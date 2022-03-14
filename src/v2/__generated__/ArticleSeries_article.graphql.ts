@@ -16,18 +16,7 @@ export type ArticleSeries_article = {
     } | null;
     readonly relatedArticles: ReadonlyArray<{
         readonly internalID: string;
-        readonly href: string | null;
-        readonly title: string | null;
-        readonly thumbnailTitle: string | null;
-        readonly byline: string | null;
-        readonly description: string | null;
-        readonly publishedAt: string | null;
-        readonly thumbnailImage: {
-            readonly display: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"ArticleSeriesItem_article">;
     }>;
     readonly " $refType": "ArticleSeries_article";
 };
@@ -39,44 +28,33 @@ export type ArticleSeries_article$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "byline",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "description",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArticleSeries_article",
   "selections": [
-    (v0/*: any*/),
-    (v1/*: any*/),
-    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "byline",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -85,7 +63,13 @@ return {
       "name": "series",
       "plural": false,
       "selections": [
-        (v3/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -120,76 +104,10 @@ return {
           "name": "internalID",
           "storageKey": null
         },
-        (v2/*: any*/),
-        (v0/*: any*/),
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "thumbnailTitle",
-          "storageKey": null
-        },
-        (v1/*: any*/),
-        (v3/*: any*/),
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "MMM DD, YYYY"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "publishedAt",
-          "storageKey": "publishedAt(format:\"MMM DD, YYYY\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "thumbnailImage",
-          "plural": false,
-          "selections": [
-            {
-              "alias": "display",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 580
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 869
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "cropped(height:580,width:869)"
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "ArticleSeriesItem_article"
         }
       ],
       "storageKey": null
@@ -198,6 +116,5 @@ return {
   "type": "Article",
   "abstractKey": null
 };
-})();
-(node as any).hash = '54fd64505017c1fdb5a9dbff60a913b9';
+(node as any).hash = '1dfee4776b927ce07e265d81a12b05d6';
 export default node;

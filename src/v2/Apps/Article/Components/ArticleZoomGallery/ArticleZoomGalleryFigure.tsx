@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { resized } from "v2/Utils/resized"
 import { ArticleZoomGalleryFigure_figure } from "v2/__generated__/ArticleZoomGalleryFigure_figure.graphql"
+import { ArticleZoomGalleryResponsiveBox } from "./ArticleZoomGalleryResponsiveBox"
 
 interface ArticleZoomGalleryFigureProps {
   figure: ArticleZoomGalleryFigure_figure
@@ -32,27 +33,20 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
   const xl = resized(src, { width: 2000, height: 2000 })
 
   return (
-    <picture key={src} style={{ width: "100%", height: "100%" }}>
-      <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
-      <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
-      <source srcSet={md.srcSet} media="(min-width: 896px)" />
-      <source srcSet={sm.srcSet} media="(min-width: 767px)" />
-      <source srcSet={xs.srcSet} media="(max-width: 766px)" />
+    <ArticleZoomGalleryResponsiveBox
+      aspectWidth={figure.image?.width || 1}
+      aspectHeight={figure.image?.height || 1}
+    >
+      <picture key={src} style={{ width: "100%", height: "100%" }}>
+        <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
+        <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
+        <source srcSet={md.srcSet} media="(min-width: 896px)" />
+        <source srcSet={sm.srcSet} media="(min-width: 767px)" />
+        <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
-      <Image
-        width="100%"
-        height="100%"
-        src={sm.src}
-        alt=""
-        loading="lazy"
-        style={{
-          objectFit: "contain",
-          maxWidth: 2000,
-          maxHeight: 2000,
-          margin: "auto",
-        }}
-      />
-    </picture>
+        <Image width="100%" height="100%" src={sm.src} alt="" loading="lazy" />
+      </picture>
+    </ArticleZoomGalleryResponsiveBox>
   )
 }
 
@@ -64,11 +58,15 @@ export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer
         __typename
         ... on Artwork {
           image {
+            width
+            height
             url(version: ["normalized", "larger", "large"])
           }
         }
         ... on ArticleImageSection {
           image {
+            width
+            height
             url(version: ["normalized", "larger", "large"])
           }
         }
@@ -79,11 +77,9 @@ export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer
 
 const Img = styled.img`
   display: block;
-  object-fit: contain;
   max-width: 100%;
   max-height: 100%;
   min-height: 0;
-  transition: opacity 250ms;
 `
 
 type Mode = "Loading" | "Ready" | "Error"
@@ -97,7 +93,7 @@ const Image: FC<ImgHTMLAttributes<HTMLImageElement>> = props => {
     if (ref.current?.complete) {
       setMode("Ready")
     }
-  }, [ref])
+  }, [ref, setMode])
 
   return (
     <>

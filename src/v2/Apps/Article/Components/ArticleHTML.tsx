@@ -45,7 +45,11 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
   }
 
   if (isMounted) {
-    return <Container>{reactHtmlParser(children, { transform })}</Container>
+    return (
+      <Container {...rest}>
+        {reactHtmlParser(children, { transform })}
+      </Container>
+    )
   }
 
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
@@ -84,11 +88,7 @@ const Container = styled(Box)`
   h1,
   h2,
   h3 {
-    margin: ${themeGet("space.4")} auto;
-
-    a {
-      text-decoration: none;
-    }
+    margin: ${themeGet("space.2")} auto;
   }
 
   h1 {
@@ -133,6 +133,7 @@ const Container = styled(Box)`
 
   a {
     transition: color 250ms;
+    text-decoration: underline;
 
     &:hover {
       color: ${themeGet("colors.brand")};

@@ -24,7 +24,6 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Write unit tests for new components](#write-unit-tests-for-new-components)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
 - [Adding global script tags](#adding-global-script-tags)
-- [Adding or removing a Segment destination](#adding-or-removing-a-segment-destination)
 - [Tracking events](#tracking-events)
 
 ## Current Preferred Practices
@@ -178,10 +177,12 @@ We use [Jest](https://jestjs.io/) for our unit tests, and [Mocha](https://mochaj
 
 Some top-level notes:
 
-- ~~We use [`enzyme`](https://enzymejs.github.io/enzyme/)~~
-- As of 2021, we've begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)
+- We use [`enzyme`](https://enzymejs.github.io/enzyme/)
+- As of 2021, we've also begun using [@testing-library/react](https://testing-library.com/docs/) for our tests. (See [this doc](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library) for some common mistakes and best practices.)
+- Enzyme is a unit testing library that matches React's internals 1:1. `@testing-library/react` is fundamentally a light weight html-based integration testing library. Depending on what you want to test one might be better suited than the other. Use what you think works best!
+- When testing React Hooks, [`@testing-library/react-hooks`](https://www.npmjs.com/package/@testing-library/react-hooks) is the best way to test that level of the stack.
 - We avoid snapshot tests; they produce too much churn for too little value.
-- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`RegisterButton` component](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1) for an example.)
+- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. There are two versions, one for Enzyme, and one for RTL. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`RegisterButton` component](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction2/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1) for an example.)
 
 Here are some great examples of what tests and test coverage should look like.
 
@@ -197,10 +198,6 @@ We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-
 ### Adding global script tags
 
 When adding global script tags (for, say, marketing-related needs), we need to add it to two places: our old app template and our new. See [this PR](https://github.com/artsy/force/pull/7640) for an implementation example.
-
-### Adding or removing a Segment destination
-
-Due to us having [integrated Segment with OneTrust Cookie Consent](https://github.com/artsy/force/pull/8853), each Segment Destination must be assigned a proper cookie category. When we add or remove a Destination, we have to update the Destination/category mapping in [this table](https://www.notion.so/artsy/Cookie-Consent-01dace52a765476ea4e9353260ce9a7f#3ec509bfb40b4d08985f6d81a306f7bf) and [object](https://github.com/artsy/force/blob/7a1b74c0736d01c67facb9108da14af043f2ee9b/src/lib/analytics/segmentOneTrustIntegration/setSegmentDestinationPref.ts#L7). This applies only to Destinations that are associated with Segment `force-staging` and `force-production` Sources and that are actually enabled.
 
 ### Tracking Events
 

@@ -4,6 +4,8 @@ import { ArticleSectionText_section } from "v2/__generated__/ArticleSectionText_
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
+export const OPTIMAL_READING_WIDTH = "65ch"
+
 interface ArticleSectionTextProps {
   section: ArticleSectionText_section
   isFirst: boolean
@@ -28,7 +30,11 @@ const ArticleSectionText: FC<ArticleSectionTextProps> = ({
     }
   })()
 
-  return <HTML>{section.body}</HTML>
+  return (
+    <HTML maxWidth={OPTIMAL_READING_WIDTH} mx="auto">
+      {section.body}
+    </HTML>
+  )
 }
 
 export const ArticleSectionTextFragmentContainer = createFragmentContainer(

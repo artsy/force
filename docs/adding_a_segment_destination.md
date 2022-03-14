@@ -1,0 +1,3 @@
+# Adding or removing a Segment destination
+
+Due to us having [integrated Segment with OneTrust Cookie Consent](https://github.com/artsy/force/pull/8853), each Segment Destination must be assigned a proper cookie category. When we add or remove a Destination, we have to update the Destination/category mapping in [this table](https://www.notion.so/artsy/Cookie-Consent-01dace52a765476ea4e9353260ce9a7f#3ec509bfb40b4d08985f6d81a306f7bf) and [object](https://github.com/artsy/force/blob/7a1b74c0736d01c67facb9108da14af043f2ee9b/src/lib/analytics/segmentOneTrustIntegration/setSegmentDestinationPref.ts#L7). This applies only to Destinations that are associated with Segment `force-staging` and `force-production` Sources and that are actually enabled.

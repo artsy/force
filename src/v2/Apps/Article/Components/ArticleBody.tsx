@@ -20,6 +20,7 @@ import { ArticleContextProvider } from "./ArticleContext"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
+import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -78,6 +79,16 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
           <Spacer mt={4} />
 
+          {article.leadParagraph && (
+            <HTML
+              variant="sm"
+              html={article.leadParagraph}
+              maxWidth={OPTIMAL_READING_WIDTH}
+              mx="auto"
+              mb={4}
+            />
+          )}
+
           <Join separator={<Spacer mt={4} />}>
             {article.sections.map((section, i) => {
               const isFirst = article.layout === "FEATURE" && i === 0
@@ -102,8 +113,11 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           {article.postscript && (
             <HTML
               variant="sm"
+              maxWidth={OPTIMAL_READING_WIDTH}
+              mx="auto"
               mt={4}
               fontStyle="italic"
+              color="black60"
               html={article.postscript}
             />
           )}
@@ -185,6 +199,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         ...ArticleSectionAd_article
         internalID
         layout
+        leadParagraph
         title
         newsSource {
           title

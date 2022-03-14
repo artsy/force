@@ -57,10 +57,12 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
 
   return (
     <>
-      {articles.map(article => {
-        return (
-          <Fragment key={article.internalID}>
-            <Join separator={<Spacer mt={4} />}>
+      <Spacer mt={4} />
+
+      <Join separator={<Spacer mt={4} />}>
+        {articles.map(article => {
+          return (
+            <Fragment key={article.internalID}>
               <ArticleVisibilityMetadataFragmentContainer article={article}>
                 <ArticleBodyFragmentContainer article={article} />
               </ArticleVisibilityMetadataFragmentContainer>
@@ -72,20 +74,14 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
               <ArticleVerticalRelatedArticlesQueryRenderer
                 id={article.internalID}
               />
-            </Join>
 
-            <ArticleInfiniteScrollSentinel onNext={handleNext} />
-          </Fragment>
-        )
-      })}
+              <ArticleInfiniteScrollSentinel onNext={handleNext} />
+            </Fragment>
+          )
+        })}
+      </Join>
 
-      {mode === "Loading" && (
-        <>
-          <Spacer mt={4} />
-
-          <ArticleInfiniteScrollPlaceholder />
-        </>
-      )}
+      {mode === "Loading" && <ArticleInfiniteScrollPlaceholder />}
     </>
   )
 }
@@ -170,7 +166,7 @@ export const ArticleInfiniteScrollQueryRenderer: FC<ArticleInfiniteScrollQueryRe
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
     <div style={{ overflowAnchor: "none" }}>
       <SystemQueryRenderer<ArticleInfiniteScrollQuery>
-        lazyLoad={false}
+        lazyLoad
         placeholder={<ArticleInfiniteScrollPlaceholder />}
         variables={{ articleID, channelID }}
         query={ARTICLE_NEXT_QUERY}
@@ -195,53 +191,73 @@ export const ArticleInfiniteScrollQueryRenderer: FC<ArticleInfiniteScrollQueryRe
 
 const ArticleInfiniteScrollPlaceholder: FC = () => {
   return (
-    <Skeleton>
-      <SkeletonText variant="xs" mb={1}>
-        Vertical
-      </SkeletonText>
+    <>
+      <FullBleed bg="black5" p={1}>
+        <ResponsiveBox
+          aspectWidth={970}
+          aspectHeight={250}
+          maxWidth={970}
+          maxHeight={250}
+          mx="auto"
+        >
+          <SkeletonBox width="100%" height="100%" />
+        </ResponsiveBox>
 
-      <SkeletonText variant="xxl">The Article Title</SkeletonText>
-
-      <SkeletonText variant="xxl">Artsy Editors</SkeletonText>
+        <SkeletonText variant="xs" textAlign="center" mx="auto" mt={1}>
+          Advertisement
+        </SkeletonText>
+      </FullBleed>
 
       <Spacer mt={4} />
 
-      <GridColumns gridRowGap={4}>
-        <Column span={[12, 8, 8, 6]}>
-          <SkeletonText variant="xs">Jan 01, 0000 00:00PM</SkeletonText>
+      <Skeleton>
+        <SkeletonText variant="xs" mb={1}>
+          Vertical
+        </SkeletonText>
 
-          <Spacer mt={4} />
+        <SkeletonText variant="xxl">The Article Title</SkeletonText>
 
-          <FadeOut>
-            <ResponsiveBox aspectWidth={16} aspectHeight={9} maxWidth="100%">
-              <SkeletonBox width="100%" height="100%" />
-            </ResponsiveBox>
-          </FadeOut>
-        </Column>
+        <SkeletonText variant="xxl">Artsy Editors</SkeletonText>
 
-        <Column span={4}>
-          <SkeletonText variant="xs" mb={4}>
-            Related Stories
-          </SkeletonText>
+        <Spacer mt={4} />
 
-          <Join separator={<Spacer mt={1} />}>
-            {new Array(3).fill(0).map((_, i) => (
-              <Flex key={i}>
-                <SkeletonBox width={80} height={60} mr={1} />
+        <GridColumns gridRowGap={4}>
+          <Column span={[12, 8, 8, 6]}>
+            <SkeletonText variant="xs">Jan 01, 0000 00:00PM</SkeletonText>
 
-                <Box>
-                  <SkeletonText variant="md">
-                    Related Article Title
-                  </SkeletonText>
+            <Spacer mt={4} />
 
-                  <SkeletonText variant="md">Artsy Editors</SkeletonText>
-                </Box>
-              </Flex>
-            ))}
-          </Join>
-        </Column>
-      </GridColumns>
-    </Skeleton>
+            <FadeOut>
+              <ResponsiveBox aspectWidth={16} aspectHeight={9} maxWidth="100%">
+                <SkeletonBox width="100%" height="100%" />
+              </ResponsiveBox>
+            </FadeOut>
+          </Column>
+
+          <Column span={4}>
+            <SkeletonText variant="xs" mb={4}>
+              Related Stories
+            </SkeletonText>
+
+            <Join separator={<Spacer mt={1} />}>
+              {new Array(3).fill(0).map((_, i) => (
+                <Flex key={i}>
+                  <SkeletonBox width={80} height={60} mr={1} />
+
+                  <Box>
+                    <SkeletonText variant="md">
+                      Related Article Title
+                    </SkeletonText>
+
+                    <SkeletonText variant="md">Artsy Editors</SkeletonText>
+                  </Box>
+                </Flex>
+              ))}
+            </Join>
+          </Column>
+        </GridColumns>
+      </Skeleton>
+    </>
   )
 }
 

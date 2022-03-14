@@ -26,4 +26,15 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {}
+module.exports = {
+  artist_grid_manual_curation_trial:
+    key: 'artist_grid_manual_curation_trial'
+    outcomes: [
+      'control'
+      'experiment'
+    ]
+    control_group: 'control'
+    edge: 'experiment'
+    weighting: 'equal'
+    scope: 'local'
+}

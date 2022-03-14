@@ -37,7 +37,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
         <RouterLink to={article.href} display="block" textDecoration="none">
           <Text variant="xxl">{article.title}</Text>
 
-          <Text variant="xxl" color="black60">
+          <Text variant="lg" color="black60">
             {article.byline}
           </Text>
         </RouterLink>
@@ -48,7 +48,11 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
   switch (article.hero.layout) {
     case "FULLSCREEN": {
       return (
-        <FullBleedHeader src={article.hero.image?.url!}>
+        <FullBleedHeader
+          {...(article.hero.media
+            ? { src: article.hero.media, mode: "VIDEO" }
+            : { src: article.hero.image?.url!, mode: "IMAGE" })}
+        >
           <FullBleedHeaderOverlay
             alignItems="flex-start"
             flexDirection="column"
@@ -61,7 +65,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
 
             <Text variant="xxl">{article.title}</Text>
 
-            <Text variant="xxl" color="rgba(255, 255, 255, 0.8)">
+            <Text variant="lg" color="rgba(255, 255, 255, 0.8)">
               {article.byline}
             </Text>
           </FullBleedHeaderOverlay>
@@ -73,7 +77,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
       const image = article.hero.image?.split
 
       return (
-        <FullBleed display="flex">
+        <FullBleed display="flex" flexDirection={["column-reverse", "row"]}>
           <Box flex={1} p={[2, 4]}>
             <Text variant="xs" textTransform="uppercase" mb={1}>
               {article.vertical}
@@ -83,7 +87,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60">
+            <Text variant="lg" color="black60">
               {article.byline}
             </Text>
           </Box>
@@ -94,7 +98,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
                 display="block"
                 width="100%"
                 height={[
-                  `max(calc(90vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+                  `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
                   `max(calc(90vh - ${desktop}px), ${MIN_HEIGHT}px)`,
                 ]}
                 style={{ objectFit: "cover" }}
@@ -114,7 +118,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
                 srcSet={image.srcSet}
                 width="100%"
                 height={[
-                  `max(calc(90vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+                  `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
                   `max(calc(90vh - ${desktop}px), ${MIN_HEIGHT}px)`,
                 ]}
                 style={{ objectFit: "cover" }}
@@ -157,7 +161,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60" mb={2}>
+            <Text variant="lg" color="black60" mb={2}>
               {article.byline}
             </Text>
           </Box>
@@ -179,7 +183,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="xxl" color="black60">
+            <Text variant="lg" color="black60">
               {article.byline}
             </Text>
           </Box>

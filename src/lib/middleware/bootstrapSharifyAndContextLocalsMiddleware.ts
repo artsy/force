@@ -70,7 +70,7 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
  * Updates both the sharify locals for template injection along with the context
  * globals for the request.
  */
-function updateSharifyAndContext(res, key, value) {
+export function updateSharifyAndContext(res, key, value) {
   res.locals.sd[key] = value
   const asyncLocalStorage = getAsyncLocalStorage()
   asyncLocalStorage.getStore()?.set(key, value)

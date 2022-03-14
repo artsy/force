@@ -7,12 +7,16 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryFigure_figure = {
     readonly __typename: "Artwork";
     readonly image: {
+        readonly width: number | null;
+        readonly height: number | null;
         readonly url: string | null;
     } | null;
     readonly " $refType": "ArticleZoomGalleryFigure_figure";
 } | {
     readonly __typename: "ArticleImageSection";
     readonly image: {
+        readonly width: number | null;
+        readonly height: number | null;
         readonly url: string | null;
     } | null;
     readonly " $refType": "ArticleZoomGalleryFigure_figure";
@@ -40,6 +44,20 @@ var v0 = [
     "name": "image",
     "plural": false,
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "width",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "height",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": [
@@ -91,5 +109,5 @@ return {
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
 })();
-(node as any).hash = '968004f71e412c2ee561e68639669652';
+(node as any).hash = 'be0d702024ad600e40a808c3e62f6d4e';
 export default node;

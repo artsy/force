@@ -14,6 +14,8 @@ import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
+import { getDefaultSortValueByVariant } from "v2/Utils/merchandisingTrial"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -28,6 +30,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { relay, aggregations, artist, me } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
+  const defaultSort = getDefaultSortValueByVariant(artist.slug)
 
   if (!hasFilter) {
     return null
@@ -43,7 +46,11 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const metric = getSupportedMetric(me?.lengthUnitPreference)
   const filters: ArtworkFiltersState = {
     metric,
+    sort: defaultSort,
     ...match.location.query,
+  }
+  const defaultFilters: ArtworkFiltersState = {
+    sort: defaultSort,
   }
 
   return (
@@ -51,8 +58,14 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       aggregations={aggregations}
       counts={artist.counts as Counts}
       filters={filters}
+      defaultFilters={defaultFilters}
+      onChange={filterState => {
+        updateUrl(filterState, {
+          defaultValues: defaultFilters,
+        })
+      }}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
+        { value: defaultSort, text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
         { value: "-has_price,prices", text: "Price (asc.)" },
         { value: "-partner_updated_at", text: "Recently updated" },
