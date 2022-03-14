@@ -76,6 +76,11 @@ describe("MetaTags", () => {
           "?resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200&height=630&quality=80",
       },
       {
+        content: "308278682573501",
+        name: null,
+        property: "fb:app_id",
+      },
+      {
         name: null,
         property: "twitter:title",
         content: "Artsy — Discover, Buy, and Sell Fine Art",
@@ -147,6 +152,11 @@ describe("MetaTags", () => {
         property: "og:image",
         content:
           "?resize_to=fill&src=https%3A%2F%2Fexample.com%2Fexample.jpg&width=1200&height=630&quality=80",
+      },
+      {
+        content: "308278682573501",
+        name: null,
+        property: "fb:app_id",
       },
       {
         name: null,
@@ -256,6 +266,11 @@ describe("MetaTags", () => {
         property: "og:image",
         content:
           "?resize_to=fill&src=https%3A%2F%2Ffiles.artsy.net%2Fimages%2Fog_image.jpeg&width=1200&height=630&quality=80",
+      },
+      {
+        content: "308278682573501",
+        name: null,
+        property: "fb:app_id",
       },
       {
         name: null,

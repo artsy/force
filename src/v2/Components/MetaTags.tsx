@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Title, Meta, Link } from "react-head"
 import { getENV } from "v2/Utils/getENV"
 import { cropped } from "v2/Utils/resized"
@@ -60,6 +60,7 @@ export const MetaTags: React.FC<MetaTagsProps> = ({
       <Meta property="og:site_name" content="Artsy" />
       <Meta property="og:description" content={description} />
       <Meta property="og:image" content={src} />
+      <Meta property="fb:app_id" content="308278682573501" />
 
       {/* Twitter */}
       <Meta property="twitter:title" content={title} />
