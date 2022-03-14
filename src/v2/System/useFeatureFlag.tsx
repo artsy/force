@@ -11,6 +11,15 @@ interface FeatureFlagDetails {
   variant: Variant
 }
 
+interface VariantTrackingProperties {
+  experiment_name: string
+  variant_name: string
+  payload?: object
+  context_owner_type?: string
+  context_owner_id?: string
+  context_owner_slug?: string
+}
+
 export function useFeatureFlag(featureName: string): boolean | null {
   const { featureFlags } = useSystemContext()
   const flagEnabled = featureFlags?.[featureName]?.flagEnabled
@@ -48,7 +57,7 @@ export function useTrackVariantView({
   context_owner_type,
   context_owner_id,
   context_owner_slug,
-}) {
+}: VariantTrackingProperties) {
   const { trackEvent } = useTracking()
 
   useEffect(() => {
