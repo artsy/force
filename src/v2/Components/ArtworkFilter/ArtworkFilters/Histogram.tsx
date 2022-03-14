@@ -6,7 +6,7 @@ const BAR_ROUNDNESS = 10
 type Range = [number, number]
 
 export interface HistogramBarEntity {
-  counts: number
+  count: number
   value: number
 }
 
@@ -23,13 +23,13 @@ export const Histogram: React.FC<HistogramProps> = ({
   bars,
   selectedRange,
 }) => {
-  const maxValue = Math.max(...bars.map(bar => bar.counts))
+  const maxValue = Math.max(...bars.map(bar => bar.count))
   const [min, max] = selectedRange
 
   return (
     <Flex height={110} justifyContent="space-between" alignItems="flex-end">
       {bars.map((entity, index) => {
-        const percent = (100 / maxValue) * entity.counts
+        const percent = (100 / maxValue) * entity.count
         const selected = isSelected(entity.value, min, max)
 
         return (

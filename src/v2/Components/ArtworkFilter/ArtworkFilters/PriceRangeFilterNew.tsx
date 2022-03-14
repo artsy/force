@@ -23,107 +23,107 @@ const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
 const BARS: HistogramBarEntity[] = [
   {
-    counts: 34548,
+    count: 34548,
     value: 0,
   },
   {
-    counts: 35234,
+    count: 35234,
     value: 2000,
   },
   {
-    counts: 6153,
+    count: 6153,
     value: 4000,
   },
   {
-    counts: 32119,
+    count: 32119,
     value: 6000,
   },
   {
-    counts: 37462,
+    count: 37462,
     value: 8000,
   },
   {
-    counts: 1655,
+    count: 1655,
     value: 10000,
   },
   {
-    counts: 39325,
+    count: 39325,
     value: 12000,
   },
   {
-    counts: 2926,
+    count: 2926,
     value: 14000,
   },
   {
-    counts: 9501,
+    count: 9501,
     value: 16000,
   },
   {
-    counts: 48407,
+    count: 48407,
     value: 18000,
   },
   {
-    counts: 28957,
+    count: 28957,
     value: 20000,
   },
   {
-    counts: 24314,
+    count: 24314,
     value: 22000,
   },
   {
-    counts: 16478,
+    count: 16478,
     value: 24000,
   },
   {
-    counts: 28169,
+    count: 28169,
     value: 26000,
   },
   {
-    counts: 7767,
+    count: 7767,
     value: 28000,
   },
   {
-    counts: 23397,
+    count: 23397,
     value: 30000,
   },
   {
-    counts: 6444,
+    count: 6444,
     value: 32000,
   },
   {
-    counts: 18366,
+    count: 18366,
     value: 34000,
   },
   {
-    counts: 457,
+    count: 457,
     value: 36000,
   },
   {
-    counts: 28344,
+    count: 28344,
     value: 38000,
   },
   {
-    counts: 35116,
+    count: 35116,
     value: 40000,
   },
   {
-    counts: 13476,
+    count: 13476,
     value: 42000,
   },
   {
-    counts: 39976,
+    count: 39976,
     value: 44000,
   },
   {
-    counts: 16281,
+    count: 16281,
     value: 46000,
   },
   {
-    counts: 38268,
+    count: 38268,
     value: 48000,
   },
   {
-    counts: 20844,
+    count: 20844,
     value: 50000,
   },
 ]
