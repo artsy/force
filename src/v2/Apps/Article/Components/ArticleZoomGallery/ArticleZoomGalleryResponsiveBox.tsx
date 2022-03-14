@@ -19,7 +19,10 @@ export const ArticleZoomGalleryResponsiveBox: FC<ArticleZoomGalleryResponsiveBox
   children,
   ...rest
 }) => {
-  const { ref, width, height } = useSizeAndPosition({ debounce: 50 })
+  const { ref, width, height } = useSizeAndPosition({
+    debounce: 50,
+    trackMutation: true,
+  })
 
   const [{ scaledWidth, scaledHeight }, setScaled] = useState({
     scaledWidth: 0,
