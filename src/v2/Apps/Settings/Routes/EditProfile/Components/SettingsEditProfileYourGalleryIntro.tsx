@@ -7,6 +7,7 @@ interface SettingsEditProfileYourGalleryIntroProps {
   me: SettingsEditProfileYourGalleryIntro_me
 }
 
+// TODO: remove this when introducing the new collector profile
 const SettingsEditProfileYourGalleryIntro: FC<SettingsEditProfileYourGalleryIntroProps> = ({
   me,
 }) => {
