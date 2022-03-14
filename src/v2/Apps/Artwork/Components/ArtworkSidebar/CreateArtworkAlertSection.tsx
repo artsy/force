@@ -14,8 +14,6 @@ import {
 } from "v2/Components/SavedSearchAlert/SavedSearchAlertContext"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateArtworkAlertSection_artwork } from "v2/__generated__/CreateArtworkAlertSection_artwork.graphql"
-import { CreateArtworkAlertSection_me } from "v2/__generated__/CreateArtworkAlertSection_me.graphql"
-import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
@@ -27,7 +25,6 @@ import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearc
 
 interface CreateArtworkAlertSectionProps {
   artwork: CreateArtworkAlertSection_artwork
-  me: CreateArtworkAlertSection_me
 }
 
 export const CreateArtworkAlertSection: React.FC = () => {
@@ -70,9 +67,7 @@ export const CreateArtworkAlertSection: React.FC = () => {
 
 export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSectionProps> = ({
   artwork,
-  me,
 }) => {
-  const metric = getSupportedMetric(me.lengthUnitPreference)
   const artists = compact(artwork.artists)
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
@@ -96,11 +91,7 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
   return (
-    <SavedSearchAlertContextProvider
-      criteria={allowedCriteria}
-      entity={entity}
-      metric={metric}
-    >
+    <SavedSearchAlertContextProvider criteria={allowedCriteria} entity={entity}>
       <CreateArtworkAlertSection />
     </SavedSearchAlertContextProvider>
   )
@@ -120,11 +111,6 @@ export const CreateArtworkAlertSectionFragmentContainer = createFragmentContaine
         attributionClass {
           name
         }
-      }
-    `,
-    me: graphql`
-      fragment CreateArtworkAlertSection_me on Me {
-        lengthUnitPreference
       }
     `,
   }

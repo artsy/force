@@ -86,7 +86,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
       {!!shouldShowCreateAlertSection && (
-        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} me={me} />
+        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
       )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
@@ -125,7 +125,6 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkSidebar_me on Me {
         ...ArtworkSidebarAuctionInfoPolling_me
-        ...CreateArtworkAlertSection_me
       }
     `,
   }
