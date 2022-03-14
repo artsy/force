@@ -15,7 +15,7 @@ export type ArtworkSidebar_artwork = {
         readonly endedAt: string | null;
         readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork">;
     readonly " $refType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$data = ArtworkSidebar_artwork;
@@ -146,10 +146,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "BuyerGuarantee_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CreateArtworkAlertSection_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '006aa4c1097978fb87d0c111148a7369';
+(node as any).hash = '8e5eb358f471911963e5782c6ec3f81e';
 export default node;
