@@ -17,7 +17,7 @@ export type useRemoveArtistYouCollectMutationResponse = {
     readonly deleteUserInterest: {
         readonly clientMutationId: string | null;
         readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
+            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
         };
     } | null;
 };
@@ -36,7 +36,6 @@ mutation useRemoveArtistYouCollectMutation(
     clientMutationId
     me {
       ...SettingsEditProfileArtistsYouCollect_me
-      ...SettingsEditProfileYourGalleryIntro_me
       id
     }
   }
@@ -63,10 +62,6 @@ fragment SettingsEditProfileArtistsYouCollect_me on Me {
     }
     id
   }
-}
-
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
 }
 */
 
@@ -134,11 +129,6 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "SettingsEditProfileArtistsYouCollect_me"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "SettingsEditProfileYourGalleryIntro_me"
               }
             ],
             "storageKey": null
@@ -253,13 +243,6 @@ return {
                 ],
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "inquiryIntroduction",
-                "storageKey": null
-              },
               (v4/*: any*/)
             ],
             "storageKey": null
@@ -270,14 +253,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "311470e90a00163bcc8766816885bea5",
+    "cacheID": "152ff6c097b54abb1e7936215500ccbd",
     "id": null,
     "metadata": {},
     "name": "useRemoveArtistYouCollectMutation",
     "operationKind": "mutation",
-    "text": "mutation useRemoveArtistYouCollectMutation(\n  $input: DeleteUserInterestMutationInput!\n) {\n  deleteUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      ...SettingsEditProfileYourGalleryIntro_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
+    "text": "mutation useRemoveArtistYouCollectMutation(\n  $input: DeleteUserInterestMutationInput!\n) {\n  deleteUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b120d7d424d14d89557158a3342b8729';
+(node as any).hash = '9631c605bb0b9c793403276a2ced3a88';
 export default node;
