@@ -27,8 +27,8 @@
 # module.exports = {}
 
 module.exports = {
-  artist_grid_manual_curation_trial_qa:
-    key: 'artist_grid_manual_curation_trial_qa'
+  artist_grid_manual_curation_trial:
+    key: 'artist_grid_manual_curation_trial'
     outcomes: [
       'control'
       'experiment'

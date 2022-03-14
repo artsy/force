@@ -60,7 +60,7 @@ export const TARGETED_ARTIST_ROUTES = TARGETED_ARTIST_SLUGS.map(slug => {
 })
 
 export const getDefaultSortValueByVariant = (artistSlug: string) => {
-  const variant = getENV("ARTIST_GRID_MANUAL_CURATION_TRIAL_QA")
+  const variant = getENV("ARTIST_GRID_MANUAL_CURATION_TRIAL")
   const isTargetedArtistSlug = TARGETED_ARTIST_SLUGS.includes(artistSlug)
 
   if (isTargetedArtistSlug && variant === "control") {

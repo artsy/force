@@ -79,7 +79,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
           ],
           abTestRouteMap: [
             {
-              abTest: "artist_grid_manual_curation_trial_qa",
+              abTest: "artist_grid_manual_curation_trial",
               routes: TARGETED_ARTIST_ROUTES,
             },
           ],
