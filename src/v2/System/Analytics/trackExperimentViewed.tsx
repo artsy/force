@@ -1,7 +1,7 @@
 import * as Schema from "v2/System/Analytics"
 import { data as sd } from "sharify"
 
-export const trackExperimentViewed = (name: string, trackingData) => {
+export const trackExperimentViewed = (name: string, trackingData = {}) => {
   if (typeof window.analytics !== "undefined") {
     const variation = sd[name.toUpperCase()]
     if (!Boolean(variation)) {

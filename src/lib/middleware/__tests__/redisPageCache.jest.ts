@@ -20,6 +20,8 @@ jest.mock("config", () => ({
   PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: 400,
 }))
 
+jest.mock("desktop/components/split_test/running_tests.coffee", () => ({}))
+
 describe("pageCacheMiddleware", () => {
   let req
   let res

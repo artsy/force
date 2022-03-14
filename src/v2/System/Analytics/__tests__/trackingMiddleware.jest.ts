@@ -6,6 +6,7 @@ declare const global: any
 jest.mock("sharify", () => ({
   data: {
     APP_URL: "http://testing.com",
+    SPECIFIC_ARTIST_ARTWORKS: "experiment",
   },
 }))
 
@@ -17,7 +18,10 @@ describe("trackingMiddleware", () => {
   const noop = x => x
 
   beforeEach(() => {
-    window.analytics = { page: jest.fn() } as any
+    window.analytics = {
+      page: jest.fn(),
+      track: jest.fn(),
+    } as any
   })
 
   afterEach(() => {
@@ -140,6 +144,58 @@ describe("trackingMiddleware", () => {
           "http://testing.com/referrer?with=queryparams"
         )
       })
+    })
+  })
+
+  describe("triggering AB test experiment viewed events", () => {
+    it("should be triggered for a given route", () => {
+      const middleware = trackingMiddleware({
+        abTestRouteMap: [
+          {
+            abTest: "specific_artist_artworks",
+            routes: ["/artist/banksy/works-for-sale"],
+          },
+        ],
+      })
+
+      middleware(store)(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: {
+          pathname: "/artist/banksy/works-for-sale",
+        },
+      })
+
+      expect(global.analytics.track).toBeCalledWith(
+        "Experiment Viewed",
+        {
+          experiment_id: "specific_artist_artworks",
+          experiment_name: "specific_artist_artworks",
+          variation_id: "experiment",
+          variation_name: "experiment",
+          nonInteraction: 1,
+        },
+        { page: {} }
+      )
+    })
+
+    it("should NOT be triggered for a denied route", () => {
+      const middleware = trackingMiddleware({
+        abTestRouteMap: [
+          {
+            abTest: "specific_artist_artworks",
+            routes: ["/artist/banksy/works-for-sale"],
+          },
+        ],
+      })
+
+      middleware(store)(noop)({
+        type: ActionTypes.UPDATE_LOCATION,
+        payload: {
+          pathname: "/unknown-path",
+        },
+      })
+
+      expect(global.analytics.track).toBeCalledTimes(0)
     })
   })
 })

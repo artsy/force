@@ -28,6 +28,7 @@ import { trackingMiddleware } from "v2/System/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
 import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
+import { TARGETED_ARTIST_ROUTES } from "v2/Utils/merchandisingTrial"
 
 interface Resolve {
   ClientApp: ComponentType<any>
@@ -75,6 +76,12 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             // Due to special needs, this page has its own page-view tracking implementation.
             // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/v2/Apps/Artwork/ArtworkApp.tsx#L117-L121
             "/artwork(.*)",
+          ],
+          abTestRouteMap: [
+            {
+              abTest: "artist_grid_manual_curation_trial",
+              routes: TARGETED_ARTIST_ROUTES,
+            },
           ],
         }),
       ]

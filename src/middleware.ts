@@ -123,6 +123,10 @@ export function initializeMiddleware(app) {
   app.use(sameOriginMiddleware)
   app.use(unsupportedBrowserMiddleware)
 
+  if (process.env.NODE_ENV !== "test") {
+    app.use(splitTestMiddleware)
+  }
+
   // Initialize caches
   applyCacheMiddleware(app)
 
@@ -145,10 +149,6 @@ export function initializeMiddleware(app) {
 
   // Sets up mobile marketing signup modal
   app.use(marketingModalsMiddleware)
-
-  if (process.env.NODE_ENV !== "test") {
-    app.use(splitTestMiddleware)
-  }
 
   // Static assets
   applyStaticAssetMiddlewares(app)
