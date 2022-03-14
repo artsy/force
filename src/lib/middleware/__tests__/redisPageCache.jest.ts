@@ -14,7 +14,7 @@ jest.mock("lib/cache", () => ({
 
 jest
   .spyOn(featureFlagMiddleware, "createFeatureFlagsCachePrefix")
-  .mockImplementation(() => "featureA:variantA|featureB:disabled")
+  .mockImplementation(() => "feature-a:variant-a|feature-b:disabled")
 
 jest.mock("config", () => ({
   PAGE_CACHE_ENABLED: true,
@@ -59,12 +59,12 @@ describe("pageCacheMiddleware", () => {
   it("sets up cache for valid pageTypes", async () => {
     redisPageCacheMiddleware(req, res, next)
     expect(cache.set).toBeCalledWith(
-      "page-cache|none|featureA:variantA|featureB:disabled|1|https://artsy.net/artist/test-artist",
+      "page-cache|none|feature-a:variant-a|feature-b:disabled|1|https://artsy.net/artist/test-artist",
       expect.anything(),
       600
     )
     expect(cache.get.mock.calls[0][0]).toBe(
-      "page-cache|none|featureA:variantA|featureB:disabled|1|https://artsy.net/artist/test-artist"
+      "page-cache|none|feature-a:variant-a|feature-b:disabled|1|https://artsy.net/artist/test-artist"
     )
     await new Promise<void>(resolve => {
       setTimeout(() => {
