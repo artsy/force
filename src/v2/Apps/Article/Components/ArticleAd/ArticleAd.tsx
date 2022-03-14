@@ -51,6 +51,8 @@ ArticleAd.displayName = "ArticleAd"
 
 export const ArticleAdProvider: FC = ({ children }) => {
   return (
-    <DFPSlotsProvider dfpNetworkId="21805539690">{children}</DFPSlotsProvider>
+    <DFPSlotsProvider dfpNetworkId="21805539690" lazyLoad>
+      {children}
+    </DFPSlotsProvider>
   )
 }
