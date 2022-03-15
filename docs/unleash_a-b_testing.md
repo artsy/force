@@ -2,7 +2,7 @@
 
 ## Creating a test
 
-- Log into unleash.artsy.net
+- Log into [Unleash](unleash.artsy.net)
 - Press Create feature toggle
   - add a name, description and select the toggle type as "Experiment"
 - Go to Variants Tab and add the variant names (e.g. "control" and "experiment").
