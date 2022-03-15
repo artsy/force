@@ -70,10 +70,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
       return null
     }
 
-    const alertName = values.name || entity.placeholder
-
     const userAlertSettings: SavedSearchAleftFormValues = {
-      name: alertName,
+      name: values.name || entity.placeholder,
       email: values.email,
       push: values.push,
     }
