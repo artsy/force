@@ -43,6 +43,7 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   })
 
   const isExpanded = variant?.name === "experiment" && !!variant?.enabled
+  const expandedProp = { ...(isExpanded && { expanded: isExpanded }) }
 
   return (
     <>
@@ -52,12 +53,12 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
-      <MaterialsFilter expanded={isExpanded} />
-      <ArtistNationalityFilter expanded={isExpanded} />
-      <ArtworkLocationFilter expanded={isExpanded} />
-      <TimePeriodFilter expanded={isExpanded} />
-      <ColorFilter expanded={isExpanded} />
-      <PartnersFilter expanded={isExpanded} />
+      <MaterialsFilter {...expandedProp} />
+      <ArtistNationalityFilter {...expandedProp} />
+      <ArtworkLocationFilter {...expandedProp} />
+      <TimePeriodFilter {...expandedProp} />
+      <ColorFilter {...expandedProp} />
+      <PartnersFilter {...expandedProp} />
     </>
   )
 }
