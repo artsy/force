@@ -21,7 +21,6 @@ import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
 
 const logger = createLogger("Apps/Components/AppShell")
-
 interface AppShellProps {
   children: React.ReactNode
   match?: Match
@@ -59,16 +58,19 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   useEffect(() => {
     let script: HTMLScriptElement
-    if (match?.location.pathname === "order/success") {
+
+    if (idConversionRoute(match?.location.pathname)) {
       script = document.createElement("script")
 
       script.id = "mntn_conversion"
-      script.src = "../../System/Analytics/MNTN"
+      script.src = "../../System/Analytics/MNTN/conversionPixelScript.js"
       script.async = true
       script.type = "javascript/text"
 
       document.body.appendChild(script)
     }
+
+    // does the removal of this element even matter if it is mounted in AppShell?
     return () => {
       if (document.getElementById("mntn_conversion")) {
         document.body.removeChild(script)
@@ -139,4 +141,42 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Theme>
     </Flex>
   )
+}
+
+// account creation, auction registration, bid placed, inquiry made,
+// gallery contacted, offer made, purchase
+function idConversionRoute(pathname: string | undefined) {
+  if (!pathname) {
+    console.log("AppShell::idConversionRoute: pathname is undefined")
+    return false
+  }
+  const paths = pathname.split(/(?=\/)/g)
+  console.log("AppShell::idConversionRoute: paths", paths)
+  const conversionRoutes = [
+    ["/signup"],
+    ["/personalize", "/artists"],
+    ["/personalize", "/budget"],
+    ["/auction", "/bid"],
+    ["/auction-registration"],
+    ["/orders", "/status"],
+    // "/signup", // account creation
+    // "/personalize/artists", // account creation
+    // "/personalize/budget", // account creation
+    // `/auction/${saleName}/bid/${artworkID}?bid=${bidID}`, // bid placed
+    // `/auction-registration/${saleName}`, // auction registration
+    // `/orders/7ef042fe-1897-4076-8f15-0d336db880c6/status`, // offer made, purchase
+    //  no route for 'gallery contacted',
+  ]
+
+  let x = conversionRoutes.length - 1
+  let matchFound = false
+  do {
+    matchFound = conversionRoutes[x--].every(route => {
+      console.log("AppShell::idConversionRoute: comparing", route, "to", paths)
+      return paths.indexOf(route) !== -1
+    })
+  } while (x >= 0 && !matchFound)
+
+  console.log("AppShell::idConversionRoute: matchFound:", matchFound)
+  return matchFound
 }
