@@ -6,7 +6,6 @@
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const { Artwork } = require("../../models/artwork")
-const { Sale } = require("../../models/sale")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("Artwork", function () {
@@ -53,12 +52,6 @@ describe("Artwork", function () {
       return this.artwork.showPriceLabel().should.be.ok()
     })
   })
-
-  describe("#showNotForSaleLabel", () =>
-    it("shows the not for sale label if inquireable and not for sale", function () {
-      this.artwork.set({ inquireable: true, availability: "not for sale" })
-      return this.artwork.showNotForSaleLabel().should.be.ok()
-    }))
 
   describe("#editionSets", () =>
     it("wraps the edition sets in a collection", function () {
@@ -122,67 +115,6 @@ describe("Artwork", function () {
         .partnerName()
         .should.equal("Österreichische Galerie Belvedere, Vienna")
     }))
-
-  describe("#fetchCurrentSale", () =>
-    it("returns the first sale", function (done) {
-      this.artwork.fetchCurrentSale({
-        success(sale) {
-          sale.toJSON().name.should.equal("First Sale")
-          return done()
-        },
-      })
-      const sale1 = new Sale({ is_auction: false, name: "First Sale" })
-      const sale2 = new Sale({ is_auction: false, name: "Second Sale" })
-      return Backbone.sync.args[0][2].success([sale1, sale2])
-    }))
-
-  describe("#fetchAuctionAndSaleArtwork", function () {
-    it("selects the sale that is an auction", function (done) {
-      this.artwork.fetchAuctionAndSaleArtwork({
-        success(auction, saleArtwork) {
-          auction.toJSON().name.should.equal("An Auction")
-          auction.toJSON().is_auction.should.equal(true)
-          return done()
-        },
-      })
-      const sale1 = new Sale({ is_auction: false, name: "Not An Auction" })
-      const sale2 = new Sale({ is_auction: true, name: "An Auction" })
-      Backbone.sync.args[0][2].success([sale1, sale2])
-      return Backbone.sync.args[1][2].success(
-        fabricate("sale_artwork", { opening_bid_cents: 100000 })
-      )
-    })
-
-    it("fetchs the auction and sale for that artwork and callsback with both", function (done) {
-      this.artwork.fetchAuctionAndSaleArtwork({
-        success(auction, saleArtwork) {
-          saleArtwork.toJSON().opening_bid_cents.should.equal(100000)
-          return done()
-        },
-      })
-      Backbone.sync.args[0][2].success([
-        fabricate("sale", { is_auction: true, name: "Awesome Sale" }),
-      ])
-      return Backbone.sync.args[1][2].success(
-        fabricate("sale_artwork", { opening_bid_cents: 100000 })
-      )
-    })
-
-    return it("injects the sale into the sale artwork to complete its url", function (done) {
-      this.artwork.fetchAuctionAndSaleArtwork({
-        success(auction, saleArtwork) {
-          saleArtwork.toJSON().sale.get("is_auction").should.be.ok()
-          return done()
-        },
-      })
-      Backbone.sync.args[0][2].success([
-        fabricate("sale", { is_auction: true, name: "Awesome Sale" }),
-      ])
-      return Backbone.sync.args[1][2].success(
-        fabricate("sale_artwork", { opening_bid_cents: 100000 })
-      )
-    })
-  })
 
   describe("#hasMoreInfo", () =>
     it("returns true if the artwork has more info to display and false otherwise", function () {
