@@ -4,11 +4,15 @@ import {
   LinkProps,
   useThemeConfig,
   TextVariant,
+  Flex,
+  Spacer,
 } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
+import { getTimerCopy } from "../LotTimer"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -203,12 +207,33 @@ export const Details: React.FC<DetailsProps> = ({
   hideSaleInfo,
   ...rest
 }) => {
+<<<<<<< HEAD
   const { isAuctionArtwork } = useArtworkGridContext()
 
   return (
     <>
       {isAuctionArtwork && (
         <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+=======
+  const { artworkGridContext } = useArtworkGridContext()
+  console.log("rest?.artwork?.sale?.cascadingEndTimeInterval", rest?.artwork)
+
+  return (
+    <>
+      {artworkGridContext?.isAuctionArtwork && (
+        <Flex flexDirection="row">
+          <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+          {rest?.artwork?.sale?.cascadingEndTimeInterval && (
+            <>
+              <Spacer mx={0.5} />
+              <LotCloseInfo
+                saleArtwork={rest.artwork.sale_artwork}
+                sale={rest.artwork.sale}
+              />
+            </>
+          )}
+        </Flex>
+>>>>>>> 9c7799c039 (Show lot close timer on lot grid page)
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <TitleLine {...rest} />
@@ -216,6 +241,66 @@ export const Details: React.FC<DetailsProps> = ({
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </>
   )
+}
+
+interface LotCloseInfoProps {
+  saleArtwork: any
+  sale: any
+}
+
+export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
+  saleArtwork,
+  sale,
+}) => {
+  const { hasEnded: lotHasClosed, time } = useTimer(
+    saleArtwork.endAt!,
+    sale.startAt
+  )
+
+  const { hasEnded: lotsAreClosing, hasStarted: saleHasStarted } = useTimer(
+    sale.endAt!,
+    sale.startAt!
+  )
+
+  if (!saleHasStarted) {
+    return null
+  }
+
+  const saleEndDate = sale.auctionsDetailFormattedStartDateTime
+  const timerCopy = getTimerCopy(time, saleHasStarted)
+
+  let lotCloseCopy
+
+  // Lot has already closed
+  if (lotHasClosed) {
+    lotCloseCopy = "Closed"
+  } else if (saleHasStarted) {
+    // Sale has started but lot has not started closing
+    if (lotsAreClosing) {
+      lotCloseCopy = `Closes, ${timerCopy.copy}`
+      // Sale has started but lots have not started closing
+    } else {
+      lotCloseCopy = `Closes, ${saleEndDate}`
+    }
+  }
+
+  return (
+    <Text variant="xs" color={getLabelColor(timerCopy.color, lotHasClosed)}>
+      {lotCloseCopy}
+    </Text>
+  )
+}
+
+const getLabelColor = (color, lotHasClosed): string => {
+  if (lotHasClosed) {
+    return "black60"
+  } else {
+    if (color === "red100") {
+      return color
+    } else {
+      return "black100"
+    }
+  }
 }
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
@@ -237,11 +322,16 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         href
       }
       sale {
+        auctionsDetailFormattedStartDateTime
+        endAt
+        cascadingEndTimeInterval
+        startAt
         is_auction: isAuction
         is_closed: isClosed
       }
       sale_artwork: saleArtwork {
         lotLabel
+        endAt
         counts {
           bidder_positions: bidderPositions
         }
