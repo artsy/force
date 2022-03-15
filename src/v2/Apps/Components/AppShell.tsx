@@ -147,11 +147,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
 // gallery contacted, offer made, purchase
 function idConversionRoute(pathname: string | undefined) {
   if (!pathname) {
-    console.log("AppShell::idConversionRoute: pathname is undefined")
     return false
   }
   const paths = pathname.split(/(?=\/)/g)
-  console.log("AppShell::idConversionRoute: paths", paths)
   const conversionRoutes = [
     ["/signup"],
     ["/personalize", "/artists"],
@@ -172,11 +170,9 @@ function idConversionRoute(pathname: string | undefined) {
   let matchFound = false
   do {
     matchFound = conversionRoutes[x--].every(route => {
-      console.log("AppShell::idConversionRoute: comparing", route, "to", paths)
       return paths.indexOf(route) !== -1
     })
   } while (x >= 0 && !matchFound)
 
-  console.log("AppShell::idConversionRoute: matchFound:", matchFound)
   return matchFound
 }
