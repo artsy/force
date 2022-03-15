@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleBody_article = {
     readonly internalID: string;
+    readonly slug: string | null;
     readonly layout: ArticleLayout;
     readonly leadParagraph: string | null;
     readonly title: string | null;
@@ -72,6 +73,13 @@ return {
   "name": "ArticleBody_article",
   "selections": [
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -231,5 +239,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b8972497704bd06bd42116f0ba9d79b8';
+(node as any).hash = 'f0de29779ba5bf7f3c1f9e2f307b3be6';
 export default node;

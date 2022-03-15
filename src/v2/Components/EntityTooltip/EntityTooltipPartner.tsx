@@ -16,21 +16,33 @@ import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProf
 import { useSystemContext } from "v2/System"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner
 }
 
 const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
+  const { trackEvent } = useTracking()
   const { user } = useSystemContext()
 
   const bio = partner.profile?.fullBio || partner.profile?.bio
   const image = partner.profile?.image?.cropped
 
+  const handleClick = () => {
+    trackEvent({
+      action: "Click",
+      flow: "tooltip",
+      type: "gene stub",
+      contextModule: "intext tooltip",
+      destination_path: partner.href,
+    })
+  }
+
   return (
     <Box p={2} width={300}>
       {image && (
-        <RouterLink to={partner.href} display="block">
+        <RouterLink to={partner.href} display="block" onClick={handleClick}>
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -46,6 +58,7 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
       <EntityHeader
         name={partner.name ?? "Unknown"}
         href={partner.href!}
+        onClick={handleClick}
         smallVariant
         FollowButton={
           <FollowProfileButtonFragmentContainer
@@ -66,6 +79,7 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
           display="block"
           textDecoration="none"
           mt={1}
+          onClick={handleClick}
         >
           <Text variant="xs" lineClamp={3}>
             {bio}

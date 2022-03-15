@@ -19,19 +19,32 @@ import { FollowArtistButtonFragmentContainer } from "../FollowButton/FollowArtis
 import { useSystemContext } from "v2/System"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist
 }
 
 const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
-  const images = artist.carousel?.images ?? []
+  const { trackEvent } = useTracking()
   const { user } = useSystemContext()
+
+  const images = artist.carousel?.images ?? []
+
+  const handleClick = () => {
+    trackEvent({
+      action: "Click",
+      flow: "tooltip",
+      type: "artist stub",
+      context_module: "intext tooltip",
+      destination_path: artist.href,
+    })
+  }
 
   return (
     <Box p={2} width={300}>
       {images.length > 0 && (
-        <RouterLink to={artist.href} display="block">
+        <RouterLink to={artist.href} display="block" onClick={handleClick}>
           <HorizontalOverflow mb={2}>
             <Join separator={<Spacer ml={1} />}>
               {images.map((image, i) => {
@@ -57,6 +70,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
         name={artist.name ?? "Unknown"}
         meta={artist.formattedNationalityAndBirthday!}
         href={artist.href!}
+        onClick={handleClick}
         smallVariant
         FollowButton={
           <FollowArtistButtonFragmentContainer
@@ -77,6 +91,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
           display="block"
           mt={1}
           textDecoration="none"
+          onClick={handleClick}
         >
           <Text variant="xs" lineClamp={3}>
             {artist.blurb}

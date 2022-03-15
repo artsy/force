@@ -14,18 +14,31 @@ import { EntityTooltipGeneQuery } from "v2/__generated__/EntityTooltipGeneQuery.
 import { EntityTooltipGene_gene } from "v2/__generated__/EntityTooltipGene_gene.graphql"
 import { FollowGeneButtonFragmentContainer } from "../FollowButton/FollowGeneButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene
 }
 
 const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
+  const { trackEvent } = useTracking()
+
   const image = gene.image?.cropped
+
+  const handleClick = () => {
+    trackEvent({
+      action: "Click",
+      flow: "tooltip",
+      type: "gene stub",
+      contextModule: "intext tooltip",
+      destination_path: gene.href,
+    })
+  }
 
   return (
     <Box p={2} width={300}>
       {image && (
-        <RouterLink to={gene.href} display="block">
+        <RouterLink to={gene.href} display="block" onClick={handleClick}>
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -41,6 +54,7 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
       <EntityHeader
         name={gene.name ?? "Unknown"}
         href={gene.href!}
+        onClick={handleClick}
         smallVariant
         FollowButton={
           <FollowGeneButtonFragmentContainer
@@ -52,7 +66,13 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
       />
 
       {gene.description && (
-        <RouterLink to={gene.href} display="block" textDecoration="none" mt={1}>
+        <RouterLink
+          to={gene.href}
+          display="block"
+          textDecoration="none"
+          mt={1}
+          onClick={handleClick}
+        >
           <Text variant="xs" lineClamp={3}>
             {gene.description}
           </Text>

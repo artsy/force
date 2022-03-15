@@ -5,16 +5,21 @@ import { Clickable, Image, ResponsiveBox } from "@artsy/palette"
 import styled from "styled-components"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
+import { useArticleTracking } from "../../useArticleTracking"
 
 interface ArticleSectionVideoProps {
   section: ArticleSectionVideo_section
 }
 
 const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
+  const { clickedPlayVideo } = useArticleTracking()
+
   const [mode, setMode] = useMode<"Pending" | "Playing">("Pending")
 
   const handleClick = () => {
     setMode("Playing")
+
+    clickedPlayVideo()
   }
 
   if (!section.embed || !section.fallbackEmbed) return null

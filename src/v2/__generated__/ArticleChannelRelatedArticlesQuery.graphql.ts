@@ -32,6 +32,7 @@ query ArticleChannelRelatedArticlesQuery(
 fragment ArticleCell_article on Article {
   vertical
   internalID
+  slug
   title
   byline
   href
@@ -153,6 +154,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "slug",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "title",
                 "storageKey": null
               },
@@ -249,12 +257,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2478ffac1998af90f4a97fa272de8359",
+    "cacheID": "8ef20ef358e8101695fb1375f8e28aa1",
     "id": null,
     "metadata": {},
     "name": "ArticleChannelRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
+    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  slug\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
   }
 };
 })();

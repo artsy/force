@@ -11,6 +11,14 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { DEFAULT_CELL_WIDTH } from "./constants"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ClickedArticleGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/System/Analytics"
 
 interface ArticleCellProps {
   article: ArticleCell_article
@@ -19,6 +27,14 @@ interface ArticleCellProps {
 }
 
 const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
+  const { trackEvent } = useTracking()
+
+  const {
+    contextPageOwnerType,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+  } = useAnalyticsContext()
+
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = article.thumbnailImage?.cropped
 
@@ -29,6 +45,21 @@ const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
       display="block"
       textDecoration="none"
       width={width}
+      onClick={() => {
+        const trackingEvent: ClickedArticleGroup = {
+          action: ActionType.clickedArticleGroup,
+          context_module: ContextModule.articleRail,
+          context_page_owner_type: contextPageOwnerType!,
+          context_page_owner_id: contextPageOwnerId,
+          context_page_owner_slug: contextPageOwnerSlug,
+          destination_page_owner_type: OwnerType.article,
+          destination_page_owner_id: article.internalID,
+          destination_page_owner_slug: article.slug!,
+          type: "thumbnail",
+        }
+
+        trackEvent(trackingEvent)
+      }}
     >
       <ResponsiveBox
         aspectWidth={4}
@@ -74,6 +105,7 @@ export const ArticleCellFragmentContainer = createFragmentContainer(
       fragment ArticleCell_article on Article {
         vertical
         internalID
+        slug
         title
         byline
         href
