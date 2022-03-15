@@ -1,24 +1,14 @@
-import * as Schema from "v2/System/Analytics"
 import { useSystemContext, useTracking } from "v2/System"
 import { Variant } from "unleash-client"
 
 import { useEffect } from "react"
-import { OwnerType } from "@artsy/cohesion"
+import { ActionType, ExperimentViewed } from "@artsy/cohesion"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
 interface FeatureFlagDetails {
   flagEnabled: boolean
   variant: Variant
-}
-
-interface VariantTrackingProperties {
-  experiment_name: string
-  variant_name: string
-  payload?: string
-  context_owner_type?: OwnerType
-  context_owner_id?: string
-  context_owner_slug?: string
 }
 
 export function useFeatureFlag(featureName: string): boolean | null {
@@ -58,7 +48,7 @@ export function useTrackVariantView({
   context_owner_type,
   context_owner_id,
   context_owner_slug,
-}: VariantTrackingProperties) {
+}: ExperimentViewed) {
   const { trackEvent } = useTracking()
 
   useEffect(() => {
@@ -67,7 +57,7 @@ export function useTrackVariantView({
 
       if (trackFeatureView) {
         trackEvent({
-          action_type: Schema.ActionType.ExperimentViewed,
+          action: ActionType.experimentViewed,
           service: "unleash",
           experiment_name,
           variant_name,
