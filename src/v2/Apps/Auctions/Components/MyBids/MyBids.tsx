@@ -23,7 +23,6 @@ import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { MyBidsQuery } from "v2/__generated__/MyBidsQuery.graphql"
-import { getENV } from "v2/Utils/getENV"
 
 interface MyBidsProps {
   me: MyBids_me
@@ -54,9 +53,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
 
           if (!sale || !saleArtworks) return <></>
 
-          const auctionURL = getENV("ENABLE_AUCTION_V2")
-            ? `/auction2/${sale.slug}`
-            : `/auction/${sale.slug}`
+          const auctionURL = `/auction/${sale.slug}`
 
           return (
             // TODO: Re-assess width

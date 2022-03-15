@@ -1967,6 +1967,7 @@ interface ArtworkConnectionInterface {
 type ArtworkConsignmentSubmission {
   displayText: String
   inProgress: Boolean
+  isSold: Boolean
 }
 
 union ArtworkContext = Fair | Sale | Show
@@ -4596,6 +4597,9 @@ type CommerceShipArta {
 type CommerceShipment {
   bookedAt: String
   carrierName: String
+  contactEmail: String
+  contactName: String
+  contactPhone: String
   createdAt(
     format: String
 
@@ -10810,6 +10814,32 @@ type PhoneNumberType {
   regionCode: String
 }
 
+type PreviewSavedSearch {
+  # Human-friendly labels that are added by Metaphysics to the upstream SearchCriteria type coming from Gravity
+  labels: [SearchCriteriaLabel]!
+}
+
+input PreviewSavedSearchAttributes {
+  acquireable: Boolean
+  additionalGeneIDs: [String]
+  artistIDs: [String]
+  atAuction: Boolean
+  attributionClass: [String]
+  colors: [String]
+  height: String
+  inquireableOnly: Boolean
+  locationCities: [String]
+  majorPeriods: [String]
+  materialsTerms: [String]
+  offerable: Boolean
+  partnerIDs: [String]
+  priceRange: String
+
+  # Filter results by Artwork sizes
+  sizes: [ArtworkSizes]
+  width: String
+}
+
 # The connection type for MarketPriceInsights.
 type PriceInsightConnection {
   # A list of edges.
@@ -11797,6 +11827,11 @@ type Query {
   # Phone number information
   phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
 
+  # A previewed saved search
+  previewSavedSearch(
+    attributes: PreviewSavedSearchAttributes
+  ): PreviewSavedSearch
+
   # Get all price insights for an artist.
   priceInsights(
     # Returns the elements in the list that come after the specified cursor.
@@ -12165,6 +12200,12 @@ type Sale implements Node {
     last: Int
   ): ArtworkConnection
   associatedSale: Sale
+
+  # A label indicating the interval in minutes in which lots close
+  auctionsDetailCascadingIntervalLabel: String
+
+  # A more granular formatted description of when the auction starts or ends or if it has ended
+  auctionsDetailFormattedStartDateTime: String
   bidder: Bidder
 
   # A bid increment policy that explains minimum bids in ranges.
@@ -12183,6 +12224,14 @@ type Sale implements Node {
   displayTimelyAt: String
   eligibleSaleArtworksCount: Int
   endAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+  endedAt(
     format: String
 
     # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
@@ -14700,6 +14749,11 @@ type Viewer {
 
   # Phone number information
   phoneNumber(phoneNumber: String!, regionCode: String): PhoneNumberType
+
+  # A previewed saved search
+  previewSavedSearch(
+    attributes: PreviewSavedSearchAttributes
+  ): PreviewSavedSearch
 
   # A requested location
   requestLocation(ip: String!): RequestLocation

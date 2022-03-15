@@ -6,7 +6,7 @@ import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
-import { auction2Routes } from "./Apps/Auction2/auction2Routes"
+import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
 import { auctionPartnershipsRoutes } from "./Apps/_AuctionPartnerships2/auctionPartnershipsRoutes"
 import { auctionsRoutes } from "v2/Apps/Auctions/auctionsRoutes"
 import { authenticationRoutes } from "v2/Apps/Authentication/authenticationRoutes"
@@ -51,7 +51,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: artistSeriesRoutes },
     { routes: artistsRoutes },
     { routes: artworkRoutes },
-    { routes: auction2Routes },
+    { routes: auctionRoutes },
     { routes: auctionsRoutes },
     { routes: auctionPartnershipsRoutes },
     { routes: authenticationRoutes },

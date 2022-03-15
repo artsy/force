@@ -30,6 +30,7 @@ query AuctionActiveBidsTestQuery(
 }
 
 fragment AuctionActiveBids_me_96HcF on Me {
+  internalID
   lotStandings(saleID: $slug, live: true) {
     isHighestBidder
     saleArtwork {
@@ -48,6 +49,7 @@ fragment AuctionActiveBids_me_96HcF on Me {
         display
       }
       sale {
+        slug
         liveStartAt
         endAt
         isLiveOpen
@@ -72,7 +74,7 @@ fragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {
     date
     title
     image {
-      resized(width: 100, height: 100, version: "square") {
+      resized(width: 100, height: 100, version: "medium") {
         src
         srcSet
         width
@@ -100,7 +102,14 @@ v1 = {
   "name": "saleID",
   "variableName": "slug"
 },
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -109,45 +118,45 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v9 = {
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -196,6 +205,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": [
@@ -258,7 +268,7 @@ return {
                     "kind": "LinkedField",
                     "name": "currentBid",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -269,13 +279,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -309,7 +313,7 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "version",
-                                "value": "square"
+                                "value": "medium"
                               },
                               {
                                 "kind": "Literal",
@@ -351,7 +355,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "resized(height:100,version:\"square\",width:100)"
+                            "storageKey": "resized(height:100,version:\"medium\",width:100)"
                           }
                         ],
                         "storageKey": null
@@ -370,12 +374,12 @@ return {
                         "name": "artistNames",
                         "storageKey": null
                       },
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -397,7 +401,7 @@ return {
                     "kind": "LinkedField",
                     "name": "highestBid",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -408,6 +412,7 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -436,25 +441,25 @@ return {
                         "name": "isClosed",
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "86ebd20026330449d16447df433990c7",
+    "cacheID": "49c905ac726b7f9755084cb9287e8fb4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -464,14 +469,15 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v5/*: any*/),
+        "me.id": (v6/*: any*/),
+        "me.internalID": (v6/*: any*/),
         "me.lotStandings": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "LotStanding"
         },
-        "me.lotStandings.isHighestBidder": (v6/*: any*/),
+        "me.lotStandings.isHighestBidder": (v7/*: any*/),
         "me.lotStandings.saleArtwork": {
           "enumValues": null,
           "nullable": true,
@@ -484,9 +490,9 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "me.lotStandings.saleArtwork.artwork.artistNames": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.date": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.id": (v5/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.artistNames": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.date": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.id": (v6/*: any*/),
         "me.lotStandings.saleArtwork.artwork.image": {
           "enumValues": null,
           "nullable": true,
@@ -499,14 +505,14 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "me.lotStandings.saleArtwork.artwork.image.resized.height": (v8/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image.resized.src": (v9/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image.resized.srcSet": (v9/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.image.resized.width": (v8/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.imageUrl": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.internalID": (v5/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.slug": (v5/*: any*/),
-        "me.lotStandings.saleArtwork.artwork.title": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.resized.height": (v9/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.resized.src": (v10/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.resized.srcSet": (v10/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.image.resized.width": (v9/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.imageUrl": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.internalID": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.slug": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.artwork.title": (v8/*: any*/),
         "me.lotStandings.saleArtwork.counts": {
           "enumValues": null,
           "nullable": true,
@@ -525,35 +531,36 @@ return {
           "plural": false,
           "type": "SaleArtworkCurrentBid"
         },
-        "me.lotStandings.saleArtwork.currentBid.display": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.currentBid.display": (v8/*: any*/),
         "me.lotStandings.saleArtwork.highestBid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "me.lotStandings.saleArtwork.highestBid.display": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.id": (v5/*: any*/),
-        "me.lotStandings.saleArtwork.lotLabel": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.reserveStatus": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.highestBid.display": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.id": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.lotLabel": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.reserveStatus": (v8/*: any*/),
         "me.lotStandings.saleArtwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "me.lotStandings.saleArtwork.sale.endAt": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.sale.id": (v5/*: any*/),
-        "me.lotStandings.saleArtwork.sale.isClosed": (v6/*: any*/),
-        "me.lotStandings.saleArtwork.sale.isLiveOpen": (v6/*: any*/),
-        "me.lotStandings.saleArtwork.sale.liveStartAt": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.saleID": (v7/*: any*/),
-        "me.lotStandings.saleArtwork.slug": (v5/*: any*/)
+        "me.lotStandings.saleArtwork.sale.endAt": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.sale.id": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.sale.isClosed": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.sale.isLiveOpen": (v7/*: any*/),
+        "me.lotStandings.saleArtwork.sale.liveStartAt": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.sale.slug": (v6/*: any*/),
+        "me.lotStandings.saleArtwork.saleID": (v8/*: any*/),
+        "me.lotStandings.saleArtwork.slug": (v6/*: any*/)
       }
     },
     "name": "AuctionActiveBidsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionActiveBidsTestQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionActiveBids_me_96HcF\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_96HcF on Me {\n  lotStandings(saleID: $slug, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query AuctionActiveBidsTestQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionActiveBids_me_96HcF\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_96HcF on Me {\n  internalID\n  lotStandings(saleID: $slug, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

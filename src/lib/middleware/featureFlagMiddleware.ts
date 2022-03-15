@@ -4,6 +4,7 @@ import {
   createFeatureFlagService,
   FeatureFlagService,
 } from "lib/featureFlags/featureFlagService"
+import { FeatureFlags } from "v2/System/useFeatureFlag"
 
 export function featureFlagMiddleware(serviceType: symbol) {
   let service
@@ -45,4 +46,18 @@ export function featureFlagMiddleware(serviceType: symbol) {
         next()
       })
   }
+}
+
+export function createFeatureFlagsCachePrefix(
+  featureFlags: FeatureFlags
+): string {
+  const flagsEnabledList: string[] = []
+
+  for (const key in featureFlags) {
+    if (featureFlags[key].flagEnabled) {
+      flagsEnabledList.push(`${key}:${featureFlags[key].variant.name}`)
+    }
+  }
+
+  return flagsEnabledList.join("|")
 }

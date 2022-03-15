@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionActiveBids_me = {
+    readonly internalID: string;
     readonly lotStandings: ReadonlyArray<{
         readonly isHighestBidder: boolean | null;
         readonly saleArtwork: {
@@ -22,6 +23,7 @@ export type AuctionActiveBids_me = {
                 readonly display: string | null;
             } | null;
             readonly sale: {
+                readonly slug: string;
                 readonly liveStartAt: string | null;
                 readonly endAt: string | null;
                 readonly isLiveOpen: boolean | null;
@@ -49,7 +51,14 @@ var v0 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [
     {
@@ -62,6 +71,13 @@ return {
   "metadata": null,
   "name": "AuctionActiveBids_me",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": [
@@ -124,13 +140,7 @@ return {
               "selections": (v0/*: any*/),
               "storageKey": null
             },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slug",
-              "storageKey": null
-            },
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -170,6 +180,7 @@ return {
               "name": "sale",
               "plural": false,
               "selections": [
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -228,5 +239,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ce4d279116ca20a6f48099b26921b1d6';
+(node as any).hash = '80a96fc662318ef88dc69811a0b19d9a';
 export default node;

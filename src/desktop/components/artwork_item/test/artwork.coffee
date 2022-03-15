@@ -6,7 +6,6 @@ path = require 'path'
 { Artwork } = require '../../../models/artwork'
 { Artists } = require '../../../collections/artists'
 { Artist } = require '../../../models/artist'
-{ SaleArtwork } = require '../../../models/sale_artwork'
 
 render = (template) ->
   filename = path.resolve __dirname, "../templates/#{template}.jade"
@@ -177,13 +176,6 @@ describe 'Artwork Item template', ->
         artwork: @artwork
         sd: {}
       $('.artwork-item-blurb').should.have.lengthOf 0
-
-      @artwork.related().saleArtwork = new SaleArtwork fabricate 'sale_artwork'
-      $ = cheerio.load render('artwork')
-        artwork: @artwork
-        sd: {}
-      $('.artwork-item-blurb').should.have.lengthOf 1
-      $('.artwork-item-blurb').text().should.containEql 'This is the blurb'
 
   describe 'buy button', ->
 

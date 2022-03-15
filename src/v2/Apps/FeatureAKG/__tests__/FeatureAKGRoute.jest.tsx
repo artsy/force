@@ -21,7 +21,7 @@ describe("FeatureAKG", () => {
       "collection3",
       "collection4",
     ],
-    auctionRailItemIDs: ["auction1", "auction2", "auction3", "auction4"],
+    auctionRailItemIDs: ["auction1", "auction", "auction3", "auction4"],
     fairRailItemIDs: ["fair1", "fair2", "fair3", "fair4"],
     hasCollectionRailItems: true,
     hasAuctionRailItems: true,
@@ -1128,7 +1128,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
             slug: "heritage-signature-photographs-1",
             name: "Auction 2",
             href: "/auction/auction-2",
-            id: "auction2",
+            id: "auction",
           },
         },
         {

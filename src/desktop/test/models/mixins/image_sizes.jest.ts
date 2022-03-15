@@ -1,4 +1,6 @@
 import _ from "underscore"
+// @ts-ignore
+import should from "should"
 import Backbone from "backbone"
 const { fabricate } = require("@artsy/antigravity")
 const { Image } = require("@artsy/backbone-mixins")

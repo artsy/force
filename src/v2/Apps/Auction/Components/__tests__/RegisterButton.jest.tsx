@@ -1,0 +1,384 @@
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { RegisterButtonFragmentContainer } from "../RegisterButton"
+import { RegisterButton_Test_Query } from "v2/__generated__/RegisterButton_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { useAuctionTracking } from "v2/Apps/Auction/Hooks/useAuctionTracking"
+import { openAuthModal } from "desktop/lib/openAuthModal"
+import { useRouter } from "v2/System/Router/useRouter"
+
+jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/Apps/Auction/Hooks/useAuctionTracking")
+jest.mock("desktop/lib/openAuthModal")
+jest.mock("v2/System/Router/useRouter")
+
+describe("RegisterButton", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const mockUseAuctionTracking = useAuctionTracking as jest.Mock
+  const mockOpenAuthModal = openAuthModal as jest.Mock
+  const mockUseRouter = useRouter as jest.Mock
+
+  const { getWrapper } = setupTestWrapper<RegisterButton_Test_Query>({
+    Component: RegisterButtonFragmentContainer,
+    query: graphql`
+      query RegisterButton_Test_Query {
+        sale(id: "foo") {
+          ...RegisterButton_sale
+        }
+        me {
+          ...RegisterButton_me
+        }
+      }
+    `,
+  })
+
+  beforeEach(() => {
+    mockUseAuctionTracking.mockImplementation(() => ({
+      tracking: {
+        clickedRegisterButton: jest.fn(),
+        clickedVerifyIdentity: jest.fn(),
+        enterLiveAuction: jest.fn(),
+      },
+    }))
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+
+    mockOpenAuthModal.mockImplementation(() => jest.fn())
+
+    mockUseRouter.mockImplementation(() => ({
+      router: {
+        push: jest.fn(),
+      },
+    }))
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  it("returns null if ecommerce sale", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        isAuction: false,
+      }),
+    })
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  it("returns null if sale is closed", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        isClosed: true,
+      }),
+    })
+
+    expect(wrapper.html()).toBeFalsy()
+  })
+
+  describe("live open", () => {
+    it("renders correctly", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isLiveOpen: true,
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Enter Live Auction")
+    })
+  })
+
+  describe("qualified for bidding", () => {
+    it("renders correctly", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isPreview: false,
+          bidder: {
+            qualifiedForBidding: true,
+          },
+          registrationStatus: {
+            internalID: "foo",
+          },
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Approved to Bid")
+    })
+  })
+
+  describe("should prompt ID verification", () => {
+    it("renders correctly", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          requireIdentityVerification: true,
+          bidder: {
+            qualifiedForBidding: false,
+          },
+        }),
+        Me: () => ({
+          identityVerified: false,
+          pendingIdentityVerification: {
+            internalID: true,
+          },
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Verify Identity")
+      expect(wrapper.text()).toContain("Identity verification required to bid.")
+      expect(wrapper.html()).toContain("/identity-verification-faq")
+    })
+  })
+
+  describe("registration pending", () => {
+    it("renders correctly without identity verification", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          requireIdentityVerification: true,
+          bidder: {
+            qualifiedForBidding: false,
+          },
+        }),
+        Me: () => ({
+          identityVerified: false,
+          pendingIdentityVerification: {
+            internalID: null,
+          },
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Registration Pending")
+      expect(wrapper.text()).toContain("Identity verification required to bid.")
+    })
+
+    it("renders correctly with identity verification", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          requireIdentityVerification: false,
+          bidder: {
+            qualifiedForBidding: false,
+          },
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Registration Pending")
+      expect(wrapper.text()).toContain("Reviewing submitted information")
+    })
+  })
+
+  describe("registration closed", () => {
+    it("renders correctly", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isRegistrationClosed: true,
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Registration Closed")
+    })
+  })
+
+  describe("registration open", () => {
+    it("renders correctly with identity verification", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isClosed: false,
+          isLiveOpen: false,
+          isRegistrationClosed: false,
+          requireIdentityVerification: true,
+        }),
+        Me: () => ({
+          identityVerified: false,
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Register to Bid")
+      expect(wrapper.text()).toContain("Identity verification required to bid.")
+    })
+
+    it("renders correctly without identity verification", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isClosed: false,
+          isLiveOpen: false,
+          isRegistrationClosed: false,
+          requireIdentityVerification: false,
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Register to Bid")
+      expect(wrapper.text()).toContain("Registration required to bid")
+    })
+
+    it("opens auth modal if no me", () => {
+      const spy = jest.fn()
+
+      mockOpenAuthModal.mockImplementation(spy)
+
+      const wrapper = getWrapper({
+        Me: () => ({
+          internalID: null,
+        }),
+        Sale: () => ({
+          slug: "sale-slug",
+          isClosed: false,
+          isLiveOpen: false,
+          requireIdentityVerification: false,
+          isRegistrationClosed: false,
+        }),
+      })
+
+      ;(wrapper.find("ButtonAction").props() as any).onClick()
+      expect(spy).toHaveBeenCalledWith("login", {
+        contextModule: "auctionSidebar",
+        copy: "Log in to bid on artworks",
+        intent: "registerToBid",
+        redirectTo: "/auction/sale-slug/register",
+      })
+    })
+
+    it("redirects to register if no credit cards", () => {
+      const spy = jest.fn()
+
+      mockUseRouter.mockImplementation(() => ({
+        router: {
+          push: spy,
+        },
+      }))
+
+      const wrapper = getWrapper({
+        Me: () => ({
+          hasCreditCards: false,
+        }),
+        Sale: () => ({
+          slug: "sale-slug",
+          isClosed: false,
+          isLiveOpen: false,
+          requireIdentityVerification: false,
+          isRegistrationClosed: false,
+        }),
+      })
+
+      ;(wrapper.find("ButtonAction").props() as any).onClick()
+      expect(spy).toHaveBeenCalledWith("/auction/sale-slug/register")
+    })
+
+    it("redirects to confirm registration if all conditions met", () => {
+      const spy = jest.fn()
+
+      mockUseRouter.mockImplementation(() => ({
+        router: {
+          push: spy,
+        },
+      }))
+
+      const wrapper = getWrapper({
+        Me: () => ({
+          hasCreditCards: true,
+        }),
+        Sale: () => ({
+          slug: "sale-slug",
+          isClosed: false,
+          isLiveOpen: false,
+          requireIdentityVerification: false,
+          isRegistrationClosed: false,
+        }),
+      })
+
+      ;(wrapper.find("ButtonAction").props() as any).onClick()
+      expect(spy).toHaveBeenCalledWith(
+        "/auction/sale-slug/confirm-registration"
+      )
+    })
+  })
+
+  describe("tracking", () => {
+    it("LIVE_OPEN", () => {
+      const registerSpy = jest.fn()
+      const enterLiveAuctionSpy = jest.fn()
+
+      mockUseAuctionTracking.mockImplementation(() => ({
+        tracking: {
+          clickedRegisterButton: registerSpy,
+          enterLiveAuction: enterLiveAuctionSpy,
+        },
+      }))
+
+      const wrapper = getWrapper({
+        Sale: () => ({
+          isLiveOpen: true,
+          liveURLIfOpen: "live-url",
+        }),
+      })
+
+      ;(wrapper.find("ButtonAction").props() as any).onClick()
+      expect(registerSpy).toHaveBeenCalled()
+      expect(enterLiveAuctionSpy).toHaveBeenCalledWith({ url: "live-url" })
+    })
+
+    it("VERIFY_IDENTITY", () => {
+      const spy = jest.fn()
+
+      mockUseAuctionTracking.mockImplementation(() => ({
+        tracking: {
+          clickedVerifyIdentity: spy,
+        },
+      }))
+
+      const wrapper = getWrapper({
+        Me: () => ({
+          internalID: "me-id",
+          identityVerified: false,
+          pendingIdentityVerification: {
+            internalID: "foo",
+          },
+        }),
+        Sale: () => ({
+          slug: "sale-slug",
+          status: "sale-status",
+          isClosed: false,
+          isLiveOpen: false,
+          isRegistrationClosed: false,
+          requireIdentityVerification: true,
+          registrationStatus: null,
+          bidder: null,
+        }),
+      })
+
+      ;(wrapper.find("ButtonAction").props() as any).onClick()
+      expect(spy).toHaveBeenCalledWith({
+        auctionSlug: "sale-slug",
+        auctionState: "sale-status",
+        userID: "me-id",
+      })
+    })
+
+    it("REGISTRATION_OPEN", () => {
+      const spy = jest.fn()
+
+      mockUseAuctionTracking.mockImplementation(() => ({
+        tracking: {
+          clickedRegisterButton: spy,
+        },
+      }))
+
+      const wrapper = getWrapper({
+        Me: () => ({
+          hasCreditCards: true,
+        }),
+        Sale: () => ({
+          slug: "sale-slug",
+          isClosed: false,
+          isLiveOpen: false,
+          requireIdentityVerification: false,
+          isRegistrationClosed: false,
+        }),
+      })
+
+      ;(wrapper.find("ButtonAction").props() as any).onClick()
+      expect(spy).toHaveBeenCalled()
+    })
+  })
+})

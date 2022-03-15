@@ -127,6 +127,10 @@ export function initializeMiddleware(app) {
     app.use(splitTestMiddleware)
   }
 
+  // Need sharify for unleash
+  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
+  app.use(featureFlagMiddleware(UnleashService))
+
   // Initialize caches
   applyCacheMiddleware(app)
 
@@ -152,10 +156,6 @@ export function initializeMiddleware(app) {
 
   // Static assets
   applyStaticAssetMiddlewares(app)
-
-  // Need sharify for unleash
-  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
-  app.use(featureFlagMiddleware(UnleashService))
 }
 
 function applySecurityMiddleware(app) {
@@ -256,7 +256,7 @@ function applyStaticAssetMiddlewares(app) {
     })
 
   // TODO: Move to ./public/images
-  app.use(favicon(path.resolve(__dirname, "mobile/public/images/favicon.ico")))
+  app.use(favicon(path.resolve(__dirname, "desktop/public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 }
 
