@@ -24,13 +24,22 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
 
   return (
     <Flex alignItems="center" {...rest}>
-      <RouterLink to={`/artwork/${artwork?.slug}`}>
+      <RouterLink
+        to={`/artwork/${artwork?.slug}`}
+        flexShrink={0}
+        width={150} // keep the box area consistent
+        display="flex"
+        justifyContent="center"
+      >
         <Image
           src={artwork?.image?.resized?.src}
           srcSet={artwork?.image?.resized?.srcSet}
           width={artwork?.image?.resized?.width}
           height={artwork?.image?.resized?.height}
           lazyLoad
+          style={{
+            backgroundColor: "white",
+          }}
         />
       </RouterLink>
 
@@ -66,8 +75,8 @@ export const AuctionLotInfoFragmentContainer = createFragmentContainer(
     saleArtwork: graphql`
       fragment AuctionLotInfo_saleArtwork on SaleArtwork
         @argumentDefinitions(
-          imageWidth: { type: "Int", defaultValue: 150 }
-          imageHeight: { type: "Int", defaultValue: 150 }
+          imageWidth: { type: "Int", defaultValue: 100 }
+          imageHeight: { type: "Int", defaultValue: 100 }
         ) {
         counts {
           bidderPositions
@@ -84,7 +93,7 @@ export const AuctionLotInfoFragmentContainer = createFragmentContainer(
             resized(
               width: $imageWidth
               height: $imageHeight
-              version: "square"
+              version: "medium"
             ) {
               src
               srcSet

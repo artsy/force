@@ -178,6 +178,7 @@ export const AuctionBidRouteFragmentContainer = createRefetchContainer(
         internalID
         saleArtwork {
           ...AuctionLotInfo_saleArtwork
+            @arguments(imageWidth: 150, imageHeight: 150)
           minimumNextBid {
             cents
           }
