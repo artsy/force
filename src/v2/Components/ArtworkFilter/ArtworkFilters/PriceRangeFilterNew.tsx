@@ -12,6 +12,7 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce } from "lodash"
+import { HistogramBarEntity, Histogram } from "./Histogram"
 
 type CustomRange = (number | "*")[]
 
@@ -20,6 +21,112 @@ const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
+const BARS: HistogramBarEntity[] = [
+  {
+    count: 34548,
+    value: 0,
+  },
+  {
+    count: 35234,
+    value: 2000,
+  },
+  {
+    count: 6153,
+    value: 4000,
+  },
+  {
+    count: 32119,
+    value: 6000,
+  },
+  {
+    count: 37462,
+    value: 8000,
+  },
+  {
+    count: 1655,
+    value: 10000,
+  },
+  {
+    count: 39325,
+    value: 12000,
+  },
+  {
+    count: 2926,
+    value: 14000,
+  },
+  {
+    count: 9501,
+    value: 16000,
+  },
+  {
+    count: 48407,
+    value: 18000,
+  },
+  {
+    count: 28957,
+    value: 20000,
+  },
+  {
+    count: 24314,
+    value: 22000,
+  },
+  {
+    count: 16478,
+    value: 24000,
+  },
+  {
+    count: 28169,
+    value: 26000,
+  },
+  {
+    count: 7767,
+    value: 28000,
+  },
+  {
+    count: 23397,
+    value: 30000,
+  },
+  {
+    count: 6444,
+    value: 32000,
+  },
+  {
+    count: 18366,
+    value: 34000,
+  },
+  {
+    count: 457,
+    value: 36000,
+  },
+  {
+    count: 28344,
+    value: 38000,
+  },
+  {
+    count: 35116,
+    value: 40000,
+  },
+  {
+    count: 13476,
+    value: 42000,
+  },
+  {
+    count: 39976,
+    value: 44000,
+  },
+  {
+    count: 16281,
+    value: 46000,
+  },
+  {
+    count: 38268,
+    value: 48000,
+  },
+  {
+    count: 20844,
+    value: 50000,
+  },
+]
 
 export interface PriceRangeFilterNewProps {
   expanded?: boolean
@@ -120,24 +227,25 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Box mt={4}>
-        <Box mx={RANGE_DOT_SIZE / 2}>
-          <Range
-            min={defaultMinValue}
-            max={defaultMaxValue}
-            value={sliderRange}
-            allowCross={false}
-            onChange={handleSliderValueChange}
-            ariaLabelGroupForHandles={[
-              "Min price slider handle",
-              "Max price slider handle",
-            ]}
-            railStyle={{
-              left: `-${RANGE_DOT_SIZE / 2}px`,
-              width: `calc(100% + ${RANGE_DOT_SIZE}px)`,
-            }}
-          />
-        </Box>
+      <Box mt={4} mx={[RANGE_DOT_SIZE / 2, 0]}>
+        <Histogram
+          bars={BARS}
+          selectedRange={[sliderRange[0], sliderRange[1]]}
+        />
+
+        <Spacer mb={4} />
+
+        <Range
+          min={defaultMinValue}
+          max={defaultMaxValue}
+          value={sliderRange}
+          allowCross={false}
+          onChange={handleSliderValueChange}
+          ariaLabelGroupForHandles={[
+            "Min price slider handle",
+            "Max price slider handle",
+          ]}
+        />
 
         <Flex justifyContent="space-between" mt={2}>
           <Text variant="xs" color="black60">
