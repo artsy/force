@@ -79,7 +79,6 @@ app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
 app.use(require("./apps/fair_redirect").app)
 app.use(require("./apps/fair_organizer_redirect").app)
-app.use(require("./apps/fair_organizer"))
 
 // Export for hot reloading
 module.exports = app

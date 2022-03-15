@@ -18,7 +18,6 @@ export const ArtworkRelations = {
     } = require("../../../collections/additional_images")
     const { Partner } = require("../../partner")
 
-    const { Fairs } = require("../../../collections/fairs")
     const { PartnerShows } = require("../../../collections/partner_shows")
     const { Artists } = require("../../../collections/artists")
 
@@ -27,8 +26,6 @@ export const ArtworkRelations = {
     const images = new AdditionalImages(this.get("images"), { parse: true })
     const artists = new Artists(this.get("artists"))
 
-    const fairs = new Fairs()
-    fairs.url = `${API_URL}/api/v1/related/fairs?artwork[]=${this.id}&active=true`
     const shows = new PartnerShows()
     shows.url = `${API_URL}/api/v1/related/shows?artwork_id=${this.id}&active=true`
 
@@ -36,7 +33,6 @@ export const ArtworkRelations = {
       artist,
       partner,
       images,
-      fairs,
       shows,
       artists,
     })

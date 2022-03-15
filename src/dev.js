@@ -96,16 +96,6 @@ mountAndReload(path.resolve("src/v2/server.ts"), {
   watchModules: [path.resolve(process.cwd(), "src/v2")],
 })
 
-// Mount reloadable on legacy mobile app
-app.use((req, res, next) => {
-  if (res.locals.sd.IS_MOBILE) {
-    const mobileApp = mountAndReload(path.resolve("src/mobile"))
-    mobileApp(req, res, next)
-  } else {
-    next()
-  }
-})
-
 // Mount express-reloadable on legacy routes
 mountAndReload(path.resolve("src/desktop"), {
   watchModules: [

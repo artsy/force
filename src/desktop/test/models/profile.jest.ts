@@ -173,16 +173,6 @@ describe("Profile", () => {
       testContext.profile.set("owner_type", "User")
       testContext.profile.related().owner.constructor.name.should.equal("User")
     })
-    it("creates Fair", () => {
-      testContext.profile.set("owner_type", "Fair")
-      testContext.profile.related().owner.constructor.name.should.equal("Fair")
-    })
-    it("creates FairOrganizer", () => {
-      testContext.profile.set("owner_type", "FairOrganizer")
-      testContext.profile
-        .related()
-        .owner.constructor.name.should.equal("FairOrganizer")
-    })
   })
 
   describe("#formatFollowText", () => {

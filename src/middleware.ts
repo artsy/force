@@ -256,7 +256,7 @@ function applyStaticAssetMiddlewares(app) {
     })
 
   // TODO: Move to ./public/images
-  app.use(favicon(path.resolve(__dirname, "mobile/public/images/favicon.ico")))
+  app.use(favicon(path.resolve(__dirname, "desktop/public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 }
 
