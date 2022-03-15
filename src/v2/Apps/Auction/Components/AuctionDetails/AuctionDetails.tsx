@@ -42,7 +42,9 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
     <>
       <GridColumns>
         <Column span={9}>
-          <Text variant="xl">{sale.name}</Text>
+          <Text variant="xl" as="h1">
+            {sale.name}
+          </Text>
         </Column>
         <Column span={3}>
           <RegisterButtonFragmentContainer sale={sale} me={me} />
