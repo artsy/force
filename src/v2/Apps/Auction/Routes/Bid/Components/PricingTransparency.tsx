@@ -60,7 +60,7 @@ const PLACEHOLDER = (
       </Text>
 
       <Row>
-        <Text variant="md">Your max bid</Text>
+        <Text variant="md">Your Max Bid</Text>
         <SkeletonText variant="md">20000</SkeletonText>
       </Row>
       <Row>
