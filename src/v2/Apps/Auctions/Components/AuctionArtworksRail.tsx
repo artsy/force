@@ -51,11 +51,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
       title={sale.name!}
       subTitle={sale.formattedStartDateTime!}
       viewAllLabel="View All"
-      viewAllHref={
-        getENV("ENABLE_AUCTION_V2")
-          ? sale.href?.replace("/auction", "/auction2")!
-          : sale.href!
-      }
+      viewAllHref={sale.href!}
       viewAllOnClick={() => {
         trackEvent(
           tracks.clickedArtworkGroupHeader(

@@ -47,7 +47,6 @@ sharify.data = _.extend(
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
-    "ENABLE_AUCTION_V2",
     "ENABLE_FAIR_PAGE_EXHIBITORS_TAB",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_NEW_AUCTIONS_FILTER",

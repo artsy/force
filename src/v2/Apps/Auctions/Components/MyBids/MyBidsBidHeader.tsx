@@ -18,9 +18,7 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
 
   const image = sale.coverImage?.cropped
 
-  const auctionURL = getENV("ENABLE_AUCTION_V2")
-    ? `/auction2/${sale.slug}`
-    : `/auction/${sale.slug}`
+  const auctionURL = `/auction/${sale.slug}`
 
   return (
     <RouterLink

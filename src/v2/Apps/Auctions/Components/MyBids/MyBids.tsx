@@ -54,9 +54,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
 
           if (!sale || !saleArtworks) return <></>
 
-          const auctionURL = getENV("ENABLE_AUCTION_V2")
-            ? `/auction2/${sale.slug}`
-            : `/auction/${sale.slug}`
+          const auctionURL = `/auction/${sale.slug}`
 
           return (
             // TODO: Re-assess width
