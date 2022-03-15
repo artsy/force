@@ -87,6 +87,7 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
         validateOnMount
         initialValues={{
           ...initialValuesForBidding,
+          agreeToTerms: requiresPaymentInformation ? false : true,
           creditCard: requiresPaymentInformation ? false : true,
           selectedBid,
         }}

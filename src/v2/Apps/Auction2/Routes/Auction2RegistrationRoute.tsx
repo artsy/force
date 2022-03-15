@@ -18,7 +18,6 @@ import { IdentityVerificationWarning } from "v2/Apps/Auction2/Components/Form/Id
 import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
 import { ErrorStatus } from "../Components/Form/ErrorStatus"
 import { Auction2ConfirmRegistrationRoute_sale } from "v2/__generated__/Auction2ConfirmRegistrationRoute_sale.graphql"
-import { isEmpty } from "lodash"
 
 export interface Auction2RegistrationRouteProps {
   me: Auction2RegistrationRoute_me
@@ -66,7 +65,7 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
         onSubmit={handleSubmit}
         validationSchema={registrationValidationSchema}
       >
-        {({ isSubmitting, isValid, touched }) => {
+        {({ isSubmitting, isValid }) => {
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
@@ -80,7 +79,7 @@ const Auction2RegistrationRoute: React.FC<Auction2RegistrationRouteProps> = ({
                   size="large"
                   width="100%"
                   loading={isSubmitting}
-                  disabled={!isValid || isSubmitting || isEmpty(touched)}
+                  disabled={!isValid}
                   type="submit"
                 >
                   Register
