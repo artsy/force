@@ -23,7 +23,6 @@ import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { MyBidsQuery } from "v2/__generated__/MyBidsQuery.graphql"
-import { getENV } from "v2/Utils/getENV"
 
 interface MyBidsProps {
   me: MyBids_me

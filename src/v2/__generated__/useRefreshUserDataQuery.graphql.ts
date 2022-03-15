@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type useRefreshUserDataQueryVariables = {};
 export type useRefreshUserDataQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Auction2BidRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"AuctionBidRoute_me">;
     } | null;
 };
 export type useRefreshUserDataQuery = {
@@ -20,12 +20,12 @@ export type useRefreshUserDataQuery = {
 /*
 query useRefreshUserDataQuery {
   me {
-    ...Auction2BidRoute_me
+    ...AuctionBidRoute_me
     id
   }
 }
 
-fragment Auction2BidRoute_me on Me {
+fragment AuctionBidRoute_me on Me {
   internalID
   hasQualifiedCreditCards
 }
@@ -49,7 +49,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Auction2BidRoute_me"
+            "name": "AuctionBidRoute_me"
           }
         ],
         "storageKey": null
@@ -99,13 +99,13 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "c6ac5618feb5983f599b96580c5c2ed8",
+    "cacheID": "37da86cc057552e5bc68d8f8f554a780",
     "id": null,
     "metadata": {},
     "name": "useRefreshUserDataQuery",
     "operationKind": "query",
-    "text": "query useRefreshUserDataQuery {\n  me {\n    ...Auction2BidRoute_me\n    id\n  }\n}\n\nfragment Auction2BidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n"
+    "text": "query useRefreshUserDataQuery {\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n"
   }
 };
-(node as any).hash = '2f85f96d4d43f4ca16183723b292b548';
+(node as any).hash = '43aae92130e1a27bccb0a9451b12d83b';
 export default node;

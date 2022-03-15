@@ -106,7 +106,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
 
-    const redirectTo = href.replace("/auction/", "/auction2/")
+    const redirectTo = href.replace("/auction/", "/auction/")
 
     if (!this.props.me) {
       openAuthModal(ModalType.login, {

@@ -22,7 +22,6 @@ import {
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AuctionArtworksRailQuery } from "v2/__generated__/AuctionArtworksRailQuery.graphql"
-import { getENV } from "v2/Utils/getENV"
 
 export type TabType =
   | "current"

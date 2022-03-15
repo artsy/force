@@ -6,7 +6,6 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System"
-import { getENV } from "v2/Utils/getENV"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale
