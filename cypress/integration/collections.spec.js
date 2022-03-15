@@ -23,12 +23,12 @@ describe("/collections", () => {
       .siblings("div")
       .should("contain", "Collectible Sculptures")
     cy.get("#abstract-art").siblings("div").should("contain", "Abstract Art")
-    cy.get("#contemporary").siblings("div").should("contain", "Contemporary")
+    cy.get("#genre").siblings("div").should("contain", "Genre")
   })
 
   it("renders collection links", () => {
-    cy.contains("Minimalist Prints")
-    cy.contains("Gifts under $1,000")
-    cy.contains("Latin American Artists")
+    cy.contains("Graffiti")
+    cy.contains("Essential KAWS")
+    cy.contains("Emerging Street Art")
   })
 })

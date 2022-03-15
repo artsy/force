@@ -1,155 +1,171 @@
 import loadable from "@loadable/component"
-import { ErrorPage } from "v2/Components/ErrorPage"
-import { RedirectException } from "found"
-import { graphql } from "react-relay"
-import createLogger from "v2/Utils/logger"
-import { Redirect, confirmBidRedirect, registerRedirect } from "./getRedirect"
+import { graphql } from "relay-runtime"
+import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { getArtworkFilterInputArgs } from "./Components/AuctionArtworkFilter"
 
-const logger = createLogger("Apps/Auction/routes")
-
-const AuctionFAQRoute = loadable(
-  () =>
-    import(/* webpackChunkName: "auctionBundle" */ "./Components/AuctionFAQ"),
+const AuctionApp = loadable(
+  () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionApp"),
   {
-    resolveComponent: component => component.AuctionFAQFragmentContainer,
+    resolveComponent: component => component.AuctionAppFragmentContainer,
+  }
+)
+const RegistrationRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "auctionBundle" */ "./Routes/AuctionRegistrationRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.AuctionRegistrationRouteFragmentContainer,
   }
 )
 const ConfirmBidRoute = loadable(
-  () => import(/* webpackChunkName: "auctionBundle" */ "./Routes/ConfirmBid"),
+  () =>
+    import(
+      /* webpackChunkName: "auctionBundle" */ "./Routes/Bid/AuctionBidRoute"
+    ),
   {
-    resolveComponent: component => component.ConfirmBidRouteFragmentContainer,
+    resolveComponent: component => component.AuctionBidRouteFragmentContainer,
   }
 )
-const RegisterRoute = loadable(
-  () => import(/* webpackChunkName: "auctionBundle" */ "./Routes/Register"),
+const ConfirmRegistrationRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "auctionBundle" */ "./Routes/AuctionConfirmRegistrationRoute"
+    ),
   {
-    resolveComponent: component => component.RegisterRouteFragmentContainer,
+    resolveComponent: component =>
+      component.AuctionConfirmRegistrationRouteFragmentContainer,
+  }
+)
+const AuctionFAQRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "auctionBundle" */ "./Routes/AuctionFAQRoute"),
+  {
+    resolveComponent: component => component.AuctionFAQRouteFragmentContainer,
   }
 )
 
 export const auctionRoutes: AppRouteConfig[] = [
   {
-    path: "/auction-faq",
-    theme: "v2",
-    getComponent: () => AuctionFAQRoute,
+    path: "/auction/:slug?",
+    theme: "v3",
+    getComponent: () => AuctionApp,
     onClientSideRender: () => {
-      AuctionFAQRoute.preload()
+      AuctionApp.preload()
     },
     query: graphql`
-      query auctionRoutes_AuctionFAQQuery {
+      query auctionRoutes_TopLevelQuery(
+        $input: FilterArtworksInput
+        $slug: String!
+      ) {
+        me {
+          ...AuctionApp_me @arguments(saleID: $slug)
+        }
+        sale(id: $slug) @principalField {
+          ...AuctionApp_sale
+        }
         viewer {
-          ...AuctionFAQ_viewer
+          ...AuctionApp_viewer @arguments(input: $input, saleID: $slug)
         }
       }
     `,
-    fetchIndicator: "overlay",
-  },
-  {
-    path: "/auction/:saleID/bid(2)?/:artworkID",
-    theme: "v2",
-    getComponent: () => ConfirmBidRoute,
-    onClientSideRender: () => {
-      ConfirmBidRoute.preload()
-    },
-    render: ({ Component, props }) => {
-      if (Component && props) {
-        const { artwork, me, match } = props as any
-        if (!artwork) {
-          return <ErrorPage code={404} />
-        }
-        handleRedirect(
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          confirmBidRedirect({ artwork, me }, match.location),
-          match.location
-        )
-        return <Component {...props} />
+    prepareVariables: (params, props) => {
+      const initialFilterState = getInitialFilterState(
+        props.location?.query ?? {}
+      )
+
+      return {
+        slug: params.slug,
+        input: {
+          ...initialFilterState,
+          ...getArtworkFilterInputArgs(props.context.user),
+          saleID: params.slug,
+        },
       }
     },
-    query: graphql`
-      query auctionRoutes_ConfirmBidQuery(
-        $saleID: String!
-        $artworkID: String!
-      ) @raw_response_type {
-        artwork(id: $artworkID) {
-          internalID
-          slug
-          saleArtwork(saleID: $saleID) {
-            internalID
-            slug
-            sale {
-              internalID
-              slug
-              name
-              isClosed
-              isRegistrationClosed
-              registrationStatus {
-                internalID
-                qualifiedForBidding
-              }
+    children: [
+      { path: "" },
+      {
+        path: "register",
+        getComponent: () => RegistrationRoute,
+        query: graphql`
+          query auctionRoutes_RegisterRouteQuery($slug: String!) {
+            me {
+              ...AuctionRegistrationRoute_me
             }
-            ...LotInfo_saleArtwork
-            ...BidForm_saleArtwork
+            sale(id: $slug) @principalField {
+              ...AuctionRegistrationRoute_sale
+            }
           }
-          ...LotInfo_artwork
-        }
-        me {
-          internalID
-          hasQualifiedCreditCards
-          ...ConfirmBid_me
-        }
-      }
-    `,
+        `,
+      },
+      {
+        path: "confirm-registration",
+        getComponent: () => ConfirmRegistrationRoute,
+        query: graphql`
+          query auctionRoutes_ConfirmRegistrationRouteQuery($slug: String!) {
+            me {
+              ...AuctionConfirmRegistrationRoute_me
+            }
+            sale(id: $slug) @principalField {
+              ...AuctionConfirmRegistrationRoute_sale
+            }
+          }
+        `,
+      },
+      {
+        path: "bid/:artworkSlug?",
+        getComponent: () => ConfirmBidRoute,
+        onClientSideRender: ({ match }) => {
+          if (!match.context.user) {
+            const redirectTo = match.location.pathname + match.location.search
+            match.router.push(
+              `/login?redirect-to=${redirectTo}&afterSignUpAction=${redirectTo}`
+            )
+          }
+        },
+        onServerSideRender: ({ req, res }) => {
+          if (!req.user) {
+            res.redirect(`/login?redirect=${req.originalUrl}`)
+          }
+        },
+        ignoreScrollBehavior: true,
+        query: graphql`
+          query auctionRoutes_BidRouteQuery(
+            $slug: String!
+            $artworkSlug: String!
+          ) {
+            sale(id: $slug) @principalField {
+              ...AuctionBidRoute_sale
+            }
+            artwork(id: $artworkSlug) {
+              ...AuctionBidRoute_artwork
+            }
+            me {
+              ...AuctionBidRoute_me
+            }
+          }
+        `,
+        prepareVariables: ({ slug, artworkSlug }) => {
+          return {
+            slug,
+            artworkSlug,
+          }
+        },
+      },
+    ],
   },
   {
-    path: "/auction-registration(2)?/:saleID",
-    theme: "v2",
-    getComponent: () => RegisterRoute,
-    onClientSideRender: () => {
-      RegisterRoute.preload()
-    },
-    render: ({ Component, props }) => {
-      if (Component && props) {
-        const { match, sale, me } = props as any
-
-        if (!sale) {
-          return <ErrorPage code={404} />
-        }
-
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        handleRedirect(registerRedirect({ sale, me }), match.location)
-
-        return <Component {...props} />
-      }
-    },
+    path: "/auction-faq2",
+    getComponent: () => AuctionFAQRoute,
     query: graphql`
-      query auctionRoutes_RegisterQuery($saleID: String!) @raw_response_type {
-        sale(id: $saleID) @principalField {
-          slug
-          isAuction
-          isRegistrationClosed
-          isPreview
-          isOpen
-          isAuction
-          registrationStatus {
-            qualifiedForBidding
-          }
-          ...Register_sale
-        }
-        me {
-          hasQualifiedCreditCards
-          ...Register_me
+      query auctionRoutes_AuctionFAQRouteQuery {
+        viewer {
+          ...AuctionFAQRoute_viewer
         }
       }
     `,
   },
 ]
-
-function handleRedirect(redirect: Redirect, location: Location) {
-  if (redirect) {
-    logger.warn(
-      `Redirecting from ${location.pathname} to ${redirect.path} because '${redirect.reason}'`
-    )
-    throw new RedirectException(redirect.path)
-  }
-}

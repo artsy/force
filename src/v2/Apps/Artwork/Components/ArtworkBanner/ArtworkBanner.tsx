@@ -12,7 +12,6 @@ import {
 } from "@artsy/palette"
 import { TopContextBar } from "v2/Components/TopContextBar"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { getENV } from "v2/Utils/getENV"
 
 export interface ArtworkBannerProps {
   artwork: ArtworkBanner_artwork
@@ -83,9 +82,7 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
         name: context.name,
         subHeadline:
           sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
-        href: getENV("ENABLE_AUCTION_V2")
-          ? context.href!.replace("/auction/", "/auction2/")
-          : context.href,
+        href: context.href,
       }
     }
     case "Fair": {

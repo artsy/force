@@ -106,22 +106,17 @@ export class ArtworkSidebarBidAction extends React.Component<
 
     const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
 
-    // FIXME: Remove this after Auction2 launches
-    if (getENV("ENABLE_AUCTION_V2")) {
-      const redirectTo = href.replace("/auction/", "/auction2/")
+    const redirectTo = href.replace("/auction/", "/auction/")
 
-      if (!this.props.me) {
-        openAuthModal(ModalType.login, {
-          redirectTo,
-          intent: Intent.bid,
-          copy: "Log in to bid on artworks",
-          contextModule: ContextModule.artworkSidebar,
-        })
-      } else {
-        this.props.router?.push(redirectTo)
-      }
+    if (!this.props.me) {
+      openAuthModal(ModalType.login, {
+        redirectTo,
+        intent: Intent.bid,
+        copy: "Log in to bid on artworks",
+        contextModule: ContextModule.artworkSidebar,
+      })
     } else {
-      window.location.href = href
+      this.props.router?.push(redirectTo)
     }
   }
 

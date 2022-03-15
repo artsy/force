@@ -6,7 +6,6 @@
 - isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
 - hasInstitutionPartner = artwork.get('partner') && artwork.get('partner').type === 'Institution' && !artwork.get('forsale')
 - displayPrice != null ? displayPrice : displayPrice = true
-- saleArtwork = artwork.related().saleArtwork
 - hasAuctionPartner = (artwork.get('partner') && (artwork.get('partner').type === 'Auction' || artwork.get('partner').type === 'Auction House')) || artwork.get('is_biddable')
 - showContact = !isAuction && artwork.isContactable()
 - showBuyButton = displayPurchase && artwork.get('acquireable')
@@ -21,7 +20,6 @@ figure.artwork-item( data-artwork= artwork.get('id') data-id= artwork.get('_id')
   figcaption.artwork-item-caption
     include ./partials/artist
     include ./partials/title
-    include ./partials/partner
     include ./partials/price
     include ./partials/auction_info
     if hasAuctionPartner && !isAuction

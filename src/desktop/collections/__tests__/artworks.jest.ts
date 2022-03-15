@@ -59,40 +59,6 @@ describe("Artworks", () => {
     })
   })
 
-  describe("@fromSale", () => {
-    it("returns sale info injected in artworks", () => {
-      const artworks = Artworks.fromSale(
-        new Backbone.Collection([
-          {
-            artwork: fabricate("artwork"),
-            user_notes: "The vomit on this canvas is truely exquisit.",
-          },
-        ])
-      )
-      artworks
-        .first()
-        .related()
-        .saleArtwork.get("user_notes")
-        .should.containEql("vomit")
-    })
-
-    it("sets the current bid", () => {
-      const artworks = Artworks.fromSale(
-        new Backbone.Collection([
-          {
-            artwork: fabricate("artwork"),
-            display_highest_bid_amount_dollars: "$10",
-          },
-        ])
-      )
-      artworks
-        .first()
-        .related()
-        .saleArtwork.currentBid()
-        .should.containEql("$10")
-    })
-  })
-
   describe("#hasAny", () => {
     it("returns true if any artworks have a blurb", () => {
       artworks.hasAny("blurb").should.be.false()

@@ -1,6 +1,7 @@
 import _ from "underscore"
-import sinon from "sinon"
+// @ts-ignore
 import should from "should"
+import sinon from "sinon"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 const { Artwork } = require("../../models/artwork")
@@ -187,37 +188,6 @@ describe("Artwork", () => {
       testContext.artwork.isHangable().should.be.false()
     })
 
-    describe("#isPartOfAuction", () => {
-      beforeEach(() => {
-        testContext.artwork.related().sales.reset()
-      })
-
-      it("returns true if the artwork has a related auction", () => {
-        testContext.artwork.isPartOfAuction().should.be.false()
-        // Adds a promo
-        testContext.artwork
-          .related()
-          .sales.add({ auction_state: "preview", sale_type: "auction promo" })
-        testContext.artwork.isPartOfAuction().should.be.false()
-        // Adds auction
-        testContext.artwork.related().sales.add({ is_auction: true })
-        testContext.artwork.isPartOfAuction().should.be.true()
-      })
-    })
-
-    describe("#isPartOfAuctionPromo", () => {
-      beforeEach(() => {
-        testContext.artwork.related().sales.reset()
-      })
-
-      it("might be part of an auction promo", () => {
-        testContext.artwork.related().sales.add({ is_auction: true })
-        testContext.artwork.isPartOfAuctionPromo().should.be.false()
-        testContext.artwork.related().sales.add({ sale_type: "auction promo" })
-        testContext.artwork.isPartOfAuctionPromo().should.be.true()
-      })
-    })
-
     describe("#isContactable", () => {
       it("can be contacted given the correct flags", () => {
         testContext.artwork.set({
@@ -244,47 +214,6 @@ describe("Artwork", () => {
           partner: undefined,
         })
         testContext.artwork.isContactable().should.be.false()
-      })
-
-      describe("with auction promo", () => {
-        beforeEach(() => {
-          testContext.artwork.related().sales.reset()
-        })
-
-        it("is contactable given an auction promo in the preview state", () => {
-          testContext.artwork.set({
-            acquireable: true,
-            forsale: true,
-            partner: "existy",
-          })
-          // Despite being normally uncontactable
-          testContext.artwork.isContactable().should.be.false()
-          // Becomes contactable in the presence of a previeable promo
-          testContext.artwork
-            .related()
-            .sales.add({ auction_state: "preview", sale_type: "auction promo" })
-          testContext.artwork.isContactable().should.be.true()
-        })
-      })
-
-      describe("with an auction", () => {
-        beforeEach(() => {
-          testContext.artwork.related().sales.reset()
-        })
-
-        it("is not contactable at all", () => {
-          testContext.artwork.set({
-            acquireable: false,
-            forsale: true,
-            partner: "existy",
-          })
-          // Contactable at first
-          testContext.artwork.isContactable().should.be.true()
-          // Auction enters
-          testContext.artwork.related().sales.add({ is_auction: true })
-          // No longer contactable
-          testContext.artwork.isContactable().should.be.false()
-        })
       })
     })
 
@@ -339,82 +268,6 @@ describe("Artwork", () => {
     })
   })
 
-  describe("#contactLabel", () => {
-    it("says to contact the appropriate thing", () => {
-      testContext.artwork.set("partner", { type: "Gallery" })
-      testContext.artwork.contactLabel().should.equal("gallery")
-      testContext.artwork.set("partner", { type: "Institution" })
-      testContext.artwork.contactLabel().should.equal("seller")
-      testContext.artwork.unset("partner")
-      testContext.artwork.contactLabel().should.equal("seller")
-    })
-  })
-
-  describe("#priceDisplay", () => {
-    it("displays the price or not", () => {
-      testContext.artwork.set({
-        availability: "for sale",
-        price: "$_$",
-        price_hidden: false,
-      })
-      testContext.artwork.priceDisplay().should.equal("$_$")
-      testContext.artwork.set({
-        availability: "for sale",
-        price: undefined,
-        price_hidden: false,
-        sale_message: "Contact For Price",
-      })
-      testContext.artwork.priceDisplay().should.equal("Contact For Price")
-      testContext.artwork.set({
-        availability: "for sale",
-        price: "$_$",
-        price_hidden: true,
-      })
-      testContext.artwork.priceDisplay().should.equal("Contact For Price")
-    })
-  })
-
-  describe("#editionStatus", () => {
-    it("displays what kind of edition it is otherwise is undefined", () => {
-      testContext.artwork.set({ unique: true })
-      testContext.artwork.editions = new Backbone.Collection()
-      testContext.artwork.editionStatus().should.equal("Unique")
-      testContext.artwork.set({ unique: false })
-      _.isUndefined(testContext.artwork.editionStatus()).should.be.true()
-      testContext.artwork.editions.add({ editions: "1 of 5" })
-      testContext.artwork.editionStatus().should.equal("1 of 5")
-    })
-  })
-
-  describe("#defaultImageUrl", () => {
-    it("returns the first medium image url by default", () => {
-      testContext.artwork
-        .defaultImageUrl()
-        .should.match(new RegExp(`/local/additional_images/.*/medium.jpg`))
-    })
-
-    // Have to unset the images attribute as well as resetting the collection
-    // due to #defaultImage falling back to wrapping the first element
-    // of the images attribute
-    it("works if there are no images", () => {
-      testContext.artwork.unset("images")
-      testContext.artwork.related().images.reset()
-      testContext.artwork
-        .defaultImageUrl()
-        .should.equal(testContext.artwork.defaultImage().missingImageUrl())
-    })
-  })
-
-  describe("#defaultImage", () => {
-    it("works if artwork.images is null but has images", () => {
-      testContext.artwork.images = null
-      testContext.artwork
-        .defaultImage()
-        .get("id")
-        .should.equal(testContext.artwork.get("images")[1].id)
-    })
-  })
-
   describe("#titleAndYear", () => {
     it("returns empty string without title or year", () => {
       testContext.artwork.set({ date: false, title: false })
@@ -429,45 +282,6 @@ describe("Artwork", () => {
     it("emphasises the title", () => {
       testContext.artwork.set({ date: "1905", title: "title" })
       testContext.artwork.titleAndYear().should.equal("<em>title</em>, 1905")
-    })
-  })
-
-  describe("#partnerName", () => {
-    it("partner name", () => {
-      testContext.artwork.set({ partner: fabricate("partner") })
-      testContext.artwork.unset("collecting_institution")
-      testContext.artwork.partnerName().should.equal("Gagosian Gallery")
-    })
-
-    it("partner name with collecting institution", () => {
-      testContext.artwork.set({ partner: fabricate("partner") })
-      testContext.artwork.partnerName().should.equal("MOMA")
-    })
-  })
-
-  describe("#partnerLink", () => {
-    it("empty without partner", () => {
-      testContext.artwork.unset("partner")
-      should.strictEqual(undefined, testContext.artwork.partnerLink())
-    })
-
-    it("partner profile", () => {
-      testContext.artwork.get("partner").default_profile_public = true
-      testContext.artwork.get("partner").default_profile_id = "profile-id"
-      testContext.artwork.get("partner").id = "profile-id"
-      testContext.artwork.partnerLink().should.equal("/partner/profile-id")
-    })
-
-    it("doesn't render an external website", () => {
-      testContext.artwork.get("partner").default_profile_public = false
-      testContext.artwork.get("partner").default_profile_id = "profile-id"
-      testContext.artwork.get("partner").website = "mah-website.com"
-      should.strictEqual(undefined, testContext.artwork.partnerLink())
-    })
-
-    it("partner website if profile and profile is private", () => {
-      testContext.artwork.get("partner").type = "Auction"
-      should.strictEqual(undefined, testContext.artwork.partnerLink())
     })
   })
 

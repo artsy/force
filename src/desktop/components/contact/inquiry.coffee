@@ -30,9 +30,6 @@ module.exports = class InquiryView extends ContactView
 
   initialize: (options) ->
     { @artwork } = options
-    @artwork.fetchPartnerAndSales
-      error: @ready
-      success: (@partner, @sales) => @ready()
     super
 
   ready: =>
