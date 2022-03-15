@@ -19,7 +19,7 @@ import { Fragment } from "react"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
-import { resized } from "v2/Utils/resized"
+import { cropped, resized } from "v2/Utils/resized"
 import * as Yup from "yup"
 import { SHOULD_WARN_PRODUCTION_ENVIRONMENT } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 
@@ -50,8 +50,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
 }
 
 const ArtsyForAuctions: React.FC = () => {
-  const headerImage =
-    "http://files.artsy.net/images/auctionpartnerships-lowres-header-temp.png"
+  const headerImage = "http://files.artsy.net/auction-partnerships2-header.png"
 
   return (
     <Box>
@@ -303,7 +302,7 @@ const PartnerWithArtsyForm: React.FC = () => {
                     , and to receive emails from Artsy.
                   </Text>
                 </Checkbox>
-                <Button type="submit" loading={isSubmitting}>
+                <Button type="submit" loading={isSubmitting} width="60%">
                   Apply
                 </Button>
               </Join>
@@ -358,13 +357,13 @@ const GlobalAudienceReach: React.FC = () => {
 }
 
 const BiddingTools: React.FC = () => {
-  const image = resized(
-    "http://files.artsy.net/images/auction-devices/temp.png",
-    {
-      width: 910,
-      height: 403,
-    }
-  )
+  // const image = resized(
+  //   "http://files.artsy.net/images/auction-devices/temp.png",
+  //   {
+  //     width: 910,
+  //     height: 403,
+  //   }
+  // )
 
   return (
     <Box>
@@ -388,14 +387,14 @@ const BiddingTools: React.FC = () => {
         </Column>
         <Column span={6}>
           <ResponsiveBox aspectWidth={2256} aspectHeight={998} maxWidth="100%">
-            <Image
+            {/* <Image
               src={image.src}
               width="100%"
               height="100%"
               srcSet={image.srcSet}
               lazyLoad
               alt=""
-            />
+            /> */}
           </ResponsiveBox>
         </Column>
       </GridColumns>
@@ -418,24 +417,14 @@ const BiddingTools: React.FC = () => {
 }
 
 const ConsignmentsInfo: React.FC = () => {
-  const image = resized("", {
-    // width: 910,
-    // height: 652,
-  })
-
   return (
     <GridColumns>
       <Column span={6}>
-        <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
-          <Image
-            src={image.src}
-            width="100%"
-            height="100%"
-            srcSet={image.srcSet}
-            lazyLoad
-            alt=""
-          />
-        </ResponsiveBox>
+        <ResponsiveBox
+          aspectWidth={4}
+          aspectHeight={3}
+          maxWidth="100%"
+        ></ResponsiveBox>
       </Column>
       <Column span={6}>
         <Text textTransform="uppercase" mb={1} variant="sm">
@@ -450,7 +439,10 @@ const ConsignmentsInfo: React.FC = () => {
           and Contemporary art. Artsy’s consignment experts have international
           auction house experience and liaise with our consignors directly to
           explain the auction process and walk them through market
-          pricing—ensuring a seamless experience for all stakeholders. <br />
+          pricing—ensuring a seamless experience for all stakeholders.
+        </Text>
+        <Spacer mt={2} />
+        <Text variant="sm">
           Grow your footprint and build relationships with this international
           database of consignors quickly and easily. Available across desktop
           and mobile devices—submit consignment proposals wherever and whenever.
@@ -462,16 +454,19 @@ const ConsignmentsInfo: React.FC = () => {
 }
 
 const VisibilityInfoTop: React.FC = () => {
-  const image1 = resized("http://files.artsy.net/images/desktopbanner.png", {
-    width: 910,
-    height: 539,
-  })
+  const image1 = resized(
+    "http://files.artsy.net/images/auctions-partnerships2desktp.png",
+    {
+      width: 910,
+      height: 539,
+    }
+  )
 
   const image2 = resized(
-    "http://files.artsy.net/images/mobilebanner/temp.gif",
+    "http://files.artsy.net/images/auction-partnership2phone.png",
     {
       width: 240,
-      height: 350,
+      height: 400,
     }
   )
 
@@ -533,16 +528,13 @@ const VisibilityInfoTop: React.FC = () => {
 }
 
 const VisibilityInfoBottom: React.FC = () => {
-  const image1 = resized(
-    "http://files.artsy.net/images/auction-kiosk/temp.png",
-    {
-      width: 910,
-      height: 585,
-    }
-  )
+  const image1 = resized("http://files.artsy.net/images/auction-kiosk2.png", {
+    width: 910,
+    height: 585,
+  })
 
   const image2 = resized(
-    "http://files.artsy.net/images/auction-projection/temp.png",
+    "http://files.artsy.net/images/auction-projection2.png",
     {
       width: 910,
       height: 586,
@@ -616,13 +608,15 @@ const AuctionsSupportTeam: React.FC = () => {
           separator={<Spacer my={2} border="1px solid" borderColor="black15" />}
         >
           {AUCTIONS_PARTNERSHIPS_SPECIALISTS.map((specialist, index) => {
+            const image = cropped(specialist.photo, { width: 100, height: 100 })
+
             return (
               <Fragment key={specialist.name}>
                 <Flex flexDirection="row">
                   <Avatar
                     size="md"
-                    src=""
-                    srcSet=""
+                    src={image.src}
+                    srcSet={image.srcSet}
                     mr={2}
                     backgroundColor="black100"
                   ></Avatar>
@@ -655,7 +649,7 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     location: "",
     email: "",
     phone: "",
-    photo: "",
+    photo: "http://files.artsy.net/specialist-headshot4.png",
   },
   {
     name: "Sophie Salamon",
@@ -663,7 +657,7 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     location: "",
     email: "",
     phone: "",
-    photo: "",
+    photo: "http://files.artsy.net/specialist-headshot1.png",
   },
   {
     name: "Chloé Bigio",
@@ -671,7 +665,7 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     location: "",
     email: "",
     phone: "",
-    photo: "",
+    photo: "http://files.artsy.net/specialist-headshot2.png",
   },
   {
     name: "Perry Weber",
@@ -679,6 +673,6 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     location: "",
     email: "",
     phone: "",
-    photo: "",
+    photo: "http://files.artsy.net/specialist-headshot3.png",
   },
 ]
