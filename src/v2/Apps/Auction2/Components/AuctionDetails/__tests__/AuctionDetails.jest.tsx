@@ -2,14 +2,20 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { AuctionDetailsFragmentContainer } from "../AuctionDetails"
 import { AuctionDetailsTestQuery } from "v2/__generated__/AuctionDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking", () => ({
+  useTracking: jest.fn(),
+}))
 
 jest.mock("../AuctionInfoSidebar", () => ({
   AuctionInfoSidebarFragmentContainer: () => null,
 }))
 
 describe("AuctionDetails", () => {
+  const mockUseTracking = useTracking as jest.Mock
+
   const { getWrapper } = setupTestWrapper<AuctionDetailsTestQuery>({
     Component: (props: any) => {
       return <AuctionDetailsFragmentContainer {...props} />
@@ -21,6 +27,12 @@ describe("AuctionDetails", () => {
         }
       }
     `,
+  })
+
+  beforeEach(() => {
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
   })
 
   it("shows correct title", () => {

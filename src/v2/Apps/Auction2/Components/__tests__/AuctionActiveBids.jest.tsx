@@ -4,24 +4,22 @@ import { MockBoot } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { AuctionActiveBidsRefetchContainer } from "../AuctionActiveBids"
 import { AuctionActiveBidsTestQuery } from "v2/__generated__/AuctionActiveBidsTestQuery.graphql"
+import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
+import { useRouter } from "v2/System/Router/useRouter"
 
 jest.unmock("react-relay")
 
+jest.mock("v2/Apps/Auction2/Hooks/useAuctionTracking")
 jest.mock("v2/Apps/Auction2/Routes/Bid/Components/AuctionLotInfo", () => ({
   AuctionLotInfoFragmentContainer: () => null,
 }))
 
-jest.mock("v2/System/Router/useRouter", () => ({
-  useRouter: () => ({
-    match: {
-      params: {
-        slug: "auction-slug",
-      },
-    },
-  }),
-}))
+jest.mock("v2/System/Router/useRouter")
 
 describe("AuctionActiveBids", () => {
+  const mockUseRouter = useRouter as jest.Mock
+  const mockUseAuctionTracking = useAuctionTracking as jest.Mock
+
   const setup = (breakpoint: Breakpoint = "lg") => {
     const { getWrapper } = setupTestWrapper<AuctionActiveBidsTestQuery>({
       Component: (props: any) => {
@@ -44,6 +42,29 @@ describe("AuctionActiveBids", () => {
     })
     return getWrapper
   }
+
+  beforeEach(() => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        params: {
+          slug: "auction-slug",
+        },
+      },
+      router: {
+        push: jest.fn(),
+      },
+    }))
+
+    mockUseAuctionTracking.mockImplementation(() => ({
+      tracking: {
+        clickedActiveBid: jest.fn(),
+      },
+    }))
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
 
   describe("mobile", () => {
     const getWrapper = setup("sm")
@@ -124,6 +145,71 @@ describe("AuctionActiveBids", () => {
 
         expect(wrapper.text()).toContain("2 bids")
       })
+    })
+  })
+
+  it("redirects to bid form on click", () => {
+    const spy = jest.fn()
+
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        params: {
+          slug: "auction-slug",
+        },
+      },
+      router: {
+        push: spy,
+      },
+    }))
+
+    const wrapper = setup("sm")({
+      Me: () => ({
+        internalID: "me-id",
+      }),
+      Sale: () => ({
+        slug: "auction-slug",
+      }),
+      SaleArtwork: () => ({
+        slug: "sale-artwork-slug",
+        saleID: "saleID",
+      }),
+    })
+
+    wrapper.find("Button").simulate("click")
+
+    expect(spy).toBeCalledWith(
+      "/auction2/saleID/bid/sale-artwork-slug?redirectTo=/auction2/saleID"
+    )
+  })
+
+  it("tracks clicks", () => {
+    const spy = jest.fn()
+
+    mockUseAuctionTracking.mockImplementation(() => ({
+      tracking: {
+        clickedActiveBid: spy,
+      },
+    }))
+
+    const wrapper = setup("sm")({
+      Me: () => ({
+        internalID: "me-id",
+      }),
+      Sale: () => ({
+        slug: "auction-slug",
+      }),
+      SaleArtwork: () => ({
+        slug: "sale-artwork-slug",
+        saleID: "saleID",
+      }),
+    })
+
+    wrapper.find("Button").simulate("click")
+
+    expect(spy).toBeCalledWith({
+      artworkSlug: "sale-artwork-slug",
+      saleSlug: "auction-slug",
+      userID: "me-id",
     })
   })
 })

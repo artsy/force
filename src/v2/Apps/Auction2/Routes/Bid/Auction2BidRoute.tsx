@@ -115,7 +115,10 @@ const Auction2BidRoute: React.FC<Auction2BidRouteProps> = ({
                 <Select
                   selected={values.selectedBid}
                   onSelect={value => {
-                    tracking.maxBidSelected(bidderID!, value)
+                    tracking.maxBidSelected({
+                      bidderID: bidderID!,
+                      maxBid: value,
+                    })
 
                     setFieldError("selectedBid", undefined)
                     setFieldValue("selectedBid", value)

@@ -38,7 +38,7 @@ export const useSubmitBid = ({
   sale,
 }: UseSubmitBidProps) => {
   // FIXME
-  const registrationTracked = useRef(false)
+  const isRegistrationTracked = useRef(false)
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
   const { submitMutation: createBidderPosition } = useCreateBidderPosition()
@@ -110,7 +110,7 @@ export const useSubmitBid = ({
     tracking.maybeTrackNewBidder({
       bidderID,
       me,
-      registrationTracked,
+      isRegistrationTracked,
       result,
       sale,
     })
@@ -207,7 +207,7 @@ const setupCheckBidStatus = (props: {
       }
 
       case "WINNING": {
-        tracking.confirmBidSuccess({ bidderID, positionID: bidderPositionID })
+        tracking.confirmBid({ bidderID, positionID: bidderPositionID })
 
         setTimeout(() => {
           sendToast({

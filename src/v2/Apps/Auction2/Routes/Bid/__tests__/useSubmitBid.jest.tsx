@@ -88,7 +88,7 @@ describe("useSubmitBid", () => {
 
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
-        confirmBidSuccess: jest.fn(),
+        confirmBid: jest.fn(),
         maybeTrackNewBidder: jest.fn(),
         registrationSubmitted: jest.fn(),
       },
@@ -211,7 +211,7 @@ describe("useSubmitBid", () => {
 
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
-        confirmBidSuccess: jest.fn(),
+        confirmBid: jest.fn(),
         maybeTrackNewBidder: spy,
       },
     }))
@@ -222,7 +222,7 @@ describe("useSubmitBid", () => {
       expect.objectContaining({
         bidderID: "bidderID",
         me: defaultProps.me,
-        registrationTracked: { current: false },
+        isRegistrationTracked: { current: false },
         result: { position: { internalID: "positionID" }, status: "WINNING" },
         sale: defaultProps.sale,
       })
@@ -293,7 +293,7 @@ describe("useSubmitBid", () => {
 
       describe("WINNING", () => {
         it("redirects to /artwork/id", async () => {
-          const confirmBidSuccessSpy = jest.fn()
+          const confirmBidSpy = jest.fn()
           const pushSpy = jest.fn()
 
           mockUseRouter.mockImplementation(() => ({
@@ -312,13 +312,13 @@ describe("useSubmitBid", () => {
           mockUseAuctionTracking.mockImplementation(() => ({
             tracking: {
               maybeTrackNewBidder: jest.fn(),
-              confirmBidSuccess: confirmBidSuccessSpy,
+              confirmBid: confirmBidSpy,
             },
           }))
 
           await setupHook()
 
-          expect(confirmBidSuccessSpy).toHaveBeenCalledWith(
+          expect(confirmBidSpy).toHaveBeenCalledWith(
             expect.objectContaining({
               bidderID: "bidderID",
               positionID: "positionID",

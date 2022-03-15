@@ -8,6 +8,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
+import { useAuctionTracking } from "../Hooks/useAuctionTracking"
 // import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
 const logger = createLogger("RegisterButton")
@@ -19,8 +20,7 @@ export interface RegisterButtonProps {
 
 export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
   const { router } = useRouter()
-  // TODO: Wire up tracking clicks
-  // const { tracking } = useAuctionTracking()
+  const { tracking } = useAuctionTracking()
 
   const { conditions, userLacksIdentityVerification } = computeConditions({
     sale,
@@ -30,7 +30,7 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
   const checkRegistrationStatus = () => {
     const saleURL = `/auction2/${sale.slug}`
 
-    if (!me) {
+    if (!me?.internalID) {
       openAuthModal(ModalType.login, {
         redirectTo: `${saleURL}/register`,
         intent: Intent.registerToBid,
@@ -46,6 +46,8 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
     } else {
       router.push(`${saleURL}/confirm-registration`)
     }
+
+    tracking.clickedRegisterButton()
   }
 
   switch (true) {
@@ -66,8 +68,10 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
           title="Enter Live Auction"
           to={href}
           onClick={() => {
-            // TODO
-            // tracking.registerButtonEnterLiveAuction()
+            tracking.clickedRegisterButton()
+            tracking.enterLiveAuction({
+              url: liveUrl,
+            })
           }}
         />
       )
@@ -90,8 +94,11 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
           description={<IdentityVerificationMessage />}
           to={href}
           onClick={() => {
-            // TODO
-            // tracking.registerButtonVerifyIdentity()
+            tracking.clickedVerifyIdentity({
+              auctionSlug: sale.slug,
+              auctionState: sale.status,
+              userID: me.internalID,
+            })
           }}
         />
       )
@@ -130,8 +137,6 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
           }
           onClick={() => {
             checkRegistrationStatus()
-            // TODO: wire up registration clicks
-            // https://github.com/artsy/force/blob/f0b90ff8272bd3bd7a4508069e841730c0a04dd0/src/desktop/apps/auction/components/DOM.js#L81
           }}
         />
       )
@@ -229,6 +234,7 @@ export const RegisterButtonFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment RegisterButton_me on Me {
+        internalID
         identityVerified
         hasCreditCards
         pendingIdentityVerification {

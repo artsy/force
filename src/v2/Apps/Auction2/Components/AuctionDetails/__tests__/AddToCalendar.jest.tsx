@@ -1,14 +1,14 @@
 import { ContextModule } from "@artsy/cohesion"
 import { mount } from "enzyme"
+import { useAuctionTracking } from "v2/Apps/Auction2/Hooks/useAuctionTracking"
 import { AddToCalendar, PopoverLinks } from "../AddToCalendar"
 
-jest.mock("v2/Apps/Auction2/Hooks/useAuctionTracking", () => ({
-  useAuctionTracking: () => ({
-    tracking: jest.fn(),
-  }),
-}))
+jest.mock("v2/Apps/Auction2/Hooks/useAuctionTracking")
 
 describe("AddToCalendar", () => {
+  const mockUseAuctionTracking = useAuctionTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
   const props = {
     title: "title",
     startDate: "2020-01-01",
@@ -19,6 +19,18 @@ describe("AddToCalendar", () => {
     liveAuctionUrl: "liveAuctionUrl",
     contextModule: ContextModule.aboutTheWork,
   }
+
+  beforeEach(() => {
+    mockUseAuctionTracking.mockImplementation(() => ({
+      tracking: {
+        addToCalendar: trackingSpy,
+      },
+    }))
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
 
   it("rendes correct components", () => {
     const getWrapper = () => {
@@ -40,5 +52,19 @@ describe("AddToCalendar", () => {
     expect(wrapper.text()).toContain("Google")
     expect(wrapper.text()).toContain("iCal")
     expect(wrapper.text()).toContain("Outlook")
+  })
+
+  it("tracks events", () => {
+    const getWrapper = () => {
+      return mount(<PopoverLinks {...props} />)
+    }
+    const wrapper = getWrapper()
+
+    wrapper.find("a").first().simulate("click")
+    expect(trackingSpy).toHaveBeenCalledWith({ subject: "google" })
+    wrapper.find("a").at(1).simulate("click")
+    expect(trackingSpy).toHaveBeenCalledWith({ subject: "iCal" })
+    wrapper.find("a").at(2).simulate("click")
+    expect(trackingSpy).toHaveBeenCalledWith({ subject: "outlook" })
   })
 })

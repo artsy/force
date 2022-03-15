@@ -118,7 +118,6 @@ export const useCreateTokenAndSubmit = ({
       onSuccess?.()
     } catch (error) {
       logger.error("Error submitting bid: ", error)
-      tracking.registrationSubmitFailed({ error, sale, me })
       helpers.setStatus("SUBMISSION_FAILED")
     } finally {
       helpers.setSubmitting(false)
