@@ -15,7 +15,6 @@ import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
-import { DownloadAppBanner } from "./DownloadAppBanner"
 import {
   SavedSearchAlertContextProvider,
   useSavedSearchAlertContext,
@@ -169,8 +168,6 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   />
                 </Box>
               </Box>
-
-              <DownloadAppBanner entity={entity} />
             </Join>
           </ModalDialog>
         )
