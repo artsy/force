@@ -49,7 +49,7 @@ fragment AuctionBidRoute_artwork on Artwork {
   slug
   internalID
   saleArtwork {
-    ...AuctionLotInfo_saleArtwork
+    ...AuctionLotInfo_saleArtwork_1WWOz5
     minimumNextBid {
       cents
     }
@@ -83,7 +83,7 @@ fragment AuctionBidRoute_sale on Sale {
   slug
 }
 
-fragment AuctionLotInfo_saleArtwork on SaleArtwork {
+fragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {
   counts {
     bidderPositions
   }
@@ -96,7 +96,7 @@ fragment AuctionLotInfo_saleArtwork on SaleArtwork {
     date
     title
     image {
-      resized(width: 150, height: 150, version: "square") {
+      resized(width: 150, height: 150, version: "medium") {
         src
         srcSet
         width
@@ -353,7 +353,7 @@ return {
                           {
                             "kind": "Literal",
                             "name": "version",
-                            "value": "square"
+                            "value": "medium"
                           },
                           {
                             "kind": "Literal",
@@ -395,7 +395,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "resized(height:150,version:\"square\",width:150)"
+                        "storageKey": "resized(height:150,version:\"medium\",width:150)"
                       }
                     ],
                     "storageKey": null
@@ -526,12 +526,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aebadae784cb4bddca4eb7e61ba9c1ee",
+    "cacheID": "c8feafa5c916383017fed762bcf91c6c",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_BidRouteQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_BidRouteQuery(\n  $slug: String!\n  $artworkSlug: String!\n) {\n  sale(id: $slug) @principalField {\n    ...AuctionBidRoute_sale\n    id\n  }\n  artwork(id: $artworkSlug) {\n    ...AuctionBidRoute_artwork\n    id\n  }\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n}\n\nfragment AuctionBidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment AuctionBidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query auctionRoutes_BidRouteQuery(\n  $slug: String!\n  $artworkSlug: String!\n) {\n  sale(id: $slug) @principalField {\n    ...AuctionBidRoute_sale\n    id\n  }\n  artwork(id: $artworkSlug) {\n    ...AuctionBidRoute_artwork\n    id\n  }\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n}\n\nfragment AuctionBidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork_1WWOz5\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment AuctionBidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

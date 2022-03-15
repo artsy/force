@@ -162,7 +162,18 @@ return {
           "storageKey": null
         },
         {
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "imageHeight",
+              "value": 150
+            },
+            {
+              "kind": "Literal",
+              "name": "imageWidth",
+              "value": 150
+            }
+          ],
           "kind": "FragmentSpread",
           "name": "AuctionLotInfo_saleArtwork"
         }
@@ -174,5 +185,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f44c0ccbaaf8b5dafc074d3e82e5a788';
+(node as any).hash = '1890c5d4be005fc2e66f11a538c56460';
 export default node;

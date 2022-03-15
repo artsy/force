@@ -50,8 +50,8 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
         <AuctionMetaFragmentContainer sale={sale} />
 
         <Join separator={<Spacer my={4} />}>
-          {sale.coverImage?.cropped ? (
-            <FullBleedHeader src={sale.coverImage.cropped.src} />
+          {sale.coverImage?.url ? (
+            <FullBleedHeader src={sale.coverImage.url} />
           ) : (
             <Spacer my={2} />
           )}
@@ -113,9 +113,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
 
       internalID
       coverImage {
-        cropped(width: 1800, height: 600, version: "normalized") {
-          src
-        }
+        url(version: ["wide", "source", "large_rectangle"])
       }
       showBuyNowTab: promotedSale {
         internalID

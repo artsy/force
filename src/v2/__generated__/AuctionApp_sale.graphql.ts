@@ -7,9 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_sale = {
     readonly internalID: string;
     readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-        } | null;
+        readonly url: string | null;
     } | null;
     readonly showBuyNowTab: {
         readonly internalID: string;
@@ -53,34 +51,17 @@ return {
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 600
-            },
-            {
-              "kind": "Literal",
               "name": "version",
-              "value": "normalized"
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 1800
+              "value": [
+                "wide",
+                "source",
+                "large_rectangle"
+              ]
             }
           ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:600,version:\"normalized\",width:1800)"
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"wide\",\"source\",\"large_rectangle\"])"
         }
       ],
       "storageKey": null
@@ -117,5 +98,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9077dfe25809a523f8872d20fd378b3a';
+(node as any).hash = 'e49096a45e02fc14330bb384398a3800';
 export default node;

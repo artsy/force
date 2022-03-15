@@ -41,12 +41,12 @@ export type AuctionLotInfo_saleArtwork$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 150,
+      "defaultValue": 100,
       "kind": "LocalArgument",
       "name": "imageHeight"
     },
     {
-      "defaultValue": 150,
+      "defaultValue": 100,
       "kind": "LocalArgument",
       "name": "imageWidth"
     }
@@ -146,7 +146,7 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "version",
-                  "value": "square"
+                  "value": "medium"
                 },
                 {
                   "kind": "Variable",
@@ -221,5 +221,5 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = '35c703cf0cb327ccdeb98be65ce51c48';
+(node as any).hash = '941de0778c4abf8f73bdd61a898785a5';
 export default node;
