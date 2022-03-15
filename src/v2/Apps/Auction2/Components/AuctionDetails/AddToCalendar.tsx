@@ -44,8 +44,9 @@ export const PopoverLinks: React.FC<AddToCalendarProps> = props => {
   const icsUrl = generateIcsCalendarUrl(props)
 
   const { tracking } = useAuctionTracking()
+
   const trackClick = (subject: AddToCalendarEvent["subject"]) => {
-    tracking.addToCalendar(subject)
+    tracking.addToCalendar({ subject })
   }
 
   return (

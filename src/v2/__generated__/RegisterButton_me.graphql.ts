@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_me = {
+    readonly internalID: string;
     readonly identityVerified: boolean | null;
     readonly hasCreditCards: boolean | null;
     readonly pendingIdentityVerification: {
@@ -20,12 +21,21 @@ export type RegisterButton_me$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "RegisterButton_me",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -48,13 +58,7 @@ const node: ReaderFragment = {
       "name": "pendingIdentityVerification",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     }
@@ -62,5 +66,6 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '8eb0a9ffa35188db66166b910243baae';
+})();
+(node as any).hash = 'a92c693069d35859e07a2f479f5721cf';
 export default node;

@@ -9,11 +9,13 @@ import {
 } from "../useCreateTokenAndSubmit"
 import { flushPromiseQueue } from "v2/DevTools"
 import { useAuctionTracking } from "../useAuctionTracking"
+import { useRefreshUserData } from "v2/Apps/Auction2/Queries/useRefreshUserData"
 
 jest.mock("v2/Components/AddressForm", () => ({
   toStripeAddress: jest.fn(),
 }))
 
+jest.mock("v2/Apps/Auction2/Queries/useRefreshUserData")
 jest.mock("v2/Apps/Auction2/Hooks/useAuctionTracking")
 jest.mock("v2/Apps/Auction2/Queries/useAddCreditCardAndUpdateProfile")
 jest.mock("v2/Apps/Auction2/Queries/useCreateBidder")
@@ -33,6 +35,7 @@ describe("useCreateTokenAndSubmit", () => {
   const mockUseStripe = useStripe as jest.Mock
   const mockUseAddCreditCardAndUpdateProfile = useAddCreditCardAndUpdateProfile as jest.Mock
   const mockUseCreateBidder = useCreateBidder as jest.Mock
+  const mockUseRefreshUserData = useRefreshUserData as jest.Mock
 
   const values = {
     address: {
@@ -102,6 +105,10 @@ describe("useCreateTokenAndSubmit", () => {
           },
         },
       })),
+    }))
+
+    mockUseRefreshUserData.mockImplementation(() => ({
+      refreshUserData: jest.fn(),
     }))
   })
 

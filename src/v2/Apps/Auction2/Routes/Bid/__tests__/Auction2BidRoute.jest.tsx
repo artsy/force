@@ -221,7 +221,7 @@ describe("Auction2BidRoute", () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  it("sets formik fields on Select select", () => {
+  it("sets formik fields on Select select and tracks click", () => {
     const spy = jest.fn()
 
     mockUseAuctionTracking.mockImplementation(() => ({
@@ -232,6 +232,11 @@ describe("Auction2BidRoute", () => {
 
     const wrapper = getWrapper()
     ;(wrapper.find("Select").props() as any).onSelect("1000")
+
+    expect(spy).toHaveBeenCalledWith({
+      bidderID: "<Bidder-mock-id-7>",
+      maxBid: "1000",
+    })
 
     expect(defaultFormikProps.setFieldError).toHaveBeenCalledWith(
       "selectedBid",

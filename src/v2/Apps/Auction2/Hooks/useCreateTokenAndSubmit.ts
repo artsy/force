@@ -15,6 +15,7 @@ import { Auction2RegistrationRoute_sale } from "v2/__generated__/Auction2Registr
 import { Auction2BidRoute_me } from "v2/__generated__/Auction2BidRoute_me.graphql"
 import { Auction2BidRoute_sale } from "v2/__generated__/Auction2BidRoute_sale.graphql"
 import { toStripeAddress } from "v2/Components/AddressForm"
+import { useRefreshUserData } from "../Queries/useRefreshUserData"
 
 const logger = createLogger("useCreateTokenAndSubmit")
 
@@ -37,6 +38,7 @@ export const useCreateTokenAndSubmit = ({
     submitMutation: submitAddCreditCardAndUpdateProfileMutation,
   } = useAddCreditCardAndUpdateProfile()
   const { submitMutation: createBidder } = useCreateBidder()
+  const { refreshUserData } = useRefreshUserData()
 
   /**
    * The createToken flow is as follows:
@@ -109,6 +111,10 @@ export const useCreateTokenAndSubmit = ({
         },
       })
 
+      // Since we've added a credit card, refresh the data so that the user
+      // no longer sees the credit card / address input form on bid page
+      await refreshUserData()
+
       tracking.registrationSubmitted({
         bidderID: response.createBidder?.bidder?.internalID,
         me,
@@ -118,7 +124,6 @@ export const useCreateTokenAndSubmit = ({
       onSuccess?.()
     } catch (error) {
       logger.error("Error submitting bid: ", error)
-      tracking.registrationSubmitFailed({ error, sale, me })
       helpers.setStatus("SUBMISSION_FAILED")
     } finally {
       helpers.setSubmitting(false)

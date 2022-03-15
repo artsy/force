@@ -36,6 +36,7 @@ export const biddingValidationSchemas = {
     selectedBid,
   }),
   validationSchemaForUnregisteredUsersWithoutCreditCard: Yup.object().shape({
+    agreeToTerms,
     address,
     creditCard,
     selectedBid,

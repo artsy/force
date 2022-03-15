@@ -1,12 +1,16 @@
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
-import { formatError } from "v2/Apps/Auction2/Components/Form/Utils"
-import { AddToCalendar, addToCalendar, ContextModule } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/System"
+import {
+  ActionType,
+  AddToCalendar,
+  addToCalendar,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 /**
  * Tracking TODO:
  * - contextModule name for buy now rail artwork
- *
  */
 
 export const useAuctionTracking = () => {
@@ -18,7 +22,7 @@ export const useAuctionTracking = () => {
   } = useAnalyticsContext()
 
   const tracking = {
-    addToCalendar: (subject: AddToCalendar["subject"]) => {
+    addToCalendar: ({ subject }: { subject: AddToCalendar["subject"] }) => {
       trackEvent(
         addToCalendar({
           context_module: ContextModule.auctionHome,
@@ -31,70 +35,65 @@ export const useAuctionTracking = () => {
     },
     bidPageView: ({ artwork, me }) => {
       trackEvent({
+        action: ActionType.bidPageView,
         artwork_slug: artwork?.slug,
         auction_slug: artwork?.saleArtwork?.sale?.slug,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
+        context_page: ContextModule.auctionHome,
         sale_id: artwork?.saleArtwork?.sale?.internalID,
         user_id: me.internalID,
       })
     },
-    clickedActiveBid: ({ artworkID, saleID, userID }) => {
+    clickedActiveBid: ({ artworkSlug, saleSlug, userID }) => {
       trackEvent({
-        artwork_slug: artworkID, //FIXME: c
-        auction_slug: saleID,
-        context_type: "your active bids",
+        action: ActionType.clickedActiveBid,
+        artwork_slug: artworkSlug,
+        auction_slug: saleSlug,
         user_id: userID,
       })
     },
-    clickedRegisterButton: ({ auctionSlug, auctionState, userID }) => {
+    clickedRegisterButton: () => {
       trackEvent({
-        auction_slug: auctionSlug,
-        auction_state: auctionState,
-        context_type: "auctions landing",
-        description: 'Clicked "Register to bid"',
-        user_id: userID,
+        action: ActionType.clickedRegisterToBid,
+        context_module: ContextModule.auctionHome,
+        context_owner_id: contextPageOwnerId,
+        context_owner_slug: contextPageOwnerSlug,
+        context_owner_type: OwnerType.auction,
       })
     },
     clickedVerifyIdentity: ({ auctionSlug, auctionState, userID }) => {
       trackEvent({
+        action: ActionType.clickedVerifyIdentity,
         auction_slug: auctionSlug,
         auction_state: auctionState,
-        context_type: "auctions landing",
+        context_type: ContextModule.auctionHome,
         description: 'Clicked "Verify identity"',
         user_id: userID,
       })
     },
-    confirmBidSuccess: ({ bidderID, positionID }) => {
+    confirmBid: ({ bidderID, positionID }) => {
       trackEvent({
-        action_type: AnalyticsSchema.ActionType.ConfirmBidSubmitted,
+        action: ActionType.confirmBid,
         bidder_id: bidderID,
         bidder_position_id: positionID,
       })
     },
-    confirmBidFailed: (errors: string[], bidderID: string) => {
-      trackEvent({
-        action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
-        bidder_id: bidderID,
-        error_messages: errors,
-      })
-    },
     confirmRegistrationPageView: () => {
       trackEvent({
-        context_page: AnalyticsSchema.PageName.AuctionRegistrationPage,
+        action: ActionType.confirmRegistrationPageview,
+        context_page: ContextModule.auctionHome,
       })
     },
-    enterLiveAuction: liveAuctionURL => {
+    enterLiveAuction: ({ url }) => {
       trackEvent({
-        context_module: "auction banner",
-        destination_path: liveAuctionURL,
-        flow: "auctions",
-        label: "enter live auction",
-        type: "button",
+        action: ActionType.enterLiveAuction,
+        context_module: ContextModule.auctionHome,
+        destination_path: url,
+        subject: "Enter live auction",
       })
     },
-    maxBidSelected: (bidderID: string, maxBid: string) => {
+    maxBidSelected: ({ bidderID, maxBid }) => {
       trackEvent({
-        action_type: AnalyticsSchema.ActionType.SelectedMaxBid,
+        action: ActionType.maxBidSelected,
         bidder_id: bidderID,
         selected_max_bid_minor: maxBid,
       })
@@ -103,14 +102,12 @@ export const useAuctionTracking = () => {
       bidderID,
       me,
       result,
-      registrationTracked,
+      isRegistrationTracked,
       sale,
     }) => {
-      const trackNewBidderRegistration = !(
-        bidderID && registrationTracked.current
-      )
+      const trackNewBidderRegistration =
+        !bidderID && isRegistrationTracked.current === false
 
-      // FIXME: registrationTracked.current is never set to true
       if (trackNewBidderRegistration) {
         const newBidderID =
           result?.position?.saleArtwork?.sale?.registrationStatus?.internalID
@@ -121,33 +118,22 @@ export const useAuctionTracking = () => {
           sale,
         })
 
-        registrationTracked.current = true
+        isRegistrationTracked.current = true
       }
     },
     registrationPageView: () => {
       trackEvent({
-        context_page: AnalyticsSchema.PageName.AuctionRegistrationPage,
+        action: ActionType.registrationPageView,
+        context_module: ContextModule.auctionHome,
       })
     },
 
     registrationSubmitted: ({ bidderID, me, sale }) => {
-      // console.log(sale, me)
-
       trackEvent({
-        action_type: AnalyticsSchema.ActionType.RegistrationSubmitted,
+        action: ActionType.registrationSubmitted,
         auction_slug: sale.slug,
         auction_state: sale.status,
-        bidder_id: bidderID, // response.createBidder?.bidder?.internalID,
-        sale_id: sale.internalID,
-        user_id: me.internalID,
-      })
-    },
-    registrationSubmitFailed: ({ error, sale, me }) => {
-      trackEvent({
-        action_type: AnalyticsSchema.ActionType.RegistrationSubmitFailed,
-        auction_slug: sale.slug,
-        auction_state: sale.status,
-        error_messages: formatError(error),
+        bidder_id: bidderID,
         sale_id: sale.internalID,
         user_id: me.internalID,
       })

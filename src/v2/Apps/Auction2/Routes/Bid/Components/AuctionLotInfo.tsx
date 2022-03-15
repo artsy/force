@@ -30,12 +30,11 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
           srcSet={artwork?.image?.resized?.srcSet}
           width={artwork?.image?.resized?.width}
           height={artwork?.image?.resized?.height}
-          mr={1}
           lazyLoad
         />
       </RouterLink>
 
-      <Box>
+      <Box pl={1}>
         <Text variant="md">Lot {saleArtwork.lotLabel}</Text>
         <Text variant="md">
           <i>{artwork.title}</i>

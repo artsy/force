@@ -30,6 +30,7 @@ query AuctionActiveBidsRefetchQuery(
 }
 
 fragment AuctionActiveBids_me_nfIph on Me {
+  internalID
   lotStandings(saleID: $saleID, live: true) {
     isHighestBidder
     saleArtwork {
@@ -48,6 +49,7 @@ fragment AuctionActiveBids_me_nfIph on Me {
         display
       }
       sale {
+        slug
         liveStartAt
         endAt
         isLiveOpen
@@ -100,7 +102,14 @@ v1 = {
   "name": "saleID",
   "variableName": "saleID"
 },
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -109,14 +118,14 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -166,6 +175,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": [
@@ -228,7 +238,7 @@ return {
                     "kind": "LinkedField",
                     "name": "currentBid",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -239,13 +249,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -340,12 +344,12 @@ return {
                         "name": "artistNames",
                         "storageKey": null
                       },
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -367,7 +371,7 @@ return {
                     "kind": "LinkedField",
                     "name": "highestBid",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -378,6 +382,7 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -406,30 +411,30 @@ return {
                         "name": "isClosed",
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9d2e2fa7a65fd2e2f96aebb86c5edda2",
+    "cacheID": "8c66e345824f6836ce57424e74403ef3",
     "id": null,
     "metadata": {},
     "name": "AuctionActiveBidsRefetchQuery",
     "operationKind": "query",
-    "text": "query AuctionActiveBidsRefetchQuery(\n  $saleID: String!\n) {\n  me {\n    ...AuctionActiveBids_me_nfIph\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_nfIph on Me {\n  lotStandings(saleID: $saleID, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query AuctionActiveBidsRefetchQuery(\n  $saleID: String!\n) {\n  me {\n    ...AuctionActiveBids_me_nfIph\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_nfIph on Me {\n  internalID\n  lotStandings(saleID: $saleID, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

@@ -188,6 +188,7 @@ fragment Auction2Meta_sale on Sale {
 }
 
 fragment AuctionActiveBids_me_96HcF on Me {
+  internalID
   lotStandings(saleID: $slug, live: true) {
     isHighestBidder
     saleArtwork {
@@ -206,6 +207,7 @@ fragment AuctionActiveBids_me_96HcF on Me {
         display
       }
       sale {
+        slug
         liveStartAt
         endAt
         isLiveOpen
@@ -437,6 +439,7 @@ fragment Pagination_pageCursors on PageCursors {
 }
 
 fragment RegisterButton_me on Me {
+  internalID
   identityVerified
   hasCreditCards
   pendingIdentityVerification {
@@ -524,7 +527,14 @@ v3 = {
   "name": "input",
   "variableName": "input"
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v5 = [
   {
     "kind": "Literal",
     "name": "live",
@@ -532,14 +542,14 @@ v4 = [
   },
   (v1/*: any*/)
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "lotLabel",
   "storageKey": null
 },
-v6 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -548,13 +558,6 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
 v8 = {
   "alias": null,
   "args": null,
@@ -651,7 +654,7 @@ v19 = {
   "storageKey": null
 },
 v20 = [
-  (v7/*: any*/),
+  (v4/*: any*/),
   (v15/*: any*/)
 ],
 v21 = {
@@ -805,7 +808,7 @@ v32 = {
   "name": "saleArtwork",
   "plural": false,
   "selections": [
-    (v5/*: any*/),
+    (v6/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -831,7 +834,7 @@ v32 = {
       "kind": "LinkedField",
       "name": "highestBid",
       "plural": false,
-      "selections": (v6/*: any*/),
+      "selections": (v7/*: any*/),
       "storageKey": null
     },
     {
@@ -841,7 +844,7 @@ v32 = {
       "kind": "LinkedField",
       "name": "openingBid",
       "plural": false,
-      "selections": (v6/*: any*/),
+      "selections": (v7/*: any*/),
       "storageKey": null
     },
     (v15/*: any*/)
@@ -918,7 +921,7 @@ v35 = [
   (v32/*: any*/),
   (v33/*: any*/),
   (v15/*: any*/),
-  (v7/*: any*/),
+  (v4/*: any*/),
   (v14/*: any*/),
   (v34/*: any*/)
 ],
@@ -1050,9 +1053,10 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          (v4/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "LotStanding",
             "kind": "LinkedField",
             "name": "lotStandings",
@@ -1091,7 +1095,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -1099,7 +1103,7 @@ return {
                     "kind": "LinkedField",
                     "name": "currentBid",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1110,7 +1114,7 @@ return {
                     "name": "artwork",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
+                      (v4/*: any*/),
                       (v8/*: any*/),
                       (v9/*: any*/),
                       {
@@ -1185,7 +1189,7 @@ return {
                     "kind": "LinkedField",
                     "name": "highestBid",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1196,6 +1200,7 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
+                      (v14/*: any*/),
                       (v16/*: any*/),
                       (v17/*: any*/),
                       (v18/*: any*/),
@@ -1237,7 +1242,7 @@ return {
           },
           {
             "alias": "showLotStandingsTab",
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "LotStanding",
             "kind": "LinkedField",
             "name": "lotStandings",
@@ -1292,7 +1297,7 @@ return {
             "plural": false,
             "selections": [
               (v22/*: any*/),
-              (v7/*: any*/),
+              (v4/*: any*/),
               (v21/*: any*/),
               {
                 "alias": null,
@@ -1434,7 +1439,7 @@ return {
           },
           (v17/*: any*/),
           (v22/*: any*/),
-          (v7/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -1635,7 +1640,7 @@ return {
                         "selections": [
                           (v14/*: any*/),
                           (v22/*: any*/),
-                          (v7/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1872,12 +1877,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "937c6c248afd56754b5d96a07f37dc2d",
+    "cacheID": "ced77d8539627100a2386626ca9cd4d5",
     "id": null,
     "metadata": {},
     "name": "Auction2AppTestQuery",
     "operationKind": "query",
-    "text": "query Auction2AppTestQuery(\n  $input: FilterArtworksInput\n  $slug: String!\n) {\n  me {\n    ...Auction2App_me_96HcF\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...Auction2App_sale\n    id\n  }\n  viewer {\n    ...Auction2App_viewer_YRlPK\n  }\n}\n\nfragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {\n  id\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkFilter_viewer_2VV6jB on Viewer {\n  filtered_artworks: artworksConnection(input: $input) {\n    id\n    ...ArtworkFilterArtworkGrid_filtered_artworks\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Auction2App_me_96HcF on Me {\n  ...AuctionActiveBids_me_96HcF\n  ...AuctionDetails_me\n  showLotStandingsTab: lotStandings(saleID: $slug, live: true) {\n    activeBid {\n      internalID\n      id\n    }\n  }\n}\n\nfragment Auction2App_sale on Sale {\n  ...Auction2Meta_sale\n  ...AuctionBuyNowRail_sale\n  ...AuctionDetails_sale\n  internalID\n  coverImage {\n    cropped(width: 1800, height: 600, version: \"normalized\") {\n      src\n    }\n  }\n  showBuyNowTab: promotedSale {\n    internalID\n    id\n  }\n}\n\nfragment Auction2App_viewer_YRlPK on Viewer {\n  ...AuctionArtworkFilter_viewer_2VV6jB\n  ...AuctionWorksByFollowedArtistsRail_viewer_96HcF\n  showFollowedArtistsTab: saleArtworksConnection(first: 1, aggregations: [TOTAL], saleSlug: $slug, includeArtworksByFollowedArtists: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Auction2Meta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment AuctionActiveBids_me_96HcF on Me {\n  lotStandings(saleID: $slug, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionArtworkFilter_viewer_2VV6jB on Viewer {\n  ...ArtworkFilter_viewer_2VV6jB\n  sidebarAggregations: artworksConnection(input: $input, first: 1) {\n    counts {\n      followedArtists\n    }\n    aggregations {\n      slice\n      counts {\n        name\n        value\n        count\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionBuyNowRail_sale on Sale {\n  promotedSale {\n    href\n    internalID\n    name\n    saleArtworksConnection(first: 99) {\n      edges {\n        node {\n          artwork {\n            ...ShelfArtwork_artwork\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionDetails_me on Me {\n  ...RegisterButton_me\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n\nfragment AuctionWorksByFollowedArtistsRail_viewer_96HcF on Viewer {\n  saleArtworksConnection(first: 99, aggregations: [TOTAL], saleSlug: $slug, includeArtworksByFollowedArtists: true) {\n    edges {\n      node {\n        ...ShelfArtwork_artwork\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
+    "text": "query Auction2AppTestQuery(\n  $input: FilterArtworksInput\n  $slug: String!\n) {\n  me {\n    ...Auction2App_me_96HcF\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...Auction2App_sale\n    id\n  }\n  viewer {\n    ...Auction2App_viewer_YRlPK\n  }\n}\n\nfragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {\n  id\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkFilter_viewer_2VV6jB on Viewer {\n  filtered_artworks: artworksConnection(input: $input) {\n    id\n    ...ArtworkFilterArtworkGrid_filtered_artworks\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Auction2App_me_96HcF on Me {\n  ...AuctionActiveBids_me_96HcF\n  ...AuctionDetails_me\n  showLotStandingsTab: lotStandings(saleID: $slug, live: true) {\n    activeBid {\n      internalID\n      id\n    }\n  }\n}\n\nfragment Auction2App_sale on Sale {\n  ...Auction2Meta_sale\n  ...AuctionBuyNowRail_sale\n  ...AuctionDetails_sale\n  internalID\n  coverImage {\n    cropped(width: 1800, height: 600, version: \"normalized\") {\n      src\n    }\n  }\n  showBuyNowTab: promotedSale {\n    internalID\n    id\n  }\n}\n\nfragment Auction2App_viewer_YRlPK on Viewer {\n  ...AuctionArtworkFilter_viewer_2VV6jB\n  ...AuctionWorksByFollowedArtistsRail_viewer_96HcF\n  showFollowedArtistsTab: saleArtworksConnection(first: 1, aggregations: [TOTAL], saleSlug: $slug, includeArtworksByFollowedArtists: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Auction2Meta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment AuctionActiveBids_me_96HcF on Me {\n  internalID\n  lotStandings(saleID: $slug, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionArtworkFilter_viewer_2VV6jB on Viewer {\n  ...ArtworkFilter_viewer_2VV6jB\n  sidebarAggregations: artworksConnection(input: $input, first: 1) {\n    counts {\n      followedArtists\n    }\n    aggregations {\n      slice\n      counts {\n        name\n        value\n        count\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionBuyNowRail_sale on Sale {\n  promotedSale {\n    href\n    internalID\n    name\n    saleArtworksConnection(first: 99) {\n      edges {\n        node {\n          artwork {\n            ...ShelfArtwork_artwork\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionDetails_me on Me {\n  ...RegisterButton_me\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n\nfragment AuctionWorksByFollowedArtistsRail_viewer_96HcF on Viewer {\n  saleArtworksConnection(first: 99, aggregations: [TOTAL], saleSlug: $slug, includeArtworksByFollowedArtists: true) {\n    edges {\n      node {\n        ...ShelfArtwork_artwork\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment RegisterButton_me on Me {\n  internalID\n  identityVerified\n  hasCreditCards\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();

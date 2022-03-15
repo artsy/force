@@ -20,6 +20,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { AuctionActiveBids_me } from "v2/__generated__/AuctionActiveBids_me.graphql"
 import { AuctionLotInfoFragmentContainer } from "../Routes/Bid/Components/AuctionLotInfo"
 import { Media } from "v2/Utils/Responsive"
+import { useAuctionTracking } from "../Hooks/useAuctionTracking"
 
 interface AuctionActiveBidsProps {
   me: AuctionActiveBids_me
@@ -61,7 +62,7 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
                     saleArtwork={lotStanding?.saleArtwork!}
                   />
                   <BidStatus lotStanding={lotStanding} />
-                  <BidButton lotStanding={lotStanding} size="small" />
+                  <BidButton lotStanding={lotStanding} me={me} size="small" />
                 </Join>
               </Box>
               <Separator />
@@ -102,7 +103,7 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
                 <BidStatus lotStanding={lotStanding} />
               </Column>
               <Column justifyContent={["flex-start", "flex-end"]}>
-                <BidButton lotStanding={lotStanding} />
+                <BidButton lotStanding={lotStanding} me={me} />
               </Column>
             </GridColumns>
           )
@@ -118,6 +119,7 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
     me: graphql`
       fragment AuctionActiveBids_me on Me
         @argumentDefinitions(saleID: { type: "String" }) {
+        internalID
         lotStandings(saleID: $saleID, live: true) {
           isHighestBidder
 
@@ -140,6 +142,7 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
               display
             }
             sale {
+              slug
               liveStartAt
               endAt
               isLiveOpen
@@ -195,11 +198,14 @@ const BidStatus: React.FC<{
   }
 }
 
-const BidButton: React.FC<LotStanding & { size?: ButtonSize }> = ({
-  lotStanding,
-  size = "medium",
-}) => {
+const BidButton: React.FC<
+  LotStanding & {
+    me: AuctionActiveBidsProps["me"]
+    size?: ButtonSize
+  }
+> = ({ lotStanding, me, size = "medium" }) => {
   const { router } = useRouter()
+  const { tracking } = useAuctionTracking()
 
   if (!lotStanding) {
     return null
@@ -218,6 +224,12 @@ const BidButton: React.FC<LotStanding & { size?: ButtonSize }> = ({
       size={size}
       onClick={event => {
         event.preventDefault()
+
+        tracking.clickedActiveBid({
+          artworkSlug: lotStanding.saleArtwork?.slug,
+          saleSlug: lotStanding.saleArtwork?.sale?.slug,
+          userID: me.internalID,
+        })
 
         // FIXME: Figure out why the router is doing hard jumps when
         // using query params forcing this hack.
