@@ -151,18 +151,12 @@ function idConversionRoute(pathname: string | undefined) {
   }
   const paths = pathname.split(/(?=\/)/g)
   const conversionRoutes = [
-    ["/signup"],
-    ["/personalize", "/artists"],
-    ["/personalize", "/budget"],
-    ["/auction", "/bid"],
-    ["/auction-registration"],
-    ["/orders", "/status"],
-    // "/signup", // account creation
-    // "/personalize/artists", // account creation
-    // "/personalize/budget", // account creation
-    // `/auction/${saleName}/bid/${artworkID}?bid=${bidID}`, // bid placed
-    // `/auction-registration/${saleName}`, // auction registration
-    // `/orders/7ef042fe-1897-4076-8f15-0d336db880c6/status`, // offer made, purchase
+    ["/signup"], // account creation
+    ["/personalize", "/artists"], // account creation
+    ["/personalize", "/budget"], // account creation
+    ["/auction", "/bid"], // bid placed
+    ["/auction-registration"], // auction registration
+    ["/orders", "/status"], // offer made, purchase
     //  no route for 'gallery contacted',
   ]
 
