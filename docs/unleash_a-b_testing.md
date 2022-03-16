@@ -38,11 +38,12 @@ In the component that you added the experiment you just need to add the followin
 +  } = useAnalyticsContext()
 
 +  useTrackVariantView({
-+    experiment_name: "my-awesome-experiment",
-+    variant_name: variant?.name!,
-+    context_owner_id: contextPageOwnerId,
-+    context_owner_slug: contextPageOwnerSlug,
-+    context_owner_type: contextPageOwnerType,
++    experimentName: "my-awesome-experiment",
++    variantName: variant?.name!,
++    contextOwnerId: contextPageOwnerId,
++    contextOwnerSlug: contextPageOwnerSlug,
++    contextOwnerType: contextPageOwnerType,
++    shouldTrackExperiment: true/false/condition
 +  })
 ```
 

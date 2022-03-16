@@ -38,12 +38,12 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const variant = useFeatureVariant("filters-expanded-experiment")
 
   useTrackVariantView({
-    experiment_name: "filters-expanded-experiment",
-    variant_name: variant?.name!,
-    context_owner_id: contextPageOwnerId,
-    context_owner_slug: contextPageOwnerSlug,
-    context_owner_type: contextPageOwnerType!,
-    should_track: isArtistPage,
+    experimentName: "filters-expanded-experiment",
+    variantName: variant?.name!,
+    contextOwnerId: contextPageOwnerId,
+    contextOwnerSlug: contextPageOwnerSlug,
+    contextOwnerType: contextPageOwnerType!,
+    shouldTrackExperiment: isArtistPage,
   })
 
   const isExpanded =

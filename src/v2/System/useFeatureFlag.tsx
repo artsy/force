@@ -12,13 +12,13 @@ interface FeatureFlagDetails {
 }
 
 interface VariantTrackingProperties {
-  experiment_name: string
-  variant_name: string
+  experimentName: string
+  variantName: string
   payload?: string
-  context_owner_type: OwnerType
-  context_owner_id?: string
-  context_owner_slug?: string
-  should_track?: boolean
+  contextOwnerType: OwnerType
+  contextOwnerId?: string
+  contextOwnerSlug?: string
+  shouldTrackExperiment?: boolean
 }
 
 export function useFeatureFlag(featureName: string): boolean | null {
@@ -52,30 +52,30 @@ export function useFeatureVariant(featureName: string): Variant | null {
 }
 
 export function useTrackVariantView({
-  experiment_name,
-  variant_name,
+  experimentName,
+  variantName,
   payload,
-  context_owner_type,
-  context_owner_id,
-  context_owner_slug,
-  should_track = true,
+  contextOwnerType,
+  contextOwnerId,
+  contextOwnerSlug,
+  shouldTrackExperiment = true,
 }: VariantTrackingProperties) {
   const { trackEvent } = useTracking()
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const trackFeatureView = shouldTrack(experiment_name, variant_name)
+      const trackFeatureView = shouldTrack(experimentName, variantName)
 
-      if (trackFeatureView && should_track) {
+      if (trackFeatureView && shouldTrackExperiment) {
         trackEvent({
           action: ActionType.experimentViewed,
           service: "unleash",
-          experiment_name,
-          variant_name,
+          experiment_name: experimentName,
+          variant_name: variantName,
           payload,
-          context_owner_type,
-          context_owner_id,
-          context_owner_slug,
+          context_owner_type: contextOwnerType,
+          context_owner_id: contextOwnerId,
+          context_owner_slug: contextOwnerSlug,
         })
       }
     }
