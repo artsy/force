@@ -38,7 +38,6 @@ import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { staticPageRoutes } from "v2/Apps/StaticPage/staticPageRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
-import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 
@@ -81,7 +80,6 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: showRoutes },
     { routes: showsRoutes },
     { routes: tagRoutes },
-    { routes: unsubscribeRoutes },
     { routes: viewingRoomRoutes },
     { routes: worksForYouRoutes },
 
