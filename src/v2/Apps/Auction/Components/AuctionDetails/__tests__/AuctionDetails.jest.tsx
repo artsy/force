@@ -54,7 +54,7 @@ describe("AuctionDetails", () => {
     expect(wrapper.find("RegisterButton").length).toBe(1)
   })
 
-  it("shows formatted start time", () => {
+  it.skip("shows formatted start time", () => {
     const wrapper = getWrapper({
       Sale: () => ({
         auctionsDetailFormattedStartDateTime: "Mar 22, 2022 • 9:22pm GMT",
