@@ -148,6 +148,11 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               is_open: true,
               is_preview: false,
               display_timely_at: "live in 3d",
+              cascadingEndTimeInterval: null,
+              auctionsDetailFormattedStartDateTime:
+                "Mar 11, 2022 • 12:33pm GMT",
+              startAt: "2022-03-11T12:33:37.000Z",
+              endAt: "2022-03-12T12:33:37.000Z",
             },
             sale_artwork: {
               lotLabel: "0",
@@ -161,6 +166,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
                 display: "USD $2222",
               },
               id: "idabc123",
+              endAt: "2022-03-12T12:33:37.000Z",
             },
             is_inquireable: true,
             is_saved: false,

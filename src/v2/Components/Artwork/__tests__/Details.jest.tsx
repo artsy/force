@@ -234,6 +234,10 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     id: "opaque-sale-id",
     is_auction: true,
     is_closed: false,
+    cascadingEndTimeInterval: null,
+    auctionsDetailFormattedStartDateTime: "Mar 11, 2022 • 12:33pm GMT",
+    startAt: "2022-03-11T12:33:37.000Z",
+    endAt: "2022-03-12T12:33:37.000Z",
   },
   sale_artwork: {
     lotLabel: "0",
@@ -241,5 +245,6 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     highest_bid: { display: "$2,600" },
     opening_bid: { display: "$2,400" },
     counts: { bidder_positions: 0 },
+    endAt: "2022-03-12T12:33:37.000Z",
   },
 }

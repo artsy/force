@@ -216,7 +216,6 @@ export const Details: React.FC<DetailsProps> = ({
         <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
 =======
   const { artworkGridContext } = useArtworkGridContext()
-  console.log("rest?.artwork?.sale?.cascadingEndTimeInterval", rest?.artwork)
 
   return (
     <>
