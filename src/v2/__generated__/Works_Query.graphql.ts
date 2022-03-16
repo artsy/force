@@ -1076,6 +1076,7 @@ return {
             "PARTNER_CITY",
             "PERIOD",
             "PRICE_RANGE",
+            "SIMPLE_PRICE_HISTOGRAM",
             "TOTAL"
           ],
           "nullable": true,
