@@ -32,6 +32,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
+  const pathname = match?.location ? match.location.pathname : null
   const { isEigen } = useSystemContext()
   const showNav = !routeConfig?.hideNav
   const showFooter = !isEigen && !routeConfig?.hideFooter
@@ -57,9 +58,10 @@ export const AppShell: React.FC<AppShellProps> = props => {
   }, [])
 
   useEffect(() => {
+    console.log("Appshell::useEffect::pathname", pathname)
     let script: HTMLScriptElement
 
-    if (idConversionRoute(match?.location.pathname)) {
+    if (idConversionRoute(pathname)) {
       script = document.createElement("script")
 
       script.id = "mntn_conversion"
@@ -76,7 +78,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
         document.body.removeChild(script)
       }
     }
-  }, [match])
+  }, [pathname])
 
   /**
    * Wait for route to finish rendering before (possibly) switching out the theme.
@@ -145,18 +147,26 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
 // account creation, auction registration, bid placed, inquiry made,
 // gallery contacted, offer made, purchase
-function idConversionRoute(pathname: string | undefined) {
+function idConversionRoute(pathname: string | null) {
   if (!pathname) {
+    console.log("AppShell::idConversionRoute: pathname is undefined")
     return false
   }
   const paths = pathname.split(/(?=\/)/g)
+  console.log("AppShell::idConversionRoute: paths", paths)
   const conversionRoutes = [
-    ["/signup"], // account creation
-    ["/personalize", "/artists"], // account creation
-    ["/personalize", "/budget"], // account creation
-    ["/auction", "/bid"], // bid placed
-    ["/auction-registration"], // auction registration
-    ["/orders", "/status"], // offer made, purchase
+    ["/signup"],
+    ["/personalize", "/artists"],
+    ["/personalize", "/budget"],
+    ["/auction", "/bid"],
+    ["/auction-registration"],
+    ["/orders", "/status"],
+    // "/signup", // account creation
+    // "/personalize/artists", // account creation
+    // "/personalize/budget", // account creation
+    // `/auction/${saleName}/bid/${artworkID}?bid=${bidID}`, // bid placed
+    // `/auction-registration/${saleName}`, // auction registration
+    // `/orders/7ef042fe-1897-4076-8f15-0d336db880c6/status`, // offer made, purchase
     //  no route for 'gallery contacted',
   ]
 
@@ -164,9 +174,11 @@ function idConversionRoute(pathname: string | undefined) {
   let matchFound = false
   do {
     matchFound = conversionRoutes[x--].every(route => {
-      return paths.indexOf(route) !== -1
+      console.log("AppShell::idConversionRoute: comparing", route, "to", paths)
+      return paths.includes(route)
     })
   } while (x >= 0 && !matchFound)
 
+  console.log("AppShell::idConversionRoute: matchFound:", matchFound)
   return matchFound
 }
