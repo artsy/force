@@ -18,7 +18,6 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: OwnerType.artist,
   placeholder: "Test Artist",
   artists: [
     {
@@ -27,6 +26,9 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "test-artist-slug",
     },
   ],
+  analytics: {
+    type: OwnerType.artist,
+  },
 }
 
 describe("ArtworkFilter", () => {

@@ -40,7 +40,7 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
-      context_page_owner_type: entity.type,
+      context_page_owner_type: entity.analytics.type,
       context_page_owner_id: entityArtist.id,
       context_page_owner_slug: entityArtist.slug,
     })
@@ -64,7 +64,7 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     setVisibleForm(false)
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: entity.type,
+      context_page_owner_type: entity.analytics.type,
       context_page_owner_id: entityArtist.id,
       context_page_owner_slug: entityArtist.slug,
       saved_search_id: result.id,

@@ -9,7 +9,6 @@ import { SavedSearchEntity } from "../../types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: OwnerType.artist,
   placeholder: "Banksy",
   artists: [
     {
@@ -18,6 +17,9 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "example-slug",
     },
   ],
+  analytics: {
+    type: OwnerType.artist,
+  },
 }
 
 const mockedFilters: ArtworkFiltersState = {

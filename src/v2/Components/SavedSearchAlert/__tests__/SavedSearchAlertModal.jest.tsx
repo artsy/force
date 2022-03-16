@@ -17,7 +17,6 @@ const formInitialValues = {
 }
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: OwnerType.artist,
   placeholder: "Test Artist",
   artists: [
     {
@@ -26,6 +25,9 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "test-artist-slug",
     },
   ],
+  analytics: {
+    type: OwnerType.artist,
+  },
 }
 
 const defaultFilters: ArtworkFiltersState = {

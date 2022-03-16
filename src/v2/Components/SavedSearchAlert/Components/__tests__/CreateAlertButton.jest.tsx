@@ -15,7 +15,6 @@ jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: OwnerType.artist,
   placeholder: "test-artist-name",
   artists: [
     {
@@ -24,6 +23,9 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "example-slug",
     },
   ],
+  analytics: {
+    type: OwnerType.artist,
+  },
 }
 
 describe("CreateAlertButton", () => {

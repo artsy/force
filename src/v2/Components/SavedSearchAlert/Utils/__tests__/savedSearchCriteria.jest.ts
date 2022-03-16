@@ -7,7 +7,6 @@ import {
 } from "../savedSearchCriteria"
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
-  type: OwnerType.artist,
   placeholder: "alertName",
   artists: [
     {
@@ -21,6 +20,9 @@ const mockedSavedSearchEntity: SavedSearchEntity = {
       slug: "artistTwoSlug",
     },
   ],
+  analytics: {
+    type: OwnerType.artist,
+  },
 }
 
 const mockedFilters: ArtworkFilters = {
@@ -57,7 +59,6 @@ describe("getSearchCriteriaFromFilters", () => {
 
   it("returns correct criteria when a single artist is passed to entity", () => {
     const entity: SavedSearchEntity = {
-      type: OwnerType.artist,
       placeholder: "",
       artists: [
         {
@@ -66,6 +67,9 @@ describe("getSearchCriteriaFromFilters", () => {
           slug: "artistOneSlug",
         },
       ],
+      analytics: {
+        type: OwnerType.artist,
+      },
     }
     const result = getSearchCriteriaFromFilters(entity, mockedFilters)
 

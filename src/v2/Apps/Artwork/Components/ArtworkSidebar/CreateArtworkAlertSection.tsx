@@ -77,13 +77,15 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
   )
 
   const entity: SavedSearchEntity = {
-    type: OwnerType.artwork,
     placeholder,
     artists: artists.map(artist => ({
       id: artist.internalID,
       name: artist.name ?? "",
       slug: artist.slug,
     })),
+    analytics: {
+      type: OwnerType.artwork,
+    },
   }
   const criteria: SearchCriteriaAttributes = {
     artistIDs,

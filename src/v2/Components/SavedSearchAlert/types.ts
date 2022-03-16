@@ -26,11 +26,15 @@ export interface SavedSearchEntityArtist {
   slug: string
 }
 
-export interface SavedSearchEntity {
+interface SavedSearchEntityAnalytics {
   // possible entity types for creating alert
   type: PageOwnerType
+}
+
+export interface SavedSearchEntity {
   placeholder: string
   artists: SavedSearchEntityArtist[]
+  analytics: SavedSearchEntityAnalytics
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes

@@ -246,7 +246,6 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   const criteria = getAllowedSearchCriteria(savedSearch as any)
   const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
-    type: OwnerType.artwork,
     placeholder: artist.name ?? "",
     artists: [
       {
@@ -255,6 +254,9 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
         slug: artist.slug ?? "",
       },
     ],
+    analytics: {
+      type: OwnerType.artwork,
+    },
   }
 
   return (
