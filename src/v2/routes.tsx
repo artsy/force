@@ -30,7 +30,7 @@ import { meetTheSpecialistsRoutes } from "v2/Apps/MeetTheSpecialists/meetTheSpec
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { partnersRoutes } from "v2/Apps/Partners/partnersRoutes"
-import { preferencesRoutes } from "./Apps/_Preferences2/preferencesRoutes"
+import { preferencesRoutes } from "./Apps/Preferences/preferencesRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
@@ -38,7 +38,6 @@ import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { staticPageRoutes } from "v2/Apps/StaticPage/staticPageRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
-import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 
@@ -81,7 +80,6 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: showRoutes },
     { routes: showsRoutes },
     { routes: tagRoutes },
-    { routes: unsubscribeRoutes },
     { routes: viewingRoomRoutes },
     { routes: worksForYouRoutes },
 

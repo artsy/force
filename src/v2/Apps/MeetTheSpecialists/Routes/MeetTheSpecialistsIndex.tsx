@@ -47,7 +47,6 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
           advise, and research on your behalf.
         </Text>
       </Box>
-
       <Box mt={2}>
         <Text variant="xs">
           Have a question about Artsy? Check out our{" "}
@@ -65,9 +64,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
           <a href="mailto:specialist@artsy.net">orders@artsy.net</a>.
         </Text>
       </Box>
-
       <Spacer mb={12} />
-
       <GridColumns>
         <Column span={4} start={1}>
           <Text variant={["xl", "xxl"]}>Advisory and Private Sales</Text>
@@ -78,7 +75,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
         </Media>
 
         <Column start={5}>
-          {advisorySpecialists.map(specialist => (
+          {ADVISORY_SPECIALISTS.map(specialist => (
             <Box width="100%">
               <Flex flexDirection={["column", "row"]}>
                 <Avatar
@@ -105,6 +102,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
           ))}
         </Column>
       </GridColumns>
+
       <GridColumns>
         <Column span={4} start={1}>
           <Text variant={["xl", "xxl"]}>Auctions</Text>
@@ -113,7 +111,43 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
         <Spacer mb={4} />
 
         <Column start={5}>
-          {auctionSpecialists.map((specialist, i) => (
+          {AUCTION_SPECIALISTS.map((specialist, i) => (
+            <Box width="100%">
+              <Flex flexDirection={["column", "row"]}>
+                <Avatar
+                  size="md"
+                  src={resizeImage(specialist.photo.url!)!}
+                  mr={[0, 2]}
+                  mb={[2, 0]}
+                />
+
+                <Flex flexDirection="column">
+                  <Text variant="lg">{specialist.name}</Text>
+                  <Text variant="md">{specialist.title}</Text>
+                  <Text variant="md" color="black60">
+                    {specialist.location}
+                  </Text>
+                  <Spacer my={10} />
+                  <RouterLink to={`mailto:${specialist.email}`}>
+                    {specialist.email}
+                  </RouterLink>
+                  <Spacer mb={6} />
+                </Flex>
+              </Flex>
+            </Box>
+          ))}
+        </Column>
+      </GridColumns>
+
+      <GridColumns>
+        <Column span={4} start={1}>
+          <Text variant={["xl", "xxl"]}>Collector Services</Text>
+        </Column>
+
+        <Spacer mb={4} />
+
+        <Column start={5}>
+          {COLLECTOR_SERVICES_SPECIALISTS.map((specialist, i) => (
             <Box width="100%">
               <Flex flexDirection={["column", "row"]}>
                 <Avatar
@@ -144,7 +178,7 @@ export const MeetTheSpecialistsIndex: React.FC = () => {
   )
 }
 
-const advisorySpecialists = [
+const ADVISORY_SPECIALISTS = [
   {
     name: "Alexander Forbes",
     title: "Head of Collector Services & Private Sales",
@@ -234,7 +268,8 @@ const advisorySpecialists = [
     photo: { url: "http://files.artsy.net/images/itziar.jpeg" },
   },
 ]
-const auctionSpecialists = [
+
+const AUCTION_SPECIALISTS = [
   {
     name: "Shlomi Rabi",
     title: "VP and Head of Auctions",
@@ -287,5 +322,43 @@ const auctionSpecialists = [
     location: "New York",
     email: "alan@artsy.net",
     photo: { url: "http://files.artsy.net/images/alan.png" },
+  },
+]
+
+const COLLECTOR_SERVICES_SPECIALISTS = [
+  {
+    name: "Wendy Wiberg",
+    title: "Collector Services Lead",
+    location: "",
+    email: "wendy.wiberg@artsy.net",
+    photo: { url: "http://files.artsy.net/images/wendy_wiberg.png" },
+  },
+  {
+    name: "Eleonora Leo",
+    title: "Senior Manager, Collector Services",
+    location: "",
+    email: "eleonora.leo@artsy.net",
+    photo: { url: "http://files.artsy.net/images/eleonora_leo.png" },
+  },
+  {
+    name: "Vanessa Zingale",
+    title: "Senior Manager, Collector Services",
+    location: "",
+    email: "vanessa.zingale@artsy.net",
+    photo: { url: "http://files.artsy.net/images/vanessa_zingale.png" },
+  },
+  {
+    name: "Isabel Telonis",
+    title: "Manager, Collector Services",
+    location: "",
+    email: "isabel.telonis@artsy.net",
+    photo: { url: "http://files.artsy.net/images/isabel_telonis.png" },
+  },
+  {
+    name: "Dana Rodriguez",
+    title: "Associate, Collector Services",
+    location: "",
+    email: "dana.rodriguez@artsy.net",
+    photo: { url: "http://files.artsy.net/images/dana_rodriguez.png" },
   },
 ]

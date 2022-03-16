@@ -11,7 +11,7 @@ const PreferencesApp = loadable(
 
 export const preferencesRoutes: AppRouteConfig[] = [
   {
-    path: "/preferences2",
+    path: "/unsubscribe",
     getComponent: () => PreferencesApp,
     onClientSideRender: () => {
       PreferencesApp.preload()
