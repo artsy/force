@@ -30,7 +30,8 @@ fragment AuctionDetails_sale on Sale {
   ...AuctionInfoSidebar_sale
   name
   slug
-  formattedStartDateTime
+  auctionsDetailFormattedStartDateTime
+  auctionsDetailCascadingIntervalLabel
   liveStartAt
   startAt
   endAt
@@ -83,25 +84,25 @@ v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Bidder"
+  "type": "String"
 },
 v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Bidder"
+},
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
-},
 v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -263,7 +264,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "formattedStartDateTime",
+            "name": "auctionsDetailFormattedStartDateTime",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "auctionsDetailCascadingIntervalLabel",
             "storageKey": null
           },
           {
@@ -307,7 +315,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d5f9bf601e2053b07464e0001c5485ae",
+    "cacheID": "dc2bb6ea492e11894861af6a9926ede6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -317,34 +325,35 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "sale.bidder": (v2/*: any*/),
-        "sale.bidder.id": (v3/*: any*/),
-        "sale.bidder.qualifiedForBidding": (v4/*: any*/),
-        "sale.description": (v5/*: any*/),
-        "sale.endAt": (v5/*: any*/),
-        "sale.formattedStartDateTime": (v5/*: any*/),
-        "sale.href": (v5/*: any*/),
-        "sale.id": (v3/*: any*/),
-        "sale.isAuction": (v4/*: any*/),
-        "sale.isClosed": (v4/*: any*/),
-        "sale.isLiveOpen": (v4/*: any*/),
-        "sale.isPreview": (v4/*: any*/),
-        "sale.isRegistrationClosed": (v4/*: any*/),
-        "sale.liveStartAt": (v5/*: any*/),
-        "sale.liveURLIfOpen": (v5/*: any*/),
-        "sale.name": (v5/*: any*/),
-        "sale.registrationStatus": (v2/*: any*/),
-        "sale.registrationStatus.id": (v3/*: any*/),
-        "sale.registrationStatus.internalID": (v3/*: any*/),
-        "sale.requireIdentityVerification": (v4/*: any*/),
-        "sale.slug": (v3/*: any*/),
-        "sale.startAt": (v5/*: any*/),
-        "sale.status": (v5/*: any*/)
+        "sale.auctionsDetailCascadingIntervalLabel": (v2/*: any*/),
+        "sale.auctionsDetailFormattedStartDateTime": (v2/*: any*/),
+        "sale.bidder": (v3/*: any*/),
+        "sale.bidder.id": (v4/*: any*/),
+        "sale.bidder.qualifiedForBidding": (v5/*: any*/),
+        "sale.description": (v2/*: any*/),
+        "sale.endAt": (v2/*: any*/),
+        "sale.href": (v2/*: any*/),
+        "sale.id": (v4/*: any*/),
+        "sale.isAuction": (v5/*: any*/),
+        "sale.isClosed": (v5/*: any*/),
+        "sale.isLiveOpen": (v5/*: any*/),
+        "sale.isPreview": (v5/*: any*/),
+        "sale.isRegistrationClosed": (v5/*: any*/),
+        "sale.liveStartAt": (v2/*: any*/),
+        "sale.liveURLIfOpen": (v2/*: any*/),
+        "sale.name": (v2/*: any*/),
+        "sale.registrationStatus": (v3/*: any*/),
+        "sale.registrationStatus.id": (v4/*: any*/),
+        "sale.registrationStatus.internalID": (v4/*: any*/),
+        "sale.requireIdentityVerification": (v5/*: any*/),
+        "sale.slug": (v4/*: any*/),
+        "sale.startAt": (v2/*: any*/),
+        "sale.status": (v2/*: any*/)
       }
     },
     "name": "AuctionDetailsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  auctionsDetailFormattedStartDateTime\n  auctionsDetailCascadingIntervalLabel\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();

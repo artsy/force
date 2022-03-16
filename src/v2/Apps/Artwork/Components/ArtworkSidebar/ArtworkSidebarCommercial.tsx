@@ -1,4 +1,3 @@
-import { userHasLabFeature } from "v2/Utils/user"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -375,10 +374,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       is_inquireable: isInquireable,
       is_sold: isSold,
     } = artwork
-    const avalaraPhase2Enabled = userHasLabFeature(
-      this.props.user,
-      "Avalara Phase 2"
-    )
 
     const {
       isCommittingCreateOrderMutation,
@@ -437,7 +432,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               <Spacer mt={1} />
             )}
 
-          {avalaraPhase2Enabled && artworkEcommerceAvailable && !isSold && (
+          {artworkEcommerceAvailable && !isSold && (
             <Text variant="xs" color="black60">
               Taxes may apply at checkout.{" "}
               <a
@@ -461,14 +456,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               {artwork.shippingInfo}
             </Text>
           )}
-
-          {!avalaraPhase2Enabled &&
-            artworkEcommerceAvailable &&
-            artwork.priceIncludesTaxDisplay && (
-              <Text variant="xs" color="black60">
-                {artwork.priceIncludesTaxDisplay}
-              </Text>
-            )}
 
           {isInquireable || isAcquireable || isOfferable ? (
             artwork.sale_message && <Spacer mt={2} />

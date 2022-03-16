@@ -3,6 +3,8 @@ import {
   ArtworkOfferableFromInquiryPriceRange,
   ArtworkOfferableAndInquireablePriceHidden,
   ForSaleArtworkWithMultipleEditions,
+  ArtworkSold,
+  ArtworkBuyNowMakeOffer,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCommercial"
 
 import { commitMutation as _commitMutation, graphql } from "react-relay"
@@ -65,5 +67,23 @@ describe("ArtworkSidebarCommercial RTL", () => {
     })
 
     expect(screen.getAllByRole("radio").length).toBe(4)
+  })
+
+  it("displays 'Taxes may apply at checkout.'", () => {
+    renderWithRelay({
+      Artwork: () => ArtworkBuyNowMakeOffer,
+    })
+
+    expect(screen.getByText("Taxes may apply at checkout.")).toBeInTheDocument()
+  })
+
+  it("does not display 'Taxes may apply at checkout.' if artwork is sold", () => {
+    renderWithRelay({
+      Artwork: () => ArtworkSold,
+    })
+
+    expect(
+      screen.queryByText("Taxes may apply at checkout.")
+    ).not.toBeInTheDocument()
   })
 })

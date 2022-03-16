@@ -3,6 +3,7 @@ import {
   Checkbox,
   Column,
   GridColumns,
+  Message,
   Separator,
   Text,
   useToasts,
@@ -18,6 +19,11 @@ import {
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
 import { useRouter } from "v2/System/Router/useRouter"
 
+export const parseTokenFromRouter = (router): string => {
+  const tokenFromQuery =
+    router.match?.location?.query?.authentication_token || ""
+  return tokenFromQuery.split("?")[0]
+}
 const NOTIFICATION_FIELDS = {
   recommendedByArtsy: false,
   artWorldInsights: false,
@@ -39,11 +45,27 @@ interface FormValuesForNotificationPreferences {
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
-  const { match } = useRouter()
-  const authenticationToken = match?.location?.query?.authentication_token
+  const router = useRouter()
+  const authenticationToken = parseTokenFromRouter(router)
   const { sendToast } = useToasts()
   const { submitMutation } = useEditNotificationPreferences()
-  let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik
+  const initialPreferences = viewer?.notificationPreferences
+  const initialValues =
+    initialPreferences && getInitialValues(initialPreferences)
+
+  if (!initialPreferences) {
+    return (
+      <>
+        <Text variant={["lg", "xl"]} mt={6} mb={6}>
+          Email Preference Center
+        </Text>
+
+        <Message variant="error" my={4}>
+          Please sign in to update your email preferences
+        </Message>
+      </>
+    )
+  }
 
   return (
     <>
@@ -267,8 +289,8 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   )
 }
 
-const getInitialValues = viewer => {
-  return viewer?.notificationPreferences
+const getInitialValues = initialPreferences => {
+  return initialPreferences
     .filter(preference =>
       Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
     )

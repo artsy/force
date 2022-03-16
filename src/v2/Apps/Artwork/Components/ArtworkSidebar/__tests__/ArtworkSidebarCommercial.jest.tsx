@@ -90,34 +90,6 @@ describe("ArtworkSidebarCommercial", () => {
       })
     })
   })
-  it("displays if the artwork price includes tax", async () => {
-    const artwork = Object.assign(
-      {},
-      {
-        ...ArtworkBuyNowMakeOffer,
-        priceIncludesTaxDisplay: "VAT included in price",
-        is_for_sale: true,
-      }
-    )
-
-    const wrapper = getWrapper(artwork)
-
-    expect(wrapper.text()).toContain("VAT included in price")
-  })
-
-  it("does not display artwork price includes tax if untrue", async () => {
-    const artwork = Object.assign(
-      {},
-      {
-        ...ArtworkSingleEditionHiddenAvailability,
-        priceIncludesTaxDisplay: null,
-      }
-    )
-
-    const wrapper = getWrapper(artwork)
-
-    expect(wrapper.text()).not.toContain("VAT included in price")
-  })
 
   it("displays single editioned hidden availability inquire work", async () => {
     const artwork = Object.assign({}, ArtworkSingleEditionHiddenAvailability)

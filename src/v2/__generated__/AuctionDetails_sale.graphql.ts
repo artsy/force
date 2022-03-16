@@ -7,7 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionDetails_sale = {
     readonly name: string | null;
     readonly slug: string;
-    readonly formattedStartDateTime: string | null;
+    readonly auctionsDetailFormattedStartDateTime: string | null;
+    readonly auctionsDetailCascadingIntervalLabel: string | null;
     readonly liveStartAt: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
@@ -49,7 +50,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "formattedStartDateTime",
+      "name": "auctionsDetailFormattedStartDateTime",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "auctionsDetailCascadingIntervalLabel",
       "storageKey": null
     },
     {
@@ -114,5 +122,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '2ff3e2f5eb66bfbd97e2a18d571a1f2d';
+(node as any).hash = 'e1903768905861b3254f8a5b174088a4';
 export default node;
