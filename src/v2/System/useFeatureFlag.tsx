@@ -1,14 +1,24 @@
-import * as Schema from "v2/System/Analytics"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { Variant } from "unleash-client"
-import { useTracking } from "react-tracking"
+
 import { useEffect } from "react"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
 interface FeatureFlagDetails {
   flagEnabled: boolean
   variant: Variant
+}
+
+interface VariantTrackingProperties {
+  experimentName: string
+  variantName: string
+  payload?: string
+  contextOwnerType: OwnerType
+  contextOwnerId?: string
+  contextOwnerSlug?: string
+  shouldTrackExperiment?: boolean
 }
 
 export function useFeatureFlag(featureName: string): boolean | null {
@@ -42,29 +52,30 @@ export function useFeatureVariant(featureName: string): Variant | null {
 }
 
 export function useTrackVariantView({
-  experiment_name,
-  variant_name,
+  experimentName,
+  variantName,
   payload,
-  context_owner_type,
-  context_owner_id,
-  context_owner_slug,
-}) {
+  contextOwnerType,
+  contextOwnerId,
+  contextOwnerSlug,
+  shouldTrackExperiment = true,
+}: VariantTrackingProperties) {
   const { trackEvent } = useTracking()
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const trackFeatureView = shouldTrack(experiment_name, variant_name)
+      const trackFeatureView = shouldTrack(experimentName, variantName)
 
-      if (trackFeatureView) {
+      if (trackFeatureView && shouldTrackExperiment) {
         trackEvent({
-          action: Schema.ActionType.ExperimentViewed,
+          action: ActionType.experimentViewed,
           service: "unleash",
-          experiment_name,
-          variant_name,
+          experiment_name: experimentName,
+          variant_name: variantName,
           payload,
-          context_owner_type,
-          context_owner_id,
-          context_owner_slug,
+          context_owner_type: contextOwnerType,
+          context_owner_id: contextOwnerId,
+          context_owner_slug: contextOwnerSlug,
         })
       }
     }

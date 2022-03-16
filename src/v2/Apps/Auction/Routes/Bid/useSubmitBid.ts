@@ -37,7 +37,6 @@ export const useSubmitBid = ({
   requiresPaymentInformation,
   sale,
 }: UseSubmitBidProps) => {
-  // FIXME
   const isRegistrationTracked = useRef(false)
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()

@@ -49,6 +49,7 @@ module.exports = function () {
           clientSecret: opts.GOOGLE_SECRET,
           passReqToCallback: true,
           callbackURL: `${opts.APP_URL}${opts.googleCallbackPath}`,
+          scope: ["profile", "email"],
         },
         callbacks.google
       )

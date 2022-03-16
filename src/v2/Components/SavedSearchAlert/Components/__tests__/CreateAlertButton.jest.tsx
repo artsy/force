@@ -9,15 +9,23 @@ import {
 import { mediator } from "lib/mediator"
 import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchEntity } from "../../types"
+import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: "artist",
-  id: "test-artist-id",
-  name: "test-artist-name",
-  slug: "example-slug",
+  placeholder: "test-artist-name",
+  artists: [
+    {
+      id: "test-artist-id",
+      name: "test-artist-name",
+      slug: "example-slug",
+    },
+  ],
+  analytics: {
+    ownerType: OwnerType.artist,
+  },
 }
 
 describe("CreateAlertButton", () => {

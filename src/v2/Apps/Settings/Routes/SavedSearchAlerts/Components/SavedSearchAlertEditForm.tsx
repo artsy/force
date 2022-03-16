@@ -35,7 +35,7 @@ import {
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 const logger = createLogger(
@@ -81,8 +81,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     email: userAlertSettings.email,
   }
 
-  const namePlaceholder = entity.name
-
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
       return
@@ -98,7 +96,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     try {
       const updatedAlertSettings = {
         ...values,
-        name: values.name || namePlaceholder,
+        name: values.name || entity.placeholder,
       }
 
       await submitEditAlert({
@@ -151,7 +149,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={namePlaceholder}
+                placeholder={entity.placeholder}
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -248,10 +246,17 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   const criteria = getAllowedSearchCriteria(savedSearch as any)
   const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
-    type: "artist",
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug ?? "",
+    placeholder: artist.name ?? "",
+    artists: [
+      {
+        id: artist.internalID,
+        name: artist.name ?? "",
+        slug: artist.slug ?? "",
+      },
+    ],
+    analytics: {
+      ownerType: OwnerType.savedSearch,
+    },
   }
 
   return (

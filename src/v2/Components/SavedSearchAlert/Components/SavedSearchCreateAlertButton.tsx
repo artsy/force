@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
-import {
-  ActionType,
-  Intent,
-  ContextModule,
-  PageOwnerType,
-} from "@artsy/cohesion"
+import { ActionType, Intent, ContextModule } from "@artsy/cohesion"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
@@ -24,6 +19,7 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
   const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
   const { sendToast } = useToasts()
+  const entityArtist = entity.artists[0]
 
   const openModal = () => {
     setVisibleForm(true)
@@ -44,9 +40,9 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
-      context_page_owner_type: entity.type as PageOwnerType,
-      context_page_owner_id: entity.id,
-      context_page_owner_slug: entity.slug,
+      context_page_owner_type: entity.analytics.ownerType,
+      context_page_owner_id: entityArtist.id,
+      context_page_owner_slug: entityArtist.slug,
     })
 
     if (isLoggedIn) {
@@ -54,8 +50,8 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     } else {
       openAuthToSatisfyIntent(mediator, {
         entity: {
-          name: entity.name,
-          slug: entity.slug,
+          name: entityArtist.name,
+          slug: entityArtist.slug,
         },
         contextModule: ContextModule.artworkGrid,
         intent: Intent.createAlert,
@@ -68,9 +64,9 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     setVisibleForm(false)
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: entity.type as PageOwnerType,
-      context_page_owner_id: entity.id,
-      context_page_owner_slug: entity.slug,
+      context_page_owner_type: entity.analytics.ownerType,
+      context_page_owner_id: entityArtist.id,
+      context_page_owner_slug: entityArtist.slug,
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)

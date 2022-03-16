@@ -1,4 +1,5 @@
 import { mount } from "enzyme"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
@@ -10,10 +11,20 @@ import { ArtworkFilters } from "../ArtworkFilters"
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: true }),
 }))
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("ArtworkFilterMobileActionSheet", () => {
   let context
   let spy
+  const trackEvent = jest.fn()
+
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
 
   const getWrapper = (props = {}) => {
     return mount(

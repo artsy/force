@@ -1,3 +1,5 @@
+import { PageOwnerType } from "@artsy/cohesion"
+
 export interface SearchCriteriaAttributes {
   artistID?: string | null
   artistIDs?: string[] | null
@@ -18,12 +20,20 @@ export interface SearchCriteriaAttributes {
   priceRange?: string | null
 }
 
-export interface SavedSearchEntity {
-  // possible entity types for creating alert
-  type: "artist"
+export interface SavedSearchEntityArtist {
   id: string
   name: string
   slug: string
+}
+
+interface SavedSearchEntityAnalytics {
+  ownerType: PageOwnerType
+}
+
+export interface SavedSearchEntity {
+  placeholder: string
+  artists: SavedSearchEntityArtist[]
+  analytics: SavedSearchEntityAnalytics
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes

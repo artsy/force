@@ -179,9 +179,11 @@ const LargeAuctionItem: FC<Props> = props => {
               {title && date_text && ", "}
               {date_text}
             </Text>
-            <Text variant="xs" color="black60">
-              <Capitalize>{mediumText}</Capitalize>
-            </Text>
+            {mediumText !== "Unknown" && (
+              <Text variant="xs" color="black60">
+                <Capitalize>{mediumText}</Capitalize>
+              </Text>
+            )}
           </Box>
         </Flex>
       </Col>
@@ -542,12 +544,16 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
         <Row>
           <Col sm={2}>
             <Text variant="xs" fontWeight="bold">
-              Artwork Info
+              {categoryText !== "Unknown"
+                ? "Artwork Info"
+                : "Artwork Dimension"}
             </Text>
           </Col>
           <Col sm={4}>
             <Box pl={1} pr={6}>
-              <Text variant="xs">{categoryText}</Text>
+              {categoryText !== "Unknown" && (
+                <Text variant="xs">{categoryText}</Text>
+              )}
               <Text variant="xs">{dimension_text}</Text>
             </Box>
           </Col>
@@ -616,15 +622,21 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
         <Row mb={2}>
           <Col xs={4}>
             <Text variant="xs" fontWeight="bold">
-              Artwork Info
+              {categoryText !== "Unknown" && mediumText !== "Unknown"
+                ? "Artwork Info"
+                : "Artwork Dimension"}
             </Text>
           </Col>
           <Col xs={8}>
             <Box>
-              <Text variant="xs">{categoryText}</Text>
-              <Text variant="xs">
-                <Capitalize>{mediumText}</Capitalize>
-              </Text>
+              {categoryText !== "Unknown" && (
+                <Text variant="xs">{categoryText}</Text>
+              )}
+              {mediumText !== "Unknown" && (
+                <Text variant="xs">
+                  <Capitalize>{mediumText}</Capitalize>
+                </Text>
+              )}
               <Text variant="xs">{dimension_text}</Text>
             </Box>
           </Col>
