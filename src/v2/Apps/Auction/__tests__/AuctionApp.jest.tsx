@@ -100,6 +100,26 @@ describe("AuctionApp", () => {
     ).toBeTruthy()
   })
 
+  describe("explanatory banner for cascading", () => {
+    it("includes banner when cascading is enabled", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          cascadingEndTimeInterval: 60,
+        }),
+      })
+      expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeTruthy()
+    })
+
+    it("hides banner when cascading is disabled", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          cascadingEndTimeInterval: null,
+        }),
+      })
+      expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeFalsy()
+    })
+  })
+
   describe("Tabs", () => {
     it("hides tab bar if conditions not met", () => {
       const wrapper = getWrapper({

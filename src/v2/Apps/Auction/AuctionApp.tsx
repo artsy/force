@@ -14,6 +14,7 @@ import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
+import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -41,6 +42,12 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
     showBuyNowTab: sale.showBuyNowTab,
   }
 
+  const {
+    cascadingEndTimeInterval,
+    cascadingEndTime.intervalLabel,
+  } = sale
+  const isFullBleedHeaderFixed = !cascadingEndTimeInterval
+
   return (
     <>
       <AnalyticsContext.Provider
@@ -50,11 +57,20 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           contextPageOwnerType,
         }}
       >
+        {cascadingEndTimeInterval && (
+          <CascadingEndTimesBanner
+            intervalMessage={cascadingEndTime.intervalLabel!}
+          />
+        )}
+
         <AuctionMetaFragmentContainer sale={sale} />
 
         <Join separator={<Spacer my={4} />}>
           {sale.coverImage?.url ? (
-            <FullBleedHeader src={sale.coverImage.url} />
+            <FullBleedHeader
+              fixed={isFullBleedHeaderFixed}
+              src={sale.coverImage.url}
+            />
           ) : (
             <Spacer my={2} />
           )}
@@ -130,6 +146,11 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       showBuyNowTab: promotedSale {
         internalID
       }
+
+      cascadingEndTime {
+        intervalLabel
+      }
+      cascadingEndTimeInterval
     }
   `,
   viewer: graphql`
