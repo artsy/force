@@ -48,7 +48,9 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   const authenticationToken = parseTokenFromRouter(router)
   const { sendToast } = useToasts()
   const { submitMutation } = useEditNotificationPreferences()
-  let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik
+  const initialPreferences = viewer?.notificationPreferences
+  const initialValues =
+    initialPreferences && getInitialValues(initialPreferences)
 
   return (
     <>
@@ -272,8 +274,8 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   )
 }
 
-const getInitialValues = viewer => {
-  return viewer?.notificationPreferences
+const getInitialValues = initialPreferences => {
+  return initialPreferences
     .filter(preference =>
       Object.keys(NOTIFICATION_FIELDS).includes(camelCase(preference.name))
     )
