@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchEntity } from "../../types"
 import {
@@ -6,7 +7,7 @@ import {
 } from "../savedSearchCriteria"
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
-  type: "artist",
+  type: OwnerType.artist,
   placeholder: "alertName",
   artists: [
     {
@@ -56,7 +57,7 @@ describe("getSearchCriteriaFromFilters", () => {
 
   it("returns correct criteria when a single artist is passed to entity", () => {
     const entity: SavedSearchEntity = {
-      type: "artist",
+      type: OwnerType.artist,
       placeholder: "",
       artists: [
         {

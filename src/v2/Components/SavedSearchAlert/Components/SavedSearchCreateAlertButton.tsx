@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
-import {
-  ActionType,
-  Intent,
-  ContextModule,
-  PageOwnerType,
-} from "@artsy/cohesion"
+import { ActionType, Intent, ContextModule } from "@artsy/cohesion"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
@@ -45,7 +40,7 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
-      context_page_owner_type: entity.type as PageOwnerType,
+      context_page_owner_type: entity.type,
       context_page_owner_id: entityArtist.id,
       context_page_owner_slug: entityArtist.slug,
     })
@@ -69,7 +64,7 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     setVisibleForm(false)
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: entity.type as PageOwnerType,
+      context_page_owner_type: entity.type,
       context_page_owner_id: entityArtist.id,
       context_page_owner_slug: entityArtist.slug,
       saved_search_id: result.id,

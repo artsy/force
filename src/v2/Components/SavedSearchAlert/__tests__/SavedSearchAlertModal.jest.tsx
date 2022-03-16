@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
@@ -16,7 +17,7 @@ const formInitialValues = {
 }
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: "artist",
+  type: OwnerType.artist,
   placeholder: "Test Artist",
   artists: [
     {

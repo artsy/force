@@ -35,7 +35,7 @@ import {
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 const logger = createLogger(
@@ -246,7 +246,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   const criteria = getAllowedSearchCriteria(savedSearch as any)
   const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
-    type: "artist",
+    type: OwnerType.artwork,
     placeholder: artist.name ?? "",
     artists: [
       {

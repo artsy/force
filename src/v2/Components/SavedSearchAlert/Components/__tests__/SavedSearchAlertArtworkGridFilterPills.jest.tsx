@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { render, screen, within, fireEvent } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
@@ -8,7 +9,7 @@ import { SavedSearchEntity } from "../../types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: "artist",
+  type: OwnerType.artist,
   placeholder: "Banksy",
   artists: [
     {

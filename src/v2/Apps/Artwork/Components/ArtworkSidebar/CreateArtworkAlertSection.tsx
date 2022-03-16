@@ -22,6 +22,7 @@ import { compact } from "lodash"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertModal } from "v2/Components/SavedSearchAlert/SavedSearchAlertModal"
+import { OwnerType } from "@artsy/cohesion"
 
 interface CreateArtworkAlertSectionProps {
   artwork: CreateArtworkAlertSection_artwork
@@ -76,7 +77,7 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
   )
 
   const entity: SavedSearchEntity = {
-    type: "artist", // TODO: Use OwnerType
+    type: OwnerType.artwork,
     placeholder,
     artists: artists.map(artist => ({
       id: artist.internalID,
