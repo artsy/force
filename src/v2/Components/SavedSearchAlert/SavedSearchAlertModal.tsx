@@ -13,7 +13,7 @@ import {
 } from "@artsy/palette"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
-import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
+import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
 import {
   SavedSearchAlertContextProvider,
@@ -25,9 +25,10 @@ import {
   SavedSearchAlertMutationResult,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
+  SearchCriteriaAttributes,
 } from "./types"
-import { getSearchCriteriaFromFilters } from "./Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
+import { Metric } from "../ArtworkFilter/Utils/metrics"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -39,6 +40,9 @@ interface SavedSearchAlertFormProps {
 export interface SavedSearchAlertFormContainerProps
   extends SavedSearchAlertFormProps {
   visible?: boolean
+  criteria: SearchCriteriaAttributes
+  metric?: Metric
+  aggregations: Aggregations | undefined
 }
 
 const logger = createLogger(
@@ -175,18 +179,15 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 }
 
 export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContainerProps> = props => {
-  const { visible, entity } = props
-  const { aggregations, filters } = useArtworkFilterContext()
+  const { visible, entity, criteria, metric, aggregations } = props
 
   if (visible) {
-    const criteria = getSearchCriteriaFromFilters(entity, filters ?? {})
-
     return (
       <SavedSearchAlertContextProvider
         criteria={criteria}
         aggregations={aggregations}
         entity={entity}
-        metric={filters?.metric!}
+        metric={metric}
       >
         <SavedSearchAlertModal {...props} />
       </SavedSearchAlertContextProvider>

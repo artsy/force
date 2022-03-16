@@ -5,14 +5,26 @@ import { ActionType, Intent, ContextModule } from "@artsy/cohesion"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
-import { SavedSearchAlertMutationResult, SavedSearchEntity } from "../types"
+import {
+  SavedSearchAlertMutationResult,
+  SavedSearchEntity,
+  SearchCriteriaAttributes,
+} from "../types"
+import { Metric } from "v2/Components/ArtworkFilter/Utils/metrics"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 export interface SavedSearchCreateAlertButtonProps extends ButtonProps {
   entity: SavedSearchEntity
+  criteria: SearchCriteriaAttributes
+  metric?: Metric
+  aggregations?: Aggregations
 }
 
 export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButtonProps> = ({
   entity,
+  criteria,
+  metric,
+  aggregations,
   ...props
 }) => {
   const tracking = useTracking()
@@ -91,6 +103,9 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
         visible={visibleForm}
         initialValues={{ name: "", email: true, push: false }}
         entity={entity}
+        criteria={criteria}
+        metric={metric}
+        aggregations={aggregations}
         onClose={() => setVisibleForm(false)}
         onComplete={handleComplete}
       />
