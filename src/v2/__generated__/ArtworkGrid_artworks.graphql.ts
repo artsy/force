@@ -14,7 +14,7 @@ export type ArtworkGrid_artworks = {
             readonly image: {
                 readonly aspect_ratio: number;
             } | null;
-            readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
+            readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork" | "FlatGridItem_artwork">;
         } | null;
     } | null> | null;
     readonly " $refType": "ArtworkGrid_artworks";
@@ -99,6 +99,11 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "FragmentSpread",
               "name": "GridItem_artwork"
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "FlatGridItem_artwork"
             }
           ],
           "storageKey": null
@@ -110,5 +115,5 @@ const node: ReaderFragment = {
   "type": "ArtworkConnectionInterface",
   "abstractKey": "__isArtworkConnectionInterface"
 };
-(node as any).hash = '59d6b9d5570ebc1f6f93d1989f91ac2f';
+(node as any).hash = '8b933fbb60b8a2a04f5dea3d4dff8494';
 export default node;

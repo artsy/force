@@ -203,11 +203,11 @@ export const Details: React.FC<DetailsProps> = ({
   hideSaleInfo,
   ...rest
 }) => {
-  const { artworkGridContext } = useArtworkGridContext()
+  const { isAuctionArtwork } = useArtworkGridContext()
 
   return (
     <>
-      {artworkGridContext?.isAuctionArtwork && (
+      {isAuctionArtwork && (
         <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
