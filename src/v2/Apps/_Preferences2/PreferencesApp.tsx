@@ -157,7 +157,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Text variant="md">Recommended for You</Text>
                 <Text variant="sm" color="black60">
                   Artworks, shows, fairs, auctions, and collections we think
-                  you'll love
+                  you’ll love
                 </Text>
               </Column>
 
@@ -216,7 +216,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               <Column span={10}>
                 <Text variant="md">Custom Alerts</Text>
                 <Text variant="sm" color="black60">
-                  A round up of updates on your favorite artists, chosen by you
+                  A roundup of updates on your favorite artists, chosen by you
                 </Text>
               </Column>
 
