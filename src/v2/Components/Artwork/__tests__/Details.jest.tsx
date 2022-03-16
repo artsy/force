@@ -2,6 +2,7 @@ import { Details_Test_QueryRawResponse } from "v2/__generated__/Details_Test_Que
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "../Details"
+import { ArtworkGridContextProvider } from "v2/Components/ArtworkGrid/ArtworkGridContext"
 
 jest.unmock("react-relay")
 
@@ -18,7 +19,9 @@ describe("Details", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <DetailsFragmentContainer {...(props as any)} {...restProps} />
+        <ArtworkGridContextProvider isAuctionArtwork={true}>
+          <DetailsFragmentContainer {...(props as any)} {...restProps} />
+        </ArtworkGridContextProvider>
       ),
       query: graphql`
         query Details_Test_Query @raw_response_type @relay_test_operation {
@@ -207,6 +210,106 @@ describe("Details", () => {
       const html = wrapper.html()
       expect(html).not.toContain("bid")
     })
+
+    describe("lot close info", () => {
+      it("shows the lot is closed if the lot end time has passed and if the sale has cascading end times enabled", async () => {
+        const data = {
+          ...artworkInAuction,
+          sale_artwork: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale_artwork,
+            endAt: "2022-03-11T12:33:37.000Z",
+          },
+          sale: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale,
+            cascadingEndTimeInterval: 120,
+          },
+        }
+
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        const wrapper = await getWrapper(data)
+        expect(wrapper.html()).toContain("Closed")
+      })
+
+      it("shows the lot is closing with the countdown if lots have started closing and the sale has cascading end times enabled", async () => {
+        const data = {
+          ...artworkInAuction,
+          sale_artwork: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale_artwork,
+            endAt: "2026-03-11T12:33:37.000Z",
+          },
+          sale: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale,
+            cascadingEndTimeInterval: 120,
+            endAt: "2022-03-12T12:33:37.000Z",
+          },
+        }
+
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        const wrapper = await getWrapper(data)
+        expect(wrapper.html()).toContain("Closes, 1455d 16h")
+      })
+
+      it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
+        const data = {
+          ...artworkInAuction,
+          sale_artwork: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale_artwork,
+            endAt: "2026-03-11T12:33:37.000Z",
+          },
+          sale: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale,
+            cascadingEndTimeInterval: 120,
+            endAt: "2030-03-12T12:33:37.000Z",
+            auctionsDetailFormattedStartDateTime: "Mar 30, 2030 • 12:33pm GMT",
+          },
+        }
+
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        const wrapper = await getWrapper(data)
+        expect(wrapper.html()).toContain("Closes, Mar 30, 2030 • 12:33pm GMT")
+      })
+
+      it("does not show the lot close info if the cascading end time flag is off", async () => {
+        const data = {
+          ...artworkInAuction,
+          sale: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale,
+            cascadingEndTimeInterval: null,
+          },
+        }
+
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        const wrapper = await getWrapper(data)
+        expect(wrapper.html()).not.toContain("Closed")
+      })
+
+      it("does not show the lot close info if sale is not yet open", async () => {
+        const data = {
+          ...artworkInAuction,
+          sale_artwork: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale_artwork,
+          },
+          sale: {
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ...artworkInAuction.sale,
+            cascadingEndTimeInterval: 120,
+            startAt: "2030-03-12T12:33:37.000Z",
+          },
+        }
+
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        const wrapper = await getWrapper(data)
+        expect(wrapper.html()).not.toContain("Closes")
+      })
+    })
   })
 })
 
@@ -235,7 +338,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     is_auction: true,
     is_closed: false,
     cascadingEndTimeInterval: null,
-    auctionsDetailFormattedStartDateTime: "Mar 11, 2022 • 12:33pm GMT",
+    auctionsDetailFormattedStartDateTime: "Mar 11, 2030 • 12:33pm GMT",
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
   },
