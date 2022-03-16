@@ -13,9 +13,9 @@ interface BadgeProps {
 const MIN_IMAGE_SIZE = 150
 
 const Badge: React.FC<BadgeProps> = ({ artwork, width }) => {
-  const { artworkGridContext } = useArtworkGridContext()
+  const { isAuctionArtwork } = useArtworkGridContext()
 
-  if (artworkGridContext?.isAuctionArtwork) {
+  if (isAuctionArtwork) {
     return null
   }
 

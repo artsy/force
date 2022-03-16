@@ -112,7 +112,6 @@ class RelatedWorksArtworkGrid extends Component<
                   ) : (
                     <ArtworkGrid
                       contextModule={ContextModule.relatedWorksRail}
-                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                       artworks={artworksConnection}
                       columnCount={[2, 3, 4, 4]}
                       mediator={mediator}

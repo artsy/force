@@ -30,6 +30,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-kenny-burrell",
             href: "/artwork/andy-warhol-kenny-burrell",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.35,
               placeholder: "74.20097898070833%",
               url:
@@ -70,6 +76,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-dollars-1-fs-ii-dot-274",
             href: "/artwork/andy-warhol-dollars-1-fs-ii-dot-274",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.79,
               placeholder: "126.35956493921945%",
               url:
@@ -110,6 +122,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-peaches",
             href: "/artwork/andy-warhol-peaches",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.33,
               placeholder: "75.44910179640718%",
               url:
@@ -153,6 +171,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             href:
               "/artwork/andy-warhol-actress-shots-andy-warhol-ny-daily-news-1968",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.07,
               placeholder: "93.81044487427465%",
               url:
@@ -194,6 +218,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-cosmos",
             href: "/artwork/andy-warhol-cosmos",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.78,
               placeholder: "128.15296989422293%",
               url:
@@ -234,6 +264,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-lee-iacocca-2",
             href: "/artwork/andy-warhol-lee-iacocca-2",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.82,
               placeholder: "121.67539267015708%",
               url:
@@ -274,6 +310,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-shoe-18",
             href: "/artwork/andy-warhol-shoe-18",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.42,
               placeholder: "70.31349968010237%",
               url:
@@ -314,6 +356,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-sewing-machine",
             href: "/artwork/andy-warhol-sewing-machine",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1,
               placeholder: "100%",
               url:
@@ -354,6 +402,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-superman-f-and-s-ii-260-3",
             href: "/artwork/andy-warhol-superman-f-and-s-ii-260-3",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1,
               placeholder: "100.45558086560365%",
               url:
@@ -394,6 +448,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-birmingham-race-riot-10",
             href: "/artwork/andy-warhol-birmingham-race-riot-10",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.21,
               placeholder: "82.84023668639054%",
               url:
@@ -436,6 +496,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
             href: "/artwork/andy-warhol-northwest-coast-mask-fs-ii-dot-380-2",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1,
               placeholder: "99.71291866028709%",
               url:
@@ -478,6 +544,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-rare-original-andy-warhol-record-art",
             href: "/artwork/andy-warhol-rare-original-andy-warhol-record-art",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1,
               placeholder: "100.2248201438849%",
               url:
@@ -522,6 +594,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             href:
               "/artwork/andy-warhol-andy-warhol-philip-fagan-and-gerard-malanga",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.58,
               placeholder: "172.1784776902887%",
               url:
@@ -566,6 +644,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             href:
               "/artwork/andy-warhol-andy-warhol-photograph-of-cornelia-guest-1985",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.8,
               placeholder: "124.82435597189696%",
               url:
@@ -610,6 +694,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             href:
               "/artwork/andy-warhol-andy-warhol-photograph-of-timothy-hutton-1980",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.76,
               placeholder: "131.11395646606914%",
               url:
@@ -651,6 +741,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-muhammed-ali-1",
             href: "/artwork/andy-warhol-muhammed-ali-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.75,
               placeholder: "133.57142857142856%",
               url:
@@ -691,6 +787,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-untitled-jon-gould-1",
             href: "/artwork/andy-warhol-untitled-jon-gould-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.73,
               placeholder: "137.22126929674099%",
               url:
@@ -731,6 +833,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-geronimo-fs-ii-dot-384-12",
             href: "/artwork/andy-warhol-geronimo-fs-ii-dot-384-12",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1,
               placeholder: "99.9002493765586%",
               url:
@@ -771,6 +879,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-jason-mccoy",
             href: "/artwork/andy-warhol-jason-mccoy",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.78,
               placeholder: "128.2233936458185%",
               url:
@@ -813,6 +927,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
             href: "/artwork/andy-warhol-dollars-quadrant-fs-ii-dot-284-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.79,
               placeholder: "125.92766557069046%",
               url:
@@ -855,6 +975,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-130-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.65,
               placeholder: "153.60983102918587%",
               url:
@@ -895,6 +1021,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-mao-f-dot-s-ii-dot-95",
             href: "/artwork/andy-warhol-mao-f-dot-s-ii-dot-95",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.99,
               placeholder: "101.26150698943061%",
               url:
@@ -937,6 +1069,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-127-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.69,
               placeholder: "145.1534339990258%",
               url:
@@ -977,6 +1115,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-truck-9",
             href: "/artwork/andy-warhol-truck-9",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.24,
               placeholder: "80.53691275167785%",
               url:
@@ -1017,6 +1161,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-brillo-1",
             href: "/artwork/andy-warhol-brillo-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.87,
               placeholder: "115.29525653436592%",
               url:
@@ -1059,6 +1209,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
             href: "/artwork/andy-warhol-plains-indian-shield-fs-ii-dot-382-3",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1,
               placeholder: "99.70089730807578%",
               url:
@@ -1099,6 +1255,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-martha-graham-15",
             href: "/artwork/andy-warhol-martha-graham-15",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.88,
               placeholder: "113.60239162929746%",
               url:
@@ -1139,6 +1301,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-fish-fs-iiia-dot-39-1",
             href: "/artwork/andy-warhol-fish-fs-iiia-dot-39-1",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.69,
               placeholder: "144.65281297516472%",
               url:
@@ -1179,6 +1347,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-untitled-female-figure",
             href: "/artwork/andy-warhol-untitled-female-figure",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.74,
               placeholder: "134.3361674296926%",
               url:
@@ -1221,6 +1395,12 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
             slug: "andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",
             href: "/artwork/andy-warhol-ladies-and-gentlemen-fs-ii-dot-128-2",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 0.62,
               placeholder: "160.09673518742443%",
               url:
