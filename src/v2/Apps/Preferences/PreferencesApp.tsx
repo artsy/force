@@ -70,7 +70,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
   return (
     <>
-      <MetaTags title="Preferences | Artsy" pathname="/preferences2" />
+      <MetaTags title="Preferences | Artsy" pathname="/unsubscribe" />
       <Text variant={["lg", "xl"]} mt={6} mb={6}>
         Email Preference Center
       </Text>
