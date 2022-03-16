@@ -100,25 +100,6 @@ function getDesktopIntentToSaveArtwork({
   }
 }
 
-const getDesktopIntentToCreateAlert = ({
-  contextModule,
-  entity,
-  intent,
-  redirectTo,
-}: AuthModalOptions): ModalOptions => {
-  return {
-    afterSignUpAction: {
-      action: "createAlert",
-      kind: "artist",
-      objectId: entity.slug,
-    },
-    contextModule,
-    intent,
-    redirectTo,
-    mode: ModalType.signup,
-  }
-}
-
 function getDesktopIntent(options: AuthModalOptions): ModalOptions {
   switch (options.intent) {
     case Intent.followArtist:
@@ -128,7 +109,7 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
     case Intent.createAlert:
-      return getDesktopIntentToCreateAlert(options)
+      return options
     default:
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       return undefined

@@ -12,6 +12,8 @@ import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
 import { FilterPill, SavedSearchEntity } from "../types"
 import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
 import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { AuthModalOptions } from "v2/Utils/openAuthModal"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -50,6 +52,23 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     setFilter(pill.filterName as keyof ArtworkFilters, filterValue)
   }
 
+  const getAuthModalOptions = (): AuthModalOptions => {
+    return {
+      entity: {
+        name: savedSearchEntity.artists[0].name,
+        slug: savedSearchEntity.artists[0].slug,
+      },
+      afterSignUpAction: {
+        action: "createAlert",
+        kind: "artist",
+        objectId: savedSearchEntity.artists[0].slug,
+      },
+      contextModule: ContextModule.artworkGrid,
+      intent: Intent.createAlert,
+      redirectTo: location.href,
+    }
+  }
+
   return (
     <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
       <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
@@ -59,6 +78,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
         metric={metric}
         aggregations={aggregations}
         ml={PILL_HORIZONTAL_MARGIN_SIZE}
+        getAuthModalOptions={getAuthModalOptions}
       />
     </Flex>
   )

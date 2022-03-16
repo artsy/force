@@ -27,9 +27,32 @@ const savedSearchEntity: SavedSearchEntity = {
   },
 }
 
+const getAuthModalOptions = () => {
+  return {
+    entity: {
+      name: "test-artist-name",
+      slug: "example-slug",
+    },
+    afterSignUpAction: {
+      action: "createAlert",
+      kind: "artist",
+      objectId: "example-slug",
+    },
+    contextModule: "artworkGrid",
+    intent: "createAlert",
+    redirectTo: "http://localhost/",
+  } as openAuthModal.AuthModalOptions
+}
+
 describe("CreateAlertButton", () => {
   const renderButton = () => {
-    render(<CreateAlertButtonTest entity={savedSearchEntity} criteria={{}} />)
+    render(
+      <CreateAlertButtonTest
+        entity={savedSearchEntity}
+        criteria={{}}
+        getAuthModalOptions={getAuthModalOptions}
+      />
+    )
   }
 
   const CreateAlertButtonTest = (props: SavedSearchCreateAlertButtonProps) => {
@@ -116,6 +139,11 @@ describe("CreateAlertButton", () => {
         entity: {
           name: "test-artist-name",
           slug: "example-slug",
+        },
+        afterSignUpAction: {
+          action: "createAlert",
+          kind: "artist",
+          objectId: "example-slug",
         },
         contextModule: "artworkGrid",
         intent: "createAlert",
