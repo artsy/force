@@ -49,6 +49,10 @@ In the component that you added the experiment you just need to add the followin
 
 In [segment live debugger](https://app.segment.com/artsy-engineering/sources/force-staging/debugger) you can see a live stream of all the events on staging. You can use the searchbar to filter out `Experiment Viewed`, click on the one that is yours and review that everything is in order.
 
+### Forcing a specific variant for a userId
+
+When creating a variant in [Unleash](unleash.artsy.net) there is an optional `Add override` option where we can set a context field like `userId` to make sure that we will get the variant we want while QAing. [More info here](https://docs.getunleash.io/advanced/toggle_variants#what-are-variants)
+
 ### Useful links
 
 [Setup an ab experiment in 3 simple steps](https://www.getunleash.io/blog/a-b-n-experiments-in-3-simple-steps)
