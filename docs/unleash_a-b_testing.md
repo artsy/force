@@ -2,7 +2,7 @@
 
 ## Creating a test
 
-- Log into [Unleash](unleash.artsy.net)
+- Log into [Unleash](https://unleash.artsy.net)
 - Press Create feature toggle
   - add a name, description and select the toggle type as "Experiment"
 - Go to Variants Tab and add the variant names (e.g. "control" and "experiment").
@@ -51,7 +51,7 @@ In [segment live debugger](https://app.segment.com/artsy-engineering/sources/for
 
 ### Forcing a specific variant for a userId
 
-When creating a variant in [Unleash](unleash.artsy.net) there is an optional `Add override` option where we can set a context field like `userId` to make sure that we will get the variant we want while QAing. [More info here](https://docs.getunleash.io/advanced/toggle_variants#what-are-variants)
+When creating a variant in [Unleash](https://unleash.artsy.net) there is an optional `Add override` option where we can set a context field like `userId` to make sure that we will get the variant we want while QAing. [More info here](https://docs.getunleash.io/advanced/toggle_variants#what-are-variants)
 
 ### Useful links
 
