@@ -206,9 +206,9 @@ export const BaseArtworkFilter: React.FC<
     const refetchVariables = {
       input: {
         first: 30,
+        ...relayRefetchInputVariables,
         ...allowedFilters(filterContext.filters),
         keyword: filterContext.filters!.term,
-        ...relayRefetchInputVariables,
       },
       ...relayVariables,
     }
