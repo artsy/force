@@ -196,6 +196,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.state.shippingOption === "SHIP" &&
       ((processWithArtaShipping && shippingCountry === "US") ||
         (artsyShippingInternational && shippingCountry !== "US"))
+      // we are only allowing US based Artsy Shipping for now
     )
   }
 
