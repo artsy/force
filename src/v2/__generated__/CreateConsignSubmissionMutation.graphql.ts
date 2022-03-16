@@ -29,6 +29,7 @@ export type CreateSubmissionMutationInput = {
     locationState?: string | null;
     medium?: string | null;
     minimumPriceDollars?: number | null;
+    myCollectionArtworkID?: string | null;
     provenance?: string | null;
     sessionID?: string | null;
     signature?: boolean | null;
