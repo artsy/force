@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Button, Flex, Text } from "@artsy/palette"
+import { Button, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const SettingsEditSettingsEmailPreferences: FC = () => {
