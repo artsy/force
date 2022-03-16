@@ -1,3 +1,4 @@
+import { OwnerType } from "@artsy/cohesion"
 import { render, screen, within, fireEvent } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
@@ -8,7 +9,6 @@ import { SavedSearchEntity } from "../../types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: "artist",
   placeholder: "Banksy",
   artists: [
     {
@@ -17,6 +17,9 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "example-slug",
     },
   ],
+  analytics: {
+    ownerType: OwnerType.artist,
+  },
 }
 
 const mockedFilters: ArtworkFiltersState = {

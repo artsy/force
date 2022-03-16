@@ -16,6 +16,7 @@ import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { getDefaultSortValueByVariant } from "v2/Utils/merchandisingTrial"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { OwnerType } from "@artsy/cohesion"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -37,7 +38,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   }
 
   const savedSearchEntity: SavedSearchEntity = {
-    type: "artist",
     placeholder: artist.name ?? "",
     artists: [
       {
@@ -46,6 +46,9 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         slug: artist.slug,
       },
     ],
+    analytics: {
+      ownerType: OwnerType.artist,
+    },
   }
 
   const metric = getSupportedMetric(me?.lengthUnitPreference)

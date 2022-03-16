@@ -8,6 +8,7 @@ import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
+import { OwnerType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -17,7 +18,6 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 const savedSearchEntity: SavedSearchEntity = {
-  type: "artist",
   placeholder: "Test Artist",
   artists: [
     {
@@ -26,6 +26,9 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "test-artist-slug",
     },
   ],
+  analytics: {
+    ownerType: OwnerType.artist,
+  },
 }
 
 describe("ArtworkFilter", () => {
