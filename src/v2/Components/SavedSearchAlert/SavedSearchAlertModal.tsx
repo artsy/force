@@ -15,7 +15,6 @@ import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { useSystemContext } from "v2/System"
 import { useArtworkFilterContext } from "../ArtworkFilter/ArtworkFilterContext"
 import createLogger from "v2/Utils/logger"
-import { DownloadAppBanner } from "./DownloadAppBanner"
 import {
   SavedSearchAlertContextProvider,
   useSavedSearchAlertContext,
@@ -54,7 +53,6 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
-  const namePlaceholder = entity.name
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -72,10 +70,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
       return null
     }
 
-    const alertName = values.name || namePlaceholder
-
     const userAlertSettings: SavedSearchAleftFormValues = {
-      name: alertName,
+      name: values.name || entity.placeholder,
       email: values.email,
       push: values.push,
     }
@@ -132,7 +128,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={namePlaceholder}
+                placeholder={entity.placeholder}
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -170,8 +166,6 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   />
                 </Box>
               </Box>
-
-              <DownloadAppBanner entity={entity} />
             </Join>
           </ModalDialog>
         )
@@ -185,7 +179,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
   const { aggregations, filters } = useArtworkFilterContext()
 
   if (visible) {
-    const criteria = getSearchCriteriaFromFilters(entity.id, filters ?? {})
+    const criteria = getSearchCriteriaFromFilters(entity, filters ?? {})
 
     return (
       <SavedSearchAlertContextProvider

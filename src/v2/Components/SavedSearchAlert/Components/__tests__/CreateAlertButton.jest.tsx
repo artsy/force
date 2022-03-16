@@ -15,9 +15,14 @@ jest.mock("v2/System/Analytics/useTracking")
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
-  id: "test-artist-id",
-  name: "test-artist-name",
-  slug: "example-slug",
+  placeholder: "test-artist-name",
+  artists: [
+    {
+      id: "test-artist-id",
+      name: "test-artist-name",
+      slug: "example-slug",
+    },
+  ],
 }
 
 describe("CreateAlertButton", () => {

@@ -23,7 +23,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
   const { savedSearchEntity } = props
   const { filters, aggregations, setFilter } = useArtworkFilterContext()
   const criteria = getSearchCriteriaFromFilters(
-    savedSearchEntity.id,
+    savedSearchEntity,
     filters ?? {}
   )
   const pills = extractPills({

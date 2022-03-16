@@ -18,9 +18,14 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
-  id: "test-artist-id",
-  name: "Test Artist",
-  slug: "test-artist-slug",
+  placeholder: "Test Artist",
+  artists: [
+    {
+      id: "test-artist-id",
+      name: "Test Artist",
+      slug: "test-artist-slug",
+    },
+  ],
 }
 
 describe("ArtworkFilter", () => {

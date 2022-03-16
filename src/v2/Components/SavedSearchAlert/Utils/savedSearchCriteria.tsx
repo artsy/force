@@ -3,7 +3,7 @@ import {
   initialArtworkFilterState,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedSearchCriteriaKeys } from "../constants"
-import { SearchCriteriaAttributes } from "../types"
+import { SavedSearchEntity, SearchCriteriaAttributes } from "../types"
 
 export const isDefaultValue = (
   paramName: string,
@@ -34,13 +34,14 @@ export const getAllowedSearchCriteria = (
 }
 
 export const getSearchCriteriaFromFilters = (
-  artistID: string,
+  entity: SavedSearchEntity,
   filters: ArtworkFiltersState
 ): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
+  const artistIDs = entity.artists.map(artist => artist.id)
 
   return {
-    artistIDs: [artistID],
+    artistIDs,
     ...allowedFilters,
   }
 }

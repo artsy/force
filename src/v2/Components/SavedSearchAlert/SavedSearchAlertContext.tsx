@@ -26,7 +26,7 @@ interface SavedSearchAlertContextProviderProps {
   entity: SavedSearchEntity
   aggregations?: Aggregations
   criteria: SearchCriteriaAttributes
-  metric: Metric
+  metric?: Metric
 }
 
 const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
