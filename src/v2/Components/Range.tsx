@@ -3,7 +3,7 @@ import { Range as RCRange, RangeProps } from "rc-slider"
 import styled from "styled-components"
 
 const BORDER_RADIUS_BASE = 6
-export const RANGE_DOT_SIZE = 16
+export const RANGE_DOT_SIZE = 24
 
 // TODO: Add styles for vertical mode, tooltip
 export const Range: React.FC<RangeProps> = props => {
