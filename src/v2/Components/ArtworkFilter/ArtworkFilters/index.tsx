@@ -17,6 +17,7 @@ import {
   useTrackVariantView,
 } from "v2/System/useFeatureFlag"
 import { useAnalyticsContext } from "v2/System"
+import { OwnerType } from "@artsy/cohesion"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -32,6 +33,8 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
     contextPageOwnerType,
   } = useAnalyticsContext()
 
+  const isArtistPage = contextPageOwnerType === OwnerType.artist
+
   const variant = useFeatureVariant("filters-expanded-experiment")
 
   useTrackVariantView({
@@ -39,10 +42,12 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
     variant_name: variant?.name!,
     context_owner_id: contextPageOwnerId,
     context_owner_slug: contextPageOwnerSlug,
-    context_owner_type: contextPageOwnerType,
+    context_owner_type: contextPageOwnerType!,
+    should_track: isArtistPage,
   })
 
-  const isExpanded = variant?.name === "experiment" && !!variant?.enabled
+  const isExpanded =
+    isArtistPage && variant?.name === "experiment" && !!variant?.enabled
   const expandedProp = { ...(isExpanded && { expanded: isExpanded }) }
 
   return (

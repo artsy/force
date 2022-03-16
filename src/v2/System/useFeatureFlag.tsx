@@ -15,9 +15,10 @@ interface VariantTrackingProperties {
   experiment_name: string
   variant_name: string
   payload?: string
-  context_owner_type?: OwnerType
+  context_owner_type: OwnerType
   context_owner_id?: string
   context_owner_slug?: string
+  should_track?: boolean
 }
 
 export function useFeatureFlag(featureName: string): boolean | null {
@@ -57,6 +58,7 @@ export function useTrackVariantView({
   context_owner_type,
   context_owner_id,
   context_owner_slug,
+  should_track = true,
 }: VariantTrackingProperties) {
   const { trackEvent } = useTracking()
 
@@ -64,7 +66,7 @@ export function useTrackVariantView({
     if (typeof window !== "undefined") {
       const trackFeatureView = shouldTrack(experiment_name, variant_name)
 
-      if (trackFeatureView) {
+      if (trackFeatureView && should_track) {
         trackEvent({
           action: ActionType.experimentViewed,
           service: "unleash",
