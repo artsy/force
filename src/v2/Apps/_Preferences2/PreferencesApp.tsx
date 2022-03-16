@@ -3,6 +3,7 @@ import {
   Checkbox,
   Column,
   GridColumns,
+  Message,
   Separator,
   Text,
   useToasts,
@@ -51,6 +52,20 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   const initialPreferences = viewer?.notificationPreferences
   const initialValues =
     initialPreferences && getInitialValues(initialPreferences)
+
+  if (!initialPreferences) {
+    return (
+      <>
+        <Text variant={["lg", "xl"]} mt={6} mb={6}>
+          Email Preference Center
+        </Text>
+
+        <Message variant="error" my={4}>
+          Please sign in to update your email preferences
+        </Message>
+      </>
+    )
+  }
 
   return (
     <>

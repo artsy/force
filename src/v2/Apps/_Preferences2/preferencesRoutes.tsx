@@ -22,7 +22,7 @@ export const preferencesRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query preferencesRoutes_PreferencesQuery($authenticationToken: String) {
-        viewer @principalField {
+        viewer {
           ...PreferencesApp_viewer
             @arguments(authenticationToken: $authenticationToken)
         }
