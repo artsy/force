@@ -255,7 +255,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
       },
     ],
     analytics: {
-      type: OwnerType.artwork,
+      ownerType: OwnerType.artwork,
     },
   }
 

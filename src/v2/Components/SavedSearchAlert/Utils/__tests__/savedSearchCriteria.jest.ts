@@ -21,7 +21,7 @@ const mockedSavedSearchEntity: SavedSearchEntity = {
     },
   ],
   analytics: {
-    type: OwnerType.artist,
+    ownerType: OwnerType.artist,
   },
 }
 
@@ -68,7 +68,7 @@ describe("getSearchCriteriaFromFilters", () => {
         },
       ],
       analytics: {
-        type: OwnerType.artist,
+        ownerType: OwnerType.artist,
       },
     }
     const result = getSearchCriteriaFromFilters(entity, mockedFilters)

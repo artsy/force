@@ -84,7 +84,7 @@ export const CreateArtworkAlertSectionContainer: React.FC<CreateArtworkAlertSect
       slug: artist.slug,
     })),
     analytics: {
-      type: OwnerType.artwork,
+      ownerType: OwnerType.artwork,
     },
   }
   const criteria: SearchCriteriaAttributes = {

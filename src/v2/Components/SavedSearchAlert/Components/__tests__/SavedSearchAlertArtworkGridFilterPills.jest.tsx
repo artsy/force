@@ -18,7 +18,7 @@ const savedSearchEntity: SavedSearchEntity = {
     },
   ],
   analytics: {
-    type: OwnerType.artist,
+    ownerType: OwnerType.artist,
   },
 }
 

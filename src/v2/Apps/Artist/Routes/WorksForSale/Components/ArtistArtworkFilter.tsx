@@ -47,7 +47,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       },
     ],
     analytics: {
-      type: OwnerType.artist,
+      ownerType: OwnerType.artist,
     },
   }
 

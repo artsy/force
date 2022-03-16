@@ -27,8 +27,7 @@ export interface SavedSearchEntityArtist {
 }
 
 interface SavedSearchEntityAnalytics {
-  // possible entity types for creating alert
-  type: PageOwnerType
+  ownerType: PageOwnerType
 }
 
 export interface SavedSearchEntity {
