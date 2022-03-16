@@ -23,7 +23,7 @@ export type preferencesRoutes_PreferencesQuery = {
 query preferencesRoutes_PreferencesQuery(
   $authenticationToken: String
 ) {
-  viewer @principalField {
+  viewer {
     ...PreferencesApp_viewer_4kNil9
   }
 }
@@ -139,14 +139,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "edd1b2c59aa9370d63d57be3a6c9649f",
+    "cacheID": "014155cbf8a8c8871f9a6574d300a670",
     "id": null,
     "metadata": {},
     "name": "preferencesRoutes_PreferencesQuery",
     "operationKind": "query",
-    "text": "query preferencesRoutes_PreferencesQuery(\n  $authenticationToken: String\n) {\n  viewer @principalField {\n    ...PreferencesApp_viewer_4kNil9\n  }\n}\n\nfragment PreferencesApp_viewer_4kNil9 on Viewer {\n  notificationPreferences(authenticationToken: $authenticationToken) {\n    id\n    name\n    channel\n    status\n  }\n}\n"
+    "text": "query preferencesRoutes_PreferencesQuery(\n  $authenticationToken: String\n) {\n  viewer {\n    ...PreferencesApp_viewer_4kNil9\n  }\n}\n\nfragment PreferencesApp_viewer_4kNil9 on Viewer {\n  notificationPreferences(authenticationToken: $authenticationToken) {\n    id\n    name\n    channel\n    status\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0fae2794f8107dcaf8ff3139fddb79c1';
+(node as any).hash = 'a2896eeba9e9d14f09b2788b3b23e53c';
 export default node;
