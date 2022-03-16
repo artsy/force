@@ -16,6 +16,7 @@ import {
   SubGroupStatus,
 } from "v2/__generated__/PreferencesApp_viewer.graphql"
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
+import { useRouter } from "v2/System/Router/useRouter"
 
 const NOTIFICATION_FIELDS = {
   recommendedByArtsy: false,
@@ -38,14 +39,16 @@ interface FormValuesForNotificationPreferences {
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
+  const { match } = useRouter()
+  const authenticationToken = match?.location?.query?.authentication_token
   const { sendToast } = useToasts()
   const { submitMutation } = useEditNotificationPreferences()
   let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik
 
   return (
     <>
-      <Text variant="xl" mt={6} mb={6}>
-        Preferences Center
+      <Text variant={["lg", "xl"]} mt={6} mb={6}>
+        Email Preference Center
       </Text>
       <Formik<FormValuesForNotificationPreferences>
         // @ts-ignore
@@ -68,7 +71,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
             )
 
             await submitMutation({
-              variables: { input: { subscriptionGroups } },
+              variables: { input: { authenticationToken, subscriptionGroups } },
             })
 
             actions.resetForm({
@@ -101,6 +104,11 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
             <GridColumns gridRowGap={4}>
               <Column span={10}>
                 <Text variant="md">Subscribe to all</Text>
+                <Text variant="sm" color="black60">
+                  Get all of Artsy’s emails, including recommendations for you,
+                  Artsy Editorial, guidance on collecting, and updates on your
+                  favorite artists.
+                </Text>
               </Column>
 
               <Column span={2}>
@@ -122,7 +130,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               </Column>
 
               <Column span={10}>
-                <Text variant="md">Recommended By Artsy</Text>
+                <Text variant="md">Recommended for You</Text>
                 <Text variant="sm" color="black60">
                   Artworks, shows, fairs, auctions, and collections we think
                   you'll love
@@ -142,7 +150,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               </Column>
 
               <Column span={10}>
-                <Text variant="md">Art World Insights</Text>
+                <Text variant="md">Editorial</Text>
                 <Text variant="sm" color="black60">
                   Market stories, artist profiles, exhibition reviews, and more
                   art world insights
@@ -155,25 +163,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   onSelect={value => {
                     setFieldValue("artWorldInsights", value)
                     setFieldTouched("artWorldInsights", true)
-                  }}
-                >
-                  Email
-                </Checkbox>
-              </Column>
-
-              <Column span={10}>
-                <Text variant="md">Product Updates</Text>
-                <Text variant="sm" color="black60">
-                  Announcements of new features on Artsy.net and the mobile app
-                </Text>
-              </Column>
-
-              <Column span={2}>
-                <Checkbox
-                  selected={values.productUpdates}
-                  onSelect={value => {
-                    setFieldValue("productUpdates", value)
-                    setFieldTouched("productUpdates", true)
                   }}
                 >
                   Email
@@ -219,6 +208,25 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 </Checkbox>
               </Column>
 
+              <Column span={10}>
+                <Text variant="md">Product Updates</Text>
+                <Text variant="sm" color="black60">
+                  Announcements of new features on Artsy.net and the mobile app
+                </Text>
+              </Column>
+
+              <Column span={2}>
+                <Checkbox
+                  selected={values.productUpdates}
+                  onSelect={value => {
+                    setFieldValue("productUpdates", value)
+                    setFieldTouched("productUpdates", true)
+                  }}
+                >
+                  Email
+                </Checkbox>
+              </Column>
+
               <Column span={12}>
                 <Separator my={2} />
               </Column>
@@ -245,6 +253,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Button
                   width="100%"
                   type="submit"
+                  loading={isSubmitting}
                   disabled={isEmpty(touched) || isSubmitting}
                 >
                   Save
@@ -274,8 +283,9 @@ export const PreferencesAppFragmentContainer = createFragmentContainer(
   PreferencesApp,
   {
     viewer: graphql`
-      fragment PreferencesApp_viewer on Viewer {
-        notificationPreferences {
+      fragment PreferencesApp_viewer on Viewer
+        @argumentDefinitions(authenticationToken: { type: "String" }) {
+        notificationPreferences(authenticationToken: $authenticationToken) {
           id
           name
           channel

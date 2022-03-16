@@ -8,14 +8,12 @@ import {
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
 import { Omit } from "lodash"
-import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBadges"
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { withSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { userHasLabFeature } from "v2/Utils/user"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -28,7 +26,6 @@ export interface TransactionDetailsSummaryItemProps
   showCongratulationMessage?: boolean
   isEigen?: boolean
   showOrderNumberHeader?: boolean
-  user: User
 }
 
 export class TransactionDetailsSummaryItem extends React.Component<
@@ -37,8 +34,6 @@ export class TransactionDetailsSummaryItem extends React.Component<
   static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
     offerContextPrice: "LIST_PRICE",
   }
-
-  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
 
   render() {
     const {
@@ -62,7 +57,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
         />
 
         <Entry
-          label={this.avalaraPhase2enabled ? "Tax*" : "Tax"}
+          label="Tax*"
           value={this.taxDisplayAmount()}
           data-test="taxDisplayAmount"
         />
@@ -74,20 +69,18 @@ export class TransactionDetailsSummaryItem extends React.Component<
           data-test="buyerTotalDisplayAmount"
         />
         <Spacer mb={2} />
-        {this.avalaraPhase2enabled && (
-          <Text variant={["xs", "sm"]} color="black60">
-            *Additional duties and taxes{" "}
-            <a
-              href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              may apply at import.
-            </a>
-          </Text>
-        )}
+        <Text variant={["xs", "sm"]} color="black60">
+          *Additional duties and taxes{" "}
+          <a
+            href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            may apply at import.
+          </a>
+        </Text>
         <Spacer mb={2} />
-        {this.avalaraPhase2enabled && this.shippingNotCalculated() && (
+        {this.shippingNotCalculated() && (
           <Text variant={["xs", "sm"]} color="black60">
             **Shipping costs to be confirmed by gallery. You will be able to
             review the total price before payment.
@@ -141,13 +134,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
   amountPlaceholder = () => {
     const { transactionStep } = this.props
 
-    if (this.avalaraPhase2enabled) {
-      return ["shipping", "offer"].includes(transactionStep!)
-        ? "Calculated in next steps"
-        : "Waiting for final costs"
-    }
-
-    return transactionStep === "review" ? "To be confirmed*" : "—"
+    return ["shipping", "offer"].includes(transactionStep!)
+      ? "Calculated in next steps"
+      : "Waiting for final costs"
   }
 
   shippingDisplayAmount = () => {
@@ -187,7 +176,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
   shippingDisplayLabel = shippingNotCalculated => {
     const { order } = this.props
 
-    if (this.avalaraPhase2enabled && shippingNotCalculated()) {
+    if (shippingNotCalculated()) {
       return "Shipping**"
     }
 
@@ -225,9 +214,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
   buyerTotalDisplayAmount = () => {
     const { order } = this.props
     const currency = order.currencyCode
-    const totalPlaceholder = this.avalaraPhase2enabled
-      ? "Waiting for final costs"
-      : null
+    const totalPlaceholder = "Waiting for final costs"
 
     switch (order.mode) {
       case "BUY":
@@ -257,7 +244,6 @@ export class TransactionDetailsSummaryItem extends React.Component<
       )
     }
     const offer = this.getOffer()
-    const offerItem = getOfferItemFromOrder(order.lineItems)
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
 
@@ -272,15 +258,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
           }
           data-test="offer"
         />
-        {offerContextPrice === "LIST_PRICE" ? (
-          offerItem &&
-          !this.avalaraPhase2enabled && (
-            <SecondaryEntry
-              label="List price"
-              value={appendCurrencySymbol(offerItem.price, currency)}
-            />
-          )
-        ) : (
+        {offerContextPrice === "LAST_OFFER" ? (
           // show last offer
           <SecondaryEntry
             label={
@@ -290,7 +268,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
             }
             value={appendCurrencySymbol(order.lastOffer?.amount, currency)}
           />
-        )}
+        ) : null}
       </>
     )
   }

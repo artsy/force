@@ -16,6 +16,10 @@ import { VerifiedSellerFragmentContainer } from "../TrustSignals/VerifiedSeller"
 import { BuyerGuaranteeFragmentContainer } from "../TrustSignals/BuyerGuarantee"
 import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtraLinks"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
+import { lotIsClosed } from "../../Utils/lotIsClosed"
+import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -28,6 +32,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   artwork,
   me,
 }) => {
+  const shouldShowCreateAlertSection = useFeatureFlag(
+    "artwork-page-create-alert"
+  )
+
+  const { sale, saleArtwork } = artwork
+
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
@@ -47,12 +57,20 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             />
           </Join>
 
-          {artwork.sale && !artwork.sale?.is_closed && (
-            <>
-              <Spacer mt={2} />
-              <AuctionTimerFragmentContainer sale={artwork.sale} />
-            </>
-          )}
+          {sale &&
+            saleArtwork &&
+            !lotIsClosed(sale, saleArtwork) &&
+            (sale?.cascadingEndTimeInterval ? (
+              <>
+                <Spacer mt={2} />
+                <LotTimerFragmentContainer saleArtwork={saleArtwork} />
+              </>
+            ) : (
+              <>
+                <Spacer mt={2} />
+                <AuctionTimerFragmentContainer sale={sale} />
+              </>
+            ))}
         </>
       ) : (
         <>
@@ -67,6 +85,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
+      {!!shouldShowCreateAlertSection && (
+        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
+      )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
@@ -89,9 +110,15 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...VerifiedSeller_artwork
         ...AuthenticityCertificate_artwork
         ...BuyerGuarantee_artwork
+        ...CreateArtworkAlertSection_artwork
         sale {
+          cascadingEndTimeInterval
           is_closed: isClosed
           ...AuctionTimer_sale
+        }
+        saleArtwork {
+          endedAt
+          ...LotTimer_saleArtwork
         }
       }
     `,

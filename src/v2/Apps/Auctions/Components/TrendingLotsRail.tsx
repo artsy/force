@@ -66,6 +66,7 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
           biddableSale: true
           first: 10
           sort: "-bidder_positions_count"
+          estimateRange: "5_000_00-*"
         ) {
           edges {
             counts {

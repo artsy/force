@@ -22,7 +22,7 @@ export type useAddArtistYouCollectMutationResponse = {
     readonly createUserInterest: {
         readonly clientMutationId: string | null;
         readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me" | "SettingsEditProfileYourGalleryIntro_me">;
+            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
         };
     } | null;
 };
@@ -41,7 +41,6 @@ mutation useAddArtistYouCollectMutation(
     clientMutationId
     me {
       ...SettingsEditProfileArtistsYouCollect_me
-      ...SettingsEditProfileYourGalleryIntro_me
       id
     }
   }
@@ -68,10 +67,6 @@ fragment SettingsEditProfileArtistsYouCollect_me on Me {
     }
     id
   }
-}
-
-fragment SettingsEditProfileYourGalleryIntro_me on Me {
-  inquiryIntroduction
 }
 */
 
@@ -139,11 +134,6 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "SettingsEditProfileArtistsYouCollect_me"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "SettingsEditProfileYourGalleryIntro_me"
               }
             ],
             "storageKey": null
@@ -258,13 +248,6 @@ return {
                 ],
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "inquiryIntroduction",
-                "storageKey": null
-              },
               (v4/*: any*/)
             ],
             "storageKey": null
@@ -275,14 +258,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b5a4b9ca3382c81b66204f9baf004088",
+    "cacheID": "d866250a124bafb576506b20e0f44567",
     "id": null,
     "metadata": {},
     "name": "useAddArtistYouCollectMutation",
     "operationKind": "mutation",
-    "text": "mutation useAddArtistYouCollectMutation(\n  $input: CreateUserInterestMutationInput!\n) {\n  createUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      ...SettingsEditProfileYourGalleryIntro_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SettingsEditProfileYourGalleryIntro_me on Me {\n  inquiryIntroduction\n}\n"
+    "text": "mutation useAddArtistYouCollectMutation(\n  $input: CreateUserInterestMutationInput!\n) {\n  createUserInterest(input: $input) {\n    clientMutationId\n    me {\n      ...SettingsEditProfileArtistsYouCollect_me\n      id\n    }\n  }\n}\n\nfragment SettingsEditProfileArtistsYouCollect_me on Me {\n  collectorProfile {\n    userInterests {\n      internalID\n      category\n      interest {\n        __typename\n        ... on Artist {\n          internalID\n          name\n          slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5c737d75992b0cf44ff8b1e75247b05d';
+(node as any).hash = '8e55820b57715b8aa924a1784e37008d';
 export default node;

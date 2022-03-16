@@ -7,6 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleSectionAd_article = {
     readonly layout: ArticleLayout;
+    readonly sections: ReadonlyArray<{
+        readonly __typename: string;
+    }>;
     readonly " $refType": "ArticleSectionAd_article";
 };
 export type ArticleSectionAd_article$data = ArticleSectionAd_article;
@@ -29,10 +32,28 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "layout",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "sections",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = 'bf8201b32500fd5b723b483827cc2feb';
+(node as any).hash = 'b4afe561e61651706142323e85372e06';
 export default node;

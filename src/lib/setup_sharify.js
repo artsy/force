@@ -34,6 +34,7 @@ sharify.data = _.extend(
     "APP_URL",
     "APPLICATION_NAME",
     "ARTSY_EDITORIAL_CHANNEL",
+    "ARTIST_GRID_MANUAL_CURATION_TRIAL", // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
     "AUCTION_ZENDESK_KEY",
     "AUTO_GRAVITY_LOGIN",
     "CDN_URL",
@@ -46,7 +47,6 @@ sharify.data = _.extend(
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
-    "ENABLE_AUCTION_V2",
     "ENABLE_FAIR_PAGE_EXHIBITORS_TAB",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_NEW_AUCTIONS_FILTER",

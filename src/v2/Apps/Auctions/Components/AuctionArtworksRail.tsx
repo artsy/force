@@ -22,7 +22,6 @@ import {
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AuctionArtworksRailQuery } from "v2/__generated__/AuctionArtworksRailQuery.graphql"
-import { getENV } from "v2/Utils/getENV"
 
 export type TabType =
   | "current"
@@ -51,11 +50,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
       title={sale.name!}
       subTitle={sale.formattedStartDateTime!}
       viewAllLabel="View All"
-      viewAllHref={
-        getENV("ENABLE_AUCTION_V2")
-          ? sale.href?.replace("/auction", "/auction2")!
-          : sale.href!
-      }
+      viewAllHref={sale.href!}
       viewAllOnClick={() => {
         trackEvent(
           tracks.clickedArtworkGroupHeader(

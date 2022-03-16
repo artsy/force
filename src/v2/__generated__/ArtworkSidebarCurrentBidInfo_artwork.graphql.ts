@@ -15,6 +15,7 @@ export type ArtworkSidebarCurrentBidInfo_artwork = {
         readonly is_with_reserve: boolean | null;
         readonly reserve_message: string | null;
         readonly reserve_status: string | null;
+        readonly endedAt: string | null;
         readonly current_bid: {
             readonly display: string | null;
         } | null;
@@ -127,6 +128,13 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endedAt",
+          "storageKey": null
+        },
+        {
           "alias": "current_bid",
           "args": null,
           "concreteType": "SaleArtworkCurrentBid",
@@ -218,5 +226,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '683ff598c60c16fd85ebe10e5225e24d';
+(node as any).hash = '244834e45aff21bd8869674daa98de55';
 export default node;

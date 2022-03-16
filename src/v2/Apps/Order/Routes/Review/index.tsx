@@ -1,11 +1,10 @@
-import { Box, Button, Flex, Join, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Join, Message, Spacer } from "@artsy/palette"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
-import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
+import { ReviewSubmitOfferOrderWithConversationMutation } from "v2/__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "v2/Apps/Order/Components/ItemReview"
-import { userHasLabFeature } from "v2/Utils/user"
 import {
   OrderStepper,
   buyNowFlowSteps,
@@ -81,8 +80,8 @@ export class ReviewRoute extends Component<ReviewProps> {
       const orderOrError =
         this.props.order.mode === "BUY"
           ? (await this.submitBuyOrder()).commerceSubmitOrder?.orderOrError
-          : (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
-              ?.orderOrError
+          : (await this.submitOffer(setupIntentId))
+              .submitOfferOrderWithConversation?.orderOrError
       if (orderOrError?.error) {
         this.handleSubmitError(orderOrError?.error!)
         return
@@ -123,15 +122,7 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        const { order, router, user, isEigen } = this.props
-
-        if (!userHasLabFeature(user, "Make Offer On All Eligible Artworks")) {
-          return order.conversation && !isEigen
-            ? router.push(
-                `/user/conversations/${order.conversation.internalID}`
-              )
-            : router.push(`/orders/${order.internalID}/status`)
-        }
+        const { order, router, isEigen } = this.props
         // Buy-mode order redirects to the status page. Eigen must keep the user inside the webview.
         if (order.mode !== "OFFER" || isEigen) {
           return router.push(`/orders/${order.internalID}/status`)
@@ -192,7 +183,9 @@ export class ReviewRoute extends Component<ReviewProps> {
   }
 
   submitOffer(setupIntentId: string | null) {
-    return this.props.commitMutation<ReviewSubmitOfferOrderMutation>({
+    return this.props.commitMutation<
+      ReviewSubmitOfferOrderWithConversationMutation
+    >({
       variables: {
         input: {
           offerId: this.props.order.myLastOffer?.internalID,
@@ -200,12 +193,7 @@ export class ReviewRoute extends Component<ReviewProps> {
         },
       },
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: userHasLabFeature(
-        this.props.user,
-        "Make Offer On All Eligible Artworks"
-      )
-        ? submitOfferOrderWithConversation
-        : commerceSubmitOrderWithOfferMutation,
+      mutation: submitOfferOrderWithConversation,
     })
   }
 
@@ -350,8 +338,6 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
-  avalaraPhase2enabled = userHasLabFeature(this.props.user, "Avalara Phase 2")
-
   render() {
     const { order, isCommittingMutation, isEigen } = this.props
 
@@ -437,13 +423,6 @@ export class ReviewRoute extends Component<ReviewProps> {
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
               />
-              {order.myLastOffer &&
-                !order.myLastOffer?.hasDefiniteTotal &&
-                !this.avalaraPhase2enabled && (
-                  <Text variant="xs" color="black60">
-                    *Shipping and taxes to be confirmed by gallery
-                  </Text>
-                )}
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button
@@ -509,34 +488,6 @@ export const ReviewFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const commerceSubmitOrderWithOfferMutation = graphql`
-  mutation ReviewSubmitOfferOrderMutation(
-    $input: CommerceSubmitOrderWithOfferInput!
-  ) {
-    commerceSubmitOrderWithOffer(input: $input) {
-      orderOrError {
-        ... on CommerceOrderWithMutationSuccess {
-          order {
-            state
-          }
-        }
-        ... on CommerceOrderRequiresAction {
-          actionData {
-            clientSecret
-          }
-        }
-        ... on CommerceOrderWithMutationFailure {
-          error {
-            type
-            code
-            data
-          }
-        }
-      }
-    }
-  }
-`
 
 const submitOfferOrderWithConversation = graphql`
   mutation ReviewSubmitOfferOrderWithConversationMutation(

@@ -49,7 +49,6 @@ import { Z } from "v2/Apps/Components/constants"
  * you're modifying the navbar you may need to update these files:
  *
  * src/desktop/apps/articles/stylesheets/articles.styl
- * src/desktop/apps/fair_organizer/stylesheets/index.styl
  * src/desktop/components/stylus_lib/index.styl
  *
  * Additional context:

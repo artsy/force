@@ -23,6 +23,7 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
             readonly is_with_reserve: boolean | null;
             readonly reserve_message: string | null;
             readonly reserve_status: string | null;
+            readonly endedAt: string | null;
             readonly current_bid: ({
                 readonly display: string | null;
             }) | null;
@@ -74,6 +75,7 @@ fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
     is_with_reserve: isWithReserve
     reserve_message: reserveMessage
     reserve_status: reserveStatus
+    endedAt
     current_bid: currentBid {
       display
     }
@@ -256,6 +258,13 @@ return {
                 "storageKey": null
               },
               {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endedAt",
+                "storageKey": null
+              },
+              {
                 "alias": "current_bid",
                 "args": null,
                 "concreteType": "SaleArtworkCurrentBid",
@@ -352,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "60c3871f8ca3b3b48e2673cc8d1aaa91",
+    "cacheID": "b80678ccf0131942947887f8734a89e1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -417,6 +426,7 @@ return {
           "type": "SaleArtworkCurrentBid"
         },
         "artwork.sale_artwork.current_bid.display": (v6/*: any*/),
+        "artwork.sale_artwork.endedAt": (v6/*: any*/),
         "artwork.sale_artwork.id": (v3/*: any*/),
         "artwork.sale_artwork.is_with_reserve": (v5/*: any*/),
         "artwork.sale_artwork.reserve_message": (v6/*: any*/),
@@ -425,7 +435,7 @@ return {
     },
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -18,6 +18,7 @@ import {
   DefaultFilterPill,
   NonDefaultFilterPill,
   SavedSearchEntity,
+  SavedSearchEntityArtist,
   SearchCriteriaAttributes,
 } from "../types"
 import { aggregationForFilter } from "./aggregationForFilter"
@@ -189,18 +190,16 @@ export const extractPillsFromCriteria = ({
   return compact(flatten(pills))
 }
 
-export const extractArtistPill = (
-  savedSearchEntity?: SavedSearchEntity
-): DefaultFilterPill | null => {
-  if (savedSearchEntity?.name && savedSearchEntity.slug) {
+export const extractArtistPills = (
+  artists: SavedSearchEntityArtist[] = []
+): DefaultFilterPill[] => {
+  return artists.map(artist => {
     return {
       isDefault: true,
-      name: savedSearchEntity.slug,
-      displayName: savedSearchEntity.name,
+      name: artist.slug,
+      displayName: artist.name,
     }
-  }
-
-  return null
+  })
 }
 
 export const extractPills = ({
@@ -214,12 +213,12 @@ export const extractPills = ({
   entity?: SavedSearchEntity
   metric?: Metric
 }) => {
-  const artistPill = extractArtistPill(entity)
+  const artistPills = extractArtistPills(entity?.artists)
   const pillsFromCriteria = extractPillsFromCriteria({
     criteria,
     aggregations,
     metric,
   })
 
-  return compact([artistPill, ...pillsFromCriteria])
+  return compact([...artistPills, ...pillsFromCriteria])
 }

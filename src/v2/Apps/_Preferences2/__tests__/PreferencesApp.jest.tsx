@@ -5,7 +5,7 @@ describe("PreferencesApp", () => {
   it("renders the preference center", () => {
     render(<PreferencesApp></PreferencesApp>)
 
-    expect(screen.getByText("Preferences Center")).toBeInTheDocument()
+    expect(screen.getByText("Email Preference Center")).toBeInTheDocument()
   })
 
   it("has disabled buttons until a change is made", () => {

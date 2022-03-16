@@ -25,6 +25,8 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { ArticleVideo_article } from "v2/__generated__/ArticleVideo_article.graphql"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 
 interface ArticleVideoProps {
   article: ArticleVideo_article
@@ -169,6 +171,33 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
           </Column>
         )}
 
+        {article.moreRelatedArticles.length > 0 && (
+          <>
+            <Column span={8} start={3}>
+              <Text variant="lg">
+                More in{" "}
+                {article.seriesArticle ? (
+                  <RouterLink to={article.seriesArticle.href}>
+                    {article.seriesArticle.title}
+                  </RouterLink>
+                ) : (
+                  article.vertical
+                )}
+              </Text>
+            </Column>
+
+            {article.moreRelatedArticles.map(relatedArticle => {
+              return (
+                <Column span={12} key={relatedArticle.internalID}>
+                  <ArticleSeriesItemFragmentContainer
+                    article={relatedArticle}
+                  />
+                </Column>
+              )
+            })}
+          </>
+        )}
+
         {article.seriesArticle?.description && (
           <>
             <Column
@@ -209,6 +238,7 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
   {
     article: graphql`
       fragment ArticleVideo_article on Article {
+        vertical
         title
         href
         description
@@ -224,10 +254,15 @@ export const ArticleVideoFragmentContainer = createFragmentContainer(
         }
         seriesArticle {
           title
+          href
           description
           sponsor {
             ...ArticleSponsor_sponsor
           }
+        }
+        moreRelatedArticles: relatedArticles(size: 4) {
+          ...ArticleSeriesItem_article
+          internalID
         }
       }
     `,

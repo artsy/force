@@ -1,12 +1,21 @@
 import { useFeatureFlag, useFeatureVariant } from "../useFeatureFlag"
 import { useSystemContext } from "v2/System/useSystemContext"
+import { useTracking } from "react-tracking"
 
 jest.mock("v2/System/useSystemContext")
 
 const mockUseSystemContext = useSystemContext as jest.Mock
 let mockFeatureFlags
+let trackEvent
 
 beforeAll(() => {
+  trackEvent = jest.fn()
+  ;(useTracking as jest.Mock).mockImplementation(() => {
+    return {
+      trackEvent,
+    }
+  })
+
   mockFeatureFlags = {
     featureFlags: {
       "feature-a": {

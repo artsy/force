@@ -13,8 +13,6 @@ import {
   Text,
   StackableBorderBox,
 } from "@artsy/palette"
-import { userHasLabFeature } from "v2/Utils/user"
-import { useSystemContext } from "v2/System/SystemContext"
 
 export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
   order: ArtworkSummaryItem_order
@@ -52,8 +50,6 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
 
   const priceLabel = mode === "OFFER" ? "List price" : "Price"
 
-  const { user } = useSystemContext()
-
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
@@ -80,15 +76,13 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
         <Text variant="sm" color="black60">
           {shippingOrigin}
         </Text>
-        {user && userHasLabFeature(user, "Avalara Phase 2") && (
-          <Text variant="sm">
-            {artworkPrice &&
-              `${priceLabel} ${appendCurrencySymbol(
-                artworkPrice.price,
-                currencyCode
-              )}`}
-          </Text>
-        )}
+        <Text variant="sm">
+          {artworkPrice &&
+            `${priceLabel} ${appendCurrencySymbol(
+              artworkPrice.price,
+              currencyCode
+            )}`}
+        </Text>
       </Flex>
     </StackableBorderBox>
   )

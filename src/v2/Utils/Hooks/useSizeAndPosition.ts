@@ -1,6 +1,6 @@
-import { useIsomorphicLayoutEffect } from "@artsy/palette"
+import { useIsomorphicLayoutEffect, useMutationObserver } from "@artsy/palette"
 import { debounce } from "lodash"
-import { useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 
 interface Geometry {
   top: number
@@ -18,40 +18,64 @@ const DEFAULT_GEOMETRY: Geometry = {
 
 interface UseSizeAndPosition {
   debounce?: number
+  trackMutation?: boolean
+  trackResize?: boolean
 }
 
-/** Hook that returns the offset geometry of the ref. Updates on resize. */
-export const useSizeAndPosition = (
-  { debounce: debounceMs }: UseSizeAndPosition = { debounce: 0 }
-) => {
+/**
+ * Hook that returns the offset geometry of the ref.
+ * Updates on resize by default.
+ * Updates on mutation optionally.
+ **/
+export const useSizeAndPosition = ({
+  debounce: debounceMs = 0,
+  trackMutation = false,
+  trackResize = true,
+}: UseSizeAndPosition = {}) => {
   const ref = useRef<HTMLElement | null>(null)
 
   const [geometry, setGeometry] = useState<Geometry>(DEFAULT_GEOMETRY)
 
+  const handleUpdate = useCallback(() => {
+    if (!ref.current) return
+
+    setGeometry({
+      top: ref.current.offsetTop,
+      left: ref.current.offsetLeft,
+      width: ref.current.offsetWidth,
+      height: ref.current.offsetHeight,
+    })
+  }, [])
+
+  const handler = debounceMs ? debounce(handleUpdate, debounceMs) : handleUpdate
+
+  useMutationObserver({
+    ref,
+    onMutate: mutations => {
+      if (!trackMutation) return
+
+      mutations.forEach(mutation => {
+        if (mutation.type === "attributes") {
+          handler()
+        }
+      })
+    },
+  })
+
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) return
 
-    const handleResize = () => {
-      if (!ref.current) return
+    setTimeout(handleUpdate, 0)
 
-      setGeometry({
-        top: ref.current.offsetTop,
-        left: ref.current.offsetLeft,
-        width: ref.current.offsetWidth,
-        height: ref.current.offsetHeight,
-      })
+    const handleResize = () => {
+      if (!trackResize) return
+      handler()
     }
 
-    handleResize()
-
-    const handler = debounceMs
-      ? debounce(handleResize, debounceMs)
-      : handleResize
-
-    window.addEventListener("resize", handler)
+    window.addEventListener("resize", handleResize)
 
     return () => {
-      window.removeEventListener("resize", handler)
+      window.removeEventListener("resize", handleResize)
     }
   }, [ref])
 

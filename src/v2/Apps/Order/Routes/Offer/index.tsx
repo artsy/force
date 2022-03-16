@@ -33,7 +33,6 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
 import { SystemContextProps, withSystemContext } from "v2/System"
-import { userHasLabFeature } from "v2/Utils/user"
 
 export interface OfferProps extends SystemContextProps {
   order: Offer_order
@@ -152,18 +151,21 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       return
     }
 
+    const artwork = this?.props?.order?.lineItems?.edges?.[0]?.node?.artwork
     const listPriceCents = this.props.order.totalListPriceCents
-    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
-      ?.artwork?.price
+    const artworkPrice = artwork?.price
+    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
+    const isEdition = artwork?.isEdition
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
       ?.displayPriceRange
 
     if (
       !isPriceHidden &&
+      !isRangeOffer &&
+      (isInquiryCheckout || isEdition) &&
       !lowSpeedBumpEncountered &&
-      offerValue * 100 < listPriceCents * 0.8 &&
-      !isRangeOffer
+      offerValue * 100 < listPriceCents * 0.8
     ) {
       this.showLowSpeedbump()
       return
@@ -174,15 +176,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
         this.state.offerNoteValue &&
         this.state.offerNoteValue.value.trim() !== ""
 
-      const offerOnAllEligibleArtworks = userHasLabFeature(
-        this.props.user,
-        "Make Offer On All Eligible Artworks"
-      )
-
       let note = hasNote
         ? this.state.offerNoteValue.value
-        : offerOnAllEligibleArtworks
-        ? `I sent an offer for ${appendCurrencySymbol(
+        : `I sent an offer for ${appendCurrencySymbol(
             this.state.offerValue.toLocaleString("en-US", {
               currency: this.props.order.currencyCode,
               minimumFractionDigits: 2,
@@ -190,7 +186,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
             }),
             this.props.order.currencyCode
           )}`
-        : undefined
 
       const orderOrError = (
         await this.addInitialOfferToOrder({

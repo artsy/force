@@ -20,6 +20,8 @@ jest.mock("config", () => ({
   PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: 400,
 }))
 
+jest.mock("desktop/components/split_test/running_tests.coffee", () => ({}))
+
 describe("pageCacheMiddleware", () => {
   let req
   let res
@@ -38,6 +40,24 @@ describe("pageCacheMiddleware", () => {
           key: "key",
           html: "html",
         },
+        sd: {
+          FEATURE_FLAGS: {
+            "feature-a": {
+              flagEnabled: true,
+              variant: {
+                enabled: true,
+                name: "variant-a",
+              },
+            },
+            "feature-b": {
+              flagEnabled: false,
+              variant: {
+                enabled: false,
+                name: "disabled",
+              },
+            },
+          },
+        },
       },
       statusCode: 200,
       _headers: {
@@ -52,12 +72,12 @@ describe("pageCacheMiddleware", () => {
   it("sets up cache for valid pageTypes", async () => {
     redisPageCacheMiddleware(req, res, next)
     expect(cache.set).toBeCalledWith(
-      "page-cache|none|1|https://artsy.net/artist/test-artist",
+      "page-cache|none|feature-a:variant-a|1|https://artsy.net/artist/test-artist",
       expect.anything(),
       600
     )
     expect(cache.get.mock.calls[0][0]).toBe(
-      "page-cache|none|1|https://artsy.net/artist/test-artist"
+      "page-cache|none|feature-a:variant-a|1|https://artsy.net/artist/test-artist"
     )
     await new Promise<void>(resolve => {
       setTimeout(() => {

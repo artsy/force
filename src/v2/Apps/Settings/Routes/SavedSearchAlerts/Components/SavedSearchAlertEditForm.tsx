@@ -11,7 +11,6 @@ import {
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getNamePlaceholder } from "v2/Components/SavedSearchAlert/Utils/getNamePlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
@@ -82,8 +81,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     email: userAlertSettings.email,
   }
 
-  const namePlaceholder = getNamePlaceholder(entity.name, pills)
-
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
       return
@@ -97,10 +94,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
-      const namePlaceholder = getNamePlaceholder(entity.name, pills)
       const updatedAlertSettings = {
         ...values,
-        name: values.name || namePlaceholder,
+        name: values.name || entity.placeholder,
       }
 
       await submitEditAlert({
@@ -153,7 +149,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={namePlaceholder}
+                placeholder={entity.placeholder}
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -251,9 +247,14 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
     type: "artist",
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug ?? "",
+    placeholder: artist.name ?? "",
+    artists: [
+      {
+        id: artist.internalID,
+        name: artist.name ?? "",
+        slug: artist.slug ?? "",
+      },
+    ],
   }
 
   return (

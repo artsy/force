@@ -34,8 +34,8 @@ fragment ArticleApp_article on Article {
   ...ArticleSeries_article
   ...ArticleVideo_article
   ...ArticleVisibilityMetadata_article
+  ...ArticleMetaTags_article
   internalID
-  title
   layout
   channelID
 }
@@ -46,6 +46,7 @@ fragment ArticleBody_article on Article {
   ...ArticleSectionAd_article
   internalID
   layout
+  leadParagraph
   title
   newsSource {
     title
@@ -116,8 +117,19 @@ fragment ArticleHeader_article on Article {
   }
 }
 
+fragment ArticleMetaTags_article on Article {
+  byline
+  href
+  keywords
+  metaPublishedAt: publishedAt
+  title
+}
+
 fragment ArticleSectionAd_article on Article {
   layout
+  sections {
+    __typename
+  }
 }
 
 fragment ArticleSectionEmbed_section on ArticleSectionEmbed {
@@ -231,6 +243,7 @@ fragment ArticleSectionText_section on ArticleSectionText {
 
 fragment ArticleSectionVideo_section on ArticleSectionVideo {
   embed(autoPlay: true)
+  fallbackEmbed: embed(autoPlay: false)
   image {
     cropped(width: 910, height: 512) {
       src
@@ -250,6 +263,24 @@ fragment ArticleSection_section on ArticleSections {
   ...ArticleSectionEmbed_section
 }
 
+fragment ArticleSeriesItem_article on Article {
+  href
+  title
+  thumbnailTitle
+  byline
+  description
+  publishedAt(format: "MMM DD, YYYY")
+  thumbnailImage {
+    display: cropped(width: 869, height: 580) {
+      src
+      srcSet
+    }
+  }
+  media {
+    duration
+  }
+}
+
 fragment ArticleSeries_article on Article {
   title
   byline
@@ -261,19 +292,8 @@ fragment ArticleSeries_article on Article {
     ...ArticleSponsor_sponsor
   }
   relatedArticles {
+    ...ArticleSeriesItem_article
     internalID
-    href
-    title
-    thumbnailTitle
-    byline
-    description
-    publishedAt(format: "MMM DD, YYYY")
-    thumbnailImage {
-      display: cropped(width: 869, height: 580) {
-        src
-        srcSet
-      }
-    }
     id
   }
 }
@@ -285,6 +305,7 @@ fragment ArticleSponsor_sponsor on ArticleSponsor {
 }
 
 fragment ArticleVideo_article on Article {
+  vertical
   title
   href
   description
@@ -300,10 +321,16 @@ fragment ArticleVideo_article on Article {
   }
   seriesArticle {
     title
+    href
     description
     sponsor {
       ...ArticleSponsor_sponsor
     }
+    id
+  }
+  moreRelatedArticles: relatedArticles(size: 4) {
+    ...ArticleSeriesItem_article
+    internalID
     id
   }
 }
@@ -623,13 +650,73 @@ v25 = [
   }
 ],
 v26 = {
+  "alias": "display",
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "height",
+      "value": 580
+    },
+    {
+      "kind": "Literal",
+      "name": "width",
+      "value": 869
+    }
+  ],
+  "concreteType": "CroppedImageUrl",
+  "kind": "LinkedField",
+  "name": "cropped",
+  "plural": false,
+  "selections": (v11/*: any*/),
+  "storageKey": "cropped(height:580,width:869)"
+},
+v27 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "thumbnailTitle",
+  "storageKey": null
+},
+v28 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "description",
   "storageKey": null
 },
-v27 = {
+v29 = {
+  "alias": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "format",
+      "value": "MMM DD, YYYY"
+    }
+  ],
+  "kind": "ScalarField",
+  "name": "publishedAt",
+  "storageKey": "publishedAt(format:\"MMM DD, YYYY\")"
+},
+v30 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "duration",
+  "storageKey": null
+},
+v31 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "ArticleMedia",
+  "kind": "LinkedField",
+  "name": "media",
+  "plural": false,
+  "selections": [
+    (v30/*: any*/)
+  ],
+  "storageKey": null
+},
+v32 = {
   "alias": null,
   "args": null,
   "concreteType": "ArticleSponsor",
@@ -846,33 +933,6 @@ return {
             "storageKey": null
           },
           (v6/*: any*/),
-          (v12/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArticleNewsSource",
-            "kind": "LinkedField",
-            "name": "newsSource",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v8/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "MMM D, YYYY h:mma"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "publishedAt",
-            "storageKey": "publishedAt(format:\"MMM D, YYYY h:mma\")"
-          },
           {
             "alias": null,
             "args": null,
@@ -1194,6 +1254,19 @@ return {
                     "storageKey": "embed(autoPlay:true)"
                   },
                   {
+                    "alias": "fallbackEmbed",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "autoPlay",
+                        "value": false
+                      }
+                    ],
+                    "kind": "ScalarField",
+                    "name": "embed",
+                    "storageKey": "embed(autoPlay:false)"
+                  },
+                  {
                     "alias": null,
                     "args": null,
                     "concreteType": "Image",
@@ -1257,6 +1330,40 @@ return {
             ],
             "storageKey": null
           },
+          (v12/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "leadParagraph",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArticleNewsSource",
+            "kind": "LinkedField",
+            "name": "newsSource",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v8/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "MMM D, YYYY h:mma"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "publishedAt",
+            "storageKey": "publishedAt(format:\"MMM D, YYYY h:mma\")"
+          },
           {
             "alias": null,
             "args": null,
@@ -1297,52 +1404,15 @@ return {
                     "selections": (v11/*: any*/),
                     "storageKey": "cropped(height:60,width:80)"
                   },
-                  {
-                    "alias": "display",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 580
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 869
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v11/*: any*/),
-                    "storageKey": "cropped(height:580,width:869)"
-                  }
+                  (v26/*: any*/)
                 ],
                 "storageKey": null
               },
               (v15/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "thumbnailTitle",
-                "storageKey": null
-              },
-              (v26/*: any*/),
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "format",
-                    "value": "MMM DD, YYYY"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "publishedAt",
-                "storageKey": "publishedAt(format:\"MMM DD, YYYY\")"
-              }
+              (v27/*: any*/),
+              (v28/*: any*/),
+              (v29/*: any*/),
+              (v31/*: any*/)
             ],
             "storageKey": null
           },
@@ -1354,12 +1424,12 @@ return {
             "name": "series",
             "plural": false,
             "selections": [
-              (v26/*: any*/)
+              (v28/*: any*/)
             ],
             "storageKey": null
           },
-          (v27/*: any*/),
-          (v26/*: any*/),
+          (v32/*: any*/),
+          (v28/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -1387,14 +1457,8 @@ return {
                 "name": "credits",
                 "storageKey": null
               },
-              (v26/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "duration",
-                "storageKey": null
-              },
+              (v28/*: any*/),
+              (v30/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -1421,10 +1485,63 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v26/*: any*/),
-              (v27/*: any*/),
+              (v3/*: any*/),
+              (v28/*: any*/),
+              (v32/*: any*/),
               (v15/*: any*/)
             ],
+            "storageKey": null
+          },
+          {
+            "alias": "moreRelatedArticles",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 4
+              }
+            ],
+            "concreteType": "Article",
+            "kind": "LinkedField",
+            "name": "relatedArticles",
+            "plural": true,
+            "selections": [
+              (v3/*: any*/),
+              (v2/*: any*/),
+              (v27/*: any*/),
+              (v4/*: any*/),
+              (v28/*: any*/),
+              (v29/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "thumbnailImage",
+                "plural": false,
+                "selections": [
+                  (v26/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v31/*: any*/),
+              (v12/*: any*/),
+              (v15/*: any*/)
+            ],
+            "storageKey": "relatedArticles(size:4)"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "keywords",
+            "storageKey": null
+          },
+          {
+            "alias": "metaPublishedAt",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "publishedAt",
             "storageKey": null
           },
           {
@@ -1441,12 +1558,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "02e3f323b2408b1283b433a5cf9c3f86",
+    "cacheID": "b663f1a6e9931ccc1fc347d8a69da839",
     "id": null,
     "metadata": {},
     "name": "articleRoutes_ArticleQuery",
     "operationKind": "query",
-    "text": "query articleRoutes_ArticleQuery(\n  $id: String!\n) {\n  article(id: $id) @principalField {\n    ...ArticleApp_article\n    id\n  }\n}\n\nfragment ArticleApp_article on Article {\n  ...ArticleBody_article\n  ...ArticleSeries_article\n  ...ArticleVideo_article\n  ...ArticleVisibilityMetadata_article\n  internalID\n  title\n  layout\n  channelID\n}\n\nfragment ArticleBody_article on Article {\n  ...ArticleHeader_article\n  ...ArticleByline_article\n  ...ArticleSectionAd_article\n  internalID\n  layout\n  title\n  newsSource {\n    title\n    url\n  }\n  href\n  publishedAt(format: \"MMM D, YYYY h:mma\")\n  sections {\n    __typename\n    ...ArticleSection_section\n  }\n  postscript\n  relatedArticles {\n    internalID\n    title\n    href\n    byline\n    thumbnailImage {\n      cropped(width: 80, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleByline_article on Article {\n  byline\n  authors {\n    internalID\n    name\n    initials\n    bio\n    image {\n      cropped(width: 60, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleHeader_article on Article {\n  title\n  href\n  vertical\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n\nfragment ArticleSectionAd_article on Article {\n  layout\n}\n\nfragment ArticleSectionEmbed_section on ArticleSectionEmbed {\n  url\n  height\n  mobileHeight\n}\n\nfragment ArticleSectionImageCollectionCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ...Metadata_artwork\n  ... on ArticleImageSection {\n    caption\n  }\n}\n\nfragment ArticleSectionImageCollectionImage_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  ... on ArticleImageSection {\n    id\n    image {\n      url(version: [\"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n  ... on Artwork {\n    id\n    image {\n      url(version: [\"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n}\n\nfragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {\n  layout\n  figures {\n    __typename\n    ...ArticleSectionImageCollectionImage_figure\n    ...ArticleSectionImageCollectionCaption_figure\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ArticleImageSection {\n      id\n    }\n  }\n}\n\nfragment ArticleSectionImageSet_section on ArticleSectionImageSet {\n  setLayout: layout\n  title\n  counts {\n    figures\n  }\n  cover {\n    __typename\n    ... on ArticleImageSection {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionSocialEmbed_section on ArticleSectionSocialEmbed {\n  url\n  embed\n}\n\nfragment ArticleSectionText_section on ArticleSectionText {\n  body\n}\n\nfragment ArticleSectionVideo_section on ArticleSectionVideo {\n  embed(autoPlay: true)\n  image {\n    cropped(width: 910, height: 512) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleSection_section on ArticleSections {\n  __isArticleSections: __typename\n  __typename\n  ...ArticleSectionText_section\n  ...ArticleSectionImageCollection_section\n  ...ArticleSectionImageSet_section\n  ...ArticleSectionVideo_section\n  ...ArticleSectionSocialEmbed_section\n  ...ArticleSectionEmbed_section\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  sponsor {\n    ...ArticleSponsor_sponsor\n  }\n  relatedArticles {\n    internalID\n    href\n    title\n    thumbnailTitle\n    byline\n    description\n    publishedAt(format: \"MMM DD, YYYY\")\n    thumbnailImage {\n      display: cropped(width: 869, height: 580) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n}\n\nfragment ArticleVisibilityMetadata_article on Article {\n  title\n  href\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n"
+    "text": "query articleRoutes_ArticleQuery(\n  $id: String!\n) {\n  article(id: $id) @principalField {\n    ...ArticleApp_article\n    id\n  }\n}\n\nfragment ArticleApp_article on Article {\n  ...ArticleBody_article\n  ...ArticleSeries_article\n  ...ArticleVideo_article\n  ...ArticleVisibilityMetadata_article\n  ...ArticleMetaTags_article\n  internalID\n  layout\n  channelID\n}\n\nfragment ArticleBody_article on Article {\n  ...ArticleHeader_article\n  ...ArticleByline_article\n  ...ArticleSectionAd_article\n  internalID\n  layout\n  leadParagraph\n  title\n  newsSource {\n    title\n    url\n  }\n  href\n  publishedAt(format: \"MMM D, YYYY h:mma\")\n  sections {\n    __typename\n    ...ArticleSection_section\n  }\n  postscript\n  relatedArticles {\n    internalID\n    title\n    href\n    byline\n    thumbnailImage {\n      cropped(width: 80, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleByline_article on Article {\n  byline\n  authors {\n    internalID\n    name\n    initials\n    bio\n    image {\n      cropped(width: 60, height: 60) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment ArticleHeader_article on Article {\n  title\n  href\n  vertical\n  byline\n  hero {\n    __typename\n    ... on ArticleFeatureSection {\n      layout\n      embed\n      media\n      image {\n        url\n        split: resized(width: 900) {\n          src\n          srcSet\n        }\n        text: cropped(width: 1600, height: 900) {\n          src\n          srcSet\n        }\n      }\n    }\n  }\n}\n\nfragment ArticleMetaTags_article on Article {\n  byline\n  href\n  keywords\n  metaPublishedAt: publishedAt\n  title\n}\n\nfragment ArticleSectionAd_article on Article {\n  layout\n  sections {\n    __typename\n  }\n}\n\nfragment ArticleSectionEmbed_section on ArticleSectionEmbed {\n  url\n  height\n  mobileHeight\n}\n\nfragment ArticleSectionImageCollectionCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ...Metadata_artwork\n  ... on ArticleImageSection {\n    caption\n  }\n}\n\nfragment ArticleSectionImageCollectionImage_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  ... on ArticleImageSection {\n    id\n    image {\n      url(version: [\"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n  ... on Artwork {\n    id\n    image {\n      url(version: [\"normalized\", \"larger\", \"large\"])\n      width\n      height\n    }\n  }\n}\n\nfragment ArticleSectionImageCollection_section on ArticleSectionImageCollection {\n  layout\n  figures {\n    __typename\n    ...ArticleSectionImageCollectionImage_figure\n    ...ArticleSectionImageCollectionCaption_figure\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ArticleImageSection {\n      id\n    }\n  }\n}\n\nfragment ArticleSectionImageSet_section on ArticleSectionImageSet {\n  setLayout: layout\n  title\n  counts {\n    figures\n  }\n  cover {\n    __typename\n    ... on ArticleImageSection {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Artwork {\n      id\n      image {\n        small: cropped(width: 80, height: 80, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n        large: resized(width: 1220, version: [\"normalized\", \"larger\", \"large\"]) {\n          src\n          srcSet\n          height\n          width\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ArticleSectionSocialEmbed_section on ArticleSectionSocialEmbed {\n  url\n  embed\n}\n\nfragment ArticleSectionText_section on ArticleSectionText {\n  body\n}\n\nfragment ArticleSectionVideo_section on ArticleSectionVideo {\n  embed(autoPlay: true)\n  fallbackEmbed: embed(autoPlay: false)\n  image {\n    cropped(width: 910, height: 512) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleSection_section on ArticleSections {\n  __isArticleSections: __typename\n  __typename\n  ...ArticleSectionText_section\n  ...ArticleSectionImageCollection_section\n  ...ArticleSectionImageSet_section\n  ...ArticleSectionVideo_section\n  ...ArticleSectionSocialEmbed_section\n  ...ArticleSectionEmbed_section\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n}\n\nfragment ArticleSeries_article on Article {\n  title\n  byline\n  href\n  series {\n    description\n  }\n  sponsor {\n    ...ArticleSponsor_sponsor\n  }\n  relatedArticles {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  vertical\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    href\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n  moreRelatedArticles: relatedArticles(size: 4) {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n\nfragment ArticleVisibilityMetadata_article on Article {\n  title\n  href\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n"
   }
 };
 })();

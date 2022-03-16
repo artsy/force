@@ -37,13 +37,8 @@ app.use(
 
 app.use(require("./apps/editorial_features"))
 app.use(require("./apps/apply"))
-app.use(require("./apps/auction_reaction/server").app)
-
 // FIXME: Remove once JSONPage + new app shell is worked out
 app.use(require("./apps/art_keeps_going/server").app)
-
-app.use(require("./apps/auction").app)
-app.use(require("./apps/auction_support"))
 app.use(require("./apps/contact"))
 app.use(require("./apps/eoy_2016"))
 app.use(require("./apps/inquiry"))
@@ -84,7 +79,6 @@ app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
 app.use(require("./apps/fair_redirect").app)
 app.use(require("./apps/fair_organizer_redirect").app)
-app.use(require("./apps/fair_organizer"))
 
 // Export for hot reloading
 module.exports = app

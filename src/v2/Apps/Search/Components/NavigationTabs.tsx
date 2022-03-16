@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   BoxProps,
   Flex,
@@ -23,7 +23,7 @@ import {
   ContextModule,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { useRouter } from "found"
+import { useRouter } from "v2/System/Router/useRouter"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 

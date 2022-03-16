@@ -4,7 +4,9 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type preferencesRoutes_PreferencesQueryVariables = {};
+export type preferencesRoutes_PreferencesQueryVariables = {
+    authenticationToken?: string | null;
+};
 export type preferencesRoutes_PreferencesQueryResponse = {
     readonly viewer: {
         readonly " $fragmentRefs": FragmentRefs<"PreferencesApp_viewer">;
@@ -18,14 +20,16 @@ export type preferencesRoutes_PreferencesQuery = {
 
 
 /*
-query preferencesRoutes_PreferencesQuery {
+query preferencesRoutes_PreferencesQuery(
+  $authenticationToken: String
+) {
   viewer @principalField {
-    ...PreferencesApp_viewer
+    ...PreferencesApp_viewer_4kNil9
   }
 }
 
-fragment PreferencesApp_viewer on Viewer {
-  notificationPreferences {
+fragment PreferencesApp_viewer_4kNil9 on Viewer {
+  notificationPreferences(authenticationToken: $authenticationToken) {
     id
     name
     channel
@@ -34,9 +38,24 @@ fragment PreferencesApp_viewer on Viewer {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "authenticationToken"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "authenticationToken",
+    "variableName": "authenticationToken"
+  }
+];
+return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "preferencesRoutes_PreferencesQuery",
@@ -50,7 +69,7 @@ const node: ConcreteRequest = {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "PreferencesApp_viewer"
           }
@@ -63,7 +82,7 @@ const node: ConcreteRequest = {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "preferencesRoutes_PreferencesQuery",
     "selections": [
@@ -77,7 +96,7 @@ const node: ConcreteRequest = {
         "selections": [
           {
             "alias": null,
-            "args": null,
+            "args": (v1/*: any*/),
             "concreteType": "NotificationPreference",
             "kind": "LinkedField",
             "name": "notificationPreferences",
@@ -120,13 +139,14 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "fef6226dc7dfcc8f2bcb1368e0b37438",
+    "cacheID": "edd1b2c59aa9370d63d57be3a6c9649f",
     "id": null,
     "metadata": {},
     "name": "preferencesRoutes_PreferencesQuery",
     "operationKind": "query",
-    "text": "query preferencesRoutes_PreferencesQuery {\n  viewer @principalField {\n    ...PreferencesApp_viewer\n  }\n}\n\nfragment PreferencesApp_viewer on Viewer {\n  notificationPreferences {\n    id\n    name\n    channel\n    status\n  }\n}\n"
+    "text": "query preferencesRoutes_PreferencesQuery(\n  $authenticationToken: String\n) {\n  viewer @principalField {\n    ...PreferencesApp_viewer_4kNil9\n  }\n}\n\nfragment PreferencesApp_viewer_4kNil9 on Viewer {\n  notificationPreferences(authenticationToken: $authenticationToken) {\n    id\n    name\n    channel\n    status\n  }\n}\n"
   }
 };
-(node as any).hash = '5d943fd9f5d8230da4d0c1eade889dd2';
+})();
+(node as any).hash = '0fae2794f8107dcaf8ff3139fddb79c1';
 export default node;

@@ -123,6 +123,14 @@ export function initializeMiddleware(app) {
   app.use(sameOriginMiddleware)
   app.use(unsupportedBrowserMiddleware)
 
+  if (process.env.NODE_ENV !== "test") {
+    app.use(splitTestMiddleware)
+  }
+
+  // Need sharify for unleash
+  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
+  app.use(featureFlagMiddleware(UnleashService))
+
   // Initialize caches
   applyCacheMiddleware(app)
 
@@ -146,16 +154,8 @@ export function initializeMiddleware(app) {
   // Sets up mobile marketing signup modal
   app.use(marketingModalsMiddleware)
 
-  if (process.env.NODE_ENV !== "test") {
-    app.use(splitTestMiddleware)
-  }
-
   // Static assets
   applyStaticAssetMiddlewares(app)
-
-  // Need sharify for unleash
-  registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
-  app.use(featureFlagMiddleware(UnleashService))
 }
 
 function applySecurityMiddleware(app) {
@@ -256,7 +256,7 @@ function applyStaticAssetMiddlewares(app) {
     })
 
   // TODO: Move to ./public/images
-  app.use(favicon(path.resolve(__dirname, "mobile/public/images/favicon.ico")))
+  app.use(favicon(path.resolve(__dirname, "desktop/public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 }
 

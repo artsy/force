@@ -7,7 +7,6 @@ import { basePath, env } from "./env"
 export function getEntrypoints() {
   return {
     ...findAssets("src/desktop/assets"),
-    ...findAssets("src/mobile/assets"),
   }
 }
 

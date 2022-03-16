@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionVideo_section = {
     readonly embed: string | null;
+    readonly fallbackEmbed: string | null;
     readonly image: {
         readonly cropped: {
             readonly src: string;
@@ -40,6 +41,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "embed",
       "storageKey": "embed(autoPlay:true)"
+    },
+    {
+      "alias": "fallbackEmbed",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "autoPlay",
+          "value": false
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "embed",
+      "storageKey": "embed(autoPlay:false)"
     },
     {
       "alias": null,
@@ -92,5 +106,5 @@ const node: ReaderFragment = {
   "type": "ArticleSectionVideo",
   "abstractKey": null
 };
-(node as any).hash = 'f64b2c6ebde06420f883c8ae86e8b05b';
+(node as any).hash = 'efd503a2f10aa94d7d0d86d131a47e4f';
 export default node;

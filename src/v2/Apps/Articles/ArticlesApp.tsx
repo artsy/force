@@ -20,6 +20,7 @@ const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
       <MetaTags
         title="Editorial | Artsy"
         description="Artsy's editorial content unpacks the art world through on-the-ground coverage, studio visits, market news, original films, and art-historical explainers."
+        pathname="/articles"
       />
 
       <Link

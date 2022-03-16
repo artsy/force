@@ -17,9 +17,14 @@ const formInitialValues = {
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
-  id: "test-artist-id",
-  name: "Test Artist",
-  slug: "test-artist-slug",
+  placeholder: "Test Artist",
+  artists: [
+    {
+      id: "test-artist-id",
+      name: "Test Artist",
+      slug: "test-artist-slug",
+    },
+  ],
 }
 
 const defaultFilters: ArtworkFiltersState = {
@@ -83,7 +88,7 @@ describe("SavedSearchAlertModal", () => {
     render(<TestComponent />)
     expect(screen.getByRole("textbox")).toHaveAttribute(
       "placeholder",
-      "Test Artist • 2 filters"
+      "Test Artist"
     )
   })
 

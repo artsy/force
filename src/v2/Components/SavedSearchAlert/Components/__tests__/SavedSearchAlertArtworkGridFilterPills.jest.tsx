@@ -9,9 +9,14 @@ import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtwo
 
 const savedSearchEntity: SavedSearchEntity = {
   type: "artist",
-  id: "test-artist-id",
-  name: "Banksy",
-  slug: "example-slug",
+  placeholder: "Banksy",
+  artists: [
+    {
+      id: "test-artist-id",
+      name: "Banksy",
+      slug: "example-slug",
+    },
+  ],
 }
 
 const mockedFilters: ArtworkFiltersState = {

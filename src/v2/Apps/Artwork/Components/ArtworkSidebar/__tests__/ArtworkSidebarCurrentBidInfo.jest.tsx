@@ -4,6 +4,7 @@ import {
   AuctionPreview,
   AuctionPreviewNoStartingBid,
   ClosedAuctionArtwork,
+  ClosedLotArtwork,
   LiveAuctionInProgress,
   OpenAuctionNoReserveNoBids,
   OpenAuctionNoReserveWithBids,
@@ -70,6 +71,14 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
   describe("for closed auction", () => {
     it("displays Auction Closed", async () => {
       const wrapper = await getWrapper(ClosedAuctionArtwork)
+
+      expect(wrapper.text()).toContain("Bidding closed")
+    })
+  })
+
+  describe("for closed auction with cascading end time turned on and a lot closed", () => {
+    it("displays Auction Closed", async () => {
+      const wrapper = await getWrapper(ClosedLotArtwork)
 
       expect(wrapper.text()).toContain("Bidding closed")
     })

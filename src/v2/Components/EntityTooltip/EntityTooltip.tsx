@@ -33,6 +33,7 @@ export const isEntity = (token: string): token is Entity => {
 export const EntityTooltipHighlight = styled(Box)`
   > a {
     position: relative;
+    text-decoration: none !important;
 
     &:before {
       content: "";
