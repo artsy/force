@@ -47,7 +47,7 @@ const StyledRange = styled(RCRange)`
     border-radius: 50%;
     background-color: ${themeGet("colors.white100")};
     touch-action: pan-x;
-    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     border: solid 1px ${themeGet("colors.black10")};
 
     &:focus {
