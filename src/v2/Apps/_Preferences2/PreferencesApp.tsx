@@ -18,6 +18,11 @@ import {
 import { useEditNotificationPreferences } from "./useEditNotificationPreferences"
 import { useRouter } from "v2/System/Router/useRouter"
 
+export const parseTokenFromRouter = (router): string => {
+  const tokenFromQuery =
+    router.match?.location?.query?.authentication_token || ""
+  return tokenFromQuery.split("?")[0]
+}
 const NOTIFICATION_FIELDS = {
   recommendedByArtsy: false,
   artWorldInsights: false,
@@ -39,8 +44,8 @@ interface FormValuesForNotificationPreferences {
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
-  const { match } = useRouter()
-  const authenticationToken = match?.location?.query?.authentication_token
+  const router = useRouter()
+  const authenticationToken = parseTokenFromRouter(router)
   const { sendToast } = useToasts()
   const { submitMutation } = useEditNotificationPreferences()
   let initialValues = getInitialValues(viewer) // Shape the response from Metaphysics for Formik

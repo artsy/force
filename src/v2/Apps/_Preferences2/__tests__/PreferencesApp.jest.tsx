@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import { PreferencesApp } from "../PreferencesApp"
+import { parseTokenFromRouter, PreferencesApp } from "../PreferencesApp"
 
 describe("PreferencesApp", () => {
   it("renders the preference center", () => {
@@ -81,5 +81,29 @@ describe("PreferencesApp", () => {
     checkboxes.forEach(checkbox => {
       expect(checkbox).not.toBeChecked()
     })
+  })
+})
+
+describe("parseTokenFromRouter", () => {
+  it("returns an empty string without a query", () => {
+    const router = {}
+    const authenticationToken = parseTokenFromRouter(router)
+    expect(authenticationToken).toEqual("")
+  })
+
+  it("returns the token from the query", () => {
+    const token = "abcd1234"
+    const query = { authentication_token: token }
+    const router = { match: { location: { query } } }
+    const authenticationToken = parseTokenFromRouter(router)
+    expect(authenticationToken).toEqual(token)
+  })
+
+  it("returns the token from the query and cleans up any malformed values", () => {
+    const token = "abcd1234"
+    const query = { authentication_token: `${token}?foo=bar` }
+    const router = { match: { location: { query } } }
+    const authenticationToken = parseTokenFromRouter(router)
+    expect(authenticationToken).toEqual(token)
   })
 })
