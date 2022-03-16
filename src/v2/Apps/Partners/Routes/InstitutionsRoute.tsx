@@ -35,6 +35,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
       <MetaTags
         title="Institutions | Artsy"
         description="Artsy promotes the collections, shows, and programs of the Louvre, Getty Museum, Robert Rauschenberg Foundation, and 600+ other museums and institutions worldwide."
+        pathname="institutions"
       />
 
       <Join separator={<Spacer mt={4} />}>
