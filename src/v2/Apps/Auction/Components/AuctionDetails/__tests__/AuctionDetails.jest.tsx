@@ -57,10 +57,20 @@ describe("AuctionDetails", () => {
   it("shows formatted start time", () => {
     const wrapper = getWrapper({
       Sale: () => ({
-        formattedStartDateTime: "Starting in 20 minutes",
+        auctionsDetailFormattedStartDateTime: "Mar 22, 2022 • 9:22pm GMT",
       }),
     })
-    expect(wrapper.text()).toContain("Starting in 20 minutes")
+    expect(wrapper.text()).toContain("Mar 22, 2022 • 9:22pm GMT")
+  })
+
+  it("show the interval label", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        auctionsDetailCascadingIntervalLabel:
+          "Lots close in 1 minute intervals",
+      }),
+    })
+    expect(wrapper.text()).toContain("Lots close in 1 minute intervals")
   })
 
   it("shows add to calendar button", () => {
