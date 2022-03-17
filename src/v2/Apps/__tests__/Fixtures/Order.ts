@@ -158,6 +158,7 @@ const OrderArtworkOrEditionSetkNode_Artwork = {
     displayPriceRange: false as boolean,
     id: "art123",
     price: "$12,000",
+    listPrice: { __typename: "Money", major: 12000 },
   },
 }
 
@@ -168,6 +169,7 @@ const OfferArtworkOrEditionSetNode_Artwork = {
     displayPriceRange: false as boolean,
     id: "art123",
     price: "$16,000",
+    listPrice: { __typename: "Money", major: 16000 },
   },
 }
 
@@ -177,6 +179,7 @@ const OfferArtworkOrEditionSetNode_EditionSet = {
     displayPriceRange: false,
     id: "ed123",
     price: "$14,000",
+    listPrice: { __typename: "Money", major: 14000 },
   },
 }
 
@@ -186,6 +189,7 @@ const OfferArtworkOrEditionSetNode_ArtworkInPounds = {
     displayPriceRange: false as boolean,
     id: "art123",
     price: "£16,000",
+    listPrice: { __typename: "Money", major: 16000 },
   },
 }
 
@@ -195,6 +199,15 @@ const OfferArtworkOrEditionSetNode_Range = {
     displayPriceRange: true as boolean,
     id: "ed123",
     price: "$14,000 - 18,000",
+    listPrice: {
+      __typename: "PriceRange",
+      maxPrice: {
+        major: 18000,
+      },
+      minPrice: {
+        major: 14000,
+      },
+    },
   },
 }
 
