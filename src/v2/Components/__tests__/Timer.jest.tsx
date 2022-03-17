@@ -71,7 +71,7 @@ describe("when the end date is set", () => {
 })
 
 describe("when the start date and the end dates are set", () => {
-  it("formats the remaining time in '00d  00h  00m  00s'", () => {
+  it("formats the remaining time before start when the start date is in the future", () => {
     let timer
 
     // Starts Thursday, May 12, 2018 10:24:31.000 AM UTC
@@ -109,9 +109,10 @@ describe("when the start date and the end dates are set", () => {
     expect(getTimerText(timer)).toMatch("00h")
     expect(getTimerText(timer)).toMatch("0m")
     expect(getTimerText(timer)).toMatch("10s")
+  })
 
-    // Start date in the past, end date in the future
-    timer = renderer.create(
+  it("formats the time before sale end when the start date has passed", () => {
+    const timer = renderer.create(
       <Timer
         startDate="2018-04-10T20:22:42+00:00"
         endDate="2018-05-10T20:22:42+00:00"
@@ -123,7 +124,7 @@ describe("when the start date and the end dates are set", () => {
     expect(getTimerText(timer)).toMatch("10s")
   })
 
-  it("counts down to zero", () => {
+  it("counts down to zero when the start date is populated", () => {
     let timer = renderer.create(
       <Timer startDate="2018-05-14T10:23:10+00:00" endDate="" />
     )

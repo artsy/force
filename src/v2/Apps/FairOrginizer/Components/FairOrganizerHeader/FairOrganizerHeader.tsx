@@ -23,7 +23,8 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
   const { startAt, exhibitionPeriod, href } = fair
 
   const currentTime = useCurrentTime({ syncWithServer: true })
-  const showTimer = DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
+  const fairHasNotStarted =
+    DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
 
   return (
     <Box>
@@ -50,7 +51,10 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         <Column span={6}>
           <Flex flexDirection="column">
             <Box>
-              {showTimer && (
+              {/* endAt is not passed to the Timer because this timer will always run
+              before the fair starts and therefore the timer only needs to know the length
+              of time before the fair begins, so the fair's end time is irrelevant */}
+              {fairHasNotStarted && (
                 <>
                   <Timer
                     variant={["lg", "xl"]}
