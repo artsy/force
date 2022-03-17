@@ -284,17 +284,20 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   }
 
   return (
-    <Text variant="xs" color={getLabelColor(timerCopy.color, lotHasClosed)}>
+    <Text
+      variant="xs"
+      color={getLabelColor(timerCopy.color, lotsAreClosing, lotHasClosed)}
+    >
       {lotCloseCopy}
     </Text>
   )
 }
 
-const getLabelColor = (color, lotHasClosed): string => {
+const getLabelColor = (color, lotsAreClosing, lotHasClosed): string => {
   if (lotHasClosed) {
     return "black60"
   } else {
-    if (color === "red100") {
+    if (color === "red100" && lotsAreClosing) {
       return color
     } else {
       return "black100"
