@@ -143,6 +143,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           value={sliderRange}
           allowCross={false}
           onChange={handleSliderValueChange}
+          step={100}
           ariaLabelGroupForHandles={[
             "Min price slider handle",
             "Max price slider handle",
