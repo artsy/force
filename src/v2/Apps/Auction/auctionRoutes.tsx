@@ -90,6 +90,7 @@ export const auctionRoutes: AppRouteConfig[] = [
       {
         path: "register",
         getComponent: () => RegistrationRoute,
+        onServerSideRender: checkIfLoggedIn,
         query: graphql`
           query auctionRoutes_RegisterRouteQuery($slug: String!) {
             me {
@@ -104,6 +105,7 @@ export const auctionRoutes: AppRouteConfig[] = [
       {
         path: "confirm-registration",
         getComponent: () => ConfirmRegistrationRoute,
+        onServerSideRender: checkIfLoggedIn,
         query: graphql`
           query auctionRoutes_ConfirmRegistrationRouteQuery($slug: String!) {
             me {
@@ -122,15 +124,11 @@ export const auctionRoutes: AppRouteConfig[] = [
           if (!match.context.user) {
             const redirectTo = match.location.pathname + match.location.search
             match.router.push(
-              `/login?redirect-to=${redirectTo}&afterSignUpAction=${redirectTo}`
+              `/login?redirectTo=${redirectTo}&afterSignUpAction=${redirectTo}`
             )
           }
         },
-        onServerSideRender: ({ req, res }) => {
-          if (!req.user) {
-            res.redirect(`/login?redirect=${req.originalUrl}`)
-          }
-        },
+        onServerSideRender: checkIfLoggedIn,
         ignoreScrollBehavior: true,
         query: graphql`
           query auctionRoutes_BidRouteQuery(
@@ -169,3 +167,9 @@ export const auctionRoutes: AppRouteConfig[] = [
     `,
   },
 ]
+
+function checkIfLoggedIn({ req, res }) {
+  if (!req.user) {
+    res.redirect(`/login?redirectTo=${req.originalUrl}`)
+  }
+}
