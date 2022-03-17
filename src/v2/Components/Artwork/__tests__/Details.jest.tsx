@@ -250,7 +250,10 @@ describe("Details", () => {
 
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(data)
-        expect(wrapper.html()).toContain("Closes, 1455d 16h")
+
+        expect(wrapper.html()).toContain("Closes, ")
+        expect(wrapper.html()).toContain("d")
+        expect(wrapper.html()).toContain("h")
       })
 
       it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {

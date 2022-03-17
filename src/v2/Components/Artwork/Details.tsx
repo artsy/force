@@ -207,19 +207,11 @@ export const Details: React.FC<DetailsProps> = ({
   hideSaleInfo,
   ...rest
 }) => {
-<<<<<<< HEAD
   const { isAuctionArtwork } = useArtworkGridContext()
 
   return (
     <>
       {isAuctionArtwork && (
-        <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
-=======
-  const { artworkGridContext } = useArtworkGridContext()
-
-  return (
-    <>
-      {artworkGridContext?.isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
           {rest?.artwork?.sale?.cascadingEndTimeInterval && (
@@ -232,7 +224,6 @@ export const Details: React.FC<DetailsProps> = ({
             </>
           )}
         </Flex>
->>>>>>> 9c7799c039 (Show lot close timer on lot grid page)
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <TitleLine {...rest} />
