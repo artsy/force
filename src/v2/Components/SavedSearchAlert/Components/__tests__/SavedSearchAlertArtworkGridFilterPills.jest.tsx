@@ -19,6 +19,8 @@ const savedSearchEntity: SavedSearchEntity = {
   ],
   analytics: {
     ownerType: OwnerType.artist,
+    ownerId: "test-artist-id",
+    ownerSlug: "example-slug",
   },
 }
 

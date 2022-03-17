@@ -28,6 +28,8 @@ export interface SavedSearchEntityArtist {
 
 interface SavedSearchEntityAnalytics {
   ownerType: PageOwnerType
+  ownerSlug: string
+  ownerId: string
 }
 
 export interface SavedSearchEntity {

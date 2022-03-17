@@ -48,6 +48,8 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     ],
     analytics: {
       ownerType: OwnerType.artist,
+      ownerId: artist.internalID,
+      ownerSlug: artist.slug,
     },
   }
 

@@ -36,7 +36,6 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
   const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
   const { sendToast } = useToasts()
-  const entityArtist = entity.artists[0]
 
   const openModal = () => {
     setVisibleForm(true)
@@ -58,8 +57,8 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
       context_page_owner_type: entity.analytics.ownerType,
-      context_page_owner_id: entityArtist.id,
-      context_page_owner_slug: entityArtist.slug,
+      context_page_owner_id: entity.analytics.ownerId,
+      context_page_owner_slug: entity.analytics.ownerSlug,
     })
 
     if (isLoggedIn) {
@@ -75,8 +74,8 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
       context_page_owner_type: entity.analytics.ownerType,
-      context_page_owner_id: entityArtist.id,
-      context_page_owner_slug: entityArtist.slug,
+      context_page_owner_id: entity.analytics.ownerId,
+      context_page_owner_slug: entity.analytics.ownerSlug,
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
