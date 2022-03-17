@@ -1,6 +1,7 @@
 import { FC, useEffect, useState, useMemo, FormEvent } from "react"
 import { Box, Flex, LabeledInput, Spacer, Text } from "@artsy/palette"
 import {
+  Aggregations,
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
@@ -11,8 +12,8 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
-import { debounce } from "lodash"
-import { HistogramBarEntity, Histogram } from "./Histogram"
+import { debounce, sortBy } from "lodash"
+import { Histogram, HistogramBarEntity } from "./Histogram"
 
 type CustomRange = (number | "*")[]
 
@@ -21,112 +22,6 @@ const DEBOUNCE_DELAY = 300
 const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
 const DEFAULT_PRICE_RANGE = "*-*"
 const DEFAULT_RANGE = [0, 50000]
-const BARS: HistogramBarEntity[] = [
-  {
-    count: 34548,
-    value: 0,
-  },
-  {
-    count: 35234,
-    value: 2000,
-  },
-  {
-    count: 6153,
-    value: 4000,
-  },
-  {
-    count: 32119,
-    value: 6000,
-  },
-  {
-    count: 37462,
-    value: 8000,
-  },
-  {
-    count: 1655,
-    value: 10000,
-  },
-  {
-    count: 39325,
-    value: 12000,
-  },
-  {
-    count: 2926,
-    value: 14000,
-  },
-  {
-    count: 9501,
-    value: 16000,
-  },
-  {
-    count: 48407,
-    value: 18000,
-  },
-  {
-    count: 28957,
-    value: 20000,
-  },
-  {
-    count: 24314,
-    value: 22000,
-  },
-  {
-    count: 16478,
-    value: 24000,
-  },
-  {
-    count: 28169,
-    value: 26000,
-  },
-  {
-    count: 7767,
-    value: 28000,
-  },
-  {
-    count: 23397,
-    value: 30000,
-  },
-  {
-    count: 6444,
-    value: 32000,
-  },
-  {
-    count: 18366,
-    value: 34000,
-  },
-  {
-    count: 457,
-    value: 36000,
-  },
-  {
-    count: 28344,
-    value: 38000,
-  },
-  {
-    count: 35116,
-    value: 40000,
-  },
-  {
-    count: 13476,
-    value: 42000,
-  },
-  {
-    count: 39976,
-    value: 44000,
-  },
-  {
-    count: 16281,
-    value: 46000,
-  },
-  {
-    count: 38268,
-    value: 48000,
-  },
-  {
-    count: 20844,
-    value: 50000,
-  },
-]
 
 export interface PriceRangeFilterNewProps {
   expanded?: boolean
@@ -135,12 +30,17 @@ export interface PriceRangeFilterNewProps {
 export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
   expanded,
 }) => {
-  const { shouldStageFilterChanges, setFilter } = useArtworkFilterContext()
+  const {
+    shouldStageFilterChanges,
+    aggregations,
+    setFilter,
+  } = useArtworkFilterContext()
   const { priceRange, reset } = useCurrentlySelectedFilters()
   const [range, setRange] = useState(parseRange(priceRange))
   const sliderRange = parseSliderRange(range)
   const [minValue, maxValue] = range
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
+  const bars = getBarsFromAggregations(aggregations)
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.priceRange
@@ -227,11 +127,13 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Box mt={4} mx={[`${RANGE_DOT_SIZE / 2}px`, 0]}>
-        <Histogram
-          bars={BARS}
-          selectedRange={[sliderRange[0], sliderRange[1]]}
-        />
+      <Box mt={4} mx={[RANGE_DOT_SIZE / 2, 0]}>
+        {bars.length > 0 ? (
+          <Histogram
+            bars={bars}
+            selectedRange={[sliderRange[0], sliderRange[1]]}
+          />
+        ) : null}
 
         <Spacer mb={4} />
 
@@ -312,4 +214,18 @@ export const convertToFilterFormatRange = (range: number[]) => {
 
 export const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
+}
+
+const getBarsFromAggregations = (aggregations?: Aggregations) => {
+  const aggregation = aggregations?.find(aggregation => {
+    return aggregation.slice === "SIMPLE_PRICE_HISTOGRAM"
+  })
+  const counts = aggregation?.counts ?? []
+  const bars: HistogramBarEntity[] = counts.map(entity => ({
+    count: entity.count,
+    value: Number(entity.value),
+  }))
+  const sortedBars = sortBy(bars, "value")
+
+  return sortedBars
 }
