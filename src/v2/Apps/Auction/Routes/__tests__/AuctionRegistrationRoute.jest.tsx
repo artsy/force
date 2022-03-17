@@ -132,6 +132,28 @@ describe("AuctionRegistrationRoute", () => {
     expect(spy).toHaveBeenCalledWith("/auction/sale-slug")
   })
 
+  it("redirects to /confirm-registration if credit card on file", async () => {
+    const spy = jest.fn()
+
+    mockUseRouter.mockImplementation(() => ({
+      router: {
+        replace: spy,
+      },
+    }))
+
+    getWrapper({
+      Sale: () => ({
+        slug: "sale-slug",
+      }),
+      Me: () => ({
+        hasQualifiedCreditCards: true,
+      }),
+    })
+
+    await flushPromiseQueue()
+    expect(spy).toHaveBeenCalledWith("/auction/sale-slug/confirm-registration")
+  })
+
   it("tracks confirmation page view", async () => {
     const spy = jest.fn()
 
@@ -191,7 +213,7 @@ describe("AuctionRegistrationRoute", () => {
       }),
       Me: () => ({
         identityVerified: false,
-        hasQualifiedCreditCards: true,
+        hasQualifiedCreditCards: false,
       }),
     })
 
@@ -204,7 +226,7 @@ describe("AuctionRegistrationRoute", () => {
         requireIdentityVerification: false,
       }),
       Me: () => ({
-        hasQualifiedCreditCards: true,
+        hasQualifiedCreditCards: false,
       }),
     })
 

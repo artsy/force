@@ -110,6 +110,12 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
             internalID: "zzz123",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.27,
               placeholder: "78.76427829698858%",
               url: "https://test.artsy.net/image",
@@ -169,6 +175,12 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             href: "/artwork/yayoi-kusama-pumpkin-33333333333333333",
             internalID: "xxx123",
             image: {
+              resized: {
+                src: "",
+                srcSet: "",
+                width: 10,
+                height: 200,
+              },
               aspect_ratio: 1.43,
               placeholder: "69.82024597918638%",
               url: "https://test.artsy.net/image2",

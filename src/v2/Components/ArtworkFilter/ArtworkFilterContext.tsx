@@ -284,6 +284,7 @@ export const ArtworkFilterContextProvider: React.FC<
 }) => {
   const initialFilterState = {
     ...initialArtworkFilterState,
+    sort: sortOptions?.[0].value ?? initialArtworkFilterState.sort,
     ...paramsToCamelCase(filters),
   }
 

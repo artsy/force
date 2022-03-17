@@ -28,5 +28,17 @@ export const ArtworkGridContextProvider: React.FC<ArtworkGridContextProps> = ({
 
 export const useArtworkGridContext = () => {
   const artworkGridContext = useContext(ArtworkGridContext) ?? {}
-  return { artworkGridContext }
+  return artworkGridContext
+}
+
+export const withArtworkGridContext = Component => {
+  return props => {
+    return (
+      <ArtworkGridContext.Consumer>
+        {contextValues => {
+          return <Component {...contextValues} {...props} />
+        }}
+      </ArtworkGridContext.Consumer>
+    )
+  }
 }

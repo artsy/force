@@ -90,10 +90,12 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
         // eslint-disable-next-line no-console
         if (console[type] === originalLoggers[type]) {
           const handler = (...args) => {
-            const runtimeErrorStackTrace = args[1]
-            if (runtimeErrorStackTrace && runtimeErrorStackTrace !== "false") {
-              originalLoggers.error(runtimeErrorStackTrace)
-            }
+            // Sometimes jest consumes relay errors. If something weird is going
+            // on uncomment this and see if it is outputted.
+            // const runtimeErrorStackTrace = args[1]
+            // if (runtimeErrorStackTrace && runtimeErrorStackTrace !== "false") {
+            //   originalLoggers.error(runtimeErrorStackTrace)
+            // }
 
             if (
               args[0] &&

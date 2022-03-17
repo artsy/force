@@ -8,6 +8,12 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
     node: {
       id: "QXJ0d29yazprYXdzLXBpbm9jY2hpby0z",
       image: {
+        resized: {
+          src: "",
+          srcSet: "",
+          width: 10,
+          height: 200,
+        },
         aspect_ratio: 0.67,
         placeholder: "150%",
         url:
@@ -49,6 +55,12 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
     node: {
       id: "QXJ0d29yazprYXdzLWthd3MteC11bmRlcmNvdmVyLTU=",
       image: {
+        resized: {
+          src: "",
+          srcSet: "",
+          width: 10,
+          height: 200,
+        },
         aspect_ratio: 0.71,
         placeholder: "141.82142857142856%",
         url:
@@ -90,6 +102,12 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
     node: {
       id: "QXJ0d29yazprYXdzLWthd3MteC11bmRlcmNvdmVyLTQ=",
       image: {
+        resized: {
+          src: "",
+          srcSet: "",
+          width: 10,
+          height: 200,
+        },
         aspect_ratio: 0.71,
         placeholder: "141.42857142857144%",
         url:
@@ -135,6 +153,12 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       href: "/artwork/kaws-passing-through-brown-open-edition",
       id: "QXJ0d29yazprYXdzLXBhc3NpbmctdGhyb3VnaC1icm93bi1vcGVuLWVkaXRpb24=",
       image: {
+        resized: {
+          src: "",
+          srcSet: "",
+          width: 10,
+          height: 200,
+        },
         aspect_ratio: 1.5,
         placeholder: "66.66666666666666%",
         url:

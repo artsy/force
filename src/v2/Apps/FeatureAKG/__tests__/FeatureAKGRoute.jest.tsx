@@ -1019,6 +1019,12 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               slug: "andy-warhol-cow-ii-dot-12-31",
               href: "/artwork/andy-warhol-cow-ii-dot-12-31",
               image: {
+                resized: {
+                  src: "",
+                  srcSet: "",
+                  width: 10,
+                  height: 200,
+                },
                 aspect_ratio: 0.69,
                 placeholder: "foo",
                 url:
@@ -1060,6 +1066,12 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               slug: "andy-warhol-cow-ii-dot-12-31",
               href: "/artwork/andy-warhol-cow-ii-dot-12-31",
               image: {
+                resized: {
+                  src: "",
+                  srcSet: "",
+                  width: 10,
+                  height: 200,
+                },
                 aspect_ratio: 0.69,
                 placeholder: "foo",
                 url:

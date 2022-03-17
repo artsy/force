@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Flex } from "@artsy/palette"
+import { Column, Flex, GridColumns } from "@artsy/palette"
 import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.graphql"
 import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
 import { isEqual } from "lodash"
@@ -12,6 +12,9 @@ import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "v2/Utils/Responsive"
 import GridItem from "../Artwork/GridItem"
+import { withArtworkGridContext } from "./ArtworkGridContext"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { FlatGridItemFragmentContainer } from "../Artwork/FlatGridItem"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type SectionedArtworks = Array<Array<ArtworkGrid_artworks["edges"][0]["node"]>>
@@ -25,6 +28,7 @@ export interface ArtworkGridProps
   contextModule?: AuthContextModule
   columnCount?: number | number[]
   preloadImageCount?: number
+  isAuctionArtwork?: boolean
   itemMargin?: number
   onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
@@ -46,6 +50,7 @@ export class ArtworkGridContainer extends React.Component<
   static defaultProps = {
     columnCount: [3],
     sectionMargin: 20,
+    isAuctionArtwork: false,
     itemMargin: 20,
     preloadImageCount: 0,
   }
@@ -72,7 +77,7 @@ export class ArtworkGridContainer extends React.Component<
 
   componentWillUnmount() {
     if (this.state.interval) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      // @ts-ignore
       clearInterval(this.state.interval)
     }
   }
@@ -165,7 +170,24 @@ export class ArtworkGridContainer extends React.Component<
     return sections
   }
 
-  renderSectionsForAllBreakpoints() {
+  renderArtworkGrid() {
+    const { artworks } = this.props
+    const nodes = extractNodes(artworks)
+
+    return (
+      <GridColumns width="100%">
+        {nodes.map(artwork => {
+          return (
+            <Column span={[6, 4]} key={artwork.internalID}>
+              <FlatGridItemFragmentContainer artwork={artwork} />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    )
+  }
+
+  renderMasonrySectionsForAllBreakpoints() {
     const columnCount = this._columnCount
 
     // Only 1 column ever, so no need to wrap.
@@ -205,12 +227,20 @@ export class ArtworkGridContainer extends React.Component<
     const {
       artworks,
       className,
+      isAuctionArtwork,
       onClearFilters,
       emptyStateComponent,
     } = this.props
 
     const hasArtworks = artworks && artworks.edges && artworks.edges.length > 0
-    const artworkGrids = this.renderSectionsForAllBreakpoints()
+    let artworkGrids
+
+    if (isAuctionArtwork) {
+      artworkGrids = this.renderArtworkGrid()
+    } else {
+      artworkGrids = this.renderMasonrySectionsForAllBreakpoints()
+    }
+
     const emptyState = emptyStateComponent || (
       <ArtworkGridEmptyState onClearFilters={onClearFilters} />
     )
@@ -233,7 +263,7 @@ const InnerContainer = styled(Flex)`
   width: 100%;
 `
 
-export default createFragmentContainer(ArtworkGrid, {
+export default createFragmentContainer(withArtworkGridContext(ArtworkGrid), {
   artworks: graphql`
     fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
       edges {
@@ -246,6 +276,7 @@ export default createFragmentContainer(ArtworkGrid, {
             aspect_ratio: aspectRatio
           }
           ...GridItem_artwork
+          ...FlatGridItem_artwork
         }
       }
     }

@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionRegistrationRoute_me = {
     readonly internalID: string;
     readonly identityVerified: boolean | null;
+    readonly hasQualifiedCreditCards: boolean | null;
     readonly " $refType": "AuctionRegistrationRoute_me";
 };
 export type AuctionRegistrationRoute_me$data = AuctionRegistrationRoute_me;
@@ -36,10 +37,17 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "identityVerified",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasQualifiedCreditCards",
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '743e2c1e4789262ab1a7c5fa5ad34834';
+(node as any).hash = 'b06ca5bee581b2dc45e4b0da0ecf12e9';
 export default node;
