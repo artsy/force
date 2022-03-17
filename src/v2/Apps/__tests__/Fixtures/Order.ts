@@ -110,6 +110,7 @@ const OrderArtworkNode = {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
     processWithArtaShipping: false,
+    artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
       major: 100,
@@ -129,6 +130,26 @@ const ArtaEnabledOrderArtworkNode = {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
     processWithArtaShipping: true,
+    artsyShippingInternational: false,
+    domesticShippingFee: {
+      minor: 10000,
+      major: 100,
+      display: "$100",
+    },
+    internationalShippingFee: {
+      minor: 10000,
+      major: 100,
+      display: "$100",
+    },
+  },
+}
+
+const ArtstyShippingInternationalOrderArtworkNode = {
+  artwork: {
+    ...OrderArtworkNodeWithoutShipping,
+    shippingOrigin: "New York, NY",
+    processWithArtaShipping: false,
+    artsyShippingInternational: true,
     domesticShippingFee: {
       minor: 10000,
       major: 100,
@@ -329,6 +350,28 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkVersionNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNode,
+        },
+      },
+    ],
+  },
+} as const
+
+export const UntouchedBuyOrderWithArtsyShippingInternational = {
+  ...UntouchedBuyOrder,
+  __typename: "CommerceBuyOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          ...ArtstyShippingInternationalOrderArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -963,6 +1006,7 @@ const OrderArtworkNodePriceHidden = {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
     processWithArtaShipping: false,
+    artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
       major: 100,

@@ -26,11 +26,12 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     savedSearchEntity,
     filters ?? {}
   )
+  const metric = filters?.metric ?? DEFAULT_METRIC
   const pills = extractPills({
     criteria,
     aggregations,
     entity: savedSearchEntity,
-    metric: filters?.metric ?? DEFAULT_METRIC,
+    metric,
   })
 
   const removePill = (pill: FilterPill) => {
@@ -54,6 +55,9 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
       <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
       <SavedSearchCreateAlertButton
         entity={savedSearchEntity}
+        criteria={criteria}
+        metric={metric}
+        aggregations={aggregations}
         ml={PILL_HORIZONTAL_MARGIN_SIZE}
       />
     </Flex>

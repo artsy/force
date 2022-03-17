@@ -4,6 +4,7 @@ import { cloneDeep } from "lodash"
 import {
   UntouchedBuyOrder,
   UntouchedBuyOrderWithArtaEnabled,
+  UntouchedBuyOrderWithArtsyShippingInternational,
   UntouchedOfferOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import {
@@ -48,6 +49,14 @@ const testOrder: ShippingTestQueryRawResponse["order"] = {
 
 const ArtaEnabledTestOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrderWithArtaEnabled,
+  __typename: "CommerceBuyOrder",
+  mode: "BUY",
+  internalID: "1234",
+  id: "1234",
+}
+
+const ArtsyShippingInternationalTestOrder: ShippingTestQueryRawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtsyShippingInternational,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
   internalID: "1234",
@@ -877,6 +886,40 @@ describe("Shipping", () => {
       await page.update()
 
       expect(mutations.mockFetch).not.toHaveBeenCalled()
+    })
+
+    describe("Artsy shipping international", () => {
+      it("commits set shipping mutation if address in Europe", async () => {
+        const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
+        collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+        collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+
+        page = await buildPage({
+          mockData: {
+            me: collectorWithDefaultAddressInEurope,
+            order: {
+              ...ArtsyShippingInternationalTestOrder,
+            },
+          },
+        })
+        await page.update()
+
+        expect(mutations.mockFetch).toHaveBeenCalled()
+      })
+
+      it("does not commit set shipping mutation if address in US", async () => {
+        page = await buildPage({
+          mockData: {
+            me: testMe,
+            order: {
+              ...ArtsyShippingInternationalTestOrder,
+            },
+          },
+        })
+        await page.update()
+
+        expect(mutations.mockFetch).not.toHaveBeenCalled()
+      })
     })
 
     describe("ARTA shipping", () => {

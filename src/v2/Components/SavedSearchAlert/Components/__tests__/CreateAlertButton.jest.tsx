@@ -7,7 +7,6 @@ import {
   SavedSearchCreateAlertButtonProps,
 } from "../SavedSearchCreateAlertButton"
 import { mediator } from "lib/mediator"
-import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchEntity } from "../../types"
 import { OwnerType } from "@artsy/cohesion"
 
@@ -30,15 +29,11 @@ const savedSearchEntity: SavedSearchEntity = {
 
 describe("CreateAlertButton", () => {
   const renderButton = () => {
-    render(<CreateAlertButtonTest entity={savedSearchEntity} />)
+    render(<CreateAlertButtonTest entity={savedSearchEntity} criteria={{}} />)
   }
 
   const CreateAlertButtonTest = (props: SavedSearchCreateAlertButtonProps) => {
-    return (
-      <ArtworkFilterContextProvider>
-        <SavedSearchCreateAlertButton {...props} />
-      </ArtworkFilterContextProvider>
-    )
+    return <SavedSearchCreateAlertButton {...props} />
   }
 
   const openAuthToSatisfyIntent = jest.spyOn(
