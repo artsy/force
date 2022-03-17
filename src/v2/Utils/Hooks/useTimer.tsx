@@ -35,6 +35,8 @@ export const useTimer = (endDate: string, startAt: string = ""): Timer => {
   )
   const hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
 
+  // If startAt is passed into this hook and it is in the future,
+  // show the time before start. Otherwise show the time before end.
   const duration =
     hasStarted || startAt === "" ? timeBeforeEnd : timeBeforeStart
 

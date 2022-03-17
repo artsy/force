@@ -51,9 +51,9 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         <Column span={6}>
           <Flex flexDirection="column">
             <Box>
-              {/* endAt is not passed to the Timer because this timer will always run
-              before the fair starts and therefore the timer only needs to know the length
-              of time before the fair begins, so the fair's end time is irrelevant */}
+              {/* endAt is not passed to the Timer because this timer will only be shown
+              before the fair starts. Therefore the timer only needs to know the length
+              of time before the fair begins. The fair's end time is irrelevant. */}
               {fairHasNotStarted && (
                 <>
                   <Timer
