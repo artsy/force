@@ -68,6 +68,21 @@ describe("CreateArtworkAlertSection", () => {
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("Limited Edition")).toBeInTheDocument()
   })
+
+  it("should correctly track event when `Create Alert` button is pressed", () => {
+    renderWithRelay({
+      Artwork: () => Artwork,
+    })
+
+    fireEvent.click(screen.getByText("Create Alert"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedCreateAlert",
+      context_page_owner_type: "artwork",
+      context_page_owner_id: "artwork-id",
+      context_page_owner_slug: "artwork-slug",
+    })
+  })
 })
 
 describe("getAttributionClassIdByLabel", () => {
@@ -116,6 +131,8 @@ describe("getAttributionClassIdByLabel", () => {
 
 const Artwork = {
   title: "Some artwork title",
+  slug: "artwork-slug",
+  internalID: "artwork-id",
   artists: [
     {
       internalID: "4dd1584de0091e000100207c",
