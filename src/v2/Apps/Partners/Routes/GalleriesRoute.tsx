@@ -34,6 +34,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
       <MetaTags
         title="Galleries | Artsy"
         description="Browse art and design galleries around the globe by location and specialty and explore artists, artworks, shows, and fair booths."
+        pathname="galleries"
       />
 
       <Join separator={<Spacer mt={4} />}>
