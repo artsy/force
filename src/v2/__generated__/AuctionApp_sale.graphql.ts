@@ -9,10 +9,13 @@ export type AuctionApp_sale = {
     readonly coverImage: {
         readonly url: string | null;
     } | null;
+    readonly showAssociatedSale: {
+        readonly internalID: string;
+    } | null;
     readonly showBuyNowTab: {
         readonly internalID: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionMeta_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale">;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionMeta_sale" | "AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale">;
     readonly " $refType": "AuctionApp_sale";
 };
 export type AuctionApp_sale$data = AuctionApp_sale;
@@ -30,7 +33,10 @@ var v0 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-};
+},
+v1 = [
+  (v0/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -67,21 +73,34 @@ return {
       "storageKey": null
     },
     {
+      "alias": "showAssociatedSale",
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "associatedSale",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
       "alias": "showBuyNowTab",
       "args": null,
       "concreteType": "Sale",
       "kind": "LinkedField",
       "name": "promotedSale",
       "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionMeta_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionAssociatedSale_sale"
     },
     {
       "args": null,
@@ -98,5 +117,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e49096a45e02fc14330bb384398a3800';
+(node as any).hash = '515e788e427c5964466161a3e3f7fb66';
 export default node;

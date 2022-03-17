@@ -13,6 +13,7 @@ import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRa
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { getENV } from "v2/Utils/getENV"
+import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -30,9 +31,11 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
   const tabBar = {
     isVisible:
+      sale.showAssociatedSale ||
       me?.showLotStandingsTab?.length ||
       viewer.showFollowedArtistsTab?.edges?.length ||
       sale.showBuyNowTab,
+    showAssociatedSale: sale.showAssociatedSale,
     showActiveBids: me?.showLotStandingsTab?.length,
     showFollowedArtistsTab: viewer.showFollowedArtistsTab?.edges?.length,
     showBuyNowTab: sale.showBuyNowTab,
@@ -60,6 +63,11 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
           {tabBar.isVisible && (
             <Tabs mb={4}>
+              {tabBar.showAssociatedSale && (
+                <Tab name="Associated Sale">
+                  <AuctionAssociatedSaleFragmentContainer sale={sale} />
+                </Tab>
+              )}
               {tabBar.showActiveBids && (
                 <Tab name="Your Active Bids">
                   <AuctionActiveBidsRefetchContainer me={me} />
@@ -108,12 +116,16 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
   sale: graphql`
     fragment AuctionApp_sale on Sale {
       ...AuctionMeta_sale
+      ...AuctionAssociatedSale_sale
       ...AuctionBuyNowRail_sale
       ...AuctionDetails_sale
 
       internalID
       coverImage {
         url(version: ["wide", "source", "large_rectangle"])
+      }
+      showAssociatedSale: associatedSale {
+        internalID
       }
       showBuyNowTab: promotedSale {
         internalID
