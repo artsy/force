@@ -4,6 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
@@ -28,6 +29,9 @@ export type DetailsSidebar_conversation = {
                     readonly lastDigits: string;
                     readonly expirationYear: number;
                     readonly expirationMonth: number;
+                } | null;
+                readonly requestedFulfillment: {
+                    readonly __typename: string;
                 } | null;
                 readonly lineItems: {
                     readonly edges: ReadonlyArray<{
@@ -56,6 +60,7 @@ export type DetailsSidebar_conversation = {
                         } | null;
                     } | null> | null;
                 } | null;
+                readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
                 readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
             } | null;
         } | null> | null;
@@ -322,6 +327,18 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "requestedFulfillment",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/)
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "CommerceLineItemConnection",
                   "kind": "LinkedField",
                   "name": "lineItems",
@@ -501,6 +518,20 @@ return {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "CreditCardSummaryItem_order"
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "buyerAction",
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "CommerceOfferOrder",
+                  "abstractKey": null
                 }
               ],
               "storageKey": null
@@ -685,5 +716,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3875ad3f21d379a8594e72bb6f8f4416';
+(node as any).hash = '3f83cc3109b9546d275e21472eca0e7e';
 export default node;

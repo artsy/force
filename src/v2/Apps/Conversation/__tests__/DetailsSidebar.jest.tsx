@@ -29,26 +29,196 @@ const { renderWithRelay } = setupTestWrapperTL<DetailsSidebar_Test_Query>({
 
 describe("Conversation", () => {
   describe("when there is an active order", () => {
-    it("shows the offer expiration message", async () => {
-      renderWithRelay({
+    describe("status message", () => {
+      const defineCommerceOrderConnection = order => ({
         CommerceOrderConnectionWithTotalCount: () => ({
           edges: [
             {
               node: {
                 mode: "OFFER",
                 stateExpiresAt: "Dec 19",
-                displayState: "SUBMITTED",
+                buyerAction: "mocked",
+                ...order,
               },
             },
           ],
         }),
       })
 
-      expect(
-        screen.getByText(
-          "The seller will respond to your offer by Dec 19. Keep in mind making an offer doesn’t guarantee you the work."
+      it("shows the offer expiration message on an offer", () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "SUBMITTED",
+            buyerAction: null,
+          })
         )
-      ).toBeInTheDocument()
+
+        const message =
+          "The seller will respond to your offer by Dec 19. Keep in mind making an offer doesn’t guarantee you the work."
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("doesn't show the offer expiration message on a counter offer", () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "SUBMITTED",
+            buyerAction: "OFFER_RECEIVED",
+          })
+        )
+
+        const message =
+          "The seller will respond to your offer by Dec 19. Keep in mind making an offer doesn’t guarantee you the work."
+        expect(screen.queryByText(message)).not.toBeInTheDocument()
+      })
+
+      it("shows a message on an approved offer", () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "APPROVED",
+            buyerAction: "OFFER_ACCEPTED",
+          })
+        )
+
+        const message = /Thank you for your purchase. You will be notified when the work has shipped, typically within 5–7 business days./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message on a processing offer", () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "PROCESSING",
+          })
+        )
+
+        const message = /Thank you for your purchase. More delivery information will be available once your order ships./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message on an in-transit offer", () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "IN_TRANSIT",
+          })
+        )
+
+        const message = /Your work is on its way./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message on a shipped order", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "FULFILLED",
+            requestedFulfillment: { __typename: "CommerceShip" },
+          })
+        )
+
+        const message = /Your work is on its way./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message on a shipped order (arta)", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "FULFILLED",
+            requestedFulfillment: { __typename: "CommerceShipArta" },
+          })
+        )
+
+        const message = /Your order has been delivered./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("doesn't show a fulfilled message on a picked up order", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "FULFILLED",
+            requestedFulfillment: { __typename: "CommercePickup" },
+          })
+        )
+
+        expect(
+          screen.queryByText(/Your work is on its way./)
+        ).not.toBeInTheDocument()
+        expect(
+          screen.queryByText(/Your order has been delivered./)
+        ).not.toBeInTheDocument()
+      })
+
+      it("shows a message when buyer declined an offer", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "CANCELED",
+            stateReason: "buyer_rejected",
+          })
+        )
+
+        const message = /Thank you for your response. The seller will be informed of your decision to end the negotiation process./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message when seller declined an offer", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "CANCELED",
+            stateReason: "seller_rejected",
+          })
+        )
+
+        const message =
+          "Sorry, the seller declined your offer and has ended the negotiation process."
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message when buyer lapsed", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "CANCELED",
+            stateReason: "buyer_lapsed",
+          })
+        )
+
+        const message =
+          "The seller’s offer expired because you didn’t respond in time."
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message when seller lapsed", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "CANCELED",
+            stateReason: "seller_lapsed",
+          })
+        )
+
+        const message =
+          "Your offer expired because the seller didn’t respond to your offer in time."
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message on an order that was canceled after accepted", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "CANCELED",
+            stateReason: null,
+          })
+        )
+
+        const message = /Please allow 5–7 business days for the refund to appear on your bank statement./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
+
+      it("shows a message on a refunded offer", async () => {
+        renderWithRelay(
+          defineCommerceOrderConnection({
+            displayState: "REFUNDED",
+            stateReason: null,
+          })
+        )
+
+        const message = /Please allow 5–7 business days for the refund to appear on your bank statement./
+        expect(screen.getByText(message)).toBeInTheDocument()
+      })
     })
 
     it("shows the offer breakdown", async () => {

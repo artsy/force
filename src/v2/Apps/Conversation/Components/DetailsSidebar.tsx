@@ -114,6 +114,9 @@ export const DetailsSidebar: FC<DetailsProps> = ({
 
   const activeOrder = extractNodes(conversation.sidebarOrderConnection)[0]
   const { description } = getStatusCopy(activeOrder)
+  const shouldDisplayStatus =
+    !!activeOrder &&
+    (!activeOrder.buyerAction || activeOrder.buyerAction !== "OFFER_RECEIVED")
 
   return (
     <DetailsContainer
@@ -129,7 +132,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
-      {!!activeOrder && !!description && (
+      {!!shouldDisplayStatus && !!description && (
         <StackableBorderBox>
           <Text>{description}</Text>
         </StackableBorderBox>
@@ -246,6 +249,12 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
                 lastDigits
                 expirationYear
                 expirationMonth
+              }
+              requestedFulfillment {
+                __typename
+              }
+              ... on CommerceOfferOrder {
+                buyerAction
               }
               lineItems {
                 edges {
