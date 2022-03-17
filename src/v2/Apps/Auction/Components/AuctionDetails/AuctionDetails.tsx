@@ -55,8 +55,8 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
 
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
-          <Text variant="lg" pr={2}>
-            {sale.auctionsDetailFormattedStartDateTime}
+          <Text variant="xl" pr={2}>
+            {sale.formattedStartDateTime}
           </Text>
 
           {!sale.isClosed && (
@@ -73,11 +73,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
             </Box>
           )}
         </Flex>
-      </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text variant="md" pr={2}>
-          {sale.auctionsDetailCascadingIntervalLabel}
-        </Text>
       </Flex>
 
       <Spacer my={2} />
@@ -104,8 +99,7 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
 
         name
         slug
-        auctionsDetailFormattedStartDateTime
-        auctionsDetailCascadingIntervalLabel
+        formattedStartDateTime
         liveStartAt
         startAt
         endAt
