@@ -414,9 +414,10 @@ workflows:
             - horizon/block
             - validate_production_schema
           post-steps:
+          # notify: practice-web, dev
             - slack/notify:
                 event: fail
-                channel: "practice-web"
+                channel: 'C2TQ4PT8R, C02BC3HEJ'
                 template: basic_fail_1
 
       # Other
