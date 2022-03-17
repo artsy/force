@@ -35,7 +35,8 @@ export const useTimer = (endDate: string, startAt: string = ""): Timer => {
   )
   const hasStarted = Math.floor(timeBeforeStart.seconds) <= 0
 
-  const duration = hasStarted ? timeBeforeEnd : timeBeforeStart
+  const duration =
+    hasStarted || startAt === "" ? timeBeforeEnd : timeBeforeStart
 
   const days = extractTime(duration.as("days"))
   const hours = extractTime(duration.as("hours") % 24)

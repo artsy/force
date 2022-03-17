@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
@@ -55,7 +55,8 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
                   <Timer
                     variant={["lg", "xl"]}
                     label="Opens in:"
-                    endDate={startAt!}
+                    startDate={startAt!}
+                    endDate=""
                   />
                   <Spacer mt={30} />
                 </>
