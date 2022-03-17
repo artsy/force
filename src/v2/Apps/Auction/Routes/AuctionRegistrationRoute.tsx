@@ -47,11 +47,18 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)
+    } else if (me.hasQualifiedCreditCards) {
+      router.replace(`/auction/${sale.slug}/confirm-registration`)
     } else {
       tracking.registrationPageView()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Will redirect to /confirm-registration above on page mount
+  if (me.hasQualifiedCreditCards) {
+    return null
+  }
 
   return (
     <ModalDialog
@@ -109,6 +116,7 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
       fragment AuctionRegistrationRoute_me on Me {
         internalID
         identityVerified
+        hasQualifiedCreditCards
       }
     `,
     sale: graphql`
