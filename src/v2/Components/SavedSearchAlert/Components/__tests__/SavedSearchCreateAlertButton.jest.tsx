@@ -1,7 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import * as openAuthModal from "v2/Utils/openAuthModal"
+import {
+  openAuthToSatisfyIntent,
+  AuthModalOptions,
+} from "v2/Utils/openAuthModal"
 import {
   SavedSearchCreateAlertButton,
   SavedSearchCreateAlertButtonProps,
@@ -12,6 +15,7 @@ import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/Utils/openAuthModal")
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "test-artist-name",
@@ -41,10 +45,12 @@ const getAuthModalOptions = () => {
     contextModule: "artworkGrid",
     intent: "createAlert",
     redirectTo: "http://localhost/",
-  } as openAuthModal.AuthModalOptions
+  } as AuthModalOptions
 }
 
-describe("CreateAlertButton", () => {
+describe("SavedSearchCreateAlertButton", () => {
+  const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
+
   const renderButton = () => {
     render(
       <CreateAlertButtonTest
@@ -59,11 +65,6 @@ describe("CreateAlertButton", () => {
     return <SavedSearchCreateAlertButton {...props} />
   }
 
-  const openAuthToSatisfyIntent = jest.spyOn(
-    openAuthModal,
-    "openAuthToSatisfyIntent"
-  )
-
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -76,6 +77,7 @@ describe("CreateAlertButton", () => {
 
   afterEach(() => {
     trackEvent.mockReset()
+    mockOpenAuthToSatisfyIntent.mockReset()
   })
 
   it("renders correctly", () => {
@@ -134,8 +136,10 @@ describe("CreateAlertButton", () => {
     it("pops up the auth modal when clicked", () => {
       renderButton()
       const button = screen.getByText("Create Alert")
+
       fireEvent.click(button)
-      expect(openAuthToSatisfyIntent).toHaveBeenCalledWith(mediator, {
+
+      expect(mockOpenAuthToSatisfyIntent).toHaveBeenCalledWith(mediator, {
         entity: {
           name: "test-artist-name",
           slug: "example-slug",
