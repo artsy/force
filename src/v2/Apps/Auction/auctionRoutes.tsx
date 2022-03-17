@@ -83,6 +83,8 @@ export const auctionRoutes: AppRouteConfig[] = [
           ...initialFilterState,
           ...getArtworkFilterInputArgs(props.context.user),
           saleID: params.slug,
+          // FIXME: Understand why this is needed to view lots in `the-artist-is-present-a-benefit-auction-for-ukraine` while logged out
+          priceRange: "*-*",
         },
       }
     },
