@@ -3,7 +3,7 @@ import { Range as RCRange, RangeProps } from "rc-slider"
 import styled from "styled-components"
 
 const BORDER_RADIUS_BASE = 6
-export const RANGE_DOT_SIZE = 16
+export const RANGE_DOT_SIZE = 24
 
 // TODO: Add styles for vertical mode, tooltip
 export const Range: React.FC<RangeProps> = props => {
@@ -47,7 +47,7 @@ const StyledRange = styled(RCRange)`
     border-radius: 50%;
     background-color: ${themeGet("colors.white100")};
     touch-action: pan-x;
-    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     border: solid 1px ${themeGet("colors.black10")};
 
     &:focus {
