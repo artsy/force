@@ -16,6 +16,7 @@ import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "../RegisterButton"
 import { getENV } from "v2/Utils/getENV"
+import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
 
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale
@@ -28,15 +29,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
   const endDate = sale.liveStartAt
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)
     : sale.endAt
-
-  // TODO: Do we really need the countdown
-  // const currentTime = useCurrentTime({ syncWithServer: true })
-  // const { formattedTime, hasEnded } = useEventTiming({
-  //   currentTime,
-  //   startAt: sale.liveStartAt ?? sale.startAt!,
-  //   endAt: endDate!,
-  //   // isLiveSale: !!sale.liveStartAt,
-  // })
 
   return (
     <>
@@ -55,9 +47,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
 
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
-          <Text variant="lg" pr={2}>
-            {sale.auctionsDetailFormattedStartDateTime}
-          </Text>
+          <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
 
           {!sale.isClosed && (
             <Box mt={0.5}>
@@ -73,11 +63,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
             </Box>
           )}
         </Flex>
-      </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text variant="md" pr={2}>
-          {sale.auctionsDetailCascadingIntervalLabel}
-        </Text>
       </Flex>
 
       <Spacer my={2} />
@@ -101,11 +86,9 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
       fragment AuctionDetails_sale on Sale {
         ...RegisterButton_sale
         ...AuctionInfoSidebar_sale
-
+        internalID
         name
         slug
-        auctionsDetailFormattedStartDateTime
-        auctionsDetailCascadingIntervalLabel
         liveStartAt
         startAt
         endAt
