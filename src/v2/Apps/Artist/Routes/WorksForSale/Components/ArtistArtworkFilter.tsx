@@ -37,19 +37,17 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     return null
   }
 
+  const artistEntity = {
+    id: artist.internalID,
+    name: artist.name ?? "",
+    slug: artist.slug,
+  }
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: artist.name ?? "",
-    artists: [
-      {
-        id: artist.internalID,
-        name: artist.name ?? "",
-        slug: artist.slug,
-      },
-    ],
-    analytics: {
-      ownerType: OwnerType.artist,
-      ownerId: artist.internalID,
-      ownerSlug: artist.slug,
+    placeholder: artistEntity.name,
+    artists: [artistEntity],
+    owner: {
+      type: OwnerType.artist,
+      ...artistEntity,
     },
   }
 

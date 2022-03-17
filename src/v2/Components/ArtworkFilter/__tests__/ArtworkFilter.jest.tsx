@@ -26,10 +26,11 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "test-artist-slug",
     },
   ],
-  analytics: {
-    ownerType: OwnerType.artist,
-    ownerId: "test-artist-id",
-    ownerSlug: "test-artist-slug",
+  owner: {
+    type: OwnerType.artist,
+    id: "owner-id",
+    slug: "owner-slug",
+    name: "Owner Name",
   },
 }
 

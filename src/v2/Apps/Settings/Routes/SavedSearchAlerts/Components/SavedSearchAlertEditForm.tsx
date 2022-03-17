@@ -254,11 +254,12 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
         slug: artist.slug ?? "",
       },
     ],
-    analytics: {
-      ownerType: OwnerType.savedSearch,
-      ownerId: savedSearch?.internalID!,
+    owner: {
+      type: OwnerType.savedSearch,
+      id: savedSearch?.internalID!,
       // alert doesn't have a slug, for this reason we pass internalID
-      ownerSlug: savedSearch?.internalID!,
+      slug: savedSearch?.internalID!,
+      name: savedSearch?.userAlertSettings.name ?? "",
     },
   }
 

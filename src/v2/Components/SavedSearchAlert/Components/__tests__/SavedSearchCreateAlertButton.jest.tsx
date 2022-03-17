@@ -18,7 +18,7 @@ jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/openAuthModal")
 
 const savedSearchEntity: SavedSearchEntity = {
-  placeholder: "test-artist-name",
+  placeholder: "placeholder-label",
   artists: [
     {
       id: "test-artist-id",
@@ -26,23 +26,24 @@ const savedSearchEntity: SavedSearchEntity = {
       slug: "example-slug",
     },
   ],
-  analytics: {
-    ownerType: OwnerType.artist,
-    ownerId: "test-artist-id",
-    ownerSlug: "example-slug",
+  owner: {
+    type: OwnerType.artist,
+    id: "owner-id",
+    slug: "owner-slug",
+    name: "Owner Name",
   },
 }
 
 const getAuthModalOptions = () => {
   return {
     entity: {
-      name: "test-artist-name",
-      slug: "example-slug",
+      name: "Owner Name",
+      slug: "owner-slug",
     },
     afterSignUpAction: {
       action: "createAlert",
       kind: "artist",
-      objectId: "example-slug",
+      objectId: "owner-slug",
     },
     contextModule: "artworkGrid",
     intent: "createAlert",
@@ -119,8 +120,8 @@ describe("SavedSearchCreateAlertButton", () => {
         expect.objectContaining({
           action: "clickedCreateAlert",
           context_page_owner_type: "artist",
-          context_page_owner_id: "test-artist-id",
-          context_page_owner_slug: "example-slug",
+          context_page_owner_id: "owner-id",
+          context_page_owner_slug: "owner-slug",
         })
       )
     })
@@ -143,13 +144,13 @@ describe("SavedSearchCreateAlertButton", () => {
 
       expect(mockOpenAuthToSatisfyIntent).toHaveBeenCalledWith(mediator, {
         entity: {
-          name: "test-artist-name",
-          slug: "example-slug",
+          name: "Owner Name",
+          slug: "owner-slug",
         },
         afterSignUpAction: {
           action: "createAlert",
           kind: "artist",
-          objectId: "example-slug",
+          objectId: "owner-slug",
         },
         contextModule: "artworkGrid",
         intent: "createAlert",
@@ -165,8 +166,8 @@ describe("SavedSearchCreateAlertButton", () => {
         expect.objectContaining({
           action: "clickedCreateAlert",
           context_page_owner_type: "artist",
-          context_page_owner_id: "test-artist-id",
-          context_page_owner_slug: "example-slug",
+          context_page_owner_id: "owner-id",
+          context_page_owner_slug: "owner-slug",
         })
       )
     })

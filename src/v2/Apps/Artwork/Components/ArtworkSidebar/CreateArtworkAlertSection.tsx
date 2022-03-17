@@ -35,10 +35,11 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
       name: artist.name ?? "",
       slug: artist.slug,
     })),
-    analytics: {
-      ownerType: OwnerType.artwork,
-      ownerSlug: artwork.slug,
-      ownerId: artwork.internalID,
+    owner: {
+      type: OwnerType.artwork,
+      slug: artwork.slug,
+      id: artwork.internalID,
+      name: artwork.title!,
     },
   }
   const criteria: SearchCriteriaAttributes = {

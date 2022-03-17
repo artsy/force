@@ -55,13 +55,13 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
   const getAuthModalOptions = (): AuthModalOptions => {
     return {
       entity: {
-        name: savedSearchEntity.artists[0].name,
-        slug: savedSearchEntity.artists[0].slug,
+        name: savedSearchEntity.owner.name,
+        slug: savedSearchEntity.owner.slug,
       },
       afterSignUpAction: {
         action: "createAlert",
         kind: "artist",
-        objectId: savedSearchEntity.artists[0].slug,
+        objectId: savedSearchEntity.owner.slug,
       },
       contextModule: ContextModule.artworkGrid,
       intent: Intent.createAlert,

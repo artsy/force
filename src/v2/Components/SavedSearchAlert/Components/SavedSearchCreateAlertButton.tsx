@@ -56,9 +56,9 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
   const handleClick = () => {
     tracking.trackEvent({
       action: ActionType.clickedCreateAlert,
-      context_page_owner_type: entity.analytics.ownerType,
-      context_page_owner_id: entity.analytics.ownerId,
-      context_page_owner_slug: entity.analytics.ownerSlug,
+      context_page_owner_type: entity.owner.type,
+      context_page_owner_id: entity.owner.id,
+      context_page_owner_slug: entity.owner.slug,
     })
 
     if (isLoggedIn) {
@@ -73,9 +73,9 @@ export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButton
     setVisibleForm(false)
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: entity.analytics.ownerType,
-      context_page_owner_id: entity.analytics.ownerId,
-      context_page_owner_slug: entity.analytics.ownerSlug,
+      context_page_owner_type: entity.owner.type,
+      context_page_owner_id: entity.owner.id,
+      context_page_owner_slug: entity.owner.slug,
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
