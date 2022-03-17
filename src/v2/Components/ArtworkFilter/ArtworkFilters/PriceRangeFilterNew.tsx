@@ -217,7 +217,7 @@ export const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-const getBarsFromAggregations = (aggregations?: Aggregations) => {
+export const getBarsFromAggregations = (aggregations?: Aggregations) => {
   const aggregation = aggregations?.find(aggregation => {
     return aggregation.slice === "SIMPLE_PRICE_HISTOGRAM"
   })
