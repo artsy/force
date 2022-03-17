@@ -6,8 +6,12 @@ import {
 } from "../CreateArtworkAlertSection"
 import { CreateArtworkAlertSection_Test_Query } from "v2/__generated__/CreateArtworkAlertSection_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
+import { useTracking } from "react-tracking"
+import { useSystemContext } from "v2/System"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
+jest.mock("v2/System/useSystemContext")
 
 const { renderWithRelay } = setupTestWrapperTL<
   CreateArtworkAlertSection_Test_Query
@@ -23,6 +27,26 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("CreateArtworkAlertSection", () => {
+  const mockuseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+  const mockuseSystemContext = useSystemContext as jest.Mock
+
+  beforeEach(() => {
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
+
+    mockuseSystemContext.mockImplementation(() => {
+      return {
+        isLoggedIn: true,
+      }
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it("should correctly render placeholder", () => {
     const placeholder = "Artworks like: Some artwork title"
     renderWithRelay({

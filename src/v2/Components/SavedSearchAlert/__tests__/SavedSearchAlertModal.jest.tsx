@@ -1,14 +1,11 @@
 import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent } from "@testing-library/react"
-import {
-  ArtworkFilterContextProvider,
-  ArtworkFiltersState,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFiltersState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import {
   SavedSearchAlertModalContainer,
   SavedSearchAlertFormContainerProps,
 } from "../SavedSearchAlertModal"
-import { SavedSearchEntity } from "../types"
+import { SavedSearchEntity, SearchCriteriaAttributes } from "../types"
 
 const formInitialValues = {
   name: "",
@@ -30,7 +27,7 @@ const savedSearchEntity: SavedSearchEntity = {
   },
 }
 
-const defaultFilters: ArtworkFiltersState = {
+const defaultCriteria: SearchCriteriaAttributes = {
   attributionClass: ["open edition"],
   priceRange: "25000-50000",
 }
@@ -44,19 +41,19 @@ interface Props extends Partial<SavedSearchAlertFormContainerProps> {
 
 describe("SavedSearchAlertModal", () => {
   const TestComponent = (props: Props) => {
-    const { filters = defaultFilters, ...rest } = props
+    const { criteria = defaultCriteria, ...rest } = props
 
     return (
-      <ArtworkFilterContextProvider filters={filters}>
-        <SavedSearchAlertModalContainer
-          visible
-          initialValues={formInitialValues}
-          entity={savedSearchEntity}
-          onClose={onCloseMock}
-          onComplete={onCompleteMock}
-          {...rest}
-        />
-      </ArtworkFilterContextProvider>
+      <SavedSearchAlertModalContainer
+        visible
+        initialValues={formInitialValues}
+        entity={savedSearchEntity}
+        criteria={criteria}
+        aggregations={[]}
+        onClose={onCloseMock}
+        onComplete={onCompleteMock}
+        {...rest}
+      />
     )
   }
 
