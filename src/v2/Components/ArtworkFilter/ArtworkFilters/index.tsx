@@ -18,6 +18,7 @@ import {
 } from "v2/System/useFeatureFlag"
 import { useAnalyticsContext } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
+import { getContextPageFromClient } from "lib/getContextPage"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -33,7 +34,9 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const isArtistPage = contextPageOwnerType === OwnerType.artist
+  const { pageType } = getContextPageFromClient()
+
+  const isArtistPage = pageType === OwnerType.artist
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
