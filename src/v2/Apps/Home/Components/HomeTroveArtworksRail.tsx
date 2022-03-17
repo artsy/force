@@ -1,4 +1,9 @@
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import {
   Box,
   Skeleton,
@@ -13,6 +18,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { HomeTroveArtworksRail_viewer } from "v2/__generated__/HomeTroveArtworksRail_viewer.graphql"
 import { HomeTroveArtworksRailQuery } from "v2/__generated__/HomeTroveArtworksRailQuery.graphql"
+import { useTracking } from "react-tracking"
 
 interface HomeTroveArtworksRailProps {
   viewer: HomeTroveArtworksRail_viewer
@@ -21,6 +27,8 @@ interface HomeTroveArtworksRailProps {
 export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
   viewer,
 }) => {
+  const { trackEvent } = useTracking()
+
   const artworks = extractNodes(viewer.artworksConnection)
 
   if (artworks.length === 0) {
@@ -33,6 +41,16 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
       subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
       viewAllLabel="View All Works"
       viewAllHref="/gene/trove"
+      viewAllOnClick={() => {
+        const trackingEvent: ClickedArtworkGroup = {
+          action: ActionType.clickedArtworkGroup,
+          context_module: ContextModule.troveArtworksRail,
+          context_page_owner_type: OwnerType.home,
+          destination_page_owner_type: OwnerType.gene,
+          type: "viewAll",
+        }
+        trackEvent(trackingEvent)
+      }}
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
