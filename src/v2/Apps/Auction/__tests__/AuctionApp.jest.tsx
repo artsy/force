@@ -8,27 +8,38 @@ jest.unmock("react-relay")
 jest.mock("v2/Apps/Auction/Components/AuctionMeta", () => ({
   AuctionMetaFragmentContainer: () => null,
 }))
+
 jest.mock("v2/Components/ZendeskWrapper", () => ({
   ZendeskWrapper: () => null,
 }))
+
 jest.mock("v2/Components/FullBleedHeader", () => ({
   FullBleedHeader: () => null,
 }))
+
 jest.mock("v2/Apps/Auction/Components/AuctionDetails/AuctionDetails", () => ({
   AuctionDetailsFragmentContainer: () => null,
 }))
+
 jest.mock("v2/Apps/Auction/Components/AuctionActiveBids", () => ({
   AuctionActiveBidsRefetchContainer: () => null,
 }))
+
 jest.mock(
   "v2/Apps/Auction/Components/AuctionWorksByFollowedArtistsRail",
   () => ({
     AuctionWorksByFollowedArtistsRailFragmentContainer: () => null,
   })
 )
+
 jest.mock("v2/Apps/Auction/Components/AuctionBuyNowRail", () => ({
   AuctionBuyNowRailFragmentContainer: () => null,
 }))
+
+jest.mock("v2/Apps/Auction/Components/AuctionAssociatedSale", () => ({
+  AuctionAssociatedSaleFragmentContainer: () => null,
+}))
+
 jest.mock("v2/Apps/Auction/Components/AuctionArtworkFilter", () => ({
   AuctionArtworkFilterRefetchContainer: () => null,
 }))
@@ -99,6 +110,7 @@ describe("AuctionApp", () => {
           showFollowedArtistsTab: null,
         }),
         Sale: () => ({
+          showAssociatedSale: null,
           showBuyNowTab: null,
         }),
       })
@@ -106,10 +118,32 @@ describe("AuctionApp", () => {
       expect(wrapper.find("Tabs").exists()).toBeFalsy()
     })
 
-    describe("ActiveBids", () => {
+    describe("Associated Sale", () => {
       it("shows tab", () => {
         const wrapper = getWrapper()
         wrapper.find("Tabs Clickable").at(0).simulate("click")
+        wrapper.update()
+        expect(
+          wrapper.find("AuctionAssociatedSaleFragmentContainer").exists()
+        ).toBeTruthy()
+      })
+
+      it("hides tab", () => {
+        const wrapper = getWrapper({
+          Sale: () => ({
+            showAssociatedSale: null,
+          }),
+        })
+        expect(
+          wrapper.find("AuctionAssociatedSaleFragmentContainer").exists()
+        ).toBeFalsy()
+      })
+    })
+
+    describe("ActiveBids", () => {
+      it("shows tab", () => {
+        const wrapper = getWrapper()
+        wrapper.find("Tabs Clickable").at(1).simulate("click")
         expect(wrapper.text()).toContain("Your Active Bids")
         wrapper.update()
         expect(
@@ -134,7 +168,7 @@ describe("AuctionApp", () => {
       it("shows tab", () => {
         const wrapper = getWrapper()
         expect(wrapper.text()).toContain("Works By Artists You Follow")
-        wrapper.find("Tabs Clickable").at(1).simulate("click")
+        wrapper.find("Tabs Clickable").at(2).simulate("click")
         wrapper.update()
         expect(
           wrapper
@@ -162,7 +196,7 @@ describe("AuctionApp", () => {
       it("shows tab", () => {
         const wrapper = getWrapper()
         expect(wrapper.text()).toContain("Buy Now")
-        wrapper.find("Tabs Clickable").at(2).simulate("click")
+        wrapper.find("Tabs Clickable").at(3).simulate("click")
         wrapper.update()
         expect(
           wrapper.find("AuctionBuyNowRailFragmentContainer").exists()
