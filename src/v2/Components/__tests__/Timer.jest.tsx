@@ -70,7 +70,7 @@ describe("when the end date is set", () => {
   })
 })
 
-describe("when the start date and the end dates are set", () => {
+describe("when the start and the end dates are set", () => {
   it("formats the remaining time before start when the start date is in the future", () => {
     let timer
 
@@ -89,8 +89,8 @@ describe("when the start date and the end dates are set", () => {
     // Starts Thursday, May 10, 2018 8:42:32.000 PM UTC
     timer = renderer.create(
       <Timer
-        startDate="2018-05-10T10:24:31+00:00"
-        endDate="2018-05-10T20:42:32+00:00"
+        startDate="2018-05-10T20:42:32+00:00"
+        endDate="2018-05-12T20:42:32+00:00"
       />
     )
     expect(getTimerText(timer)).toMatch("00d")
@@ -102,7 +102,7 @@ describe("when the start date and the end dates are set", () => {
     timer = renderer.create(
       <Timer
         startDate="2018-05-10T20:22:42+00:00"
-        endDate="2018-05-10T20:22:42+00:00"
+        endDate="2018-05-12T20:22:42+00:00"
       />
     )
     expect(getTimerText(timer)).toMatch("00d")
