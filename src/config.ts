@@ -52,7 +52,6 @@ export const ENABLE_FAIR_ORGANIZER_REDIRECT: any = false
 export const ENABLE_INSTANT_PAGE: any = true
 export const ENABLE_MEMORY_PROFILING: any = false
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
-export const ENABLE_NEW_PRICE_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_SAVED_SEARCH: any = false
 export const ENABLE_SERVER_SIDE_CACHE: any = false
