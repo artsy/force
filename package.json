@@ -90,7 +90,7 @@
     "@artsy/fresnel": "3.4.0",
     "@artsy/gemup": "0.1.0",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "19.1.0",
+    "@artsy/palette": "19.1.1",
     "@artsy/palette-charts": "18.1.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/reaction": "29.2.1",
