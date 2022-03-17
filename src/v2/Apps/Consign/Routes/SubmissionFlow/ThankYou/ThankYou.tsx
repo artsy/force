@@ -25,16 +25,16 @@ export const ThankYou: React.FC = () => {
   return (
     <>
       <Text variant="xxl" mt={4}>
-        Thank you for submitting a work
+        Your artwork has been submitted
       </Text>
       <Box maxWidth="720px" mt={4}>
-        <Text variant="lg">
-          We’ll email you within 1–3 business days to let you know the status of
-          your submission.
+        <Text variant="lg" color="black60">
+          We will email you within 1-3 days to confirm if your artwork has been
+          accepted or not.
         </Text>
-        <Text variant="lg" mt={2}>
-          In the meantime, feel free to submit another work—and benefit from
-          Artsy’s low fees, informed pricing, and multiple selling options.
+        <Text variant="lg" mt={2} color="black60">
+          In the meantime your submission will appear in the feature, My
+          Collection, on the Artsy app.
         </Text>
       </Box>
 
