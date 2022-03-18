@@ -47,6 +47,8 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
           context_module: ContextModule.troveArtworksRail,
           context_page_owner_type: OwnerType.home,
           destination_page_owner_type: OwnerType.gene,
+          destination_page_owner_id: "60a6b70fa7025f0012fdf5df",
+          destination_page_owner_slug: "trove",
           type: "viewAll",
         }
         trackEvent(trackingEvent)
@@ -57,7 +59,21 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
             artwork={artwork}
             key={artwork.internalID}
             lazyLoad
-            contextModule={ContextModule.featuredArtists}
+            // TODO: add troveArtworksRail to the union type of auth context module
+            // @ts-ignore
+            contextModule={ContextModule.troveArtworksRail}
+            onClick={() => {
+              const trackingEvent: ClickedArtworkGroup = {
+                action: ActionType.clickedArtworkGroup,
+                context_module: ContextModule.troveArtworksRail,
+                context_page_owner_type: OwnerType.home,
+                destination_page_owner_type: OwnerType.artwork,
+                destination_page_owner_id: artwork.internalID,
+                destination_page_owner_slug: artwork.slug,
+                type: "thumbnail",
+              }
+              trackEvent(trackingEvent)
+            }}
           />
         ))
       }}
