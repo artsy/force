@@ -239,7 +239,7 @@ const BidButton: React.FC<
         router.push(href)
       }}
     >
-      {lotStanding.saleArtwork?.endedAt ? "Bidding closed" : "Increase Bid"}
+      {lotStanding.saleArtwork?.endedAt ? "Bidding Closed" : "Increase Bid"}
     </Button>
   )
 }
