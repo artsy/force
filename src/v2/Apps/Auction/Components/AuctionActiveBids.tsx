@@ -141,6 +141,7 @@ export const AuctionActiveBidsRefetchContainer = createRefetchContainer(
             highestBid {
               display
             }
+            endedAt
             sale {
               slug
               liveStartAt
@@ -222,6 +223,8 @@ const BidButton: React.FC<
       as={RouterLink}
       to={href}
       size={size}
+      width="50%"
+      disabled={!!lotStanding.saleArtwork?.endedAt}
       onClick={event => {
         event.preventDefault()
 
@@ -236,7 +239,7 @@ const BidButton: React.FC<
         router.push(href)
       }}
     >
-      Increase Bid
+      {lotStanding.saleArtwork?.endedAt ? "Bidding closed" : "Increase Bid"}
     </Button>
   )
 }
