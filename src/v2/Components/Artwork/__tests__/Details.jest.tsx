@@ -269,12 +269,11 @@ describe("Details", () => {
             ...artworkInAuction?.sale,
             cascadingEndTimeInterval: 120,
             endAt: "2030-03-12T12:33:37.000Z",
-            auctionsDetailFormattedStartDateTime: "Mar 30, 2030 • 12:33pm GMT",
           },
         }
 
         const wrapper = await getWrapper(data)
-        expect(wrapper.html()).toContain("Closes, Mar 30, 2030 • 12:33pm GMT")
+        expect(wrapper.html()).toContain("Closes, Mar 12 • 12:33pm GMT")
       })
 
       it("does not show the lot close info if the cascading end time flag is off", async () => {
@@ -345,6 +344,6 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     opening_bid: { display: "$2,400" },
     counts: { bidder_positions: 0 },
     endAt: "2022-03-12T12:33:37.000Z",
-    formattedEndDateTime: "Mar 12 • 12:33pm GMT",
+    formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
   },
 }
