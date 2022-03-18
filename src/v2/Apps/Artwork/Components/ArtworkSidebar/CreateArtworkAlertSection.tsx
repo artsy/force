@@ -62,6 +62,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
       contextModule: ContextModule.artworkSidebar,
       intent: Intent.createAlert,
       redirectTo: location.href,
+      copy: "Sign up to create your alert",
     }
   }
 

@@ -105,12 +105,14 @@ const getDesktopIntentToCreateAlert = ({
   intent,
   redirectTo,
   afterSignUpAction,
+  copy,
 }: AuthModalOptions): ModalOptions => {
   return {
     afterSignUpAction,
     contextModule,
     intent,
     redirectTo,
+    copy,
     mode: ModalType.signup,
   }
 }
