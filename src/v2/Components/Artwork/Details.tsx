@@ -260,44 +260,32 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   const timerCopy = getTimerCopy(time, saleHasStarted)
 
   let lotCloseCopy
+  let labelColor = "black60"
 
   // Lot has already closed
   if (lotHasClosed) {
     lotCloseCopy = "Closed"
   } else if (saleHasStarted) {
-    // Sale has started and lots are hours from closing
-    if (parseInt(time.days) < 1) {
+    // Sale has started and lots are <24 hours from closing or are actively closing
+    if (parseInt(time.days) < 1 || lotsAreClosing) {
       lotCloseCopy = `Closes, ${timerCopy.copy}`
+      if (timerCopy.color === "red100") {
+        labelColor = "red100"
+      } else {
+        labelColor = "black100"
+      }
     }
-    // Sale has started and lots have started closing
-    else if (lotsAreClosing) {
-      lotCloseCopy = `Closes, ${timerCopy.copy}`
-      // Sale has started but lots have not started closing
-    } else {
+    // Sale has started but lots have not started closing
+    else {
       lotCloseCopy = saleArtwork.formattedEndDateTime
     }
   }
 
   return (
-    <Text
-      variant="xs"
-      color={getLabelColor(timerCopy.color, lotsAreClosing, lotHasClosed)}
-    >
+    <Text variant="xs" color={labelColor}>
       {lotCloseCopy}
     </Text>
   )
-}
-
-const getLabelColor = (color, lotsAreClosing, lotHasClosed): string => {
-  if (lotHasClosed) {
-    return "black60"
-  } else {
-    if (color === "red100" && lotsAreClosing) {
-      return color
-    } else {
-      return "black100"
-    }
-  }
 }
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
