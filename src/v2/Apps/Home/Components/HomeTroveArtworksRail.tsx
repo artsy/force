@@ -31,6 +31,8 @@ export const HomeTroveArtworksRail: React.FC<HomeTroveArtworksRailProps> = ({
     <Rail
       title="Trove"
       subTitle="A weekly curated selection of the best works on Artsy by emerging and sought after artists."
+      viewAllLabel="View All Works"
+      viewAllHref="/gene/trove"
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer

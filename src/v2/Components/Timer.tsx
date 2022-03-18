@@ -14,6 +14,7 @@ const SEPARATOR = <>&nbsp;&nbsp;</>
 export const Timer: React.FC<
   {
     endDate: string
+    startDate?: string
     labelWithTimeRemaining?: string
     labelWithoutTimeRemaining?: string
     label?: string
@@ -21,13 +22,14 @@ export const Timer: React.FC<
     TextProps
 > = ({
   endDate,
+  startDate,
   labelWithTimeRemaining,
   labelWithoutTimeRemaining,
   label = "",
   variant = "md",
   ...rest
 }) => {
-  const { hasEnded, time } = useTimer(endDate)
+  const { hasEnded, time } = useTimer(endDate, startDate)
   const { days, hours, minutes, seconds } = time
 
   const tokens = useThemeConfig({

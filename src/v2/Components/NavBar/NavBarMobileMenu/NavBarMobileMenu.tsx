@@ -99,7 +99,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
               Galleries
             </NavBarMobileMenuItemLink>
 
-            <NavBarMobileMenuItemLink to="/fairs" onClick={handleClick}>
+            <NavBarMobileMenuItemLink to="/art-fairs" onClick={handleClick}>
               Fairs
             </NavBarMobileMenuItemLink>
 
