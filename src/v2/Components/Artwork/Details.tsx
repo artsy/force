@@ -214,15 +214,16 @@ export const Details: React.FC<DetailsProps> = ({
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
-          {rest?.artwork?.sale?.cascadingEndTimeInterval && (
-            <>
-              <Spacer mx={0.5} />
-              <LotCloseInfo
-                saleArtwork={rest.artwork.sale_artwork}
-                sale={rest.artwork.sale}
-              />
-            </>
-          )}
+          {rest?.artwork?.sale?.cascadingEndTimeInterval &&
+            rest?.artwork?.sale_artwork && (
+              <>
+                <Spacer mx={0.5} />
+                <LotCloseInfo
+                  saleArtwork={rest.artwork.sale_artwork}
+                  sale={rest.artwork.sale}
+                />
+              </>
+            )}
         </Flex>
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
@@ -234,8 +235,8 @@ export const Details: React.FC<DetailsProps> = ({
 }
 
 interface LotCloseInfoProps {
-  saleArtwork: any
-  sale: any
+  saleArtwork: NonNullable<Details_artwork["sale_artwork"]>
+  sale: NonNullable<Details_artwork["sale"]>
 }
 
 export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
@@ -244,7 +245,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
 }) => {
   const { hasEnded: lotHasClosed, time } = useTimer(
     saleArtwork.endAt!,
-    sale.startAt
+    sale.startAt!
   )
 
   const { hasEnded: lotsAreClosing, hasStarted: saleHasStarted } = useTimer(
@@ -265,8 +266,12 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   if (lotHasClosed) {
     lotCloseCopy = "Closed"
   } else if (saleHasStarted) {
-    // Sale has started but lot has not started closing
-    if (lotsAreClosing) {
+    // Sale has started and lots are hours from closing
+    if (parseInt(time.days) < 1) {
+      lotCloseCopy = `Closes, ${timerCopy.copy}`
+    }
+    // Sale has started and lots have started closing
+    else if (lotsAreClosing) {
       lotCloseCopy = `Closes, ${timerCopy.copy}`
       // Sale has started but lots have not started closing
     } else {

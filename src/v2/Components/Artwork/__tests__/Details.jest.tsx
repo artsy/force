@@ -6,6 +6,12 @@ import { ArtworkGridContextProvider } from "v2/Components/ArtworkGrid/ArtworkGri
 
 jest.unmock("react-relay")
 
+jest.mock("v2/Utils/getCurrentTimeAsIsoString")
+
+require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(
+  "2022-03-18T05:22:32.000Z"
+)
+
 describe("Details", () => {
   let props
 
@@ -19,7 +25,7 @@ describe("Details", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <ArtworkGridContextProvider isAuctionArtwork={true}>
+        <ArtworkGridContextProvider isAuctionArtwork>
           <DetailsFragmentContainer {...(props as any)} {...restProps} />
         </ArtworkGridContextProvider>
       ),
@@ -74,94 +80,84 @@ describe("Details", () => {
     })
 
     it("shows 'bidding closed' message if in closed auction", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        sale: { ...artworkInAuction.sale, is_closed: true },
+        sale: { ...artworkInAuction?.sale, is_closed: true },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       expect(wrapper.html()).toContain("Bidding closed")
     })
 
     it("shows opening bid if sale open and no highest bid", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
         sale_artwork: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale_artwork,
+          ...artworkInAuction?.sale_artwork,
           highest_bid: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork.highest_bid,
+            ...artworkInAuction?.sale_artwork?.highest_bid,
             display: null,
           },
         },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("$2,400")
     })
 
     it("shows Contact for price if sale_message equals the same", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
         sale_message: "Contact For Price",
         sale: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale,
+          ...artworkInAuction?.sale,
           is_auction: false,
         },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("Price on Request")
     })
 
     it("shows sale message if sale open and no bids", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
         sale: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale,
+          ...artworkInAuction?.sale,
           is_auction: false,
         },
         sale_artwork: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale_artwork,
+          ...artworkInAuction?.sale_artwork,
           highest_bid: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork.highest_bid,
+            ...artworkInAuction?.sale_artwork?.highest_bid,
             display: null,
           },
           opening_bid: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork.highest_bid,
+            ...artworkInAuction?.sale_artwork?.highest_bid,
             display: null,
           },
         },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("$450")
     })
 
     it("shows the number of bids in the message if sale open and are bids", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
         sale_artwork: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale_artwork,
+          ...artworkInAuction?.sale_artwork,
           counts: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork.counts,
+            ...artworkInAuction?.sale_artwork?.counts,
             bidder_positions: 2,
           },
         },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("$2,600")
@@ -169,43 +165,38 @@ describe("Details", () => {
     })
 
     it("skips bid information in a closed show", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
         sale: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale,
+          ...artworkInAuction?.sale,
           is_closed: true,
         },
         sale_artwork: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale_artwork,
+          ...artworkInAuction?.sale_artwork,
           counts: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork.counts,
+            ...artworkInAuction?.sale_artwork?.counts,
             bidder_positions: 2,
           },
         },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).not.toContain("(2 bids)")
     })
 
     it("skips showing bid information when there are no bidder positions", async () => {
-      const data = {
+      const data: any = {
         ...artworkInAuction,
         sale_artwork: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          ...artworkInAuction.sale_artwork,
+          ...artworkInAuction?.sale_artwork,
           counts: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork.counts,
+            ...artworkInAuction?.sale_artwork?.counts,
             bidder_positions: 0,
           },
         },
       }
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).not.toContain("bid")
@@ -213,102 +204,105 @@ describe("Details", () => {
 
     describe("lot close info", () => {
       it("shows the lot is closed if the lot end time has passed and if the sale has cascading end times enabled", async () => {
-        const data = {
+        const data: any = {
           ...artworkInAuction,
           sale_artwork: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork,
+            ...artworkInAuction?.sale_artwork,
             endAt: "2022-03-11T12:33:37.000Z",
           },
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale,
+            ...artworkInAuction?.sale,
             cascadingEndTimeInterval: 120,
           },
         }
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(data)
         expect(wrapper.html()).toContain("Closed")
       })
 
-      it("shows the lot is closing with the countdown if lots have started closing and the sale has cascading end times enabled", async () => {
-        const data = {
+      it("shows the lot is closing with the days countdown if lots have started closing and the sale has cascading end times enabled", async () => {
+        const data: any = {
           ...artworkInAuction,
           sale_artwork: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork,
+            ...artworkInAuction?.sale_artwork,
             endAt: "2026-03-11T12:33:37.000Z",
           },
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale,
+            ...artworkInAuction?.sale,
             cascadingEndTimeInterval: 120,
             endAt: "2022-03-12T12:33:37.000Z",
           },
         }
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(data)
 
-        expect(wrapper.html()).toContain("Closes, ")
-        expect(wrapper.html()).toContain("d")
-        expect(wrapper.html()).toContain("h")
+        expect(wrapper.html()).toContain("Closes, 1454d 7h")
+      })
+
+      it("shows the lot is closing with the hours countdown if lots are hours from closing and the sale has cascading end times enabled", async () => {
+        const data: any = {
+          ...artworkInAuction,
+          sale_artwork: {
+            ...artworkInAuction?.sale_artwork,
+            endAt: "2022-03-18T16:33:37.000Z",
+          },
+          sale: {
+            ...artworkInAuction?.sale,
+            cascadingEndTimeInterval: 120,
+            endAt: "2022-03-18T15:33:37.000Z",
+          },
+        }
+
+        const wrapper = await getWrapper(data)
+
+        expect(wrapper.html()).toContain("Closes, 11h 11m")
       })
 
       it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
-        const data = {
+        const data: any = {
           ...artworkInAuction,
           sale_artwork: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork,
+            ...artworkInAuction?.sale_artwork,
             endAt: "2026-03-11T12:33:37.000Z",
           },
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale,
+            ...artworkInAuction?.sale,
             cascadingEndTimeInterval: 120,
             endAt: "2030-03-12T12:33:37.000Z",
             auctionsDetailFormattedStartDateTime: "Mar 30, 2030 • 12:33pm GMT",
           },
         }
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(data)
         expect(wrapper.html()).toContain("Closes, Mar 30, 2030 • 12:33pm GMT")
       })
 
       it("does not show the lot close info if the cascading end time flag is off", async () => {
-        const data = {
+        const data: any = {
           ...artworkInAuction,
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale,
+            ...artworkInAuction?.sale,
             cascadingEndTimeInterval: null,
           },
         }
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(data)
         expect(wrapper.html()).not.toContain("Closed")
       })
 
       it("does not show the lot close info if sale is not yet open", async () => {
-        const data = {
+        const data: any = {
           ...artworkInAuction,
           sale_artwork: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale_artwork,
+            ...artworkInAuction?.sale_artwork,
           },
           sale: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ...artworkInAuction.sale,
+            ...artworkInAuction?.sale,
             cascadingEndTimeInterval: 120,
             startAt: "2030-03-12T12:33:37.000Z",
           },
         }
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const wrapper = await getWrapper(data)
         expect(wrapper.html()).not.toContain("Closes")
       })
