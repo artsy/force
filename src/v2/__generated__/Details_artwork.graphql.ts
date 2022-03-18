@@ -21,11 +21,16 @@ export type Details_artwork = {
         readonly href: string | null;
     } | null;
     readonly sale: {
+        readonly endAt: string | null;
+        readonly cascadingEndTimeInterval: number | null;
+        readonly startAt: string | null;
         readonly is_auction: boolean | null;
         readonly is_closed: boolean | null;
     } | null;
     readonly sale_artwork: {
         readonly lotLabel: string | null;
+        readonly endAt: string | null;
+        readonly formattedEndDateTime: string | null;
         readonly counts: {
             readonly bidder_positions: number | null;
         } | null;
@@ -68,7 +73,14 @@ v2 = {
   "name": "name",
   "storageKey": null
 },
-v3 = [
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
+  "storageKey": null
+},
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -160,6 +172,21 @@ return {
       "name": "sale",
       "plural": false,
       "selections": [
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "cascadingEndTimeInterval",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "startAt",
+          "storageKey": null
+        },
         {
           "alias": "is_auction",
           "args": null,
@@ -192,6 +219,14 @@ return {
           "name": "lotLabel",
           "storageKey": null
         },
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "formattedEndDateTime",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -217,7 +252,7 @@ return {
           "kind": "LinkedField",
           "name": "highestBid",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v4/*: any*/),
           "storageKey": null
         },
         {
@@ -227,7 +262,7 @@ return {
           "kind": "LinkedField",
           "name": "openingBid",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v4/*: any*/),
           "storageKey": null
         }
       ],
@@ -238,5 +273,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4f6751c877326d96681e742e6f74c761';
+(node as any).hash = '846097a55242d32d80ea7f4a99ff4316';
 export default node;

@@ -304,6 +304,9 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   is_live_open: false,
                   is_open: false,
                   is_preview: false,
+                  cascadingEndTimeInterval: null,
+                  startAt: "2022-03-11T12:33:37.000Z",
+                  endAt: "2022-03-12T12:33:37.000Z",
                 },
                 sale_artwork: {
                   lotLabel: "0",
@@ -317,6 +320,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   opening_bid: {
                     display: "$1,000",
                   },
+                  endAt: "2022-03-12T12:33:37.000Z",
+                  formattedEndDateTime: "Mar 12, 2022 • 12:33pm GMT",
                 },
                 sale_message: null,
                 slug: "alex-katz-luna-park-2-maravell-67-schroder-68",
@@ -417,6 +422,9 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   is_live_open: false,
                   is_open: false,
                   is_preview: false,
+                  cascadingEndTimeInterval: null,
+                  startAt: "2022-03-11T12:33:37.000Z",
+                  endAt: "2022-03-12T12:33:37.000Z",
                 },
                 sale_artwork: {
                   lotLabel: "0",
@@ -430,6 +438,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                   opening_bid: {
                     display: "$800",
                   },
+                  endAt: "2022-03-12T12:33:37.000Z",
+                  formattedEndDateTime: "Mar 12 • 12:33pm GMT",
                 },
                 sale_message: null,
                 slug:
