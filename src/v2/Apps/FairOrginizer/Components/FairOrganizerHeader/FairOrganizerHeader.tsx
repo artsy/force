@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
@@ -23,7 +23,8 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
   const { startAt, exhibitionPeriod, href } = fair
 
   const currentTime = useCurrentTime({ syncWithServer: true })
-  const showTimer = DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
+  const fairHasNotStarted =
+    DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
 
   return (
     <Box>
@@ -50,12 +51,16 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         <Column span={6}>
           <Flex flexDirection="column">
             <Box>
-              {showTimer && (
+              {/* endAt is not passed to the Timer because this timer will only be shown
+              before the fair starts. Therefore the timer only needs to know the length
+              of time before the fair begins. The fair's end time is irrelevant. */}
+              {fairHasNotStarted && (
                 <>
                   <Timer
                     variant={["lg", "xl"]}
                     label="Opens in:"
-                    endDate={startAt!}
+                    startDate={startAt!}
+                    endDate=""
                   />
                   <Spacer mt={30} />
                 </>
