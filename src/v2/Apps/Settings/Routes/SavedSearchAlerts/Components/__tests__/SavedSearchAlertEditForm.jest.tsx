@@ -47,7 +47,6 @@ describe("SavedSearchAlertEditForm", () => {
           <SavedSearchAlertEditFormFragmentContainer
             me={props.me!}
             artist={props.artist!}
-            artworksConnection={props.artworksConnection!}
             editAlertEntity={defaultEditAlertEntity}
             onCompleted={mockOnCompleted}
             onDeleteClick={mockOnDeleteClick}
