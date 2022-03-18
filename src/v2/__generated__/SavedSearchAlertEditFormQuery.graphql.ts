@@ -55,6 +55,7 @@ fragment SavedSearchAlertEditForm_me_3PSMXk on Me {
     colors
     dimensionRange
     sizes
+    width
     height
     inquireableOnly
     locationCities
@@ -68,7 +69,11 @@ fragment SavedSearchAlertEditForm_me_3PSMXk on Me {
       email
       push
     }
-    width
+    labels {
+      field
+      value
+      label
+    }
   }
 }
 */
@@ -256,6 +261,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "width",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "height",
                 "storageKey": null
               },
@@ -337,8 +349,33 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "width",
+                "concreteType": "SearchCriteriaLabel",
+                "kind": "LinkedField",
+                "name": "labels",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "field",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "value",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "label",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -372,12 +409,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "87f7d3ca884481dad8e9113cbd8d7cbc",
+    "cacheID": "8f1656932904e24c99ca446e78e2ea65",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistId: String!\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_3PSMXk\n    id\n  }\n  artist(id: $artistId) {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_me_3PSMXk on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    width\n  }\n}\n"
+    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistId: String!\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_3PSMXk\n    id\n  }\n  artist(id: $artistId) {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_me_3PSMXk on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels {\n      field\n      value\n      label\n    }\n  }\n}\n"
   }
 };
 })();

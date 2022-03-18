@@ -25,16 +25,17 @@ import {
   useSavedSearchAlertContext,
 } from "v2/Components/SavedSearchAlert/SavedSearchAlertContext"
 import {
-  FilterPill,
   SavedSearchAleftFormValues,
   SavedSearchEntity,
-  SearchCriteriaAttributeKeys,
 } from "v2/Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
+import {
+  convertLabelsToPills,
+  LabelEntity,
+} from "v2/Components/SavedSearchAlert/Utils/convertLabelsToPills"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -69,21 +70,13 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     entity,
     criteria,
     isCriteriaChanged,
-    removeCriteriaValue,
+    removePill,
   } = useSavedSearchAlertContext()
 
   const initialValues: SavedSearchAleftFormValues = {
     name: userAlertSettings.name ?? "",
     push: userAlertSettings.push,
     email: userAlertSettings.email,
-  }
-
-  const removePill = (pill: FilterPill) => {
-    if (pill.isDefault) {
-      return
-    }
-
-    removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
@@ -236,7 +229,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
   const { artist, me } = props
   const { savedSearch } = me
+  const labels = (savedSearch?.labels as LabelEntity[]) ?? []
   const criteria = getAllowedSearchCriteria(savedSearch as any)
+  const pills = convertLabelsToPills(labels)
   const entity: SavedSearchEntity = {
     placeholder: artist.name ?? "",
     artists: [
@@ -256,7 +251,11 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   }
 
   return (
-    <SavedSearchAlertContextProvider entity={entity} criteria={criteria}>
+    <SavedSearchAlertContextProvider
+      entity={entity}
+      criteria={criteria}
+      initialPills={pills}
+    >
       <SavedSearchAlertEditForm {...props} />
     </SavedSearchAlertContextProvider>
   )
@@ -278,6 +277,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
           colors
           dimensionRange
           sizes
+          width
           height
           inquireableOnly
           internalID
@@ -292,7 +292,11 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
             email
             push
           }
-          width
+          labels {
+            field
+            value
+            label
+          }
         }
       }
     `,

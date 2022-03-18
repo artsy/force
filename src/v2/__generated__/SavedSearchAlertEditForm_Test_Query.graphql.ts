@@ -25,6 +25,7 @@ export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
             readonly colors: ReadonlyArray<string>;
             readonly dimensionRange: string | null;
             readonly sizes: ReadonlyArray<string>;
+            readonly width: string | null;
             readonly height: string | null;
             readonly inquireableOnly: boolean | null;
             readonly locationCities: ReadonlyArray<string>;
@@ -38,7 +39,11 @@ export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
                 readonly email: boolean;
                 readonly push: boolean;
             };
-            readonly width: string | null;
+            readonly labels: ReadonlyArray<{
+                readonly field: string;
+                readonly value: string;
+                readonly label: string;
+            }>;
         }) | null;
         readonly id: string;
     }) | null;
@@ -86,6 +91,7 @@ fragment SavedSearchAlertEditForm_me_1LtJCq on Me {
     colors
     dimensionRange
     sizes
+    width
     height
     inquireableOnly
     locationCities
@@ -99,7 +105,11 @@ fragment SavedSearchAlertEditForm_me_1LtJCq on Me {
       email
       push
     }
-    width
+    labels {
+      field
+      value
+      label
+    }
   }
 }
 */
@@ -271,6 +281,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "width",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "height",
                 "storageKey": null
               },
@@ -352,8 +369,33 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "width",
+                "concreteType": "SearchCriteriaLabel",
+                "kind": "LinkedField",
+                "name": "labels",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "field",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "value",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "label",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -387,12 +429,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "afb62eb132169ff624c4cc0473242172",
+    "cacheID": "7b14cece4eecc897e009e4d51df67b14",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query {\n  me {\n    ...SavedSearchAlertEditForm_me_1LtJCq\n    id\n  }\n  artist(id: \"artistId\") {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_me_1LtJCq on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    width\n  }\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query {\n  me {\n    ...SavedSearchAlertEditForm_me_1LtJCq\n    id\n  }\n  artist(id: \"artistId\") {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_me_1LtJCq on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels {\n      field\n      value\n      label\n    }\n  }\n}\n"
   }
 };
 })();
