@@ -149,8 +149,6 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               is_preview: false,
               display_timely_at: "live in 3d",
               cascadingEndTimeInterval: null,
-              auctionsDetailFormattedStartDateTime:
-                "Mar 11, 2022 • 12:33pm GMT",
               startAt: "2022-03-11T12:33:37.000Z",
               endAt: "2022-03-12T12:33:37.000Z",
             },
@@ -167,6 +165,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               },
               id: "idabc123",
               endAt: "2022-03-12T12:33:37.000Z",
+              formattedEndDateTime: "Mar 12 • 12:33pm GMT",
             },
             is_inquireable: true,
             is_saved: false,

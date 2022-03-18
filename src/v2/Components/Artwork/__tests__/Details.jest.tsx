@@ -335,7 +335,6 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     is_auction: true,
     is_closed: false,
     cascadingEndTimeInterval: null,
-    auctionsDetailFormattedStartDateTime: "Mar 11, 2030 • 12:33pm GMT",
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
   },
@@ -346,5 +345,6 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     opening_bid: { display: "$2,400" },
     counts: { bidder_positions: 0 },
     endAt: "2022-03-12T12:33:37.000Z",
+    formattedEndDateTime: "Mar 12 • 12:33pm GMT",
   },
 }

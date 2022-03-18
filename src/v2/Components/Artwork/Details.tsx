@@ -274,7 +274,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
       lotCloseCopy = `Closes, ${timerCopy.copy}`
       // Sale has started but lots have not started closing
     } else {
-      lotCloseCopy = `Closes, ${saleArtwork.formattedEndDateTime}`
+      lotCloseCopy = saleArtwork.formattedEndDateTime
     }
   }
 
