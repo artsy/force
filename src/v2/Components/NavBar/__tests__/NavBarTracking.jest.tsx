@@ -81,12 +81,12 @@ describe("NavBarTracking", () => {
         </Wrapper>
       )
 
-      wrapper.find("a").find({ href: "/fairs" }).first().simulate("click")
+      wrapper.find("a").find({ href: "/art-fairs" }).first().simulate("click")
 
       expect(trackEvent).toHaveBeenLastCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
         subject: "Fairs",
-        destination_path: "/fairs",
+        destination_path: "/art-fairs",
       })
 
       wrapper

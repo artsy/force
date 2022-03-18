@@ -62,7 +62,7 @@ describe("NavBarMobileMenu", () => {
         ["/auctions", "Auctions"],
         ["/viewing-rooms", "Viewing Rooms"],
         ["/galleries", "Galleries"],
-        ["/fairs", "Fairs"],
+        ["/art-fairs", "Fairs"],
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
         ["/nft", "NFTs"],
