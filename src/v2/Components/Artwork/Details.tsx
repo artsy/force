@@ -257,7 +257,6 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
     return null
   }
 
-  const saleEndDate = sale.auctionsDetailFormattedStartDateTime
   const timerCopy = getTimerCopy(time, saleHasStarted)
 
   let lotCloseCopy
@@ -275,7 +274,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
       lotCloseCopy = `Closes, ${timerCopy.copy}`
       // Sale has started but lots have not started closing
     } else {
-      lotCloseCopy = `Closes, ${saleEndDate}`
+      lotCloseCopy = `Closes, ${saleArtwork.formattedEndDateTime}`
     }
   }
 
@@ -320,7 +319,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         href
       }
       sale {
-        auctionsDetailFormattedStartDateTime
         endAt
         cascadingEndTimeInterval
         startAt
@@ -330,6 +328,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       sale_artwork: saleArtwork {
         lotLabel
         endAt
+        formattedEndDateTime
         counts {
           bidder_positions: bidderPositions
         }
