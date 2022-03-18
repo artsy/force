@@ -9815,6 +9815,11 @@ type Mutation {
     input: RequestCredentialsForAssetUploadInput!
   ): RequestCredentialsForAssetUploadPayload
 
+  # Request price estimate of an artwork
+  requestPriceEstimate(
+    input: RequestPriceEstimateInput!
+  ): RequestPriceEstimatePayload
+
   # Save (or remove) an artwork to (from) a users default collection.
   saveArtwork(input: SaveArtworkInput!): SaveArtworkPayload
 
@@ -12152,6 +12157,31 @@ type RequestLocation {
   countryCode: String
 }
 
+type RequestPriceEstimatedMutationFailure {
+  mutationError: GravityMutationError
+}
+
+type RequestPriceEstimatedMutationSuccess {
+  submittedPriceEstimateParams: SubmittedPriceEstimateParams
+}
+
+input RequestPriceEstimateInput {
+  artworkId: String!
+  clientMutationId: String
+  requesterEmail: String
+  requesterName: String
+  requesterPhoneNumber: String
+}
+
+union RequestPriceEstimateMutationType =
+    RequestPriceEstimatedMutationFailure
+  | RequestPriceEstimatedMutationSuccess
+
+type RequestPriceEstimatePayload {
+  clientMutationId: String
+  priceEstimateParamsOrError: RequestPriceEstimateMutationType
+}
+
 type ResizedImageUrl {
   factor: Float!
   height: Int
@@ -12383,6 +12413,9 @@ type SaleArtwork implements ArtworkEdgeInterface & Node {
 
   # Singular estimate field, if specified
   estimateCents: Int
+
+  # A formatted description of the lot end date and time
+  formattedEndDateTime: String
 
   # A formatted description of when the lot starts or ends or if it has ended
   formattedStartDateTime: String
@@ -13516,6 +13549,20 @@ type SubmitInquiryRequestMutationPayload {
 
   # Artwork Inquiry request
   inquiryRequest: InquiryRequest
+}
+
+type SubmittedPriceEstimateParams {
+  # Artwork ID submitted for estimate
+  artworkId: String!
+
+  # Email of the requester
+  requesterEmail: String
+
+  # Name of the requester
+  requesterName: String
+
+  # Phone number of the requester
+  requesterPhoneNumber: String
 }
 
 type System {

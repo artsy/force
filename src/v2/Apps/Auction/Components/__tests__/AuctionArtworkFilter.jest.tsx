@@ -81,7 +81,7 @@ describe("AuctionArtworkFilter", () => {
     it("returns default arguments", () => {
       expect(getArtworkFilterInputArgs()).toEqual({
         aggregations: ["ARTIST", "MEDIUM", "TOTAL"],
-        first: 10,
+        first: 39,
         sort: "sale_position",
       })
     })

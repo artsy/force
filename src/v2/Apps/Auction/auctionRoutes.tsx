@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { Redirect } from "found"
 import { graphql } from "relay-runtime"
 import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 import { AppRouteConfig } from "v2/System/Router/Route"
@@ -82,6 +83,8 @@ export const auctionRoutes: AppRouteConfig[] = [
           ...initialFilterState,
           ...getArtworkFilterInputArgs(props.context.user),
           saleID: params.slug,
+          // FIXME: Understand why this is needed to view lots in `the-artist-is-present-a-benefit-auction-for-ukraine` while logged out
+          priceRange: "*-*",
         },
       }
     },
@@ -165,6 +168,16 @@ export const auctionRoutes: AppRouteConfig[] = [
         }
       }
     `,
+  },
+  {
+    // Redirect from the old route to the new one
+    path: "/sale/:slug?",
+    children: [
+      new Redirect({
+        from: "/",
+        to: "/auction/:slug?",
+      }) as any,
+    ],
   },
 ]
 
