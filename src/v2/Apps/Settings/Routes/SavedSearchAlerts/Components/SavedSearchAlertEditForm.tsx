@@ -10,12 +10,10 @@ import {
 } from "@artsy/palette"
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
 import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
-import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { EditAlertEntity } from "../types"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "v2/Utils/logger"
@@ -51,7 +49,6 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 interface SavedSearchAlertEditFormProps {
   me: SavedSearchAlertEditForm_me
   artist: SavedSearchAlertEditForm_artist
-  artworksConnection: SavedSearchAlertEditForm_artworksConnection
   editAlertEntity: EditAlertEntity
   onDeleteClick: () => void
   onCompleted: () => void
@@ -237,11 +234,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 }
 
 const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
-  const { artworksConnection, artist, me } = props
+  const { artist, me } = props
   const { savedSearch } = me
-  const aggregations = artworksConnection.aggregations as Aggregations
   const criteria = getAllowedSearchCriteria(savedSearch as any)
-  const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
     placeholder: artist.name ?? "",
     artists: [
@@ -261,12 +256,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   }
 
   return (
-    <SavedSearchAlertContextProvider
-      entity={entity}
-      criteria={criteria}
-      aggregations={aggregations}
-      metric={metric}
-    >
+    <SavedSearchAlertContextProvider entity={entity} criteria={criteria}>
       <SavedSearchAlertEditForm {...props} />
     </SavedSearchAlertContextProvider>
   )
@@ -278,7 +268,6 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
     me: graphql`
       fragment SavedSearchAlertEditForm_me on Me
         @argumentDefinitions(savedSearchId: { type: "ID" }) {
-        lengthUnitPreference
         savedSearch(id: $savedSearchId) {
           internalID
           acquireable
@@ -314,18 +303,6 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
         slug
       }
     `,
-    artworksConnection: graphql`
-      fragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {
-        aggregations {
-          slice
-          counts {
-            count
-            name
-            value
-          }
-        }
-      }
-    `,
   }
 )
 
@@ -336,20 +313,6 @@ const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
     }
     artist(id: $artistId) {
       ...SavedSearchAlertEditForm_artist
-    }
-    artworksConnection(
-      first: 0
-      artistID: $artistId
-      aggregations: [
-        ARTIST
-        LOCATION_CITY
-        MATERIALS_TERMS
-        MEDIUM
-        PARTNER
-        COLOR
-      ]
-    ) {
-      ...SavedSearchAlertEditForm_artworksConnection
     }
   }
 `
@@ -371,12 +334,11 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           return null
         }
 
-        if (props?.artist && props.artworksConnection && props.me) {
+        if (props?.artist && props.me) {
           return (
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
               artist={props.artist!}
-              artworksConnection={props.artworksConnection!}
               editAlertEntity={editAlertEntity}
               onDeleteClick={onDeleteClick}
               onCompleted={onCompleted}

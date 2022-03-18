@@ -4,9 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type SavedSearchAlertEditForm_me = {
-    readonly lengthUnitPreference: LengthUnitPreference;
     readonly savedSearch: {
         readonly internalID: string;
         readonly acquireable: boolean | null;
@@ -54,13 +52,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "SavedSearchAlertEditForm_me",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "lengthUnitPreference",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -240,5 +231,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '784b378cbf2374e90e7bb600aaebcb92';
+(node as any).hash = '0214c6d176035933426e8ef1ff4734cb';
 export default node;

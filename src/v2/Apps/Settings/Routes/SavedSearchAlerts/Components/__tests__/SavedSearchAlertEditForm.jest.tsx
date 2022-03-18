@@ -63,20 +63,6 @@ describe("SavedSearchAlertEditForm", () => {
         artist(id: "artistId") {
           ...SavedSearchAlertEditForm_artist
         }
-        artworksConnection(
-          first: 0
-          artistID: "artistId"
-          aggregations: [
-            ARTIST
-            LOCATION_CITY
-            MATERIALS_TERMS
-            MEDIUM
-            PARTNER
-            COLOR
-          ]
-        ) {
-          ...SavedSearchAlertEditForm_artworksConnection
-        }
       }
     `,
   })
