@@ -26,7 +26,7 @@ export const ThankYou: React.FC = () => {
 
   return (
     <>
-      {isSWAMCEnabled ? (
+      {isSWAMCEnabled && isLoggedIn ? (
         <>
           <Text variant="xxl" mt={4}>
             Your artwork has been submitted
