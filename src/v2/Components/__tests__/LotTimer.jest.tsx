@@ -37,6 +37,15 @@ describe("getTimerCopy", () => {
         expect(getTimerCopy(time, hasStarted).color).toEqual("red100")
       })
     })
+
+    describe("when the close date/time is 2-3 min until close", () => {
+      const time = { days: "00", hours: "00", minutes: "02", seconds: "59" }
+
+      it("formats the timer to show 'xm xs", () => {
+        expect(getTimerCopy(time, hasStarted).copy).toEqual("2m 59s")
+        expect(getTimerCopy(time, hasStarted).color).toEqual("blue100")
+      })
+    })
   })
 
   describe("when the sale is not yet open", () => {
