@@ -29,7 +29,6 @@ declare module "sharify" {
       readonly ENABLE_FAIR_PAGE_EXHIBITORS_TAB: boolean
       readonly ENABLE_SAVED_SEARCH: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
-      readonly ENABLE_NEW_PRICE_FILTER: boolean
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_YOUR_ALERTS_PAGE: boolean

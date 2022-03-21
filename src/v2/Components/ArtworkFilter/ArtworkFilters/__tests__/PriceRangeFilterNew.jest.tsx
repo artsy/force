@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import {
+  Aggregations,
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
@@ -7,6 +8,7 @@ import {
 import { getENV } from "v2/Utils/getENV"
 import {
   convertToFilterFormatRange,
+  getBarsFromAggregations,
   getValue,
   parseRange,
   PriceRangeFilterNew,
@@ -208,3 +210,64 @@ describe("parseRange", () => {
     expect(parseRange("*-*")).toEqual(["*", "*"])
   })
 })
+
+describe("getBarsFromAggregations", () => {
+  it("should return empty array if there is no aggregation", () => {
+    const result = getBarsFromAggregations([
+      {
+        slice: "MAJOR_PERIOD",
+        counts: [
+          {
+            name: "0",
+            value: "0",
+            count: 1445,
+          },
+        ],
+      },
+    ])
+
+    expect(result).toEqual([])
+  })
+
+  it("should return sorted bars", () => {
+    const result = getBarsFromAggregations(aggregations)
+
+    expect(result).toEqual([
+      {
+        count: 1445,
+        value: 0,
+      },
+      {
+        count: 133,
+        value: 2000,
+      },
+      {
+        count: 750,
+        value: 50000,
+      },
+    ])
+  })
+})
+
+const aggregations: Aggregations = [
+  {
+    slice: "SIMPLE_PRICE_HISTOGRAM",
+    counts: [
+      {
+        name: "0",
+        value: "0",
+        count: 1445,
+      },
+      {
+        name: "50000",
+        value: "50000",
+        count: 750,
+      },
+      {
+        name: "2000",
+        value: "2000",
+        count: 133,
+      },
+    ],
+  },
+]

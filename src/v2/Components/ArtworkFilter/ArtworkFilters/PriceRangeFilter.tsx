@@ -21,8 +21,8 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { getENV } from "v2/Utils/getENV"
 import { PriceRangeFilterNew } from "./PriceRangeFilterNew"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -234,7 +234,9 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 }
 
 export const PriceRangeFilter: FC<PriceRangeFilterProps> = props => {
-  if (getENV("ENABLE_NEW_PRICE_FILTER")) {
+  const isNewPriceFilterEnabled = useFeatureFlag("new_price_filter")
+
+  if (isNewPriceFilterEnabled) {
     return <PriceRangeFilterNew {...props} />
   }
 
