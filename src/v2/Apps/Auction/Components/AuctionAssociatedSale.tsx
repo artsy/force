@@ -1,4 +1,4 @@
-import { Box, Image, Text } from "@artsy/palette"
+import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { startCase } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -15,26 +15,49 @@ const AuctionAssociatedSale: React.FC<AuctionAssociatedSaleProps> = ({
     return null
   }
 
-  return (
-    <Box maxWidth={400}>
-      <RouterLink to={sale.associatedSale.href} textDecoration="none">
-        {sale.associatedSale?.coverImage && (
-          <Image
-            src={sale.associatedSale?.coverImage.cropped?.src}
-            srcSet={sale.associatedSale?.coverImage.cropped?.srcSet}
-          />
-        )}
+  const image = sale.associatedSale?.coverImage?.cropped
 
-        <Text variant="sm">{sale.associatedSale.name}</Text>
-        <Text variant="sm" color="black60">
-          {startCase(sale.associatedSale.displayTimelyAt!)
-            .replace("By", "by")
-            .replace(" In", " in")
-            .replace(" Am", "am")
-            .replace(" Pm", "pm")}
-        </Text>
-      </RouterLink>
-    </Box>
+  return (
+    <GridColumns>
+      <Column span={[12, 4, 3]}>
+        <RouterLink
+          to={sale.associatedSale.href}
+          display="block"
+          textDecoration="none"
+        >
+          <ResponsiveBox
+            aspectWidth={16}
+            aspectHeight={9}
+            maxWidth="100%"
+            bg="black10"
+          >
+            {image && (
+              <Image
+                src={image.src}
+                srcSet={image.srcSet}
+                width="100%"
+                height="100%"
+                alt=""
+                lazyLoad
+                style={{ display: "block" }}
+              />
+            )}
+          </ResponsiveBox>
+
+          <Text variant="sm" mt={1}>
+            {sale.associatedSale.name}
+          </Text>
+
+          <Text variant="sm" color="black60">
+            {startCase(sale.associatedSale.displayTimelyAt!)
+              .replace("By", "by")
+              .replace(" In", " in")
+              .replace(" Am", "am")
+              .replace(" Pm", "pm")}
+          </Text>
+        </RouterLink>
+      </Column>
+    </GridColumns>
   )
 }
 
@@ -45,11 +68,9 @@ export const AuctionAssociatedSaleFragmentContainer = createFragmentContainer(
       fragment AuctionAssociatedSale_sale on Sale {
         associatedSale {
           coverImage {
-            cropped(width: 260, height: 110) {
+            cropped(width: 445, height: 250) {
               src
               srcSet
-              width
-              height
             }
           }
           displayTimelyAt
