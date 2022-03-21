@@ -75,30 +75,35 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
           {tabBar.isVisible && (
-            <Tabs mb={4}>
-              {tabBar.showAssociatedSale && (
-                <Tab name="Associated Sale">
-                  <AuctionAssociatedSaleFragmentContainer sale={sale} />
-                </Tab>
-              )}
-              {tabBar.showActiveBids && (
-                <Tab name="Your Active Bids">
-                  <AuctionActiveBidsRefetchContainer me={me} />
-                </Tab>
-              )}
-              {tabBar.showFollowedArtistsTab && (
-                <Tab name="Works By Artists You Follow">
-                  <AuctionWorksByFollowedArtistsRailFragmentContainer
-                    viewer={viewer}
-                  />
-                </Tab>
-              )}
-              {tabBar.showBuyNowTab && (
-                <Tab name="Buy Now">
-                  <AuctionBuyNowRailFragmentContainer sale={sale} />
-                </Tab>
-              )}
-            </Tabs>
+            // `key` is being passed to `Tabs` to ensure re-render
+            // Join is messing with `key` at this level; so `Tabs` are wrapped in a `Box`
+            // https://github.com/artsy/palette/pull/1144
+            <Box>
+              <Tabs key={sale.internalID} mb={4}>
+                {tabBar.showAssociatedSale && (
+                  <Tab name="Associated Sale">
+                    <AuctionAssociatedSaleFragmentContainer sale={sale} />
+                  </Tab>
+                )}
+                {tabBar.showActiveBids && (
+                  <Tab name="Your Active Bids">
+                    <AuctionActiveBidsRefetchContainer me={me} />
+                  </Tab>
+                )}
+                {tabBar.showFollowedArtistsTab && (
+                  <Tab name="Works By Artists You Follow">
+                    <AuctionWorksByFollowedArtistsRailFragmentContainer
+                      viewer={viewer}
+                    />
+                  </Tab>
+                )}
+                {tabBar.showBuyNowTab && (
+                  <Tab name="Buy Now">
+                    <AuctionBuyNowRailFragmentContainer sale={sale} />
+                  </Tab>
+                )}
+              </Tabs>
+            </Box>
           )}
 
           <AuctionArtworkFilterRefetchContainer viewer={viewer} />
