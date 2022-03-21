@@ -28,11 +28,9 @@ query AuctionAssociatedSaleTestQuery {
 fragment AuctionAssociatedSale_sale on Sale {
   associatedSale {
     coverImage {
-      cropped(width: 260, height: 110) {
+      cropped(width: 445, height: 250) {
         src
         srcSet
-        width
-        height
       }
     }
     displayTimelyAt
@@ -122,12 +120,12 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 110
+                        "value": 250
                       },
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 260
+                        "value": 445
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
@@ -148,23 +146,9 @@ return {
                         "kind": "ScalarField",
                         "name": "srcSet",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "width",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "height",
-                        "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:110,width:260)"
+                    "storageKey": "cropped(height:250,width:445)"
                   }
                 ],
                 "storageKey": null
@@ -208,12 +192,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d02c6cee6097c3abc6fabb36be15763a",
+    "cacheID": "1f4cf337f0ce08792bd28d57432a7202",
     "id": null,
     "metadata": {},
     "name": "AuctionAssociatedSaleTestQuery",
     "operationKind": "query",
-    "text": "query AuctionAssociatedSaleTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionAssociatedSale_sale\n    id\n  }\n}\n\nfragment AuctionAssociatedSale_sale on Sale {\n  associatedSale {\n    coverImage {\n      cropped(width: 260, height: 110) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    displayTimelyAt\n    href\n    slug\n    name\n    id\n  }\n}\n"
+    "text": "query AuctionAssociatedSaleTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionAssociatedSale_sale\n    id\n  }\n}\n\nfragment AuctionAssociatedSale_sale on Sale {\n  associatedSale {\n    coverImage {\n      cropped(width: 445, height: 250) {\n        src\n        srcSet\n      }\n    }\n    displayTimelyAt\n    href\n    slug\n    name\n    id\n  }\n}\n"
   }
 };
 })();
