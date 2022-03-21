@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_me = {
-    readonly showLotStandingsTab: ReadonlyArray<{
+    readonly showActiveBids: ReadonlyArray<{
         readonly activeBid: {
             readonly internalID: string;
         } | null;
@@ -40,7 +40,7 @@ return {
   "name": "AuctionApp_me",
   "selections": [
     {
-      "alias": "showLotStandingsTab",
+      "alias": "showActiveBids",
       "args": [
         {
           "kind": "Literal",
@@ -92,5 +92,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e53a542f7e19ebe7297176ff4ddbee99';
+(node as any).hash = 'ebe98c3104bd0df206f283da3ea1f865';
 export default node;

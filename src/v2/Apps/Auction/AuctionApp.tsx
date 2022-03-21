@@ -30,14 +30,16 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
+  const showActiveBids = me?.showActiveBids?.length && !sale.isClosed
+
   const tabBar = {
     isVisible:
       sale.showAssociatedSale ||
-      me?.showLotStandingsTab?.length ||
+      showActiveBids ||
       viewer.showFollowedArtistsTab?.edges?.length ||
       sale.showBuyNowTab,
     showAssociatedSale: sale.showAssociatedSale,
-    showActiveBids: me?.showLotStandingsTab?.length,
+    showActiveBids: showActiveBids,
     showFollowedArtistsTab: viewer.showFollowedArtistsTab?.edges?.length,
     showBuyNowTab: sale.showBuyNowTab,
   }
@@ -124,7 +126,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionActiveBids_me @arguments(saleID: $saleID)
       ...AuctionDetails_me
 
-      showLotStandingsTab: lotStandings(saleID: $saleID, live: true) {
+      showActiveBids: lotStandings(saleID: $saleID, live: true) {
         activeBid {
           internalID
         }
@@ -139,6 +141,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionDetails_sale
 
       internalID
+      isClosed
       coverImage {
         url(version: ["wide", "source", "large_rectangle"])
       }

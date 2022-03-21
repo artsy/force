@@ -22,6 +22,7 @@ export type AuctionActiveBids_me = {
             readonly highestBid: {
                 readonly display: string | null;
             } | null;
+            readonly endedAt: string | null;
             readonly sale: {
                 readonly slug: string;
                 readonly liveStartAt: string | null;
@@ -175,6 +176,13 @@ return {
             {
               "alias": null,
               "args": null,
+              "kind": "ScalarField",
+              "name": "endedAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
               "concreteType": "Sale",
               "kind": "LinkedField",
               "name": "sale",
@@ -239,5 +247,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '80a96fc662318ef88dc69811a0b19d9a';
+(node as any).hash = '22040b50814763b99b53e2e61d7b1a41';
 export default node;

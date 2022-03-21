@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_sale = {
     readonly internalID: string;
+    readonly isClosed: boolean | null;
     readonly coverImage: {
         readonly url: string | null;
     } | null;
@@ -48,6 +49,13 @@ return {
   "name": "AuctionApp_sale",
   "selections": [
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isClosed",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -146,5 +154,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a3e3dba05a708385e858e24a2e4c0803';
+(node as any).hash = 'd09577f9463229e86d75dd2d25d230b6';
 export default node;

@@ -109,6 +109,36 @@ describe("AuctionActiveBids", () => {
       expect(wrapper.text()).toContain("$2000")
     })
 
+    describe("auction with cascading lots, some closed", () => {
+      it("displays bidding closed for a lot that has closed", () => {
+        const wrapper = getWrapper({
+          Me: () => ({
+            lotStandings: [
+              {
+                saleArtwork: {
+                  counts: {
+                    bidderPositions: 1,
+                  },
+                  endedAt: "2021-01-01T00:00:00.000Z",
+                },
+              },
+              {
+                saleArtwork: {
+                  counts: {
+                    bidderPositions: 2,
+                  },
+                  endedAt: null,
+                },
+              },
+            ],
+          }),
+        })
+
+        expect(wrapper.text()).toContain("Bidding Closed")
+        expect(wrapper.text()).toContain("Increase Bid")
+      })
+    })
+
     describe("current bid", () => {
       it("shows current bid count", () => {
         const wrapper = getWrapper({

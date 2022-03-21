@@ -124,7 +124,7 @@ describe("AuctionApp", () => {
     it("hides tab bar if conditions not met", () => {
       const wrapper = getWrapper({
         Me: () => ({
-          showLotStandingsTab: null,
+          showActiveBids: null,
         }),
         Viewer: () => ({
           showFollowedArtistsTab: null,
@@ -162,7 +162,14 @@ describe("AuctionApp", () => {
 
     describe("ActiveBids", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper()
+        const wrapper = getWrapper({
+          Me: () => ({
+            showActiveBids: [1],
+          }),
+          Sale: () => ({
+            isClosed: false,
+          }),
+        })
         wrapper.find("Tabs Clickable").at(1).simulate("click")
         expect(wrapper.text()).toContain("Your Active Bids")
         wrapper.update()
@@ -174,7 +181,7 @@ describe("AuctionApp", () => {
       it("hides tab", () => {
         const wrapper = getWrapper({
           Me: () => ({
-            showLotStandingsTab: null,
+            showActiveBids: null,
           }),
         })
         expect(wrapper.text()).not.toContain("Your Active Bids")
@@ -186,7 +193,20 @@ describe("AuctionApp", () => {
 
     describe("Works by artists you follow", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper()
+        const wrapper = getWrapper({
+          Me: () => ({
+            showActiveBids: [1],
+          }),
+          Sale: () => ({
+            showBuyNowTab: true,
+            isClosed: false,
+          }),
+          Viewer: () => ({
+            showFollowedArtistsTab: {
+              edges: [1],
+            },
+          }),
+        })
         expect(wrapper.text()).toContain("Works By Artists You Follow")
         wrapper.find("Tabs Clickable").at(2).simulate("click")
         wrapper.update()
@@ -214,7 +234,15 @@ describe("AuctionApp", () => {
 
     describe("Buy now tab", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper()
+        const wrapper = getWrapper({
+          Sale: () => ({
+            showBuyNowTab: true,
+            isClosed: false,
+          }),
+          Me: () => ({
+            showActiveBids: [1],
+          }),
+        })
         expect(wrapper.text()).toContain("Buy Now")
         wrapper.find("Tabs Clickable").at(3).simulate("click")
         wrapper.update()
