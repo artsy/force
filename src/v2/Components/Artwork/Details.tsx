@@ -4,11 +4,15 @@ import {
   LinkProps,
   useThemeConfig,
   TextVariant,
+  Flex,
+  Spacer,
 } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
+import { getTimerCopy } from "../LotTimer"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -208,13 +212,79 @@ export const Details: React.FC<DetailsProps> = ({
   return (
     <>
       {isAuctionArtwork && (
-        <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+        <Flex flexDirection="row">
+          <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+          {rest?.artwork?.sale?.cascadingEndTimeInterval &&
+            rest?.artwork?.sale_artwork && (
+              <>
+                <Spacer mx={0.5} />
+                <LotCloseInfo
+                  saleArtwork={rest.artwork.sale_artwork}
+                  sale={rest.artwork.sale}
+                />
+              </>
+            )}
+        </Flex>
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <TitleLine {...rest} />
       {!hidePartnerName && <PartnerLine {...rest} />}
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </>
+  )
+}
+
+interface LotCloseInfoProps {
+  saleArtwork: NonNullable<Details_artwork["sale_artwork"]>
+  sale: NonNullable<Details_artwork["sale"]>
+}
+
+export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
+  saleArtwork,
+  sale,
+}) => {
+  const { hasEnded: lotHasClosed, time } = useTimer(
+    saleArtwork.endAt!,
+    sale.startAt!
+  )
+
+  const { hasEnded: lotsAreClosing, hasStarted: saleHasStarted } = useTimer(
+    sale.endAt!,
+    sale.startAt!
+  )
+
+  if (!saleHasStarted) {
+    return null
+  }
+
+  const timerCopy = getTimerCopy(time, saleHasStarted)
+
+  let lotCloseCopy
+  let labelColor = "black60"
+
+  // Lot has already closed
+  if (lotHasClosed) {
+    lotCloseCopy = "Closed"
+  } else if (saleHasStarted) {
+    // Sale has started and lots are <24 hours from closing or are actively closing
+    if (parseInt(time.days) < 1 || lotsAreClosing) {
+      lotCloseCopy = `Closes, ${timerCopy.copy}`
+      if (timerCopy.color === "red100") {
+        labelColor = "red100"
+      } else {
+        labelColor = "black100"
+      }
+    }
+    // Sale has started but lots have not started closing
+    else {
+      lotCloseCopy = saleArtwork.formattedEndDateTime
+    }
+  }
+
+  return (
+    <Text variant="xs" color={labelColor}>
+      {lotCloseCopy}
+    </Text>
   )
 }
 
@@ -237,11 +307,16 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         href
       }
       sale {
+        endAt
+        cascadingEndTimeInterval
+        startAt
         is_auction: isAuction
         is_closed: isClosed
       }
       sale_artwork: saleArtwork {
         lotLabel
+        endAt
+        formattedEndDateTime
         counts {
           bidder_positions: bidderPositions
         }

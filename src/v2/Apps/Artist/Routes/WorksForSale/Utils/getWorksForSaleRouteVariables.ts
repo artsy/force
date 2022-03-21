@@ -1,11 +1,17 @@
 import { getDefaultSortValueByVariant } from "v2/Utils/merchandisingTrial"
 import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
-export function getWorksForSaleRouteVariables({ artistID }, props) {
+export function getWorksForSaleRouteVariables(
+  { artistID },
+  { location, context }
+) {
+  const { featureFlags = {} } = context
+
   // FIXME: The initial render includes `location` in props, but subsequent
   // renders (such as tabbing back to this route in your browser) will not.
-  const initialFilterState = getInitialFilterState(props.location?.query ?? {})
+  const initialFilterState = getInitialFilterState(location?.query ?? {})
   const defaultSort = getDefaultSortValueByVariant(artistID)
+  const newPriceFilterFlag = featureFlags["new_price_filter"]
 
   const filterParams = {
     sort: defaultSort,
@@ -20,6 +26,11 @@ export function getWorksForSaleRouteVariables({ artistID }, props) {
     "LOCATION_CITY",
     "MATERIALS_TERMS",
   ]
+
+  // Fetch histogram data for price filter
+  if (newPriceFilterFlag?.flagEnabled) {
+    aggregations.push("SIMPLE_PRICE_HISTOGRAM")
+  }
 
   return {
     input: filterParams,

@@ -131,6 +131,7 @@ export type Slice =
   | "PARTNER"
   | "PERIOD"
   | "PRICE_RANGE"
+  | "SIMPLE_PRICE_HISTOGRAM"
   | "TOTAL"
 
 /**

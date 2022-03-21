@@ -55,6 +55,9 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                                 readonly type: string | null;
                             }) | null;
                             readonly sale: ({
+                                readonly endAt: string | null;
+                                readonly cascadingEndTimeInterval: number | null;
+                                readonly startAt: string | null;
                                 readonly is_auction: boolean | null;
                                 readonly is_closed: boolean | null;
                                 readonly id: string;
@@ -65,6 +68,8 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                             }) | null;
                             readonly sale_artwork: ({
                                 readonly lotLabel: string | null;
+                                readonly endAt: string | null;
+                                readonly formattedEndDateTime: string | null;
                                 readonly counts: ({
                                     readonly bidder_positions: number | null;
                                 }) | null;
@@ -286,12 +291,17 @@ fragment Details_artwork on Artwork {
     id
   }
   sale {
+    endAt
+    cascadingEndTimeInterval
+    startAt
     is_auction: isAuction
     is_closed: isClosed
     id
   }
   sale_artwork: saleArtwork {
     lotLabel
+    endAt
+    formattedEndDateTime
     counts {
       bidder_positions: bidderPositions
     }
@@ -384,7 +394,14 @@ v6 = [
     "value": true
   }
 ],
-v7 = [
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endAt",
+  "storageKey": null
+},
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -393,25 +410,25 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v9 = {
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v10 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
 },
-v11 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -688,6 +705,21 @@ return {
                                 "name": "sale",
                                 "plural": false,
                                 "selections": [
+                                  (v7/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "cascadingEndTimeInterval",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "startAt",
+                                    "storageKey": null
+                                  },
                                   {
                                     "alias": "is_auction",
                                     "args": null,
@@ -749,6 +781,14 @@ return {
                                     "name": "lotLabel",
                                     "storageKey": null
                                   },
+                                  (v7/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "formattedEndDateTime",
+                                    "storageKey": null
+                                  },
                                   {
                                     "alias": null,
                                     "args": null,
@@ -774,7 +814,7 @@ return {
                                     "kind": "LinkedField",
                                     "name": "highestBid",
                                     "plural": false,
-                                    "selections": (v7/*: any*/),
+                                    "selections": (v8/*: any*/),
                                     "storageKey": null
                                   },
                                   {
@@ -784,7 +824,7 @@ return {
                                     "kind": "LinkedField",
                                     "name": "openingBid",
                                     "plural": false,
-                                    "selections": (v7/*: any*/),
+                                    "selections": (v8/*: any*/),
                                     "storageKey": null
                                   },
                                   (v5/*: any*/)
@@ -895,7 +935,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1498b0cbad346a96f51846588717aad9",
+    "cacheID": "862896b13f92c20f477ee2602aa2cae1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -905,16 +945,16 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.href": (v8/*: any*/),
-        "artist.id": (v9/*: any*/),
-        "artist.name": (v8/*: any*/),
+        "artist.href": (v9/*: any*/),
+        "artist.id": (v10/*: any*/),
+        "artist.name": (v9/*: any*/),
         "artist.targetSupply": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistTargetSupply"
         },
-        "artist.targetSupply.isInMicrofunnel": (v10/*: any*/),
+        "artist.targetSupply.isInMicrofunnel": (v11/*: any*/),
         "artist.targetSupply.microfunnel": {
           "enumValues": null,
           "nullable": true,
@@ -945,14 +985,14 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.date": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.href": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.id": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.date": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.href": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.id": (v10/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -965,51 +1005,54 @@ return {
           "plural": false,
           "type": "Float"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.imageURL": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.imageURL": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.height": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.height": (v12/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.url": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "String"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.width": (v11/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.resized.width": (v12/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v11/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v10/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.cascadingEndTimeInterval": (v12/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.endAt": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v11/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale.startAt": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork": {
           "enumValues": null,
           "nullable": true,
@@ -1028,41 +1071,43 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.endAt": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.formattedEndDateTime": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.lotLabel": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.lotLabel": (v9/*: any*/),
         "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.slug": (v9/*: any*/),
-        "artist.targetSupply.microfunnel.artworksConnection.edges.node.title": (v8/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.slug": (v10/*: any*/),
+        "artist.targetSupply.microfunnel.artworksConnection.edges.node.title": (v9/*: any*/),
         "artist.targetSupply.microfunnel.metadata": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "TargetSupplyMicrofunnelMetadata"
         },
-        "artist.targetSupply.microfunnel.metadata.highestRealized": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.realized": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.roundedUniqueVisitors": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.roundedViews": (v8/*: any*/),
-        "artist.targetSupply.microfunnel.metadata.str": (v8/*: any*/)
+        "artist.targetSupply.microfunnel.metadata.highestRealized": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.realized": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.roundedUniqueVisitors": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.roundedViews": (v9/*: any*/),
+        "artist.targetSupply.microfunnel.metadata.str": (v9/*: any*/)
       }
     },
     "name": "ArtistConsignRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistConsignRoute_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistConsignRoute_artist\n    targetSupply {\n      isInMicrofunnel\n    }\n    id\n  }\n}\n\nfragment ArtistConsignFAQ_artist on Artist {\n  href\n}\n\nfragment ArtistConsignHeaderImages_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworksConnection {\n        edges {\n          node {\n            image {\n              resized(height: 395) {\n                width\n                height\n                url\n              }\n            }\n            ...FillwidthItem_artwork\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignHeader_artist on Artist {\n  ...ArtistConsignHeaderImages_artist\n  name\n  href\n}\n\nfragment ArtistConsignHowToSell_artist on Artist {\n  href\n}\n\nfragment ArtistConsignMarketTrends_artist on Artist {\n  href\n  targetSupply {\n    microfunnel {\n      metadata {\n        highestRealized\n        str\n        realized\n      }\n    }\n  }\n}\n\nfragment ArtistConsignMeta_artist on Artist {\n  name\n  href\n  targetSupply {\n    microfunnel {\n      artworksConnection {\n        edges {\n          node {\n            image {\n              imageURL: url(version: \"medium\")\n            }\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignPageViews_artist on Artist {\n  name\n  targetSupply {\n    microfunnel {\n      metadata {\n        roundedViews\n        roundedUniqueVisitors\n      }\n    }\n  }\n}\n\nfragment ArtistConsignRecentlySold_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworksConnection {\n        edges {\n          node {\n            ...FillwidthItem_artwork\n            realizedPrice\n            id\n          }\n        }\n      }\n    }\n  }\n  name\n}\n\nfragment ArtistConsignRoute_artist on Artist {\n  ...ArtistConsignMeta_artist\n  ...ArtistConsignHeader_artist\n  ...ArtistConsignRecentlySold_artist\n  ...ArtistConsignPageViews_artist\n  ...ArtistConsignMarketTrends_artist\n  ...ArtistConsignHowToSell_artist\n  ...ArtistConsignFAQ_artist\n  ...ArtistConsignSellArt_artist\n}\n\nfragment ArtistConsignSellArt_artist on Artist {\n  href\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query ArtistConsignRoute_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistConsignRoute_artist\n    targetSupply {\n      isInMicrofunnel\n    }\n    id\n  }\n}\n\nfragment ArtistConsignFAQ_artist on Artist {\n  href\n}\n\nfragment ArtistConsignHeaderImages_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworksConnection {\n        edges {\n          node {\n            image {\n              resized(height: 395) {\n                width\n                height\n                url\n              }\n            }\n            ...FillwidthItem_artwork\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignHeader_artist on Artist {\n  ...ArtistConsignHeaderImages_artist\n  name\n  href\n}\n\nfragment ArtistConsignHowToSell_artist on Artist {\n  href\n}\n\nfragment ArtistConsignMarketTrends_artist on Artist {\n  href\n  targetSupply {\n    microfunnel {\n      metadata {\n        highestRealized\n        str\n        realized\n      }\n    }\n  }\n}\n\nfragment ArtistConsignMeta_artist on Artist {\n  name\n  href\n  targetSupply {\n    microfunnel {\n      artworksConnection {\n        edges {\n          node {\n            image {\n              imageURL: url(version: \"medium\")\n            }\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignPageViews_artist on Artist {\n  name\n  targetSupply {\n    microfunnel {\n      metadata {\n        roundedViews\n        roundedUniqueVisitors\n      }\n    }\n  }\n}\n\nfragment ArtistConsignRecentlySold_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworksConnection {\n        edges {\n          node {\n            ...FillwidthItem_artwork\n            realizedPrice\n            id\n          }\n        }\n      }\n    }\n  }\n  name\n}\n\nfragment ArtistConsignRoute_artist on Artist {\n  ...ArtistConsignMeta_artist\n  ...ArtistConsignHeader_artist\n  ...ArtistConsignRecentlySold_artist\n  ...ArtistConsignPageViews_artist\n  ...ArtistConsignMarketTrends_artist\n  ...ArtistConsignHowToSell_artist\n  ...ArtistConsignFAQ_artist\n  ...ArtistConsignSellArt_artist\n}\n\nfragment ArtistConsignSellArt_artist on Artist {\n  href\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
