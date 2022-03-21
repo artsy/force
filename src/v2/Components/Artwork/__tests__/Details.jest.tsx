@@ -118,7 +118,7 @@ describe("Details", () => {
 
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
-      expect(html).toContain("Price on Request")
+      expect(html).toContain("Price on request")
     })
 
     it("shows sale message if sale open and no bids", async () => {
