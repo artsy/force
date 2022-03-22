@@ -33,10 +33,14 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+  let currentPage
 
-  const { pageType } = getContextPageFromClient()
+  if (typeof window !== "undefined") {
+    const { pageType } = getContextPageFromClient()
+    currentPage = pageType
+  }
 
-  const isArtistPage = pageType === OwnerType.artist
+  const isArtistPage = currentPage === OwnerType.artist
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
