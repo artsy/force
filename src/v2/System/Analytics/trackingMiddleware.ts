@@ -117,7 +117,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             })
           }
 
-          // AB Test
+          // triggering AB test experiment viewed events on specific routes
           abTestRouteMap.forEach(({ abTest, routes }) => {
             routes.some(route => {
               const matcher = match(route, { decode: decodeURIComponent })
