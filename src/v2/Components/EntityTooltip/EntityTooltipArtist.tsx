@@ -1,7 +1,6 @@
 import { FC } from "react"
 import {
   Box,
-  EntityHeader,
   HorizontalOverflow,
   Image,
   Join,
@@ -15,10 +14,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { EntityTooltipArtistQuery } from "v2/__generated__/EntityTooltipArtistQuery.graphql"
 import { EntityTooltipArtist_artist } from "v2/__generated__/EntityTooltipArtist_artist.graphql"
-import { FollowArtistButtonFragmentContainer } from "../FollowButton/FollowArtistButton"
-import { useSystemContext } from "v2/System"
-import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { ArtistEntityHeaderFragmentContainer } from "../EntityHeaders/ArtistEntityHeader"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist
@@ -26,7 +23,6 @@ interface EntityTooltipArtistProps {
 
 const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
   const images = artist.carousel?.images ?? []
-  const { user } = useSystemContext()
 
   return (
     <Box p={2} width={300}>
@@ -53,22 +49,10 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
         </RouterLink>
       )}
 
-      <EntityHeader
-        name={artist.name ?? "Unknown"}
-        meta={artist.formattedNationalityAndBirthday!}
-        href={artist.href!}
-        smallVariant
-        FollowButton={
-          <FollowArtistButtonFragmentContainer
-            contextModule={ContextModule.artistHeader}
-            user={user}
-            artist={artist}
-            buttonProps={{
-              size: "small",
-              variant: "secondaryOutline",
-            }}
-          />
-        }
+      <ArtistEntityHeaderFragmentContainer
+        artist={artist}
+        displayAvatar={false}
+        alignItems="flex-start"
       />
 
       {artist.blurb && (
@@ -92,10 +76,8 @@ const EntityTooltipArtistFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment EntityTooltipArtist_artist on Artist {
-        ...FollowArtistButton_artist
-        name
+        ...ArtistEntityHeader_artist
         href
-        formattedNationalityAndBirthday
         blurb(format: PLAIN)
         carousel {
           images {

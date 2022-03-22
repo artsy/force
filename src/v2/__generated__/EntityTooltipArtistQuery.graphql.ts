@@ -29,11 +29,28 @@ query EntityTooltipArtistQuery(
   }
 }
 
-fragment EntityTooltipArtist_artist on Artist {
-  ...FollowArtistButton_artist
-  name
+fragment ArtistEntityHeader_artist on Artist {
+  internalID
   href
+  slug
+  name
+  initials
   formattedNationalityAndBirthday
+  counts {
+    artworks
+    forSaleArtworks
+  }
+  avatar: image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
+  }
+}
+
+fragment EntityTooltipArtist_artist on Artist {
+  ...ArtistEntityHeader_artist
+  href
   blurb(format: PLAIN)
   carousel {
     images {
@@ -44,17 +61,6 @@ fragment EntityTooltipArtist_artist on Artist {
         width
       }
     }
-  }
-}
-
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
   }
 }
 */
@@ -73,7 +79,21 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -119,14 +139,21 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "internalID",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -140,14 +167,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "initials",
             "storageKey": null
           },
           {
-            "alias": "is_followed",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isFollowed",
+            "name": "formattedNationalityAndBirthday",
             "storageKey": null
           },
           {
@@ -162,24 +189,52 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "follows",
+                "name": "artworks",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "forSaleArtworks",
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "avatar",
             "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "formattedNationalityAndBirthday",
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 45
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 45
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/)
+                ],
+                "storageKey": "cropped(height:45,width:45)"
+              }
+            ],
             "storageKey": null
           },
           {
@@ -225,20 +280,8 @@ return {
                     "name": "resized",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -261,6 +304,13 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -268,12 +318,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "991144f093a50d991e793751ca4c0e48",
+    "cacheID": "1f300a0a57bfb80145c8fbb8afa674a3",
     "id": null,
     "metadata": {},
     "name": "EntityTooltipArtistQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...ArtistEntityHeader_artist\n  href\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n"
   }
 };
 })();

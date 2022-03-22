@@ -24,6 +24,25 @@ query HomeTrendingArtistsRail_Test_Query {
   }
 }
 
+fragment ArtistEntityHeader_artist on Artist {
+  internalID
+  href
+  slug
+  name
+  initials
+  formattedNationalityAndBirthday
+  counts {
+    artworks
+    forSaleArtworks
+  }
+  avatar: image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment FollowArtistButton_artist on Artist {
   id
   internalID
@@ -40,6 +59,7 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
     edges {
       node {
         ...FollowArtistButton_artist
+        ...ArtistEntityHeader_artist
         internalID
         isFollowed
         name
@@ -63,30 +83,62 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "FormattedNumber"
+},
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v1 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v2 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v3 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v4 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -217,15 +269,22 @@ return {
                             "kind": "ScalarField",
                             "name": "follows",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "artworks",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "forSaleArtworks",
+                            "storageKey": null
                           }
                         ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isFollowed",
                         "storageKey": null
                       },
                       {
@@ -239,7 +298,56 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "initials",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "formattedNationalityAndBirthday",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "avatar",
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 45
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 45
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              (v0/*: any*/),
+                              (v1/*: any*/)
+                            ],
+                            "storageKey": "cropped(height:45,width:45)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isFollowed",
                         "storageKey": null
                       },
                       {
@@ -269,20 +377,8 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              },
+                              (v0/*: any*/),
+                              (v1/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -318,7 +414,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fa1bcc72df64ff92f9d247730071e21f",
+    "cacheID": "56d9a5577d1464b6d11cfd798923b52f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -346,47 +442,39 @@ return {
           "plural": false,
           "type": "Artist"
         },
+        "viewer.artistsConnection.edges.node.avatar": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.avatar.cropped": (v3/*: any*/),
+        "viewer.artistsConnection.edges.node.avatar.cropped.src": (v4/*: any*/),
+        "viewer.artistsConnection.edges.node.avatar.cropped.srcSet": (v4/*: any*/),
         "viewer.artistsConnection.edges.node.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistCounts"
         },
-        "viewer.artistsConnection.edges.node.counts.follows": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "FormattedNumber"
-        },
-        "viewer.artistsConnection.edges.node.formattedNationalityAndBirthday": (v0/*: any*/),
-        "viewer.artistsConnection.edges.node.href": (v0/*: any*/),
-        "viewer.artistsConnection.edges.node.id": (v1/*: any*/),
-        "viewer.artistsConnection.edges.node.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "viewer.artistsConnection.edges.node.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "viewer.artistsConnection.edges.node.image.cropped.height": (v2/*: any*/),
-        "viewer.artistsConnection.edges.node.image.cropped.src": (v3/*: any*/),
-        "viewer.artistsConnection.edges.node.image.cropped.srcSet": (v3/*: any*/),
-        "viewer.artistsConnection.edges.node.image.cropped.width": (v2/*: any*/),
-        "viewer.artistsConnection.edges.node.internalID": (v1/*: any*/),
-        "viewer.artistsConnection.edges.node.isFollowed": (v4/*: any*/),
-        "viewer.artistsConnection.edges.node.is_followed": (v4/*: any*/),
-        "viewer.artistsConnection.edges.node.name": (v0/*: any*/),
-        "viewer.artistsConnection.edges.node.slug": (v1/*: any*/)
+        "viewer.artistsConnection.edges.node.counts.artworks": (v5/*: any*/),
+        "viewer.artistsConnection.edges.node.counts.follows": (v5/*: any*/),
+        "viewer.artistsConnection.edges.node.counts.forSaleArtworks": (v5/*: any*/),
+        "viewer.artistsConnection.edges.node.formattedNationalityAndBirthday": (v6/*: any*/),
+        "viewer.artistsConnection.edges.node.href": (v6/*: any*/),
+        "viewer.artistsConnection.edges.node.id": (v7/*: any*/),
+        "viewer.artistsConnection.edges.node.image": (v2/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped": (v3/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.height": (v8/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.src": (v4/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.srcSet": (v4/*: any*/),
+        "viewer.artistsConnection.edges.node.image.cropped.width": (v8/*: any*/),
+        "viewer.artistsConnection.edges.node.initials": (v6/*: any*/),
+        "viewer.artistsConnection.edges.node.internalID": (v7/*: any*/),
+        "viewer.artistsConnection.edges.node.isFollowed": (v9/*: any*/),
+        "viewer.artistsConnection.edges.node.is_followed": (v9/*: any*/),
+        "viewer.artistsConnection.edges.node.name": (v6/*: any*/),
+        "viewer.artistsConnection.edges.node.slug": (v7/*: any*/)
       }
     },
     "name": "HomeTrendingArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeTrendingArtistsRail_Test_Query {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query HomeTrendingArtistsRail_Test_Query {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        ...ArtistEntityHeader_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

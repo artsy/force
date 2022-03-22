@@ -14,22 +14,25 @@ export type ArtworkSidebarArtists_Test_QueryRawResponse = {
     readonly artwork: ({
         readonly cultural_maker: string | null;
         readonly artists: ReadonlyArray<({
-            readonly id: string;
             readonly internalID: string;
+            readonly href: string | null;
             readonly slug: string;
             readonly name: string | null;
+            readonly initials: string | null;
             readonly formattedNationalityAndBirthday: string | null;
-            readonly href: string | null;
+            readonly counts: ({
+                readonly artworks: number | null;
+                readonly forSaleArtworks: number | null;
+                readonly follows: number | null;
+            }) | null;
             readonly avatar: ({
                 readonly cropped: ({
                     readonly src: string;
                     readonly srcSet: string;
                 }) | null;
             }) | null;
+            readonly id: string;
             readonly is_followed: boolean | null;
-            readonly counts: ({
-                readonly follows: number | null;
-            }) | null;
             readonly related: ({
                 readonly suggestedConnection: ({
                     readonly edges: ReadonlyArray<({
@@ -67,22 +70,34 @@ query ArtworkSidebarArtists_Test_Query {
   }
 }
 
+fragment ArtistEntityHeader_artist on Artist {
+  internalID
+  href
+  slug
+  name
+  initials
+  formattedNationalityAndBirthday
+  counts {
+    artworks
+    forSaleArtworks
+  }
+  avatar: image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment ArtworkSidebarArtists_artwork on Artwork {
   cultural_maker: culturalMaker
   artists {
-    id
+    ...ArtistEntityHeader_artist
     internalID
     slug
     name
-    formattedNationalityAndBirthday
-    href
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
     ...FollowArtistButton_artist_2eN9lh
+    id
   }
 }
 
@@ -136,31 +151,24 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "formattedNationalityAndBirthday",
   "storageKey": null
 },
-v5 = [
+v4 = [
   {
     "kind": "Literal",
     "name": "height",
@@ -171,7 +179,14 @@ v5 = [
     "name": "width",
     "value": 45
   }
-];
+],
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -229,7 +244,13 @@ return {
             "plural": true,
             "selections": [
               (v1/*: any*/),
-              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -237,13 +258,45 @@ return {
                 "name": "slug",
                 "storageKey": null
               },
-              (v3/*: any*/),
-              (v4/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "href",
+                "name": "initials",
+                "storageKey": null
+              },
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "artworks",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "forSaleArtworks",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "follows",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               },
               {
@@ -256,7 +309,7 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v5/*: any*/),
+                    "args": (v4/*: any*/),
                     "concreteType": "CroppedImageUrl",
                     "kind": "LinkedField",
                     "name": "cropped",
@@ -282,29 +335,12 @@ return {
                 ],
                 "storageKey": null
               },
+              (v5/*: any*/),
               {
                 "alias": "is_followed",
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isFollowed",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArtistCounts",
-                "kind": "LinkedField",
-                "name": "counts",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "follows",
-                    "storageKey": null
-                  }
-                ],
                 "storageKey": null
               },
               {
@@ -350,10 +386,10 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
+                              (v5/*: any*/),
                               (v1/*: any*/),
                               (v2/*: any*/),
                               (v3/*: any*/),
-                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -364,7 +400,7 @@ return {
                                 "selections": [
                                   {
                                     "alias": null,
-                                    "args": (v5/*: any*/),
+                                    "args": (v4/*: any*/),
                                     "concreteType": "CroppedImageUrl",
                                     "kind": "LinkedField",
                                     "name": "cropped",
@@ -398,19 +434,19 @@ return {
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
-    "cacheID": "c555233c93212d0d7b7a2f936e1e7887",
+    "cacheID": "c2b839df3295d74eb412bc194d571180",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarArtists_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    id\n    internalID\n    slug\n    name\n    formattedNationalityAndBirthday\n    href\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    ...FollowArtistButton_artist_2eN9lh\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    ...ArtistEntityHeader_artist\n    internalID\n    slug\n    name\n    ...FollowArtistButton_artist_2eN9lh\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

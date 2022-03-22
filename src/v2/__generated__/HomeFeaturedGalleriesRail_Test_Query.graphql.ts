@@ -65,6 +65,7 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
 }
 
 fragment PartnerCell_partner on Partner {
+  ...PartnerEntityHeader_partner
   internalID
   slug
   name
@@ -88,6 +89,37 @@ fragment PartnerCell_partner on Partner {
     isFollowed
     image {
       cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
+        src
+        srcSet
+      }
+    }
+    id
+  }
+}
+
+fragment PartnerEntityHeader_partner on Partner {
+  internalID
+  slug
+  href
+  name
+  initials
+  locationsConnection(first: 15) {
+    edges {
+      node {
+        city
+        id
+      }
+    }
+  }
+  categories {
+    name
+    slug
+    id
+  }
+  profile {
+    ...FollowProfileButton_profile
+    avatar: image {
+      cropped(width: 45, height: 45) {
         src
         srcSet
       }
@@ -141,33 +173,61 @@ v5 = {
   "storageKey": null
 },
 v6 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v7 = [
   (v5/*: any*/)
 ],
-v7 = {
+v8 = {
   "kind": "InlineFragment",
-  "selections": (v6/*: any*/),
+  "selections": (v7/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
 },
 v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
 v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v11 = {
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -262,7 +322,6 @@ return {
                                 "selections": [
                                   (v2/*: any*/),
                                   (v3/*: any*/),
-                                  (v4/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -270,6 +329,7 @@ return {
                                     "name": "href",
                                     "storageKey": null
                                   },
+                                  (v4/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -358,6 +418,38 @@ return {
                                         "storageKey": null
                                       },
                                       {
+                                        "alias": "avatar",
+                                        "args": null,
+                                        "concreteType": "Image",
+                                        "kind": "LinkedField",
+                                        "name": "image",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": [
+                                              {
+                                                "kind": "Literal",
+                                                "name": "height",
+                                                "value": 45
+                                              },
+                                              {
+                                                "kind": "Literal",
+                                                "name": "width",
+                                                "value": 45
+                                              }
+                                            ],
+                                            "concreteType": "CroppedImageUrl",
+                                            "kind": "LinkedField",
+                                            "name": "cropped",
+                                            "plural": false,
+                                            "selections": (v6/*: any*/),
+                                            "storageKey": "cropped(height:45,width:45)"
+                                          }
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
                                         "alias": null,
                                         "args": null,
                                         "kind": "ScalarField",
@@ -400,22 +492,7 @@ return {
                                             "kind": "LinkedField",
                                             "name": "cropped",
                                             "plural": false,
-                                            "selections": [
-                                              {
-                                                "alias": null,
-                                                "args": null,
-                                                "kind": "ScalarField",
-                                                "name": "src",
-                                                "storageKey": null
-                                              },
-                                              {
-                                                "alias": null,
-                                                "args": null,
-                                                "kind": "ScalarField",
-                                                "name": "srcSet",
-                                                "storageKey": null
-                                              }
-                                            ],
+                                            "selections": (v6/*: any*/),
                                             "storageKey": "cropped(height:334,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:445)"
                                           }
                                         ],
@@ -428,10 +505,10 @@ return {
                                 "type": "Partner",
                                 "abstractKey": null
                               },
-                              (v7/*: any*/),
+                              (v8/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v6/*: any*/),
+                                "selections": (v7/*: any*/),
                                 "type": "FairOrganizer",
                                 "abstractKey": null
                               }
@@ -443,10 +520,10 @@ return {
                         "type": "Profile",
                         "abstractKey": null
                       },
-                      (v7/*: any*/),
+                      (v8/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v6/*: any*/),
+                        "selections": (v7/*: any*/),
                         "type": "FeaturedLink",
                         "abstractKey": null
                       }
@@ -466,7 +543,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6d3ffdca838fc7a13f828d44828c237a",
+    "cacheID": "9bc3c85c3355e45f0ccce20a6bb73c16",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -476,7 +553,7 @@ return {
           "plural": false,
           "type": "OrderedSet"
         },
-        "orderedSet.id": (v8/*: any*/),
+        "orderedSet.id": (v9/*: any*/),
         "orderedSet.orderedItemsConnection": {
           "enumValues": null,
           "nullable": false,
@@ -495,30 +572,30 @@ return {
           "plural": false,
           "type": "OrderedSetItem"
         },
-        "orderedSet.orderedItemsConnection.edges.node.__isNode": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.__typename": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.id": (v8/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.__isNode": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.__typename": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.id": (v9/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ProfileOwnerType"
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.__isNode": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.__typename": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.__isNode": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.__typename": (v10/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.categories": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "PartnerCategory"
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.categories.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.categories.name": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.categories.slug": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.href": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.initials": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.internalID": (v8/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.categories.id": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.categories.name": (v11/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.categories.slug": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.href": (v11/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.id": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.initials": (v11/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.internalID": (v9/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -537,41 +614,35 @@ return {
           "plural": false,
           "type": "Location"
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.city": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.name": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.city": (v11/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.locationsConnection.edges.node.id": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.name": (v11/*: any*/),
         "orderedSet.orderedItemsConnection.edges.node.owner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.id": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.src": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.srcSet": (v9/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.internalID": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.isFollowed": (v11/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.is_followed": (v11/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.name": (v10/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.profile.slug": (v8/*: any*/),
-        "orderedSet.orderedItemsConnection.edges.node.owner.slug": (v8/*: any*/)
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.avatar": (v12/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.avatar.cropped": (v13/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.avatar.cropped.src": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.avatar.cropped.srcSet": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.id": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image": (v12/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped": (v13/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.src": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.image.cropped.srcSet": (v10/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.internalID": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.isFollowed": (v14/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.is_followed": (v14/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.name": (v11/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.profile.slug": (v9/*: any*/),
+        "orderedSet.orderedItemsConnection.edges.node.owner.slug": (v9/*: any*/)
       }
     },
     "name": "HomeFeaturedGalleriesRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  ...PartnerEntityHeader_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

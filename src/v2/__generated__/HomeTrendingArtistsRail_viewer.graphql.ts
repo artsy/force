@@ -22,7 +22,7 @@ export type HomeTrendingArtistsRail_viewer = {
                         readonly height: number;
                     } | null;
                 } | null;
-                readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+                readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "ArtistEntityHeader_artist">;
             } | null;
         } | null> | null;
     } | null;
@@ -184,6 +184,11 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "FollowArtistButton_artist"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ArtistEntityHeader_artist"
                 }
               ],
               "storageKey": null
@@ -198,5 +203,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '36a8216ebf215e085480e876d9cf294e';
+(node as any).hash = '4935b1dcbf3fff7c4314b5a9e8eec6ae';
 export default node;

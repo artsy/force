@@ -5,7 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipGene_gene = {
-    readonly name: string | null;
     readonly href: string | null;
     readonly description: string | null;
     readonly image: {
@@ -16,7 +15,7 @@ export type EntityTooltipGene_gene = {
             readonly width: number;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"GeneEntityHeader_gene">;
     readonly " $refType": "EntityTooltipGene_gene";
 };
 export type EntityTooltipGene_gene$data = EntityTooltipGene_gene;
@@ -33,13 +32,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "EntityTooltipGene_gene",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -132,11 +124,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowGeneButton_gene"
+      "name": "GeneEntityHeader_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'efd29bee70b8d6162fa75b28267c69e2';
+(node as any).hash = 'a9d626b93c7269b47824240a788cd43a';
 export default node;

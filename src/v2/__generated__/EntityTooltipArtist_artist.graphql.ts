@@ -5,9 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipArtist_artist = {
-    readonly name: string | null;
     readonly href: string | null;
-    readonly formattedNationalityAndBirthday: string | null;
     readonly blurb: string | null;
     readonly carousel: {
         readonly images: ReadonlyArray<{
@@ -19,7 +17,7 @@ export type EntityTooltipArtist_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistEntityHeader_artist">;
     readonly " $refType": "EntityTooltipArtist_artist";
 };
 export type EntityTooltipArtist_artist$data = EntityTooltipArtist_artist;
@@ -40,21 +38,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedNationalityAndBirthday",
       "storageKey": null
     },
     {
@@ -140,11 +124,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
+      "name": "ArtistEntityHeader_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '777f88f7db41146b322dfc91121ae85e';
+(node as any).hash = '695b844fec34cd116c8715ae5d8eda99';
 export default node;

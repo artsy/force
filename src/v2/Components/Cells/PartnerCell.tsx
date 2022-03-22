@@ -6,23 +6,19 @@ import {
 } from "@artsy/cohesion"
 import {
   Box,
-  EntityHeader,
   Image,
   ResponsiveBox,
   SkeletonBox,
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { uniq } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { extractNodes } from "v2/Utils/extractNodes"
 import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
-import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
 import { DEFAULT_CELL_WIDTH } from "./constants"
+import { PartnerEntityHeaderFragmentContainer } from "../EntityHeaders/PartnerEntityHeader"
 
 interface PartnerCellProps {
   partner: PartnerCell_partner
@@ -34,24 +30,10 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
   partner,
   mode = "RAIL",
 }) => {
-  const { user } = useSystemContext()
   const { trackEvent } = useTracking()
 
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
-  const locations = extractNodes(partner.locationsConnection)
-  const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
   const image = partner.profile?.image?.cropped
-
-  // coerce away the case of nil by falling back to an empty array
-  const categories = partner.categories || []
-  // supporting a new category badge would mean updating this list of slugs:
-  const badgedCategorySlugs = ["black-owned"]
-  const matchingCategories = categories.filter(category =>
-    badgedCategorySlugs.includes(category!.slug)
-  )
-  const badges = matchingCategories.map(category => ({
-    children: category?.name,
-  }))
 
   if (!partner.profile) {
     return null
@@ -77,31 +59,12 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
         trackEvent(trackingEvent)
       }}
     >
-      <EntityHeader
-        name={partner.name!}
-        meta={meta}
-        smallVariant
-        badges={badges}
+      <PartnerEntityHeaderFragmentContainer
+        partner={partner}
+        displayAvatar={false}
+        displayLink={false}
+        alignItems="flex-end"
         mb={1}
-        FollowButton={
-          <FollowProfileButtonFragmentContainer
-            user={user}
-            profile={partner.profile}
-            contextModule={ContextModule.partnerHeader}
-            buttonProps={{ size: "small", variant: "secondaryOutline" }}
-            onClick={() => {
-              const trackingEvent: any = {
-                action: partner.profile?.isFollowed
-                  ? ActionType.unfollowedPartner
-                  : ActionType.followedPartner,
-                context_module: ContextModule.featuredGalleriesRail,
-                context_owner_type: OwnerType.partner,
-              }
-
-              trackEvent(trackingEvent)
-            }}
-          />
-        }
       />
 
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
@@ -160,6 +123,7 @@ export const PartnerCellFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment PartnerCell_partner on Partner {
+        ...PartnerEntityHeader_partner
         internalID
         slug
         name

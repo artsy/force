@@ -1,12 +1,4 @@
-import {
-  Box,
-  Image,
-  Spacer,
-  EntityHeader,
-  Skeleton,
-  SkeletonText,
-  SkeletonBox,
-} from "@artsy/palette"
+import { Box, Image, Skeleton, SkeletonText, SkeletonBox } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
@@ -21,8 +13,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Rail } from "v2/Components/Rail"
+import { ArtistEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/ArtistEntityHeader"
 
 interface HomeTrendingArtistsRailProps {
   viewer: HomeTrendingArtistsRail_viewer
@@ -32,7 +24,6 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
-  const { user } = useSystemContext()
   const nodes = extractNodes(viewer.artistsConnection)
 
   if (nodes.length === 0) {
@@ -90,33 +81,11 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
                   <Box bg="black30" width={325} height={230} />
                 )}
 
-                <Spacer mt={1} />
-
-                <EntityHeader
-                  name={node.name!}
-                  meta={node.formattedNationalityAndBirthday!}
-                  smallVariant
-                  FollowButton={
-                    <FollowArtistButtonFragmentContainer
-                      user={user}
-                      artist={node}
-                      contextModule={ContextModule.artistHeader}
-                      buttonProps={{
-                        size: "small",
-                        variant: "secondaryOutline",
-                      }}
-                      onClick={() => {
-                        const trackingEvent: any = {
-                          action: node.isFollowed
-                            ? ActionType.unfollowedArtist
-                            : ActionType.followedArtist,
-                          context_module: ContextModule.trendingArtistsRail,
-                          context_page_owner_type: OwnerType.home,
-                        }
-                        trackEvent(trackingEvent)
-                      }}
-                    />
-                  }
+                <ArtistEntityHeaderFragmentContainer
+                  mt={1}
+                  alignItems="flex-start"
+                  artist={node}
+                  displayAvatar={false}
                 />
               </Box>
             </RouterLink>
@@ -157,6 +126,7 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               ...FollowArtistButton_artist
+              ...ArtistEntityHeader_artist
               internalID
               isFollowed
               name

@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
+import { ArtistEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/ArtistEntityHeader"
 
 export interface ArtistsProps {
   artwork: ArtworkSidebarArtists_artwork
@@ -20,15 +21,9 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
         if (!artist || !artist.name) return null
 
         return (
-          <EntityHeader
+          <ArtistEntityHeaderFragmentContainer
             key={artist.internalID}
-            name={artist.name}
-            href={artist.href!}
-            meta={artist.formattedNationalityAndBirthday!}
-            image={{
-              src: artist.avatar?.cropped?.src,
-              srcSet: artist.avatar?.cropped?.srcSet,
-            }}
+            artist={artist}
             FollowButton={
               <FollowArtistButtonFragmentContainer
                 artist={artist}
@@ -63,18 +58,10 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
         ) {
         cultural_maker: culturalMaker
         artists {
-          id
+          ...ArtistEntityHeader_artist
           internalID
           slug
           name
-          formattedNationalityAndBirthday
-          href
-          avatar: image {
-            cropped(width: 45, height: 45) {
-              src
-              srcSet
-            }
-          }
           ...FollowArtistButton_artist
             @arguments(showFollowSuggestions: $showFollowSuggestions)
         }
