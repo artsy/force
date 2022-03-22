@@ -30,13 +30,16 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
 
   const locations = extractNodes(partner.locationsConnection)
   const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
-  const image = partner.profile?.avatar?.cropped
+  const image =
+    partner.profile?.icon?.cropped ?? partner.profile?.avatar?.cropped
   const initials = partner.initials ?? partner.name?.[0]
   const badges = compact(
     (partner.categories ?? []).filter(category =>
       DISPLAYABLE_BADGES.includes(category?.slug ?? "")
     )
   )
+  const isFollowable =
+    partner && partner.type !== "Auction House" && !!partner.profile
 
   return (
     <Flex
@@ -79,14 +82,15 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
         </Flex>
       </Flex>
 
-      {FollowButton || (
-        <FollowProfileButtonFragmentContainer
-          user={user}
-          profile={partner.profile!}
-          contextModule={ContextModule.partnerHeader}
-          buttonProps={{ size: "small", variant: "secondaryOutline" }}
-        />
-      )}
+      {isFollowable &&
+        (FollowButton || (
+          <FollowProfileButtonFragmentContainer
+            user={user}
+            profile={partner.profile!}
+            contextModule={ContextModule.partnerHeader}
+            buttonProps={{ size: "small", variant: "secondaryOutline" }}
+          />
+        ))}
     </Flex>
   )
 }
@@ -97,6 +101,7 @@ export const EntityHeaderPartnerFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment EntityHeaderPartner_partner on Partner {
         internalID
+        type
         slug
         href
         name
@@ -116,6 +121,16 @@ export const EntityHeaderPartnerFragmentContainer = createFragmentContainer(
           ...FollowProfileButton_profile
           avatar: image {
             cropped(width: 45, height: 45) {
+              src
+              srcSet
+            }
+          }
+          icon {
+            cropped(
+              width: 45
+              height: 45
+              version: ["untouched-png", "large", "square"]
+            ) {
               src
               srcSet
             }

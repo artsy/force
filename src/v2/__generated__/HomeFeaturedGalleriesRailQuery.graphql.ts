@@ -27,6 +27,7 @@ query HomeFeaturedGalleriesRailQuery {
 
 fragment EntityHeaderPartner_partner on Partner {
   internalID
+  type
   slug
   href
   name
@@ -48,6 +49,12 @@ fragment EntityHeaderPartner_partner on Partner {
     ...FollowProfileButton_profile
     avatar: image {
       cropped(width: 45, height: 45) {
+        src
+        srcSet
+      }
+    }
+    icon {
+      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
         src
         srcSet
       }
@@ -172,7 +179,17 @@ v5 = {
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v6 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 45
+},
+v7 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 45
+},
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -188,12 +205,12 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = [
+v9 = [
   (v5/*: any*/)
 ],
-v8 = {
+v10 = {
   "kind": "InlineFragment",
-  "selections": (v7/*: any*/),
+  "selections": (v9/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 };
@@ -285,6 +302,13 @@ return {
                                 "kind": "InlineFragment",
                                 "selections": [
                                   (v2/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "type",
+                                    "storageKey": null
+                                  },
                                   (v3/*: any*/),
                                   {
                                     "alias": null,
@@ -392,23 +416,48 @@ return {
                                           {
                                             "alias": null,
                                             "args": [
-                                              {
-                                                "kind": "Literal",
-                                                "name": "height",
-                                                "value": 45
-                                              },
-                                              {
-                                                "kind": "Literal",
-                                                "name": "width",
-                                                "value": 45
-                                              }
+                                              (v6/*: any*/),
+                                              (v7/*: any*/)
                                             ],
                                             "concreteType": "CroppedImageUrl",
                                             "kind": "LinkedField",
                                             "name": "cropped",
                                             "plural": false,
-                                            "selections": (v6/*: any*/),
+                                            "selections": (v8/*: any*/),
                                             "storageKey": "cropped(height:45,width:45)"
+                                          }
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "Image",
+                                        "kind": "LinkedField",
+                                        "name": "icon",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": [
+                                              (v6/*: any*/),
+                                              {
+                                                "kind": "Literal",
+                                                "name": "version",
+                                                "value": [
+                                                  "untouched-png",
+                                                  "large",
+                                                  "square"
+                                                ]
+                                              },
+                                              (v7/*: any*/)
+                                            ],
+                                            "concreteType": "CroppedImageUrl",
+                                            "kind": "LinkedField",
+                                            "name": "cropped",
+                                            "plural": false,
+                                            "selections": (v8/*: any*/),
+                                            "storageKey": "cropped(height:45,version:[\"untouched-png\",\"large\",\"square\"],width:45)"
                                           }
                                         ],
                                         "storageKey": null
@@ -456,7 +505,7 @@ return {
                                             "kind": "LinkedField",
                                             "name": "cropped",
                                             "plural": false,
-                                            "selections": (v6/*: any*/),
+                                            "selections": (v8/*: any*/),
                                             "storageKey": "cropped(height:334,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:445)"
                                           }
                                         ],
@@ -469,10 +518,10 @@ return {
                                 "type": "Partner",
                                 "abstractKey": null
                               },
-                              (v8/*: any*/),
+                              (v10/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v7/*: any*/),
+                                "selections": (v9/*: any*/),
                                 "type": "FairOrganizer",
                                 "abstractKey": null
                               }
@@ -484,10 +533,10 @@ return {
                         "type": "Profile",
                         "abstractKey": null
                       },
-                      (v8/*: any*/),
+                      (v10/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v7/*: any*/),
+                        "selections": (v9/*: any*/),
                         "type": "FeaturedLink",
                         "abstractKey": null
                       }
@@ -507,12 +556,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c3ac450153fe41ae21191cda55bf887d",
+    "cacheID": "590446cb9bce2dd5ed793af11a5f9198",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedGalleriesRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"6193c9ede70512000fbf3e8d\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"6193c9ede70512000fbf3e8d\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          owner {\n            __typename\n            ...PartnerCell_partner\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

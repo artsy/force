@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderPartner_partner = {
     readonly internalID: string;
+    readonly type: string | null;
     readonly slug: string;
     readonly href: string | null;
     readonly name: string | null;
@@ -23,6 +24,12 @@ export type EntityHeaderPartner_partner = {
     } | null> | null;
     readonly profile: {
         readonly avatar: {
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
+        } | null;
+        readonly icon: {
             readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
@@ -54,7 +61,33 @@ v1 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-};
+},
+v2 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 45
+},
+v3 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 45
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -66,6 +99,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "type",
       "storageKey": null
     },
     (v0/*: any*/),
@@ -162,38 +202,48 @@ return {
             {
               "alias": null,
               "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 45
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 45
-                }
+                (v2/*: any*/),
+                (v3/*: any*/)
               ],
               "concreteType": "CroppedImageUrl",
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
+              "selections": (v4/*: any*/),
               "storageKey": "cropped(height:45,width:45)"
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "icon",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                (v2/*: any*/),
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": [
+                    "untouched-png",
+                    "large",
+                    "square"
+                  ]
+                },
+                (v3/*: any*/)
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": (v4/*: any*/),
+              "storageKey": "cropped(height:45,version:[\"untouched-png\",\"large\",\"square\"],width:45)"
             }
           ],
           "storageKey": null
@@ -211,5 +261,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1f1eb1e1c15d7a13a9cc330e14d9e1c0';
+(node as any).hash = '7f4e8871facf3f86981d91a011a74e42';
 export default node;
