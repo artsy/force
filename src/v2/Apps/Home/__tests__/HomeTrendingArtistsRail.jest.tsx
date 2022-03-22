@@ -6,6 +6,9 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/Components/FollowButton/FollowArtistButton", () => ({
+  FollowArtistButtonQueryRenderer: () => <>Following</>,
+}))
 
 const { getWrapper } = setupTestWrapper<HomeTrendingArtistsRail_Test_Query>({
   Component: props => {
