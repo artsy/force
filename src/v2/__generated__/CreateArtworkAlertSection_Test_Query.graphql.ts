@@ -26,7 +26,9 @@ query CreateArtworkAlertSection_Test_Query {
 }
 
 fragment CreateArtworkAlertSection_artwork on Artwork {
+  internalID
   title
+  slug
   artists {
     internalID
     name
@@ -52,23 +54,37 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -115,6 +131,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -122,6 +139,7 @@ return {
             "name": "title",
             "storageKey": null
           },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -130,22 +148,10 @@ return {
             "name": "artists",
             "plural": true,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
               (v1/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
-              (v2/*: any*/)
+              (v3/*: any*/),
+              (v2/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -157,19 +163,19 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
-              (v2/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"test-artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "9c3b90039e00a0321833c661e6f5b18b",
+    "cacheID": "fbb819a320c7d5cb5290119bfe3378b0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -185,25 +191,27 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.id": (v3/*: any*/),
-        "artwork.artists.internalID": (v3/*: any*/),
-        "artwork.artists.name": (v4/*: any*/),
-        "artwork.artists.slug": (v3/*: any*/),
+        "artwork.artists.id": (v5/*: any*/),
+        "artwork.artists.internalID": (v5/*: any*/),
+        "artwork.artists.name": (v6/*: any*/),
+        "artwork.artists.slug": (v5/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v3/*: any*/),
-        "artwork.attributionClass.name": (v4/*: any*/),
-        "artwork.id": (v3/*: any*/),
-        "artwork.title": (v4/*: any*/)
+        "artwork.attributionClass.id": (v5/*: any*/),
+        "artwork.attributionClass.name": (v6/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.internalID": (v5/*: any*/),
+        "artwork.slug": (v5/*: any*/),
+        "artwork.title": (v6/*: any*/)
       }
     },
     "name": "CreateArtworkAlertSection_Test_Query",
     "operationKind": "query",
-    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n"
+    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

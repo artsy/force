@@ -148,7 +148,7 @@ describe("ArtworkSidebarCommercial", () => {
 
     const wrapper = getWrapper(artwork)
 
-    expect(wrapper.text()).toContain("Price on Request")
+    expect(wrapper.text()).toContain("Price on request")
   })
 
   it("creates a Buy Now order and redirects to the order page", () => {

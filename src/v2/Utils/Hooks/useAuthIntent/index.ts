@@ -13,6 +13,7 @@ const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
 export type AfterAuthAction =
   | { action: "createAlert"; kind: "artist"; objectId: string }
+  | { action: "createAlert"; kind: "artworks"; objectId: string }
   | { action: "follow"; kind: "artist"; objectId: string }
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "follow"; kind: "gene"; objectId: string }
@@ -53,10 +54,7 @@ export const runAuthIntent = async (
     await (() => {
       switch (value.action) {
         case "createAlert":
-          if (value.kind === "artist") {
-            triggerEvent(mediator, "auth:login:success")
-          }
-          break
+          return triggerEvent(mediator, "auth:login:success")
         case "follow":
           switch (value.kind) {
             case "artist":

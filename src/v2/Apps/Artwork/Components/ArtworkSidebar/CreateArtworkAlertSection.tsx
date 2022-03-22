@@ -11,6 +11,8 @@ import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/Attri
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertButton"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { AuthModalOptions } from "v2/Utils/openAuthModal"
 
 interface CreateArtworkAlertSectionProps {
   artwork: CreateArtworkAlertSection_artwork
@@ -33,8 +35,11 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
       name: artist.name ?? "",
       slug: artist.slug,
     })),
-    analytics: {
-      ownerType: OwnerType.artwork,
+    owner: {
+      type: OwnerType.artwork,
+      slug: artwork.slug,
+      id: artwork.internalID,
+      name: artwork.title!,
     },
   }
   const criteria: SearchCriteriaAttributes = {
@@ -42,6 +47,24 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
     attributionClass,
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
+
+  const getAuthModalOptions = (): AuthModalOptions => {
+    return {
+      entity: {
+        name: artwork.title!,
+        slug: artwork.slug,
+      },
+      afterSignUpAction: {
+        action: "createAlert",
+        kind: "artworks",
+        objectId: artwork.internalID,
+      },
+      contextModule: ContextModule.artworkSidebar,
+      intent: Intent.createAlert,
+      redirectTo: location.href,
+      copy: "Sign up to create your alert",
+    }
+  }
 
   return (
     <Box my={2}>
@@ -59,6 +82,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
         <SavedSearchCreateAlertButton
           entity={entity}
           criteria={allowedCriteria}
+          getAuthModalOptions={getAuthModalOptions}
         />
       </Flex>
     </Box>
@@ -70,7 +94,9 @@ export const CreateArtworkAlertSectionFragmentContainer = createFragmentContaine
   {
     artwork: graphql`
       fragment CreateArtworkAlertSection_artwork on Artwork {
+        internalID
         title
+        slug
         artists {
           internalID
           name

@@ -102,19 +102,17 @@ function getDesktopIntentToSaveArtwork({
 
 const getDesktopIntentToCreateAlert = ({
   contextModule,
-  entity,
   intent,
   redirectTo,
+  afterSignUpAction,
+  copy,
 }: AuthModalOptions): ModalOptions => {
   return {
-    afterSignUpAction: {
-      action: "createAlert",
-      kind: "artist",
-      objectId: entity.slug,
-    },
+    afterSignUpAction,
     contextModule,
     intent,
     redirectTo,
+    copy,
     mode: ModalType.signup,
   }
 }

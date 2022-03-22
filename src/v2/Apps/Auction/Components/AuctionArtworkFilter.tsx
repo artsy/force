@@ -23,7 +23,9 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
   const { user } = useSystemContext()
   const { match } = useRouter()
 
-  const { aggregations, counts } = viewer.sidebarAggregations!
+  if (!viewer.sidebarAggregations) return null
+
+  const { aggregations, counts } = viewer.sidebarAggregations
 
   return (
     <ArtworkGridContextProvider isAuctionArtwork>

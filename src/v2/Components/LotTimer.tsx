@@ -64,7 +64,11 @@ export const getTimerCopy = (time, hasStarted) => {
     } Until Bidding Starts`
   } else {
     // 2mins or fewer until close
-    if (parsedDays < 1 && parsedHours < 1 && parsedMinutes <= 2) {
+    if (
+      parsedDays < 1 &&
+      parsedHours < 1 &&
+      ((parsedMinutes === 2 && parsedSeconds === 0) || parsedMinutes <= 1)
+    ) {
       copy = `${parsedMinutes}m ${parsedSeconds}s`
       color = "red100"
     }
@@ -80,7 +84,7 @@ export const getTimerCopy = (time, hasStarted) => {
     }
 
     // 2-60 mins until close
-    else if (parsedDays < 1 && parsedHours < 1 && parsedMinutes > 2) {
+    else if (parsedDays < 1 && parsedHours < 1 && parsedMinutes >= 2) {
       copy = `${parsedMinutes}m ${parsedSeconds}s`
     }
   }

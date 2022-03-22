@@ -14,6 +14,7 @@ import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
+import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -29,17 +30,22 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
+  const showActiveBids = me?.showActiveBids?.length && !sale.isClosed
+
   const tabBar = {
     isVisible:
       sale.showAssociatedSale ||
-      me?.showLotStandingsTab?.length ||
+      showActiveBids ||
       viewer.showFollowedArtistsTab?.edges?.length ||
       sale.showBuyNowTab,
     showAssociatedSale: sale.showAssociatedSale,
-    showActiveBids: me?.showLotStandingsTab?.length,
+    showActiveBids: showActiveBids,
     showFollowedArtistsTab: viewer.showFollowedArtistsTab?.edges?.length,
     showBuyNowTab: sale.showBuyNowTab,
   }
+
+  const { cascadingEndTimeInterval, cascadingEndTime } = sale
+  const isFullBleedHeaderFixed = !cascadingEndTimeInterval
 
   return (
     <>
@@ -50,11 +56,20 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           contextPageOwnerType,
         }}
       >
+        {cascadingEndTimeInterval && (
+          <CascadingEndTimesBanner
+            intervalMessage={cascadingEndTime?.intervalLabel!}
+          />
+        )}
+
         <AuctionMetaFragmentContainer sale={sale} />
 
         <Join separator={<Spacer my={4} />}>
           {sale.coverImage?.url ? (
-            <FullBleedHeader src={sale.coverImage.url} />
+            <FullBleedHeader
+              fixed={isFullBleedHeaderFixed}
+              src={sale.coverImage.url}
+            />
           ) : (
             <Spacer my={2} />
           )}
@@ -62,30 +77,35 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
           {tabBar.isVisible && (
-            <Tabs mb={4}>
-              {tabBar.showAssociatedSale && (
-                <Tab name="Associated Sale">
-                  <AuctionAssociatedSaleFragmentContainer sale={sale} />
-                </Tab>
-              )}
-              {tabBar.showActiveBids && (
-                <Tab name="Your Active Bids">
-                  <AuctionActiveBidsRefetchContainer me={me} />
-                </Tab>
-              )}
-              {tabBar.showFollowedArtistsTab && (
-                <Tab name="Works By Artists You Follow">
-                  <AuctionWorksByFollowedArtistsRailFragmentContainer
-                    viewer={viewer}
-                  />
-                </Tab>
-              )}
-              {tabBar.showBuyNowTab && (
-                <Tab name="Buy Now">
-                  <AuctionBuyNowRailFragmentContainer sale={sale} />
-                </Tab>
-              )}
-            </Tabs>
+            // `key` is being passed to `Tabs` to ensure re-render
+            // Join is messing with `key` at this level; so `Tabs` are wrapped in a `Box`
+            // https://github.com/artsy/palette/pull/1144
+            <Box>
+              <Tabs key={sale.internalID} mb={4}>
+                {tabBar.showAssociatedSale && (
+                  <Tab name="Associated Sale">
+                    <AuctionAssociatedSaleFragmentContainer sale={sale} />
+                  </Tab>
+                )}
+                {tabBar.showActiveBids && (
+                  <Tab name="Your Active Bids">
+                    <AuctionActiveBidsRefetchContainer me={me} />
+                  </Tab>
+                )}
+                {tabBar.showFollowedArtistsTab && (
+                  <Tab name="Works By Artists You Follow">
+                    <AuctionWorksByFollowedArtistsRailFragmentContainer
+                      viewer={viewer}
+                    />
+                  </Tab>
+                )}
+                {tabBar.showBuyNowTab && (
+                  <Tab name="Buy Now">
+                    <AuctionBuyNowRailFragmentContainer sale={sale} />
+                  </Tab>
+                )}
+              </Tabs>
+            </Box>
           )}
 
           <AuctionArtworkFilterRefetchContainer viewer={viewer} />
@@ -106,7 +126,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionActiveBids_me @arguments(saleID: $saleID)
       ...AuctionDetails_me
 
-      showLotStandingsTab: lotStandings(saleID: $saleID, live: true) {
+      showActiveBids: lotStandings(saleID: $saleID, live: true) {
         activeBid {
           internalID
         }
@@ -121,6 +141,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionDetails_sale
 
       internalID
+      isClosed
       coverImage {
         url(version: ["wide", "source", "large_rectangle"])
       }
@@ -130,6 +151,11 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       showBuyNowTab: promotedSale {
         internalID
       }
+
+      cascadingEndTime {
+        intervalLabel
+      }
+      cascadingEndTimeInterval
     }
   `,
   viewer: graphql`

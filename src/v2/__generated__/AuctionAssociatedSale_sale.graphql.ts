@@ -10,8 +10,6 @@ export type AuctionAssociatedSale_sale = {
             readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
             } | null;
         } | null;
         readonly displayTimelyAt: string | null;
@@ -57,12 +55,12 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 110
+                  "value": 250
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 260
+                  "value": 445
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -83,23 +81,9 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "srcSet",
                   "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "width",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "height",
-                  "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:110,width:260)"
+              "storageKey": "cropped(height:250,width:445)"
             }
           ],
           "storageKey": null
@@ -139,5 +123,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '5d417455a90e1f4715c30247347f46a4';
+(node as any).hash = '834abac48e3175cdd56f6627bd3cde6d';
 export default node;

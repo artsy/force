@@ -5,7 +5,9 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CreateArtworkAlertSection_artwork = {
+    readonly internalID: string;
     readonly title: string | null;
+    readonly slug: string;
     readonly artists: ReadonlyArray<{
         readonly internalID: string;
         readonly name: string | null;
@@ -29,6 +31,20 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 };
@@ -38,6 +54,7 @@ return {
   "metadata": null,
   "name": "CreateArtworkAlertSection_artwork",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -45,6 +62,7 @@ return {
       "name": "title",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -53,21 +71,9 @@ return {
       "name": "artists",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
         (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        }
+        (v2/*: any*/),
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -79,7 +85,7 @@ return {
       "name": "attributionClass",
       "plural": false,
       "selections": [
-        (v0/*: any*/)
+        (v2/*: any*/)
       ],
       "storageKey": null
     }
@@ -88,5 +94,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c7fab570736d2d90036eb1df5816af4a';
+(node as any).hash = '4e86da0bfa2df158e1dc57215438a42f';
 export default node;
