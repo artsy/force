@@ -66,7 +66,7 @@ describe("Conversation", () => {
 
     it("shows the buyer guarantee message", async () => {
       renderWithRelay({
-        Artwork: () => ({ isOfferableFromInquiry: true }),
+        Artwork: () => ({ isOfferable: true }),
       })
 
       expect(
@@ -84,7 +84,7 @@ describe("Conversation", () => {
 
     it("doesn't show the buyer guarantee message", () => {
       renderWithRelay({
-        Artwork: () => ({ isOfferableFromInquiry: false }),
+        Artwork: () => ({ isOfferable: false }),
       })
 
       expect(

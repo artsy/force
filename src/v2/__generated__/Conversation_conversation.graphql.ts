@@ -50,12 +50,12 @@ export type Conversation_conversation = {
         readonly item: {
             readonly __typename: string;
             readonly id?: string;
-            readonly isOfferableFromInquiry?: boolean | null;
+            readonly isOfferable?: boolean | null;
             readonly internalID?: string;
             readonly " $fragmentRefs": FragmentRefs<"Item_item">;
         } | null;
         readonly liveArtwork: ({
-            readonly isOfferableFromInquiry: boolean | null;
+            readonly isOfferable: boolean | null;
             readonly internalID: string;
             readonly __typename: "Artwork";
         } | {
@@ -108,7 +108,7 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isOfferableFromInquiry",
+  "name": "isOfferable",
   "storageKey": null
 };
 return {
@@ -458,5 +458,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
+(node as any).hash = 'ef03f5143be6b9bfd5f5d7a57ae3e351';
 export default node;
