@@ -109,10 +109,10 @@ function setExperimentsViewed(experiments: string[]) {
       "experimentsViewed",
       JSON.stringify(experiments)
     )
-  } catch (e) {
+  } catch (error) {
     console.error(
       "[Force] Error: unable to set experimentsViewed on local storage: ",
-      e
+      error
     )
   }
 }
