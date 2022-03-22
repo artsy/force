@@ -66,6 +66,23 @@ export const PriceDatabaseBenefits: React.FC = () => {
           />
         }
       />
+
+      <Separator />
+
+      <Section
+        title="Track artists and their markets"
+        text={`Get insight into artists you follow with a personalized feed, powered by the Artsy Price Database. \n Available now on iOS and Android.`}
+        jsx={
+          <SectionImage
+            src="https://files.artsy.net/images/matthew_wong_morning.png"
+            srcSet=""
+            alt=""
+            artistName="Matthew Wong"
+            artworkName="Morning Landscape ,2017"
+          />
+        }
+        jsxPosition="right"
+      />
     </Flex>
   )
 }
