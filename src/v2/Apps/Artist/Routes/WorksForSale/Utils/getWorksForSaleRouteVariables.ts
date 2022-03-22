@@ -1,4 +1,3 @@
-import { getDefaultSortValueByVariant } from "v2/Utils/merchandisingTrial"
 import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
 export function getWorksForSaleRouteVariables(
@@ -10,11 +9,10 @@ export function getWorksForSaleRouteVariables(
   // FIXME: The initial render includes `location` in props, but subsequent
   // renders (such as tabbing back to this route in your browser) will not.
   const initialFilterState = getInitialFilterState(location?.query ?? {})
-  const defaultSort = getDefaultSortValueByVariant(artistID)
   const newPriceFilterFlag = featureFlags["new_price_filter"]
 
   const filterParams = {
-    sort: defaultSort,
+    sort: "-decayed_merch",
     ...initialFilterState,
   }
 
