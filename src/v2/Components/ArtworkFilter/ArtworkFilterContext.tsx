@@ -184,10 +184,6 @@ export interface ArtworkFilterContextProps {
   /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFiltersState
 
-  // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
-  /** Correctly restore sort value depending on A/B test (for example, when the "Clear All" button was pressed) */
-  defaultFilters?: ArtworkFiltersState
-
   /** Interim filter state, to be manipulated before being applied to the current filter state */
   stagedFilters?: ArtworkFiltersState
 
@@ -259,7 +255,6 @@ export type SharedArtworkFilterContextProps = Pick<
   ArtworkFilterContextProps,
   | "aggregations"
   | "counts"
-  | "defaultFilters"
   | "filters"
   | "sortOptions"
   | "onFilterClick"
@@ -277,7 +272,6 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
-  defaultFilters = {},
   onChange = updateUrl,
   onFilterClick,
   sortOptions,
@@ -322,8 +316,7 @@ export const ArtworkFilterContextProvider: React.FC<
   }
 
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
-    currentlySelectedFilters(),
-    defaultFilters
+    currentlySelectedFilters()
   )
 
   const artworkFilterContext = {
@@ -385,7 +378,6 @@ export const ArtworkFilterContextProvider: React.FC<
       const action: ArtworkFiltersAction = {
         type: "RESET",
         payload: {
-          ...defaultFilters,
           metric: initialFilterState.metric,
         },
       }
@@ -595,8 +587,7 @@ const artworkFilterReducer = (
 }
 
 export const getSelectedFiltersCounts = (
-  selectedFilters: ArtworkFilters = {},
-  defaultFilters: ArtworkFilters = {} // TODO: remove once "artist_grid_manual_curation_trial" A/B test is over
+  selectedFilters: ArtworkFilters = {}
 ) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
@@ -633,10 +624,7 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.sort: {
-        if (
-          paramValue !== initialArtworkFilterState.sort &&
-          paramValue !== defaultFilters.sort
-        ) {
+        if (paramValue !== initialArtworkFilterState.sort) {
           counts[paramName] = 1
         }
         break
