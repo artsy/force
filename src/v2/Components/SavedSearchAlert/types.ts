@@ -26,14 +26,17 @@ export interface SavedSearchEntityArtist {
   slug: string
 }
 
-interface SavedSearchEntityAnalytics {
-  ownerType: PageOwnerType
+interface SavedSearchEntityOwner {
+  type: PageOwnerType
+  slug: string
+  id: string
+  name: string
 }
 
 export interface SavedSearchEntity {
   placeholder: string
   artists: SavedSearchEntityArtist[]
-  analytics: SavedSearchEntityAnalytics
+  owner: SavedSearchEntityOwner
 }
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
