@@ -19,7 +19,7 @@ const AuctionDetailsStartTime: FC<AuctionDetailsStartTimeProps> = ({
 }) => {
   return (
     <Text variant="xl" {...rest}>
-      {sale.formattedStartDateTime}
+      {sale.cascadingEndTime.formattedStartDateTime}
     </Text>
   )
 }
@@ -29,7 +29,9 @@ const AuctionDetailsStartTimeFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionDetailsStartTime_sale on Sale {
-        formattedStartDateTime
+        cascadingEndTime {
+          formattedStartDateTime
+        }
       }
     `,
   }

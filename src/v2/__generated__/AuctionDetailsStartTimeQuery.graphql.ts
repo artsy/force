@@ -30,7 +30,9 @@ query AuctionDetailsStartTimeQuery(
 }
 
 fragment AuctionDetailsStartTime_sale on Sale {
-  formattedStartDateTime
+  cascadingEndTime {
+    formattedStartDateTime
+  }
 }
 */
 
@@ -93,8 +95,19 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "formattedStartDateTime",
+            "concreteType": "SaleCascadingEndTime",
+            "kind": "LinkedField",
+            "name": "cascadingEndTime",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "formattedStartDateTime",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           {
@@ -110,12 +123,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8692e160478aff17408b2070b7b9d03d",
+    "cacheID": "a976dfe1bdcfa7bd1d8b536178e6d07b",
     "id": null,
     "metadata": {},
     "name": "AuctionDetailsStartTimeQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsStartTimeQuery(\n  $id: String!\n) {\n  sale(id: $id) {\n    ...AuctionDetailsStartTime_sale\n    id\n  }\n}\n\nfragment AuctionDetailsStartTime_sale on Sale {\n  formattedStartDateTime\n}\n"
+    "text": "query AuctionDetailsStartTimeQuery(\n  $id: String!\n) {\n  sale(id: $id) {\n    ...AuctionDetailsStartTime_sale\n    id\n  }\n}\n\nfragment AuctionDetailsStartTime_sale on Sale {\n  cascadingEndTime {\n    formattedStartDateTime\n  }\n}\n"
   }
 };
 })();

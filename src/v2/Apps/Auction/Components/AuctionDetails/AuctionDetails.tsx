@@ -15,6 +15,7 @@ import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphq
 import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "../RegisterButton"
+import { SaleDetailTimerFragmentContainer } from "v2/Components/SaleDetailTimer"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
 
@@ -44,7 +45,11 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
       </GridColumns>
 
       <Spacer my={4} />
-
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center">
+          <SaleDetailTimerFragmentContainer sale={sale} />
+        </Flex>
+      </Flex>
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
           <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
@@ -63,6 +68,12 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
             </Box>
           )}
         </Flex>
+      </Flex>
+
+      <Flex alignItems="center" justifyContent="space-between">
+        <Text variant="md" pr={2}>
+          {sale.cascadingEndTime.intervalLabel}
+        </Text>
       </Flex>
 
       <Spacer my={2} />
@@ -86,6 +97,7 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
       fragment AuctionDetails_sale on Sale {
         ...RegisterButton_sale
         ...AuctionInfoSidebar_sale
+        ...SaleDetailTimer_sale
         internalID
         name
         slug
@@ -95,6 +107,9 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         description(format: HTML)
         href
         isClosed
+        cascadingEndTime {
+          intervalLabel
+        }
       }
     `,
     me: graphql`
