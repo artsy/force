@@ -205,7 +205,7 @@ jobs:
 
             To fix, run:
               git reset --soft HEAD^
-              yarn detect-secrets
+              yarn detect-secrets:hook
           EOF
             exit $code
           fi
@@ -414,10 +414,10 @@ workflows:
             - horizon/block
             - validate_production_schema
           post-steps:
-          # notify: practice-web, dev
+            # notify: practice-web, dev
             - slack/notify:
                 event: fail
-                channel: 'C2TQ4PT8R, C02BC3HEJ'
+                channel: "C2TQ4PT8R, C02BC3HEJ"
                 template: basic_fail_1
 
       # Other
