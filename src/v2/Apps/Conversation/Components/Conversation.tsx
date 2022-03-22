@@ -48,7 +48,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
-  const isOfferable = !!artwork && !!artwork?.isOfferableFromInquiry
+  const isOfferable = !!artwork?.isOfferable
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
@@ -342,14 +342,14 @@ export const ConversationPaginationContainer = createPaginationContainer(
             __typename
             ... on Artwork {
               id
-              isOfferableFromInquiry
+              isOfferable
               internalID
             }
             ...Item_item
           }
           liveArtwork {
             ... on Artwork {
-              isOfferableFromInquiry
+              isOfferable
               internalID
               __typename
             }
