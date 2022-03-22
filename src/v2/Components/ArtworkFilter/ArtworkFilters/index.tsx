@@ -18,7 +18,7 @@ import {
 } from "v2/System/useFeatureFlag"
 import { useAnalyticsContext } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
-import { getContextPageFromClient } from "lib/getContextPage"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -33,14 +33,9 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
-  let currentPage
+  const { match } = useRouter()
 
-  if (typeof window !== "undefined") {
-    const { pageType } = getContextPageFromClient()
-    currentPage = pageType
-  }
-
-  const isArtistPage = currentPage === OwnerType.artist
+  const isArtistPage = match.location.pathname.slice(1, 7) === OwnerType.artist
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
