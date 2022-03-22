@@ -25,13 +25,13 @@ export const SaleDetailTimer: React.FC<SaleDetailTimerProps> = ({ sale }) => {
 
   const endedAt = sale?.endedAt
 
-  const { time, hasStarted } = useTimer(endAt!, startAt!)
+  const { time } = useTimer(endAt!, startAt!)
 
   if (!endAt) {
     return null
   }
 
-  const timerCopy = getTimerCopy(time, startAt, endAt, endedAt, hasStarted)
+  const timerCopy = getTimerCopy(time, startAt, endAt, endedAt)
 
   return (
     <Flex alignItems="center" flexDirection="column">
@@ -55,7 +55,7 @@ export const SaleDetailTimerFragmentContainer = createFragmentContainer(
   }
 )
 
-export const getTimerCopy = (time, startAt, endAt, endedAt, hasStarted) => {
+export const getTimerCopy = (time, startAt, endAt, endedAt) => {
   const { days, hours, minutes, seconds } = time
 
   const parsedDays = parseInt(days, 10)
@@ -71,7 +71,7 @@ export const getTimerCopy = (time, startAt, endAt, endedAt, hasStarted) => {
 
   // Sale has ended
   if (!!endedAt) {
-    copy = "TEST"
+    copy = ""
   }
   // Sale has not yet started
   else if (thisMoment.isBefore(startedAt)) {
@@ -86,7 +86,7 @@ export const getTimerCopy = (time, startAt, endAt, endedAt, hasStarted) => {
   else {
     // 1 hour or less
     if (parsedDays < 1 && parsedHours < 1 && parsedHours < 1) {
-      copy = `${parsedMinutes}m ${parsedSeconds}s Until Bidding Ends `
+      copy = `${parsedMinutes}m ${parsedSeconds}s Until Bidding Ends`
       color = "red100"
     }
 
