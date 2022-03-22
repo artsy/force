@@ -4,6 +4,7 @@ import { identity, pickBy } from "lodash"
 import { Component } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } from "./ArtistMetaCanonicalLink"
@@ -166,9 +167,7 @@ export class ArtistMeta extends Component<Props> {
       return (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Meta property="og:image" content={artist.image.large} />
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Meta name="thumbnail" content={artist.image.square} />
         </>
       )

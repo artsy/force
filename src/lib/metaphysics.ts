@@ -1,6 +1,8 @@
 import qs from "qs"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { some } from "lodash"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Request } from "express"
 import { isV6Format } from "./ip"
@@ -55,7 +57,6 @@ export const metaphysics = function (
 
     if (token) {
       post.set({ "X-ACCESS-TOKEN": token })
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       post.set({ "X-USER-ID": req.user.id })
     }
 
