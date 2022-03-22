@@ -12,7 +12,7 @@ export type FairOrganizerEntityHeader_fairOrganizer = {
         readonly totalCount: number | null;
     } | null;
     readonly profile: {
-        readonly isFollowed: boolean | null;
+        readonly href: string | null;
         readonly initials: string | null;
         readonly avatar: {
             readonly cropped: {
@@ -89,7 +89,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "isFollowed",
+          "name": "href",
           "storageKey": null
         },
         {
@@ -158,5 +158,5 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '4b4a93ee4a9b9955c6a0e6817f6c9cf0';
+(node as any).hash = 'e2528f0fae55854404302ab620c3c608';
 export default node;

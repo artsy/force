@@ -1,31 +1,28 @@
-import { ContextModule } from "@artsy/cohesion"
 import { BoxProps, Flex, Text, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { FairEntityHeader_fair } from "v2/__generated__/FairEntityHeader_fair.graphql"
-import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
+import { GeneEntityHeader_gene } from "v2/__generated__/GeneEntityHeader_gene.graphql"
+import { FollowGeneButtonFragmentContainer } from "../FollowButton/FollowGeneButton"
 
-export interface FairEntityHeaderProps extends BoxProps {
-  fair: FairEntityHeader_fair
+export interface GeneEntityHeaderProps extends BoxProps {
+  gene: GeneEntityHeader_gene
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
 }
 
-const FairEntityHeader: FC<FairEntityHeaderProps> = ({
-  fair,
+const GeneEntityHeader: FC<GeneEntityHeaderProps> = ({
+  gene,
   displayAvatar = true,
   displayLink = true,
   FollowButton,
   ...rest
 }) => {
-  const { user } = useSystemContext()
-
-  const image = fair?.avatar?.cropped
-  const meta = [fair.startAt, fair.endAt].filter(Boolean).join(" – ")
-  const initials = fair.profile?.initials ?? fair.name?.[0]
+  const image = gene.avatar?.cropped
+  const initials = gene.name?.[0]
+  const total = gene.filterArtworksConnection?.counts?.total ?? 0
+  const meta = total > 0 ? `${total.toLocaleString("en-US")} artworks` : null
 
   return (
     <Flex
@@ -36,7 +33,7 @@ const FairEntityHeader: FC<FairEntityHeaderProps> = ({
     >
       <Flex
         {...(displayLink
-          ? { as: RouterLink, to: fair.href, textDecoration: "none" }
+          ? { as: RouterLink, to: gene.href, textDecoration: "none" }
           : {})}
         display="flex"
         alignItems="center"
@@ -49,7 +46,7 @@ const FairEntityHeader: FC<FairEntityHeaderProps> = ({
 
         <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
           <Text variant="md" lineClamp={2}>
-            {fair.name}
+            {gene.name ?? "Unknown"}
           </Text>
 
           {meta && (
@@ -61,36 +58,35 @@ const FairEntityHeader: FC<FairEntityHeaderProps> = ({
       </Flex>
 
       {FollowButton || (
-        <FollowProfileButtonFragmentContainer
-          user={user}
-          profile={fair.profile!}
-          contextModule={ContextModule.fairsHeader}
-          buttonProps={{ size: "small", variant: "secondaryOutline" }}
+        <FollowGeneButtonFragmentContainer
+          gene={gene}
+          size="small"
+          variant="secondaryOutline"
         />
       )}
     </Flex>
   )
 }
 
-export const FairEntityHeaderFragmentContainer = createFragmentContainer(
-  FairEntityHeader,
+export const GeneEntityHeaderFragmentContainer = createFragmentContainer(
+  GeneEntityHeader,
   {
-    fair: graphql`
-      fragment FairEntityHeader_fair on Fair {
+    gene: graphql`
+      fragment GeneEntityHeader_gene on Gene {
+        ...FollowGeneButton_gene
         internalID
         href
         name
-        startAt(format: "MMM Do")
-        endAt(format: "MMM Do YYYY")
         avatar: image {
-          cropped(width: 45, height: 45) {
+          cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
             src
             srcSet
           }
         }
-        profile {
-          ...FollowProfileButton_profile
-          initials
+        filterArtworksConnection(first: 1) {
+          counts {
+            total
+          }
         }
       }
     `,

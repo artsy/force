@@ -1,43 +1,80 @@
 import { ContextModule } from "@artsy/cohesion"
-import { EntityHeader, BoxProps } from "@artsy/palette"
+import { Text, BoxProps, Flex, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairOrganizerEntityHeader_fairOrganizer } from "v2/__generated__/FairOrganizerEntityHeader_fairOrganizer.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
-interface FairOrganizerEntityHeaderProps extends BoxProps {
+export interface FairOrganizerEntityHeaderProps extends BoxProps {
   fairOrganizer: FairOrganizerEntityHeader_fairOrganizer
+  displayAvatar?: boolean
+  displayLink?: boolean
+  FollowButton?: JSX.Element
 }
 
 const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
   fairOrganizer,
+  displayAvatar = true,
+  displayLink = true,
+  FollowButton,
   ...rest
 }) => {
   const { user } = useSystemContext()
 
+  const initials = fairOrganizer.profile?.initials ?? fairOrganizer.name?.[0]
   const image = fairOrganizer.profile?.avatar?.cropped
   const totalCount = fairOrganizer.fairsConnection?.totalCount ?? 0
   const meta =
     totalCount > 0 ? `${totalCount} Fair${totalCount === 1 ? "" : "s"}` : ""
 
   return (
-    <EntityHeader
-      name={fairOrganizer.name!}
-      meta={meta}
-      href={`/fair-organizer/${fairOrganizer.slug}`}
-      initials={fairOrganizer.profile?.initials ?? fairOrganizer.name?.[0]}
-      image={image!}
-      FollowButton={
+    <Flex
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      {...rest}
+    >
+      <Flex
+        {...(displayLink && fairOrganizer.profile?.href
+          ? {
+              as: RouterLink,
+              to: fairOrganizer.profile?.href,
+              textDecoration: "none",
+            }
+          : {})}
+        display="flex"
+        alignItems="center"
+        minWidth={0}
+        flex={1}
+      >
+        {displayAvatar && (image || initials) && (
+          <Avatar size="xs" mr={1} initials={initials} lazyLoad {...image} />
+        )}
+
+        <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
+          <Text variant="md" lineClamp={2}>
+            {fairOrganizer.name}
+          </Text>
+
+          {meta && (
+            <Text variant="xs" color="black60" overflowEllipsis>
+              {meta}
+            </Text>
+          )}
+        </Flex>
+      </Flex>
+
+      {FollowButton || (
         <FollowProfileButtonFragmentContainer
           user={user}
           profile={fairOrganizer.profile!}
-          contextModule={ContextModule.fairOrganizerHeader}
+          contextModule={ContextModule.fairsHeader}
           buttonProps={{ size: "small", variant: "secondaryOutline" }}
         />
-      }
-      {...rest}
-    />
+      )}
+    </Flex>
   )
 }
 
@@ -54,7 +91,7 @@ export const FairOrganizerEntityHeaderFragmentContainer = createFragmentContaine
         }
         profile {
           ...FollowProfileButton_profile
-          isFollowed
+          href
           initials
           avatar: image {
             cropped(width: 45, height: 45) {

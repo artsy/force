@@ -4,28 +4,29 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairEntityHeader_fair = {
+export type ArtistEntityHeader_artist = {
     readonly internalID: string;
     readonly href: string | null;
+    readonly slug: string;
     readonly name: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
+    readonly initials: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
+    readonly counts: {
+        readonly artworks: number | null;
+        readonly forSaleArtworks: number | null;
+    } | null;
     readonly avatar: {
         readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly profile: {
-        readonly initials: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-    } | null;
-    readonly " $refType": "FairEntityHeader_fair";
+    readonly " $refType": "ArtistEntityHeader_artist";
 };
-export type FairEntityHeader_fair$data = FairEntityHeader_fair;
-export type FairEntityHeader_fair$key = {
-    readonly " $data"?: FairEntityHeader_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEntityHeader_fair">;
+export type ArtistEntityHeader_artist$data = ArtistEntityHeader_artist;
+export type ArtistEntityHeader_artist$key = {
+    readonly " $data"?: ArtistEntityHeader_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistEntityHeader_artist">;
 };
 
 
@@ -34,7 +35,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairEntityHeader_fair",
+  "name": "ArtistEntityHeader_artist",
   "selections": [
     {
       "alias": null,
@@ -54,34 +55,54 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
       "storageKey": null
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do"
-        }
-      ],
+      "args": null,
       "kind": "ScalarField",
-      "name": "startAt",
-      "storageKey": "startAt(format:\"MMM Do\")"
+      "name": "initials",
+      "storageKey": null
     },
     {
       "alias": null,
-      "args": [
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedNationalityAndBirthday",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
         {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do YYYY"
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artworks",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "forSaleArtworks",
+          "storageKey": null
         }
       ],
-      "kind": "ScalarField",
-      "name": "endAt",
-      "storageKey": "endAt(format:\"MMM Do YYYY\")"
+      "storageKey": null
     },
     {
       "alias": "avatar",
@@ -129,33 +150,10 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Profile",
-      "kind": "LinkedField",
-      "name": "profile",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "initials",
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
-        }
-      ],
-      "storageKey": null
     }
   ],
-  "type": "Fair",
+  "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'cdddfdd53e178b3bcbfd92d7fe7b5062';
+(node as any).hash = 'b224ee32a5feb50c6bcbb9b4aebf9c39';
 export default node;

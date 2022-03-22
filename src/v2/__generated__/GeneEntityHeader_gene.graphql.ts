@@ -4,28 +4,28 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairEntityHeader_fair = {
+export type GeneEntityHeader_gene = {
     readonly internalID: string;
     readonly href: string | null;
     readonly name: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
     readonly avatar: {
         readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly profile: {
-        readonly initials: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+    readonly filterArtworksConnection: {
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
     } | null;
-    readonly " $refType": "FairEntityHeader_fair";
+    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
+    readonly " $refType": "GeneEntityHeader_gene";
 };
-export type FairEntityHeader_fair$data = FairEntityHeader_fair;
-export type FairEntityHeader_fair$key = {
-    readonly " $data"?: FairEntityHeader_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEntityHeader_fair">;
+export type GeneEntityHeader_gene$data = GeneEntityHeader_gene;
+export type GeneEntityHeader_gene$key = {
+    readonly " $data"?: GeneEntityHeader_gene$data;
+    readonly " $fragmentRefs": FragmentRefs<"GeneEntityHeader_gene">;
 };
 
 
@@ -34,7 +34,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairEntityHeader_fair",
+  "name": "GeneEntityHeader_gene",
   "selections": [
     {
       "alias": null,
@@ -58,32 +58,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "startAt",
-      "storageKey": "startAt(format:\"MMM Do\")"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do YYYY"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "endAt",
-      "storageKey": "endAt(format:\"MMM Do YYYY\")"
-    },
-    {
       "alias": "avatar",
       "args": null,
       "concreteType": "Image",
@@ -98,6 +72,14 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "height",
               "value": 45
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "big_and_tall",
+                "tall"
+              ]
             },
             {
               "kind": "Literal",
@@ -125,37 +107,54 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:45,width:45)"
+          "storageKey": "cropped(height:45,version:[\"big_and_tall\",\"tall\"],width:45)"
         }
       ],
       "storageKey": null
     },
     {
       "alias": null,
-      "args": null,
-      "concreteType": "Profile",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "profile",
+      "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "initials",
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
-      "storageKey": null
+      "storageKey": "filterArtworksConnection(first:1)"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
-  "type": "Fair",
+  "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'cdddfdd53e178b3bcbfd92d7fe7b5062';
+(node as any).hash = 'e10f921af2dd40990e1a797ad257732a';
 export default node;
