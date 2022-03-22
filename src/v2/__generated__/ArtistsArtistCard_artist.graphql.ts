@@ -12,7 +12,7 @@ export type ArtistsArtistCard_artist = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistEntityHeader_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
     readonly " $refType": "ArtistsArtistCard_artist";
 };
 export type ArtistsArtistCard_artist$data = ArtistsArtistCard_artist;
@@ -86,11 +86,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistEntityHeader_artist"
+      "name": "EntityHeaderArtist_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '3683b530810db6874ae377504ebf68f1';
+(node as any).hash = '79b6c6d6116566a0019316029b44ca10';
 export default node;

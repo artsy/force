@@ -10,7 +10,7 @@ export type ArtworkSidebarArtists_artwork = {
         readonly internalID: string;
         readonly slug: string;
         readonly name: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistEntityHeader_artist" | "FollowArtistButton_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist" | "FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtworkSidebarArtists_artwork";
 };
@@ -73,7 +73,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtistEntityHeader_artist"
+          "name": "EntityHeaderArtist_artist"
         },
         {
           "args": [
@@ -93,5 +93,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '1583eb4fc6978c46876629328c598d35';
+(node as any).hash = '7b030820d6156f2b5417ed17d67e09f7';
 export default node;

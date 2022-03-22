@@ -70,7 +70,19 @@ query ArtworkSidebarArtists_Test_Query {
   }
 }
 
-fragment ArtistEntityHeader_artist on Artist {
+fragment ArtworkSidebarArtists_artwork on Artwork {
+  cultural_maker: culturalMaker
+  artists {
+    ...EntityHeaderArtist_artist
+    internalID
+    slug
+    name
+    ...FollowArtistButton_artist_2eN9lh
+    id
+  }
+}
+
+fragment EntityHeaderArtist_artist on Artist {
   internalID
   href
   slug
@@ -86,18 +98,6 @@ fragment ArtistEntityHeader_artist on Artist {
       src
       srcSet
     }
-  }
-}
-
-fragment ArtworkSidebarArtists_artwork on Artwork {
-  cultural_maker: culturalMaker
-  artists {
-    ...ArtistEntityHeader_artist
-    internalID
-    slug
-    name
-    ...FollowArtistButton_artist_2eN9lh
-    id
   }
 }
 
@@ -441,12 +441,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c2b839df3295d74eb412bc194d571180",
+    "cacheID": "5663c5f3358dce45f912616f5b4dafd2",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarArtists_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    ...ArtistEntityHeader_artist\n    internalID\n    slug\n    name\n    ...FollowArtistButton_artist_2eN9lh\n    id\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    ...FollowArtistButton_artist_2eN9lh\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -18,7 +18,7 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
-import { PartnerEntityHeaderFragmentContainer } from "../EntityHeaders/PartnerEntityHeader"
+import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 
 interface PartnerCellProps {
   partner: PartnerCell_partner
@@ -59,7 +59,7 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
         trackEvent(trackingEvent)
       }}
     >
-      <PartnerEntityHeaderFragmentContainer
+      <EntityHeaderPartnerFragmentContainer
         partner={partner}
         displayAvatar={false}
         displayLink={false}
@@ -123,7 +123,7 @@ export const PartnerCellFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment PartnerCell_partner on Partner {
-        ...PartnerEntityHeader_partner
+        ...EntityHeaderPartner_partner
         internalID
         slug
         name

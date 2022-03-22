@@ -2,21 +2,21 @@ import { graphql } from "relay-runtime"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
-  FairOrganizerEntityHeaderFragmentContainer,
-  FairOrganizerEntityHeaderProps,
-} from "./FairOrganizerEntityHeader"
-import { PlaceholderEntityHeader } from "./PlaceholderEntityHeader"
-import { FairOrganizerEntityHeaderStoryQuery } from "v2/__generated__/FairOrganizerEntityHeaderStoryQuery.graphql"
+  EntityHeaderFairOrganizerFragmentContainer,
+  EntityHeaderFairOrganizerProps,
+} from "./EntityHeaderFairOrganizer"
+import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
+import { EntityHeaderFairOrganizerStoryQuery } from "v2/__generated__/EntityHeaderFairOrganizerStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",
 }
 
-export const FairOrganizerEntityHeader = () => {
+export const EntityHeaderFairOrganizer = () => {
   return (
     <States<
       { id: string } & Partial<
-        Omit<FairOrganizerEntityHeaderProps, "fairOrganizer">
+        Omit<EntityHeaderFairOrganizerProps, "fairOrganizer">
       >
     >
       states={[
@@ -29,13 +29,13 @@ export const FairOrganizerEntityHeader = () => {
     >
       {({ id, ...rest }) => {
         return (
-          <SystemQueryRenderer<FairOrganizerEntityHeaderStoryQuery>
+          <SystemQueryRenderer<EntityHeaderFairOrganizerStoryQuery>
             variables={{ id }}
-            placeholder={<PlaceholderEntityHeader />}
+            placeholder={<EntityHeaderPlaceholder />}
             query={graphql`
-              query FairOrganizerEntityHeaderStoryQuery($id: String!) {
+              query EntityHeaderFairOrganizerStoryQuery($id: String!) {
                 fairOrganizer(id: $id) {
-                  ...FairOrganizerEntityHeader_fairOrganizer
+                  ...EntityHeaderFairOrganizer_fairOrganizer
                 }
               }
             `}
@@ -46,11 +46,11 @@ export const FairOrganizerEntityHeader = () => {
               }
 
               if (!props?.fairOrganizer) {
-                return <PlaceholderEntityHeader />
+                return <EntityHeaderPlaceholder />
               }
 
               return (
-                <FairOrganizerEntityHeaderFragmentContainer
+                <EntityHeaderFairOrganizerFragmentContainer
                   fairOrganizer={props.fairOrganizer}
                   {...rest}
                 />
@@ -63,6 +63,6 @@ export const FairOrganizerEntityHeader = () => {
   )
 }
 
-FairOrganizerEntityHeader.story = {
-  name: "FairOrganizerEntityHeader",
+EntityHeaderFairOrganizer.story = {
+  name: "EntityHeaderFairOrganizer",
 }

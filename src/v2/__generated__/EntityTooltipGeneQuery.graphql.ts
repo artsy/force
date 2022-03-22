@@ -29,8 +29,27 @@ query EntityTooltipGeneQuery(
   }
 }
 
+fragment EntityHeaderGene_gene on Gene {
+  ...FollowGeneButton_gene
+  internalID
+  href
+  name
+  avatar: image {
+    cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
+      src
+      srcSet
+    }
+  }
+  filterArtworksConnection(first: 1) {
+    counts {
+      total
+    }
+    id
+  }
+}
+
 fragment EntityTooltipGene_gene on Gene {
-  ...GeneEntityHeader_gene
+  ...EntityHeaderGene_gene
   href
   description(format: PLAIN)
   image {
@@ -49,25 +68,6 @@ fragment FollowGeneButton_gene on Gene {
   name
   internalID
   isFollowed
-}
-
-fragment GeneEntityHeader_gene on Gene {
-  ...FollowGeneButton_gene
-  internalID
-  href
-  name
-  avatar: image {
-    cropped(width: 45, height: 45, version: ["big_and_tall", "tall"]) {
-      src
-      srcSet
-    }
-  }
-  filterArtworksConnection(first: 1) {
-    counts {
-      total
-    }
-    id
-  }
 }
 */
 
@@ -333,12 +333,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "02c1ef9ae82b5d46f82e99d717412fa6",
+    "cacheID": "0b11f10f4dc300935eeb02c1084539b1",
     "id": null,
     "metadata": {},
     "name": "EntityTooltipGeneQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipGeneQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityTooltipGene_gene\n    id\n  }\n}\n\nfragment EntityTooltipGene_gene on Gene {\n  ...GeneEntityHeader_gene\n  href\n  description(format: PLAIN)\n  image {\n    cropped(width: 260, height: 146, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n      height\n      width\n    }\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment GeneEntityHeader_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query EntityTooltipGeneQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityTooltipGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment EntityTooltipGene_gene on Gene {\n  ...EntityHeaderGene_gene\n  href\n  description(format: PLAIN)\n  image {\n    cropped(width: 260, height: 146, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n      height\n      width\n    }\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();

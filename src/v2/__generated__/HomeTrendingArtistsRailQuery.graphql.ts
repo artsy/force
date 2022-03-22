@@ -24,7 +24,7 @@ query HomeTrendingArtistsRailQuery {
   }
 }
 
-fragment ArtistEntityHeader_artist on Artist {
+fragment EntityHeaderArtist_artist on Artist {
   internalID
   href
   slug
@@ -59,7 +59,7 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
     edges {
       node {
         ...FollowArtistButton_artist
-        ...ArtistEntityHeader_artist
+        ...EntityHeaderArtist_artist
         internalID
         isFollowed
         name
@@ -366,12 +366,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "37a644e1740b2199cfcc90ddb3028cc3",
+    "cacheID": "e47e8877b08bbe08004093f7a0d23b1a",
     "id": null,
     "metadata": {},
     "name": "HomeTrendingArtistsRailQuery",
     "operationKind": "query",
-    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        ...ArtistEntityHeader_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        ...EntityHeaderArtist_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -4,32 +4,32 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairEntityHeaderStoryQueryVariables = {
+export type EntityHeaderFairStoryQueryVariables = {
     id: string;
 };
-export type FairEntityHeaderStoryQueryResponse = {
+export type EntityHeaderFairStoryQueryResponse = {
     readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairEntityHeader_fair">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
     } | null;
 };
-export type FairEntityHeaderStoryQuery = {
-    readonly response: FairEntityHeaderStoryQueryResponse;
-    readonly variables: FairEntityHeaderStoryQueryVariables;
+export type EntityHeaderFairStoryQuery = {
+    readonly response: EntityHeaderFairStoryQueryResponse;
+    readonly variables: EntityHeaderFairStoryQueryVariables;
 };
 
 
 
 /*
-query FairEntityHeaderStoryQuery(
+query EntityHeaderFairStoryQuery(
   $id: String!
 ) {
   fair(id: $id) {
-    ...FairEntityHeader_fair
+    ...EntityHeaderFair_fair
     id
   }
 }
 
-fragment FairEntityHeader_fair on Fair {
+fragment EntityHeaderFair_fair on Fair {
   internalID
   href
   name
@@ -98,7 +98,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FairEntityHeaderStoryQuery",
+    "name": "EntityHeaderFairStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -111,7 +111,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "FairEntityHeader_fair"
+            "name": "EntityHeaderFair_fair"
           }
         ],
         "storageKey": null
@@ -124,7 +124,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FairEntityHeaderStoryQuery",
+    "name": "EntityHeaderFairStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -258,14 +258,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6a0a6edee1140be7852be53d8710075",
+    "cacheID": "b5b28b0983133a0893bdaa686dc609d3",
     "id": null,
     "metadata": {},
-    "name": "FairEntityHeaderStoryQuery",
+    "name": "EntityHeaderFairStoryQuery",
     "operationKind": "query",
-    "text": "query FairEntityHeaderStoryQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairEntityHeader_fair\n    id\n  }\n}\n\nfragment FairEntityHeader_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query EntityHeaderFairStoryQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'cea72bcf7d8f5426a634e7891d3e7e60';
+(node as any).hash = 'fcbf66e61120838cdbb9154af857c2c8';
 export default node;

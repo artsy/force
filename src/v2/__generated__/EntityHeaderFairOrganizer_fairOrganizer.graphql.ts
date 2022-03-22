@@ -4,24 +4,16 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PartnerEntityHeader_partner = {
+export type EntityHeaderFairOrganizer_fairOrganizer = {
     readonly internalID: string;
     readonly slug: string;
-    readonly href: string | null;
     readonly name: string | null;
-    readonly initials: string | null;
-    readonly locationsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly city: string | null;
-            } | null;
-        } | null> | null;
+    readonly fairsConnection: {
+        readonly totalCount: number | null;
     } | null;
-    readonly categories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
     readonly profile: {
+        readonly href: string | null;
+        readonly initials: string | null;
         readonly avatar: {
             readonly cropped: {
                 readonly src: string;
@@ -30,36 +22,21 @@ export type PartnerEntityHeader_partner = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $refType": "PartnerEntityHeader_partner";
+    readonly " $refType": "EntityHeaderFairOrganizer_fairOrganizer";
 };
-export type PartnerEntityHeader_partner$data = PartnerEntityHeader_partner;
-export type PartnerEntityHeader_partner$key = {
-    readonly " $data"?: PartnerEntityHeader_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerEntityHeader_partner">;
+export type EntityHeaderFairOrganizer_fairOrganizer$data = EntityHeaderFairOrganizer_fairOrganizer;
+export type EntityHeaderFairOrganizer_fairOrganizer$key = {
+    readonly " $data"?: EntityHeaderFairOrganizer_fairOrganizer$data;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PartnerEntityHeader_partner",
+  "name": "EntityHeaderFairOrganizer_fairOrganizer",
   "selections": [
     {
       "alias": null,
@@ -68,78 +45,35 @@ return {
       "name": "internalID",
       "storageKey": null
     },
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "href",
+      "name": "slug",
       "storageKey": null
     },
-    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "initials",
+      "name": "name",
       "storageKey": null
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 15
-        }
-      ],
-      "concreteType": "LocationConnection",
+      "args": null,
+      "concreteType": "FairConnection",
       "kind": "LinkedField",
-      "name": "locationsConnection",
+      "name": "fairsConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "LocationEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Location",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "totalCount",
           "storageKey": null
         }
-      ],
-      "storageKey": "locationsConnection(first:15)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "categories",
-      "plural": true,
-      "selections": [
-        (v1/*: any*/),
-        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -151,6 +85,20 @@ return {
       "name": "profile",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "initials",
+          "storageKey": null
+        },
         {
           "alias": "avatar",
           "args": null,
@@ -207,9 +155,8 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Partner",
+  "type": "FairOrganizer",
   "abstractKey": null
 };
-})();
-(node as any).hash = '2e8aa47c645ac210e92dede24e04b45d';
+(node as any).hash = '052b967b34d0875f92bf82944cfa0ee2';
 export default node;

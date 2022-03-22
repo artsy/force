@@ -31,7 +31,7 @@ export type PartnerCell_partner = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerEntityHeader_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     readonly " $refType": "PartnerCell_partner";
 };
 export type PartnerCell_partner$data = PartnerCell_partner;
@@ -228,12 +228,12 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PartnerEntityHeader_partner"
+      "name": "EntityHeaderPartner_partner"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
 })();
-(node as any).hash = '8b279cf80cc7fd390beee4f72ed6fce8';
+(node as any).hash = 'cd30a7469ab33b0f2a970ab81899bbf5';
 export default node;

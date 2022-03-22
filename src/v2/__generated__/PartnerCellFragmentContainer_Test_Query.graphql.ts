@@ -25,6 +25,37 @@ query PartnerCellFragmentContainer_Test_Query {
   }
 }
 
+fragment EntityHeaderPartner_partner on Partner {
+  internalID
+  slug
+  href
+  name
+  initials
+  locationsConnection(first: 15) {
+    edges {
+      node {
+        city
+        id
+      }
+    }
+  }
+  categories {
+    name
+    slug
+    id
+  }
+  profile {
+    ...FollowProfileButton_profile
+    avatar: image {
+      cropped(width: 45, height: 45) {
+        src
+        srcSet
+      }
+    }
+    id
+  }
+}
+
 fragment FollowProfileButton_profile on Profile {
   id
   slug
@@ -34,7 +65,7 @@ fragment FollowProfileButton_profile on Profile {
 }
 
 fragment PartnerCell_partner on Partner {
-  ...PartnerEntityHeader_partner
+  ...EntityHeaderPartner_partner
   internalID
   slug
   name
@@ -58,37 +89,6 @@ fragment PartnerCell_partner on Partner {
     isFollowed
     image {
       cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment PartnerEntityHeader_partner on Partner {
-  internalID
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
         src
         srcSet
       }
@@ -415,7 +415,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "083b97c7769cff45bac6cda63a0dc170",
+    "cacheID": "c5f6f4d5f02c6e2628c4646df490051d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -484,7 +484,7 @@ return {
     },
     "name": "PartnerCellFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  ...PartnerEntityHeader_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

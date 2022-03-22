@@ -14,7 +14,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Rail } from "v2/Components/Rail"
-import { ArtistEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/ArtistEntityHeader"
+import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 
 interface HomeTrendingArtistsRailProps {
   viewer: HomeTrendingArtistsRail_viewer
@@ -81,7 +81,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
                   <Box bg="black30" width={325} height={230} />
                 )}
 
-                <ArtistEntityHeaderFragmentContainer
+                <EntityHeaderArtistFragmentContainer
                   mt={1}
                   alignItems="flex-start"
                   artist={node}
@@ -126,7 +126,7 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               ...FollowArtistButton_artist
-              ...ArtistEntityHeader_artist
+              ...EntityHeaderArtist_artist
               internalID
               isFollowed
               name

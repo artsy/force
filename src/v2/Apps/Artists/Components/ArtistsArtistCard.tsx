@@ -3,7 +3,7 @@ import { Image, ResponsiveBox } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsArtistCard_artist } from "v2/__generated__/ArtistsArtistCard_artist.graphql"
-import { ArtistEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/ArtistEntityHeader"
+import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 
 interface ArtistsArtistCardProps {
   artist: ArtistsArtistCard_artist
@@ -42,7 +42,7 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
           )}
         </ResponsiveBox>
 
-        <ArtistEntityHeaderFragmentContainer
+        <EntityHeaderArtistFragmentContainer
           mt={1}
           alignItems="flex-start"
           artist={artist}
@@ -60,7 +60,7 @@ export const ArtistsArtistCardFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistsArtistCard_artist on Artist {
-        ...ArtistEntityHeader_artist
+        ...EntityHeaderArtist_artist
         href
         image {
           thumb: cropped(width: 445, height: 334) {

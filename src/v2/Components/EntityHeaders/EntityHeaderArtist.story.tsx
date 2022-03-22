@@ -2,19 +2,19 @@ import { graphql } from "relay-runtime"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
-  ArtistEntityHeaderFragmentContainer,
-  ArtistEntityHeaderProps,
-} from "./ArtistEntityHeader"
-import { PlaceholderEntityHeader } from "./PlaceholderEntityHeader"
-import { ArtistEntityHeaderStoryQuery } from "v2/__generated__/ArtistEntityHeaderStoryQuery.graphql"
+  EntityHeaderArtistFragmentContainer,
+  EntityHeaderArtistProps,
+} from "./EntityHeaderArtist"
+import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
+import { EntityHeaderArtistStoryQuery } from "v2/__generated__/EntityHeaderArtistStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",
 }
 
-export const ArtistEntityHeader = () => {
+export const EntityHeaderArtist = () => {
   return (
-    <States<{ id: string } & Partial<Omit<ArtistEntityHeaderProps, "artist">>>
+    <States<{ id: string } & Partial<Omit<EntityHeaderArtistProps, "artist">>>
       states={[
         { id: "damon-zucconi" },
         { id: "walid-raad", displayCounts: false },
@@ -26,13 +26,13 @@ export const ArtistEntityHeader = () => {
     >
       {({ id, ...rest }) => {
         return (
-          <SystemQueryRenderer<ArtistEntityHeaderStoryQuery>
+          <SystemQueryRenderer<EntityHeaderArtistStoryQuery>
             variables={{ id }}
-            placeholder={<PlaceholderEntityHeader />}
+            placeholder={<EntityHeaderPlaceholder />}
             query={graphql`
-              query ArtistEntityHeaderStoryQuery($id: String!) {
+              query EntityHeaderArtistStoryQuery($id: String!) {
                 artist(id: $id) {
-                  ...ArtistEntityHeader_artist
+                  ...EntityHeaderArtist_artist
                 }
               }
             `}
@@ -43,11 +43,11 @@ export const ArtistEntityHeader = () => {
               }
 
               if (!props?.artist) {
-                return <PlaceholderEntityHeader />
+                return <EntityHeaderPlaceholder />
               }
 
               return (
-                <ArtistEntityHeaderFragmentContainer
+                <EntityHeaderArtistFragmentContainer
                   artist={props.artist}
                   {...rest}
                 />
@@ -60,6 +60,6 @@ export const ArtistEntityHeader = () => {
   )
 }
 
-ArtistEntityHeader.story = {
-  name: "ArtistEntityHeader",
+EntityHeaderArtist.story = {
+  name: "EntityHeaderArtist",
 }

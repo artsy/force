@@ -29,33 +29,7 @@ query EntityTooltipPartnerQuery(
   }
 }
 
-fragment EntityTooltipPartner_partner on Partner {
-  ...PartnerEntityHeader_partner
-  href
-  profile {
-    bio
-    fullBio
-    image {
-      cropped(width: 260, height: 146, version: ["wide", "medium250x165"]) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment PartnerEntityHeader_partner on Partner {
+fragment EntityHeaderPartner_partner on Partner {
   internalID
   slug
   href
@@ -84,6 +58,32 @@ fragment PartnerEntityHeader_partner on Partner {
     }
     id
   }
+}
+
+fragment EntityTooltipPartner_partner on Partner {
+  ...EntityHeaderPartner_partner
+  href
+  profile {
+    bio
+    fullBio
+    image {
+      cropped(width: 260, height: 146, version: ["wide", "medium250x165"]) {
+        src
+        srcSet
+        width
+        height
+      }
+    }
+    id
+  }
+}
+
+fragment FollowProfileButton_profile on Profile {
+  id
+  slug
+  name
+  internalID
+  is_followed: isFollowed
 }
 */
 
@@ -398,12 +398,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fac6abe7e1f284948ab73322a2337ec6",
+    "cacheID": "3cf06e67282e749c92f2a22f4cecb29f",
     "id": null,
     "metadata": {},
     "name": "EntityTooltipPartnerQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipPartnerQuery(\n  $id: String!\n) {\n  partner(id: $id) {\n    ...EntityTooltipPartner_partner\n    id\n  }\n}\n\nfragment EntityTooltipPartner_partner on Partner {\n  ...PartnerEntityHeader_partner\n  href\n  profile {\n    bio\n    fullBio\n    image {\n      cropped(width: 260, height: 146, version: [\"wide\", \"medium250x165\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query EntityTooltipPartnerQuery(\n  $id: String!\n) {\n  partner(id: $id) {\n    ...EntityTooltipPartner_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityTooltipPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  href\n  profile {\n    bio\n    fullBio\n    image {\n      cropped(width: 260, height: 146, version: [\"wide\", \"medium250x165\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();

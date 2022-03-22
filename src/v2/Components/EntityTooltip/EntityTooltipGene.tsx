@@ -12,7 +12,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { EntityTooltipGeneQuery } from "v2/__generated__/EntityTooltipGeneQuery.graphql"
 import { EntityTooltipGene_gene } from "v2/__generated__/EntityTooltipGene_gene.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { GeneEntityHeaderFragmentContainer } from "../EntityHeaders/GeneEntityHeader"
+import { EntityHeaderGeneFragmentContainer } from "../EntityHeaders/EntityHeaderGene"
 
 interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene
@@ -37,7 +37,7 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
         </RouterLink>
       )}
 
-      <GeneEntityHeaderFragmentContainer
+      <EntityHeaderGeneFragmentContainer
         gene={gene}
         displayAvatar={false}
         alignItems="flex-start"
@@ -59,7 +59,7 @@ const EntityTooltipGeneFragmentContainer = createFragmentContainer(
   {
     gene: graphql`
       fragment EntityTooltipGene_gene on Gene {
-        ...GeneEntityHeader_gene
+        ...EntityHeaderGene_gene
         href
         description(format: PLAIN)
         image {

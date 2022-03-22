@@ -2,19 +2,19 @@ import { graphql } from "relay-runtime"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
-  GeneEntityHeaderFragmentContainer,
-  GeneEntityHeaderProps,
-} from "./GeneEntityHeader"
-import { PlaceholderEntityHeader } from "./PlaceholderEntityHeader"
-import { GeneEntityHeaderStoryQuery } from "v2/__generated__/GeneEntityHeaderStoryQuery.graphql"
+  EntityHeaderGeneFragmentContainer,
+  EntityHeaderGeneProps,
+} from "./EntityHeaderGene"
+import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
+import { EntityHeaderGeneStoryQuery } from "v2/__generated__/EntityHeaderGeneStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",
 }
 
-export const GeneEntityHeader = () => {
+export const EntityHeaderGene = () => {
   return (
-    <States<{ id: string } & Partial<Omit<GeneEntityHeaderProps, "gene">>>
+    <States<{ id: string } & Partial<Omit<EntityHeaderGeneProps, "gene">>>
       states={[
         { id: "painting" },
         { id: "globalization" },
@@ -26,13 +26,13 @@ export const GeneEntityHeader = () => {
     >
       {({ id, ...rest }) => {
         return (
-          <SystemQueryRenderer<GeneEntityHeaderStoryQuery>
+          <SystemQueryRenderer<EntityHeaderGeneStoryQuery>
             variables={{ id }}
-            placeholder={<PlaceholderEntityHeader />}
+            placeholder={<EntityHeaderPlaceholder />}
             query={graphql`
-              query GeneEntityHeaderStoryQuery($id: String!) {
+              query EntityHeaderGeneStoryQuery($id: String!) {
                 gene(id: $id) {
-                  ...GeneEntityHeader_gene
+                  ...EntityHeaderGene_gene
                 }
               }
             `}
@@ -43,11 +43,11 @@ export const GeneEntityHeader = () => {
               }
 
               if (!props?.gene) {
-                return <PlaceholderEntityHeader />
+                return <EntityHeaderPlaceholder />
               }
 
               return (
-                <GeneEntityHeaderFragmentContainer
+                <EntityHeaderGeneFragmentContainer
                   gene={props.gene}
                   {...rest}
                 />
@@ -60,6 +60,6 @@ export const GeneEntityHeader = () => {
   )
 }
 
-GeneEntityHeader.story = {
-  name: "GeneEntityHeader",
+EntityHeaderGene.story = {
+  name: "EntityHeaderGene",
 }

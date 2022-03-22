@@ -4,32 +4,32 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistEntityHeaderStoryQueryVariables = {
+export type EntityHeaderArtistStoryQueryVariables = {
     id: string;
 };
-export type ArtistEntityHeaderStoryQueryResponse = {
+export type EntityHeaderArtistStoryQueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistEntityHeader_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
     } | null;
 };
-export type ArtistEntityHeaderStoryQuery = {
-    readonly response: ArtistEntityHeaderStoryQueryResponse;
-    readonly variables: ArtistEntityHeaderStoryQueryVariables;
+export type EntityHeaderArtistStoryQuery = {
+    readonly response: EntityHeaderArtistStoryQueryResponse;
+    readonly variables: EntityHeaderArtistStoryQueryVariables;
 };
 
 
 
 /*
-query ArtistEntityHeaderStoryQuery(
+query EntityHeaderArtistStoryQuery(
   $id: String!
 ) {
   artist(id: $id) {
-    ...ArtistEntityHeader_artist
+    ...EntityHeaderArtist_artist
     id
   }
 }
 
-fragment ArtistEntityHeader_artist on Artist {
+fragment EntityHeaderArtist_artist on Artist {
   internalID
   href
   slug
@@ -69,7 +69,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistEntityHeaderStoryQuery",
+    "name": "EntityHeaderArtistStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -82,7 +82,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistEntityHeader_artist"
+            "name": "EntityHeaderArtist_artist"
           }
         ],
         "storageKey": null
@@ -95,7 +95,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistEntityHeaderStoryQuery",
+    "name": "EntityHeaderArtistStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -232,14 +232,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "04280482f5f520d8a05fed2fd37bfae2",
+    "cacheID": "e61d3f4901db276aac70d4f2170f38f0",
     "id": null,
     "metadata": {},
-    "name": "ArtistEntityHeaderStoryQuery",
+    "name": "EntityHeaderArtistStoryQuery",
     "operationKind": "query",
-    "text": "query ArtistEntityHeaderStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistEntityHeader_artist\n    id\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query EntityHeaderArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd150ee546e11688c2c528961f2251145';
+(node as any).hash = 'dda62c1ab2833db57baf26b1d8d107cc';
 export default node;

@@ -12,7 +12,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { EntityTooltipPartnerQuery } from "v2/__generated__/EntityTooltipPartnerQuery.graphql"
 import { EntityTooltipPartner_partner } from "v2/__generated__/EntityTooltipPartner_partner.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { PartnerEntityHeaderFragmentContainer } from "../EntityHeaders/PartnerEntityHeader"
+import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 
 interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner
@@ -38,7 +38,7 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
         </RouterLink>
       )}
 
-      <PartnerEntityHeaderFragmentContainer
+      <EntityHeaderPartnerFragmentContainer
         partner={partner}
         displayAvatar={false}
         alignItems="flex-start"
@@ -65,7 +65,7 @@ const EntityTooltipPartnerFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment EntityTooltipPartner_partner on Partner {
-        ...PartnerEntityHeader_partner
+        ...EntityHeaderPartner_partner
         href
         profile {
           bio

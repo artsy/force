@@ -3,18 +3,18 @@ import { Avatar, BoxProps, Text, Flex } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ArtistEntityHeader_artist } from "v2/__generated__/ArtistEntityHeader_artist.graphql"
+import { EntityHeaderArtist_artist } from "v2/__generated__/EntityHeaderArtist_artist.graphql"
 import { FollowArtistButtonQueryRenderer } from "../FollowButton/FollowArtistButton"
 
-export interface ArtistEntityHeaderProps extends BoxProps {
-  artist: ArtistEntityHeader_artist
+export interface EntityHeaderArtistProps extends BoxProps {
+  artist: EntityHeaderArtist_artist
   displayAvatar?: boolean
   displayCounts?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
 }
 
-const ArtistEntityHeader: FC<ArtistEntityHeaderProps> = ({
+const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
   artist,
   displayAvatar = true,
   displayCounts = false,
@@ -76,11 +76,11 @@ const ArtistEntityHeader: FC<ArtistEntityHeaderProps> = ({
   )
 }
 
-export const ArtistEntityHeaderFragmentContainer = createFragmentContainer(
-  ArtistEntityHeader,
+export const EntityHeaderArtistFragmentContainer = createFragmentContainer(
+  EntityHeaderArtist,
   {
     artist: graphql`
-      fragment ArtistEntityHeader_artist on Artist {
+      fragment EntityHeaderArtist_artist on Artist {
         internalID
         href
         slug

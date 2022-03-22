@@ -4,40 +4,32 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type GeneEntityHeaderStoryQueryVariables = {
+export type EntityHeaderGeneStoryQueryVariables = {
     id: string;
 };
-export type GeneEntityHeaderStoryQueryResponse = {
+export type EntityHeaderGeneStoryQueryResponse = {
     readonly gene: {
-        readonly " $fragmentRefs": FragmentRefs<"GeneEntityHeader_gene">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
     } | null;
 };
-export type GeneEntityHeaderStoryQuery = {
-    readonly response: GeneEntityHeaderStoryQueryResponse;
-    readonly variables: GeneEntityHeaderStoryQueryVariables;
+export type EntityHeaderGeneStoryQuery = {
+    readonly response: EntityHeaderGeneStoryQueryResponse;
+    readonly variables: EntityHeaderGeneStoryQueryVariables;
 };
 
 
 
 /*
-query GeneEntityHeaderStoryQuery(
+query EntityHeaderGeneStoryQuery(
   $id: String!
 ) {
   gene(id: $id) {
-    ...GeneEntityHeader_gene
+    ...EntityHeaderGene_gene
     id
   }
 }
 
-fragment FollowGeneButton_gene on Gene {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment GeneEntityHeader_gene on Gene {
+fragment EntityHeaderGene_gene on Gene {
   ...FollowGeneButton_gene
   internalID
   href
@@ -54,6 +46,14 @@ fragment GeneEntityHeader_gene on Gene {
     }
     id
   }
+}
+
+fragment FollowGeneButton_gene on Gene {
+  id
+  slug
+  name
+  internalID
+  isFollowed
 }
 */
 
@@ -84,7 +84,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "GeneEntityHeaderStoryQuery",
+    "name": "EntityHeaderGeneStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -97,7 +97,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "GeneEntityHeader_gene"
+            "name": "EntityHeaderGene_gene"
           }
         ],
         "storageKey": null
@@ -110,7 +110,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "GeneEntityHeaderStoryQuery",
+    "name": "EntityHeaderGeneStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -253,14 +253,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7e6686d25bef38ca09e937355240ec98",
+    "cacheID": "4ba967064bce8d7607449106b38e21b1",
     "id": null,
     "metadata": {},
-    "name": "GeneEntityHeaderStoryQuery",
+    "name": "EntityHeaderGeneStoryQuery",
     "operationKind": "query",
-    "text": "query GeneEntityHeaderStoryQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...GeneEntityHeader_gene\n    id\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment GeneEntityHeader_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query EntityHeaderGeneStoryQuery(\n  $id: String!\n) {\n  gene(id: $id) {\n    ...EntityHeaderGene_gene\n    id\n  }\n}\n\nfragment EntityHeaderGene_gene on Gene {\n  ...FollowGeneButton_gene\n  internalID\n  href\n  name\n  avatar: image {\n    cropped(width: 45, height: 45, version: [\"big_and_tall\", \"tall\"]) {\n      src\n      srcSet\n    }\n  }\n  filterArtworksConnection(first: 1) {\n    counts {\n      total\n    }\n    id\n  }\n}\n\nfragment FollowGeneButton_gene on Gene {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = '399b25f48c1cf121a67de450c02dcc23';
+(node as any).hash = '7e9ecbfe74212e88f0c22eb76b43d2b1';
 export default node;

@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairEntityHeader_fair = {
+export type EntityHeaderFair_fair = {
     readonly internalID: string;
     readonly href: string | null;
     readonly name: string | null;
@@ -20,12 +20,12 @@ export type FairEntityHeader_fair = {
         readonly initials: string | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $refType": "FairEntityHeader_fair";
+    readonly " $refType": "EntityHeaderFair_fair";
 };
-export type FairEntityHeader_fair$data = FairEntityHeader_fair;
-export type FairEntityHeader_fair$key = {
-    readonly " $data"?: FairEntityHeader_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEntityHeader_fair">;
+export type EntityHeaderFair_fair$data = EntityHeaderFair_fair;
+export type EntityHeaderFair_fair$key = {
+    readonly " $data"?: EntityHeaderFair_fair$data;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
 };
 
 
@@ -34,7 +34,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairEntityHeader_fair",
+  "name": "EntityHeaderFair_fair",
   "selections": [
     {
       "alias": null,
@@ -157,5 +157,5 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = 'cdddfdd53e178b3bcbfd92d7fe7b5062';
+(node as any).hash = 'e4e1a33d028f86d9efa0f3b80e0458cc';
 export default node;

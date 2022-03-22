@@ -4,40 +4,32 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PartnerEntityHeaderStoryQueryVariables = {
+export type EntityHeaderPartnerStoryQueryVariables = {
     id: string;
 };
-export type PartnerEntityHeaderStoryQueryResponse = {
+export type EntityHeaderPartnerStoryQueryResponse = {
     readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerEntityHeader_partner">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     } | null;
 };
-export type PartnerEntityHeaderStoryQuery = {
-    readonly response: PartnerEntityHeaderStoryQueryResponse;
-    readonly variables: PartnerEntityHeaderStoryQueryVariables;
+export type EntityHeaderPartnerStoryQuery = {
+    readonly response: EntityHeaderPartnerStoryQueryResponse;
+    readonly variables: EntityHeaderPartnerStoryQueryVariables;
 };
 
 
 
 /*
-query PartnerEntityHeaderStoryQuery(
+query EntityHeaderPartnerStoryQuery(
   $id: String!
 ) {
   partner(id: $id) {
-    ...PartnerEntityHeader_partner
+    ...EntityHeaderPartner_partner
     id
   }
 }
 
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  is_followed: isFollowed
-}
-
-fragment PartnerEntityHeader_partner on Partner {
+fragment EntityHeaderPartner_partner on Partner {
   internalID
   slug
   href
@@ -66,6 +58,14 @@ fragment PartnerEntityHeader_partner on Partner {
     }
     id
   }
+}
+
+fragment FollowProfileButton_profile on Profile {
+  id
+  slug
+  name
+  internalID
+  is_followed: isFollowed
 }
 */
 
@@ -117,7 +117,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PartnerEntityHeaderStoryQuery",
+    "name": "EntityHeaderPartnerStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -130,7 +130,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PartnerEntityHeader_partner"
+            "name": "EntityHeaderPartner_partner"
           }
         ],
         "storageKey": null
@@ -143,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PartnerEntityHeaderStoryQuery",
+    "name": "EntityHeaderPartnerStoryQuery",
     "selections": [
       {
         "alias": null,
@@ -307,14 +307,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "86306ace2da9f462854e04605468784d",
+    "cacheID": "cb976dbcead4a26e291b5a1352e383d2",
     "id": null,
     "metadata": {},
-    "name": "PartnerEntityHeaderStoryQuery",
+    "name": "EntityHeaderPartnerStoryQuery",
     "operationKind": "query",
-    "text": "query PartnerEntityHeaderStoryQuery(\n  $id: String!\n) {\n  partner(id: $id) {\n    ...PartnerEntityHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query EntityHeaderPartnerStoryQuery(\n  $id: String!\n) {\n  partner(id: $id) {\n    ...EntityHeaderPartner_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'f259f183f3f7bab107226d664f69b914';
+(node as any).hash = 'b673831def60d8c87e59728eced8043f';
 export default node;

@@ -18,7 +18,7 @@ export type EntityTooltipPartner_partner = {
             } | null;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerEntityHeader_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     readonly " $refType": "EntityTooltipPartner_partner";
 };
 export type EntityTooltipPartner_partner$data = EntityTooltipPartner_partner;
@@ -139,11 +139,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PartnerEntityHeader_partner"
+      "name": "EntityHeaderPartner_partner"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'a8c9d2bb11aaa347303414924450f92a';
+(node as any).hash = '82bb31bb03b675a6c87f8734d20e1534';
 export default node;

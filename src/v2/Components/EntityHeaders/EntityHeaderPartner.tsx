@@ -7,19 +7,19 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { PartnerEntityHeader_partner } from "v2/__generated__/PartnerEntityHeader_partner.graphql"
+import { EntityHeaderPartner_partner } from "v2/__generated__/EntityHeaderPartner_partner.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
 const DISPLAYABLE_BADGES = ["black-owned"]
 
-export interface PartnerEntityHeaderProps extends BoxProps {
-  partner: PartnerEntityHeader_partner
+export interface EntityHeaderPartnerProps extends BoxProps {
+  partner: EntityHeaderPartner_partner
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
 }
 
-const PartnerEntityHeader: FC<PartnerEntityHeaderProps> = ({
+const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
   partner,
   displayAvatar = true,
   displayLink = true,
@@ -91,11 +91,11 @@ const PartnerEntityHeader: FC<PartnerEntityHeaderProps> = ({
   )
 }
 
-export const PartnerEntityHeaderFragmentContainer = createFragmentContainer(
-  PartnerEntityHeader,
+export const EntityHeaderPartnerFragmentContainer = createFragmentContainer(
+  EntityHeaderPartner,
   {
     partner: graphql`
-      fragment PartnerEntityHeader_partner on Partner {
+      fragment EntityHeaderPartner_partner on Partner {
         internalID
         slug
         href

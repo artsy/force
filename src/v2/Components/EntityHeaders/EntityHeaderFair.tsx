@@ -1,21 +1,21 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Text, BoxProps, Flex, Avatar } from "@artsy/palette"
+import { BoxProps, Flex, Text, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { FairOrganizerEntityHeader_fairOrganizer } from "v2/__generated__/FairOrganizerEntityHeader_fairOrganizer.graphql"
+import { EntityHeaderFair_fair } from "v2/__generated__/EntityHeaderFair_fair.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
-export interface FairOrganizerEntityHeaderProps extends BoxProps {
-  fairOrganizer: FairOrganizerEntityHeader_fairOrganizer
+export interface EntityHeaderFairProps extends BoxProps {
+  fair: EntityHeaderFair_fair
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
 }
 
-const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
-  fairOrganizer,
+const EntityHeaderFair: FC<EntityHeaderFairProps> = ({
+  fair,
   displayAvatar = true,
   displayLink = true,
   FollowButton,
@@ -23,11 +23,9 @@ const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
 }) => {
   const { user } = useSystemContext()
 
-  const initials = fairOrganizer.profile?.initials ?? fairOrganizer.name?.[0]
-  const image = fairOrganizer.profile?.avatar?.cropped
-  const totalCount = fairOrganizer.fairsConnection?.totalCount ?? 0
-  const meta =
-    totalCount > 0 ? `${totalCount} Fair${totalCount === 1 ? "" : "s"}` : ""
+  const image = fair?.avatar?.cropped
+  const meta = [fair.startAt, fair.endAt].filter(Boolean).join(" – ")
+  const initials = fair.profile?.initials ?? fair.name?.[0]
 
   return (
     <Flex
@@ -37,12 +35,8 @@ const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
       {...rest}
     >
       <Flex
-        {...(displayLink && fairOrganizer.profile?.href
-          ? {
-              as: RouterLink,
-              to: fairOrganizer.profile?.href,
-              textDecoration: "none",
-            }
+        {...(displayLink
+          ? { as: RouterLink, to: fair.href, textDecoration: "none" }
           : {})}
         display="flex"
         alignItems="center"
@@ -55,7 +49,7 @@ const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
 
         <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
           <Text variant="md" lineClamp={2}>
-            {fairOrganizer.name}
+            {fair.name}
           </Text>
 
           {meta && (
@@ -69,7 +63,7 @@ const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
       {FollowButton || (
         <FollowProfileButtonFragmentContainer
           user={user}
-          profile={fairOrganizer.profile!}
+          profile={fair.profile!}
           contextModule={ContextModule.fairsHeader}
           buttonProps={{ size: "small", variant: "secondaryOutline" }}
         />
@@ -78,27 +72,25 @@ const FairOrganizerEntityHeader: FC<FairOrganizerEntityHeaderProps> = ({
   )
 }
 
-export const FairOrganizerEntityHeaderFragmentContainer = createFragmentContainer(
-  FairOrganizerEntityHeader,
+export const EntityHeaderFairFragmentContainer = createFragmentContainer(
+  EntityHeaderFair,
   {
-    fairOrganizer: graphql`
-      fragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {
+    fair: graphql`
+      fragment EntityHeaderFair_fair on Fair {
         internalID
-        slug
+        href
         name
-        fairsConnection {
-          totalCount
+        startAt(format: "MMM Do")
+        endAt(format: "MMM Do YYYY")
+        avatar: image {
+          cropped(width: 45, height: 45) {
+            src
+            srcSet
+          }
         }
         profile {
           ...FollowProfileButton_profile
-          href
           initials
-          avatar: image {
-            cropped(width: 45, height: 45) {
-              src
-              srcSet
-            }
-          }
         }
       }
     `,

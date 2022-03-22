@@ -29,7 +29,7 @@ query EntityTooltipArtistQuery(
   }
 }
 
-fragment ArtistEntityHeader_artist on Artist {
+fragment EntityHeaderArtist_artist on Artist {
   internalID
   href
   slug
@@ -49,7 +49,7 @@ fragment ArtistEntityHeader_artist on Artist {
 }
 
 fragment EntityTooltipArtist_artist on Artist {
-  ...ArtistEntityHeader_artist
+  ...EntityHeaderArtist_artist
   href
   blurb(format: PLAIN)
   carousel {
@@ -318,12 +318,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1f300a0a57bfb80145c8fbb8afa674a3",
+    "cacheID": "c1fde7f74fd0976dfe0ffe76837d7a0e",
     "id": null,
     "metadata": {},
     "name": "EntityTooltipArtistQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...ArtistEntityHeader_artist\n  href\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n"
+    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n"
   }
 };
 })();

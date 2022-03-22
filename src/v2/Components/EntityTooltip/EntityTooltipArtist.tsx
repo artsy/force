@@ -15,7 +15,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { EntityTooltipArtistQuery } from "v2/__generated__/EntityTooltipArtistQuery.graphql"
 import { EntityTooltipArtist_artist } from "v2/__generated__/EntityTooltipArtist_artist.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ArtistEntityHeaderFragmentContainer } from "../EntityHeaders/ArtistEntityHeader"
+import { EntityHeaderArtistFragmentContainer } from "../EntityHeaders/EntityHeaderArtist"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist
@@ -49,7 +49,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
         </RouterLink>
       )}
 
-      <ArtistEntityHeaderFragmentContainer
+      <EntityHeaderArtistFragmentContainer
         artist={artist}
         displayAvatar={false}
         alignItems="flex-start"
@@ -76,7 +76,7 @@ const EntityTooltipArtistFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment EntityTooltipArtist_artist on Artist {
-        ...ArtistEntityHeader_artist
+        ...EntityHeaderArtist_artist
         href
         blurb(format: PLAIN)
         carousel {

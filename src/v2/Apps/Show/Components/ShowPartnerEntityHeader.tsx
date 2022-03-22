@@ -8,11 +8,11 @@ import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { ShowPartnerEntityHeader_partner } from "v2/__generated__/ShowPartnerEntityHeader_partner.graphql"
 
-interface ShowPartnerEntityHeaderProps {
+interface ShowEntityHeaderPartnerProps {
   partner: ShowPartnerEntityHeader_partner
 }
 
-const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
+const ShowEntityHeaderPartner: React.FC<ShowEntityHeaderPartnerProps> = ({
   partner,
 }) => {
   const { user } = useSystemContext()
@@ -57,7 +57,7 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
 }
 
 export const ShowPartnerEntityHeaderFragmentContainer = createFragmentContainer(
-  ShowPartnerEntityHeader,
+  ShowEntityHeaderPartner,
   {
     partner: graphql`
       fragment ShowPartnerEntityHeader_partner on Partner {

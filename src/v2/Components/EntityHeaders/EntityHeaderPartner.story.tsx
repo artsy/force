@@ -2,19 +2,19 @@ import { graphql } from "relay-runtime"
 import { States } from "storybook-states"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
-  PartnerEntityHeaderFragmentContainer,
-  PartnerEntityHeaderProps,
-} from "./PartnerEntityHeader"
-import { PlaceholderEntityHeader } from "./PlaceholderEntityHeader"
-import { PartnerEntityHeaderStoryQuery } from "v2/__generated__/PartnerEntityHeaderStoryQuery.graphql"
+  EntityHeaderPartnerFragmentContainer,
+  EntityHeaderPartnerProps,
+} from "./EntityHeaderPartner"
+import { EntityHeaderPlaceholder } from "./EntityHeaderPlaceholder"
+import { EntityHeaderPartnerStoryQuery } from "v2/__generated__/EntityHeaderPartnerStoryQuery.graphql"
 
 export default {
   title: "Components/EntityHeader",
 }
 
-export const PartnerEntityHeader = () => {
+export const EntityHeaderPartner = () => {
   return (
-    <States<{ id: string } & Partial<Omit<PartnerEntityHeaderProps, "partner">>>
+    <States<{ id: string } & Partial<Omit<EntityHeaderPartnerProps, "partner">>>
       states={[
         { id: "gagosian" },
         { id: "jtt-gallery" },
@@ -26,13 +26,13 @@ export const PartnerEntityHeader = () => {
     >
       {({ id, ...rest }) => {
         return (
-          <SystemQueryRenderer<PartnerEntityHeaderStoryQuery>
+          <SystemQueryRenderer<EntityHeaderPartnerStoryQuery>
             variables={{ id }}
-            placeholder={<PlaceholderEntityHeader />}
+            placeholder={<EntityHeaderPlaceholder />}
             query={graphql`
-              query PartnerEntityHeaderStoryQuery($id: String!) {
+              query EntityHeaderPartnerStoryQuery($id: String!) {
                 partner(id: $id) {
-                  ...PartnerEntityHeader_partner
+                  ...EntityHeaderPartner_partner
                 }
               }
             `}
@@ -43,11 +43,11 @@ export const PartnerEntityHeader = () => {
               }
 
               if (!props?.partner) {
-                return <PlaceholderEntityHeader />
+                return <EntityHeaderPlaceholder />
               }
 
               return (
-                <PartnerEntityHeaderFragmentContainer
+                <EntityHeaderPartnerFragmentContainer
                   partner={props.partner}
                   {...rest}
                 />
@@ -60,6 +60,6 @@ export const PartnerEntityHeader = () => {
   )
 }
 
-PartnerEntityHeader.story = {
-  name: "PartnerEntityHeader",
+EntityHeaderPartner.story = {
+  name: "EntityHeaderPartner",
 }

@@ -15,7 +15,7 @@ export type EntityTooltipGene_gene = {
             readonly width: number;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"GeneEntityHeader_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
     readonly " $refType": "EntityTooltipGene_gene";
 };
 export type EntityTooltipGene_gene$data = EntityTooltipGene_gene;
@@ -124,11 +124,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "GeneEntityHeader_gene"
+      "name": "EntityHeaderGene_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'a9d626b93c7269b47824240a788cd43a';
+(node as any).hash = '599deba5f6a9cd75d515f99fe51e0151';
 export default node;

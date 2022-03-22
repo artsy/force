@@ -25,7 +25,18 @@ query ArtistsArtistCard_Test_Query {
   }
 }
 
-fragment ArtistEntityHeader_artist on Artist {
+fragment ArtistsArtistCard_artist on Artist {
+  ...EntityHeaderArtist_artist
+  href
+  image {
+    thumb: cropped(width: 445, height: 334) {
+      src
+      srcSet
+    }
+  }
+}
+
+fragment EntityHeaderArtist_artist on Artist {
   internalID
   href
   slug
@@ -38,17 +49,6 @@ fragment ArtistEntityHeader_artist on Artist {
   }
   avatar: image {
     cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ArtistsArtistCard_artist on Artist {
-  ...ArtistEntityHeader_artist
-  href
-  image {
-    thumb: cropped(width: 445, height: 334) {
       src
       srcSet
     }
@@ -301,7 +301,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c7530873db36b9352f9236bcb7a6d2c7",
+    "cacheID": "00d11d5784e15f42ade6233e98b1cbf9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -338,7 +338,7 @@ return {
     },
     "name": "ArtistsArtistCard_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistsArtistCard_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistsArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistEntityHeader_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...ArtistEntityHeader_artist\n  href\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistsArtistCard_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistsArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

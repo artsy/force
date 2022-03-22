@@ -17,7 +17,7 @@ export type EntityTooltipArtist_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistEntityHeader_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
     readonly " $refType": "EntityTooltipArtist_artist";
 };
 export type EntityTooltipArtist_artist$data = EntityTooltipArtist_artist;
@@ -124,11 +124,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistEntityHeader_artist"
+      "name": "EntityHeaderArtist_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '695b844fec34cd116c8715ae5d8eda99';
+(node as any).hash = '04adc27765f3888ecb9699bed4bd430d';
 export default node;
