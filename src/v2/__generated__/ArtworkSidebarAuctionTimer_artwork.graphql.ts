@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarAuctionInfoPolling_artwork = {
+export type ArtworkSidebarAuctionTimer_artwork = {
     readonly internalID: string;
     readonly sale: {
         readonly cascadingEndTimeInterval: number | null;
@@ -14,18 +14,14 @@ export type ArtworkSidebarAuctionInfoPolling_artwork = {
     } | null;
     readonly saleArtwork: {
         readonly endAt: string | null;
-        readonly currentBid: {
-            readonly display: string | null;
-        } | null;
         readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCurrentBidInfo_artwork" | "ArtworkSidebarBidAction_artwork" | "ArtworkSidebarAuctionTimer_artwork">;
-    readonly " $refType": "ArtworkSidebarAuctionInfoPolling_artwork";
+    readonly " $refType": "ArtworkSidebarAuctionTimer_artwork";
 };
-export type ArtworkSidebarAuctionInfoPolling_artwork$data = ArtworkSidebarAuctionInfoPolling_artwork;
-export type ArtworkSidebarAuctionInfoPolling_artwork$key = {
-    readonly " $data"?: ArtworkSidebarAuctionInfoPolling_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_artwork">;
+export type ArtworkSidebarAuctionTimer_artwork$data = ArtworkSidebarAuctionTimer_artwork;
+export type ArtworkSidebarAuctionTimer_artwork$key = {
+    readonly " $data"?: ArtworkSidebarAuctionTimer_artwork$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionTimer_artwork">;
 };
 
 
@@ -34,7 +30,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkSidebarAuctionInfoPolling_artwork",
+  "name": "ArtworkSidebarAuctionTimer_artwork",
   "selections": [
     {
       "alias": null,
@@ -96,49 +92,16 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "SaleArtworkCurrentBid",
-          "kind": "LinkedField",
-          "name": "currentBid",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "display",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "LotTimer_saleArtwork"
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCurrentBidInfo_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarBidAction_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarAuctionTimer_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ab6eceb615b0e06e670e2cf211f3c773';
+(node as any).hash = 'ea53465d946b8344557431358c7067f7';
 export default node;

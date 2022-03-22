@@ -6,15 +6,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork = {
     readonly is_in_auction: boolean | null;
-    readonly sale: {
-        readonly cascadingEndTimeInterval: number | null;
-        readonly is_closed: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
-    } | null;
-    readonly saleArtwork: {
-        readonly endedAt: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
-    } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork">;
     readonly " $refType": "ArtworkSidebar_artwork";
 };
@@ -37,59 +28,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Sale",
-      "kind": "LinkedField",
-      "name": "sale",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cascadingEndTimeInterval",
-          "storageKey": null
-        },
-        {
-          "alias": "is_closed",
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isClosed",
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "AuctionTimer_sale"
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "SaleArtwork",
-      "kind": "LinkedField",
-      "name": "saleArtwork",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "endedAt",
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "LotTimer_saleArtwork"
-        }
-      ],
       "storageKey": null
     },
     {
@@ -156,5 +94,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '8e5eb358f471911963e5782c6ec3f81e';
+(node as any).hash = 'f2fad6904afdf3343fda4250e8f83d86';
 export default node;

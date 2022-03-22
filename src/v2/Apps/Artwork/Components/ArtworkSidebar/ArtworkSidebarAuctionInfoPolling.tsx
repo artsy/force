@@ -1,11 +1,16 @@
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArtworkSidebarBidActionFragmentContainer } from "./ArtworkSidebarBidAction"
-import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "./ArtworkSidebarCurrentBidInfo"
+import {
+  ArtworkSidebarCurrentBidInfoFragmentContainer,
+  BiddingClosedMessage,
+} from "./ArtworkSidebarCurrentBidInfo"
 import { ArtworkSidebarAuctionInfoPolling_artwork } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_artwork.graphql"
 import { ArtworkSidebarAuctionInfoPolling_me } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "v2/Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
+import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
 
 type Props = {
   artwork: ArtworkSidebarAuctionInfoPolling_artwork
@@ -48,6 +53,17 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
     clearWhen: isClosed,
   })
 
+  // If we have info about the lot end time, use that to render
+  // closed state immediately, vs. relying on polling.
+  const endAt = saleArtwork?.endAt
+  const startAt = sale?.startAt
+
+  const { hasEnded } = useTimer(endAt!, startAt!)
+
+  if (hasEnded) {
+    return <BiddingClosedMessage />
+  }
+
   return (
     <>
       <ArtworkSidebarCurrentBidInfoFragmentContainer
@@ -55,6 +71,8 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
         artwork={artwork}
       />
       <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
+
+      <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
     </>
   )
 }
@@ -66,15 +84,21 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
       fragment ArtworkSidebarAuctionInfoPolling_artwork on Artwork {
         internalID
         sale {
+          cascadingEndTimeInterval
           isClosed
+          ...AuctionTimer_sale
+          startAt
         }
         saleArtwork {
+          ...LotTimer_saleArtwork
+          endAt
           currentBid {
             display
           }
         }
         ...ArtworkSidebarCurrentBidInfo_artwork
         ...ArtworkSidebarBidAction_artwork
+        ...ArtworkSidebarAuctionTimer_artwork
       }
     `,
     me: graphql`
