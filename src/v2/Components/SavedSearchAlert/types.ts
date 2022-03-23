@@ -46,7 +46,7 @@ export type FilterPill = {
   isDefault?: boolean
   value: string
   label: string
-  filterName: string
+  field: string
 }
 
 export interface SavedSearchAleftFormValues {

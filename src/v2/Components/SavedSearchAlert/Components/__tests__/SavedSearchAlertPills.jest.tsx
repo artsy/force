@@ -7,12 +7,12 @@ import {
 
 const items: FilterPill[] = [
   {
-    filterName: "colors",
+    field: "colors",
     value: "red",
     label: "Red",
   },
   {
-    filterName: "attributionClass",
+    field: "attributionClass",
     value: "open-edition",
     label: "Open Edition",
   },
@@ -43,7 +43,7 @@ describe("SavedSearchAlertPills", () => {
     fireEvent.click(screen.getByText("Red"))
 
     expect(onDeletePressMock).toBeCalledWith({
-      filterName: "colors",
+      field: "colors",
       value: "red",
       label: "Red",
     })

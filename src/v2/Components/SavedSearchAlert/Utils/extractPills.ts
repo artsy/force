@@ -38,7 +38,7 @@ export const extractPillFromAggregation = (
     return (paramValue as string[]).map(value => ({
       value,
       label: aggregationByValue[value]?.name ?? "",
-      filterName: paramName,
+      field: paramName,
     }))
   }
 
@@ -107,7 +107,7 @@ export const extractPillsFromCriteria = ({
     if (paramName in WAYS_TO_BUY_OPTIONS) {
       return (
         paramValue && {
-          filterName: paramName,
+          field: paramName,
           value: paramName,
           label: WAYS_TO_BUY_OPTIONS[paramName].name,
         }
@@ -119,7 +119,7 @@ export const extractPillsFromCriteria = ({
       case "height": {
         if (paramValue && isCustomValue(paramValue)) {
           result = {
-            filterName: paramName,
+            field: paramName,
             value: paramValue,
             label: extractSizeLabel({
               prefix: paramName[0],
@@ -136,7 +136,7 @@ export const extractPillsFromCriteria = ({
           const sizeItem = find(SIZES, option => value === option.name)
 
           return {
-            filterName: paramName,
+            field: paramName,
             value,
             label: sizeItem?.displayName,
           }
@@ -145,7 +145,7 @@ export const extractPillsFromCriteria = ({
       }
       case "colors": {
         result = paramValue.map(value => ({
-          filterName: paramName,
+          field: paramName,
           value,
           label: find(COLOR_OPTIONS, option => value === option.value)?.name,
         }))
@@ -153,7 +153,7 @@ export const extractPillsFromCriteria = ({
       }
       case "attributionClass": {
         result = paramValue.map(value => ({
-          filterName: paramName,
+          field: paramName,
           value,
           label: find(checkboxValues, option => value === option.value)?.name,
         }))
@@ -161,7 +161,7 @@ export const extractPillsFromCriteria = ({
       }
       case "majorPeriods": {
         result = paramValue.map(value => ({
-          filterName: paramName,
+          field: paramName,
           value,
           label: getTimePeriodToDisplay(value),
         }))
@@ -170,7 +170,7 @@ export const extractPillsFromCriteria = ({
       case "priceRange": {
         if (paramValue && isCustomValue(paramValue)) {
           result = {
-            filterName: paramName,
+            field: paramName,
             value: paramValue,
             label: extractPriceLabel(paramValue),
           }
@@ -195,7 +195,7 @@ export const extractArtistPills = (
       isDefault: true,
       value: artist.id,
       label: artist.name,
-      filterName: "artistIDs",
+      field: "artistIDs",
     }
   })
 }
