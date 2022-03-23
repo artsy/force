@@ -31,6 +31,7 @@ export type PartnerCell_partner = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     readonly " $refType": "PartnerCell_partner";
 };
 export type PartnerCell_partner$data = PartnerCell_partner;
@@ -223,11 +224,16 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderPartner_partner"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
 })();
-(node as any).hash = '37bc5578f1f7d7a47d392d11bb2b4acc';
+(node as any).hash = 'cd30a7469ab33b0f2a970ab81899bbf5';
 export default node;

@@ -29,9 +29,30 @@ query SettingsSavesProfilesQuery(
   }
 }
 
-fragment FairEntityHeader_fair on Fair {
+fragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {
   internalID
   slug
+  name
+  fairsConnection {
+    totalCount
+  }
+  profile {
+    ...FollowProfileButton_profile
+    href
+    initials
+    avatar: image {
+      cropped(width: 45, height: 45) {
+        src
+        srcSet
+      }
+    }
+    id
+  }
+}
+
+fragment EntityHeaderFair_fair on Fair {
+  internalID
+  href
   name
   startAt(format: "MMM Do")
   endAt(format: "MMM Do YYYY")
@@ -43,25 +64,41 @@ fragment FairEntityHeader_fair on Fair {
   }
   profile {
     ...FollowProfileButton_profile
-    isFollowed
     initials
     id
   }
 }
 
-fragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {
+fragment EntityHeaderPartner_partner on Partner {
   internalID
+  type
   slug
+  href
   name
-  fairsConnection {
-    totalCount
+  initials
+  locationsConnection(first: 15) {
+    edges {
+      node {
+        city
+        id
+      }
+    }
+  }
+  categories {
+    name
+    slug
+    id
   }
   profile {
     ...FollowProfileButton_profile
-    isFollowed
-    initials
     avatar: image {
       cropped(width: 45, height: 45) {
+        src
+        srcSet
+      }
+    }
+    icon {
+      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
         src
         srcSet
       }
@@ -76,32 +113,6 @@ fragment FollowProfileButton_profile on Profile {
   name
   internalID
   is_followed: isFollowed
-}
-
-fragment PartnerEntityHeader_partner on Partner {
-  internalID
-  slug
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  profile {
-    ...FollowProfileButton_profile
-    isFollowed
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
 }
 
 fragment SettingsSavesProfiles_me_WGPvJ on Me {
@@ -123,13 +134,13 @@ fragment SettingsSavesProfiles_me_WGPvJ on Me {
             owner {
               __typename
               ... on Partner {
-                ...PartnerEntityHeader_partner
+                ...EntityHeaderPartner_partner
               }
               ... on Fair {
-                ...FairEntityHeader_fair
+                ...EntityHeaderFair_fair
               }
               ... on FairOrganizer {
-                ...FairOrganizerEntityHeader_fairOrganizer
+                ...EntityHeaderFairOrganizer_fairOrganizer
                 id
               }
               ... on Node {
@@ -196,6 +207,39 @@ v5 = {
   "storageKey": null
 },
 v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v7 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 45
+},
+v8 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 45
+},
+v9 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v10 = {
   "alias": "avatar",
   "args": null,
   "concreteType": "Image",
@@ -206,79 +250,49 @@ v6 = {
     {
       "alias": null,
       "args": [
-        {
-          "kind": "Literal",
-          "name": "height",
-          "value": 45
-        },
-        {
-          "kind": "Literal",
-          "name": "width",
-          "value": 45
-        }
+        (v7/*: any*/),
+        (v8/*: any*/)
       ],
       "concreteType": "CroppedImageUrl",
       "kind": "LinkedField",
       "name": "cropped",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "src",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "srcSet",
-          "storageKey": null
-        }
-      ],
+      "selections": (v9/*: any*/),
       "storageKey": "cropped(height:45,width:45)"
     }
   ],
   "storageKey": null
 },
-v7 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v8 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v9 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "initials",
   "storageKey": null
 },
-v10 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v11 = {
+v15 = {
   "alias": "is_followed",
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isFollowed",
-  "storageKey": null
-},
-v12 = {
-  "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isFollowed",
@@ -370,14 +384,8 @@ return {
                             "plural": false,
                             "selections": [
                               (v5/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "href",
-                                "storageKey": null
-                              },
                               (v6/*: any*/),
+                              (v10/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -386,14 +394,22 @@ return {
                                 "name": "owner",
                                 "plural": false,
                                 "selections": [
-                                  (v7/*: any*/),
+                                  (v11/*: any*/),
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v8/*: any*/),
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "type",
+                                        "storageKey": null
+                                      },
+                                      (v12/*: any*/),
+                                      (v6/*: any*/),
                                       (v5/*: any*/),
-                                      (v9/*: any*/),
+                                      (v13/*: any*/),
                                       {
                                         "alias": null,
                                         "args": [
@@ -431,7 +447,7 @@ return {
                                                     "name": "city",
                                                     "storageKey": null
                                                   },
-                                                  (v10/*: any*/)
+                                                  (v14/*: any*/)
                                                 ],
                                                 "storageKey": null
                                               }
@@ -444,18 +460,64 @@ return {
                                       {
                                         "alias": null,
                                         "args": null,
+                                        "concreteType": "PartnerCategory",
+                                        "kind": "LinkedField",
+                                        "name": "categories",
+                                        "plural": true,
+                                        "selections": [
+                                          (v5/*: any*/),
+                                          (v12/*: any*/),
+                                          (v14/*: any*/)
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
                                         "concreteType": "Profile",
                                         "kind": "LinkedField",
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
-                                          (v8/*: any*/),
+                                          (v14/*: any*/),
+                                          (v12/*: any*/),
                                           (v5/*: any*/),
                                           (v4/*: any*/),
-                                          (v11/*: any*/),
-                                          (v12/*: any*/),
-                                          (v6/*: any*/)
+                                          (v15/*: any*/),
+                                          (v10/*: any*/),
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "concreteType": "Image",
+                                            "kind": "LinkedField",
+                                            "name": "icon",
+                                            "plural": false,
+                                            "selections": [
+                                              {
+                                                "alias": null,
+                                                "args": [
+                                                  (v7/*: any*/),
+                                                  {
+                                                    "kind": "Literal",
+                                                    "name": "version",
+                                                    "value": [
+                                                      "untouched-png",
+                                                      "large",
+                                                      "square"
+                                                    ]
+                                                  },
+                                                  (v8/*: any*/)
+                                                ],
+                                                "concreteType": "CroppedImageUrl",
+                                                "kind": "LinkedField",
+                                                "name": "cropped",
+                                                "plural": false,
+                                                "selections": (v9/*: any*/),
+                                                "storageKey": "cropped(height:45,version:[\"untouched-png\",\"large\",\"square\"],width:45)"
+                                              }
+                                            ],
+                                            "storageKey": null
+                                          }
                                         ],
                                         "storageKey": null
                                       }
@@ -467,7 +529,7 @@ return {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v8/*: any*/),
+                                      (v6/*: any*/),
                                       (v5/*: any*/),
                                       {
                                         "alias": null,
@@ -495,7 +557,7 @@ return {
                                         "name": "endAt",
                                         "storageKey": "endAt(format:\"MMM Do YYYY\")"
                                       },
-                                      (v6/*: any*/),
+                                      (v10/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -504,13 +566,12 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
-                                          (v8/*: any*/),
+                                          (v14/*: any*/),
+                                          (v12/*: any*/),
                                           (v5/*: any*/),
                                           (v4/*: any*/),
-                                          (v11/*: any*/),
-                                          (v12/*: any*/),
-                                          (v9/*: any*/)
+                                          (v15/*: any*/),
+                                          (v13/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -522,7 +583,7 @@ return {
                                     "kind": "InlineFragment",
                                     "selections": [
                                       (v4/*: any*/),
-                                      (v8/*: any*/),
+                                      (v12/*: any*/),
                                       (v5/*: any*/),
                                       {
                                         "alias": null,
@@ -544,18 +605,18 @@ return {
                                         "name": "profile",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
-                                          (v8/*: any*/),
+                                          (v14/*: any*/),
+                                          (v12/*: any*/),
                                           (v5/*: any*/),
                                           (v4/*: any*/),
-                                          (v11/*: any*/),
-                                          (v12/*: any*/),
-                                          (v9/*: any*/),
-                                          (v6/*: any*/)
+                                          (v15/*: any*/),
+                                          (v6/*: any*/),
+                                          (v13/*: any*/),
+                                          (v10/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
-                                      (v10/*: any*/)
+                                      (v14/*: any*/)
                                     ],
                                     "type": "FairOrganizer",
                                     "abstractKey": null
@@ -563,7 +624,7 @@ return {
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
-                                      (v10/*: any*/)
+                                      (v14/*: any*/)
                                     ],
                                     "type": "Node",
                                     "abstractKey": "__isNode"
@@ -571,12 +632,12 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v10/*: any*/)
+                              (v14/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v10/*: any*/),
-                          (v7/*: any*/)
+                          (v14/*: any*/),
+                          (v11/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -630,19 +691,19 @@ return {
             ],
             "storageKey": null
           },
-          (v10/*: any*/)
+          (v14/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e60c8e911560dfc948bcb1d057abd730",
+    "cacheID": "f1dd233bafd7933c3cda429430a0baa8",
     "id": null,
     "metadata": {},
     "name": "SettingsSavesProfilesQuery",
     "operationKind": "query",
-    "text": "query SettingsSavesProfilesQuery(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment FairEntityHeader_fair on Fair {\n  internalID\n  slug\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    id\n  }\n}\n\nfragment FairOrganizerEntityHeader_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerEntityHeader_partner on Partner {\n  internalID\n  slug\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...PartnerEntityHeader_partner\n              }\n              ... on Fair {\n                ...FairEntityHeader_fair\n              }\n              ... on FairOrganizer {\n                ...FairOrganizerEntityHeader_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsSavesProfilesQuery(\n  $after: String\n) {\n  me {\n    ...SettingsSavesProfiles_me_WGPvJ\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment SettingsSavesProfiles_me_WGPvJ on Me {\n  followsAndSaves {\n    profilesConnection(first: 12, after: $after) {\n      totalCount\n      edges {\n        node {\n          internalID\n          profile {\n            name\n            href\n            avatar: image {\n              cropped(width: 45, height: 45) {\n                src\n                srcSet\n              }\n            }\n            owner {\n              __typename\n              ... on Partner {\n                ...EntityHeaderPartner_partner\n              }\n              ... on Fair {\n                ...EntityHeaderFair_fair\n              }\n              ... on FairOrganizer {\n                ...EntityHeaderFairOrganizer_fairOrganizer\n                id\n              }\n              ... on Node {\n                __isNode: __typename\n                id\n              }\n            }\n            id\n          }\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n"
   }
 };
 })();

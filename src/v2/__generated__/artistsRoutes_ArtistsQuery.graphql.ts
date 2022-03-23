@@ -33,14 +33,8 @@ query artistsRoutes_ArtistsQuery {
 }
 
 fragment ArtistsArtistCard_artist on Artist {
-  ...FollowArtistButton_artist
-  name
+  ...EntityHeaderArtist_artist
   href
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
   image {
     thumb: cropped(width: 445, height: 334) {
       src
@@ -122,14 +116,22 @@ fragment ArtistsIndex_featuredGenes on OrderedSet {
   }
 }
 
-fragment FollowArtistButton_artist on Artist {
-  id
+fragment EntityHeaderArtist_artist on Artist {
   internalID
-  name
+  href
   slug
-  is_followed: isFollowed
+  name
+  initials
+  formattedNationalityAndBirthday
   counts {
-    follows
+    artworks
+    forSaleArtworks
+  }
+  avatar: image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
   }
 }
 */
@@ -219,7 +221,11 @@ v12 = {
   "selections": (v8/*: any*/),
   "type": "Profile",
   "abstractKey": null
-};
+},
+v13 = [
+  (v10/*: any*/),
+  (v11/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -436,8 +442,7 @@ return {
                     "plural": true,
                     "selections": [
                       (v4/*: any*/),
-                      (v7/*: any*/),
-                      (v2/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -445,13 +450,15 @@ return {
                         "name": "slug",
                         "storageKey": null
                       },
+                      (v2/*: any*/),
                       {
-                        "alias": "is_followed",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "isFollowed",
+                        "name": "initials",
                         "storageKey": null
                       },
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -460,13 +467,6 @@ return {
                         "name": "counts",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "follows",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -484,8 +484,38 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
-                      (v6/*: any*/),
+                      {
+                        "alias": "avatar",
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 45
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 45
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": (v13/*: any*/),
+                            "storageKey": "cropped(height:45,width:45)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -512,15 +542,13 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": [
-                              (v10/*: any*/),
-                              (v11/*: any*/)
-                            ],
+                            "selections": (v13/*: any*/),
                             "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
-                      }
+                      },
+                      (v7/*: any*/)
                     ],
                     "storageKey": "trendingArtists(sample:4)"
                   }
@@ -546,12 +574,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a93924a1d42dcaf551b41605d435b251",
+    "cacheID": "76810845235a157ff32254ebe6fc9287",
     "id": null,
     "metadata": {},
     "name": "artistsRoutes_ArtistsQuery",
     "operationKind": "query",
-    "text": "query artistsRoutes_ArtistsQuery {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  entity {\n    __typename\n    ... on Artist {\n      internalID\n      name\n      formattedNationalityAndBirthday\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query artistsRoutes_ArtistsQuery {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  entity {\n    __typename\n    ... on Artist {\n      internalID\n      name\n      formattedNationalityAndBirthday\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

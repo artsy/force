@@ -1,10 +1,9 @@
 import * as React from "react"
-import { Box, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { Image, ResponsiveBox } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsArtistCard_artist } from "v2/__generated__/ArtistsArtistCard_artist.graphql"
-import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
+import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 
 interface ArtistsArtistCardProps {
   artist: ArtistsArtistCard_artist
@@ -13,7 +12,7 @@ interface ArtistsArtistCardProps {
 export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
   artist,
 }) => {
-  const { image, counts } = artist
+  const { image } = artist
 
   if (!image) return null
 
@@ -42,38 +41,16 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
             />
           )}
         </ResponsiveBox>
-      </RouterLink>
 
-      <Flex mt={1} alignItems="center" justifyContent="space-between">
-        <Box mr={1}>
-          <RouterLink to={artist.href} noUnderline style={{ display: "block" }}>
-            <Text variant="md">{artist.name}</Text>
-
-            {artist.formattedNationalityAndBirthday && (
-              <Text color="black60">
-                {artist.formattedNationalityAndBirthday}
-              </Text>
-            )}
-
-            {counts && (counts.artworks ?? 0) > 0 && (
-              <Text variant="xs" fontWeight="bold">
-                {counts.artworks} work
-                {counts.artworks === 1 ? "" : "s"}
-                {(counts.forSaleArtworks ?? 0) > 0 &&
-                  counts.forSaleArtworks !== counts.artworks && (
-                    <>, {counts.forSaleArtworks} for sale</>
-                  )}
-              </Text>
-            )}
-          </RouterLink>
-        </Box>
-
-        <FollowArtistButtonFragmentContainer
+        <EntityHeaderArtistFragmentContainer
+          mt={1}
+          alignItems="flex-start"
           artist={artist}
-          contextModule={ContextModule.featuredArtistsRail}
-          buttonProps={{ size: "small", variant: "secondaryOutline" }}
+          displayAvatar={false}
+          displayLink={false}
+          displayCounts
         />
-      </Flex>
+      </RouterLink>
     </>
   )
 }
@@ -83,14 +60,8 @@ export const ArtistsArtistCardFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistsArtistCard_artist on Artist {
-        ...FollowArtistButton_artist
-        name
+        ...EntityHeaderArtist_artist
         href
-        formattedNationalityAndBirthday
-        counts {
-          artworks
-          forSaleArtworks
-        }
         image {
           thumb: cropped(width: 445, height: 334) {
             src

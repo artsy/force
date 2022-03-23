@@ -18,10 +18,10 @@ import {
   Column,
 } from "@artsy/palette"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { PartnerEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/PartnerEntityHeader"
-import { FairOrganizerEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/FairOrganizerEntityHeader"
-import { FairEntityHeaderFragmentContainer } from "v2/Components/EntityHeaders/FairEntityHeader"
-import { PlaceholderEntityHeader } from "v2/Components/EntityHeaders/PlaceholderEntityHeader"
+import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
+import { EntityHeaderFairOrganizerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderFairOrganizer"
+import { EntityHeaderFairFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderFair"
+import { EntityHeaderPlaceholder } from "v2/Components/EntityHeaders/EntityHeaderPlaceholder"
 
 interface SettingsSavesProfilesProps {
   me: SettingsSavesProfiles_me
@@ -67,7 +67,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
                     switch (profile.owner.__typename) {
                       case "Partner":
                         return (
-                          <PartnerEntityHeaderFragmentContainer
+                          <EntityHeaderPartnerFragmentContainer
                             key={internalID}
                             partner={profile.owner}
                           />
@@ -75,7 +75,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
 
                       case "Fair":
                         return (
-                          <FairEntityHeaderFragmentContainer
+                          <EntityHeaderFairFragmentContainer
                             key={internalID}
                             fair={profile.owner}
                           />
@@ -83,7 +83,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
 
                       case "FairOrganizer":
                         return (
-                          <FairOrganizerEntityHeaderFragmentContainer
+                          <EntityHeaderFairOrganizerFragmentContainer
                             key={internalID}
                             fairOrganizer={profile.owner}
                           />
@@ -145,13 +145,13 @@ export const SettingsSavesProfilesPaginationContainer = createPaginationContaine
                   owner {
                     __typename
                     ... on Partner {
-                      ...PartnerEntityHeader_partner
+                      ...EntityHeaderPartner_partner
                     }
                     ... on Fair {
-                      ...FairEntityHeader_fair
+                      ...EntityHeaderFair_fair
                     }
                     ... on FairOrganizer {
-                      ...FairOrganizerEntityHeader_fairOrganizer
+                      ...EntityHeaderFairOrganizer_fairOrganizer
                     }
                   }
                 }
@@ -186,7 +186,7 @@ const SETTINGS_SAVES_PROFILES_PLACEHOLDER = (
       {[...new Array(12)].map((_, i) => {
         return (
           <Column key={i} span={[12, 4, 3]}>
-            <PlaceholderEntityHeader />
+            <EntityHeaderPlaceholder />
           </Column>
         )
       })}

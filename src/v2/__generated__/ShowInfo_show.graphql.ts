@@ -12,7 +12,7 @@ export type ShowInfo_show = {
     readonly partner: ({
         readonly __typename: "Partner";
         readonly type: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"ShowPartnerEntityHeader_partner">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
@@ -97,7 +97,7 @@ const node: ReaderFragment = {
             {
               "args": null,
               "kind": "FragmentSpread",
-              "name": "ShowPartnerEntityHeader_partner"
+              "name": "EntityHeaderPartner_partner"
             }
           ],
           "type": "Partner",
@@ -120,5 +120,5 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = '84b0d3a43686b45691ad2cbb75214684';
+(node as any).hash = '093a8b1f2819b7cb2556cbb3352decda';
 export default node;

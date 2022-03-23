@@ -1,7 +1,6 @@
 import { FC } from "react"
 import {
   Box,
-  EntityHeader,
   Image,
   Skeleton,
   SkeletonBox,
@@ -12,8 +11,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { EntityTooltipGeneQuery } from "v2/__generated__/EntityTooltipGeneQuery.graphql"
 import { EntityTooltipGene_gene } from "v2/__generated__/EntityTooltipGene_gene.graphql"
-import { FollowGeneButtonFragmentContainer } from "../FollowButton/FollowGeneButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { EntityHeaderGeneFragmentContainer } from "../EntityHeaders/EntityHeaderGene"
 
 interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene
@@ -38,17 +37,10 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
         </RouterLink>
       )}
 
-      <EntityHeader
-        name={gene.name ?? "Unknown"}
-        href={gene.href!}
-        smallVariant
-        FollowButton={
-          <FollowGeneButtonFragmentContainer
-            gene={gene}
-            size="small"
-            variant="secondaryOutline"
-          />
-        }
+      <EntityHeaderGeneFragmentContainer
+        gene={gene}
+        displayAvatar={false}
+        alignItems="flex-start"
       />
 
       {gene.description && (
@@ -67,8 +59,7 @@ const EntityTooltipGeneFragmentContainer = createFragmentContainer(
   {
     gene: graphql`
       fragment EntityTooltipGene_gene on Gene {
-        ...FollowGeneButton_gene
-        name
+        ...EntityHeaderGene_gene
         href
         description(format: PLAIN)
         image {

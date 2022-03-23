@@ -4,9 +4,11 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PartnerEntityHeader_partner = {
+export type EntityHeaderPartner_partner = {
     readonly internalID: string;
+    readonly type: string | null;
     readonly slug: string;
+    readonly href: string | null;
     readonly name: string | null;
     readonly initials: string | null;
     readonly locationsConnection: {
@@ -16,9 +18,18 @@ export type PartnerEntityHeader_partner = {
             } | null;
         } | null> | null;
     } | null;
+    readonly categories: ReadonlyArray<{
+        readonly name: string | null;
+        readonly slug: string;
+    } | null> | null;
     readonly profile: {
-        readonly isFollowed: boolean | null;
         readonly avatar: {
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
+        } | null;
+        readonly icon: {
             readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
@@ -26,21 +37,62 @@ export type PartnerEntityHeader_partner = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $refType": "PartnerEntityHeader_partner";
+    readonly " $refType": "EntityHeaderPartner_partner";
 };
-export type PartnerEntityHeader_partner$data = PartnerEntityHeader_partner;
-export type PartnerEntityHeader_partner$key = {
-    readonly " $data"?: PartnerEntityHeader_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerEntityHeader_partner">;
+export type EntityHeaderPartner_partner$data = EntityHeaderPartner_partner;
+export type EntityHeaderPartner_partner$key = {
+    readonly " $data"?: EntityHeaderPartner_partner$data;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
 };
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 45
+},
+v3 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 45
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PartnerEntityHeader_partner",
+  "name": "EntityHeaderPartner_partner",
   "selections": [
     {
       "alias": null,
@@ -53,16 +105,18 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "type",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "href",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -119,18 +173,24 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "PartnerCategory",
+      "kind": "LinkedField",
+      "name": "categories",
+      "plural": true,
+      "selections": [
+        (v1/*: any*/),
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Profile",
       "kind": "LinkedField",
       "name": "profile",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isFollowed",
-          "storageKey": null
-        },
         {
           "alias": "avatar",
           "args": null,
@@ -142,38 +202,48 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 45
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 45
-                }
+                (v2/*: any*/),
+                (v3/*: any*/)
               ],
               "concreteType": "CroppedImageUrl",
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
+              "selections": (v4/*: any*/),
               "storageKey": "cropped(height:45,width:45)"
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "icon",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                (v2/*: any*/),
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": [
+                    "untouched-png",
+                    "large",
+                    "square"
+                  ]
+                },
+                (v3/*: any*/)
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": (v4/*: any*/),
+              "storageKey": "cropped(height:45,version:[\"untouched-png\",\"large\",\"square\"],width:45)"
             }
           ],
           "storageKey": null
@@ -190,5 +260,6 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '100b4275a49bab33343d141bd7846498';
+})();
+(node as any).hash = '7f4e8871facf3f86981d91a011a74e42';
 export default node;

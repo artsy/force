@@ -1,7 +1,7 @@
 import { Flex, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { FC } from "react"
 
-export const PlaceholderEntityHeader: FC = () => {
+export const EntityHeaderPlaceholder: FC = () => {
   return (
     <Skeleton display="flex">
       <SkeletonBox width={45} height={45} borderRadius="50%" />
