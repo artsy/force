@@ -14,8 +14,9 @@ describe("extractArtistPills", () => {
     expect(extractArtistPills(artists)).toEqual([
       {
         isDefault: true,
-        name: "slug",
-        displayName: "name",
+        filterName: "artistIDs",
+        name: "id",
+        label: "name",
       },
     ])
   })

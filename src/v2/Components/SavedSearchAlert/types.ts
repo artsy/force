@@ -41,20 +41,12 @@ export interface SavedSearchEntity {
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
 
-export interface DefaultFilterPill {
-  isDefault: true
-  name: string
-  displayName: string
-}
-
-export interface NonDefaultFilterPill {
-  isDefault?: false
-  name: string
-  displayName: string
+export type FilterPill = {
+  isDefault?: boolean
+  value: string
+  label: string
   filterName: string
 }
-
-export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
 
 export interface SavedSearchAleftFormValues {
   name: string

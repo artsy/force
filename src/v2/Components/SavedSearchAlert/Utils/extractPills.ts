@@ -15,8 +15,7 @@ import {
 } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
-  DefaultFilterPill,
-  NonDefaultFilterPill,
+  FilterPill,
   SavedSearchEntity,
   SavedSearchEntityArtist,
   SearchCriteriaAttributes,
@@ -37,8 +36,8 @@ export const extractPillFromAggregation = (
     const aggregationByValue = keyBy(aggregation.counts, "value")
 
     return (paramValue as string[]).map(value => ({
-      name: value,
-      displayName: aggregationByValue[value]?.name ?? "",
+      value,
+      label: aggregationByValue[value]?.name ?? "",
       filterName: paramName,
     }))
   }
@@ -96,10 +95,10 @@ export const extractPillsFromCriteria = ({
   aggregations: Aggregations
   metric: Metric
 }) => {
-  const pills: NonDefaultFilterPill[] = Object.entries(criteria).map(filter => {
+  const pills: FilterPill[] = Object.entries(criteria).map(filter => {
     const [paramName, paramValue] = filter
 
-    let result: NonDefaultFilterPill | NonDefaultFilterPill[] | null = null
+    let result: FilterPill | FilterPill[] | null = null
 
     if (shouldExtractValueNamesFromAggregation.includes(paramName)) {
       return extractPillFromAggregation({ paramName, paramValue }, aggregations)
@@ -109,8 +108,8 @@ export const extractPillsFromCriteria = ({
       return (
         paramValue && {
           filterName: paramName,
-          name: paramName,
-          displayName: WAYS_TO_BUY_OPTIONS[paramName].name,
+          value: paramName,
+          label: WAYS_TO_BUY_OPTIONS[paramName].name,
         }
       )
     }
@@ -121,8 +120,8 @@ export const extractPillsFromCriteria = ({
         if (paramValue && isCustomValue(paramValue)) {
           result = {
             filterName: paramName,
-            name: paramValue,
-            displayName: extractSizeLabel({
+            value: paramValue,
+            label: extractSizeLabel({
               prefix: paramName[0],
               value: paramValue,
               metric,
@@ -138,8 +137,8 @@ export const extractPillsFromCriteria = ({
 
           return {
             filterName: paramName,
-            name: value,
-            displayName: sizeItem?.displayName,
+            value,
+            label: sizeItem?.displayName,
           }
         })
         break
@@ -147,26 +146,24 @@ export const extractPillsFromCriteria = ({
       case "colors": {
         result = paramValue.map(value => ({
           filterName: paramName,
-          name: value,
-          displayName: find(COLOR_OPTIONS, option => value === option.value)
-            ?.name,
+          value,
+          label: find(COLOR_OPTIONS, option => value === option.value)?.name,
         }))
         break
       }
       case "attributionClass": {
         result = paramValue.map(value => ({
           filterName: paramName,
-          name: value,
-          displayName: find(checkboxValues, option => value === option.value)
-            ?.name,
+          value,
+          label: find(checkboxValues, option => value === option.value)?.name,
         }))
         break
       }
       case "majorPeriods": {
         result = paramValue.map(value => ({
           filterName: paramName,
-          name: value,
-          displayName: getTimePeriodToDisplay(value),
+          value,
+          label: getTimePeriodToDisplay(value),
         }))
         break
       }
@@ -174,8 +171,8 @@ export const extractPillsFromCriteria = ({
         if (paramValue && isCustomValue(paramValue)) {
           result = {
             filterName: paramName,
-            name: paramValue,
-            displayName: extractPriceLabel(paramValue),
+            value: paramValue,
+            label: extractPriceLabel(paramValue),
           }
         }
         break
@@ -192,12 +189,13 @@ export const extractPillsFromCriteria = ({
 
 export const extractArtistPills = (
   artists: SavedSearchEntityArtist[] = []
-): DefaultFilterPill[] => {
+): FilterPill[] => {
   return artists.map(artist => {
     return {
       isDefault: true,
-      name: artist.slug,
-      displayName: artist.name,
+      value: artist.id,
+      label: artist.name,
+      filterName: "artistIDs",
     }
   })
 }

@@ -44,7 +44,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     let filterValue = filters![pill.filterName]
 
     if (isArray(filterValue)) {
-      filterValue = filterValue.filter(value => value !== pill.name)
+      filterValue = filterValue.filter(value => value !== pill.value)
     } else {
       filterValue = initialArtworkFilterState[pill.filterName]
     }

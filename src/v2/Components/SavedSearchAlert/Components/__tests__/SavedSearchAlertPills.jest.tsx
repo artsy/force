@@ -8,13 +8,13 @@ import {
 const items: FilterPill[] = [
   {
     filterName: "colors",
-    name: "red",
-    displayName: "Red",
+    value: "red",
+    label: "Red",
   },
   {
     filterName: "attributionClass",
-    name: "open-edition",
-    displayName: "Open Edition",
+    value: "open-edition",
+    label: "Open Edition",
   },
 ]
 
@@ -44,8 +44,8 @@ describe("SavedSearchAlertPills", () => {
 
     expect(onDeletePressMock).toBeCalledWith({
       filterName: "colors",
-      name: "red",
-      displayName: "Red",
+      value: "red",
+      label: "Red",
     })
   })
 })

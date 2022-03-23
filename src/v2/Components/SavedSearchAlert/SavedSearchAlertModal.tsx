@@ -65,7 +65,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
     removeCriteriaValue(
       pill.filterName as SearchCriteriaAttributeKeys,
-      pill.name
+      pill.value
     )
   }
 

@@ -88,7 +88,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
     removeCriteriaValue(
       pill.filterName as SearchCriteriaAttributeKeys,
-      pill.name
+      pill.value
     )
   }
 
