@@ -85,9 +85,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     )
 
     const getRangeDetails = [
-      { value: minPriceRange, description: "Low-end of range" },
-      { value: midPriceRange, description: "Midpoint" },
       { value: maxPriceRange, description: "Top-end of range" },
+      { value: midPriceRange, description: "Midpoint" },
+      { value: minPriceRange, description: "Low-end of range" },
     ]
     return getRangeDetails.map((rangePrice, idx) => ({
       key: `price-option-${idx}`,

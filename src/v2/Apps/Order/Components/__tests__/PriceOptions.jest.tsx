@@ -84,9 +84,9 @@ describe("PriceOptions", () => {
       expect(radios).toHaveLength(4)
     })
     it("correctly formats values", () => {
-      expect(radios[0]).toHaveTextContent("US$100.00")
+      expect(radios[0]).toHaveTextContent("US$200.00")
       expect(radios[1]).toHaveTextContent("US$150.00")
-      expect(radios[2]).toHaveTextContent("US$200.00")
+      expect(radios[2]).toHaveTextContent("US$100.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
     it("fires click event with correct value", () => {
@@ -110,7 +110,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("Low-end of range", 100, "USD")
+          getTrackingObject("Top-end of range", 200, "USD")
         )
       )
       fireEvent.click(radios[1])
@@ -120,7 +120,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("Top-end of range", 200, "USD")
+          getTrackingObject("Low-end of range", 100, "USD")
         )
       )
       fireEvent.click(radios[3])
@@ -132,7 +132,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$100.00."
+        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$200.00."
       )
       expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenCalledWith(
@@ -141,20 +141,20 @@ describe("PriceOptions", () => {
           flow: "Make offer",
         })
       )
-      fireEvent.change(input, { target: { value: 180 } })
+      fireEvent.change(input, { target: { value: 200 } })
       expect(notice).not.toBeInTheDocument()
     })
     it("selects the first option when clicking on the low price notice", async () => {
       fireEvent.click(radios[3])
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$100.00."
+        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$200.00."
       )
       fireEvent.click(notice)
       const selected = screen.getAllByRole("radio", { checked: true })
-      expect(selected[0]).toHaveTextContent("US$100.00")
+      expect(selected[0]).toHaveTextContent("US$200.00")
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
-          getTrackingObject("We recommend changing your offer", 100, "USD")
+          getTrackingObject("We recommend changing your offer", 200, "USD")
         )
       )
     })
