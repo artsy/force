@@ -96,17 +96,26 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     }))
   }
 
+  const fixedPrice = Number(listPrice?.major)
+
+  const percentagePrices = [
+    { value: fixedPrice, description: "Exact price" },
+    {
+      value: Number([Math.round(fixedPrice * (1 - 0.1))]),
+      description: "10% below the list price",
+    },
+    {
+      value: Number([Math.round(fixedPrice * (1 - 0.2))]),
+      description: "20% below the list price",
+    },
+  ]
+
   const getPercentageOptions = () => {
-    return [0.2, 0.15, 0.1].map((pricePercentage, idx) => {
-      if (listPrice?.major) {
-        return {
-          key: `price-option-${idx}`,
-          value: Math.round(listPrice.major * (1 - pricePercentage)),
-          description: `${pricePercentage * 100}% below the list price`,
-        }
-      }
-      return
-    })
+    return percentagePrices.map((percentagePrice, idx) => ({
+      key: `price-option-${idx}`,
+      value: percentagePrice.value!,
+      description: percentagePrice.description,
+    }))
   }
 
   const priceOptions = artwork?.isPriceRange
