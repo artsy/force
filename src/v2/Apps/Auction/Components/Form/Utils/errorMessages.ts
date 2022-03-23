@@ -17,6 +17,7 @@ export type BiddingStatus =
   | "PENDING"
   | "RESERVE_NOT_MET"
   | "SALE_CLOSED"
+  | "LOT_CLOSED"
   | "SUCCESS"
   | "WINNING"
 
@@ -35,6 +36,8 @@ const BIDDING_STATE_TO_MESSAGE: Record<
   RESERVE_NOT_MET:
     "Your bid is below the reserve price. Please select a higher bid.",
   SALE_CLOSED: "This sale had been closed. Please browse other open sales.",
+  LOT_CLOSED:
+    "This lot has closed. Please browse other open lots for this sale.",
 }
 
 const SYSTEM_ERROR = {
