@@ -21,6 +21,16 @@ export interface ArtworkSidebarCurrentBidInfoProps {
   currentBidChanged: boolean
 }
 
+export const BiddingClosedMessage: React.FC<{}> = () => (
+  <>
+    <Separator my={2} />
+
+    <Text variant="subtitle" color="black100">
+      Bidding closed
+    </Text>
+  </>
+)
+
 // This text pulse animation is used when the current bid changes.
 const pulse = keyframes`
   0% {
@@ -72,15 +82,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
   }
 
   if (lotIsClosed(artwork.sale, artwork.sale_artwork)) {
-    return (
-      <>
-        <Separator my={2} />
-
-        <Text variant="subtitle" color="black100">
-          Bidding closed
-        </Text>
-      </>
-    )
+    return <BiddingClosedMessage />
   }
 
   // Don't display anything if there is no starting bid info
