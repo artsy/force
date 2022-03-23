@@ -30,7 +30,7 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   let currentPage
 
   // HACK: This logic should not be replicated for other experiments and is being
-  // accepted as part of this trivial Unleash test.
+  // accepted as part of this initial trivial Unleash test.
   if (typeof window !== "undefined") {
     const { pageType } = getContextPageFromClient()
     currentPage = pageType
