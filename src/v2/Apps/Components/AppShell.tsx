@@ -19,6 +19,7 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
+import { appendMntnConversionPixel } from "v2/System/Analytics/MNTN/mntnConversionPixel"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -58,23 +59,10 @@ export const AppShell: React.FC<AppShellProps> = props => {
   }, [])
 
   useEffect(() => {
-    console.log("Appshell::useEffect::pathname", pathname)
-    let script: HTMLScriptElement
-
-    if (idConversionRoute(pathname)) {
-      script = document.createElement("script")
-
-      script.id = "mntn_conversion"
-      script.src = "../../System/Analytics/MNTN/conversionPixelScript.js"
-      script.async = true
-      script.type = "javascript/text"
-
-      document.body.appendChild(script)
-    }
-
+    const script = appendMntnConversionPixel(pathname)
     // does the removal of this element even matter if it is mounted in AppShell?
     return () => {
-      if (document.getElementById("mntn_conversion")) {
+      if (script && document.getElementById("mntn_conversion")) {
         document.body.removeChild(script)
       }
     }
@@ -143,28 +131,4 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Theme>
     </Flex>
   )
-}
-
-// account creation, auction registration, bid placed, inquiry made,
-// gallery contacted, offer made, purchase
-function idConversionRoute(pathname: string | null) {
-  if (!pathname) {
-    console.log("AppShell::idConversionRoute: pathname is undefined")
-    return false
-  }
-  console.log("AppShell::idConversionRoute: pathname", pathname)
-  const conversionRoutes: RegExp[] = [
-    /\/signup/g,
-    /(\/auction\/)([a-z]|[0-9]|\-)+(\/bid\/)([a-z]|[0-9]|\-)+\?(sort=)([a-z]|\_)+\&(bid\=)([0-9]+)/g,
-    /\/auction\/registration\/([a-z]|[0-9]|\-)+/g,
-    /(\/orders\/)([0-9]|[a-z]|\-)+(\/status)/g,
-  ]
-
-  const matchFound = conversionRoutes.every(route => {
-    console.log("AppShell::idConversionRoute: comparing", route, "to", pathname)
-    return pathname.match(route)
-  })
-
-  console.log("AppShell::idConversionRoute: matchFound:", matchFound)
-  return matchFound
 }
