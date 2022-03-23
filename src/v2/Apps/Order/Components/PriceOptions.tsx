@@ -96,16 +96,16 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     }))
   }
 
-  const fixedPrice = Number(listPrice?.major)
+  const exactPrice = Number(listPrice?.major)
 
   const percentagePrices = [
-    { value: fixedPrice, description: "Exact price" },
+    { value: exactPrice, description: "Exact price" },
     {
-      value: Number([Math.round(fixedPrice * (1 - 0.1))]),
+      value: Number([Math.round(exactPrice * (1 - 0.1))]),
       description: "10% below the list price",
     },
     {
-      value: Number([Math.round(fixedPrice * (1 - 0.2))]),
+      value: Number([Math.round(exactPrice * (1 - 0.2))]),
       description: "20% below the list price",
     },
   ]
