@@ -19,7 +19,7 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { appendMntnConversionPixel } from "v2/System/Analytics/MNTN/mntnConversionPixel"
+import { appendMntnConversionPixelByRoute } from "v2/System/Analytics/MNTN/mntnConversionPixel"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -59,7 +59,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
   }, [])
 
   useEffect(() => {
-    const script = appendMntnConversionPixel(pathname)
+    const script = appendMntnConversionPixelByRoute(pathname)
     // does the removal of this element even matter if it is mounted in AppShell?
     return () => {
       if (script && document.getElementById("mntn_conversion")) {

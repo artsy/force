@@ -39,4 +39,4 @@ function appendMntnConversionPixelByRoute(
   return script
 }
 
-export { appendMntnConversionPixelByRoute as appendMntnConversionPixel }
+export { appendMntnConversionPixelByRoute }
