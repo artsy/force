@@ -34,6 +34,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
 
   return (
     <RouterLink
+      display="block"
       to={`/artwork/${saleArtwork.slug}`}
       noUnderline
       onClick={() => {
