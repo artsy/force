@@ -18,6 +18,7 @@ export interface SearchCriteriaAttributes {
   width?: string | null
   materialsTerms?: string[] | null
   priceRange?: string | null
+  sizes?: string[] | null
 }
 
 export interface SavedSearchEntityArtist {
