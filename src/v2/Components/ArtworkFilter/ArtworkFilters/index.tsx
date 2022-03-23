@@ -16,9 +16,8 @@ import {
   useFeatureVariant,
   useTrackVariantView,
 } from "v2/System/useFeatureFlag"
-import { useAnalyticsContext } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
-import { useRouter } from "v2/System/Router/useRouter"
+import { getContextPageFromClient } from "lib/getContextPage"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -28,23 +27,21 @@ interface ArtworkFiltersProps {
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
-  const { match } = useRouter()
+  let currentPage
 
-  const isArtistPage = match.location.pathname.slice(1, 7) === OwnerType.artist
+  if (typeof window !== "undefined") {
+    const { pageType } = getContextPageFromClient()
+    currentPage = pageType
+  }
+
+  const isArtistPage = currentPage === OwnerType.artist
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
   useTrackVariantView({
     experimentName: "filters-expanded-experiment",
     variantName: variant?.name!,
-    contextOwnerId: contextPageOwnerId,
-    contextOwnerSlug: contextPageOwnerSlug,
-    contextOwnerType: contextPageOwnerType!,
+    contextOwnerType: currentPage!,
     shouldTrackExperiment: isArtistPage,
   })
 
