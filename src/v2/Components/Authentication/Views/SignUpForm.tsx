@@ -74,6 +74,24 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
     })
   }
 
+  script: HTMLScriptElement
+  componentDidMount() {
+    this.script = document.createElement("script")
+
+    this.script.id = "mntn_conversion"
+    this.script.src = "../../System/Analytics/MNTN/conversionPixelScript.js"
+    this.script.async = true
+    this.script.type = "javascript/text"
+
+    document.body.appendChild(this.script)
+  }
+
+  componentWillUnmount() {
+    if (document.getElementById("mntn_conversion")) {
+      document.body.removeChild(this.script)
+    }
+  }
+
   render() {
     const initialValues = {
       accepted_terms_of_service: false,

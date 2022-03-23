@@ -61,7 +61,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
     let script: HTMLScriptElement
 
     const result = findConversionRoute(pathname)
-    console.log("Appshell::findConversionRoute::result", result)
     if (result) {
       script = document.createElement("script")
 
@@ -148,12 +147,10 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
 // account creation, auction registration, bid placed, inquiry made,
 // gallery contacted, offer made, purchase
-function findConversionRoute(pathname: string | null) {
+function findConversionRoute(pathname?: string | null) {
   if (!pathname) {
-    console.log("AppShell::idConversionRoute: pathname is undefined")
     return false
   }
-  console.log("AppShell::idConversionRoute: pathname", pathname)
   const conversionRoutes: RegExp[] = [
     /\/signup/g,
     /(\/auction\/)([a-z]|[0-9]|\-)+(\/bid\/)([a-z]|[0-9]|\-)+\?(sort=)([a-z]|\_)+\&(bid\=)([0-9]+)/g,
@@ -162,10 +159,8 @@ function findConversionRoute(pathname: string | null) {
   ]
 
   const matchFound = conversionRoutes.find(route => {
-    console.log("AppShell::idConversionRoute: comparing", route, "to", pathname)
     return pathname.match(route)
   })
 
-  console.log("AppShell::idConversionRoute: matchFound:", matchFound)
   return Boolean(matchFound)
 }
