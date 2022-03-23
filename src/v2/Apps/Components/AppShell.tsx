@@ -152,32 +152,18 @@ function idConversionRoute(pathname: string | null) {
     console.log("AppShell::idConversionRoute: pathname is undefined")
     return false
   }
-  const paths = pathname.split(/(?=\/)/g)
-  console.log("AppShell::idConversionRoute: paths", paths)
-  const conversionRoutes = [
-    ["/signup"],
-    ["/personalize", "/artists"],
-    ["/personalize", "/budget"],
-    ["/auction", "/bid"],
-    ["/auction-registration"],
-    ["/orders", "/status"],
-    // "/signup", // account creation
-    // "/personalize/artists", // account creation
-    // "/personalize/budget", // account creation
-    // `/auction/${saleName}/bid/${artworkID}?bid=${bidID}`, // bid placed
-    // `/auction-registration/${saleName}`, // auction registration
-    // `/orders/7ef042fe-1897-4076-8f15-0d336db880c6/status`, // offer made, purchase
-    //  no route for 'gallery contacted',
+  console.log("AppShell::idConversionRoute: pathname", pathname)
+  const conversionRoutes: RegExp[] = [
+    /\/signup/g,
+    /(\/auction\/)([a-z]|[0-9]|\-)+(\/bid\/)([a-z]|[0-9]|\-)+\?(sort=)([a-z]|\_)+\&(bid\=)([0-9]+)/g,
+    /\/auction\/registration\/([a-z]|[0-9]|\-)+/g,
+    /(\/orders\/)([0-9]|[a-z]|\-)+(\/status)/g,
   ]
 
-  let x = conversionRoutes.length - 1
-  let matchFound = false
-  do {
-    matchFound = conversionRoutes[x--].every(route => {
-      console.log("AppShell::idConversionRoute: comparing", route, "to", paths)
-      return paths.includes(route)
-    })
-  } while (x >= 0 && !matchFound)
+  const matchFound = conversionRoutes.every(route => {
+    console.log("AppShell::idConversionRoute: comparing", route, "to", pathname)
+    return pathname.match(route)
+  })
 
   console.log("AppShell::idConversionRoute: matchFound:", matchFound)
   return matchFound
