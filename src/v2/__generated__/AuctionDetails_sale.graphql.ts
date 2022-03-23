@@ -11,9 +11,11 @@ export type AuctionDetails_sale = {
     readonly liveStartAt: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
+    readonly endedAt: string | null;
     readonly description: string | null;
     readonly href: string | null;
     readonly isClosed: boolean | null;
+    readonly cascadingEndTimeInterval: number | null;
     readonly cascadingEndTime: {
         readonly intervalLabel: string | null;
     } | null;
@@ -78,6 +80,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endedAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -101,6 +110,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isClosed",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cascadingEndTimeInterval",
       "storageKey": null
     },
     {
@@ -140,5 +156,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '4e05641f2abb724aab2eca59a027abb5';
+(node as any).hash = 'e368b2849779d15308faa43d2294b5fd';
 export default node;

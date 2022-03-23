@@ -19,7 +19,7 @@ const AuctionDetailsStartTime: FC<AuctionDetailsStartTimeProps> = ({
 }) => {
   return (
     <Text variant="xl" {...rest}>
-      {sale.cascadingEndTime.formattedStartDateTime}
+      {!!sale.cascadingEndTime && sale.cascadingEndTime?.formattedStartDateTime}
     </Text>
   )
 }
@@ -60,6 +60,11 @@ export const AuctionDetailsStartTimeQueryRenderer: FC<AuctionDetailsStartTimeQue
         query AuctionDetailsStartTimeQuery($id: String!) {
           sale(id: $id) {
             ...AuctionDetailsStartTime_sale
+            cascadingEndTimeInterval
+            formattedStartDateTime
+            cascadingEndTime {
+              formattedStartDateTime
+            }
           }
         }
       `}
