@@ -23,7 +23,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
   me,
 }) => {
   const { sendToast } = useToasts()
-  const { submitUpdateSettingsInformation } = useUpdateSettingsInformation()
+  const { submitMutation } = useUpdateSettingsInformation()
 
   return (
     <>
@@ -60,11 +60,11 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
         })}
         onSubmit={async ({ email, name, password, phone }) => {
           try {
-            await submitUpdateSettingsInformation({
-              email,
-              name,
-              password,
-              phone,
+            await submitMutation({
+              variables: { input: { email, name, password, phone } },
+              rejectIf: res => {
+                return res.updateMyUserProfile?.userOrError?.mutationError
+              },
             })
 
             sendToast({
