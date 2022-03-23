@@ -10,7 +10,6 @@ import { BreadCrumbList } from "v2/Components/Seo"
 import * as React from "react"
 import { Title } from "react-head"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
-import { data as sd } from "sharify"
 import truncate from "trunc-html"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
@@ -27,6 +26,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { MetaTags } from "v2/Components/MetaTags"
+import { getENV } from "v2/Utils/getENV"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
   collection: Collection_collection
@@ -49,7 +49,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     descending_artworks,
     ascending_artworks,
   } = collection
-  const collectionHref = `${sd.APP_URL}/collection/${slug}`
+  const collectionHref = `${getENV("APP_URL")}/collection/${slug}`
   const collectionSlug = `collection/${slug}`
 
   const metadataDescription = description
@@ -179,10 +179,6 @@ export const CollectionFragmentContainer = createFragmentContainer(
         slug
         id
         title
-        query {
-          artist_id: artistID
-          gene_id: geneID
-        }
         relatedCollections(size: 16) {
           ...RelatedCollectionsRail_collections
         }
