@@ -8,7 +8,7 @@ import { FeatureFlags } from "v2/System/useFeatureFlag"
 
 export function featureFlagMiddleware(serviceType: symbol) {
   let service
-  return (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
+  return (_req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     new Promise<FeatureFlagService>(async (resolve, reject) => {
       if (service) {
         resolve(service)
@@ -43,6 +43,7 @@ export function featureFlagMiddleware(serviceType: symbol) {
       })
       .catch(error => {
         console.error("[Force] Error creating feature flag service:", error)
+        res.locals.sd.FEATURE_FLAGS = {}
         next()
       })
   }
