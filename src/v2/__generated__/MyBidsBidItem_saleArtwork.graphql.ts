@@ -8,9 +8,11 @@ export type MyBidsBidItem_saleArtwork = {
     readonly artwork: {
         readonly artistNames: string | null;
         readonly image: {
-            readonly resized: {
+            readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
+                readonly width: number;
+                readonly height: number;
             } | null;
         } | null;
     } | null;
@@ -92,9 +94,9 @@ return {
                   "value": 55
                 }
               ],
-              "concreteType": "ResizedImageUrl",
+              "concreteType": "CroppedImageUrl",
               "kind": "LinkedField",
-              "name": "resized",
+              "name": "cropped",
               "plural": false,
               "selections": [
                 {
@@ -110,9 +112,23 @@ return {
                   "kind": "ScalarField",
                   "name": "srcSet",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "width",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "height",
+                  "storageKey": null
                 }
               ],
-              "storageKey": "resized(height:55,width:55)"
+              "storageKey": "cropped(height:55,width:55)"
             }
           ],
           "storageKey": null
@@ -205,5 +221,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '96aa172209d13cf0db980cf0357f473b';
+(node as any).hash = '01d8693674c141b25ab9c428b3d632f5';
 export default node;
