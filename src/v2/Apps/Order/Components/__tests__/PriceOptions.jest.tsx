@@ -132,7 +132,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$200.00."
+        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$100.00."
       )
       expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenCalledWith(
@@ -164,9 +164,9 @@ describe("PriceOptions", () => {
       expect(radios).toHaveLength(4)
     })
     it("correctly formats values", () => {
-      expect(radios[0]).toHaveTextContent("€100")
-      expect(radios[1]).toHaveTextContent("€90")
-      expect(radios[2]).toHaveTextContent("€80")
+      expect(radios[0]).toHaveTextContent("€100.00")
+      expect(radios[1]).toHaveTextContent("€90.00")
+      expect(radios[2]).toHaveTextContent("€80.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
     it("correctly tracks the clicking of an option", async () => {
