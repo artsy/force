@@ -34,7 +34,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       },
       {
         text: "Alerts",
-        href: "/user/alerts",
+        href: "/settings/alerts",
       },
       {
         text: "Saves & Follows",

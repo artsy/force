@@ -69,7 +69,7 @@ export const NavBarUserMenu: React.FC = () => {
       {getENV("ENABLE_YOUR_ALERTS_PAGE") && (
         <NavBarMenuItemLink
           aria-label="View your alerts"
-          to="/user/alerts"
+          to="/settings/alerts"
           onClick={trackClick}
         >
           <BellIcon mr={1} aria-hidden="true" /> Alerts
