@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@18.1.4":
-  version "18.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-18.1.4.tgz#d8c0463359bdb718aae445afcc27b6e54eadb93b"
-  integrity sha512-TJuG86/np/l4jF0BDgNlstax6J86WNrqtWPOYpRcvGI6Hk5fokPyWvFB0oRgrENYgYN+NUBXhgNXpIzeA26h3Q==
+"@artsy/palette-charts@18.1.5":
+  version "18.1.5"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-18.1.5.tgz#71318de7e5224240d251854a6dbf67fd51b30360"
+  integrity sha512-LUSaT0qN84nx70zsxFLtCl/mBFWHOTlCoi3MJxM/KWpyrRsiKdpr8fzvjoYHtvT4KV0LWTYqerW9sz4/J5SQLw==
   dependencies:
-    "@artsy/palette" "^19.1.4"
+    "@artsy/palette" "^19.1.5"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,29 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@19.1.5":
+"@artsy/palette@19.1.5", "@artsy/palette@^19.1.5":
   version "19.1.5"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.1.5.tgz#ac257588193ee60e54b43814f023df9b3d3bd94a"
   integrity sha512-O5bflPqkhn+aIgKEpEhjHXsxepYUGMtiae65H7oBCgKlhZ5yYJqtzDJmFTmVA+HH+tTKq2UntOMj//S1t5Y8CQ==
-  dependencies:
-    "@artsy/palette-tokens" "^2.6.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "^2.3.0"
-    styled-bootstrap-grid "3.1.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^19.1.4":
-  version "19.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.1.4.tgz#05c8994c1d002e28e018caa35a25b5e42164faa7"
-  integrity sha512-sIyuu3epCb2K+i27oTmw8Bt387NrLXZGsMo/sD6SLZZuiMB/ftb3QFPQDWidSj/B8WGFPXXOhR4ZbCE8BMaJ/Q==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
