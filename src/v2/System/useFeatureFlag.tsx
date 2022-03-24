@@ -1,4 +1,4 @@
-import { useSystemContext, useTracking } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { Variant } from "unleash-client"
 
 import { useEffect } from "react"
@@ -60,15 +60,14 @@ export function useTrackVariantView({
   contextOwnerSlug,
   shouldTrackExperiment = true,
 }: VariantTrackingProperties) {
-  const { trackEvent } = useTracking()
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.analytics !== "undefined"
+    ) {
       const trackFeatureView = shouldTrack(experimentName, variantName)
-
       if (trackFeatureView && shouldTrackExperiment) {
-        trackEvent({
-          action: ActionType.experimentViewed,
+        window.analytics.track(ActionType.experimentViewed, {
           service: "unleash",
           experiment_name: experimentName,
           variant_name: variantName,
