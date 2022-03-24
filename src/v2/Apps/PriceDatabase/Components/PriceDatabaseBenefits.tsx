@@ -71,7 +71,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
       <Section
         title="Track artists and their markets"
-        text={`Get insight into artists you follow with a personalized feed, powered by the Artsy Price Database. \n Available now on iOS and Android.`}
+        text={`Get insight into artists you follow with a personalized feed in the Artsy app, powered by the Artsy Price Database. \n Available now on iOS and Android.`}
         jsx={
           <SectionImage
             src="https://files.artsy.net/images/matthew_wong_morning.png"
@@ -79,6 +79,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
             alt=""
             artistName="Matthew Wong"
             artworkName="Morning Landscape ,2017"
+            artworkCopyright="© Artist Rights Society (ARS), New York."
           />
         }
         jsxPosition="right"
