@@ -67,6 +67,9 @@ export function useTrackVariantView({
     ) {
       const trackFeatureView = shouldTrack(experimentName, variantName)
       if (trackFeatureView && shouldTrackExperiment) {
+        // HACK: We are using window.analytics.track over trackEvent from useTracking because
+        // the trackEvent wasn't behaving as expected, it was never firing the event and
+        // moving to using the solution below fixed the issue.
         window.analytics.track(ActionType.experimentViewed, {
           service: "unleash",
           experiment_name: experimentName,
