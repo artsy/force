@@ -52,8 +52,25 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
       getItems={() => {
         return nodes.map((node, index) => {
           if (node.__typename !== "Profile") return <></>
+
           return (
-            <PartnerCellFragmentContainer key={index} partner={node.owner} />
+            <PartnerCellFragmentContainer
+              key={index}
+              partner={node.owner}
+              onClick={() => {
+                const trackingEvent: ClickedGalleryGroup = {
+                  action: ActionType.clickedGalleryGroup,
+                  context_module: ContextModule.featuredGalleriesRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: node.owner.internalID,
+                  destination_page_owner_slug: node.owner.slug,
+                  destination_page_owner_type: OwnerType.galleries,
+                  type: "thumbnail",
+                }
+
+                trackEvent(trackingEvent)
+              }}
+            />
           )
         })
       }}
@@ -88,6 +105,10 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
               ... on Profile {
                 owner {
                   ...PartnerCell_partner
+                  ... on Partner {
+                    internalID
+                    slug
+                  }
                 }
               }
             }

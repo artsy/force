@@ -1,10 +1,4 @@
 import {
-  ActionType,
-  ClickedGalleryGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import {
   Box,
   Image,
   ResponsiveBox,
@@ -14,13 +8,12 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "v2/System/Analytics/useTracking"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 
-interface PartnerCellProps {
+interface PartnerCellProps extends Omit<RouterLinkProps, "to"> {
   partner: PartnerCell_partner
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
@@ -29,9 +22,8 @@ interface PartnerCellProps {
 const PartnerCell: React.FC<PartnerCellProps> = ({
   partner,
   mode = "RAIL",
+  ...rest
 }) => {
-  const { trackEvent } = useTracking()
-
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = partner.profile?.image?.cropped
 
@@ -41,23 +33,11 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
 
   return (
     <RouterLink
-      to={`${partner.href}`}
+      to={partner.href}
       display="block"
       textDecoration="none"
       width={width}
-      onClick={() => {
-        const trackingEvent: ClickedGalleryGroup = {
-          action: ActionType.clickedGalleryGroup,
-          context_module: ContextModule.featuredGalleriesRail,
-          context_page_owner_type: OwnerType.home,
-          destination_page_owner_id: partner.internalID,
-          destination_page_owner_slug: partner.slug,
-          destination_page_owner_type: OwnerType.galleries,
-          type: "thumbnail",
-        }
-
-        trackEvent(trackingEvent)
-      }}
+      {...rest}
     >
       <EntityHeaderPartnerFragmentContainer
         partner={partner}
