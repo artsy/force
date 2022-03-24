@@ -74,7 +74,11 @@ export const MyBidsBidHeaderFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment MyBidsBidHeader_sale on Sale {
         coverImage {
-          cropped(width: 330, height: 100) {
+          cropped(
+            width: 330
+            height: 100
+            version: ["source", "wide", "large_rectangle"]
+          ) {
             src
             srcSet
           }

@@ -29,9 +29,11 @@ fragment MyBidsBidItem_saleArtwork on SaleArtwork {
   artwork {
     artistNames
     image {
-      resized(width: 55, height: 55) {
+      cropped(width: 55, height: 55) {
         src
         srcSet
+        width
+        height
       }
     }
     id
@@ -94,9 +96,15 @@ v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "Int"
 },
 v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -180,9 +188,9 @@ return {
                         "value": 55
                       }
                     ],
-                    "concreteType": "ResizedImageUrl",
+                    "concreteType": "CroppedImageUrl",
                     "kind": "LinkedField",
-                    "name": "resized",
+                    "name": "cropped",
                     "plural": false,
                     "selections": [
                       {
@@ -198,9 +206,23 @@ return {
                         "kind": "ScalarField",
                         "name": "srcSet",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "width",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "height",
+                        "storageKey": null
                       }
                     ],
-                    "storageKey": "resized(height:55,width:55)"
+                    "storageKey": "cropped(height:55,width:55)"
                   }
                 ],
                 "storageKey": null
@@ -296,7 +318,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8ee40c4ec5ab997e8da94a8f3f764fad",
+    "cacheID": "8ac86c18a9477ec93a5fc8d1e3df0bfc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -320,14 +342,16 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "saleArtwork.artwork.image.resized": {
+        "saleArtwork.artwork.image.cropped": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "ResizedImageUrl"
+          "type": "CroppedImageUrl"
         },
-        "saleArtwork.artwork.image.resized.src": (v5/*: any*/),
-        "saleArtwork.artwork.image.resized.srcSet": (v5/*: any*/),
+        "saleArtwork.artwork.image.cropped.height": (v5/*: any*/),
+        "saleArtwork.artwork.image.cropped.src": (v6/*: any*/),
+        "saleArtwork.artwork.image.cropped.srcSet": (v6/*: any*/),
+        "saleArtwork.artwork.image.cropped.width": (v5/*: any*/),
         "saleArtwork.currentBid": {
           "enumValues": null,
           "nullable": true,
@@ -338,8 +362,8 @@ return {
         "saleArtwork.estimate": (v3/*: any*/),
         "saleArtwork.id": (v4/*: any*/),
         "saleArtwork.internalID": (v4/*: any*/),
-        "saleArtwork.isHighestBidder": (v6/*: any*/),
-        "saleArtwork.isWatching": (v6/*: any*/),
+        "saleArtwork.isHighestBidder": (v7/*: any*/),
+        "saleArtwork.isWatching": (v7/*: any*/),
         "saleArtwork.lotLabel": (v3/*: any*/),
         "saleArtwork.lotState": {
           "enumValues": null,
@@ -365,7 +389,7 @@ return {
     },
     "name": "MyBidsBidItem_Test_Query",
     "operationKind": "query",
-    "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n"
+    "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n"
   }
 };
 })();
