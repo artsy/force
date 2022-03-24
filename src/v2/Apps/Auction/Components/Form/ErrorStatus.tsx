@@ -54,6 +54,12 @@ export const ErrorStatus = () => {
           message,
         }
       }
+      case "LOT_CLOSED": {
+        return {
+          title: "Lot Closed",
+          message,
+        }
+      }
       case "ERROR":
       case "SUBMISSION_FAILED":
       default: {
