@@ -23,7 +23,7 @@ import { SettingsPurchasesRow_order } from "v2/__generated__/SettingsPurchasesRo
 import { LocaleOptions } from "luxon"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
-import { PlaceholderEntityHeader } from "v2/Components/EntityHeaders/PlaceholderEntityHeader"
+import { EntityHeaderPlaceholder } from "v2/Components/EntityHeaders/EntityHeaderPlaceholder"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -314,7 +314,7 @@ export const SettingsPurchasesRowPlaceholder: FC = () => {
           </Column>
 
           <Column span={6}>
-            <PlaceholderEntityHeader />
+            <EntityHeaderPlaceholder />
           </Column>
 
           <Column span={12}>

@@ -24,6 +24,25 @@ query HomeTrendingArtistsRailQuery {
   }
 }
 
+fragment EntityHeaderArtist_artist on Artist {
+  internalID
+  href
+  slug
+  name
+  initials
+  formattedNationalityAndBirthday
+  counts {
+    artworks
+    forSaleArtworks
+  }
+  avatar: image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment FollowArtistButton_artist on Artist {
   id
   internalID
@@ -40,6 +59,7 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
     edges {
       node {
         ...FollowArtistButton_artist
+        ...EntityHeaderArtist_artist
         internalID
         isFollowed
         name
@@ -61,7 +81,22 @@ fragment HomeTrendingArtistsRail_viewer on Viewer {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -186,15 +221,22 @@ const node: ConcreteRequest = {
                             "kind": "ScalarField",
                             "name": "follows",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "artworks",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "forSaleArtworks",
+                            "storageKey": null
                           }
                         ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isFollowed",
                         "storageKey": null
                       },
                       {
@@ -208,7 +250,56 @@ const node: ConcreteRequest = {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "initials",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "formattedNationalityAndBirthday",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "avatar",
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 45
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 45
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              (v0/*: any*/),
+                              (v1/*: any*/)
+                            ],
+                            "storageKey": "cropped(height:45,width:45)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isFollowed",
                         "storageKey": null
                       },
                       {
@@ -238,20 +329,8 @@ const node: ConcreteRequest = {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              },
+                              (v0/*: any*/),
+                              (v1/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -287,13 +366,14 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "a200616d623f3fac08246f67ef3434e3",
+    "cacheID": "e47e8877b08bbe08004093f7a0d23b1a",
     "id": null,
     "metadata": {},
     "name": "HomeTrendingArtistsRailQuery",
     "operationKind": "query",
-    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  artistsConnection(sort: TRENDING_DESC, first: 99) {\n    edges {\n      node {\n        ...FollowArtistButton_artist\n        ...EntityHeaderArtist_artist\n        internalID\n        isFollowed\n        name\n        slug\n        href\n        formattedNationalityAndBirthday\n        image {\n          cropped(width: 325, height: 230) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
+})();
 (node as any).hash = 'ba5b4a81fc58c141a3f8c4e5deb9fb8a';
 export default node;

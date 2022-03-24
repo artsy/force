@@ -104,5 +104,15 @@ function getExperimentsViewed(): string[] {
 }
 
 function setExperimentsViewed(experiments: string[]) {
-  window.localStorage.setItem("experimentsViewed", JSON.stringify(experiments))
+  try {
+    window.localStorage.setItem(
+      "experimentsViewed",
+      JSON.stringify(experiments)
+    )
+  } catch (error) {
+    console.error(
+      "[Force] Error: unable to set experimentsViewed on local storage: ",
+      error
+    )
+  }
 }

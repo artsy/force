@@ -4,9 +4,9 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairEntityHeader_fair = {
+export type EntityHeaderFair_fair = {
     readonly internalID: string;
-    readonly slug: string;
+    readonly href: string | null;
     readonly name: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
@@ -17,16 +17,15 @@ export type FairEntityHeader_fair = {
         } | null;
     } | null;
     readonly profile: {
-        readonly isFollowed: boolean | null;
         readonly initials: string | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $refType": "FairEntityHeader_fair";
+    readonly " $refType": "EntityHeaderFair_fair";
 };
-export type FairEntityHeader_fair$data = FairEntityHeader_fair;
-export type FairEntityHeader_fair$key = {
-    readonly " $data"?: FairEntityHeader_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEntityHeader_fair">;
+export type EntityHeaderFair_fair$data = EntityHeaderFair_fair;
+export type EntityHeaderFair_fair$key = {
+    readonly " $data"?: EntityHeaderFair_fair$data;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
 };
 
 
@@ -35,7 +34,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairEntityHeader_fair",
+  "name": "EntityHeaderFair_fair",
   "selections": [
     {
       "alias": null,
@@ -48,7 +47,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -143,13 +142,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "isFollowed",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "initials",
           "storageKey": null
         },
@@ -165,5 +157,5 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '7e4eab4264bc6cf0c1bb01524783c715';
+(node as any).hash = 'e4e1a33d028f86d9efa0f3b80e0458cc';
 export default node;

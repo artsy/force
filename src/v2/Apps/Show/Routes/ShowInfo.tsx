@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Box,
   Column,
@@ -11,10 +11,10 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowInfo_show } from "v2/__generated__/ShowInfo_show.graphql"
-import { ShowPartnerEntityHeaderFragmentContainer as ShowPartnerEntityHeader } from "../Components/ShowPartnerEntityHeader"
 import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "../Components/ShowInfoLocation"
 import { Media } from "v2/Utils/Responsive"
 import { ShowHoursFragmentContainer } from "../Components/ShowHours"
+import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
 
 interface ShowInfoProps {
   show: ShowInfo_show
@@ -74,7 +74,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
                     {partner.type}
                   </Text>
 
-                  <ShowPartnerEntityHeader partner={partner} />
+                  <EntityHeaderPartnerFragmentContainer partner={partner} />
                 </Box>
               )}
 
@@ -107,7 +107,7 @@ export const ShowInfoFragmentContainer = createFragmentContainer(ShowInfo, {
       partner {
         __typename
         ... on Partner {
-          ...ShowPartnerEntityHeader_partner
+          ...EntityHeaderPartner_partner
           type
         }
       }

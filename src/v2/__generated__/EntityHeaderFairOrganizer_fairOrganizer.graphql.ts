@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerEntityHeader_fairOrganizer = {
+export type EntityHeaderFairOrganizer_fairOrganizer = {
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
@@ -12,7 +12,7 @@ export type FairOrganizerEntityHeader_fairOrganizer = {
         readonly totalCount: number | null;
     } | null;
     readonly profile: {
-        readonly isFollowed: boolean | null;
+        readonly href: string | null;
         readonly initials: string | null;
         readonly avatar: {
             readonly cropped: {
@@ -22,12 +22,12 @@ export type FairOrganizerEntityHeader_fairOrganizer = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
-    readonly " $refType": "FairOrganizerEntityHeader_fairOrganizer";
+    readonly " $refType": "EntityHeaderFairOrganizer_fairOrganizer";
 };
-export type FairOrganizerEntityHeader_fairOrganizer$data = FairOrganizerEntityHeader_fairOrganizer;
-export type FairOrganizerEntityHeader_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerEntityHeader_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerEntityHeader_fairOrganizer">;
+export type EntityHeaderFairOrganizer_fairOrganizer$data = EntityHeaderFairOrganizer_fairOrganizer;
+export type EntityHeaderFairOrganizer_fairOrganizer$key = {
+    readonly " $data"?: EntityHeaderFairOrganizer_fairOrganizer$data;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
 };
 
 
@@ -36,7 +36,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairOrganizerEntityHeader_fairOrganizer",
+  "name": "EntityHeaderFairOrganizer_fairOrganizer",
   "selections": [
     {
       "alias": null,
@@ -89,7 +89,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "isFollowed",
+          "name": "href",
           "storageKey": null
         },
         {
@@ -158,5 +158,5 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '4b4a93ee4a9b9955c6a0e6817f6c9cf0';
+(node as any).hash = '052b967b34d0875f92bf82944cfa0ee2';
 export default node;

@@ -5,7 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipPartner_partner = {
-    readonly name: string | null;
     readonly href: string | null;
     readonly profile: {
         readonly bio: string | null;
@@ -18,8 +17,8 @@ export type EntityTooltipPartner_partner = {
                 readonly height: number;
             } | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     readonly " $refType": "EntityTooltipPartner_partner";
 };
 export type EntityTooltipPartner_partner$data = EntityTooltipPartner_partner;
@@ -36,13 +35,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "EntityTooltipPartner_partner",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -140,18 +132,18 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "FollowProfileButton_profile"
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "EntityHeaderPartner_partner"
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '0564ab8a74f6d0556791392237900794';
+(node as any).hash = '82bb31bb03b675a6c87f8734d20e1534';
 export default node;

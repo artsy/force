@@ -22,13 +22,13 @@ export type SettingsSavesProfiles_me = {
                         } | null;
                         readonly owner: {
                             readonly __typename: "Partner";
-                            readonly " $fragmentRefs": FragmentRefs<"PartnerEntityHeader_partner">;
+                            readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
                         } | {
                             readonly __typename: "Fair";
-                            readonly " $fragmentRefs": FragmentRefs<"FairEntityHeader_fair">;
+                            readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
                         } | {
                             readonly __typename: "FairOrganizer";
-                            readonly " $fragmentRefs": FragmentRefs<"FairOrganizerEntityHeader_fairOrganizer">;
+                            readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
                         } | {
                             /*This will never be '%other', but we need some
                             value in case none of the concrete values match.*/
@@ -211,7 +211,7 @@ return {
                                 {
                                   "args": null,
                                   "kind": "FragmentSpread",
-                                  "name": "PartnerEntityHeader_partner"
+                                  "name": "EntityHeaderPartner_partner"
                                 }
                               ],
                               "type": "Partner",
@@ -223,7 +223,7 @@ return {
                                 {
                                   "args": null,
                                   "kind": "FragmentSpread",
-                                  "name": "FairEntityHeader_fair"
+                                  "name": "EntityHeaderFair_fair"
                                 }
                               ],
                               "type": "Fair",
@@ -235,7 +235,7 @@ return {
                                 {
                                   "args": null,
                                   "kind": "FragmentSpread",
-                                  "name": "FairOrganizerEntityHeader_fairOrganizer"
+                                  "name": "EntityHeaderFairOrganizer_fairOrganizer"
                                 }
                               ],
                               "type": "FairOrganizer",
@@ -297,5 +297,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7bcbc7a942408122d4f9bf618b1ab7d8';
+(node as any).hash = 'fb6a2df7011e9429e147931780a967eb';
 export default node;

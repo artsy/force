@@ -7,19 +7,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarArtists_artwork = {
     readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
-        readonly id: string;
         readonly internalID: string;
         readonly slug: string;
         readonly name: string | null;
-        readonly formattedNationalityAndBirthday: string | null;
-        readonly href: string | null;
-        readonly avatar: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist" | "FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtworkSidebarArtists_artwork";
 };
@@ -62,13 +53,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "internalID",
           "storageKey": null
         },
@@ -87,65 +71,9 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "formattedNationalityAndBirthday",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": "avatar",
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 45
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 45
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "cropped(height:45,width:45)"
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "EntityHeaderArtist_artist"
         },
         {
           "args": [
@@ -165,5 +93,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '3bd0d5dae070cc3a4cfb0892eacd488f';
+(node as any).hash = '7b030820d6156f2b5417ed17d67e09f7';
 export default node;

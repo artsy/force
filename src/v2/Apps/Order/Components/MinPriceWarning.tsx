@@ -22,19 +22,15 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
       flow: AnalyticsSchema.Flow.MakeOffer,
       order_id: orderID,
     })
-  }, [])
+  }, [orderID, tracking])
 
   return (
     <Clickable cursor="pointer" onClick={onClick} mt={2}>
       <Message variant="warning" p={2}>
         <Text>
-          Galleries usually accept offers within
           {isPriceRange
-            ? " the displayed price range"
-            : " 20% of the listed price"}
-          ; any lower is likely to be rejected.
-        </Text>
-        <Text style={{ textDecoration: "underline" }}>
+            ? "Offers lower than the displayed price range are often declined. "
+            : "Offers less than 20% of the list price are often declined. "}
           We recommend changing your offer to {minPrice}.
         </Text>
       </Message>

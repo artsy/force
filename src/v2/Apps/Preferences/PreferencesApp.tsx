@@ -104,7 +104,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
             sendToast({
               variant: "success",
-              message: "Preferences updated sucessfully.",
+              message: "Preferences updated successfully.",
             })
           } catch (error) {
             console.error(error)

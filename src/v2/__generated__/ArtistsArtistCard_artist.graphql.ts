@@ -5,20 +5,14 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsArtistCard_artist = {
-    readonly name: string | null;
     readonly href: string | null;
-    readonly formattedNationalityAndBirthday: string | null;
-    readonly counts: {
-        readonly artworks: number | null;
-        readonly forSaleArtworks: number | null;
-    } | null;
     readonly image: {
         readonly thumb: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
     readonly " $refType": "ArtistsArtistCard_artist";
 };
 export type ArtistsArtistCard_artist$data = ArtistsArtistCard_artist;
@@ -39,46 +33,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedNationalityAndBirthday",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artworks",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "forSaleArtworks",
-          "storageKey": null
-        }
-      ],
       "storageKey": null
     },
     {
@@ -131,11 +86,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
+      "name": "EntityHeaderArtist_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '5db5127fb9d1599c8dc00c7692a24b9b';
+(node as any).hash = '79b6c6d6116566a0019316029b44ca10';
 export default node;

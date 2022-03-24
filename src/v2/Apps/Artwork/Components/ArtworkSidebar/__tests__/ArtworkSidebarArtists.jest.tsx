@@ -93,13 +93,13 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(screen.getByText("Josef Albers")).toBeInTheDocument()
       expect(links[0]).toHaveAttribute("href", "/artist/josef-albers")
-      expect(within(links[0]).getByText("Follow")).toBeInTheDocument()
-      expect(within(links[0]).getByText("Following")).toHaveStyle("opacity: 0")
+
+      expect(screen.getAllByText("Follow")).toHaveLength(2)
+      expect(screen.getAllByText("Following")[0]).toHaveStyle("opacity: 0")
 
       expect(screen.getByText("Ed Ruscha")).toBeInTheDocument()
       expect(links[1]).toHaveAttribute("href", "/artist/ed-ruscha")
-      expect(within(links[1]).getByText("Follow")).toBeInTheDocument()
-      expect(within(links[1]).getByText("Following")).toHaveStyle("opacity: 0")
+      expect(screen.getAllByText("Following")[1]).toHaveStyle("opacity: 0")
     })
   })
 
