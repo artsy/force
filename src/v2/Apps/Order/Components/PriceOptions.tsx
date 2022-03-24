@@ -114,7 +114,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = artwork?.isPriceRange
     ? getRangeOptions()
     : getPercentageOptions()
-  const minPrice = priceOptions[0]?.value!
+  const minPrice = priceOptions[2]?.value!
 
   const { scrollTo } = useScrollTo({
     selectorOrRef: "#scrollTo--price-option-custom",
