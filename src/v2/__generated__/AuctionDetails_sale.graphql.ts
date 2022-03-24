@@ -11,10 +11,15 @@ export type AuctionDetails_sale = {
     readonly liveStartAt: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
+    readonly endedAt: string | null;
     readonly description: string | null;
     readonly href: string | null;
     readonly isClosed: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale" | "AuctionInfoSidebar_sale">;
+    readonly cascadingEndTimeInterval: number | null;
+    readonly cascadingEndTime: {
+        readonly intervalLabel: string | null;
+    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale" | "AuctionInfoSidebar_sale" | "SaleDetailTimer_sale">;
     readonly " $refType": "AuctionDetails_sale";
 };
 export type AuctionDetails_sale$data = AuctionDetails_sale;
@@ -75,6 +80,13 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endedAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -101,6 +113,31 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cascadingEndTimeInterval",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleCascadingEndTime",
+      "kind": "LinkedField",
+      "name": "cascadingEndTime",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "intervalLabel",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "RegisterButton_sale"
@@ -109,10 +146,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionInfoSidebar_sale"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SaleDetailTimer_sale"
     }
   ],
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = 'b867e4115b6d342a9272e6a83b1400b6';
+(node as any).hash = 'e368b2849779d15308faa43d2294b5fd';
 export default node;

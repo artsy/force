@@ -19,7 +19,7 @@ const AuctionDetailsStartTime: FC<AuctionDetailsStartTimeProps> = ({
 }) => {
   return (
     <Text variant="xl" {...rest}>
-      {sale.formattedStartDateTime}
+      {!!sale.cascadingEndTime && sale.cascadingEndTime?.formattedStartDateTime}
     </Text>
   )
 }
@@ -29,7 +29,9 @@ const AuctionDetailsStartTimeFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionDetailsStartTime_sale on Sale {
-        formattedStartDateTime
+        cascadingEndTime {
+          formattedStartDateTime
+        }
       }
     `,
   }
@@ -58,6 +60,11 @@ export const AuctionDetailsStartTimeQueryRenderer: FC<AuctionDetailsStartTimeQue
         query AuctionDetailsStartTimeQuery($id: String!) {
           sale(id: $id) {
             ...AuctionDetailsStartTime_sale
+            cascadingEndTimeInterval
+            formattedStartDateTime
+            cascadingEndTime {
+              formattedStartDateTime
+            }
           }
         }
       `}
