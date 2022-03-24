@@ -29,7 +29,7 @@ export const CellArticle = () => {
         return (
           <SystemQueryRenderer<CellArticleStoryQuery>
             variables={{ id }}
-            placeholder={<CellArticlePlaceholder />}
+            placeholder={<CellArticlePlaceholder {...rest} />}
             query={graphql`
               query CellArticleStoryQuery($id: String!) {
                 article(id: $id) {
@@ -44,7 +44,7 @@ export const CellArticle = () => {
               }
 
               if (!props?.article) {
-                return <CellArticlePlaceholder />
+                return <CellArticlePlaceholder {...rest} />
               }
 
               return (

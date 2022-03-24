@@ -1,17 +1,11 @@
-import {
-  Box,
-  Image,
-  ResponsiveBox,
-  SkeletonBox,
-  SkeletonText,
-  Text,
-} from "@artsy/palette"
+import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { CellPartner_partner } from "v2/__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
+import { EntityHeaderPlaceholder } from "../EntityHeaders/EntityHeaderPlaceholder"
 
 export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
   partner: CellPartner_partner
@@ -85,11 +79,7 @@ export const CellPartnerPlaceholder: React.FC<CellPartnerPlaceholderProps> = ({
 
   return (
     <Box width={width}>
-      <SkeletonText variant="lg">Example Gallery</SkeletonText>
-
-      <SkeletonText variant="md" mb={1}>
-        Location
-      </SkeletonText>
+      <EntityHeaderPlaceholder displayAvatar={false} mb={1} />
 
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
         <SkeletonBox width="100%" height="100%" />

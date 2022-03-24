@@ -28,7 +28,7 @@ export const CellPartner = () => {
         return (
           <SystemQueryRenderer<CellPartnerStoryQuery>
             variables={{ id }}
-            placeholder={<CellPartnerPlaceholder />}
+            placeholder={<CellPartnerPlaceholder {...rest} />}
             query={graphql`
               query CellPartnerStoryQuery($id: String!) {
                 partner(id: $id) {
@@ -43,7 +43,7 @@ export const CellPartner = () => {
               }
 
               if (!props?.partner) {
-                return <CellPartnerPlaceholder />
+                return <CellPartnerPlaceholder {...rest} />
               }
 
               return (
