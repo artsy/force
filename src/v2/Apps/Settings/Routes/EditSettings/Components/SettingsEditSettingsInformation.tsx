@@ -58,9 +58,9 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             }
           ),
         })}
-        onSubmit={async ({ email, name, password, phone }) => {
+        onSubmit={async ({ email, name, password, phone }, { resetForm }) => {
           try {
-            await submitMutation({
+            const { updateMyUserProfile } = await submitMutation({
               variables: { input: { email, name, password, phone } },
               rejectIf: res => {
                 return res.updateMyUserProfile?.userOrError?.mutationError
@@ -70,6 +70,17 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             sendToast({
               variant: "success",
               message: "Information updated successfully",
+            })
+
+            const updatedMe = updateMyUserProfile?.me
+
+            resetForm({
+              values: {
+                name: updatedMe?.name ?? name,
+                email: updatedMe?.email ?? email,
+                phone: updatedMe?.phone ?? phone,
+                password: "",
+              },
             })
           } catch (err) {
             console.error(err)

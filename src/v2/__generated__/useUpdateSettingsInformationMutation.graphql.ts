@@ -55,6 +55,9 @@ export type useUpdateSettingsInformationMutationVariables = {
 export type useUpdateSettingsInformationMutationResponse = {
     readonly updateMyUserProfile: {
         readonly me: {
+            readonly name: string | null;
+            readonly email: string | null;
+            readonly phone: string | null;
             readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
         } | null;
         readonly userOrError: {
@@ -88,6 +91,9 @@ mutation useUpdateSettingsInformationMutation(
   updateMyUserProfile(input: $input) {
     me {
       ...SettingsEditSettingsInformation_me
+      name
+      email
+      phone
       id
     }
     userOrError {
@@ -141,24 +147,38 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "message",
+  "name": "email",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "phone",
   "storageKey": null
 },
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "message",
+  "storageKey": null
+},
+v7 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -176,7 +196,7 @@ v5 = {
           "name": "type",
           "storageKey": null
         },
-        (v3/*: any*/),
+        (v6/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -199,8 +219,8 @@ v5 = {
           "name": "fieldErrors",
           "plural": true,
           "selections": [
-            (v4/*: any*/),
-            (v3/*: any*/)
+            (v2/*: any*/),
+            (v6/*: any*/)
           ],
           "storageKey": null
         }
@@ -211,7 +231,7 @@ v5 = {
   "type": "UpdateMyProfileMutationFailure",
   "abstractKey": null
 },
-v6 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -241,6 +261,9 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -268,7 +291,7 @@ return {
                     "name": "user",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -276,7 +299,7 @@ return {
                 "type": "UpdateMyProfileMutationSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -309,14 +332,8 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "email",
-                "storageKey": null
-              },
-              (v4/*: any*/),
+              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -324,14 +341,8 @@ return {
                 "name": "paddleNumber",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "phone",
-                "storageKey": null
-              },
-              (v6/*: any*/)
+              (v4/*: any*/),
+              (v8/*: any*/)
             ],
             "storageKey": null
           },
@@ -361,8 +372,8 @@ return {
                     "name": "user",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v6/*: any*/)
+                      (v5/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -370,7 +381,7 @@ return {
                 "type": "UpdateMyProfileMutationSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -380,14 +391,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "37d94d71b7a7ac3672af3289d66d45bd",
+    "cacheID": "3b677675af93b6b4796cb95699e6911f",
     "id": null,
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
+    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      name\n      email\n      phone\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n}\n"
   }
 };
 })();
-(node as any).hash = 'c3ddab7400b980cba872ea195359ca0a';
+(node as any).hash = '75b2af000cf6f99e786ce594039695c4';
 export default node;
