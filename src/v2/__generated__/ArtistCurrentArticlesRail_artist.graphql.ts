@@ -14,7 +14,7 @@ export type ArtistCurrentArticlesRail_artist = {
                 readonly internalID: string;
                 readonly slug: string | null;
                 readonly href: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
+                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
             } | null;
         } | null> | null;
     } | null;
@@ -110,7 +110,7 @@ return {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArticleCell_article"
+                  "name": "CellArticle_article"
                 }
               ],
               "storageKey": null
@@ -126,5 +126,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4265a11b41886e8497b2d7b98395b174';
+(node as any).hash = 'c08088f56451680766023365484066e6';
 export default node;

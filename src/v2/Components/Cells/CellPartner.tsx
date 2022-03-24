@@ -9,17 +9,17 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
-import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
+import { CellPartner_partner } from "v2/__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 
-interface PartnerCellProps extends Omit<RouterLinkProps, "to"> {
-  partner: PartnerCell_partner
+export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
+  partner: CellPartner_partner
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
 
-const PartnerCell: React.FC<PartnerCellProps> = ({
+const CellPartner: React.FC<CellPartnerProps> = ({
   partner,
   mode = "RAIL",
   ...rest
@@ -76,9 +76,9 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
   )
 }
 
-type PartnerCellPlaceholderProps = Pick<PartnerCellProps, "mode">
+type CellPartnerPlaceholderProps = Pick<CellPartnerProps, "mode">
 
-export const PartnerCellPlaceholder: React.FC<PartnerCellPlaceholderProps> = ({
+export const CellPartnerPlaceholder: React.FC<CellPartnerPlaceholderProps> = ({
   mode = "RAIL",
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
@@ -98,11 +98,11 @@ export const PartnerCellPlaceholder: React.FC<PartnerCellPlaceholderProps> = ({
   )
 }
 
-export const PartnerCellFragmentContainer = createFragmentContainer(
-  PartnerCell,
+export const CellPartnerFragmentContainer = createFragmentContainer(
+  CellPartner,
   {
     partner: graphql`
-      fragment PartnerCell_partner on Partner {
+      fragment CellPartner_partner on Partner {
         ...EntityHeaderPartner_partner
         internalID
         slug

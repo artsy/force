@@ -8,7 +8,7 @@ export type ArticleChannelRelatedArticles_article = {
     readonly byline: string | null;
     readonly channelArticles: ReadonlyArray<{
         readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
+        readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
     }>;
     readonly " $refType": "ArticleChannelRelatedArticles_article";
 };
@@ -51,7 +51,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArticleCell_article"
+          "name": "CellArticle_article"
         }
       ],
       "storageKey": null
@@ -60,5 +60,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = 'e607027ef20ec0176628a60d2d0e6810';
+(node as any).hash = 'f14731273fb9b7023f44396acf49ba8f';
 export default node;

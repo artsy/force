@@ -13,7 +13,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistCurrentArticlesRail_artist } from "v2/__generated__/ArtistCurrentArticlesRail_artist.graphql"
 import { ArtistCurrentArticlesRailQuery } from "v2/__generated__/ArtistCurrentArticlesRailQuery.graphql"
-import { ArticleCellFragmentContainer } from "v2/Components/Cells/ArticleCell"
+import { CellArticleFragmentContainer } from "v2/Components/Cells/CellArticle"
 
 interface ArtistCurrentArticlesRailProps {
   artist: ArtistCurrentArticlesRail_artist
@@ -58,7 +58,7 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
       getItems={() => {
         return articles.map((article, index) => {
           return (
-            <ArticleCellFragmentContainer
+            <CellArticleFragmentContainer
               key={article.internalID}
               article={article}
               onClick={() => {
@@ -100,7 +100,7 @@ export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContaine
         ) {
           edges {
             node {
-              ...ArticleCell_article
+              ...CellArticle_article
               internalID
               slug
               href

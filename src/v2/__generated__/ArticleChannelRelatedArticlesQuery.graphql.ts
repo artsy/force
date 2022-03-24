@@ -29,7 +29,16 @@ query ArticleChannelRelatedArticlesQuery(
   }
 }
 
-fragment ArticleCell_article on Article {
+fragment ArticleChannelRelatedArticles_article on Article {
+  byline
+  channelArticles {
+    internalID
+    ...CellArticle_article
+    id
+  }
+}
+
+fragment CellArticle_article on Article {
   vertical
   title
   byline
@@ -42,15 +51,6 @@ fragment ArticleCell_article on Article {
       src
       srcSet
     }
-  }
-}
-
-fragment ArticleChannelRelatedArticles_article on Article {
-  byline
-  channelArticles {
-    internalID
-    ...ArticleCell_article
-    id
   }
 }
 */
@@ -248,12 +248,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aa14cdbcd48574b0ddc7e07776a29c86",
+    "cacheID": "407110a04ecba890f3b251cdcf32658b",
     "id": null,
     "metadata": {},
     "name": "ArticleChannelRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
+    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

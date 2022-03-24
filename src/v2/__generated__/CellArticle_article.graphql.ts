@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArticleCell_article = {
+export type CellArticle_article = {
     readonly vertical: string | null;
     readonly title: string | null;
     readonly byline: string | null;
@@ -18,12 +18,12 @@ export type ArticleCell_article = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "ArticleCell_article";
+    readonly " $refType": "CellArticle_article";
 };
-export type ArticleCell_article$data = ArticleCell_article;
-export type ArticleCell_article$key = {
-    readonly " $data"?: ArticleCell_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
+export type CellArticle_article$data = CellArticle_article;
+export type CellArticle_article$key = {
+    readonly " $data"?: CellArticle_article$data;
+    readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
 };
 
 
@@ -32,7 +32,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArticleCell_article",
+  "name": "CellArticle_article",
   "selections": [
     {
       "alias": null,
@@ -140,5 +140,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = 'fa6426a1d610693eb2a51b544b1b215f';
+(node as any).hash = '88259e6519919a68b45fb45bd1de3b84';
 export default node;

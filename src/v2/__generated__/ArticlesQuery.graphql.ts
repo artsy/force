@@ -37,22 +37,6 @@ query ArticlesQuery(
   }
 }
 
-fragment ArticleCell_article on Article {
-  vertical
-  title
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
 fragment Articles_partner_pbnwq on Partner {
   slug
   articlesConnection(first: $first, last: $last, after: $after, before: $before) {
@@ -66,9 +50,25 @@ fragment Articles_partner_pbnwq on Partner {
     edges {
       node {
         internalID
-        ...ArticleCell_article
+        ...CellArticle_article
         id
       }
+    }
+  }
+}
+
+fragment CellArticle_article on Article {
+  vertical
+  title
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
+  thumbnailImage {
+    cropped(width: 445, height: 334) {
+      width
+      height
+      src
+      srcSet
     }
   }
 }
@@ -472,12 +472,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "323d03dc9f998ae7711ad2823466e8aa",
+    "cacheID": "f232b945c6ebb76233b26137ce46970f",
     "id": null,
     "metadata": {},
     "name": "ArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticlesQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n) {\n  partner(id: $partnerId) {\n    ...Articles_partner_pbnwq\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner_pbnwq on Partner {\n  slug\n  articlesConnection(first: $first, last: $last, after: $after, before: $before) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCell_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArticlesQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n) {\n  partner(id: $partnerId) {\n    ...Articles_partner_pbnwq\n    id\n  }\n}\n\nfragment Articles_partner_pbnwq on Partner {\n  slug\n  articlesConnection(first: $first, last: $last, after: $after, before: $before) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

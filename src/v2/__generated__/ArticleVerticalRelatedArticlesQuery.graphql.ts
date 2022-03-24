@@ -29,7 +29,16 @@ query ArticleVerticalRelatedArticlesQuery(
   }
 }
 
-fragment ArticleCell_article on Article {
+fragment ArticleVerticalRelatedArticles_article on Article {
+  vertical
+  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
+    internalID
+    ...CellArticle_article
+    id
+  }
+}
+
+fragment CellArticle_article on Article {
   vertical
   title
   byline
@@ -42,15 +51,6 @@ fragment ArticleCell_article on Article {
       src
       srcSet
     }
-  }
-}
-
-fragment ArticleVerticalRelatedArticles_article on Article {
-  vertical
-  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
-    internalID
-    ...ArticleCell_article
-    id
   }
 }
 */
@@ -259,12 +259,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c80295adce85d3a450a67b14e0a097ea",
+    "cacheID": "5c40f7c797ff43e72cabad6647482602",
     "id": null,
     "metadata": {},
     "name": "ArticleVerticalRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
+    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

@@ -5,9 +5,9 @@ import { ArticleChannelRelatedArticles_article } from "v2/__generated__/ArticleC
 import { ArticleChannelRelatedArticlesQuery } from "v2/__generated__/ArticleChannelRelatedArticlesQuery.graphql"
 import { Shelf, Skeleton, SkeletonText, Text } from "@artsy/palette"
 import {
-  ArticleCellFragmentContainer,
-  ArticleCellPlaceholder,
-} from "v2/Components/Cells/ArticleCell"
+  CellArticleFragmentContainer,
+  CellArticlePlaceholder,
+} from "v2/Components/Cells/CellArticle"
 
 interface ArticleChannelRelatedArticlesProps {
   article: ArticleChannelRelatedArticles_article
@@ -27,7 +27,7 @@ const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
       <Shelf alignItems="flex-start">
         {article.channelArticles.map(article => {
           return (
-            <ArticleCellFragmentContainer
+            <CellArticleFragmentContainer
               key={article.internalID}
               article={article}
             />
@@ -46,7 +46,7 @@ export const ArticleChannelRelatedArticlesFragmentContainer = createFragmentCont
         byline
         channelArticles {
           internalID
-          ...ArticleCell_article
+          ...CellArticle_article
         }
       }
     `,
@@ -101,7 +101,7 @@ const ArticleChannelRelatedArticlesPlaceholder: FC = () => {
 
       <Shelf alignItems="flex-start">
         {[...new Array(8)].map((_, index) => {
-          return <ArticleCellPlaceholder key={index} />
+          return <CellArticlePlaceholder key={index} />
         })}
       </Shelf>
     </Skeleton>

@@ -14,9 +14,9 @@ import {
 } from "@artsy/cohesion"
 import { Rail } from "v2/Components/Rail"
 import {
-  PartnerCellFragmentContainer,
-  PartnerCellPlaceholder,
-} from "v2/Components/Cells/PartnerCell"
+  CellPartnerFragmentContainer,
+  CellPartnerPlaceholder,
+} from "v2/Components/Cells/CellPartner"
 
 interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet
@@ -54,7 +54,7 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
           if (node.__typename !== "Profile") return <></>
 
           return (
-            <PartnerCellFragmentContainer
+            <CellPartnerFragmentContainer
               key={index}
               partner={node.owner}
               onClick={() => {
@@ -86,7 +86,7 @@ const PLACEHOLDER = (
       viewAllHref="/galleries"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return <PartnerCellPlaceholder key={i} />
+          return <CellPartnerPlaceholder key={i} />
         })
       }}
     />
@@ -104,7 +104,7 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
               __typename
               ... on Profile {
                 owner {
-                  ...PartnerCell_partner
+                  ...CellPartner_partner
                   ... on Partner {
                     internalID
                     slug

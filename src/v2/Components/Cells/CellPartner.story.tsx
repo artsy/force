@@ -1,0 +1,65 @@
+import { graphql } from "relay-runtime"
+import { States } from "storybook-states"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import {
+  CellPartnerFragmentContainer,
+  CellPartnerProps,
+  CellPartnerPlaceholder,
+} from "./CellPartner"
+import { CellPartnerStoryQuery } from "v2/__generated__/CellPartnerStoryQuery.graphql"
+
+export default {
+  title: "Components/Cell",
+}
+
+export const CellPartner = () => {
+  return (
+    <States<{ id: string } & Partial<Omit<CellPartnerProps, "partner">>>
+      states={[
+        { id: "gagosian" },
+        { id: "gagosian", mode: "GRID" },
+        {
+          id: "jtt-gallery",
+        },
+        { id: "jtt-gallery", mode: "GRID" },
+      ]}
+    >
+      {({ id, ...rest }) => {
+        return (
+          <SystemQueryRenderer<CellPartnerStoryQuery>
+            variables={{ id }}
+            placeholder={<CellPartnerPlaceholder />}
+            query={graphql`
+              query CellPartnerStoryQuery($id: String!) {
+                partner(id: $id) {
+                  ...CellPartner_partner
+                }
+              }
+            `}
+            render={({ error, props }) => {
+              if (error) {
+                console.error(error)
+                return null
+              }
+
+              if (!props?.partner) {
+                return <CellPartnerPlaceholder />
+              }
+
+              return (
+                <CellPartnerFragmentContainer
+                  partner={props.partner}
+                  {...rest}
+                />
+              )
+            }}
+          />
+        )
+      }}
+    </States>
+  )
+}
+
+CellPartner.story = {
+  name: "CellPartner",
+}

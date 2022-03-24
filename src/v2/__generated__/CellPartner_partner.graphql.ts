@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PartnerCell_partner = {
+export type CellPartner_partner = {
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
@@ -32,12 +32,12 @@ export type PartnerCell_partner = {
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-    readonly " $refType": "PartnerCell_partner";
+    readonly " $refType": "CellPartner_partner";
 };
-export type PartnerCell_partner$data = PartnerCell_partner;
-export type PartnerCell_partner$key = {
-    readonly " $data"?: PartnerCell_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+export type CellPartner_partner$data = CellPartner_partner;
+export type CellPartner_partner$key = {
+    readonly " $data"?: CellPartner_partner$data;
+    readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
 };
 
 
@@ -61,7 +61,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PartnerCell_partner",
+  "name": "CellPartner_partner",
   "selections": [
     {
       "alias": null,
@@ -235,5 +235,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cd30a7469ab33b0f2a970ab81899bbf5';
+(node as any).hash = '8daa72f3a04fa812c142720b2e5bbe7f';
 export default node;

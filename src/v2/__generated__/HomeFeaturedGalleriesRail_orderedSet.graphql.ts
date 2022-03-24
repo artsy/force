@@ -12,7 +12,7 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
                 readonly owner: {
                     readonly internalID?: string;
                     readonly slug?: string;
-                    readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+                    readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
                 };
             } | {
                 /*This will never be '%other', but we need some
@@ -88,7 +88,7 @@ const node: ReaderFragment = {
                         {
                           "args": null,
                           "kind": "FragmentSpread",
-                          "name": "PartnerCell_partner"
+                          "name": "CellPartner_partner"
                         },
                         {
                           "kind": "InlineFragment",
@@ -131,5 +131,5 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = 'ec8ae9476088b4d619f4e34c6dbd0436';
+(node as any).hash = 'bc03fec288ee3abe0afef9a8712853c0';
 export default node;

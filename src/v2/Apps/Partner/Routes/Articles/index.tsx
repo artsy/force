@@ -6,7 +6,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"
-import { ArticleCellFragmentContainer } from "v2/Components/Cells/ArticleCell"
+import { CellArticleFragmentContainer } from "v2/Components/Cells/CellArticle"
 
 interface ArticlesProps {
   partner: Articles_partner
@@ -80,7 +80,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
           {articles.map(({ node: article }) => {
             return (
               <Column key={article.internalID} span={4}>
-                <ArticleCellFragmentContainer mode="GRID" article={article} />
+                <CellArticleFragmentContainer mode="GRID" article={article} />
               </Column>
             )
           })}
@@ -131,7 +131,7 @@ export const ArticlesPaginationContainer = createRefetchContainer(
           edges {
             node {
               internalID
-              ...ArticleCell_article
+              ...CellArticle_article
             }
           }
         }
