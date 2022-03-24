@@ -6,7 +6,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleCell_article = {
     readonly vertical: string | null;
-    readonly internalID: string;
     readonly title: string | null;
     readonly byline: string | null;
     readonly href: string | null;
@@ -40,13 +39,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "vertical",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
       "storageKey": null
     },
     {
@@ -148,5 +140,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '5d0ff74cf81eb4908ea0d40963568756';
+(node as any).hash = 'fa6426a1d610693eb2a51b544b1b215f';
 export default node;

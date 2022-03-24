@@ -9,26 +9,26 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
-interface ArticleCellProps {
+interface ArticleCellProps extends Omit<RouterLinkProps, "to"> {
   article: ArticleCell_article
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
 
-const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
+const ArticleCell: FC<ArticleCellProps> = ({ article, mode, ...rest }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = article.thumbnailImage?.cropped
 
   return (
     <RouterLink
-      key={article.internalID}
       to={article.href}
       display="block"
       textDecoration="none"
       width={width}
+      {...rest}
     >
       <ResponsiveBox
         aspectWidth={4}
@@ -73,7 +73,6 @@ export const ArticleCellFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleCell_article on Article {
         vertical
-        internalID
         title
         byline
         href

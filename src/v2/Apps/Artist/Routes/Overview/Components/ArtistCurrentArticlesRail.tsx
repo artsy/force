@@ -1,14 +1,6 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import {
-  Box,
-  Image,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
-import * as React from "react";
+import { Box, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Rail } from "v2/Components/Rail"
@@ -18,10 +10,10 @@ import {
   useSystemContext,
 } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistCurrentArticlesRail_artist } from "v2/__generated__/ArtistCurrentArticlesRail_artist.graphql"
 import { ArtistCurrentArticlesRailQuery } from "v2/__generated__/ArtistCurrentArticlesRailQuery.graphql"
+import { ArticleCellFragmentContainer } from "v2/Components/Cells/ArticleCell"
 
 interface ArtistCurrentArticlesRailProps {
   artist: ArtistCurrentArticlesRail_artist
@@ -37,9 +29,9 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const nodes = extractNodes(artist.articlesConnection)
+  const articles = extractNodes(artist.articlesConnection)
 
-  if (nodes.length === 0) {
+  if (articles.length === 0) {
     return null
   }
 
@@ -64,48 +56,28 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
         )
       }}
       getItems={() => {
-        return nodes.map((node, index) => {
+        return articles.map((article, index) => {
           return (
-            <Box maxWidth={345} key={index}>
-              <RouterLink
-                to={node.href!}
-                key={index}
-                noUnderline
-                onClick={() => {
-                  tracking.trackEvent({
-                    action_type: AnalyticsSchema.ActionType.Click,
-                    contextModule: ContextModule.relatedArticles,
-                    contextPageOwnerId,
-                    contextPageOwnerSlug,
-                    contextPageOwnerType,
-                    destination_path: node.href,
-                    destinationPageOwnerId: node.internalID,
-                    destinationPageOwnerSlug: node.slug,
-                    destinationPageOwnerType: OwnerType.artwork,
-                    horizontalSlidePosition: index + 1,
-                    subject: "showCarouselSlide",
-                    type: "thumbnail",
-                  })
-                }}
-              >
-                {node?.thumbnailImage?.cropped?.src ? (
-                  <Image
-                    width={node.thumbnailImage.cropped.width}
-                    height={node.thumbnailImage.cropped.height}
-                    src={node.thumbnailImage.cropped.src}
-                    srcSet={node.thumbnailImage.cropped.srcSet}
-                    lazyLoad
-                  />
-                ) : (
-                  <Box width={325} height={230} bg="black10" />
-                )}
-                <Spacer my={1} />
-                <Text variant="md">{node.thumbnailTitle}</Text>
-                <Text variant="md" color="black60">
-                  {node.publishedAt}
-                </Text>
-              </RouterLink>
-            </Box>
+            <ArticleCellFragmentContainer
+              key={article.internalID}
+              article={article}
+              onClick={() => {
+                tracking.trackEvent({
+                  action_type: AnalyticsSchema.ActionType.Click,
+                  contextModule: ContextModule.relatedArticles,
+                  contextPageOwnerId,
+                  contextPageOwnerSlug,
+                  contextPageOwnerType,
+                  destination_path: article.href,
+                  destinationPageOwnerId: article.internalID,
+                  destinationPageOwnerSlug: article.slug,
+                  destinationPageOwnerType: OwnerType.artwork,
+                  horizontalSlidePosition: index + 1,
+                  subject: "showCarouselSlide",
+                  type: "thumbnail",
+                })
+              }}
+            />
           )
         })
       }}
@@ -118,6 +90,9 @@ export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContaine
   {
     artist: graphql`
       fragment ArtistCurrentArticlesRail_artist on Artist {
+        internalID
+        name
+        slug
         articlesConnection(
           first: 10
           sort: PUBLISHED_AT_DESC
@@ -125,25 +100,13 @@ export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContaine
         ) {
           edges {
             node {
+              ...ArticleCell_article
               internalID
               slug
               href
-              thumbnailTitle
-              publishedAt(format: "MMM Do, YYYY")
-              thumbnailImage {
-                cropped(width: 325, height: 230) {
-                  width
-                  height
-                  src
-                  srcSet
-                }
-              }
             }
           }
         }
-        internalID
-        name
-        slug
       }
     `,
   }

@@ -5,28 +5,19 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCurrentArticlesRail_artist = {
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly slug: string;
     readonly articlesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string | null;
                 readonly href: string | null;
-                readonly thumbnailTitle: string | null;
-                readonly publishedAt: string | null;
-                readonly thumbnailImage: {
-                    readonly cropped: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
+                readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
             } | null;
         } | null> | null;
     } | null;
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly slug: string;
     readonly " $refType": "ArtistCurrentArticlesRail_artist";
 };
 export type ArtistCurrentArticlesRail_artist$data = ArtistCurrentArticlesRail_artist;
@@ -58,6 +49,15 @@ return {
   "metadata": null,
   "name": "ArtistCurrentArticlesRail_artist",
   "selections": [
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": [
@@ -108,85 +108,9 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "thumbnailTitle",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "format",
-                      "value": "MMM Do, YYYY"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "publishedAt",
-                  "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "thumbnailImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 230
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 325
-                        }
-                      ],
-                      "concreteType": "CroppedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "cropped",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "cropped(height:230,width:325)"
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "ArticleCell_article"
                 }
               ],
               "storageKey": null
@@ -196,20 +120,11 @@ return {
         }
       ],
       "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
-    },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    (v1/*: any*/)
+    }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e500cb142b6664b7d5d4b2de008bfbaf';
+(node as any).hash = '4265a11b41886e8497b2d7b98395b174';
 export default node;

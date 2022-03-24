@@ -39,7 +39,6 @@ query partnerRoutes_ArticlesQuery(
 
 fragment ArticleCell_article on Article {
   vertical
-  internalID
   title
   byline
   href
@@ -470,12 +469,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6071808a3b06a2664f3c5ab14947e75e",
+    "cacheID": "b917b4a35cda37ce79429d4a65693876",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCell_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCell_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
