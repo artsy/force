@@ -10,10 +10,6 @@ jest.mock("v2/Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonFragmentContainer: () => null,
 }))
 
-jest.mock("v2/System/Analytics/useTracking", () => ({
-  useTracking: () => ({}),
-}))
-
 const { renderWithRelay } = setupTestWrapperTL<
   CellPartnerFragmentContainer_Test_Query
 >({
