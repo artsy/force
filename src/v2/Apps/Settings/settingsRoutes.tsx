@@ -197,6 +197,21 @@ export const settingsRoutes: AppRouteConfig[] = [
         `,
       },
       {
+        path: "/alerts",
+        getComponent: () => SavedSearchAlertsApp,
+        onClientSideRender: () => {
+          SavedSearchAlertsApp.preload()
+        },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query settingsRoutes_SavedSearchAlertsAppQuery {
+            me {
+              ...SavedSearchAlertsApp_me
+            }
+          }
+        `,
+      },
+      {
         path: "edit-settings",
         getComponent: () => EditSettingsRoute,
         onClientSideRender: () => {
@@ -238,7 +253,7 @@ export const settingsRoutes: AppRouteConfig[] = [
   },
 
   {
-    path: "/user/alerts",
+    path: "/settings/alerts",
     theme: "v3",
     getComponent: () => SavedSearchAlertsApp,
     onClientSideRender: () => {

@@ -13,6 +13,7 @@ const TABS = [
   { name: "Edit Settings", url: "/settings/edit-settings" },
   { name: "Collector Profile", url: "/settings/edit-profile" },
   { name: "Saves & Follows", url: "/settings/saves" },
+  { name: "Your Alerts", url: "/settings/alerts" },
   { name: "Order History", url: "/settings/purchases" },
   { name: "Bids", url: "/settings/auctions" },
   { name: "Payments", url: "/settings/payments" },
