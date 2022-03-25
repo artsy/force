@@ -26,11 +26,19 @@ const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
 
   return (
     <HoverContainer>
-      {pills.map(pill => (
-        <NonClickablePill key={pill.id} variant="textSquare" mr={0.5}>
-          {pill.label}
-        </NonClickablePill>
-      ))}
+      {pills.map((pill, index) => {
+        const isLastPill = pills.length - 1 === index
+
+        return (
+          <NonClickablePill
+            key={pill.id}
+            variant="textSquare"
+            mr={isLastPill ? 0 : 0.5}
+          >
+            {pill.label}
+          </NonClickablePill>
+        )
+      })}
     </HoverContainer>
   )
 }
