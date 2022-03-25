@@ -12,7 +12,7 @@ const MntnConversionPixel: FC<MntnConversionPixelProps> = ({ path }) => {
     if (matchFound && !document.getElementById("mntn_conversion")) {
       script = document.createElement("script")
       script.id = "mntn_conversion"
-      script.src = src
+      script.text = text
       script.async = true
       script.type = "javascript/text"
       document.body.appendChild(script)
@@ -21,7 +21,7 @@ const MntnConversionPixel: FC<MntnConversionPixelProps> = ({ path }) => {
         "mntn_conversion"
       ) as HTMLScriptElement | null
       if (script) {
-        window.document.body.removeChild(script)
+        document.body.removeChild(script)
       }
     }
     return () => {
@@ -29,7 +29,7 @@ const MntnConversionPixel: FC<MntnConversionPixelProps> = ({ path }) => {
         "mntn_conversion"
       ) as HTMLScriptElement | null
       if (script) {
-        window.document.body.removeChild(script)
+        document.body.removeChild(script)
       }
     }
   }, [path])
@@ -57,7 +57,7 @@ function findConversionRoute(pathname?: string | null) {
   return Boolean(matchFound)
 }
 
-const src = `(function(){var x=null,p,q,m,
+const text = `(function(){var x=null,p,q,m,
   o="32548",
   l="ORDER ID",
   i="TOTAL ORDER AMOUNT",
