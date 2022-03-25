@@ -10104,7 +10104,7 @@ type NotificationPreference {
 
 input NotificationPreferenceInput {
   name: String!
-  status: SubGroupStatus!
+  status: SubGroupInputStatus!
 }
 
 # Consignment Offer Response
@@ -13524,6 +13524,11 @@ type StaticContent {
 
   # A slug ID.
   slug: ID!
+}
+
+enum SubGroupInputStatus {
+  SUBSCRIBED
+  UNSUBSCRIBED
 }
 
 enum SubGroupStatus {

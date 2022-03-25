@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
+export type SubGroupInputStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 export type updateNotificationPreferencesMutationInput = {
     authenticationToken?: string | null;
     clientMutationId?: string | null;
@@ -11,7 +11,7 @@ export type updateNotificationPreferencesMutationInput = {
 };
 export type NotificationPreferenceInput = {
     name: string;
-    status: SubGroupStatus;
+    status: SubGroupInputStatus;
 };
 export type useEditNotificationPreferencesMutationVariables = {
     input: updateNotificationPreferencesMutationInput;
