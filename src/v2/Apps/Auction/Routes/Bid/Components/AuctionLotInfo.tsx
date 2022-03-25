@@ -44,7 +44,11 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
       </RouterLink>
 
       <Box pl={1}>
-        <Text variant="md">Lot {saleArtwork.lotLabel}</Text>
+        <Text variant="md">
+          Lot {saleArtwork.lotLabel}{" "}
+          {saleArtwork.formattedEndDateTime &&
+            `• ${saleArtwork.formattedEndDateTime}`}
+        </Text>
         <Text variant="md">
           <i>{artwork.title}</i>
           {artwork.date && `, ${artwork.date}`}
@@ -85,6 +89,7 @@ export const AuctionLotInfoFragmentContainer = createFragmentContainer(
         currentBid {
           display
         }
+        formattedEndDateTime
         artwork {
           internalID
           date

@@ -212,6 +212,21 @@ const BidButton: React.FC<
     return null
   }
 
+  if (!!lotStanding.saleArtwork?.endedAt) {
+    return (
+      <Box
+        alignItems="center"
+        justifyContent="center"
+        display="flex"
+        width="50%"
+      >
+        <Text variant="md" color="black100">
+          Bidding Closed
+        </Text>
+      </Box>
+    )
+  }
+
   // By default, we redirect to /artwork/id on successful bid, but since we're
   // in the ActiveBids component, redirect to /auction/id (i.e., close modal)
   const redirectTo = `/auction/${lotStanding.saleArtwork?.saleID}`
@@ -239,7 +254,7 @@ const BidButton: React.FC<
         router.push(href)
       }}
     >
-      {lotStanding.saleArtwork?.endedAt ? "Bidding Closed" : "Increase Bid"}
+      Increase Bid
     </Button>
   )
 }
