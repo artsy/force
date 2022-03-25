@@ -21,7 +21,7 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
         if (item.isDefault) {
           return (
             <DefaultPill key={key} variant="textSquare" mx={0.5} mb={1}>
-              {item.label}
+              {item.displayValue}
             </DefaultPill>
           )
         }
@@ -34,7 +34,7 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
             mb={1}
             onClick={() => onDeletePress(item)}
           >
-            {item.label}
+            {item.displayValue}
             <CloseIcon
               fill="currentColor"
               width={CLOSE_ICON_SIZE}

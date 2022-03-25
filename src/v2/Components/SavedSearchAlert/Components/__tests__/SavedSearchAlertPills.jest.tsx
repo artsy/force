@@ -9,12 +9,12 @@ const items: FilterPill[] = [
   {
     field: "colors",
     value: "red",
-    label: "Red",
+    displayValue: "Red",
   },
   {
     field: "attributionClass",
     value: "open-edition",
-    label: "Open Edition",
+    displayValue: "Open Edition",
   },
 ]
 
@@ -45,7 +45,7 @@ describe("SavedSearchAlertPills", () => {
     expect(onDeletePressMock).toBeCalledWith({
       field: "colors",
       value: "red",
-      label: "Red",
+      displayValue: "Red",
     })
   })
 })

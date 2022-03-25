@@ -16,7 +16,7 @@ describe("extractArtistPills", () => {
         isDefault: true,
         field: "artistIDs",
         value: "id",
-        label: "name",
+        displayValue: "name",
       },
     ])
   })

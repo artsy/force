@@ -45,7 +45,7 @@ export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
 export type FilterPill = {
   isDefault?: boolean
   value: string
-  label: string
+  displayValue: string
   field: string
 }
 
