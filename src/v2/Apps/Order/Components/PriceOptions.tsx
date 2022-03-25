@@ -114,15 +114,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
   const minPrice = priceOptions[0]?.value!
 
-  const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    trackClick("We recommend changing your offer", minPrice)
-    setSelectedRadio("price-option-0")
-    setToggle(false)
-    setCustomValue(undefined)
-    onChange(minPrice)
-  }
-
   const { scrollTo } = useScrollTo({
     selectorOrRef: "#scrollTo--price-option-custom",
     behavior: "smooth",
@@ -175,7 +166,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                 {(!customValue || customValue < minPrice) && (
                   <MinPriceWarning
                     isPriceRange={!!artwork?.isPriceRange}
-                    onClick={selectMinPrice}
                     minPrice={asCurrency(minPrice) as string}
                     orderID={order.internalID}
                   />

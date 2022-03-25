@@ -144,20 +144,6 @@ describe("PriceOptions", () => {
       fireEvent.change(input, { target: { value: 200 } })
       expect(notice).not.toBeInTheDocument()
     })
-    it("selects the first option when clicking on the low price notice", async () => {
-      fireEvent.click(radios[3])
-      const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$200.00."
-      )
-      fireEvent.click(notice)
-      const selected = screen.getAllByRole("radio", { checked: true })
-      expect(selected[0]).toHaveTextContent("US$200.00")
-      expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject("We recommend changing your offer", 200, "USD")
-        )
-      )
-    })
   })
 
   describe("Exact", () => {
