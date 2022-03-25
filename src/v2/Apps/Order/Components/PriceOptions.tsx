@@ -32,8 +32,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
+
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
+  const [selectedRadio, setSelectedRadio] = useState<string>()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   useEffect(() => {
     if (showError) {
+      setSelectedRadio("price-option-custom")
       setToggle(true)
     }
   }, [showError])
@@ -117,7 +120,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   })
 
   return (
-    <RadioGroup>
+    <RadioGroup onSelect={setSelectedRadio} defaultValue={selectedRadio}>
       {compact(priceOptions)
         .map(({ value, description, key }) => (
           <BorderedRadio
