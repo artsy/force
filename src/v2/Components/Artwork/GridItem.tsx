@@ -2,7 +2,6 @@ import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, Box } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
@@ -11,6 +10,9 @@ import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
+import { useState } from "react"
+
+const SHOULD_USE_HOVER_EFFECT = true
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -28,6 +30,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
+  const [isHovered, setIsHovered] = useState(false)
 
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
@@ -46,12 +49,36 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     onClick?.()
   }
 
+  const handleMouseEnter = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (SHOULD_USE_HOVER_EFFECT) {
+      setIsHovered(true)
+    }
+
+    containerProps.onMouseEnter(event)
+    rest.onMouseEnter?.(event)
+  }
+
+  const handleMouseLeave = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (SHOULD_USE_HOVER_EFFECT) {
+      setIsHovered(false)
+    }
+
+    containerProps.onMouseLeave(event)
+    rest.onMouseLeave?.(event)
+  }
+
   return (
     <div
       data-id={artwork.internalID}
       data-test="artworkGridItem"
       {...containerProps}
       {...rest}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <Box
         position="relative"
