@@ -111,7 +111,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         )}
       </Box>
 
-      <Metadata artwork={artwork} />
+      <Metadata artwork={artwork} isHovered={isHovered} />
     </div>
   )
 }
