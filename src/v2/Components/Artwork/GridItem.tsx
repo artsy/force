@@ -11,6 +11,7 @@ import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useState } from "react"
+import { isTouch } from "v2/Utils/device"
 
 const SHOULD_USE_HOVER_EFFECT = true
 
@@ -52,7 +53,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const handleMouseEnter = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (SHOULD_USE_HOVER_EFFECT) {
+    if (SHOULD_USE_HOVER_EFFECT ?? !isTouch) {
       setIsHovered(true)
     }
 
@@ -63,7 +64,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const handleMouseLeave = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (SHOULD_USE_HOVER_EFFECT) {
+    if (SHOULD_USE_HOVER_EFFECT ?? !isTouch) {
       setIsHovered(false)
     }
 
