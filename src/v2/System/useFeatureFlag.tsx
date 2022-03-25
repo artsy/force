@@ -65,7 +65,8 @@ export function useTrackVariantView({
       typeof window !== "undefined" &&
       typeof window.analytics !== "undefined"
     ) {
-      const trackFeatureView = shouldTrack(experimentName, variantName)
+      const trackFeatureView =
+        shouldTrackExperiment && shouldTrack(experimentName, variantName)
       if (trackFeatureView && shouldTrackExperiment) {
         // HACK: We are using window.analytics.track over trackEvent from useTracking because
         // the trackEvent wasn't behaving as expected, it was never firing the event and
