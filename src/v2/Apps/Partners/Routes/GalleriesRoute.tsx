@@ -40,12 +40,16 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
       <Join separator={<Spacer mt={4} />}>
         <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flexDirection={["column", "row"]}
+        >
           <Text variant="xl" as="h1">
             Browse Galleries
           </Text>
 
-          <Flex>
+          <Flex flexShrink={0} mt={[2, 0]}>
             <Text
               variant="md"
               as="a"
