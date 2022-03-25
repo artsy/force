@@ -10,7 +10,9 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
             readonly node: ({
                 readonly __typename: "Profile";
                 readonly owner: {
-                    readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+                    readonly internalID?: string;
+                    readonly slug?: string;
+                    readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
                 };
             } | {
                 /*This will never be '%other', but we need some
@@ -86,7 +88,28 @@ const node: ReaderFragment = {
                         {
                           "args": null,
                           "kind": "FragmentSpread",
-                          "name": "PartnerCell_partner"
+                          "name": "CellPartner_partner"
+                        },
+                        {
+                          "kind": "InlineFragment",
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "internalID",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "slug",
+                              "storageKey": null
+                            }
+                          ],
+                          "type": "Partner",
+                          "abstractKey": null
                         }
                       ],
                       "storageKey": null
@@ -108,5 +131,5 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = 'c1d656d65f824f2ce8b585cecd25cd2c';
+(node as any).hash = 'bc03fec288ee3abe0afef9a8712853c0';
 export default node;

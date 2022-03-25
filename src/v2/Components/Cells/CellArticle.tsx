@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArticleCell_article } from "v2/__generated__/ArticleCell_article.graphql"
+import { CellArticle_article } from "v2/__generated__/CellArticle_article.graphql"
 import {
   Box,
   Image,
@@ -9,26 +9,26 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 
-interface ArticleCellProps {
-  article: ArticleCell_article
+export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {
+  article: CellArticle_article
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
 
-const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
+const CellArticle: FC<CellArticleProps> = ({ article, mode, ...rest }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = article.thumbnailImage?.cropped
 
   return (
     <RouterLink
-      key={article.internalID}
       to={article.href}
       display="block"
       textDecoration="none"
       width={width}
+      {...rest}
     >
       <ResponsiveBox
         aspectWidth={4}
@@ -53,7 +53,7 @@ const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
       </Text>
 
       <Text variant="lg" mt={0.5} lineClamp={3}>
-        {article.title}
+        {article.thumbnailTitle ?? article.title}
       </Text>
 
       <Text variant="md" mt={0.5} lineClamp={1}>
@@ -67,14 +67,14 @@ const ArticleCell: FC<ArticleCellProps> = ({ article, mode }) => {
   )
 }
 
-export const ArticleCellFragmentContainer = createFragmentContainer(
-  ArticleCell,
+export const CellArticleFragmentContainer = createFragmentContainer(
+  CellArticle,
   {
     article: graphql`
-      fragment ArticleCell_article on Article {
+      fragment CellArticle_article on Article {
         vertical
-        internalID
         title
+        thumbnailTitle
         byline
         href
         publishedAt(format: "MMM D, YYYY")
@@ -91,9 +91,9 @@ export const ArticleCellFragmentContainer = createFragmentContainer(
   }
 )
 
-type ArticleCellPlaceholderProps = Pick<ArticleCellProps, "mode">
+type CellArticlePlaceholderProps = Pick<CellArticleProps, "mode">
 
-export const ArticleCellPlaceholder: FC<ArticleCellPlaceholderProps> = ({
+export const CellArticlePlaceholder: FC<CellArticlePlaceholderProps> = ({
   mode = "RAIL",
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
@@ -109,7 +109,7 @@ export const ArticleCellPlaceholder: FC<ArticleCellPlaceholderProps> = ({
       </SkeletonText>
 
       <SkeletonText variant="lg" mt={0.5} lineClamp={3}>
-        The Example Article Title
+        The Example Article Title Longer Than The Line
       </SkeletonText>
 
       <SkeletonText variant="md" mt={0.5} lineClamp={1}>

@@ -29,10 +29,19 @@ query ArticleVerticalRelatedArticlesQuery(
   }
 }
 
-fragment ArticleCell_article on Article {
+fragment ArticleVerticalRelatedArticles_article on Article {
   vertical
-  internalID
+  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
+    internalID
+    ...CellArticle_article
+    id
+  }
+}
+
+fragment CellArticle_article on Article {
+  vertical
   title
+  thumbnailTitle
   byline
   href
   publishedAt(format: "MMM D, YYYY")
@@ -43,15 +52,6 @@ fragment ArticleCell_article on Article {
       src
       srcSet
     }
-  }
-}
-
-fragment ArticleVerticalRelatedArticles_article on Article {
-  vertical
-  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {
-    internalID
-    ...ArticleCell_article
-    id
   }
 }
 */
@@ -165,6 +165,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "thumbnailTitle",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "byline",
                 "storageKey": null
               },
@@ -260,12 +267,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3cc845756b217d3a689f210b9acc35c4",
+    "cacheID": "14893f65ce4b4d644c80cde80ec45448",
     "id": null,
     "metadata": {},
     "name": "ArticleVerticalRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleCell_article on Article {\n  vertical\n  internalID\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...ArticleCell_article\n    id\n  }\n}\n"
+    "text": "query ArticleVerticalRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleVerticalRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleVerticalRelatedArticles_article on Article {\n  vertical\n  verticalRelatedArticles: relatedArticles(inVertical: true, size: 8) {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

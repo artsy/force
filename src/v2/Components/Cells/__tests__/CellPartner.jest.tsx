@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { PartnerCellFragmentContainer_Test_Query } from "v2/__generated__/PartnerCellFragmentContainer_Test_Query.graphql"
+import { CellPartnerFragmentContainer_Test_Query } from "v2/__generated__/CellPartnerFragmentContainer_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { PartnerCellFragmentContainer } from "../PartnerCell"
+import { CellPartnerFragmentContainer } from "../CellPartner"
 
 jest.unmock("react-relay")
 
@@ -10,24 +10,20 @@ jest.mock("v2/Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonFragmentContainer: () => null,
 }))
 
-jest.mock("v2/System/Analytics/useTracking", () => ({
-  useTracking: () => ({}),
-}))
-
 const { renderWithRelay } = setupTestWrapperTL<
-  PartnerCellFragmentContainer_Test_Query
+  CellPartnerFragmentContainer_Test_Query
 >({
-  Component: PartnerCellFragmentContainer,
+  Component: CellPartnerFragmentContainer,
   query: graphql`
-    query PartnerCellFragmentContainer_Test_Query @relay_test_operation {
+    query CellPartnerFragmentContainer_Test_Query @relay_test_operation {
       partner(id: "example") {
-        ...PartnerCell_partner
+        ...CellPartner_partner
       }
     }
   `,
 })
 
-describe("PartnerCell", () => {
+describe("CellPartner", () => {
   it("renders the component", () => {
     renderWithRelay({
       Partner: () => ({

@@ -4,10 +4,10 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArticleCell_article = {
+export type CellArticle_article = {
     readonly vertical: string | null;
-    readonly internalID: string;
     readonly title: string | null;
+    readonly thumbnailTitle: string | null;
     readonly byline: string | null;
     readonly href: string | null;
     readonly publishedAt: string | null;
@@ -19,12 +19,12 @@ export type ArticleCell_article = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "ArticleCell_article";
+    readonly " $refType": "CellArticle_article";
 };
-export type ArticleCell_article$data = ArticleCell_article;
-export type ArticleCell_article$key = {
-    readonly " $data"?: ArticleCell_article$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
+export type CellArticle_article$data = CellArticle_article;
+export type CellArticle_article$key = {
+    readonly " $data"?: CellArticle_article$data;
+    readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
 };
 
 
@@ -33,7 +33,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArticleCell_article",
+  "name": "CellArticle_article",
   "selections": [
     {
       "alias": null,
@@ -46,14 +46,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "title",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "thumbnailTitle",
       "storageKey": null
     },
     {
@@ -148,5 +148,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '5d0ff74cf81eb4908ea0d40963568756';
+(node as any).hash = '5c126e0802585c7d7ca03d92d5ccca08';
 export default node;

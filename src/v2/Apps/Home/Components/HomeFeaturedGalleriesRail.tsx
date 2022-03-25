@@ -14,9 +14,9 @@ import {
 } from "@artsy/cohesion"
 import { Rail } from "v2/Components/Rail"
 import {
-  PartnerCellFragmentContainer,
-  PartnerCellPlaceholder,
-} from "v2/Components/Cells/PartnerCell"
+  CellPartnerFragmentContainer,
+  CellPartnerPlaceholder,
+} from "v2/Components/Cells/CellPartner"
 
 interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet
@@ -52,8 +52,25 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
       getItems={() => {
         return nodes.map((node, index) => {
           if (node.__typename !== "Profile") return <></>
+
           return (
-            <PartnerCellFragmentContainer key={index} partner={node.owner} />
+            <CellPartnerFragmentContainer
+              key={index}
+              partner={node.owner}
+              onClick={() => {
+                const trackingEvent: ClickedGalleryGroup = {
+                  action: ActionType.clickedGalleryGroup,
+                  context_module: ContextModule.featuredGalleriesRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: node.owner.internalID,
+                  destination_page_owner_slug: node.owner.slug,
+                  destination_page_owner_type: OwnerType.galleries,
+                  type: "thumbnail",
+                }
+
+                trackEvent(trackingEvent)
+              }}
+            />
           )
         })
       }}
@@ -69,7 +86,7 @@ const PLACEHOLDER = (
       viewAllHref="/galleries"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return <PartnerCellPlaceholder key={i} />
+          return <CellPartnerPlaceholder key={i} />
         })
       }}
     />
@@ -87,7 +104,11 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
               __typename
               ... on Profile {
                 owner {
-                  ...PartnerCell_partner
+                  ...CellPartner_partner
+                  ... on Partner {
+                    internalID
+                    slug
+                  }
                 }
               }
             }

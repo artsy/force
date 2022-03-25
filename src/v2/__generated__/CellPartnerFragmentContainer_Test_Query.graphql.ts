@@ -4,23 +4,56 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PartnerCellFragmentContainer_Test_QueryVariables = {};
-export type PartnerCellFragmentContainer_Test_QueryResponse = {
+export type CellPartnerFragmentContainer_Test_QueryVariables = {};
+export type CellPartnerFragmentContainer_Test_QueryResponse = {
     readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+        readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
     } | null;
 };
-export type PartnerCellFragmentContainer_Test_Query = {
-    readonly response: PartnerCellFragmentContainer_Test_QueryResponse;
-    readonly variables: PartnerCellFragmentContainer_Test_QueryVariables;
+export type CellPartnerFragmentContainer_Test_Query = {
+    readonly response: CellPartnerFragmentContainer_Test_QueryResponse;
+    readonly variables: CellPartnerFragmentContainer_Test_QueryVariables;
 };
 
 
 
 /*
-query PartnerCellFragmentContainer_Test_Query {
+query CellPartnerFragmentContainer_Test_Query {
   partner(id: "example") {
-    ...PartnerCell_partner
+    ...CellPartner_partner
+    id
+  }
+}
+
+fragment CellPartner_partner on Partner {
+  ...EntityHeaderPartner_partner
+  internalID
+  slug
+  name
+  href
+  initials
+  locationsConnection(first: 15) {
+    edges {
+      node {
+        city
+        id
+      }
+    }
+  }
+  categories {
+    name
+    slug
+    id
+  }
+  profile {
+    ...FollowProfileButton_profile
+    isFollowed
+    image {
+      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
+        src
+        srcSet
+      }
+    }
     id
   }
 }
@@ -69,39 +102,6 @@ fragment FollowProfileButton_profile on Profile {
   name
   internalID
   is_followed: isFollowed
-}
-
-fragment PartnerCell_partner on Partner {
-  ...EntityHeaderPartner_partner
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    isFollowed
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
 }
 */
 
@@ -208,7 +208,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "PartnerCellFragmentContainer_Test_Query",
+    "name": "CellPartnerFragmentContainer_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -221,7 +221,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PartnerCell_partner"
+            "name": "CellPartner_partner"
           }
         ],
         "storageKey": "partner(id:\"example\")"
@@ -234,7 +234,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "PartnerCellFragmentContainer_Test_Query",
+    "name": "CellPartnerFragmentContainer_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -464,7 +464,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "045bc7bfa0efb673040feff9eea2451c",
+    "cacheID": "28d2ea6ad3601006f9deaf13fc11662c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -536,11 +536,11 @@ return {
         "partner.type": (v9/*: any*/)
       }
     },
-    "name": "PartnerCellFragmentContainer_Test_Query",
+    "name": "CellPartnerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerCellFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerCell_partner\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerCell_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query CellPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'b609bdc6b023c52eca89ffa453b5cd36';
+(node as any).hash = 'd9fc9d24a91674df92f0f4af3e11957e';
 export default node;

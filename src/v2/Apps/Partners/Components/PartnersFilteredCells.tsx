@@ -5,9 +5,9 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import {
-  PartnerCellFragmentContainer,
-  PartnerCellPlaceholder,
-} from "v2/Components/Cells/PartnerCell"
+  CellPartnerFragmentContainer,
+  CellPartnerPlaceholder,
+} from "v2/Components/Cells/CellPartner"
 import { PartnersFilteredCells_viewer } from "v2/__generated__/PartnersFilteredCells_viewer.graphql"
 import { PartnersFilteredCellsQuery } from "v2/__generated__/PartnersFilteredCellsQuery.graphql"
 import { useSystemContext } from "v2/System"
@@ -68,7 +68,7 @@ const PartnersFilteredCells: FC<PartnersFilteredCellsProps> = ({
                   display="flex"
                   alignItems="flex-end"
                 >
-                  <PartnerCellFragmentContainer partner={partner} mode="GRID" />
+                  <CellPartnerFragmentContainer partner={partner} mode="GRID" />
                 </Column>
               )
             })}
@@ -127,7 +127,7 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
           edges {
             node {
               internalID
-              ...PartnerCell_partner
+              ...CellPartner_partner
             }
           }
         }
@@ -160,7 +160,7 @@ const PartnersFilteredCellsPlaceholder: FC = () => {
         {[...new Array(12)].map((_, i) => {
           return (
             <Column key={i} span={[6, 4, 3]}>
-              <PartnerCellPlaceholder mode="GRID" />
+              <CellPartnerPlaceholder mode="GRID" />
             </Column>
           )
         })}

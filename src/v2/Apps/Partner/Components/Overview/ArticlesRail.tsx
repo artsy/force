@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRail_partner } from "v2/__generated__/ArticlesRail_partner.graphql"
 import { ViewAllButton } from "./ViewAllButton"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArticleCellFragmentContainer } from "v2/Components/Cells/ArticleCell"
+import { CellArticleFragmentContainer } from "v2/Components/Cells/CellArticle"
 
 interface ArticlesRailProps {
   partner: ArticlesRail_partner
@@ -34,7 +34,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({ partner }) => {
       <Shelf alignItems="flex-start">
         {articles.map(article => {
           return (
-            <ArticleCellFragmentContainer
+            <CellArticleFragmentContainer
               key={article.internalID}
               article={article}
             />
@@ -56,7 +56,7 @@ export const ArticlesRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
-              ...ArticleCell_article
+              ...CellArticle_article
             }
           }
         }

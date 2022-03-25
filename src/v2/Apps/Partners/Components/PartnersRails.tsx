@@ -8,7 +8,7 @@ import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { Join, Skeleton, Spacer } from "@artsy/palette"
 import { Rail } from "v2/Components/Rail"
-import { PartnerCellPlaceholder } from "v2/Components/Cells/PartnerCell"
+import { CellPartnerPlaceholder } from "v2/Components/Cells/CellPartner"
 
 interface PartnersRailsProps {
   viewer: PartnersRails_viewer
@@ -65,7 +65,7 @@ const PartnersRailsPlaceholder: FC = () => {
               isLoading
               getItems={() => {
                 return [...new Array(9)].map((_, k) => {
-                  return <PartnerCellPlaceholder key={k} mode="RAIL" />
+                  return <CellPartnerPlaceholder key={k} mode="RAIL" />
                 })
               }}
             />
