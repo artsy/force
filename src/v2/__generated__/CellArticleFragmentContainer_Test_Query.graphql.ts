@@ -28,6 +28,7 @@ query CellArticleFragmentContainer_Test_Query {
 fragment CellArticle_article on Article {
   vertical
   title
+  thumbnailTitle
   byline
   href
   publishedAt(format: "MMM D, YYYY")
@@ -121,6 +122,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "thumbnailTitle",
             "storageKey": null
           },
           {
@@ -224,7 +232,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ca41281f69ea5d32a983c5f16497d31b",
+    "cacheID": "7958c1805cb985932128fc36090dfc45",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -259,13 +267,14 @@ return {
         "article.thumbnailImage.cropped.src": (v3/*: any*/),
         "article.thumbnailImage.cropped.srcSet": (v3/*: any*/),
         "article.thumbnailImage.cropped.width": (v2/*: any*/),
+        "article.thumbnailTitle": (v1/*: any*/),
         "article.title": (v1/*: any*/),
         "article.vertical": (v1/*: any*/)
       }
     },
     "name": "CellArticleFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellArticleFragmentContainer_Test_Query {\n  article(id: \"example\") {\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellArticleFragmentContainer_Test_Query {\n  article(id: \"example\") {\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

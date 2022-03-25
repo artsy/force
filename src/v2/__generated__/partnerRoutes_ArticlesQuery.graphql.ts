@@ -60,6 +60,7 @@ fragment Articles_partner_2Pg8Wv on Partner {
 fragment CellArticle_article on Article {
   vertical
   title
+  thumbnailTitle
   byline
   href
   publishedAt(format: "MMM D, YYYY")
@@ -368,6 +369,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "thumbnailTitle",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "byline",
                         "storageKey": null
                       },
@@ -469,12 +477,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d6ec203366711d02e73a0547e78ed44d",
+    "cacheID": "0fdcd807dd2afe1d1772957509739f79",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

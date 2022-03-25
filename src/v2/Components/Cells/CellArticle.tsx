@@ -53,7 +53,7 @@ const CellArticle: FC<CellArticleProps> = ({ article, mode, ...rest }) => {
       </Text>
 
       <Text variant="lg" mt={0.5} lineClamp={3}>
-        {article.title}
+        {article.thumbnailTitle ?? article.title}
       </Text>
 
       <Text variant="md" mt={0.5} lineClamp={1}>
@@ -74,6 +74,7 @@ export const CellArticleFragmentContainer = createFragmentContainer(
       fragment CellArticle_article on Article {
         vertical
         title
+        thumbnailTitle
         byline
         href
         publishedAt(format: "MMM D, YYYY")

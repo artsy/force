@@ -36,17 +36,9 @@ afterEach(() => {
 describe("HomeTrendingArtistsRail", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
-      Viewer: () => ({
-        artistsConnection: {
-          edges: [
-            {
-              node: {
-                name: "Test Artist",
-                href: "test-href",
-              },
-            },
-          ],
-        },
+      Artist: () => ({
+        name: "Test Artist",
+        href: "test-href",
       }),
     })
 
@@ -59,14 +51,21 @@ describe("HomeTrendingArtistsRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        Artist: () => ({
+          internalID: "test-artist-id",
+          slug: "test-artist-slug",
+        }),
+      })
+
       wrapper.find("RouterLink").last().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtistGroup",
         context_module: "trendingArtistsRail",
         context_page_owner_type: "home",
-        destination_page_owner_id: "<Artist-mock-id-2>",
-        destination_page_owner_slug: "<Artist-mock-id-3>",
+        destination_page_owner_id: "test-artist-id",
+        destination_page_owner_slug: "test-artist-slug",
         destination_page_owner_type: "artist",
         type: "thumbnail",
       })
@@ -74,7 +73,9 @@ describe("HomeTrendingArtistsRail", () => {
 
     it("tracks view all", () => {
       const wrapper = getWrapper()
+
       wrapper.find("RouterLink").first().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtistGroup",
         context_module: "trendingArtistsRail",

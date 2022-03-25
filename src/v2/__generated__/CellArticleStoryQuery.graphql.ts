@@ -32,6 +32,7 @@ query CellArticleStoryQuery(
 fragment CellArticle_article on Article {
   vertical
   title
+  thumbnailTitle
   byline
   href
   publishedAt(format: "MMM D, YYYY")
@@ -114,6 +115,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "thumbnailTitle",
             "storageKey": null
           },
           {
@@ -217,12 +225,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "191e9bf8b9b1f1a0dc21edd84032cde3",
+    "cacheID": "6a460f1ad0a78ade7979d0f0b923eed0",
     "id": null,
     "metadata": {},
     "name": "CellArticleStoryQuery",
     "operationKind": "query",
-    "text": "query CellArticleStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellArticleStoryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

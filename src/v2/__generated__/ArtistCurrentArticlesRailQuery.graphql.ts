@@ -49,6 +49,7 @@ fragment ArtistCurrentArticlesRail_artist on Artist {
 fragment CellArticle_article on Article {
   vertical
   title
+  thumbnailTitle
   byline
   href
   publishedAt(format: "MMM D, YYYY")
@@ -207,6 +208,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "thumbnailTitle",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "byline",
                         "storageKey": null
                       },
@@ -310,12 +318,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "47df1f0203663f6a695d9721d3a8b109",
+    "cacheID": "5946a149c3ab1c7f794a3364b4961509",
     "id": null,
     "metadata": {},
     "name": "ArtistCurrentArticlesRailQuery",
     "operationKind": "query",
-    "text": "query ArtistCurrentArticlesRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistCurrentArticlesRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

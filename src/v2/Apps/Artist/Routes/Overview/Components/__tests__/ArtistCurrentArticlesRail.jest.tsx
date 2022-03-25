@@ -40,6 +40,7 @@ describe("ArtistCurrentArticlesRail", () => {
         articlesConnection: { edges: null },
       }),
     })
+
     expect(wrapper.html()).toBeFalsy()
   })
 
@@ -50,6 +51,7 @@ describe("ArtistCurrentArticlesRail", () => {
         slug: "artistSlug",
       }),
     })
+
     expect(wrapper.text()).toContain("Articles Featuring artistName")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
@@ -62,14 +64,21 @@ describe("ArtistCurrentArticlesRail", () => {
   })
 
   it("tracks to articles route", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Artist: () => ({
+        internalID: "test-artist-id",
+        slug: "test-artist-slug",
+      }),
+    })
+
     wrapper.find("RouterLink").first().simulate("click")
+
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "clickedArtistGroup",
         context_module: "relatedArticles",
-        destination_page_owner_id: "<Artist-mock-id-3>",
-        destination_page_owner_slug: "<Artist-mock-id-4>",
+        destination_page_owner_id: "test-artist-id",
+        destination_page_owner_slug: "test-artist-slug",
         destination_page_owner_type: "artist",
         type: "viewAll",
       })
@@ -77,16 +86,24 @@ describe("ArtistCurrentArticlesRail", () => {
   })
 
   it("tracks article click", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Article: () => ({
+        internalID: "test-article-id",
+        slug: "test-article-slug",
+        href: "/article/test-article-slug",
+      }),
+    })
+
     wrapper.find("RouterLink").last().simulate("click")
+
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         action_type: "Click",
         contextModule: "relatedArticles",
-        destinationPageOwnerId: "<Article-mock-id-1>",
-        destinationPageOwnerSlug: '<mock-value-for-field-"slug">',
-        destinationPageOwnerType: "artwork",
-        destination_path: '<mock-value-for-field-"href">',
+        destinationPageOwnerId: "test-article-id",
+        destinationPageOwnerSlug: "test-article-slug",
+        destinationPageOwnerType: "article",
+        destination_path: "/article/test-article-slug",
         horizontalSlidePosition: 1,
         subject: "showCarouselSlide",
         type: "thumbnail",

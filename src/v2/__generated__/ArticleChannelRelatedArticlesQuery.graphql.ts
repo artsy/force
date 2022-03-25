@@ -41,6 +41,7 @@ fragment ArticleChannelRelatedArticles_article on Article {
 fragment CellArticle_article on Article {
   vertical
   title
+  thumbnailTitle
   byline
   href
   publishedAt(format: "MMM D, YYYY")
@@ -155,6 +156,13 @@ return {
                 "name": "title",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "thumbnailTitle",
+                "storageKey": null
+              },
               (v2/*: any*/),
               {
                 "alias": null,
@@ -248,12 +256,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "407110a04ecba890f3b251cdcf32658b",
+    "cacheID": "a7fef10af472812fe2d9b5dc94de6a91",
     "id": null,
     "metadata": {},
     "name": "ArticleChannelRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

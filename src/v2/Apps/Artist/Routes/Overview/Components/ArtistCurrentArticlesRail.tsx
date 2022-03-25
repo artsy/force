@@ -71,7 +71,7 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
                   destination_path: article.href,
                   destinationPageOwnerId: article.internalID,
                   destinationPageOwnerSlug: article.slug,
-                  destinationPageOwnerType: OwnerType.artwork,
+                  destinationPageOwnerType: OwnerType.article,
                   horizontalSlidePosition: index + 1,
                   subject: "showCarouselSlide",
                   type: "thumbnail",

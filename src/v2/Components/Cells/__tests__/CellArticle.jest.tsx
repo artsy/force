@@ -24,7 +24,7 @@ describe("CellArticle", () => {
     renderWithRelay({
       Article: () => ({
         vertical: "Art",
-        title: "Example Article",
+        thumbnailTitle: "Example Article",
         byline: "Artsy Editorial",
       }),
     })
