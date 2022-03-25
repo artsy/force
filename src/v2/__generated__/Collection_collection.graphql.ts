@@ -11,10 +11,6 @@ export type Collection_collection = {
     readonly slug: string;
     readonly id: string;
     readonly title: string;
-    readonly query: {
-        readonly artist_id: string | null;
-        readonly gene_id: string | null;
-    };
     readonly relatedCollections: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"RelatedCollectionsRail_collections">;
     }>;
@@ -134,31 +130,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "MarketingCollectionQuery",
-      "kind": "LinkedField",
-      "name": "query",
-      "plural": false,
-      "selections": [
-        {
-          "alias": "artist_id",
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artistID",
-          "storageKey": null
-        },
-        {
-          "alias": "gene_id",
-          "args": null,
-          "kind": "ScalarField",
-          "name": "geneID",
-          "storageKey": null
-        }
-      ],
       "storageKey": null
     },
     {
@@ -449,5 +420,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1f48511974abdd4c6a64a42ee9f22b94';
+(node as any).hash = '581d35b4a2f7ba29676b154039a4595f';
 export default node;
