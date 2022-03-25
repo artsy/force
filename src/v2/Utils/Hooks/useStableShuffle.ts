@@ -1,19 +1,18 @@
-import { useCallback, useMemo } from "react"
+import { useMemo } from "react"
 import { getENV } from "../getENV"
 
 /**
  * Returns a shuffle function seeded using the Express requestID so that the
  * function returns the same order on both server side and client-side render passes.
  */
-export const useStableShuffle = () => {
+export const useStableShuffle = <T>({ items }: { items: T[] }) => {
   const seed = getENV("REQUEST_ID")
 
   const { shuffle } = useMemo(() => seeded(seed), [seed])
 
-  return {
-    shuffle: useCallback(<T>(array: T[]) => shuffle(array), [shuffle]),
-    seed,
-  }
+  const shuffled = useMemo(() => shuffle(items), [items, shuffle])
+
+  return { shuffled, seed }
 }
 
 /**

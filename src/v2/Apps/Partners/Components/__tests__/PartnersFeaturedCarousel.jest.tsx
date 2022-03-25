@@ -8,7 +8,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter")
 jest.mock("v2/Utils/Hooks/useStableShuffle", () => ({
-  useStableShuffle: () => ({ shuffle: x => x }),
+  useStableShuffle: ({ items }) => ({ shuffled: items }),
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<

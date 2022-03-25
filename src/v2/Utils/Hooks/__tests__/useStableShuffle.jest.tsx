@@ -40,18 +40,12 @@ describe("useStableShuffle", () => {
 
     const {
       result: {
-        current: { shuffle, seed },
+        current: { shuffled, seed },
       },
-    } = renderHook(useStableShuffle)
+    } = renderHook(() => useStableShuffle({ items: ["a", "b", "c", "d", "e"] }))
 
     expect(seed).toEqual("seed")
-    expect(shuffle(["a", "b", "c", "d", "e"])).toEqual([
-      "e",
-      "a",
-      "d",
-      "b",
-      "c",
-    ])
+    expect(shuffled).toEqual(["e", "a", "d", "b", "c"])
   })
 
   it("shuffles the array ('example')", () => {
@@ -59,18 +53,12 @@ describe("useStableShuffle", () => {
 
     const {
       result: {
-        current: { shuffle, seed },
+        current: { shuffled, seed },
       },
-    } = renderHook(useStableShuffle)
+    } = renderHook(() => useStableShuffle({ items: ["a", "b", "c", "d", "e"] }))
 
     expect(seed).toEqual("example")
-    expect(shuffle(["a", "b", "c", "d", "e"])).toEqual([
-      "b",
-      "e",
-      "c",
-      "d",
-      "a",
-    ])
+    expect(shuffled).toEqual(["b", "e", "c", "d", "a"])
   })
 
   it("shuffles the array given an example request ID ('fbc4f9f0-9065-4bc4-8476-ad21636794b5')", () => {
@@ -78,17 +66,11 @@ describe("useStableShuffle", () => {
 
     const {
       result: {
-        current: { shuffle, seed },
+        current: { shuffled, seed },
       },
-    } = renderHook(useStableShuffle)
+    } = renderHook(() => useStableShuffle({ items: ["a", "b", "c", "d", "e"] }))
 
     expect(seed).toEqual("fbc4f9f0-9065-4bc4-8476-ad21636794b5")
-    expect(shuffle(["a", "b", "c", "d", "e"])).toEqual([
-      "c",
-      "e",
-      "a",
-      "b",
-      "d",
-    ])
+    expect(shuffled).toEqual(["c", "e", "a", "b", "d"])
   })
 })
