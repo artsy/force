@@ -70,6 +70,7 @@ fragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {
   currentBid {
     display
   }
+  formattedEndDateTime
   artwork {
     internalID
     date
@@ -240,6 +241,13 @@ return {
                     "name": "currentBid",
                     "plural": false,
                     "selections": (v3/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "formattedEndDateTime",
                     "storageKey": null
                   },
                   {
@@ -437,12 +445,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9e17af843ae8d3a9bf57242e41bcb2ec",
+    "cacheID": "da94b6c39e468762a1950583a8c605b1",
     "id": null,
     "metadata": {},
     "name": "AuctionActiveBidsRefetchQuery",
     "operationKind": "query",
-    "text": "query AuctionActiveBidsRefetchQuery(\n  $saleID: String!\n) {\n  me {\n    ...AuctionActiveBids_me_nfIph\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_nfIph on Me {\n  internalID\n  lotStandings(saleID: $saleID, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      endedAt\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query AuctionActiveBidsRefetchQuery(\n  $saleID: String!\n) {\n  me {\n    ...AuctionActiveBids_me_nfIph\n    id\n  }\n}\n\nfragment AuctionActiveBids_me_nfIph on Me {\n  internalID\n  lotStandings(saleID: $saleID, live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      endedAt\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

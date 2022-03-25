@@ -105,6 +105,7 @@ fragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {
   currentBid {
     display
   }
+  formattedEndDateTime
   artwork {
     internalID
     date
@@ -243,52 +244,59 @@ v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "date",
+  "name": "formattedEndDateTime",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "date",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "title",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "endAt",
+  "name": "id",
   "storageKey": null
 },
 v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "endAt",
+  "storageKey": null
+},
+v15 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v15 = [
+v16 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v16 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -448,6 +456,7 @@ return {
                     "selections": (v8/*: any*/),
                     "storageKey": null
                   },
+                  (v9/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -457,8 +466,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v4/*: any*/),
-                      (v9/*: any*/),
                       (v10/*: any*/),
+                      (v11/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -539,12 +548,12 @@ return {
                         "name": "artistNames",
                         "storageKey": null
                       },
-                      (v11/*: any*/),
-                      (v12/*: any*/)
+                      (v12/*: any*/),
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v11/*: any*/),
+                  (v12/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -584,7 +593,7 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
-                      (v11/*: any*/),
+                      (v12/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -592,7 +601,7 @@ return {
                         "name": "liveStartAt",
                         "storageKey": null
                       },
-                      (v13/*: any*/),
+                      (v14/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -607,11 +616,11 @@ return {
                         "name": "isClosed",
                         "storageKey": null
                       },
-                      (v12/*: any*/)
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v12/*: any*/)
+                  (v13/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -654,9 +663,9 @@ return {
                         "name": "artwork",
                         "plural": false,
                         "selections": [
-                          (v14/*: any*/),
+                          (v15/*: any*/),
+                          (v11/*: any*/),
                           (v10/*: any*/),
-                          (v9/*: any*/),
                           {
                             "alias": "sale_message",
                             "args": null,
@@ -673,15 +682,15 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v15/*: any*/),
+                            "args": (v16/*: any*/),
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artists",
                             "plural": true,
                             "selections": [
-                              (v12/*: any*/),
-                              (v14/*: any*/),
-                              (v16/*: any*/)
+                              (v13/*: any*/),
+                              (v15/*: any*/),
+                              (v17/*: any*/)
                             ],
                             "storageKey": "artists(shallow:true)"
                           },
@@ -694,15 +703,15 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v15/*: any*/),
+                            "args": (v16/*: any*/),
                             "concreteType": "Partner",
                             "kind": "LinkedField",
                             "name": "partner",
                             "plural": false,
                             "selections": [
-                              (v16/*: any*/),
-                              (v14/*: any*/),
-                              (v12/*: any*/)
+                              (v17/*: any*/),
+                              (v15/*: any*/),
+                              (v13/*: any*/)
                             ],
                             "storageKey": "partner(shallow:true)"
                           },
@@ -714,7 +723,7 @@ return {
                             "name": "sale",
                             "plural": false,
                             "selections": [
-                              (v13/*: any*/),
+                              (v14/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -743,7 +752,7 @@ return {
                                 "name": "isClosed",
                                 "storageKey": null
                               },
-                              (v12/*: any*/)
+                              (v13/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -756,14 +765,8 @@ return {
                             "plural": false,
                             "selections": [
                               (v7/*: any*/),
-                              (v13/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "formattedEndDateTime",
-                                "storageKey": null
-                              },
+                              (v14/*: any*/),
+                              (v9/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -802,38 +805,38 @@ return {
                                 "selections": (v8/*: any*/),
                                 "storageKey": null
                               },
-                              (v12/*: any*/)
+                              (v13/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v12/*: any*/)
+                          (v13/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v12/*: any*/)
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v12/*: any*/)
+                  (v13/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v12/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "2fd4826fdca84a3924db6ad37a015bae",
+    "cacheID": "53fc0c3e9ba1e5c9c48e15092552aef9",
     "id": null,
     "metadata": {},
     "name": "useBidderPositionQuery",
     "operationKind": "query",
-    "text": "query useBidderPositionQuery(\n  $bidderPositionID: String!\n) {\n  me {\n    ...AuctionActiveBids_me\n    bidderPosition(id: $bidderPositionID) {\n      status\n      messageHeader\n      position {\n        internalID\n        suggestedNextBid {\n          cents\n          display\n        }\n        saleArtwork {\n          artwork {\n            ...Details_artwork\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionActiveBids_me on Me {\n  internalID\n  lotStandings(live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      endedAt\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
+    "text": "query useBidderPositionQuery(\n  $bidderPositionID: String!\n) {\n  me {\n    ...AuctionActiveBids_me\n    bidderPosition(id: $bidderPositionID) {\n      status\n      messageHeader\n      position {\n        internalID\n        suggestedNextBid {\n          cents\n          display\n        }\n        saleArtwork {\n          artwork {\n            ...Details_artwork\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionActiveBids_me on Me {\n  internalID\n  lotStandings(live: true) {\n    isHighestBidder\n    saleArtwork {\n      ...AuctionLotInfo_saleArtwork_4oTW5x\n      counts {\n        bidderPositions\n      }\n      currentBid {\n        display\n      }\n      slug\n      lotLabel\n      reserveStatus\n      saleID\n      highestBid {\n        display\n      }\n      endedAt\n      sale {\n        slug\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 100, height: 100, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
   }
 };
 })();
