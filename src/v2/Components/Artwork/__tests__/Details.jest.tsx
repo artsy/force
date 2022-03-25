@@ -311,6 +311,7 @@ describe("Details", () => {
 
 const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
   id: "opaque-artwork-id",
+  internalID: "opaque-internal-id",
   artists: [
     {
       id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
@@ -346,4 +347,6 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     endAt: "2022-03-12T12:33:37.000Z",
     formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
   },
+  attributionClass: null,
+  mediumType: null,
 }
