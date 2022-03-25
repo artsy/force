@@ -36,6 +36,36 @@ query ShowPaginatedEventsRendererQuery(
   }
 }
 
+fragment CellShow_show on Show {
+  internalID
+  slug
+  name
+  href
+  startAt
+  endAt
+  isFairBooth
+  exhibitionPeriod
+  partner {
+    __typename
+    ... on Partner {
+      name
+    }
+    ... on Node {
+      __isNode: __typename
+      id
+    }
+    ... on ExternalPartner {
+      id
+    }
+  }
+  coverImage {
+    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment Pagination_pageCursors on PageCursors {
   around {
     cursor
@@ -58,25 +88,10 @@ fragment Pagination_pageCursors on PageCursors {
   }
 }
 
-fragment ShowCard_show on Show {
-  href
-  name
-  isFairBooth
-  exhibitionPeriod
-  coverImage {
-    medium: cropped(width: 320, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-
 fragment ShowEvents_edges on ShowEdge {
   node {
+    ...CellShow_show
     internalID
-    ...ShowCard_show
     id
   }
 }
@@ -145,19 +160,26 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
+  "name": "slug",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v10 = [
-  (v8/*: any*/),
+v11 = [
   (v9/*: any*/),
+  (v10/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -166,13 +188,23 @@ v10 = [
     "storageKey": null
   }
 ],
-v11 = {
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v14 = [
+  (v13/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -228,13 +260,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
+          (v8/*: any*/),
           {
             "alias": "showsList",
             "args": [
@@ -292,7 +318,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v10/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -302,7 +328,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v10/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -312,7 +338,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v10/*: any*/),
+                    "selections": (v11/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -323,8 +349,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
-                      (v9/*: any*/)
+                      (v9/*: any*/),
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -354,6 +380,8 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
+                      (v8/*: any*/),
+                      (v12/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -365,7 +393,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "name",
+                        "name": "startAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endAt",
                         "storageKey": null
                       },
                       {
@@ -385,23 +420,70 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "partner",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "__typename",
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v12/*: any*/)
+                            ],
+                            "type": "Partner",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v14/*: any*/),
+                            "type": "Node",
+                            "abstractKey": "__isNode"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v14/*: any*/),
+                            "type": "ExternalPartner",
+                            "abstractKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
                         "name": "coverImage",
                         "plural": false,
                         "selections": [
                           {
-                            "alias": "medium",
+                            "alias": null,
                             "args": [
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 240
+                                "value": 334
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": [
+                                  "normalized",
+                                  "larger",
+                                  "large"
+                                ]
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 320
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -409,20 +491,6 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "height",
-                                "storageKey": null
-                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -438,12 +506,12 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:240,width:320)"
+                            "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v13/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -453,19 +521,19 @@ return {
             ],
             "storageKey": null
           },
-          (v11/*: any*/)
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4f7055a0c83c066f28c4ac8c25b8bf86",
+    "cacheID": "04a58e92c43c6daaaad4365056b5c3a5",
     "id": null,
     "metadata": {},
     "name": "ShowPaginatedEventsRendererQuery",
     "operationKind": "query",
-    "text": "query ShowPaginatedEventsRendererQuery(\n  $partnerId: String!\n  $first: Int\n  $page: Int\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_JfDnP\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 320, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_JfDnP on Partner {\n  slug\n  showsList: showsConnection(first: $first, status: $status, page: $page, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query ShowPaginatedEventsRendererQuery(\n  $partnerId: String!\n  $first: Int\n  $page: Int\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_JfDnP\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    ...CellShow_show\n    internalID\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_JfDnP on Partner {\n  slug\n  showsList: showsConnection(first: $first, status: $status, page: $page, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();

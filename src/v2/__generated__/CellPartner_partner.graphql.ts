@@ -22,7 +22,6 @@ export type CellPartner_partner = {
         readonly slug: string;
     } | null> | null;
     readonly profile: {
-        readonly isFollowed: boolean | null;
         readonly image: {
             readonly cropped: {
                 readonly src: string;
@@ -156,13 +155,6 @@ return {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "isFollowed",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
           "name": "image",
@@ -235,5 +227,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8daa72f3a04fa812c142720b2e5bbe7f';
+(node as any).hash = '58bd0b98f38e647dd9bb2a1a74b181e5';
 export default node;

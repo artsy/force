@@ -11,8 +11,8 @@ export type ShowsRail_partner = {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
+                readonly internalID: string;
+                readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
             } | null;
         } | null> | null;
     } | null;
@@ -97,13 +97,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "internalID",
                   "storageKey": null
                 },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ShowCard_show"
+                  "name": "CellShow_show"
                 }
               ],
               "storageKey": null
@@ -118,5 +118,5 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'd6e77342a610708d73c1b06cb0b3bed2';
+(node as any).hash = '9ef8feb773884c0376184f2b91b9bba9';
 export default node;
