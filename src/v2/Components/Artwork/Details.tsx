@@ -17,6 +17,7 @@ import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { compact } from "lodash"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -214,6 +215,7 @@ export const Details: React.FC<DetailsProps> = ({
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
+  const pills = compact([rest.artwork.attributionClass?.name])
 
   return (
     <>
@@ -236,12 +238,17 @@ export const Details: React.FC<DetailsProps> = ({
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
-        {isHovered && (
+        {isHovered && pills.length > 0 && (
           <HoverContainer>
-            <NonClickablePill variant="textSquare" mr={0.5}>
-              Limited Edition
-            </NonClickablePill>
-            <NonClickablePill variant="textSquare">Print</NonClickablePill>
+            {pills.map((pill, index) => (
+              <NonClickablePill
+                key={`${rest.artwork.internalID}-pill-${index}`}
+                variant="textSquare"
+                mr={0.5}
+              >
+                {pill}
+              </NonClickablePill>
+            ))}
           </HoverContainer>
         )}
       </Box>
@@ -321,6 +328,7 @@ const HoverContainer = styled(Box)`
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
     fragment Details_artwork on Artwork {
+      internalID
       href
       title
       date
@@ -356,6 +364,9 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         opening_bid: openingBid {
           display
         }
+      }
+      attributionClass {
+        name
       }
     }
   `,
