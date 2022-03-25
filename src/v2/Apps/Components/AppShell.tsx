@@ -33,7 +33,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
-  const pathname = match?.location ? match.location.pathname : null
   const { isEigen } = useSystemContext()
   const showNav = !routeConfig?.hideNav
   const showFooter = !isEigen && !routeConfig?.hideFooter
@@ -119,7 +118,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
           </Flex>
         )}
       </Theme>
-      <MntnConversionPixel path={pathname} />
+      <MntnConversionPixel />
     </Flex>
   )
 }

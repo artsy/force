@@ -38,7 +38,7 @@ const MntnConversionPixel: FC<MntnConversionPixelProps> = ({ path }) => {
         document.body.removeChild(script)
       }
     }
-  })
+  }, [matchFound])
 
   if (matchFound) {
     return <Pixel />
