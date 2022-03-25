@@ -97,12 +97,15 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }
 
   const getPercentageOptions = () => {
-    return [0.2, 0.15, 0.1].map((pricePercentage, idx) => {
+    return [0, 0.1, 0.2].map((pricePercentage, idx) => {
       if (listPrice?.major) {
         return {
           key: `price-option-${idx}`,
           value: Math.round(listPrice.major * (1 - pricePercentage)),
-          description: `${pricePercentage * 100}% below the list price`,
+          description:
+            pricePercentage !== 0
+              ? `${pricePercentage * 100}% below the list price`
+              : "Exact price",
         }
       }
       return
@@ -112,7 +115,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = artwork?.isPriceRange
     ? getRangeOptions()
     : getPercentageOptions()
-  const minPrice = priceOptions[0]?.value!
+  const minPrice = priceOptions[2]?.value!
 
   const { scrollTo } = useScrollTo({
     selectorOrRef: "#scrollTo--price-option-custom",
