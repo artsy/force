@@ -8,7 +8,7 @@ export type ArticleVerticalRelatedArticles_article = {
     readonly vertical: string | null;
     readonly verticalRelatedArticles: ReadonlyArray<{
         readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArticleCell_article">;
+        readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
     }>;
     readonly " $refType": "ArticleVerticalRelatedArticles_article";
 };
@@ -62,7 +62,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArticleCell_article"
+          "name": "CellArticle_article"
         }
       ],
       "storageKey": "relatedArticles(inVertical:true,size:8)"
@@ -71,5 +71,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '31d2b928f4850224b758e6d24caf0541';
+(node as any).hash = '2f7a755ddadcce2fa748cd41f4384d29';
 export default node;

@@ -3,9 +3,9 @@ import { useMemo } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
-  PartnerCellFragmentContainer,
-  PartnerCellPlaceholder,
-} from "v2/Components/Cells/PartnerCell"
+  CellPartnerFragmentContainer,
+  CellPartnerPlaceholder,
+} from "v2/Components/Cells/CellPartner"
 import { Rail } from "v2/Components/Rail"
 import { PartnersRail_partnerCategory } from "v2/__generated__/PartnersRail_partnerCategory.graphql"
 import { PartnersRailQuery } from "v2/__generated__/PartnersRailQuery.graphql"
@@ -30,7 +30,7 @@ const PartnersRail: React.FC<PartnersRailProps> = ({ partnerCategory }) => {
       getItems={() => {
         return partners.map(partner => {
           return (
-            <PartnerCellFragmentContainer
+            <CellPartnerFragmentContainer
               key={partner.internalID}
               partner={partner}
             />
@@ -55,7 +55,7 @@ export const PartnersRailPlaceholder: React.FC<PartnersRailPlaceholderProps> = (
         isLoading
         getItems={() => {
           return [...new Array(9)].map((_, k) => {
-            return <PartnerCellPlaceholder key={k} mode="RAIL" />
+            return <CellPartnerPlaceholder key={k} mode="RAIL" />
           })
         }}
       />
@@ -82,7 +82,7 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
           type: $type
         ) {
           internalID
-          ...PartnerCell_partner
+          ...CellPartner_partner
         }
         secondary: partners(
           eligibleForListing: true
@@ -93,7 +93,7 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
           defaultProfilePublic: true
         ) {
           internalID
-          ...PartnerCell_partner
+          ...CellPartner_partner
         }
       }
     `,

@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { ResponsiveBox, Image, Box } from "@artsy/palette"
+import { ResponsiveBox, Image, Flex } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -27,7 +27,13 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   }
 
   return (
-    <Box {...containerProps}>
+    <Flex
+      {...containerProps}
+      flexDirection="column"
+      justifyContent="flex-end"
+      width="100%"
+      height="100%"
+    >
       <ResponsiveBox
         aspectWidth={image?.width ?? 1}
         aspectHeight={image?.height ?? 1}
@@ -62,7 +68,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
       </ResponsiveBox>
 
       <Metadata artwork={artwork} />
-    </Box>
+    </Flex>
   )
 }
 

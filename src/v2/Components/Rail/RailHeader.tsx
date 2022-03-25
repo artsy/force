@@ -1,5 +1,5 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface RailHeaderProps {
@@ -46,7 +46,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
-      <Box>
+      <Box pr={2}>
         <Text variant="lg" as="h3">
           <RailHeaderTitle
             title={title}
@@ -59,7 +59,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
         </Text>
 
         {subTitle && (
-          <Text as="h3" variant="lg" color="black60">
+          <Text as="h3" variant="lg" color="black60" lineClamp={2}>
             {subTitle}
           </Text>
         )}
@@ -69,6 +69,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
         <Text
           textAlign="right"
           variant="sm"
+          flexShrink={0}
           as={RouterLink}
           // @ts-ignore
           to={viewAllHref}

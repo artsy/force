@@ -7,15 +7,13 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork = {
     readonly is_in_auction: boolean | null;
     readonly sale: {
-        readonly cascadingEndTimeInterval: number | null;
         readonly is_closed: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
+        readonly startAt: string | null;
     } | null;
     readonly saleArtwork: {
-        readonly endedAt: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
+        readonly endAt: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork">;
     readonly " $refType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$data = ArtworkSidebar_artwork;
@@ -48,13 +46,6 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cascadingEndTimeInterval",
-          "storageKey": null
-        },
-        {
           "alias": "is_closed",
           "args": null,
           "kind": "ScalarField",
@@ -62,9 +53,11 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "AuctionTimer_sale"
+          "kind": "ScalarField",
+          "name": "startAt",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -81,13 +74,8 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "endedAt",
+          "name": "endAt",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "LotTimer_saleArtwork"
         }
       ],
       "storageKey": null
@@ -111,6 +99,11 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarAuctionInfoPolling_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarAuctionTimer_artwork"
     },
     {
       "args": null,
@@ -156,5 +149,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '8e5eb358f471911963e5782c6ec3f81e';
+(node as any).hash = 'ddc3285b67d5eb1e778e317420ef05fa';
 export default node;

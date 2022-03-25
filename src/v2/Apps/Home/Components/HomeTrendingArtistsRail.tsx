@@ -1,9 +1,8 @@
-import { Box, Image, Skeleton, SkeletonText, SkeletonBox } from "@artsy/palette"
+import { Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { HomeTrendingArtistsRail_viewer } from "v2/__generated__/HomeTrendingArtistsRail_viewer.graphql"
 import { HomeTrendingArtistsRailQuery } from "v2/__generated__/HomeTrendingArtistsRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -14,7 +13,10 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Rail } from "v2/Components/Rail"
-import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
+import {
+  CellArtistFragmentContainer,
+  CellArtistPlaceholder,
+} from "v2/Components/Cells/CellArtist"
 
 interface HomeTrendingArtistsRailProps {
   viewer: HomeTrendingArtistsRail_viewer
@@ -24,9 +26,10 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
   viewer,
 }) => {
   const { trackEvent } = useTracking()
-  const nodes = extractNodes(viewer.artistsConnection)
 
-  if (nodes.length === 0) {
+  const artists = extractNodes(viewer.artistsConnection)
+
+  if (artists.length === 0) {
     return null
   }
 
@@ -47,48 +50,24 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
         trackEvent(trackingEvent)
       }}
       getItems={() => {
-        return nodes.map(node => {
+        return artists.map(artist => {
           return (
-            <RouterLink
-              to={node.href}
-              textDecoration="none"
+            <CellArtistFragmentContainer
+              key={artist.internalID}
+              artist={artist}
               onClick={() => {
                 const trackingEvent: ClickedArtistGroup = {
                   action: ActionType.clickedArtistGroup,
                   context_module: ContextModule.trendingArtistsRail,
                   context_page_owner_type: OwnerType.home,
-                  destination_page_owner_id: node.internalID,
-                  destination_page_owner_slug: node.slug,
+                  destination_page_owner_id: artist.internalID,
+                  destination_page_owner_slug: artist.slug,
                   destination_page_owner_type: OwnerType.artist,
                   type: "thumbnail",
                 }
                 trackEvent(trackingEvent)
               }}
-            >
-              <Box width={325}>
-                {node.image?.cropped?.src ? (
-                  <Box>
-                    <Image
-                      src={node.image.cropped.src}
-                      srcSet={node.image.cropped.srcSet}
-                      width={node.image.cropped.width}
-                      height={node.image.cropped.height}
-                      alt=""
-                      lazyLoad
-                    />
-                  </Box>
-                ) : (
-                  <Box bg="black30" width={325} height={230} />
-                )}
-
-                <EntityHeaderArtistFragmentContainer
-                  mt={1}
-                  alignItems="flex-start"
-                  artist={node}
-                  displayAvatar={false}
-                />
-              </Box>
-            </RouterLink>
+            />
           )
         })
       }}
@@ -104,13 +83,7 @@ const PLACEHOLDER = (
       viewAllHref="/artists"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={325} key={i}>
-              <SkeletonBox width={325} height={230} />
-              <SkeletonText variant="lg">Some Artist</SkeletonText>
-              <SkeletonText variant="md">Location</SkeletonText>
-            </Box>
-          )
+          return <CellArtistPlaceholder key={i} />
         })
       }}
     />
@@ -125,22 +98,9 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
         artistsConnection(sort: TRENDING_DESC, first: 99) {
           edges {
             node {
-              ...FollowArtistButton_artist
-              ...EntityHeaderArtist_artist
+              ...CellArtist_artist
               internalID
-              isFollowed
-              name
               slug
-              href
-              formattedNationalityAndBirthday
-              image {
-                cropped(width: 325, height: 230) {
-                  src
-                  srcSet
-                  width
-                  height
-                }
-              }
             }
           }
         }

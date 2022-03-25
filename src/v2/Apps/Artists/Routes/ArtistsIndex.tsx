@@ -14,11 +14,11 @@ import { ArtistsIndex_featuredArtists } from "v2/__generated__/ArtistsIndex_feat
 import { ArtistsIndex_featuredGenes } from "v2/__generated__/ArtistsIndex_featuredGenes.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArtistsIndexMeta } from "../Components/ArtistsIndexMeta"
-import { ArtistsArtistCardFragmentContainer } from "../Components/ArtistsArtistCard"
 import { ArtistsCarouselCellFragmentContainer } from "../Components/ArtistsCarouselCell"
 import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
 import { Media } from "v2/Utils/Responsive"
 import { compact } from "lodash"
+import { CellArtistFragmentContainer } from "v2/Components/Cells/CellArtist"
 
 interface ArtistsIndexProps {
   featuredArtists: ArtistsIndex_featuredArtists
@@ -102,13 +102,16 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                   </RouterLink>
                 </Box>
 
-                <GridColumns gridRowGap={[2, 0]}>
+                <GridColumns>
                   {gene.trendingArtists.map(artist => {
                     if (!artist) return null
 
                     return (
                       <Column key={artist.internalID} span={[12, 6, 3, 3]}>
-                        <ArtistsArtistCardFragmentContainer artist={artist} />
+                        <CellArtistFragmentContainer
+                          mode="GRID"
+                          artist={artist}
+                        />
                       </Column>
                     )
                   })}
@@ -145,8 +148,8 @@ export const ArtistsIndexFragmentContainer = createFragmentContainer(
             name
             href
             trendingArtists(sample: 4) {
+              ...CellArtist_artist
               internalID
-              ...ArtistsArtistCard_artist
             }
           }
         }

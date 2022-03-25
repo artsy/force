@@ -1,37 +1,23 @@
-import {
-  ActionType,
-  ClickedGalleryGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import {
-  Box,
-  Image,
-  ResponsiveBox,
-  SkeletonBox,
-  SkeletonText,
-  Text,
-} from "@artsy/palette"
+import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "v2/System/Analytics/useTracking"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { PartnerCell_partner } from "v2/__generated__/PartnerCell_partner.graphql"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
+import { CellPartner_partner } from "v2/__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
+import { EntityHeaderPlaceholder } from "../EntityHeaders/EntityHeaderPlaceholder"
 
-interface PartnerCellProps {
-  partner: PartnerCell_partner
+export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
+  partner: CellPartner_partner
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
 
-const PartnerCell: React.FC<PartnerCellProps> = ({
+const CellPartner: React.FC<CellPartnerProps> = ({
   partner,
   mode = "RAIL",
+  ...rest
 }) => {
-  const { trackEvent } = useTracking()
-
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = partner.profile?.image?.cropped
 
@@ -41,23 +27,11 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
 
   return (
     <RouterLink
-      to={`${partner.href}`}
+      to={partner.href}
       display="block"
       textDecoration="none"
       width={width}
-      onClick={() => {
-        const trackingEvent: ClickedGalleryGroup = {
-          action: ActionType.clickedGalleryGroup,
-          context_module: ContextModule.featuredGalleriesRail,
-          context_page_owner_type: OwnerType.home,
-          destination_page_owner_id: partner.internalID,
-          destination_page_owner_slug: partner.slug,
-          destination_page_owner_type: OwnerType.galleries,
-          type: "thumbnail",
-        }
-
-        trackEvent(trackingEvent)
-      }}
+      {...rest}
     >
       <EntityHeaderPartnerFragmentContainer
         partner={partner}
@@ -96,20 +70,16 @@ const PartnerCell: React.FC<PartnerCellProps> = ({
   )
 }
 
-type PartnerCellPlaceholderProps = Pick<PartnerCellProps, "mode">
+type CellPartnerPlaceholderProps = Pick<CellPartnerProps, "mode">
 
-export const PartnerCellPlaceholder: React.FC<PartnerCellPlaceholderProps> = ({
+export const CellPartnerPlaceholder: React.FC<CellPartnerPlaceholderProps> = ({
   mode = "RAIL",
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
 
   return (
     <Box width={width}>
-      <SkeletonText variant="lg">Example Gallery</SkeletonText>
-
-      <SkeletonText variant="md" mb={1}>
-        Location
-      </SkeletonText>
+      <EntityHeaderPlaceholder displayAvatar={false} mb={1} />
 
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
         <SkeletonBox width="100%" height="100%" />
@@ -118,11 +88,11 @@ export const PartnerCellPlaceholder: React.FC<PartnerCellPlaceholderProps> = ({
   )
 }
 
-export const PartnerCellFragmentContainer = createFragmentContainer(
-  PartnerCell,
+export const CellPartnerFragmentContainer = createFragmentContainer(
+  CellPartner,
   {
     partner: graphql`
-      fragment PartnerCell_partner on Partner {
+      fragment CellPartner_partner on Partner {
         ...EntityHeaderPartner_partner
         internalID
         slug

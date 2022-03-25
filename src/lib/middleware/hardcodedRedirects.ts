@@ -81,6 +81,7 @@ const redirects = {
   "/user/shipping": "/settings/shipping",
   "/user/purchases": "/settings/purchases",
   "/user/payments": "/settings/payments",
+  "/user/alerts": "/settings/alerts",
 }
 
 for (let from in redirects) {

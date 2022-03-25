@@ -132,7 +132,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$200.00."
+        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$100.00."
       )
       expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenCalledWith(
@@ -143,20 +143,6 @@ describe("PriceOptions", () => {
       )
       fireEvent.change(input, { target: { value: 200 } })
       expect(notice).not.toBeInTheDocument()
-    })
-    it("selects the first option when clicking on the low price notice", async () => {
-      fireEvent.click(radios[3])
-      const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$200.00."
-      )
-      fireEvent.click(notice)
-      const selected = screen.getAllByRole("radio", { checked: true })
-      expect(selected[0]).toHaveTextContent("US$200.00")
-      expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject("We recommend changing your offer", 200, "USD")
-        )
-      )
     })
   })
 
@@ -178,30 +164,31 @@ describe("PriceOptions", () => {
       expect(radios).toHaveLength(4)
     })
     it("correctly formats values", () => {
-      expect(radios[0]).toHaveTextContent("€80.00")
-      expect(radios[1]).toHaveTextContent("€85.00")
-      expect(radios[2]).toHaveTextContent("€90.00")
+      expect(radios[0]).toHaveTextContent("€100.00")
+      expect(radios[1]).toHaveTextContent("€90.00")
+      expect(radios[2]).toHaveTextContent("€80.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject("20% below the list price", 80, "EUR")
-        )
+        expect.objectContaining(getTrackingObject("Exact price", 100, "EUR"))
       )
+
       fireEvent.click(radios[1])
-      expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(
-          getTrackingObject("15% below the list price", 85, "EUR")
-        )
-      )
-      fireEvent.click(radios[2])
       expect(trackEvent).toHaveBeenLastCalledWith(
         expect.objectContaining(
           getTrackingObject("10% below the list price", 90, "EUR")
         )
       )
+
+      fireEvent.click(radios[2])
+      expect(trackEvent).toHaveBeenLastCalledWith(
+        expect.objectContaining(
+          getTrackingObject("20% below the list price", 80, "EUR")
+        )
+      )
+
       fireEvent.click(radios[3])
       expect(trackEvent).toHaveBeenCalledWith(
         expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
@@ -239,9 +226,9 @@ describe("PriceOptions", () => {
       expect(selected).toHaveTextContent("Offer amount missing or invalid.")
     })
     it("correctly rounds the values and displays the currency symbol", () => {
-      expect(radios[0]).toHaveTextContent("A$79.00") // %80 would be A$79.20
-      expect(radios[1]).toHaveTextContent("A$84.00") // %85 would be A$84.15
-      expect(radios[2]).toHaveTextContent("A$89.00") // %90 would be A$89.10
+      expect(radios[0]).toHaveTextContent("A$99.00") // Exact price
+      expect(radios[1]).toHaveTextContent("A$89.00") // %90 would be A$89.10
+      expect(radios[2]).toHaveTextContent("A$79.00") // %80 would be A$79.20
     })
   })
 })

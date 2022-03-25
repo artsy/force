@@ -4,21 +4,25 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsArtistCard_artist = {
+export type CellArtist_artist = {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly name: string | null;
     readonly href: string | null;
+    readonly initials: string | null;
     readonly image: {
-        readonly thumb: {
+        readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-    readonly " $refType": "ArtistsArtistCard_artist";
+    readonly " $refType": "CellArtist_artist";
 };
-export type ArtistsArtistCard_artist$data = ArtistsArtistCard_artist;
-export type ArtistsArtistCard_artist$key = {
-    readonly " $data"?: ArtistsArtistCard_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
+export type CellArtist_artist$data = CellArtist_artist;
+export type CellArtist_artist$key = {
+    readonly " $data"?: CellArtist_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
 };
 
 
@@ -27,13 +31,41 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistsArtistCard_artist",
+  "name": "CellArtist_artist",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "initials",
       "storageKey": null
     },
     {
@@ -45,12 +77,21 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": "thumb",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
               "name": "height",
               "value": 334
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "normalized",
+                "larger",
+                "large"
+              ]
             },
             {
               "kind": "Literal",
@@ -78,7 +119,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:334,width:445)"
+          "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
         }
       ],
       "storageKey": null
@@ -92,5 +133,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '79b6c6d6116566a0019316029b44ca10';
+(node as any).hash = '883c585cb325cbaa008a980afdc40f0c';
 export default node;

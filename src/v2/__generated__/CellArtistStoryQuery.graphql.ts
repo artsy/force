@@ -4,32 +4,40 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsArtistCard_Test_QueryVariables = {};
-export type ArtistsArtistCard_Test_QueryResponse = {
+export type CellArtistStoryQueryVariables = {
+    id: string;
+};
+export type CellArtistStoryQueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
     } | null;
 };
-export type ArtistsArtistCard_Test_Query = {
-    readonly response: ArtistsArtistCard_Test_QueryResponse;
-    readonly variables: ArtistsArtistCard_Test_QueryVariables;
+export type CellArtistStoryQuery = {
+    readonly response: CellArtistStoryQueryResponse;
+    readonly variables: CellArtistStoryQueryVariables;
 };
 
 
 
 /*
-query ArtistsArtistCard_Test_Query {
-  artist(id: "example") {
-    ...ArtistsArtistCard_artist
+query CellArtistStoryQuery(
+  $id: String!
+) {
+  artist(id: $id) {
+    ...CellArtist_artist
     id
   }
 }
 
-fragment ArtistsArtistCard_artist on Artist {
+fragment CellArtist_artist on Artist {
   ...EntityHeaderArtist_artist
+  internalID
+  slug
+  name
   href
+  initials
   image {
-    thumb: cropped(width: 445, height: 334) {
+    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
       src
       srcSet
     }
@@ -59,12 +67,19 @@ fragment EntityHeaderArtist_artist on Artist {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "example"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
   }
 ],
 v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -79,53 +94,17 @@ v1 = [
     "name": "srcSet",
     "storageKey": null
   }
-],
-v2 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Image"
-},
-v3 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "CroppedImageUrl"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "FormattedNumber"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v7 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-};
+];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistsArtistCard_Test_Query",
+    "name": "CellArtistStoryQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -134,10 +113,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistsArtistCard_artist"
+            "name": "CellArtist_artist"
           }
         ],
-        "storageKey": "artist(id:\"example\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -145,13 +124,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistsArtistCard_Test_Query",
+    "name": "CellArtistStoryQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -250,7 +229,7 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v1/*: any*/),
+                "selections": (v2/*: any*/),
                 "storageKey": "cropped(height:45,width:45)"
               }
             ],
@@ -265,12 +244,21 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "thumb",
+                "alias": null,
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "height",
                     "value": 334
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
                   },
                   {
                     "kind": "Literal",
@@ -282,8 +270,8 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v1/*: any*/),
-                "storageKey": "cropped(height:334,width:445)"
+                "selections": (v2/*: any*/),
+                "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
               }
             ],
             "storageKey": null
@@ -296,51 +284,19 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "artist(id:\"example\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "00d11d5784e15f42ade6233e98b1cbf9",
+    "cacheID": "d6af2244d36418993abc9e781ab2c29b",
     "id": null,
-    "metadata": {
-      "relayTestingSelectionTypeInfo": {
-        "artist": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artist"
-        },
-        "artist.avatar": (v2/*: any*/),
-        "artist.avatar.cropped": (v3/*: any*/),
-        "artist.avatar.cropped.src": (v4/*: any*/),
-        "artist.avatar.cropped.srcSet": (v4/*: any*/),
-        "artist.counts": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistCounts"
-        },
-        "artist.counts.artworks": (v5/*: any*/),
-        "artist.counts.forSaleArtworks": (v5/*: any*/),
-        "artist.formattedNationalityAndBirthday": (v6/*: any*/),
-        "artist.href": (v6/*: any*/),
-        "artist.id": (v7/*: any*/),
-        "artist.image": (v2/*: any*/),
-        "artist.image.thumb": (v3/*: any*/),
-        "artist.image.thumb.src": (v4/*: any*/),
-        "artist.image.thumb.srcSet": (v4/*: any*/),
-        "artist.initials": (v6/*: any*/),
-        "artist.internalID": (v7/*: any*/),
-        "artist.name": (v6/*: any*/),
-        "artist.slug": (v7/*: any*/)
-      }
-    },
-    "name": "ArtistsArtistCard_Test_Query",
+    "metadata": {},
+    "name": "CellArtistStoryQuery",
     "operationKind": "query",
-    "text": "query ArtistsArtistCard_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistsArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CellArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...CellArtist_artist\n    id\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '187b8f4dda0ef6b7394507080251b7f5';
+(node as any).hash = 'e873bebdbb59c58201c96d6d6999e74f';
 export default node;

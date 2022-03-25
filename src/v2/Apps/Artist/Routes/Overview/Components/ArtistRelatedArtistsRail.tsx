@@ -1,16 +1,8 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import {
-  Box,
-  EntityHeader,
-  Image,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-} from "@artsy/palette"
-import * as React from "react";
+import { Box, Skeleton } from "@artsy/palette"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Rail } from "v2/Components/Rail"
 import {
   AnalyticsSchema,
@@ -18,10 +10,13 @@ import {
   useSystemContext,
 } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistRelatedArtistsRail_artist } from "v2/__generated__/ArtistRelatedArtistsRail_artist.graphql"
 import { ArtistRelatedArtistsRailQuery } from "v2/__generated__/ArtistRelatedArtistsRailQuery.graphql"
+import {
+  CellArtistFragmentContainer,
+  CellArtistPlaceholder,
+} from "v2/Components/Cells/CellArtist"
 
 interface ArtistRelatedArtistsRailProps {
   artist: ArtistRelatedArtistsRail_artist
@@ -31,15 +26,16 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
   artist,
 }) => {
   const tracking = useTracking()
+
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const nodes = extractNodes(artist?.related?.artistsConnection)
+  const artists = extractNodes(artist?.related?.artistsConnection)
 
-  if (nodes.length === 0) {
+  if (artists.length === 0) {
     return null
   }
 
@@ -49,72 +45,26 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
         title="Related Artists"
         alignItems="flex-start"
         getItems={() => {
-          return nodes.map((node, index) => {
-            const artworkImage = extractNodes(
-              node.filterArtworksConnection
-            )?.[0]?.image
-
-            if (!artworkImage) {
-              return null as any
-            }
-
+          return artists.map((artist, index) => {
             return (
-              <React.Fragment key={index}>
-                <RouterLink
-                  to={node.href}
-                  display="block"
-                  textDecoration="none"
-                  onClick={() => {
-                    tracking.trackEvent({
-                      action_type: AnalyticsSchema.ActionType.Click,
-                      contextModule: ContextModule.relatedArtistsRail,
-                      contextPageOwnerId,
-                      contextPageOwnerSlug,
-                      contextPageOwnerType,
-                      destination_path: node.href,
-                      destinationPageOwnerId: node.internalID,
-                      destinationPageOwnerSlug: node.slug,
-                      destinationPageOwnerType: OwnerType.artwork,
-                      horizontalSlidePosition: index + 1,
-                      type: "thumbnail",
-                    })
-                  }}
-                >
-                  <Image
-                    width={325}
-                    maxHeight={230}
-                    height={230}
-                    src={artworkImage?.cropped?.src}
-                    srcSet={artworkImage?.cropped?.srcSet}
-                    lazyLoad
-                    alt=""
-                  />
-                </RouterLink>
-
-                <EntityHeader
-                  mt={1}
-                  width={325}
-                  name={node.name!}
-                  imageUrl={node?.image?.cropped?.url}
-                  href={`/artist/${node.slug}`}
-                  meta={
-                    node.nationality && node.birthday
-                      ? `${node.nationality}, b. ${node.birthday}`
-                      : undefined
-                  }
-                  FollowButton={
-                    <FollowArtistButtonFragmentContainer
-                      artist={node}
-                      contextModule={ContextModule.featuredArtistsRail}
-                      buttonProps={{
-                        size: "small",
-                        variant: "secondaryOutline",
-                        width: null,
-                      }}
-                    />
-                  }
-                />
-              </React.Fragment>
+              <CellArtistFragmentContainer
+                artist={artist}
+                onClick={() => {
+                  tracking.trackEvent({
+                    action_type: AnalyticsSchema.ActionType.Click,
+                    contextModule: ContextModule.relatedArtistsRail,
+                    contextPageOwnerId,
+                    contextPageOwnerSlug,
+                    contextPageOwnerType,
+                    destination_path: artist.href,
+                    destinationPageOwnerId: artist.internalID,
+                    destinationPageOwnerSlug: artist.slug,
+                    destinationPageOwnerType: OwnerType.artist,
+                    horizontalSlidePosition: index + 1,
+                    type: "thumbnail",
+                  })
+                }}
+              />
             )
           })
         }}
@@ -134,38 +84,10 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
           artistsConnection(kind: MAIN, first: 20) {
             edges {
               node {
-                ...FollowArtistButton_artist
-                name
-                href
+                ...CellArtist_artist
                 internalID
-                isFollowed
                 slug
-                nationality
-                birthday
-                filterArtworksConnection(
-                  sort: "-weighted_iconicity"
-                  first: 1
-                ) {
-                  edges {
-                    node {
-                      internalID
-                      slug
-                      image {
-                        cropped(width: 325, height: 230) {
-                          width
-                          height
-                          src
-                          srcSet
-                        }
-                      }
-                    }
-                  }
-                }
-                image {
-                  cropped(width: 50, height: 50) {
-                    url
-                  }
-                }
+                href
               }
             }
           }
@@ -179,16 +101,10 @@ const PLACEHOLDER = (
   <Skeleton>
     <Rail
       title="Related Artists"
-      viewAllLabel="View All Articles"
+      viewAllLabel="View All Artists"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
-          return (
-            <Box width={325} key={i}>
-              <SkeletonBox width={325} height={230} />
-              <SkeletonText variant="lg">Some Artist</SkeletonText>
-              <SkeletonText variant="md">Location</SkeletonText>
-            </Box>
-          )
+          return <CellArtistPlaceholder key={i} />
         })
       }}
     />
