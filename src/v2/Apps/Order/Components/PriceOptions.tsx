@@ -102,9 +102,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
         return {
           key: `price-option-${idx}`,
           value: Math.round(listPrice.major * (1 - pricePercentage)),
-          description: !!pricePercentage
-            ? `${pricePercentage * 100}% below the list price`
-            : "Exact price",
+          description:
+            pricePercentage !== 0
+              ? `${pricePercentage * 100}% below the list price`
+              : "Exact price",
         }
       }
       return
