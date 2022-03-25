@@ -77,7 +77,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
 
-  console.log("AppShell::preRender", pathname)
   return (
     <Flex
       width="100%"
