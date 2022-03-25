@@ -45,6 +45,9 @@ export type Details_artwork = {
     readonly attributionClass: {
         readonly name: string | null;
     } | null;
+    readonly mediumType: {
+        readonly name: string | null;
+    } | null;
     readonly " $refType": "Details_artwork";
 };
 export type Details_artwork$data = Details_artwork;
@@ -92,6 +95,9 @@ v4 = [
     "name": "display",
     "storageKey": null
   }
+],
+v5 = [
+  (v2/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -286,9 +292,17 @@ return {
       "kind": "LinkedField",
       "name": "attributionClass",
       "plural": false,
-      "selections": [
-        (v2/*: any*/)
-      ],
+      "selections": (v5/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": (v5/*: any*/),
       "storageKey": null
     }
   ],
@@ -296,5 +310,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bbdfe3bce6d5b96e40c3c704fd9965da';
+(node as any).hash = 'ac9a1a96d4786dee298bcec9ad0aea7a';
 export default node;
