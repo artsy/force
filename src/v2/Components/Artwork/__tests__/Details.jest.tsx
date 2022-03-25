@@ -21,6 +21,7 @@ describe("Details", () => {
       hideSaleInfo: boolean
       hidePartnerName: boolean
       hideArtistName: boolean
+      isHovered: boolean
     }
   ) => {
     return await renderRelayTree({
@@ -307,6 +308,62 @@ describe("Details", () => {
       })
     })
   })
+
+  describe("alternate metadata when hovering", () => {
+    it("pills should NOT be displayed if isHovered is false", async () => {
+      props = {
+        isHovered: false,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Unique")
+      expect(html).not.toContain("Print")
+    })
+
+    it("pills should be displayed if isHovered is true", async () => {
+      props = {
+        isHovered: true,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Unique")
+      expect(html).toContain("Print")
+    })
+
+    it("only Rarity pill should be displayed", async () => {
+      props = {
+        isHovered: true,
+      }
+      const data: any = {
+        ...artworkInAuction,
+        attributionClass: null,
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Unique")
+      expect(html).toContain("Print")
+    })
+
+    it("only Medium pill should be displayed", async () => {
+      props = {
+        isHovered: true,
+      }
+      const data: any = {
+        ...artworkInAuction,
+        mediumType: null,
+      }
+
+      const wrapper = await getWrapper(data, props)
+      const html = wrapper.html()
+
+      expect(html).toContain("Unique")
+      expect(html).not.toContain("Print")
+    })
+  })
 })
 
 const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
@@ -347,6 +404,11 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     endAt: "2022-03-12T12:33:37.000Z",
     formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
   },
-  attributionClass: null,
-  mediumType: null,
+  attributionClass: {
+    id: "attributionClass-id",
+    name: "Unique",
+  },
+  mediumType: {
+    name: "Print",
+  },
 }
