@@ -215,7 +215,10 @@ export const Details: React.FC<DetailsProps> = ({
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
-  const pills = compact([rest.artwork.attributionClass?.name])
+  const pills = compact([
+    rest.artwork.attributionClass?.name,
+    rest.artwork.mediumType?.name,
+  ])
 
   return (
     <>
@@ -366,6 +369,9 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         }
       }
       attributionClass {
+        name
+      }
+      mediumType {
         name
       }
     }
