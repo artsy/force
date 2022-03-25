@@ -30,9 +30,7 @@ query preferencesRoutes_PreferencesQuery(
 
 fragment PreferencesApp_viewer_4kNil9 on Viewer {
   notificationPreferences(authenticationToken: $authenticationToken) {
-    id
     name
-    channel
     status
   }
 }
@@ -106,21 +104,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "channel",
                 "storageKey": null
               },
               {
@@ -139,12 +123,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "014155cbf8a8c8871f9a6574d300a670",
+    "cacheID": "b5a42ea324a5fbc271f83dabb8544269",
     "id": null,
     "metadata": {},
     "name": "preferencesRoutes_PreferencesQuery",
     "operationKind": "query",
-    "text": "query preferencesRoutes_PreferencesQuery(\n  $authenticationToken: String\n) {\n  viewer {\n    ...PreferencesApp_viewer_4kNil9\n  }\n}\n\nfragment PreferencesApp_viewer_4kNil9 on Viewer {\n  notificationPreferences(authenticationToken: $authenticationToken) {\n    id\n    name\n    channel\n    status\n  }\n}\n"
+    "text": "query preferencesRoutes_PreferencesQuery(\n  $authenticationToken: String\n) {\n  viewer {\n    ...PreferencesApp_viewer_4kNil9\n  }\n}\n\nfragment PreferencesApp_viewer_4kNil9 on Viewer {\n  notificationPreferences(authenticationToken: $authenticationToken) {\n    name\n    status\n  }\n}\n"
   }
 };
 })();
