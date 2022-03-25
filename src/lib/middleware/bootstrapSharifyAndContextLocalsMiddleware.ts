@@ -63,6 +63,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
 
   updateSharifyAndContext(res, "AP", res.locals.sd.AP)
 
+  updateSharifyAndContext(res, "REQUEST_ID", req.id)
+
   next()
 }
 

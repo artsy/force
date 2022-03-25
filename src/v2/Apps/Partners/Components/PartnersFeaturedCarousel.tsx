@@ -1,7 +1,8 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeroCarousel } from "v2/Components/HeroCarousel/HeroCarousel"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { useStableShuffle } from "v2/Utils/Hooks/useStableShuffle"
 import { PartnersFeaturedCarousel_viewer } from "v2/__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import { PartnersFeaturedCarouselCellFragmentContainer } from "./PartnersFeaturedCarouselCell"
 
@@ -14,9 +15,13 @@ const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
 }) => {
   const profiles = extractNodes(viewer.orderedSet?.orderedItemsConnection)
 
+  const { shuffle } = useStableShuffle()
+
+  const shuffled = useMemo(() => shuffle(profiles), [profiles, shuffle])
+
   return (
     <HeroCarousel fullBleed={false}>
-      {profiles.map(profile => {
+      {shuffled.map(profile => {
         return (
           <PartnersFeaturedCarouselCellFragmentContainer
             key={profile.internalID}
