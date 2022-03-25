@@ -12,6 +12,7 @@ export type Details_Test_QueryResponse = {
 };
 export type Details_Test_QueryRawResponse = {
     readonly artwork: ({
+        readonly internalID: string;
         readonly href: string | null;
         readonly title: string | null;
         readonly date: string | null;
@@ -51,6 +52,10 @@ export type Details_Test_QueryRawResponse = {
             }) | null;
             readonly id: string;
         }) | null;
+        readonly attributionClass: ({
+            readonly name: string | null;
+            readonly id: string;
+        }) | null;
         readonly id: string;
     }) | null;
 };
@@ -71,6 +76,7 @@ query Details_Test_Query {
 }
 
 fragment Details_artwork on Artwork {
+  internalID
   href
   title
   date
@@ -108,6 +114,10 @@ fragment Details_artwork on Artwork {
     opening_bid: openingBid {
       display
     }
+    id
+  }
+  attributionClass {
+    name
     id
   }
 }
@@ -224,6 +234,13 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           (v1/*: any*/),
           {
             "alias": null,
@@ -394,6 +411,19 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
@@ -401,7 +431,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d08850483f27c396a654fbea631d5b0b",
+    "cacheID": "e99ee306c5be580fa2882eb35fea3069",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,11 +450,20 @@ return {
         "artwork.artists.href": (v7/*: any*/),
         "artwork.artists.id": (v8/*: any*/),
         "artwork.artists.name": (v7/*: any*/),
+        "artwork.attributionClass": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AttributionClass"
+        },
+        "artwork.attributionClass.id": (v8/*: any*/),
+        "artwork.attributionClass.name": (v7/*: any*/),
         "artwork.collecting_institution": (v7/*: any*/),
         "artwork.cultural_maker": (v7/*: any*/),
         "artwork.date": (v7/*: any*/),
         "artwork.href": (v7/*: any*/),
         "artwork.id": (v8/*: any*/),
+        "artwork.internalID": (v8/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -493,7 +532,7 @@ return {
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

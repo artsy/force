@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork = {
+    readonly internalID: string;
     readonly href: string | null;
     readonly title: string | null;
     readonly date: string | null;
@@ -40,6 +41,9 @@ export type Details_artwork = {
         readonly opening_bid: {
             readonly display: string | null;
         } | null;
+    } | null;
+    readonly attributionClass: {
+        readonly name: string | null;
     } | null;
     readonly " $refType": "Details_artwork";
 };
@@ -95,6 +99,13 @@ return {
   "metadata": null,
   "name": "Details_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -267,11 +278,23 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": [
+        (v2/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '846097a55242d32d80ea7f4a99ff4316';
+(node as any).hash = 'bbdfe3bce6d5b96e40c3c704fd9965da';
 export default node;

@@ -63,6 +63,7 @@ fragment Contact_artwork on Artwork {
 }
 
 fragment Details_artwork on Artwork {
+  internalID
   href
   title
   date
@@ -100,6 +101,10 @@ fragment Details_artwork on Artwork {
     opening_bid: openingBid {
       display
     }
+    id
+  }
+  attributionClass {
+    name
     id
   }
 }
@@ -323,6 +328,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "internalID",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "date",
                             "storageKey": null
                           },
@@ -517,6 +529,19 @@ return {
                             "storageKey": null
                           },
                           {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "AttributionClass",
+                            "kind": "LinkedField",
+                            "name": "attributionClass",
+                            "plural": false,
+                            "selections": [
+                              (v3/*: any*/),
+                              (v2/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          {
                             "alias": "is_inquireable",
                             "args": null,
                             "kind": "ScalarField",
@@ -524,13 +549,6 @@ return {
                             "storageKey": null
                           },
                           (v2/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "internalID",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -577,12 +595,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "021819502670a5d38d789fcb0466e3fb",
+    "cacheID": "55cbdfdff4e8df42c26c4204e41546b9",
     "id": null,
     "metadata": {},
     "name": "SoldRecentlyQuery",
     "operationKind": "query",
-    "text": "query SoldRecentlyQuery {\n  targetSupply {\n    ...SoldRecently_targetSupply\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SoldRecently_targetSupply on TargetSupply {\n  microfunnel {\n    artworksConnection {\n      edges {\n        node {\n          ...FillwidthItem_artwork\n          realizedPrice\n          realizedToEstimate\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SoldRecentlyQuery {\n  targetSupply {\n    ...SoldRecently_targetSupply\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SoldRecently_targetSupply on TargetSupply {\n  microfunnel {\n    artworksConnection {\n      edges {\n        node {\n          ...FillwidthItem_artwork\n          realizedPrice\n          realizedToEstimate\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
