@@ -10103,8 +10103,6 @@ type NotificationPreference {
 }
 
 input NotificationPreferenceInput {
-  channel: String!
-  id: String!
   name: String!
   status: SubGroupStatus!
 }

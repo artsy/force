@@ -10,8 +10,6 @@ export type updateNotificationPreferencesMutationInput = {
     subscriptionGroups: Array<NotificationPreferenceInput>;
 };
 export type NotificationPreferenceInput = {
-    channel: string;
-    id: string;
     name: string;
     status: SubGroupStatus;
 };

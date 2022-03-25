@@ -7,9 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 export type PreferencesApp_viewer = {
     readonly notificationPreferences: ReadonlyArray<{
-        readonly id: string;
         readonly name: string;
-        readonly channel: string;
         readonly status: SubGroupStatus;
     }>;
     readonly " $refType": "PreferencesApp_viewer";
@@ -52,21 +50,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "channel",
           "storageKey": null
         },
         {
@@ -83,5 +67,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '407ddcff82ae4483ee244e3633b65cc9';
+(node as any).hash = '010b0db11226b29964bff79c43adcc2a';
 export default node;
