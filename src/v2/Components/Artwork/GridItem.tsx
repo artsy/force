@@ -12,8 +12,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useState } from "react"
 import { isTouch } from "v2/Utils/device"
-
-const SHOULD_USE_HOVER_EFFECT = true
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -32,6 +31,9 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const [isHovered, setIsHovered] = useState(false)
+  const enableHoverEffect = useFeatureFlag(
+    "force-enable-hover-effect-for-artwork-item"
+  )
 
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
@@ -53,7 +55,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const handleMouseEnter = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (SHOULD_USE_HOVER_EFFECT ?? !isTouch) {
+    if (enableHoverEffect ?? !isTouch) {
       setIsHovered(true)
     }
 
@@ -64,7 +66,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const handleMouseLeave = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (SHOULD_USE_HOVER_EFFECT ?? !isTouch) {
+    if (enableHoverEffect ?? !isTouch) {
       setIsHovered(false)
     }
 
