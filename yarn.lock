@@ -94,6 +94,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
+
 "@artsy/palette@19.1.5", "@artsy/palette@^19.1.5":
   version "19.1.5"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.1.5.tgz#ac257588193ee60e54b43814f023df9b3d3bd94a"
