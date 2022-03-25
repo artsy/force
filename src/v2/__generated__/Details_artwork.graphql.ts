@@ -5,7 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Details_artwork = {
-    readonly internalID: string;
     readonly href: string | null;
     readonly title: string | null;
     readonly date: string | null;
@@ -42,12 +41,7 @@ export type Details_artwork = {
             readonly display: string | null;
         } | null;
     } | null;
-    readonly attributionClass: {
-        readonly name: string | null;
-    } | null;
-    readonly mediumType: {
-        readonly name: string | null;
-    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"HoverDetails_artwork">;
     readonly " $refType": "Details_artwork";
 };
 export type Details_artwork$data = Details_artwork;
@@ -95,9 +89,6 @@ v4 = [
     "name": "display",
     "storageKey": null
   }
-],
-v5 = [
-  (v2/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -105,13 +96,6 @@ return {
   "metadata": null,
   "name": "Details_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -286,29 +270,14 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "concreteType": "AttributionClass",
-      "kind": "LinkedField",
-      "name": "attributionClass",
-      "plural": false,
-      "selections": (v5/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworkMedium",
-      "kind": "LinkedField",
-      "name": "mediumType",
-      "plural": false,
-      "selections": (v5/*: any*/),
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "HoverDetails_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ac9a1a96d4786dee298bcec9ad0aea7a';
+(node as any).hash = 'b29ea4fba3a1a6acb469b0e30ac82ad2';
 export default node;

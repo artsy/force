@@ -130,7 +130,6 @@ fragment Contact_artwork on Artwork {
 }
 
 fragment Details_artwork on Artwork {
-  internalID
   href
   title
   date
@@ -170,6 +169,11 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...HoverDetails_artwork
+}
+
+fragment HoverDetails_artwork on Artwork {
+  internalID
   attributionClass {
     name
     id
@@ -254,97 +258,90 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "href",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "title",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "date",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": "sale_message",
   "args": null,
   "kind": "ScalarField",
   "name": "saleMessage",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": "cultural_maker",
   "args": null,
   "kind": "ScalarField",
   "name": "culturalMaker",
   "storageKey": null
 },
-v10 = [
+v9 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v12 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v13 = {
+v12 = {
   "alias": null,
-  "args": (v10/*: any*/),
+  "args": (v9/*: any*/),
   "concreteType": "Artist",
   "kind": "LinkedField",
   "name": "artists",
   "plural": true,
   "selections": [
-    (v11/*: any*/),
-    (v5/*: any*/),
-    (v12/*: any*/)
+    (v10/*: any*/),
+    (v4/*: any*/),
+    (v11/*: any*/)
   ],
   "storageKey": "artists(shallow:true)"
 },
-v14 = {
+v13 = {
   "alias": "collecting_institution",
   "args": null,
   "kind": "ScalarField",
   "name": "collectingInstitution",
   "storageKey": null
 },
-v15 = {
+v14 = {
   "alias": null,
-  "args": (v10/*: any*/),
+  "args": (v9/*: any*/),
   "concreteType": "Partner",
   "kind": "LinkedField",
   "name": "partner",
   "plural": false,
   "selections": [
-    (v12/*: any*/),
-    (v5/*: any*/),
     (v11/*: any*/),
+    (v4/*: any*/),
+    (v10/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -355,14 +352,14 @@ v15 = {
   ],
   "storageKey": "partner(shallow:true)"
 },
-v16 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "endAt",
   "storageKey": null
 },
-v17 = {
+v16 = {
   "alias": null,
   "args": null,
   "concreteType": "Sale",
@@ -370,7 +367,7 @@ v17 = {
   "name": "sale",
   "plural": false,
   "selections": [
-    (v16/*: any*/),
+    (v15/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -399,7 +396,7 @@ v17 = {
       "name": "isClosed",
       "storageKey": null
     },
-    (v11/*: any*/),
+    (v10/*: any*/),
     {
       "alias": "is_live_open",
       "args": null,
@@ -417,7 +414,7 @@ v17 = {
   ],
   "storageKey": null
 },
-v18 = [
+v17 = [
   {
     "alias": null,
     "args": null,
@@ -426,7 +423,7 @@ v18 = [
     "storageKey": null
   }
 ],
-v19 = {
+v18 = {
   "alias": "sale_artwork",
   "args": null,
   "concreteType": "SaleArtwork",
@@ -441,7 +438,7 @@ v19 = {
       "name": "lotLabel",
       "storageKey": null
     },
-    (v16/*: any*/),
+    (v15/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -474,7 +471,7 @@ v19 = {
       "kind": "LinkedField",
       "name": "highestBid",
       "plural": false,
-      "selections": (v18/*: any*/),
+      "selections": (v17/*: any*/),
       "storageKey": null
     },
     {
@@ -484,11 +481,18 @@ v19 = {
       "kind": "LinkedField",
       "name": "openingBid",
       "plural": false,
-      "selections": (v18/*: any*/),
+      "selections": (v17/*: any*/),
       "storageKey": null
     },
-    (v11/*: any*/)
+    (v10/*: any*/)
   ],
+  "storageKey": null
+},
+v19 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v20 = {
@@ -499,8 +503,8 @@ v20 = {
   "name": "attributionClass",
   "plural": false,
   "selections": [
-    (v12/*: any*/),
-    (v11/*: any*/)
+    (v11/*: any*/),
+    (v10/*: any*/)
   ],
   "storageKey": null
 },
@@ -512,7 +516,7 @@ v21 = {
   "name": "mediumType",
   "plural": false,
   "selections": [
-    (v12/*: any*/)
+    (v11/*: any*/)
   ],
   "storageKey": null
 },
@@ -531,7 +535,7 @@ v23 = {
   "storageKey": null
 },
 v24 = [
-  (v11/*: any*/)
+  (v10/*: any*/)
 ],
 v25 = {
   "kind": "InlineFragment",
@@ -614,16 +618,16 @@ return {
                           (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
-                          (v9/*: any*/),
+                          (v12/*: any*/),
                           (v13/*: any*/),
                           (v14/*: any*/),
-                          (v15/*: any*/),
-                          (v17/*: any*/),
+                          (v16/*: any*/),
+                          (v18/*: any*/),
                           (v19/*: any*/),
                           (v20/*: any*/),
                           (v21/*: any*/),
                           (v22/*: any*/),
-                          (v11/*: any*/)
+                          (v10/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -633,7 +637,7 @@ return {
                         "selections": [
                           (v3/*: any*/),
                           (v23/*: any*/),
-                          (v11/*: any*/)
+                          (v10/*: any*/)
                         ],
                         "type": "ArticleImageSection",
                         "abstractKey": null
@@ -649,7 +653,7 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -671,11 +675,11 @@ return {
                               (v6/*: any*/),
                               (v7/*: any*/),
                               (v8/*: any*/),
-                              (v9/*: any*/),
+                              (v12/*: any*/),
                               (v13/*: any*/),
                               (v14/*: any*/),
-                              (v15/*: any*/),
-                              (v17/*: any*/),
+                              (v16/*: any*/),
+                              (v18/*: any*/),
                               (v19/*: any*/),
                               (v20/*: any*/),
                               (v21/*: any*/),
@@ -720,19 +724,19 @@ return {
             ],
             "storageKey": null
           },
-          (v11/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ffd44878de76acaebe516c45faac317a",
+    "cacheID": "dbd98547afb060a757b543a9ababf742",
     "id": null,
     "metadata": {},
     "name": "ArticleZoomGalleryQuery",
     "operationKind": "query",
-    "text": "query ArticleZoomGalleryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleZoomGallery_article\n    id\n  }\n}\n\nfragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    ...Metadata_artwork\n    href\n  }\n  ... on ArticleImageSection {\n    caption\n  }\n}\n\nfragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n  ... on ArticleImageSection {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n}\n\nfragment ArticleZoomGallery_article on Article {\n  sections {\n    __typename\n    ... on ArticleSectionImageCollection {\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n    ... on ArticleSectionImageSet {\n      title\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n"
+    "text": "query ArticleZoomGalleryQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleZoomGallery_article\n    id\n  }\n}\n\nfragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    ...Metadata_artwork\n    href\n  }\n  ... on ArticleImageSection {\n    caption\n  }\n}\n\nfragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {\n  __isArticleSectionImageCollectionFigure: __typename\n  __typename\n  ... on Artwork {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n  ... on ArticleImageSection {\n    image {\n      width\n      height\n      url(version: [\"normalized\", \"larger\", \"large\"])\n    }\n  }\n}\n\nfragment ArticleZoomGallery_article on Article {\n  sections {\n    __typename\n    ... on ArticleSectionImageCollection {\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n    ... on ArticleSectionImageSet {\n      title\n      figures {\n        ...ArticleZoomGalleryFigure_figure\n        ...ArticleZoomGalleryCaption_figure\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on ArticleImageSection {\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n"
   }
 };
 })();

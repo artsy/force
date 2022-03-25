@@ -7,7 +7,6 @@ import {
   Flex,
   Spacer,
   Box,
-  Pill,
 } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
@@ -15,9 +14,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import { compact } from "lodash"
+import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -215,10 +212,6 @@ export const Details: React.FC<DetailsProps> = ({
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
-  const pills = compact([
-    rest.artwork.attributionClass?.name,
-    rest.artwork.mediumType?.name,
-  ])
 
   return (
     <>
@@ -241,19 +234,7 @@ export const Details: React.FC<DetailsProps> = ({
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
-        {isHovered && pills.length > 0 && (
-          <HoverContainer>
-            {pills.map((pill, index) => (
-              <NonClickablePill
-                key={`${rest.artwork.internalID}-pill-${index}`}
-                variant="textSquare"
-                mr={0.5}
-              >
-                {pill}
-              </NonClickablePill>
-            ))}
-          </HoverContainer>
-        )}
+        {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </>
@@ -314,24 +295,9 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   )
 }
 
-const NonClickablePill = styled(Pill)`
-  pointer-events: none;
-`
-
-const HoverContainer = styled(Box)`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  background-color: ${themeGet("colors.white100")};
-`
-
 export const DetailsFragmentContainer = createFragmentContainer(Details, {
   artwork: graphql`
     fragment Details_artwork on Artwork {
-      internalID
       href
       title
       date
@@ -368,12 +334,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
-      attributionClass {
-        name
-      }
-      mediumType {
-        name
-      }
+      ...HoverDetails_artwork
     }
   `,
 })
