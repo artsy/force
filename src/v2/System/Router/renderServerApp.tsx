@@ -54,7 +54,6 @@ export const renderServerApp = ({
     },
     disable: {
       analytics: getServerParam(req, "disableAnalytics") === "true",
-      mntn: getServerParam(req, "disableMntn") === "true",
       onetrust: getServerParam(req, "disableOneTrust") === "true",
       postie: getServerParam(req, "disablePostie") === "true",
       segment: getServerParam(req, "disableSegment") === "true",
