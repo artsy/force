@@ -19,6 +19,7 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
+import { MntnConversionPixel } from "../../System/Analytics/MNTN"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -57,29 +58,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
     document.body.setAttribute("data-test", "AppReady")
   }, [])
 
-  useEffect(() => {
-    let script: HTMLScriptElement
-
-    const result = findConversionRoute(pathname)
-    if (result) {
-      script = document.createElement("script")
-
-      script.id = "mntn_conversion"
-      script.src = "../../System/Analytics/MNTN/conversionPixelScript.js"
-      script.async = true
-      script.type = "javascript/text"
-
-      document.body.appendChild(script)
-    }
-
-    // does the removal of this element even matter if it is mounted in AppShell?
-    return () => {
-      if (document.getElementById("mntn_conversion")) {
-        document.body.removeChild(script)
-      }
-    }
-  }, [pathname])
-
   /**
    * Wait for route to finish rendering before (possibly) switching out the theme.
    *
@@ -99,6 +77,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
 
+  console.log("AppShell::preRender", pathname)
   return (
     <Flex
       width="100%"
@@ -141,26 +120,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
           </Flex>
         )}
       </Theme>
+      <MntnConversionPixel path={pathname} />
     </Flex>
   )
-}
-
-// account creation, auction registration, bid placed, inquiry made,
-// gallery contacted, offer made, purchase
-function findConversionRoute(pathname?: string | null) {
-  if (!pathname) {
-    return false
-  }
-  const conversionRoutes: RegExp[] = [
-    /\/signup/g,
-    /(\/auction\/)([a-z]|[0-9]|\-)+(\/bid\/)([a-z]|[0-9]|\-)+\?(sort=)([a-z]|\_)+\&(bid\=)([0-9]+)/g,
-    /(\/auction\/)([a-z]|[0-9]|\-)+(\/register)/g,
-    /(\/orders\/)([0-9]|[a-z]|\-)+(\/status)/g,
-  ]
-
-  const matchFound = conversionRoutes.find(route => {
-    return pathname.match(route)
-  })
-
-  return Boolean(matchFound)
 }

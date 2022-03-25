@@ -18,6 +18,7 @@ import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswor
 import { AuthenticationCheckbox } from "../Components/AuthenticationCheckbox"
 import { AuthenticationFooter } from "../Components/AuthenticationFooter"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { MntnConversionPixel } from "../../../System/Analytics/MNTN"
 
 const gdprCountries = [
   "AT",
@@ -72,24 +73,6 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
 
       this.props.handleSubmit?.(valuesWithToken, formikBag)
     })
-  }
-
-  script: HTMLScriptElement
-  componentDidMount() {
-    this.script = document.createElement("script")
-
-    this.script.id = "mntn_conversion"
-    this.script.src = "../../System/Analytics/MNTN/conversionPixelScript.js"
-    this.script.async = true
-    this.script.type = "javascript/text"
-
-    document.body.appendChild(this.script)
-  }
-
-  componentWillUnmount() {
-    if (document.getElementById("mntn_conversion")) {
-      document.body.removeChild(this.script)
-    }
   }
 
   render() {
@@ -305,6 +288,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                   showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
                 />
               </Join>
+              <MntnConversionPixel path="/signup" />
             </Box>
           )
         }}
