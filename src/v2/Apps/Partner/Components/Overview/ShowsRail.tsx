@@ -1,9 +1,9 @@
 import { Box, BoxProps, Flex, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"
-import { ShowCardFragmentContainer } from "../PartnerShows/ShowCard"
 import { ViewAllButton } from "./ViewAllButton"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { CellShowFragmentContainer } from "v2/Components/Cells/CellShow"
 
 interface ShowsRailProps extends BoxProps {
   partner: ShowsRail_partner
@@ -34,11 +34,15 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
           <ViewAllButton to={`/partner/${slug}/shows`} />
         )}
       </Flex>
+
       <Shelf alignItems="flex-start">
         {shows.map(show => (
-          <Box maxWidth={320}>
-            <ShowCardFragmentContainer key={show?.id} show={show} />
-          </Box>
+          <CellShowFragmentContainer
+            key={show.internalID}
+            show={show}
+            displayKind
+            displayPartner={false}
+          />
         ))}
       </Shelf>
     </Box>
@@ -54,8 +58,8 @@ export const ShowsRailFragmentContainer = createFragmentContainer(ShowsRail, {
         totalCount
         edges {
           node {
-            id
-            ...ShowCard_show
+            ...CellShow_show
+            internalID
           }
         }
       }

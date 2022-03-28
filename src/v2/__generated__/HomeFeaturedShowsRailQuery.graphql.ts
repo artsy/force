@@ -25,45 +25,48 @@ query HomeFeaturedShowsRailQuery {
   }
 }
 
-fragment HomeFeaturedShow_show on Show {
+fragment CellShow_show on Show {
   internalID
   slug
   name
   href
   startAt
   endAt
-  formattedStartAt: startAt(format: "MMM D")
-  formattedEndAt: endAt(format: "MMM D")
+  isFairBooth
+  exhibitionPeriod
   partner {
     __typename
     ... on Partner {
       name
     }
-    ... on ExternalPartner {
-      name
-      id
-    }
     ... on Node {
       __isNode: __typename
       id
     }
-  }
-  coverImage {
-    cropped(width: 325, height: 230) {
-      src
-      srcSet
-      width
-      height
+    ... on ExternalPartner {
+      id
     }
   }
+  coverImage {
+    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
+      src
+      srcSet
+    }
+  }
+}
+
+fragment HomeFeaturedShow_show on Show {
+  ...CellShow_show
+  internalID
+  slug
 }
 
 fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
   items {
     __typename
     ... on Show {
-      internalID
       ...HomeFeaturedShow_show
+      internalID
     }
     ... on Node {
       __isNode: __typename
@@ -101,26 +104,19 @@ v2 = {
   "name": "name",
   "storageKey": null
 },
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "format",
-    "value": "MMM D"
-  }
-],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = [
-  (v4/*: any*/)
+v4 = [
+  (v3/*: any*/)
 ],
-v6 = {
+v5 = {
   "kind": "InlineFragment",
-  "selections": (v5/*: any*/),
+  "selections": (v4/*: any*/),
   "type": "Node",
   "abstractKey": "__isNode"
 };
@@ -214,18 +210,18 @@ return {
                     "storageKey": null
                   },
                   {
-                    "alias": "formattedStartAt",
-                    "args": (v3/*: any*/),
+                    "alias": null,
+                    "args": null,
                     "kind": "ScalarField",
-                    "name": "startAt",
-                    "storageKey": "startAt(format:\"MMM D\")"
+                    "name": "isFairBooth",
+                    "storageKey": null
                   },
                   {
-                    "alias": "formattedEndAt",
-                    "args": (v3/*: any*/),
+                    "alias": null,
+                    "args": null,
                     "kind": "ScalarField",
-                    "name": "endAt",
-                    "storageKey": "endAt(format:\"MMM D\")"
+                    "name": "exhibitionPeriod",
+                    "storageKey": null
                   },
                   {
                     "alias": null,
@@ -244,16 +240,13 @@ return {
                         "type": "Partner",
                         "abstractKey": null
                       },
+                      (v5/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": [
-                          (v2/*: any*/),
-                          (v4/*: any*/)
-                        ],
+                        "selections": (v4/*: any*/),
                         "type": "ExternalPartner",
                         "abstractKey": null
-                      },
-                      (v6/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   },
@@ -271,12 +264,21 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 230
+                            "value": 334
+                          },
+                          {
+                            "kind": "Literal",
+                            "name": "version",
+                            "value": [
+                              "normalized",
+                              "larger",
+                              "large"
+                            ]
                           },
                           {
                             "kind": "Literal",
                             "name": "width",
-                            "value": 325
+                            "value": 445
                           }
                         ],
                         "concreteType": "CroppedImageUrl",
@@ -297,23 +299,9 @@ return {
                             "kind": "ScalarField",
                             "name": "srcSet",
                             "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "width",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "height",
-                            "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:230,width:325)"
+                        "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
                       }
                     ],
                     "storageKey": null
@@ -322,35 +310,35 @@ return {
                 "type": "Show",
                 "abstractKey": null
               },
-              (v6/*: any*/),
+              (v5/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
+                "selections": (v4/*: any*/),
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
+                "selections": (v4/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
               }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"530ebe92139b21efd6000071\")"
       }
     ]
   },
   "params": {
-    "cacheID": "6b80800bf79c637f67cc7a5053f464b9",
+    "cacheID": "3549761f70240bc61f3402163459d46f",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedShowsRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedShowsRailQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsRailQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  ...CellShow_show\n  internalID\n  slug\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      ...HomeFeaturedShow_show\n      internalID\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
