@@ -36,7 +36,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   artistIDs
   href
   labels {
-    value
+    displayValue
   }
   userAlertSettings {
     name
@@ -192,7 +192,7 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "value",
+                            "name": "displayValue",
                             "storageKey": null
                           }
                         ],
@@ -286,12 +286,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f56f2a299083435d3f7a086bd404cc4",
+    "cacheID": "57b584f1bc01f5542ef29091d76361c1",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    value\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  savedSearchesConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  savedSearchesConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

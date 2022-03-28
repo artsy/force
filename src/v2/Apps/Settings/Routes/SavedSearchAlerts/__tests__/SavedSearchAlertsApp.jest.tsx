@@ -129,7 +129,10 @@ const mockedSavedSearchesConnection = {
   edges: [
     {
       node: {
-        labels: [{ value: "Limited Edition" }, { value: "Andy Warhol" }],
+        labels: [
+          { displayValue: "Limited Edition" },
+          { displayValue: "Andy Warhol" },
+        ],
         userAlertSettings: {
           name: "Alert #1",
         },
@@ -144,7 +147,7 @@ const mockedSavedSearchesConnection = {
     },
     {
       node: {
-        labels: [{ value: "$0–$34,240" }, { value: "Omar Ba" }],
+        labels: [{ displayValue: "$0–$34,240" }, { displayValue: "Omar Ba" }],
         userAlertSettings: {
           name: "Alert #3",
         },
@@ -161,10 +164,10 @@ const mockedSavedSearchesConnectionWithFilters = {
           name: "Alert With Some Filters",
         },
         labels: [
-          { value: "Limited Edition" },
-          { value: "Andy Warhol" },
-          { value: "$0–$34,240" },
-          { value: "Painting" },
+          { displayValue: "Limited Edition" },
+          { displayValue: "Andy Warhol" },
+          { displayValue: "$0–$34,240" },
+          { displayValue: "Painting" },
         ],
       },
     },
