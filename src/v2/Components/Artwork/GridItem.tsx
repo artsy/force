@@ -10,9 +10,7 @@ import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
-import { useState } from "react"
-import { isTouch } from "v2/Utils/device"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { useHoverMetadata } from "./useHoverMetadata"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -30,14 +28,11 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
-  const [isHovered, setIsHovered] = useState(false)
-  const enableHoverEffect = useFeatureFlag(
-    "force-enable-hover-effect-for-artwork-item"
-  )
 
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -55,10 +50,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const handleMouseEnter = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (enableHoverEffect ?? !isTouch) {
-      setIsHovered(true)
-    }
-
+    onMouseEnter()
     containerProps.onMouseEnter(event)
     rest.onMouseEnter?.(event)
   }
@@ -66,10 +58,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const handleMouseLeave = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (enableHoverEffect ?? !isTouch) {
-      setIsHovered(false)
-    }
-
+    onMouseLeave()
     containerProps.onMouseLeave(event)
     rest.onMouseLeave?.(event)
   }
