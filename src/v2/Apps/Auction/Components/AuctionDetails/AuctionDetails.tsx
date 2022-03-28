@@ -47,35 +47,40 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           <RegisterButtonFragmentContainer sale={sale} me={me} />
         </Column>
       </GridColumns>
+      <Spacer my={4} />
       <Flex alignItems="center" justifyContent="space-between">
         {!!sale.cascadingEndTimeInterval && (
-          <SaleDetailTimerFragmentContainer sale={sale} />
+          <>
+            <SaleDetailTimerFragmentContainer sale={sale} />
+            <Spacer my={2} />
+          </>
         )}
       </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Flex alignItems="center">
-          <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
+      <Flex alignItems="center">
+        <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
 
-          {!sale.isClosed && (
-            <Box mt={0.5}>
-              <AddToCalendar
-                startDate={sale.liveStartAt || sale.startAt!}
-                endDate={endDate!}
-                title={sale.name!}
-                description={sale.description!}
-                href={`${getENV("APP_URL")}${sale.href!}`}
-                liveAuctionUrl={liveAuctionUrl}
-                contextModule={ContextModule.auctionHome}
-              />
-            </Box>
-          )}
-        </Flex>
+        {!sale.isClosed && (
+          <Box mt={0.5}>
+            <AddToCalendar
+              startDate={sale.liveStartAt || sale.startAt!}
+              endDate={endDate!}
+              title={sale.name!}
+              description={sale.description!}
+              href={`${getENV("APP_URL")}${sale.href!}`}
+              liveAuctionUrl={liveAuctionUrl}
+              contextModule={ContextModule.auctionHome}
+            />
+          </Box>
+        )}
       </Flex>
 
       {showCascadingEndTimeIntervalMessage && (
-        <Text variant="md" pr={2}>
-          {getCascadingEndTimeIntervalMessage(sale.cascadingEndTimeInterval!)}
-        </Text>
+        <>
+          <Spacer my={2} />
+          <Text variant="md" pr={2}>
+            {getCascadingEndTimeIntervalMessage(sale.cascadingEndTimeInterval!)}
+          </Text>
+        </>
       )}
 
       <Spacer my={2} />
