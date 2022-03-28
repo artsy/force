@@ -8,7 +8,7 @@ import { RelatedCollectionsRail } from "../RelatedCollectionsRail"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 
 jest.mock("v2/System/Analytics/useTracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
@@ -20,7 +20,7 @@ describe.skip("CollectionsRail", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "1234",
           contextPageOwnerSlug: "slug",
@@ -28,7 +28,7 @@ describe.skip("CollectionsRail", () => {
         }}
       >
         <RelatedCollectionsRail {...passedProps} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   }
 

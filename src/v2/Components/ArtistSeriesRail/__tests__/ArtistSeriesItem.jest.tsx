@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 import { ArtistSeriesItem } from "../ArtistSeriesItem"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -29,7 +29,7 @@ describe("Artist Series Rail Item", () => {
 
   it("tracks the analytics properties when an artwork is clicked on the Notable works rail", () => {
     const component = mount(
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "context-page-owner-id",
           contextPageOwnerSlug: "context-page-owner-slug",
@@ -37,7 +37,7 @@ describe("Artist Series Rail Item", () => {
         }}
       >
         <ArtistSeriesItem {...props} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
     const elem = component.find(RouterLink).first()
     elem.props().onClick({} as any)

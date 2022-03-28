@@ -1,7 +1,7 @@
 import { ShowContextCardFragmentContainer } from "../Components/ShowContextCard"
 import { graphql } from "react-relay"
 import { ShowContextCard_Test_Query } from "v2/__generated__/ShowContextCard_Test_Query.graphql"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { useTracking } from "react-tracking"
@@ -11,7 +11,7 @@ jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
   Component: props => (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: "example-show-id",
         contextPageOwnerSlug: "example-show-slug",
@@ -20,7 +20,7 @@ const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
     >
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <ShowContextCardFragmentContainer {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   ),
   query: graphql`
     query ShowContextCard_Test_Query @relay_test_operation {

@@ -6,7 +6,7 @@ import { FollowButton } from "../Button"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "../FollowProfileButton"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { ArtworkDetailsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkDetails"
 
 const openAuthToSatisfyIntent = jest.spyOn(
@@ -24,7 +24,7 @@ describe("FollowProfileButton", () => {
   const getWrapper = (passedProps = props, user = { id: "1234" }) => {
     return mount(
       <SystemContextProvider user={user} mediator={mediator}>
-        <AnalyticsContext.Provider
+        <AnalyticsContextProvider
           value={{
             contextPageOwnerId: "54321",
             contextPageOwnerType: OwnerType.artwork,
@@ -32,7 +32,7 @@ describe("FollowProfileButton", () => {
           }}
         >
           <FollowProfileButton {...passedProps} />
-        </AnalyticsContext.Provider>
+        </AnalyticsContextProvider>
       </SystemContextProvider>
     )
   }

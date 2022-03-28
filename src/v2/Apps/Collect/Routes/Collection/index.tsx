@@ -15,7 +15,7 @@ import truncate from "trunc-html"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import {
-  AnalyticsContext,
+  AnalyticsContextProvider,
   AnalyticsContextProps,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
@@ -151,7 +151,7 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
   } = props
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: id,
         contextPageOwnerSlug,
@@ -159,7 +159,7 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
       }}
     >
       <CollectionApp {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

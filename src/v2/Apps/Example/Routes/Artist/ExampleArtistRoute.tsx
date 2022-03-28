@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ExampleArtistRoute_artist } from "v2/__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
-import { AnalyticsContext, useAnalyticsContext } from "v2/System"
+import { AnalyticsContextProvider, useAnalyticsContext } from "v2/System"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 
@@ -41,7 +41,7 @@ const TrackingWrappedExampleArtistRoute: React.FC<ExampleArtistAppProps> = props
   const { contextPageOwnerType } = useAnalyticsContext()
 
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: internalID,
         contextPageOwnerSlug: slug,
@@ -49,7 +49,7 @@ const TrackingWrappedExampleArtistRoute: React.FC<ExampleArtistAppProps> = props
       }}
     >
       <ExampleArtistRoute {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

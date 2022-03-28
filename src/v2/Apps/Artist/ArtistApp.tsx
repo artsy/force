@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
 import {
-  AnalyticsContext,
+  AnalyticsContextProvider,
   useAnalyticsContext,
   useSystemContext,
 } from "v2/System"
@@ -90,7 +90,7 @@ const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: artist.internalID,
         contextPageOwnerSlug,
@@ -101,7 +101,7 @@ const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
         <ArtistMetaFragmentContainer artist={artist} />
         {children}
       </Box>
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

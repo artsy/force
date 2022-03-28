@@ -34,7 +34,7 @@ export function getContextPageFromClient(): {
   pageType: PageOwnerType
   path: string
 } {
-  if (window) {
+  if (typeof window !== "undefined") {
     const PAGE_TYPE = window.sd && window.sd.PAGE_TYPE
     const { pathname } = window.location
     const pageParts = pathname.split("/")

@@ -8,7 +8,7 @@ import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "v2/System"
 import { useTracking } from "react-tracking"
 import {
-  AnalyticsContext,
+  AnalyticsContextProvider,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import {
@@ -179,7 +179,7 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   }
 
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: internalID,
         contextPageOwnerSlug: slug,
@@ -187,7 +187,7 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
       }}
     >
       <FairApp {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

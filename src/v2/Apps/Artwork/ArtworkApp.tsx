@@ -22,7 +22,7 @@ import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import {
-  AnalyticsContext,
+  AnalyticsContextProvider,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
@@ -243,7 +243,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const { isComplete } = useRouteComplete()
 
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: internalID,
         contextPageOwnerSlug,
@@ -256,7 +256,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
         referrer={referrer}
         shouldTrackPageView={isComplete}
       />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

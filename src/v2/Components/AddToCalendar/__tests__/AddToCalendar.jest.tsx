@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 import { AddToCalendar, CalendarEventProps } from "../AddToCalendar"
 import { MenuItem } from "@artsy/palette"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { useTracking } from "react-tracking"
 
 describe("AddToCalendar", () => {
@@ -28,7 +28,7 @@ describe("AddToCalendar", () => {
 
   const getWrapper = (passedProps = props) =>
     mount(
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "context-page-owner-id",
           contextPageOwnerSlug: "context-page-owner-slug",
@@ -36,7 +36,7 @@ describe("AddToCalendar", () => {
         }}
       >
         <AddToCalendar {...passedProps} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
 
   it("Open/closes menu", () => {

@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Text, Title } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsContext, useAnalyticsContext } from "v2/System"
+import { AnalyticsContextProvider, useAnalyticsContext } from "v2/System"
 import { ExampleArtworkRoute_artwork } from "v2/__generated__/ExampleArtworkRoute_artwork.graphql"
 import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
 import { ContextModule } from "@artsy/cohesion"
@@ -56,7 +56,7 @@ const TrackingWrappedExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = p
   const { contextPageOwnerType } = useAnalyticsContext()
 
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: internalID,
         contextPageOwnerSlug: slug,
@@ -64,7 +64,7 @@ const TrackingWrappedExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = p
       }}
     >
       <ExampleArtworkRoute {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

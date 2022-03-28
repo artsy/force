@@ -18,6 +18,7 @@ import {
 } from "v2/System/useFeatureFlag"
 import { OwnerType } from "@artsy/cohesion"
 import { getContextPageFromClient } from "lib/getContextPage"
+import { useAnalyticsContext } from "v2/System"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -27,6 +28,15 @@ interface ArtworkFiltersProps {
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
+  
+  const {
+    // contextPageOwnerId,
+    // contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  console.log("HERE", contextPageOwnerType)
+
   let currentPage
 
   // HACK: This logic should not be replicated for other experiments and is being

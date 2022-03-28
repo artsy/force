@@ -3,7 +3,7 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import { ArtistSeriesEntity } from "../ArtistSeriesEntity"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { Image } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -32,7 +32,7 @@ describe.skip("ArtistSeriesEntity", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "1234",
           contextPageOwnerSlug: "slug",
@@ -40,7 +40,7 @@ describe.skip("ArtistSeriesEntity", () => {
         }}
       >
         <ArtistSeriesEntity {...passedProps} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   }
 

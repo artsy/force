@@ -1,7 +1,7 @@
 import { Box, Join, Spacer, Tab, Tabs } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
-import { AnalyticsContext, useAnalyticsContext } from "v2/System"
+import { AnalyticsContextProvider, useAnalyticsContext } from "v2/System"
 import { AuctionApp_me } from "v2/__generated__/AuctionApp_me.graphql"
 import { AuctionApp_sale } from "v2/__generated__/AuctionApp_sale.graphql"
 import { AuctionApp_viewer } from "v2/__generated__/AuctionApp_viewer.graphql"
@@ -49,7 +49,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
   return (
     <>
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: sale.internalID,
           contextPageOwnerSlug,
@@ -112,7 +112,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
           <Box>{children}</Box>
         </Join>
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
 
       <ZendeskWrapper zdKey={getENV("AUCTION_ZENDESK_KEY")} />
     </>

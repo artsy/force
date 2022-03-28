@@ -5,7 +5,7 @@ import "jest-styled-components"
 import { FeaturedCollectionEntity, FeaturedCollectionsRails } from "../index"
 import { Image, paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("v2/System/Analytics/useTracking")
@@ -20,7 +20,7 @@ describe("FeaturedCollectionsRails", () => {
   const trackEvent = jest.fn()
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "1234",
           contextPageOwnerSlug: "slug",
@@ -28,7 +28,7 @@ describe("FeaturedCollectionsRails", () => {
         }}
       >
         <FeaturedCollectionsRails {...passedProps} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   }
 

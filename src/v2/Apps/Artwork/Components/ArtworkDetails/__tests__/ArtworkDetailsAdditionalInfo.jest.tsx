@@ -4,7 +4,7 @@ import { ArtworkDetailsAdditionalInfoFragmentContainer } from "../ArtworkDetails
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot } from "v2/DevTools"
 import { ArtworkDetailsAdditionalInfo_Test_Query } from "v2/__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
-import { AnalyticsContext } from "v2/System"
+import { AnalyticsContextProvider } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper<
   Component: props => {
     return (
       <MockBoot>
-        <AnalyticsContext.Provider
+        <AnalyticsContextProvider
           value={{
             contextPageOwnerId: "example-artwork-id",
             contextPageOwnerSlug: "example-artwork-slug",
@@ -26,7 +26,7 @@ const { getWrapper } = setupTestWrapper<
         >
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
-        </AnalyticsContext.Provider>
+        </AnalyticsContextProvider>
       </MockBoot>
     )
   },

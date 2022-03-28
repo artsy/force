@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "../Components/ShowViewingRoom"
 import { ShowViewingRoom_Test_Query } from "v2/__generated__/ShowViewingRoom_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
@@ -12,7 +12,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
   Component: props => {
     return (
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "example-show-id",
           contextPageOwnerSlug: "example-show-slug",
@@ -21,7 +21,7 @@ const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
       >
         {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <ShowViewingRoom {...props} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   },
   query: graphql`

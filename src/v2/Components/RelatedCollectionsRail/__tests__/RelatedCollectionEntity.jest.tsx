@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 jest.mock("v2/System/Analytics/useTracking")
@@ -26,7 +26,7 @@ describe.skip("RelatedCollectionEntity", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContext.Provider
+      <AnalyticsContextProvider
         value={{
           contextPageOwnerId: "1234",
           contextPageOwnerSlug: "slug",
@@ -34,7 +34,7 @@ describe.skip("RelatedCollectionEntity", () => {
         }}
       >
         <RelatedCollectionEntity {...passedProps} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   }
 

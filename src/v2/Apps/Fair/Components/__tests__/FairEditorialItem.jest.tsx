@@ -2,7 +2,7 @@ import { graphql } from "relay-runtime"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { FairEditorialItemFragmentContainer } from "../FairEditorial/FairEditorialItem"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("react-tracking")
@@ -17,7 +17,7 @@ describe("FairEditorialItem", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
       return (
-        <AnalyticsContext.Provider
+        <AnalyticsContextProvider
           value={{
             contextPageOwnerId: "example-article-id",
             contextPageOwnerSlug: "example-article-slug",
@@ -28,7 +28,7 @@ describe("FairEditorialItem", () => {
             article={props.article}
             size="large"
           />
-        </AnalyticsContext.Provider>
+        </AnalyticsContextProvider>
       )
     },
     query: graphql`

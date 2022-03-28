@@ -23,7 +23,7 @@ import {
   MediaContextProvider,
   ResponsiveProvider,
 } from "v2/Utils/Responsive"
-import { AnalyticsContext } from "../Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "../Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
@@ -76,7 +76,7 @@ export const Boot = track(undefined, {
       <HeadProvider headTags={headTags}>
         <StateProvider>
           <SystemContextProvider {...contextProps}>
-            <AnalyticsContext.Provider value={context?.analytics}>
+            <AnalyticsContextProvider value={context?.analytics}>
               <ErrorBoundary>
                 <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                   <ResponsiveProvider
@@ -94,7 +94,7 @@ export const Boot = track(undefined, {
                   </ResponsiveProvider>
                 </MediaContextProvider>
               </ErrorBoundary>
-            </AnalyticsContext.Provider>
+            </AnalyticsContextProvider>
           </SystemContextProvider>
         </StateProvider>
       </HeadProvider>

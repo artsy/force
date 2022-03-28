@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -18,7 +18,7 @@ import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 import {
-  AnalyticsContext,
+  AnalyticsContextProvider,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
@@ -53,7 +53,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
       <ShowMeta show={show} />
 
       <>
-        <AnalyticsContext.Provider
+        <AnalyticsContextProvider
           value={{
             contextPageOwnerId: show.internalID,
             contextPageOwnerSlug,
@@ -127,7 +127,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               <ShowContextCard show={show} />
             </>
           )}
-        </AnalyticsContext.Provider>
+        </AnalyticsContextProvider>
       </>
     </>
   )

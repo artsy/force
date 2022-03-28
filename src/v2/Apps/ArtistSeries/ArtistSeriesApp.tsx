@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesApp_artistSeries } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
@@ -7,7 +7,7 @@ import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/C
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 import { ContextModule } from "@artsy/cohesion"
 import {
-  AnalyticsContext,
+  AnalyticsContextProvider,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
@@ -23,7 +23,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   const { railArtist, internalID, sidebarAggregations } = artistSeries
 
   return (
-    <AnalyticsContext.Provider
+    <AnalyticsContextProvider
       value={{
         contextPageOwnerId: internalID,
         contextPageOwnerSlug,
@@ -57,7 +57,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
           </>
         )}
       </>
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 
