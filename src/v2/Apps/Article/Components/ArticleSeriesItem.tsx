@@ -19,6 +19,7 @@ interface ArticleSeriesItemProps {
 
 const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
   const image = article.thumbnailImage?.display
+  const context = article.seriesArticle?.title ?? article.vertical
 
   return (
     <RouterLink to={article.href} display="block" textDecoration="none">
@@ -35,9 +36,11 @@ const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
             height="100%"
           >
             <Box>
-              <Text variant="xs" textTransform="uppercase" mb={0.5}>
-                {article.title}
-              </Text>
+              {context && (
+                <Text variant="xs" textTransform="uppercase" mb={0.5}>
+                  {context}
+                </Text>
+              )}
 
               <Text variant="xl" mb={2}>
                 {article.thumbnailTitle ?? article.title}
@@ -109,6 +112,7 @@ export const ArticleSeriesItemFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleSeriesItem_article on Article {
         href
+        vertical
         title
         thumbnailTitle
         byline
@@ -123,6 +127,9 @@ export const ArticleSeriesItemFragmentContainer = createFragmentContainer(
         }
         media {
           duration
+        }
+        seriesArticle {
+          title
         }
       }
     `,
