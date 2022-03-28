@@ -132,7 +132,7 @@ describe("PriceOptions", () => {
       fireEvent.click(radios[3])
       const input = await within(radios[3]).findByRole("textbox")
       const notice = await screen.findByText(
-        "Offers lower than the displayed price range are often declined. We recommend changing your offer to US$100.00."
+        "Offers lower than the displayed price range are often declined. We recommend increasing your offer to US$100.00."
       )
       expect(notice).toBeInTheDocument()
       expect(trackEvent).toHaveBeenCalledWith(
@@ -172,7 +172,7 @@ describe("PriceOptions", () => {
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
       expect(trackEvent).toHaveBeenLastCalledWith(
-        expect.objectContaining(getTrackingObject("Exact price", 100, "EUR"))
+        expect.objectContaining(getTrackingObject("List price", 100, "EUR"))
       )
 
       fireEvent.click(radios[1])
@@ -194,7 +194,7 @@ describe("PriceOptions", () => {
         expect.objectContaining(getTrackingObject("Different amount", 0, "EUR"))
       )
       const notice = await screen.findByText(
-        "Offers less than 20% of the list price are often declined. We recommend changing your offer to €80.00."
+        "Offers less than 20% off the list price are often declined. We recommend increasing your offer to €80.00."
       )
       expect(notice).toBeInTheDocument()
     })
@@ -226,7 +226,7 @@ describe("PriceOptions", () => {
       expect(selected).toHaveTextContent("Offer amount missing or invalid.")
     })
     it("correctly rounds the values and displays the currency symbol", () => {
-      expect(radios[0]).toHaveTextContent("A$99.00") // Exact price
+      expect(radios[0]).toHaveTextContent("A$99.00") // List price
       expect(radios[1]).toHaveTextContent("A$89.00") // %90 would be A$89.10
       expect(radios[2]).toHaveTextContent("A$79.00") // %80 would be A$79.20
     })
