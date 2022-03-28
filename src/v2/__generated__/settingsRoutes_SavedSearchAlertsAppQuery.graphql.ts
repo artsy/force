@@ -29,9 +29,6 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   internalID
   artistIDs
   href
-  labels {
-    value
-  }
   userAlertSettings {
     name
   }
@@ -152,24 +149,6 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "SearchCriteriaLabel",
-                        "kind": "LinkedField",
-                        "name": "labels",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "value",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "SavedSearchUserAlertSettings",
                         "kind": "LinkedField",
                         "name": "userAlertSettings",
@@ -255,12 +234,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3d120eca2c0c998c729d5add671a179d",
+    "cacheID": "faf109a7264045ced46e6dba7ff7fa1a",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsAppQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsAppQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    value\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsAppQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
