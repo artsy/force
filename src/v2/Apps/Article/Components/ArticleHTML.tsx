@@ -126,9 +126,11 @@ const Container = styled(Box)`
     margin-left: ${themeGet("space.2")};
   }
 
+  /* Text treatment unique to article body copy */
   p,
   li {
-    ${toStyle({ ...THEME.textVariants.sm })}
+    font-size: 18px;
+    line-height: 30px;
   }
 
   a {
@@ -147,6 +149,6 @@ const Container = styled(Box)`
   }
 
   blockquote {
-    ${toStyle({ ...THEME.textVariants.xl })}
+    ${toStyle({ ...THEME.textVariants.lg })}
   }
 `

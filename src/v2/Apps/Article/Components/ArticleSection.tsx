@@ -6,24 +6,19 @@ import { ArticleSectionImageSetFragmentContainer } from "./Sections/ArticleSecti
 import { ArticleSectionSocialEmbedFragmentContainer } from "./Sections/ArticleSectionSocialEmbed"
 import { ArticleSectionTextFragmentContainer } from "./Sections/ArticleSectionText"
 import { ArticleSectionVideoFragmentContainer } from "./Sections/ArticleSectionVideo"
+import { ArticleSection_section } from "v2/__generated__/ArticleSection_section.graphql"
 
 interface ArticleSectionProps {
-  section: any
-  isFirst: boolean
+  section: ArticleSection_section
   isLast: boolean
 }
 
-const ArticleSection: FC<ArticleSectionProps> = ({
-  section,
-  isFirst,
-  isLast,
-}) => {
+const ArticleSection: FC<ArticleSectionProps> = ({ section, isLast }) => {
   switch (section.__typename) {
     case "ArticleSectionText": {
       return (
         <ArticleSectionTextFragmentContainer
           section={section}
-          isFirst={isFirst}
           isLast={isLast}
         />
       )
