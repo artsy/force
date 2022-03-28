@@ -23,12 +23,12 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
   }, [orderID, tracking])
 
   return (
-    <Message variant="warning" p={2}>
+    <Message variant="warning" p={2} mt={2}>
       <Text>
         {isPriceRange
           ? "Offers lower than the displayed price range are often declined. "
-          : "Offers less than 20% of the list price are often declined. "}
-        We recommend changing your offer to {minPrice}.
+          : "Offers less than 20% off the list price are often declined. "}
+        We recommend increasing your offer to {minPrice}.
       </Text>
     </Message>
   )

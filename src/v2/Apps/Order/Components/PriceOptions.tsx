@@ -105,7 +105,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
           description:
             pricePercentage !== 0
               ? `${pricePercentage * 100}% below the list price`
-              : "Exact price",
+              : "List price",
         }
       }
       return
