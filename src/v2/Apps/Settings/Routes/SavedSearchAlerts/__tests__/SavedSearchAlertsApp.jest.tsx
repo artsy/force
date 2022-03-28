@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchAlertsAppPaginationContainer } from "../SavedSearchAlertsApp"
@@ -54,6 +54,48 @@ describe("SavedSearchAlertsApp", () => {
     expect(screen.getAllByText("Alert #3")[0]).toBeInTheDocument()
   })
 
+  it("should expand/collapse filter pills when user toggles show all/close all filters button", async () => {
+    renderWithRelay({
+      Me: () => ({
+        savedSearchesConnection: mockedSavedSearchesConnectionWithFilters,
+      }),
+    })
+
+    expect(
+      screen.getAllByText("Alert With Some Filters")[0]
+    ).toBeInTheDocument()
+
+    // the rest of the filters are hidden by default
+    expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
+    expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
+    expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
+    expect(screen.queryAllByText("Painting")).toStrictEqual([])
+
+    // the show all filters button is displayed
+    expect(screen.getAllByText("Show all filters")[0]).toBeInTheDocument()
+    expect(screen.queryAllByText("Close all filters")).toStrictEqual([])
+    fireEvent.click(screen.getAllByText("Show all filters")[0])
+
+    // after pressing show all filters the hidden filters appear
+    expect(screen.getAllByText("Close all filters")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Limited Edition")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Andy Warhol")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("$0–$34,240")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Painting")[0]).toBeInTheDocument()
+
+    // collapses the filters
+    fireEvent.click(screen.getByText("Close all filters"))
+
+    await waitFor(() =>
+      expect(screen.queryByText("Close all filters")).not.toBeInTheDocument()
+    )
+    // after pressing close all filters, all the filters are collapsed
+    expect(screen.queryAllByText("Limited Edition")).toStrictEqual([])
+    expect(screen.queryAllByText("Andy Warhol")).toStrictEqual([])
+    expect(screen.queryAllByText("$0–$34,240")).toStrictEqual([])
+    expect(screen.queryAllByText("Painting")).toStrictEqual([])
+  })
+
   it("renders a empty results message if there are no alerts", () => {
     renderWithRelay({
       Me: () => ({
@@ -87,7 +129,10 @@ const mockedSavedSearchesConnection = {
   edges: [
     {
       node: {
-        labels: [{ value: "Limited Edition" }, { value: "Andy Warhol" }],
+        labels: [
+          { displayValue: "Limited Edition" },
+          { displayValue: "Andy Warhol" },
+        ],
         userAlertSettings: {
           name: "Alert #1",
         },
@@ -102,10 +147,28 @@ const mockedSavedSearchesConnection = {
     },
     {
       node: {
-        labels: [{ value: "$0–$34,240" }, { value: "Omar Ba" }],
+        labels: [{ displayValue: "$0–$34,240" }, { displayValue: "Omar Ba" }],
         userAlertSettings: {
           name: "Alert #3",
         },
+      },
+    },
+  ],
+}
+
+const mockedSavedSearchesConnectionWithFilters = {
+  edges: [
+    {
+      node: {
+        userAlertSettings: {
+          name: "Alert With Some Filters",
+        },
+        labels: [
+          { displayValue: "Limited Edition" },
+          { displayValue: "Andy Warhol" },
+          { displayValue: "$0–$34,240" },
+          { displayValue: "Painting" },
+        ],
       },
     },
   ],
