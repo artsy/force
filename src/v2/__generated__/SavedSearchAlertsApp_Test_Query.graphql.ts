@@ -18,9 +18,6 @@ export type SavedSearchAlertsApp_Test_QueryRawResponse = {
                     readonly internalID: string;
                     readonly artistIDs: ReadonlyArray<string> | null;
                     readonly href: string;
-                    readonly labels: ReadonlyArray<{
-                        readonly value: string;
-                    }>;
                     readonly userAlertSettings: {
                         readonly name: string | null;
                     };
@@ -56,9 +53,6 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   internalID
   artistIDs
   href
-  labels {
-    value
-  }
   userAlertSettings {
     name
   }
@@ -179,24 +173,6 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "SearchCriteriaLabel",
-                        "kind": "LinkedField",
-                        "name": "labels",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "value",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "SavedSearchUserAlertSettings",
                         "kind": "LinkedField",
                         "name": "userAlertSettings",
@@ -282,12 +258,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3fe5795655bdb3b5f44edbf7c54a3776",
+    "cacheID": "2a3a707aacbdf938baf2330c4b465717",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    value\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
