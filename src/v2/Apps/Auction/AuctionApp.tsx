@@ -15,6 +15,7 @@ import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
+import { getCascadingEndTimeIntervalMessage } from "./Hooks/Utils/helpers"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -44,7 +45,8 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
     showBuyNowTab: sale.showBuyNowTab,
   }
 
-  const { cascadingEndTimeInterval, cascadingEndTime } = sale
+  const { cascadingEndTimeInterval } = sale
+
   const isFullBleedHeaderFixed = !cascadingEndTimeInterval
 
   return (
@@ -58,7 +60,9 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
       >
         {cascadingEndTimeInterval && (
           <CascadingEndTimesBanner
-            intervalMessage={cascadingEndTime?.intervalLabel!}
+            intervalMessage={
+              getCascadingEndTimeIntervalMessage(cascadingEndTimeInterval)!
+            }
           />
         )}
 
@@ -150,10 +154,6 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       }
       showBuyNowTab: promotedSale {
         internalID
-      }
-
-      cascadingEndTime {
-        intervalLabel
       }
       cascadingEndTimeInterval
     }

@@ -18,6 +18,7 @@ import { RegisterButtonFragmentContainer } from "../RegisterButton"
 import { SaleDetailTimerFragmentContainer } from "v2/Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
+import { getCascadingEndTimeIntervalMessage } from "../../Hooks/Utils/helpers"
 
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale
@@ -31,10 +32,8 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)
     : sale.endAt
 
-  const cascadingEndTimeIntervalLabel =
-    !!sale.cascadingEndTimeInterval &&
-    !sale.endedAt &&
-    sale.cascadingEndTime?.intervalLabel
+  const showCascadingEndTimeIntervalMessage: boolean =
+    !!sale.cascadingEndTimeInterval && !sale.isClosed
 
   return (
     <>
@@ -73,9 +72,9 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
         </Flex>
       </Flex>
 
-      {cascadingEndTimeIntervalLabel && (
+      {showCascadingEndTimeIntervalMessage && (
         <Text variant="md" pr={2}>
-          {cascadingEndTimeIntervalLabel}
+          {getCascadingEndTimeIntervalMessage(sale.cascadingEndTimeInterval!)}
         </Text>
       )}
 
@@ -107,14 +106,10 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         liveStartAt
         startAt
         endAt
-        endedAt
         description(format: HTML)
         href
         isClosed
         cascadingEndTimeInterval
-        cascadingEndTime {
-          intervalLabel
-        }
       }
     `,
     me: graphql`
