@@ -4,35 +4,63 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowCard_show = {
-    readonly href: string | null;
+export type CellShow_show = {
+    readonly internalID: string;
+    readonly slug: string;
     readonly name: string | null;
+    readonly href: string | null;
+    readonly startAt: string | null;
+    readonly endAt: string | null;
     readonly isFairBooth: boolean | null;
     readonly exhibitionPeriod: string | null;
+    readonly partner: {
+        readonly name?: string | null;
+    } | null;
     readonly coverImage: {
-        readonly medium: {
-            readonly width: number;
-            readonly height: number;
+        readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "ShowCard_show";
+    readonly " $refType": "CellShow_show";
 };
-export type ShowCard_show$data = ShowCard_show;
-export type ShowCard_show$key = {
-    readonly " $data"?: ShowCard_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
+export type CellShow_show$data = CellShow_show;
+export type CellShow_show$key = {
+    readonly " $data"?: CellShow_show$data;
+    readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
 };
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ShowCard_show",
+  "name": "CellShow_show",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -44,7 +72,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "startAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endAt",
       "storageKey": null
     },
     {
@@ -64,23 +99,51 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "type": "Partner",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "coverImage",
       "plural": false,
       "selections": [
         {
-          "alias": "medium",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 240
+              "value": 334
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "normalized",
+                "larger",
+                "large"
+              ]
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 320
+              "value": 445
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -88,20 +151,6 @@ const node: ReaderFragment = {
           "name": "cropped",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            },
             {
               "alias": null,
               "args": null,
@@ -117,7 +166,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:240,width:320)"
+          "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
         }
       ],
       "storageKey": null
@@ -126,5 +175,6 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = '76ed317dec01eb8714a6602721d25131';
+})();
+(node as any).hash = '9baaf250a0d4304282eae2fc6f46c848';
 export default node;

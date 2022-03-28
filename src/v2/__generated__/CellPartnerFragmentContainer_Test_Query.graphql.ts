@@ -47,7 +47,6 @@ fragment CellPartner_partner on Partner {
   }
   profile {
     ...FollowProfileButton_profile
-    isFollowed
     image {
       cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
         src
@@ -196,12 +195,6 @@ v12 = {
   "nullable": false,
   "plural": false,
   "type": "String"
-},
-v13 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -408,13 +401,6 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "isFollowed",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
                 "concreteType": "Image",
                 "kind": "LinkedField",
                 "name": "image",
@@ -464,7 +450,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "28d2ea6ad3601006f9deaf13fc11662c",
+    "cacheID": "0492c71ba3b045a8d33df980fb426b53",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -528,8 +514,12 @@ return {
         "partner.profile.image.cropped.src": (v12/*: any*/),
         "partner.profile.image.cropped.srcSet": (v12/*: any*/),
         "partner.profile.internalID": (v8/*: any*/),
-        "partner.profile.isFollowed": (v13/*: any*/),
-        "partner.profile.is_followed": (v13/*: any*/),
+        "partner.profile.is_followed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "partner.profile.name": (v9/*: any*/),
         "partner.profile.slug": (v8/*: any*/),
         "partner.slug": (v8/*: any*/),
@@ -538,7 +528,7 @@ return {
     },
     "name": "CellPartnerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query CellPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query CellPartnerFragmentContainer_Test_Query {\n  partner(id: \"example\") {\n    ...CellPartner_partner\n    id\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();

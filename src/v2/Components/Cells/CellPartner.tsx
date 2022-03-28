@@ -112,7 +112,6 @@ export const CellPartnerFragmentContainer = createFragmentContainer(
         }
         profile {
           ...FollowProfileButton_profile
-          isFollowed
           image {
             cropped(
               width: 445
