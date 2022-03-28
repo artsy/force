@@ -3,17 +3,17 @@ import { useEffect } from "react"
 interface UseLoadScript {
   id: string
   src?: string
-  text?: string
-  type?: string
   onReady?(): void
+  removeOnUnmount?: boolean
+  text?: string
 }
 
 export const useLoadScript = ({
   id,
   src,
   text,
-  type,
   onReady,
+  removeOnUnmount = false,
 }: UseLoadScript) => {
   useEffect(() => {
     if (document.getElementById(id)) {
@@ -33,17 +33,16 @@ export const useLoadScript = ({
     if (text) {
       script.text = text
     }
-    if (type) {
-      script.type = type
-    }
 
     document.body.appendChild(script)
 
     return () => {
-      const script = document.getElementById(id) as HTMLScriptElement | null
-      if (script) {
-        document.body.removeChild(script)
+      if (removeOnUnmount) {
+        const script = document.getElementById(id)
+        if (script) {
+          document.body.removeChild(script)
+        }
       }
     }
-  }, [id, onReady, src, text, type])
+  }, [id, onReady, src, text, removeOnUnmount])
 }

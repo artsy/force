@@ -18,7 +18,7 @@ import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswor
 import { AuthenticationCheckbox } from "../Components/AuthenticationCheckbox"
 import { AuthenticationFooter } from "../Components/AuthenticationFooter"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { MntnConversionPixel } from "../../../System/Analytics/MNTN"
+import { MNTNTrackingPixel } from "v2/Components/MNTNTrackingPixel"
 
 const gdprCountries = [
   "AT",
@@ -288,7 +288,8 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                   showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
                 />
               </Join>
-              <MntnConversionPixel path="/signup" />
+
+              <MNTNTrackingPixel forceEmbed />
             </Box>
           )
         }}
