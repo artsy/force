@@ -2,11 +2,19 @@ import { useEffect } from "react"
 
 interface UseLoadScript {
   id: string
-  src: string
+  src?: string
   onReady?(): void
+  removeOnUnmount?: boolean
+  text?: string
 }
 
-export const useLoadScript = ({ id, src, onReady }: UseLoadScript) => {
+export const useLoadScript = ({
+  id,
+  src,
+  text,
+  onReady,
+  removeOnUnmount = false,
+}: UseLoadScript) => {
   useEffect(() => {
     if (document.getElementById(id)) {
       onReady?.()
@@ -17,9 +25,24 @@ export const useLoadScript = ({ id, src, onReady }: UseLoadScript) => {
 
     script.id = id
     script.async = true
-    script.src = src
     script.onload = () => onReady?.()
 
+    if (src) {
+      script.src = src
+    }
+    if (text) {
+      script.text = text
+    }
+
     document.body.appendChild(script)
-  }, [id, onReady, src])
+
+    return () => {
+      if (removeOnUnmount) {
+        const script = document.getElementById(id)
+        if (script) {
+          document.body.removeChild(script)
+        }
+      }
+    }
+  }, [id, onReady, src, text, removeOnUnmount])
 }
