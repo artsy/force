@@ -11,19 +11,10 @@ export type ArtistCurrentShowsRail_artist = {
     readonly showsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly coverImage: {
-                    readonly cropped: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly srcSet: string;
-                        readonly src: string;
-                    } | null;
-                } | null;
-                readonly exhibitionPeriod: string | null;
-                readonly href: string | null;
                 readonly internalID: string;
-                readonly name: string | null;
                 readonly slug: string;
+                readonly href: string | null;
+                readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
             } | null;
         } | null> | null;
     } | null;
@@ -49,13 +40,6 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 };
@@ -66,8 +50,14 @@ return {
   "name": "ArtistCurrentShowsRail_artist",
   "selections": [
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     (v1/*: any*/),
-    (v2/*: any*/),
     {
       "alias": null,
       "args": [
@@ -108,74 +98,8 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "coverImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 230
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 325
-                        }
-                      ],
-                      "concreteType": "CroppedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "cropped",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "cropped(height:230,width:325)"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "exhibitionPeriod",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -183,9 +107,11 @@ return {
                   "name": "href",
                   "storageKey": null
                 },
-                (v0/*: any*/),
-                (v1/*: any*/),
-                (v2/*: any*/)
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellShow_show"
+                }
               ],
               "storageKey": null
             }
@@ -200,5 +126,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6a4e331891476674b3d62947cf93c36b';
+(node as any).hash = '4c6c269dbc41fb2a6fe08b6946167b7a';
 export default node;
