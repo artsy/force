@@ -51,7 +51,6 @@ export const ArticleShare: FC<ArticleShareProps> = ({
         as="a"
         display="flex"
         title="Share on Twitter"
-        mr={1}
         // @ts-ignore
         href={`https://twitter.com/intent/tweet?original_referer=${url}&text=${description}&url=${url}&via=artsy`}
       >

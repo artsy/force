@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { ArticleHTML } from "../ArticleHTML"
 import { ArticleSectionText_section } from "v2/__generated__/ArticleSectionText_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -8,27 +8,23 @@ export const OPTIMAL_READING_WIDTH = "65ch"
 
 interface ArticleSectionTextProps {
   section: ArticleSectionText_section
-  isFirst: boolean
   isLast: boolean
 }
 
 const ArticleSectionText: FC<ArticleSectionTextProps> = ({
   section,
-  isFirst,
   isLast,
 }) => {
-  if (!section.body) return null
-
-  const HTML = (() => {
+  const HTML = useMemo(() => {
     switch (true) {
-      case isFirst:
-        return ArticleHTMLFirstLetter
       case isLast:
         return ArticleHTMLLastChild
       default:
         return ArticleHTML
     }
-  })()
+  }, [isLast])
+
+  if (!section.body) return null
 
   return (
     <HTML maxWidth={OPTIMAL_READING_WIDTH} mx="auto">
@@ -47,19 +43,6 @@ export const ArticleSectionTextFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-/**
- * Drop caps the first letter of the first paragraph.
- */
-const ArticleHTMLFirstLetter = styled(ArticleHTML)`
-  p:first-child::first-letter {
-    font-size: 3em;
-    float: left;
-    margin-right: 0.125em;
-    margin-top: 0.25em;
-    text-transform: uppercase;
-  }
-`
 
 /**
  * Inserts a tombstone after the last sentence of the last paragraph.

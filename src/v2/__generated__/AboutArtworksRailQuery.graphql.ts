@@ -589,6 +589,31 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "concreteType": "AttributionClass",
+                        "kind": "LinkedField",
+                        "name": "attributionClass",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/),
+                          (v3/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkMedium",
+                        "kind": "LinkedField",
+                        "name": "mediumType",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "is_inquireable",
+                        "args": null,
                         "kind": "ScalarField",
                         "name": "slug",
                         "storageKey": null
