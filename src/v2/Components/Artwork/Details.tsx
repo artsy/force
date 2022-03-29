@@ -233,7 +233,7 @@ export const Details: React.FC<DetailsProps> = ({
             )}
         </Flex>
       )}
-      {(!!rest.artwork.is_saved || isHovered) && (
+      {(!!rest.artwork.isSaved || isHovered) && (
         <NewSaveButtonFragmentContainer
           contextModule={ContextModule.artworkGrid}
           artwork={rest.artwork}
@@ -310,7 +310,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      is_saved
+      isSaved
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artists(shallow: true) {
