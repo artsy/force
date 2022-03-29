@@ -1,4 +1,4 @@
-import { Box, Pill } from "@artsy/palette"
+import { Box, Join, Pill, Spacer } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { compact } from "lodash"
 import { FC } from "react"
@@ -26,19 +26,13 @@ const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
 
   return (
     <HoverContainer>
-      {pills.map((pill, index) => {
-        const isLastPill = pills.length - 1 === index
-
-        return (
-          <NonClickablePill
-            key={pill.id}
-            variant="textSquare"
-            mr={isLastPill ? 0 : 0.5}
-          >
+      <Join separator={<Spacer mr={0.5} />}>
+        {pills.map(pill => (
+          <NonClickablePill key={pill.id} variant="textSquare">
             {pill.label}
           </NonClickablePill>
-        )
-      })}
+        ))}
+      </Join>
     </HoverContainer>
   )
 }
