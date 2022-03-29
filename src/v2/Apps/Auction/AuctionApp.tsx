@@ -15,7 +15,6 @@ import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
-import { getCascadingEndTimeIntervalMessage } from "./Hooks/Utils/helpers"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -60,9 +59,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
       >
         {cascadingEndTimeInterval && (
           <CascadingEndTimesBanner
-            intervalMessage={
-              getCascadingEndTimeIntervalMessage(cascadingEndTimeInterval)!
-            }
+            cascadingEndTimeInterval={cascadingEndTimeInterval}
           />
         )}
 

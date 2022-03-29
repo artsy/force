@@ -18,7 +18,6 @@ import { RegisterButtonFragmentContainer } from "../RegisterButton"
 import { SaleDetailTimerFragmentContainer } from "v2/Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
-import { getCascadingEndTimeIntervalMessage } from "../../Hooks/Utils/helpers"
 
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale
@@ -78,7 +77,9 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
         <>
           <Spacer my={2} />
           <Text variant="md" pr={2}>
-            {getCascadingEndTimeIntervalMessage(sale.cascadingEndTimeInterval!)}
+            {`Lots close at ${
+              sale.cascadingEndTimeInterval! / 60
+            }-minute interval`}
           </Text>
         </>
       )}
