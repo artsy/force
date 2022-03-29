@@ -9,13 +9,13 @@ export const useHoverMetadata = () => {
   )
 
   const onMouseEnter = () => {
-    if (isHoverEffectEnabled ?? !isTouch) {
+    if (isHoverEffectEnabled && !isTouch) {
       setIsHovered(true)
     }
   }
 
   const onMouseLeave = () => {
-    if (isHoverEffectEnabled ?? !isTouch) {
+    if (isHoverEffectEnabled && !isTouch) {
       setIsHovered(false)
     }
   }
