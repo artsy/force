@@ -13,6 +13,7 @@ export interface MetadataProps
   hidePartnerName?: boolean
   hideArtistName?: boolean
   hideSaleInfo?: boolean
+  isHovered?: boolean
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -22,6 +23,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   hidePartnerName,
   hideArtistName,
   hideSaleInfo,
+  isHovered,
   ...rest
 }) => {
   return (
@@ -39,6 +41,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hideSaleInfo={hideSaleInfo}
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
+        isHovered={isHovered}
       />
     </RouterLink>
   )
