@@ -82,8 +82,8 @@ describe("HomeAuctionLotsRail", () => {
         action: "clickedArtworkGroup",
         context_module: "auctionLots",
         context_page_owner_type: "home",
-        destination_page_owner_id: "<Artwork-mock-id-5>",
-        destination_page_owner_slug: "<Artwork-mock-id-8>",
+        destination_page_owner_id: "<Artwork-mock-id-6>",
+        destination_page_owner_slug: "<Artwork-mock-id-7>",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
       })
