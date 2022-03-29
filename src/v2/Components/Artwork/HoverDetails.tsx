@@ -55,6 +55,13 @@ const HoverContainer = styled(Box)`
 
 const NonClickablePill = styled(Pill)`
   pointer-events: none;
+
+  &:last-child {
+    overflow: hidden;
+    min-width: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `
 
 export const HoverDetailsFragmentContainer = createFragmentContainer(
