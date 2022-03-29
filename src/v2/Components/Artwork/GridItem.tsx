@@ -1,4 +1,4 @@
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
+import { AuthContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, Box } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
@@ -7,7 +7,7 @@ import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
+import { useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
@@ -29,7 +29,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
-  const { containerProps, isSaveButtonVisible } = useSaveButton({
+  const { containerProps } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
@@ -94,13 +94,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         </Link>
 
         <Badge artwork={artwork} />
-
-        {isSaveButtonVisible && (
-          <SaveButtonFragmentContainer
-            contextModule={contextModule || ContextModule.artworkGrid}
-            artwork={artwork}
-          />
-        )}
       </Box>
 
       <Metadata artwork={artwork} isHovered={isHovered} />
