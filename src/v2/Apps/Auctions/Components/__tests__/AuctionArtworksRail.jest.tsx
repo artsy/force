@@ -62,7 +62,13 @@ describe("AuctionArtworksRail", () => {
   })
 
   it("tracks clicks", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Sale: () => ({
+        internalID: "sale-id",
+        slug: "sale-slug",
+      }),
+    })
+
     wrapper.find("RouterLink").first().simulate("click")
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
       Array [
@@ -70,8 +76,8 @@ describe("AuctionArtworksRail", () => {
           "action": "clickedArtworkGroup",
           "context_module": "currentAuctions",
           "context_page_owner_type": undefined,
-          "destination_page_owner_id": "<Sale-mock-id-9>",
-          "destination_page_owner_slug": "<Sale-mock-id-10>",
+          "destination_page_owner_id": "sale-id",
+          "destination_page_owner_slug": "sale-slug",
           "destination_page_owner_type": "sale",
           "type": "viewAll",
         },
