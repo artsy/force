@@ -9,7 +9,6 @@ import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 import { HttpError } from "found"
-import { yupToFormErrors } from "formik"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
