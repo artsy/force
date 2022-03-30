@@ -91,13 +91,11 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
           <Join separator={<Spacer mt={4} />}>
             {article.sections.map((section, i) => {
-              const isFirst = article.layout === "FEATURE" && i === 0
               const isLast = i === article.sections.length - 1
 
               return (
                 <Fragment key={i}>
                   <ArticleSectionFragmentContainer
-                    isFirst={isFirst}
                     isLast={isLast}
                     section={section}
                   />
