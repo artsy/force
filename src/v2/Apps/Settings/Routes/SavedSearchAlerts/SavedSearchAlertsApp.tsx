@@ -49,6 +49,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [sort, setSort] = useState("CREATED_AT_DESC")
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
@@ -108,6 +109,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
+  const handleSortSelect = (value: string) => {
+    setSort(value)
+  }
+
   const list = (
     <>
       <Join separator={<Separator color="black15" />}>
@@ -146,7 +151,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <StickyProvider>
       <MetaTags title="Your Alerts | Artsy" pathname="/settings/alerts" />
 
-      <SavedSearchAlertHeader />
+      <SavedSearchAlertHeader selected={sort} onSortSelect={handleSortSelect} />
 
       <Box mx={[-2, 0]}>
         <Separator color="black15" />

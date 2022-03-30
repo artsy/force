@@ -1,9 +1,39 @@
-import { Text } from "@artsy/palette"
+import { Flex, Option, Select, Text } from "@artsy/palette"
+import { FC } from "react"
 
-export const SavedSearchAlertHeader = () => {
+interface SavedSearchAlertHeaderProps {
+  selected: string
+  onSortSelect: (value: string) => void
+}
+
+const SORT_OPTIONS: Option[] = [
+  { value: "CREATED_AT_DESC", text: "Recently Added" },
+  { value: "NAME_ASC", text: "Name (A-Z)" },
+]
+
+export const SavedSearchAlertHeader: FC<SavedSearchAlertHeaderProps> = ({
+  selected,
+  onSortSelect,
+}) => {
   return (
-    <Text variant="xl" my={4}>
-      Your Alerts
-    </Text>
+    <Flex
+      flexDirection={["column", "row"]}
+      alignItems={["stretch", "center"]}
+      justifyContent="space-between"
+      my={4}
+    >
+      <Text variant="xl" mb={[4, 0]} mr={[0, 2]}>
+        Your Alerts
+      </Text>
+
+      <Select
+        variant="inline"
+        title="Sort:"
+        options={SORT_OPTIONS}
+        selected={selected}
+        onSelect={onSortSelect}
+        width="auto"
+      />
+    </Flex>
   )
 }
