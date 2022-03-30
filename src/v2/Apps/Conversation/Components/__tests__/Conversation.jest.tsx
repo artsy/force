@@ -83,6 +83,16 @@ describe("Conversation", () => {
         screen.getByText("Be Protected by The Artsy Guarantee")
       ).toBeInTheDocument()
     })
+
+    it("shows the buyer guarantee message if offerable and offerable from inquiry", async () => {
+      renderWithRelay({
+        Artwork: () => ({ isOfferableFromInquiry: true, isOfferable: true }),
+      })
+
+      expect(
+        screen.getByText("Be Protected by The Artsy Guarantee")
+      ).toBeInTheDocument()
+    })
   })
 
   describe("when the artwork is not offerable", () => {
