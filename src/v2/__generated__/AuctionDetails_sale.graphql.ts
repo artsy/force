@@ -11,14 +11,10 @@ export type AuctionDetails_sale = {
     readonly liveStartAt: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
-    readonly endedAt: string | null;
     readonly description: string | null;
     readonly href: string | null;
     readonly isClosed: boolean | null;
     readonly cascadingEndTimeInterval: number | null;
-    readonly cascadingEndTime: {
-        readonly intervalLabel: string | null;
-    } | null;
     readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale" | "AuctionInfoSidebar_sale" | "SaleDetailTimer_sale">;
     readonly " $refType": "AuctionDetails_sale";
 };
@@ -80,13 +76,6 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "endedAt",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -120,24 +109,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "SaleCascadingEndTime",
-      "kind": "LinkedField",
-      "name": "cascadingEndTime",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "intervalLabel",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "RegisterButton_sale"
@@ -156,5 +127,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = 'e368b2849779d15308faa43d2294b5fd';
+(node as any).hash = '9c7ff082957e145b2853a02bb3322b12';
 export default node;
