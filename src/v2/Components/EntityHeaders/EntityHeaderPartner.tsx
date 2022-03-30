@@ -10,7 +10,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { EntityHeaderPartner_partner } from "v2/__generated__/EntityHeaderPartner_partner.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
-const DISPLAYABLE_BADGES = ["black-owned"]
+const DISPLAYABLE_BADGES = ["black-owned", "women-owned"]
 
 export interface EntityHeaderPartnerProps extends BoxProps {
   partner: EntityHeaderPartner_partner
