@@ -30,6 +30,10 @@ query ConversationCTA_Test_Query {
   }
 }
 
+fragment ConfirmArtworkButton_artwork on Artwork {
+  internalID
+}
+
 fragment ConversationCTA_conversation on Conversation {
   internalID
   items {
@@ -78,11 +82,28 @@ fragment ConversationCTA_conversation on Conversation {
       }
     }
   }
-  ...OpenInquiryModalCTA_conversation
+  ...MakeOfferOnInquiryButton_conversation
 }
 
-fragment OpenInquiryModalCTA_conversation on Conversation {
+fragment MakeOfferOnInquiryButton_conversation on Conversation {
   internalID
+  items {
+    liveArtwork {
+      __typename
+      ... on Artwork {
+        __typename
+        editionSets {
+          internalID
+          id
+        }
+        ...ConfirmArtworkButton_artwork
+      }
+      ... on Node {
+        __isNode: __typename
+        id
+      }
+    }
+  }
 }
 */
 
@@ -115,7 +136,11 @@ v3 = {
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v4 = [
+  (v1/*: any*/),
+  (v3/*: any*/)
+],
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     (v3/*: any*/)
@@ -123,25 +148,25 @@ v4 = {
   "type": "Node",
   "abstractKey": "__isNode"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -234,12 +259,23 @@ return {
                             "kind": "ScalarField",
                             "name": "isOfferableFromInquiry",
                             "storageKey": null
-                          }
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "EditionSet",
+                            "kind": "LinkedField",
+                            "name": "editionSets",
+                            "plural": true,
+                            "selections": (v4/*: any*/),
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null
                       },
-                      (v4/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -260,7 +296,7 @@ return {
                         "type": "Artwork",
                         "abstractKey": null
                       },
-                      (v4/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -370,10 +406,7 @@ return {
                                         "kind": "LinkedField",
                                         "name": "node",
                                         "plural": false,
-                                        "selections": [
-                                          (v1/*: any*/),
-                                          (v3/*: any*/)
-                                        ],
+                                        "selections": (v4/*: any*/),
                                         "storageKey": null
                                       }
                                     ],
@@ -406,7 +439,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c5c606e36de02ee745caa5f9b96c1c64",
+    "cacheID": "1339c9b68cd5eca8a497a2061f7a257e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -440,7 +473,7 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "me.conversation.activeOrders.edges.node.__typename": (v5/*: any*/),
+        "me.conversation.activeOrders.edges.node.__typename": (v6/*: any*/),
         "me.conversation.activeOrders.edges.node.buyerAction": {
           "enumValues": [
             "OFFER_ACCEPTED",
@@ -454,8 +487,8 @@ return {
           "plural": false,
           "type": "CommerceBuyerOfferActionEnum"
         },
-        "me.conversation.activeOrders.edges.node.id": (v6/*: any*/),
-        "me.conversation.activeOrders.edges.node.internalID": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.id": (v7/*: any*/),
+        "me.conversation.activeOrders.edges.node.internalID": (v7/*: any*/),
         "me.conversation.activeOrders.edges.node.offers": {
           "enumValues": null,
           "nullable": true,
@@ -474,8 +507,8 @@ return {
           "plural": false,
           "type": "CommerceOffer"
         },
-        "me.conversation.activeOrders.edges.node.offers.edges.node.id": (v6/*: any*/),
-        "me.conversation.activeOrders.edges.node.offers.edges.node.internalID": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.offers.edges.node.id": (v7/*: any*/),
+        "me.conversation.activeOrders.edges.node.offers.edges.node.internalID": (v7/*: any*/),
         "me.conversation.activeOrders.edges.node.state": {
           "enumValues": [
             "ABANDONED",
@@ -490,9 +523,9 @@ return {
           "plural": false,
           "type": "CommerceOrderStateEnum"
         },
-        "me.conversation.activeOrders.edges.node.stateExpiresAt": (v7/*: any*/),
-        "me.conversation.activeOrders.edges.node.stateReason": (v7/*: any*/),
-        "me.conversation.id": (v6/*: any*/),
+        "me.conversation.activeOrders.edges.node.stateExpiresAt": (v8/*: any*/),
+        "me.conversation.activeOrders.edges.node.stateReason": (v8/*: any*/),
+        "me.conversation.id": (v7/*: any*/),
         "me.conversation.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -505,27 +538,36 @@ return {
           "plural": true,
           "type": "ConversationItem"
         },
-        "me.conversation.items.item": (v8/*: any*/),
-        "me.conversation.items.item.__isNode": (v5/*: any*/),
-        "me.conversation.items.item.__typename": (v5/*: any*/),
-        "me.conversation.items.item.id": (v6/*: any*/),
-        "me.conversation.items.item.internalID": (v6/*: any*/),
-        "me.conversation.items.liveArtwork": (v8/*: any*/),
-        "me.conversation.items.liveArtwork.__isNode": (v5/*: any*/),
-        "me.conversation.items.liveArtwork.__typename": (v5/*: any*/),
-        "me.conversation.items.liveArtwork.id": (v6/*: any*/),
+        "me.conversation.items.item": (v9/*: any*/),
+        "me.conversation.items.item.__isNode": (v6/*: any*/),
+        "me.conversation.items.item.__typename": (v6/*: any*/),
+        "me.conversation.items.item.id": (v7/*: any*/),
+        "me.conversation.items.item.internalID": (v7/*: any*/),
+        "me.conversation.items.liveArtwork": (v9/*: any*/),
+        "me.conversation.items.liveArtwork.__isNode": (v6/*: any*/),
+        "me.conversation.items.liveArtwork.__typename": (v6/*: any*/),
+        "me.conversation.items.liveArtwork.editionSets": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "EditionSet"
+        },
+        "me.conversation.items.liveArtwork.editionSets.id": (v7/*: any*/),
+        "me.conversation.items.liveArtwork.editionSets.internalID": (v7/*: any*/),
+        "me.conversation.items.liveArtwork.id": (v7/*: any*/),
+        "me.conversation.items.liveArtwork.internalID": (v7/*: any*/),
         "me.conversation.items.liveArtwork.isOfferableFromInquiry": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "me.id": (v6/*: any*/)
+        "me.id": (v7/*: any*/)
       }
     },
     "name": "ConversationCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationCTA_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      ...ConversationCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...OpenInquiryModalCTA_conversation\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n"
+    "text": "query ConversationCTA_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      ...ConversationCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...MakeOfferOnInquiryButton_conversation\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

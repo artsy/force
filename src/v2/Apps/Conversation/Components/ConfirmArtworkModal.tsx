@@ -5,7 +5,7 @@ import { Button, Flex, ModalDialog, Separator, Spacer } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-
+import { OwnerType } from "@artsy/cohesion"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { CollapsibleArtworkDetailsFragmentContainer } from "./CollapsibleArtworkDetails"
 import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
@@ -59,6 +59,10 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
             disabled={!!isEdition && !selectedEdition}
             conversationID={conversationID}
             editionSetID={selectedEdition || null}
+            trackingEvent={{
+              context_module: OwnerType.conversationMakeOfferConfirmArtwork,
+              context_owner_type: OwnerType.conversation,
+            }}
           />
         </Flex>
       }
