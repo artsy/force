@@ -62,8 +62,8 @@ describe("NavBar", () => {
   describe("desktop", () => {
     it("renders logged out items", () => {
       const wrapper = getWrapper()
-      expect(wrapper.html()).toContain("Log In")
-      expect(wrapper.html()).toContain("Sign Up")
+      expect(wrapper.html()).toContain("navbar.login")
+      expect(wrapper.html()).toContain("navbar.signup")
       expect(wrapper.find(BellIcon).length).toEqual(0)
       expect(wrapper.find(SoloIcon).length).toEqual(0)
     })
@@ -71,8 +71,8 @@ describe("NavBar", () => {
     it("renders logged in items", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const wrapper = getWrapper({ user: true })
-      expect(wrapper.html()).not.toContain("Log In")
-      expect(wrapper.html()).not.toContain("Sign Up")
+      expect(wrapper.html()).not.toContain("navbar.login")
+      expect(wrapper.html()).not.toContain("navbar.signup")
       expect(wrapper.find(BellIcon).length).toEqual(1)
       expect(wrapper.find(SoloIcon).length).toEqual(1)
     })

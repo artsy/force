@@ -9,8 +9,6 @@ import * as Schema from "v2/System/Analytics/Schema"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   FirstSuggestionItem,
-  PLACEHOLDER,
-  PLACEHOLDER_XS,
   SuggestionItem,
 } from "v2/Components/Search/Suggestions/SuggestionItem"
 import { Router } from "found"
@@ -28,10 +26,11 @@ import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { SearchInputContainer } from "./SearchInputContainer"
+import { withTranslation, WithTranslation } from "react-i18next"
 
 const logger = createLogger("Components/Search/SearchBar")
 
-export interface Props extends SystemContextProps {
+export interface Props extends SystemContextProps, WithTranslation {
   relay: RelayRefetchProp
   router?: Router
   viewer: SearchBar_viewer
@@ -373,7 +372,7 @@ export class SearchBar extends Component<Props, State> {
 
   renderAutosuggestComponent({ xs }) {
     const { term } = this.state
-    const { viewer } = this.props
+    const { viewer, t } = this.props
 
     const inputProps = {
       "aria-label": "Search Artsy",
@@ -390,7 +389,7 @@ export class SearchBar extends Component<Props, State> {
           event.preventDefault()
         }
       },
-      placeholder: xs ? PLACEHOLDER_XS : PLACEHOLDER,
+      placeholder: xs ? t`navbar.searchArtsy` : t`navbar.searchBy`,
       value: term,
     }
 
@@ -465,7 +464,7 @@ export class SearchBar extends Component<Props, State> {
 }
 
 export const SearchBarRefetchContainer = createRefetchContainer(
-  withSystemContext(SearchBar),
+  withSystemContext(withTranslation()(SearchBar)),
   {
     viewer: graphql`
       fragment SearchBar_viewer on Viewer
@@ -509,22 +508,21 @@ export const SearchBarRefetchContainer = createRefetchContainer(
  * Displays during SSR render, but once mounted is swapped out with
  * QueryRenderer below.
  */
-const StaticSearchContainer: React.FC<{ searchQuery: string } & BoxProps> = ({
-  searchQuery,
-  ...rest
-}) => {
+const StaticSearchContainer: React.FC<
+  { searchQuery: string } & BoxProps & WithTranslation
+> = ({ searchQuery, t, ...rest }) => {
   return (
     <>
       <Box display={["block", "none"]} {...rest}>
         <SearchInputContainer
-          placeholder={searchQuery || PLACEHOLDER_XS}
+          placeholder={searchQuery || t`navbar.searchArtsy`}
           defaultValue={searchQuery}
         />
       </Box>
 
       <Box display={["none", "block"]} {...rest}>
         <SearchInputContainer
-          placeholder={searchQuery || PLACEHOLDER}
+          placeholder={searchQuery || t`navbar.searchBy`}
           defaultValue={searchQuery}
         />
       </Box>
@@ -532,12 +530,21 @@ const StaticSearchContainer: React.FC<{ searchQuery: string } & BoxProps> = ({
   )
 }
 
+const WithTranslationStaticSearchContainer = withTranslation()(
+  StaticSearchContainer
+)
+
 export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
   const { relayEnvironment, searchQuery = "" } = useContext(SystemContext)
   const isMounted = useDidMount(typeof window !== "undefined")
 
   if (!isMounted) {
-    return <StaticSearchContainer searchQuery={searchQuery} {...props} />
+    return (
+      <WithTranslationStaticSearchContainer
+        searchQuery={searchQuery}
+        {...props}
+      />
+    )
   }
 
   return (
@@ -561,7 +568,9 @@ export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.
         } else {
-          return <StaticSearchContainer searchQuery={searchQuery} />
+          return (
+            <WithTranslationStaticSearchContainer searchQuery={searchQuery} />
+          )
         }
       }}
     />
