@@ -79,7 +79,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           <Text variant="md" pr={2}>
             {`Lots close at ${
               sale.cascadingEndTimeInterval! / 60
-            }-minute interval`}
+            }-minute intervals`}
           </Text>
         </>
       )}
