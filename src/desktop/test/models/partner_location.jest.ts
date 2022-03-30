@@ -9,11 +9,13 @@ describe("PartnerLocation", () => {
     testContext = {}
   })
 
-  beforeAll(done => {
-    benv.setup(() => {
-      benv.expose({ $: benv.require("jquery") })
-      sd.GOOGLE_MAPS_API_KEY = "GOOGLE-MAPS-API-KEY"
-      done()
+  beforeAll(() => {
+    return new Promise<void>(done => {
+      benv.setup(() => {
+        benv.expose({ $: benv.require("jquery") })
+        sd.PUBLIC_GOOGLE_MAPS_API_KEY = "GOOGLE-MAPS-API-KEY"
+        done()
+      })
     })
   })
 
