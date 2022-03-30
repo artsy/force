@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Expandable, Flex, Image, Text } from "@artsy/palette"
 import styled from "styled-components"
@@ -56,7 +56,7 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
       <Expandable
         pb={1}
         label={
-          <Flex alignItems="center" mt={1} mx={2} pb={1}>
+          <Flex py={1}>
             {!!artwork.image && (
               <Image
                 width={artwork.image.resized?.width}
@@ -77,7 +77,6 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
       >
         <Flex
           flexDirection="column"
-          ml={2}
           pr={2}
           maxHeight="230px"
           overflowY="scroll"
