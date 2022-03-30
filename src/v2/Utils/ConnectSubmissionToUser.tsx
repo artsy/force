@@ -15,6 +15,7 @@ export const ConnectSubmissionToUser: React.FC = () => {
           userEmail: user.email,
         }
 
+        // TODO: this will be the new addUserTosubmissionMutation when backends are ready
         await updateConsignSubmissionMutation(relayEnvironment, input)
       }
     }

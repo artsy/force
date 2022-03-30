@@ -139,6 +139,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {
+      // TODO: same logic needs to be applied to the login route
       if (match.location.query.submissionId) {
         Cookies.set("submissionId", match.location.query.submissionId, {
           expires: 60 * 60 * 24,
