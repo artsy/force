@@ -16,6 +16,9 @@ import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
+import { ContextModule } from "@artsy/cohesion"
+import { NewSaveButtonFragmentContainer } from "./SaveButton"
+
 interface DetailsProps {
   artwork: Details_artwork
   includeLinks: boolean
@@ -214,7 +217,7 @@ export const Details: React.FC<DetailsProps> = ({
   const { isAuctionArtwork } = useArtworkGridContext()
 
   return (
-    <>
+    <Box position="relative">
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
@@ -230,6 +233,12 @@ export const Details: React.FC<DetailsProps> = ({
             )}
         </Flex>
       )}
+      {(!!rest.artwork.isSaved || isHovered) && (
+        <NewSaveButtonFragmentContainer
+          contextModule={ContextModule.artworkGrid}
+          artwork={rest.artwork}
+        />
+      )}
       {!hideArtistName && <ArtistLine {...rest} />}
       <Box position="relative">
         <TitleLine {...rest} />
@@ -237,7 +246,7 @@ export const Details: React.FC<DetailsProps> = ({
         {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
-    </>
+    </Box>
   )
 }
 
@@ -301,6 +310,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
+      isSaved
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artists(shallow: true) {
@@ -334,6 +344,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
+      ...NewSaveButton_artwork
       ...HoverDetails_artwork
     }
   `,

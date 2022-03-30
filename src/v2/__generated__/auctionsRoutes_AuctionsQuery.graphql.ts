@@ -80,6 +80,7 @@ fragment Details_artwork on Artwork {
   href
   title
   date
+  isSaved
   sale_message: saleMessage
   cultural_maker: culturalMaker
   artists(shallow: true) {
@@ -116,6 +117,7 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...NewSaveButton_artwork
   ...HoverDetails_artwork
 }
 
@@ -196,6 +198,14 @@ fragment MyBids_me on Me {
       }
     }
   }
+}
+
+fragment NewSaveButton_artwork on Artwork {
+  id
+  internalID
+  slug
+  is_saved: isSaved
+  title
 }
 
 fragment SaveButton_artwork on Artwork {
@@ -400,72 +410,79 @@ v12 = {
   "storageKey": null
 },
 v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isSaved",
+  "storageKey": null
+},
+v14 = {
   "alias": "sale_message",
   "args": null,
   "kind": "ScalarField",
   "name": "saleMessage",
   "storageKey": null
 },
-v14 = {
+v15 = {
   "alias": "cultural_maker",
   "args": null,
   "kind": "ScalarField",
   "name": "culturalMaker",
   "storageKey": null
 },
-v15 = [
+v16 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v16 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v17 = {
+v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v18 = {
+v19 = {
   "alias": null,
-  "args": (v15/*: any*/),
+  "args": (v16/*: any*/),
   "concreteType": "Artist",
   "kind": "LinkedField",
   "name": "artists",
   "plural": true,
   "selections": [
-    (v16/*: any*/),
+    (v17/*: any*/),
     (v10/*: any*/),
-    (v17/*: any*/)
+    (v18/*: any*/)
   ],
   "storageKey": "artists(shallow:true)"
 },
-v19 = {
+v20 = {
   "alias": "collecting_institution",
   "args": null,
   "kind": "ScalarField",
   "name": "collectingInstitution",
   "storageKey": null
 },
-v20 = {
+v21 = {
   "alias": null,
-  "args": (v15/*: any*/),
+  "args": (v16/*: any*/),
   "concreteType": "Partner",
   "kind": "LinkedField",
   "name": "partner",
   "plural": false,
   "selections": [
-    (v17/*: any*/),
+    (v18/*: any*/),
     (v10/*: any*/),
-    (v16/*: any*/),
+    (v17/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -476,77 +493,77 @@ v20 = {
   ],
   "storageKey": "partner(shallow:true)"
 },
-v21 = {
+v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "endAt",
   "storageKey": null
 },
-v22 = {
+v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cascadingEndTimeInterval",
   "storageKey": null
 },
-v23 = {
+v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "startAt",
   "storageKey": null
 },
-v24 = {
+v25 = {
   "alias": "is_auction",
   "args": null,
   "kind": "ScalarField",
   "name": "isAuction",
   "storageKey": null
 },
-v25 = {
+v26 = {
   "alias": "is_closed",
   "args": null,
   "kind": "ScalarField",
   "name": "isClosed",
   "storageKey": null
 },
-v26 = {
+v27 = {
   "alias": "is_live_open",
   "args": null,
   "kind": "ScalarField",
   "name": "isLiveOpen",
   "storageKey": null
 },
-v27 = {
+v28 = {
   "alias": "is_open",
   "args": null,
   "kind": "ScalarField",
   "name": "isOpen",
   "storageKey": null
 },
-v28 = {
+v29 = {
   "alias": "is_preview",
   "args": null,
   "kind": "ScalarField",
   "name": "isPreview",
   "storageKey": null
 },
-v29 = {
+v30 = {
   "alias": "display_timely_at",
   "args": null,
   "kind": "ScalarField",
   "name": "displayTimelyAt",
   "storageKey": null
 },
-v30 = {
+v31 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "lotLabel",
   "storageKey": null
 },
-v31 = [
+v32 = [
   {
     "alias": null,
     "args": null,
@@ -555,7 +572,7 @@ v31 = [
     "storageKey": null
   }
 ],
-v32 = {
+v33 = {
   "alias": "sale_artwork",
   "args": null,
   "concreteType": "SaleArtwork",
@@ -563,8 +580,8 @@ v32 = {
   "name": "saleArtwork",
   "plural": false,
   "selections": [
-    (v30/*: any*/),
-    (v21/*: any*/),
+    (v31/*: any*/),
+    (v22/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -597,7 +614,7 @@ v32 = {
       "kind": "LinkedField",
       "name": "highestBid",
       "plural": false,
-      "selections": (v31/*: any*/),
+      "selections": (v32/*: any*/),
       "storageKey": null
     },
     {
@@ -607,28 +624,28 @@ v32 = {
       "kind": "LinkedField",
       "name": "openingBid",
       "plural": false,
-      "selections": (v31/*: any*/),
+      "selections": (v32/*: any*/),
       "storageKey": null
     },
-    (v16/*: any*/)
+    (v17/*: any*/)
   ],
   "storageKey": null
 },
-v33 = [
-  (v17/*: any*/),
-  (v16/*: any*/)
+v34 = [
+  (v18/*: any*/),
+  (v17/*: any*/)
 ],
-v34 = {
+v35 = {
   "alias": null,
   "args": null,
   "concreteType": "AttributionClass",
   "kind": "LinkedField",
   "name": "attributionClass",
   "plural": false,
-  "selections": (v33/*: any*/),
+  "selections": (v34/*: any*/),
   "storageKey": null
 },
-v35 = {
+v36 = {
   "alias": null,
   "args": null,
   "concreteType": "ArtworkMedium",
@@ -636,25 +653,25 @@ v35 = {
   "name": "mediumType",
   "plural": false,
   "selections": [
-    (v17/*: any*/)
+    (v18/*: any*/)
   ],
   "storageKey": null
 },
-v36 = {
+v37 = {
   "alias": "is_inquireable",
   "args": null,
   "kind": "ScalarField",
   "name": "isInquireable",
   "storageKey": null
 },
-v37 = {
+v38 = {
   "alias": "is_biddable",
   "args": null,
   "kind": "ScalarField",
   "name": "isBiddable",
   "storageKey": null
 },
-v38 = {
+v39 = {
   "alias": null,
   "args": null,
   "concreteType": "Artwork",
@@ -672,9 +689,10 @@ v38 = {
     (v12/*: any*/),
     (v13/*: any*/),
     (v14/*: any*/),
-    (v18/*: any*/),
+    (v15/*: any*/),
     (v19/*: any*/),
     (v20/*: any*/),
+    (v21/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -683,25 +701,25 @@ v38 = {
       "name": "sale",
       "plural": false,
       "selections": [
-        (v21/*: any*/),
         (v22/*: any*/),
         (v23/*: any*/),
         (v24/*: any*/),
         (v25/*: any*/),
-        (v16/*: any*/),
         (v26/*: any*/),
+        (v17/*: any*/),
         (v27/*: any*/),
         (v28/*: any*/),
-        (v29/*: any*/)
+        (v29/*: any*/),
+        (v30/*: any*/)
       ],
       "storageKey": null
     },
-    (v32/*: any*/),
-    (v34/*: any*/),
+    (v33/*: any*/),
+    (v17/*: any*/),
     (v35/*: any*/),
     (v36/*: any*/),
-    (v16/*: any*/),
-    (v37/*: any*/)
+    (v37/*: any*/),
+    (v38/*: any*/)
   ],
   "storageKey": null
 };
@@ -779,8 +797,8 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  (v38/*: any*/),
-                  (v16/*: any*/)
+                  (v39/*: any*/),
+                  (v17/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -842,8 +860,8 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v38/*: any*/),
-                  (v16/*: any*/)
+                  (v39/*: any*/),
+                  (v17/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -891,9 +909,10 @@ return {
                       (v12/*: any*/),
                       (v13/*: any*/),
                       (v14/*: any*/),
-                      (v18/*: any*/),
+                      (v15/*: any*/),
                       (v19/*: any*/),
                       (v20/*: any*/),
+                      (v21/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -902,16 +921,16 @@ return {
                         "name": "sale",
                         "plural": false,
                         "selections": [
-                          (v21/*: any*/),
                           (v22/*: any*/),
                           (v23/*: any*/),
                           (v24/*: any*/),
                           (v25/*: any*/),
-                          (v16/*: any*/),
                           (v26/*: any*/),
+                          (v17/*: any*/),
                           (v27/*: any*/),
                           (v28/*: any*/),
                           (v29/*: any*/),
+                          (v30/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -922,16 +941,16 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v32/*: any*/),
-                      (v34/*: any*/),
+                      (v33/*: any*/),
+                      (v17/*: any*/),
                       (v35/*: any*/),
                       (v36/*: any*/),
-                      (v16/*: any*/),
-                      (v37/*: any*/)
+                      (v37/*: any*/),
+                      (v38/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v16/*: any*/)
+                  (v17/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -1022,7 +1041,7 @@ return {
                             "name": "formattedStartDateTime",
                             "storageKey": null
                           },
-                          (v17/*: any*/),
+                          (v18/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1030,10 +1049,10 @@ return {
                             "kind": "LinkedField",
                             "name": "partner",
                             "plural": false,
-                            "selections": (v33/*: any*/),
+                            "selections": (v34/*: any*/),
                             "storageKey": null
                           },
-                          (v16/*: any*/)
+                          (v17/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -1092,7 +1111,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v16/*: any*/)
+                              (v17/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -1110,7 +1129,7 @@ return {
                             "kind": "LinkedField",
                             "name": "currentBid",
                             "plural": false,
-                            "selections": (v31/*: any*/),
+                            "selections": (v32/*: any*/),
                             "storageKey": null
                           },
                           (v1/*: any*/),
@@ -1150,15 +1169,15 @@ return {
                                 "kind": "LinkedField",
                                 "name": "sellingPrice",
                                 "plural": false,
-                                "selections": (v31/*: any*/),
+                                "selections": (v32/*: any*/),
                                 "storageKey": null
                               }
                             ],
                             "storageKey": null
                           },
-                          (v30/*: any*/),
+                          (v31/*: any*/),
                           (v2/*: any*/),
-                          (v16/*: any*/)
+                          (v17/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -1168,7 +1187,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v16/*: any*/)
+              (v17/*: any*/)
             ],
             "storageKey": null
           }
@@ -1178,12 +1197,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d6f98f7de1ede835a5fed8b3a95c357d",
+    "cacheID": "d15b370372d636822aa6d55003b6d479",
     "id": null,
     "metadata": {},
     "name": "auctionsRoutes_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_AuctionsQuery {\n  viewer {\n    ...AuctionsApp_viewer\n  }\n}\n\nfragment AuctionsApp_viewer on Viewer {\n  ...CuritorialRailsTabBar_viewer\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment CuritorialRailsTabBar_viewer on Viewer {\n  ...WorksByArtistsYouFollowRail_viewer\n  ...TrendingLotsRail_viewer\n  ...StandoutLotsRail_viewer\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100, version: [\"source\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment StandoutLotsRail_viewer on Viewer {\n  StandoutLotsRailConnection: saleArtworksConnection(first: 50, geneIDs: \"highlights-at-auction\") {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        sale {\n          isClosed\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\", estimateRange: \"5_000_00-*\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment WorksByArtistsYouFollowRail_viewer on Viewer {\n  saleArtworksConnection(includeArtworksByFollowedArtists: true, isAuction: true, liveSale: true, first: 50) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_AuctionsQuery {\n  viewer {\n    ...AuctionsApp_viewer\n  }\n}\n\nfragment AuctionsApp_viewer on Viewer {\n  ...CuritorialRailsTabBar_viewer\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment CuritorialRailsTabBar_viewer on Viewer {\n  ...WorksByArtistsYouFollowRail_viewer\n  ...TrendingLotsRail_viewer\n  ...StandoutLotsRail_viewer\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  isSaved\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100, version: [\"source\", \"wide\", \"large_rectangle\"]) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      cropped(width: 55, height: 55) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment StandoutLotsRail_viewer on Viewer {\n  StandoutLotsRailConnection: saleArtworksConnection(first: 50, geneIDs: \"highlights-at-auction\") {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        sale {\n          isClosed\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment TrendingLotsRail_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(biddableSale: true, first: 10, sort: \"-bidder_positions_count\", estimateRange: \"5_000_00-*\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment WorksByArtistsYouFollowRail_viewer on Viewer {\n  saleArtworksConnection(includeArtworksByFollowedArtists: true, isAuction: true, liveSale: true, first: 50) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
