@@ -31,8 +31,15 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
     throw new HttpError(404)
   }
 
-  const isBlackOwned =
-    categories!.filter(c => c && c.name === "Black Owned").length > 0
+  const galleryBadges = ["Black Owned", "Women Owned"]
+
+  const eligibleCategories = (categories || []).filter(Boolean)
+  const categoryNames: string[] = eligibleCategories.map(
+    category => category?.name || ""
+  )
+  const firstEligibleBadgeName: string | undefined = galleryBadges.find(badge =>
+    categoryNames.includes(badge)
+  )
 
   return (
     <PartnerArtistsLoadingContextProvider>
@@ -46,8 +53,8 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
         <PartnerHeader partner={partner} />
 
         <FullBleed mb={[2, 4]}>
-          {isBlackOwned ? (
-            <Marquee speed="static" marqueeText="Black Owned" />
+          {firstEligibleBadgeName ? (
+            <Marquee speed="static" marqueeText={firstEligibleBadgeName} />
           ) : (
             <Separator />
           )}

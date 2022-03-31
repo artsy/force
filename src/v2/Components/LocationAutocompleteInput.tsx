@@ -21,7 +21,7 @@ import { debounce } from "lodash"
 const DEBOUNCE_DELAY = 300
 
 const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${getENV(
-  "GOOGLE_MAPS_API_KEY"
+  "PUBLIC_GOOGLE_MAPS_API_KEY"
 )}&libraries=places&v=weekly&language=en&sessiontoken=${getENV(
   "SESSION_ID"
 )}&callback=__googleMapsCallback`

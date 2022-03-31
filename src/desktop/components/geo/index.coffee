@@ -1,9 +1,9 @@
 GeoFormatter = require 'geoformatter'
 Backbone = require 'backbone'
-{ GOOGLE_MAPS_API_KEY } = require('sharify').data
+{ PUBLIC_GOOGLE_MAPS_API_KEY } = require('sharify').data
 
 module.exports =
-  googleMapsAPI: "https://maps.googleapis.com/maps/api/js?key=#{GOOGLE_MAPS_API_KEY}&libraries=places&sensor=true&language=en"
+  googleMapsAPI: "https://maps.googleapis.com/maps/api/js?key=#{PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&sensor=true&language=en"
 
   loadGoogleMaps: (cb) ->
     if @googleMapsLoading? and @googleMapsLoading.state() is 'resolved'
