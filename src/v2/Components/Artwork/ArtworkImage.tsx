@@ -18,6 +18,8 @@ const defaultPositions: Positions = {
   y: null,
 }
 const ENTER_TIMEOUT_DELAY = 200
+const SCALE = 1.75
+const SCALE_DURATION = 0.15
 
 export const ArtworkImage: React.FC<ArtworkImageProps> = ({
   shouldZoomOnHover,
@@ -79,8 +81,8 @@ const ZoomScrollImage: React.FC<ImageProps> = props => {
         style={{
           ...props.style,
           transformOrigin: getTransformOrigin(positions),
-          transition: "transform 0.2s ease-out",
-          transform: zoomed ? `scale(1.5)` : `scale(1.0)`,
+          transition: `transform ${SCALE_DURATION}s ease-out`,
+          transform: zoomed ? `scale(${SCALE})` : `scale(1.0)`,
         }}
       />
     </Box>
