@@ -66,6 +66,7 @@ describe("MakeOfferOnInquiryButton", () => {
       }),
       Conversation: () => ({
         internalID: "internal-test-id",
+        isEdition: false,
       }),
     })
 
@@ -87,6 +88,7 @@ describe("MakeOfferOnInquiryButton", () => {
           {
             liveArtwork: {
               __typename: "Artwork",
+              isEdition: true,
               editionSets: [
                 {
                   internalID: "an-edition-set",
@@ -116,6 +118,7 @@ describe("MakeOfferOnInquiryButton", () => {
           {
             liveArtwork: {
               __typename: "Artwork",
+              isEdition: true,
               editionSets: [
                 {
                   internalID: "an-edition-set",

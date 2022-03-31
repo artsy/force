@@ -41,6 +41,7 @@ fragment MakeOfferOnInquiryButton_conversation on Conversation {
       __typename
       ... on Artwork {
         __typename
+        isEdition
         editionSets {
           internalID
           id
@@ -180,6 +181,13 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "isEdition",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "EditionSet",
                             "kind": "LinkedField",
                             "name": "editionSets",
@@ -220,7 +228,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "de29c190d62b0b58a294cda0b85f8c56",
+    "cacheID": "8c499d8ed5759fe1df784b1dc9ebbf3e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -267,12 +275,18 @@ return {
         "me.conversation.items.liveArtwork.editionSets.internalID": (v3/*: any*/),
         "me.conversation.items.liveArtwork.id": (v3/*: any*/),
         "me.conversation.items.liveArtwork.internalID": (v3/*: any*/),
+        "me.conversation.items.liveArtwork.isEdition": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "me.id": (v3/*: any*/)
       }
     },
     "name": "MakeOfferOnInquiryButton_Test_Query",
     "operationKind": "query",
-    "text": "query MakeOfferOnInquiryButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...MakeOfferOnInquiryButton_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query MakeOfferOnInquiryButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...MakeOfferOnInquiryButton_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

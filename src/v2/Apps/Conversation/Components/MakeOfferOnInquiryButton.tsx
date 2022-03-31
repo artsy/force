@@ -36,6 +36,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
   if (!artwork) return null
 
+  const { isEdition, editionSets } = artwork
   const conversationID = conversation.internalID!
   const handleOpenModal = () => {
     tracking.trackEvent(tappedMakeOffer(conversationID ?? ""))
@@ -58,7 +59,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
             </Text>
           </Flex>
         </Flex>
-        {artwork.editionSets && artwork.editionSets.length > 1 ? (
+        {!!isEdition && editionSets?.length! > 1 ? (
           // Opens a modal window to select an edition set on non-unique artworks
           <Button
             size="medium"
@@ -72,7 +73,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
           <ConfirmArtworkButtonFragmentContainer
             artwork={artwork}
             conversationID={conversationID}
-            editionSetID={artwork.editionSets?.[0]?.internalID || null}
+            editionSetID={editionSets?.[0]?.internalID || null}
           >
             Make an Offer
           </ConfirmArtworkButtonFragmentContainer>
@@ -92,6 +93,7 @@ export const MakeOfferOnInquiryButtonFragmentContainer = createFragmentContainer
           liveArtwork {
             ... on Artwork {
               __typename
+              isEdition
               editionSets {
                 internalID
               }

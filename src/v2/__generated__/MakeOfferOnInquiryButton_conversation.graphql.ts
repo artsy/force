@@ -9,6 +9,7 @@ export type MakeOfferOnInquiryButton_conversation = {
     readonly items: ReadonlyArray<{
         readonly liveArtwork: ({
             readonly __typename: "Artwork";
+            readonly isEdition: boolean | null;
             readonly editionSets: ReadonlyArray<{
                 readonly internalID: string;
             } | null> | null;
@@ -73,6 +74,13 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "isEdition",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "EditionSet",
                   "kind": "LinkedField",
                   "name": "editionSets",
@@ -102,5 +110,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'bbede75c0c13e5bc4c7298ad637807e0';
+(node as any).hash = '8e5c51a2e60800cccdcfca6d1d583d35';
 export default node;
