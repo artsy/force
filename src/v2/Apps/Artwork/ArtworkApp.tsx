@@ -1,5 +1,4 @@
 import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
-import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
@@ -19,7 +18,7 @@ import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrde
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
-import { RouterContext } from "found"
+import { useRouter } from "v2/System/Router/useRouter"
 import { TrackingProp } from "react-tracking"
 import {
   AnalyticsContext,
@@ -29,6 +28,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
+import { CascadingEndTimesBanner } from "../Auction/Components/AuctionDetails/CascadingEndTimesBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -179,7 +179,11 @@ export class ArtworkApp extends React.Component<Props> {
     return (
       <>
         <UseRecordArtworkView />
-
+        {artwork.sale?.cascadingEndTimeInterval && (
+          <CascadingEndTimesBanner
+            cascadingEndTimeInterval={artwork.sale.cascadingEndTimeInterval}
+          />
+        )}
         <ArtworkMetaFragmentContainer artwork={artwork} />
 
         <ArtworkBannerFragmentContainer artwork={artwork} />
@@ -234,7 +238,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
     match: {
       location: { pathname, state },
     },
-  } = useContext(RouterContext)
+  } = useRouter()
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
   // Check to see if referrer comes from link interception.
@@ -283,6 +287,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         is_in_auction: isInAuction
         sale {
           internalID
+          cascadingEndTimeInterval
           slug
         }
         artists {
