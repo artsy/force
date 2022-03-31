@@ -71,6 +71,7 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
     >
       <Image
         {...rest}
+        title={undefined} // don't display a tooltip when hovering over the image
         style={{
           ...rest.style,
           transformOrigin: getTransformOrigin(positions),
