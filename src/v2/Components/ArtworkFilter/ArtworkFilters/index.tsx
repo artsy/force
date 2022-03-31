@@ -12,12 +12,6 @@ import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import {
-  useFeatureVariant,
-  useTrackVariantView,
-} from "v2/System/useFeatureFlag"
-import { useAnalyticsContext } from "v2/System"
-import { OwnerType } from "@artsy/cohesion"
 
 interface ArtworkFiltersProps {
   user?: User
