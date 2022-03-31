@@ -14,7 +14,7 @@ interface MagnifyImageProps extends ImageProps {
   scaleDuration?: number
 }
 
-const ENTER_TIMEOUT_DELAY = 200
+const ENTER_TIMEOUT_DELAY = 300
 const DEFAULT_SCALE = 1.75
 const DEFAULT_SCALE_DURATION = 0.15
 
@@ -75,7 +75,7 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
         style={{
           ...rest.style,
           transformOrigin: getTransformOrigin(positions),
-          transition: `transform ${scaleDuration}s ease-out`,
+          transition: `transform ${scaleDuration}s ease, transform-origin 100ms ease`,
           transform: zoomed ? `scale(${scale})` : `scale(1.0)`,
         }}
       />
