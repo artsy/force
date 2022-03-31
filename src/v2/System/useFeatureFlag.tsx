@@ -1,8 +1,8 @@
-import { useSystemContext, useTracking } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { Variant } from "unleash-client"
-
-import { useEffect } from "react"
-import { ActionType, OwnerType } from "@artsy/cohesion"
+import { ActionType } from "@artsy/cohesion"
+import { formatOwnerTypes } from "lib/getContextPage"
+import { useRouter } from "./Router/useRouter"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -15,10 +15,6 @@ interface VariantTrackingProperties {
   experimentName: string
   variantName: string
   payload?: string
-  contextOwnerType: OwnerType
-  contextOwnerId?: string
-  contextOwnerSlug?: string
-  shouldTrackExperiment?: boolean
 }
 
 export function useFeatureFlag(featureName: string): boolean | null {
@@ -55,36 +51,39 @@ export function useTrackVariantView({
   experimentName,
   variantName,
   payload,
-  contextOwnerType,
-  contextOwnerId,
-  contextOwnerSlug,
-  shouldTrackExperiment = true,
 }: VariantTrackingProperties) {
-  const { trackEvent } = useTracking()
+  const router = useRouter()
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const trackFeatureView = shouldTrack(experimentName, variantName)
+  const trackVariantView = () => {
+    // HACK: Temporary hack while we refactor useAnalyticsContext
+    // to update upon page navigation. Currently it requires a
+    // context provider to be manually added as a parent component,
+    // which doesn't support components used accross various pageTypes
+    const path = router.match.location.pathname
+    const pageParts = path.split("/")
+    const pageSlug = pageParts[2]
+    const pageType = formatOwnerTypes(path)
 
-      if (trackFeatureView && shouldTrackExperiment) {
-        trackEvent({
-          action: ActionType.experimentViewed,
-          service: "unleash",
-          experiment_name: experimentName,
-          variant_name: variantName,
-          payload,
-          context_owner_type: contextOwnerType,
-          context_owner_id: contextOwnerId,
-          context_owner_slug: contextOwnerSlug,
-        })
-      }
+    const trackFeatureView = shouldTrack(experimentName, variantName)
+
+    if (trackFeatureView) {
+      window?.analytics?.track(ActionType.experimentViewed, {
+        service: "unleash",
+        experiment_name: experimentName,
+        variant_name: variantName,
+        payload,
+        context_owner_type: pageType,
+        context_owner_slug: pageSlug,
+      })
     }
-  }, [])
+  }
+
+  return { trackVariantView }
 }
 
-function shouldTrack(featureName: string, variantName: string): boolean {
+export function shouldTrack(featureName: string, variantName: string): boolean {
   // Value to set and read from the experimentsViewed key in localStorage.
-  const experimentName = `${featureName}+${variantName}`
+  const experimentName = `${featureName}:${variantName}`
   const viewedExperiments = getExperimentsViewed()
 
   if (viewedExperiments.includes(experimentName)) {
