@@ -1,5 +1,6 @@
 import { Image as BaseImage, ImageProps, Box } from "@artsy/palette"
-import { useRef, useState } from "react"
+import { debounce } from "lodash"
+import { useRef, useState, useMemo } from "react"
 import styled from "styled-components"
 
 interface ArtworkImageProps extends ImageProps {
@@ -17,6 +18,7 @@ const defaultPositions: Positions = {
   x: null,
   y: null,
 }
+const MOUSE_ENTER_DEBOUNCE_TIME = 200
 
 export const ArtworkImage: React.FC<ArtworkImageProps> = ({
   shouldZoomOnHover,
@@ -34,12 +36,17 @@ const ZoomScrollImage: React.FC<ImageProps> = props => {
   const [positions, setPositions] = useState<Positions>(defaultPositions)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
-  const onMouseOver = () => {
-    setZoomed(true)
-  }
+  const onMouseOver = useMemo(
+    () =>
+      debounce(() => {
+        setZoomed(true)
+      }, MOUSE_ENTER_DEBOUNCE_TIME),
+    []
+  )
 
   const onMouseOut = () => {
     setZoomed(false)
+    onMouseOver.cancel()
   }
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
