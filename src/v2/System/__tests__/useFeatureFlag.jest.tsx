@@ -1,45 +1,47 @@
-import { useFeatureFlag, useFeatureVariant } from "../useFeatureFlag"
+import {
+  useFeatureFlag,
+  useFeatureVariant,
+  useTrackVariantView,
+  shouldTrack,
+} from "../useFeatureFlag"
 import { useSystemContext } from "v2/System/useSystemContext"
-import { useTracking } from "react-tracking"
 
 jest.mock("v2/System/useSystemContext")
-
-const mockUseSystemContext = useSystemContext as jest.Mock
-let mockFeatureFlags
-let trackEvent
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        pathname: "/artist/daniel-arsham",
+      },
+    },
+  }),
+}))
 
 beforeAll(() => {
-  trackEvent = jest.fn()
-  ;(useTracking as jest.Mock).mockImplementation(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => {
     return {
-      trackEvent,
-    }
-  })
-
-  mockFeatureFlags = {
-    featureFlags: {
-      "feature-a": {
-        flagEnabled: true,
-        variant: {
-          enabled: true,
-          name: "variant-a",
-          payload: {
-            type: "string",
-            value: "my payload",
+      featureFlags: {
+        "feature-a": {
+          flagEnabled: true,
+          variant: {
+            enabled: true,
+            name: "variant-a",
+            payload: {
+              type: "string",
+              value: "my payload",
+            },
+          },
+        },
+        "feature-b": {
+          flagEnabled: false,
+          variant: {
+            enabled: false,
+            name: "disabled",
           },
         },
       },
-      "feature-b": {
-        flagEnabled: false,
-        variant: {
-          enabled: false,
-          name: "disabled",
-        },
-      },
-    },
-  }
-
-  mockUseSystemContext.mockImplementation(() => mockFeatureFlags)
+    }
+  })
 })
 
 describe("useFeatureFlag", () => {
@@ -73,5 +75,58 @@ describe("useFeatureVariant", () => {
   it("returns false when the variant isn't present", () => {
     const variant = useFeatureVariant("feature-x")
     expect(variant).toBe(null)
+  })
+})
+
+describe("useTrackVariantView", () => {
+  const analytics = window.analytics
+
+  beforeEach(() => {
+    window.analytics = {
+      track: jest.fn(),
+    } as any
+  })
+
+  afterEach(() => {
+    window.localStorage.clear()
+    window.analytics = analytics
+  })
+
+  it("calls the tracking function with the correct payload", () => {
+    const { trackVariantView } = useTrackVariantView({
+      experimentName: "cool-experiment",
+      variantName: "experiment",
+    })
+
+    trackVariantView()
+
+    expect(window?.analytics?.track).toHaveBeenLastCalledWith(
+      "experimentViewed",
+      {
+        context_owner_slug: "daniel-arsham",
+        context_owner_type: "artist",
+        experiment_name: "cool-experiment",
+        payload: undefined,
+        service: "unleash",
+        variant_name: "experiment",
+      }
+    )
+  })
+})
+
+describe("shouldTrack", () => {
+  afterEach(() => {
+    window.localStorage.clear()
+  })
+
+  it("returns true if the experiment has not been viewed", () => {
+    const track = shouldTrack("coolFeature", "variantName")
+    expect(track).toEqual(true)
+  })
+
+  it("returns false if the experiment has been viewed", () => {
+    shouldTrack("coolFeature", "variantName")
+    const track = shouldTrack("coolFeature", "variantName")
+    expect(track).toEqual(false)
   })
 })
