@@ -85,6 +85,7 @@ fragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {
   currentBid {
     display
   }
+  formattedEndDateTime
   artwork {
     internalID
     date
@@ -325,6 +326,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "formattedEndDateTime",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "Artwork",
                 "kind": "LinkedField",
                 "name": "artwork",
@@ -551,7 +559,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c15d7509e093e86989ff2aee9ae5a221",
+    "cacheID": "a15223260af92c38a35a19016265f1e1",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -607,6 +615,7 @@ return {
           "type": "SaleArtworkCurrentBid"
         },
         "artwork.saleArtwork.currentBid.display": (v8/*: any*/),
+        "artwork.saleArtwork.formattedEndDateTime": (v8/*: any*/),
         "artwork.saleArtwork.id": (v7/*: any*/),
         "artwork.saleArtwork.increments": {
           "enumValues": null,
@@ -651,7 +660,7 @@ return {
     },
     "name": "AuctionBidRouteTestQuery",
     "operationKind": "query",
-    "text": "query AuctionBidRouteTestQuery {\n  artwork(id: \"foo\") {\n    ...AuctionBidRoute_artwork\n    id\n  }\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionBidRoute_sale\n    id\n  }\n}\n\nfragment AuctionBidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork_1WWOz5\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment AuctionBidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query AuctionBidRouteTestQuery {\n  artwork(id: \"foo\") {\n    ...AuctionBidRoute_artwork\n    id\n  }\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionBidRoute_sale\n    id\n  }\n}\n\nfragment AuctionBidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork_1WWOz5\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment AuctionBidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
   }
 };
 })();

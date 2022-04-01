@@ -14,7 +14,6 @@ import { getMobileAuthLink } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { getENV } from "v2/Utils/getENV"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me | null
@@ -34,7 +33,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       },
       {
         text: "Alerts",
-        href: "/user/alerts",
+        href: "/settings/alerts",
       },
       {
         text: "Saves & Follows",
@@ -70,13 +69,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         },
       },
     ],
-  }
-
-  // TODO: Remove it when ENABLE_YOUR_ALERTS_PAGE flag is released
-  if (!getENV("ENABLE_YOUR_ALERTS_PAGE")) {
-    menu.links = menu.links.filter(link => {
-      return link.text !== "Alerts"
-    })
   }
 
   const conversationCount =

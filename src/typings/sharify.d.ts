@@ -31,7 +31,6 @@ declare module "sharify" {
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
-      readonly ENABLE_YOUR_ALERTS_PAGE: boolean
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
       readonly FEATURE_FLAGS: any
@@ -58,7 +57,7 @@ declare module "sharify" {
       readonly VOLLEY_ENDPOINT: string
       readonly WEBFONT_URL: string
       readonly XAPP_TOKEN: string
-      readonly GOOGLE_MAPS_API_KEY: string
+      readonly PUBLIC_GOOGLE_MAPS_API_KEY: string
       readonly ZENDESK_KEY: string
       readonly AUCTION_ZENDESK_KEY: string
 

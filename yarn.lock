@@ -25,10 +25,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.60.0.tgz#854db37b9f8643ed650f3cc9d14234a1b762fcc8"
   integrity sha512-GBfa0/AoiLtG/Mw0VBR0vCiEj1s8+eBMTtKSLQS82iFo41Z84Li8M0YrlHAmXUrK3oBOO/YvhVNFE40avgK8xQ==
 
-"@artsy/cohesion@4.40.0":
-  version "4.40.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.40.0.tgz#c34029ce48ee527183bd23f170f8b8c143286554"
-  integrity sha512-RxmUsrVSojMDL/58lWINlqtdIgs3vI3XUpQsFGVd01WsyBkzpRN/PMi1yARivBjZdKapT5ks4NL1S/YVke0xiQ==
+"@artsy/cohesion@4.43.0":
+  version "4.43.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.43.0.tgz#9089ceec64bea8d5fcf7d8a80f26de8ab3e92071"
+  integrity sha512-qN7XLVOXtoxRaRTfTNuAKNtb6uas2UprTXNa74Yh6mBxluxVCEz7rWjRvqwDA363D8+WZg8x2se1ntTjBCiWxg==
   dependencies:
     core-js "3"
 
@@ -77,12 +77,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@18.1.4":
-  version "18.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-18.1.4.tgz#d8c0463359bdb718aae445afcc27b6e54eadb93b"
-  integrity sha512-TJuG86/np/l4jF0BDgNlstax6J86WNrqtWPOYpRcvGI6Hk5fokPyWvFB0oRgrENYgYN+NUBXhgNXpIzeA26h3Q==
+"@artsy/palette-charts@18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-18.3.0.tgz#3ad8d842f9fd43f2fa4d213d46f3cef68672705f"
+  integrity sha512-1K4WXJmJa6RIopIbu0nPzzTfKgCwbzdCwlk5gW6OGZR7+eYGpgrBGlUGd0QicF8KpHYo3esfGKdeQUIWerf/kg==
   dependencies:
-    "@artsy/palette" "^19.1.4"
+    "@artsy/palette" "^19.3.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -94,10 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@19.1.4", "@artsy/palette@^19.1.4":
-  version "19.1.4"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.1.4.tgz#05c8994c1d002e28e018caa35a25b5e42164faa7"
-  integrity sha512-sIyuu3epCb2K+i27oTmw8Bt387NrLXZGsMo/sD6SLZZuiMB/ftb3QFPQDWidSj/B8WGFPXXOhR4ZbCE8BMaJ/Q==
+"@artsy/palette@19.3.0", "@artsy/palette@^19.3.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.3.0.tgz#757be88a9ee334c10944555d45ea526b715758d3"
+  integrity sha512-gZnFYWPNA8IHcVWGnWnAnjW5+RZZgO/gWQeRPd2KvCf1n4dJicAcKYjQUgkia2ZIKCVBvYEEe2/wksW0gYRFlw==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -3279,17 +3279,17 @@
     resolve-from "^5.0.0"
     store2 "^2.12.0"
 
-"@stripe/react-stripe-js@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.1.2.tgz#a7f5ef5b4d7dc7fa723501b706644414cfe6dcba"
-  integrity sha512-07hu8RJXwWKGbvdvd1yt1cYvGtDB8jFX+q10f7FQuItUt9rlSo0am3WIx845iMHANiYgxyRb1PS201Yle9xxPQ==
+"@stripe/react-stripe-js@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.7.0.tgz#83c993a09a903703205d556617f9729784a896c3"
+  integrity sha512-L20v8Jq0TDZFL2+y+uXD751t6q9SalSFkSYZpmZ2VWrGZGK7HAGfRQ804dzYSSr5fGenW6iz6y7U0YKfC/TK3g==
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.11.0.tgz#00e812d72a7760dae08237875066d263671478ee"
-  integrity sha512-SDNZKuETBEVkernd1tq8tL6wNfVKrl24Txs3p+4NYxoaIbNaEO7mrln/2Y/WRcQBWjagvhDIM5I6+X1rfK0qhQ==
+"@stripe/stripe-js@^1.25.0":
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.25.0.tgz#74334e3f9971e8dfd352a67581c6e02dc5c2ebf8"
+  integrity sha512-cywIoKu3sJnBPQ1eKi3BzFHWslA2ePqHvQhcxp7iYYlo1tWcVgEKTSh7y7hb6GoR4TyT3DwlK4v1vOZpVg8u4Q==
 
 "@styled-system/background@^5.1.2":
   version "5.1.2"

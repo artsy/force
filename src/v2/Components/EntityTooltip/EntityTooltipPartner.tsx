@@ -1,7 +1,6 @@
 import { FC } from "react"
 import {
   Box,
-  EntityHeader,
   Image,
   Skeleton,
   SkeletonBox,
@@ -12,18 +11,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { EntityTooltipPartnerQuery } from "v2/__generated__/EntityTooltipPartnerQuery.graphql"
 import { EntityTooltipPartner_partner } from "v2/__generated__/EntityTooltipPartner_partner.graphql"
-import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
-import { useSystemContext } from "v2/System"
-import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 
 interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner
 }
 
 const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
-  const { user } = useSystemContext()
-
   const bio = partner.profile?.fullBio || partner.profile?.bio
   const image = partner.profile?.image?.cropped
 
@@ -43,21 +38,10 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
         </RouterLink>
       )}
 
-      <EntityHeader
-        name={partner.name ?? "Unknown"}
-        href={partner.href!}
-        smallVariant
-        FollowButton={
-          <FollowProfileButtonFragmentContainer
-            contextModule={ContextModule.partnerHeader}
-            user={user}
-            profile={partner.profile!}
-            buttonProps={{
-              size: "small",
-              variant: "secondaryOutline",
-            }}
-          />
-        }
+      <EntityHeaderPartnerFragmentContainer
+        partner={partner}
+        displayAvatar={false}
+        alignItems="flex-start"
       />
 
       {bio && (
@@ -81,10 +65,9 @@ const EntityTooltipPartnerFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment EntityTooltipPartner_partner on Partner {
-        name
+        ...EntityHeaderPartner_partner
         href
         profile {
-          ...FollowProfileButton_profile
           bio
           fullBio
           image {

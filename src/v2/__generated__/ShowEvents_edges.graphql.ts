@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowEvents_edges = ReadonlyArray<{
     readonly node: {
         readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
+        readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
     } | null;
     readonly " $refType": "ShowEvents_edges";
 }>;
@@ -45,7 +45,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ShowCard_show"
+          "name": "CellShow_show"
         }
       ],
       "storageKey": null
@@ -54,5 +54,5 @@ const node: ReaderFragment = {
   "type": "ShowEdge",
   "abstractKey": null
 };
-(node as any).hash = '58326af14db11ca1886a69e4b8fb89dc';
+(node as any).hash = '3d9ebca4ccbc4133b6c1950fe311d8ca';
 export default node;

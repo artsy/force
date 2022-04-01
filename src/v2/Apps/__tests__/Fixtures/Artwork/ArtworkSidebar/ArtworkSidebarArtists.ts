@@ -1,6 +1,4 @@
-import { ArtworkSidebarArtists_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarArtists_Test_Query.graphql"
-
-export const SingleFollowedArtist: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = {
+export const SingleFollowedArtist = {
   id: "opaque-artwork-id",
   artists: [
     {
@@ -35,7 +33,7 @@ export const SingleNonFollowedArtist = {
   cultural_maker: "American 18th Century",
 }
 
-export const MultipleArtists: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = {
+export const MultipleArtists = {
   id: "opaque-artwork-id",
   artists: [
     {
@@ -66,7 +64,7 @@ export const MultipleArtists: ArtworkSidebarArtists_Test_QueryRawResponse["artwo
   cultural_maker: "American 18th Century",
 }
 
-export const CulturalMakerWork: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = {
+export const CulturalMakerWork = {
   id: "opaque-artwork-id",
   artists: [],
   cultural_maker: "American 18th Century",

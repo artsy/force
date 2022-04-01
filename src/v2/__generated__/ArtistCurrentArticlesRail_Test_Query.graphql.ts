@@ -26,29 +26,37 @@ query ArtistCurrentArticlesRail_Test_Query {
 }
 
 fragment ArtistCurrentArticlesRail_artist on Artist {
+  internalID
+  name
+  slug
   articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
     edges {
       node {
+        ...CellArticle_article
         internalID
         slug
         href
-        thumbnailTitle
-        publishedAt(format: "MMM Do, YYYY")
-        thumbnailImage {
-          cropped(width: 325, height: 230) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
         id
       }
     }
   }
-  internalID
-  name
-  slug
+}
+
+fragment CellArticle_article on Article {
+  vertical
+  title
+  thumbnailTitle
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
+  thumbnailImage {
+    cropped(width: 445, height: 334) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
 }
 */
 
@@ -146,6 +154,15 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": [
@@ -186,13 +203,18 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
-                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "href",
+                        "name": "vertical",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
                         "storageKey": null
                       },
                       {
@@ -204,16 +226,30 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
                             "name": "format",
-                            "value": "MMM Do, YYYY"
+                            "value": "MMM D, YYYY"
                           }
                         ],
                         "kind": "ScalarField",
                         "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -229,12 +265,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 230
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 325
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -271,11 +307,13 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:230,width:325)"
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
                       },
+                      (v1/*: any*/),
+                      (v2/*: any*/),
                       (v3/*: any*/)
                     ],
                     "storageKey": null
@@ -286,15 +324,6 @@ return {
             ],
             "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          (v2/*: any*/),
           (v3/*: any*/)
         ],
         "storageKey": "artist(id:\"test\")"
@@ -302,7 +331,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d1dd826dff83de2467027b30ba325afb",
+    "cacheID": "5e6dc751569d4a76207d7063bfad2be7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -330,6 +359,7 @@ return {
           "plural": false,
           "type": "Article"
         },
+        "artist.articlesConnection.edges.node.byline": (v4/*: any*/),
         "artist.articlesConnection.edges.node.href": (v4/*: any*/),
         "artist.articlesConnection.edges.node.id": (v5/*: any*/),
         "artist.articlesConnection.edges.node.internalID": (v5/*: any*/),
@@ -352,6 +382,8 @@ return {
         "artist.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v7/*: any*/),
         "artist.articlesConnection.edges.node.thumbnailImage.cropped.width": (v6/*: any*/),
         "artist.articlesConnection.edges.node.thumbnailTitle": (v4/*: any*/),
+        "artist.articlesConnection.edges.node.title": (v4/*: any*/),
+        "artist.articlesConnection.edges.node.vertical": (v4/*: any*/),
         "artist.id": (v5/*: any*/),
         "artist.internalID": (v5/*: any*/),
         "artist.name": (v4/*: any*/),
@@ -360,7 +392,7 @@ return {
     },
     "name": "ArtistCurrentArticlesRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n"
+    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

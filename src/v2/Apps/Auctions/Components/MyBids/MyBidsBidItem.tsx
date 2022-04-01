@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBidsBidItem_saleArtwork } from "v2/__generated__/MyBidsBidItem_saleArtwork.graphql"
 import {
@@ -30,10 +30,11 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
   const { contextPageOwnerType } = useAnalyticsContext()
 
   const contextModule = tabTypeToContextModuleMap.myBids
-  const image = saleArtwork.artwork?.image?.resized
+  const image = saleArtwork.artwork?.image?.cropped
 
   return (
     <RouterLink
+      display="block"
       to={`/artwork/${saleArtwork.slug}`}
       noUnderline
       onClick={() => {
@@ -54,8 +55,8 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
             <Image
               src={image.src}
               srcSet={image.srcSet}
-              width={55}
-              height={55}
+              width={image.width}
+              height={image.height}
               lazyLoad
             />
           )}
@@ -143,9 +144,11 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         artwork {
           artistNames
           image {
-            resized(width: 55, height: 55) {
+            cropped(width: 55, height: 55) {
               src
               srcSet
+              width
+              height
             }
           }
         }

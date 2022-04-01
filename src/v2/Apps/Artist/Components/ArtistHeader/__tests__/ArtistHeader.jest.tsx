@@ -6,10 +6,10 @@ import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-
 jest.mock("v2/Components/SelectedCareerAchievements", () => ({
   SelectedCareerAchievementsFragmentContainer: () => null,
 }))
+jest.mock("react-head", () => ({ Link: () => null }))
 
 describe("ArtistHeader", () => {
   const { getWrapper } = setupTestWrapper<ArtistHeader_Test_Query>({

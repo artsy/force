@@ -1056,6 +1056,8 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               is_inquireable: true,
               is_saved: false,
               is_biddable: false,
+              attributionClass: null,
+              mediumType: null,
             },
           },
           {
@@ -1103,6 +1105,8 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
               is_inquireable: true,
               is_saved: false,
               is_biddable: false,
+              attributionClass: null,
+              mediumType: null,
             },
           },
         ],

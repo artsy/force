@@ -28,6 +28,7 @@ query AuctionDetailsTestQuery {
 fragment AuctionDetails_sale on Sale {
   ...RegisterButton_sale
   ...AuctionInfoSidebar_sale
+  ...SaleDetailTimer_sale
   internalID
   name
   slug
@@ -37,6 +38,7 @@ fragment AuctionDetails_sale on Sale {
   description(format: HTML)
   href
   isClosed
+  cascadingEndTimeInterval
 }
 
 fragment AuctionInfoSidebar_sale on Sale {
@@ -61,6 +63,12 @@ fragment RegisterButton_sale on Sale {
   }
   slug
   status
+}
+
+fragment SaleDetailTimer_sale on Sale {
+  endAt
+  endedAt
+  startAt
 }
 */
 
@@ -253,12 +261,18 @@ return {
             "name": "liveStartAt",
             "storageKey": null
           },
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "endAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "endedAt",
             "storageKey": null
           },
           {
@@ -268,11 +282,12 @@ return {
             "name": "startAt",
             "storageKey": null
           },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "endAt",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -295,6 +310,13 @@ return {
             "name": "href",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "cascadingEndTimeInterval",
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": "sale(id:\"foo\")"
@@ -302,7 +324,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "644d85f953043a2d9dc4496ca4bbe2ed",
+    "cacheID": "be7843a591e11c501ccb41657a9e6375",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -315,8 +337,15 @@ return {
         "sale.bidder": (v3/*: any*/),
         "sale.bidder.id": (v4/*: any*/),
         "sale.bidder.qualifiedForBidding": (v5/*: any*/),
+        "sale.cascadingEndTimeInterval": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
         "sale.description": (v6/*: any*/),
         "sale.endAt": (v6/*: any*/),
+        "sale.endedAt": (v6/*: any*/),
         "sale.href": (v6/*: any*/),
         "sale.id": (v4/*: any*/),
         "sale.internalID": (v4/*: any*/),
@@ -339,7 +368,7 @@ return {
     },
     "name": "AuctionDetailsTestQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
+    "text": "query AuctionDetailsTestQuery {\n  sale(id: \"foo\") {\n    ...AuctionDetails_sale\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeInterval\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n"
   }
 };
 })();

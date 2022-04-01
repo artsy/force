@@ -30,7 +30,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   artistIDs
   href
   labels {
-    value
+    displayValue
   }
   userAlertSettings {
     name
@@ -161,7 +161,7 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "value",
+                            "name": "displayValue",
                             "storageKey": null
                           }
                         ],
@@ -255,12 +255,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "edef56ac652009431ab6a9970228a302",
+    "cacheID": "ffca519e9ae22f6baba8464769468785",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    value\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

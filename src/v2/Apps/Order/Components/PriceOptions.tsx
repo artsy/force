@@ -85,9 +85,9 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     )
 
     const getRangeDetails = [
-      { value: minPriceRange, description: "Low-end of range" },
-      { value: midPriceRange, description: "Midpoint" },
       { value: maxPriceRange, description: "Top-end of range" },
+      { value: midPriceRange, description: "Midpoint" },
+      { value: minPriceRange, description: "Low-end of range" },
     ]
     return getRangeDetails.map((rangePrice, idx) => ({
       key: `price-option-${idx}`,
@@ -97,12 +97,15 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }
 
   const getPercentageOptions = () => {
-    return [0.2, 0.15, 0.1].map((pricePercentage, idx) => {
+    return [0, 0.1, 0.2].map((pricePercentage, idx) => {
       if (listPrice?.major) {
         return {
           key: `price-option-${idx}`,
           value: Math.round(listPrice.major * (1 - pricePercentage)),
-          description: `${pricePercentage * 100}% below the list price`,
+          description:
+            pricePercentage !== 0
+              ? `${pricePercentage * 100}% below the list price`
+              : "List price",
         }
       }
       return
@@ -112,16 +115,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const priceOptions = artwork?.isPriceRange
     ? getRangeOptions()
     : getPercentageOptions()
-  const minPrice = priceOptions[0]?.value!
-
-  const selectMinPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    trackClick("We recommend changing your offer", minPrice)
-    setSelectedRadio("price-option-0")
-    setToggle(false)
-    setCustomValue(undefined)
-    onChange(minPrice)
-  }
+  const minPrice = priceOptions[2]?.value!
 
   const { scrollTo } = useScrollTo({
     selectorOrRef: "#scrollTo--price-option-custom",
@@ -175,7 +169,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                 {(!customValue || customValue < minPrice) && (
                   <MinPriceWarning
                     isPriceRange={!!artwork?.isPriceRange}
-                    onClick={selectMinPrice}
                     minPrice={asCurrency(minPrice) as string}
                     orderID={order.internalID}
                   />

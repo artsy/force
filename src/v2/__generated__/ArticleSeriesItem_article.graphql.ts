@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSeriesItem_article = {
     readonly href: string | null;
+    readonly vertical: string | null;
     readonly title: string | null;
     readonly thumbnailTitle: string | null;
     readonly byline: string | null;
@@ -20,6 +21,9 @@ export type ArticleSeriesItem_article = {
     readonly media: {
         readonly duration: string | null;
     } | null;
+    readonly seriesArticle: {
+        readonly title: string | null;
+    } | null;
     readonly " $refType": "ArticleSeriesItem_article";
 };
 export type ArticleSeriesItem_article$data = ArticleSeriesItem_article;
@@ -30,7 +34,15 @@ export type ArticleSeriesItem_article$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -47,9 +59,10 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "vertical",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -148,10 +161,23 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Article",
+      "kind": "LinkedField",
+      "name": "seriesArticle",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '9b3e980e91c235489cef08317a09d083';
+})();
+(node as any).hash = '16a4037c1b10f7ead04149b6cf7233cc';
 export default node;

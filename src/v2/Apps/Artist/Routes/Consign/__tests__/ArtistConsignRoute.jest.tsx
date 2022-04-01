@@ -326,6 +326,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 sale_message: null,
                 slug: "alex-katz-luna-park-2-maravell-67-schroder-68",
                 title: "Luna Park 2 (Maravell 67; Schröder 68)",
+                attributionClass: null,
+                mediumType: null,
               },
             },
             {
@@ -372,6 +374,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 sale_message: "$11,000",
                 slug: "alex-katz-rose-bud-30",
                 title: "Rose Bud",
+                attributionClass: null,
+                mediumType: null,
               },
             },
             {
@@ -445,6 +449,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 slug:
                   "alex-katz-fog-and-night-from-the-northern-landscapes-series",
                 title: "Fog and Night from the Northern Landscapes series",
+                attributionClass: null,
+                mediumType: null,
               },
             },
             {
@@ -491,6 +497,8 @@ const ConsignRouteFixture: ArtistConsignRoute_Test_QueryRawResponse = {
                 sale_message: "$7,500",
                 slug: "alex-katz-laura-1-49",
                 title: "Laura 1",
+                attributionClass: null,
+                mediumType: null,
               },
             },
           ],

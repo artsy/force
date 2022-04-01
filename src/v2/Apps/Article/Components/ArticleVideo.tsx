@@ -27,6 +27,7 @@ import { ArticleVideo_article } from "v2/__generated__/ArticleVideo_article.grap
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
+import { ArticleHTML } from "./ArticleHTML"
 
 interface ArticleVideoProps {
   article: ArticleVideo_article
@@ -100,7 +101,6 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
                             textTransform="uppercase"
                             display="flex"
                             color="white100"
-                            mb={0.5}
                           >
                             {article.seriesArticle && (
                               <Box mr={2}>{article.seriesArticle.title}</Box>
@@ -167,7 +167,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
               About the Film
             </Text>
 
-            <HTML variant="sm" html={article.media.description} />
+            <ArticleHTML>{article.media.description}</ArticleHTML>
           </Column>
         )}
 

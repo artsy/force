@@ -25,6 +25,9 @@ jest.mock("../../Components/PartnersFilteredCells", () => ({
   PartnersFilteredCellsQueryRenderer: () =>
     "PartnersFilteredCellsQueryRenderer",
 }))
+jest.mock("v2/Utils/Hooks/useStableShuffle", () => ({
+  useStableShuffle: ({ items }) => ({ shuffled: items }),
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<
   InstitutionsRouteFragmentContainer_Test_Query

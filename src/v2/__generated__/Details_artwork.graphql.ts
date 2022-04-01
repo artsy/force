@@ -41,6 +41,7 @@ export type Details_artwork = {
             readonly display: string | null;
         } | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"HoverDetails_artwork">;
     readonly " $refType": "Details_artwork";
 };
 export type Details_artwork$data = Details_artwork;
@@ -267,11 +268,16 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "HoverDetails_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '846097a55242d32d80ea7f4a99ff4316';
+(node as any).hash = 'b29ea4fba3a1a6acb469b0e30ac82ad2';
 export default node;

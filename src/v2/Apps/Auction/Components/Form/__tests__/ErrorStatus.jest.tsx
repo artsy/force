@@ -69,6 +69,12 @@ describe("ErrorStatus", () => {
       expect(wrapper.text()).toContain("Sale Closed")
     })
 
+    it("LOT_CLOSED", () => {
+      status = "LOT_CLOSED"
+      const wrapper = getWrapper()
+      expect(wrapper.text()).toContain("Lot Closed")
+    })
+
     it("ERROR", () => {
       status = "ERROR"
       const wrapper = getWrapper()

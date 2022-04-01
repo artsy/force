@@ -16,12 +16,12 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
   return (
     <>
       {items.map(item => {
-        const key = `filter-label-${item.name}`
+        const key = `filter-label-${item.value}`
 
         if (item.isDefault) {
           return (
             <DefaultPill key={key} variant="textSquare" mx={0.5} mb={1}>
-              {item.displayName}
+              {item.displayValue}
             </DefaultPill>
           )
         }
@@ -34,7 +34,7 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
             mb={1}
             onClick={() => onDeletePress(item)}
           >
-            {item.displayName}
+            {item.displayValue}
             <CloseIcon
               fill="currentColor"
               width={CLOSE_ICON_SIZE}

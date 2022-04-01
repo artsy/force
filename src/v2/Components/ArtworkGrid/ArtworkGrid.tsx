@@ -178,7 +178,7 @@ export class ArtworkGridContainer extends React.Component<
       <GridColumns width="100%">
         {nodes.map(artwork => {
           return (
-            <Column span={[6, 4]} key={artwork.internalID}>
+            <Column span={[6, 4]} key={artwork.internalID} minWidth={0}>
               <FlatGridItemFragmentContainer artwork={artwork} />
             </Column>
           )

@@ -79,14 +79,10 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
         initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
         onSubmit={async (values, actions) => {
           try {
-            // TODO: Refactor mutation in Metaphysics so that we don't have to send
-            // id, channel, or status (Gravity doesn't care about them)
             const subscriptionGroups = Object.entries(values).map(
               ([key, value]) => {
                 return {
-                  id: "",
                   name: snakeCase(key),
-                  channel: "email",
                   status: (value
                     ? "SUBSCRIBED"
                     : "UNSUBSCRIBED") as SubGroupStatus,
@@ -104,7 +100,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
 
             sendToast({
               variant: "success",
-              message: "Preferences updated sucessfully.",
+              message: "Preferences updated successfully.",
             })
           } catch (error) {
             console.error(error)
@@ -310,9 +306,7 @@ export const PreferencesAppFragmentContainer = createFragmentContainer(
       fragment PreferencesApp_viewer on Viewer
         @argumentDefinitions(authenticationToken: { type: "String" }) {
         notificationPreferences(authenticationToken: $authenticationToken) {
-          id
           name
-          channel
           status
         }
       }

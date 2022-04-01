@@ -202,6 +202,7 @@ describe("AuctionActiveBids", () => {
       SaleArtwork: () => ({
         slug: "sale-artwork-slug",
         saleID: "saleID",
+        endedAt: null,
       }),
     })
 
@@ -231,6 +232,7 @@ describe("AuctionActiveBids", () => {
       SaleArtwork: () => ({
         slug: "sale-artwork-slug",
         saleID: "saleID",
+        endedAt: null,
       }),
     })
 

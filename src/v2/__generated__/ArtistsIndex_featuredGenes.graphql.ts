@@ -12,7 +12,7 @@ export type ArtistsIndex_featuredGenes = ReadonlyArray<{
         readonly href?: string | null;
         readonly trendingArtists?: ReadonlyArray<{
             readonly internalID: string;
-            readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
+            readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
         } | null> | null;
     } | null> | null;
     readonly " $refType": "ArtistsIndex_featuredGenes";
@@ -87,7 +87,7 @@ return {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArtistsArtistCard_artist"
+                  "name": "CellArtist_artist"
                 }
               ],
               "storageKey": "trendingArtists(sample:4)"
@@ -104,5 +104,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '64b07efb8dc9cb2ad5f98213e6216081';
+(node as any).hash = 'ba3c9a816ff34b7dc7fef04365df621a';
 export default node;
