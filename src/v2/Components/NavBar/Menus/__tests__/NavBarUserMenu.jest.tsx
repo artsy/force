@@ -29,6 +29,7 @@ describe("NavBarUserMenu", () => {
     expect(links.map(a => [a.prop("href"), a.text()])).toEqual([
       // Label also includes SVG image title
       ["/settings/purchases", "Pending Order History"],
+      ["/settings/alerts", "Watch lot Alerts"],
       ["/settings/saves", "Save Saves & Follows"],
       ["/settings/edit-profile", "User Collector Profile"],
       ["/settings/edit-settings", "Settings Settings"],
