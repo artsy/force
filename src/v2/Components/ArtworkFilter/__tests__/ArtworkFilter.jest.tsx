@@ -33,6 +33,13 @@ const savedSearchEntity: SavedSearchEntity = {
     name: "Owner Name",
   },
 }
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: { query: {}, pathname: "" },
+    },
+  }),
+}))
 
 describe("ArtworkFilter", () => {
   const onFilterClick = jest.fn()
