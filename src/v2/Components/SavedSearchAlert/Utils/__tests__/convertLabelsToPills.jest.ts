@@ -5,26 +5,28 @@ describe("convertLabelsToPills", () => {
     const result = convertLabelsToPills([
       {
         field: "attributionClass",
-        label: "Unknown edition",
+        displayValue: "Unknown edition",
         value: "unknown edition",
       },
       {
         field: "additionalGeneIDs",
-        label: "Photography",
+        displayValue: "Photography",
         value: "photography",
       },
     ])
 
     expect(result).toEqual([
       {
-        filterName: "attributionClass",
-        name: "unknown edition",
-        displayName: "Unknown edition",
+        isDefault: false,
+        field: "attributionClass",
+        value: "unknown edition",
+        displayValue: "Unknown edition",
       },
       {
-        filterName: "additionalGeneIDs",
-        name: "photography",
-        displayName: "Photography",
+        isDefault: false,
+        field: "additionalGeneIDs",
+        value: "photography",
+        displayValue: "Photography",
       },
     ])
   })
@@ -33,17 +35,17 @@ describe("convertLabelsToPills", () => {
     const result = convertLabelsToPills([
       {
         field: "artistIDs",
-        label: "Banksy",
+        displayValue: "Banksy",
         value: "4dd1584de0091e000100207c", // pragma: allowlist secret
       },
       {
         field: "artistIDs",
-        label: "KAWS",
+        displayValue: "KAWS",
         value: "4e934002e340fa0001005336", // pragma: allowlist secret
       },
       {
         field: "sizes",
-        label: "Medium (40 – 100cm)",
+        displayValue: "Medium (40 – 100cm)",
         value: "MEDIUM",
       },
     ])
@@ -51,18 +53,21 @@ describe("convertLabelsToPills", () => {
     expect(result).toEqual([
       {
         isDefault: true,
-        name: "4dd1584de0091e000100207c", // pragma: allowlist secret
-        displayName: "Banksy",
+        field: "artistIDs",
+        value: "4dd1584de0091e000100207c", // pragma: allowlist secret
+        displayValue: "Banksy",
       },
       {
         isDefault: true,
-        name: "4e934002e340fa0001005336", // pragma: allowlist secret
-        displayName: "KAWS",
+        field: "artistIDs",
+        value: "4e934002e340fa0001005336", // pragma: allowlist secret
+        displayValue: "KAWS",
       },
       {
-        filterName: "sizes",
-        name: "MEDIUM",
-        displayName: "Medium (40 – 100cm)",
+        isDefault: false,
+        field: "sizes",
+        value: "MEDIUM",
+        displayValue: "Medium (40 – 100cm)",
       },
     ])
   })

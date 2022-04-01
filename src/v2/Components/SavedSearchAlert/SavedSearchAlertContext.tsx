@@ -84,13 +84,12 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
       return
     }
 
-    setPills(prevPills =>
-      prevPills!.filter(currentPill => currentPill.name !== pill.name)
+    const updatedPills = pills?.filter(
+      currentPill => currentPill.value !== pill.value
     )
-    removeCriteriaValue(
-      pill.filterName as SearchCriteriaAttributeKeys,
-      pill.name
-    )
+
+    setPills(updatedPills)
+    removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
   const contextValue: SavedSearchAlertContextProps = {
