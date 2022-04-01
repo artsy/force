@@ -29,7 +29,7 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
   const { match } = useRouter()
 
-  const isArtistPage = match.location.pathname.includes("/artist")
+  const isArtistPage = match.location.pathname.includes("/artist/")
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
