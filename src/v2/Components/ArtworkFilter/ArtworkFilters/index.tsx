@@ -16,8 +16,8 @@ import {
   useFeatureVariant,
   useTrackVariantView,
 } from "v2/System/useFeatureFlag"
-import { OwnerType } from "@artsy/cohesion"
-import { getContextPageFromClient } from "lib/getContextPage"
+import { useEffect } from "react"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -27,25 +27,22 @@ interface ArtworkFiltersProps {
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
-  let currentPage
+  const { match } = useRouter()
 
-  // HACK: This logic should not be replicated for other experiments and is being
-  // accepted as part of this initial trivial Unleash test.
-  if (typeof window !== "undefined") {
-    const { pageType } = getContextPageFromClient()
-    currentPage = pageType
-  }
-
-  const isArtistPage = currentPage === OwnerType.artist
+  const isArtistPage = match.location.pathname.includes("/artist")
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
-  useTrackVariantView({
+  const { trackVariantView } = useTrackVariantView({
     experimentName: "filters-expanded-experiment",
     variantName: variant?.name!,
-    contextOwnerType: currentPage!,
-    shouldTrackExperiment: isArtistPage,
   })
+
+  useEffect(() => {
+    if (isArtistPage) {
+      trackVariantView()
+    }
+  }, [isArtistPage, trackVariantView])
 
   const isExpanded =
     isArtistPage && variant?.name === "experiment" && !!variant?.enabled
