@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Image as BaseImage, Box } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,6 +11,7 @@ import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
+import { ArtworkImage } from "./ArtworkImage"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -32,7 +33,12 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
-  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+  const {
+    isHovered,
+    isHoverEffectEnabled,
+    onMouseEnter,
+    onMouseLeave,
+  } = useHoverMetadata()
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -83,13 +89,14 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
         >
-          <Image
+          <ArtworkImage
             title={artwork.title ?? undefined}
             alt={artwork.image_title ?? ""}
             src={src}
             srcSet={srcSet}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
+            shouldZoomOnHover={!!isHoverEffectEnabled}
           />
         </Link>
 
@@ -119,12 +126,6 @@ const Link = styled(RouterLink)`
   right: 0;
   bottom: 0;
   left: 0;
-`
-
-const Image = styled(BaseImage)`
-  display: block;
-  width: 100%;
-  height: 100%;
 `
 
 export const ArtworkGridItemFragmentContainer = createFragmentContainer(
