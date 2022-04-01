@@ -66,15 +66,13 @@ export const NavBarUserMenu: React.FC = () => {
         <ReceiptIcon mr={1} aria-hidden="true" /> Order History
       </NavBarMenuItemLink>
 
-      {getENV("ENABLE_YOUR_ALERTS_PAGE") && (
-        <NavBarMenuItemLink
-          aria-label="View your alerts"
-          to="/settings/alerts"
-          onClick={trackClick}
-        >
-          <BellIcon mr={1} aria-hidden="true" /> Alerts
-        </NavBarMenuItemLink>
-      )}
+      <NavBarMenuItemLink
+        aria-label="View your alerts"
+        to="/settings/alerts"
+        onClick={trackClick}
+      >
+        <BellIcon mr={1} aria-hidden="true" /> Alerts
+      </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
         aria-label="View your Saves &amp; Follows"
