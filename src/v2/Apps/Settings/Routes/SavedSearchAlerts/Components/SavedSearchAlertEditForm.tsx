@@ -398,11 +398,6 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
     "force-fetch-alert-labels-from-metaphysics"
   )
 
-  console.log(
-    "[debug] shouldFetchLabelsFromMetaphysics",
-    shouldFetchLabelsFromMetaphysics
-  )
-
   return (
     <SystemQueryRenderer<SavedSearchAlertEditFormQuery>
       query={SAVED_SEARCH_ALERT_EDIT_FORM_QUERY}

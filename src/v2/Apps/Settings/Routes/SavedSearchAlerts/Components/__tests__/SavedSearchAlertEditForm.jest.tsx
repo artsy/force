@@ -59,7 +59,7 @@ describe("SavedSearchAlertEditForm", () => {
       query SavedSearchAlertEditForm_Test_Query @raw_response_type {
         me {
           ...SavedSearchAlertEditForm_me
-            @arguments(savedSearchId: "id", withAggregations: false)
+            @arguments(savedSearchId: "id", withAggregations: true)
         }
         artist(id: "artistId") {
           ...SavedSearchAlertEditForm_artist
