@@ -295,7 +295,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
           labels {
             field
             value
-            label
+            displayValue
           }
         }
       }

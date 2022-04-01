@@ -32,7 +32,7 @@ export type SavedSearchAlertEditForm_me = {
         readonly labels: ReadonlyArray<{
             readonly field: string;
             readonly value: string;
-            readonly label: string;
+            readonly displayValue: string;
         }>;
     } | null;
     readonly " $refType": "SavedSearchAlertEditForm_me";
@@ -255,7 +255,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "label",
+              "name": "displayValue",
               "storageKey": null
             }
           ],
@@ -268,5 +268,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '87807a3188e14a3680a6fbe3918911e2';
+(node as any).hash = 'deb9dd8c1681543dcb764c10a8fb9780';
 export default node;
