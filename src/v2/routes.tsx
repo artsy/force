@@ -17,6 +17,7 @@ import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 import { contactRoutes } from "./Apps/_Contact2/contactRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
+import { curatorRoutes } from "v2/Apps/Curator/curatorRoutes"
 import { debugRoutes } from "v2/Apps/Debug/debugRoutes"
 import { exampleRoutes } from "v2/Apps/Example/exampleRoutes"
 import { fairOrganizerRoutes } from "./Apps/FairOrginizer/fairOrganizerRoutes"
@@ -60,6 +61,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: consignRoutes },
     { routes: contactRoutes },
     { routes: conversationRoutes },
+    { routes: curatorRoutes },
     { routes: exampleRoutes },
     { routes: fairOrganizerRoutes },
     { routes: fairRoutes },
