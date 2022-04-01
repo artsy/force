@@ -92,7 +92,7 @@ describe("useTrackVariantView", () => {
     window.analytics = analytics
   })
 
-  it("does something", () => {
+  it("calls the tracking function with the correct payload", () => {
     const { trackVariantView } = useTrackVariantView({
       experimentName: "cool-experiment",
       variantName: "experiment",
