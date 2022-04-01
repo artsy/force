@@ -47,6 +47,7 @@ describe("SavedSearchAlertEditForm", () => {
           <SavedSearchAlertEditFormFragmentContainer
             me={props.me!}
             artist={props.artist!}
+            artworksConnection={props.artworksConnection!}
             editAlertEntity={defaultEditAlertEntity}
             onCompleted={mockOnCompleted}
             onDeleteClick={mockOnDeleteClick}
@@ -57,10 +58,25 @@ describe("SavedSearchAlertEditForm", () => {
     query: graphql`
       query SavedSearchAlertEditForm_Test_Query @raw_response_type {
         me {
-          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
+          ...SavedSearchAlertEditForm_me
+            @arguments(savedSearchId: "id", withAggregations: false)
         }
         artist(id: "artistId") {
           ...SavedSearchAlertEditForm_artist
+        }
+        artworksConnection(
+          first: 0
+          artistID: "artistId"
+          aggregations: [
+            ARTIST
+            LOCATION_CITY
+            MATERIALS_TERMS
+            MEDIUM
+            PARTNER
+            COLOR
+          ]
+        ) {
+          ...SavedSearchAlertEditForm_artworksConnection
         }
       }
     `,

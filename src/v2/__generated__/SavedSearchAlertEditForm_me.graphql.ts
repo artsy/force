@@ -29,7 +29,7 @@ export type SavedSearchAlertEditForm_me = {
             readonly email: boolean;
             readonly push: boolean;
         };
-        readonly labels: ReadonlyArray<{
+        readonly labels?: ReadonlyArray<{
             readonly field: string;
             readonly value: string;
             readonly displayValue: string;
@@ -51,6 +51,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "savedSearchId"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "withAggregations"
     }
   ],
   "kind": "Fragment",
@@ -230,36 +235,43 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "SearchCriteriaLabel",
-          "kind": "LinkedField",
-          "name": "labels",
-          "plural": true,
+          "condition": "withAggregations",
+          "kind": "Condition",
+          "passingValue": false,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "field",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "value",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "displayValue",
+              "concreteType": "SearchCriteriaLabel",
+              "kind": "LinkedField",
+              "name": "labels",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "field",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "value",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "displayValue",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
       ],
       "storageKey": null
@@ -268,5 +280,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'deb9dd8c1681543dcb764c10a8fb9780';
+(node as any).hash = '1f8ca40d6ff77c4fb56b84763c946395';
 export default node;

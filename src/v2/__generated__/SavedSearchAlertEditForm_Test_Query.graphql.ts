@@ -4,6 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 export type SavedSearchAlertEditForm_Test_QueryVariables = {};
 export type SavedSearchAlertEditForm_Test_QueryResponse = {
     readonly me: {
@@ -11,6 +12,9 @@ export type SavedSearchAlertEditForm_Test_QueryResponse = {
     } | null;
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artist">;
+    } | null;
+    readonly artworksConnection: {
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
     } | null;
 };
 export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
@@ -53,6 +57,17 @@ export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
         readonly slug: string;
         readonly id: string;
     }) | null;
+    readonly artworksConnection: ({
+        readonly aggregations: ReadonlyArray<({
+            readonly slice: ArtworkAggregation | null;
+            readonly counts: ReadonlyArray<({
+                readonly count: number;
+                readonly name: string;
+                readonly value: string;
+            }) | null> | null;
+        }) | null> | null;
+        readonly id: string;
+    }) | null;
 };
 export type SavedSearchAlertEditForm_Test_Query = {
     readonly response: SavedSearchAlertEditForm_Test_QueryResponse;
@@ -65,11 +80,15 @@ export type SavedSearchAlertEditForm_Test_Query = {
 /*
 query SavedSearchAlertEditForm_Test_Query {
   me {
-    ...SavedSearchAlertEditForm_me_1LtJCq
+    ...SavedSearchAlertEditForm_me_2RI7SE
     id
   }
   artist(id: "artistId") {
     ...SavedSearchAlertEditForm_artist
+    id
+  }
+  artworksConnection(first: 0, artistID: "artistId", aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {
+    ...SavedSearchAlertEditForm_artworksConnection
     id
   }
 }
@@ -80,7 +99,18 @@ fragment SavedSearchAlertEditForm_artist on Artist {
   slug
 }
 
-fragment SavedSearchAlertEditForm_me_1LtJCq on Me {
+fragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {
+  aggregations {
+    slice
+    counts {
+      count
+      name
+      value
+    }
+  }
+}
+
+fragment SavedSearchAlertEditForm_me_2RI7SE on Me {
   savedSearch(id: "id") {
     internalID
     acquireable
@@ -122,21 +152,52 @@ var v0 = [
     "value": "artistId"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "aggregations",
+    "value": [
+      "ARTIST",
+      "LOCATION_CITY",
+      "MATERIALS_TERMS",
+      "MEDIUM",
+      "PARTNER",
+      "COLOR"
+    ]
+  },
+  {
+    "kind": "Literal",
+    "name": "artistID",
+    "value": "artistId"
+  },
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 0
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "value",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -164,6 +225,11 @@ return {
                 "kind": "Literal",
                 "name": "savedSearchId",
                 "value": "id"
+              },
+              {
+                "kind": "Literal",
+                "name": "withAggregations",
+                "value": false
               }
             ],
             "kind": "FragmentSpread",
@@ -187,6 +253,22 @@ return {
           }
         ],
         "storageKey": "artist(id:\"artistId\")"
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "FilterArtworksConnection",
+        "kind": "LinkedField",
+        "name": "artworksConnection",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "SavedSearchAlertEditForm_artworksConnection"
+          }
+        ],
+        "storageKey": "artworksConnection(aggregations:[\"ARTIST\",\"LOCATION_CITY\",\"MATERIALS_TERMS\",\"MEDIUM\",\"PARTNER\",\"COLOR\"],artistID:\"artistId\",first:0)"
       }
     ],
     "type": "Query",
@@ -220,7 +302,7 @@ return {
             "name": "savedSearch",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -348,7 +430,7 @@ return {
                 "name": "userAlertSettings",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -381,13 +463,7 @@ return {
                     "name": "field",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "value",
-                    "storageKey": null
-                  },
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -401,7 +477,7 @@ return {
             ],
             "storageKey": "savedSearch(id:\"id\")"
           },
-          (v3/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       },
@@ -413,8 +489,8 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -422,21 +498,71 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "artist(id:\"artistId\")"
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "FilterArtworksConnection",
+        "kind": "LinkedField",
+        "name": "artworksConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworksAggregationResults",
+            "kind": "LinkedField",
+            "name": "aggregations",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "slice",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AggregationCount",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "count",
+                    "storageKey": null
+                  },
+                  (v3/*: any*/),
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v5/*: any*/)
+        ],
+        "storageKey": "artworksConnection(aggregations:[\"ARTIST\",\"LOCATION_CITY\",\"MATERIALS_TERMS\",\"MEDIUM\",\"PARTNER\",\"COLOR\"],artistID:\"artistId\",first:0)"
       }
     ]
   },
   "params": {
-    "cacheID": "766d56f051b20989d90c144d4489a4b4",
+    "cacheID": "8a45bf18300a7806a383eb52d54fc7ff",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query {\n  me {\n    ...SavedSearchAlertEditForm_me_1LtJCq\n    id\n  }\n  artist(id: \"artistId\") {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_me_1LtJCq on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels {\n      field\n      value\n      displayValue\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query {\n  me {\n    ...SavedSearchAlertEditForm_me_2RI7SE\n    id\n  }\n  artist(id: \"artistId\") {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n  artworksConnection(first: 0, artistID: \"artistId\", aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_2RI7SE on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels {\n      field\n      value\n      displayValue\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '280106f3e19caa939436609b9eab3e7c';
+(node as any).hash = 'a77ae3f796a46fd0ad43db910129a01a';
 export default node;
