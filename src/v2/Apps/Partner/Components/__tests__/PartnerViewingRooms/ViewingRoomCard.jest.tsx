@@ -4,6 +4,10 @@ import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
 
+jest.mock("v2/Utils/getENV", () => ({
+  getENV: () => "",
+}))
+
 const { getWrapper } = setupTestWrapper({
   Component: ({ partner }: any) => {
     return (

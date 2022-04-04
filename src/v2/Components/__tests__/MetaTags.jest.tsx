@@ -3,7 +3,12 @@ import { MetaTags } from "../MetaTags"
 import { MockBoot } from "v2/DevTools"
 
 jest.mock("v2/Utils/getENV", () => ({
-  getENV: () => "https://www.artsy.net",
+  getENV: (name: string) => {
+    return {
+      APP_URL: "https://www.artsy.net",
+      GEMINI_CLOUDFRONT_URL: "",
+    }[name]
+  },
 }))
 
 describe("MetaTags", () => {
