@@ -42,6 +42,7 @@ import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
+import { puzzleRoutes } from "./Apps/Puzzle/puzzleRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -86,6 +87,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: tagRoutes },
     { routes: viewingRoomRoutes },
     { routes: worksForYouRoutes },
+    { routes: puzzleRoutes },
 
     // For debugging baseline app shell stuff
     { routes: debugRoutes },

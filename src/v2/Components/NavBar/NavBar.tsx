@@ -388,6 +388,10 @@ export const NavBar: React.FC = track(
                 <NavBarItemLink href="/nft" onClick={handleClick}>
                   NFTs
                 </NavBarItemLink>
+
+                <NavBarItemLink href="/puzzle" onClick={handleClick}>
+                  Puzzle
+                </NavBarItemLink>
               </Flex>
 
               <Flex alignItems="stretch" display={["none", "none", "flex"]}>

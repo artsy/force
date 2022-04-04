@@ -29,6 +29,7 @@ export const computeLandingPages = appUrl => {
     { loc: appUrl + "/signup" },
     { loc: appUrl + "/terms" },
     { loc: appUrl + "/viewing-rooms" },
+    { loc: appUrl + "/puzzle" },
   ]
 
   return urls

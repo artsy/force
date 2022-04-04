@@ -80,6 +80,11 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         exact: true,
         hidden: !locations || !locations.totalCount,
       },
+      {
+        name: "Puzzle",
+        href: route("/puzzle"),
+        exact: true,
+      },
     ]
 
     return routes
