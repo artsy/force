@@ -1,10 +1,10 @@
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { PuzzleApp } from "./puzzleApp"
+import Puzzle from "./Puzzle"
 
 export const puzzleRoutes: AppRouteConfig[] = [
   {
     path: "/puzzle",
-    getComponent: () => PuzzleApp,
+    getComponent: () => Puzzle,
     hideNav: true,
     hideFooter: true,
     cacheConfig: {
