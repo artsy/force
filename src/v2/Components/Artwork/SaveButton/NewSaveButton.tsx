@@ -57,6 +57,8 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
     setIsHovered(false)
   }
 
+  const title = isSaved ? "Unsave" : "Save"
+
   return (
     <Clickable
       data-test="newSaveButton"
@@ -67,9 +69,19 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
       width={BTN_WIDTH}
     >
       {isSaved || isHovered ? (
-        <HeartFillIcon fill="blue100" width={BTN_WIDTH} height={BTN_HEIGHT} />
+        <HeartFillIcon
+          title={title}
+          fill="blue100"
+          width={BTN_WIDTH}
+          height={BTN_HEIGHT}
+        />
       ) : (
-        <HeartIcon fill="black100" width={BTN_WIDTH} height={BTN_HEIGHT} />
+        <HeartIcon
+          title={title}
+          fill="black100"
+          width={BTN_WIDTH}
+          height={BTN_HEIGHT}
+        />
       )}
     </Clickable>
   )
