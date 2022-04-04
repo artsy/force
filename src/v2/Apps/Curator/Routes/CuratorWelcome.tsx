@@ -21,22 +21,7 @@ const CuratorWelcome: FC<CuratorWelcomeProps> = ({ geneFamilies }) => {
 const CuratorWelcomeFragmentContainer = createFragmentContainer(
   CuratorWelcome,
   {
-    geneFamilies: graphql`
-      query {
-        geneFamiliesConnection {
-          edges {
-            node {
-              name
-              slug
-              genes {
-                name
-                slug
-              }
-            }
-          }
-        }
-      }
-    `,
+    geneFamilies: graphql``,
   }
 )
 
