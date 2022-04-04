@@ -57,6 +57,7 @@ import {
   startingAddress,
   convertShippingAddressForExchange,
   defaultShippingAddressIndex,
+  getDefaultShippingQuoteId,
   getSelectedShippingQuoteId,
   getShippingQuotes,
   getShippingOption,
@@ -495,6 +496,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   @track(
     (_props, _state, args) =>
       ({
+        // analytics data missing if default shipping is already selected?
         action: ActionType.clickedSelectShippingOption,
         context_module: ContextModule.ordersShipping,
         context_page_owner_type: "orders-shipping",
@@ -610,6 +612,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const showSavedAddresses =
       shippingSelected && addressList && addressList.length > 0
     const isArtaShipping = this.isArtaShipping()
+
+    if (
+      isArtaShipping &&
+      shippingQuotes &&
+      shippingQuotes.length > 0 &&
+      !shippingQuoteId
+    ) {
+      const defaultShippingQuoteId = getDefaultShippingQuoteId(order)
+      this.setState({ shippingQuoteId: defaultShippingQuoteId })
+    }
+
     const isContinueButtonDisabled = isCommittingMutation
       ? false
       : isArtaShipping &&
@@ -853,6 +866,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
                   node {
                     id
                     isSelected
+                    priceCents
                   }
                 }
               }

@@ -440,7 +440,6 @@ describe("Shipping", () => {
         expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
           "SetShippingMutation"
         )
-        expect(page.submitButton.props().disabled).toBeTruthy()
 
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
@@ -970,10 +969,6 @@ describe("Shipping", () => {
         )
 
         expect(page.find(ShippingRoute).state().shippingQuotes).toHaveLength(5)
-      })
-
-      it("submit button disabled if shipping quote is not selected", async () => {
-        expect(page.submitButton.props().disabled).toBeTruthy()
       })
 
       it("submit button enabled if shipping quote is selected", async () => {
