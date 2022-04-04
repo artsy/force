@@ -11,7 +11,6 @@ import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -33,10 +32,12 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
-  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
-  const enableHoverForArtwork = useFeatureFlag(
-    "force-enable-hover-effect-for-artwork-item"
-  )
+  const {
+    isHovered,
+    onMouseEnter,
+    onMouseLeave,
+    isHoverEffectEnabled,
+  } = useHoverMetadata()
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -98,7 +99,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         </Link>
 
         <Badge artwork={artwork} />
-        {!enableHoverForArtwork && isSaveButtonVisible && (
+        {!isHoverEffectEnabled && isSaveButtonVisible && (
           <SaveButtonFragmentContainer
             contextModule={contextModule || ContextModule.artworkGrid}
             artwork={artwork}

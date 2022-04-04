@@ -18,7 +18,8 @@ import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
 import { ContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { useHoverMetadata } from "./useHoverMetadata"
+import { isTouch } from "v2/Utils/device"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -216,12 +217,10 @@ export const Details: React.FC<DetailsProps> = ({
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
-  const enableHoverForArtwork = useFeatureFlag(
-    "force-enable-hover-effect-for-artwork-item"
-  )
+  const { isHoverEffectEnabled } = useHoverMetadata()
 
   const shouldShowHoverSaveButton =
-    enableHoverForArtwork && (!!rest.artwork.is_saved || isHovered)
+    isHoverEffectEnabled && (!!rest.artwork.is_saved || (isHovered && !isTouch))
 
   return (
     <Box position="relative">
