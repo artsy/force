@@ -16,6 +16,11 @@ import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
+import { ContextModule } from "@artsy/cohesion"
+import { NewSaveButtonFragmentContainer } from "./SaveButton"
+import { useHoverMetadata } from "./useHoverMetadata"
+import { isTouch } from "v2/Utils/device"
+
 interface DetailsProps {
   artwork: Details_artwork
   includeLinks: boolean
@@ -212,9 +217,13 @@ export const Details: React.FC<DetailsProps> = ({
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
+  const { isHoverEffectEnabled } = useHoverMetadata()
+
+  const shouldShowHoverSaveButton =
+    isHoverEffectEnabled && (!!rest.artwork.is_saved || (isHovered && !isTouch))
 
   return (
-    <>
+    <Box>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
@@ -230,14 +239,22 @@ export const Details: React.FC<DetailsProps> = ({
             )}
         </Flex>
       )}
-      {!hideArtistName && <ArtistLine {...rest} />}
+      <Flex flexDirection="row" justifyContent="space-between">
+        {!hideArtistName && <ArtistLine {...rest} />}
+        {shouldShowHoverSaveButton && (
+          <NewSaveButtonFragmentContainer
+            contextModule={ContextModule.artworkGrid}
+            artwork={rest.artwork}
+          />
+        )}
+      </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
-    </>
+    </Box>
   )
 }
 
@@ -301,6 +318,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
+      is_saved: isSaved
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artists(shallow: true) {
@@ -334,6 +352,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
+      ...NewSaveButton_artwork
       ...HoverDetails_artwork
     }
   `,

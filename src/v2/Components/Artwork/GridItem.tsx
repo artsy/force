@@ -101,8 +101,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         </Link>
 
         <Badge artwork={artwork} />
-
-        {isSaveButtonVisible && (
+        {!isHoverEffectEnabled && isSaveButtonVisible && (
           <SaveButtonFragmentContainer
             contextModule={contextModule || ContextModule.artworkGrid}
             artwork={artwork}

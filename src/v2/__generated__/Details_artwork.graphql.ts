@@ -8,6 +8,7 @@ export type Details_artwork = {
     readonly href: string | null;
     readonly title: string | null;
     readonly date: string | null;
+    readonly is_saved: boolean | null;
     readonly sale_message: string | null;
     readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
@@ -41,7 +42,7 @@ export type Details_artwork = {
             readonly display: string | null;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"HoverDetails_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"NewSaveButton_artwork" | "HoverDetails_artwork">;
     readonly " $refType": "Details_artwork";
 };
 export type Details_artwork$data = Details_artwork;
@@ -109,6 +110,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "date",
+      "storageKey": null
+    },
+    {
+      "alias": "is_saved",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSaved",
       "storageKey": null
     },
     {
@@ -272,6 +280,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "NewSaveButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "HoverDetails_artwork"
     }
   ],
@@ -279,5 +292,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b29ea4fba3a1a6acb469b0e30ac82ad2';
+(node as any).hash = '66405cd293b6698167c417349c682f56';
 export default node;

@@ -64,7 +64,9 @@ describe("HomeAuctionLotsRail", () => {
             edges: [
               {
                 node: {
+                  internalID: "test-internal-id",
                   title: "Test Auction",
+                  slug: "test-href",
                   href: "test-href",
                   sale: {
                     isClosed: false,
@@ -82,8 +84,8 @@ describe("HomeAuctionLotsRail", () => {
         action: "clickedArtworkGroup",
         context_module: "auctionLots",
         context_page_owner_type: "home",
-        destination_page_owner_id: "<Artwork-mock-id-5>",
-        destination_page_owner_slug: "<Artwork-mock-id-8>",
+        destination_page_owner_id: "test-internal-id",
+        destination_page_owner_slug: "test-href",
         destination_page_owner_type: "artwork",
         type: "thumbnail",
       })
