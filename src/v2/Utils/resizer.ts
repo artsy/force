@@ -1,7 +1,10 @@
 import qs from "qs"
-import { data } from "sharify"
+import { getENV } from "./getENV"
 
-const warn = message => {
+const GEMINI_CLOUDFRONT_URL =
+  getENV("GEMINI_CLOUDFRONT_URL") ?? "https://d7hftxdivxxvm.cloudfront.net"
+
+const warn = (message: string) => {
   if (process.env.NODE_ENV === "development") {
     console.warn(message)
   }
@@ -18,7 +21,6 @@ export const crop = (
 ) => {
   const { width, height, quality, convert_to } = options
 
-  // dont call gemini with empty src
   if (!src) return null
 
   if (!width && !height) {
@@ -41,7 +43,7 @@ export const crop = (
     convert_to,
   }
 
-  return [data.GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
+  return [GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
 }
 
 export const resize = (
@@ -55,10 +57,10 @@ export const resize = (
 ) => {
   const { width, height, quality, convert_to } = options
 
-  // dont call gemini with empty src
   if (!src) return null
 
   let resizeTo
+
   if (width && !height) {
     resizeTo = "width"
   } else if (height && !width) {
@@ -76,5 +78,5 @@ export const resize = (
     convert_to,
   }
 
-  return [data.GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
+  return [GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
 }
