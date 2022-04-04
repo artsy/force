@@ -65,6 +65,18 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...HoverDetails_artwork
+}
+
+fragment HoverDetails_artwork on Artwork {
+  internalID
+  attributionClass {
+    name
+    id
+  }
+  mediumType {
+    name
+  }
 }
 
 fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
@@ -450,6 +462,38 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AttributionClass",
+                        "kind": "LinkedField",
+                        "name": "attributionClass",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/),
+                          (v1/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkMedium",
+                        "kind": "LinkedField",
+                        "name": "mediumType",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
                         "name": "image",
@@ -512,7 +556,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2b96845ec1d11068d5c917a86235872e",
+    "cacheID": "8aa110a4f39892c388b9a9f2c2069394",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -546,6 +590,14 @@ return {
         "me.inactiveLotStandings.saleArtwork.artwork.artists.href": (v10/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.artists.id": (v7/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.artists.name": (v10/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.attributionClass": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AttributionClass"
+        },
+        "me.inactiveLotStandings.saleArtwork.artwork.attributionClass.id": (v7/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.attributionClass.name": (v10/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.collecting_institution": (v10/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.cultural_maker": (v10/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.date": (v10/*: any*/),
@@ -565,6 +617,14 @@ return {
         },
         "me.inactiveLotStandings.saleArtwork.artwork.image.cropped.src": (v11/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.image.cropped.srcSet": (v11/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.internalID": (v7/*: any*/),
+        "me.inactiveLotStandings.saleArtwork.artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "me.inactiveLotStandings.saleArtwork.artwork.mediumType.name": (v10/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -628,7 +688,7 @@ return {
     },
     "name": "UserBidHistory_Test_Query",
     "operationKind": "query",
-    "text": "query UserBidHistory_Test_Query {\n  me {\n    ...UserBidHistory_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment SettingsAuctionsLotStanding_lotStanding on LotStanding {\n  isLeadingBidder\n  saleArtwork {\n    lotLabel\n    sale {\n      isClosed\n      id\n    }\n    artwork {\n      ...Details_artwork\n      href\n      image {\n        cropped(height: 100, width: 100) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  inactiveLotStandings: lotStandings(live: false) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n"
+    "text": "query UserBidHistory_Test_Query {\n  me {\n    ...UserBidHistory_me\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment SettingsAuctionsLotStanding_lotStanding on LotStanding {\n  isLeadingBidder\n  saleArtwork {\n    lotLabel\n    sale {\n      isClosed\n      id\n    }\n    artwork {\n      ...Details_artwork\n      href\n      image {\n        cropped(height: 100, width: 100) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  inactiveLotStandings: lotStandings(live: false) {\n    ...SettingsAuctionsLotStanding_lotStanding\n  }\n}\n"
   }
 };
 })();

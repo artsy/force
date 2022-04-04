@@ -102,13 +102,13 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           {isExpanded &&
             item.labels.map(label => (
               <AlertPill
-                key={label.value}
+                key={label.displayValue}
                 variant="textSquare"
                 active
                 mr={1}
                 mb={1}
               >
-                {label.value}
+                {label.displayValue}
               </AlertPill>
             ))}
         </Column>
@@ -126,7 +126,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
         artistIDs
         href
         labels {
-          value
+          displayValue
         }
         userAlertSettings {
           name

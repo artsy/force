@@ -1,16 +1,14 @@
-import { Clickable, Message, Text } from "@artsy/palette"
+import { Message, Text } from "@artsy/palette"
 import { useEffect } from "react"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 
 interface MinPriceWarningProps {
   isPriceRange: boolean
-  onClick: React.MouseEventHandler<HTMLButtonElement>
   minPrice: string
   orderID: string
 }
 
 export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
-  onClick,
   isPriceRange,
   minPrice,
   orderID,
@@ -22,22 +20,16 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
       flow: AnalyticsSchema.Flow.MakeOffer,
       order_id: orderID,
     })
-  }, [])
+  }, [orderID, tracking])
 
   return (
-    <Clickable cursor="pointer" onClick={onClick} mt={2}>
-      <Message variant="warning" p={2}>
-        <Text>
-          Galleries usually accept offers within
-          {isPriceRange
-            ? " the displayed price range"
-            : " 20% of the listed price"}
-          ; any lower is likely to be rejected.
-        </Text>
-        <Text style={{ textDecoration: "underline" }}>
-          We recommend changing your offer to {minPrice}.
-        </Text>
-      </Message>
-    </Clickable>
+    <Message variant="warning" p={2} mt={2}>
+      <Text>
+        {isPriceRange
+          ? "Offers lower than the displayed price range are often declined. "
+          : "Offers less than 20% off the list price are often declined. "}
+        We recommend increasing your offer to {minPrice}.
+      </Text>
+    </Message>
   )
 }

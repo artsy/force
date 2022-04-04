@@ -4,16 +4,11 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import {
-  ResponsiveBox,
-  Spacer,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-} from "@artsy/palette"
+import { Skeleton } from "@artsy/palette"
 import { compact, take } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { CellShowPlaceholder } from "v2/Components/Cells/CellShow"
 import { Rail } from "v2/Components/Rail"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -58,11 +53,17 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
           destination_page_owner_type: OwnerType.shows,
           type: "viewAll",
         }
+
         trackEvent(trackingEvent)
       }}
       getItems={() => {
-        return shows.map((show, index) => {
-          return <HomeFeaturedShowFragmentContainer show={show} />
+        return shows.map(show => {
+          return (
+            <HomeFeaturedShowFragmentContainer
+              key={show.internalID}
+              show={show}
+            />
+          )
         })
       }}
     />
@@ -77,8 +78,8 @@ export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
         items {
           __typename
           ... on Show {
-            internalID
             ...HomeFeaturedShow_show
+            internalID
           }
         }
       }
@@ -94,23 +95,7 @@ const PLACEHOLDER = (
       viewAllHref="/shows"
       getItems={() => {
         return [...new Array(6)].map((_, i) => {
-          return (
-            <React.Fragment key={i}>
-              <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
-                <SkeletonBox width="100%" height="100%" />
-              </ResponsiveBox>
-
-              <Spacer mt={2} />
-
-              <SkeletonText variant="lg" mr={1}>
-                Show Title Typically Two Lines
-              </SkeletonText>
-
-              <SkeletonText variant="sm">Partner name</SkeletonText>
-
-              <SkeletonText variant="sm">Jan 1–31</SkeletonText>
-            </React.Fragment>
-          )
+          return <CellShowPlaceholder key={i} />
         })
       }}
     />

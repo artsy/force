@@ -1,8 +1,8 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowCardFragmentContainer } from "./ShowCard"
 import { ShowEvents_edges } from "v2/__generated__/ShowEvents_edges.graphql"
+import { CellShowFragmentContainer } from "v2/Components/Cells/CellShow"
 
 interface ShowEventsProps {
   edges: ShowEvents_edges
@@ -15,17 +15,22 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <Text color="black" variant="lg" mb={6}>
+      <Text variant="lg" mb={6}>
         {eventTitle}
       </Text>
 
       <GridColumns mb={6} gridRowGap={[2, 4]}>
         {edges.map(({ node: show }) => {
+          if (!show) return null
+
           return (
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             <Column key={show.internalID} span={[6, 6, 3, 3]}>
-              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-              <ShowCardFragmentContainer isResponsive show={show} />
+              <CellShowFragmentContainer
+                show={show}
+                mode="GRID"
+                displayKind
+                displayPartner={false}
+              />
             </Column>
           )
         })}
@@ -38,8 +43,8 @@ export const ShowEventsFragmentContainer = createFragmentContainer(ShowEvents, {
   edges: graphql`
     fragment ShowEvents_edges on ShowEdge @relay(plural: true) {
       node {
+        ...CellShow_show
         internalID
-        ...ShowCard_show
       }
     }
   `,

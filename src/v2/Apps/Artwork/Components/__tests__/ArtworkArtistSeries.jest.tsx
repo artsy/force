@@ -222,6 +222,8 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                     is_inquireable: true,
                     is_saved: false,
                     is_biddable: true,
+                    attributionClass: null,
+                    mediumType: null,
                   },
                 },
               ],

@@ -1,4 +1,5 @@
 import { compact } from "lodash"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import qs from "qs"
 import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
@@ -59,7 +60,9 @@ export function getGoogleStaticMapImageUrl(
     size: `${width}x${height}`,
     center: locationString,
     markers: `color:0x873ff0|${locationString}`,
-    key: sd.GOOGLE_MAPS_API_KEY ? sd.GOOGLE_MAPS_API_KEY : undefined,
+    key: sd.PUBLIC_GOOGLE_MAPS_API_KEY
+      ? sd.PUBLIC_GOOGLE_MAPS_API_KEY
+      : undefined,
   }
 
   return `https://maps.googleapis.com/maps/api/staticmap?${qs.stringify(

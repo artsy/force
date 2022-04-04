@@ -32,23 +32,6 @@ query ArtistsIndexFragmentContainer_Test_Query {
   }
 }
 
-fragment ArtistsArtistCard_artist on Artist {
-  ...FollowArtistButton_artist
-  name
-  href
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  image {
-    thumb: cropped(width: 445, height: 334) {
-      src
-      srcSet
-    }
-  }
-}
-
 fragment ArtistsCarouselCell_featuredLink on FeaturedLink {
   internalID
   title
@@ -104,8 +87,8 @@ fragment ArtistsIndex_featuredGenes on OrderedSet {
       name
       href
       trendingArtists(sample: 4) {
+        ...CellArtist_artist
         internalID
-        ...ArtistsArtistCard_artist
         id
       }
     }
@@ -122,14 +105,37 @@ fragment ArtistsIndex_featuredGenes on OrderedSet {
   }
 }
 
-fragment FollowArtistButton_artist on Artist {
-  id
+fragment CellArtist_artist on Artist {
+  ...EntityHeaderArtist_artist
   internalID
-  name
   slug
-  is_followed: isFollowed
+  name
+  href
+  initials
+  image {
+    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
+      src
+      srcSet
+    }
+  }
+}
+
+fragment EntityHeaderArtist_artist on Artist {
+  internalID
+  href
+  slug
+  name
+  initials
+  formattedNationalityAndBirthday
   counts {
-    follows
+    artworks
+    forSaleArtworks
+  }
+  avatar: image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
   }
 }
 */
@@ -220,55 +226,59 @@ v12 = {
   "type": "Profile",
   "abstractKey": null
 },
-v13 = {
+v13 = [
+  (v10/*: any*/),
+  (v11/*: any*/)
+],
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "OrderedSet"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "OrderedSetItem"
 },
-v15 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v16 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v17 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v18 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Image"
+  "type": "ID"
 },
 v19 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "type": "Image"
 },
 v20 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v21 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v21 = {
+v22 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -490,8 +500,7 @@ return {
                     "plural": true,
                     "selections": [
                       (v4/*: any*/),
-                      (v7/*: any*/),
-                      (v2/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -499,13 +508,15 @@ return {
                         "name": "slug",
                         "storageKey": null
                       },
+                      (v2/*: any*/),
                       {
-                        "alias": "is_followed",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "isFollowed",
+                        "name": "initials",
                         "storageKey": null
                       },
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -514,13 +525,6 @@ return {
                         "name": "counts",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "follows",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -538,8 +542,38 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/),
-                      (v6/*: any*/),
+                      {
+                        "alias": "avatar",
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 45
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 45
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": (v13/*: any*/),
+                            "storageKey": "cropped(height:45,width:45)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -549,12 +583,21 @@ return {
                         "plural": false,
                         "selections": [
                           {
-                            "alias": "thumb",
+                            "alias": null,
                             "args": [
                               {
                                 "kind": "Literal",
                                 "name": "height",
                                 "value": 334
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": [
+                                  "normalized",
+                                  "larger",
+                                  "large"
+                                ]
                               },
                               {
                                 "kind": "Literal",
@@ -566,15 +609,13 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": [
-                              (v10/*: any*/),
-                              (v11/*: any*/)
-                            ],
-                            "storageKey": "cropped(height:334,width:445)"
+                            "selections": (v13/*: any*/),
+                            "storageKey": "cropped(height:334,version:[\"normalized\",\"larger\",\"large\"],width:445)"
                           }
                         ],
                         "storageKey": null
-                      }
+                      },
+                      (v7/*: any*/)
                     ],
                     "storageKey": "trendingArtists(sample:4)"
                   }
@@ -600,85 +641,83 @@ return {
     ]
   },
   "params": {
-    "cacheID": "38a513c14fb438758be34b1c4c719634",
+    "cacheID": "5e2784cfd8069a69868744c4c9303c1c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "featuredArtists": (v13/*: any*/),
-        "featuredArtists.artists": (v14/*: any*/),
-        "featuredArtists.artists.__isNode": (v15/*: any*/),
-        "featuredArtists.artists.__typename": (v15/*: any*/),
+        "featuredArtists": (v14/*: any*/),
+        "featuredArtists.artists": (v15/*: any*/),
+        "featuredArtists.artists.__isNode": (v16/*: any*/),
+        "featuredArtists.artists.__typename": (v16/*: any*/),
         "featuredArtists.artists.entity": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "FeaturedLinkEntity"
         },
-        "featuredArtists.artists.entity.__isNode": (v15/*: any*/),
-        "featuredArtists.artists.entity.__typename": (v15/*: any*/),
-        "featuredArtists.artists.entity.formattedNationalityAndBirthday": (v16/*: any*/),
-        "featuredArtists.artists.entity.id": (v17/*: any*/),
-        "featuredArtists.artists.entity.internalID": (v17/*: any*/),
-        "featuredArtists.artists.entity.name": (v16/*: any*/),
-        "featuredArtists.artists.href": (v16/*: any*/),
-        "featuredArtists.artists.id": (v17/*: any*/),
-        "featuredArtists.artists.image": (v18/*: any*/),
-        "featuredArtists.artists.image.thumb": (v19/*: any*/),
-        "featuredArtists.artists.image.thumb.height": (v20/*: any*/),
-        "featuredArtists.artists.image.thumb.src": (v15/*: any*/),
-        "featuredArtists.artists.image.thumb.srcSet": (v15/*: any*/),
-        "featuredArtists.artists.image.thumb.width": (v20/*: any*/),
-        "featuredArtists.artists.internalID": (v17/*: any*/),
-        "featuredArtists.artists.subtitle": (v16/*: any*/),
-        "featuredArtists.artists.title": (v16/*: any*/),
-        "featuredArtists.id": (v17/*: any*/),
-        "featuredArtists.name": (v16/*: any*/),
-        "featuredGenes": (v13/*: any*/),
-        "featuredGenes.genes": (v14/*: any*/),
-        "featuredGenes.genes.__isNode": (v15/*: any*/),
-        "featuredGenes.genes.__typename": (v15/*: any*/),
-        "featuredGenes.genes.href": (v16/*: any*/),
-        "featuredGenes.genes.id": (v17/*: any*/),
-        "featuredGenes.genes.internalID": (v17/*: any*/),
-        "featuredGenes.genes.name": (v16/*: any*/),
+        "featuredArtists.artists.entity.__isNode": (v16/*: any*/),
+        "featuredArtists.artists.entity.__typename": (v16/*: any*/),
+        "featuredArtists.artists.entity.formattedNationalityAndBirthday": (v17/*: any*/),
+        "featuredArtists.artists.entity.id": (v18/*: any*/),
+        "featuredArtists.artists.entity.internalID": (v18/*: any*/),
+        "featuredArtists.artists.entity.name": (v17/*: any*/),
+        "featuredArtists.artists.href": (v17/*: any*/),
+        "featuredArtists.artists.id": (v18/*: any*/),
+        "featuredArtists.artists.image": (v19/*: any*/),
+        "featuredArtists.artists.image.thumb": (v20/*: any*/),
+        "featuredArtists.artists.image.thumb.height": (v21/*: any*/),
+        "featuredArtists.artists.image.thumb.src": (v16/*: any*/),
+        "featuredArtists.artists.image.thumb.srcSet": (v16/*: any*/),
+        "featuredArtists.artists.image.thumb.width": (v21/*: any*/),
+        "featuredArtists.artists.internalID": (v18/*: any*/),
+        "featuredArtists.artists.subtitle": (v17/*: any*/),
+        "featuredArtists.artists.title": (v17/*: any*/),
+        "featuredArtists.id": (v18/*: any*/),
+        "featuredArtists.name": (v17/*: any*/),
+        "featuredGenes": (v14/*: any*/),
+        "featuredGenes.genes": (v15/*: any*/),
+        "featuredGenes.genes.__isNode": (v16/*: any*/),
+        "featuredGenes.genes.__typename": (v16/*: any*/),
+        "featuredGenes.genes.href": (v17/*: any*/),
+        "featuredGenes.genes.id": (v18/*: any*/),
+        "featuredGenes.genes.internalID": (v18/*: any*/),
+        "featuredGenes.genes.name": (v17/*: any*/),
         "featuredGenes.genes.trendingArtists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
+        "featuredGenes.genes.trendingArtists.avatar": (v19/*: any*/),
+        "featuredGenes.genes.trendingArtists.avatar.cropped": (v20/*: any*/),
+        "featuredGenes.genes.trendingArtists.avatar.cropped.src": (v16/*: any*/),
+        "featuredGenes.genes.trendingArtists.avatar.cropped.srcSet": (v16/*: any*/),
         "featuredGenes.genes.trendingArtists.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistCounts"
         },
-        "featuredGenes.genes.trendingArtists.counts.artworks": (v21/*: any*/),
-        "featuredGenes.genes.trendingArtists.counts.follows": (v21/*: any*/),
-        "featuredGenes.genes.trendingArtists.counts.forSaleArtworks": (v21/*: any*/),
-        "featuredGenes.genes.trendingArtists.formattedNationalityAndBirthday": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.href": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.id": (v17/*: any*/),
-        "featuredGenes.genes.trendingArtists.image": (v18/*: any*/),
-        "featuredGenes.genes.trendingArtists.image.thumb": (v19/*: any*/),
-        "featuredGenes.genes.trendingArtists.image.thumb.src": (v15/*: any*/),
-        "featuredGenes.genes.trendingArtists.image.thumb.srcSet": (v15/*: any*/),
-        "featuredGenes.genes.trendingArtists.internalID": (v17/*: any*/),
-        "featuredGenes.genes.trendingArtists.is_followed": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Boolean"
-        },
-        "featuredGenes.genes.trendingArtists.name": (v16/*: any*/),
-        "featuredGenes.genes.trendingArtists.slug": (v17/*: any*/),
-        "featuredGenes.id": (v17/*: any*/),
-        "featuredGenes.name": (v16/*: any*/)
+        "featuredGenes.genes.trendingArtists.counts.artworks": (v22/*: any*/),
+        "featuredGenes.genes.trendingArtists.counts.forSaleArtworks": (v22/*: any*/),
+        "featuredGenes.genes.trendingArtists.formattedNationalityAndBirthday": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.href": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.id": (v18/*: any*/),
+        "featuredGenes.genes.trendingArtists.image": (v19/*: any*/),
+        "featuredGenes.genes.trendingArtists.image.cropped": (v20/*: any*/),
+        "featuredGenes.genes.trendingArtists.image.cropped.src": (v16/*: any*/),
+        "featuredGenes.genes.trendingArtists.image.cropped.srcSet": (v16/*: any*/),
+        "featuredGenes.genes.trendingArtists.initials": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.internalID": (v18/*: any*/),
+        "featuredGenes.genes.trendingArtists.name": (v17/*: any*/),
+        "featuredGenes.genes.trendingArtists.slug": (v18/*: any*/),
+        "featuredGenes.id": (v18/*: any*/),
+        "featuredGenes.name": (v17/*: any*/)
       }
     },
     "name": "ArtistsIndexFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistsIndexFragmentContainer_Test_Query {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  entity {\n    __typename\n    ... on Artist {\n      internalID\n      name\n      formattedNationalityAndBirthday\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query ArtistsIndexFragmentContainer_Test_Query {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  entity {\n    __typename\n    ... on Artist {\n      internalID\n      name\n      formattedNationalityAndBirthday\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        ...CellArtist_artist\n        internalID\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

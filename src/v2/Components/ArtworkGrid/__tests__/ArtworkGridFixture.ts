@@ -47,6 +47,8 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       is_inquireable: true,
       slug: "kaws-pinocchio-3",
       is_saved: false,
+      attributionClass: null,
+      mediumType: null,
     },
   },
   {
@@ -94,6 +96,8 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       is_inquireable: true,
       slug: "kaws-kaws-x-undercover-5",
       is_saved: false,
+      attributionClass: null,
+      mediumType: null,
     },
   },
   {
@@ -141,6 +145,8 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       is_inquireable: true,
       slug: "kaws-kaws-x-undercover-4",
       is_saved: false,
+      attributionClass: null,
+      mediumType: null,
     },
   },
   {
@@ -183,6 +189,8 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
 
       artists: null,
       artistNames: "",
+      attributionClass: null,
+      mediumType: null,
     },
   },
 ]

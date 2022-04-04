@@ -12,6 +12,7 @@ export type AuctionLotInfo_saleArtwork = {
     readonly currentBid: {
         readonly display: string | null;
     } | null;
+    readonly formattedEndDateTime: string | null;
     readonly artwork: {
         readonly internalID: string;
         readonly date: string | null;
@@ -96,6 +97,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedEndDateTime",
       "storageKey": null
     },
     {
@@ -221,5 +229,5 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = '941de0778c4abf8f73bdd61a898785a5';
+(node as any).hash = '013371f8cc17dd7db45b7a1d66c61f11';
 export default node;

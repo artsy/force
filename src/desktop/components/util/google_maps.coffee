@@ -13,15 +13,15 @@ module.exports =
       zoom: 16
       sensor: false
     )
-    if sd.GOOGLE_MAPS_API_KEY
-      options.key = sd.GOOGLE_MAPS_API_KEY
+    if sd.PUBLIC_GOOGLE_MAPS_API_KEY
+      options.key = sd.PUBLIC_GOOGLE_MAPS_API_KEY
     "https://maps.googleapis.com/maps/api/staticmap?#{qs.stringify(options)}"
 
   getMapLink: (options) ->
     "https://maps.google.com/maps?#{qs.stringify(options)}"
 
   getDirections: (options) ->
-    if sd.GOOGLE_MAPS_API_KEY
-      options.key = sd.GOOGLE_MAPS_API_KEY
+    if sd.PUBLIC_GOOGLE_MAPS_API_KEY
+      options.key = sd.PUBLIC_GOOGLE_MAPS_API_KEY
 
     "https://www.google.com/maps/dir/#{encodeURI(options.origin)}/#{options.destination}"

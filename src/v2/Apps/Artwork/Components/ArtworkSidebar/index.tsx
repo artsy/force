@@ -1,5 +1,4 @@
 import { Box, Spacer, Join } from "@artsy/palette"
-import { AuctionTimerFragmentContainer } from "v2/Components/AuctionTimer"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
@@ -17,9 +16,10 @@ import { BuyerGuaranteeFragmentContainer } from "../TrustSignals/BuyerGuarantee"
 import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtraLinks"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
-import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
-import { lotIsClosed } from "../../Utils/lotIsClosed"
 import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
+import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
+import { BiddingClosedMessage } from "./ArtworkSidebarCurrentBidInfo"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -36,7 +36,11 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     "artwork-page-create-alert"
   )
 
+  // If we have info about the lot end time (cascading), use that.
   const { sale, saleArtwork } = artwork
+  const endAt = saleArtwork?.endAt
+  const startAt = sale?.startAt
+  const { hasEnded } = useTimer(endAt!, startAt!)
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -51,26 +55,19 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             <ArtworkSidebarAuctionPartnerInfoFragmentContainer
               artwork={artwork}
             />
-            <ArtworkSidebarAuctionPollingRefetchContainer
-              artwork={artwork}
-              me={me}
-            />
+            {hasEnded ? (
+              <BiddingClosedMessage />
+            ) : (
+              <ArtworkSidebarAuctionPollingRefetchContainer
+                artwork={artwork}
+                me={me}
+              />
+            )}
           </Join>
 
-          {sale &&
-            saleArtwork &&
-            !lotIsClosed(sale, saleArtwork) &&
-            (sale?.cascadingEndTimeInterval ? (
-              <>
-                <Spacer mt={2} />
-                <LotTimerFragmentContainer saleArtwork={saleArtwork} />
-              </>
-            ) : (
-              <>
-                <Spacer mt={2} />
-                <AuctionTimerFragmentContainer sale={sale} />
-              </>
-            ))}
+          {!hasEnded && (
+            <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
+          )}
         </>
       ) : (
         <>
@@ -103,6 +100,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarMetadata_artwork
         ...ArtworkSidebarAuctionPartnerInfo_artwork
         ...ArtworkSidebarAuctionInfoPolling_artwork
+        ...ArtworkSidebarAuctionTimer_artwork
         ...ArtworkSidebarCommercial_artwork
         ...ArtworkSidebarPartnerInfo_artwork
         ...ArtworkSidebarExtraLinks_artwork
@@ -112,13 +110,11 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...BuyerGuarantee_artwork
         ...CreateArtworkAlertSection_artwork
         sale {
-          cascadingEndTimeInterval
           is_closed: isClosed
-          ...AuctionTimer_sale
+          startAt
         }
         saleArtwork {
-          endedAt
-          ...LotTimer_saleArtwork
+          endAt
         }
       }
     `,

@@ -15,6 +15,7 @@ import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphq
 import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
 import { RegisterButtonFragmentContainer } from "../RegisterButton"
+import { SaleDetailTimerFragmentContainer } from "v2/Apps/Auction/Components/AuctionDetails/SaleDetailTimer"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionDetailsStartTimeQueryRenderer } from "./AuctionDetailsStartTime"
 
@@ -30,6 +31,9 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)
     : sale.endAt
 
+  const showCascadingEndTimeIntervalMessage: boolean =
+    !!sale.cascadingEndTimeInterval && !sale.isClosed
+
   return (
     <>
       <GridColumns>
@@ -42,28 +46,43 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           <RegisterButtonFragmentContainer sale={sale} me={me} />
         </Column>
       </GridColumns>
-
       <Spacer my={4} />
-
       <Flex alignItems="center" justifyContent="space-between">
-        <Flex alignItems="center">
-          <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
-
-          {!sale.isClosed && (
-            <Box mt={0.5}>
-              <AddToCalendar
-                startDate={sale.liveStartAt || sale.startAt!}
-                endDate={endDate!}
-                title={sale.name!}
-                description={sale.description!}
-                href={`${getENV("APP_URL")}${sale.href!}`}
-                liveAuctionUrl={liveAuctionUrl}
-                contextModule={ContextModule.auctionHome}
-              />
-            </Box>
-          )}
-        </Flex>
+        {!!sale.cascadingEndTimeInterval && (
+          <>
+            <SaleDetailTimerFragmentContainer sale={sale} />
+            <Spacer my={2} />
+          </>
+        )}
       </Flex>
+      <Flex alignItems="center">
+        <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
+
+        {!sale.isClosed && (
+          <Box mt={0.5}>
+            <AddToCalendar
+              startDate={sale.liveStartAt || sale.startAt!}
+              endDate={endDate!}
+              title={sale.name!}
+              description={sale.description!}
+              href={`${getENV("APP_URL")}${sale.href!}`}
+              liveAuctionUrl={liveAuctionUrl}
+              contextModule={ContextModule.auctionHome}
+            />
+          </Box>
+        )}
+      </Flex>
+
+      {showCascadingEndTimeIntervalMessage && (
+        <>
+          <Spacer my={2} />
+          <Text variant="md" pr={2}>
+            {`Lots close at ${
+              sale.cascadingEndTimeInterval! / 60
+            }-minute intervals`}
+          </Text>
+        </>
+      )}
 
       <Spacer my={2} />
 
@@ -86,6 +105,7 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
       fragment AuctionDetails_sale on Sale {
         ...RegisterButton_sale
         ...AuctionInfoSidebar_sale
+        ...SaleDetailTimer_sale
         internalID
         name
         slug
@@ -95,6 +115,7 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         description(format: HTML)
         href
         isClosed
+        cascadingEndTimeInterval
       }
     `,
     me: graphql`

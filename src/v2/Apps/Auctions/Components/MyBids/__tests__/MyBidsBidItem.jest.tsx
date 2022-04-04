@@ -51,7 +51,7 @@ describe("MyBidsBidItem", () => {
         artwork: {
           artistNames: "artistNames",
           image: {
-            resized: {
+            cropped: {
               src: "artworkImageResizedSrc",
               srcSet: "artworkImageResizedSrcSet",
             },

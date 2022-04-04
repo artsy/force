@@ -19,7 +19,7 @@ export type SavedSearchAlertsApp_Test_QueryRawResponse = {
                     readonly artistIDs: ReadonlyArray<string> | null;
                     readonly href: string;
                     readonly labels: ReadonlyArray<{
-                        readonly value: string;
+                        readonly displayValue: string;
                     }>;
                     readonly userAlertSettings: {
                         readonly name: string | null;
@@ -57,7 +57,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   artistIDs
   href
   labels {
-    value
+    displayValue
   }
   userAlertSettings {
     name
@@ -188,7 +188,7 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "value",
+                            "name": "displayValue",
                             "storageKey": null
                           }
                         ],
@@ -282,12 +282,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3fe5795655bdb3b5f44edbf7c54a3776",
+    "cacheID": "0fd17dd72036a1d729c8a0b5a0eef135",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    value\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

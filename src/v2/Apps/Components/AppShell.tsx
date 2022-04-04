@@ -19,9 +19,9 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
+import { MNTNTrackingPixel } from "v2/Components/MNTNTrackingPixel"
 
 const logger = createLogger("Apps/Components/AppShell")
-
 interface AppShellProps {
   children: React.ReactNode
   match?: Match
@@ -118,6 +118,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
           </Flex>
         )}
       </Theme>
+
+      <MNTNTrackingPixel />
     </Flex>
   )
 }

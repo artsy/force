@@ -50,11 +50,13 @@ export type Conversation_conversation = {
         readonly item: {
             readonly __typename: string;
             readonly id?: string;
+            readonly isOfferable?: boolean | null;
             readonly isOfferableFromInquiry?: boolean | null;
             readonly internalID?: string;
             readonly " $fragmentRefs": FragmentRefs<"Item_item">;
         } | null;
         readonly liveArtwork: ({
+            readonly isOfferable: boolean | null;
             readonly isOfferableFromInquiry: boolean | null;
             readonly internalID: string;
             readonly __typename: "Artwork";
@@ -105,6 +107,13 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isOfferable",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -411,6 +420,7 @@ return {
               "selections": [
                 (v0/*: any*/),
                 (v4/*: any*/),
+                (v5/*: any*/),
                 (v1/*: any*/)
               ],
               "type": "Artwork",
@@ -436,6 +446,7 @@ return {
               "kind": "InlineFragment",
               "selections": [
                 (v4/*: any*/),
+                (v5/*: any*/),
                 (v1/*: any*/),
                 (v3/*: any*/)
               ],
@@ -458,5 +469,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
+(node as any).hash = 'a86f3c8c683ef44a18578820c358f547';
 export default node;

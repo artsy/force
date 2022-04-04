@@ -92,13 +92,13 @@ describe("Offer InitialMutation", () => {
       expect(page.transactionSummary.text()).toContain("Your offer")
 
       await page.selectPriceOption(0)
-      expect(page.transactionSummary.text()).toContain("Your offerUS$12,800.00")
+      expect(page.transactionSummary.text()).toContain("Your offerUS$16,000.00")
 
       await page.selectPriceOption(1)
-      expect(page.transactionSummary.text()).toContain("Your offerUS$13,600.00")
+      expect(page.transactionSummary.text()).toContain("Your offerUS$14,400.00")
 
       await page.selectPriceOption(2)
-      expect(page.transactionSummary.text()).toContain("Your offerUS$14,400.00")
+      expect(page.transactionSummary.text()).toContain("Your offerUS$12,800.00")
     })
 
     it("shows final offer binding notice", () => {

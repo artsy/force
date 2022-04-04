@@ -8,11 +8,11 @@ export type PartnersRail_partnerCategory = {
     readonly name: string | null;
     readonly primary: ReadonlyArray<{
         readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+        readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
     } | null> | null;
     readonly secondary: ReadonlyArray<{
         readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+        readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
     } | null> | null;
     readonly " $refType": "PartnersRail_partnerCategory";
 };
@@ -61,7 +61,7 @@ v5 = [
   {
     "args": null,
     "kind": "FragmentSpread",
-    "name": "PartnerCell_partner"
+    "name": "CellPartner_partner"
   }
 ];
 return {
@@ -135,5 +135,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cc6b6a031766931890033cb1c816dc44';
+(node as any).hash = '69c9d6088c5c46312d1b8cbeff54f7aa';
 export default node;

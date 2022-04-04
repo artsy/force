@@ -4,7 +4,6 @@ import { isEmpty } from "lodash"
 import RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
-import { data as sd } from "sharify"
 import {
   RelayNetworkLayer,
   batchMiddleware,
@@ -23,8 +22,7 @@ import { getENV } from "v2/Utils/getENV"
 const logger = createLogger("v2/System/Relay/createRelaySSREnvironment")
 
 const isServer = typeof window === "undefined"
-const isDevelopment =
-  (isServer ? process.env.NODE_ENV : sd.NODE_ENV) === "development"
+const isDevelopment = getENV("NODE_ENV") === "development"
 
 // Only log on the client during development
 const loggingEnabled = isDevelopment && !isServer
@@ -38,6 +36,7 @@ interface Config {
   checkStatus?: boolean
   relayNetwork?: INetwork
   userAgent?: string
+  metaphysicsEndpoint?: string
 }
 
 export interface RelaySSREnvironment extends Environment {
@@ -46,7 +45,14 @@ export interface RelaySSREnvironment extends Environment {
 }
 
 export function createRelaySSREnvironment(config: Config = {}) {
-  const { cache = {}, checkStatus, user, relayNetwork, userAgent } = config
+  const {
+    cache = {},
+    checkStatus,
+    user,
+    relayNetwork,
+    userAgent,
+    metaphysicsEndpoint = METAPHYSICS_ENDPOINT,
+  } = config
 
   /**
    * Lazy load these here so we can safely ignore the server module from client
@@ -92,7 +98,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const middlewares = [
     searchBarImmediateResolveMiddleware(),
     urlMiddleware({
-      url: METAPHYSICS_ENDPOINT,
+      url: metaphysicsEndpoint,
       headers: authenticatedHeaders,
     }),
     relaySSRMiddleware.getMiddleware(),
@@ -113,7 +119,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),
 
-    ...(sd.ENABLE_QUERY_BATCHING
+    ...(getENV("ENABLE_QUERY_BATCHING")
       ? [
           batchMiddleware({
             headers: authenticatedHeaders,

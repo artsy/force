@@ -30,7 +30,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
       <>
         <Spacer mt={4} />
 
-        <Text variant="xs" textTransform="uppercase" mb={1}>
+        <Text variant="xs" textTransform="uppercase">
           {article.vertical}
         </Text>
 
@@ -59,7 +59,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
             color="white100"
             p={4}
           >
-            <Text variant="xs" textTransform="uppercase" mb={1}>
+            <Text variant="xs" textTransform="uppercase">
               {article.vertical}
             </Text>
 
@@ -79,7 +79,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
       return (
         <FullBleed display="flex" flexDirection={["column-reverse", "row"]}>
           <Box flex={1} p={[2, 4]}>
-            <Text variant="xs" textTransform="uppercase" mb={1}>
+            <Text variant="xs" textTransform="uppercase">
               {article.vertical}
             </Text>
 
@@ -152,7 +152,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
             )}
 
             {article.vertical && (
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" textTransform="uppercase">
                 {article.vertical}
               </Text>
             )}
@@ -175,7 +175,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
       return (
         <FullBleed>
           <Box mb={12} p={[2, 4]}>
-            <Text variant="xs" textTransform="uppercase" mb={1}>
+            <Text variant="xs" textTransform="uppercase">
               {article.vertical}
             </Text>
 

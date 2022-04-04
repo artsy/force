@@ -27,6 +27,7 @@ query ArticleVideo_test_Query {
 
 fragment ArticleSeriesItem_article on Article {
   href
+  vertical
   title
   thumbnailTitle
   byline
@@ -40,6 +41,10 @@ fragment ArticleSeriesItem_article on Article {
   }
   media {
     duration
+  }
+  seriesArticle {
+    title
+    id
   }
 }
 
@@ -93,75 +98,82 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "vertical",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "title",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "description",
+  "name": "href",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "url",
+  "name": "description",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "duration",
+  "name": "url",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "duration",
   "storageKey": null
 },
 v7 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Article"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Article"
 },
 v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v10 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "ArticleMedia"
 },
-v11 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v12 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -208,16 +220,10 @@ return {
         "name": "article",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "vertical",
-            "storageKey": null
-          },
           (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -234,7 +240,7 @@ return {
                 "name": "coverImage",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -245,8 +251,8 @@ return {
                 "name": "credits",
                 "storageKey": null
               },
-              (v3/*: any*/),
-              (v5/*: any*/),
+              (v4/*: any*/),
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -260,7 +266,7 @@ return {
                 "name": "releaseDate",
                 "storageKey": "releaseDate(format:\"MMM DD, YYYY h:mma\")"
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -272,9 +278,9 @@ return {
             "name": "seriesArticle",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
               (v2/*: any*/),
               (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -307,7 +313,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
@@ -325,8 +331,9 @@ return {
             "name": "relatedArticles",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -341,7 +348,7 @@ return {
                 "name": "byline",
                 "storageKey": null
               },
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -410,7 +417,20 @@ return {
                 "name": "media",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/)
+                  (v6/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Article",
+                "kind": "LinkedField",
+                "name": "seriesArticle",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -421,79 +441,83 @@ return {
                 "name": "internalID",
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": "relatedArticles(size:4)"
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": "article(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "d37772601c2619995498be367b0ebbd5",
+    "cacheID": "2fbf4f8756cee62f3a5401a3259b849b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "article": (v7/*: any*/),
-        "article.description": (v8/*: any*/),
-        "article.href": (v8/*: any*/),
-        "article.id": (v9/*: any*/),
-        "article.media": (v10/*: any*/),
-        "article.media.coverImage": (v11/*: any*/),
-        "article.media.coverImage.url": (v8/*: any*/),
-        "article.media.credits": (v8/*: any*/),
-        "article.media.description": (v8/*: any*/),
-        "article.media.duration": (v8/*: any*/),
-        "article.media.releaseDate": (v8/*: any*/),
-        "article.media.url": (v8/*: any*/),
+        "article": (v8/*: any*/),
+        "article.description": (v9/*: any*/),
+        "article.href": (v9/*: any*/),
+        "article.id": (v10/*: any*/),
+        "article.media": (v11/*: any*/),
+        "article.media.coverImage": (v12/*: any*/),
+        "article.media.coverImage.url": (v9/*: any*/),
+        "article.media.credits": (v9/*: any*/),
+        "article.media.description": (v9/*: any*/),
+        "article.media.duration": (v9/*: any*/),
+        "article.media.releaseDate": (v9/*: any*/),
+        "article.media.url": (v9/*: any*/),
         "article.moreRelatedArticles": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "Article"
         },
-        "article.moreRelatedArticles.byline": (v8/*: any*/),
-        "article.moreRelatedArticles.description": (v8/*: any*/),
-        "article.moreRelatedArticles.href": (v8/*: any*/),
-        "article.moreRelatedArticles.id": (v9/*: any*/),
-        "article.moreRelatedArticles.internalID": (v9/*: any*/),
-        "article.moreRelatedArticles.media": (v10/*: any*/),
-        "article.moreRelatedArticles.media.duration": (v8/*: any*/),
-        "article.moreRelatedArticles.publishedAt": (v8/*: any*/),
-        "article.moreRelatedArticles.thumbnailImage": (v11/*: any*/),
+        "article.moreRelatedArticles.byline": (v9/*: any*/),
+        "article.moreRelatedArticles.description": (v9/*: any*/),
+        "article.moreRelatedArticles.href": (v9/*: any*/),
+        "article.moreRelatedArticles.id": (v10/*: any*/),
+        "article.moreRelatedArticles.internalID": (v10/*: any*/),
+        "article.moreRelatedArticles.media": (v11/*: any*/),
+        "article.moreRelatedArticles.media.duration": (v9/*: any*/),
+        "article.moreRelatedArticles.publishedAt": (v9/*: any*/),
+        "article.moreRelatedArticles.seriesArticle": (v8/*: any*/),
+        "article.moreRelatedArticles.seriesArticle.id": (v10/*: any*/),
+        "article.moreRelatedArticles.seriesArticle.title": (v9/*: any*/),
+        "article.moreRelatedArticles.thumbnailImage": (v12/*: any*/),
         "article.moreRelatedArticles.thumbnailImage.display": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "article.moreRelatedArticles.thumbnailImage.display.src": (v12/*: any*/),
-        "article.moreRelatedArticles.thumbnailImage.display.srcSet": (v12/*: any*/),
-        "article.moreRelatedArticles.thumbnailTitle": (v8/*: any*/),
-        "article.moreRelatedArticles.title": (v8/*: any*/),
-        "article.seriesArticle": (v7/*: any*/),
-        "article.seriesArticle.description": (v8/*: any*/),
-        "article.seriesArticle.href": (v8/*: any*/),
-        "article.seriesArticle.id": (v9/*: any*/),
+        "article.moreRelatedArticles.thumbnailImage.display.src": (v13/*: any*/),
+        "article.moreRelatedArticles.thumbnailImage.display.srcSet": (v13/*: any*/),
+        "article.moreRelatedArticles.thumbnailTitle": (v9/*: any*/),
+        "article.moreRelatedArticles.title": (v9/*: any*/),
+        "article.moreRelatedArticles.vertical": (v9/*: any*/),
+        "article.seriesArticle": (v8/*: any*/),
+        "article.seriesArticle.description": (v9/*: any*/),
+        "article.seriesArticle.href": (v9/*: any*/),
+        "article.seriesArticle.id": (v10/*: any*/),
         "article.seriesArticle.sponsor": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArticleSponsor"
         },
-        "article.seriesArticle.sponsor.partnerDarkLogo": (v8/*: any*/),
-        "article.seriesArticle.sponsor.partnerLightLogo": (v8/*: any*/),
-        "article.seriesArticle.sponsor.partnerLogoLink": (v8/*: any*/),
-        "article.seriesArticle.title": (v8/*: any*/),
-        "article.title": (v8/*: any*/),
-        "article.vertical": (v8/*: any*/)
+        "article.seriesArticle.sponsor.partnerDarkLogo": (v9/*: any*/),
+        "article.seriesArticle.sponsor.partnerLightLogo": (v9/*: any*/),
+        "article.seriesArticle.sponsor.partnerLogoLink": (v9/*: any*/),
+        "article.seriesArticle.title": (v9/*: any*/),
+        "article.title": (v9/*: any*/),
+        "article.vertical": (v9/*: any*/)
       }
     },
     "name": "ArticleVideo_test_Query",
     "operationKind": "query",
-    "text": "query ArticleVideo_test_Query {\n  article(id: \"example\") {\n    ...ArticleVideo_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  vertical\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    href\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n  moreRelatedArticles: relatedArticles(size: 4) {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n"
+    "text": "query ArticleVideo_test_Query {\n  article(id: \"example\") {\n    ...ArticleVideo_article\n    id\n  }\n}\n\nfragment ArticleSeriesItem_article on Article {\n  href\n  vertical\n  title\n  thumbnailTitle\n  byline\n  description\n  publishedAt(format: \"MMM DD, YYYY\")\n  thumbnailImage {\n    display: cropped(width: 869, height: 580) {\n      src\n      srcSet\n    }\n  }\n  media {\n    duration\n  }\n  seriesArticle {\n    title\n    id\n  }\n}\n\nfragment ArticleSponsor_sponsor on ArticleSponsor {\n  partnerLightLogo\n  partnerDarkLogo\n  partnerLogoLink\n}\n\nfragment ArticleVideo_article on Article {\n  vertical\n  title\n  href\n  description\n  media {\n    coverImage {\n      url\n    }\n    credits\n    description\n    duration\n    releaseDate(format: \"MMM DD, YYYY h:mma\")\n    url\n  }\n  seriesArticle {\n    title\n    href\n    description\n    sponsor {\n      ...ArticleSponsor_sponsor\n    }\n    id\n  }\n  moreRelatedArticles: relatedArticles(size: 4) {\n    ...ArticleSeriesItem_article\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

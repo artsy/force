@@ -44,7 +44,8 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
     showBuyNowTab: sale.showBuyNowTab,
   }
 
-  const { cascadingEndTimeInterval, cascadingEndTime } = sale
+  const { cascadingEndTimeInterval } = sale
+
   const isFullBleedHeaderFixed = !cascadingEndTimeInterval
 
   return (
@@ -58,7 +59,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
       >
         {cascadingEndTimeInterval && (
           <CascadingEndTimesBanner
-            intervalMessage={cascadingEndTime?.intervalLabel!}
+            cascadingEndTimeInterval={cascadingEndTimeInterval}
           />
         )}
 
@@ -150,10 +151,6 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       }
       showBuyNowTab: promotedSale {
         internalID
-      }
-
-      cascadingEndTime {
-        intervalLabel
       }
       cascadingEndTimeInterval
     }

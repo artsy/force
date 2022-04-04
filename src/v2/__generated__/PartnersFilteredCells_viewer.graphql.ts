@@ -10,7 +10,7 @@ export type PartnersFilteredCells_viewer = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+                readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
             } | null;
         } | null> | null;
     } | null;
@@ -146,7 +146,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "PartnerCell_partner"
+                  "name": "CellPartner_partner"
                 }
               ],
               "storageKey": null
@@ -193,5 +193,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '2481c1769e31d61ea5e961c1ccb7d0fe';
+(node as any).hash = 'e5b6e92d05656ec2e55e3392793f7c1f';
 export default node;

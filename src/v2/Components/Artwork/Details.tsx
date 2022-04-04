@@ -6,6 +6,7 @@ import {
   TextVariant,
   Flex,
   Spacer,
+  Box,
 } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
@@ -13,6 +14,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
+import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -20,6 +22,7 @@ interface DetailsProps {
   hideSaleInfo?: boolean
   hideArtistName?: boolean
   hidePartnerName?: boolean
+  isHovered?: boolean
 }
 
 const ConditionalLink: React.FC<
@@ -205,6 +208,7 @@ export const Details: React.FC<DetailsProps> = ({
   hideArtistName,
   hidePartnerName,
   hideSaleInfo,
+  isHovered,
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
@@ -227,8 +231,11 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
       {!hideArtistName && <ArtistLine {...rest} />}
-      <TitleLine {...rest} />
-      {!hidePartnerName && <PartnerLine {...rest} />}
+      <Box position="relative">
+        <TitleLine {...rest} />
+        {!hidePartnerName && <PartnerLine {...rest} />}
+        {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
+      </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </>
   )
@@ -327,6 +334,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
+      ...HoverDetails_artwork
     }
   `,
 })

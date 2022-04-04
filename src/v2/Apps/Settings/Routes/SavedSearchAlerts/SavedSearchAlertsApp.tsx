@@ -144,11 +144,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   return (
     <StickyProvider>
-      <MetaTags title="Your Alerts | Artsy" pathname="/user/alerts" />
+      <MetaTags title="Your Alerts | Artsy" pathname="/settings/alerts" />
 
       <SavedSearchAlertHeader />
 
-      <Box mx={[-2, -4]}>
+      <Box mx={[-2, 0]}>
         <Separator color="black15" />
 
         {alerts.length === 0 ? (
