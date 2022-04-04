@@ -18,6 +18,7 @@ import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
 import { ContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -215,6 +216,12 @@ export const Details: React.FC<DetailsProps> = ({
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
+  const enableHoverForArtwork = useFeatureFlag(
+    "force-enable-hover-effect-for-artwork-item"
+  )
+
+  const shouldShowHoverSaveButton =
+    enableHoverForArtwork && (!!rest.artwork.is_saved || isHovered)
 
   return (
     <Box position="relative">
@@ -233,13 +240,15 @@ export const Details: React.FC<DetailsProps> = ({
             )}
         </Flex>
       )}
-      {(!!rest.artwork.is_saved || isHovered) && (
-        <NewSaveButtonFragmentContainer
-          contextModule={ContextModule.artworkGrid}
-          artwork={rest.artwork}
-        />
-      )}
-      {!hideArtistName && <ArtistLine {...rest} />}
+      <Flex flexDirection="row" justifyContent="space-between">
+        {!hideArtistName && <ArtistLine {...rest} />}
+        {shouldShowHoverSaveButton && (
+          <NewSaveButtonFragmentContainer
+            contextModule={ContextModule.artworkGrid}
+            artwork={rest.artwork}
+          />
+        )}
+      </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}

@@ -16,6 +16,9 @@ export interface SaveButtonProps {
   contextModule: AuthContextModule
 }
 
+const BTN_HEIGHT = 20
+const BTN_WIDTH = 20
+
 export const NewSaveButton: React.FC<SaveButtonProps> = ({
   artwork,
   contextModule,
@@ -57,17 +60,16 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
   return (
     <Clickable
       data-test="newSaveButton"
-      position="absolute"
-      right={0.5}
-      zIndex={2}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      height={BTN_HEIGHT}
+      width={BTN_WIDTH}
     >
       {isSaved || isHovered ? (
-        <HeartFillIcon fill="blue100" width={20} height={20} />
+        <HeartFillIcon fill="blue100" width={BTN_WIDTH} height={BTN_HEIGHT} />
       ) : (
-        <HeartIcon fill="black100" width={20} height={20} />
+        <HeartIcon fill="black100" width={BTN_WIDTH} height={BTN_HEIGHT} />
       )}
     </Clickable>
   )

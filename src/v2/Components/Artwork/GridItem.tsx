@@ -1,4 +1,4 @@
-import { AuthContextModule } from "@artsy/cohesion"
+import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, Box } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
@@ -7,10 +7,11 @@ import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import { useSaveButton } from "./SaveButton"
+import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -29,10 +30,13 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
-  const { containerProps } = useSaveButton({
+  const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+  const enableHoverForArtwork = useFeatureFlag(
+    "force-enable-hover-effect-for-artwork-item"
+  )
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -94,6 +98,12 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         </Link>
 
         <Badge artwork={artwork} />
+        {!enableHoverForArtwork && isSaveButtonVisible && (
+          <SaveButtonFragmentContainer
+            contextModule={contextModule || ContextModule.artworkGrid}
+            artwork={artwork}
+          />
+        )}
       </Box>
 
       <Metadata artwork={artwork} isHovered={isHovered} />
