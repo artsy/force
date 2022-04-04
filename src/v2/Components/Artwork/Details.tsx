@@ -223,7 +223,7 @@ export const Details: React.FC<DetailsProps> = ({
     isHoverEffectEnabled && (!!rest.artwork.is_saved || (isHovered && !isTouch))
 
   return (
-    <Box position="relative">
+    <Box>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
