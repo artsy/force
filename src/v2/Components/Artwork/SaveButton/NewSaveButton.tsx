@@ -61,7 +61,7 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
 
   return (
     <Clickable
-      data-test="newSaveButton"
+      data-test="saveButton"
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
