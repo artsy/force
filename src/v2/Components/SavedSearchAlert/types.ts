@@ -18,6 +18,7 @@ export interface SearchCriteriaAttributes {
   width?: string | null
   materialsTerms?: string[] | null
   priceRange?: string | null
+  sizes?: string[] | null
 }
 
 export interface SavedSearchEntityArtist {
@@ -41,20 +42,12 @@ export interface SavedSearchEntity {
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
 
-export interface DefaultFilterPill {
-  isDefault: true
-  name: string
-  displayName: string
+export type FilterPill = {
+  isDefault?: boolean
+  value: string
+  displayValue: string
+  field: string
 }
-
-export interface NonDefaultFilterPill {
-  isDefault?: false
-  name: string
-  displayName: string
-  filterName: string
-}
-
-export type FilterPill = DefaultFilterPill | NonDefaultFilterPill
 
 export interface SavedSearchAleftFormValues {
   name: string

@@ -62,9 +62,6 @@ fragment AuctionApp_sale on Sale {
     internalID
     id
   }
-  cascadingEndTime {
-    intervalLabel
-  }
   cascadingEndTimeInterval
 }
 
@@ -114,14 +111,10 @@ fragment AuctionDetails_sale on Sale {
   liveStartAt
   startAt
   endAt
-  endedAt
   description(format: HTML)
   href
   isClosed
   cascadingEndTimeInterval
-  cascadingEndTime {
-    intervalLabel
-  }
 }
 
 fragment AuctionInfoSidebar_sale on Sale {
@@ -1027,24 +1020,6 @@ return {
                   (v2/*: any*/),
                   (v7/*: any*/),
                   (v12/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "SaleCascadingEndTime",
-                    "kind": "LinkedField",
-                    "name": "cascadingEndTime",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "intervalLabel",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
                   {
                     "alias": null,
                     "args": null,

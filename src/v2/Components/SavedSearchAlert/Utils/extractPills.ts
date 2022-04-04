@@ -15,8 +15,7 @@ import {
 } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
-  DefaultFilterPill,
-  NonDefaultFilterPill,
+  FilterPill,
   SavedSearchEntity,
   SavedSearchEntityArtist,
   SearchCriteriaAttributes,
@@ -37,9 +36,9 @@ export const extractPillFromAggregation = (
     const aggregationByValue = keyBy(aggregation.counts, "value")
 
     return (paramValue as string[]).map(value => ({
-      name: value,
-      displayName: aggregationByValue[value]?.name ?? "",
-      filterName: paramName,
+      value,
+      displayValue: aggregationByValue[value]?.name ?? "",
+      field: paramName,
     }))
   }
 
@@ -96,10 +95,10 @@ export const extractPillsFromCriteria = ({
   aggregations: Aggregations
   metric: Metric
 }) => {
-  const pills: NonDefaultFilterPill[] = Object.entries(criteria).map(filter => {
+  const pills: FilterPill[] = Object.entries(criteria).map(filter => {
     const [paramName, paramValue] = filter
 
-    let result: NonDefaultFilterPill | NonDefaultFilterPill[] | null = null
+    let result: FilterPill | FilterPill[] | null = null
 
     if (shouldExtractValueNamesFromAggregation.includes(paramName)) {
       return extractPillFromAggregation({ paramName, paramValue }, aggregations)
@@ -108,9 +107,9 @@ export const extractPillsFromCriteria = ({
     if (paramName in WAYS_TO_BUY_OPTIONS) {
       return (
         paramValue && {
-          filterName: paramName,
-          name: paramName,
-          displayName: WAYS_TO_BUY_OPTIONS[paramName].name,
+          field: paramName,
+          value: paramName,
+          displayValue: WAYS_TO_BUY_OPTIONS[paramName].name,
         }
       )
     }
@@ -120,9 +119,9 @@ export const extractPillsFromCriteria = ({
       case "height": {
         if (paramValue && isCustomValue(paramValue)) {
           result = {
-            filterName: paramName,
-            name: paramValue,
-            displayName: extractSizeLabel({
+            field: paramName,
+            value: paramValue,
+            displayValue: extractSizeLabel({
               prefix: paramName[0],
               value: paramValue,
               metric,
@@ -137,45 +136,45 @@ export const extractPillsFromCriteria = ({
           const sizeItem = find(SIZES, option => value === option.name)
 
           return {
-            filterName: paramName,
-            name: value,
-            displayName: sizeItem?.displayName,
+            field: paramName,
+            value,
+            displayValue: sizeItem?.displayName,
           }
         })
         break
       }
       case "colors": {
         result = paramValue.map(value => ({
-          filterName: paramName,
-          name: value,
-          displayName: find(COLOR_OPTIONS, option => value === option.value)
+          field: paramName,
+          value,
+          displayValue: find(COLOR_OPTIONS, option => value === option.value)
             ?.name,
         }))
         break
       }
       case "attributionClass": {
         result = paramValue.map(value => ({
-          filterName: paramName,
-          name: value,
-          displayName: find(checkboxValues, option => value === option.value)
+          field: paramName,
+          value,
+          displayValue: find(checkboxValues, option => value === option.value)
             ?.name,
         }))
         break
       }
       case "majorPeriods": {
         result = paramValue.map(value => ({
-          filterName: paramName,
-          name: value,
-          displayName: getTimePeriodToDisplay(value),
+          field: paramName,
+          value,
+          displayValue: getTimePeriodToDisplay(value),
         }))
         break
       }
       case "priceRange": {
         if (paramValue && isCustomValue(paramValue)) {
           result = {
-            filterName: paramName,
-            name: paramValue,
-            displayName: extractPriceLabel(paramValue),
+            field: paramName,
+            value: paramValue,
+            displayValue: extractPriceLabel(paramValue),
           }
         }
         break
@@ -192,12 +191,13 @@ export const extractPillsFromCriteria = ({
 
 export const extractArtistPills = (
   artists: SavedSearchEntityArtist[] = []
-): DefaultFilterPill[] => {
+): FilterPill[] => {
   return artists.map(artist => {
     return {
       isDefault: true,
-      name: artist.slug,
-      displayName: artist.name,
+      value: artist.id,
+      displayValue: artist.name,
+      field: "artistIDs",
     }
   })
 }

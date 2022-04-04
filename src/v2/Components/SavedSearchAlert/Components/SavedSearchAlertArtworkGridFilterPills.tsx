@@ -41,15 +41,15 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
       return
     }
 
-    let filterValue = filters![pill.filterName]
+    let filterValue = filters![pill.field]
 
     if (isArray(filterValue)) {
-      filterValue = filterValue.filter(value => value !== pill.name)
+      filterValue = filterValue.filter(value => value !== pill.value)
     } else {
-      filterValue = initialArtworkFilterState[pill.filterName]
+      filterValue = initialArtworkFilterState[pill.field]
     }
 
-    setFilter(pill.filterName as keyof ArtworkFilters, filterValue)
+    setFilter(pill.field as keyof ArtworkFilters, filterValue)
   }
 
   const getAuthModalOptions = (): AuthModalOptions => {

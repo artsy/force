@@ -31,10 +31,8 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
     ? formatIsoDateNoZoneOffset(sale.liveStartAt, 4)
     : sale.endAt
 
-  const cascadingEndTimeIntervalLabel =
-    !!sale.cascadingEndTimeInterval &&
-    !sale.endedAt &&
-    sale.cascadingEndTime?.intervalLabel
+  const showCascadingEndTimeIntervalMessage: boolean =
+    !!sale.cascadingEndTimeInterval && !sale.isClosed
 
   return (
     <>
@@ -48,35 +46,42 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
           <RegisterButtonFragmentContainer sale={sale} me={me} />
         </Column>
       </GridColumns>
+      <Spacer my={4} />
       <Flex alignItems="center" justifyContent="space-between">
         {!!sale.cascadingEndTimeInterval && (
-          <SaleDetailTimerFragmentContainer sale={sale} />
+          <>
+            <SaleDetailTimerFragmentContainer sale={sale} />
+            <Spacer my={2} />
+          </>
         )}
       </Flex>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Flex alignItems="center">
-          <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
+      <Flex alignItems="center">
+        <AuctionDetailsStartTimeQueryRenderer id={sale.internalID} pr={2} />
 
-          {!sale.isClosed && (
-            <Box mt={0.5}>
-              <AddToCalendar
-                startDate={sale.liveStartAt || sale.startAt!}
-                endDate={endDate!}
-                title={sale.name!}
-                description={sale.description!}
-                href={`${getENV("APP_URL")}${sale.href!}`}
-                liveAuctionUrl={liveAuctionUrl}
-                contextModule={ContextModule.auctionHome}
-              />
-            </Box>
-          )}
-        </Flex>
+        {!sale.isClosed && (
+          <Box mt={0.5}>
+            <AddToCalendar
+              startDate={sale.liveStartAt || sale.startAt!}
+              endDate={endDate!}
+              title={sale.name!}
+              description={sale.description!}
+              href={`${getENV("APP_URL")}${sale.href!}`}
+              liveAuctionUrl={liveAuctionUrl}
+              contextModule={ContextModule.auctionHome}
+            />
+          </Box>
+        )}
       </Flex>
 
-      {cascadingEndTimeIntervalLabel && (
-        <Text variant="md" pr={2}>
-          {cascadingEndTimeIntervalLabel}
-        </Text>
+      {showCascadingEndTimeIntervalMessage && (
+        <>
+          <Spacer my={2} />
+          <Text variant="md" pr={2}>
+            {`Lots close at ${
+              sale.cascadingEndTimeInterval! / 60
+            }-minute intervals`}
+          </Text>
+        </>
       )}
 
       <Spacer my={2} />
@@ -107,14 +112,10 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         liveStartAt
         startAt
         endAt
-        endedAt
         description(format: HTML)
         href
         isClosed
         cascadingEndTimeInterval
-        cascadingEndTime {
-          intervalLabel
-        }
       }
     `,
     me: graphql`

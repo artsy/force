@@ -257,6 +257,7 @@ fragment Conversation_conversation on Conversation {
       ... on Artwork {
         id
         isOfferable
+        isOfferableFromInquiry
         internalID
       }
       ...Item_item
@@ -269,6 +270,7 @@ fragment Conversation_conversation on Conversation {
       __typename
       ... on Artwork {
         isOfferable
+        isOfferableFromInquiry
         internalID
         __typename
       }
@@ -931,14 +933,14 @@ v29 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "isOfferableFromInquiry",
   "storageKey": null
 },
 v30 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isOfferableFromInquiry",
+  "name": "href",
   "storageKey": null
 },
 v31 = {
@@ -1665,11 +1667,11 @@ return {
                         "selections": [
                           (v3/*: any*/),
                           (v28/*: any*/),
+                          (v29/*: any*/),
                           (v4/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
-                          (v29/*: any*/),
                           (v30/*: any*/),
                           {
                             "alias": null,
@@ -1752,7 +1754,7 @@ return {
                             "plural": true,
                             "selections": [
                               (v3/*: any*/),
-                              (v29/*: any*/),
+                              (v30/*: any*/),
                               (v5/*: any*/)
                             ],
                             "storageKey": "artists(shallow:true)"
@@ -1773,7 +1775,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v5/*: any*/),
-                              (v29/*: any*/),
+                              (v30/*: any*/),
                               (v3/*: any*/),
                               {
                                 "alias": null,
@@ -1982,7 +1984,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v29/*: any*/),
+                          (v30/*: any*/),
                           (v5/*: any*/),
                           (v13/*: any*/),
                           {
@@ -2018,8 +2020,8 @@ return {
                         "kind": "InlineFragment",
                         "selections": [
                           (v28/*: any*/),
-                          (v4/*: any*/),
-                          (v30/*: any*/)
+                          (v29/*: any*/),
+                          (v4/*: any*/)
                         ],
                         "type": "Artwork",
                         "abstractKey": null

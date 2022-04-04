@@ -25,6 +25,14 @@ jobs:
 
   validate_production_schema:
     executor: node/build
+    parameters:
+      # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
+      practice_web:
+        type: string
+        default: C2TQ4PT8R
+      dev:
+        type: string
+        default: C02BC3HEJ
     steps:
       - yarn/setup
       - run:
@@ -32,15 +40,56 @@ jobs:
           command: node scripts/validateSchemas.js production
       - slack/notify:
           event: fail
+          channel: "<< parameters.practice_web >>, << parameters.dev >>"
           custom: |
             {
               "blocks": [
                 {
                   "type": "section",
-                  "fields": [
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":warning: *Deployment Failed* :warning:"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Hey there! :wave:"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "A Force production deployment failed <$CIRCLE_BUILD_URL|on CircleCI> because its local Metaphysics GraphQL schema is incompatible with Metaphysics' production environment."
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "No worries though! Force deploys are usually unblocked by first deploying Metaphysics with a Deploy PR <https://github.com/artsy/metaphysics/compare/release...staging?expand=1|here on GitHub>."
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "As soon as Metaphysics' production environment is up-to-date, you can \"Rerun worflow from failed\" on the <$CIRCLE_BUILD_URL| CircleCI build page> to continue this Force deployment. :+1:"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
                     {
-                      "type": "plain_text",
-                      "text": "A Force production deploy was attempted and failed due to the local Metaphysics GraphQL schema not being compatible with Metaphysics production. To fix, start a deploy here: https://github.com/artsy/metaphysics/compare/release...staging?expand=1"
+                      "type": "image",
+                      "image_url": "https://assets.brandfolder.com/otz5mn-bw4j2w-6jzqo8/original/circle-logo-badge-black.png",
+                      "alt_text": "CircleCI logo"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "<$CIRCLE_BUILD_URL|$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME@$CIRCLE_BRANCH (#$CIRCLE_BUILD_NUM)> — $CIRCLE_JOB"
                     }
                   ]
                 }
@@ -413,12 +462,6 @@ workflows:
           requires:
             - horizon/block
             - validate_production_schema
-          post-steps:
-            # notify: practice-web, dev
-            - slack/notify:
-                event: fail
-                channel: "C2TQ4PT8R, C02BC3HEJ"
-                template: basic_fail_1
 
       # Other
       - run_deepcrawl_automator:

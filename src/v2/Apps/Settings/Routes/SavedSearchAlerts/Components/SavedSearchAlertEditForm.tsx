@@ -86,10 +86,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
       return
     }
 
-    removeCriteriaValue(
-      pill.filterName as SearchCriteriaAttributeKeys,
-      pill.name
-    )
+    removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
