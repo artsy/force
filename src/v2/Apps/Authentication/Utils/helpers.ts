@@ -135,8 +135,6 @@ export const handleSubmit = async (
 export const setCookies = options => {
   const { afterSignUpAction, destination, submissionId } = options
 
-  console.log({ options })
-
   if (afterSignUpAction) {
     Cookies.set("afterSignUpAction", JSON.stringify(afterSignUpAction))
   }
