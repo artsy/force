@@ -155,15 +155,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
             >
               1Password
             </a>{" "}
-            or{" "}
-            <a
-              href="https://authy.com/features"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Authy
-            </a>
-            .
+            or Google Authenticator.
           </Text>
         </Box>
 
