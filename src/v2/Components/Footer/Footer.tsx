@@ -6,6 +6,7 @@ import {
   Box,
   boxMixin,
   BoxProps,
+  Clickable,
   Column,
   FacebookIcon,
   Flex,
@@ -18,7 +19,7 @@ import {
   useThemeConfig,
   WeChatIcon,
 } from "@artsy/palette"
-import { CCPARequest } from "../CCPARequest"
+import { useCCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 
@@ -243,48 +244,54 @@ const PolicyLinks = () => {
     },
   })
 
+  const { CCPARequestComponent, showCCPARequest } = useCCPARequest()
+
   return (
-    <Text
-      variant={tokens.variant}
-      color="black60"
-      display="flex"
-      alignItems="center"
-      flexWrap="wrap"
-    >
-      <Flex mr={1}>© {new Date().getFullYear()} Artsy</Flex>
+    <>
+      {CCPARequestComponent}
 
-      <FooterLink color="black60" mr={1} to="/terms">
-        Terms of Use
-      </FooterLink>
-
-      <FooterLink color="black60" mr={1} to="/privacy">
-        Privacy Policy
-      </FooterLink>
-
-      <FooterLink color="black60" mr={1} to="/security">
-        Security
-      </FooterLink>
-
-      <FooterLink color="black60" mr={1} to="/conditions-of-sale">
-        Conditions of Sale
-      </FooterLink>
-
-      <FooterLink
+      <Text
+        variant={tokens.variant}
         color="black60"
-        mr={1}
-        to="/page/artsy-curated-auctions-listing-agreement"
+        display="flex"
+        alignItems="center"
+        flexWrap="wrap"
       >
-        ACA Seller’s Agreement
-      </FooterLink>
+        <Flex mr={1}>© {new Date().getFullYear()} Artsy</Flex>
 
-      <FooterLink color="black60" mr={1} to="/buyer-guarantee">
-        Buyer Guarantee
-      </FooterLink>
+        <FooterLink color="black60" mr={1} to="/terms">
+          Terms of Use
+        </FooterLink>
 
-      <Flex mr={1}>
-        <CCPARequest />
-      </Flex>
-    </Text>
+        <FooterLink color="black60" mr={1} to="/privacy">
+          Privacy Policy
+        </FooterLink>
+
+        <FooterLink color="black60" mr={1} to="/security">
+          Security
+        </FooterLink>
+
+        <FooterLink color="black60" mr={1} to="/conditions-of-sale">
+          Conditions of Sale
+        </FooterLink>
+
+        <FooterLink
+          color="black60"
+          mr={1}
+          to="/page/artsy-curated-auctions-listing-agreement"
+        >
+          ACA Seller’s Agreement
+        </FooterLink>
+
+        <FooterLink color="black60" mr={1} to="/buyer-guarantee">
+          Buyer Guarantee
+        </FooterLink>
+
+        <Clickable onClick={showCCPARequest}>
+          Do not sell my personal information
+        </Clickable>
+      </Text>
+    </>
   )
 }
 
