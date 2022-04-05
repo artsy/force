@@ -66,7 +66,6 @@ app.use(require("./apps/basel_week").app)
 
 // Non-profile dynamic vanity url apps
 app.use(require("./apps/articles").app)
-app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
 
 // Apps that need to fetch a profile.

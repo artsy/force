@@ -82,6 +82,7 @@ const redirects = {
   "/user/purchases": "/settings/purchases",
   "/user/payments": "/settings/payments",
   "/user/alerts": "/settings/alerts",
+  "/page/collector-faqs-selling-on-artsy": "/consign",
 }
 
 for (let from in redirects) {

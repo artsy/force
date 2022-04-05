@@ -4,32 +4,33 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type staticPageRoutes_TopLevelQueryVariables = {
-    slug: string;
+export type pageRoutes_PageQueryVariables = {
+    id: string;
 };
-export type staticPageRoutes_TopLevelQueryResponse = {
+export type pageRoutes_PageQueryResponse = {
     readonly page: {
-        readonly " $fragmentRefs": FragmentRefs<"StaticPageApp_page">;
+        readonly " $fragmentRefs": FragmentRefs<"PageApp_page">;
     };
 };
-export type staticPageRoutes_TopLevelQuery = {
-    readonly response: staticPageRoutes_TopLevelQueryResponse;
-    readonly variables: staticPageRoutes_TopLevelQueryVariables;
+export type pageRoutes_PageQuery = {
+    readonly response: pageRoutes_PageQueryResponse;
+    readonly variables: pageRoutes_PageQueryVariables;
 };
 
 
 
 /*
-query staticPageRoutes_TopLevelQuery(
-  $slug: ID!
+query pageRoutes_PageQuery(
+  $id: ID!
 ) {
-  page(id: $slug) {
-    ...StaticPageApp_page
+  page(id: $id) @principalField {
+    ...PageApp_page
     id
   }
 }
 
-fragment StaticPageApp_page on Page {
+fragment PageApp_page on Page {
+  internalID
   name
   content(format: HTML)
 }
@@ -40,14 +41,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug"
+    "name": "id"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "slug"
+    "variableName": "id"
   }
 ];
 return {
@@ -55,7 +56,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "staticPageRoutes_TopLevelQuery",
+    "name": "pageRoutes_PageQuery",
     "selections": [
       {
         "alias": null,
@@ -68,7 +69,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "StaticPageApp_page"
+            "name": "PageApp_page"
           }
         ],
         "storageKey": null
@@ -81,7 +82,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "staticPageRoutes_TopLevelQuery",
+    "name": "pageRoutes_PageQuery",
     "selections": [
       {
         "alias": null,
@@ -91,6 +92,13 @@ return {
         "name": "page",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -124,14 +132,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "de787d71c7ff755788f8991294a50c77",
+    "cacheID": "bbce546c73c13350b02235445c92b516",
     "id": null,
     "metadata": {},
-    "name": "staticPageRoutes_TopLevelQuery",
+    "name": "pageRoutes_PageQuery",
     "operationKind": "query",
-    "text": "query staticPageRoutes_TopLevelQuery(\n  $slug: ID!\n) {\n  page(id: $slug) {\n    ...StaticPageApp_page\n    id\n  }\n}\n\nfragment StaticPageApp_page on Page {\n  name\n  content(format: HTML)\n}\n"
+    "text": "query pageRoutes_PageQuery(\n  $id: ID!\n) {\n  page(id: $id) @principalField {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  name\n  content(format: HTML)\n}\n"
   }
 };
 })();
-(node as any).hash = '73ca758dbf390fca7491db2031e169dc';
+(node as any).hash = '45e5b86c54cb7b4e6e24703a746af08b';
 export default node;
