@@ -47,14 +47,14 @@ export function useFeatureVariant(featureName: string): Variant | null {
   return variant
 }
 
-export function useTrackVariantView({
+export function useTrackFeatureVariant({
   experimentName,
   variantName,
   payload,
 }: VariantTrackingProperties) {
   const router = useRouter()
 
-  const trackVariantView = () => {
+  const trackFeatureVariant = () => {
     // HACK: Temporary hack while we refactor useAnalyticsContext
     // to update upon page navigation.
     const path = router.match.location.pathname
@@ -79,7 +79,7 @@ export function useTrackVariantView({
     }
   }
 
-  return { trackVariantView }
+  return { trackFeatureVariant }
 }
 
 export function shouldTrack(featureName: string, variantName: string): boolean {
