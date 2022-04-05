@@ -11,6 +11,7 @@ import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionFAQRoute_viewer } from "v2/__generated__/AuctionFAQRoute_viewer.graphql"
 import { MetaTags } from "v2/Components/MetaTags"
+import { toStyle } from "v2/Utils/toStyle"
 
 interface AuctionFAQRouteProps {
   viewer: AuctionFAQRoute_viewer
@@ -129,15 +130,6 @@ const computeProps = ({ viewer }: AuctionFAQRouteProps) => {
 
 const HTML: FC<{ children: string }> = ({ children, ...rest }) => {
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
-}
-
-const toStyle = (style: Record<string, string | number | undefined>) => {
-  return Object.entries(style)
-    .map(([key, value]) => {
-      const property = key.replace(/[A-Z]/g, m => `-${m.toLowerCase()}`)
-      return `${property}: ${value};`
-    })
-    .join("")
 }
 
 const Container = styled(Box)`

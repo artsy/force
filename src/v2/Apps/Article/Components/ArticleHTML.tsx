@@ -4,6 +4,7 @@ import { FC } from "react"
 import styled from "styled-components"
 import reactHtmlParser from "@artsy/react-html-parser"
 import { ArticleTooltip, isSupportedArticleTooltip } from "./ArticleTooltip"
+import { toStyle } from "v2/Utils/toStyle"
 
 interface ArticleHTMLProps extends BoxProps {
   children: string
@@ -53,15 +54,6 @@ export const ArticleHTML: FC<ArticleHTMLProps> = ({ children, ...rest }) => {
   }
 
   return <Container dangerouslySetInnerHTML={{ __html: children }} {...rest} />
-}
-
-const toStyle = (style: Record<string, string | number | undefined>) => {
-  return Object.entries(style)
-    .map(([key, value]) => {
-      const property = key.replace(/[A-Z]/g, m => `-${m.toLowerCase()}`)
-      return `${property}: ${value};`
-    })
-    .join("")
 }
 
 const Container = styled(Box)`
