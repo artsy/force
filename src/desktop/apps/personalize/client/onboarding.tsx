@@ -8,7 +8,6 @@ import { data as sd } from "sharify"
 import { createBrowserRouter, makeRouteConfig, Route } from "found"
 import { track } from "v2/System"
 import Events from "v2/Utils/Events"
-import { ConnectSubmissionToUser } from "v2/Utils/ConnectSubmissionToUser"
 
 const bootstrapData = window.__BOOTSTRAP__
 
@@ -30,7 +29,6 @@ const Onboarding = track(null, {
   return (
     <div>
       <SystemContextProvider {...bootstrapData} user={sd.CURRENT_USER}>
-        <ConnectSubmissionToUser />
         <BrowserRouter />
       </SystemContextProvider>
     </div>

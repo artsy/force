@@ -14,6 +14,7 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
+import { useConnectUserToSubmission } from "v2/Utils/Hooks/useConnectUserToSubmission"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
@@ -30,6 +31,7 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = props => {
   useAuthIntent()
   useAuthValidation()
+  useConnectUserToSubmission()
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
