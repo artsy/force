@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
 const PageApp = loadable(
-  () => import(/* webpackChunkName: "buyerBundle" */ "./PageApp"),
+  () => import(/* webpackChunkName: "pageBundle" */ "./PageApp"),
   {
     resolveComponent: component => component.PageAppFragmentContainer,
   }
