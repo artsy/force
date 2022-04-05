@@ -15,7 +15,12 @@ const connectUserToSubmission = async (
 ) => {
   const submissionId = await Cookies.get("submissionId")
 
-  if (!user || !submissionId) return
+  if (!submissionId) return
+
+  if (!user) {
+    Cookies.expire("submissionId")
+    return
+  }
 
   try {
     await addUser({

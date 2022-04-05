@@ -8,7 +8,6 @@ import { redirectIfLoggedIn } from "./Server/redirectIfLoggedIn"
 import { setCookies } from "./Utils/helpers"
 import { redirectPostAuth } from "./Server/redirectPostAuth"
 import { stringify } from "qs"
-import Cookies from "desktop/components/cookies/index"
 
 const ForgotPasswordRoute = loadable(
   () =>
@@ -76,12 +75,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {
-      if (match.location.query.submissionId) {
-        Cookies.set("submissionId", match.location.query.submissionId, {
-          expires: 60 * 60 * 24,
-        })
-      }
-
       setCookies(match.location.query)
       LoginRoute.preload()
     },
@@ -145,12 +138,6 @@ export const authenticationRoutes: AppRouteConfig[] = [
       runAuthMiddleware(props)
     },
     onClientSideRender: ({ match }) => {
-      if (match.location.query.submissionId) {
-        Cookies.set("submissionId", match.location.query.submissionId, {
-          expires: 60 * 60 * 24,
-        })
-      }
-
       setCookies(match.location.query)
       SignupRoute.preload()
     },
