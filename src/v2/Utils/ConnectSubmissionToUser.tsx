@@ -1,27 +1,35 @@
 import { useEffect } from "react"
 import { useSystemContext } from "v2/System"
-import { updateConsignSubmissionMutation } from "v2/Apps/Consign/Routes/SubmissionFlow/Mutations"
-import { UpdateSubmissionMutationInput } from "v2/__generated__/UpdateConsignSubmissionMutation.graphql"
+import { useAddUserToSubmission } from "v2/Apps/Consign/Routes/SubmissionFlow/Mutations"
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("ConnectSubmissionToUser.tsx")
 
 export const ConnectSubmissionToUser: React.FC = () => {
-  const { relayEnvironment, user } = useSystemContext()
+  const { user } = useSystemContext()
+  const { submitMutation: addUser } = useAddUserToSubmission()
   const submissionId = Cookies.get("submissionId")
 
   useEffect(() => {
     const updateSubmissionWithUser = async () => {
-      if (user?.id && user?.email && submissionId && relayEnvironment) {
-        const input: UpdateSubmissionMutationInput = {
-          id: submissionId,
-          userEmail: user.email,
-        }
-
-        // TODO: this will be the new addUserTosubmissionMutation when backends are ready
-        await updateConsignSubmissionMutation(relayEnvironment, input)
+      if (user?.id && user?.email && submissionId) {
+        await addUser({
+          variables: {
+            input: {
+              id: submissionId,
+              userEmail: user.email,
+            },
+          },
+        })
       }
     }
 
-    updateSubmissionWithUser()
-  }, [submissionId, relayEnvironment, user])
+    try {
+      updateSubmissionWithUser()
+    } catch (error) {
+      logger.error("Add user to submission error", error)
+    }
+  }, [submissionId, user, addUser])
 
   return null
 }
