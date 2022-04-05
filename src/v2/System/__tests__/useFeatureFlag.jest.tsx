@@ -1,7 +1,7 @@
 import {
   useFeatureFlag,
   useFeatureVariant,
-  useTrackVariantView,
+  useTrackFeatureVariant,
   shouldTrack,
 } from "../useFeatureFlag"
 import { useSystemContext } from "v2/System/useSystemContext"
@@ -93,12 +93,12 @@ describe("useTrackVariantView", () => {
   })
 
   it("calls the tracking function with the correct payload", () => {
-    const { trackVariantView } = useTrackVariantView({
+    const { trackFeatureVariant } = useTrackFeatureVariant({
       experimentName: "cool-experiment",
       variantName: "experiment",
     })
 
-    trackVariantView()
+    trackFeatureVariant()
 
     expect(window?.analytics?.track).toHaveBeenLastCalledWith(
       "experimentViewed",

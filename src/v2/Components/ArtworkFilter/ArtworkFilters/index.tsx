@@ -14,7 +14,7 @@ import { ArtistsFilter } from "./ArtistsFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import {
   useFeatureVariant,
-  useTrackVariantView,
+  useTrackFeatureVariant,
 } from "v2/System/useFeatureFlag"
 import { useEffect } from "react"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -33,16 +33,16 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
 
   const variant = useFeatureVariant("filters-expanded-experiment")
 
-  const { trackVariantView } = useTrackVariantView({
+  const { trackFeatureVariant } = useTrackFeatureVariant({
     experimentName: "filters-expanded-experiment",
     variantName: variant?.name!,
   })
 
   useEffect(() => {
     if (isArtistPage) {
-      trackVariantView()
+      trackFeatureVariant()
     }
-  }, [isArtistPage, trackVariantView])
+  }, [isArtistPage, trackFeatureVariant])
 
   const isExpanded =
     isArtistPage && variant?.name === "experiment" && !!variant?.enabled
