@@ -4,15 +4,16 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type StaticPageApp_page = {
+export type PageApp_page = {
+    readonly internalID: string;
     readonly name: string;
     readonly content: string | null;
-    readonly " $refType": "StaticPageApp_page";
+    readonly " $refType": "PageApp_page";
 };
-export type StaticPageApp_page$data = StaticPageApp_page;
-export type StaticPageApp_page$key = {
-    readonly " $data"?: StaticPageApp_page$data;
-    readonly " $fragmentRefs": FragmentRefs<"StaticPageApp_page">;
+export type PageApp_page$data = PageApp_page;
+export type PageApp_page$key = {
+    readonly " $data"?: PageApp_page$data;
+    readonly " $fragmentRefs": FragmentRefs<"PageApp_page">;
 };
 
 
@@ -21,8 +22,15 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "StaticPageApp_page",
+  "name": "PageApp_page",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -47,5 +55,5 @@ const node: ReaderFragment = {
   "type": "Page",
   "abstractKey": null
 };
-(node as any).hash = 'c033ab6fba82c3615fec6b8959ac232d';
+(node as any).hash = '94845d296973a411f90edbe8aca444a5';
 export default node;
