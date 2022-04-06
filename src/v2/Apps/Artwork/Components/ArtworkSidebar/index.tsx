@@ -84,7 +84,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
-      {!!shouldShowCreateAlertSection && (
+      {!!shouldShowCreateAlertSection && !hasEnded && (
         <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
       )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
