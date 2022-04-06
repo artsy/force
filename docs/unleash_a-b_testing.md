@@ -3,11 +3,11 @@
 ## Creating a test
 
 1. Log into [Unleash](https://unleash.artsy.net)
-2. Select create feature toggle
+2. Select "Create feature toggle"
 
 - Add a name, description and select "Experiment" as the toggle type.
 
-3. Go to the Strategies tab and pick your strategy (usually this will be Gradual Rollout for experiments).
+3. Go to the "Strategies" tab and pick your rollout strategy (usually this will be Gradual Rollout for experiments).
 
 - Set `stickiness` to `sessionId`
 
@@ -22,13 +22,15 @@
 
 NOTE: if you haven't already, you will need to create an [admin api token](https://docs.getunleash.io/user_guide/api-token) and set it as the value of `Authorization` in the request header.
 
-- You should aim to use `control` and `experiment` as your variant names, and implement the experiment to match the variant names. Reach out to the data team if you have questions on naming.
+- You should aim to use `control` and `experiment` as your variant names. Reach out to the data team if you have questions on naming.
 
-NOTE: `stickiness` needs to be set to `sessionID` on both the strategy and the variant as each has their own independent `stickiness` factor.This ensures a user gets the same treatment when unauthenticated and authenticated.
+5. Go to the "Variant" tab in the Unleash UI and confirm the variants were created and that all fields are correct.
+
+NOTE: `stickiness` needs to be set to `sessionID` on both the strategy and the variant as each has their own independent `stickiness` factor. This ensures a user gets the same treatment when unauthenticated and authenticated.
 
 ### Adding the test to a React Component
 
-Inside the component that you want to access the variants use the `useFeatureVariant` hook.
+Use the `useFeatureVariant` hook in the component that you want to run the experiment.
 
 ```tsx
 import { useFeatureVariant } from "v2/System/useFeatureFlag"
