@@ -393,11 +393,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       return <Separator />
     }
 
-    const shouldDisplayMakeOfferButton: boolean | null = isOfferable
-
-    const shouldDisplayMakeOfferAsPrimary: boolean | null =
-      shouldDisplayMakeOfferButton && isInquireable
-
     return (
       <>
         {inquiryComponent}
@@ -464,6 +459,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             <Separator my={2} />
           )}
 
+          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+
           {isAcquireable && (
             <Button
               width="100%"
@@ -474,7 +471,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               Purchase
             </Button>
           )}
-          {shouldDisplayMakeOfferButton && (
+          {isOfferable && (
             <>
               <Spacer mt={2} />
               <Button
@@ -489,20 +486,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-
           {isInquireable && (
             <>
-              <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
+              <Spacer mt={isOfferable ? 2 : 0} />
               <Button
                 width="100%"
                 size="medium"
                 onClick={this.handleInquiry.bind(this)}
-                variant={
-                  shouldDisplayMakeOfferAsPrimary
-                    ? "secondaryOutline"
-                    : "primaryBlack"
-                }
+                variant={isOfferable ? "secondaryOutline" : "primaryBlack"}
               >
                 Contact Gallery
               </Button>
