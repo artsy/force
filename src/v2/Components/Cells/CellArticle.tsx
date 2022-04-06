@@ -16,9 +16,15 @@ export interface CellArticleProps extends Omit<RouterLinkProps, "to"> {
   article: CellArticle_article
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
+  displayByline?: boolean
 }
 
-const CellArticle: FC<CellArticleProps> = ({ article, mode, ...rest }) => {
+const CellArticle: FC<CellArticleProps> = ({
+  article,
+  mode,
+  displayByline = true,
+  ...rest
+}) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
   const image = article.thumbnailImage?.cropped
 
@@ -56,9 +62,11 @@ const CellArticle: FC<CellArticleProps> = ({ article, mode, ...rest }) => {
         {article.thumbnailTitle ?? article.title}
       </Text>
 
-      <Text variant="md" mt={0.5} lineClamp={1}>
-        By {article.byline}
-      </Text>
+      {displayByline && (
+        <Text variant="md" mt={0.5} lineClamp={1}>
+          By {article.byline}
+        </Text>
+      )}
 
       <Text variant="md" color="black60" mt={0.5}>
         {article.publishedAt}

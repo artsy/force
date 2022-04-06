@@ -26,6 +26,7 @@ import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { geneRoutes } from "v2/Apps/Gene/geneRoutes"
 import { homeRoutes } from "v2/Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
+import { jobsRoutes } from "v2/Apps/Jobs/jobsRoutes"
 import { meetTheSpecialistsRoutes } from "v2/Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { pageRoutes } from "v2/Apps/Page/pageRoutes"
@@ -68,6 +69,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: geneRoutes },
     { routes: homeRoutes },
     { routes: identityVerificationRoutes },
+    { routes: jobsRoutes },
     { routes: meetTheSpecialistsRoutes },
     { routes: orderRoutes },
     { routes: pageRoutes },
