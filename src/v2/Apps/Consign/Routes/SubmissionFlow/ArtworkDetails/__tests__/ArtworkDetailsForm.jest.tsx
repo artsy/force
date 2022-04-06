@@ -109,7 +109,7 @@ describe("ArtworkDetailsForm", () => {
     const sizeFields = wrapper
       .find(LabeledInput)
       .filterWhere(
-        n => n.prop("title") !== "Artist" && n.prop("title") !== "Location"
+        n => n.prop("title") !== "Artist" && n.prop("title") !== "City"
       )
 
     sizeFields.forEach((node: ReactWrapper) => {
@@ -122,7 +122,7 @@ describe("ArtworkDetailsForm", () => {
     const sizeFields = wrapper
       .find(LabeledInput)
       .filterWhere(
-        n => n.prop("title") !== "Artist" && n.prop("title") !== "Location"
+        n => n.prop("title") !== "Artist" && n.prop("title") !== "City"
       )
 
     sizeFields.forEach((node: ReactWrapper) => {
