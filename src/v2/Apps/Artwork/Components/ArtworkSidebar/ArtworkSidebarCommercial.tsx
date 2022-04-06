@@ -382,6 +382,28 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     return <Separator my={2} />
   }
 
+  renderShipAndTaxInformation(artworkEcommerceAvailable: boolean) {
+    const { artwork } = this.props
+
+    return (
+      <>
+        {artworkEcommerceAvailable && artwork.shippingOrigin && (
+          <Text variant="xs" color="black60">
+            Ships from {artwork.shippingOrigin}
+          </Text>
+        )}
+
+        {artworkEcommerceAvailable && artwork.shippingInfo && (
+          <Text variant="xs" color="black60">
+            {artwork.shippingInfo}
+          </Text>
+        )}
+
+        {this.renderSpacer()}
+      </>
+    )
+  }
+
   renderCreateAlertButton() {
     const { artwork } = this.props
 
@@ -470,19 +492,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.shippingOrigin && (
-            <Text variant="xs" color="black60">
-              Ships from {artwork.shippingOrigin}
-            </Text>
-          )}
-
-          {!isSold && artworkEcommerceAvailable && artwork.shippingInfo && (
-            <Text variant="xs" color="black60">
-              {artwork.shippingInfo}
-            </Text>
-          )}
-
-          {isSold ? this.renderCreateAlertButton() : this.renderSpacer()}
+          {isSold
+            ? this.renderCreateAlertButton()
+            : this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
 
           {isAcquireable && (
             <Button
