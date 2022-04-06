@@ -1,3 +1,4 @@
+import sanitizeRedirect from "lib/passport/sanitize-redirect"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
 
 export const checkForRedirect = ({ req, res }) => {
@@ -15,7 +16,7 @@ export const checkForRedirect = ({ req, res }) => {
   if (redirectTo === ("/reset_password" || "/user/delete")) {
     newRedirect = "/"
   } else {
-    newRedirect = redirectTo
+    newRedirect = sanitizeRedirect(redirectTo)
   }
 
   res.locals.sd.AUTHENTICATION_REDIRECT_TO = newRedirect
