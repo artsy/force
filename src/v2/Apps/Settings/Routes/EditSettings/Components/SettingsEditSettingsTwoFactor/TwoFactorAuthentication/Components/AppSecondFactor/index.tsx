@@ -157,11 +157,11 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
             </a>{" "}
             or{" "}
             <a
-              href="https://authy.com/features"
+              href="https://support.google.com/accounts/answer/1066447"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Authy
+              Google Authenticator
             </a>
             .
           </Text>
