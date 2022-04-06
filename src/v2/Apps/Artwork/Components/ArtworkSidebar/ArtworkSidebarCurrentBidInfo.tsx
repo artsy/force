@@ -1,4 +1,4 @@
-import { Clickable, Spacer } from "@artsy/palette"
+import { Button, Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,21 +15,43 @@ import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "v2/Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
 import { lotIsClosed } from "../../Utils/lotIsClosed"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork
   currentBidChanged: boolean
 }
 
-export const BiddingClosedMessage: React.FC<{}> = () => (
-  <>
-    <Separator my={2} />
+export const BiddingClosedMessage: React.FC<{}> = () => {
+  const shouldShowCreateAlertSection = useFeatureFlag(
+    "artwork-page-create-alert"
+  )
 
-    <Text variant="subtitle" color="black100">
-      Bidding closed
-    </Text>
-  </>
-)
+  return (
+    <>
+      <Separator my={2} />
+
+      <Text
+        variant={shouldShowCreateAlertSection ? "lg" : "subtitle"}
+        color="black100"
+      >
+        Bidding closed
+      </Text>
+      {!!shouldShowCreateAlertSection && (
+        <>
+          <Text variant="sm" color="black60" pt={0.5}>
+            Be notified when a similar piece is available
+          </Text>
+          <Spacer my={2} />
+          {/* This is gonna be replaced with the SavedSearchCreateAlert(Base/Container) once it's merged */}
+          <Button width="100%" size="medium">
+            Create Alert
+          </Button>
+        </>
+      )}
+    </>
+  )
+}
 
 // This text pulse animation is used when the current bid changes.
 const pulse = keyframes`
