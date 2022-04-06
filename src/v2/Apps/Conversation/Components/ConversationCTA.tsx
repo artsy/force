@@ -3,8 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
-import { OpenInquiryModalCTAFragmentContainer } from "./OpenInquiryModalCTA"
-
+import { MakeOfferOnInquiryButtonFragmentContainer } from "./MakeOfferOnInquiryButton"
 import { ConversationCTA_conversation } from "v2/__generated__/ConversationCTA_conversation.graphql"
 
 interface ConversationCTAProps {
@@ -32,7 +31,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   if (!activeOrder) {
     if (artwork.isOfferableFromInquiry) {
       return (
-        <OpenInquiryModalCTAFragmentContainer
+        <MakeOfferOnInquiryButtonFragmentContainer
           openInquiryModal={() => openInquiryModal()}
           conversation={conversation}
         />
@@ -100,7 +99,7 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...OpenInquiryModalCTA_conversation
+        ...MakeOfferOnInquiryButton_conversation
       }
     `,
   }

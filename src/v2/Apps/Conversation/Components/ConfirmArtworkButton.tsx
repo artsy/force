@@ -1,9 +1,9 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql, RelayProp } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Button } from "@artsy/palette"
-import { tappedConfirmArtwork } from "@artsy/cohesion"
+import { TappedConfirmArtwork } from "@artsy/cohesion"
 
 import createLogger from "v2/Utils/logger"
 import { MakeInquiryOffer } from "../Mutation/MakeInquiryOfferMutation"
@@ -18,6 +18,8 @@ export interface ConfirmArtworkButtonProps {
   editionSetID: string | null
   disabled?: boolean
   conversationID: string
+  children?: React.ReactNode
+  trackingEvent?: TappedConfirmArtwork
 }
 
 export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props => {
@@ -34,14 +36,19 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props =
   const tracking = useTracking()
 
   const handleCreateInquiryOfferOrder = () => {
-    tracking.trackEvent(tappedConfirmArtwork())
-
-    const { relay, artwork, editionSetID, conversationID } = props
+    const {
+      relay,
+      artwork,
+      editionSetID,
+      conversationID,
+      trackingEvent,
+    } = props
     const { internalID } = artwork
 
     if (isCommittingCreateOfferOrderMutation) {
       return
     }
+    if (trackingEvent) tracking.trackEvent(trackingEvent)
     setIsCommittingCreateOfferOrderMutation(true)
     if (relay && relay.environment) {
       return MakeInquiryOffer(
@@ -77,7 +84,7 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props =
       disabled={props.disabled}
       flexGrow={1}
     >
-      Confirm
+      {props.children || "Confirm"}
     </Button>
   )
 }
