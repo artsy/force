@@ -17,8 +17,6 @@ export const checkForRedirect = ({ req, res }) => {
     newRedirect = "/"
   } else if (!!redirectTo) {
     newRedirect = sanitizeRedirect(redirectTo)
-  } else {
-    newRedirect = redirectTo
   }
 
   res.locals.sd.AUTHENTICATION_REDIRECT_TO = newRedirect
