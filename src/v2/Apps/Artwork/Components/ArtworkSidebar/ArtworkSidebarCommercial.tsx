@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import {
   Box,
   Button,
@@ -31,10 +31,17 @@ import {
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
-import { openAuthModal } from "v2/Utils/openAuthModal"
+import { AuthModalOptions, openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
+import { SavedSearchCreateAlertBase } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertBase"
+import {
+  SavedSearchEntity,
+  SearchCriteriaAttributes,
+} from "v2/Components/SavedSearchAlert/types"
+import { compact } from "lodash"
+import { getAttributionClassValueByLabel } from "v2/Components/SavedSearchAlert/Utils/getAttributionClassValueByLabel"
 
 type EditionSet = NonNullable<
   ArtworkSidebarCommercial_artwork["edition_sets"]
@@ -366,6 +373,26 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
+  getAuthModalOptions(): AuthModalOptions {
+    const { artwork } = this.props
+
+    return {
+      entity: {
+        name: artwork.title!,
+        slug: artwork.slug,
+      },
+      afterSignUpAction: {
+        action: "createAlert",
+        kind: "artworks",
+        objectId: artwork.internalID,
+      },
+      contextModule: ContextModule.artworkSidebar,
+      intent: Intent.createAlert,
+      redirectTo: location.href,
+      copy: "Sign up to create your alert",
+    }
+  }
+
   render() {
     const { artwork, inquiryComponent } = this.props
     const {
@@ -396,6 +423,31 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
     const shouldDisplayMakeOfferAsPrimary: boolean | null =
       shouldDisplayMakeOfferButton && isInquireable
+
+    const attributionClass = getAttributionClassValueByLabel(
+      artwork.attributionClass?.name ?? ""
+    )
+    const artists = compact(artwork.artists)
+    const artistIDs = artists.map(artist => artist.internalID)
+    const placeholder = `Artworks like: ${artwork.title!}`
+    const entity: SavedSearchEntity = {
+      placeholder,
+      artists: artists.map(artist => ({
+        id: artist.internalID,
+        name: artist.name ?? "",
+        slug: artist.slug,
+      })),
+      owner: {
+        type: OwnerType.artwork,
+        slug: artwork.slug,
+        id: artwork.internalID,
+        name: artwork.title!,
+      },
+    }
+    const criteria: SearchCriteriaAttributes = {
+      artistIDs,
+      attributionClass,
+    }
 
     return (
       <>
@@ -487,6 +539,18 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               </Button>
             </>
           )}
+
+          <SavedSearchCreateAlertBase
+            entity={entity}
+            criteria={criteria}
+            getAuthModalOptions={this.getAuthModalOptions}
+            renderButton={({ onClick }) => (
+              <Button width="100%" size="medium" onClick={onClick}>
+                Create Alert
+              </Button>
+            )}
+          />
+
           {isInquireable && (
             <>
               <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
@@ -576,6 +640,15 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
         shippingInfo
         shippingOrigin
         slug
+        title
+        artists {
+          internalID
+          name
+          slug
+        }
+        attributionClass {
+          name
+        }
       }
     `,
   }

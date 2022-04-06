@@ -29,6 +29,15 @@ export type ArtworkSidebarCommercial_artwork = {
     readonly shippingInfo: string | null;
     readonly shippingOrigin: string | null;
     readonly slug: string;
+    readonly title: string | null;
+    readonly artists: ReadonlyArray<{
+        readonly internalID: string;
+        readonly name: string | null;
+        readonly slug: string;
+    } | null> | null;
+    readonly attributionClass: {
+        readonly name: string | null;
+    } | null;
     readonly " $refType": "ArtworkSidebarCommercial_artwork";
 };
 export type ArtworkSidebarCommercial_artwork$data = ArtworkSidebarCommercial_artwork;
@@ -76,7 +85,21 @@ v4 = [
     "name": "display",
     "storageKey": null
   }
-];
+],
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -193,11 +216,38 @@ return {
       "name": "shippingOrigin",
       "storageKey": null
     },
+    (v5/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        (v6/*: any*/),
+        (v5/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": [
+        (v6/*: any*/)
+      ],
       "storageKey": null
     }
   ],
@@ -205,5 +255,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ab0cb8b3634f45072454f9147423dc3a';
+(node as any).hash = 'dc07b655bb81714ac1fe98ccd77621df';
 export default node;
