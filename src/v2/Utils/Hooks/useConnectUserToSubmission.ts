@@ -7,7 +7,7 @@ import { MutationParameters } from "relay-runtime"
 
 const logger = createLogger("Utils/Hooks/useConnectUserToSubmission.tsx")
 
-const connectUserToSubmission = async (
+export const connectUserToSubmission = async (
   user: User,
   addUser: (
     variables: MutationParameters["variables"]
@@ -17,7 +17,7 @@ const connectUserToSubmission = async (
 
   if (!submissionId) return
 
-  if (!user) {
+  if (!user || !user.email) {
     Cookies.expire("submissionId")
     return
   }
@@ -31,10 +31,10 @@ const connectUserToSubmission = async (
         },
       },
     })
-
-    Cookies.expire("submissionId")
   } catch (error) {
     logger.error("Add user to submission error", error)
+  } finally {
+    Cookies.expire("submissionId")
   }
 }
 
