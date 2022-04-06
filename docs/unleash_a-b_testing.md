@@ -22,13 +22,15 @@
 
 NOTE: if you haven't already, you will need to create an `admin` [api token](https://docs.getunleash.io/user_guide/api-token) and set it as the value of `Authorization` in the request header.
 
-- You should aim to use `control` and `experiment` as your variant names. Reach out to the data team if you have questions on naming.
+- You should aim to use `control` and `experiment` as your variant names, and implement the experiment to match the variant names. Reach out to the data team if you have questions on naming.
 
 ### Adding the test to a React Component
 
 Inside the component that you want to access the variants use the `useFeatureVariant` hook.
 
 ```tsx
+import { useFeatureVariant } from "v2/System/useFeatureFlag"
+
 const variant = useFeatureVariant("my-awesome-experiment")
 ```
 
@@ -46,12 +48,31 @@ const variant = useFeatureVariant("my-awesome-experiment")
 }
 ```
 
+Example implementation
+
+```tsx
+function MyComponent({ props }) {
+  const variant = useFeatureVariant("my-awesome-experiment")
+
+  return (
+    <div>
+        {if(variant?.name! === 'experiment')
+          ? <ExperimentComponent />
+          : <ControlComponent />
+        }
+    </div>
+  )
+}
+```
+
 ### Adding tracking data and confirming that it is received
 
 In the component that you added the experiment you just need to add the following:
 
 ```tsx
-  { trackFeatureVarient } = useTrackFeatureVariant({
+import { useFeatureVariant } from "v2/System/useFeatureFlag"
+
+  { trackFeatureVariant } = useTrackFeatureVariant({
     experimentName: "my-awesome-experiment",
     variantName: variant?.name!
     // payload is optional
