@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork = {
     readonly is_in_auction: boolean | null;
+    readonly is_sold: boolean | null;
     readonly sale: {
         readonly is_closed: boolean | null;
         readonly startAt: string | null;
@@ -35,6 +36,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isInAuction",
+      "storageKey": null
+    },
+    {
+      "alias": "is_sold",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSold",
       "storageKey": null
     },
     {
@@ -149,5 +157,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ddc3285b67d5eb1e778e317420ef05fa';
+(node as any).hash = '9564180c111b2e3f87b979f73a94daf3';
 export default node;

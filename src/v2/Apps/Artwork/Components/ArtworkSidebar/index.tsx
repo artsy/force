@@ -32,9 +32,11 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   artwork,
   me,
 }) => {
-  const shouldShowCreateAlertSection = useFeatureFlag(
+  const isCreateAlertButtonForArtworkEnabled = useFeatureFlag(
     "artwork-page-create-alert"
   )
+  const shouldShowCreateAlertSection =
+    isCreateAlertButtonForArtworkEnabled && !artwork.is_sold
 
   // If we have info about the lot end time (cascading), use that.
   const { sale, saleArtwork } = artwork
@@ -96,6 +98,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkSidebar_artwork on Artwork {
         is_in_auction: isInAuction
+        is_sold: isSold
         ...ArtworkSidebarArtists_artwork
         ...ArtworkSidebarMetadata_artwork
         ...ArtworkSidebarAuctionPartnerInfo_artwork
