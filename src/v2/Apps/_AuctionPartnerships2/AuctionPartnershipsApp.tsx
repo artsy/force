@@ -357,13 +357,13 @@ const GlobalAudienceReach: React.FC = () => {
 }
 
 const BiddingTools: React.FC = () => {
-  // const image = resized(
-  //   "http://files.artsy.net/images/auction-devices/temp.png",
-  //   {
-  //     width: 910,
-  //     height: 403,
-  //   }
-  // )
+  const image = resized(
+    "http://files.artsy.net/images/artwork-page_-centered_2.png",
+    {
+      width: 910,
+      height: 403,
+    }
+  )
 
   return (
     <Box>
@@ -386,15 +386,15 @@ const BiddingTools: React.FC = () => {
           </Text>
         </Column>
         <Column span={6}>
-          <ResponsiveBox aspectWidth={2256} aspectHeight={998} maxWidth="100%">
-            {/* <Image
+          <ResponsiveBox aspectWidth={2880} aspectHeight={2298} maxWidth="100%">
+            <Image
               src={image.src}
               width="100%"
               height="100%"
               srcSet={image.srcSet}
               lazyLoad
               alt=""
-            /> */}
+            />
           </ResponsiveBox>
         </Column>
       </GridColumns>
@@ -455,20 +455,17 @@ const ConsignmentsInfo: React.FC = () => {
 
 const VisibilityInfoTop: React.FC = () => {
   const image1 = resized(
-    "http://files.artsy.net/images/auctions-partnerships2desktp.png",
+    "http://files.artsy.net/images/authenticated-desktop.png",
     {
       width: 910,
       height: 539,
     }
   )
 
-  const image2 = resized(
-    "http://files.artsy.net/images/auction-partnership2phone.png",
-    {
-      width: 240,
-      height: 400,
-    }
-  )
+  const image2 = resized("http://files.artsy.net/images/x-2.png", {
+    width: 240,
+    height: 400,
+  })
 
   return (
     <GridColumns>
@@ -502,8 +499,8 @@ const VisibilityInfoTop: React.FC = () => {
           </ResponsiveBox>
           <Spacer mt={4} />
           <ResponsiveBox
-            aspectWidth={1144}
-            aspectHeight={1664}
+            aspectWidth={750}
+            aspectHeight={1640}
             maxWidth={240}
             maxHeight={400}
             mx="auto"
