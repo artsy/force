@@ -47,9 +47,10 @@ export const errorHandlerMiddleware = async (
   res: ArtsyResponse,
   _next: NextFunction
 ) => {
-  // If we are in development mode, we want to display the message & stack trace
   const enableLogging =
     NODE_ENV === "development" || argv.verbose || VERBOSE_LOGGING
+
+  const displayStackTrace = NODE_ENV === "development"
 
   const code = (() => {
     switch (true) {
@@ -91,8 +92,8 @@ export const errorHandlerMiddleware = async (
               <ErrorPage
                 mt={4}
                 code={code}
-                message={enableLogging ? message : undefined}
-                detail={enableLogging ? detail : undefined}
+                message={displayStackTrace ? message : undefined}
+                detail={displayStackTrace ? detail : undefined}
               />
             </HorizontalPadding>
           </AppContainer>
