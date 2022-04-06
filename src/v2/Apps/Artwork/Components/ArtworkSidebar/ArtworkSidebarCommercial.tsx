@@ -367,6 +367,35 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
+  renderSpacer() {
+    const { artwork } = this.props
+    const {
+      is_offerable: isOfferable,
+      is_acquireable: isAcquireable,
+      is_inquireable: isInquireable,
+    } = artwork
+
+    if (isInquireable || isAcquireable || isOfferable) {
+      return artwork.sale_message && <Spacer mt={2} />
+    }
+
+    return <Separator my={2} />
+  }
+
+  renderCreateAlertButton() {
+    const { artwork } = this.props
+
+    return (
+      <>
+        <Text variant="sm" color="black60">
+          Be notified when a similar piece is available
+        </Text>
+        <Spacer mt={2} />
+        <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+      </>
+    )
+  }
+
   render() {
     const { artwork, inquiryComponent } = this.props
     const {
@@ -453,23 +482,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {isSold && (
-            <Text variant="sm" color="black60">
-              Be notified when a similar piece is available
-            </Text>
-          )}
-
-          {isInquireable || isAcquireable || isOfferable ? (
-            artwork.sale_message && <Spacer mt={2} />
-          ) : (
-            <Separator my={2} />
-          )}
-
-          {isSold && (
-            <ArtworkSidebarCreateAlertButtonFragmentContainer
-              artwork={artwork}
-            />
-          )}
+          {isSold ? this.renderCreateAlertButton() : this.renderSpacer()}
 
           {isAcquireable && (
             <Button
