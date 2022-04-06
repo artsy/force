@@ -56,6 +56,12 @@ fragment ArtworkSidebarCommercial_artwork on Artwork {
   shippingInfo
   shippingOrigin
   slug
+  ...ArtworkSidebarCreateAlertButton_artwork
+}
+
+fragment ArtworkSidebarCreateAlertButton_artwork on Artwork {
+  slug
+  internalID
   title
   artists {
     internalID
@@ -398,7 +404,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0da344a9f197d737c9448169d767126",
+    "cacheID": "93b041cdce66a55758f0bead09de3194",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -474,7 +480,7 @@ return {
     },
     "name": "ArtworkSidebarCommercial2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  is_sold: isSold\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
+    "text": "query ArtworkSidebarCommercial2_Test_Query {\n  artwork(id: \"pretty-drawing-111\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n  internalID\n  isOfferableFromInquiry\n  isPriceHidden\n  is_acquireable: isAcquireable\n  is_for_sale: isForSale\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  is_sold: isSold\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  slug\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
   }
 };
 })();
