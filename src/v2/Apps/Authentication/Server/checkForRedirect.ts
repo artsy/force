@@ -15,8 +15,10 @@ export const checkForRedirect = ({ req, res }) => {
   let newRedirect
   if (redirectTo === ("/reset_password" || "/user/delete")) {
     newRedirect = "/"
-  } else {
+  } else if (!!redirectTo) {
     newRedirect = sanitizeRedirect(redirectTo)
+  } else {
+    newRedirect = redirectTo
   }
 
   res.locals.sd.AUTHENTICATION_REDIRECT_TO = newRedirect
