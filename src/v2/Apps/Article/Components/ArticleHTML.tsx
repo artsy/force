@@ -121,8 +121,8 @@ const Container = styled(Box)`
   /* Text treatment unique to article body copy */
   p,
   li {
-    font-size: 18px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 32px;
   }
 
   a {
@@ -140,7 +140,9 @@ const Container = styled(Box)`
     background-color: ${themeGet("colors.black10")};
   }
 
+  /* Text treatment unique to article blockquotes */
   blockquote {
-    ${toStyle({ ...THEME.textVariants.lg })}
+    font-size: 30px;
+    line-height: 40px;
   }
 `
