@@ -26,6 +26,8 @@ export type CreateSubmissionMutationInput = {
     height?: string | null;
     locationCity?: string | null;
     locationCountry?: string | null;
+    locationCountryCode?: string | null;
+    locationPostalCode?: string | null;
     locationState?: string | null;
     medium?: string | null;
     minimumPriceDollars?: number | null;
