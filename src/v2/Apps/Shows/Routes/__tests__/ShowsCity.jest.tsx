@@ -15,7 +15,7 @@ jest.mock("v2/Components/Pagination", () => ({
 }))
 
 jest.mock("v2/Utils/Hooks/useScrollTo", () => ({
-  useScrollTo: () => ({ scrollTo: jest.fn() }),
+  useScrollToElement: () => ({ scrollTo: jest.fn() }),
 }))
 
 const { getWrapper } = setupTestWrapper<ShowsCity_Test_Query>({
