@@ -8,7 +8,7 @@ import {
 import { mediator } from "lib/mediator"
 import { SavedSearchEntity } from "../../types"
 import { OwnerType } from "@artsy/cohesion"
-import { SavedSearchCreateAlertBase } from "../SavedSearchCreateAlertBase"
+import { SavedSearchCreateAlertButtonContainer } from "../SavedSearchCreateAlertButtonContainer"
 import { Button } from "@artsy/palette"
 
 jest.mock("v2/System/useSystemContext")
@@ -49,12 +49,12 @@ const getAuthModalOptions = () => {
   } as AuthModalOptions
 }
 
-describe("SavedSearchCreateAlertBase", () => {
+describe("SavedSearchCreateAlertButtonContainer", () => {
   const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
 
   const renderButton = () => {
     render(
-      <SavedSearchCreateAlertBase
+      <SavedSearchCreateAlertButtonContainer
         entity={savedSearchEntity}
         criteria={{}}
         getAuthModalOptions={getAuthModalOptions}

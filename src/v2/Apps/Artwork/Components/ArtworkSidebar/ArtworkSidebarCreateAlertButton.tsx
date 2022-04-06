@@ -3,7 +3,7 @@ import { Button } from "@artsy/palette"
 import { compact } from "lodash"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SavedSearchCreateAlertBase } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertBase"
+import { SavedSearchCreateAlertButtonContainer } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
@@ -63,7 +63,7 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
   }
 
   return (
-    <SavedSearchCreateAlertBase
+    <SavedSearchCreateAlertButtonContainer
       entity={entity}
       criteria={criteria}
       getAuthModalOptions={getAuthModalOptions}

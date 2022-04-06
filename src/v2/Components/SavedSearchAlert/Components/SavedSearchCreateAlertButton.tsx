@@ -1,11 +1,11 @@
 import React from "react"
 import { BellIcon, Button, ButtonProps } from "@artsy/palette"
 import {
-  SavedSearchCreateAlertBase,
-  SavedSearchCreateAlertBaseProps,
-} from "./SavedSearchCreateAlertBase"
+  SavedSearchCreateAlertButtonContainer,
+  SavedSearchCreateAlertButtonContainerProps,
+} from "./SavedSearchCreateAlertButtonContainer"
 
-export interface Props extends SavedSearchCreateAlertBaseProps {
+export interface Props extends SavedSearchCreateAlertButtonContainerProps {
   buttonProps?: ButtonProps
 }
 
@@ -14,7 +14,7 @@ export const SavedSearchCreateAlertButton: React.FC<Props> = ({
   ...rest
 }) => {
   return (
-    <SavedSearchCreateAlertBase
+    <SavedSearchCreateAlertButtonContainer
       {...rest}
       renderButton={({ onClick }) => (
         <Button

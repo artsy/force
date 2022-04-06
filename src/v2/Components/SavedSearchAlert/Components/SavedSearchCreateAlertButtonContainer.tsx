@@ -20,7 +20,7 @@ interface RenderButtonProps {
   onClick: () => void
 }
 
-export interface SavedSearchCreateAlertBaseProps {
+export interface SavedSearchCreateAlertButtonContainerProps {
   entity: SavedSearchEntity
   criteria: SearchCriteriaAttributes
   metric?: Metric
@@ -28,11 +28,11 @@ export interface SavedSearchCreateAlertBaseProps {
   getAuthModalOptions: () => AuthModalOptions
 }
 
-interface Props extends SavedSearchCreateAlertBaseProps {
+interface Props extends SavedSearchCreateAlertButtonContainerProps {
   renderButton: (props: RenderButtonProps) => JSX.Element
 }
 
-export const SavedSearchCreateAlertBase: React.FC<Props> = ({
+export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   entity,
   criteria,
   metric,
