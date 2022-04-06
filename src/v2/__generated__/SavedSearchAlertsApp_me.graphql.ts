@@ -34,6 +34,11 @@ const node: ReaderFragment = {
       "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "count"
+    },
+    {
+      "defaultValue": "CREATED_AT_DESC",
+      "kind": "LocalArgument",
+      "name": "sort"
     }
   ],
   "kind": "Fragment",
@@ -53,7 +58,13 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": "savedSearchesConnection",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "sort",
+          "variableName": "sort"
+        }
+      ],
       "concreteType": "SearchCriteriaConnection",
       "kind": "LinkedField",
       "name": "__SavedSearchAlertsApp_savedSearchesConnection_connection",
@@ -139,5 +150,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'dc92dbbcb5472a2788be298b9ccb7532';
+(node as any).hash = 'a85e13be4e90808804eb46649153d8df';
 export default node;

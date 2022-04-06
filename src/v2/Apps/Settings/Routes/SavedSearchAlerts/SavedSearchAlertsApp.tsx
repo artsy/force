@@ -37,6 +37,10 @@ interface SavedSearchAlertsAppProps {
   relay: RelayPaginationProp
 }
 
+interface RefetchVariables {
+  sort?: string
+}
+
 export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   me,
   relay,
@@ -49,6 +53,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [sort, setSort] = useState("CREATED_AT_DESC")
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
@@ -57,9 +62,17 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     setEditAlertEntity(null)
   }
 
+  const refetch = (variables?: RefetchVariables) => {
+    const relayRefetchVariables = {
+      sort: variables?.sort ?? sort,
+    }
+
+    relay.refetchConnection(10, null, relayRefetchVariables)
+  }
+
   const closeEditFormAndRefetch = () => {
     closeEditForm()
-    relay.refetchConnection(10)
+    refetch()
   }
 
   const closeDeleteModal = () => {
@@ -108,6 +121,13 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
+  const handleSortSelect = (value: string) => {
+    setSort(value)
+    refetch({
+      sort: value,
+    })
+  }
+
   const list = (
     <>
       <Join separator={<Separator color="black15" />}>
@@ -146,7 +166,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <StickyProvider>
       <MetaTags title="Your Alerts | Artsy" pathname="/settings/alerts" />
 
-      <SavedSearchAlertHeader />
+      <SavedSearchAlertHeader selected={sort} onSortSelect={handleSortSelect} />
 
       <Box mx={[-2, 0]}>
         <Separator color="black15" />
@@ -218,8 +238,9 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
         @argumentDefinitions(
           after: { type: "String" }
           count: { type: "Int", defaultValue: 10 }
+          sort: { type: "SavedSearchesSortEnum", defaultValue: CREATED_AT_DESC }
         ) {
-        savedSearchesConnection(first: $count, after: $after)
+        savedSearchesConnection(first: $count, after: $after, sort: $sort)
           @connection(key: "SavedSearchAlertsApp_savedSearchesConnection") {
           edges {
             node {
@@ -244,9 +265,14 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
       }
     },
     query: graphql`
-      query SavedSearchAlertsAppRefetchQuery($after: String, $count: Int!) {
+      query SavedSearchAlertsAppRefetchQuery(
+        $after: String
+        $count: Int!
+        $sort: SavedSearchesSortEnum
+      ) {
         me {
-          ...SavedSearchAlertsApp_me @arguments(after: $after, count: $count)
+          ...SavedSearchAlertsApp_me
+            @arguments(after: $after, count: $count, sort: $sort)
         }
       }
     `,

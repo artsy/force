@@ -65,7 +65,7 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
 }
 
 fragment SavedSearchAlertsApp_me on Me {
-  savedSearchesConnection(first: 10) {
+  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {
     edges {
       node {
         internalID
@@ -88,6 +88,11 @@ var v0 = [
     "kind": "Literal",
     "name": "first",
     "value": 10
+  },
+  {
+    "kind": "Literal",
+    "name": "sort",
+    "value": "CREATED_AT_DESC"
   }
 ];
 return {
@@ -258,12 +263,14 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:10)"
+            "storageKey": "savedSearchesConnection(first:10,sort:\"CREATED_AT_DESC\")"
           },
           {
             "alias": null,
             "args": (v0/*: any*/),
-            "filters": null,
+            "filters": [
+              "sort"
+            ],
             "handle": "connection",
             "key": "SavedSearchAlertsApp_savedSearchesConnection",
             "kind": "LinkedHandle",
@@ -282,12 +289,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0fd17dd72036a1d729c8a0b5a0eef135",
+    "cacheID": "fd3ebff13beb53901ec6c118e7c25673",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
