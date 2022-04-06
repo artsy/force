@@ -7,8 +7,8 @@ import {
   Sup,
   Message,
 } from "@artsy/palette"
-import { useMemo, useRef, useState } from "react";
-import * as React from "react";
+import { useMemo, useRef, useState } from "react"
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ShowsHeaderFragmentContainer } from "../Components/ShowsHeader"
 import { ShowsCity_viewer } from "v2/__generated__/ShowsCity_viewer.graphql"
@@ -19,7 +19,7 @@ import { DateTime } from "luxon"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { FragmentRefs } from "relay-runtime"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
-import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 
 interface ShowsCityProps {
   viewer: ShowsCity_viewer
@@ -61,7 +61,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
   const [loading, setLoading] = useState(false)
 
   const currentShowsRef = useRef<HTMLDivElement | null>(null)
-  const { scrollTo } = useScrollTo({
+  const { scrollTo } = useScrollToElement({
     selectorOrRef: currentShowsRef,
     offset: 20,
   })

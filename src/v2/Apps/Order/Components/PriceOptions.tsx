@@ -13,7 +13,7 @@ import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork } from "v2/__generated__/PriceOptions_artwork.graphql"
 import { PriceOptions_order } from "v2/__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
-import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -117,7 +117,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     : getPercentageOptions()
   const minPrice = priceOptions[2]?.value!
 
-  const { scrollTo } = useScrollTo({
+  const { scrollTo } = useScrollToElement({
     selectorOrRef: "#scrollTo--price-option-custom",
     behavior: "smooth",
   })
