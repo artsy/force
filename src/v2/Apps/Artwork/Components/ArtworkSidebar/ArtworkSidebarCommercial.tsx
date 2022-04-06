@@ -447,9 +447,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.shippingInfo && (
+          {!isSold && artworkEcommerceAvailable && artwork.shippingInfo && (
             <Text variant="xs" color="black60">
               {artwork.shippingInfo}
+            </Text>
+          )}
+
+          {isSold && (
+            <Text variant="sm" color="black60">
+              Be notified when a similar piece is available
             </Text>
           )}
 
@@ -459,7 +465,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             <Separator my={2} />
           )}
 
-          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+          {isSold && (
+            <ArtworkSidebarCreateAlertButtonFragmentContainer
+              artwork={artwork}
+            />
+          )}
 
           {isAcquireable && (
             <Button
@@ -471,6 +481,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               Purchase
             </Button>
           )}
+
           {isOfferable && (
             <>
               <Spacer mt={2} />
@@ -488,12 +499,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
           {isInquireable && (
             <>
-              <Spacer mt={isOfferable ? 2 : 0} />
+              <Spacer mt={isOfferable || isSold ? 2 : 0} />
               <Button
                 width="100%"
                 size="medium"
                 onClick={this.handleInquiry.bind(this)}
-                variant={isOfferable ? "secondaryOutline" : "primaryBlack"}
+                variant={
+                  isOfferable || isSold ? "secondaryOutline" : "primaryBlack"
+                }
               >
                 Contact Gallery
               </Button>
