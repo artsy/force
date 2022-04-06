@@ -7,7 +7,7 @@ import {
 } from "v2/Utils/openAuthModal"
 import {
   SavedSearchCreateAlertButton,
-  SavedSearchCreateAlertButtonProps,
+  Props,
 } from "../SavedSearchCreateAlertButton"
 import { mediator } from "lib/mediator"
 import { SavedSearchEntity } from "../../types"
@@ -64,7 +64,7 @@ describe("SavedSearchCreateAlertButton", () => {
     )
   }
 
-  const CreateAlertButtonTest = (props: SavedSearchCreateAlertButtonProps) => {
+  const CreateAlertButtonTest = (props: Props) => {
     return <SavedSearchCreateAlertButton {...props} />
   }
 
