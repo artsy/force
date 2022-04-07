@@ -49,7 +49,6 @@ app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 
 app.use(require("./apps/unsupported_browser"))
-app.use(require("./apps/style_guide"))
 app.use(require("./apps/static"))
 app.use(require("./apps/clear_cache"))
 app.use(require("./apps/sitemaps"))
