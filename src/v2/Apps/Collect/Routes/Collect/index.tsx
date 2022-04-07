@@ -1,9 +1,9 @@
 import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import { Match, Router } from "found"
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
@@ -13,7 +13,7 @@ import { BreadCrumbList } from "v2/Components/Seo"
 
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 
-import { Collect_marketingHubCollections } from "v2/__generated__/Collect_marketingHubCollections.graphql"
+import { Collect_marketingCollections } from "v2/__generated__/Collect_marketingCollections.graphql"
 import { collectRoutes_ArtworkFilterQueryResponse } from "v2/__generated__/collectRoutes_ArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "v2/Components/CollectionsHubsNav"
 import { ArtworkFilter } from "v2/Components/ArtworkFilter"
@@ -26,14 +26,14 @@ import {
 export interface CollectAppProps {
   match: Match
   router: Router
-  marketingHubCollections: Collect_marketingHubCollections
+  marketingCollections: Collect_marketingCollections
   viewer: collectRoutes_ArtworkFilterQueryResponse["viewer"]
   filterArtworks: collectRoutes_ArtworkFilterQueryResponse["filterArtworks"]
 }
 
 export const CollectApp: React.FC<CollectAppProps> = ({
   filterArtworks,
-  marketingHubCollections,
+  marketingCollections,
   match: { location, params },
   viewer,
 }) => {
@@ -46,11 +46,11 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
   let canonicalHref
   if (medium) {
-    canonicalHref = `${sd.APP_URL}/collect/${medium}`
+    canonicalHref = `${getENV("APP_URL")}/collect/${medium}`
   } else if (color) {
-    canonicalHref = `${sd.APP_URL}/collect/color/${color}`
+    canonicalHref = `${getENV("APP_URL")}/collect/color/${color}`
   } else {
-    canonicalHref = `${sd.APP_URL}/collect`
+    canonicalHref = `${getENV("APP_URL")}/collect`
   }
 
   const items = [{ name: "Collect", path: "/collect" }]
@@ -65,10 +65,10 @@ export const CollectApp: React.FC<CollectAppProps> = ({
     <>
       <FrameWithRecentlyViewed>
         <Title>{title}</Title>
-        <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
+        <Meta property="og:url" content={`${getENV("APP_URL")}/collect`} />
         <Meta
           property="og:image"
-          content={`${sd.APP_URL}/images/og_image.jpg`}
+          content={`${getENV("APP_URL")}/images/og_image.jpg`}
         />
         <Meta name="description" content={description} />
         <Meta property="og:description" content={description} />
@@ -96,9 +96,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
           <Separator my={4} />
 
-          <CollectionsHubsNav
-            marketingHubCollections={marketingHubCollections}
-          />
+          <CollectionsHubsNav marketingCollections={marketingCollections} />
 
           <Spacer my={6} />
         </Box>
@@ -151,10 +149,10 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 }
 
 export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
-  marketingHubCollections: graphql`
-    fragment Collect_marketingHubCollections on MarketingCollection
+  marketingCollections: graphql`
+    fragment Collect_marketingCollections on MarketingCollection
       @relay(plural: true) {
-      ...CollectionsHubsNav_marketingHubCollections
+      ...CollectionsHubsNav_marketingCollections
     }
   `,
 })

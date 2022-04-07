@@ -14,7 +14,6 @@ import { Box } from "@artsy/palette"
 
 export { StitchWrapper } from "./StitchWrapper"
 export { NavBar } from "./NavBar"
-export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
 export {
   TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
 } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication"

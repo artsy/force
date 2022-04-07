@@ -4,16 +4,16 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type CollectionsHubsHomepageNav_marketingHubCollections = ReadonlyArray<{
+export type CollectionsHubsNav_marketingCollections = ReadonlyArray<{
     readonly slug: string;
     readonly title: string;
     readonly thumbnail: string | null;
-    readonly " $refType": "CollectionsHubsHomepageNav_marketingHubCollections";
+    readonly " $refType": "CollectionsHubsNav_marketingCollections";
 }>;
-export type CollectionsHubsHomepageNav_marketingHubCollections$data = CollectionsHubsHomepageNav_marketingHubCollections;
-export type CollectionsHubsHomepageNav_marketingHubCollections$key = ReadonlyArray<{
-    readonly " $data"?: CollectionsHubsHomepageNav_marketingHubCollections$data;
-    readonly " $fragmentRefs": FragmentRefs<"CollectionsHubsHomepageNav_marketingHubCollections">;
+export type CollectionsHubsNav_marketingCollections$data = CollectionsHubsNav_marketingCollections;
+export type CollectionsHubsNav_marketingCollections$key = ReadonlyArray<{
+    readonly " $data"?: CollectionsHubsNav_marketingCollections$data;
+    readonly " $fragmentRefs": FragmentRefs<"CollectionsHubsNav_marketingCollections">;
 }>;
 
 
@@ -24,7 +24,7 @@ const node: ReaderFragment = {
   "metadata": {
     "plural": true
   },
-  "name": "CollectionsHubsHomepageNav_marketingHubCollections",
+  "name": "CollectionsHubsNav_marketingCollections",
   "selections": [
     {
       "alias": null,
@@ -51,5 +51,5 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = '34bd7792d5ea1762efa545928881b4b5';
+(node as any).hash = '8185f2013a226a3705b5221e4d675b5a';
 export default node;

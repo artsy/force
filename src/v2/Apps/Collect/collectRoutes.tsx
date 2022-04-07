@@ -146,8 +146,17 @@ function getArtworkFilterQuery() {
       $aggregations: [ArtworkAggregation]
       $shouldFetchCounts: Boolean!
     ) {
-      marketingHubCollections {
-        ...Collect_marketingHubCollections
+      marketingCollections(
+        slugs: [
+          "contemporary"
+          "post-war"
+          "impressionist-and-modern"
+          "pre-20th-century"
+          "photography"
+          "street-art"
+        ]
+      ) {
+        ...Collect_marketingCollections
       }
       filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
