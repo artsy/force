@@ -15,7 +15,7 @@ import { buyerGuaranteeRoutes } from "v2/Apps/BuyerGuarantee/buyerGuaranteeRoute
 import { categoriesRoutes } from "./Apps/Categories/categoriesRoutes"
 import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
-import { contactRoutes } from "./Apps/_Contact2/contactRoutes"
+import { contactRoutes } from "./Apps/Contact/contactRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
 import { debugRoutes } from "v2/Apps/Debug/debugRoutes"
 import { exampleRoutes } from "v2/Apps/Example/exampleRoutes"
