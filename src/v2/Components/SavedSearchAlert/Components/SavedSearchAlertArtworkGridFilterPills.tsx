@@ -77,8 +77,10 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
         criteria={criteria}
         metric={metric}
         aggregations={aggregations}
-        ml={PILL_HORIZONTAL_MARGIN_SIZE}
         getAuthModalOptions={getAuthModalOptions}
+        buttonProps={{
+          ml: PILL_HORIZONTAL_MARGIN_SIZE,
+        }}
       />
     </Flex>
   )

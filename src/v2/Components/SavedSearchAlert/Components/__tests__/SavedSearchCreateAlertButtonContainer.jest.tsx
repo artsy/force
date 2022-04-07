@@ -5,13 +5,11 @@ import {
   openAuthToSatisfyIntent,
   AuthModalOptions,
 } from "v2/Utils/openAuthModal"
-import {
-  SavedSearchCreateAlertButton,
-  SavedSearchCreateAlertButtonProps,
-} from "../SavedSearchCreateAlertButton"
 import { mediator } from "lib/mediator"
 import { SavedSearchEntity } from "../../types"
 import { OwnerType } from "@artsy/cohesion"
+import { SavedSearchCreateAlertButtonContainer } from "../SavedSearchCreateAlertButtonContainer"
+import { Button } from "@artsy/palette"
 
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
@@ -51,21 +49,20 @@ const getAuthModalOptions = () => {
   } as AuthModalOptions
 }
 
-describe("SavedSearchCreateAlertButton", () => {
+describe("SavedSearchCreateAlertButtonContainer", () => {
   const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
 
   const renderButton = () => {
     render(
-      <CreateAlertButtonTest
+      <SavedSearchCreateAlertButtonContainer
         entity={savedSearchEntity}
         criteria={{}}
         getAuthModalOptions={getAuthModalOptions}
+        renderButton={({ onClick }) => (
+          <Button onClick={onClick}>Create Alert</Button>
+        )}
       />
     )
-  }
-
-  const CreateAlertButtonTest = (props: SavedSearchCreateAlertButtonProps) => {
-    return <SavedSearchCreateAlertButton {...props} />
   }
 
   const trackEvent = jest.fn()

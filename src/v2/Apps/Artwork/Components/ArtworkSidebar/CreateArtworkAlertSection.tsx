@@ -7,12 +7,12 @@ import {
   SearchCriteriaAttributes,
 } from "v2/Components/SavedSearchAlert/types"
 import { compact } from "lodash"
-import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertButton"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
+import { getAttributionClassValueByLabel } from "v2/Components/SavedSearchAlert/Utils/getAttributionClassValueByLabel"
 
 interface CreateArtworkAlertSectionProps {
   artwork: CreateArtworkAlertSection_artwork
@@ -24,7 +24,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
   const artists = compact(artwork.artists)
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
-  const attributionClass = getAttributionClassIdByLabel(
+  const attributionClass = getAttributionClassValueByLabel(
     artwork.attributionClass?.name ?? ""
   )
 
@@ -109,15 +109,3 @@ export const CreateArtworkAlertSectionFragmentContainer = createFragmentContaine
     `,
   }
 )
-
-export const getAttributionClassIdByLabel = (label: string) => {
-  const option = checkboxValues.find(
-    value => value.name.toLowerCase() === label.toLowerCase()
-  )
-
-  if (option?.value) {
-    return [option.value]
-  }
-
-  return []
-}

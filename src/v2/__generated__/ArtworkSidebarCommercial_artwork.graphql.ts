@@ -29,6 +29,7 @@ export type ArtworkSidebarCommercial_artwork = {
     readonly shippingInfo: string | null;
     readonly shippingOrigin: string | null;
     readonly slug: string;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
     readonly " $refType": "ArtworkSidebarCommercial_artwork";
 };
 export type ArtworkSidebarCommercial_artwork$data = ArtworkSidebarCommercial_artwork;
@@ -199,11 +200,16 @@ return {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ab0cb8b3634f45072454f9147423dc3a';
+(node as any).hash = '40d8e070c3175f02d1f53a7a659335b8';
 export default node;

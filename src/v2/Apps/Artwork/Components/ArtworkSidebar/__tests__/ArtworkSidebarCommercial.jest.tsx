@@ -50,6 +50,7 @@ describe("ArtworkSidebarCommercial", () => {
           user={user}
           mediator={mediator}
           relay={{ environment: {} } as RelayProp}
+          isCreateAlertButtonEnabled={true} // TODO: Remove it when "artwork-page-create-alert" flag is released
           {...otherProps}
         />
       </SystemContextProvider>
@@ -235,5 +236,13 @@ describe("ArtworkSidebarCommercial", () => {
 
     component.find(ModalButton).simulate("click")
     expect(component.find(ErrorModal).props().show).toBe(false)
+  })
+
+  it("displays 'Create Alert' button when artwork is sold", () => {
+    const artwork = Object.assign({ is_sold: true }, ArtworkBuyNow)
+
+    const wrapper = getWrapper(artwork)
+
+    expect(wrapper.text()).toContain("Create Alert")
   })
 })

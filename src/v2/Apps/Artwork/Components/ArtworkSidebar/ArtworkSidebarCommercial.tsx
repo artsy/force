@@ -35,6 +35,8 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
+import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSidebarCreateAlertButton"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 type EditionSet = NonNullable<
   ArtworkSidebarCommercial_artwork["edition_sets"]
@@ -46,6 +48,7 @@ export interface ArtworkSidebarCommercialContainerProps
   mediator: Mediator
   router?: Router
   user?: User
+  isCreateAlertButtonEnabled?: boolean
 }
 
 export interface ArtworkSidebarCommercialContainerState {
@@ -366,8 +369,59 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
+  renderSpacer() {
+    const { artwork } = this.props
+    const {
+      is_offerable: isOfferable,
+      is_acquireable: isAcquireable,
+      is_inquireable: isInquireable,
+    } = artwork
+
+    if (isInquireable || isAcquireable || isOfferable) {
+      return artwork.sale_message && <Spacer mt={2} />
+    }
+
+    return <Separator my={2} />
+  }
+
+  renderShipAndTaxInformation(artworkEcommerceAvailable: boolean) {
+    const { artwork } = this.props
+
+    return (
+      <>
+        {artworkEcommerceAvailable && artwork.shippingOrigin && (
+          <Text variant="xs" color="black60">
+            Ships from {artwork.shippingOrigin}
+          </Text>
+        )}
+
+        {artworkEcommerceAvailable && artwork.shippingInfo && (
+          <Text variant="xs" color="black60">
+            {artwork.shippingInfo}
+          </Text>
+        )}
+
+        {this.renderSpacer()}
+      </>
+    )
+  }
+
+  renderCreateAlertButton() {
+    const { artwork } = this.props
+
+    return (
+      <>
+        <Text variant="sm" color="black60">
+          Be notified when a similar piece is available
+        </Text>
+        <Spacer mt={2} />
+        <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+      </>
+    )
+  }
+
   render() {
-    const { artwork, inquiryComponent } = this.props
+    const { artwork, inquiryComponent, isCreateAlertButtonEnabled } = this.props
     const {
       is_offerable: isOfferable,
       is_acquireable: isAcquireable,
@@ -392,10 +446,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       return <Separator />
     }
 
-    const shouldDisplayMakeOfferButton: boolean | null = isOfferable
-
-    const shouldDisplayMakeOfferAsPrimary: boolean | null =
-      shouldDisplayMakeOfferButton && isInquireable
+    const shouldShowCreateAlertButton = isCreateAlertButtonEnabled && isSold
 
     return (
       <>
@@ -445,23 +496,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {artworkEcommerceAvailable && artwork.shippingOrigin && (
-            <Text variant="xs" color="black60">
-              Ships from {artwork.shippingOrigin}
-            </Text>
-          )}
-
-          {artworkEcommerceAvailable && artwork.shippingInfo && (
-            <Text variant="xs" color="black60">
-              {artwork.shippingInfo}
-            </Text>
-          )}
-
-          {isInquireable || isAcquireable || isOfferable ? (
-            artwork.sale_message && <Spacer mt={2} />
-          ) : (
-            <Separator my={2} />
-          )}
+          {shouldShowCreateAlertButton
+            ? this.renderCreateAlertButton()
+            : this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
 
           {isAcquireable && (
             <Button
@@ -473,7 +510,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               Purchase
             </Button>
           )}
-          {shouldDisplayMakeOfferButton && (
+
+          {isOfferable && (
             <>
               <Spacer mt={2} />
               <Button
@@ -487,15 +525,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               </Button>
             </>
           )}
+
           {isInquireable && (
             <>
-              <Spacer mt={shouldDisplayMakeOfferAsPrimary ? 2 : 0} />
+              <Spacer mt={isOfferable || shouldShowCreateAlertButton ? 2 : 0} />
               <Button
                 width="100%"
                 size="medium"
                 onClick={this.handleInquiry.bind(this)}
                 variant={
-                  shouldDisplayMakeOfferAsPrimary
+                  isOfferable || shouldShowCreateAlertButton
                     ? "secondaryOutline"
                     : "primaryBlack"
                 }
@@ -528,6 +567,7 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = ({
   const { mediator, router, user } = useContext(SystemContext)
 
   const inquiry = useInquiry({ artworkID: artwork.internalID })
+  const isCreateAlertButtonEnabled = useFeatureFlag("artwork-page-create-alert")
 
   return (
     <ArtworkSidebarCommercialContainer
@@ -536,6 +576,7 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = ({
       mediator={mediator!}
       router={router!}
       user={user}
+      isCreateAlertButtonEnabled={!!isCreateAlertButtonEnabled}
       {...inquiry}
       {...rest}
     />
@@ -576,6 +617,7 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
         shippingInfo
         shippingOrigin
         slug
+        ...ArtworkSidebarCreateAlertButton_artwork
       }
     `,
   }
