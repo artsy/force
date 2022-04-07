@@ -1876,7 +1876,7 @@ type Artwork implements Node & Searchable & Sellable {
   pricePaid: Money
   pricingContext: AnalyticsPricingContext
 
-  # Returns true if this work is eligible automatically opted into Artsy Domestic Shipping
+  # Returns true if this work is eligible to be automatically opted into Artsy Domestic Shipping
   processWithArtaShipping: Boolean
     @deprecated(
       reason: "Prefer to use `processWithArtsyShippingDomestic`. [Will be removed in v2]"
