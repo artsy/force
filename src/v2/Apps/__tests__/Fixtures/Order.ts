@@ -125,7 +125,7 @@ const OrderArtworkNode = {
   },
 }
 
-const ArtaEnabledOrderArtworkNode = {
+const ArtsyShippingDomesticOrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
@@ -349,7 +349,7 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
-          ...ArtaEnabledOrderArtworkNode,
+          ...ArtsyShippingDomesticOrderArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -455,7 +455,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
               },
             ],
           },
-          ...ArtaEnabledOrderArtworkNode,
+          ...ArtsyShippingDomesticOrderArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -549,7 +549,7 @@ export const UntouchedBuyOrderWithSelectedShippingQuote = {
               },
             ],
           },
-          ...ArtaEnabledOrderArtworkNode,
+          ...ArtsyShippingDomesticOrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
