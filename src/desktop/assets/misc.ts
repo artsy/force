@@ -5,8 +5,6 @@ require("blueimp-file-upload")
 require("jquery.iframe-transport")
 
 const routes = {
-  "/contact": require("../apps/contact/client/index.coffee").init,
-
   "/jobs": require("../apps/jobs/client/index.coffee").init,
 }
 
