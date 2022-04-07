@@ -27,7 +27,6 @@ const REDIRECTS = {
   "/about/page/events": "/press/in-the-media",
   "/about/jobs": "/jobs",
   "/lama": "/auction/los-angeles-modern-auctions-march-2015", // HACK: Redirect the "auction" profile to the LAMA auction
-  "/dev": "/inquiry/development",
   "/artist": "/artists",
   "/job/mobile-engineer": "/article/artsy-jobs-mobile-engineer",
   "/article/jesse-kedy-digital-marketing-manager-organic-growth-06-22-15":
