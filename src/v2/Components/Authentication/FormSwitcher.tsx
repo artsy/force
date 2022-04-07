@@ -15,6 +15,7 @@ import {
   ModalType,
   SubmitHandler,
 } from "./Types"
+import sanitizeRedirect from "lib/passport/sanitize-redirect"
 
 export interface FormSwitcherProps {
   error?: string
@@ -146,7 +147,9 @@ export class FormSwitcher extends Component<FormSwitcherProps, State> {
       },
       options.redirectTo || options["redirect-to"]
         ? {
-            "redirect-to": options.redirectTo || options["redirect-to"],
+            "redirect-to": sanitizeRedirect(
+              options.redirectTo || options["redirect-to"]
+            ),
           }
         : null,
       options.intent
