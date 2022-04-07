@@ -22,6 +22,7 @@ import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
 import { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 import { Environment, RecordSource, Store } from "relay-runtime"
+// eslint-disable-next-line no-restricted-imports
 import { GlobalData } from "sharify"
 import { mockStripe } from "v2/DevTools/mockStripe"
 
@@ -40,9 +41,6 @@ jest.mock("@stripe/stripe-js", () => {
     _mockReset: () => (mock = mockStripe()),
   }
 })
-jest.mock("desktop/components/inquiry_questionnaire/index.coffee", () =>
-  jest.fn()
-)
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
