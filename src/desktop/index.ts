@@ -36,12 +36,10 @@ app.use(
  */
 
 app.use(require("./apps/editorial_features"))
-app.use(require("./apps/apply"))
 // FIXME: Remove once JSONPage + new app shell is worked out
 app.use(require("./apps/art_keeps_going/server").app)
 app.use(require("./apps/contact"))
 app.use(require("./apps/eoy_2016"))
-app.use(require("./apps/inquiry"))
 app.use(require("./apps/partnerships"))
 app.use(require("./apps/geo"))
 app.use(require("./apps/jobs"))
@@ -49,7 +47,6 @@ app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 
 app.use(require("./apps/unsupported_browser"))
-app.use(require("./apps/style_guide"))
 app.use(require("./apps/static"))
 app.use(require("./apps/clear_cache"))
 app.use(require("./apps/sitemaps"))
