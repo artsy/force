@@ -66,12 +66,15 @@ describe("TrendingLotsRail", () => {
 
   it("skips closed lots", () => {
     const wrapper = getWrapper({
-      SaleArtworksConnection: () => ({
-        edges: [{ node: { sale: { isClosed: true } } }],
-      }),
+      Boolean: () => true,
+      SaleArtworksConnection: () => {
+        return {
+          edges: [{ node: { sale: { isClosed: true } } }],
+        }
+      },
     })
 
-    expect(wrapper.html()).toContain("No Works To Show")
+    expect(wrapper.text()).toContain("No Works To Show")
   })
 
   it("tracks clicks", () => {
