@@ -43,7 +43,7 @@ export type Shipping_order = {
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
-                    readonly processWithArtaShipping: boolean | null;
+                    readonly processWithArtsyShippingDomestic: boolean | null;
                     readonly artsyShippingInternational: boolean | null;
                     readonly pickup_available: boolean | null;
                     readonly onlyShipsDomestically: boolean | null;
@@ -241,7 +241,7 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "processWithArtaShipping",
+                      "name": "processWithArtsyShippingDomestic",
                       "storageKey": null
                     },
                     {
@@ -358,5 +358,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'f8eac44b49a1630fdf21638aacbc1e0d';
+(node as any).hash = '5c1b57a0e809e02a3874e25d4bc51b0a';
 export default node;

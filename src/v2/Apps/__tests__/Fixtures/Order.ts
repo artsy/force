@@ -109,7 +109,7 @@ const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: false,
+    processWithArtsyShippingDomestic: false,
     artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
@@ -129,7 +129,7 @@ const ArtaEnabledOrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: true,
+    processWithArtsyShippingDomestic: true,
     artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
@@ -148,7 +148,7 @@ const ArtstyShippingInternationalOrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: false,
+    processWithArtsyShippingDomestic: false,
     artsyShippingInternational: true,
     domesticShippingFee: {
       minor: 10000,
@@ -1005,7 +1005,7 @@ const OrderArtworkNodePriceHidden = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: false,
+    processWithArtsyShippingDomestic: false,
     artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
