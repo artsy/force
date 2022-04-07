@@ -1,11 +1,11 @@
 import Cookies from "cookies-js"
-import { connectUserToSubmission } from "./useConnectUserToSubmission"
+import { connectUserToSubmission } from "../useConnectUserToSubmission"
 import { waitFor } from "@testing-library/react"
 
 const mockAddUser = jest.fn()
 
-jest.mock("../../Apps/Consign/Routes/SubmissionFlow/Mutations", () => ({
-  ...jest.requireActual("../../Apps/Consign/Routes/SubmissionFlow/Mutations"),
+jest.mock("../../Routes/SubmissionFlow/Mutations", () => ({
+  ...jest.requireActual("../../Routes/SubmissionFlow/Mutations"),
   useAddUserToSubmission: () => ({
     submitMutation: mockAddUser,
   }),
