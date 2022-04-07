@@ -1,4 +1,4 @@
-import { Button, Clickable, Spacer } from "@artsy/palette"
+import { Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,7 +22,13 @@ export interface ArtworkSidebarCurrentBidInfoProps {
   currentBidChanged: boolean
 }
 
-export const BiddingClosedMessage: React.FC<{}> = () => {
+interface BiddingClosedMessageProps {
+  children?: React.ReactNode
+}
+
+export const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
+  children,
+}) => {
   const shouldShowCreateAlertSection = useFeatureFlag(
     "artwork-page-create-alert"
   )
@@ -37,18 +43,7 @@ export const BiddingClosedMessage: React.FC<{}> = () => {
       >
         Bidding closed
       </Text>
-      {!!shouldShowCreateAlertSection && (
-        <>
-          <Text variant="sm" color="black60" pt={0.5}>
-            Be notified when a similar piece is available
-          </Text>
-          <Spacer my={2} />
-          {/* This is gonna be replaced with the SavedSearchCreateAlert(Base/Container) once it's merged */}
-          <Button width="100%" size="medium">
-            Create Alert
-          </Button>
-        </>
-      )}
+      {children}
     </>
   )
 }
