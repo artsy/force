@@ -141,10 +141,6 @@ if !sd.THIRD_PARTIES_DISABLED
 if sd.BROWSER && sd.BROWSER.family != 'Other' && !sd.THIRD_PARTIES_DISABLED
   script( src=asset('/assets/legacy-analytics.js') )
 
-//- Prefetch links on hover. See: https://instant.page/
-if sd.ENABLE_INSTANT_PAGE && !sd.THIRD_PARTIES_DISABLED
-  include instant-page
-
 //- Google reCAPTCHA
 if options.grecaptcha && sd.RECAPTCHA_KEY && !sd.EIGEN && !sd.THIRD_PARTIES_DISABLED
   script( type="text/javascript" ).
