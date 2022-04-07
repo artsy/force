@@ -1,7 +1,6 @@
 import { Box, Flex, Theme } from "@artsy/palette"
 import { useNetworkOfflineMonitor } from "v2/Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
-import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
@@ -67,9 +66,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
   const nextTheme = routeConfig?.theme ?? "v3"
   const [theme, setTheme] = useState<"v2" | "v3">(nextTheme)
   useRouteComplete({ onComplete: () => setTheme(nextTheme) })
-
-  // TODO: When old backbone inquiry modal goes away, this can be removed
-  useMaybeReloadAfterInquirySignIn()
 
   const { height: navBarHeight } = useNavBarHeight()
 

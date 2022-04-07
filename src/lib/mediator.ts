@@ -1,13 +1,6 @@
 import EventEmitter from "eventemitter3"
 
 /**
- * Start an inquiry, or ask a specialist
- */
-export interface ArtworkEventOptions {
-  artworkId: string
-}
-
-/**
  * Logout user and optionally redirect
  */
 export type LogoutEventOptions = { redirectPath?: string }
