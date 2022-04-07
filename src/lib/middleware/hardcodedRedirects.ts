@@ -1,20 +1,9 @@
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
 import url from "url"
 import express from "express"
 
-const router = express.Router()
-
-const to = path =>
-  function (req: ArtsyRequest, res: ArtsyResponse) {
-    const queryString = url.parse(req.url).search || ""
-    res.redirect(301, path + queryString)
-  }
-
-// Want to permanently redirect a specific route or route pattern?
-// Put em' here:
-
-const redirects = {
+// Permanently (301) redirect a specific route or route pattern?
+const REDIRECTS = {
   "/partners": "/galleries",
   "/gallery": "/galleries",
   "/institution": "/institutions",
@@ -83,11 +72,23 @@ const redirects = {
   "/user/payments": "/settings/payments",
   "/user/alerts": "/settings/alerts",
   "/page/collector-faqs-selling-on-artsy": "/consign",
+  "/apply/gallery": "http://apply.artsy.net/galleries",
+  "/apply/institution": "http://apply.artsy.net/institutions",
+  "/apply/auction": "http://apply.artsy.net/auctions",
+  "/apply/fair": "http://apply.artsy.net/fairs",
+  "/apply*": "http://apply.artsy.net/partnerships",
 }
 
-for (let from in redirects) {
-  const path = redirects[from]
-  router.get(from, to(path))
+const router = express.Router()
+
+for (let from in REDIRECTS) {
+  const path = REDIRECTS[from]
+
+  router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
+    const queryString = url.parse(req.url).search || ""
+
+    res.redirect(301, path + queryString)
+  })
 }
 
 export const hardcodedRedirectsMiddleware = router
