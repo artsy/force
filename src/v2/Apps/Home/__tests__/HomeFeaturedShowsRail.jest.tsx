@@ -41,7 +41,7 @@ describe("HomeFeaturedShowsRail", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Featured shows")
+    expect(wrapper.text()).toContain("Featured Shows")
     expect(wrapper.text()).toContain("Explore All Shows")
     expect(wrapper.text()).toContain("Example Show")
     expect(wrapper.text()).toContain("Example Partner")
