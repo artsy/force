@@ -19,7 +19,10 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { MNTNTrackingPixel } from "v2/Components/MNTNTrackingPixel"
+import {
+  MNTNConversionPixel,
+  MNTNTrackingPixel,
+} from "v2/Components/MNTNPixels"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -119,6 +122,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
         )}
       </Theme>
 
+      <MNTNConversionPixel />
       <MNTNTrackingPixel />
     </Flex>
   )

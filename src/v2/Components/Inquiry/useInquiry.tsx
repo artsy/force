@@ -1,6 +1,7 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Inquiry } from "./Inquiry"
+import { MNTNConversionPixel } from "../MNTNPixels"
 
 export interface UseInquiryProps {
   artworkID: string
@@ -23,11 +24,14 @@ export const useInquiry = ({ artworkID }: UseInquiryProps) => {
   const inquiryComponent = (
     <>
       {isInquiryVisible && (
-        <Inquiry
-          artworkID={artworkID}
-          onClose={hideInquiry}
-          askSpecialist={askSpecialist}
-        />
+        <>
+          <Inquiry
+            artworkID={artworkID}
+            onClose={hideInquiry}
+            askSpecialist={askSpecialist}
+          />
+          <MNTNConversionPixel forceEmbed />
+        </>
       )}
     </>
   )
