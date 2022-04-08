@@ -109,7 +109,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           />
         </Box>
 
-        <Spacer mx={2} />
+        <Spacer mr={2} />
 
         <Box flex={1}>
           <Text variant="xs" mb={0.5}>
@@ -127,7 +127,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Box mt={4} mx={`${RANGE_DOT_SIZE / 2}px`}>
+      <Box mt={2} mx={`${RANGE_DOT_SIZE / 2}px`}>
         {bars.length > 0 ? (
           <Histogram
             bars={bars}
@@ -135,7 +135,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           />
         ) : null}
 
-        <Spacer mb={4} />
+        <Spacer mb={2} />
 
         <Range
           min={defaultMinValue}
@@ -150,7 +150,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           ]}
         />
 
-        <Flex justifyContent="space-between" mt={2}>
+        <Flex justifyContent="space-between" mt={1}>
           <Text variant="xs" color="black60">
             ${defaultMinValue}
           </Text>
