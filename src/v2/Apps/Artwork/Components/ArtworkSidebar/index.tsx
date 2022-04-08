@@ -36,14 +36,15 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const isCreateAlertButtonForArtworkEnabled = useFeatureFlag(
     "artwork-page-create-alert"
   )
-  const shouldShowCreateAlertSection =
-    isCreateAlertButtonForArtworkEnabled && !artwork.is_sold
 
   // If we have info about the lot end time (cascading), use that.
   const { sale, saleArtwork } = artwork
   const endAt = saleArtwork?.endAt
   const startAt = sale?.startAt
   const { hasEnded } = useTimer(endAt!, startAt!)
+
+  const shouldShowCreateAlertSection =
+    isCreateAlertButtonForArtworkEnabled && !artwork.is_sold && !hasEnded
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -60,7 +61,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
             />
             {hasEnded ? (
               <BiddingClosedMessage>
-                {!!shouldShowCreateAlertSection && (
+                {!!isCreateAlertButtonForArtworkEnabled && (
                   <>
                     <Text variant="sm" color="black60" pt={0.5}>
                       Be notified when a similar piece is available
@@ -97,7 +98,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
-      {!!shouldShowCreateAlertSection && !hasEnded && (
+      {!!shouldShowCreateAlertSection && (
         <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
       )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
