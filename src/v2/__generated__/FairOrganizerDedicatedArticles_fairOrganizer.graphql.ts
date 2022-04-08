@@ -18,7 +18,7 @@ export type FairOrganizerDedicatedArticles_fairOrganizer = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
+                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
             } | null;
         } | null> | null;
     } | null;
@@ -155,7 +155,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairEditorialItem_article"
+                  "name": "CellArticle_article"
                 }
               ],
               "storageKey": null
@@ -175,5 +175,5 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = 'f055e099c96bf554574dd68603857fa9';
+(node as any).hash = 'fc88751958cb88b783c8aa6c04fec51d';
 export default node;

@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"
-import { getArticlesColumns } from "../helpers/getArticlesColumns"
 import { FairOrganizerLatestArticles_fairOrganizer } from "v2/__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { FairOrganizerArticle } from "./FairOrganizerArticle"
+import { CellArticleFragmentContainer } from "v2/Components/Cells/CellArticle"
+import { Masonry } from "v2/Components/Masonry"
 
 interface FairOrganizerLatestArticlesProps {
   fairOrganizer: FairOrganizerLatestArticles_fairOrganizer
@@ -22,8 +22,6 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
   }
 
   const [latestArticle, ...otherArticles] = articles
-  const { leftColumn, rightColumn } = getArticlesColumns(otherArticles)
-
   const showReadAllButton = articlesConnection?.totalCount! > 7
 
   return (
@@ -34,55 +32,40 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
 
       <Spacer mt={4} />
 
-      <GridColumns>
-        {/* latest article */}
+      <GridColumns gridRowGap={4}>
+        {/* Latest article */}
         <Column span={6}>
-          <FairOrganizerArticle article={latestArticle} size="large" />
-          <Spacer mt={30} />
+          <CellArticleFragmentContainer article={latestArticle} mode="GRID" />
         </Column>
 
-        {/* other articles */}
+        {/* Other articles */}
         <Column span={6}>
-          <GridColumns>
-            {/* left column */}
-            <Column span={[6]}>
-              {leftColumn.map(article => (
-                <Box mb={30} key={article.id}>
-                  <FairOrganizerArticle article={article} size={"small"} />
-                </Box>
-              ))}
-            </Column>
-
-            {/* right column */}
-            <Column span={[6]}>
-              {rightColumn.map(article => (
-                <Box mb={30} key={article.id}>
-                  <FairOrganizerArticle article={article} size={"small"} />
-                </Box>
-              ))}
-            </Column>
-
-            {/* Read All Articles button */}
-            {showReadAllButton && (
-              <Column span={[12, 8, 6]} start={[1, 5, 7]}>
-                <Spacer mt={30} />
-                <RouterLink
-                  to={`/fair-organizer/${slug}/articles`}
-                  style={{ textDecoration: "none", display: "block" }}
-                >
-                  <Button
-                    variant="secondaryOutline"
-                    size="medium"
-                    display="block"
-                    width="100%"
-                  >
-                    Read All Articles
-                  </Button>
-                </RouterLink>
-              </Column>
-            )}
-          </GridColumns>
+          <Masonry columnCount={2}>
+            {otherArticles.map(article => (
+              <CellArticleFragmentContainer
+                key={article.internalID}
+                article={article}
+                mode="GRID"
+                mb={4}
+              />
+            ))}
+          </Masonry>
         </Column>
+
+        {/* Read All Articles button */}
+        {showReadAllButton && (
+          <Column span={[12, 6]} start={[1, 7]}>
+            <RouterLink
+              to={`/fair-organizer/${slug}/articles`}
+              display="block"
+              textDecoration="none"
+            >
+              <Button variant="secondaryOutline" display="block" width="100%">
+                Read All Articles
+              </Button>
+            </RouterLink>
+          </Column>
+        )}
       </GridColumns>
     </Box>
   )
@@ -99,8 +82,8 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
           totalCount
           edges {
             node {
-              id
-              ...FairEditorialItem_article
+              ...CellArticle_article
+              internalID
             }
           }
         }

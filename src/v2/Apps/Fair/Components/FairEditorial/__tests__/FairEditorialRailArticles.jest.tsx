@@ -26,21 +26,25 @@ describe("FairEditorialRailArticles", () => {
             {
               node: {
                 id: "article-1",
+                href: "/article/article-1",
               },
             },
             {
               node: {
                 id: "article-2",
+                href: "/article/article-2",
               },
             },
             {
               node: {
                 id: "article-3",
+                href: "/article/article-3",
               },
             },
             {
               node: {
                 id: "article-4",
+                href: "/article/article-4",
               },
             },
           ],
@@ -48,8 +52,11 @@ describe("FairEditorialRailArticles", () => {
       }),
     })
 
-    const shelf = wrapper.find("Shelf")
-    expect(shelf.length).toBe(1)
-    expect(shelf.find("FairEditorialItem").length).toBe(4)
+    expect(wrapper.find("Shelf").length).toBe(1)
+
+    expect(wrapper.html()).toContain("/article/article-1")
+    expect(wrapper.html()).toContain("/article/article-2")
+    expect(wrapper.html()).toContain("/article/article-3")
+    expect(wrapper.html()).toContain("/article/article-4")
   })
 })

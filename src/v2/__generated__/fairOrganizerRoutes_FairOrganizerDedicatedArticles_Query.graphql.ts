@@ -31,6 +31,23 @@ query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(
   }
 }
 
+fragment CellArticle_article on Article {
+  vertical
+  title
+  thumbnailTitle
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
+  thumbnailImage {
+    cropped(width: 445, height: 334) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
+}
+
 fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   slug
   name
@@ -43,36 +60,6 @@ fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
     }
     id
   }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
 }
 
 fragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {
@@ -88,8 +75,8 @@ fragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {
     }
     edges {
       node {
+        ...CellArticle_article
         id
-        ...FairEditorialItem_article
       }
     }
   }
@@ -146,26 +133,19 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "cursor",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v7 = [
+v6 = [
+  (v4/*: any*/),
   (v5/*: any*/),
-  (v6/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -174,45 +154,27 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v9 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v10 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v11 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "height",
-    "storageKey": null
-  },
-  (v9/*: any*/),
-  (v10/*: any*/)
-];
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -262,7 +224,13 @@ return {
         "name": "fairOrganizer",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -330,7 +298,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v7/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -340,7 +308,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -350,7 +318,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -361,8 +329,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
-                      (v6/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -385,26 +353,19 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v8/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "vertical",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "title",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "MMMM D, YYYY"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -416,71 +377,80 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "thumbnailImage",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": "large",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 720
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 670
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v11/*: any*/),
-                            "storageKey": "cropped(height:720,width:670)"
-                          },
-                          {
-                            "alias": "small",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 240
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 325
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v11/*: any*/),
-                            "storageKey": "cropped(height:240,width:325)"
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "byline",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "href",
                         "storageKey": null
-                      }
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM D, YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "thumbnailImage",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 334
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 445
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
+                              },
+                              (v7/*: any*/),
+                              (v8/*: any*/)
+                            ],
+                            "storageKey": "cropped(height:334,width:445)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -530,31 +500,31 @@ return {
                     "name": "resized",
                     "plural": false,
                     "selections": [
-                      (v9/*: any*/),
-                      (v10/*: any*/)
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": "resized(height:30,version:\"square\",width:30)"
                   }
                 ],
                 "storageKey": null
               },
-              (v8/*: any*/)
+              (v9/*: any*/)
             ],
             "storageKey": null
           },
-          (v8/*: any*/)
+          (v9/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "beb0520e545ad6ce011b9e7d38b06749",
+    "cacheID": "f5af771025f0b63efafb5bc9244c15c5",
     "id": null,
     "metadata": {},
     "name": "fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

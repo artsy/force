@@ -25,34 +25,21 @@ query FairOrganizerApp_Test_Query {
   }
 }
 
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
+fragment CellArticle_article on Article {
+  vertical
   title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
   thumbnailTitle
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
   thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
+    cropped(width: 445, height: 334) {
       width
       height
       src
       srcSet
     }
   }
-  ...FairEditorialItemLink_article
 }
 
 fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
@@ -137,8 +124,9 @@ fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
     totalCount
     edges {
       node {
+        ...CellArticle_article
+        internalID
         id
-        ...FairEditorialItem_article
       }
     }
   }
@@ -240,12 +228,7 @@ v9 = {
   "name": "sort",
   "value": "START_AT_DESC"
 },
-v10 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 325
-},
-v11 = [
+v10 = [
   {
     "alias": null,
     "args": null,
@@ -263,62 +246,62 @@ v11 = [
   (v5/*: any*/),
   (v6/*: any*/)
 ],
-v12 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v13 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v14 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v15 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v16 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v17 = {
+v16 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v18 = {
+v17 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v19 = {
+v18 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "FairConnection"
 },
-v20 = {
+v19 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "FairEdge"
 },
-v21 = {
+v20 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -539,13 +522,17 @@ return {
                                 "name": "height",
                                 "value": 244
                               },
-                              (v10/*: any*/)
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 325
+                              }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v11/*: any*/),
+                            "selections": (v10/*: any*/),
                             "storageKey": "cropped(height:244,width:325)"
                           }
                         ],
@@ -591,7 +578,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
+                      (v11/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -658,26 +645,19 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "vertical",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "title",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "MMMM D, YYYY"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -689,55 +669,58 @@ return {
                       {
                         "alias": null,
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "byline",
+                        "storageKey": null
+                      },
+                      (v11/*: any*/),
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM D, YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
                         "name": "thumbnailImage",
                         "plural": false,
                         "selections": [
                           {
-                            "alias": "large",
+                            "alias": null,
                             "args": [
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 720
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 670
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v11/*: any*/),
-                            "storageKey": "cropped(height:720,width:670)"
-                          },
-                          {
-                            "alias": "small",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 240
-                              },
-                              (v10/*: any*/)
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v11/*: any*/),
-                            "storageKey": "cropped(height:240,width:325)"
+                            "selections": (v10/*: any*/),
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
                       },
                       (v8/*: any*/),
-                      (v2/*: any*/),
-                      (v12/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -754,7 +737,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "82555bf5c74b44d3c22ba4de189ff67d",
+    "cacheID": "a6c4c20d4b0d7e5b9d91095d670be231",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -764,7 +747,7 @@ return {
           "plural": false,
           "type": "FairOrganizer"
         },
-        "fairOrganizer.about": (v13/*: any*/),
+        "fairOrganizer.about": (v12/*: any*/),
         "fairOrganizer.articlesConnection": {
           "enumValues": null,
           "nullable": true,
@@ -783,82 +766,78 @@ return {
           "plural": false,
           "type": "Article"
         },
-        "fairOrganizer.articlesConnection.edges.node.href": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.id": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.internalID": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.slug": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.height": (v17/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.src": (v18/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v18/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.width": (v17/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.height": (v17/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.src": (v18/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v18/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.width": (v17/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.title": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.byline": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.href": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.id": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.internalID": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": (v14/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped": (v15/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.height": (v16/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.src": (v17/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v17/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.width": (v16/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.title": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.vertical": (v12/*: any*/),
         "fairOrganizer.articlesConnection.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "fairOrganizer.fairsConnection": (v19/*: any*/),
-        "fairOrganizer.fairsConnection.edges": (v20/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node": (v21/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.exhibitionPeriod": (v13/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.href": (v13/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.id": (v14/*: any*/),
-        "fairOrganizer.fairsConnection.edges.node.startAt": (v13/*: any*/),
-        "fairOrganizer.id": (v14/*: any*/),
-        "fairOrganizer.name": (v13/*: any*/),
-        "fairOrganizer.pastFairs": (v19/*: any*/),
-        "fairOrganizer.pastFairs.edges": (v20/*: any*/),
-        "fairOrganizer.pastFairs.edges.node": (v21/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.id": (v14/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image": (v15/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image.cropped": (v16/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image.cropped.height": (v17/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image.cropped.src": (v18/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image.cropped.srcSet": (v18/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.image.cropped.width": (v17/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.name": (v13/*: any*/),
-        "fairOrganizer.pastFairs.edges.node.slug": (v14/*: any*/),
+        "fairOrganizer.fairsConnection": (v18/*: any*/),
+        "fairOrganizer.fairsConnection.edges": (v19/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node": (v20/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.exhibitionPeriod": (v12/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.href": (v12/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.id": (v13/*: any*/),
+        "fairOrganizer.fairsConnection.edges.node.startAt": (v12/*: any*/),
+        "fairOrganizer.id": (v13/*: any*/),
+        "fairOrganizer.name": (v12/*: any*/),
+        "fairOrganizer.pastFairs": (v18/*: any*/),
+        "fairOrganizer.pastFairs.edges": (v19/*: any*/),
+        "fairOrganizer.pastFairs.edges.node": (v20/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.id": (v13/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image": (v14/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped": (v15/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.height": (v16/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.src": (v17/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.srcSet": (v17/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.image.cropped.width": (v16/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.name": (v12/*: any*/),
+        "fairOrganizer.pastFairs.edges.node.slug": (v13/*: any*/),
         "fairOrganizer.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "fairOrganizer.profile.icon": (v15/*: any*/),
-        "fairOrganizer.profile.icon.desktop": (v16/*: any*/),
-        "fairOrganizer.profile.icon.desktop.size": (v17/*: any*/),
-        "fairOrganizer.profile.icon.desktop.src": (v18/*: any*/),
-        "fairOrganizer.profile.icon.desktop.srcSet": (v18/*: any*/),
-        "fairOrganizer.profile.icon.mobile": (v16/*: any*/),
-        "fairOrganizer.profile.icon.mobile.size": (v17/*: any*/),
-        "fairOrganizer.profile.icon.mobile.src": (v18/*: any*/),
-        "fairOrganizer.profile.icon.mobile.srcSet": (v18/*: any*/),
-        "fairOrganizer.profile.id": (v14/*: any*/),
-        "fairOrganizer.profile.image": (v15/*: any*/),
-        "fairOrganizer.profile.image.url": (v13/*: any*/),
-        "fairOrganizer.profile.internalID": (v14/*: any*/),
+        "fairOrganizer.profile.icon": (v14/*: any*/),
+        "fairOrganizer.profile.icon.desktop": (v15/*: any*/),
+        "fairOrganizer.profile.icon.desktop.size": (v16/*: any*/),
+        "fairOrganizer.profile.icon.desktop.src": (v17/*: any*/),
+        "fairOrganizer.profile.icon.desktop.srcSet": (v17/*: any*/),
+        "fairOrganizer.profile.icon.mobile": (v15/*: any*/),
+        "fairOrganizer.profile.icon.mobile.size": (v16/*: any*/),
+        "fairOrganizer.profile.icon.mobile.src": (v17/*: any*/),
+        "fairOrganizer.profile.icon.mobile.srcSet": (v17/*: any*/),
+        "fairOrganizer.profile.id": (v13/*: any*/),
+        "fairOrganizer.profile.image": (v14/*: any*/),
+        "fairOrganizer.profile.image.url": (v12/*: any*/),
+        "fairOrganizer.profile.internalID": (v13/*: any*/),
         "fairOrganizer.profile.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Boolean"
         },
-        "fairOrganizer.slug": (v14/*: any*/)
+        "fairOrganizer.slug": (v13/*: any*/)
       }
     },
     "name": "FairOrganizerApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  slug\n  about(format: HTML)\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n  ...FairOrganizerPastEventsRail_fairOrganizer\n  ...FairOrganizerHeaderImage_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n  ...FairOrganizerLatestArticles_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
+    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  slug\n  about(format: HTML)\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n  ...FairOrganizerPastEventsRail_fairOrganizer\n  ...FairOrganizerHeaderImage_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n  ...FairOrganizerLatestArticles_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
   }
 };
 })();

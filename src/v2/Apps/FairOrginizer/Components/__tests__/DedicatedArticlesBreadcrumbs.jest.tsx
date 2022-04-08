@@ -21,10 +21,6 @@ const { getWrapper } = setupTestWrapper<
 })
 
 describe("DedicatedArticlesBreadcrumbs", () => {
-  it("renders breadcrumbs wrapper", () => {
-    const wrapper = getWrapper({})
-    expect(wrapper.find("Breadcrumbs").length).toBe(1)
-  })
   it("renders proper router link", () => {
     const wrapper = getWrapper({ FairOrganizer: () => ({ slug: "organizer" }) })
     expect(wrapper.find("RouterLink").length).toBe(1)
