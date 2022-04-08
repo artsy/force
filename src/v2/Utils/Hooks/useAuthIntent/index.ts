@@ -8,6 +8,7 @@ import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
+import { useConnectUserToSubmission } from "v2/Apps/Consign/Hooks/useConnectUserToSubmission"
 
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -81,9 +82,14 @@ export const runAuthIntent = async (
  * specifying what action they were trying to take.
  *
  * This hook is what checks that cookie and runs that action after they are authenticated.
+ *
+ * Additionally, this hooks fires a hook that checks submissionId cookie and
+ * adds the authenticated user to the submission when found.
  */
 export const useAuthIntent = () => {
   const { user, relayEnvironment } = useSystemContext()
+
+  useConnectUserToSubmission()
 
   useEffect(() => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
