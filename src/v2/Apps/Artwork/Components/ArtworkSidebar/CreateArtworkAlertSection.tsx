@@ -12,7 +12,6 @@ import { OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertButton"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
-import { getAttributionClassValueByLabel } from "v2/Components/SavedSearchAlert/Utils/getAttributionClassValueByLabel"
 
 interface CreateArtworkAlertSectionProps {
   artwork: CreateArtworkAlertSection_artwork
@@ -22,11 +21,9 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
   artwork,
 }) => {
   const artists = compact(artwork.artists)
+  const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
-  const attributionClass = getAttributionClassValueByLabel(
-    artwork.attributionClass?.name ?? ""
-  )
 
   const entity: SavedSearchEntity = {
     placeholder,
@@ -103,7 +100,7 @@ export const CreateArtworkAlertSectionFragmentContainer = createFragmentContaine
           slug
         }
         attributionClass {
-          name
+          internalID
         }
       }
     `,

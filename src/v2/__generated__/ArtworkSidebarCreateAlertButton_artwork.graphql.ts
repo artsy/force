@@ -14,7 +14,7 @@ export type ArtworkSidebarCreateAlertButton_artwork = {
         readonly slug: string;
     } | null> | null;
     readonly attributionClass: {
-        readonly name: string | null;
+        readonly internalID: string;
     } | null;
     readonly " $refType": "ArtworkSidebarCreateAlertButton_artwork";
 };
@@ -39,13 +39,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
   "storageKey": null
 };
 return {
@@ -72,7 +65,13 @@ return {
       "plural": true,
       "selections": [
         (v1/*: any*/),
-        (v2/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
         (v0/*: any*/)
       ],
       "storageKey": null
@@ -85,7 +84,7 @@ return {
       "name": "attributionClass",
       "plural": false,
       "selections": [
-        (v2/*: any*/)
+        (v1/*: any*/)
       ],
       "storageKey": null
     }
@@ -94,5 +93,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a0d315313d6f94aadd6596e6f0898512';
+(node as any).hash = '03c0438310c78c6772635faa709bbb68';
 export default node;
