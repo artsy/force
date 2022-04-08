@@ -8,8 +8,9 @@ export type FairEditorialRailArticles_fair = {
     readonly articlesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
+                readonly internalID: string;
+                readonly slug: string | null;
+                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
             } | null;
         } | null> | null;
     } | null;
@@ -68,13 +69,20 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
                   "storageKey": null
                 },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairEditorialItem_article"
+                  "name": "CellArticle_article"
                 }
               ],
               "storageKey": null
@@ -89,5 +97,5 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '22a9194f3ccff534806853a8f70a5581';
+(node as any).hash = '30676188c1197d7f9f369fc18a86211c';
 export default node;

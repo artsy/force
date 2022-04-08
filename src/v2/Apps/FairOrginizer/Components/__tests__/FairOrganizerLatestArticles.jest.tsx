@@ -37,31 +37,11 @@ describe("FairOrganizerLatestArticles", () => {
     expect(wrapper.text()).toContain("Latest from Art Paris")
   })
 
-  it("renders 7 articles", () => {
+  it("renders 7 article links", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ articlesConnection: articlesFixture }),
     })
-    expect(wrapper.find("FairOrganizerArticle").length).toBe(7)
-  })
-
-  it("renders the most recent article in a large card", () => {
-    const wrapper = getWrapper({
-      FairOrganizer: () => ({ articlesConnection: articlesFixture }),
-    })
-    expect(wrapper.find("FairOrganizerArticle").first().prop("size")).toEqual(
-      "large"
-    )
-  })
-
-  it("renders the next 6 articles in small cards", () => {
-    const wrapper = getWrapper({
-      FairOrganizer: () => ({ articlesConnection: articlesFixture }),
-    })
-    for (let i = 1; i < 7; i++) {
-      expect(wrapper.find("FairOrganizerArticle").at(i).prop("size")).toEqual(
-        "small"
-      )
-    }
+    expect(wrapper.find("a").length).toBe(7)
   })
 
   it("doesn't render read all button if articles count is not greater than 7", () => {

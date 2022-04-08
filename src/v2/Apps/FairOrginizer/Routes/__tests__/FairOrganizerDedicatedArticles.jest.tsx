@@ -13,6 +13,9 @@ jest.mock("v2/System/Router/useRouter", () => ({
     },
   }),
 }))
+jest.mock("v2/Components/MetaTags", () => ({
+  MetaTags: () => null,
+}))
 
 const { getWrapper } = setupTestWrapper<
   FairOrganizerDedicatedArticles_Test_Query
@@ -40,16 +43,17 @@ describe("FairOrganizerDedicatedArticles", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ name: "The Armory Show" }),
     })
+
     expect(wrapper.text()).toContain(
       "All Articles for The Armory Show on Artsy"
     )
   })
 
-  it("renders 10 articles", () => {
+  it("renders 10 article links", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ articlesConnection: articlesFixture }),
     })
-    expect(wrapper.find("FairOrganizerArticle").length).toBe(10)
+    expect(wrapper.find("a").length).toBe(11)
   })
 
   it("renders pagination", () => {
