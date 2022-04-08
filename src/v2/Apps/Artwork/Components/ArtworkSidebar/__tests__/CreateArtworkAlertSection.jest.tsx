@@ -94,6 +94,6 @@ const Artwork = {
     },
   ],
   attributionClass: {
-    name: "Limited edition",
+    internalID: "limited edition",
   },
 }
