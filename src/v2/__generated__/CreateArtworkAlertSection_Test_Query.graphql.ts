@@ -36,7 +36,7 @@ fragment CreateArtworkAlertSection_artwork on Artwork {
     id
   }
   attributionClass {
-    name
+    internalID
     id
   }
 }
@@ -68,23 +68,16 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -149,9 +142,15 @@ return {
             "plural": true,
             "selections": [
               (v1/*: any*/),
-              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
               (v2/*: any*/),
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -163,19 +162,19 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
-              (v4/*: any*/)
+              (v1/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": "artwork(id:\"test-artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "fbb819a320c7d5cb5290119bfe3378b0",
+    "cacheID": "b53e5beabe485c5d3585eb90610a353e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -191,27 +190,27 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.id": (v5/*: any*/),
-        "artwork.artists.internalID": (v5/*: any*/),
-        "artwork.artists.name": (v6/*: any*/),
-        "artwork.artists.slug": (v5/*: any*/),
+        "artwork.artists.id": (v4/*: any*/),
+        "artwork.artists.internalID": (v4/*: any*/),
+        "artwork.artists.name": (v5/*: any*/),
+        "artwork.artists.slug": (v4/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v5/*: any*/),
-        "artwork.attributionClass.name": (v6/*: any*/),
-        "artwork.id": (v5/*: any*/),
-        "artwork.internalID": (v5/*: any*/),
-        "artwork.slug": (v5/*: any*/),
-        "artwork.title": (v6/*: any*/)
+        "artwork.attributionClass.id": (v4/*: any*/),
+        "artwork.attributionClass.internalID": (v4/*: any*/),
+        "artwork.id": (v4/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.slug": (v4/*: any*/),
+        "artwork.title": (v5/*: any*/)
       }
     },
     "name": "CreateArtworkAlertSection_Test_Query",
     "operationKind": "query",
-    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n"
+    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();
