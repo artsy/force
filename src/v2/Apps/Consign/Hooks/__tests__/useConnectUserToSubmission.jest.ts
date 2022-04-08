@@ -65,12 +65,11 @@ describe("connectUserToSubmission", () => {
     await waitFor(() => expect(mockAddUser).not.toHaveBeenCalled())
   })
 
-  it("does not call addUser and expires submission, when submission but no user found", async () => {
+  it("does not call addUser, when submission but no user found", async () => {
     ;(Cookies.get as jest.Mock).mockImplementation(() => mockSubmissionId)
 
     connectUserToSubmission(mockNonExistentUser, mockAddUser)
 
     await waitFor(() => expect(mockAddUser).not.toHaveBeenCalled())
-    expect(Cookies.expire).toHaveBeenCalledWith("submissionId")
   })
 })
