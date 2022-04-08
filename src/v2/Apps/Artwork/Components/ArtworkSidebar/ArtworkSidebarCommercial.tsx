@@ -381,11 +381,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       selectedEditionSet,
     } = this.state
 
-    const editionSelectableOnInquireable = !!artwork.is_inquireable
     const artworkEcommerceAvailable = !!(
-      artwork.is_acquireable ||
-      artwork.is_offerable ||
-      editionSelectableOnInquireable
+      artwork.is_acquireable || artwork.is_offerable
     )
 
     if (!artwork.sale_message && !isInquireable) {
@@ -414,8 +411,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           ) : (
             <>
               {this.renderEditionSets(
-                artworkEcommerceAvailable,
-                editionSelectableOnInquireable
+                artworkEcommerceAvailable || !!isInquireable,
+                !!isInquireable
               )}
 
               {selectedEditionSet && (
@@ -427,7 +424,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          {artworkEcommerceAvailable &&
+          {(artworkEcommerceAvailable || !!isInquireable) &&
             (artwork.shippingOrigin || artwork.shippingInfo) && (
               <Spacer mt={1} />
             )}
