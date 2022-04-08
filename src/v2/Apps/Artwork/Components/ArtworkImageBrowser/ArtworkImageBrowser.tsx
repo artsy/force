@@ -1,5 +1,5 @@
 import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { Box, Spacer } from "@artsy/palette"
@@ -16,10 +16,17 @@ export interface ArtworkImageBrowserProps {
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
 }) => {
-  const { images } = artwork
+  const { images, video } = artwork
+  let length = 0
+  if (images?.length) {
+    length += images.length
+  }
+  if (video) {
+    length += 1
+  }
 
   const { index, handleNext, handlePrev, setCursor } = useCursor({
-    max: images?.length ?? 0,
+    max: length,
   })
 
   const handleSelectDefaultSlide = () => {
@@ -77,6 +84,7 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
         internalID
         isDefault
       }
+      videoUrl
     }
   `,
 })
