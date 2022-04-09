@@ -5,7 +5,7 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@0.10.0
   horizon: artsy/release@0.0.1
-  node: artsy/node@2.0.0
+  node: artsy/node@2.1.0
   slack: circleci/slack@4.9.3
   yarn: artsy/yarn@6.1.0
 
