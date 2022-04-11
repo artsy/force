@@ -13,6 +13,9 @@ export type ArtworkImageBrowserLarge_artwork = {
     } | null> | null;
     readonly video: {
         readonly type: string;
+        readonly src: string | null;
+        readonly height: number | null;
+        readonly width: number | null;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
     readonly " $refType": "ArtworkImageBrowserLarge_artwork";
@@ -78,7 +81,28 @@ return {
       "name": "video",
       "plural": false,
       "selections": [
-        (v0/*: any*/)
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "src",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "height",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "width",
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -97,5 +121,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6efdfe07d9321759cfa7078a15b365bb';
+(node as any).hash = '8a5f9728cb3cbe6fc81d678a396aa3ef';
 export default node;
