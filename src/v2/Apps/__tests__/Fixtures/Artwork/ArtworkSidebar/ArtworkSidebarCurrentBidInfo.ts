@@ -28,6 +28,7 @@ export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawRes
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -58,6 +59,7 @@ export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawRespons
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -88,6 +90,7 @@ export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse[
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -116,6 +119,7 @@ export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Quer
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -146,6 +150,7 @@ export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -176,6 +181,7 @@ export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Que
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -206,6 +212,7 @@ export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRa
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -236,6 +243,7 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -266,6 +274,7 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
 
 export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -334,4 +343,5 @@ export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfo_Test_QueryRawRe
   title: "",
   artists: [],
   attributionClass: null,
+  mediumType: null,
 }
