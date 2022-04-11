@@ -14,6 +14,8 @@ export type ArtworkDetails_submission = {
     readonly locationCity: string | null;
     readonly locationCountry: string | null;
     readonly locationState: string | null;
+    readonly locationPostalCode: string | null;
+    readonly locationCountryCode: string | null;
     readonly year: string | null;
     readonly title: string | null;
     readonly medium: string | null;
@@ -98,6 +100,20 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "locationPostalCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "locationCountryCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "year",
       "storageKey": null
     },
@@ -175,5 +191,5 @@ const node: ReaderFragment = {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = '6bac5054bb25e2f6d968ea96e93e81e9';
+(node as any).hash = 'c3ab7081a0e1d3f79a17ced903a5280d';
 export default node;

@@ -82,6 +82,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           locationCity: artworkDetailsForm.location.city.trim(),
           locationCountry: artworkDetailsForm.location.country?.trim(),
           locationState: artworkDetailsForm.location.state?.trim(),
+          locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
+          locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
           state: "DRAFT",
           utmMedium: utmParams?.utmMedium,
           utmSource: utmParams?.utmSource,
@@ -174,6 +176,8 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         locationCity
         locationCountry
         locationState
+        locationPostalCode
+        locationCountryCode
         year
         title
         medium

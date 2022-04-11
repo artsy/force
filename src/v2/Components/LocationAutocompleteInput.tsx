@@ -170,6 +170,7 @@ export type Location = {
   stateCode?: string
   postalCode?: string
   country?: string
+  countryCode?: string
   coordinates?: number[]
 }
 
@@ -219,6 +220,7 @@ export const normalizePlace = (place?: Place): Location => {
     stateCode: components.state?.short_name,
     postalCode: components.postalCode?.long_name,
     country: components.country?.long_name,
+    countryCode: components.country?.short_name,
   }
 }
 

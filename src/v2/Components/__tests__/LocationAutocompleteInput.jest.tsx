@@ -152,6 +152,7 @@ describe("normalizePlace", () => {
       stateCode: "NY",
       postalCode: "10536",
       country: "United States",
+      countryCode: "US",
     })
   })
 
