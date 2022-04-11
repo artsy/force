@@ -24,7 +24,7 @@ jobs:
 
   validate_production_schema:
     docker:
-      - image: cimg/node:14.18
+      - image: cimg/node:14.19
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       practice_web:
