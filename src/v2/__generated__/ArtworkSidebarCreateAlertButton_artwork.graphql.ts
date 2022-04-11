@@ -16,6 +16,12 @@ export type ArtworkSidebarCreateAlertButton_artwork = {
     readonly attributionClass: {
         readonly internalID: string;
     } | null;
+    readonly mediumType: {
+        readonly filterGene: {
+            readonly slug: string;
+            readonly name: string | null;
+        } | null;
+    } | null;
     readonly " $refType": "ArtworkSidebarCreateAlertButton_artwork";
 };
 export type ArtworkSidebarCreateAlertButton_artwork$data = ArtworkSidebarCreateAlertButton_artwork;
@@ -39,6 +45,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -65,13 +78,7 @@ return {
       "plural": true,
       "selections": [
         (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
+        (v2/*: any*/),
         (v0/*: any*/)
       ],
       "storageKey": null
@@ -87,11 +94,35 @@ return {
         (v1/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
+            (v2/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '03c0438310c78c6772635faa709bbb68';
+(node as any).hash = '4df5f222f3236aacd8dbc226f42abe55';
 export default node;
