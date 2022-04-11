@@ -59,9 +59,11 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
         </Text>
 
         {subTitle && (
-          <Text as="h3" variant="lg" color="black60" lineClamp={2}>
-            {subTitle}
-          </Text>
+          <Box display={["none", "block"]}>
+            <Text as="h3" variant="lg" color="black60" lineClamp={2}>
+              {subTitle}
+            </Text>
+          </Box>
         )}
       </Box>
 
