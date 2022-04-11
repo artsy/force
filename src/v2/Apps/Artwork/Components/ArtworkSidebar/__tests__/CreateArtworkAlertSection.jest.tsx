@@ -64,6 +64,33 @@ describe("CreateArtworkAlertSection", () => {
 
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("Limited Edition")).toBeInTheDocument()
+    expect(screen.getByText("Prints")).toBeInTheDocument()
+  })
+
+  it("should not render `Rarity` pill if needed data is missing", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        ...Artwork,
+        attributionClass: null,
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Create Alert"))
+
+    expect(screen.queryByText("Limited Edition")).not.toBeInTheDocument()
+  })
+
+  it("should not render `Medium` pill if needed data is missing", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        ...Artwork,
+        mediumType: null,
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Create Alert"))
+
+    expect(screen.queryByText("Prints")).not.toBeInTheDocument()
   })
 
   it("should correctly track event when `Create Alert` button is pressed", () => {
@@ -95,5 +122,11 @@ const Artwork = {
   ],
   attributionClass: {
     internalID: "limited edition",
+  },
+  mediumType: {
+    filterGene: {
+      slug: "prints",
+      name: "Prints",
+    },
   },
 }

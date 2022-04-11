@@ -54,8 +54,15 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
             readonly id: string;
         }) | null> | null;
         readonly attributionClass: ({
-            readonly name: string | null;
+            readonly internalID: string;
             readonly id: string;
+        }) | null;
+        readonly mediumType: ({
+            readonly filterGene: ({
+                readonly slug: string;
+                readonly name: string | null;
+                readonly id: string;
+            }) | null;
         }) | null;
         readonly id: string;
     }) | null;
@@ -91,8 +98,15 @@ fragment ArtworkSidebarCreateAlertButton_artwork on Artwork {
     id
   }
   attributionClass {
-    name
+    internalID
     id
+  }
+  mediumType {
+    filterGene {
+      slug
+      name
+      id
+    }
   }
 }
 
@@ -435,8 +449,33 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
+              (v1/*: any*/),
               (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Gene",
+                "kind": "LinkedField",
+                "name": "filterGene",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -447,7 +486,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a8c4e03034fecbb393bb99f3b3bd34db",
+    "cacheID": "b54599dd7542a30a3f513ace75bacbbc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -474,9 +513,24 @@ return {
           "type": "AttributionClass"
         },
         "artwork.attributionClass.id": (v6/*: any*/),
-        "artwork.attributionClass.name": (v7/*: any*/),
+        "artwork.attributionClass.internalID": (v6/*: any*/),
         "artwork.id": (v6/*: any*/),
         "artwork.internalID": (v6/*: any*/),
+        "artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "artwork.mediumType.filterGene": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "artwork.mediumType.filterGene.id": (v6/*: any*/),
+        "artwork.mediumType.filterGene.name": (v7/*: any*/),
+        "artwork.mediumType.filterGene.slug": (v6/*: any*/),
         "artwork.myLotStanding": {
           "enumValues": null,
           "nullable": true,
@@ -542,7 +596,7 @@ return {
     },
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n  ...ArtworkSidebarBiddingClosedMessage_artwork\n}\n"
+    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n  ...ArtworkSidebarBiddingClosedMessage_artwork\n}\n"
   }
 };
 })();

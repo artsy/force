@@ -12,6 +12,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertButton"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 interface CreateArtworkAlertSectionProps {
   artwork: CreateArtworkAlertSection_artwork
@@ -20,11 +21,12 @@ interface CreateArtworkAlertSectionProps {
 export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps> = ({
   artwork,
 }) => {
+  let aggregations: Aggregations = []
+  let additionalGeneIDs: string[] = []
   const artists = compact(artwork.artists)
   const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
-
   const entity: SavedSearchEntity = {
     placeholder,
     artists: artists.map(artist => ({
@@ -39,9 +41,30 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
       name: artwork.title!,
     },
   }
+
+  if (
+    artwork.mediumType?.filterGene?.name &&
+    artwork.mediumType?.filterGene.slug
+  ) {
+    additionalGeneIDs = [artwork.mediumType.filterGene.slug]
+    aggregations = [
+      {
+        slice: "MEDIUM",
+        counts: [
+          {
+            name: artwork.mediumType.filterGene.name,
+            value: artwork.mediumType.filterGene.slug,
+            count: 0,
+          },
+        ],
+      },
+    ]
+  }
+
   const criteria: SearchCriteriaAttributes = {
     artistIDs,
     attributionClass,
+    additionalGeneIDs,
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
@@ -79,6 +102,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
         <SavedSearchCreateAlertButton
           entity={entity}
           criteria={allowedCriteria}
+          aggregations={aggregations}
           getAuthModalOptions={getAuthModalOptions}
         />
       </Flex>
@@ -101,6 +125,12 @@ export const CreateArtworkAlertSectionFragmentContainer = createFragmentContaine
         }
         attributionClass {
           internalID
+        }
+        mediumType {
+          filterGene {
+            slug
+            name
+          }
         }
       }
     `,
