@@ -23,6 +23,11 @@ export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawRes
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -48,6 +53,11 @@ export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawRespons
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -73,6 +83,11 @@ export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse[
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -96,6 +111,11 @@ export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Quer
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -121,6 +141,11 @@ export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -146,6 +171,11 @@ export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Que
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -171,6 +201,11 @@ export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRa
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -196,6 +231,11 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -221,6 +261,11 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
     },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
 
 export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -284,4 +329,9 @@ export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfo_Test_QueryRawRe
     counts: { bidder_positions: 0 },
   },
   myLotStanding: null,
+  slug: "/artwork_from_closed_auction",
+  internalID: "artwork_from_closed_auction",
+  title: "",
+  artists: [],
+  attributionClass: null,
 }
