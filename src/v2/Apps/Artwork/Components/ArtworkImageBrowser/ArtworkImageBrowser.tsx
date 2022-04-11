@@ -17,6 +17,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
 }) => {
   const { images, video } = artwork
+
   let length = 0
   if (images?.length) {
     length += images.length

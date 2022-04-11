@@ -14,7 +14,7 @@ import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
-import { ArtworkVideoPlayer } from "../ArtworkDetails/ArtworkVideoPlayer"
+import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkDetails/ArtworkVideoPlayer"
 import { Override } from "v2/Utils/typeSupport"
 
 interface ArtworkImageBrowserLargeProps {
@@ -56,7 +56,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
   return (
     <>
-      {isDeepZoomVisible && activeImage.type === "Image" && (
+      {activeImage.type === "Image" && isDeepZoomVisible && (
         <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
       )}
 
@@ -107,7 +107,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
         )}
 
         {activeImage.type === "Video" && (
-          <ArtworkVideoPlayer video={activeImage} />
+          <ArtworkVideoPlayerFragmentContainer artwork={artwork} />
         )}
 
         {figures.length > 1 && (
@@ -150,6 +150,7 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
     artwork: graphql`
       fragment ArtworkImageBrowserLarge_artwork on Artwork {
         ...ArtworkLightbox_artwork
+        ...ArtworkVideoPlayer_artwork
         images {
           type: __typename
           internalID
@@ -158,9 +159,6 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
         }
         video {
           type: __typename
-          src
-          height
-          width
         }
       }
     `,

@@ -1,7 +1,7 @@
 import { Clickable, ClickableProps, Image, ResponsiveBox } from "@artsy/palette"
 import { Link } from "react-head"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkLightbox_artwork } from "v2/__generated__/ArtworkLightbox_artwork.graphql"
 import { useSystemContext } from "v2/System"
@@ -30,6 +30,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   )
   const { resized, fallback, placeholder, isDefault } = images[activeIndex]
   const image = hasGeometry ? resized : fallback
+  console.log(image)
 
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
