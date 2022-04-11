@@ -56,7 +56,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
   return (
     <>
-      {isDeepZoomVisible && activeImage.type === "Image" && (
+      {activeImage.type === "Image" && isDeepZoomVisible && (
         <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
       )}
 
@@ -159,9 +159,6 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
         }
         video {
           type: __typename
-          src
-          height
-          width
         }
       }
     `,
