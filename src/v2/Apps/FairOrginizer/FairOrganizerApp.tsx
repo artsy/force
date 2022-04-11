@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import truncate from "trunc-html"
-import { Box, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette"
 import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
 import { FairOrganizerHeaderImageFragmentContainer as FairOrganizerHeaderImage } from "./Components/FairOrganizerHeaderImage"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
@@ -18,32 +18,28 @@ const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
 }) => {
   const { name, profile, slug, about } = fairOrganizer
 
-  const title = `${name} | Artsy`
-
   return (
     <>
       <MetaTags
         description={truncate(about, 200).text}
         imageURL={profile?.image?.url}
         pathname={`fair-organizer/${slug}`}
-        title={title}
+        title={`${name} | Artsy`}
       />
 
-      <Box>
-        <FairOrganizerHeaderImage fairOrganizer={fairOrganizer} />
+      <FairOrganizerHeaderImage fairOrganizer={fairOrganizer} />
 
-        <Spacer mt={4} />
+      <Spacer mt={4} />
 
-        <FairOrganizerHeader fairOrganizer={fairOrganizer} />
+      <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
-        <Spacer mt={6} />
+      <Spacer mt={6} />
 
-        <FairOrganizerPastEventsRail fairOrganizer={fairOrganizer} />
+      <FairOrganizerPastEventsRail fairOrganizer={fairOrganizer} />
 
-        <Spacer mt={140} />
+      <Spacer mt={12} />
 
-        <FairOrganizerLatestArticles fairOrganizer={fairOrganizer} />
-      </Box>
+      <FairOrganizerLatestArticles fairOrganizer={fairOrganizer} />
     </>
   )
 }

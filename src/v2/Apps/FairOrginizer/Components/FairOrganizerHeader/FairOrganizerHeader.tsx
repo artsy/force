@@ -62,7 +62,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
                     startDate={startAt!}
                     endDate=""
                   />
-                  <Spacer mt={30} />
+                  <Spacer mt={4} />
                 </>
               )}
             </Box>
@@ -73,7 +73,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
               </Column>
             </GridColumns>
 
-            <Spacer mt={30} />
+            <Spacer mt={4} />
           </Flex>
         </Column>
 

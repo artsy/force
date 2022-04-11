@@ -64,6 +64,19 @@ describe("TrendingLotsRail", () => {
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })
 
+  it("skips closed lots", () => {
+    const wrapper = getWrapper({
+      Boolean: () => true,
+      SaleArtworksConnection: () => {
+        return {
+          edges: [{ node: { sale: { isClosed: true } } }],
+        }
+      },
+    })
+
+    expect(wrapper.text()).toContain("No Works To Show")
+  })
+
   it("tracks clicks", () => {
     const wrapper = getWrapper({
       SaleArtworksConnection: () => ({

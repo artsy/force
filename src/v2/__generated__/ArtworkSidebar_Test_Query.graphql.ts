@@ -195,7 +195,7 @@ fragment ArtworkSidebarCreateAlertButton_artwork on Artwork {
     id
   }
   attributionClass {
-    name
+    internalID
     id
   }
 }
@@ -362,7 +362,7 @@ fragment CreateArtworkAlertSection_artwork on Artwork {
     id
   }
   attributionClass {
-    name
+    internalID
     id
   }
 }
@@ -1120,7 +1120,7 @@ return {
                 "storageKey": null
               },
               (v7/*: any*/),
-              (v4/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
@@ -1597,7 +1597,7 @@ return {
           "type": "AttributionClass"
         },
         "artwork.attributionClass.id": (v23/*: any*/),
-        "artwork.attributionClass.name": (v22/*: any*/),
+        "artwork.attributionClass.internalID": (v23/*: any*/),
         "artwork.attributionClass.shortDescription": (v22/*: any*/),
         "artwork.cultural_maker": (v22/*: any*/),
         "artwork.date": (v22/*: any*/),

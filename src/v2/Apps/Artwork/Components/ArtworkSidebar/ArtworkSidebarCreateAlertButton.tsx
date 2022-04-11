@@ -8,7 +8,6 @@ import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "v2/Components/SavedSearchAlert/types"
-import { getAttributionClassValueByLabel } from "v2/Components/SavedSearchAlert/Utils/getAttributionClassValueByLabel"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarCreateAlertButton_artwork } from "v2/__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
 
@@ -19,10 +18,8 @@ interface ArtworkSidebarCreateAlertButtonProps {
 const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> = ({
   artwork,
 }) => {
-  const attributionClass = getAttributionClassValueByLabel(
-    artwork.attributionClass?.name ?? ""
-  )
   const artists = compact(artwork.artists)
+  const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
   const entity: SavedSearchEntity = {
@@ -90,7 +87,7 @@ export const ArtworkSidebarCreateAlertButtonFragmentContainer = createFragmentCo
           slug
         }
         attributionClass {
-          name
+          internalID
         }
       }
     `,
