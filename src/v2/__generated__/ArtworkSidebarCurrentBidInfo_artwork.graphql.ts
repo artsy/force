@@ -33,6 +33,7 @@ export type ArtworkSidebarCurrentBidInfo_artwork = {
             } | null;
         } | null;
     }> | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork">;
     readonly " $refType": "ArtworkSidebarCurrentBidInfo_artwork";
 };
 export type ArtworkSidebarCurrentBidInfo_artwork$data = ArtworkSidebarCurrentBidInfo_artwork;
@@ -220,11 +221,21 @@ return {
         }
       ],
       "storageKey": "myLotStanding(live:true)"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarBiddingClosedMessage_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '244834e45aff21bd8869674daa98de55';
+(node as any).hash = '0bad59ddf808323ac7060e4df697a8d2';
 export default node;

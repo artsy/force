@@ -44,6 +44,19 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
                 readonly id: string;
             }) | null;
         }> | null;
+        readonly slug: string;
+        readonly internalID: string;
+        readonly title: string | null;
+        readonly artists: ReadonlyArray<({
+            readonly internalID: string;
+            readonly name: string | null;
+            readonly slug: string;
+            readonly id: string;
+        }) | null> | null;
+        readonly attributionClass: ({
+            readonly name: string | null;
+            readonly id: string;
+        }) | null;
         readonly id: string;
     }) | null;
 };
@@ -59,6 +72,26 @@ export type ArtworkSidebarCurrentBidInfo_Test_Query = {
 query ArtworkSidebarCurrentBidInfo_Test_Query {
   artwork(id: "auction_artwork_estimate_premium") {
     ...ArtworkSidebarCurrentBidInfo_artwork
+    id
+  }
+}
+
+fragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {
+  ...ArtworkSidebarCreateAlertButton_artwork
+}
+
+fragment ArtworkSidebarCreateAlertButton_artwork on Artwork {
+  slug
+  internalID
+  title
+  artists {
+    internalID
+    name
+    slug
+    id
+  }
+  attributionClass {
+    name
     id
   }
 }
@@ -96,6 +129,8 @@ fragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {
       id
     }
   }
+  ...ArtworkSidebarCreateAlertButton_artwork
+  ...ArtworkSidebarBiddingClosedMessage_artwork
 }
 */
 
@@ -111,10 +146,17 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -123,29 +165,43 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "BidderPosition"
 },
-v5 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Boolean"
-},
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -210,13 +266,7 @@ return {
                 "name": "isLiveOpen",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
+              (v1/*: any*/),
               {
                 "alias": "is_with_buyers_premium",
                 "args": null,
@@ -224,7 +274,7 @@ return {
                 "name": "isWithBuyersPremium",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -271,7 +321,7 @@ return {
                 "kind": "LinkedField",
                 "name": "currentBid",
                 "plural": false,
-                "selections": (v2/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
               {
@@ -292,7 +342,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -325,7 +375,7 @@ return {
                     "name": "isWinning",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -344,24 +394,61 @@ return {
                     "kind": "LinkedField",
                     "name": "maxBid",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": "myLotStanding(live:true)"
           },
-          (v1/*: any*/)
+          (v4/*: any*/),
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artists",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              (v5/*: any*/),
+              (v4/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": [
+              (v5/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
       }
     ]
   },
   "params": {
-    "cacheID": "b80678ccf0131942947887f8734a89e1",
+    "cacheID": "61a03c6e75ebdba158642aacca2f64ee",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -371,36 +458,55 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.id": (v3/*: any*/),
+        "artwork.artists": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "Artist"
+        },
+        "artwork.artists.id": (v6/*: any*/),
+        "artwork.artists.internalID": (v6/*: any*/),
+        "artwork.artists.name": (v7/*: any*/),
+        "artwork.artists.slug": (v6/*: any*/),
+        "artwork.attributionClass": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AttributionClass"
+        },
+        "artwork.attributionClass.id": (v6/*: any*/),
+        "artwork.attributionClass.name": (v7/*: any*/),
+        "artwork.id": (v6/*: any*/),
+        "artwork.internalID": (v6/*: any*/),
         "artwork.myLotStanding": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "LotStanding"
         },
-        "artwork.myLotStanding.active_bid": (v4/*: any*/),
-        "artwork.myLotStanding.active_bid.id": (v3/*: any*/),
-        "artwork.myLotStanding.active_bid.is_winning": (v5/*: any*/),
-        "artwork.myLotStanding.most_recent_bid": (v4/*: any*/),
-        "artwork.myLotStanding.most_recent_bid.id": (v3/*: any*/),
+        "artwork.myLotStanding.active_bid": (v8/*: any*/),
+        "artwork.myLotStanding.active_bid.id": (v6/*: any*/),
+        "artwork.myLotStanding.active_bid.is_winning": (v9/*: any*/),
+        "artwork.myLotStanding.most_recent_bid": (v8/*: any*/),
+        "artwork.myLotStanding.most_recent_bid.id": (v6/*: any*/),
         "artwork.myLotStanding.most_recent_bid.max_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "BidderPositionMaxBid"
         },
-        "artwork.myLotStanding.most_recent_bid.max_bid.display": (v6/*: any*/),
+        "artwork.myLotStanding.most_recent_bid.max_bid.display": (v7/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.id": (v3/*: any*/),
-        "artwork.sale.internalID": (v3/*: any*/),
-        "artwork.sale.is_closed": (v5/*: any*/),
-        "artwork.sale.is_live_open": (v5/*: any*/),
-        "artwork.sale.is_with_buyers_premium": (v5/*: any*/),
+        "artwork.sale.id": (v6/*: any*/),
+        "artwork.sale.internalID": (v6/*: any*/),
+        "artwork.sale.is_closed": (v9/*: any*/),
+        "artwork.sale.is_live_open": (v9/*: any*/),
+        "artwork.sale.is_with_buyers_premium": (v9/*: any*/),
         "artwork.sale_artwork": {
           "enumValues": null,
           "nullable": true,
@@ -425,17 +531,19 @@ return {
           "plural": false,
           "type": "SaleArtworkCurrentBid"
         },
-        "artwork.sale_artwork.current_bid.display": (v6/*: any*/),
-        "artwork.sale_artwork.endedAt": (v6/*: any*/),
-        "artwork.sale_artwork.id": (v3/*: any*/),
-        "artwork.sale_artwork.is_with_reserve": (v5/*: any*/),
-        "artwork.sale_artwork.reserve_message": (v6/*: any*/),
-        "artwork.sale_artwork.reserve_status": (v6/*: any*/)
+        "artwork.sale_artwork.current_bid.display": (v7/*: any*/),
+        "artwork.sale_artwork.endedAt": (v7/*: any*/),
+        "artwork.sale_artwork.id": (v6/*: any*/),
+        "artwork.sale_artwork.is_with_reserve": (v9/*: any*/),
+        "artwork.sale_artwork.reserve_message": (v7/*: any*/),
+        "artwork.sale_artwork.reserve_status": (v7/*: any*/),
+        "artwork.slug": (v6/*: any*/),
+        "artwork.title": (v7/*: any*/)
       }
     },
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    endedAt\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n  ...ArtworkSidebarBiddingClosedMessage_artwork\n}\n"
   }
 };
 })();

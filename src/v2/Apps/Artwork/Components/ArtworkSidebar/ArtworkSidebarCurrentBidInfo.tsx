@@ -15,37 +15,11 @@ import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "v2/Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
 import { lotIsClosed } from "../../Utils/lotIsClosed"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork
   currentBidChanged: boolean
-}
-
-interface BiddingClosedMessageProps {
-  children?: React.ReactNode
-}
-
-export const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
-  children,
-}) => {
-  const shouldShowCreateAlertSection = useFeatureFlag(
-    "artwork-page-create-alert"
-  )
-
-  return (
-    <>
-      <Separator my={2} />
-
-      <Text
-        variant={shouldShowCreateAlertSection ? "lg" : "subtitle"}
-        color="black100"
-      >
-        Bidding closed
-      </Text>
-      {children}
-    </>
-  )
 }
 
 // This text pulse animation is used when the current bid changes.
@@ -99,7 +73,9 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
   }
 
   if (lotIsClosed(artwork.sale, artwork.sale_artwork)) {
-    return <BiddingClosedMessage />
+    return (
+      <ArtworkSidebarBiddingClosedMessageFragmentContainer artwork={artwork} />
+    )
   }
 
   // Don't display anything if there is no starting bid info
@@ -246,6 +222,8 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentConta
             }
           }
         }
+        ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkSidebarBiddingClosedMessage_artwork
       }
     `,
   }

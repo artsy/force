@@ -1,4 +1,4 @@
-import { Box, Spacer, Text, Join } from "@artsy/palette"
+import { Box, Spacer, Join } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
@@ -18,9 +18,8 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
-import { BiddingClosedMessage } from "./ArtworkSidebarCurrentBidInfo"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSidebarCreateAlertButton"
+import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -60,19 +59,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
               artwork={artwork}
             />
             {hasEnded ? (
-              <BiddingClosedMessage>
-                {!!isCreateAlertButtonForArtworkEnabled && (
-                  <>
-                    <Text variant="sm" color="black60" pt={0.5}>
-                      Be notified when a similar piece is available
-                    </Text>
-                    <Spacer my={2} />
-                    <ArtworkSidebarCreateAlertButtonFragmentContainer
-                      artwork={artwork}
-                    />
-                  </>
-                )}
-              </BiddingClosedMessage>
+              <ArtworkSidebarBiddingClosedMessageFragmentContainer
+                artwork={artwork}
+              />
             ) : (
               <ArtworkSidebarAuctionPollingRefetchContainer
                 artwork={artwork}
@@ -127,6 +116,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...BuyerGuarantee_artwork
         ...CreateArtworkAlertSection_artwork
         ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkSidebarBiddingClosedMessage_artwork
         sale {
           is_closed: isClosed
           startAt
