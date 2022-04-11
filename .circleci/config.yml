@@ -5,7 +5,6 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@0.10.0
   horizon: artsy/release@0.0.1
-  node: artsy/node@2.1.0
   slack: circleci/slack@4.9.3
   yarn: artsy/yarn@6.1.0
 
@@ -24,7 +23,8 @@ jobs:
           command: chmod +x automator.sh && ./automator.sh
 
   validate_production_schema:
-    executor: node/build
+    docker:
+      - image: cimg/node:14.18
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       practice_web:
