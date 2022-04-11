@@ -76,6 +76,7 @@ const REDIRECTS = {
   "/apply/auction": "http://apply.artsy.net/auctions",
   "/apply/fair": "http://apply.artsy.net/fairs",
   "/apply*": "http://apply.artsy.net/partnerships",
+  "/gallery-partnerships": "https://partners.artsy.net",
 }
 
 const router = express.Router()
