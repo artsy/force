@@ -6,10 +6,17 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowserLarge_artwork = {
     readonly images: ReadonlyArray<{
+        readonly type: string;
         readonly internalID: string | null;
         readonly isZoomable: boolean | null;
         readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
     } | null> | null;
+    readonly video: {
+        readonly type: string;
+        readonly src: string | null;
+        readonly height: number | null;
+        readonly width: number | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork">;
     readonly " $refType": "ArtworkImageBrowserLarge_artwork";
 };
@@ -21,7 +28,15 @@ export type ArtworkImageBrowserLarge_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": "type",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -35,6 +50,7 @@ const node: ReaderFragment = {
       "name": "images",
       "plural": true,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -58,6 +74,39 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Video",
+      "kind": "LinkedField",
+      "name": "video",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "src",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "height",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "width",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkLightbox_artwork"
@@ -66,5 +115,6 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '76181998a2ea6347028e36a0267ae23c';
+})();
+(node as any).hash = '5660fac63304c2732db1805ba0a559cc';
 export default node;

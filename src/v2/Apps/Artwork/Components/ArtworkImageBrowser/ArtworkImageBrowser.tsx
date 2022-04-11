@@ -21,6 +21,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   if (images?.length) {
     length += images.length
   }
+
   if (video) {
     length += 1
   }
@@ -84,7 +85,9 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
         internalID
         isDefault
       }
-      videoUrl
+      video {
+        __typename
+      }
     }
   `,
 })

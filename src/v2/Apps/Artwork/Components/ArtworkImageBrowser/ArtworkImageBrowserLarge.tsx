@@ -7,13 +7,15 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
+import { ArtworkVideoPlayer } from "../ArtworkDetails/ArtworkVideoPlayer"
+import { Override } from "v2/Utils/typeSupport"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
@@ -22,32 +24,44 @@ interface ArtworkImageBrowserLargeProps {
   onPrev(): void
 }
 
+type Images = NonNullable<ArtworkImageBrowserLarge_artwork["images"]>
+type Image = Override<NonNullable<Images[number]>, { type: "Image" }>
+type Figure = Image | Video
+export type Video = Override<
+  NonNullable<ArtworkImageBrowserLarge_artwork["video"]>,
+  { type: "Video" }
+>
+
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   artwork,
   index,
   onNext,
   onPrev,
 }) => {
-  const images = compact(artwork.images)
+  const figures: Figure[] = compact(artwork.images) as Figure[]
 
-  const activeImage = images[index]
+  if (artwork.video) {
+    figures.push(artwork.video as Figure)
+  }
+
+  const activeImage = figures[index]
 
   const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
 
   const { containerRef } = useNextPrevious({ onNext, onPrevious: onPrev })
 
-  if (images.length === 0) {
+  if (figures.length === 0) {
     return null
   }
 
   return (
     <>
-      {isDeepZoomVisible && (
+      {isDeepZoomVisible && activeImage.type === "Image" && (
         <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
       )}
 
       <Box ref={containerRef as any} position="relative">
-        {images.length > 1 && (
+        {figures.length > 1 && (
           <nav>
             <NextPrevious
               onClick={onPrev}
@@ -83,22 +97,28 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           </nav>
         )}
 
-        <ArtworkLightboxFragmentContainer
-          my={2}
-          artwork={artwork}
-          activeIndex={index}
-          onClick={activeImage.isZoomable ? showDeepZoom : undefined}
-        />
+        {activeImage.type === "Image" && (
+          <ArtworkLightboxFragmentContainer
+            my={2}
+            artwork={artwork}
+            activeIndex={index}
+            onClick={activeImage.isZoomable ? showDeepZoom : undefined}
+          />
+        )}
 
-        {images.length > 1 && (
+        {activeImage.type === "Video" && (
+          <ArtworkVideoPlayer video={activeImage} />
+        )}
+
+        {figures.length > 1 && (
           <>
             <VisuallyHidden aria-live="polite" aria-atomic="true">
-              Page {index + 1} of {images.length}
+              Page {index + 1} of {figures.length}
             </VisuallyHidden>
 
             <ProgressDots
               activeIndex={index}
-              amount={images.length}
+              amount={figures.length}
               variant="dash"
             />
           </>
@@ -131,9 +151,16 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
       fragment ArtworkImageBrowserLarge_artwork on Artwork {
         ...ArtworkLightbox_artwork
         images {
+          type: __typename
           internalID
           isZoomable
           ...DeepZoom_image
+        }
+        video {
+          type: __typename
+          src
+          height
+          width
         }
       }
     `,
