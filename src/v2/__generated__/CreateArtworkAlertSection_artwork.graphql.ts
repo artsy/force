@@ -16,6 +16,12 @@ export type CreateArtworkAlertSection_artwork = {
     readonly attributionClass: {
         readonly internalID: string;
     } | null;
+    readonly mediumType: {
+        readonly filterGene: {
+            readonly slug: string;
+            readonly name: string | null;
+        } | null;
+    } | null;
     readonly " $refType": "CreateArtworkAlertSection_artwork";
 };
 export type CreateArtworkAlertSection_artwork$data = CreateArtworkAlertSection_artwork;
@@ -39,6 +45,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -65,13 +78,7 @@ return {
       "plural": true,
       "selections": [
         (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
+        (v2/*: any*/),
         (v1/*: any*/)
       ],
       "storageKey": null
@@ -87,11 +94,35 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            (v2/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '3a013f29d4b4892d02dff17087c63846';
+(node as any).hash = '9ca1426f14bb12aac7cab50c39f76613';
 export default node;

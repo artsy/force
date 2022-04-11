@@ -39,6 +39,13 @@ fragment CreateArtworkAlertSection_artwork on Artwork {
     internalID
     id
   }
+  mediumType {
+    filterGene {
+      slug
+      name
+      id
+    }
+  }
 }
 */
 
@@ -68,16 +75,23 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -142,15 +156,9 @@ return {
             "plural": true,
             "selections": [
               (v1/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
+              (v3/*: any*/),
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -163,18 +171,43 @@ return {
             "plural": false,
             "selections": [
               (v1/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Gene",
+                "kind": "LinkedField",
+                "name": "filterGene",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"test-artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "b53e5beabe485c5d3585eb90610a353e",
+    "cacheID": "52b31b82b1a93c02971ac3d1c843df0c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -190,27 +223,42 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.id": (v4/*: any*/),
-        "artwork.artists.internalID": (v4/*: any*/),
-        "artwork.artists.name": (v5/*: any*/),
-        "artwork.artists.slug": (v4/*: any*/),
+        "artwork.artists.id": (v5/*: any*/),
+        "artwork.artists.internalID": (v5/*: any*/),
+        "artwork.artists.name": (v6/*: any*/),
+        "artwork.artists.slug": (v5/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v4/*: any*/),
-        "artwork.attributionClass.internalID": (v4/*: any*/),
-        "artwork.id": (v4/*: any*/),
-        "artwork.internalID": (v4/*: any*/),
-        "artwork.slug": (v4/*: any*/),
-        "artwork.title": (v5/*: any*/)
+        "artwork.attributionClass.id": (v5/*: any*/),
+        "artwork.attributionClass.internalID": (v5/*: any*/),
+        "artwork.id": (v5/*: any*/),
+        "artwork.internalID": (v5/*: any*/),
+        "artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "artwork.mediumType.filterGene": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "artwork.mediumType.filterGene.id": (v5/*: any*/),
+        "artwork.mediumType.filterGene.name": (v6/*: any*/),
+        "artwork.mediumType.filterGene.slug": (v5/*: any*/),
+        "artwork.slug": (v5/*: any*/),
+        "artwork.title": (v6/*: any*/)
       }
     },
     "name": "CreateArtworkAlertSection_Test_Query",
     "operationKind": "query",
-    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n}\n"
+    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
