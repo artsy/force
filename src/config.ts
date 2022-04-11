@@ -64,9 +64,6 @@ export const FACEBOOK_ID: any = null
 export const FACEBOOK_SECRET: any = null
 export const FEATURE_FLAGS: any = null
 export const FAIR_CHANNEL_ID: any = "5759e4f3b5989e6f98f77998"
-export const GALAXY_PUBLISHABLE_TOKEN: any = null
-export const GALAXY_TOKEN: any = null
-export const GALAXY_URL: any = null
 // Used to redirect to partners.artsy.net
 export const GALLERY_INSIGHTS_CHANNEL: any = "5759e4a6b5989e6f98f77995"
 export const GALLERY_PARTNER_UPDATES_CHANNEL: any = "5762d454b5989e6f98f7799a"
