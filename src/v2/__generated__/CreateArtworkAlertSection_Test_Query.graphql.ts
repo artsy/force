@@ -36,8 +36,15 @@ fragment CreateArtworkAlertSection_artwork on Artwork {
     id
   }
   attributionClass {
-    name
+    internalID
     id
+  }
+  mediumType {
+    filterGene {
+      slug
+      name
+      id
+    }
   }
 }
 */
@@ -163,8 +170,33 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v1/*: any*/),
               (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkMedium",
+            "kind": "LinkedField",
+            "name": "mediumType",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Gene",
+                "kind": "LinkedField",
+                "name": "filterGene",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -175,7 +207,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fbb819a320c7d5cb5290119bfe3378b0",
+    "cacheID": "52b31b82b1a93c02971ac3d1c843df0c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -202,16 +234,31 @@ return {
           "type": "AttributionClass"
         },
         "artwork.attributionClass.id": (v5/*: any*/),
-        "artwork.attributionClass.name": (v6/*: any*/),
+        "artwork.attributionClass.internalID": (v5/*: any*/),
         "artwork.id": (v5/*: any*/),
         "artwork.internalID": (v5/*: any*/),
+        "artwork.mediumType": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkMedium"
+        },
+        "artwork.mediumType.filterGene": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "artwork.mediumType.filterGene.id": (v5/*: any*/),
+        "artwork.mediumType.filterGene.name": (v6/*: any*/),
+        "artwork.mediumType.filterGene.slug": (v5/*: any*/),
         "artwork.slug": (v5/*: any*/),
         "artwork.title": (v6/*: any*/)
       }
     },
     "name": "CreateArtworkAlertSection_Test_Query",
     "operationKind": "query",
-    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    name\n    id\n  }\n}\n"
+    "text": "query CreateArtworkAlertSection_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...CreateArtworkAlertSection_artwork\n    id\n  }\n}\n\nfragment CreateArtworkAlertSection_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

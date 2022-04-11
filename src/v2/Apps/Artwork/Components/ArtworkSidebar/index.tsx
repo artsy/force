@@ -18,8 +18,8 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
-import { BiddingClosedMessage } from "./ArtworkSidebarCurrentBidInfo"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
+import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -35,14 +35,15 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const isCreateAlertButtonForArtworkEnabled = useFeatureFlag(
     "artwork-page-create-alert"
   )
-  const shouldShowCreateAlertSection =
-    isCreateAlertButtonForArtworkEnabled && !artwork.is_sold
 
   // If we have info about the lot end time (cascading), use that.
   const { sale, saleArtwork } = artwork
   const endAt = saleArtwork?.endAt
   const startAt = sale?.startAt
   const { hasEnded } = useTimer(endAt!, startAt!)
+
+  const shouldShowCreateAlertSection =
+    isCreateAlertButtonForArtworkEnabled && !artwork.is_sold && !hasEnded
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -58,7 +59,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
               artwork={artwork}
             />
             {hasEnded ? (
-              <BiddingClosedMessage />
+              <ArtworkSidebarBiddingClosedMessageFragmentContainer
+                artwork={artwork}
+              />
             ) : (
               <ArtworkSidebarAuctionPollingRefetchContainer
                 artwork={artwork}
@@ -112,6 +115,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...AuthenticityCertificate_artwork
         ...BuyerGuarantee_artwork
         ...CreateArtworkAlertSection_artwork
+        ...ArtworkSidebarBiddingClosedMessage_artwork
         sale {
           is_closed: isClosed
           startAt

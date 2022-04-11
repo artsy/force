@@ -39,12 +39,15 @@ describe("FairOverview", () => {
 
   it("renders articles if they are present", () => {
     const wrapper = getWrapper({
-      Article: () => ({
-        title: "Miart 2020",
+      Fair: () => ({
+        href: "/fair/example",
+      }),
+      ArticleConnection: () => ({
+        totalCount: 7,
       }),
     })
 
-    expect(wrapper.text()).toContain("Miart 2020")
+    expect(wrapper.html()).toContain("/fair/example/articles")
   })
 
   it("does not render the collection when it is missing", () => {
@@ -58,10 +61,15 @@ describe("FairOverview", () => {
 
   it("does not render articles when they are missing", () => {
     const wrapper = getWrapper({
-      ArticleConnection: () => ({ edges: [] }),
+      Fair: () => ({
+        href: "/fair/example",
+      }),
+      ArticleConnection: () => ({
+        totalCount: 0,
+      }),
     })
 
-    expect(wrapper.text()).not.toContain("Miart 2020")
+    expect(wrapper.html()).not.toContain("/fair/example/articles")
   })
 
   it("renders the collection when it is present", () => {

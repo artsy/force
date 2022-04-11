@@ -3,12 +3,12 @@ import { Button } from "@artsy/palette"
 import { compact } from "lodash"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchCreateAlertButtonContainer } from "v2/Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "v2/Components/SavedSearchAlert/types"
-import { getAttributionClassValueByLabel } from "v2/Components/SavedSearchAlert/Utils/getAttributionClassValueByLabel"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarCreateAlertButton_artwork } from "v2/__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
 
@@ -19,10 +19,10 @@ interface ArtworkSidebarCreateAlertButtonProps {
 const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> = ({
   artwork,
 }) => {
-  const attributionClass = getAttributionClassValueByLabel(
-    artwork.attributionClass?.name ?? ""
-  )
+  let aggregations: Aggregations = []
+  let additionalGeneIDs: string[] = []
   const artists = compact(artwork.artists)
+  const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
   const entity: SavedSearchEntity = {
@@ -39,9 +39,30 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
       name: artwork.title!,
     },
   }
+
+  if (
+    artwork.mediumType?.filterGene?.name &&
+    artwork.mediumType?.filterGene.slug
+  ) {
+    additionalGeneIDs = [artwork.mediumType.filterGene.slug]
+    aggregations = [
+      {
+        slice: "MEDIUM",
+        counts: [
+          {
+            name: artwork.mediumType.filterGene.name,
+            value: artwork.mediumType.filterGene.slug,
+            count: 0,
+          },
+        ],
+      },
+    ]
+  }
+
   const criteria: SearchCriteriaAttributes = {
     artistIDs,
     attributionClass,
+    additionalGeneIDs,
   }
 
   const getAuthModalOptions = (): AuthModalOptions => {
@@ -66,6 +87,7 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
     <SavedSearchCreateAlertButtonContainer
       entity={entity}
       criteria={criteria}
+      aggregations={aggregations}
       getAuthModalOptions={getAuthModalOptions}
       renderButton={({ onClick }) => (
         <Button width="100%" size="medium" onClick={onClick}>
@@ -90,7 +112,13 @@ export const ArtworkSidebarCreateAlertButtonFragmentContainer = createFragmentCo
           slug
         }
         attributionClass {
-          name
+          internalID
+        }
+        mediumType {
+          filterGene {
+            slug
+            name
+          }
         }
       }
     `,

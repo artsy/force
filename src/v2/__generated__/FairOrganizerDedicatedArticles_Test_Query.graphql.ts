@@ -25,6 +25,23 @@ query FairOrganizerDedicatedArticles_Test_Query {
   }
 }
 
+fragment CellArticle_article on Article {
+  vertical
+  title
+  thumbnailTitle
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
+  thumbnailImage {
+    cropped(width: 445, height: 334) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
+}
+
 fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   slug
   name
@@ -37,36 +54,6 @@ fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
     }
     id
   }
-}
-
-fragment FairEditorialItemLink_article on Article {
-  internalID
-  slug
-  title
-  href
-  publishedAt(format: "MMMM D, YYYY")
-}
-
-fragment FairEditorialItem_article on Article {
-  id
-  title
-  publishedAt(format: "MMMM D, YYYY")
-  thumbnailTitle
-  thumbnailImage {
-    large: cropped(width: 670, height: 720) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 325, height: 240) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  ...FairEditorialItemLink_article
 }
 
 fragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer {
@@ -82,8 +69,8 @@ fragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer {
     }
     edges {
       node {
+        ...CellArticle_article
         id
-        ...FairEditorialItem_article
       }
     }
   }
@@ -125,26 +112,19 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "cursor",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v4 = [
+v3 = [
+  (v1/*: any*/),
   (v2/*: any*/),
-  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -153,88 +133,64 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v8 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "height",
-    "storageKey": null
-  },
-  (v6/*: any*/),
-  (v7/*: any*/)
-],
-v9 = {
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v10 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v11 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v12 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "CroppedImageUrl"
-},
-v13 = {
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v14 = {
+v11 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v15 = {
+v12 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Boolean"
 },
-v16 = {
+v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -281,7 +237,13 @@ return {
         "name": "fairOrganizer",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -353,7 +315,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -363,7 +325,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -373,7 +335,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -384,8 +346,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v1/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -408,26 +370,19 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "vertical",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "title",
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "format",
-                            "value": "MMMM D, YYYY"
-                          }
-                        ],
-                        "kind": "ScalarField",
-                        "name": "publishedAt",
-                        "storageKey": "publishedAt(format:\"MMMM D, YYYY\")"
                       },
                       {
                         "alias": null,
@@ -439,71 +394,80 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "thumbnailImage",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": "large",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 720
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 670
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v8/*: any*/),
-                            "storageKey": "cropped(height:720,width:670)"
-                          },
-                          {
-                            "alias": "small",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 240
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 325
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v8/*: any*/),
-                            "storageKey": "cropped(height:240,width:325)"
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "byline",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "href",
                         "storageKey": null
-                      }
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM D, YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "thumbnailImage",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 334
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 445
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
+                              },
+                              (v4/*: any*/),
+                              (v5/*: any*/)
+                            ],
+                            "storageKey": "cropped(height:334,width:445)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -553,26 +517,26 @@ return {
                     "name": "resized",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": "resized(height:30,version:\"square\",width:30)"
                   }
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "c8afcb0240dd026d64ee19e8fb387c92",
+    "cacheID": "cee8fe574d18412edac8f67c751db4ac",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -600,24 +564,24 @@ return {
           "plural": false,
           "type": "Article"
         },
-        "fairOrganizer.articlesConnection.edges.node.href": (v9/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.id": (v10/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.internalID": (v10/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v9/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.slug": (v9/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": (v11/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large": (v12/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.height": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.src": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.srcSet": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.large.width": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small": (v12/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.height": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.src": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.srcSet": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.small.width": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v9/*: any*/),
-        "fairOrganizer.articlesConnection.edges.node.title": (v9/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.byline": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.href": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.id": (v8/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.publishedAt": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage": (v9/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.height": (v10/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.src": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.srcSet": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailImage.cropped.width": (v10/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.thumbnailTitle": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.title": (v7/*: any*/),
+        "fairOrganizer.articlesConnection.edges.node.vertical": (v7/*: any*/),
         "fairOrganizer.articlesConnection.pageCursors": {
           "enumValues": null,
           "nullable": false,
@@ -630,57 +594,57 @@ return {
           "plural": true,
           "type": "PageCursor"
         },
-        "fairOrganizer.articlesConnection.pageCursors.around.cursor": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.around.isCurrent": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.around.page": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first.cursor": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first.isCurrent": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.first.page": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last.cursor": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last.isCurrent": (v15/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.last.page": (v13/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.previous": (v16/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.previous.cursor": (v14/*: any*/),
-        "fairOrganizer.articlesConnection.pageCursors.previous.page": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.around.cursor": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.around.isCurrent": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.around.page": (v10/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first.cursor": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first.isCurrent": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.first.page": (v10/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last.cursor": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last.isCurrent": (v12/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.last.page": (v10/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.previous": (v13/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.previous.cursor": (v11/*: any*/),
+        "fairOrganizer.articlesConnection.pageCursors.previous.page": (v10/*: any*/),
         "fairOrganizer.articlesConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "fairOrganizer.articlesConnection.pageInfo.hasNextPage": (v15/*: any*/),
+        "fairOrganizer.articlesConnection.pageInfo.hasNextPage": (v12/*: any*/),
         "fairOrganizer.articlesConnection.totalCount": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "fairOrganizer.id": (v10/*: any*/),
-        "fairOrganizer.name": (v9/*: any*/),
+        "fairOrganizer.id": (v8/*: any*/),
+        "fairOrganizer.name": (v7/*: any*/),
         "fairOrganizer.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "fairOrganizer.profile.id": (v10/*: any*/),
-        "fairOrganizer.profile.image": (v11/*: any*/),
+        "fairOrganizer.profile.id": (v8/*: any*/),
+        "fairOrganizer.profile.image": (v9/*: any*/),
         "fairOrganizer.profile.image.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "fairOrganizer.profile.image.resized.src": (v14/*: any*/),
-        "fairOrganizer.profile.image.resized.srcSet": (v14/*: any*/),
-        "fairOrganizer.slug": (v10/*: any*/)
+        "fairOrganizer.profile.image.resized.src": (v11/*: any*/),
+        "fairOrganizer.profile.image.resized.srcSet": (v11/*: any*/),
+        "fairOrganizer.slug": (v8/*: any*/)
       }
     },
     "name": "FairOrganizerDedicatedArticles_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerDedicatedArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerDedicatedArticles_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: 1, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query FairOrganizerDedicatedArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerDedicatedArticles_fairOrganizer\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: 1, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

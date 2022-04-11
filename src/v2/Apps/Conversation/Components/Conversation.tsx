@@ -291,7 +291,6 @@ export const ConversationPaginationContainer = createPaginationContainer(
         id
         internalID
         from {
-          name
           email
         }
         to {

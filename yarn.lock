@@ -37,10 +37,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
   integrity sha512-axgW5YuqSpPzHb27yo2jmPHz/N9eN2hh2E+Mub5BKuu/jHZI+iDTdw0OZ3I+z7Z9WKBh+FPVx4gpza5w7slJNA==
 
-"@artsy/eigen-web-association@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.2.1.tgz#8b286b8fe15384dd53ad85dd90b7c7acf660115b"
-  integrity sha512-o9IWTgo595yKPDLCv3t7MqVsXgx1nLEnFjdBPZjZp2XgzQG7oJrLhi8EImn5rmjth/cR+3KOqgia5pTMQqCdWQ==
+"@artsy/eigen-web-association@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.2.2.tgz#59625f1be37ce5579a249c0215c3db494da0c20d"
+  integrity sha512-n2ZrBELGE46CHgV5XU6akusxunI3W0l8JrQ+YQOPygX2Lw2ZvpzI4I8ug9NbSldDI/4ThPiExdgN+kMkI+4VGA==
   dependencies:
     express "^4.15.0"
 
@@ -53,10 +53,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/fresnel@3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.4.0.tgz#513f139e1d2326fd8a07e32c6fc9c03167cce91f"
-  integrity sha512-wK1pmOEm38oHfwlcyO26n2vr2QTMnn9AawfrJsixT4K4IjyGlI+aa8vS6osUiw2fIdaNIvBqPmXlsCVN+5/kNw==
+"@artsy/fresnel@3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.4.1.tgz#6418aa082c15b2d7395e82fb3b440b186ad72610"
+  integrity sha512-CB9K3x6aNpHoNcFSK4cg2Hk7V4biH8mnf+7d1KOmrfI/SOk0vJNVZbZPtE2E/plrrsGH0XlRsbiHX7dNehrjwA==
 
 "@artsy/fresnel@^1.0.13":
   version "1.7.0"
@@ -118,10 +118,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@29.2.1":
-  version "29.2.1"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-29.2.1.tgz#1bb5afc87ad9fb3b6ec6e3be0d7e1f0d6e86e454"
-  integrity sha512-N6TraFamBs+v9zzGwt971kj9da5WuxQzVbpVwBVr+ZorKz2KPgQ6X0pSdlD36azWCFgurpkr+1jA+I7R3UL+9w==
+"@artsy/reaction@29.4.0":
+  version "29.4.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-29.4.0.tgz#70c1faf31cbcc016fc7dbb6bdc8ec30f014f017e"
+  integrity sha512-LFSgWTsTMl4eaF+V9bWejhcBJqblAU69j3GrVEjhrg2bLZ+VZyvlHQ/x6lliqp1svD5pZDnYHf0l9WV5LCnjng==
   dependencies:
     "@artsy/cohesion" "1.60.0"
     "@artsy/detect-responsive-traits" "^0.0.5"

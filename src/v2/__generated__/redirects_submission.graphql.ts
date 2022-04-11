@@ -14,6 +14,8 @@ export type redirects_submission = {
     readonly locationCity: string | null;
     readonly locationCountry: string | null;
     readonly locationState: string | null;
+    readonly locationPostalCode: string | null;
+    readonly locationCountryCode: string | null;
     readonly year: string | null;
     readonly title: string | null;
     readonly medium: string | null;
@@ -101,6 +103,20 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "locationState",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "locationPostalCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "locationCountryCode",
       "storageKey": null
     },
     {

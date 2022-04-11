@@ -215,7 +215,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     title: "VP and Head of Auctions",
     location: "New York",
     email: "shlomi.rabi@artsy.net",
-    image: "http://files.artsy.net/images/shlomi.jpg",
+    image: "http://files.artsy.net/images/shlomi2.jpg",
   },
   {
     name: "Chloé Bigio",
@@ -250,7 +250,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     title: "Senior Specialist and Head of Prints",
     location: "New York",
     email: "adam.mccoy@artsy.net",
-    image: "http://files.artsy.net/images/adam.jpg",
+    image: "http://files.artsy.net/images/adam2.jpg",
   },
 
   {

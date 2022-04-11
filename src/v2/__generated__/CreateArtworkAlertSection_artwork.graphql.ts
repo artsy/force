@@ -14,7 +14,13 @@ export type CreateArtworkAlertSection_artwork = {
         readonly slug: string;
     } | null> | null;
     readonly attributionClass: {
-        readonly name: string | null;
+        readonly internalID: string;
+    } | null;
+    readonly mediumType: {
+        readonly filterGene: {
+            readonly slug: string;
+            readonly name: string | null;
+        } | null;
     } | null;
     readonly " $refType": "CreateArtworkAlertSection_artwork";
 };
@@ -85,7 +91,31 @@ return {
       "name": "attributionClass",
       "plural": false,
       "selections": [
-        (v2/*: any*/)
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            (v2/*: any*/)
+          ],
+          "storageKey": null
+        }
       ],
       "storageKey": null
     }
@@ -94,5 +124,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4e86da0bfa2df158e1dc57215438a42f';
+(node as any).hash = '9ca1426f14bb12aac7cab50c39f76613';
 export default node;

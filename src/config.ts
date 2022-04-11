@@ -49,7 +49,6 @@ export const EF_VENICE: any = "58f5eb75faef6a3a8e7fe1ad"
 export const EF_VIDEO_GUIDE: any = "5901d64b4682400017f0e3cb"
 export const ENABLE_FAIR_PAGE_EXHIBITORS_TAB: any = false
 export const ENABLE_FAIR_ORGANIZER_REDIRECT: any = false
-export const ENABLE_INSTANT_PAGE: any = true
 export const ENABLE_MEMORY_PROFILING: any = false
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false

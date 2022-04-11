@@ -133,7 +133,7 @@ export const handleSubmit = async (
 }
 
 export const setCookies = options => {
-  const { afterSignUpAction, destination } = options
+  const { afterSignUpAction, destination, submissionId } = options
 
   if (afterSignUpAction) {
     Cookies.set("afterSignUpAction", JSON.stringify(afterSignUpAction))
@@ -141,6 +141,12 @@ export const setCookies = options => {
 
   if (destination) {
     Cookies.set("destination", destination, {
+      expires: 60 * 60 * 24,
+    })
+  }
+
+  if (submissionId) {
+    Cookies.set("submissionId", submissionId, {
       expires: 60 * 60 * 24,
     })
   }

@@ -14,7 +14,13 @@ export type ArtworkSidebarCreateAlertButton_artwork = {
         readonly slug: string;
     } | null> | null;
     readonly attributionClass: {
-        readonly name: string | null;
+        readonly internalID: string;
+    } | null;
+    readonly mediumType: {
+        readonly filterGene: {
+            readonly slug: string;
+            readonly name: string | null;
+        } | null;
     } | null;
     readonly " $refType": "ArtworkSidebarCreateAlertButton_artwork";
 };
@@ -85,7 +91,31 @@ return {
       "name": "attributionClass",
       "plural": false,
       "selections": [
-        (v2/*: any*/)
+        (v1/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
+            (v2/*: any*/)
+          ],
+          "storageKey": null
+        }
       ],
       "storageKey": null
     }
@@ -94,5 +124,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a0d315313d6f94aadd6596e6f0898512';
+(node as any).hash = '4df5f222f3236aacd8dbc226f42abe55';
 export default node;

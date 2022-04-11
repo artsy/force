@@ -39,6 +39,8 @@ fragment ArtworkDetails_submission on ConsignmentSubmission {
   locationCity
   locationCountry
   locationState
+  locationPostalCode
+  locationCountryCode
   year
   title
   medium
@@ -180,6 +182,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "locationPostalCode",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "locationCountryCode",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "year",
             "storageKey": null
           },
@@ -259,7 +275,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fdde03f7c93d93f44b812a2caed24760",
+    "cacheID": "873a95b10fe5e28c3fea51e31f54ec2e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -297,6 +313,8 @@ return {
         "submission.id": (v3/*: any*/),
         "submission.locationCity": (v4/*: any*/),
         "submission.locationCountry": (v4/*: any*/),
+        "submission.locationCountryCode": (v4/*: any*/),
+        "submission.locationPostalCode": (v4/*: any*/),
         "submission.locationState": (v4/*: any*/),
         "submission.medium": (v4/*: any*/),
         "submission.provenance": (v4/*: any*/),
@@ -307,7 +325,7 @@ return {
     },
     "name": "ArtworkDetails_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query ArtworkDetails_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...ArtworkDetails_submission\n    id\n  }\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  id\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
   }
 };
 })();
