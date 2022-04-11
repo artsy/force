@@ -52,12 +52,6 @@ app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
 app.use(require("./apps/dev"))
 app.use(require("./apps/article").app)
-app.use(require("./apps/marketing_signup_modals")) // delete
-app.use(require("./apps/artsy_in_miami").app)
-app.use(require("./apps/armory_week").app)
-app.use(require("./apps/frieze_week").app)
-app.use(require("./apps/frieze_week_london").app)
-app.use(require("./apps/basel_week").app)
 
 // Non-profile dynamic vanity url apps
 app.use(require("./apps/articles").app)
