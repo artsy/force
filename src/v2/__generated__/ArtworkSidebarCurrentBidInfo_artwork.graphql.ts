@@ -33,7 +33,7 @@ export type ArtworkSidebarCurrentBidInfo_artwork = {
             } | null;
         } | null;
     }> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
     readonly " $refType": "ArtworkSidebarCurrentBidInfo_artwork";
 };
 export type ArtworkSidebarCurrentBidInfo_artwork$data = ArtworkSidebarCurrentBidInfo_artwork;
@@ -225,11 +225,6 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCreateAlertButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "ArtworkSidebarBiddingClosedMessage_artwork"
     }
   ],
@@ -237,5 +232,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '0bad59ddf808323ac7060e4df697a8d2';
+(node as any).hash = '9a308c73b8de6ab64f191f6f8ecbe54c';
 export default node;

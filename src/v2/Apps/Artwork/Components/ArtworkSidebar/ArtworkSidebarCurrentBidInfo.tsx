@@ -222,7 +222,6 @@ export const ArtworkSidebarCurrentBidInfoFragmentContainer = createFragmentConta
             }
           }
         }
-        ...ArtworkSidebarCreateAlertButton_artwork
         ...ArtworkSidebarBiddingClosedMessage_artwork
       }
     `,

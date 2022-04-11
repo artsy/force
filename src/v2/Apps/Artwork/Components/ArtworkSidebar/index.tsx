@@ -115,7 +115,6 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...AuthenticityCertificate_artwork
         ...BuyerGuarantee_artwork
         ...CreateArtworkAlertSection_artwork
-        ...ArtworkSidebarCreateAlertButton_artwork
         ...ArtworkSidebarBiddingClosedMessage_artwork
         sale {
           is_closed: isClosed
