@@ -23,37 +23,45 @@ const { getWrapper } = setupTestWrapper<
 describe("DedicatedArticlesBreadcrumbs", () => {
   it("renders proper router link", () => {
     const wrapper = getWrapper({ FairOrganizer: () => ({ slug: "organizer" }) })
+
     expect(wrapper.find("RouterLink").length).toBe(1)
     expect(wrapper.find("RouterLink").prop("to")).toEqual(
       "/fair-organizer/organizer"
     )
   })
+
   it("displays breadcrumbs item containing fair organizer name", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ name: "Organizer" }),
     })
+
     expect(wrapper.text()).toContain("Explore Organizer on Artsy")
   })
+
   it("displays arrow left icon", () => {
     const wrapper = getWrapper({})
+
     expect(wrapper.find("ArrowLeftIcon").length).toBe(1)
   })
+
   it("displays image", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({
         profile: {
-          image: { resized: { src: "some-src", srcSet: "some-src-set" } },
+          image: { url: "some-src" },
         },
       }),
     })
+
     expect(wrapper.find("Image").length).toBe(1)
-    expect(wrapper.find("Image").prop("src")).toEqual("some-src")
-    expect(wrapper.find("Image").prop("srcSet")).toEqual("some-src-set")
+    expect(wrapper.find("Image").prop("src")).toContain("some-src")
   })
+
   it("displays title containing fair organizer name", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ name: "Organizer" }),
     })
+
     expect(wrapper.text()).toContain("Explore Organizer on Artsy")
   })
 })

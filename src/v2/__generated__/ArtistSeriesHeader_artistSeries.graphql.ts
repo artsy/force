@@ -21,9 +21,7 @@ export type ArtistSeriesHeader_artistSeries = {
     readonly artists: ReadonlyArray<{
         readonly name: string | null;
         readonly image: {
-            readonly cropped: {
-                readonly src: string;
-            } | null;
+            readonly url: string | null;
         } | null;
         readonly href: string | null;
         readonly slug: string;
@@ -53,13 +51,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "src",
   "storageKey": null
 };
 return {
@@ -129,7 +120,13 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -188,26 +185,10 @@ return {
           "selections": [
             {
               "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 60
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 60
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": [
-                (v2/*: any*/)
-              ],
-              "storageKey": "cropped(height:60,width:60)"
+              "args": null,
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -234,5 +215,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f00900bdae79e095ac650f42524691da';
+(node as any).hash = '68596204c6cde0509a32283681e33a4d';
 export default node;

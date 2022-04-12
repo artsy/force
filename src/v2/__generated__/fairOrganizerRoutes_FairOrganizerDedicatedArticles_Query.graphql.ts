@@ -53,10 +53,7 @@ fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   name
   profile {
     image {
-      resized(width: 30, height: 30, version: "square") {
-        src
-        srcSet
-      }
+      url
     }
     id
   }
@@ -155,20 +152,6 @@ v6 = [
   }
 ],
 v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "src",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "srcSet",
-  "storageKey": null
-},
-v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -442,15 +425,27 @@ return {
                                 "name": "height",
                                 "storageKey": null
                               },
-                              (v7/*: any*/),
-                              (v8/*: any*/)
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
                             ],
                             "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v9/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -478,53 +473,31 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 30
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": "square"
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 30
-                      }
-                    ],
-                    "concreteType": "ResizedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "resized",
-                    "plural": false,
-                    "selections": [
-                      (v7/*: any*/),
-                      (v8/*: any*/)
-                    ],
-                    "storageKey": "resized(height:30,version:\"square\",width:30)"
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
               },
-              (v9/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
-          (v9/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "f5af771025f0b63efafb5bc9244c15c5",
+    "cacheID": "87b4a4504847e835d43e92c5ade3cf6a",
     "id": null,
     "metadata": {},
     "name": "fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      url\n    }\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        id\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

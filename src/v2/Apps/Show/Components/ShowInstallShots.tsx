@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   Clickable,
   Image,
@@ -39,7 +39,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
 
   return (
     <>
-      <Shelf alignItems="flex-end">
+      <Shelf alignItems="flex-end" {...rest}>
         {images.map((image, i) => {
           if (!image.desktop || !image.mobile) return <></>
 
@@ -130,17 +130,27 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         images(default: false, size: 100) {
           internalID
           caption
-          mobile: resized(width: 200) {
+          mobile: resized(
+            width: 200
+            version: ["normalized", "larger", "large"]
+          ) {
             width
             height
           }
-          desktop: resized(width: 325) {
+          desktop: resized(
+            width: 325
+            version: ["normalized", "larger", "large"]
+          ) {
             src
             srcSet
             width
             height
           }
-          zoom: resized(width: 900, height: 900, version: ["larger", "large"]) {
+          zoom: resized(
+            width: 900
+            height: 900
+            version: ["normalized", "larger", "large"]
+          ) {
             src
             srcSet
             width
