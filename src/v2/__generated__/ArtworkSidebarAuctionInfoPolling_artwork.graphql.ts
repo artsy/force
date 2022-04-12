@@ -8,6 +8,7 @@ export type ArtworkSidebarAuctionInfoPolling_artwork = {
     readonly internalID: string;
     readonly sale: {
         readonly isClosed: boolean | null;
+        readonly internalID: string;
     } | null;
     readonly saleArtwork: {
         readonly currentBid: {
@@ -25,19 +26,21 @@ export type ArtworkSidebarAuctionInfoPolling_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkSidebarAuctionInfoPolling_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -52,7 +55,8 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "isClosed",
           "storageKey": null
-        }
+        },
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -99,5 +103,6 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'b0a2b446ed7619564d9f80ff278a2878';
+})();
+(node as any).hash = '8d89addab26979c8880a17f0186bc691';
 export default node;

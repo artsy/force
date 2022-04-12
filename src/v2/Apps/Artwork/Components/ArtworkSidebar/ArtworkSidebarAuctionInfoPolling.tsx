@@ -6,6 +6,7 @@ import { ArtworkSidebarAuctionInfoPolling_artwork } from "v2/__generated__/Artwo
 import { ArtworkSidebarAuctionInfoPolling_me } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "v2/Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
+import { isServer } from "lib/isServer"
 
 type Props = {
   artwork: ArtworkSidebarAuctionInfoPolling_artwork
@@ -25,6 +26,8 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
   const [currentBidChanged, setCurrentBidChanged] = useState(false)
 
   const isMounted = useRef(false)
+
+  const saleId = sale?.internalID
 
   useEffect(() => {
     if (isMounted.current) {
@@ -48,6 +51,29 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
     clearWhen: isClosed,
   })
 
+  useEffect(() => {
+    const actionCable = require("actioncable")
+    const CableApp = {} as any
+    CableApp.cable = actionCable.createConsumer(
+      "wss://stagingapi.artsy.net/cable"
+    )
+
+    console.log("CREATING WEBSOCKET SUBSCRIPTION")
+    CableApp.cable.subscriptions.create(
+      {
+        channel: "SalesChannel",
+        sale_id: saleId,
+      },
+      {
+        received(data) {
+          if (data.events) {
+            console.dir(data.events)
+          }
+        },
+      }
+    )
+  })
+
   return (
     <>
       <ArtworkSidebarCurrentBidInfoFragmentContainer
@@ -67,6 +93,7 @@ export const ArtworkSidebarAuctionPollingRefetchContainer = createRefetchContain
         internalID
         sale {
           isClosed
+          internalID
         }
         saleArtwork {
           currentBid {
