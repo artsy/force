@@ -624,7 +624,7 @@ const AuctionsSupportTeam: React.FC = () => {
                   <Flex flexDirection="column">
                     <Text variant="lg">{specialist.name}</Text>
                     <Text variant="md">{specialist.title}</Text>
-                    <Text variant="sm" color="black60" mb={2}>
+                    <Text variant="md" color="black60" mb={2}>
                       {specialist.location}
                     </Text>
                   </Flex>
