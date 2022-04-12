@@ -27,10 +27,10 @@ query ShowMeta_Test_Query {
 
 fragment ShowMeta_show on Show {
   name
-  slug
+  href
   metaDescription: description
   metaImage {
-    src: url(version: "large")
+    src: url(version: ["normalized", "larger", "large"])
   }
   partner {
     __typename
@@ -139,7 +139,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -163,12 +163,16 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": [
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
               }
             ],
             "storageKey": null
@@ -244,7 +248,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d7a27551ca47553021e6a94042b4ca74",
+    "cacheID": "9aa4859f931f3959c3e0edc766f5d8ec",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -256,6 +260,7 @@ return {
         },
         "show.formattedEndAt": (v4/*: any*/),
         "show.formattedStartAt": (v4/*: any*/),
+        "show.href": (v4/*: any*/),
         "show.id": (v5/*: any*/),
         "show.metaDescription": (v4/*: any*/),
         "show.metaImage": {
@@ -275,13 +280,12 @@ return {
         "show.partner.__isNode": (v6/*: any*/),
         "show.partner.__typename": (v6/*: any*/),
         "show.partner.id": (v5/*: any*/),
-        "show.partner.name": (v4/*: any*/),
-        "show.slug": (v5/*: any*/)
+        "show.partner.name": (v4/*: any*/)
       }
     },
     "name": "ShowMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ShowMeta_Test_Query {\n  show(id: \"some-show\") {\n    ...ShowMeta_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n"
+    "text": "query ShowMeta_Test_Query {\n  show(id: \"some-show\") {\n    ...ShowMeta_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  href\n  metaDescription: description\n  metaImage {\n    src: url(version: [\"normalized\", \"larger\", \"large\"])\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n"
   }
 };
 })();

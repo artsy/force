@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowMeta_show = {
     readonly name: string | null;
-    readonly slug: string;
+    readonly href: string | null;
     readonly metaDescription: string | null;
     readonly metaImage: {
         readonly src: string | null;
@@ -45,7 +45,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "href",
       "storageKey": null
     },
     {
@@ -69,12 +69,16 @@ return {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "large"
+              "value": [
+                "normalized",
+                "larger",
+                "large"
+              ]
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
         }
       ],
       "storageKey": null
@@ -129,5 +133,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd9ea358ac6d1415c8a4c4196e740634c';
+(node as any).hash = 'e1404626f15ca6b5d2d9c1552850a96b';
 export default node;
