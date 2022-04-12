@@ -1,14 +1,7 @@
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  Box,
-  Column,
-  GridColumns,
-  Separator,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
 import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
@@ -65,9 +58,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
           )}
 
           {Number(show?.images?.length) > 0 && (
-            <Box my={4}>
-              <ShowInstallShots show={show} mt={4} mb={6} />
-            </Box>
+            <ShowInstallShots show={show} my={4} />
           )}
 
           <GridColumns mt={2}>

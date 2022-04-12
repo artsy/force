@@ -38,20 +38,29 @@ export type ShowInstallShots_show$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "normalized",
+    "larger",
+    "large"
+  ]
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -66,8 +75,8 @@ v2 = [
     "name": "srcSet",
     "storageKey": null
   },
-  (v0/*: any*/),
-  (v1/*: any*/)
+  (v1/*: any*/),
+  (v2/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -118,6 +127,7 @@ return {
         {
           "alias": "mobile",
           "args": [
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -129,14 +139,15 @@ return {
           "name": "resized",
           "plural": false,
           "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/)
+            (v1/*: any*/),
+            (v2/*: any*/)
           ],
-          "storageKey": "resized(width:200)"
+          "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:200)"
         },
         {
           "alias": "desktop",
           "args": [
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -147,8 +158,8 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "resized(width:325)"
+          "selections": (v3/*: any*/),
+          "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:325)"
         },
         {
           "alias": "zoom",
@@ -158,14 +169,7 @@ return {
               "name": "height",
               "value": 900
             },
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": [
-                "larger",
-                "large"
-              ]
-            },
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -176,8 +180,8 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
+          "selections": (v3/*: any*/),
+          "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
         }
       ],
       "storageKey": "images(default:false,size:100)"
@@ -187,5 +191,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9b1323b9572cd5274d25e926a137c39b';
+(node as any).hash = '3b2517ce38562421567d146e6c64ea96';
 export default node;
