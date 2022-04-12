@@ -13,6 +13,7 @@ import {
   Checkbox,
   ResponsiveBox,
   Button,
+  Separator,
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { Fragment } from "react"
@@ -32,9 +33,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
         pathname="/auction-partnerships"
       />
 
-      <Join
-        separator={<Spacer my={6} border="1px solid" borderColor="black15" />}
-      >
+      <Join separator={<Separator my={6} />}>
         <ArtsyForAuctions />
         <MarketplaceExperience />
         <PartnerWithArtsyForm />
@@ -42,7 +41,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
         <BiddingTools />
         <ConsignmentsInfo />
         <VisibilityInfoTop />
-        <VisibilityInfoBottom />
+        <EventServicesInfo />
         <AuctionsSupportTeam />
       </Join>
     </>
@@ -50,7 +49,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
 }
 
 const ArtsyForAuctions: React.FC = () => {
-  const headerImage = "http://files.artsy.net/auction-partnerships2-header.png"
+  const headerImage = "http://files.artsy.net/images/lamodern-auctioneer.png"
 
   return (
     <Box>
@@ -96,10 +95,10 @@ const MarketplaceExperience: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text variant="sm" textTransform="uppercase" mb={1}>
+        <Text variant="xs" textTransform="uppercase" mb={1}>
           Experience
         </Text>
-        <Text variant="lg" mb={1}>
+        <Text variant="xl" mb={1}>
           Trusted Marketplace for Both Commercial and Benefit Auctions
         </Text>
         <Text variant="sm">
@@ -133,7 +132,7 @@ const PartnerWithArtsyForm: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text variant="lg" mb={1}>
+        <Text variant="xl" mb={1}>
           Interested in Partnering with Artsy?
         </Text>
         <Text variant="sm">Apply to host your auctions on Artsy</Text>
@@ -338,10 +337,10 @@ const GlobalAudienceReach: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="sm">
+        <Text textTransform="uppercase" mb={1} variant="xs">
           Audience
         </Text>
-        <Text variant="lg" mb={1}>
+        <Text variant="xl" mb={1}>
           Reach a Global Audience of 24+ Million Collectors and Art Lovers
         </Text>
         <Text variant="sm">
@@ -357,22 +356,18 @@ const GlobalAudienceReach: React.FC = () => {
 }
 
 const BiddingTools: React.FC = () => {
-  const image = resized(
-    "http://files.artsy.net/images/artwork-page_-centered_2.png",
-    {
-      width: 910,
-      height: 403,
-    }
-  )
+  const image = resized("http://files.artsy.net/images/auction-devices.png", {
+    width: 910,
+  })
 
   return (
     <Box>
       <GridColumns>
         <Column span={6}>
-          <Text textTransform="uppercase" mb={1} variant="sm">
+          <Text textTransform="uppercase" mb={1} variant="xs">
             Access
           </Text>
-          <Text variant="lg" mb={1}>
+          <Text variant="xl" mb={1}>
             Maximize Bids With Our User-Friendly Bidding Tools
           </Text>
           <Text variant="sm">
@@ -386,13 +381,13 @@ const BiddingTools: React.FC = () => {
           </Text>
         </Column>
         <Column span={6}>
-          <ResponsiveBox aspectWidth={2880} aspectHeight={2298} maxWidth="100%">
-            <Image
+          <ResponsiveBox aspectWidth={2256} aspectHeight={998} maxWidth="100%">
+            <img
               src={image.src}
               width="100%"
               height="100%"
               srcSet={image.srcSet}
-              lazyLoad
+              loading="lazy"
               alt=""
             />
           </ResponsiveBox>
@@ -427,10 +422,10 @@ const ConsignmentsInfo: React.FC = () => {
         ></ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="sm">
+        <Text textTransform="uppercase" mb={1} variant="xs">
           Consignments
         </Text>
-        <Text variant="lg" mb={1}>
+        <Text variant="xl" mb={1}>
           Access to a Comprehensive Artwork Database
         </Text>
         <Text variant="sm">
@@ -459,21 +454,23 @@ const VisibilityInfoTop: React.FC = () => {
     {
       width: 910,
       height: 539,
+      quality: 100,
     }
   )
 
   const image2 = resized("http://files.artsy.net/images/x-2.png", {
     width: 240,
     height: 400,
+    quality: 100,
   })
 
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="sm">
+        <Text textTransform="uppercase" mb={1} variant="xs">
           Visibility
         </Text>
-        <Text variant="lg" mb={1}>
+        <Text variant="xl" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
           Promote Your Brand
         </Text>
@@ -487,7 +484,13 @@ const VisibilityInfoTop: React.FC = () => {
       </Column>
       <Column span={6}>
         <Flex flexDirection="column">
-          <ResponsiveBox aspectWidth={1668} aspectHeight={988} maxWidth="100%">
+          <ResponsiveBox
+            aspectWidth={1668}
+            aspectHeight={988}
+            maxWidth="100%"
+            border="1px solid"
+            borderColor="black10"
+          >
             <Image
               src={image1.src}
               width="100%"
@@ -504,6 +507,8 @@ const VisibilityInfoTop: React.FC = () => {
             maxWidth={240}
             maxHeight={400}
             mx="auto"
+            border="1px solid"
+            borderColor="black10"
           >
             <Image
               src={image2.src}
@@ -514,9 +519,10 @@ const VisibilityInfoTop: React.FC = () => {
               alt=""
             />
           </ResponsiveBox>
-          <Text variant="sm" textAlign="center" fontWeight="bold">
-            Social Media Coverage <br /> 1,700,000+ combined following across
-            platforms
+          <Spacer mt={2} />
+          <Text variant="xs" textAlign="center">
+            <strong>Social Media Coverage</strong> <br /> 1,700,000+ combined
+            following across platforms
           </Text>
         </Flex>
       </Column>
@@ -524,7 +530,7 @@ const VisibilityInfoTop: React.FC = () => {
   )
 }
 
-const VisibilityInfoBottom: React.FC = () => {
+const EventServicesInfo: React.FC = () => {
   const image1 = resized("http://files.artsy.net/images/auction-kiosk2.png", {
     width: 910,
     height: 585,
@@ -564,8 +570,8 @@ const VisibilityInfoBottom: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="sm">
-          Visibility
+        <Text textTransform="uppercase" mb={1} variant="xs">
+          Event Services
         </Text>
         <Text variant="lg" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
@@ -587,10 +593,10 @@ const AuctionsSupportTeam: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="sm">
+        <Text textTransform="uppercase" mb={1} variant="xs">
           Support
         </Text>
-        <Text variant="lg" mb={1}>
+        <Text variant="xl" mb={1}>
           We’re With You Every Step of the Way
         </Text>
         <Text variant="sm">
@@ -601,9 +607,7 @@ const AuctionsSupportTeam: React.FC = () => {
         </Text>
       </Column>
       <Column span={6}>
-        <Join
-          separator={<Spacer my={2} border="1px solid" borderColor="black15" />}
-        >
+        <Join separator={<Separator my={2} />}>
           {AUCTIONS_PARTNERSHIPS_SPECIALISTS.map((specialist, index) => {
             const image = cropped(specialist.photo, { width: 100, height: 100 })
 
@@ -619,7 +623,7 @@ const AuctionsSupportTeam: React.FC = () => {
                   ></Avatar>
                   <Flex flexDirection="column">
                     <Text variant="lg">{specialist.name}</Text>
-                    <Text variant="sm">{specialist.title}</Text>
+                    <Text variant="md">{specialist.title}</Text>
                     <Text variant="sm" color="black60" mb={2}>
                       {specialist.location}
                     </Text>
