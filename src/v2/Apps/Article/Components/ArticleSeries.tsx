@@ -1,6 +1,5 @@
 import {
   Box,
-  ChevronIcon,
   Column,
   GridColumns,
   Join,
@@ -13,7 +12,6 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleShare } from "v2/Components/ArticleShare"
 import { TopContextBar } from "v2/Components/TopContextBar"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleSeries_article } from "v2/__generated__/ArticleSeries_article.graphql"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
@@ -26,17 +24,8 @@ interface ArticleSeriesProps {
 const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
   return (
     <>
-      <TopContextBar>
-        <RouterLink
-          to="/articles"
-          display="flex"
-          alignItems="center"
-          textDecoration="none"
-        >
-          <ChevronIcon direction="left" mr={1} />
-
-          <Text variant="md">{article.byline}</Text>
-        </RouterLink>
+      <TopContextBar href="/articles" displayBackArrow>
+        {article.byline}
       </TopContextBar>
 
       <Box>

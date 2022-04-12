@@ -39,6 +39,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { match } = useRouter()
   const { from_fair } = match.location.query
 
+  // FIXME: Why is this memoized?
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const arrivedFromFair = useMemo(() => from_fair ?? false, [])
 
@@ -60,11 +61,11 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
+          {arrivedFromFair && <ShowNavigationBanner show={show} />}
+
           <Spacer mt={4} />
 
           <Join separator={<Spacer mt={4} />}>
-            {arrivedFromFair && <ShowNavigationBanner show={show} />}
-
             {Number(show?.images?.length) > 0 && (
               <ShowInstallShots show={show} />
             )}

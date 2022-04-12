@@ -13,12 +13,7 @@ export type ArtworkBanner_artwork = {
         readonly isBenefit: boolean | null;
         readonly isGalleryAuction: boolean | null;
         readonly coverImage: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
+            readonly url: string | null;
         } | null;
     } | null;
     readonly context: ({
@@ -31,12 +26,7 @@ export type ArtworkBanner_artwork = {
         readonly href: string | null;
         readonly profile: {
             readonly icon: {
-                readonly cropped: {
-                    readonly src: string;
-                    readonly srcSet: string;
-                    readonly width: number;
-                    readonly height: number;
-                } | null;
+                readonly url: string | null;
             } | null;
         } | null;
     } | {
@@ -45,12 +35,7 @@ export type ArtworkBanner_artwork = {
         readonly href: string | null;
         readonly status: string | null;
         readonly thumbnail: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
+            readonly url: string | null;
         } | null;
     } | {
         /*This will never be '%other', but we need some
@@ -78,58 +63,10 @@ var v0 = {
 v1 = [
   {
     "alias": null,
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "height",
-        "value": 30
-      },
-      {
-        "kind": "Literal",
-        "name": "version",
-        "value": "square"
-      },
-      {
-        "kind": "Literal",
-        "name": "width",
-        "value": 30
-      }
-    ],
-    "concreteType": "CroppedImageUrl",
-    "kind": "LinkedField",
-    "name": "cropped",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "src",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "srcSet",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "width",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "height",
-        "storageKey": null
-      }
-    ],
-    "storageKey": "cropped(height:30,version:\"square\",width:30)"
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
   }
 ],
 v2 = {
@@ -287,5 +224,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4898236c45792710759a2ce16638f5e4';
+(node as any).hash = '803f3968d437647578fb01fd5e699273';
 export default node;

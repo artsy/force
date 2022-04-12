@@ -1,17 +1,8 @@
 import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  Box,
-  ChevronIcon,
-  Column,
-  Flex,
-  GridColumns,
-  Image,
-  Text,
-} from "@artsy/palette"
+import { Box, Column, GridColumns } from "@artsy/palette"
 import { TopContextBar } from "v2/Components/TopContextBar"
-import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface ArtworkBannerProps {
   artwork: ArtworkBanner_artwork
@@ -28,37 +19,19 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
   const isShow = props.artwork?.context?.__typename === "Show"
 
   return (
-    <TopContextBar>
-      <RouterLink to={href} display="block" textDecoration="none">
-        <GridColumns>
-          <Column span={8}>
-            <Flex alignItems="center">
-              {isShow ? (
-                <ChevronIcon direction="left" height="14px" mr={1} />
-              ) : (
-                image && (
-                  <Image
-                    src={image.src}
-                    srcSet={image.srcSet}
-                    width={image.width}
-                    height={image.height}
-                    mr={1}
-                    alt=""
-                  />
-                )
-              )}
-
-              <Text variant="xs" lineHeight={1} lineClamp={2}>
-                {[name, subHeadline].filter(Boolean).join(" - ")}
-
-                <Box as="span" display="inline-block" color="black60" ml={0.5}>
-                  {meta}
-                </Box>
-              </Text>
-            </Flex>
-          </Column>
-        </GridColumns>
-      </RouterLink>
+    <TopContextBar
+      href={href}
+      displayBackArrow={isShow}
+      src={!isShow ? image : undefined}
+    >
+      <GridColumns>
+        <Column span={8}>
+          {[name, subHeadline].filter(Boolean).join(" - ")}　
+          <Box as="span" display="inline-block" color="black60">
+            {meta}
+          </Box>
+        </Column>
+      </GridColumns>
     </TopContextBar>
   )
 }
@@ -77,7 +50,7 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
       }
 
       return {
-        image: sale.coverImage?.cropped,
+        image: sale.coverImage?.url,
         meta: "In auction",
         name: context.name,
         subHeadline:
@@ -87,7 +60,7 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
     }
     case "Fair": {
       return {
-        image: context.profile?.icon?.cropped,
+        image: context.profile?.icon?.url,
         meta: "At fair",
         name: context.name,
         subHeadline: partner?.name,
@@ -103,7 +76,7 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
       }
 
       return {
-        image: context.thumbnail?.cropped,
+        image: context.thumbnail?.url,
         meta,
         name: context.name,
         subHeadline: partner?.name,
@@ -129,12 +102,7 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
           isBenefit
           isGalleryAuction
           coverImage {
-            cropped(width: 30, height: 30, version: "square") {
-              src
-              srcSet
-              width
-              height
-            }
+            url
           }
         }
         context {
@@ -148,12 +116,7 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
             href
             profile {
               icon {
-                cropped(width: 30, height: 30, version: "square") {
-                  src
-                  srcSet
-                  width
-                  height
-                }
+                url
               }
             }
           }
@@ -162,12 +125,7 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
             href
             status
             thumbnail: coverImage {
-              cropped(width: 30, height: 30, version: "square") {
-                src
-                srcSet
-                width
-                height
-              }
+              url
             }
           }
         }

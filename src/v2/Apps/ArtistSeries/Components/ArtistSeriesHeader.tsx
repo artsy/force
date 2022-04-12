@@ -1,10 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import {
-  ChevronIcon,
-  Clickable,
   Column,
-  EntityHeader,
-  Flex,
   GridColumns,
   HTML,
   Image,
@@ -14,11 +10,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
-import { ContextModule } from "@artsy/cohesion"
 import { TopContextBar } from "v2/Components/TopContextBar"
-import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
@@ -34,47 +27,19 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
   },
 }) => {
   if (artists === null) return null
+
   const [artist] = artists
+
   if (artist === null) return null
 
   return (
     <>
-      <TopContextBar>
-        <Flex alignItems="center">
-          <RouterLink
-            to={artist.href!}
-            style={{ display: "flex", alignItems: "center" }}
-            tabIndex={-1}
-          >
-            <ChevronIcon direction="left" mr={1} />
-          </RouterLink>
-
-          <EntityHeader
-            justifyContent="flex-start"
-            smallVariant
-            name={artist.name!}
-            imageUrl={artist.image?.cropped?.src}
-            href={artist.href!}
-            FollowButton={
-              <FollowArtistButton
-                artist={artist}
-                contextModule={ContextModule.featuredArtists}
-                render={({ is_followed }) => {
-                  return (
-                    <Clickable
-                      data-test="followArtistButton"
-                      textDecoration="underline"
-                    >
-                      <Text variant="md">
-                        {is_followed ? "Following" : "Follow"}
-                      </Text>
-                    </Clickable>
-                  )
-                }}
-              />
-            }
-          />
-        </Flex>
+      <TopContextBar
+        href={artist.href}
+        displayBackArrow
+        src={artist.image?.url}
+      >
+        {artist.name}
       </TopContextBar>
 
       <Spacer mt={4} />
@@ -147,9 +112,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         artists(size: 1) {
           name
           image {
-            cropped(width: 60, height: 60) {
-              src
-            }
+            url
           }
           href
           slug
