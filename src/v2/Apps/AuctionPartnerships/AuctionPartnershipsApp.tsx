@@ -57,7 +57,9 @@ const ArtsyForAuctions: React.FC = () => {
       <Spacer mb={4} />
       <GridColumns gridRowGap={4}>
         <Column span={6}>
-          <Text variant="xl">Artsy for Auctions</Text>
+          <Text as="h1" variant="xl">
+            Artsy for Auctions
+          </Text>
         </Column>
         <Column span={6}>
           <Text variant="lg">
