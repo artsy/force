@@ -43,6 +43,7 @@ const ArtistItem: React.FC<
   const toggleArtistSelection = (selected, slug) => {
     let updatedValues = artistIDs
 
+    // Move followed artists to the explicit `artistIDs` list
     if (isFollowedArtistCheckboxSelected) {
       updatedValues = [...artistIDs, ...followedArtistSlugs]
     }
