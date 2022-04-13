@@ -98,15 +98,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     )
   }
 
-  renderEditionSet(
-    editionSet: EditionSet,
-    includeSelectOption: boolean,
-    editionSelectableOnInquireable: boolean
-  ) {
+  renderEditionSet(editionSet: EditionSet) {
+    const {
+      is_offerable: isOfferable,
+      is_acquireable: isAcquireable,
+      is_inquireable: isInquireable,
+    } = this.props.artwork
     const editionEcommerceAvailable =
-      editionSet?.is_acquireable ||
-      editionSet?.is_offerable ||
-      editionSelectableOnInquireable
+      editionSet?.is_acquireable || editionSet?.is_offerable || isInquireable
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
@@ -117,7 +116,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         </Text>
       </Flex>
     )
-    if (includeSelectOption) {
+    if (!!(isOfferable || isAcquireable || isInquireable)) {
       return (
         <Row>
           <Radio
@@ -136,22 +135,13 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
-  renderEditionSets(
-    includeSelectOption: boolean,
-    editionSelectableOnInquireable: boolean
-  ) {
+  renderEditionSets() {
     const editionSets = this.props.artwork.edition_sets
 
     const editionSetsFragment = editionSets?.map((editionSet, index) => {
       return (
         <React.Fragment key={editionSet?.id}>
-          <Box py={2}>
-            {this.renderEditionSet(
-              editionSet,
-              includeSelectOption,
-              editionSelectableOnInquireable
-            )}
-          </Box>
+          <Box py={2}>{this.renderEditionSet(editionSet)}</Box>
           {index !== editionSets.length - 1 && <Separator />}
         </React.Fragment>
       )
@@ -435,11 +425,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       selectedEditionSet,
     } = this.state
 
-    const editionSelectableOnInquireable = !!artwork.is_inquireable
     const artworkEcommerceAvailable = !!(
-      artwork.is_acquireable ||
-      artwork.is_offerable ||
-      editionSelectableOnInquireable
+      artwork.is_acquireable || artwork.is_offerable
     )
 
     if (!artwork.sale_message && !isInquireable) {
@@ -464,10 +451,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             )
           ) : (
             <>
-              {this.renderEditionSets(
-                artworkEcommerceAvailable,
-                editionSelectableOnInquireable
-              )}
+              {this.renderEditionSets()}
 
               {selectedEditionSet && (
                 <>
@@ -478,7 +462,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          {artworkEcommerceAvailable &&
+          {(artworkEcommerceAvailable || !!isInquireable) &&
             (artwork.shippingOrigin || artwork.shippingInfo) && (
               <Spacer mt={1} />
             )}
