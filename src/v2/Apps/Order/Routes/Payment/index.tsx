@@ -1,7 +1,6 @@
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "v2/__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
-
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
   OrderStepper,
@@ -11,7 +10,7 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import { createRef, Component } from "react"
+import { createRef, FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
@@ -30,10 +29,12 @@ import {
 import { AnalyticsSchema, track } from "v2/System"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { PaymentContent } from "./PaymentContent"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
-    Continue
+    Review and Pay
   </Button>
 )
 export interface StripeProps {
@@ -50,36 +51,35 @@ export interface PaymentProps {
   isCommittingMutation: boolean
 }
 
-interface PaymentState {
-  isGettingCreditCardId: boolean
-}
+type Props = PaymentProps & StripeProps
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
-@track((props: PaymentProps) => ({
+track((props: PaymentProps) => ({
   flow:
     props.order.mode === "BUY"
       ? AnalyticsSchema.Flow.BuyNow
       : AnalyticsSchema.Flow.MakeOffer,
 }))
-export class PaymentRoute extends Component<
-  PaymentProps & StripeProps,
-  PaymentState
-> {
-  state: PaymentState = { isGettingCreditCardId: false }
-  paymentPicker = createRef<PaymentPicker>()
-  onContinue = async () => {
+export const PaymentRoute: FC<Props> = props => {
+  const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
+  const { order, isCommittingMutation } = props
+  const isLoading = isGettingCreditCardId || isCommittingMutation
+  const paymentPicker = createRef<PaymentPicker>()
+  const isACHEnabled = useFeatureFlag("stripe-ACH")
+
+  const onContinue = async () => {
     try {
-      this.setState({ isGettingCreditCardId: true })
-      const result = await this.paymentPicker?.current?.getCreditCardId()
-      this.setState({ isGettingCreditCardId: false })
+      setIsGettingCreditCardId(true)
+      const result = await paymentPicker?.current?.getCreditCardId()
+      setIsGettingCreditCardId(false)
 
       if (result?.type === "invalid_form") {
         return
       }
 
       if (result?.type === "error") {
-        this.props.dialog.showErrorDialog({
+        props.dialog.showErrorDialog({
           title: result.error,
           message:
             "Please enter another payment method or contact your bank for more information.",
@@ -88,18 +88,19 @@ export class PaymentRoute extends Component<
       }
 
       if (result?.type === "internal_error") {
-        this.props.dialog.showErrorDialog({
+        props.dialog.showErrorDialog({
           title: "An internal error occurred",
         })
         logger.error(result.error)
         return
       }
-
+      console.log("credicardid", isGettingCreditCardId)
+      console.log("id", props.order.internalID!)
       const orderOrError = (
-        await this.setOrderPayment({
+        await setOrderPayment({
           input: {
             creditCardId: result?.creditCardId!,
-            id: this.props.order.internalID!,
+            id: props.order.internalID!,
           },
         })
       ).commerceSetPayment?.orderOrError
@@ -108,73 +109,17 @@ export class PaymentRoute extends Component<
         throw orderOrError.error
       }
 
-      this.props.router.push(`/orders/${this.props.order.internalID}/review`)
+      props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
       logger.error(error)
-      this.props.dialog.showErrorDialog()
+      props.dialog.showErrorDialog()
     }
   }
 
-  render() {
-    const { order, isCommittingMutation } = this.props
-    const { isGettingCreditCardId } = this.state
-    const isLoading = isGettingCreditCardId || isCommittingMutation
-
-    return (
-      <Box data-test="orderPayment">
-        <OrderStepper
-          currentStep="Payment"
-          steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-        />
-
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isLoading ? { pointerEvents: "none" } : {}}
-            >
-              <PaymentPickerFragmentContainer
-                commitMutation={this.props.commitMutation}
-                me={this.props.me}
-                order={this.props.order}
-                innerRef={this.paymentPicker}
-              />
-              <Spacer mb={4} />
-              <Media greaterThan="xs">
-                <ContinueButton onClick={this.onContinue} loading={isLoading} />
-              </Media>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-                <TransactionDetailsSummaryItem
-                  transactionStep="payment"
-                  order={order}
-                />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersPayment}
-                contextPageOwnerType={OwnerType.ordersPayment}
-              />
-              <Spacer mb={[2, 4]} />
-              <Media at="xs">
-                <>
-                  <ContinueButton
-                    onClick={this.onContinue}
-                    loading={isLoading}
-                  />
-                </>
-              </Media>
-            </Flex>
-          }
-        />
-      </Box>
-    )
-  }
-  setOrderPayment(variables: PaymentRouteSetOrderPaymentMutation["variables"]) {
-    return this.props.commitMutation<PaymentRouteSetOrderPaymentMutation>({
+  const setOrderPayment = (
+    variables: PaymentRouteSetOrderPaymentMutation["variables"]
+  ) => {
+    return props.commitMutation<PaymentRouteSetOrderPaymentMutation>({
       variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
@@ -211,6 +156,66 @@ export class PaymentRoute extends Component<
       `,
     })
   }
+
+  return (
+    <Box data-test="orderPayment">
+      <OrderStepper
+        currentStep="Payment"
+        steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+      />
+      <TwoColumnLayout
+        Content={
+          isACHEnabled ? (
+            <PaymentContent
+              commitMutation={props.commitMutation}
+              isLoading={isLoading}
+              me={props.me}
+              order={props.order}
+              onContinue={onContinue}
+              paymentPicker={paymentPicker}
+            />
+          ) : (
+            <Flex
+              flexDirection="column"
+              style={isLoading ? { pointerEvents: "none" } : {}}
+            >
+              <PaymentPickerFragmentContainer
+                commitMutation={props.commitMutation}
+                me={props.me}
+                order={order}
+                innerRef={paymentPicker}
+              />
+              <Spacer mb={4} />
+              <Media greaterThan="xs">
+                <ContinueButton onClick={onContinue} loading={isLoading} />
+              </Media>
+            </Flex>
+          )
+        }
+        Sidebar={
+          <Flex flexDirection="column">
+            <Flex flexDirection="column">
+              <ArtworkSummaryItem order={order} />
+              <TransactionDetailsSummaryItem
+                transactionStep="payment"
+                order={order}
+              />
+            </Flex>
+            <BuyerGuarantee
+              contextModule={ContextModule.ordersPayment}
+              contextPageOwnerType={OwnerType.ordersPayment}
+            />
+            <Spacer mb={[2, 4]} />
+            <Media at="xs">
+              <>
+                <ContinueButton onClick={onContinue} loading={isLoading} />
+              </>
+            </Media>
+          </Flex>
+        }
+      />
+    </Box>
+  )
 }
 
 export const PaymentFragmentContainer = createFragmentContainer(
