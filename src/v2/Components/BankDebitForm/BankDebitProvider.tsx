@@ -5,6 +5,7 @@ import { getENV } from "v2/Utils/getENV"
 import { commitMutation, graphql } from "relay-runtime"
 import { createBankDebitSetupMutation } from "v2/__generated__/createBankDebitSetupMutation.graphql"
 import { useSystemContext } from "v2/System"
+import { BankDebitForm } from "./BankDebitForm"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"), {
   betas: ["us_bank_account_beta_2"],
@@ -56,19 +57,15 @@ export const BankDebitProvider: FC = ({ children }) => {
   const options = {
     clientSecret: clientSecret,
     appearance: appearance,
-    terms: {
-      usBankAccount: "never",
-    },
-    fields: {
-      billingDetails: "never",
-    },
   }
 
   return (
-    clientSecret && (
-      <Elements options={options} stripe={stripePromise}>
-        {children}
-      </Elements>
-    )
+    <div>
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          <BankDebitForm />
+        </Elements>
+      )}
+    </div>
   )
 }
