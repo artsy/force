@@ -65,22 +65,22 @@ export const getTimerCopy = (time, hasStarted, lotsAreClosing) => {
   // Lots haven't yet closed
   else {
     // 1 hour or less
-    if (parsedDays < 1 && parsedHours < 1 && parsedHours < 1) {
-      copy = `${parsedMinutes}m ${parsedSeconds}s Until Bidding Ends`
+    if (parsedDays < 1 && parsedHours < 1) {
+      copy = `${parsedMinutes}m ${parsedSeconds}s`
       color = "red100"
     }
-    // More than 24 hours until close
+    // More than 24 hours
     else if (parsedDays >= 1) {
-      copy = `${parsedDays + 1} Day${
-        parsedDays >= 1 ? "s" : ""
-      } Until Bidding Ends`
+      copy = `${parsedDays + 1} Day${parsedDays >= 1 ? "s" : ""}`
     }
 
     // 1-24 hours until close
     else if (parsedDays < 1 && parsedHours >= 1) {
-      copy = `${parsedHours}h ${parsedMinutes}m Until Bidding Ends`
+      copy = `${parsedHours}h ${parsedMinutes}m`
       color = "red100"
     }
+
+    copy += " Until Lots Start Closing"
   }
 
   return { copy, color }
