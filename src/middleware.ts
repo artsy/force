@@ -61,7 +61,6 @@ import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirect
 import { localsMiddleware } from "./lib/middleware/locals"
 import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
-import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "./lib/backboneSync"
 import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
 import { splitTestMiddleware } from "./desktop/components/split_test/splitTestMiddleware"
@@ -120,7 +119,6 @@ export function initializeMiddleware(app) {
   app.use(localsMiddleware)
   app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
-  app.use(unsupportedBrowserMiddleware)
 
   if (process.env.NODE_ENV !== "test") {
     app.use(splitTestMiddleware)
