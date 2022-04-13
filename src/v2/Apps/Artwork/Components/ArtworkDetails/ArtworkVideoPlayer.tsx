@@ -5,10 +5,12 @@ import { ArtworkVideoPlayer_artwork } from "v2/__generated__/ArtworkVideoPlayer_
 
 interface ArtworkVideoPlayerProps {
   artwork: ArtworkVideoPlayer_artwork
+  small?: boolean
 }
 
 const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
   artwork: { video },
+  small,
 }) => {
   if (!video) {
     return null
@@ -18,7 +20,9 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
     <Box
       my={2}
       width="100%"
-      minHeight={800}
+      // This minHeight works for the 10 POC video items
+      // Should be replaced with a dynamic value in the future
+      minHeight={small ? "inherit" : 800}
       display="flex"
       alignItems="center"
       justifyContent="center"

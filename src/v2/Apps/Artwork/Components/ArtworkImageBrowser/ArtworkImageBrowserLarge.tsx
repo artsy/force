@@ -15,7 +15,7 @@ import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageB
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkDetails/ArtworkVideoPlayer"
-import { Override } from "v2/Utils/typeSupport"
+import { GenericFigure } from "v2/Apps/Artwork/Components/ArtworkImageBrowser/utilityTypes"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
@@ -24,13 +24,7 @@ interface ArtworkImageBrowserLargeProps {
   onPrev(): void
 }
 
-type Images = NonNullable<ArtworkImageBrowserLarge_artwork["images"]>
-type Image = Override<NonNullable<Images[number]>, { type: "Image" }>
-type Figure = Image | Video
-export type Video = Override<
-  NonNullable<ArtworkImageBrowserLarge_artwork["video"]>,
-  { type: "Video" }
->
+type Figure = GenericFigure<ArtworkImageBrowserLarge_artwork>
 
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   artwork,

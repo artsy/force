@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   ProgressDots,
   Swiper,
@@ -12,6 +12,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkImageBrowserSmall_artwork } from "v2/__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
+import { ArtworkVideoPlayerFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkDetails/ArtworkVideoPlayer"
+import { GenericFigure } from "v2/Apps/Artwork/Components/ArtworkImageBrowser/utilityTypes"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork
@@ -19,45 +21,66 @@ interface ArtworkImageBrowserSmallProps {
   setIndex(index: number): void
 }
 
+type Figure = GenericFigure<ArtworkImageBrowserSmall_artwork>
+
 const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
   artwork,
   index,
   setIndex,
 }) => {
-  const images = compact(artwork.images)
-  const activeImage = images[index]
+  const figures: Figure[] = compact(artwork.images) as Figure[]
+
+  if (artwork.video) {
+    figures.push(artwork.video as Figure)
+  }
+
+  const activeImage = figures[index]
 
   const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
 
-  if (images.length === 0) {
+  if (figures.length === 0) {
     return null
   }
 
   return (
     <>
-      {isDeepZoomVisible && (
+      {activeImage.type === "Image" && isDeepZoomVisible && (
         <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
       )}
 
       <Swiper snap="center" onChange={setIndex} Cell={Cell} Rail={Rail}>
-        {images.map((image, i) => {
-          return (
-            <ArtworkLightboxFragmentContainer
-              key={image.internalID ?? i}
-              my={2}
-              artwork={artwork}
-              activeIndex={i}
-              lazyLoad={i !== 0}
-              onClick={activeImage.isZoomable ? showDeepZoom : undefined}
-            />
-          )
+        {figures.map((image, i) => {
+          if (image.type === "Video") {
+            return (
+              <ArtworkVideoPlayerFragmentContainer
+                artwork={artwork}
+                key={image.type ?? i}
+                small
+              />
+            )
+          } else {
+            return (
+              <ArtworkLightboxFragmentContainer
+                key={image.internalID ?? i}
+                my={2}
+                artwork={artwork}
+                activeIndex={i}
+                lazyLoad={i !== 0}
+                onClick={
+                  activeImage.type === "Image" && activeImage.isZoomable
+                    ? showDeepZoom
+                    : undefined
+                }
+              />
+            )
+          }
         })}
       </Swiper>
 
-      {images.length > 1 && (
+      {figures.length > 1 && (
         <ProgressDots
           variant="dash"
-          amount={images.length}
+          amount={figures.length}
           activeIndex={index}
         />
       )}
@@ -92,10 +115,15 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
     artwork: graphql`
       fragment ArtworkImageBrowserSmall_artwork on Artwork {
         ...ArtworkLightbox_artwork
+        ...ArtworkVideoPlayer_artwork
         images {
           internalID
           isZoomable
+          type: __typename
           ...DeepZoom_image
+        }
+        video {
+          type: __typename
         }
       }
     `,

@@ -8,9 +8,13 @@ export type ArtworkImageBrowserSmall_artwork = {
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
         readonly isZoomable: boolean | null;
+        readonly type: string;
         readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
     } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork">;
+    readonly video: {
+        readonly type: string;
+    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
     readonly " $refType": "ArtworkImageBrowserSmall_artwork";
 };
 export type ArtworkImageBrowserSmall_artwork$data = ArtworkImageBrowserSmall_artwork;
@@ -21,7 +25,15 @@ export type ArtworkImageBrowserSmall_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": "type",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -49,6 +61,7 @@ const node: ReaderFragment = {
           "name": "isZoomable",
           "storageKey": null
         },
+        (v0/*: any*/),
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -58,13 +71,31 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Video",
+      "kind": "LinkedField",
+      "name": "video",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkLightbox_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkVideoPlayer_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '0d48fdd3b4bc8ce8bb14b80807dcd103';
+})();
+(node as any).hash = '44ceafd4883e3dd340d4d7e740517b58';
 export default node;
