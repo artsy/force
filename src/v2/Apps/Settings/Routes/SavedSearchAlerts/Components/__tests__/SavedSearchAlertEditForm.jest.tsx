@@ -58,7 +58,8 @@ describe("SavedSearchAlertEditForm", () => {
     query: graphql`
       query SavedSearchAlertEditForm_Test_Query @raw_response_type {
         me {
-          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
+          ...SavedSearchAlertEditForm_me
+            @arguments(savedSearchId: "id", withAggregations: true)
         }
         artist(id: "artistId") {
           ...SavedSearchAlertEditForm_artist
@@ -252,6 +253,39 @@ const artistMocked = {
   slug: "banksy",
 }
 
+const savedSearchAlertLabelsMocked = [
+  {
+    field: "artistIDs",
+    value: "artist-id",
+    displayValue: "Banksy",
+  },
+  {
+    field: "sizes",
+    value: "SMALL",
+    displayValue: "Small (under 40cm)",
+  },
+  {
+    field: "acquireable",
+    value: "true",
+    displayValue: "Buy Now",
+  },
+  {
+    field: "atAuction",
+    value: "true",
+    displayValue: "Bid",
+  },
+  {
+    field: "inquireableOnly",
+    value: "true",
+    displayValue: "Inquire",
+  },
+  {
+    field: "offerable",
+    value: "true",
+    displayValue: "Make Offer",
+  },
+]
+
 const savedSearchAlertMocked = {
   internalID: "alert-id",
   acquireable: true,
@@ -276,6 +310,7 @@ const savedSearchAlertMocked = {
     push: false,
   },
   width: null,
+  labels: savedSearchAlertLabelsMocked,
 }
 
 const filterArtworksConnectionMocked = {
