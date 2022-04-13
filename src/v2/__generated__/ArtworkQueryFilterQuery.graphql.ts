@@ -38,6 +38,7 @@ export type FilterArtworksInput = {
     locationCities?: Array<string | null> | null;
     majorPeriods?: Array<string | null> | null;
     marketable?: boolean | null;
+    marketingCollectionID?: string | null;
     materialsTerms?: Array<string | null> | null;
     medium?: string | null;
     offerable?: boolean | null;
