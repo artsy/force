@@ -11,7 +11,7 @@ global.Node = jsdom.window.Node
 global.DOMParser = jsdom.window.DOMParser
 
 const rewire = require("rewire")("../routes")
-const { articles, section, teamChannel } = rewire
+const { articles, section } = rewire
 
 describe("Articles routes", () => {
   let req
@@ -80,57 +80,6 @@ describe("Articles routes", () => {
       section(req, res, next)
       Backbone.sync.args[0][2].error()
       next.called.should.be.ok()
-    })
-  })
-
-  describe("#teamChannel", () => {
-    it("renders the channel with its articles", () => {
-      const channel = extend(cloneDeep(fixtures.channel), {
-        slug: "foo",
-        type: "team",
-      })
-      req.path = "foo"
-      teamChannel(req, res, next)
-      Backbone.sync.args[0][2].success(channel)
-      Backbone.sync.args[1][2].data.ids.length.should.equal(4)
-      Backbone.sync.args[1][2].success(fixtures.article)
-      res.render.args[0][0].should.equal("team_channel")
-      res.render.args[0][1].channel.get("name").should.equal(channel.name)
-    })
-
-    it("nexts if channel is not a team channel", () => {
-      const channel = extend(cloneDeep(fixtures.channel), {
-        slug: "foo",
-        type: "editorial",
-      })
-      req.path = "/foo"
-      teamChannel(req, res, next)
-      Backbone.sync.args[0][2].success(channel)
-      next.called.should.be.ok()
-    })
-
-    it("errors if there is an issue fetching a team channel", () => {
-      const channel = extend(cloneDeep(fixtures.channel), {
-        slug: "foo",
-        type: "editorial",
-      })
-      req.path = "/foo"
-      teamChannel(req, res, next)
-      Backbone.sync.args[0][2].error(channel)
-      res.backboneError.called.should.be.ok()
-    })
-
-    it("handles query params", () => {
-      const channel = extend(cloneDeep(fixtures.channel), {
-        slug: "foo",
-        type: "team",
-      })
-      req.path = "/foo?utm=campaign"
-      teamChannel(req, res, next)
-      Backbone.sync.args[0][2].success(channel)
-      Backbone.sync.args[1][2].success(fixtures.article)
-      res.render.args[0][0].should.equal("team_channel")
-      res.render.args[0][1].channel.get("name").should.equal(channel.name)
     })
   })
 })

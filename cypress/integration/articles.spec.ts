@@ -31,14 +31,14 @@ describe("Articles", () => {
   })
 
   describe("Team Blogs (channels)", () => {
-    it("/artsy-education", () => {
-      visitWithStatusRetries("artsy-education")
-      cy.title().should("eq", "Artsy for Education")
+    it("/channel/artsy-education", () => {
+      visitWithStatusRetries("channel/artsy-education")
+      cy.title().should("eq", "Artsy for Education | Artsy")
     })
 
-    it("/buying-with-artsy", () => {
-      visitWithStatusRetries("buying-with-artsy")
-      cy.title().should("eq", "Buying with Artsy")
+    it("/channel/buying-with-artsy", () => {
+      visitWithStatusRetries("channel/buying-with-artsy")
+      cy.title().should("eq", "Buying with Artsy | Artsy")
     })
 
     it("/jobs", () => {
@@ -46,9 +46,9 @@ describe("Articles", () => {
       cy.title().should("eq", "Jobs | Artsy")
     })
 
-    it("/life-at-artsy", () => {
-      visitWithStatusRetries("life-at-artsy")
-      cy.title().should("eq", "Life at Artsy")
+    it("/channel/life-at-artsy", () => {
+      visitWithStatusRetries("channel/life-at-artsy")
+      cy.title().should("eq", "Life at Artsy | Artsy")
     })
   })
 })

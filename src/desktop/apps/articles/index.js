@@ -14,5 +14,4 @@ app.locals.crop = crop
 app.locals.toSentence = toSentence
 
 app.get("/news", routes.news)
-app.get(sd.TEAM_BLOGS, routes.teamChannel)
 app.get("/venice-biennale-2015", routes.section)

@@ -118,8 +118,6 @@ export const SITEMAP_BASE_URL: any =
   "http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com"
 export const STRIPE_PUBLISHABLE_KEY: any = null
 export const TARGET_CAMPAIGN_URL: any = "/seattle-art-fair-2017"
-export const TEAM_BLOGS: any =
-  "^/life-at-artsy$|^/artsy-education$|^/buying-with-artsy$"
 export const THIRD_PARTIES_DISABLED: any = false
 export const TRACK_PAGELOAD_PATHS: any = null
 export const UNLEASH_API: any = null
