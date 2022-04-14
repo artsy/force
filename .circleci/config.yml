@@ -27,9 +27,6 @@ jobs:
       - image: cimg/node:14.19
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
-      practice_web:
-        type: string
-        default: C2TQ4PT8R
       dev:
         type: string
         default: C02BC3HEJ
@@ -40,7 +37,7 @@ jobs:
           command: node scripts/validateSchemas.js production
       - slack/notify:
           event: fail
-          channel: "<< parameters.practice_web >>, << parameters.dev >>"
+          channel: "<< parameters.dev >>"
           custom: |
             {
               "blocks": [
