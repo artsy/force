@@ -94,10 +94,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@19.5.0":
-  version "19.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.5.0.tgz#88444ebb6fd5a189b41c06c2e6a938c4503e0910"
-  integrity sha512-+zLQaqt8fYl+ZtlrfSqb5zPfQW9IpRIfhYmc5xvk1B6p+oSp9cMUooqRLlcQG+SA/mfRXwhxhLFJCPa5IaOO+Q==
+"@artsy/palette@19.5.1":
+  version "19.5.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.5.1.tgz#3030ccf97e5a11ba5ef0ab4641aa4ee022871000"
+  integrity sha512-TT2NOpqvGPW0o90g2GN8DXq/IovLdWf8fEHo8/6kKmuquNGC/M8yva851sat7jsL/0GYtvxzDi+dR/KrheYSNg==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
