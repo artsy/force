@@ -2,7 +2,7 @@
 
 `components/typeahead/view.coffee` wraps up configuration and event binding for [Twitter's typeahead.js](https://github.com/twitter/typeahead.js/blob/v0.10.5/doc/jquery_typeahead.md). (Do note that we're locked into the 0.10.x version until this issue is resolved https://github.com/twitter/typeahead.js/issues/743#issuecomment-142104685)
 
------
+---
 
 ## Usage
 
@@ -29,7 +29,7 @@ TypeaheadView = require '../../components/typeahead/view.coffee'
 
 @typeahead = new TypeaheadView
   # Specify a `url` instead of of `kind` (which configures the default Gravity /match endpoint)
-  url: "#{GALAXY_ENDPOINT}/galleries"
+  url: "#{NON_DEFAULT_ENDPOINT}/galleries"
   # Specify a named query parameter that will get populated with the value from the input
   param: 'term'
   # Specify a path to walk down to get the array of results
@@ -41,7 +41,7 @@ TypeaheadView = require '../../components/typeahead/view.coffee'
   # Do something with the Suggestion model
 ```
 
------
+---
 
 ## Options (w/ default values)
 
@@ -79,7 +79,7 @@ kind: null
 selected: []
 ```
 
------
+---
 
 ## Events
 
@@ -88,4 +88,3 @@ selected: []
 'asyncrequest': -> # Triggered when an AJAX request is started
 'asyncreceive': -> # Triggered when an AJAX request is completed
 ```
-
