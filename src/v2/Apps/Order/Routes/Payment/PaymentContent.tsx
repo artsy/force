@@ -98,7 +98,6 @@ export const PaymentContent: FC<Props> = props => {
           </Button>
         </Collapse>
         <Spacer mb={4} />
-
         {/* Step Two Payment Details */}
         <Text variant="xs">Step 2 of 2</Text>
         <Text variant="lg">Payment Details</Text>
