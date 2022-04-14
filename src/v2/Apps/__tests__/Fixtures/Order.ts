@@ -109,7 +109,7 @@ const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: false,
+    processWithArtsyShippingDomestic: false,
     artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
@@ -125,11 +125,11 @@ const OrderArtworkNode = {
   },
 }
 
-const ArtaEnabledOrderArtworkNode = {
+const ArtsyShippingDomesticOrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: true,
+    processWithArtsyShippingDomestic: true,
     artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,
@@ -148,7 +148,7 @@ const ArtstyShippingInternationalOrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: false,
+    processWithArtsyShippingDomestic: false,
     artsyShippingInternational: true,
     domesticShippingFee: {
       minor: 10000,
@@ -349,7 +349,7 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
-          ...ArtaEnabledOrderArtworkNode,
+          ...ArtsyShippingDomesticOrderArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -455,7 +455,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
               },
             ],
           },
-          ...ArtaEnabledOrderArtworkNode,
+          ...ArtsyShippingDomesticOrderArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -549,7 +549,7 @@ export const UntouchedBuyOrderWithSelectedShippingQuote = {
               },
             ],
           },
-          ...ArtaEnabledOrderArtworkNode,
+          ...ArtsyShippingDomesticOrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
@@ -1005,7 +1005,7 @@ const OrderArtworkNodePriceHidden = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    processWithArtaShipping: false,
+    processWithArtsyShippingDomestic: false,
     artsyShippingInternational: false,
     domesticShippingFee: {
       minor: 10000,

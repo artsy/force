@@ -4,9 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type SavedSearchAlertEditForm_me = {
-    readonly lengthUnitPreference: LengthUnitPreference;
     readonly savedSearch: {
         readonly internalID: string;
         readonly acquireable: boolean | null;
@@ -17,6 +15,7 @@ export type SavedSearchAlertEditForm_me = {
         readonly colors: ReadonlyArray<string>;
         readonly dimensionRange: string | null;
         readonly sizes: ReadonlyArray<string>;
+        readonly width: string | null;
         readonly height: string | null;
         readonly inquireableOnly: boolean | null;
         readonly locationCities: ReadonlyArray<string>;
@@ -30,7 +29,11 @@ export type SavedSearchAlertEditForm_me = {
             readonly email: boolean;
             readonly push: boolean;
         };
-        readonly width: string | null;
+        readonly labels?: ReadonlyArray<{
+            readonly field: string;
+            readonly value: string;
+            readonly displayValue: string;
+        }>;
     } | null;
     readonly " $refType": "SavedSearchAlertEditForm_me";
 };
@@ -48,19 +51,17 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "savedSearchId"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "withAggregations"
     }
   ],
   "kind": "Fragment",
   "metadata": null,
   "name": "SavedSearchAlertEditForm_me",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "lengthUnitPreference",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -136,6 +137,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "sizes",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "width",
           "storageKey": null
         },
         {
@@ -227,11 +235,43 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "width",
-          "storageKey": null
+          "condition": "withAggregations",
+          "kind": "Condition",
+          "passingValue": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "SearchCriteriaLabel",
+              "kind": "LinkedField",
+              "name": "labels",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "field",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "value",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "displayValue",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
@@ -240,5 +280,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '784b378cbf2374e90e7bb600aaebcb92';
+(node as any).hash = '1f8ca40d6ff77c4fb56b84763c946395';
 export default node;

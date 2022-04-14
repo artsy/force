@@ -76,6 +76,12 @@ const REDIRECTS = {
   "/apply/auction": "http://apply.artsy.net/auctions",
   "/apply/fair": "http://apply.artsy.net/fairs",
   "/apply*": "http://apply.artsy.net/partnerships",
+  "/gallery-partnerships": "https://partners.artsy.net",
+  "/artsy-in-miami": "/fairs",
+  "/armory-week": "/fairs",
+  "/spring-art-fairs": "/fairs",
+  "/london-art-fair-week": "/fairs",
+  "/basel-art-week": "/fairs",
 }
 
 const router = express.Router()

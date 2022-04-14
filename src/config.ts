@@ -73,7 +73,6 @@ export const GEMINI_CLOUDFRONT_URL: any = "https://d7hftxdivxxvm.cloudfront.net"
 export const GENOME_URL: any = "https://helix.artsy.net"
 export const GEODATA_URL: any =
   "http://artsy-geodata.s3-website-us-east-1.amazonaws.com"
-export const GEOIP_ENDPOINT: any = "https://freegeoip.app/json/"
 export const GOOGLE_ADWORDS_ID: any = null
 export const GOOGLE_ANALYTICS_ID: any = "UA-12450662-6"
 export const GOOGLE_CLIENT_ID: any = null

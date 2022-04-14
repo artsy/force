@@ -59,10 +59,8 @@ import { backboneErrorHandlerMiddleware } from "./lib/middleware/backboneErrorHa
 import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
-import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
 import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
-import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "./lib/backboneSync"
 import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
 import { splitTestMiddleware } from "./desktop/components/split_test/splitTestMiddleware"
@@ -121,7 +119,6 @@ export function initializeMiddleware(app) {
   app.use(localsMiddleware)
   app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
-  app.use(unsupportedBrowserMiddleware)
 
   if (process.env.NODE_ENV !== "test") {
     app.use(splitTestMiddleware)
@@ -150,9 +147,6 @@ export function initializeMiddleware(app) {
   app.get("/system/up", (req, res) => {
     res.status(200).send({ nodejs: true })
   })
-
-  // Sets up mobile marketing signup modal
-  app.use(marketingModalsMiddleware)
 
   // Static assets
   applyStaticAssetMiddlewares(app)

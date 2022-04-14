@@ -8,7 +8,7 @@ describe("getTimerCopy", () => {
       const hasEnded = false
       it("formats the timer correctly", () => {
         expect(getTimerCopy(time, hasStarted, hasEnded).copy).toEqual(
-          "2 Days Until Bidding Ends"
+          "2 Days Until Lots Start Closing"
         )
         expect(getTimerCopy(time, hasStarted, hasEnded).color).toEqual(
           "blue100"
@@ -22,7 +22,7 @@ describe("getTimerCopy", () => {
       const hasEnded = false
       it("formats the timer correctly", () => {
         expect(getTimerCopy(time, hasStarted, hasEnded).copy).toEqual(
-          "23h 33m Until Bidding Ends"
+          "23h 33m Until Lots Start Closing"
         )
         expect(getTimerCopy(time, hasStarted, hasEnded).color).toEqual("red100")
       })
@@ -34,7 +34,7 @@ describe("getTimerCopy", () => {
       const hasEnded = false
       it("formats the timer correctly", () => {
         expect(getTimerCopy(time, hasStarted, hasEnded).copy).toEqual(
-          "58m 23s Until Bidding Ends"
+          "58m 23s Until Lots Start Closing"
         )
         expect(getTimerCopy(time, hasStarted, hasEnded).color).toEqual("red100")
       })

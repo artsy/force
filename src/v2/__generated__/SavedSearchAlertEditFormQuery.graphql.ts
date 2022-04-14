@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditFormQueryVariables = {
     id: string;
     artistId: string;
+    withAggregations: boolean;
 };
 export type SavedSearchAlertEditFormQueryResponse = {
     readonly me: {
@@ -15,7 +16,7 @@ export type SavedSearchAlertEditFormQueryResponse = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artist">;
     } | null;
-    readonly artworksConnection: {
+    readonly artworksConnection?: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
     } | null;
 };
@@ -30,16 +31,17 @@ export type SavedSearchAlertEditFormQuery = {
 query SavedSearchAlertEditFormQuery(
   $id: ID!
   $artistId: String!
+  $withAggregations: Boolean!
 ) {
   me {
-    ...SavedSearchAlertEditForm_me_3PSMXk
+    ...SavedSearchAlertEditForm_me_2FI717
     id
   }
   artist(id: $artistId) {
     ...SavedSearchAlertEditForm_artist
     id
   }
-  artworksConnection(first: 0, artistID: $artistId, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {
+  artworksConnection(first: 0, artistID: $artistId, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) @include(if: $withAggregations) {
     ...SavedSearchAlertEditForm_artworksConnection
     id
   }
@@ -62,8 +64,7 @@ fragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection
   }
 }
 
-fragment SavedSearchAlertEditForm_me_3PSMXk on Me {
-  lengthUnitPreference
+fragment SavedSearchAlertEditForm_me_2FI717 on Me {
   savedSearch(id: $id) {
     internalID
     acquireable
@@ -74,6 +75,7 @@ fragment SavedSearchAlertEditForm_me_3PSMXk on Me {
     colors
     dimensionRange
     sizes
+    width
     height
     inquireableOnly
     locationCities
@@ -87,7 +89,11 @@ fragment SavedSearchAlertEditForm_me_3PSMXk on Me {
       email
       push
     }
-    width
+    labels @skip(if: $withAggregations) {
+      field
+      value
+      displayValue
+    }
   }
 }
 */
@@ -103,14 +109,19 @@ v1 = {
   "kind": "LocalArgument",
   "name": "id"
 },
-v2 = [
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "withAggregations"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artistId"
   }
 ],
-v3 = [
+v4 = [
   {
     "kind": "Literal",
     "name": "aggregations",
@@ -134,21 +145,28 @@ v3 = [
     "value": 0
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "value",
+  "storageKey": null
+},
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -159,7 +177,8 @@ return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -179,6 +198,11 @@ return {
                 "kind": "Variable",
                 "name": "savedSearchId",
                 "variableName": "id"
+              },
+              {
+                "kind": "Variable",
+                "name": "withAggregations",
+                "variableName": "withAggregations"
               }
             ],
             "kind": "FragmentSpread",
@@ -189,7 +213,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -204,20 +228,27 @@ return {
         "storageKey": null
       },
       {
-        "alias": null,
-        "args": (v3/*: any*/),
-        "concreteType": "FilterArtworksConnection",
-        "kind": "LinkedField",
-        "name": "artworksConnection",
-        "plural": false,
+        "condition": "withAggregations",
+        "kind": "Condition",
+        "passingValue": true,
         "selections": [
           {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "SavedSearchAlertEditForm_artworksConnection"
+            "alias": null,
+            "args": (v4/*: any*/),
+            "concreteType": "FilterArtworksConnection",
+            "kind": "LinkedField",
+            "name": "artworksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "SavedSearchAlertEditForm_artworksConnection"
+              }
+            ],
+            "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ],
     "type": "Query",
@@ -227,7 +258,8 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v1/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Operation",
     "name": "SavedSearchAlertEditFormQuery",
@@ -242,13 +274,6 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "lengthUnitPreference",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
               {
                 "kind": "Variable",
@@ -261,7 +286,7 @@ return {
             "name": "savedSearch",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -316,6 +341,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "sizes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "width",
                 "storageKey": null
               },
               {
@@ -382,7 +414,7 @@ return {
                 "name": "userAlertSettings",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -401,29 +433,55 @@ return {
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "width",
-                "storageKey": null
+                "condition": "withAggregations",
+                "kind": "Condition",
+                "passingValue": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "SearchCriteriaLabel",
+                    "kind": "LinkedField",
+                    "name": "labels",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "field",
+                        "storageKey": null
+                      },
+                      (v7/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayValue",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ]
               }
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -431,77 +489,78 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       },
       {
-        "alias": null,
-        "args": (v3/*: any*/),
-        "concreteType": "FilterArtworksConnection",
-        "kind": "LinkedField",
-        "name": "artworksConnection",
-        "plural": false,
+        "condition": "withAggregations",
+        "kind": "Condition",
+        "passingValue": true,
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "ArtworksAggregationResults",
+            "args": (v4/*: any*/),
+            "concreteType": "FilterArtworksConnection",
             "kind": "LinkedField",
-            "name": "aggregations",
-            "plural": true,
+            "name": "artworksConnection",
+            "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "slice",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "AggregationCount",
+                "concreteType": "ArtworksAggregationResults",
                 "kind": "LinkedField",
-                "name": "counts",
+                "name": "aggregations",
                 "plural": true,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "count",
+                    "name": "slice",
                     "storageKey": null
                   },
-                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "value",
+                    "concreteType": "AggregationCount",
+                    "kind": "LinkedField",
+                    "name": "counts",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "count",
+                        "storageKey": null
+                      },
+                      (v6/*: any*/),
+                      (v7/*: any*/)
+                    ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v8/*: any*/)
             ],
             "storageKey": null
-          },
-          (v6/*: any*/)
-        ],
-        "storageKey": null
+          }
+        ]
       }
     ]
   },
   "params": {
-    "cacheID": "2b15b3beb8609d8fbebe8998bf43ef0f",
+    "cacheID": "e6225beee8e6f7b594787217dfb25a29",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistId: String!\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_3PSMXk\n    id\n  }\n  artist(id: $artistId) {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n  artworksConnection(first: 0, artistID: $artistId, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_3PSMXk on Me {\n  lengthUnitPreference\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    width\n  }\n}\n"
+    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistId: String!\n  $withAggregations: Boolean!\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_2FI717\n    id\n  }\n  artist(id: $artistId) {\n    ...SavedSearchAlertEditForm_artist\n    id\n  }\n  artworksConnection(first: 0, artistID: $artistId, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) @include(if: $withAggregations) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artist on Artist {\n  internalID\n  name\n  slug\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_2FI717 on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels @skip(if: $withAggregations) {\n      field\n      value\n      displayValue\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '25bc2082801b22a9fb816fca26b4f10a';
+(node as any).hash = '99f369da31b4eff785ff7567c2a5ec51';
 export default node;

@@ -2,15 +2,12 @@
 CurrentUser = require '../../models/current_user'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
-{ triggerMarketingModal } = require '../marketing_signup_modal/triggerMarketingModal.ts'
 { Intent } = require "@artsy/cohesion"
 
 module.exports = ->
   deprecatedGlobalClientSetup()
   checkForAfterSignUpAction()
   checkForPersonalizeFlash()
-
-  triggerMarketingModal(Intent.viewFair, true)
 
 checkForAfterSignUpAction = ->
   currentUser = CurrentUser.orNull()

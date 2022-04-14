@@ -31,10 +31,10 @@ query showRoutes_ShowSubAppQuery(
 
 fragment ShowMeta_show on Show {
   name
-  slug
+  href
   metaDescription: description
   metaImage {
-    src: url(version: "large")
+    src: url(version: ["normalized", "larger", "large"])
   }
   partner {
     __typename
@@ -242,12 +242,16 @@ return {
                   {
                     "kind": "Literal",
                     "name": "version",
-                    "value": "large"
+                    "value": [
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
                   }
                 ],
                 "kind": "ScalarField",
                 "name": "url",
-                "storageKey": "url(version:\"large\")"
+                "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
               }
             ],
             "storageKey": null
@@ -284,12 +288,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "380b4dc8139229c978801427c1b90e1f",
+    "cacheID": "5f037781b244684ca68b30d6d62e1da5",
     "id": null,
     "metadata": {},
     "name": "showRoutes_ShowSubAppQuery",
     "operationKind": "query",
-    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
+    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  href\n  metaDescription: description\n  metaImage {\n    src: url(version: [\"normalized\", \"larger\", \"large\"])\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
   }
 };
 })();

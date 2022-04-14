@@ -159,7 +159,7 @@ export const auctionRoutes: AppRouteConfig[] = [
     ],
   },
   {
-    path: "/auction-faq2",
+    path: "/auction-faq",
     getComponent: () => AuctionFAQRoute,
     query: graphql`
       query auctionRoutes_AuctionFAQRouteQuery {
@@ -168,6 +168,27 @@ export const auctionRoutes: AppRouteConfig[] = [
         }
       }
     `,
+  },
+  {
+    // Legacy redirect for old Eigen clients
+    path: "/auction-registration/:slug?",
+    children: [
+      new Redirect({
+        from: "/",
+        to: "/auction/:slug/register",
+      }) as any,
+    ],
+  },
+
+  {
+    // Legacy redirect for old Eigen clients
+    path: "/auction/:slug/buyers-premium",
+    children: [
+      new Redirect({
+        from: "/",
+        to: "/auction-faq",
+      }) as any,
+    ],
   },
   {
     // Redirect from the old route to the new one

@@ -1,8 +1,7 @@
 import * as React from "react"
-import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowMeta_show } from "v2/__generated__/ShowMeta_show.graphql"
-import { getENV } from "v2/Utils/getENV"
+import { MetaTags } from "v2/Components/MetaTags"
 
 interface ShowMetaProps {
   show: ShowMeta_show
@@ -11,7 +10,7 @@ interface ShowMetaProps {
 const ShowMeta: React.FC<ShowMetaProps> = ({
   show: {
     name,
-    slug,
+    href,
     metaDescription,
     metaImage,
     partner,
@@ -19,25 +18,17 @@ const ShowMeta: React.FC<ShowMetaProps> = ({
     formattedEndAt,
   },
 }) => {
-  const title = `${name} | Artsy`
-  const href = `${getENV("APP_URL")}/show/${slug}`
+  const fallbackDescription = `Explore ${name} from ${
+    partner ? `${partner.name} on` : ""
+  } Artsy. ${formattedStartAt} - ${formattedEndAt}.`
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const fallbackDescription = `Explore ${name} from ${partner.name} on Artsy. ${formattedStartAt} - ${formattedEndAt}.`
-  const description = metaDescription || fallbackDescription
   return (
-    <>
-      <Title>{title}</Title>
-      <Meta property="og:title" content={title} />
-      <Meta name="description" content={description} />
-      <Meta property="og:description" content={description} />
-      <Meta property="twitter:description" content={description} />
-      <Link rel="canonical" href={href} />
-      <Meta property="og:url" content={href} />
-      <Meta property="og:type" content="website" />
-      <Meta property="twitter:card" content="summary" />
-      {metaImage && <Meta property="og:image" content={metaImage.src} />}
-    </>
+    <MetaTags
+      title={`${name} | Artsy`}
+      description={metaDescription || fallbackDescription}
+      pathname={href}
+      imageURL={metaImage?.src}
+    />
   )
 }
 
@@ -45,10 +36,10 @@ export const ShowMetaFragmentContainer = createFragmentContainer(ShowMeta, {
   show: graphql`
     fragment ShowMeta_show on Show {
       name
-      slug
+      href
       metaDescription: description
       metaImage {
-        src: url(version: "large")
+        src: url(version: ["normalized", "larger", "large"])
       }
       partner {
         ... on Partner {

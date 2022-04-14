@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
-  Box,
   Column,
   GridColumns,
+  Join,
   Separator,
   Spacer,
   Text,
@@ -39,6 +39,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { match } = useRouter()
   const { from_fair } = match.location.query
 
+  // FIXME: Why is this memoized?
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const arrivedFromFair = useMemo(() => from_fair ?? false, [])
 
@@ -60,73 +61,74 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          {arrivedFromFair && (
-            <ShowNavigationBanner show={show} mt={2} mb={4} />
-          )}
+          {arrivedFromFair && <ShowNavigationBanner show={show} />}
 
-          {Number(show?.images?.length) > 0 && (
-            <Box my={4}>
-              <ShowInstallShots show={show} mt={4} mb={6} />
-            </Box>
-          )}
+          <Spacer mt={4} />
 
-          <GridColumns mt={2}>
-            <Column span={hasWideHeader ? [12, 8, 6] : 6} wrap={hasWideHeader}>
-              <ShowHeader show={show} />
+          <Join separator={<Spacer mt={4} />}>
+            {Number(show?.images?.length) > 0 && (
+              <ShowInstallShots show={show} />
+            )}
 
-              {!hasAbout && show.href && (
-                <>
-                  <Spacer mt={1} />
+            <GridColumns>
+              <Column
+                span={hasWideHeader ? [12, 8, 6] : 6}
+                wrap={hasWideHeader}
+              >
+                <ShowHeader show={show} />
 
-                  <RouterLink to={`${show.href}/info`}>
-                    <Text variant="sm">More info</Text>
-                  </RouterLink>
-                </>
-              )}
-            </Column>
+                {!hasAbout && show.href && (
+                  <>
+                    <Spacer mt={1} />
 
-            {hasAbout && (
-              <Column span={6}>
-                <ShowAbout show={show} />
-
-                {show.href && (
-                  <RouterLink to={`${show.href}/info`}>
-                    <Text variant="sm">More info</Text>
-                  </RouterLink>
+                    <RouterLink to={`${show.href}/info`}>
+                      <Text variant="sm">More info</Text>
+                    </RouterLink>
+                  </>
                 )}
               </Column>
+
+              {hasAbout && (
+                <Column span={6}>
+                  <ShowAbout show={show} />
+
+                  {show.href && (
+                    <RouterLink to={`${show.href}/info`}>
+                      <Text variant="sm">More info</Text>
+                    </RouterLink>
+                  )}
+                </Column>
+              )}
+
+              {hasViewingRoom && (
+                <Column span={5} start={8}>
+                  <ShowViewingRoom show={show} />
+                </Column>
+              )}
+            </GridColumns>
+
+            {(show.counts?.eligibleArtworks ?? 0) > 0 ? (
+              <ShowArtworksFilter
+                aggregations={
+                  sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                }
+                counts={sidebar?.counts as Counts}
+                show={show}
+              />
+            ) : (
+              <>
+                <Separator as="hr" />
+                <ShowArtworksEmptyState show={show} />
+              </>
             )}
 
-            {hasViewingRoom && (
-              <Column span={5} start={8}>
-                <ShowViewingRoom show={show} />
-              </Column>
+            {!show.fair?.hasFullFeature && (
+              <>
+                <Separator as="hr" />
+                <ShowContextCard show={show} />
+              </>
             )}
-          </GridColumns>
-
-          <Spacer mt={[6, 12]} />
-
-          {(show.counts?.eligibleArtworks ?? 0) > 0 ? (
-            <ShowArtworksFilter
-              aggregations={
-                sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-              }
-              counts={sidebar?.counts as Counts}
-              show={show}
-            />
-          ) : (
-            <>
-              <Separator my={2} />
-              <ShowArtworksEmptyState show={show} />
-            </>
-          )}
-
-          {show.fair?.hasFullFeature !== false && (
-            <>
-              <Separator as="hr" my={6} />
-              <ShowContextCard show={show} />
-            </>
-          )}
+          </Join>
         </AnalyticsContext.Provider>
       </>
     </>

@@ -30,10 +30,7 @@ fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   name
   profile {
     image {
-      resized(width: 30, height: 30, version: "square") {
-        src
-        srcSet
-      }
+      url
     }
     id
   }
@@ -63,7 +60,7 @@ v2 = {
 },
 v3 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "String"
 };
@@ -140,44 +137,10 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 30
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": "square"
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 30
-                      }
-                    ],
-                    "concreteType": "ResizedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "resized",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "resized(height:30,version:\"square\",width:30)"
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -193,7 +156,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2df6ba381ddfe63972a0899de2e26f73",
+    "cacheID": "97c86dcd89f2399867b589680d719f74",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -204,12 +167,7 @@ return {
           "type": "FairOrganizer"
         },
         "fairOrganizer.id": (v2/*: any*/),
-        "fairOrganizer.name": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "fairOrganizer.name": (v3/*: any*/),
         "fairOrganizer.profile": {
           "enumValues": null,
           "nullable": true,
@@ -223,20 +181,13 @@ return {
           "plural": false,
           "type": "Image"
         },
-        "fairOrganizer.profile.image.resized": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ResizedImageUrl"
-        },
-        "fairOrganizer.profile.image.resized.src": (v3/*: any*/),
-        "fairOrganizer.profile.image.resized.srcSet": (v3/*: any*/),
+        "fairOrganizer.profile.image.url": (v3/*: any*/),
         "fairOrganizer.slug": (v2/*: any*/)
       }
     },
     "name": "DedicatedArticlesBreadcrumbs_Test_Query",
     "operationKind": "query",
-    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      url\n    }\n    id\n  }\n}\n"
   }
 };
 })();

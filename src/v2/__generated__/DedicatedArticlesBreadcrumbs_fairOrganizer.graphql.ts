@@ -9,10 +9,7 @@ export type DedicatedArticlesBreadcrumbs_fairOrganizer = {
     readonly name: string | null;
     readonly profile: {
         readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
+            readonly url: string | null;
         } | null;
     } | null;
     readonly " $refType": "DedicatedArticlesBreadcrumbs_fairOrganizer";
@@ -63,44 +60,10 @@ const node: ReaderFragment = {
           "selections": [
             {
               "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 30
-                },
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "square"
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 30
-                }
-              ],
-              "concreteType": "ResizedImageUrl",
-              "kind": "LinkedField",
-              "name": "resized",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "resized(height:30,version:\"square\",width:30)"
+              "args": null,
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -112,5 +75,5 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = '322d075ec0670293841ce10f1aa54c40';
+(node as any).hash = '926158cf56d60a6398c8cc2568267f3a';
 export default node;
