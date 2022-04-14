@@ -66,7 +66,7 @@ export const PaymentRoute: FC<Props> = props => {
   const { order, isCommittingMutation } = props
   const isLoading = isGettingCreditCardId || isCommittingMutation
   const paymentPicker = createRef<PaymentPicker>()
-  const isACHEnabled = useFeatureFlag("stripe-ACH")
+  const isACHEnabled = useFeatureFlag("stripe_ACH")
 
   const onContinue = async () => {
     try {
