@@ -38,17 +38,6 @@ describe("Articles routes", () => {
     }
     next = sinon.stub()
 
-    rewire.__set__(
-      "topParselyArticles",
-      sinon
-        .stub()
-        .yields([
-          fixtures.parselyArticle,
-          fixtures.parselyArticle,
-          fixtures.parselyArticle,
-        ])
-    )
-
     positronql = sinon.stub().returns(
       Promise.resolve({
         articles: articlesJSON,

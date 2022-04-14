@@ -1,6 +1,7 @@
 import { getContextPageFromClient } from "lib/getContextPage"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { extend, omit, pick } from "lodash"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
@@ -62,24 +63,11 @@ export const onAnalyticsReady = () => {
  */
 const onClickedReadMore = data => {
   const pathname = data.pathname || location.pathname
-  const href = window.sd.APP_URL + "/" + pathname
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   window.analytics.page(
     { path: pathname },
     { integrations: { Marketo: false } }
   )
-  // guard for aggressive ad blockers
-  if (
-    window.PARSELY &&
-    window.PARSELY.beacon &&
-    window.PARSELY.beacon.trackPageView
-  ) {
-    window.PARSELY.beacon.trackPageView({
-      action_name: "infinite",
-      js: 1,
-      url: href,
-    })
-  }
   // Return early because we don't want to make a Segment call for read more
   return
 }
