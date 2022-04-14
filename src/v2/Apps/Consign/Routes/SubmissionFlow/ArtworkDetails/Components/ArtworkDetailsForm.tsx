@@ -122,7 +122,7 @@ export const ArtworkDetailsForm: React.FC = () => {
     setFieldTouched("location", false)
   }
   const handleLocationSelect = (place?: Place) => {
-    setFieldValue("location", normalizePlace(place))
+    setFieldValue("location", normalizePlace(place, true))
   }
 
   const showPostalCode =

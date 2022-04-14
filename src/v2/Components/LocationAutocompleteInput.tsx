@@ -174,7 +174,10 @@ export type Location = {
   coordinates?: number[]
 }
 
-export const normalizePlace = (place?: Place): Location => {
+export const normalizePlace = (
+  place?: Place,
+  withCountryCode: boolean = false
+): Location => {
   if (!place) return { city: "" }
 
   if (!("address_components" in place)) {
@@ -220,7 +223,7 @@ export const normalizePlace = (place?: Place): Location => {
     stateCode: components.state?.short_name,
     postalCode: components.postalCode?.long_name,
     country: components.country?.long_name,
-    countryCode: components.country?.short_name,
+    countryCode: withCountryCode ? components.country?.short_name : undefined,
   }
 }
 

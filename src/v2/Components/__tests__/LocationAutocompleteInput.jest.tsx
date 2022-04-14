@@ -152,6 +152,16 @@ describe("normalizePlace", () => {
       stateCode: "NY",
       postalCode: "10536",
       country: "United States",
+    })
+  })
+
+  it("returns country code", () => {
+    expect(normalizePlace(fullPlace as Place, true)).toEqual({
+      city: "Katonah",
+      state: "New York",
+      stateCode: "NY",
+      postalCode: "10536",
+      country: "United States",
       countryCode: "US",
     })
   })
