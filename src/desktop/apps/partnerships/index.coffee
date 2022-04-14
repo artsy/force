@@ -9,7 +9,7 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 # JSON Page routes
-for subject in ['auction', 'institution']
+for subject in ['institution']
   page = new JSONPage
     name: "#{subject}-partnerships"
     paths:
