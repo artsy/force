@@ -34,7 +34,7 @@ import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
-    Review and Pay
+    Continue
   </Button>
 )
 export interface StripeProps {
@@ -94,8 +94,7 @@ export const PaymentRoute: FC<Props> = props => {
         logger.error(result.error)
         return
       }
-      console.log("credicardid", isGettingCreditCardId)
-      console.log("id", props.order.internalID!)
+
       const orderOrError = (
         await setOrderPayment({
           input: {
