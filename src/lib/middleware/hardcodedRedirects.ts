@@ -82,6 +82,9 @@ const REDIRECTS = {
   "/spring-art-fairs": "/fairs",
   "/london-art-fair-week": "/fairs",
   "/basel-art-week": "/fairs",
+  "/life-at-artsy": "/channel/life-at-artsy",
+  "/artsy-education": "/channel/artsy-education",
+  "/buying-with-artsy": "/channel/buying-with-artsy",
 }
 
 const router = express.Router()

@@ -1,6 +1,7 @@
 import { match } from "path-to-regexp"
 import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 const foundExcludedPath = excludedRoutes => {
@@ -26,10 +27,6 @@ export const trackPageView = (excludedRoutes: string[] = []) => {
       properties["availability"] = sd.ARTWORK.availability
       properties["price_listed"] =
         sd.ARTWORK.price && sd.ARTWORK.price.length > 0
-    }
-    // Disable Parsely firing on non-article pages
-    if (pageType !== OwnerType.article) {
-      window.PARSELY = { autotrack: false }
     }
 
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

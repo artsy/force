@@ -90,8 +90,6 @@ export const PAGE_CACHE_NAMESPACE: any = "page-cache"
 export const PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: any = 400
 export const PAGE_CACHE_TYPES: any = "artist"
 export const PAGE_CACHE_VERSION: any = "1"
-export const PARSELY_KEY: any = "artsy.net"
-export const PARSELY_SECRET: any = null
 export const PC_ARTSY_CHANNEL: any = "5759e508b5989e6f98f77999"
 export const PC_AUCTION_CHANNEL: any = "5759e4d7b5989e6f98f77997"
 export const PORT: any = 5000
@@ -118,8 +116,6 @@ export const SITEMAP_BASE_URL: any =
   "http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com"
 export const STRIPE_PUBLISHABLE_KEY: any = null
 export const TARGET_CAMPAIGN_URL: any = "/seattle-art-fair-2017"
-export const TEAM_BLOGS: any =
-  "^/life-at-artsy$|^/artsy-education$|^/buying-with-artsy$"
 export const THIRD_PARTIES_DISABLED: any = false
 export const TRACK_PAGELOAD_PATHS: any = null
 export const UNLEASH_API: any = null

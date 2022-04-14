@@ -74,7 +74,6 @@ sharify.data = _.extend(
     "NODE_ENV",
     "NOTIFICATION_COUNT",
     "ONETRUST_SCRIPT_ID",
-    "PARSELY_KEY",
     "PC_ARTSY_CHANNEL",
     "PC_AUCTION_CHANNEL",
     "POSITRON_URL",

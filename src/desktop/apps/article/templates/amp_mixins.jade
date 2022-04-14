@@ -115,13 +115,6 @@ mixin amp_analytics
           "properties.library": "amp"
         }
       }
-  amp-analytics(type="parsely")
-    script(type="application/json").
-      {
-        "vars": {
-          "apikey": "#{sd.PARSELY_KEY}"
-        }
-      }
 
 mixin amp_head
   meta(charset='utf-8')

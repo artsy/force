@@ -108,13 +108,6 @@ if options.marketo && !sd.THIRD_PARTIES_DISABLED
     }
     }
 
-//- Disable Parsely on non-article pages before loading Segment
-if !sd.THIRD_PARTIES_DISABLED
-  script( type="text/javascript" ).
-    if (!location.pathname.match(new RegExp("#{sd.EDITORIAL_PATHS}"))){
-      window.PARSELY = {autotrack: false}
-    }
-
 //- Segment.io
 if !sd.THIRD_PARTIES_DISABLED
   script( type="text/javascript" ).
