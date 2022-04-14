@@ -10,7 +10,9 @@ export type HoverDetails_artwork = {
         readonly name: string | null;
     } | null;
     readonly mediumType: {
-        readonly name: string | null;
+        readonly filterGene: {
+            readonly name: string | null;
+        } | null;
     } | null;
     readonly " $refType": "HoverDetails_artwork";
 };
@@ -62,7 +64,18 @@ return {
       "kind": "LinkedField",
       "name": "mediumType",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": (v0/*: any*/),
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -70,5 +83,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f2b85e1e0f7c36fa06484f674f64bc26';
+(node as any).hash = 'a38dd2db0f35df2d65cfbb27cdb6e4f8';
 export default node;
