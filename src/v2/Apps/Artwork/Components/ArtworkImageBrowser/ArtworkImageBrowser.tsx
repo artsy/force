@@ -16,27 +16,18 @@ export interface ArtworkImageBrowserProps {
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
 }) => {
-  const { images, video } = artwork
-
-  let length = 0
-  if (images?.length) {
-    length += images.length
-  }
-
-  if (video) {
-    length += 1
-  }
+  const { figures } = artwork
 
   const { index, handleNext, handlePrev, setCursor } = useCursor({
-    max: length,
+    max: figures.length,
   })
 
   const handleSelectDefaultSlide = () => {
-    const defaultIndex = images?.findIndex(image => !!image?.isDefault) ?? 0
+    const defaultIndex = figures?.findIndex(image => !!image?.isDefault) ?? 0
     setCursor(defaultIndex)
   }
 
-  if ((images ?? []).length === 0) {
+  if ((figures ?? []).length === 0) {
     return null
   }
 
@@ -82,12 +73,14 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
       ...ArtworkImageBrowserSmall_artwork
       ...ArtworkImageBrowserLarge_artwork
       internalID
-      images {
-        internalID
-        isDefault
-      }
-      video {
-        __typename
+      figures {
+        ... on Image {
+          internalID
+          isDefault
+        }
+        ... on Video {
+          type: __typename
+        }
       }
     }
   `,

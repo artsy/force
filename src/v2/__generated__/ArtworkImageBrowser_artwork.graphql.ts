@@ -6,13 +6,11 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork = {
     readonly internalID: string;
-    readonly images: ReadonlyArray<{
-        readonly internalID: string | null;
-        readonly isDefault: boolean | null;
-    } | null> | null;
-    readonly video: {
-        readonly __typename: string;
-    } | null;
+    readonly figures: ReadonlyArray<{
+        readonly internalID?: string | null;
+        readonly isDefault?: boolean | null;
+        readonly type: "Video";
+    }>;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;
     readonly " $refType": "ArtworkImageBrowser_artwork";
 };
@@ -42,36 +40,39 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "images",
+      "name": "figures",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isDefault",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Video",
-      "kind": "LinkedField",
-      "name": "video",
-      "plural": false,
-      "selections": [
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isDefault",
+              "storageKey": null
+            }
+          ],
+          "type": "Image",
+          "abstractKey": null
+        },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": "type",
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            }
+          ],
+          "type": "Video",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -96,5 +97,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8479e562e64ba56f91b4719bc45c04fb';
+(node as any).hash = '4dd3ab92cc285a244e20b8e3ccd617d4';
 export default node;

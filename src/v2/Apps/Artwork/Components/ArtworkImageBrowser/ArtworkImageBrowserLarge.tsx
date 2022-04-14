@@ -6,7 +6,6 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -15,7 +14,6 @@ import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageB
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkDetails/ArtworkVideoPlayer"
-import { GenericFigure } from "v2/Apps/Artwork/Components/ArtworkImageBrowser/utilityTypes"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
@@ -24,19 +22,13 @@ interface ArtworkImageBrowserLargeProps {
   onPrev(): void
 }
 
-type Figure = GenericFigure<ArtworkImageBrowserLarge_artwork>
-
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   artwork,
   index,
   onNext,
   onPrev,
 }) => {
-  const figures: Figure[] = compact(artwork.images) as Figure[]
-
-  if (artwork.video) {
-    figures.push(artwork.video as Figure)
-  }
+  const { figures } = artwork
 
   const activeImage = figures[index]
 
@@ -145,14 +137,16 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
       fragment ArtworkImageBrowserLarge_artwork on Artwork {
         ...ArtworkLightbox_artwork
         ...ArtworkVideoPlayer_artwork
-        images {
-          type: __typename
-          internalID
-          isZoomable
-          ...DeepZoom_image
-        }
-        video {
-          type: __typename
+        figures {
+          ... on Image {
+            type: __typename
+            internalID
+            isZoomable
+            ...DeepZoom_image
+          }
+          ... on Video {
+            type: __typename
+          }
         }
       }
     `,

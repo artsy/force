@@ -5,11 +5,16 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkVideoPlayer_artwork = {
-    readonly video: {
-        readonly src: string | null;
-        readonly height: number | null;
-        readonly width: number | null;
-    } | null;
+    readonly figures: ReadonlyArray<{
+        readonly type: "Video";
+        readonly url: string;
+        readonly height: number;
+        readonly width: number;
+    } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
+        readonly type: "%other";
+    }>;
     readonly " $refType": "ArtworkVideoPlayer_artwork";
 };
 export type ArtworkVideoPlayer_artwork$data = ArtworkVideoPlayer_artwork;
@@ -29,31 +34,45 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Video",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "video",
-      "plural": false,
+      "name": "figures",
+      "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "src",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "height",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "width",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": "type",
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            }
+          ],
+          "type": "Video",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -62,5 +81,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '52baf4e265c8ddb30e50461ccf1af810';
+(node as any).hash = '974a30d74f842d7276a8cb99153735a5';
 export default node;

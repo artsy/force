@@ -5,15 +5,18 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowserSmall_artwork = {
-    readonly images: ReadonlyArray<{
+    readonly figures: ReadonlyArray<{
         readonly internalID: string | null;
         readonly isZoomable: boolean | null;
-        readonly type: string;
+        readonly type: "Image";
         readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
-    } | null> | null;
-    readonly video: {
-        readonly type: string;
-    } | null;
+    } | {
+        readonly type: "Video";
+    } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
+        readonly type: "%other";
+    }>;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
     readonly " $refType": "ArtworkImageBrowserSmall_artwork";
 };
@@ -42,43 +45,46 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "images",
+      "name": "figures",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isZoomable",
+              "storageKey": null
+            },
+            (v0/*: any*/),
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "DeepZoom_image"
+            }
+          ],
+          "type": "Image",
+          "abstractKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isZoomable",
-          "storageKey": null
-        },
-        (v0/*: any*/),
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "DeepZoom_image"
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "type": "Video",
+          "abstractKey": null
         }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Video",
-      "kind": "LinkedField",
-      "name": "video",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -97,5 +103,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '44ceafd4883e3dd340d4d7e740517b58';
+(node as any).hash = '9d61f1f280c6045dc4ed0a16dcf8c6fe';
 export default node;

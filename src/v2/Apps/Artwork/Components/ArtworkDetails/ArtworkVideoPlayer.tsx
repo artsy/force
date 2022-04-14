@@ -9,10 +9,16 @@ interface ArtworkVideoPlayerProps {
 }
 
 const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
-  artwork: { video },
+  artwork: { figures },
   small,
 }) => {
-  if (!video) {
+  if (!figures) {
+    return null
+  }
+
+  const video = figures.find(figure => figure.type === "Video")
+
+  if (!video || video.type === "%other") {
     return null
   }
 
@@ -32,11 +38,11 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
         mx={[0, 2]}
         // @ts-ignore
         maxWidth={video.width ?? "100%"}
-        aspectWidth={video.width!}
-        aspectHeight={video.height!}
+        aspectWidth={video.width}
+        aspectHeight={video.height}
       >
         <iframe
-          src={video.src!}
+          src={video.url}
           frameBorder="0"
           allow="fullscreen; picture-in-picture"
           allowFullScreen
@@ -53,10 +59,13 @@ const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkVideoPlayer_artwork on Artwork {
-        video {
-          src
-          height
-          width
+        figures {
+          ... on Video {
+            type: __typename
+            url
+            height
+            width
+          }
         }
       }
     `,
