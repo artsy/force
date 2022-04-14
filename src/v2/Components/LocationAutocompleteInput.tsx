@@ -182,31 +182,38 @@ export const normalizePlace = (place?: Place): Location => {
   }
 
   const components = place.address_components.reduce<{
-    [key: string]: google.maps.GeocoderAddressComponent
+    [key: string]: google.maps.GeocoderAddressComponent["long_name"]
   }>(
     (
       acc: {
-        city: google.maps.GeocoderAddressComponent
-        state?: google.maps.GeocoderAddressComponent
-        postalCode?: google.maps.GeocoderAddressComponent
-        country?: google.maps.GeocoderAddressComponent
+        city: google.maps.GeocoderAddressComponent["long_name"]
+        state?: google.maps.GeocoderAddressComponent["long_name"]
+        postalCode?: google.maps.GeocoderAddressComponent["long_name"]
+        country?: google.maps.GeocoderAddressComponent["long_name"]
       },
       component
     ) => {
       if (component.types.includes("locality")) {
-        return { ...acc, city: component }
+        return { ...acc, city: component.long_name }
       }
 
       if (component.types.includes("administrative_area_level_1")) {
-        return { ...acc, state: component }
+        return {
+          ...acc,
+          state: component.long_name,
+          stateCode: component.short_name,
+        }
       }
 
       if (component.types.includes("postal_code")) {
-        return { ...acc, postalCode: component }
+        return { ...acc, postalCode: component.long_name }
       }
 
       if (component.types.includes("country")) {
-        return { ...acc, country: component }
+        return {
+          ...acc,
+          country: component.long_name,
+        }
       }
 
       return { ...acc }
@@ -215,12 +222,8 @@ export const normalizePlace = (place?: Place): Location => {
   )
 
   return {
-    city: components.city?.long_name,
-    state: components.state?.long_name,
-    stateCode: components.state?.short_name,
-    postalCode: components.postalCode?.long_name,
-    country: components.country?.long_name,
-    countryCode: components.country?.short_name,
+    ...components,
+    city: components.city,
   }
 }
 
