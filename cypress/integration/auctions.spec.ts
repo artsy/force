@@ -13,6 +13,6 @@ describe("Auctions", () => {
   it("/auction-partnerships", () => {
     visitWithStatusRetries("auction-partnerships")
     cy.get("h1").should("contain", "Artsy for Auctions")
-    cy.title().should("eq", "Auction Partnerships")
+    cy.title().should("eq", "Auction Partnerships | Artsy")
   })
 })

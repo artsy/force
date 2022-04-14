@@ -28,7 +28,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
   return (
     <>
       <MetaTags
-        title="Auction Partnerships"
+        title="Auction Partnerships | Artsy"
         description=""
         pathname="/auction-partnerships"
       />
