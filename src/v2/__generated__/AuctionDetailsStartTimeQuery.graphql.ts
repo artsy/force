@@ -9,7 +9,7 @@ export type AuctionDetailsStartTimeQueryVariables = {
 };
 export type AuctionDetailsStartTimeQueryResponse = {
     readonly sale: {
-        readonly cascadingEndTimeInterval: number | null;
+        readonly cascadingEndTimeIntervalMinutes: number | null;
         readonly formattedStartDateTime: string | null;
         readonly cascadingEndTime: {
             readonly formattedStartDateTime: string | null;
@@ -30,7 +30,7 @@ query AuctionDetailsStartTimeQuery(
 ) {
   sale(id: $id) {
     ...AuctionDetailsStartTime_sale
-    cascadingEndTimeInterval
+    cascadingEndTimeIntervalMinutes
     formattedStartDateTime
     cascadingEndTime {
       formattedStartDateTime
@@ -65,7 +65,7 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cascadingEndTimeInterval",
+  "name": "cascadingEndTimeIntervalMinutes",
   "storageKey": null
 },
 v3 = {
@@ -147,14 +147,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "daf72a4fc3156dbe112f4458737dfeec",
+    "cacheID": "921c748d1407535ba067514ecc89a7d6",
     "id": null,
     "metadata": {},
     "name": "AuctionDetailsStartTimeQuery",
     "operationKind": "query",
-    "text": "query AuctionDetailsStartTimeQuery(\n  $id: String!\n) {\n  sale(id: $id) {\n    ...AuctionDetailsStartTime_sale\n    cascadingEndTimeInterval\n    formattedStartDateTime\n    cascadingEndTime {\n      formattedStartDateTime\n    }\n    id\n  }\n}\n\nfragment AuctionDetailsStartTime_sale on Sale {\n  cascadingEndTime {\n    formattedStartDateTime\n  }\n}\n"
+    "text": "query AuctionDetailsStartTimeQuery(\n  $id: String!\n) {\n  sale(id: $id) {\n    ...AuctionDetailsStartTime_sale\n    cascadingEndTimeIntervalMinutes\n    formattedStartDateTime\n    cascadingEndTime {\n      formattedStartDateTime\n    }\n    id\n  }\n}\n\nfragment AuctionDetailsStartTime_sale on Sale {\n  cascadingEndTime {\n    formattedStartDateTime\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4dd302fd0a9c5b2f8cfd6ae265ced679';
+(node as any).hash = '531fbde1ac6c06cfbf4d7e24a4bff263';
 export default node;

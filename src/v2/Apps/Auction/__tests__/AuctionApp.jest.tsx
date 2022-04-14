@@ -104,7 +104,7 @@ describe("AuctionApp", () => {
     it("includes banner when cascading is enabled", () => {
       const wrapper = getWrapper({
         Sale: () => ({
-          cascadingEndTimeInterval: 60,
+          cascadingEndTimeIntervalMinutes: 1,
         }),
       })
       expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeTruthy()
@@ -113,7 +113,7 @@ describe("AuctionApp", () => {
     it("hides banner when cascading is disabled", () => {
       const wrapper = getWrapper({
         Sale: () => ({
-          cascadingEndTimeInterval: null,
+          cascadingEndTimeIntervalMinutes: null,
         }),
       })
       expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeFalsy()

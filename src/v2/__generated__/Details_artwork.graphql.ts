@@ -23,7 +23,7 @@ export type Details_artwork = {
     } | null;
     readonly sale: {
         readonly endAt: string | null;
-        readonly cascadingEndTimeInterval: number | null;
+        readonly cascadingEndTimeIntervalMinutes: number | null;
         readonly startAt: string | null;
         readonly is_auction: boolean | null;
         readonly is_closed: boolean | null;
@@ -186,7 +186,7 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "cascadingEndTimeInterval",
+          "name": "cascadingEndTimeIntervalMinutes",
           "storageKey": null
         },
         {
@@ -292,5 +292,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '66405cd293b6698167c417349c682f56';
+(node as any).hash = '6836e8c4a7af896f4ca044e22b46e117';
 export default node;

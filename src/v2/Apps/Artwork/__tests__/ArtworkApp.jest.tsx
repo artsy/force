@@ -57,7 +57,7 @@ describe("ArtworkApp", () => {
       const wrapper = getWrapper({
         Artwork: () => ({
           sale: {
-            cascadingEndTimeInterval: 60,
+            cascadingEndTimeIntervalMinutes: 1,
           },
         }),
       })
@@ -68,7 +68,7 @@ describe("ArtworkApp", () => {
       const wrapper = getWrapper({
         Artwork: () => ({
           sale: {
-            cascadingEndTimeInterval: null,
+            cascadingEndTimeIntervalMinutes: null,
           },
         }),
       })

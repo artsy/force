@@ -14,7 +14,7 @@ export type AuctionDetails_sale = {
     readonly description: string | null;
     readonly href: string | null;
     readonly isClosed: boolean | null;
-    readonly cascadingEndTimeInterval: number | null;
+    readonly cascadingEndTimeIntervalMinutes: number | null;
     readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale" | "AuctionInfoSidebar_sale" | "SaleDetailTimer_sale">;
     readonly " $refType": "AuctionDetails_sale";
 };
@@ -105,7 +105,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "cascadingEndTimeInterval",
+      "name": "cascadingEndTimeIntervalMinutes",
       "storageKey": null
     },
     {
@@ -127,5 +127,5 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '9c7ff082957e145b2853a02bb3322b12';
+(node as any).hash = 'cfcbdbc49d04d07475a7e3a52262bb03';
 export default node;

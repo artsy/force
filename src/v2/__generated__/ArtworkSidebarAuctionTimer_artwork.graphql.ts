@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionTimer_artwork = {
     readonly internalID: string;
     readonly sale: {
-        readonly cascadingEndTimeInterval: number | null;
+        readonly cascadingEndTimeIntervalMinutes: number | null;
         readonly isClosed: boolean | null;
         readonly startAt: string | null;
         readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
@@ -51,7 +51,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "cascadingEndTimeInterval",
+          "name": "cascadingEndTimeIntervalMinutes",
           "storageKey": null
         },
         {
@@ -103,5 +103,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ea53465d946b8344557431358c7067f7';
+(node as any).hash = 'ee979a38a92f846d74830f71c75c5e5b';
 export default node;

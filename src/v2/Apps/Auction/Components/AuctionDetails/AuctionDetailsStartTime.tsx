@@ -60,7 +60,7 @@ export const AuctionDetailsStartTimeQueryRenderer: FC<AuctionDetailsStartTimeQue
         query AuctionDetailsStartTimeQuery($id: String!) {
           sale(id: $id) {
             ...AuctionDetailsStartTime_sale
-            cascadingEndTimeInterval
+            cascadingEndTimeIntervalMinutes
             formattedStartDateTime
             cascadingEndTime {
               formattedStartDateTime

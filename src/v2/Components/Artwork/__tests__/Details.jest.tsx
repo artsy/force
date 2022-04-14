@@ -213,7 +213,7 @@ describe("Details", () => {
           },
           sale: {
             ...artworkInAuction?.sale,
-            cascadingEndTimeInterval: 120,
+            cascadingEndTimeIntervalMinutes: 2,
           },
         }
 
@@ -230,7 +230,7 @@ describe("Details", () => {
           },
           sale: {
             ...artworkInAuction?.sale,
-            cascadingEndTimeInterval: 120,
+            cascadingEndTimeIntervalMinutes: 2,
             endAt: "2022-03-12T12:33:37.000Z",
           },
         }
@@ -249,7 +249,7 @@ describe("Details", () => {
           },
           sale: {
             ...artworkInAuction?.sale,
-            cascadingEndTimeInterval: 120,
+            cascadingEndTimeIntervalMinutes: 2,
             endAt: "2022-03-18T15:33:37.000Z",
           },
         }
@@ -268,7 +268,7 @@ describe("Details", () => {
           },
           sale: {
             ...artworkInAuction?.sale,
-            cascadingEndTimeInterval: 120,
+            cascadingEndTimeIntervalMinutes: 2,
             endAt: "2030-03-12T12:33:37.000Z",
           },
         }
@@ -282,7 +282,7 @@ describe("Details", () => {
           ...artworkInAuction,
           sale: {
             ...artworkInAuction?.sale,
-            cascadingEndTimeInterval: null,
+            cascadingEndTimeIntervalMinutes: null,
           },
         }
 
@@ -298,7 +298,7 @@ describe("Details", () => {
           },
           sale: {
             ...artworkInAuction?.sale,
-            cascadingEndTimeInterval: 120,
+            cascadingEndTimeIntervalMinutes: 2,
             startAt: "2030-03-12T12:33:37.000Z",
           },
         }
@@ -393,7 +393,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     id: "opaque-sale-id",
     is_auction: true,
     is_closed: false,
-    cascadingEndTimeInterval: null,
+    cascadingEndTimeIntervalMinutes: null,
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
   },
