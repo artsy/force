@@ -7,13 +7,13 @@ import { createBankDebitSetupMutation } from "v2/__generated__/createBankDebitSe
 import { useSystemContext } from "v2/System"
 import { BankDebitForm } from "./BankDebitForm"
 
-const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"), {
-  betas: ["us_bank_account_beta_2"],
-})
-
-export const BankDebitProvider: FC = ({ children }) => {
+export const BankDebitProvider: FC = () => {
   const { relayEnvironment } = useSystemContext()
   const [clientSecret, setClientSecret] = useState("")
+
+  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"), {
+    betas: ["us_bank_account_beta_2"],
+  })
 
   useEffect(() => {
     // Create SetupIntent as soon as the page loads
