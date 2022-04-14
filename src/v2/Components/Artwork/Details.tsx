@@ -227,7 +227,7 @@ export const Details: React.FC<DetailsProps> = ({
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
-          {rest?.artwork?.sale?.cascadingEndTimeInterval &&
+          {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
             rest?.artwork?.sale_artwork && (
               <>
                 <Spacer mx={0.5} />
@@ -333,7 +333,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       }
       sale {
         endAt
-        cascadingEndTimeInterval
+        cascadingEndTimeIntervalMinutes
         startAt
         is_auction: isAuction
         is_closed: isClosed

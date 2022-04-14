@@ -4,11 +4,11 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { getENV } from "v2/Utils/getENV"
 
 interface CascadingEndTimesBannerProps {
-  cascadingEndTimeInterval: number
+  cascadingEndTimeIntervalMinutes: number
 }
 
 export const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
-  cascadingEndTimeInterval,
+  cascadingEndTimeIntervalMinutes,
 }) => {
   const helpArticleLink = getENV("CASCADING_AUCTION_HELP_ARTICLE_LINK")
 
@@ -19,7 +19,8 @@ export const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = (
       <AppContainer>
         <HorizontalPadding>
           <Banner dismissable pl={0} variant="brand">
-            {`Lots close at ${cascadingEndTimeInterval / 60}-minute intervals`}.
+            {`Lots close at ${cascadingEndTimeIntervalMinutes}-minute intervals`}
+            .
             {hasLink && (
               <>
                 &nbsp;

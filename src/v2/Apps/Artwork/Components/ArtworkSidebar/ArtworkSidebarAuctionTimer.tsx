@@ -20,7 +20,7 @@ export const ArtworkSidebarAuctionTimer: React.FC<ArtworkSidebarAuctionTimerProp
       {sale &&
         saleArtwork &&
         !lotIsClosed(sale, saleArtwork) &&
-        (sale?.cascadingEndTimeInterval ? (
+        (sale?.cascadingEndTimeIntervalMinutes ? (
           <>
             <Spacer mt={2} />
             <LotTimerFragmentContainer saleArtwork={saleArtwork} />
@@ -42,7 +42,7 @@ export const ArtworkSidebarAuctionTimerFragmentContainer = createFragmentContain
       fragment ArtworkSidebarAuctionTimer_artwork on Artwork {
         internalID
         sale {
-          cascadingEndTimeInterval
+          cascadingEndTimeIntervalMinutes
           isClosed
           ...AuctionTimer_sale
           startAt
