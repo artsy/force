@@ -411,6 +411,9 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     name: "Unique",
   },
   mediumType: {
-    name: "Print",
+    filterGene: {
+      id: "gene-id",
+      name: "Prints",
+    },
   },
 }
