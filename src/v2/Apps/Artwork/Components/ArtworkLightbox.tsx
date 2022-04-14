@@ -30,7 +30,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   )
   const { resized, fallback, placeholder, isDefault } = images[activeIndex]
   const image = hasGeometry ? resized : fallback
-  console.log(image)
 
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
