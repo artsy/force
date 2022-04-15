@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { graphql, fetchQuery } from "relay-runtime"
 import { useSystemContext } from "v2/System"
 import {
@@ -18,6 +18,7 @@ import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
 import { Metric } from "../ArtworkFilter/Utils/metrics"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { extractPills } from "./Utils/extractPills"
+import useDeepCompareEffect from "use-deep-compare-effect"
 
 type AttributeEntity = [string, string]
 
@@ -49,7 +50,6 @@ export const usePreviewPills = (
   const { relayEnvironment } = useSystemContext()
   const prevAttributes = usePrevious(attributes)
   const requestId = useRef(0)
-  const currentAttributesCount = getAttributesCount(attributes)
   const fetchPillsFromMetaphysics = useFeatureFlag(
     "force-fetch-alert-labels-from-metaphysics"
   )
@@ -101,8 +101,11 @@ export const usePreviewPills = (
     setPills(updatedPills)
   }
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (fetchPillsFromMetaphysics) {
+      console.log("[debug] attributes changed")
+
+      const currentAttributesCount = getAttributesCount(attributes)
       const prevAttributesCount = getAttributesCount(prevAttributes)
 
       requestId.current += 1
@@ -122,7 +125,7 @@ export const usePreviewPills = (
       removePillByAttributeEntity(removed[0])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAttributesCount, fetchPillsFromMetaphysics])
+  }, [attributes])
 
   const result = {
     pills,
