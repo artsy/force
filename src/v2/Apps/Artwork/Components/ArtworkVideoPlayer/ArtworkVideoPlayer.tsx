@@ -74,4 +74,8 @@ const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
   }
 )
 
-export { ArtworkVideoPlayerFragmentContainer }
+export {
+  ArtworkVideoPlayer,
+  ArtworkVideoPlayerFragmentContainer,
+  ArtworkVideoPlayerProps,
+}
