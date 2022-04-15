@@ -11,7 +11,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkImageBrowserSmall_artwork } from "v2/__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
-import { ArtworkVideoPlayerFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkDetails/ArtworkVideoPlayer"
+import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork
@@ -63,6 +63,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
             case "Video":
               return (
                 <ArtworkVideoPlayerFragmentContainer
+                  activeIndex={i}
                   artwork={artwork}
                   key={figure.type ?? i}
                   small

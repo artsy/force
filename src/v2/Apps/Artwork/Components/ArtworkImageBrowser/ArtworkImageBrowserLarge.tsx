@@ -13,8 +13,7 @@ import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
-import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkDetails/ArtworkVideoPlayer"
-
+import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
   index: number
@@ -30,7 +29,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 }) => {
   const { figures } = artwork
 
-  const activeImage = figures[index]
+  const activeFigure = figures[index]
 
   const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
 
@@ -42,8 +41,11 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
   return (
     <>
-      {activeImage.type === "Image" && isDeepZoomVisible && (
-        <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
+      {activeFigure.type === "Image" && isDeepZoomVisible && (
+        <DeepZoomFragmentContainer
+          image={activeFigure}
+          onClose={hideDeepZoom}
+        />
       )}
 
       <Box ref={containerRef as any} position="relative">
@@ -83,17 +85,20 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           </nav>
         )}
 
-        {activeImage.type === "Image" && (
+        {activeFigure.type === "Image" && (
           <ArtworkLightboxFragmentContainer
             my={2}
             artwork={artwork}
             activeIndex={index}
-            onClick={activeImage.isZoomable ? showDeepZoom : undefined}
+            onClick={activeFigure.isZoomable ? showDeepZoom : undefined}
           />
         )}
 
-        {activeImage.type === "Video" && (
-          <ArtworkVideoPlayerFragmentContainer artwork={artwork} />
+        {activeFigure.type === "Video" && (
+          <ArtworkVideoPlayerFragmentContainer
+            activeIndex={index}
+            artwork={artwork}
+          />
         )}
 
         {figures.length > 1 && (
@@ -116,8 +121,8 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
 const NextPrevious = styled(Clickable)`
   position: absolute;
-  top: 0;
-  height: 100%;
+  top: 20%;
+  height: 60%;
   display: flex;
   align-items: center;
   justify-content: center;

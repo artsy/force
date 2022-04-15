@@ -4,11 +4,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkVideoPlayer_artwork } from "v2/__generated__/ArtworkVideoPlayer_artwork.graphql"
 
 interface ArtworkVideoPlayerProps {
+  activeIndex: number
   artwork: ArtworkVideoPlayer_artwork
   small?: boolean
 }
 
 const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
+  activeIndex,
   artwork: { figures },
   small,
 }) => {
@@ -16,9 +18,9 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
     return null
   }
 
-  const video = figures.find(figure => figure.type === "Video")
+  const activeVideo = figures[activeIndex]
 
-  if (!video || video.type === "%other") {
+  if (!activeVideo || activeVideo.type === "%other") {
     return null
   }
 
@@ -37,12 +39,12 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
         bg="black10"
         mx={[0, 2]}
         // @ts-ignore
-        maxWidth={video.width ?? "100%"}
-        aspectWidth={video.width}
-        aspectHeight={video.height}
+        maxWidth={"100%"}
+        aspectWidth={activeVideo.width}
+        aspectHeight={activeVideo.height}
       >
         <iframe
-          src={video.url}
+          src={activeVideo.url}
           frameBorder="0"
           allow="fullscreen; picture-in-picture"
           allowFullScreen
