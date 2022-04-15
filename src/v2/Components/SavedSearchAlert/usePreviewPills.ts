@@ -68,6 +68,8 @@ export const usePreviewPills = (
     const currentRequestId = requestId.current
     let response: usePreviewPillsQueryResponse | undefined
 
+    setIsFetching(true)
+
     try {
       response = await fetchQuery<usePreviewPillsQuery>(
         relayEnvironment,
