@@ -24,10 +24,10 @@ interface RenderContentProps {
 
 interface SavedSearchPreviewPillsQueryRendererProps {
   attributes: SearchCriteriaAttributes
-  aggregations: Aggregations | undefined
   renderContent: (props: RenderContentProps) => JSX.Element
 
   // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
+  aggregations: Aggregations | undefined
   savedSearchEntity: SavedSearchEntity
   metric?: Metric
 }
