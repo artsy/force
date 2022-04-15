@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { graphql, fetchQuery } from "relay-runtime"
 import { useSystemContext } from "v2/System"
 import {
@@ -8,6 +8,7 @@ import {
 } from "./types"
 import {
   usePreviewPillsQuery,
+  usePreviewPillsQueryResponse,
   PreviewSavedSearchAttributes,
 } from "v2/__generated__/usePreviewPillsQuery.graphql"
 import { convertLabelsToPills, LabelEntity } from "./Utils/convertLabelsToPills"
@@ -47,6 +48,7 @@ export const usePreviewPills = (
   const [isFetching, setIsFetching] = useState(false)
   const { relayEnvironment } = useSystemContext()
   const prevAttributes = usePrevious(attributes)
+  const requestId = useRef(0)
   const currentAttributesCount = getAttributesCount(attributes)
   const fetchPillsFromMetaphysics = useFeatureFlag(
     "force-fetch-alert-labels-from-metaphysics"
@@ -57,23 +59,30 @@ export const usePreviewPills = (
       return
     }
 
-    try {
-      setIsFetching(true)
+    const currentRequestId = requestId.current
+    let response: usePreviewPillsQueryResponse | undefined
 
-      const { previewSavedSearch } = await fetchQuery<usePreviewPillsQuery>(
+    try {
+      response = await fetchQuery<usePreviewPillsQuery>(
         relayEnvironment,
         PREVIEW_PILLS_QUERY,
         {
           attributes: attributes as PreviewSavedSearchAttributes,
         }
       )
-      const labels = (previewSavedSearch?.labels ?? []) as LabelEntity[]
-      const convertedPills = convertLabelsToPills(labels)
-
-      setPills(convertedPills)
     } catch (error) {
       console.log("[debug] error", error)
-    } finally {
+    }
+
+    if (currentRequestId === requestId.current) {
+      if (response) {
+        const { previewSavedSearch } = response
+        const labels = (previewSavedSearch?.labels ?? []) as LabelEntity[]
+        const convertedPills = convertLabelsToPills(labels)
+
+        setPills(convertedPills)
+      }
+
       setIsFetching(false)
     }
   }
@@ -95,6 +104,8 @@ export const usePreviewPills = (
   useEffect(() => {
     if (fetchPillsFromMetaphysics) {
       const prevAttributesCount = getAttributesCount(prevAttributes)
+
+      requestId.current += 1
 
       // If there are more criteria, then a new filter has been added
       if (currentAttributesCount >= prevAttributesCount) {
