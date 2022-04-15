@@ -38,7 +38,7 @@ describe("lifecycle", function () {
       "opts",
       (this.opts = {
         loginPagePath: "/login",
-        afterSignupPagePath: "/personalize",
+        afterSignupPagePath: "/",
         APP_URL: "https://www.artsy.net",
         ARTSY_URL: "https://api.artsy.net",
       })
@@ -147,7 +147,7 @@ describe("lifecycle", function () {
   })
 
   describe("#afterSocialAuth", function () {
-    it("doesnt redirect to personalize if skip-onboarding is set", function () {
+    it("doesnt redirect to / if skip-onboarding is set", function () {
       req.artsyPassportSignedUp = true
       req.session.skipOnboarding = true
       passport.authenticate.returns((req, res, next) => next())
@@ -186,12 +186,12 @@ describe("lifecycle", function () {
   describe("#ensureLoggedInOnAfterSignupPage", function () {
     it("redirects to the login page, and back, without a user", function () {
       lifecycle.ensureLoggedInOnAfterSignupPage(req, res, this.next)
-      res.redirect.args[0][0].should.equal("/login?redirect-to=/personalize")
+      res.redirect.args[0][0].should.equal("/login?redirect-to=/")
     })
   })
 
   describe("#ssoAndRedirectBack", function () {
-    it("redirects signups to personalize", function () {
+    it("redirects signups to /", function () {
       req.user = {
         get() {
           return "token"
@@ -200,21 +200,7 @@ describe("lifecycle", function () {
       req.artsyPassportSignedUp = true
       lifecycle.ssoAndRedirectBack(req, res, this.next)
       request.end.args[0][0](null, { body: { trust_token: "foo-trust-token" } })
-      res.redirect.args[0][0].should.containEql("/personalize")
-    })
-
-    it("doesnt redirect to personalize if skipping onboarding", function () {
-      req.artsyPassportSignedUp = true
-      req.session.skipOnboarding = true
-      req.user = {
-        get() {
-          return "token"
-        },
-      }
-      req.artsyPassportSignedUp = true
-      lifecycle.ssoAndRedirectBack(req, res, this.next)
-      request.end.args[0][0](null, { body: { trust_token: "foo-trust-token" } })
-      res.redirect.args[0][0].should.not.containEql("/personalize")
+      res.redirect.args[0][0].should.containEql("/")
     })
 
     it("passes on for xhrs", function () {
