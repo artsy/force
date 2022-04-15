@@ -14,8 +14,6 @@ import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
 import { SavedSearchPreviewPillsQueryRenderer } from "./SavedSearchPreviewPills"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
-import { extractPills } from "../Utils/extractPills"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -26,9 +24,6 @@ interface SavedSearchAlertArtworkGridFilterPillsProps {
 export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertArtworkGridFilterPillsProps> = props => {
   const { savedSearchEntity } = props
   const { filters, aggregations, setFilter } = useArtworkFilterContext()
-  const shouldFetchLabelsFromMetaphysics = useFeatureFlag(
-    "force-fetch-alert-labels-from-metaphysics"
-  )
   const criteria = getSearchCriteriaFromFilters(
     savedSearchEntity,
     filters ?? {}
@@ -68,52 +63,28 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     }
   }
 
-  if (!shouldFetchLabelsFromMetaphysics) {
-    const pills = extractPills({
-      criteria,
-      aggregations,
-      entity: savedSearchEntity,
-      metric,
-    })
-
-    return (
-      <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-        <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
-        <SavedSearchCreateAlertButton
-          entity={savedSearchEntity}
-          criteria={criteria}
-          metric={metric}
-          aggregations={aggregations}
-          getAuthModalOptions={getAuthModalOptions}
-          buttonProps={{
-            ml: PILL_HORIZONTAL_MARGIN_SIZE,
-          }}
-        />
-      </Flex>
-    )
-  }
-
   return (
-    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-      <SavedSearchPreviewPillsQueryRenderer
-        attributes={criteria}
-        renderContent={({ pills, isFetching }) => (
-          <>
-            <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
-            <SavedSearchCreateAlertButton
-              entity={savedSearchEntity}
-              criteria={criteria}
-              metric={metric}
-              aggregations={aggregations}
-              getAuthModalOptions={getAuthModalOptions}
-              buttonProps={{
-                ml: PILL_HORIZONTAL_MARGIN_SIZE,
-                loading: isFetching,
-              }}
-            />
-          </>
-        )}
-      />
-    </Flex>
+    <SavedSearchPreviewPillsQueryRenderer
+      attributes={criteria}
+      aggregations={aggregations}
+      savedSearchEntity={savedSearchEntity}
+      metric={metric}
+      renderContent={({ pills, isFetching }) => (
+        <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
+          <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
+          <SavedSearchCreateAlertButton
+            entity={savedSearchEntity}
+            criteria={criteria}
+            metric={metric}
+            aggregations={aggregations}
+            getAuthModalOptions={getAuthModalOptions}
+            buttonProps={{
+              ml: PILL_HORIZONTAL_MARGIN_SIZE,
+              loading: isFetching,
+            }}
+          />
+        </Flex>
+      )}
+    />
   )
 }

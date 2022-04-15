@@ -1,13 +1,21 @@
 import React, { FC, useEffect, useState } from "react"
 import { graphql, createFragmentContainer } from "react-relay"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { Metric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { SavedSearchPreviewPillsQuery } from "v2/__generated__/SavedSearchPreviewPillsQuery.graphql"
 import { SavedSearchPreviewPills_previewSavedSearch } from "v2/__generated__/SavedSearchPreviewPills_previewSavedSearch.graphql"
-import { FilterPill, SearchCriteriaAttributes } from "../types"
+import {
+  FilterPill,
+  SavedSearchEntity,
+  SearchCriteriaAttributes,
+} from "../types"
 import {
   convertLabelsToPills,
   LabelEntity,
 } from "../Utils/convertLabelsToPills"
+import { extractPills } from "../Utils/extractPills"
 
 interface RenderContentProps {
   pills: FilterPill[]
@@ -16,6 +24,9 @@ interface RenderContentProps {
 
 interface SavedSearchPreviewPillsQueryRendererProps {
   attributes: SearchCriteriaAttributes
+  aggregations: Aggregations | undefined
+  savedSearchEntity: SavedSearchEntity
+  metric: Metric
   renderContent: (props: RenderContentProps) => JSX.Element
 }
 
@@ -60,8 +71,26 @@ const SavedSearchPreviewPillsFragmentContainer = createFragmentContainer(
 
 export const SavedSearchPreviewPillsQueryRenderer: FC<SavedSearchPreviewPillsQueryRendererProps> = ({
   attributes,
+  aggregations,
+  savedSearchEntity,
+  metric,
   renderContent,
 }) => {
+  const shouldFetchLabelsFromMetaphysics = useFeatureFlag(
+    "force-fetch-alert-labels-from-metaphysics"
+  )
+
+  if (!shouldFetchLabelsFromMetaphysics) {
+    const pills = extractPills({
+      criteria: attributes,
+      aggregations,
+      entity: savedSearchEntity,
+      metric,
+    })
+
+    return renderContent({ pills, isFetching: false })
+  }
+
   return (
     <SystemQueryRenderer<SavedSearchPreviewPillsQuery>
       query={SAVED_SEARCH_PREVIEW_PILLS_QUERY}
