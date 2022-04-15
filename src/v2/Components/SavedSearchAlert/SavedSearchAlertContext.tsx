@@ -21,6 +21,10 @@ interface SavedSearchAlertContextProps {
     value: string | number | boolean
   ) => void
   removePill: (pill: FilterPill) => void
+
+  // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
+  aggregations?: Aggregations
+  metric?: Metric
 }
 
 interface SavedSearchAlertContextProviderProps {
@@ -106,6 +110,10 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     isCriteriaChanged,
     removeCriteriaValue,
     removePill,
+
+    // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
+    aggregations,
+    metric,
   }
 
   return (

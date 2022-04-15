@@ -25,9 +25,11 @@ interface RenderContentProps {
 interface SavedSearchPreviewPillsQueryRendererProps {
   attributes: SearchCriteriaAttributes
   aggregations: Aggregations | undefined
-  savedSearchEntity: SavedSearchEntity
-  metric: Metric
   renderContent: (props: RenderContentProps) => JSX.Element
+
+  // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
+  savedSearchEntity: SavedSearchEntity
+  metric?: Metric
 }
 
 interface SavedSearchPreviewPillsProps {
@@ -80,6 +82,7 @@ export const SavedSearchPreviewPillsQueryRenderer: FC<SavedSearchPreviewPillsQue
     "force-fetch-alert-labels-from-metaphysics"
   )
 
+  // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
   if (!shouldFetchLabelsFromMetaphysics) {
     const pills = extractPills({
       criteria: attributes,

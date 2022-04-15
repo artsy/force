@@ -29,6 +29,7 @@ import {
 } from "./types"
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "../ArtworkFilter/Utils/metrics"
+import { SavedSearchPreviewPillsQueryRenderer } from "./Components/SavedSearchPreviewPills"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -56,7 +57,12 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   onComplete,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
+  const {
+    aggregations,
+    criteria,
+    metric,
+    removeCriteriaValue,
+  } = useSavedSearchAlertContext()
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -94,84 +100,92 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   }
 
   return (
-    <Formik<SavedSearchAleftFormValues>
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-    >
-      {({
-        values,
-        errors,
-        isSubmitting,
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-      }) => {
-        const isSaveAlertButtonDisabled = !values.email && !values.push
+    <SavedSearchPreviewPillsQueryRenderer
+      attributes={criteria}
+      aggregations={aggregations}
+      metric={metric}
+      savedSearchEntity={entity}
+      renderContent={({ pills, isFetching }) => (
+        <Formik<SavedSearchAleftFormValues>
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
+          {({
+            values,
+            errors,
+            isSubmitting,
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            setFieldValue,
+          }) => {
+            const isSaveAlertButtonDisabled = !values.email && !values.push
 
-        return (
-          <ModalDialog
-            onClose={onClose}
-            title="Create Alert"
-            data-testid="CreateAlertModal"
-            footer={
-              <Button
-                disabled={isSaveAlertButtonDisabled}
-                loading={isSubmitting}
-                onClick={() => handleSubmit()}
-                width="100%"
+            return (
+              <ModalDialog
+                onClose={onClose}
+                title="Create Alert"
+                data-testid="CreateAlertModal"
+                footer={
+                  <Button
+                    disabled={isSaveAlertButtonDisabled}
+                    loading={isSubmitting || isFetching}
+                    onClick={() => handleSubmit()}
+                    width="100%"
+                  >
+                    Save Alert
+                  </Button>
+                }
               >
-                Save Alert
-              </Button>
-            }
-          >
-            <Join separator={<Spacer mt={4} />}>
-              <Input
-                title="Alert Name"
-                name="name"
-                placeholder={entity.placeholder}
-                value={values.name}
-                onChange={handleChange("name")}
-                onBlur={handleBlur("name")}
-                error={errors.name}
-                maxLength={75}
-              />
+                <Join separator={<Spacer mt={4} />}>
+                  <Input
+                    title="Alert Name"
+                    name="name"
+                    placeholder={entity.placeholder}
+                    value={values.name}
+                    onChange={handleChange("name")}
+                    onBlur={handleBlur("name")}
+                    error={errors.name}
+                    maxLength={75}
+                  />
 
-              <Box>
-                <Text variant="xs" textTransform="uppercase">
-                  Filters
-                </Text>
-                <Spacer mt={2} />
-                <Flex flexWrap="wrap" mx={-0.5}>
-                  <SavedSearchAlertPills
-                    items={pills}
-                    onDeletePress={handleRemovePillPress}
-                  />
-                </Flex>
-              </Box>
+                  <Box>
+                    <Text variant="xs" textTransform="uppercase">
+                      Filters
+                    </Text>
+                    <Spacer mt={2} />
+                    <Flex flexWrap="wrap" mx={-0.5}>
+                      <SavedSearchAlertPills
+                        items={pills}
+                        onDeletePress={handleRemovePillPress}
+                      />
+                    </Flex>
+                  </Box>
 
-              <Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text variant="md">Email Alerts</Text>
-                  <Checkbox
-                    onSelect={selected => setFieldValue("email", selected)}
-                    selected={values.email}
-                  />
-                </Box>
-                <Spacer mt={4} />
-                <Box display="flex" justifyContent="space-between">
-                  <Text variant="md">Mobile Alerts</Text>
-                  <Checkbox
-                    onSelect={selected => setFieldValue("push", selected)}
-                    selected={values.push}
-                  />
-                </Box>
-              </Box>
-            </Join>
-          </ModalDialog>
-        )
-      }}
-    </Formik>
+                  <Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Text variant="md">Email Alerts</Text>
+                      <Checkbox
+                        onSelect={selected => setFieldValue("email", selected)}
+                        selected={values.email}
+                      />
+                    </Box>
+                    <Spacer mt={4} />
+                    <Box display="flex" justifyContent="space-between">
+                      <Text variant="md">Mobile Alerts</Text>
+                      <Checkbox
+                        onSelect={selected => setFieldValue("push", selected)}
+                        selected={values.push}
+                      />
+                    </Box>
+                  </Box>
+                </Join>
+              </ModalDialog>
+            )
+          }}
+        </Formik>
+      )}
+    />
   )
 }
 
