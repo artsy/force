@@ -6,7 +6,6 @@ import {
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { extractPills } from "../Utils/extractPills"
 import { getSearchCriteriaFromFilters } from "../Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
 import { FilterPill, SavedSearchEntity } from "../types"
@@ -14,6 +13,7 @@ import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
 import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
+import { usePreviewPills } from "../usePreviewPills"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -29,8 +29,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     filters ?? {}
   )
   const metric = filters?.metric ?? DEFAULT_METRIC
-  const pills = extractPills({
-    criteria,
+  const { pills, isFetching } = usePreviewPills(criteria, {
     aggregations,
     entity: savedSearchEntity,
     metric,
@@ -80,6 +79,7 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
         getAuthModalOptions={getAuthModalOptions}
         buttonProps={{
           ml: PILL_HORIZONTAL_MARGIN_SIZE,
+          loading: isFetching,
         }}
       />
     </Flex>
