@@ -29,6 +29,7 @@ import {
 } from "./types"
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "../ArtworkFilter/Utils/metrics"
+import { usePreviewPills } from "./usePreviewPills"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -56,7 +57,17 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   onComplete,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
+  const {
+    criteria,
+    aggregations,
+    metric,
+    removeCriteriaValue,
+  } = useSavedSearchAlertContext()
+  const { pills, isFetching } = usePreviewPills(criteria, {
+    aggregations,
+    metric,
+    entity,
+  })
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -117,7 +128,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
             footer={
               <Button
                 disabled={isSaveAlertButtonDisabled}
-                loading={isSubmitting}
+                loading={isSubmitting || isFetching}
                 onClick={() => handleSubmit()}
                 width="100%"
               >
