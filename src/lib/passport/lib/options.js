@@ -11,7 +11,7 @@ module.exports = {
   loginPagePath: "/log_in",
   signupPagePath: "/sign_up",
   settingsPagePath: "/settings",
-  afterSignupPagePath: "/personalize",
+  afterSignupPagePath: "/",
 
   // Misc
   logoutPath: "/users/sign_out",

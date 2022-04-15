@@ -41,7 +41,6 @@ app.use(require("./apps/art_keeps_going/server").app)
 app.use(require("./apps/eoy_2016"))
 app.use(require("./apps/partnerships"))
 app.use(require("./apps/jobs"))
-app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 
 app.use(require("./apps/static"))

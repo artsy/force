@@ -85,6 +85,8 @@ const REDIRECTS = {
   "/life-at-artsy": "/channel/life-at-artsy",
   "/artsy-education": "/channel/artsy-education",
   "/buying-with-artsy": "/channel/buying-with-artsy",
+  "/personalize": "/",
+  "/personalize/*": "/",
 }
 
 const router = express.Router()
