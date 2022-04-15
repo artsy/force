@@ -35,6 +35,8 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
     metric,
   })
 
+  console.log("[debug] 💊 pills", pills)
+
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {
       return

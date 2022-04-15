@@ -81,7 +81,7 @@ export const usePreviewPills = (
     }
 
     if (currentRequestId === requestId.current) {
-      console.log("[debug] ✅ request", currentRequestId)
+      console.log("[debug] ✅ request", currentRequestId, attributes)
 
       if (response) {
         const { previewSavedSearch } = response
@@ -97,7 +97,7 @@ export const usePreviewPills = (
 
       setIsFetching(false)
     } else {
-      console.log("[debug] ❌ request", currentRequestId)
+      console.log("[debug] ❌ request", currentRequestId, attributes)
     }
   }
 
