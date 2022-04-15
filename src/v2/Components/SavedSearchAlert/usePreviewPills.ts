@@ -170,8 +170,11 @@ export const getPillsByAttributes = (
   const attributeEntities = convertAttributes(attributes)
 
   return pills.filter(pill => {
-    return attributeEntities.find(
-      entity => entity.field === pill.field && entity.value === pill.value
-    )
+    return attributeEntities.find(entity => {
+      const isEqualFields = entity.field === pill.field
+      const isEqualValues = String(entity.value) === String(pill.value)
+
+      return isEqualFields && isEqualValues
+    })
   })
 }
