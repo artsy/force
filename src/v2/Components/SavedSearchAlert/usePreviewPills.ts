@@ -18,7 +18,7 @@ import { Metric } from "../ArtworkFilter/Utils/metrics"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { extractPills } from "./Utils/extractPills"
 
-type Entity = [string, string]
+type AttributeEntity = [string, string]
 
 // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
 interface Options {
@@ -48,7 +48,7 @@ export const usePreviewPills = (
   const { relayEnvironment } = useSystemContext()
   const prevAttributes = usePrevious(attributes)
   const currentAttributesCount = getAttributesCount(attributes)
-  const fetchLabelsFromMetaphysics = useFeatureFlag(
+  const fetchPillsFromMetaphysics = useFeatureFlag(
     "force-fetch-alert-labels-from-metaphysics"
   )
 
@@ -78,7 +78,7 @@ export const usePreviewPills = (
     }
   }
 
-  const removePillByEntity = (entity: Entity) => {
+  const removePillByAttributeEntity = (entity: AttributeEntity) => {
     const [field, value] = entity
 
     const updatedPills = pills.filter(pill => {
@@ -93,7 +93,7 @@ export const usePreviewPills = (
   }
 
   useEffect(() => {
-    if (fetchLabelsFromMetaphysics) {
+    if (fetchPillsFromMetaphysics) {
       const prevAttributesCount = getAttributesCount(prevAttributes)
 
       // If there are more criteria, then a new filter has been added
@@ -104,25 +104,21 @@ export const usePreviewPills = (
 
       // If there are fewer criteria, then some filter has been removed
       // and we have to remove corresponding pill
-      const prevEntities = convertAttributesToEntities(prevAttributes)
-      const currentEntities = convertAttributesToEntities(attributes)
-      const removedEntities = differenceWith(
-        prevEntities,
-        currentEntities,
-        isEqual
-      )
+      const prev = convertAttributes(prevAttributes)
+      const current = convertAttributes(attributes)
+      const removed = differenceWith(prev, current, isEqual)
 
-      removePillByEntity(removedEntities[0])
+      removePillByAttributeEntity(removed[0])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentAttributesCount, fetchLabelsFromMetaphysics])
+  }, [currentAttributesCount, fetchPillsFromMetaphysics])
 
   const result = {
     pills,
     isFetching,
   }
 
-  if (!fetchLabelsFromMetaphysics) {
+  if (!fetchPillsFromMetaphysics) {
     result.pills = extractPills({
       criteria: attributes,
       aggregations: options.aggregations,
@@ -144,7 +140,7 @@ const getAttributesCount = (attributes: SearchCriteriaAttributes) => {
   }, 0)
 }
 
-const convertAttributesToEntities = (attributes: SearchCriteriaAttributes) => {
+const convertAttributes = (attributes: SearchCriteriaAttributes) => {
   return Object.entries(attributes).reduce((acc, entity) => {
     const [key, value] = entity
 
@@ -155,5 +151,5 @@ const convertAttributesToEntities = (attributes: SearchCriteriaAttributes) => {
     }
 
     return [...acc, [key, value]]
-  }, []) as Entity[]
+  }, []) as AttributeEntity[]
 }
