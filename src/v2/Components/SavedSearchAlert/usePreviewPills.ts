@@ -13,14 +13,16 @@ import {
 } from "v2/__generated__/usePreviewPillsQuery.graphql"
 import { convertLabelsToPills, LabelEntity } from "./Utils/convertLabelsToPills"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
-import { differenceWith, isEqual } from "lodash"
 import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
 import { Metric } from "../ArtworkFilter/Utils/metrics"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { extractPills } from "./Utils/extractPills"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
-type AttributeEntity = [string, string]
+type AttributeEntity = {
+  field: string
+  value: any
+}
 
 // TODO: Remove when "force-fetch-alert-labels-from-metaphysics" feature flag is released
 interface Options {
@@ -50,6 +52,7 @@ export const usePreviewPills = (
   const { relayEnvironment } = useSystemContext()
   const prevAttributes = usePrevious(attributes)
   const requestId = useRef(0)
+  const attributesRef = useRef(attributes)
   const fetchPillsFromMetaphysics = useFeatureFlag(
     "force-fetch-alert-labels-from-metaphysics"
   )
@@ -58,6 +61,9 @@ export const usePreviewPills = (
     if (!relayEnvironment) {
       return
     }
+
+    console.log("[debug] 🚀 fetch pills")
+    requestId.current += 1
 
     const currentRequestId = requestId.current
     let response: usePreviewPillsQueryResponse | undefined
@@ -75,40 +81,32 @@ export const usePreviewPills = (
     }
 
     if (currentRequestId === requestId.current) {
+      console.log("[debug] ✅ request", currentRequestId)
+
       if (response) {
         const { previewSavedSearch } = response
         const labels = (previewSavedSearch?.labels ?? []) as LabelEntity[]
         const convertedPills = convertLabelsToPills(labels)
+        const pillsByAttributes = getPillsByAttributes(
+          convertedPills,
+          attributesRef.current
+        )
 
-        setPills(convertedPills)
+        setPills(pillsByAttributes)
       }
 
       setIsFetching(false)
+    } else {
+      console.log("[debug] ❌ request", currentRequestId)
     }
-  }
-
-  const removePillByAttributeEntity = (entity: AttributeEntity) => {
-    const [field, value] = entity
-
-    const updatedPills = pills.filter(pill => {
-      if (field === pill.field && value === pill.value) {
-        return false
-      }
-
-      return true
-    })
-
-    setPills(updatedPills)
   }
 
   useDeepCompareEffect(() => {
     if (fetchPillsFromMetaphysics) {
-      console.log("[debug] attributes changed")
-
-      const currentAttributesCount = getAttributesCount(attributes)
       const prevAttributesCount = getAttributesCount(prevAttributes)
+      const currentAttributesCount = getAttributesCount(attributes)
 
-      requestId.current += 1
+      attributesRef.current = attributes
 
       // If there are more criteria, then a new filter has been added
       if (currentAttributesCount >= prevAttributesCount) {
@@ -118,11 +116,8 @@ export const usePreviewPills = (
 
       // If there are fewer criteria, then some filter has been removed
       // and we have to remove corresponding pill
-      const prev = convertAttributes(prevAttributes)
-      const current = convertAttributes(attributes)
-      const removed = differenceWith(prev, current, isEqual)
-
-      removePillByAttributeEntity(removed[0])
+      const pillsByAttributes = getPillsByAttributes(pills, attributes)
+      setPills(pillsByAttributes)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attributes])
@@ -144,7 +139,7 @@ export const usePreviewPills = (
   return result
 }
 
-const getAttributesCount = (attributes: SearchCriteriaAttributes) => {
+export const getAttributesCount = (attributes: SearchCriteriaAttributes) => {
   return Object.values(attributes).reduce((count, value) => {
     if (Array.isArray(value)) {
       return count + value.length
@@ -154,16 +149,29 @@ const getAttributesCount = (attributes: SearchCriteriaAttributes) => {
   }, 0)
 }
 
-const convertAttributes = (attributes: SearchCriteriaAttributes) => {
+export const convertAttributes = (attributes: SearchCriteriaAttributes) => {
   return Object.entries(attributes).reduce((acc, entity) => {
-    const [key, value] = entity
+    const [field, value] = entity
 
     if (Array.isArray(value)) {
-      const convertedItems = value.map(v => [key, v])
+      const convertedEntities = value.map(v => ({ field, value: v }))
 
-      return [...acc, ...convertedItems]
+      return [...acc, ...convertedEntities]
     }
 
-    return [...acc, [key, value]]
+    return [...acc, { field, value }]
   }, []) as AttributeEntity[]
+}
+
+export const getPillsByAttributes = (
+  pills: FilterPill[],
+  attributes: SearchCriteriaAttributes
+) => {
+  const attributeEntities = convertAttributes(attributes)
+
+  return pills.filter(pill => {
+    return attributeEntities.find(
+      entity => entity.field === pill.field && entity.value === pill.value
+    )
+  })
 }
