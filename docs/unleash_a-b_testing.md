@@ -107,6 +107,12 @@ The number of segment events sent for an experiment is [throttled](https://githu
 
 In [segment live debugger](https://app.segment.com/artsy-engineering/sources/force-staging/debugger) you can see a live stream of all the events on staging. You can use the searchbar to filter out `Experiment Viewed`, click on the one that is yours and review that everything is in order.
 
+### Terminating an experiment
+
+- turn feature flag off in both staging/production via the [dashboard](https://unleash.artsy.net/projects/default)
+- open a clean up PR
+- once the PR is live in prod, go to unleash [dashboard](https://unleash.artsy.net/projects/default/) and archive the `feature-flag`
+
 ### Useful links
 
 [Setup an ab experiment in 3 simple steps](https://www.getunleash.io/blog/a-b-n-experiments-in-3-simple-steps)

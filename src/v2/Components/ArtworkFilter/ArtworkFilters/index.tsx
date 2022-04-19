@@ -12,12 +12,6 @@ import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import {
-  useFeatureVariant,
-  useTrackFeatureVariant,
-} from "v2/System/useFeatureFlag"
-import { useEffect } from "react"
-import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtworkFiltersProps {
   user?: User
@@ -27,26 +21,6 @@ interface ArtworkFiltersProps {
 // Some filters will be rendered only if there is the necessary data in aggregations (for example, ArtistsFilter)
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
-  const { match } = useRouter()
-
-  const isArtistPage = match.location.pathname.includes("/artist/")
-
-  const variant = useFeatureVariant("filters-expanded-experiment")
-
-  const { trackFeatureVariant } = useTrackFeatureVariant({
-    experimentName: "filters-expanded-experiment",
-    variantName: variant?.name!,
-  })
-
-  useEffect(() => {
-    if (isArtistPage) {
-      trackFeatureVariant()
-    }
-  }, [isArtistPage, trackFeatureVariant])
-
-  const isExpanded =
-    isArtistPage && variant?.name === "experiment" && !!variant?.enabled
-  const expandedProp = { ...(isExpanded && { expanded: isExpanded }) }
 
   return (
     <>
@@ -56,12 +30,12 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
-      <MaterialsFilter {...expandedProp} />
-      <ArtistNationalityFilter {...expandedProp} />
-      <ArtworkLocationFilter {...expandedProp} />
-      <TimePeriodFilter {...expandedProp} />
-      <ColorFilter {...expandedProp} />
-      <PartnersFilter {...expandedProp} />
+      <MaterialsFilter />
+      <ArtistNationalityFilter />
+      <ArtworkLocationFilter />
+      <TimePeriodFilter />
+      <ColorFilter />
+      <PartnersFilter />
     </>
   )
 }
