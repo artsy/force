@@ -32,10 +32,10 @@
   dependencies:
     core-js "3"
 
-"@artsy/detect-responsive-traits@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
-  integrity sha512-axgW5YuqSpPzHb27yo2jmPHz/N9eN2hh2E+Mub5BKuu/jHZI+iDTdw0OZ3I+z7Z9WKBh+FPVx4gpza5w7slJNA==
+"@artsy/detect-responsive-traits@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.1.0.tgz#f7ae5041893b859ff9f6bc305fd318d2f5132745"
+  integrity sha512-cdHMDcGpYuItSBvelAWEWxWipVGw/8Yzk7YoMvO+qWjZsHJtIF2hACtL5QFQxcf9K3j/eTXNSFlPmfZAe9Byew==
 
 "@artsy/eigen-web-association@1.2.2":
   version "1.2.2"
@@ -118,13 +118,13 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@29.7.0":
-  version "29.7.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-29.7.0.tgz#c42e5d6fcade3bdc807e0117f524d354eb85c3a4"
-  integrity sha512-i8Lwog+daI6fr8tBOvRrYdfZJiVj9mNr+TCgDjLyuxB9cqhFwuMJ0d69JaaEyxlkddo2V8TW4ldr7NzhaC5TRQ==
+"@artsy/reaction@29.8.0":
+  version "29.8.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-29.8.0.tgz#c3087f8d27efa4a8ffc1c86b34e738019b468105"
+  integrity sha512-XXwK7OibtrMnJISGBjIP7O1mAM0ZEZYh3jIhf4ykINGapAV27BUWioeXw8DwxZdEqlwe0tGuLLojhnMqXmOF4w==
   dependencies:
     "@artsy/cohesion" "1.60.0"
-    "@artsy/detect-responsive-traits" "^0.0.5"
+    "@artsy/detect-responsive-traits" "^0.1.0"
     "@artsy/fresnel" "^1.0.13"
     "@artsy/react-html-parser" "^3.0.2"
     "@loadable/component" "^5.12.0"
@@ -159,7 +159,7 @@
     react-waypoint "^7.3.3"
     relay-mock-network-layer "^2.0.0"
     relay-runtime "9.1.0"
-    serialize-javascript "^2.1.1"
+    serialize-javascript "^3.1.0"
     sharify "^0.1.6"
     styled-system "^5.1.5"
     superagent "^3.6.3"
@@ -18940,10 +18940,17 @@ serialize-javascript@5.0.1, serialize-javascript@^5.0.1:
   dependencies:
     randombytes "^2.1.0"
 
-serialize-javascript@^2.1.1, serialize-javascript@^2.1.2:
+serialize-javascript@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-2.1.2.tgz#ecec53b0e0317bdc95ef76ab7074b7384785fa61"
   integrity sha512-rs9OggEUF0V4jUSecXazOYsLfu7OGK2qIn3c7IPBiffz32XniEp/TX9Xmc9LQfK2nQ2QKHvZ2oygKUGU0lG4jQ==
+
+serialize-javascript@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-3.1.0.tgz#8bf3a9170712664ef2561b44b691eafe399214ea"
+  integrity sha512-JIJT1DGiWmIKhzRsG91aS6Ze4sFUrYbltlkg2onR5OrnNM02Kl/hnY/T4FN2omvyeBbQmMJv+K4cPOpGzOTFBg==
+  dependencies:
+    randombytes "^2.1.0"
 
 serialize-javascript@^4.0.0:
   version "4.0.0"
