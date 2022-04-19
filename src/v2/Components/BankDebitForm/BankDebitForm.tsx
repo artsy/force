@@ -52,7 +52,7 @@ export const BankDebitForm: FC = () => {
         />
         <Spacer mt={2} />
         <Button disabled={!stripe} variant="primaryBlack" width="100%">
-          Review and Pay
+          Save and Continue
         </Button>
       </LoadingArea>
     </form>

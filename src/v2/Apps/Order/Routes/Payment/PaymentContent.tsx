@@ -45,9 +45,9 @@ export const PaymentContent: FC<Props> = props => {
   const paymentMethodLabel = (paymentMethod: string) => {
     switch (paymentMethod) {
       case "credit_card":
-        return "Credit Card"
+        return "Credit card"
       case "bank_transfer":
-        return "Bank Transfer"
+        return "Bank transfer (US bank account)"
     }
   }
 
@@ -67,7 +67,9 @@ export const PaymentContent: FC<Props> = props => {
           <Flex flexDirection="column">
             <Text variant="xs">Step 1 of 2</Text>
             <Text variant="lg">Payment Method</Text>
-            <Text>{paymentMethod && paymentMethodLabel(paymentMethod)}</Text>
+            <Text color="black60">
+              {paymentMethod && paymentMethodLabel(paymentMethod)}
+            </Text>
           </Flex>
           {paymentMethod && (
             <Clickable
@@ -99,8 +101,12 @@ export const PaymentContent: FC<Props> = props => {
         </Collapse>
         <Spacer mb={4} />
         {/* Step Two Payment Details */}
-        <Text variant="xs">Step 2 of 2</Text>
-        <Text variant="lg">Payment Details</Text>
+        <Text color={stepOneComplete ? "black100" : "black30"} variant="xs">
+          Step 2 of 2
+        </Text>
+        <Text color={stepOneComplete ? "black100" : "black30"} variant="lg">
+          Payment Details
+        </Text>
         <Spacer mb={2} />
         {paymentMethod && paymentMethod === "credit_card" && (
           <Collapse open={stepOneComplete}>
