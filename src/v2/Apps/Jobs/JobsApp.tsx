@@ -1,32 +1,44 @@
-import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import {
+  Column,
+  GridColumns,
+  Join,
+  Separator,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { CellArticleFragmentContainer } from "v2/Components/Cells/CellArticle"
+import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { extractNodes } from "v2/Utils/extractNodes"
 import { JobsApp_viewer } from "v2/__generated__/JobsApp_viewer.graphql"
+
+const HEADER_IMAGE_URL =
+  "https://artsy-media-uploads.s3.amazonaws.com/xUM8bX2vV6CkHmlNuKUF-g%2F18_11_09_Artsy_0573%2B0591.jpg"
 
 interface JobsAppProps {
   viewer: JobsApp_viewer
 }
 
 const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
-  const articles = extractNodes(viewer.articlesConnection)
-
   return (
     <>
       <MetaTags
         title="Jobs | Artsy"
         description="Artsy is redefining the way the world discovers art. Our mission is to make all the world’s art accessible to anyone with an Internet connection. Reaching that goal starts with our people, and so we dedicate serious time and energy to find excellent new team members as passionate about our product as we are. Want to help us? We’d love to hear from you."
         pathname="jobs"
+        imageURL={HEADER_IMAGE_URL}
       />
+
+      <FullBleedHeader src={HEADER_IMAGE_URL} />
 
       <Spacer mt={4} />
 
       <GridColumns gridRowGap={4}>
         <Column span={6}>
-          <Text variant="xl">Join Our Team</Text>
+          <Text variant="xl" as="h1">
+            Join Our Team
+          </Text>
         </Column>
 
         <Column span={6}>
@@ -53,10 +65,10 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
             </RouterLink>
           </Text>
 
-          <Separator my={2} />
+          <Spacer mt={2} />
 
           <Text variant="sm">
-            Check us out on:{" "}
+            Check us out on{" "}
             <a
               href="http://www.glassdoor.com/Overview/Working-at-Artsy-EI_IE793485.11,16.htm"
               target="_blank"
@@ -64,7 +76,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
             >
               Glassdoor
             </a>
-            {" | "}
+            ,{" "}
             <a
               href="https://angel.co/artsy"
               target="_blank"
@@ -72,7 +84,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
             >
               AngelList
             </a>
-            {" | "}
+            , and{" "}
             <a
               href="https://www.linkedin.com/company/artsyinc?trk=top_nav_home"
               target="_blank"
@@ -83,15 +95,49 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
           </Text>
         </Column>
 
-        {articles.map(article => (
-          <Column span={3} key={article.internalID}>
-            <CellArticleFragmentContainer
-              article={article}
-              mode="GRID"
-              displayByline={false}
-            />
-          </Column>
-        ))}
+        <Column span={12}>
+          <Separator />
+        </Column>
+
+        {viewer.departments.map(department => {
+          if (department.jobs.length === 0) {
+            return null
+          }
+
+          return (
+            <Fragment key={department.id}>
+              <Column span={4} key={department.id}>
+                <Text variant="lg">{department.name}</Text>
+
+                <Text variant="lg" color="black60">
+                  {department.jobs.length} open position
+                  {department.jobs.length === 1 ? "" : "s"}
+                </Text>
+              </Column>
+
+              <Column span={8}>
+                <Join separator={<Spacer mt={2} />}>
+                  {department.jobs.map(job => {
+                    return (
+                      <RouterLink
+                        to={`/job/${job.id}`}
+                        display="block"
+                        textDecoration="none"
+                        key={job.id}
+                      >
+                        <Text variant="md">{job.title}</Text>
+
+                        <Text variant="md" color="black60">
+                          {job.location}
+                        </Text>
+                      </RouterLink>
+                    )
+                  })}
+                </Join>
+              </Column>
+            </Fragment>
+          )
+        })}
       </GridColumns>
     </>
   )
@@ -100,12 +146,13 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
 export const JobsAppFragmentContainer = createFragmentContainer(JobsApp, {
   viewer: graphql`
     fragment JobsApp_viewer on Viewer {
-      articlesConnection(channelId: "578eb73cb5989e6f98f779a1", first: 50) {
-        edges {
-          node {
-            internalID
-            ...CellArticle_article
-          }
+      departments {
+        id
+        name
+        jobs {
+          id
+          title
+          location
         }
       }
     }

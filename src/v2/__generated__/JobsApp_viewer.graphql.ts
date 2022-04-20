@@ -5,14 +5,15 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type JobsApp_viewer = {
-    readonly articlesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
+    readonly departments: ReadonlyArray<{
+        readonly id: string;
+        readonly name: string;
+        readonly jobs: ReadonlyArray<{
+            readonly id: string;
+            readonly title: string;
+            readonly location: string;
+        }>;
+    }>;
     readonly " $refType": "JobsApp_viewer";
 };
 export type JobsApp_viewer$data = JobsApp_viewer;
@@ -23,7 +24,15 @@ export type JobsApp_viewer$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -31,63 +40,53 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "channelId",
-          "value": "578eb73cb5989e6f98f779a1"
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 50
-        }
-      ],
-      "concreteType": "ArticleConnection",
+      "args": null,
+      "concreteType": "Department",
       "kind": "LinkedField",
-      "name": "articlesConnection",
-      "plural": false,
+      "name": "departments",
+      "plural": true,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArticleEdge",
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Job",
           "kind": "LinkedField",
-          "name": "edges",
+          "name": "jobs",
           "plural": true,
           "selections": [
+            (v0/*: any*/),
             {
               "alias": null,
               "args": null,
-              "concreteType": "Article",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArticle_article"
-                }
-              ],
+              "kind": "ScalarField",
+              "name": "title",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "location",
               "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(channelId:\"578eb73cb5989e6f98f779a1\",first:50)"
+      "storageKey": null
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '8aac205979127838257b0420969f1c1d';
+})();
+(node as any).hash = 'e62b0809691ef30c32fcd54f029ab452';
 export default node;
