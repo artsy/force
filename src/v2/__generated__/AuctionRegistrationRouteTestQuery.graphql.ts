@@ -36,6 +36,9 @@ fragment AuctionRegistrationRoute_me on Me {
   internalID
   identityVerified
   hasQualifiedCreditCards
+  phoneNumber {
+    isValid
+  }
 }
 
 fragment AuctionRegistrationRoute_sale on Sale {
@@ -165,6 +168,24 @@ return {
             "name": "hasQualifiedCreditCards",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "phoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isValid",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -246,7 +267,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54a047cf1c2ff689d9ccad2768960a31",
+    "cacheID": "ff8c1e33ccc0bdcf87a461c45d34ecb5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -260,6 +281,13 @@ return {
         "me.id": (v4/*: any*/),
         "me.identityVerified": (v3/*: any*/),
         "me.internalID": (v4/*: any*/),
+        "me.phoneNumber": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PhoneNumberType"
+        },
+        "me.phoneNumber.isValid": (v3/*: any*/),
         "sale": {
           "enumValues": null,
           "nullable": true,
@@ -286,7 +314,7 @@ return {
     },
     "name": "AuctionRegistrationRouteTestQuery",
     "operationKind": "query",
-    "text": "query AuctionRegistrationRouteTestQuery {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query AuctionRegistrationRouteTestQuery {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    isValid\n  }\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

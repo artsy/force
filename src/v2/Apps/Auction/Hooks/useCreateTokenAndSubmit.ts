@@ -16,6 +16,7 @@ import { AuctionBidRoute_me } from "v2/__generated__/AuctionBidRoute_me.graphql"
 import { AuctionBidRoute_sale } from "v2/__generated__/AuctionBidRoute_sale.graphql"
 import { toStripeAddress } from "v2/Components/AddressForm"
 import { useRefreshUserData } from "../Queries/useRefreshUserData"
+import { useUpdateMyUserProfile } from "v2/Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
 const logger = createLogger("useCreateTokenAndSubmit")
 
@@ -23,6 +24,59 @@ export interface UseCreateTokenAndSubmitProps {
   me: AuctionRegistrationRoute_me | AuctionBidRoute_me
   sale: AuctionRegistrationRoute_sale | AuctionBidRoute_sale
   onSuccess?: () => void
+}
+
+export const useUpdateMyUserProfileAndSubmit = ({
+  me,
+  sale,
+  onSuccess,
+}: UseCreateTokenAndSubmitProps) => {
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const { submitMutation: createBidder } = useCreateBidder()
+  const { refreshUserData } = useRefreshUserData()
+  const { tracking } = useAuctionTracking()
+
+  /**
+   * The update profile and register flow is as follows:
+   *
+   * 1. Load stripe
+   * 2. Set submitting=true
+   * 3. Create a new stripe token from address form
+   * 4. Add credit card and update user address or reject if mutation error
+   * 5. Create bidder
+   * 6. Call onSuccess callback
+   */
+  const updateProfileAndSubmit = async (
+    values: AuctionFormValues, // TODO: new type?
+    helpers: AuctionFormHelpers
+  ) => {
+    try {
+      await submitUpdateMyUserProfile({
+        phone: values.address?.phoneNumber,
+      })
+
+      const response = await createBidder({
+        variables: {
+          input: { saleID: sale.slug },
+        },
+      })
+      await refreshUserData()
+
+      tracking.registrationSubmitted({
+        bidderID: response.createBidder?.bidder?.internalID,
+        me,
+        sale,
+      })
+
+      onSuccess?.()
+    } catch (error) {
+      logger.error("Error submitting bid: ", error)
+      helpers.setStatus("SUBMISSION_FAILED")
+    } finally {
+      helpers.setSubmitting(false)
+    }
+  }
+  return { updateProfileAndSubmit }
 }
 
 export const useCreateTokenAndSubmit = ({

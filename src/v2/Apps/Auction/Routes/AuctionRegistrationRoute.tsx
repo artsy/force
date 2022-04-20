@@ -10,8 +10,11 @@ import {
   initialValuesForRegistration,
   registrationValidationSchema,
 } from "v2/Apps/Auction/Components/Form/Utils"
-import { useCreateTokenAndSubmit } from "v2/Apps/Auction/Hooks/useCreateTokenAndSubmit"
-import { useEffect } from "react"
+import {
+  useCreateTokenAndSubmit,
+  useUpdateMyUserProfileAndSubmit,
+} from "v2/Apps/Auction/Hooks/useCreateTokenAndSubmit"
+import React, { useEffect } from "react"
 import { ConditionsOfSaleCheckbox } from "v2/Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { AddressFormWithCreditCard } from "v2/Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { IdentityVerificationWarning } from "v2/Apps/Auction/Components/Form/IdentityVerificationWarning"
@@ -24,13 +27,22 @@ export interface AuctionRegistrationRouteProps {
   sale: AuctionRegistrationRoute_sale
 }
 
+interface RegistrationFormProps extends AuctionRegistrationRouteProps {
+  onSuccess: () => void
+  needsIdentityVerification: boolean
+}
+
 const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
   me,
   sale,
 }) => {
   const { tracking } = useAuctionTracking()
   const { router } = useRouter()
-  const { needsIdentityVerification } = computeProps({ sale, me })
+  const { needsIdentityVerification, requiredBidderInfo } = computeProps({
+    sale,
+    me,
+  })
+
   const { createToken: handleSubmit } = useCreateTokenAndSubmit({
     me,
     sale,
@@ -56,8 +68,14 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
   }, [])
 
   // Will redirect to /confirm-registration above on page mount
-  if (me.hasQualifiedCreditCards) {
+  if (!requiredBidderInfo) {
     return null
+  }
+  let RequiredInfoForm: React.FC<RegistrationFormProps>
+  if (requiredBidderInfo == "payment") {
+    RequiredInfoForm = NewCreditCardForm
+  } else {
+    RequiredInfoForm = NewPhoneNumberForm
   }
 
   return (
@@ -66,6 +84,12 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
       onClose={handleModalClose}
       width={["100%", 600]}
     >
+      <RequiredInfoForm
+        me={me}
+        sale={sale}
+        onSuccess={() => router.push(`/auction/${sale.slug}`)}
+        needsIdentityVerification={needsIdentityVerification}
+      />
       <Formik<AuctionFormValues>
         validateOnMount
         initialValues={initialValuesForRegistration}
@@ -102,6 +126,102 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
   )
 }
 
+const NewCreditCardForm: React.FC<RegistrationFormProps> = ({
+  me,
+  sale,
+  onSuccess,
+  needsIdentityVerification,
+}) => {
+  const { createToken: handleSubmit } = useCreateTokenAndSubmit({
+    me,
+    sale,
+    onSuccess,
+  })
+
+  return (
+    <Formik<AuctionFormValues>
+      validateOnMount
+      initialValues={initialValuesForRegistration}
+      onSubmit={handleSubmit}
+      validationSchema={registrationValidationSchema}
+    >
+      {({ isSubmitting, isValid }) => {
+        return (
+          <Form>
+            <Join separator={<Spacer my={2} />}>
+              <AddressFormWithCreditCard />
+
+              {needsIdentityVerification && <IdentityVerificationWarning />}
+
+              <ConditionsOfSaleCheckbox />
+
+              <Button
+                size="large"
+                width="100%"
+                loading={isSubmitting}
+                disabled={!isValid}
+                type="submit"
+              >
+                Register
+              </Button>
+
+              <ErrorStatus />
+            </Join>
+          </Form>
+        )
+      }}
+    </Formik>
+  )
+}
+
+const NewPhoneNumberForm: React.FC<RegistrationFormProps> = ({
+  me,
+  sale,
+  onSuccess,
+  needsIdentityVerification,
+}) => {
+  const { updateProfileAndSubmit } = useUpdateMyUserProfileAndSubmit({
+    me,
+    sale,
+    onSuccess,
+  })
+
+  return (
+    <Formik<AuctionFormValues>
+      validateOnMount
+      initialValues={initialValuesForRegistration}
+      onSubmit={updateProfileAndSubmit}
+      validationSchema={registrationValidationSchema}
+    >
+      {({ isSubmitting, isValid }) => {
+        return (
+          <Form>
+            <Join separator={<Spacer my={2} />}>
+              <h1>TODO:</h1>
+
+              {needsIdentityVerification && <IdentityVerificationWarning />}
+
+              <ConditionsOfSaleCheckbox />
+
+              <Button
+                size="large"
+                width="100%"
+                loading={isSubmitting}
+                disabled={!isValid}
+                type="submit"
+              >
+                Register
+              </Button>
+
+              <ErrorStatus />
+            </Join>
+          </Form>
+        )
+      }}
+    </Formik>
+  )
+}
+
 export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer(
   (props: AuctionRegistrationRouteProps) => {
     return (
@@ -117,6 +237,9 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
         internalID
         identityVerified
         hasQualifiedCreditCards
+        phoneNumber {
+          isValid
+        }
       }
     `,
     sale: graphql`
@@ -137,13 +260,24 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
 )
 
 const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
-  const needsIdentityVerification =
+  const needsIdentityVerification = Boolean(
     sale?.requireIdentityVerification &&
-    !sale?.bidder?.qualifiedForBidding &&
-    !me?.identityVerified
+      !sale?.bidder?.qualifiedForBidding &&
+      !me?.identityVerified
+  )
+
+  const requiredBidderInfo:
+    | "payment"
+    | "phone"
+    | null = !me.hasQualifiedCreditCards
+    ? "payment"
+    : !me.phoneNumber?.isValid
+    ? "phone"
+    : null
 
   return {
     needsIdentityVerification,
+    requiredBidderInfo,
   }
 }
 

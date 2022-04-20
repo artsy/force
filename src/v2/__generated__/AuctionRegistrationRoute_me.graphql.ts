@@ -8,6 +8,9 @@ export type AuctionRegistrationRoute_me = {
     readonly internalID: string;
     readonly identityVerified: boolean | null;
     readonly hasQualifiedCreditCards: boolean | null;
+    readonly phoneNumber: {
+        readonly isValid: boolean | null;
+    } | null;
     readonly " $refType": "AuctionRegistrationRoute_me";
 };
 export type AuctionRegistrationRoute_me$data = AuctionRegistrationRoute_me;
@@ -44,10 +47,28 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "hasQualifiedCreditCards",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "PhoneNumberType",
+      "kind": "LinkedField",
+      "name": "phoneNumber",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isValid",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'b06ca5bee581b2dc45e4b0da0ecf12e9';
+(node as any).hash = '042a81c674d32b180c41546f5ff8783b';
 export default node;
