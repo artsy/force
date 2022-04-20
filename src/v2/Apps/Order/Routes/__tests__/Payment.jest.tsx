@@ -1,6 +1,5 @@
 import { Checkbox } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
-
 import {
   BuyOrderWithShippingDetails,
   OfferOrderWithShippingDetails,
@@ -15,13 +14,14 @@ import {
 } from "../__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { useSystemContext } from "v2/System"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
@@ -30,6 +30,7 @@ jest.mock(
     return require("../../Components/__mocks__/PaymentPicker")
   }
 )
+jest.mock("v2/System/useSystemContext")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
@@ -159,6 +160,25 @@ describe("Payment", () => {
         `"CheckOfferNavigate rightCheckShippingNavigate rightPaymentNavigate rightReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
+    })
+  })
+
+  describe("stripe ACH enabled", () => {
+    beforeAll(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return {
+          featureFlags: {
+            stripe_ACH: {
+              flagEnabled: true,
+            },
+          },
+        }
+      })
+    })
+
+    it("returns true when the feature is enabled", () => {
+      const result = useFeatureFlag("stripe_ACH")
+      expect(result).toBe(true)
     })
   })
 })
