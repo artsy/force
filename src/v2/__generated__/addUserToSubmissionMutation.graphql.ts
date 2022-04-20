@@ -6,6 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type AddUserToSubmissionMutationInput = {
     clientMutationId?: string | null;
     id: string;
+    userEmail: string;
 };
 export type addUserToSubmissionMutationVariables = {
     input: AddUserToSubmissionMutationInput;
