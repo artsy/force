@@ -113,7 +113,7 @@ describe("useTrackFeatureVariantView", () => {
     )
   })
 
-  it("does not call tracking funciton if the variantName is disabled", () => {
+  it("does not call the tracking function if the variantName is disabled", () => {
     const { trackFeatureVariant } = useTrackFeatureVariant({
       experimentName: "cool-experiment",
       variantName: "disabled",
