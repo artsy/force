@@ -1,17 +1,11 @@
-import {
-  Column,
-  GridColumns,
-  Join,
-  Separator,
-  Spacer,
-  Text,
-} from "@artsy/palette"
-import { FC, Fragment } from "react"
+import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { JobsApp_viewer } from "v2/__generated__/JobsApp_viewer.graphql"
+import { JobsFilterFragmentContainer } from "./Components/JobsFilter"
 
 const HEADER_IMAGE_URL =
   "https://artsy-media-uploads.s3.amazonaws.com/xUM8bX2vV6CkHmlNuKUF-g%2F18_11_09_Artsy_0573%2B0591.jpg"
@@ -94,51 +88,11 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
             </a>
           </Text>
         </Column>
-
-        <Column span={12}>
-          <Separator />
-        </Column>
-
-        {viewer.departments.map(department => {
-          if (department.jobs.length === 0) {
-            return null
-          }
-
-          return (
-            <Fragment key={department.id}>
-              <Column span={4} key={department.id}>
-                <Text variant="lg">{department.name}</Text>
-
-                <Text variant="lg" color="black60">
-                  {department.jobs.length} open position
-                  {department.jobs.length === 1 ? "" : "s"}
-                </Text>
-              </Column>
-
-              <Column span={8}>
-                <Join separator={<Spacer mt={2} />}>
-                  {department.jobs.map(job => {
-                    return (
-                      <RouterLink
-                        to={`/job/${job.id}`}
-                        display="block"
-                        textDecoration="none"
-                        key={job.id}
-                      >
-                        <Text variant="md">{job.title}</Text>
-
-                        <Text variant="md" color="black60">
-                          {job.location}
-                        </Text>
-                      </RouterLink>
-                    )
-                  })}
-                </Join>
-              </Column>
-            </Fragment>
-          )
-        })}
       </GridColumns>
+
+      <Separator my={4} />
+
+      <JobsFilterFragmentContainer viewer={viewer} />
     </>
   )
 }
@@ -146,15 +100,7 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
 export const JobsAppFragmentContainer = createFragmentContainer(JobsApp, {
   viewer: graphql`
     fragment JobsApp_viewer on Viewer {
-      departments {
-        id
-        name
-        jobs {
-          id
-          title
-          location
-        }
-      }
+      ...JobsFilter_viewer
     }
   `,
 })

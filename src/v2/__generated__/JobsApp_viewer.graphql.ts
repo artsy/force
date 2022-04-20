@@ -5,15 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type JobsApp_viewer = {
-    readonly departments: ReadonlyArray<{
-        readonly id: string;
-        readonly name: string;
-        readonly jobs: ReadonlyArray<{
-            readonly id: string;
-            readonly title: string;
-            readonly location: string;
-        }>;
-    }>;
+    readonly " $fragmentRefs": FragmentRefs<"JobsFilter_viewer">;
     readonly " $refType": "JobsApp_viewer";
 };
 export type JobsApp_viewer$data = JobsApp_viewer;
@@ -24,69 +16,20 @@ export type JobsApp_viewer$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "JobsApp_viewer",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "concreteType": "Department",
-      "kind": "LinkedField",
-      "name": "departments",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Job",
-          "kind": "LinkedField",
-          "name": "jobs",
-          "plural": true,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "title",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "location",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "JobsFilter_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-})();
-(node as any).hash = 'e62b0809691ef30c32fcd54f029ab452';
+(node as any).hash = '9f8ac2fe7c98208cbcde0bf6bf403191';
 export default node;

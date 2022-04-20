@@ -24,14 +24,28 @@ query jobsRoutes_JobsQuery {
   }
 }
 
+fragment JobLink_job on Job {
+  id
+  title
+  location
+}
+
 fragment JobsApp_viewer on Viewer {
+  ...JobsFilter_viewer
+}
+
+fragment JobsFilter_viewer on Viewer {
+  jobs {
+    ...JobLink_job
+    id
+    location
+  }
   departments {
     id
     name
     jobs {
+      ...JobLink_job
       id
-      title
-      location
     }
   }
 }
@@ -43,6 +57,32 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Job",
+  "kind": "LinkedField",
+  "name": "jobs",
+  "plural": true,
+  "selections": [
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "location",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 };
 return {
@@ -86,6 +126,7 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -102,32 +143,7 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Job",
-                "kind": "LinkedField",
-                "name": "jobs",
-                "plural": true,
-                "selections": [
-                  (v0/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "title",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "location",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
+              (v1/*: any*/)
             ],
             "storageKey": null
           }
@@ -137,12 +153,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9c59604671c651dac972e320d0d496a2",
+    "cacheID": "b30414b05e340d2dee080de602d47be7",
     "id": null,
     "metadata": {},
     "name": "jobsRoutes_JobsQuery",
     "operationKind": "query",
-    "text": "query jobsRoutes_JobsQuery {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobsApp_viewer on Viewer {\n  departments {\n    id\n    name\n    jobs {\n      id\n      title\n      location\n    }\n  }\n}\n"
+    "text": "query jobsRoutes_JobsQuery {\n  viewer {\n    ...JobsApp_viewer\n  }\n}\n\nfragment JobLink_job on Job {\n  id\n  title\n  location\n}\n\nfragment JobsApp_viewer on Viewer {\n  ...JobsFilter_viewer\n}\n\nfragment JobsFilter_viewer on Viewer {\n  jobs {\n    ...JobLink_job\n    id\n    location\n  }\n  departments {\n    id\n    name\n    jobs {\n      ...JobLink_job\n      id\n    }\n  }\n}\n"
   }
 };
 })();
