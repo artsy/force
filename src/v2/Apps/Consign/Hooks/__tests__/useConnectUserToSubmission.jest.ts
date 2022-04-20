@@ -18,7 +18,6 @@ jest.mock("cookies-js", () => ({
 
 const mockUser = {
   id: "123",
-  email: "john@doe.com",
 }
 const mockNonExistentUser = {}
 
@@ -48,7 +47,6 @@ describe("connectUserToSubmission", () => {
         variables: {
           input: {
             id: mockSubmissionId,
-            userEmail: mockUser.email,
           },
         },
       })

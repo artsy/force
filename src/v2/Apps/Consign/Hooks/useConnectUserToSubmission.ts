@@ -15,14 +15,13 @@ export const connectUserToSubmission = async (
 ) => {
   const submissionId = await Cookies.get("submissionId")
 
-  if (!submissionId || !user || !user.email) return
+  if (!submissionId || !user) return
 
   try {
     await addUser({
       variables: {
         input: {
           id: submissionId,
-          userEmail: user.email,
         },
       },
     })
