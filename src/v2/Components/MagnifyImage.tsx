@@ -67,6 +67,8 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       onMouseMove={onMouseMove}
+      width="100%"
+      height="100%"
       ref={containerRef as any}
     >
       <Image
