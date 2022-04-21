@@ -6,8 +6,10 @@ import { ArtworkSidebarPartnerInfoFragmentContainer } from "v2/Apps/Artwork/Comp
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { useSystemContext } from "v2/System/useSystemContext"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/useSystemContext")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
@@ -23,6 +25,12 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebarPartnerInfo", () => {
+  beforeEach(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: { "conversational-buy-now": { flagEnabled: true } },
+    }))
+  })
+
   describe("Non-auction Sales display", () => {
     it("displays sale name", () => {
       const { sale } = ArtworkInNonAuctionSale

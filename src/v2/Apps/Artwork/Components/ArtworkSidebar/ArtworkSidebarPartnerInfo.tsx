@@ -12,6 +12,7 @@ import { FC } from "react"
 import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useInquiry } from "v2/Components/Inquiry/useInquiry"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork
@@ -32,8 +33,11 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
   })
-  const renderInquiryButton =
-    !isInquireable || (isInquireable && isOfferable && isPriceRange)
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
+
+  const shouldRenderInquiryButton =
+    isCBNEnabled &&
+    (!isInquireable || (isInquireable && isOfferable && isPriceRange))
 
   const renderPartnerName = () => {
     if (sale) {
@@ -83,7 +87,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </Box>
 
-        {renderInquiryButton && (
+        {shouldRenderInquiryButton && (
           <Button
             variant="secondaryOutline"
             size="small"
