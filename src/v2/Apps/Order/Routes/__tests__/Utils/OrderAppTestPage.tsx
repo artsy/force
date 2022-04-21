@@ -100,6 +100,12 @@ export class OrderAppTestPage extends RootTestPage {
     await this.update()
   }
 
+  async selectPaymentMethod(option: number) {
+    this.find(BorderedRadio).at(option).simulate("click")
+    this.find(Button).simulate("click")
+    await this.update()
+  }
+
   /*** COMMON ASSERTIONS ***/
   async expectNoModal() {
     const modal = this.modalDialog.find(ModalButton)
