@@ -124,7 +124,7 @@ export const PaymentContent: FC<Props> = props => {
         )}
         {paymentMethod && paymentMethod === "bank_transfer" && (
           <Collapse open={stepOneComplete}>
-            <BankDebitProvider />
+            <BankDebitProvider order={order} />
           </Collapse>
         )}
       </Flex>

@@ -2,45 +2,36 @@ import { FC, useEffect, useState } from "react"
 import { Appearance, loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "v2/Utils/getENV"
-import { commitMutation, graphql } from "relay-runtime"
-import { createBankDebitSetupMutation } from "v2/__generated__/createBankDebitSetupMutation.graphql"
-import { useSystemContext } from "v2/System"
 import { BankDebitForm } from "./BankDebitForm"
+import { CreateBankDebitSetupForOrder } from "./createBankDebitSetupForOrder"
+import { Payment_order } from "v2/__generated__/Payment_order.graphql"
+interface Props {
+  order: Payment_order
+}
 
-export const BankDebitProvider: FC = () => {
-  const { relayEnvironment } = useSystemContext()
+export const BankDebitProvider: FC<Props> = ({ order }) => {
   const [clientSecret, setClientSecret] = useState("")
-
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"), {
     betas: ["us_bank_account_beta_2"],
   })
 
+  const { submitMutation } = CreateBankDebitSetupForOrder()
+
   useEffect(() => {
-    // Create SetupIntent as soon as the page loads
-    commitMutation<createBankDebitSetupMutation>(relayEnvironment!, {
-      mutation: graphql`
-        mutation createBankDebitSetupMutation(
-          $input: CreateBankDebitSetupInput!
-        ) {
-          createBankDebitSetup(input: $input) {
-            clientSecret
-          }
-        }
-      `,
-      variables: {
-        input: {
-          clientMutationId: "create-bank-debit-setup",
-          paymentMethodTypes: ["us_bank_account"],
-        },
+    submitMutation({
+      variables: { input: { id: order.internalID } },
+      rejectIf: res => {
+        return res.commerceCreateBankDebitSetupForOrder?.actionOrError
+          .error?.[0].message
       },
-      onCompleted: response => {
-        setClientSecret(response.createBankDebitSetup!.clientSecret)
-      },
-      onError: error => {
-        console.log("error", error)
-      },
+    }).then(res => {
+      setClientSecret(
+        res.commerceCreateBankDebitSetupForOrder?.actionOrError.actionData
+          .clientSecret
+      )
     })
-  }, [relayEnvironment])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const appearance: Appearance = {
     theme: "stripe",
