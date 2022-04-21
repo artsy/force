@@ -1,6 +1,7 @@
 import { Image as BaseImage, ImageProps, Box } from "@artsy/palette"
 import { useRef, useState } from "react"
 import styled from "styled-components"
+import { isTouch } from "v2/Utils/device"
 
 type Position = number | null
 
@@ -32,12 +33,20 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
   })
 
   const onMouseOver = () => {
+    if (isTouch) {
+      return
+    }
+
     timeoutRef.current = setTimeout(() => {
       setZoomed(true)
     }, ENTER_TIMEOUT_DELAY)
   }
 
   const onMouseOut = () => {
+    if (isTouch) {
+      return
+    }
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
@@ -46,7 +55,7 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
   }
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!containerRef.current) {
+    if (!containerRef.current || isTouch) {
       return
     }
 
