@@ -43,8 +43,8 @@ const PageApp: FC<PageAppProps> = ({ page }) => {
 
       <Spacer mt={4} />
 
-      <GridColumns>
-        <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+      <GridColumns gridRowGap={4}>
+        <Column span={8} start={3}>
           <PageHTML dangerouslySetInnerHTML={{ __html: page.content }} />
         </Column>
       </GridColumns>
