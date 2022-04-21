@@ -12,6 +12,10 @@ export type ArtworkSidebarPartnerInfo_Test_QueryResponse = {
 };
 export type ArtworkSidebarPartnerInfo_Test_QueryRawResponse = {
     readonly artwork: ({
+        readonly internalID: string;
+        readonly isOfferable: boolean | null;
+        readonly isInquireable: boolean | null;
+        readonly isPriceRange: boolean | null;
         readonly partner: ({
             readonly name: string | null;
             readonly href: string | null;
@@ -46,6 +50,10 @@ query ArtworkSidebarPartnerInfo_Test_Query {
 }
 
 fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
+  internalID
+  isOfferable
+  isInquireable
+  isPriceRange
   partner {
     name
     href
@@ -102,6 +110,12 @@ v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
+  "type": "Boolean"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
   "type": "String"
 };
 return {
@@ -145,6 +159,34 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isOfferable",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isInquireable",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isPriceRange",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -199,7 +241,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "405b9532fe786c0825194ba0d3166f6d",
+    "cacheID": "bc3e83612bd1d612fb653baf1e360dcb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -210,13 +252,17 @@ return {
           "type": "Artwork"
         },
         "artwork.id": (v4/*: any*/),
+        "artwork.internalID": (v4/*: any*/),
+        "artwork.isInquireable": (v5/*: any*/),
+        "artwork.isOfferable": (v5/*: any*/),
+        "artwork.isPriceRange": (v5/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.href": (v5/*: any*/),
+        "artwork.partner.href": (v6/*: any*/),
         "artwork.partner.id": (v4/*: any*/),
         "artwork.partner.locations": {
           "enumValues": null,
@@ -224,23 +270,23 @@ return {
           "plural": true,
           "type": "Location"
         },
-        "artwork.partner.locations.city": (v5/*: any*/),
+        "artwork.partner.locations.city": (v6/*: any*/),
         "artwork.partner.locations.id": (v4/*: any*/),
-        "artwork.partner.name": (v5/*: any*/),
+        "artwork.partner.name": (v6/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.href": (v5/*: any*/),
+        "artwork.sale.href": (v6/*: any*/),
         "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.name": (v5/*: any*/)
+        "artwork.sale.name": (v6/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  isOfferable\n  isInquireable\n  isPriceRange\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();
