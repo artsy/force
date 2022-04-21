@@ -10,33 +10,9 @@ export type ArtworkSidebarPartnerInfo_Test_QueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarPartnerInfo_artwork">;
     } | null;
 };
-export type ArtworkSidebarPartnerInfo_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly internalID: string;
-        readonly isOfferable: boolean | null;
-        readonly isInquireable: boolean | null;
-        readonly isPriceRange: boolean | null;
-        readonly partner: ({
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly locations: ReadonlyArray<({
-                readonly city: string | null;
-                readonly id: string;
-            }) | null> | null;
-            readonly id: string;
-        }) | null;
-        readonly sale: ({
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
-};
 export type ArtworkSidebarPartnerInfo_Test_Query = {
     readonly response: ArtworkSidebarPartnerInfo_Test_QueryResponse;
     readonly variables: ArtworkSidebarPartnerInfo_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarPartnerInfo_Test_QueryRawResponse;
 };
 
 
@@ -290,5 +266,5 @@ return {
   }
 };
 })();
-(node as any).hash = '56bce63add2affb95615b5d17250cf6c';
+(node as any).hash = 'c28fcd12678374ea3678a8b3c41e5dbc';
 export default node;
