@@ -105,6 +105,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           <Button
             variant="secondaryOutline"
             size="small"
+            borderColor="black30"
             onClick={handleInquiry}
           >
             Contact Gallery
