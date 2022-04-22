@@ -12,8 +12,6 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   const { endAt } = saleArtwork
 
   const startAt = saleArtwork?.sale?.startAt
-  const extendedBiddingPeriodMinutes =
-    saleArtwork?.sale?.extendedBiddingPeriodMinutes
 
   const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
 
@@ -23,7 +21,7 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
 
   const timerCopy = getTimerCopy(time, hasStarted)
   const extendedBiddingInfoLabel = extendedBiddingInfoCopy(
-    extendedBiddingPeriodMinutes
+    saleArtwork?.sale?.extendedBiddingPeriodMinutes
   )
 
   return (
