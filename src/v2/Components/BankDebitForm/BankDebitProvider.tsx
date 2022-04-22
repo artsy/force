@@ -19,11 +19,18 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
       const data = await submitMutation({
         variables: { input: { id: order.internalID } },
       })
-      setClientSecret(
-        data.commerceCreateBankDebitSetupForOrder?.actionOrError?.actionData
-          .clientSecret
-      )
+
+      if (
+        data.commerceCreateBankDebitSetupForOrder?.actionOrError.__typename ===
+        "CommerceOrderRequiresAction"
+      ) {
+        setClientSecret(
+          data.commerceCreateBankDebitSetupForOrder?.actionOrError?.actionData
+            .clientSecret
+        )
+      }
     }
+
     fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
