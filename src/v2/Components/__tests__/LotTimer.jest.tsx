@@ -1,4 +1,6 @@
 import { getTimerCopy } from "../LotTimer"
+import { extendedBiddingInfoCopy } from "../LotTimer"
+import { Text, Spacer } from "@artsy/palette"
 
 describe("getTimerCopy", () => {
   describe("when the sale is open", () => {
@@ -75,6 +77,31 @@ describe("getTimerCopy", () => {
           "3 Days Until Bidding Starts"
         )
       })
+    })
+  })
+})
+
+describe("extendedBiddingInfoCopy", () => {
+  describe("when extended bidding feature is on", () => {
+    const extendedBiddingPeriodMinutes = 2
+    it("shows the extended bidding info label", () => {
+      expect(extendedBiddingInfoCopy(extendedBiddingPeriodMinutes)).toEqual(
+        <>
+          <Spacer mt={1} />
+          <Text variant="xs" color={"black60"}>
+            *Closure times may be extended to accomodate last minute bids
+          </Text>
+        </>
+      )
+    })
+  })
+
+  describe("when extended bidding feature is off", () => {
+    const extendedBiddingPeriodMinutes = null
+    it("shows the extended bidding info label", () => {
+      expect(extendedBiddingInfoCopy(extendedBiddingPeriodMinutes)).toEqual(
+        null
+      )
     })
   })
 })
