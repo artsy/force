@@ -170,7 +170,7 @@ export { OrderAppWithRouter as OrderApp }
 const SafeAreaContainer = styled(Box)`
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
-  margin-bottom: 75px;
+  margin-bottom: 200px;
 `
 
 graphql`
