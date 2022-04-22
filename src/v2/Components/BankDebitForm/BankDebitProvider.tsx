@@ -15,18 +15,16 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
-    submitMutation({
-      variables: { input: { id: order.internalID } },
-      rejectIf: res => {
-        return res.commerceCreateBankDebitSetupForOrder?.actionOrError
-          .error?.[0].message
-      },
-    }).then(res => {
+    const fetchData = async () => {
+      const data = await submitMutation({
+        variables: { input: { id: order.internalID } },
+      })
       setClientSecret(
-        res.commerceCreateBankDebitSetupForOrder?.actionOrError?.actionData
+        data.commerceCreateBankDebitSetupForOrder?.actionOrError?.actionData
           .clientSecret
       )
-    })
+    }
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
