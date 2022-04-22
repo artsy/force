@@ -3,8 +3,10 @@ import { ArtworkApp_Test_Query } from "v2/__generated__/ArtworkApp_Test_Query.gr
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ArtworkAppFragmentContainer } from "../ArtworkApp"
 import { MockBoot } from "v2/DevTools"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({
@@ -32,6 +34,10 @@ const mockMatch = {
 }
 
 describe("ArtworkApp", () => {
+  ;(useTracking as jest.Mock).mockImplementation(() => ({
+    trackEvent: jest.fn(),
+  }))
+
   const { getWrapper } = setupTestWrapper<ArtworkApp_Test_Query>({
     Component: (props: any) => {
       return (
