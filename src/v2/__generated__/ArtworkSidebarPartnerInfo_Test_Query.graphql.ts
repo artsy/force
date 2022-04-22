@@ -27,6 +27,7 @@ query ArtworkSidebarPartnerInfo_Test_Query {
 
 fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
   internalID
+  slug
   isOfferable
   isInquireable
   isPriceRange
@@ -146,6 +147,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "isOfferable",
             "storageKey": null
           },
@@ -217,7 +225,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bc3e83612bd1d612fb653baf1e360dcb",
+    "cacheID": "a2f4e0fb0bedc27ed00015023ae8d047",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -257,12 +265,13 @@ return {
         },
         "artwork.sale.href": (v6/*: any*/),
         "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.name": (v6/*: any*/)
+        "artwork.sale.name": (v6/*: any*/),
+        "artwork.slug": (v4/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  isOfferable\n  isInquireable\n  isPriceRange\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isOfferable\n  isInquireable\n  isPriceRange\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

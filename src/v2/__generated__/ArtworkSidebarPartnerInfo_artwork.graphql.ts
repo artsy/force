@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork = {
     readonly internalID: string;
+    readonly slug: string;
     readonly isOfferable: boolean | null;
     readonly isInquireable: boolean | null;
     readonly isPriceRange: boolean | null;
@@ -56,6 +57,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -128,5 +136,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '25ab99ac12847f3e786618f41f34da05';
+(node as any).hash = '012d796aba8815d2308f88886305b178';
 export default node;

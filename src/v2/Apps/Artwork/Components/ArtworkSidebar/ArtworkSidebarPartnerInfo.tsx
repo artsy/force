@@ -13,6 +13,7 @@ import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSideb
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useInquiry } from "v2/Components/Inquiry/useInquiry"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 
 export interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork
@@ -25,6 +26,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     sale,
     partner,
     internalID,
+    slug,
     isOfferable,
     isInquireable,
     isPriceRange,
@@ -34,6 +36,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     artworkID: internalID,
   })
   const isCBNEnabled = useFeatureFlag("conversational-buy-now")
+  const { trackEvent } = useTracking()
 
   const shouldRenderInquiryButton =
     isCBNEnabled &&
@@ -59,6 +62,17 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     ) : (
       <Text variant="md">{partner.name}</Text>
     )
+  }
+
+  const handleInquiry = () => {
+    trackEvent({
+      context_module: AnalyticsSchema.ContextModule.Sidebar,
+      action_type: AnalyticsSchema.ActionType.ClickedContactGallery,
+      subject: AnalyticsSchema.Subject.ContactGallery,
+      artwork_id: internalID,
+      artwork_slug: slug,
+    })
+    showInquiry()
   }
 
   const locationNames =
@@ -91,7 +105,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           <Button
             variant="secondaryOutline"
             size="small"
-            onClick={() => showInquiry()}
+            onClick={handleInquiry}
           >
             Contact Gallery
           </Button>
@@ -110,6 +124,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
     artwork: graphql`
       fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
         internalID
+        slug
         isOfferable
         isInquireable
         isPriceRange

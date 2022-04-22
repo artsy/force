@@ -3,13 +3,17 @@ import {
   ArtworkInNonAuctionSale,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarPartnerInfo"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
-import { screen } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { useSystemContext } from "v2/System/useSystemContext"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/useSystemContext")
+jest.mock("react-tracking")
+
+const trackEvent = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => (
@@ -26,6 +30,9 @@ const { renderWithRelay } = setupTestWrapperTL({
 
 describe("ArtworkSidebarPartnerInfo", () => {
   beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent,
+    }))
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       featureFlags: { "conversational-buy-now": { flagEnabled: true } },
     }))
@@ -113,10 +120,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
-          isOfferable: false,
           isAcquireable: true,
-          isInquireable: false,
-          isPriceRange: false,
         }),
       })
 
@@ -129,8 +133,6 @@ describe("ArtworkSidebarPartnerInfo", () => {
           ...ArtworkFromPartnerWithLocations,
           isOfferable: true,
           isAcquireable: true,
-          isInquireable: false,
-          isPriceRange: false,
         }),
       })
 
@@ -142,9 +144,6 @@ describe("ArtworkSidebarPartnerInfo", () => {
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isOfferable: true,
-          isAcquireable: false,
-          isInquireable: false,
-          isPriceRange: false,
         }),
       })
 
@@ -156,8 +155,6 @@ describe("ArtworkSidebarPartnerInfo", () => {
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isOfferable: true,
-          isAcquireable: false,
-          isInquireable: false,
           isPriceRange: true,
         }),
       })
@@ -170,9 +167,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isOfferable: true,
-          isAcquireable: false,
           isInquireable: true,
-          isPriceRange: false,
         }),
       })
 
@@ -184,7 +179,6 @@ describe("ArtworkSidebarPartnerInfo", () => {
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isOfferable: true,
-          isAcquireable: false,
           isInquireable: true,
           isPriceRange: true,
         }),
@@ -197,10 +191,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
-          isOfferable: false,
-          isAcquireable: false,
           isInquireable: true,
-          isPriceRange: false,
         }),
       })
 
@@ -211,14 +202,31 @@ describe("ArtworkSidebarPartnerInfo", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
-          isOfferable: false,
-          isAcquireable: false,
           isInquireable: true,
           isPriceRange: true,
         }),
       })
 
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("tracks the right event when clicked", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          slug: "test-slug",
+          isAcquireable: true,
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Contact Gallery"))
+      expect(trackEvent).toBeCalledWith({
+        action_type: 'Clicked "Contact Gallery"',
+        artwork_id: "artwork_from_partner_with_locations",
+        artwork_slug: "test-slug",
+        context_module: "Sidebar",
+        subject: "Contact Gallery",
+      })
     })
   })
 })
