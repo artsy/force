@@ -46,7 +46,7 @@ export const PaymentContent: FC<Props> = props => {
     switch (paymentMethod) {
       case "credit_card":
         return "Credit card"
-      case "bank_transfer":
+      case "bank_debit":
         return "Bank transfer (US bank account)"
     }
   }
@@ -88,7 +88,7 @@ export const PaymentContent: FC<Props> = props => {
             }}
           >
             <BorderedRadio value="credit_card" label="Credit Card" />
-            <BorderedRadio value="bank_transfer" label="Bank Transfer" />
+            <BorderedRadio value="bank_debit" label="Bank Transfer" />
           </RadioGroup>
           <Spacer mb={4} />
           <Button
@@ -122,7 +122,7 @@ export const PaymentContent: FC<Props> = props => {
             </Media>
           </Collapse>
         )}
-        {paymentMethod && paymentMethod === "bank_transfer" && (
+        {paymentMethod && paymentMethod === "bank_debit" && (
           <Collapse open={stepOneComplete}>
             <BankDebitProvider order={order} />
           </Collapse>

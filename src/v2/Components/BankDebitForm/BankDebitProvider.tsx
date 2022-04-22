@@ -3,7 +3,7 @@ import { Appearance, loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "v2/Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
-import { CreateBankDebitSetupForOrder } from "./createBankDebitSetupForOrder"
+import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 interface Props {
   order: Payment_order
@@ -11,10 +11,7 @@ interface Props {
 
 export const BankDebitProvider: FC<Props> = ({ order }) => {
   const [clientSecret, setClientSecret] = useState("")
-  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"), {
-    betas: ["us_bank_account_beta_2"],
-  })
-
+  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -26,7 +23,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
       },
     }).then(res => {
       setClientSecret(
-        res.commerceCreateBankDebitSetupForOrder?.actionOrError.actionData
+        res.commerceCreateBankDebitSetupForOrder?.actionOrError?.actionData
           .clientSecret
       )
     })
