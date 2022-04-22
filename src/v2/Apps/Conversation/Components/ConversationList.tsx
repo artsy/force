@@ -8,7 +8,7 @@ import {
 import styled from "styled-components"
 import compact from "lodash/compact"
 import { Box, Flex, Spinner } from "@artsy/palette"
-
+import { themeGet } from "@styled-system/theme-get"
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { ConversationListHeader } from "./ConversationListHeader"
 
@@ -24,6 +24,16 @@ const SpinnerContainer = styled.div`
   width: 100%;
   height: 100px;
   position: relative;
+`
+
+const ConstrainedHeightContainer = styled(Flex)`
+  height: calc(100vh - 103px);
+  width: 100%;
+  overflow: hidden;
+  flex-direction: column;
+  @media ${themeGet("mediaQueries.xs")} {
+    height: calc(100vh - 60px);
+  }
 `
 
 export const PAGE_SIZE: number = 15
@@ -61,30 +71,28 @@ const ConversationList: React.FC<ConversationsProps> = props => {
   }
 
   return (
-    <Flex height="100%" width="100" overflow="hidden" flexDirection="column">
-      <>
-        <ConversationListHeader />
-        <ScrollContainer onScroll={handleScroll}>
-          {conversations.map(edge => (
-            <ConversationSnippet
-              isSelected={edge?.node?.internalID === selectedConversationID}
-              conversation={edge.node!}
-              key={edge.cursor}
-              hasDivider={
-                conversations.indexOf(edge) !== selectedConversationIndex &&
-                conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
-                conversations.indexOf(edge) !== conversations.length - 1
-              }
-            />
-          ))}
-          {fetchingMore ? (
-            <SpinnerContainer>
-              <Spinner />
-            </SpinnerContainer>
-          ) : null}
-        </ScrollContainer>
-      </>
-    </Flex>
+    <ConstrainedHeightContainer>
+      <ConversationListHeader />
+      <ScrollContainer onScroll={handleScroll}>
+        {conversations.map(edge => (
+          <ConversationSnippet
+            isSelected={edge?.node?.internalID === selectedConversationID}
+            conversation={edge.node!}
+            key={edge.cursor}
+            hasDivider={
+              conversations.indexOf(edge) !== selectedConversationIndex &&
+              conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
+              conversations.indexOf(edge) !== conversations.length - 1
+            }
+          />
+        ))}
+        {fetchingMore && (
+          <SpinnerContainer>
+            <Spinner />
+          </SpinnerContainer>
+        )}
+      </ScrollContainer>
+    </ConstrainedHeightContainer>
   )
 }
 
