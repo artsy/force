@@ -314,7 +314,6 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       href
       title
       date
-      is_saved: isSaved
       sale_message: saleMessage
       cultural_maker: culturalMaker
       artists(shallow: true) {
