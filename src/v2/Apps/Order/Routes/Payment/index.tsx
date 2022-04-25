@@ -55,12 +55,6 @@ type Props = PaymentProps & StripeProps
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
-track((props: PaymentProps) => ({
-  flow:
-    props.order.mode === "BUY"
-      ? AnalyticsSchema.Flow.BuyNow
-      : AnalyticsSchema.Flow.MakeOffer,
-}))
 export const PaymentRoute: FC<Props> = props => {
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
   const { order, isCommittingMutation } = props
