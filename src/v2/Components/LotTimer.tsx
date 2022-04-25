@@ -57,19 +57,6 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
   `,
 })
 
-export const extendedBiddingInfoCopy = extendedBiddingPeriodMinutes => {
-  return (
-    extendedBiddingPeriodMinutes && (
-      <>
-        <Spacer mt={1} />
-        <Text variant="xs" color={"black60"}>
-          *Closure times may be extended to accomodate last minute bids
-        </Text>
-      </>
-    )
-  )
-}
-
 export const getTimerCopy = (time, hasStarted) => {
   const { days, hours, minutes, seconds } = time
 
