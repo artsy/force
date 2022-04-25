@@ -1,9 +1,6 @@
 import { getTimerCopy, LotTimer } from "../LotTimer"
-import { extendedBiddingInfoCopy } from "../LotTimer"
-import { Text, Spacer } from "@artsy/palette"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import renderer from "react-test-renderer"
 
 describe("getTimerCopy", () => {
   describe("when the sale is open", () => {
