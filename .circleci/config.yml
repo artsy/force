@@ -1,12 +1,12 @@
 version: 2.1
 
 orbs:
-  artsy-remote-docker: artsy/remote-docker@0.1.15
+  artsy-remote-docker: artsy/remote-docker@volatile
   aws-s3: circleci/aws-s3@2.0.0
-  hokusai: artsy/hokusai@0.11.0
-  horizon: artsy/release@0.0.1
+  hokusai: artsy/hokusai@volatile
+  horizon: artsy/release@volatile
   slack: circleci/slack@4.9.3
-  yarn: artsy/yarn@6.1.0
+  yarn: artsy/yarn@volatile
 
 jobs:
   run_deepcrawl_automator:
@@ -94,7 +94,7 @@ jobs:
             }
 
   create_or_update_review_app:
-    executor: hokusai/deploy
+    executor: hokusai/beta
     parameters:
       artsy_docker_host:
         type: string
@@ -310,6 +310,7 @@ workflows:
       - artsy-remote-docker/buildkit-build:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: builder-image-build
           pre-steps:
             - run:
@@ -318,6 +319,7 @@ workflows:
       - artsy-remote-docker/buildkit-push:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: builder-image-push
           requires:
             - builder-image-build
@@ -329,6 +331,7 @@ workflows:
       - artsy-remote-docker/buildkit-build:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: electron-runner-image-build
           requires:
             - builder-image-build
@@ -339,6 +342,7 @@ workflows:
       - artsy-remote-docker/buildkit-push:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: electron-runner-image-push
           requires:
             - electron-runner-image-build
@@ -393,6 +397,7 @@ workflows:
       - artsy-remote-docker/buildkit-build:
           <<: *only_main
           context: hokusai
+          executor: hokusai/beta
           name: production-image-build
           requires:
             - builder-image-build
@@ -400,6 +405,7 @@ workflows:
       - artsy-remote-docker/buildkit-push:
           <<: *only_main
           context: hokusai
+          executor: hokusai/beta
           name: production-image-push
           requires:
             - mocha
@@ -414,6 +420,7 @@ workflows:
           <<: *only_main
           name: deploy-staging
           project-name: force
+          executor: hokusai/beta
           requires:
             - production-image-push
           post-steps:
@@ -455,6 +462,7 @@ workflows:
       # Production
       - hokusai/deploy-production:
           <<: *only_release
+          executor: hokusai/beta
           name: deploy-production
           requires:
             - horizon/block

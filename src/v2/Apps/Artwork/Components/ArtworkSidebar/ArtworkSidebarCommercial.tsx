@@ -402,7 +402,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     return (
       <>
         <Text variant="sm" color="black60">
-          Be notified when a similar piece is available
+          Be notified when a similar work is available
         </Text>
         <Spacer mt={2} />
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />

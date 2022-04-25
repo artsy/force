@@ -28,7 +28,6 @@ export const PageHTML = styled(Box)`
   h2,
   h3 {
     margin: ${themeGet("space.2")} auto;
-    text-align: center;
   }
 
   h1 {
@@ -82,6 +81,7 @@ export const PageHTML = styled(Box)`
   }
 
   hr {
+    margin: ${themeGet("space.4")} auto;
     height: 1px;
     border: 0;
     background-color: ${themeGet("colors.black10")};

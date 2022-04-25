@@ -97,7 +97,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
         justifyContent="space-between"
       >
         <Text variant="xs" mr={2}>
-          Be notified when a similar piece is available
+          Be notified when a similar work is available
         </Text>
         <SavedSearchCreateAlertButton
           entity={entity}

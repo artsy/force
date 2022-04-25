@@ -1,91 +1,232 @@
-import { ArtworkSidebarPartnerInfo_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarPartnerInfo_Test_Query.graphql"
 import {
   ArtworkFromPartnerWithLocations,
   ArtworkInNonAuctionSale,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarPartnerInfo"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarPartnerInfo"
-import { renderRelayTree } from "v2/DevTools"
+import { screen, fireEvent } from "@testing-library/react"
 import { graphql } from "react-relay"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { useSystemContext } from "v2/System/useSystemContext"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/useSystemContext")
+jest.mock("react-tracking")
+
+const trackEvent = jest.fn()
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => (
+    <ArtworkSidebarPartnerInfoFragmentContainer artwork={props.artwork} />
+  ),
+  query: graphql`
+    query ArtworkSidebarPartnerInfo_Test_Query @relay_test_operation {
+      artwork(id: "artwork_from_partner_with_locations") {
+        ...ArtworkSidebarPartnerInfo_artwork
+      }
+    }
+  `,
+})
 
 describe("ArtworkSidebarPartnerInfo", () => {
-  const getWrapper = async (
-    response: ArtworkSidebarPartnerInfo_Test_QueryRawResponse["artwork"]
-  ) => {
-    return await renderRelayTree({
-      Component: ArtworkSidebarPartnerInfoFragmentContainer,
-      query: graphql`
-        query ArtworkSidebarPartnerInfo_Test_Query
-          @raw_response_type
-          @relay_test_operation {
-          artwork(id: "artwork_from_partner_with_locations") {
-            ...ArtworkSidebarPartnerInfo_artwork
-          }
-        }
-      `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarPartnerInfo_Test_QueryRawResponse,
-    })
-  }
-
-  let artwork
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent,
+    }))
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: { "conversational-buy-now": { flagEnabled: true } },
+    }))
+  })
 
   describe("Non-auction Sales display", () => {
-    beforeEach(() => {
-      artwork = Object.assign({}, ArtworkInNonAuctionSale)
-    })
+    it("displays sale name", () => {
+      const { sale } = ArtworkInNonAuctionSale
 
-    it("displays sale name", async () => {
-      const wrapper = await getWrapper(artwork)
+      renderWithRelay({
+        Artwork: () => ArtworkInNonAuctionSale,
+      })
 
-      expect(wrapper.text()).toContain(artwork.sale.name)
-      expect(
-        wrapper.find({ href: artwork.sale.href }).hostNodes()
-      ).toHaveLength(1)
+      const element = screen.getByText(sale.name)
+      expect(element).toBeInTheDocument()
+      expect(element).toHaveAttribute("href", sale.href)
     })
   })
 
   describe("Partners display", () => {
-    beforeEach(() => {
-      artwork = Object.assign({}, ArtworkFromPartnerWithLocations)
-    })
+    it("displays partner name", () => {
+      const { partner } = ArtworkFromPartnerWithLocations
 
-    it("displays partner name", async () => {
-      const wrapper = await getWrapper(artwork)
-
-      expect(wrapper.text()).toContain(artwork.partner.name)
-      expect(
-        wrapper.find({ href: artwork.partner.href }).hostNodes()
-      ).toHaveLength(1)
-    })
-
-    it("displays partner name without href", async () => {
-      artwork.partner.href = null
-
-      const wrapper = await getWrapper(artwork)
-
-      expect(wrapper.text()).toContain(artwork.partner.name)
-      expect(wrapper.find({ href: artwork.partner.href }).length).toBe(0)
-    })
-
-    it("displays partner locations", async () => {
-      const wrapper = await getWrapper(artwork)
-
-      const text = wrapper.text()
-
-      artwork.partner.locations.forEach(location => {
-        expect(text).toContain(location.city)
+      renderWithRelay({
+        Artwork: () => ArtworkFromPartnerWithLocations,
       })
+
+      const element = screen.getByText(partner.name)
+      expect(element).toBeInTheDocument()
+      expect(element).toHaveAttribute("href", partner.href)
     })
 
-    it("displays partner without locations", async () => {
-      artwork.partner.locations = []
+    it("displays partner name without href", () => {
+      const { partner } = ArtworkFromPartnerWithLocations
 
-      const wrapper = await getWrapper(artwork)
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          partner: { ...partner, href: null },
+        }),
+      })
 
-      expect(wrapper.text()).toContain(artwork.partner.name)
+      const element = screen.getByText(partner.name)
+      expect(element).toBeInTheDocument()
+      expect(element).not.toHaveAttribute("href")
+    })
+
+    it("displays partner locations", () => {
+      renderWithRelay({
+        Artwork: () => ArtworkFromPartnerWithLocations,
+      })
+
+      const text = [
+        "New York",
+        "Beverly Hills",
+        "San Francisco",
+        "London",
+        "Paris",
+        "Le Bourget",
+        "Rome",
+        "Geneva",
+        "Athens",
+        "Central",
+        "Hong Kong",
+      ].join(", ")
+      expect(screen.getByText(text)).toBeInTheDocument()
+    })
+
+    it("displays partner without locations", () => {
+      const { partner } = ArtworkFromPartnerWithLocations
+
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          partner: { ...partner, locations: [] },
+        }),
+      })
+
+      expect(screen.getByText(partner.name)).toBeInTheDocument()
+    })
+  })
+
+  describe("Contact Gallery CTA", () => {
+    it("acquirable artwork (BN only) with exact price displays button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isAcquireable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("acquirable and offerable artwork (BNMO) with exact price displays button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isOfferable: true,
+          isAcquireable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("offerable artwork (MO only) with exact price displays button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isOfferable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("offerable artwork (MO only) with price range displays button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isOfferable: true,
+          isPriceRange: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("inquirible and offerable artwork with exact price doesn't display button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isOfferable: true,
+          isInquireable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("inquirible and offerable artwork with price range displays button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isOfferable: true,
+          isInquireable: true,
+          isPriceRange: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
+    })
+
+    it("inquirible artwork with exact price doesn't display button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isInquireable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("inquirible artwork with price range doesn't display button", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          isInquireable: true,
+          isPriceRange: true,
+        }),
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
+    it("tracks the right event when clicked", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          ...ArtworkFromPartnerWithLocations,
+          slug: "test-slug",
+          isAcquireable: true,
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Contact Gallery"))
+      expect(trackEvent).toBeCalledWith({
+        action_type: 'Clicked "Contact Gallery"',
+        artwork_id: "artwork_from_partner_with_locations",
+        artwork_slug: "test-slug",
+        context_module: "Sidebar",
+        subject: "Contact Gallery",
+      })
     })
   })
 })

@@ -78,7 +78,7 @@ describe("useFeatureVariant", () => {
   })
 })
 
-describe("useTrackVariantView", () => {
+describe("useTrackFeatureVariantView", () => {
   const analytics = window.analytics
 
   beforeEach(() => {
@@ -111,6 +111,17 @@ describe("useTrackVariantView", () => {
         variant_name: "experiment",
       }
     )
+  })
+
+  it("does not call the tracking function if the variantName is disabled", () => {
+    const { trackFeatureVariant } = useTrackFeatureVariant({
+      experimentName: "cool-experiment",
+      variantName: "disabled",
+    })
+
+    trackFeatureVariant()
+
+    expect(window?.analytics?.track).toHaveBeenCalledTimes(0)
   })
 })
 

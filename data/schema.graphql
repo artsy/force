@@ -1511,6 +1511,9 @@ type ArtistRelatedData {
     # Exclude artists the user already follows
     excludeFollowedArtists: Boolean
     first: Int
+
+    # Include featured artists if no results are found
+    includeFallbackArtists: Boolean
     last: Int
   ): ArtistConnection
 }
@@ -3336,6 +3339,7 @@ type CommerceBuyOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   sellerTotalCents: Int
+  shippingRadius: String
   shippingTotal(
     decimal: String = "."
 
@@ -4039,6 +4043,7 @@ type CommerceOfferOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   sellerTotalCents: Int
+  shippingRadius: String
   shippingTotal(
     decimal: String = "."
 
@@ -4233,6 +4238,7 @@ interface CommerceOrder {
     thousand: String = ","
   ): String
   sellerTotalCents: Int
+  shippingRadius: String
   shippingTotal(
     decimal: String = "."
 
@@ -6891,6 +6897,12 @@ type Delivery {
   ): String
 }
 
+type Department {
+  id: ID!
+  jobs: [Job!]!
+  name: String!
+}
+
 type Device {
   # E.g., net.artsy.artsy
   appId: String!
@@ -8880,6 +8892,25 @@ enum InvoiceState {
 
 # An ISO 8601-encoded datetime
 scalar ISO8601DateTime
+
+type Job {
+  # HTML of job listing
+  content: String!
+
+  # The url of the job listing on Greenhouse
+  externalURL: String!
+  id: ID!
+  location: String!
+  title: String!
+  updatedAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+}
 
 # Represents untyped JSON
 scalar JSON
@@ -11305,11 +11336,11 @@ type Query {
 
   # Get Algolia configuration
   _unused_gravity_algolia: Algolia!
-  _unused_gravity_categories: [MarketingCollectionCategory!]!
   _unused_gravity_devices(userId: ID!): [Device!]!
+  _unused_gravity_marketingCategories: [MarketingCollectionCategory!]!
 
   # Find a marketing collection by ID or slug
-  _unused_gravity_marketingCollection(id: ID!): MarketingCollection
+  _unused_gravity_marketingCollection(slug: String!): MarketingCollection
 
   # An array of marketing collections. Defaults to returning all available collections if no args are passed
   _unused_gravity_marketingCollections(
@@ -11787,6 +11818,7 @@ type Query {
     # The ID of the Credit Card
     id: String!
   ): CreditCard
+  departments: [Department!]!
 
   # A namespace external partners (provided by Galaxy)
   external: External!
@@ -11906,6 +11938,8 @@ type Query {
 
   # Home screen content
   homePage: HomePage
+  job(id: ID!): Job!
+  jobs: [Job!]!
   marketingCategories: [MarketingCollectionCategory!]!
   marketingCollection(slug: String!): MarketingCollection
   marketingCollections(
@@ -14938,6 +14972,7 @@ type Viewer {
     # The ID of the Credit Card
     id: String!
   ): CreditCard
+  departments: [Department!]!
 
   # A namespace external partners (provided by Galaxy)
   external: External!
@@ -15057,6 +15092,8 @@ type Viewer {
 
   # Home screen content
   homePage: HomePage
+  job(id: ID!): Job!
+  jobs: [Job!]!
   marketingCollections(
     artistID: String
     category: String

@@ -43,19 +43,18 @@ const ArtistItem: React.FC<
   const toggleArtistSelection = (selected, slug) => {
     let updatedValues = artistIDs
 
+    // Move followed artists to the explicit `artistIDs` list
+    if (isFollowedArtistCheckboxSelected) {
+      updatedValues = [...artistIDs, ...followedArtistSlugs]
+    }
+
     if (selected) {
       updatedValues = [...updatedValues, slug]
     } else {
-      // When an artist is de-selected, if it is a followed artist _and_ that filter
-      // is also checked, we want to de-select it as well, and move remaining followed
-      // artists to the explicit `artistIDs` list.
-      if (followedArtistSlugs.includes(slug)) {
-        setFilter("includeArtworksByFollowedArtists", false)
-        updatedValues = [...updatedValues, ...followedArtistSlugs]
-      }
-
       updatedValues = updatedValues.filter(item => item !== slug)
     }
+
+    setFilter("includeArtworksByFollowedArtists", false)
     setFilter("artistIDs", updatedValues)
   }
 
@@ -132,9 +131,10 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
         <Checkbox
           disabled={!followedArtistArtworkCount}
           selected={isFollowedArtistCheckboxSelected}
-          onSelect={value =>
+          onSelect={value => {
             filterContext.setFilter("includeArtworksByFollowedArtists", value)
-          }
+            filterContext.setFilter("artistIDs", [])
+          }}
           my={tokens.my}
         >
           Artists I follow ({followedArtistArtworkCount})

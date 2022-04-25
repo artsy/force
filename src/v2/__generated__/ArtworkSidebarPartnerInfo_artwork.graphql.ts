@@ -5,6 +5,11 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork = {
+    readonly internalID: string;
+    readonly slug: string;
+    readonly isOfferable: boolean | null;
+    readonly isInquireable: boolean | null;
+    readonly isPriceRange: boolean | null;
     readonly partner: {
         readonly name: string | null;
         readonly href: string | null;
@@ -47,6 +52,41 @@ return {
   "metadata": null,
   "name": "ArtworkSidebarPartnerInfo_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInquireable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isPriceRange",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -96,5 +136,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '806a61f16b48333cb19accd4017590d0';
+(node as any).hash = '012d796aba8815d2308f88886305b178';
 export default node;

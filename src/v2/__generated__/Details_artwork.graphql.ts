@@ -8,7 +8,6 @@ export type Details_artwork = {
     readonly href: string | null;
     readonly title: string | null;
     readonly date: string | null;
-    readonly is_saved: boolean | null;
     readonly sale_message: string | null;
     readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
@@ -110,13 +109,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "date",
-      "storageKey": null
-    },
-    {
-      "alias": "is_saved",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSaved",
       "storageKey": null
     },
     {
@@ -292,5 +284,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6836e8c4a7af896f4ca044e22b46e117';
+(node as any).hash = 'c0dd41967c2168024832749bf2155e6f';
 export default node;

@@ -33,6 +33,7 @@ import { pageRoutes } from "v2/Apps/Page/pageRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { partnersRoutes } from "v2/Apps/Partners/partnersRoutes"
 import { preferencesRoutes } from "./Apps/Preferences/preferencesRoutes"
+import { pressRoutes } from "./Apps/Press/pressRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
@@ -76,6 +77,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: partnerRoutes },
     { routes: partnersRoutes },
     { routes: preferencesRoutes },
+    { routes: pressRoutes },
     { routes: priceDatabaseRoutes },
     { routes: searchRoutes },
     { routes: settingsRoutes },

@@ -66,6 +66,7 @@ To add a new provider, you'll need to accomplish the following tasks:
   provider](https://www.passportjs.org/packages/)
 - Add any required keys or tokens from the provider to Force
 - Configure the strategy in `src/lib/passport/lib/passport/index.js`
+  - Ensure you have set any necessary scope params in `src/lib/passport/lib/passport/lifecycle.js` or [this could be you](https://github.com/artsy/force/pull/9851)!
 - Write the callback function for your provider in
   `src/lib/passport/lib/passport/callbacks.js`
 - Add routes for your provider to `src/lib/passport/lib/passport/index.js`

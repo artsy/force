@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "@artsy/backbone-mixins": "3.0.0",
-    "@artsy/cohesion": "4.43.0",
+    "@artsy/cohesion": "4.44.0",
     "@artsy/eigen-web-association": "1.2.2",
     "@artsy/express-reloadable": "1.6.0",
     "@artsy/fresnel": "3.5.0",
