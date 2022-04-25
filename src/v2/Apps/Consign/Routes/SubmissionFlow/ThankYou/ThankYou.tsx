@@ -6,13 +6,11 @@ import { DownloadApps } from "./Components/DownloadApps"
 import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
   const { match } = useRouter()
   const { trackEvent } = useTracking()
-  const isSWAMCEnabled = useFeatureFlag("swa_my_collection")
 
   const trackSubmitAnotherWorkClick = () =>
     trackEvent({
@@ -26,7 +24,7 @@ export const ThankYou: React.FC = () => {
 
   return (
     <>
-      {isSWAMCEnabled && isLoggedIn ? (
+      {isLoggedIn ? (
         <>
           <Text variant="xxl" mt={4}>
             Your artwork has been submitted
