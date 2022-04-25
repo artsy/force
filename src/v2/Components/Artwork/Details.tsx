@@ -18,8 +18,6 @@ import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
 import { ContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
-import { useHoverMetadata } from "./useHoverMetadata"
-import { isTouch } from "v2/Utils/device"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -28,6 +26,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
+  shouldShowHoverSaveButton?: boolean
 }
 
 const ConditionalLink: React.FC<
@@ -214,13 +213,10 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
+  shouldShowHoverSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
-  const { isHoverEffectEnabled } = useHoverMetadata()
-
-  const shouldShowHoverSaveButton =
-    isHoverEffectEnabled && (!!rest.artwork.is_saved || (isHovered && !isTouch))
 
   return (
     <Box>
