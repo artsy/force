@@ -13,16 +13,37 @@ import { ShippingQuotes_shippingQuotes } from "v2/__generated__/ShippingQuotes_s
 import { compact } from "lodash"
 
 export const shippingQuoteDescriptions = {
-  standard:
+  // Domestic shipping quotes
+  ground:
     "Delivers to your door in 3-5 business days once packaged and shipped via a common carrier.",
-  express:
+  second_day_air:
     "Delivers to your door in 2 business days once packaged and shipped via a common carrier.",
-  rush:
+  next_day_air:
     "Delivers to your door in 1 business day once packaged and shipped via a common carrier.",
-  premium:
+  select:
     "Inside delivery shipped via a white glove shipping service with custom packaging. Delivery timing variable.",
-  "white glove":
+  premium:
     "Room-of-choice delivery handled via trained technicians with specialized packaging and climate-controlled transportation. Recommended for high-value works. Delivery timing variable.",
+  // International shipping quotes
+  economy:
+    "Delivers to your door in 5-7 business days once packaged and shipped via a common carrier, depending on destination and prompt payment of applicable duties and taxes.",
+  standard:
+    "Delivers to your door in 3-5 business days once packaged and shipped via a common carrier, depending on destination and prompt payment of applicable duties and taxes.",
+  priority:
+    "Delivers to your door in 2-4 business days once packaged and shipped via a common carrier, depending on destination and prompt payment of applicable duties and taxes.",
+}
+
+export const shippingQuoteDisplayNames = {
+  // Domestic shipping quotes
+  ground: "Standard",
+  second_day_air: "Express",
+  next_day_air: "Rush",
+  select: "Premium",
+  premium: "White Glove",
+  // International shipping quotes
+  economy: "TBD",
+  standard: "Standard",
+  priority: "Priority",
 }
 
 export interface ShippingQuotesProps extends BoxProps {
@@ -52,8 +73,9 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
       defaultValue={selectedShippingQuoteId || quotes[0]?.id}
     >
       {quotes.map(shippingQuote => {
-        const { id, displayName, price } = shippingQuote
-        const description = shippingQuoteDescriptions[displayName.toLowerCase()]
+        const { id, price, typeName } = shippingQuote
+        const description = shippingQuoteDescriptions[typeName]
+        const displayName = shippingQuoteDisplayNames[typeName]
 
         return (
           <BorderedRadio
@@ -90,10 +112,10 @@ export const ShippingQuotesFragmentContainer = createFragmentContainer(
         @relay(plural: true) {
         node {
           id
-          displayName
           isSelected
           price(precision: 2)
           priceCents
+          typeName
         }
       }
     `,
