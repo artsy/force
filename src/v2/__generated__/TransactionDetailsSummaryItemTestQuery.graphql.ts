@@ -46,6 +46,7 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
+        readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
@@ -116,6 +117,7 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
+        readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
@@ -176,6 +178,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
       }
     }
   }
+  internalID
   mode
   shippingTotal(precision: 2)
   shippingTotalCents
@@ -246,59 +249,60 @@ v3 = {
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v5 = [
   {
     "kind": "Literal",
     "name": "precision",
     "value": 2
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
-  "args": (v4/*: any*/),
+  "args": (v5/*: any*/),
   "kind": "ScalarField",
   "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "shippingTotalCents",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
-  "args": (v4/*: any*/),
+  "args": (v5/*: any*/),
   "kind": "ScalarField",
   "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "taxTotalCents",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
-  "args": (v4/*: any*/),
+  "args": (v5/*: any*/),
   "kind": "ScalarField",
   "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
 },
-v10 = [
+v11 = [
+  (v4/*: any*/),
   {
     "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": (v4/*: any*/),
+    "args": (v5/*: any*/),
     "kind": "ScalarField",
     "name": "amount",
     "storageKey": "amount(precision:2)"
@@ -310,11 +314,11 @@ v10 = [
     "name": "amountCents",
     "storageKey": null
   },
-  (v5/*: any*/),
   (v6/*: any*/),
   (v7/*: any*/),
   (v8/*: any*/),
   (v9/*: any*/),
+  (v10/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -338,43 +342,43 @@ v10 = [
   },
   (v3/*: any*/)
 ],
-v11 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v12 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v13 = {
   "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v14 = {
+  "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CommerceOffer"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v16 = {
+v17 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Int"
 },
-v17 = {
+v18 = {
   "enumValues": [
     "BUYER",
     "SELLER"
@@ -538,6 +542,7 @@ return {
             ],
             "storageKey": null
           },
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -545,18 +550,18 @@ return {
             "name": "mode",
             "storageKey": null
           },
-          (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "kind": "ScalarField",
             "name": "itemsTotal",
             "storageKey": "itemsTotal(precision:2)"
           },
-          (v9/*: any*/),
+          (v10/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -575,7 +580,7 @@ return {
                 "kind": "LinkedField",
                 "name": "lastOffer",
                 "plural": false,
-                "selections": (v10/*: any*/),
+                "selections": (v11/*: any*/),
                 "storageKey": null
               },
               {
@@ -585,7 +590,7 @@ return {
                 "kind": "LinkedField",
                 "name": "myLastOffer",
                 "plural": false,
-                "selections": (v10/*: any*/),
+                "selections": (v11/*: any*/),
                 "storageKey": null
               }
             ],
@@ -598,7 +603,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54f903a1bc5e69a2a0766f292a3c1e7e",
+    "cacheID": "091a7827c299cf17861833efdb38da70",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -608,26 +613,27 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "order.__isCommerceOrder": (v11/*: any*/),
-        "order.__typename": (v11/*: any*/),
-        "order.buyerTotal": (v12/*: any*/),
-        "order.code": (v11/*: any*/),
-        "order.currencyCode": (v11/*: any*/),
-        "order.id": (v13/*: any*/),
-        "order.itemsTotal": (v12/*: any*/),
-        "order.lastOffer": (v14/*: any*/),
-        "order.lastOffer.amount": (v12/*: any*/),
-        "order.lastOffer.amountCents": (v15/*: any*/),
-        "order.lastOffer.buyerTotal": (v12/*: any*/),
-        "order.lastOffer.buyerTotalCents": (v16/*: any*/),
-        "order.lastOffer.fromParticipant": (v17/*: any*/),
-        "order.lastOffer.id": (v13/*: any*/),
-        "order.lastOffer.internalID": (v13/*: any*/),
-        "order.lastOffer.note": (v12/*: any*/),
-        "order.lastOffer.shippingTotal": (v12/*: any*/),
-        "order.lastOffer.shippingTotalCents": (v16/*: any*/),
-        "order.lastOffer.taxTotal": (v12/*: any*/),
-        "order.lastOffer.taxTotalCents": (v16/*: any*/),
+        "order.__isCommerceOrder": (v12/*: any*/),
+        "order.__typename": (v12/*: any*/),
+        "order.buyerTotal": (v13/*: any*/),
+        "order.code": (v12/*: any*/),
+        "order.currencyCode": (v12/*: any*/),
+        "order.id": (v14/*: any*/),
+        "order.internalID": (v14/*: any*/),
+        "order.itemsTotal": (v13/*: any*/),
+        "order.lastOffer": (v15/*: any*/),
+        "order.lastOffer.amount": (v13/*: any*/),
+        "order.lastOffer.amountCents": (v16/*: any*/),
+        "order.lastOffer.buyerTotal": (v13/*: any*/),
+        "order.lastOffer.buyerTotalCents": (v17/*: any*/),
+        "order.lastOffer.fromParticipant": (v18/*: any*/),
+        "order.lastOffer.id": (v14/*: any*/),
+        "order.lastOffer.internalID": (v14/*: any*/),
+        "order.lastOffer.note": (v13/*: any*/),
+        "order.lastOffer.shippingTotal": (v13/*: any*/),
+        "order.lastOffer.shippingTotalCents": (v17/*: any*/),
+        "order.lastOffer.taxTotal": (v13/*: any*/),
+        "order.lastOffer.taxTotalCents": (v17/*: any*/),
         "order.lineItems": {
           "enumValues": null,
           "nullable": true,
@@ -652,19 +658,19 @@ return {
           "plural": false,
           "type": "ArtworkOrEditionSetType"
         },
-        "order.lineItems.edges.node.artworkOrEditionSet.__isNode": (v11/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v11/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.id": (v13/*: any*/),
-        "order.lineItems.edges.node.artworkOrEditionSet.price": (v12/*: any*/),
-        "order.lineItems.edges.node.id": (v13/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.__isNode": (v12/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.__typename": (v12/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.id": (v14/*: any*/),
+        "order.lineItems.edges.node.artworkOrEditionSet.price": (v13/*: any*/),
+        "order.lineItems.edges.node.id": (v14/*: any*/),
         "order.lineItems.edges.node.selectedShippingQuote": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceShippingQuote"
         },
-        "order.lineItems.edges.node.selectedShippingQuote.displayName": (v11/*: any*/),
-        "order.lineItems.edges.node.selectedShippingQuote.id": (v13/*: any*/),
+        "order.lineItems.edges.node.selectedShippingQuote.displayName": (v12/*: any*/),
+        "order.lineItems.edges.node.selectedShippingQuote.id": (v14/*: any*/),
         "order.mode": {
           "enumValues": [
             "BUY",
@@ -674,35 +680,35 @@ return {
           "plural": false,
           "type": "CommerceOrderModeEnum"
         },
-        "order.myLastOffer": (v14/*: any*/),
-        "order.myLastOffer.amount": (v12/*: any*/),
-        "order.myLastOffer.amountCents": (v15/*: any*/),
-        "order.myLastOffer.buyerTotal": (v12/*: any*/),
-        "order.myLastOffer.buyerTotalCents": (v16/*: any*/),
-        "order.myLastOffer.fromParticipant": (v17/*: any*/),
-        "order.myLastOffer.id": (v13/*: any*/),
-        "order.myLastOffer.internalID": (v13/*: any*/),
-        "order.myLastOffer.note": (v12/*: any*/),
-        "order.myLastOffer.shippingTotal": (v12/*: any*/),
-        "order.myLastOffer.shippingTotalCents": (v16/*: any*/),
-        "order.myLastOffer.taxTotal": (v12/*: any*/),
-        "order.myLastOffer.taxTotalCents": (v16/*: any*/),
+        "order.myLastOffer": (v15/*: any*/),
+        "order.myLastOffer.amount": (v13/*: any*/),
+        "order.myLastOffer.amountCents": (v16/*: any*/),
+        "order.myLastOffer.buyerTotal": (v13/*: any*/),
+        "order.myLastOffer.buyerTotalCents": (v17/*: any*/),
+        "order.myLastOffer.fromParticipant": (v18/*: any*/),
+        "order.myLastOffer.id": (v14/*: any*/),
+        "order.myLastOffer.internalID": (v14/*: any*/),
+        "order.myLastOffer.note": (v13/*: any*/),
+        "order.myLastOffer.shippingTotal": (v13/*: any*/),
+        "order.myLastOffer.shippingTotalCents": (v17/*: any*/),
+        "order.myLastOffer.taxTotal": (v13/*: any*/),
+        "order.myLastOffer.taxTotalCents": (v17/*: any*/),
         "order.requestedFulfillment": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceRequestedFulfillmentUnion"
         },
-        "order.requestedFulfillment.__typename": (v11/*: any*/),
-        "order.shippingTotal": (v12/*: any*/),
-        "order.shippingTotalCents": (v16/*: any*/),
-        "order.taxTotal": (v12/*: any*/),
-        "order.taxTotalCents": (v16/*: any*/)
+        "order.requestedFulfillment.__typename": (v12/*: any*/),
+        "order.shippingTotal": (v13/*: any*/),
+        "order.shippingTotalCents": (v17/*: any*/),
+        "order.taxTotal": (v13/*: any*/),
+        "order.taxTotalCents": (v17/*: any*/)
       }
     },
     "name": "TransactionDetailsSummaryItemTestQuery",
     "operationKind": "query",
-    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  internalID\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

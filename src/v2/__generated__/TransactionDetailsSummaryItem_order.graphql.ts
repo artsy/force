@@ -32,6 +32,7 @@ export type TransactionDetailsSummaryItem_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly shippingTotal: string | null;
     readonly shippingTotalCents: number | null;
@@ -93,59 +94,60 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = [
   {
     "kind": "Literal",
     "name": "precision",
     "value": 2
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
-  "args": (v2/*: any*/),
+  "args": (v3/*: any*/),
   "kind": "ScalarField",
   "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "shippingTotalCents",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
-  "args": (v2/*: any*/),
+  "args": (v3/*: any*/),
   "kind": "ScalarField",
   "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "taxTotalCents",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
-  "args": (v2/*: any*/),
+  "args": (v3/*: any*/),
   "kind": "ScalarField",
   "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
 },
-v8 = [
+v9 = [
+  (v2/*: any*/),
   {
     "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": (v2/*: any*/),
+    "args": (v3/*: any*/),
     "kind": "ScalarField",
     "name": "amount",
     "storageKey": "amount(precision:2)"
@@ -157,11 +159,11 @@ v8 = [
     "name": "amountCents",
     "storageKey": null
   },
-  (v3/*: any*/),
   (v4/*: any*/),
   (v5/*: any*/),
   (v6/*: any*/),
   (v7/*: any*/),
+  (v8/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -285,6 +287,7 @@ return {
       ],
       "storageKey": null
     },
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -292,18 +295,18 @@ return {
       "name": "mode",
       "storageKey": null
     },
-    (v3/*: any*/),
     (v4/*: any*/),
     (v5/*: any*/),
     (v6/*: any*/),
+    (v7/*: any*/),
     {
       "alias": null,
-      "args": (v2/*: any*/),
+      "args": (v3/*: any*/),
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
     },
-    (v7/*: any*/),
+    (v8/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -321,7 +324,7 @@ return {
           "kind": "LinkedField",
           "name": "lastOffer",
           "plural": false,
-          "selections": (v8/*: any*/),
+          "selections": (v9/*: any*/),
           "storageKey": null
         },
         {
@@ -331,7 +334,7 @@ return {
           "kind": "LinkedField",
           "name": "myLastOffer",
           "plural": false,
-          "selections": (v8/*: any*/),
+          "selections": (v9/*: any*/),
           "storageKey": null
         }
       ],
@@ -343,5 +346,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '71d925480aee61f68ce09f24eea756c8';
+(node as any).hash = '6cc144e00de9759c79c8cf4069eeeb27';
 export default node;
