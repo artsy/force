@@ -1,6 +1,5 @@
 import { Checkbox } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
-
 import {
   BuyOrderWithShippingDetails,
   OfferOrderWithShippingDetails,
@@ -15,13 +14,16 @@ import {
 } from "../__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { useSystemContext } from "v2/System"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
+import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
@@ -30,6 +32,7 @@ jest.mock(
     return require("../../Components/__mocks__/PaymentPicker")
   }
 )
+jest.mock("v2/System/useSystemContext")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
@@ -37,6 +40,24 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 }
 
 describe("Payment", () => {
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => {
+      return {
+        featureFlags: {
+          stripe_ACH: {
+            flagEnabled: false,
+          },
+        },
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+          ready: jest.fn(),
+          trigger: jest.fn(),
+        },
+      }
+    })
+  })
+
   const { buildPage, mutations, routes } = createTestEnv({
     Component: PaymentFragmentContainer,
     defaultData: {
@@ -159,6 +180,51 @@ describe("Payment", () => {
         `"CheckOfferNavigate rightCheckShippingNavigate rightPaymentNavigate rightReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
+    })
+  })
+
+  describe("stripe ACH enabled", () => {
+    beforeAll(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return {
+          featureFlags: {
+            stripe_ACH: {
+              flagEnabled: true,
+            },
+          },
+          mediator: {
+            on: jest.fn(),
+            off: jest.fn(),
+            ready: jest.fn(),
+            trigger: jest.fn(),
+          },
+        }
+      })
+    })
+
+    it("returns true when the feature is enabled", () => {
+      const result = useFeatureFlag("stripe_ACH")
+      expect(result).toBe(true)
+    })
+
+    it("renders selection of payment methods", async () => {
+      const page = await buildPage()
+      expect(page.text()).toContain("Credit Card")
+      expect(page.text()).toContain("Bank Transfer")
+    })
+
+    it("renders credit card element when credit card is chosen as payment method", async () => {
+      const page = await buildPage()
+      page.selectPaymentMethod(0)
+      expect(page.text()).toContain("Credit card")
+      expect(page.find(PaymentPickerFragmentContainer).length).toBe(1)
+    })
+
+    it("renders bank element when bank transfer is chosen as payment mehod", async () => {
+      const page = await buildPage()
+      page.selectPaymentMethod(1)
+      expect(page.text()).toContain("Bank transfer")
+      expect(page.find(BankDebitProvider).length).toBe(1)
     })
   })
 })
