@@ -476,7 +476,6 @@ workflows:
 
       - create_or_update_review_app:
           context: hokusai
-          executor: hokusai/beta
           filters:
             branches:
               only: /^review-app-.*/
