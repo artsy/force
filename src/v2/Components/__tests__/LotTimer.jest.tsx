@@ -1,7 +1,7 @@
 import { getTimerCopy, LotTimer } from "../LotTimer"
 import { mount } from "enzyme"
 import "jest-styled-components"
-
+import { LotTimer_saleArtwork } from "v2/__generated__/LotTimer_saleArtwork.graphql"
 describe("getTimerCopy", () => {
   describe("when the sale is open", () => {
     const hasStarted = true
@@ -84,11 +84,11 @@ describe("getTimerCopy", () => {
 describe("extendedBiddingInfoCopy", () => {
   describe("when extended bidding feature is on", () => {
     it("shows the extended bidding info label", () => {
-      const saleArtwork = {
+      const saleArtwork: LotTimer_saleArtwork = {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         sale: { startAt: "", extendedBiddingPeriodMinutes: 2 },
-        " $refType": null,
+        " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
@@ -100,11 +100,11 @@ describe("extendedBiddingInfoCopy", () => {
 
   describe("when extended bidding feature is off", () => {
     it("shows the extended bidding info label", () => {
-      const saleArtwork = {
+      const saleArtwork: LotTimer_saleArtwork = {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         sale: { startAt: "", extendedBiddingPeriodMinutes: null },
-        " $refType": null,
+        " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
