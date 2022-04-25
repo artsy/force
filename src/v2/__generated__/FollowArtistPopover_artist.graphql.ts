@@ -52,6 +52,11 @@ const node: ReaderFragment = {
               "kind": "Literal",
               "name": "first",
               "value": 3
+            },
+            {
+              "kind": "Literal",
+              "name": "includeFallbackArtists",
+              "value": true
             }
           ],
           "concreteType": "ArtistConnection",
@@ -101,7 +106,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "suggestedConnection(excludeFollowedArtists:true,first:3)"
+          "storageKey": "suggestedConnection(excludeFollowedArtists:true,first:3,includeFallbackArtists:true)"
         }
       ],
       "storageKey": null
@@ -110,5 +115,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '90657ea28fda4ad1f17942932ad1d208';
+(node as any).hash = '472738b46c0229ba9ace17383c80e73a';
 export default node;
