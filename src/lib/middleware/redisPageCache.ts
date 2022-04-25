@@ -18,9 +18,6 @@ import { createFeatureFlagsCachePrefix } from "./featureFlagMiddleware"
 
 const debugLog = util.debuglog("redisCache")
 
-const ENABLED_AB_TESTS = Object.keys(
-  require("desktop/components/split_test/running_tests.coffee")
-).sort()
 const cacheablePageTypes: string[] = PAGE_CACHE_TYPES.split("|")
 
 // Middleware will `next` and do nothing if any of the following is true:
@@ -63,13 +60,6 @@ export function redisPageCacheMiddleware(
   }
   if (!isCacheablePageType(req)) return next()
 
-  // Generate cache key that includes all currently running AB tests and outcomes.
-  const abTestPrefix =
-    ENABLED_AB_TESTS.map(test => {
-      const outcome = res.locals.sd[test.toUpperCase()]
-      return `${test}:${outcome}`
-    }).join("|") || "none"
-
   // Generate cache key that indlues all currently enabled featureFlags and
   // variants
   const featureFlagsCachePrefix = createFeatureFlagsCachePrefix(
@@ -81,7 +71,6 @@ export function redisPageCacheMiddleware(
   const cacheKey = (key: string) => {
     return [
       PAGE_CACHE_NAMESPACE,
-      abTestPrefix,
       featureFlagsCachePrefix,
       PAGE_CACHE_VERSION,
       key,
