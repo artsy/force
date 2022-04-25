@@ -12,6 +12,8 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   const { endAt } = saleArtwork
 
   const startAt = saleArtwork?.sale?.startAt
+  const extendedBiddingPeriodMinutes =
+    saleArtwork?.sale?.extendedBiddingPeriodMinutes
 
   const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
 
@@ -20,9 +22,6 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   }
 
   const timerCopy = getTimerCopy(time, hasStarted)
-  const extendedBiddingInfoLabel = extendedBiddingInfoCopy(
-    saleArtwork?.sale?.extendedBiddingPeriodMinutes
-  )
 
   return (
     <Flex alignItems="center" flexDirection="column">
@@ -33,7 +32,14 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
       <Text variant="md" color={"black60"}>
         {saleArtwork.formattedStartDateTime}
       </Text>
-      {extendedBiddingInfoLabel}
+      {extendedBiddingPeriodMinutes && (
+        <>
+          <Spacer mt={1} />
+          <Text variant="xs" color={"black60"}>
+            *Closure times may be extended to accomodate last minute bids
+          </Text>
+        </>
+      )}
     </Flex>
   )
 }

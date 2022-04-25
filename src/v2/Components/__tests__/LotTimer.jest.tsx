@@ -1,6 +1,9 @@
-import { getTimerCopy } from "../LotTimer"
+import { getTimerCopy, LotTimer } from "../LotTimer"
 import { extendedBiddingInfoCopy } from "../LotTimer"
 import { Text, Spacer } from "@artsy/palette"
+import { mount } from "enzyme"
+import "jest-styled-components"
+import renderer from "react-test-renderer"
 
 describe("getTimerCopy", () => {
   describe("when the sale is open", () => {
@@ -83,24 +86,33 @@ describe("getTimerCopy", () => {
 
 describe("extendedBiddingInfoCopy", () => {
   describe("when extended bidding feature is on", () => {
-    const extendedBiddingPeriodMinutes = 2
     it("shows the extended bidding info label", () => {
-      expect(extendedBiddingInfoCopy(extendedBiddingPeriodMinutes)).toEqual(
-        <>
-          <Spacer mt={1} />
-          <Text variant="xs" color={"black60"}>
-            *Closure times may be extended to accomodate last minute bids
-          </Text>
-        </>
+      const saleArtwork = {
+        endAt: Date.now().toString(),
+        formattedStartDateTime: "",
+        sale: { startAt: "", extendedBiddingPeriodMinutes: 2 },
+        " $refType": null,
+      }
+      const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
+      const text = wrapper.text()
+      expect(text).toContain(
+        "*Closure times may be extended to accomodate last minute bids"
       )
     })
   })
 
   describe("when extended bidding feature is off", () => {
-    const extendedBiddingPeriodMinutes = null
     it("shows the extended bidding info label", () => {
-      expect(extendedBiddingInfoCopy(extendedBiddingPeriodMinutes)).toEqual(
-        null
+      const saleArtwork = {
+        endAt: Date.now().toString(),
+        formattedStartDateTime: "",
+        sale: { startAt: "", extendedBiddingPeriodMinutes: null },
+        " $refType": null,
+      }
+      const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
+      const text = wrapper.text()
+      expect(text).not.toContain(
+        "*Closure times may be extended to accomodate last minute bids"
       )
     })
   })
