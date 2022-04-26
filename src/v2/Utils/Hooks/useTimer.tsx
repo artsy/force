@@ -1,5 +1,4 @@
 import { DateTime, Duration } from "luxon"
-import { convertToObject } from "typescript"
 import { useCurrentTime } from "./useCurrentTime"
 
 interface Time {

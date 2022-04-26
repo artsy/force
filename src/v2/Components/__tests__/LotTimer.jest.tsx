@@ -97,7 +97,7 @@ describe("extendedBiddingInfoCopy", () => {
         "*Closure times may be extended to accomodate last minute bids"
       )
     })
-    describe("a bid has enxtended the auction", () => {
+    describe("a bid has extended the auction", () => {
       it("shows the extended next to the timer", () => {
         let startDate = new Date()
         const startAt = new Date(startDate.setMonth(startDate.getMonth() - 1))

@@ -23,9 +23,6 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
     return null
   }
 
-  console.log(startAt)
-  console.log(endAt)
-
   const timerCopy = getTimerCopy(time, hasStarted, extendBiddingEndAt)
 
   return (
@@ -77,8 +74,6 @@ export const getTimerCopy = (
 
   let copy = ""
   let color = "blue100"
-  console.log(time)
-  console.log(extendedBiddingEndAt)
 
   // Sale has not yet started
   if (!hasStarted) {
