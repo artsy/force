@@ -9,21 +9,20 @@ export interface LotTimerProps {
 }
 
 export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
-  const { endAt } = saleArtwork
+  const { endAt, extendedBiddingEndAt } = saleArtwork
 
   const startAt = saleArtwork?.sale?.startAt
   const extendedBiddingPeriodMinutes =
     saleArtwork?.sale?.extendedBiddingPeriodMinutes
 
-  const extendBiddingEndAt = saleArtwork?.extendedBiddingEndAt
-
-  const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
+  const biddingEndAt = extendedBiddingEndAt ?? endAt
+  const { hasEnded, time, hasStarted } = useTimer(biddingEndAt!, startAt!)
 
   if (!endAt) {
     return null
   }
 
-  const timerCopy = getTimerCopy(time, hasStarted, extendBiddingEndAt)
+  const timerCopy = getTimerCopy(time, hasStarted, extendedBiddingEndAt)
 
   return (
     <Flex alignItems="center" flexDirection="column">
@@ -60,6 +59,8 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
   `,
 })
 
+// If `extendedBiddingEndAt` is passed in and non-null, the `time`
+// parameter refers to the time left in the extended period.
 export const getTimerCopy = (
   time,
   hasStarted,
@@ -82,10 +83,6 @@ export const getTimerCopy = (
     } Until Bidding Starts`
     // entered extended bidding
   } else if (extendedBiddingEndAt) {
-    const { time } = useTimer(extendedBiddingEndAt)
-    const { minutes, seconds } = time
-    const parsedMinutes = parseInt(minutes, 10)
-    const parsedSeconds = parseInt(seconds, 10)
     copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
     color = "red100"
   } else {
