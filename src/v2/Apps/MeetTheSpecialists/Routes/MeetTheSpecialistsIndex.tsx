@@ -265,14 +265,14 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     title: "Specialist in Post-War & Contemporary Art",
     location: "New York",
     email: "celine.cunha@artsymail.com",
-    photo: { url: "http://files.artsy.net/images/Celine_Cunha_Krieger.png" },
+    image: "http://files.artsy.net/images/Celine_Cunha_Krieger.png",
   },
   {
     name: "Simon Wills",
     title: "Trusts & Estates Senior Manager",
     location: "New York",
     email: "simon.wills@artsymail.com",
-    photo: { url: "http://files.artsy.net/images/simon_wills.png" },
+    image: "http://files.artsy.net/images/simon_wills.png",
   },
 ]
 
