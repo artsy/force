@@ -1,4 +1,4 @@
-import { Box, Spacer, Join } from "@artsy/palette"
+import { Box, Spacer, Join, Separator } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
@@ -21,6 +21,11 @@ import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuc
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 import { lotIsClosed } from "v2/Apps/Artwork/Utils/lotIsClosed"
+import {
+  shouldRenderAuthenticityCertificate,
+  shouldRenderGuarantee,
+  shouldRenderVerifiedSeller,
+} from "../../Utils/badges"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -48,13 +53,18 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
     is_sold
 
+  const shouldRenderArtworkBadges =
+    shouldRenderAuthenticityCertificate(artwork) ||
+    shouldRenderVerifiedSeller(artwork) ||
+    shouldRenderGuarantee(artwork)
+
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
       <Spacer mt={4} />
       <ArtworkSidebarMetadataFragmentContainer artwork={artwork} />
 
-      {artwork.is_in_auction ? (
+      {is_in_auction ? (
         <>
           <Spacer mt={2} />
           <Join separator={<Spacer mt={2} />}>
@@ -84,16 +94,25 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
           <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
         </>
       )}
-      <Join separator={<Spacer mt={2} />}>
-        <AuthenticityCertificateFragmentContainer artwork={artwork} />
-        <SecurePaymentFragmentContainer artwork={artwork} />
-        <VerifiedSellerFragmentContainer artwork={artwork} />
-        <BuyerGuaranteeFragmentContainer artwork={artwork} />
-      </Join>
+
+      {shouldRenderArtworkBadges && (
+        <Join separator={<Spacer mt={2} />}>
+          <AuthenticityCertificateFragmentContainer artwork={artwork} />
+          <SecurePaymentFragmentContainer artwork={artwork} />
+          <VerifiedSellerFragmentContainer artwork={artwork} />
+          <BuyerGuaranteeFragmentContainer artwork={artwork} />
+        </Join>
+      )}
+
+      {(shouldRenderArtworkBadges || (is_in_auction && !hasEnded)) && (
+        <Separator mt={2} />
+      )}
+
       {isCreateAlertButtonForArtworkEnabled &&
         !shouldHideDetailsCreateAlertCTA && (
           <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
         )}
+
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
@@ -106,6 +125,13 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
       fragment ArtworkSidebar_artwork on Artwork {
         is_in_auction: isInAuction
         is_sold: isSold
+        hasCertificateOfAuthenticity
+        isBiddable
+        isAcquireable
+        isOfferable
+        partner {
+          isVerifiedSeller
+        }
         ...ArtworkSidebarArtists_artwork
         ...ArtworkSidebarMetadata_artwork
         ...ArtworkSidebarAuctionPartnerInfo_artwork
