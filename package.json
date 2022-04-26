@@ -130,7 +130,7 @@
     "core-js": "2.6.5",
     "csurf": "^1.9.0",
     "currency.js": "1.2.1",
-    "dd-trace": "0.7.3",
+    "dd-trace": "0.36.2",
     "dotenv": "4.0.0",
     "ejs": "3.1.5",
     "es7-object-polyfill": "0.0.7",
