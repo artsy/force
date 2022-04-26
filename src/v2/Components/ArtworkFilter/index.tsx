@@ -28,7 +28,6 @@ import {
   GridColumns,
   Spacer,
   Text,
-  useThemeConfig,
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
@@ -115,11 +114,11 @@ export const BaseArtworkFilter: React.FC<
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
-  const [isFetching, toggleFetching] = useState(false)
+  // const [isFetching, toggleFetching] = useState(false)
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
-  const { user } = useSystemContext()
+  const { user, isFetching } = useSystemContext()
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
@@ -187,21 +186,8 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  const tokens = useThemeConfig({
-    v2: {
-      version: "v2",
-      mt: [0, 0.5],
-      pr: [0, 2],
-    },
-    v3: {
-      version: "v3",
-      mt: undefined,
-      pr: undefined,
-    },
-  })
-
   function fetchResults() {
-    toggleFetching(true)
+    // toggleFetching(true)
 
     const refetchVariables = {
       input: {
@@ -213,13 +199,13 @@ export const BaseArtworkFilter: React.FC<
       ...relayVariables,
     }
 
-    relay.refetch(refetchVariables, null, error => {
-      if (error) {
-        console.error(error)
-      }
+    // relay.refetch(refetchVariables, null, error => {
+    //   if (error) {
+    //     console.error(error)
+    //   }
 
-      toggleFetching(false)
-    })
+    //   toggleFetching(false)
+    // })
   }
 
   if (!viewer?.filtered_artworks) {
@@ -227,7 +213,7 @@ export const BaseArtworkFilter: React.FC<
   }
 
   return (
-    <Box mt={tokens.mt} {...rest}>
+    <Box {...rest}>
       <Box id="jump--artworkFilter" />
 
       {/* Mobile Artwork Filter */}
@@ -307,18 +293,16 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        {tokens.version === "v3" && (
-          <Flex justifyContent="space-between" alignItems="center" mb={4}>
-            <Text variant="xs" textTransform="uppercase">
-              Filter by
-            </Text>
+        <Flex justifyContent="space-between" alignItems="center" mb={4}>
+          <Text variant="xs" textTransform="uppercase">
+            Filter by
+          </Text>
 
-            <ArtworkSortFilter />
-          </Flex>
-        )}
+          <ArtworkSortFilter />
+        </Flex>
 
         <GridColumns>
-          <Column span={3} pr={tokens.pr}>
+          <Column span={3}>
             {Filters ? (
               Filters
             ) : (
@@ -335,12 +319,6 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {tokens.version === "v2" && (
-              <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
-                <ArtworkSortFilter />
-              </Box>
-            )}
-
             {enableCreateAlert && savedSearchEntity && (
               <>
                 <SavedSearchAlertArtworkGridFilterPills
@@ -397,8 +375,6 @@ export const ArtworkFilterQueryRenderer = ({ keyword = "andy warhol" }) => {
     >
       <SystemQueryRenderer<ArtworkFilterQueryType>
         environment={relayEnvironment}
-        // FIXME: Passing a variable to `query` shouldn't error out in linter
-        /* tslint:disable:relay-operation-generics */
         query={ArtworkQueryFilter}
         variables={{
           keyword,

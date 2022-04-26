@@ -9,12 +9,16 @@ import { NetworkTimeout } from "./NetworkTimeout"
 import { PageLoader } from "./PageLoader"
 import { AppShell } from "v2/Apps/Components/AppShell"
 import { getENV } from "v2/Utils/getENV"
-import { HttpError } from "found"
+import { HttpError, useRouter } from "found"
 
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
 export const RenderPending = () => {
+  const { match } = useRouter()
   const { isFetching, setFetching } = useSystemContext()
+
+  const hidePageLoaderFromRouterState =
+    match.location?.state?.hidePageLoader ?? false
 
   /**
    * First, set fetching to ensure that components that are listening for this
@@ -31,18 +35,20 @@ export const RenderPending = () => {
       <>
         <Renderer>{null}</Renderer>
 
-        <PageLoader
-          className="reactionPageLoader" // positional styling comes from Force body.styl
-          showBackground={false}
-          step={10} // speed of progress bar, randomized between 1/x to simulate variable progress
-          style={{
-            borderTop: "1px solid white",
-            position: "fixed",
-            left: 0,
-            top: -5,
-            zIndex: 1000,
-          }}
-        />
+        {!hidePageLoaderFromRouterState && (
+          <PageLoader
+            className="reactionPageLoader" // positional styling comes from Force body.styl
+            showBackground={false}
+            step={10} // speed of progress bar, randomized between 1/x to simulate variable progress
+            style={{
+              borderTop: "1px solid white",
+              position: "fixed",
+              left: 0,
+              top: -5,
+              zIndex: 1000,
+            }}
+          />
+        )}
 
         <NetworkTimeout />
       </>

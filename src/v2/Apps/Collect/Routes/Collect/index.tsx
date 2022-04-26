@@ -22,6 +22,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { useRouter } from "v2/System/Router/useRouter"
 
 export interface CollectAppProps {
   match: Match
@@ -37,6 +38,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   match: { location, params },
   viewer,
 }) => {
+  const { router } = useRouter()
   const medium = params?.medium as Medium
   const color = params?.color as Color
   const { description, breadcrumbTitle, title } = getMetadata({
@@ -120,26 +122,27 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             onChange={filters => {
               const url = buildUrlForCollectApp(filters)
 
-              if (typeof window !== "undefined") {
-                window.history.replaceState({}, "", url)
-              }
+              // if (typeof window !== "undefined") {
+              //   window.history.pushState({}, "", url)
+              // }
 
               /**
-             * FIXME: Ideally we route using our router, but are running into
-             * synchronization issues between router state and URL bar state.
-             *
-             * See below example as an illustration:
-             *
+               * FIXME: Ideally we route using our router, but are running into
+               * synchronization issues between router state and URL bar state.
+               *
+               * See below example as an illustration:
+               *
+               */
               const newLocation = router.createLocation(url)
 
-              router.replace({
+              router.push({
                 ...newLocation,
                 state: {
-                  scrollTo: "#jump--artworkFilter"
+                  scrollTo: "#jump--artworkFilter",
+                  ignoreScrollBehavior: true,
+                  hidePageLoader: true,
                 },
               })
-            *
-            */
             }}
           />
         </Box>

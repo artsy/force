@@ -177,14 +177,17 @@ export enum SelectedFiltersCountsLabels {
   waysToBuy = "waysToBuy",
 }
 
-// TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
-// Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
-// and `BaseFilterContext<AuctionResultFilters>`.
+// TODO: merge or make a generic base of `ArtworkFilterContextProps` and
+// `AuctionResultsFilterContextProps`. Possibly just extend `BaseFilterContext`
+// and make the former ones into `BaseFilterContext<ArtworkFilters>` and
+// `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
-  /** The current artwork filter state (which determines the network request and the url querystring) */
+  // The current artwork filter state (which determines the network request and
+  // the url querystring)
   filters?: ArtworkFiltersState
 
-  /** Interim filter state, to be manipulated before being applied to the current filter state */
+  // Interim filter state, to be manipulated before being applied to the current
+  // filter state
   stagedFilters?: ArtworkFiltersState
 
   /** Getter for the appropriate source of truth to render in the filter UI */
