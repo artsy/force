@@ -12,7 +12,7 @@ export type ArtistIconicCollectionsRail_Test_QueryVariables = {
 export type ArtistIconicCollectionsRail_Test_QueryResponse = {
     readonly marketingCollections: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
-    }> | null;
+    }>;
 };
 export type ArtistIconicCollectionsRail_Test_Query = {
     readonly response: ArtistIconicCollectionsRail_Test_QueryResponse;
@@ -333,7 +333,7 @@ return {
       "relayTestingSelectionTypeInfo": {
         "marketingCollections": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "MarketingCollection"
         },
