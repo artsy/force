@@ -32,6 +32,7 @@ export type UpdateMyProfileInput = {
     receiveLotOpeningSoonNotification?: boolean | null;
     receiveNewSalesNotification?: boolean | null;
     receiveNewWorksNotification?: boolean | null;
+    receiveOrderNotification?: boolean | null;
     receiveOutbidNotification?: boolean | null;
     receivePromotionNotification?: boolean | null;
     receivePurchaseNotification?: boolean | null;
