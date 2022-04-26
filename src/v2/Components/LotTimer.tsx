@@ -82,6 +82,10 @@ export const getTimerCopy = (
     } Until Bidding Starts`
     // entered extended bidding
   } else if (extendedBiddingEndAt) {
+    const { time } = useTimer(extendedBiddingEndAt)
+    const { minutes, seconds } = time
+    const parsedMinutes = parseInt(minutes, 10)
+    const parsedSeconds = parseInt(seconds, 10)
     copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
     color = "red100"
   } else {

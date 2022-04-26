@@ -140,7 +140,7 @@ describe("extendedBiddingInfoCopy", () => {
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
         const text = wrapper.text()
-        expect(text).not.toContain("Extended:")
+        expect(text).not.toContain("Extended: 2m0s")
       })
     })
   })

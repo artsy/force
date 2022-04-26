@@ -28,7 +28,6 @@ export const useTimer = (endDate: string, startAt: string = ""): Timer => {
   const timeBeforeEnd = Duration.fromISO(
     DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString()
   )
-  console.log(timeBeforeEnd)
   const hasEnded = Math.floor(timeBeforeEnd.seconds) <= 0
 
   const timeBeforeStart = Duration.fromISO(
