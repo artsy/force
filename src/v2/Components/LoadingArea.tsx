@@ -1,5 +1,5 @@
 import Spinner from "v2/Components/Spinner"
-import { ReactNode, SFC } from "react";
+import { ReactNode, SFC } from "react"
 import styled from "styled-components"
 
 export interface LoadingAreaState {

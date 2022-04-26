@@ -1,4 +1,4 @@
-import { Spacer, useThemeConfig } from "@artsy/palette"
+import { Box, Spacer, Spinner, useThemeConfig } from "@artsy/palette"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
@@ -6,10 +6,10 @@ import { useSystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
-import { LoadingArea } from "../LoadingArea"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { Sticky } from "../Sticky"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -62,7 +62,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
 
   return (
     <>
-      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <LoadingArea isLoading={props.isLoading}>
         <ArtworkGrid
           artworks={props.filtered_artworks}
@@ -127,3 +126,22 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
     `,
   }
 )
+
+const LoadingArea: React.FC<{ isLoading?: boolean }> = ({
+  isLoading,
+  children,
+}) => {
+  return (
+    <Box position="relative">
+      {isLoading && (
+        <Sticky>
+          <Box height={300} width="100%" position="absolute">
+            <Spinner />
+          </Box>
+        </Sticky>
+      )}
+
+      <Box opacity={isLoading ? 0.1 : 1}>{children}</Box>
+    </Box>
+  )
+}

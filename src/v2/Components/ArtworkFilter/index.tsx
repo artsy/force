@@ -114,7 +114,7 @@ export const BaseArtworkFilter: React.FC<
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
-  // const [isFetching, toggleFetching] = useState(false)
+  const [_isFetching, toggleFetching] = useState(false)
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
@@ -149,7 +149,9 @@ export const BaseArtworkFilter: React.FC<
         const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
         if (filtersHaveUpdated) {
-          fetchResults()
+          // TODO: Remove this function once we're certain route-based updates
+          // are working as expected.
+          // fetchResultsViaRelayRefetch()
 
           if (filterKey === "page") {
             const pageTrackingParams: ClickedChangePage = {
@@ -186,8 +188,10 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  function fetchResults() {
-    // toggleFetching(true)
+  // TODO: Remove this once we're certain that route-based updates are working
+  // as expected.
+  function fetchResultsViaRelayRefetch() {
+    toggleFetching(true)
 
     const refetchVariables = {
       input: {
@@ -199,13 +203,13 @@ export const BaseArtworkFilter: React.FC<
       ...relayVariables,
     }
 
-    // relay.refetch(refetchVariables, null, error => {
-    //   if (error) {
-    //     console.error(error)
-    //   }
+    relay.refetch(refetchVariables, null, error => {
+      if (error) {
+        console.error(error)
+      }
 
-    //   toggleFetching(false)
-    // })
+      toggleFetching(false)
+    })
   }
 
   if (!viewer?.filtered_artworks) {

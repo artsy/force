@@ -17,6 +17,7 @@ export const RenderPending = () => {
   const { match } = useRouter()
   const { isFetching, setFetching } = useSystemContext()
 
+  // One can set this by passing argument to router.push `state`
   const hidePageLoaderFromRouterState =
     match.location?.state?.hidePageLoader ?? false
 
