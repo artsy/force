@@ -26,8 +26,8 @@ query SecurePaymentTestQuery {
 }
 
 fragment SecurePayment_artwork on Artwork {
-  is_acquireable: isAcquireable
-  is_offerable: isOfferable
+  isAcquireable
+  isOfferable
 }
 */
 
@@ -87,14 +87,14 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "is_acquireable",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isAcquireable",
             "storageKey": null
           },
           {
-            "alias": "is_offerable",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isOfferable",
@@ -113,7 +113,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6174e5f4a3c77e88f3c06d269b84758",
+    "cacheID": "8b4682496a9ed8ad6fc5504c1e5ef3b3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -129,13 +129,13 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "artwork.is_acquireable": (v1/*: any*/),
-        "artwork.is_offerable": (v1/*: any*/)
+        "artwork.isAcquireable": (v1/*: any*/),
+        "artwork.isOfferable": (v1/*: any*/)
       }
     },
     "name": "SecurePaymentTestQuery",
     "operationKind": "query",
-    "text": "query SecurePaymentTestQuery {\n  artwork(id: \"whatevs\") {\n    ...SecurePayment_artwork\n    id\n  }\n}\n\nfragment SecurePayment_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n"
+    "text": "query SecurePaymentTestQuery {\n  artwork(id: \"whatevs\") {\n    ...SecurePayment_artwork\n    id\n  }\n}\n\nfragment SecurePayment_artwork on Artwork {\n  isAcquireable\n  isOfferable\n}\n"
   }
 };
 })();

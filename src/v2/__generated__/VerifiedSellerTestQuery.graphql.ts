@@ -26,7 +26,7 @@ query VerifiedSellerTestQuery {
 }
 
 fragment VerifiedSeller_artwork on Artwork {
-  is_biddable: isBiddable
+  isBiddable
   partner {
     isVerifiedSeller
     name
@@ -104,7 +104,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "is_biddable",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isBiddable",
@@ -143,7 +143,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "266407a3e6a21a2606e73e5025d2e0df",
+    "cacheID": "7d3ee9621a69e884cdfcbf88966a0a67",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -154,7 +154,7 @@ return {
           "type": "Artwork"
         },
         "artwork.id": (v2/*: any*/),
-        "artwork.is_biddable": (v3/*: any*/),
+        "artwork.isBiddable": (v3/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -173,7 +173,7 @@ return {
     },
     "name": "VerifiedSellerTestQuery",
     "operationKind": "query",
-    "text": "query VerifiedSellerTestQuery {\n  artwork(id: \"whatevs\") {\n    ...VerifiedSeller_artwork\n    id\n  }\n}\n\nfragment VerifiedSeller_artwork on Artwork {\n  is_biddable: isBiddable\n  partner {\n    isVerifiedSeller\n    name\n    id\n  }\n}\n"
+    "text": "query VerifiedSellerTestQuery {\n  artwork(id: \"whatevs\") {\n    ...VerifiedSeller_artwork\n    id\n  }\n}\n\nfragment VerifiedSeller_artwork on Artwork {\n  isBiddable\n  partner {\n    isVerifiedSeller\n    name\n    id\n  }\n}\n"
   }
 };
 })();

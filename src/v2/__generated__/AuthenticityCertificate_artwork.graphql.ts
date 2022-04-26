@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuthenticityCertificate_artwork = {
     readonly hasCertificateOfAuthenticity: boolean | null;
-    readonly is_biddable: boolean | null;
+    readonly isBiddable: boolean | null;
     readonly " $refType": "AuthenticityCertificate_artwork";
 };
 export type AuthenticityCertificate_artwork$data = AuthenticityCertificate_artwork;
@@ -31,7 +31,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "is_biddable",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isBiddable",
@@ -41,5 +41,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '39bc344c746b3df84f3c897873593c9b';
+(node as any).hash = '68976fde8abfd8a937ab302662fb539b';
 export default node;
