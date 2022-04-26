@@ -15,13 +15,18 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   const extendedBiddingPeriodMinutes =
     saleArtwork?.sale?.extendedBiddingPeriodMinutes
 
+  const extendBiddingEndAt = saleArtwork?.extendedBiddingEndAt
+
   const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
 
   if (!endAt) {
     return null
   }
 
-  const timerCopy = getTimerCopy(time, hasStarted)
+  console.log(startAt)
+  console.log(endAt)
+
+  const timerCopy = getTimerCopy(time, hasStarted, extendBiddingEndAt)
 
   return (
     <Flex alignItems="center" flexDirection="column">
@@ -49,6 +54,7 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
     fragment LotTimer_saleArtwork on SaleArtwork {
       endAt
       formattedStartDateTime
+      extendedBiddingEndAt
       sale {
         startAt
         extendedBiddingPeriodMinutes
@@ -57,7 +63,11 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
   `,
 })
 
-export const getTimerCopy = (time, hasStarted) => {
+export const getTimerCopy = (
+  time,
+  hasStarted,
+  extendedBiddingEndAt?: string | null
+) => {
   const { days, hours, minutes, seconds } = time
 
   const parsedDays = parseInt(days, 10)
@@ -67,12 +77,18 @@ export const getTimerCopy = (time, hasStarted) => {
 
   let copy = ""
   let color = "blue100"
+  console.log(time)
+  console.log(extendedBiddingEndAt)
 
   // Sale has not yet started
   if (!hasStarted) {
     copy = `${parsedDays + 1} Day${
       parsedDays >= 1 ? "s" : ""
     } Until Bidding Starts`
+    // entered extended bidding
+  } else if (extendedBiddingEndAt) {
+    copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
+    color = "red100"
   } else {
     // 2mins or fewer until close
     if (
