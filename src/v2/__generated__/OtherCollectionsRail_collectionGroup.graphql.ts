@@ -4,9 +4,9 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MarketingCollectionGroupTypeEnum = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
+export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
 export type OtherCollectionsRail_collectionGroup = {
-    readonly groupType: MarketingCollectionGroupTypeEnum;
+    readonly groupType: MarketingGroupTypes;
     readonly name: string;
     readonly members: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"OtherCollectionEntity_member">;
