@@ -7,6 +7,13 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork = {
     readonly is_in_auction: boolean | null;
     readonly is_sold: boolean | null;
+    readonly hasCertificateOfAuthenticity: boolean | null;
+    readonly isBiddable: boolean | null;
+    readonly isAcquireable: boolean | null;
+    readonly isOfferable: boolean | null;
+    readonly partner: {
+        readonly isVerifiedSeller: boolean | null;
+    } | null;
     readonly sale: {
         readonly is_closed: boolean | null;
         readonly startAt: string | null;
@@ -44,6 +51,52 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "isSold",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasCertificateOfAuthenticity",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isBiddable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isAcquireable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isVerifiedSeller",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -170,5 +223,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '6d4f0574bf7a55af00fd956e3bc60fb3';
+(node as any).hash = '763ac65160338f59e068792dbd19ccb4';
 export default node;
