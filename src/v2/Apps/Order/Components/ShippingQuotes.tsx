@@ -41,7 +41,7 @@ export const shippingQuoteDisplayNames = {
   select: "Premium",
   premium: "White Glove",
   // International shipping quotes
-  economy: "TBD",
+  economy: "Saver",
   standard: "Standard",
   priority: "Priority",
 }
