@@ -97,15 +97,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {shouldRenderArtworkBadges && (
         <Join separator={<Spacer mt={2} />}>
+          <Separator mt={2} />
           <AuthenticityCertificateFragmentContainer artwork={artwork} />
           <SecurePaymentFragmentContainer artwork={artwork} />
           <VerifiedSellerFragmentContainer artwork={artwork} />
           <BuyerGuaranteeFragmentContainer artwork={artwork} />
         </Join>
-      )}
-
-      {(shouldRenderArtworkBadges || (is_in_auction && !hasEnded)) && (
-        <Separator mt={2} />
       )}
 
       {isCreateAlertButtonForArtworkEnabled &&

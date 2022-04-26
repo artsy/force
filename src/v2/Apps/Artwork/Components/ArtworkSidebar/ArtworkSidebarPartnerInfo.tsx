@@ -114,7 +114,6 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
 
         {inquiryComponent}
       </Flex>
-      <Separator my={2} />
     </>
   )
 }
