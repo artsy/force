@@ -47,8 +47,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     (is_in_auction && hasEnded) ||
     (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
     is_sold
-  const shouldShowCreateAlertSection =
-    isCreateAlertButtonForArtworkEnabled && !shouldHideDetailsCreateAlertCTA
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -92,9 +90,10 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
-      {!!shouldShowCreateAlertSection && (
-        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
-      )}
+      {isCreateAlertButtonForArtworkEnabled &&
+        !shouldHideDetailsCreateAlertCTA && (
+          <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
+        )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
