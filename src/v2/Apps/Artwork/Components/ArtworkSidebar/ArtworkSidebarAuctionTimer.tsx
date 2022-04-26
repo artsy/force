@@ -2,7 +2,7 @@ import { Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionTimerFragmentContainer } from "v2/Components/AuctionTimer"
-import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
+import { LotTimerFragmentContainer } from "./LotTimer"
 import { lotIsClosed } from "../../Utils/lotIsClosed"
 import { ArtworkSidebarAuctionTimer_artwork } from "v2/__generated__/ArtworkSidebarAuctionTimer_artwork.graphql"
 
