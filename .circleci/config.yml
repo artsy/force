@@ -6,7 +6,7 @@ orbs:
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.9.3
-  yarn: artsy/yarn@volatile
+  yarn: artsy/yarn@6.1.0
 
 jobs:
   run_deepcrawl_automator:
