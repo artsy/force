@@ -43,12 +43,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const startAt = sale?.startAt
   const { hasEnded } = useTimer(endAt!, startAt!)
 
-  const shouldSkipCreateAlert =
+  const shouldHideDetailsCreateAlertCTA =
     (is_in_auction && hasEnded) ||
     (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
     is_sold
   const shouldShowCreateAlertSection =
-    isCreateAlertButtonForArtworkEnabled && !shouldSkipCreateAlert
+    isCreateAlertButtonForArtworkEnabled && !shouldHideDetailsCreateAlertCTA
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
