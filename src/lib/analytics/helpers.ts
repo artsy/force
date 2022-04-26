@@ -5,7 +5,6 @@ import { extend, omit, pick } from "lodash"
 import { data as sd } from "sharify"
 import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
-const setupSplitTests = require("../../desktop/components/split_test/setup.coffee")
 const Events = require("../../v2/Utils/Events").default
 
 /**
@@ -53,7 +52,6 @@ export const beforeAnalyticsReady = () => {
  * Global analytics code that needs to run after analytics.ready
  */
 export const onAnalyticsReady = () => {
-  setupSplitTests()
   identify()
 }
 
