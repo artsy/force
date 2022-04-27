@@ -1,7 +1,7 @@
 import { LotTimer_saleArtwork } from "v2/__generated__/LotTimer_saleArtwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
-import { Flex, Text } from "@artsy/palette"
+import { Flex, Text, Spacer } from "@artsy/palette"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 export interface LotTimerProps {
@@ -12,6 +12,8 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   const { endAt } = saleArtwork
 
   const startAt = saleArtwork?.sale?.startAt
+  const extendedBiddingPeriodMinutes =
+    saleArtwork?.sale?.extendedBiddingPeriodMinutes
 
   const { hasEnded, time, hasStarted } = useTimer(endAt!, startAt!)
 
@@ -30,6 +32,14 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
       <Text variant="md" color={"black60"}>
         {saleArtwork.formattedStartDateTime}
       </Text>
+      {extendedBiddingPeriodMinutes && (
+        <>
+          <Spacer mt={1} />
+          <Text variant="xs" color={"black60"}>
+            *Closure times may be extended to accomodate last minute bids
+          </Text>
+        </>
+      )}
     </Flex>
   )
 }
@@ -41,6 +51,7 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
       formattedStartDateTime
       sale {
         startAt
+        extendedBiddingPeriodMinutes
       }
     }
   `,

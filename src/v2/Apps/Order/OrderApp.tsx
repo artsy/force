@@ -14,11 +14,11 @@ import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
-import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { AppContainer } from "../Components/AppContainer"
 import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
+import { getENV } from "v2/Utils/getENV"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -96,7 +96,7 @@ class OrderApp extends Component<OrderAppProps, {}> {
 
     if (typeof window !== "undefined" && window.zEmbed) return
 
-    return <ZendeskWrapper zdKey={sd.ZENDESK_KEY} />
+    return <ZendeskWrapper zdKey={getENV("ZENDESK_KEY")} />
   }
 
   render() {
@@ -117,7 +117,7 @@ class OrderApp extends Component<OrderAppProps, {}> {
       )
     }
 
-    const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
+    const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
     const isModal = !!this.props.match?.location.query.isModal
 
@@ -170,7 +170,7 @@ export { OrderAppWithRouter as OrderApp }
 const SafeAreaContainer = styled(Box)`
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     env(safe-area-inset-bottom) env(safe-area-inset-left);
-  margin-bottom: 75px;
+  margin-bottom: 200px;
 `
 
 graphql`

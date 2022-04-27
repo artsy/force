@@ -4816,6 +4816,7 @@ type CommerceShippingQuote {
   priceCents: Int!
   priceCurrency: String!
   tier: String!
+  typeName: String!
   updatedAt(
     format: String
 
@@ -9588,6 +9589,9 @@ type Me implements Node {
   # This user should receive new works notifications
   receiveNewWorksNotification: Boolean
 
+  # This user should receive order notifications
+  receiveOrderNotification: Boolean
+
   # This user should receive outbid notifications
   receiveOutbidNotification: Boolean
 
@@ -11344,7 +11348,7 @@ type Query {
 
   # An array of marketing collections. Defaults to returning all available collections if no args are passed
   _unused_gravity_marketingCollections(
-    artistID: ID
+    artistID: String
     category: String
     isFeaturedArtistContent: Boolean
     size: Int
@@ -14240,6 +14244,9 @@ input UpdateMyProfileInput {
   # This user should receive new works notifications
   receiveNewWorksNotification: Boolean
 
+  # This user should receive order notifications
+  receiveOrderNotification: Boolean
+
   # This user should receive outbid notifications
   receiveOutbidNotification: Boolean
 
@@ -14526,6 +14533,9 @@ type User {
 
   # This user should receive new works notifications
   receiveNewWorksNotification: Boolean
+
+  # This user should receive order notifications
+  receiveOrderNotification: Boolean
 
   # This user should receive outbid notifications
   receiveOutbidNotification: Boolean

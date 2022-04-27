@@ -28,7 +28,7 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
       {!!isCreateAlertButtonForArtworkEnabled && (
         <>
           <Text variant="sm" color="black60" pt={0.5}>
-            Be notified when a similar piece is available
+            Be notified when a similar work is available
           </Text>
           <Spacer my={2} />
           <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />

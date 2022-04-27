@@ -20,6 +20,7 @@ import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlert
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
+import { lotIsClosed } from "v2/Apps/Artwork/Utils/lotIsClosed"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -37,13 +38,15 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   )
 
   // If we have info about the lot end time (cascading), use that.
-  const { sale, saleArtwork } = artwork
+  const { sale, saleArtwork, is_sold, is_in_auction } = artwork
   const endAt = saleArtwork?.endAt
   const startAt = sale?.startAt
   const { hasEnded } = useTimer(endAt!, startAt!)
 
-  const shouldShowCreateAlertSection =
-    isCreateAlertButtonForArtworkEnabled && !artwork.is_sold && !hasEnded
+  const shouldHideDetailsCreateAlertCTA =
+    (is_in_auction && hasEnded) ||
+    (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
+    is_sold
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -87,9 +90,10 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <VerifiedSellerFragmentContainer artwork={artwork} />
         <BuyerGuaranteeFragmentContainer artwork={artwork} />
       </Join>
-      {!!shouldShowCreateAlertSection && (
-        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
-      )}
+      {isCreateAlertButtonForArtworkEnabled &&
+        !shouldHideDetailsCreateAlertCTA && (
+          <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
+        )}
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
@@ -122,6 +126,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         }
         saleArtwork {
           endAt
+          endedAt
         }
       }
     `,

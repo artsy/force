@@ -80,7 +80,7 @@ describe("ArtworkSidebar", () => {
 
     expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
     expect(
-      screen.queryByText(/Be notified when a similar piece is available/i)
+      screen.queryByText(/Be notified when a similar work is available/i)
     ).toBeInTheDocument()
   })
 
@@ -89,7 +89,7 @@ describe("ArtworkSidebar", () => {
 
     expect(screen.queryByText(/Create Alert/i)).not.toBeInTheDocument()
     expect(
-      screen.queryByText(/Be notified when a similar piece is available/i)
+      screen.queryByText(/Be notified when a similar work is available/i)
     ).not.toBeInTheDocument()
   })
 })

@@ -22,6 +22,8 @@ import {
   MNTNConversionPixel,
   MNTNTrackingPixel,
 } from "v2/Components/MNTNPixels"
+import { createGlobalStyle } from "styled-components"
+import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -30,6 +32,8 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
+  const isMounted = useDidMount()
+
   useAuthIntent()
   useAuthValidation()
 
@@ -120,6 +124,18 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
       <MNTNConversionPixel />
       <MNTNTrackingPixel />
+
+      {isMounted && <OneTrustModalOverlayHotfixStyles />}
     </Flex>
   )
 }
+
+/**
+ * This is a workaround for the cookie consent banner overlay appearing on top
+ * of our modals. This positions it below so that modal buttons are clickable.
+ */
+export const OneTrustModalOverlayHotfixStyles = createGlobalStyle`
+  #onetrust-banner-sdk {
+    z-index: 1 !important;
+  }
+`
