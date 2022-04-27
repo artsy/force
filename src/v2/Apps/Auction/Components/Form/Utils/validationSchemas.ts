@@ -20,6 +20,7 @@ const selectedBid = Yup.string().required()
 
 export const confirmRegistrationValidationSchema = Yup.object().shape({
   agreeToTerms,
+  phoneNumber,
 })
 
 export const registrationValidationSchema = Yup.object().shape({

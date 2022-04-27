@@ -26,6 +26,7 @@ import { useEffect } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { redirectToSaleHome } from "./AuctionRegistrationRoute"
 import { isEmpty } from "lodash"
+import { useUpdateMyUserProfile } from "v2/Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
 interface AuctionConfirmRegistrationRouteProps {
   me: AuctionConfirmRegistrationRoute_me
@@ -43,9 +44,17 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
     sale,
     me,
   })
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const hasPhoneNumber = !!me?.phoneNumber?.originalNumber
 
-  const handleSubmit = async (_values, helpers) => {
+  const handleSubmit = async (values, helpers) => {
     try {
+      if (!hasPhoneNumber) {
+        await submitUpdateMyUserProfile({
+          phone: values.phoneNumber,
+        })
+      }
+
       const response = await createBidder({
         variables: {
           input: {
@@ -90,9 +99,11 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
 
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
-      <Formik<Pick<AuctionFormValues, "agreeToTerms">>
+      <Formik<Pick<AuctionFormValues, "agreeToTerms" | "phoneNumber">>
+        validateOnMount
         initialValues={{
           agreeToTerms: false,
+          phoneNumber: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={confirmRegistrationValidationSchema}
@@ -113,40 +124,31 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
                   <IdentityVerificationWarning />
                 ) : (
                   <GridColumns>
-                    {/* <Column span={12}>
-                      <Input
-                        name="address.phoneNumber"
-                        title="Phone Number"
-                        type="tel"
-                        description="Required for shipping logistics"
-                        placeholder="Add phone number"
-                        autoComplete="tel"
-                        value={values.address?.phoneNumber}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          touched.address?.phoneNumber &&
-                          errors.address?.phoneNumber
-                        }
-                        required
-                      />
-                    </Column> */}
-                    <Column span={12}>
-                      <Text variant="md">
-                        Welcome back. To complete your registration, please
-                        confirm that you agree to the{" "}
-                        <Text variant="md" display="inline">
-                          <RouterLink
-                            color="black100"
-                            to="/conditions-of-sale"
-                            target="_blank"
-                          >
-                            Conditions of Sale
-                          </RouterLink>
-                          .
-                        </Text>
-                      </Text>
-                    </Column>
+                    {!hasPhoneNumber ? (
+                      <>
+                        <Column span={12}>
+                          <ConditionsOfSaleMessage additionalText=" and provide a valid phone number." />
+                          <Spacer my={2} />
+                          <Input
+                            name="phoneNumber"
+                            title="Phone Number"
+                            type="tel"
+                            description="Required for shipping logistics"
+                            placeholder="Add phone number"
+                            autoComplete="tel"
+                            value={values.phoneNumber}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.phoneNumber && errors.phoneNumber}
+                            required
+                          />
+                        </Column>
+                      </>
+                    ) : (
+                      <Column span={12}>
+                        <ConditionsOfSaleMessage />
+                      </Column>
+                    )}
                   </GridColumns>
                 )}
 
@@ -154,7 +156,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
 
                 <Button
                   loading={isSubmitting}
-                  disabled={!isValid || isSubmitting || isEmpty(touched)}
+                  disabled={!isValid}
                   type="submit"
                 >
                   Register
@@ -168,6 +170,23 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
   )
 }
 
+const ConditionsOfSaleMessage: React.FC<{ additionalText?: string }> = ({
+  additionalText,
+}) => {
+  return (
+    <Text variant="md">
+      Welcome back. To complete your registration, please confirm that you agree
+      to the{" "}
+      <Text variant="md" display="inline">
+        <RouterLink color="black100" to="/conditions-of-sale" target="_blank">
+          Conditions of Sale
+        </RouterLink>
+      </Text>
+      {additionalText}
+    </Text>
+  )
+}
+
 export const AuctionConfirmRegistrationRouteFragmentContainer = createFragmentContainer(
   AuctionConfirmRegistrationRoute,
   {
@@ -176,6 +195,10 @@ export const AuctionConfirmRegistrationRouteFragmentContainer = createFragmentCo
         internalID
         identityVerified
         hasQualifiedCreditCards
+
+        phoneNumber {
+          originalNumber
+        }
       }
     `,
     sale: graphql`
