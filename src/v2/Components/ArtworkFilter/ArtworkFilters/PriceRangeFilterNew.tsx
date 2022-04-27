@@ -41,6 +41,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
   const [minValue, maxValue] = range
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
   const bars = getBarsFromAggregations(aggregations)
+  const isAllBarsEmpty = bars.every(bar => bar.count === 0)
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.priceRange
@@ -128,14 +129,15 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
       </Flex>
 
       <Box mt={2} mx={`${RANGE_DOT_SIZE / 2}px`}>
-        {bars.length > 0 ? (
+        {bars.length > 0 && !isAllBarsEmpty ? (
           <Histogram
             bars={bars}
             selectedRange={[sliderRange[0], sliderRange[1]]}
+            data-testid="PriceFilterHistogram"
           />
         ) : null}
 
-        <Spacer mb={2} />
+        <Spacer pb={2} />
 
         <Range
           min={defaultMinValue}
