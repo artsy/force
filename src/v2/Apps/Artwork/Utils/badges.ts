@@ -6,6 +6,6 @@ export const shouldRenderVerifiedSeller = artwork => {
   return !artwork.is_biddable && artwork.partner?.isVerifiedSeller
 }
 
-export const shouldRenderGuarantee = artwork => {
+export const shouldRenderBuyerGuaranteeAndSecurePayment = artwork => {
   return artwork.is_acquireable || artwork.is_offerable
 }

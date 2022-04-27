@@ -4,7 +4,7 @@ import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
-import { shouldRenderGuarantee } from "v2/Apps/Artwork/Utils/badges"
+import { shouldRenderBuyerGuaranteeAndSecurePayment } from "v2/Apps/Artwork/Utils/badges"
 
 interface SecurePaymentProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
@@ -16,7 +16,7 @@ export const SecurePayment: React.FC<SecurePaymentProps> = ({
   ...other
 }) => {
   return (
-    shouldRenderGuarantee(artwork) && (
+    shouldRenderBuyerGuaranteeAndSecurePayment(artwork) && (
       <TrustSignal
         Icon={<LockIcon />}
         label="Secure payment"

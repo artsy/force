@@ -23,7 +23,7 @@ import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSi
 import { lotIsClosed } from "v2/Apps/Artwork/Utils/lotIsClosed"
 import {
   shouldRenderAuthenticityCertificate,
-  shouldRenderGuarantee,
+  shouldRenderBuyerGuaranteeAndSecurePayment,
   shouldRenderVerifiedSeller,
 } from "../../Utils/badges"
 
@@ -56,7 +56,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const shouldRenderArtworkBadges =
     shouldRenderAuthenticityCertificate(artwork) ||
     shouldRenderVerifiedSeller(artwork) ||
-    shouldRenderGuarantee(artwork)
+    shouldRenderBuyerGuaranteeAndSecurePayment(artwork)
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
