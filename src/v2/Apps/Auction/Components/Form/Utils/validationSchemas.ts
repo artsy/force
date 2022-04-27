@@ -18,17 +18,22 @@ const agreeToTerms = Yup.bool().oneOf(
 const creditCard = Yup.bool().oneOf([true], "")
 const selectedBid = Yup.string().required()
 
-export const confirmRegistrationValidationSchema = Yup.object().shape({
-  agreeToTerms,
-  phoneNumber,
-})
-
 export const registrationValidationSchema = Yup.object().shape({
   address,
   agreeToTerms,
   creditCard,
   phoneNumber,
 })
+
+export const confirmRegistrationValidationSchemas = {
+  withPhoneValidation: Yup.object().shape({
+    agreeToTerms,
+    phoneNumber,
+  }),
+  withoutPhoneValidation: Yup.object().shape({
+    agreeToTerms,
+  }),
+}
 
 export const biddingValidationSchemas = {
   validationSchemaForRegisteredUsers: Yup.object().shape({

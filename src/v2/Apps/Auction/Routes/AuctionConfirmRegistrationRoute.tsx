@@ -18,14 +18,13 @@ import { IdentityVerificationWarning } from "v2/Apps/Auction/Components/Form/Ide
 import { ConditionsOfSaleCheckbox } from "v2/Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { Form, Formik } from "formik"
 import {
-  confirmRegistrationValidationSchema,
   formatError,
   AuctionFormValues,
+  confirmRegistrationValidationSchemas,
 } from "v2/Apps/Auction/Components/Form/Utils"
 import { useEffect } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { redirectToSaleHome } from "./AuctionRegistrationRoute"
-import { isEmpty } from "lodash"
 import { useUpdateMyUserProfile } from "v2/Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
 interface AuctionConfirmRegistrationRouteProps {
@@ -40,7 +39,11 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
   const { tracking } = useAuctionTracking()
   const { router } = useRouter()
   const { submitMutation: createBidder } = useCreateBidder()
-  const { auctionURL, needsIdentityVerification } = computeProps({
+  const {
+    auctionURL,
+    needsIdentityVerification,
+    validationSchema,
+  } = computeProps({
     sale,
     me,
   })
@@ -106,7 +109,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
           phoneNumber: "",
         }}
         onSubmit={handleSubmit}
-        validationSchema={confirmRegistrationValidationSchema}
+        validationSchema={validationSchema}
       >
         {({
           isSubmitting,
@@ -146,7 +149,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
                       </>
                     ) : (
                       <Column span={12}>
-                        <ConditionsOfSaleMessage />
+                        <ConditionsOfSaleMessage additionalText="." />
                       </Column>
                     )}
                   </GridColumns>
@@ -226,8 +229,13 @@ const computeProps = ({ me, sale }: AuctionConfirmRegistrationRouteProps) => {
     !sale?.bidder?.qualifiedForBidding &&
     !me?.identityVerified
 
+  const validationSchema = !!me.phoneNumber?.originalNumber
+    ? confirmRegistrationValidationSchemas.withoutPhoneValidation
+    : confirmRegistrationValidationSchemas.withPhoneValidation
+
   return {
-    needsIdentityVerification,
     auctionURL,
+    needsIdentityVerification,
+    validationSchema,
   }
 }

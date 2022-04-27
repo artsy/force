@@ -26,6 +26,7 @@ const commitMutation = _commitMutation as jest.Mock<any>
 
 const savedAddress: SavedAddressType = {
   ...validAddress,
+  phoneNumber: "8475937743",
   id: "id",
   internalID: "internal-id",
   addressLine3: null,
