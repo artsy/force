@@ -1,9 +1,7 @@
-// import { trackExperimentViewed } from "v2/System/Analytics/trackExperimentViewed"
 import { ActionTypes } from "farce"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 import { match } from "path-to-regexp"
-import { trackExperimentViewed } from "./trackExperimentViewed"
 
 /**
  * PageView tracking middleware for use in our router apps. Middleware conforms
@@ -46,7 +44,6 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
           typeof window.analytics !== "undefined" && window.analytics
 
         if (analytics) {
-          // TODO: Pass referrer over to Artwork page if A/B test passes
           // window.sd.routerReferrer = referrer
 
           /**
