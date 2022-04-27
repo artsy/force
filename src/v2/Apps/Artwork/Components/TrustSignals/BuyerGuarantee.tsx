@@ -13,8 +13,9 @@ interface Props {
 
 const BuyerGuarantee: React.FC<Props> = props => {
   const { artwork } = props
-  return (
-    shouldRenderBuyerGuaranteeAndSecurePayment(artwork) && (
+
+  if (shouldRenderBuyerGuaranteeAndSecurePayment(artwork)) {
+    return (
       <TrustSignal
         Icon={<CheckCircleIcon />}
         label="Your purchase is protected"
@@ -33,7 +34,9 @@ const BuyerGuarantee: React.FC<Props> = props => {
         }
       />
     )
-  )
+  }
+
+  return null
 }
 
 export const BuyerGuaranteeFragmentContainer = createFragmentContainer(

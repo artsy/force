@@ -15,8 +15,8 @@ export const SecurePayment: React.FC<SecurePaymentProps> = ({
   artwork,
   ...other
 }) => {
-  return (
-    shouldRenderBuyerGuaranteeAndSecurePayment(artwork) && (
+  if (shouldRenderBuyerGuaranteeAndSecurePayment(artwork)) {
+    return (
       <TrustSignal
         Icon={<LockIcon />}
         label="Secure payment"
@@ -37,7 +37,9 @@ export const SecurePayment: React.FC<SecurePaymentProps> = ({
         {...other}
       />
     )
-  )
+  }
+
+  return null
 }
 
 export const SecurePaymentFragmentContainer = createFragmentContainer(

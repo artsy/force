@@ -15,8 +15,8 @@ export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({
   artwork,
   ...other
 }) => {
-  return (
-    shouldRenderVerifiedSeller(artwork) && (
+  if (shouldRenderVerifiedSeller(artwork)) {
+    return (
       <TrustSignal
         Icon={<VerifiedIcon />}
         label="Verified seller"
@@ -24,7 +24,9 @@ export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({
         {...other}
       />
     )
-  )
+  }
+
+  return null
 }
 
 export const VerifiedSellerFragmentContainer = createFragmentContainer(
