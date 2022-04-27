@@ -21,7 +21,7 @@ export interface Address {
   addressLine2: string
   city: string
   region: string
-  phoneNumber: string
+  phoneNumber?: string
 }
 
 export type AddressErrors = Partial<Address>

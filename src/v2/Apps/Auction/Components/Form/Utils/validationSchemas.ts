@@ -7,8 +7,9 @@ const address = Yup.object({
   city: Yup.string().required("City is required"),
   region: Yup.string().required("Region is required"),
   postalCode: Yup.string().required("Postal Code is required"),
-  phoneNumber: Yup.string().required("Phone Number is required"),
 })
+
+const phoneNumber = Yup.string().required("Phone Number is required")
 
 const agreeToTerms = Yup.bool().oneOf(
   [true],
@@ -25,6 +26,7 @@ export const registrationValidationSchema = Yup.object().shape({
   address,
   agreeToTerms,
   creditCard,
+  phoneNumber,
 })
 
 export const biddingValidationSchemas = {

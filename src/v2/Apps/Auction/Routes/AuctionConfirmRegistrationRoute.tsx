@@ -1,4 +1,13 @@
-import { Button, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Input,
+  Join,
+  ModalDialog,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AuctionConfirmRegistrationRoute_me } from "v2/__generated__/AuctionConfirmRegistrationRoute_me.graphql"
@@ -88,27 +97,57 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
         onSubmit={handleSubmit}
         validationSchema={confirmRegistrationValidationSchema}
       >
-        {({ isSubmitting, isValid, touched }) => {
+        {({
+          isSubmitting,
+          isValid,
+          touched,
+          values,
+          handleChange,
+          handleBlur,
+          errors,
+        }) => {
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
                 {needsIdentityVerification ? (
                   <IdentityVerificationWarning />
                 ) : (
-                  <Text variant="md">
-                    Welcome back. To complete your registration, please confirm
-                    that you agree to the{" "}
-                    <Text variant="md" display="inline">
-                      <RouterLink
-                        color="black100"
-                        to="/conditions-of-sale"
-                        target="_blank"
-                      >
-                        Conditions of Sale
-                      </RouterLink>
-                      .
-                    </Text>
-                  </Text>
+                  <GridColumns>
+                    {/* <Column span={12}>
+                      <Input
+                        name="address.phoneNumber"
+                        title="Phone Number"
+                        type="tel"
+                        description="Required for shipping logistics"
+                        placeholder="Add phone number"
+                        autoComplete="tel"
+                        value={values.address?.phoneNumber}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                          touched.address?.phoneNumber &&
+                          errors.address?.phoneNumber
+                        }
+                        required
+                      />
+                    </Column> */}
+                    <Column span={12}>
+                      <Text variant="md">
+                        Welcome back. To complete your registration, please
+                        confirm that you agree to the{" "}
+                        <Text variant="md" display="inline">
+                          <RouterLink
+                            color="black100"
+                            to="/conditions-of-sale"
+                            target="_blank"
+                          >
+                            Conditions of Sale
+                          </RouterLink>
+                          .
+                        </Text>
+                      </Text>
+                    </Column>
+                  </GridColumns>
                 )}
 
                 <ConditionsOfSaleCheckbox />
