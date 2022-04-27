@@ -13,19 +13,14 @@ import { trackExperimentViewed } from "./trackExperimentViewed"
  * @see https://github.com/4Catalyzer/farce/blob/master/src/ActionTypes.js
  */
 
-interface ABTestRouteMap {
-  abTest: string
-  routes: string[]
-}
 
 interface TrackingMiddlewareOptions {
   excludePaths?: string[]
-  abTestRouteMap?: ABTestRouteMap[]
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
   return store => next => action => {
-    const { excludePaths = [], abTestRouteMap = [] } = options
+    const { excludePaths = [] } = options
     const { type, payload } = action
 
     switch (type) {
@@ -116,19 +111,6 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               }
             })
           }
-
-          // triggering AB test experiment viewed events on specific routes
-          abTestRouteMap.forEach(({ abTest, routes }) => {
-            routes.some(route => {
-              const matcher = match(route, { decode: decodeURIComponent })
-              const foundMatch = !!matcher(pathname)
-
-              if (foundMatch) {
-                trackExperimentViewed(abTest)
-                return true
-              }
-            })
-          })
         }
 
         return next(action)
