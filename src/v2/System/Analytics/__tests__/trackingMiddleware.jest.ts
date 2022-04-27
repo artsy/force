@@ -104,4 +104,45 @@ describe("trackingMiddleware", () => {
       expect(global.analytics.page).not.toBeCalled()
     })
   })
+
+  describe("referrers", () => {
+    it("tracks collect, collection and collections", () => {
+      const pathsToTest = ["/collect", "/collection/foo", "/collections"]
+
+      pathsToTest.forEach(pathToTest => {
+        trackingMiddleware()({
+          getState: () => {
+            return {
+              found: {
+                match: {
+                  location: {
+                    pathname: "/referrer",
+                    search: "?with=queryparams",
+                  },
+                },
+              },
+            }
+          },
+        })(noop)({
+          type: ActionTypes.UPDATE_LOCATION,
+          payload: {
+            pathname: pathToTest,
+          },
+        })
+
+        expect(global.analytics.page).toBeCalledWith(
+          {
+            path: pathToTest,
+            referrer: `http://testing.com/referrer?with=queryparams`,
+            url: `http://testing.com${pathToTest}`,
+          },
+          { integrations: { Marketo: false } }
+        )
+
+        expect(window.analytics!.__artsyClientSideRoutingReferrer).toEqual(
+          "http://testing.com/referrer?with=queryparams"
+        )
+      })
+    })
+  })
 })
