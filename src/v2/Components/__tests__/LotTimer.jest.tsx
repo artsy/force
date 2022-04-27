@@ -108,7 +108,7 @@ describe("extendedBiddingInfoCopy", () => {
           ).toISOString(),
           formattedStartDateTime: "",
           extendedBiddingEndAt: new Date(
-            endDate.setMinutes(endDate.getMinutes() + 3)
+            endDate.setMinutes(endDate.getMinutes() + 1)
           ).toISOString(),
           sale: {
             startAt: startAt.toISOString(),
@@ -118,7 +118,7 @@ describe("extendedBiddingInfoCopy", () => {
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
         const text = wrapper.text()
-        expect(text).toContain("Extended:")
+        expect(text).toContain("Extended: 2m 0s")
       })
     })
     describe("the auction has not yet been extended", () => {
@@ -140,7 +140,7 @@ describe("extendedBiddingInfoCopy", () => {
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
         const text = wrapper.text()
-        expect(text).not.toContain("Extended: 2m0s")
+        expect(text).not.toContain("Extended:")
       })
     })
   })
