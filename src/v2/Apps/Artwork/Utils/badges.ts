@@ -1,11 +1,11 @@
 export const shouldRenderAuthenticityCertificate = artwork => {
-  return artwork.hasCertificateOfAuthenticity && !artwork.isBiddable
+  return artwork.hasCertificateOfAuthenticity && !artwork.is_biddable
 }
 
 export const shouldRenderVerifiedSeller = artwork => {
-  return !artwork.isBiddable && artwork.partner?.isVerifiedSeller
+  return !artwork.is_biddable && artwork.partner?.isVerifiedSeller
 }
 
 export const shouldRenderGuarantee = artwork => {
-  return artwork.isAcquireable || artwork.isOfferable
+  return artwork.is_acquireable || artwork.is_offerable
 }

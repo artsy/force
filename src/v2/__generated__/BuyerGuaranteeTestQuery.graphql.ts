@@ -26,8 +26,8 @@ query BuyerGuaranteeTestQuery {
 }
 
 fragment BuyerGuarantee_artwork on Artwork {
-  isAcquireable
-  isOfferable
+  is_acquireable: isAcquireable
+  is_offerable: isOfferable
 }
 */
 
@@ -87,14 +87,14 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
+            "alias": "is_acquireable",
             "args": null,
             "kind": "ScalarField",
             "name": "isAcquireable",
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "is_offerable",
             "args": null,
             "kind": "ScalarField",
             "name": "isOfferable",
@@ -113,7 +113,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f709ab365cb32e132f4fb973e1c42877",
+    "cacheID": "3304937a9de9eb05c58ff1b74af00891",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -129,13 +129,13 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "artwork.isAcquireable": (v1/*: any*/),
-        "artwork.isOfferable": (v1/*: any*/)
+        "artwork.is_acquireable": (v1/*: any*/),
+        "artwork.is_offerable": (v1/*: any*/)
       }
     },
     "name": "BuyerGuaranteeTestQuery",
     "operationKind": "query",
-    "text": "query BuyerGuaranteeTestQuery {\n  artwork(id: \"whatevs\") {\n    ...BuyerGuarantee_artwork\n    id\n  }\n}\n\nfragment BuyerGuarantee_artwork on Artwork {\n  isAcquireable\n  isOfferable\n}\n"
+    "text": "query BuyerGuaranteeTestQuery {\n  artwork(id: \"whatevs\") {\n    ...BuyerGuarantee_artwork\n    id\n  }\n}\n\nfragment BuyerGuarantee_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n"
   }
 };
 })();

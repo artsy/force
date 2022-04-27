@@ -5,8 +5,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type BuyerGuarantee_artwork = {
-    readonly isAcquireable: boolean | null;
-    readonly isOfferable: boolean | null;
+    readonly is_acquireable: boolean | null;
+    readonly is_offerable: boolean | null;
     readonly " $refType": "BuyerGuarantee_artwork";
 };
 export type BuyerGuarantee_artwork$data = BuyerGuarantee_artwork;
@@ -24,14 +24,14 @@ const node: ReaderFragment = {
   "name": "BuyerGuarantee_artwork",
   "selections": [
     {
-      "alias": null,
+      "alias": "is_acquireable",
       "args": null,
       "kind": "ScalarField",
       "name": "isAcquireable",
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "is_offerable",
       "args": null,
       "kind": "ScalarField",
       "name": "isOfferable",
@@ -41,5 +41,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'f9de274d8ab42f89abb8f6ff744c9b06';
+(node as any).hash = '06087f71d5e148df2d9230940ba042ec';
 export default node;

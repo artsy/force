@@ -7,10 +7,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork = {
     readonly is_in_auction: boolean | null;
     readonly is_sold: boolean | null;
+    readonly is_biddable: boolean | null;
+    readonly is_acquireable: boolean | null;
+    readonly is_offerable: boolean | null;
     readonly hasCertificateOfAuthenticity: boolean | null;
-    readonly isBiddable: boolean | null;
-    readonly isAcquireable: boolean | null;
-    readonly isOfferable: boolean | null;
     readonly partner: {
         readonly isVerifiedSeller: boolean | null;
     } | null;
@@ -54,31 +54,31 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasCertificateOfAuthenticity",
-      "storageKey": null
-    },
-    {
-      "alias": null,
+      "alias": "is_biddable",
       "args": null,
       "kind": "ScalarField",
       "name": "isBiddable",
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "is_acquireable",
       "args": null,
       "kind": "ScalarField",
       "name": "isAcquireable",
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "is_offerable",
       "args": null,
       "kind": "ScalarField",
       "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasCertificateOfAuthenticity",
       "storageKey": null
     },
     {
@@ -223,5 +223,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '763ac65160338f59e068792dbd19ccb4';
+(node as any).hash = 'b16b57cd4df3247800c5e3e214a8ec43';
 export default node;

@@ -27,7 +27,7 @@ query AuthenticityCertificateTestQuery {
 
 fragment AuthenticityCertificate_artwork on Artwork {
   hasCertificateOfAuthenticity
-  isBiddable
+  is_biddable: isBiddable
 }
 */
 
@@ -94,7 +94,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "is_biddable",
             "args": null,
             "kind": "ScalarField",
             "name": "isBiddable",
@@ -113,7 +113,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73d4e41d2f91c2406959c3f9c128854f",
+    "cacheID": "3d9f17f1026c9c31b3b3d3c0bf568d11",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -130,12 +130,12 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "artwork.isBiddable": (v1/*: any*/)
+        "artwork.is_biddable": (v1/*: any*/)
       }
     },
     "name": "AuthenticityCertificateTestQuery",
     "operationKind": "query",
-    "text": "query AuthenticityCertificateTestQuery {\n  artwork(id: \"whatevs\") {\n    ...AuthenticityCertificate_artwork\n    id\n  }\n}\n\nfragment AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  isBiddable\n}\n"
+    "text": "query AuthenticityCertificateTestQuery {\n  artwork(id: \"whatevs\") {\n    ...AuthenticityCertificate_artwork\n    id\n  }\n}\n\nfragment AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  is_biddable: isBiddable\n}\n"
   }
 };
 })();

@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type VerifiedSeller_artwork = {
-    readonly isBiddable: boolean | null;
+    readonly is_biddable: boolean | null;
     readonly partner: {
         readonly isVerifiedSeller: boolean | null;
         readonly name: string | null;
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "name": "VerifiedSeller_artwork",
   "selections": [
     {
-      "alias": null,
+      "alias": "is_biddable",
       "args": null,
       "kind": "ScalarField",
       "name": "isBiddable",
@@ -62,5 +62,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ffc33ea2163d8e4b7821dc20aefb7a4e';
+(node as any).hash = '2efbba0f7a6a9470dc169125c7b5fdc9';
 export default node;

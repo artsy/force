@@ -122,10 +122,10 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
       fragment ArtworkSidebar_artwork on Artwork {
         is_in_auction: isInAuction
         is_sold: isSold
+        is_biddable: isBiddable
+        is_acquireable: isAcquireable
+        is_offerable: isOfferable
         hasCertificateOfAuthenticity
-        isBiddable
-        isAcquireable
-        isOfferable
         partner {
           isVerifiedSeller
         }

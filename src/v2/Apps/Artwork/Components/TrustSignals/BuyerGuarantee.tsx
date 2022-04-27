@@ -41,8 +41,8 @@ export const BuyerGuaranteeFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment BuyerGuarantee_artwork on Artwork {
-        isAcquireable
-        isOfferable
+        is_acquireable: isAcquireable
+        is_offerable: isOfferable
       }
     `,
   }
