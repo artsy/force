@@ -63,7 +63,6 @@ import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { backboneSync } from "./lib/backboneSync"
 import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
-import { splitTestMiddleware } from "./desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
 import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
 import { featureFlagMiddleware } from "lib/middleware/featureFlagMiddleware"
@@ -119,10 +118,6 @@ export function initializeMiddleware(app) {
   app.use(localsMiddleware)
   app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
-
-  if (process.env.NODE_ENV !== "test") {
-    app.use(splitTestMiddleware)
-  }
 
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
