@@ -1,4 +1,4 @@
-import { Box, Flex } from "@artsy/palette"
+import { Box, Flex, FlexProps } from "@artsy/palette"
 
 const BAR_WIDTH = 2
 const BAR_ROUNDNESS = 10
@@ -10,7 +10,7 @@ export interface HistogramBarEntity {
   value: number
 }
 
-interface HistogramProps {
+interface HistogramProps extends FlexProps {
   selectedRange: Range
   bars: HistogramBarEntity[]
 }
@@ -30,12 +30,18 @@ const getPercentByEntity = (maxValue: number, entityCount: number) => {
 export const Histogram: React.FC<HistogramProps> = ({
   bars,
   selectedRange,
+  ...other
 }) => {
   const maxValue = Math.max(...bars.map(bar => bar.count))
   const [min, max] = selectedRange
 
   return (
-    <Flex height={110} justifyContent="space-between" alignItems="flex-end">
+    <Flex
+      height={110}
+      justifyContent="space-between"
+      alignItems="flex-end"
+      {...other}
+    >
       {bars.map((entity, index) => {
         const percent = getPercentByEntity(maxValue, entity.count)
         const selected = isSelected(entity.value, min, max)
