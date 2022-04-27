@@ -1,9 +1,9 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
-import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
+import { getPhoneNumberInformation } from "v2/Utils/phoneNumberUtils"
 import { useSystemContext } from "v2/System"
-import { PhoneNumber, PhoneNumberInput } from "./PhoneNumberInput"
+import { PhoneNumber, PhoneNumberInput } from "v2/Components/PhoneNumberInput"
 
 export interface ContactInformationFormModel {
   name: string

@@ -1,12 +1,20 @@
-import { Button, Join, ModalDialog, Spacer } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Join,
+  ModalDialog,
+  Spacer,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionRegistrationRoute_me } from "v2/__generated__/AuctionRegistrationRoute_me.graphql"
 import { AuctionRegistrationRoute_sale } from "v2/__generated__/AuctionRegistrationRoute_sale.graphql"
-import { Form, Formik } from "formik"
+import { Form, Formik, FormikHelpers } from "formik"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { useRouter } from "v2/System/Router/useRouter"
 import {
-  AuctionFormValues,
+  AuctionFullFormValues,
+  AuctionPhoneFormValues,
   initialValuesForRegistration,
   registrationValidationSchema,
 } from "v2/Apps/Auction/Components/Form/Utils"
@@ -21,6 +29,13 @@ import { IdentityVerificationWarning } from "v2/Apps/Auction/Components/Form/Ide
 import { useAuctionTracking } from "v2/Apps/Auction/Hooks/useAuctionTracking"
 import { ErrorStatus } from "../Components/Form/ErrorStatus"
 import { AuctionConfirmRegistrationRoute_sale } from "v2/__generated__/AuctionConfirmRegistrationRoute_sale.graphql"
+
+import {
+  emptyPhoneNumber,
+  PhoneNumberInput,
+} from "v2/Components/PhoneNumberInput"
+import { getPhoneNumberInformation } from "v2/Utils/phoneNumberUtils"
+import { useSystemContext } from "v2/System"
 
 export interface AuctionRegistrationRouteProps {
   me: AuctionRegistrationRoute_me
@@ -43,14 +58,6 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
     me,
   })
 
-  const { createToken: handleSubmit } = useCreateTokenAndSubmit({
-    me,
-    sale,
-    onSuccess: () => {
-      router.push(`/auction/${sale.slug}`)
-    },
-  })
-
   const handleModalClose = () => {
     router.push(`/auction/${sale.slug}`)
   }
@@ -59,7 +66,7 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
   useEffect(() => {
     if (redirectToSaleHome(sale)) {
       router.replace(`/auction/${sale.slug}`)
-    } else if (me.hasQualifiedCreditCards) {
+    } else if (!requiredBidderInfo) {
       router.replace(`/auction/${sale.slug}/confirm-registration`)
     } else {
       tracking.registrationPageView()
@@ -72,6 +79,7 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
     return null
   }
   let RequiredInfoForm: React.FC<RegistrationFormProps>
+
   if (requiredBidderInfo == "payment") {
     RequiredInfoForm = NewCreditCardForm
   } else {
@@ -90,38 +98,6 @@ const AuctionRegistrationRoute: React.FC<AuctionRegistrationRouteProps> = ({
         onSuccess={() => router.push(`/auction/${sale.slug}`)}
         needsIdentityVerification={needsIdentityVerification}
       />
-      <Formik<AuctionFormValues>
-        validateOnMount
-        initialValues={initialValuesForRegistration}
-        onSubmit={handleSubmit}
-        validationSchema={registrationValidationSchema}
-      >
-        {({ isSubmitting, isValid }) => {
-          return (
-            <Form>
-              <Join separator={<Spacer my={2} />}>
-                <AddressFormWithCreditCard />
-
-                {needsIdentityVerification && <IdentityVerificationWarning />}
-
-                <ConditionsOfSaleCheckbox />
-
-                <Button
-                  size="large"
-                  width="100%"
-                  loading={isSubmitting}
-                  disabled={!isValid}
-                  type="submit"
-                >
-                  Register
-                </Button>
-
-                <ErrorStatus />
-              </Join>
-            </Form>
-          )
-        }}
-      </Formik>
     </ModalDialog>
   )
 }
@@ -139,7 +115,7 @@ const NewCreditCardForm: React.FC<RegistrationFormProps> = ({
   })
 
   return (
-    <Formik<AuctionFormValues>
+    <Formik<AuctionFullFormValues>
       validateOnMount
       initialValues={initialValuesForRegistration}
       onSubmit={handleSubmit}
@@ -185,19 +161,89 @@ const NewPhoneNumberForm: React.FC<RegistrationFormProps> = ({
     sale,
     onSuccess,
   })
+  const { relayEnvironment } = useSystemContext()
+
+  const validatePhone = async ({ phoneNumber }) => {
+    const { isValid } = phoneNumber
+    if (isValid) {
+      return {}
+    } else {
+      return { phoneNumber: "Please enter a valid phone number" }
+    }
+  }
+
+  const handlePhoneNumberChange = (
+    setFieldValue: FormikHelpers<AuctionPhoneFormValues>["setFieldValue"]
+  ) => async (region, number) => {
+    if (region && number && relayEnvironment) {
+      const phoneInformation = await getPhoneNumberInformation(
+        number,
+        relayEnvironment,
+        region
+      )
+      setFieldValue("phoneNumber", phoneInformation)
+      return
+    }
+
+    setFieldValue("phone", {
+      international: "",
+      isValid: false,
+      national: "",
+      originalNumber: "",
+    })
+  }
 
   return (
-    <Formik<AuctionFormValues>
+    <Formik<AuctionPhoneFormValues>
       validateOnMount
-      initialValues={initialValuesForRegistration}
+      initialValues={{
+        // phoneNumber: "",
+        phoneNumber: emptyPhoneNumber,
+      }}
       onSubmit={updateProfileAndSubmit}
-      validationSchema={registrationValidationSchema}
+      validate={validatePhone}
     >
-      {({ isSubmitting, isValid }) => {
+      {({
+        isSubmitting,
+        isValid,
+        values,
+        errors,
+        touched,
+        handleBlur,
+        setFieldValue,
+        handleChange,
+      }) => {
         return (
           <Form>
             <Join separator={<Spacer my={2} />}>
-              <h1>TODO:</h1>
+              <GridColumns>
+                <Column span={12}>
+                  {/*
+                  <Input
+                    name="phoneNumber"
+                    title="Phone Number"
+                    type="tel"
+                    description="Required for shipping logistics"
+                    placeholder="Add phone number"
+                    autoComplete="tel"
+                    value={values.phoneNumber}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.phoneNumber && errors.phoneNumber}
+                    required
+                  />
+                */}
+                  <PhoneNumberInput
+                    inputProps={{ name: "phoneNumber", onBlur: handleBlur }}
+                    mt={4}
+                    onChange={handlePhoneNumberChange(setFieldValue)}
+                    phoneNumber={values.phoneNumber}
+                    error={
+                      touched.phoneNumber && (errors.phoneNumber as string)
+                    }
+                  />
+                </Column>
+              </GridColumns>
 
               {needsIdentityVerification && <IdentityVerificationWarning />}
 
@@ -239,6 +285,7 @@ export const AuctionRegistrationRouteFragmentContainer = createFragmentContainer
         hasQualifiedCreditCards
         phoneNumber {
           isValid
+          display
         }
       }
     `,
@@ -265,7 +312,6 @@ const computeProps = ({ sale, me }: AuctionRegistrationRouteProps) => {
       !sale?.bidder?.qualifiedForBidding &&
       !me?.identityVerified
   )
-
   const requiredBidderInfo:
     | "payment"
     | "phone"

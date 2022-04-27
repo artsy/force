@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 export interface PhoneNumber {
   isValid: boolean
   national?: string
+  international?: string
   regionCode?: string
 }
 
@@ -130,4 +131,10 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
       )}
     </Flex>
   )
+}
+
+export const emptyPhoneNumber: PhoneNumber = {
+  international: "",
+  isValid: false,
+  national: "",
 }

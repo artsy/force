@@ -2,8 +2,10 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { useAddCreditCardAndUpdateProfile } from "v2/Apps/Auction/Queries/useAddCreditCardAndUpdateProfile"
 import { useCreateBidder } from "v2/Apps/Auction/Queries/useCreateBidder"
 import {
-  AuctionFormHelpers,
-  AuctionFormValues,
+  AuctionFullFormHelpers,
+  AuctionFullFormValues,
+  AuctionPhoneFormHelpers,
+  AuctionPhoneFormValues,
   errorMessageForCard,
   stripeCardElementNotFound,
   stripeNotLoadedErrorMessage,
@@ -47,12 +49,12 @@ export const useUpdateMyUserProfileAndSubmit = ({
    * 6. Call onSuccess callback
    */
   const updateProfileAndSubmit = async (
-    values: AuctionFormValues, // TODO: new type?
-    helpers: AuctionFormHelpers
+    values: AuctionPhoneFormValues,
+    helpers: AuctionPhoneFormHelpers
   ) => {
     try {
       await submitUpdateMyUserProfile({
-        phone: values.address?.phoneNumber,
+        phone: values.phoneNumber.international,
       })
 
       const response = await createBidder({
@@ -105,8 +107,8 @@ export const useCreateTokenAndSubmit = ({
    * 6. Call onSuccess callback
    */
   const createToken = async (
-    values: AuctionFormValues,
-    helpers: AuctionFormHelpers
+    values: AuctionFullFormValues,
+    helpers: AuctionFullFormHelpers
   ) => {
     if (!stripe || !elements) {
       logger.error(stripeNotLoadedErrorMessage)

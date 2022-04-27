@@ -11,7 +11,7 @@ import { Form, Formik } from "formik"
 import {
   confirmRegistrationValidationSchema,
   formatError,
-  AuctionFormValues,
+  AuctionFullFormValues,
 } from "v2/Apps/Auction/Components/Form/Utils"
 import { useEffect } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -81,7 +81,7 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
 
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
-      <Formik<Pick<AuctionFormValues, "agreeToTerms">>
+      <Formik<Pick<AuctionFullFormValues, "agreeToTerms">>
         initialValues={{
           agreeToTerms: false,
         }}

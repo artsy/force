@@ -3,7 +3,7 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SystemContextProvider, useTracking } from "v2/System"
 import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 import { useErrorModal } from "../../Utils/useErrorModal"
-import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
+import { getPhoneNumberInformation } from "../../../../../../Utils/phoneNumberUtils"
 import { ContactInformationFragmentContainer } from "../ContactInformation"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ActionType } from "@artsy/cohesion"
@@ -59,8 +59,8 @@ jest.mock("../../Utils/createOrUpdateConsignSubmission", () => ({
   createOrUpdateConsignSubmission: jest.fn(),
 }))
 
-jest.mock("../../Utils/phoneNumberUtils", () => ({
-  ...jest.requireActual("../../Utils/phoneNumberUtils"),
+jest.mock("v2/Utils/phoneNumberUtils", () => ({
+  ...jest.requireActual("v2/Utils/phoneNumberUtils"),
   getPhoneNumberInformation: jest.fn(),
 }))
 

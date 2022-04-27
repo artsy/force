@@ -5,8 +5,8 @@ import createLogger from "v2/Utils/logger"
 import { useBidderPosition } from "v2/Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "v2/Apps/Auction/Queries/useCreateBidderPosition"
 import {
-  AuctionFormHelpers,
-  AuctionFormValues,
+  AuctionFullFormHelpers,
+  AuctionFullFormValues,
   BiddingStatus,
   errorMessageForBidding,
 } from "v2/Apps/Auction/Components/Form/Utils"
@@ -58,8 +58,9 @@ export const useSubmitBid = ({
    *  4. If PENDING, continue polling (can be removed with new Bidding engine)
    */
   const submitBid = async (
-    values: AuctionFormValues,
-    helpers: AuctionFormHelpers
+    // TODO: update types
+    values: AuctionFullFormValues,
+    helpers: AuctionFullFormHelpers
   ) => {
     helpers.setStatus(null)
 
@@ -133,7 +134,7 @@ const setupCheckBidStatus = (props: {
   fetchBidderPosition: ReturnType<
     typeof useBidderPosition
   >["fetchBidderPosition"]
-  helpers: AuctionFormHelpers
+  helpers: AuctionFullFormHelpers
   redirectTo: string
   relay: RelayRefetchProp
   router: Router

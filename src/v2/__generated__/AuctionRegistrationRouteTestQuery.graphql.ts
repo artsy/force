@@ -38,6 +38,7 @@ fragment AuctionRegistrationRoute_me on Me {
   hasQualifiedCreditCards
   phoneNumber {
     isValid
+    display
   }
 }
 
@@ -182,6 +183,13 @@ return {
                 "kind": "ScalarField",
                 "name": "isValid",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -267,7 +275,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ff8c1e33ccc0bdcf87a461c45d34ecb5",
+    "cacheID": "1b5d095fa25829cd993e9acb09fde65c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -287,6 +295,7 @@ return {
           "plural": false,
           "type": "PhoneNumberType"
         },
+        "me.phoneNumber.display": (v5/*: any*/),
         "me.phoneNumber.isValid": (v3/*: any*/),
         "sale": {
           "enumValues": null,
@@ -314,7 +323,7 @@ return {
     },
     "name": "AuctionRegistrationRouteTestQuery",
     "operationKind": "query",
-    "text": "query AuctionRegistrationRouteTestQuery {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    isValid\n  }\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query AuctionRegistrationRouteTestQuery {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    isValid\n    display\n  }\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

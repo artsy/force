@@ -38,13 +38,15 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
         contextModule: ContextModule.auctionSidebar,
       })
 
-      // Register
-    } else if (!me?.hasCreditCards) {
-      router.push(`${saleURL}/register`)
+      // TODO: should this be removed or duplicate the same check as in the phone form?
+      //   // Register
+      // } else if (!me?.hasCreditCards) {
+      //   router.push(`${saleURL}/register`)
 
       // Confirm Registration
     } else {
-      router.push(`${saleURL}/confirm-registration`)
+      router.push(`${saleURL}/register`)
+      // router.push(`${saleURL}/confirm-registration`)
     }
 
     tracking.clickedRegisterButton()

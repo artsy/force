@@ -42,6 +42,7 @@ fragment AuctionRegistrationRoute_me on Me {
   hasQualifiedCreditCards
   phoneNumber {
     isValid
+    display
   }
 }
 
@@ -175,6 +176,13 @@ return {
                 "kind": "ScalarField",
                 "name": "isValid",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -260,12 +268,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a1ac2a796923bfaa6b7ddf56f4453659",
+    "cacheID": "0a37e3521766242ae51f80053d2d0302",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_RegisterRouteQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_RegisterRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    isValid\n  }\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query auctionRoutes_RegisterRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    isValid\n    display\n  }\n}\n\nfragment AuctionRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  requireIdentityVerification\n  isClosed\n  isLiveOpen\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();
