@@ -186,7 +186,7 @@ Some top-level notes:
 
 Here are some great examples of what tests and test coverage should look like.
 
-- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1)
+- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
 - [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
 
 ### Add smoke tests for new routes
