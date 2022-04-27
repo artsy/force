@@ -86,7 +86,7 @@ export const MagnifyImage: React.FC<MagnifyImageProps> = ({
         style={{
           ...rest.style,
           transformOrigin: getTransformOrigin(positions),
-          transition: `transform ${scaleDuration}s ease, transform-origin 100ms ease`,
+          transition: `transform ${scaleDuration}s ease, transform-origin 100ms ease, opacity 0.25s`,
           transform: zoomed ? `scale(${scale})` : `scale(1.0)`,
         }}
       />
