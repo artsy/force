@@ -261,7 +261,7 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     image: "http://files.artsy.net/images/alan.png",
   },
   {
-    name: "Celine Cunha-Krieger",
+    name: "Celine Cunha",
     title: "Specialist in Post-War & Contemporary Art",
     location: "New York",
     email: "celine.cunha@artsymail.com",
