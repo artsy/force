@@ -39,7 +39,7 @@ export type Status_order = {
                     readonly estimatedDeliveryWindow: string | null;
                 } | null;
                 readonly selectedShippingQuote: {
-                    readonly displayName: string;
+                    readonly typeName: string;
                 } | null;
                 readonly fulfillments: {
                     readonly edges: ReadonlyArray<{
@@ -265,7 +265,7 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "displayName",
+                      "name": "typeName",
                       "storageKey": null
                     }
                   ],
@@ -426,5 +426,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'b34e7bef0303aa5e740f47c2352dd80e';
+(node as any).hash = '9d9d1e9bd3e772980684c2234ede924b';
 export default node;

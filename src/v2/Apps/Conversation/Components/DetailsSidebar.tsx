@@ -269,7 +269,7 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
                       estimatedDeliveryWindow
                     }
                     selectedShippingQuote {
-                      displayName
+                      typeName
                     }
                     fulfillments {
                       edges {

@@ -198,7 +198,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
               estimatedDeliveryWindow
             }
             selectedShippingQuote {
-              displayName
+              typeName
             }
             fulfillments {
               edges {
