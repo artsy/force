@@ -17,6 +17,8 @@ import { ContinueButton } from "./index"
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { CommitMutation } from "../../Utils/commitMutation"
+import { useTracking } from "v2/System"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 
 export interface Props {
   order: Payment_order
@@ -38,6 +40,22 @@ export const PaymentContent: FC<Props> = props => {
   } = props
   const [paymentMethod, setPaymentMethod] = useState("bank_debit")
 
+  const tracking = useTracking()
+
+  const trackClickedPaymentMethod = (val: string): void => {
+    const event = {
+      subject: "click_payment_method",
+      payment_method: val,
+      action: ActionType.clickedChangePaymentMethod,
+      flow: order.mode!,
+      context_page_owner_type: OwnerType.ordersPayment,
+      order_id: order.internalID,
+      amount: order.buyerTotal,
+      currency: order.currencyCode,
+    }
+    tracking.trackEvent(event)
+  }
+
   return (
     <div>
       <Flex
@@ -49,6 +67,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
         <RadioGroup
           onSelect={val => {
+            trackClickedPaymentMethod(val)
             setPaymentMethod(val)
           }}
           defaultValue={paymentMethod}

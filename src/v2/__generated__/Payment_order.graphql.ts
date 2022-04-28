@@ -8,6 +8,8 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type Payment_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
+    readonly currencyCode: string;
+    readonly buyerTotal: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -47,6 +49,26 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "mode",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "precision",
+          "value": 2
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "buyerTotal",
+      "storageKey": "buyerTotal(precision:2)"
     },
     {
       "alias": null,
@@ -118,5 +140,5 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = 'd7d52f4d7c603a596b9c91b633ee8efc';
+(node as any).hash = 'd90b850a736d2adaa3c8ebe1c2616338';
 export default node;

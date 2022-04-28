@@ -56,7 +56,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
     <div>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <BankDebitForm />
+          <BankDebitForm order={order} />
         </Elements>
       )}
     </div>
