@@ -70,9 +70,11 @@ describe("AuctionConfirmRegistrationRoute", () => {
   }
 
   const defaultFormikProps = {
+    errors: {},
     touched: {},
     isSubmitting: false,
     isValid: true,
+    values: {},
   }
 
   beforeEach(() => {
@@ -172,6 +174,42 @@ describe("AuctionConfirmRegistrationRoute", () => {
     expect(wrapper.find("IdentityVerificationWarning")).toHaveLength(0)
   })
 
+  it("shows phone number input", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        hasQualifiedCreditCards: true,
+        phoneNumber: {
+          originalNumber: null,
+        },
+      }),
+    })
+
+    expect(wrapper.text()).toContain(
+      "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale and provide a valid phone number."
+    )
+    expect(wrapper.text()).toContain(
+      "Phone Number*Required for shipping logistics"
+    )
+  })
+
+  it("hides phone number input", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        requireIdentityVerification: false,
+      }),
+      Me: () => ({
+        hasQualifiedCreditCards: true,
+      }),
+      PhoneNumber: () => ({
+        originalNumber: "+1 (123) 456-7890",
+      }),
+    })
+
+    expect(wrapper.text()).not.toContain(
+      "Phone Number*Required for shipping logistics"
+    )
+  })
+
   it("renders correct components", () => {
     const wrapper = getWrapper({
       Me: () => ({
@@ -179,7 +217,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
       }),
     })
     expect(wrapper.text()).toContain(
-      "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale"
+      "Welcome back. To complete your registration, please confirm that you agree to the Conditions of Sale."
     )
     expect(wrapper.find("ConditionsOfSaleCheckbox")).toHaveLength(1)
     expect(wrapper.find("Button")).toHaveLength(1)

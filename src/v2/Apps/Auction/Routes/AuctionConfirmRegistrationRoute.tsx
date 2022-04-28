@@ -1,4 +1,13 @@
-import { Button, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Input,
+  Join,
+  ModalDialog,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AuctionConfirmRegistrationRoute_me } from "v2/__generated__/AuctionConfirmRegistrationRoute_me.graphql"
@@ -9,14 +18,14 @@ import { IdentityVerificationWarning } from "v2/Apps/Auction/Components/Form/Ide
 import { ConditionsOfSaleCheckbox } from "v2/Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 import { Form, Formik } from "formik"
 import {
-  confirmRegistrationValidationSchema,
   formatError,
   AuctionFormValues,
+  confirmRegistrationValidationSchemas,
 } from "v2/Apps/Auction/Components/Form/Utils"
 import { useEffect } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { redirectToSaleHome } from "./AuctionRegistrationRoute"
-import { isEmpty } from "lodash"
+import { useUpdateMyUserProfile } from "v2/Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
 interface AuctionConfirmRegistrationRouteProps {
   me: AuctionConfirmRegistrationRoute_me
@@ -30,13 +39,25 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
   const { tracking } = useAuctionTracking()
   const { router } = useRouter()
   const { submitMutation: createBidder } = useCreateBidder()
-  const { auctionURL, needsIdentityVerification } = computeProps({
+  const {
+    auctionURL,
+    needsIdentityVerification,
+    validationSchema,
+  } = computeProps({
     sale,
     me,
   })
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const hasPhoneNumber = !!me?.phoneNumber?.originalNumber
 
-  const handleSubmit = async (_values, helpers) => {
+  const handleSubmit = async (values, helpers) => {
     try {
+      if (!hasPhoneNumber) {
+        await submitUpdateMyUserProfile({
+          phone: values.phoneNumber,
+        })
+      }
+
       const response = await createBidder({
         variables: {
           input: {
@@ -81,41 +102,64 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
 
   return (
     <ModalDialog title={`Register for ${sale.name}`} onClose={closeModal}>
-      <Formik<Pick<AuctionFormValues, "agreeToTerms">>
+      <Formik<Pick<AuctionFormValues, "agreeToTerms" | "phoneNumber">>
+        validateOnMount
         initialValues={{
           agreeToTerms: false,
+          phoneNumber: "",
         }}
         onSubmit={handleSubmit}
-        validationSchema={confirmRegistrationValidationSchema}
+        validationSchema={validationSchema}
       >
-        {({ isSubmitting, isValid, touched }) => {
+        {({
+          isSubmitting,
+          isValid,
+          touched,
+          values,
+          handleChange,
+          handleBlur,
+          errors,
+        }) => {
           return (
             <Form>
               <Join separator={<Spacer my={2} />}>
                 {needsIdentityVerification ? (
                   <IdentityVerificationWarning />
                 ) : (
-                  <Text variant="md">
-                    Welcome back. To complete your registration, please confirm
-                    that you agree to the{" "}
-                    <Text variant="md" display="inline">
-                      <RouterLink
-                        color="black100"
-                        to="/conditions-of-sale"
-                        target="_blank"
-                      >
-                        Conditions of Sale
-                      </RouterLink>
-                      .
-                    </Text>
-                  </Text>
+                  <GridColumns>
+                    {!hasPhoneNumber ? (
+                      <>
+                        <Column span={12}>
+                          <ConditionsOfSaleMessage additionalText=" and provide a valid phone number." />
+                          <Spacer my={2} />
+                          <Input
+                            name="phoneNumber"
+                            title="Phone Number"
+                            type="tel"
+                            description="Required for shipping logistics"
+                            placeholder="Add phone number"
+                            autoComplete="tel"
+                            value={values.phoneNumber}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.phoneNumber && errors.phoneNumber}
+                            required
+                          />
+                        </Column>
+                      </>
+                    ) : (
+                      <Column span={12}>
+                        <ConditionsOfSaleMessage additionalText="." />
+                      </Column>
+                    )}
+                  </GridColumns>
                 )}
 
                 <ConditionsOfSaleCheckbox />
 
                 <Button
                   loading={isSubmitting}
-                  disabled={!isValid || isSubmitting || isEmpty(touched)}
+                  disabled={!isValid}
                   type="submit"
                 >
                   Register
@@ -129,6 +173,23 @@ const AuctionConfirmRegistrationRoute: React.FC<AuctionConfirmRegistrationRouteP
   )
 }
 
+const ConditionsOfSaleMessage: React.FC<{ additionalText?: string }> = ({
+  additionalText,
+}) => {
+  return (
+    <Text variant="md">
+      Welcome back. To complete your registration, please confirm that you agree
+      to the{" "}
+      <Text variant="md" display="inline">
+        <RouterLink color="black100" to="/conditions-of-sale" target="_blank">
+          Conditions of Sale
+        </RouterLink>
+      </Text>
+      {additionalText}
+    </Text>
+  )
+}
+
 export const AuctionConfirmRegistrationRouteFragmentContainer = createFragmentContainer(
   AuctionConfirmRegistrationRoute,
   {
@@ -137,6 +198,10 @@ export const AuctionConfirmRegistrationRouteFragmentContainer = createFragmentCo
         internalID
         identityVerified
         hasQualifiedCreditCards
+
+        phoneNumber {
+          originalNumber
+        }
       }
     `,
     sale: graphql`
@@ -164,8 +229,13 @@ const computeProps = ({ me, sale }: AuctionConfirmRegistrationRouteProps) => {
     !sale?.bidder?.qualifiedForBidding &&
     !me?.identityVerified
 
+  const validationSchema = !!me.phoneNumber?.originalNumber
+    ? confirmRegistrationValidationSchemas.withoutPhoneValidation
+    : confirmRegistrationValidationSchemas.withPhoneValidation
+
   return {
-    needsIdentityVerification,
     auctionURL,
+    needsIdentityVerification,
+    validationSchema,
   }
 }
