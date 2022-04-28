@@ -121,6 +121,7 @@ describe("NavBar", () => {
         contextModule: "header",
         intent: "signup",
         mode: "signup",
+        redirectTo: "http://localhost/",
       })
     })
   })

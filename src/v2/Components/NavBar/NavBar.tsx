@@ -241,6 +241,7 @@ export const NavBar: React.FC = track(
                           mode: ModalType.signup,
                           intent: Intent.signup,
                           contextModule: ContextModule.header,
+                          redirectTo: window.location.href,
                         })
                       }}
                     >
