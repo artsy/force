@@ -198,7 +198,6 @@ export const SoldRecentlyOnArtsyQueryRenderer: React.FC = () => {
           return null
         }
 
-        // FIXME: Add skeleton loading state
         if (!props || !props.recentlySoldArtworks) {
           return PLACEHOLDER
         }
