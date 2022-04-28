@@ -189,6 +189,10 @@ Here are some great examples of what tests and test coverage should look like.
 - [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
 - [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
 
+#### Manipulating time in unit tests
+
+If you're attempting to write a test that relies on time-related code, it can be handy to manipulate [Luxon's Settings module](https://moment.github.io/luxon/api-docs/index.html#settings) rather than relying on the test environment to behave as you expect ([see example](https://github.com/artsy/force/blob/0c275707c4dc9c467593d8d08bcc88662c925389/src/v2/Components/__tests__/LotTimer.jest.tsx#L103-L105)).
+
 ### Add smoke tests for new routes
 
 We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/main/cypress/integration) for some patterns. We generally add a simple check just to ensure the route doesn't error out.
