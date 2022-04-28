@@ -15,7 +15,7 @@ interface TimerInfo {
 export const getSaleOrLotTimerInfo = (
   time: Time,
   hasStarted?: boolean,
-  saleHasEnded?: boolean,
+  lotsAreClosing?: boolean,
   isSaleInfo: boolean = false,
   extendedBiddingEndAt?: string | null
 ): TimerInfo => {
@@ -34,19 +34,21 @@ export const getSaleOrLotTimerInfo = (
     if (parsedDays < 1) {
       copy = "Bidding Starts Today"
       // Entered extended bidding
-    } else if (extendedBiddingEndAt) {
-      copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
-      color = "red100"
     } else {
-      copy = `${parsedDays} Day${
-        parsedDays > 1 ? "s" : ""
-      } Until Bidding Starts`
+      if (extendedBiddingEndAt) {
+        copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
+        color = "red100"
+      } else {
+        copy = `${parsedDays} Day${
+          parsedDays > 1 ? "s" : ""
+        } Until Bidding Starts`
+      }
     }
     // Sale has started
   } else {
     // When the timer is on the sale:
     if (isSaleInfo) {
-      if (saleHasEnded) {
+      if (lotsAreClosing) {
         copy = "Lots are closing"
         color = "red100"
         // More than 24 hours until close

@@ -69,6 +69,22 @@ describe("getSaleOrLotTimerInfo", () => {
     })
 
     describe("when the sale is not yet open", () => {
+      describe("when the sale has popcorn bidding", () => {
+        const time = { days: "3", hours: "0", minutes: "2", seconds: "0" }
+        const hasStarted = false
+        const hasEnded = false
+        it("formats the timer correctly", () => {
+          const saleTimerInfo = getSaleOrLotTimerInfo(
+            time,
+            hasStarted,
+            hasEnded,
+            true,
+            "2"
+          )
+          expect(saleTimerInfo.copy).toEqual("Extended: 2m 0s")
+          expect(saleTimerInfo.color).toEqual("red100")
+        })
+      })
       describe("when the sale is more than 1 day away", () => {
         const time = { days: "3", hours: "0", minutes: "0", seconds: "0" }
         const hasStarted = false
