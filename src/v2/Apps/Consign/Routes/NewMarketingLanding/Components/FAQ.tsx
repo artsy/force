@@ -58,7 +58,13 @@ export const FAQ: React.FC = () => {
           </p>
           <p>
             If you’re looking for gallery representation, you might be
-            interested in reading Artsy Editorial’s Gallery Representation Guide
+            interested in reading Artsy Editorial’s{" "}
+            <a
+              href="/article/artsy-editorial-artists-gallery-representation"
+              target="_blank"
+            >
+              Gallery Representation Guide
+            </a>{" "}
             and{" "}
             <a href="/series/working-artists-guide" target="_blank">
               Working Artist’s Guide

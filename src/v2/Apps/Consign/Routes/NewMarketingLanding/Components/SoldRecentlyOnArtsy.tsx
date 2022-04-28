@@ -87,7 +87,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                     <Text variant="xs">Estimate</Text>
 
                     <Text variant="xs">
-                      US ${lowEstimateUSD}—${highEstimateUSD}
+                      US${lowEstimateUSD}—US${highEstimateUSD}
                     </Text>
                   </Flex>
 
@@ -99,7 +99,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                   >
                     <Text variant="xs">Sold for (incl. premium)</Text>
 
-                    <Text variant="xs">US ${priceRealized}</Text>
+                    <Text variant="xs">US${priceRealized}</Text>
                   </Flex>
                 </RouterLink>
               </Fragment>
