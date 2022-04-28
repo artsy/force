@@ -29,22 +29,22 @@ export const getSaleOrLotTimerInfo = (
   let copy = ""
   let color = "blue100"
 
+  console.log(extendedBiddingEndAt)
+
   // Sale has not yet started
   if (!hasStarted) {
     if (parsedDays < 1) {
       copy = "Bidding Starts Today"
       // Entered extended bidding
     } else {
-      if (extendedBiddingEndAt) {
-        copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
-        color = "red100"
-      } else {
-        copy = `${parsedDays} Day${
-          parsedDays > 1 ? "s" : ""
-        } Until Bidding Starts`
-      }
+      copy = `${parsedDays} Day${
+        parsedDays > 1 ? "s" : ""
+      } Until Bidding Starts`
     }
     // Sale has started
+  } else if (extendedBiddingEndAt) {
+    copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
+    color = "red100"
   } else {
     // When the timer is on the sale:
     if (isSaleInfo) {
