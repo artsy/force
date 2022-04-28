@@ -11,7 +11,11 @@ describe("extendedBiddingInfoCopy", () => {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         extendedBiddingEndAt: "",
-        sale: { startAt: "", extendedBiddingPeriodMinutes: 2 },
+        sale: {
+          startAt: "",
+          extendedBiddingPeriodMinutes: 2,
+          extendedBiddingIntervalMinutes: 2,
+        },
         " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
@@ -38,6 +42,7 @@ describe("extendedBiddingInfoCopy", () => {
           sale: {
             startAt: new Date(startDate).toISOString(),
             extendedBiddingPeriodMinutes: 2,
+            extendedBiddingIntervalMinutes: 2,
           },
           " $refType": "LotTimer_saleArtwork",
         }
@@ -60,6 +65,7 @@ describe("extendedBiddingInfoCopy", () => {
           sale: {
             startAt: startAt.toISOString(),
             extendedBiddingPeriodMinutes: 2,
+            extendedBiddingIntervalMinutes: 2,
           },
           " $refType": "LotTimer_saleArtwork",
         }
@@ -76,7 +82,11 @@ describe("extendedBiddingInfoCopy", () => {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         extendedBiddingEndAt: "",
-        sale: { startAt: "", extendedBiddingPeriodMinutes: null },
+        sale: {
+          startAt: "",
+          extendedBiddingPeriodMinutes: null,
+          extendedBiddingIntervalMinutes: null,
+        },
         " $refType": "LotTimer_saleArtwork",
       }
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
