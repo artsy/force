@@ -4,19 +4,19 @@ import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
+import { shouldRenderBuyerGuaranteeAndSecurePayment } from "v2/Apps/Artwork/Utils/badges"
 
 interface SecurePaymentProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
   artwork: SecurePayment_artwork
 }
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const SecurePayment: React.FC<SecurePaymentProps> = ({
   artwork,
   ...other
 }) => {
-  return (
-    (artwork.is_acquireable || artwork.is_offerable) && (
+  if (shouldRenderBuyerGuaranteeAndSecurePayment(artwork)) {
+    return (
       <TrustSignal
         Icon={<LockIcon />}
         label="Secure payment"
@@ -37,7 +37,9 @@ export const SecurePayment: React.FC<SecurePaymentProps> = ({
         {...other}
       />
     )
-  )
+  }
+
+  return null
 }
 
 export const SecurePaymentFragmentContainer = createFragmentContainer(

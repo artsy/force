@@ -5,16 +5,17 @@ import { BuyerGuarantee_artwork } from "v2/__generated__/BuyerGuarantee_artwork.
 import { createFragmentContainer, graphql } from "react-relay"
 import { TrustSignal } from "./TrustSignal"
 import { BUYER_GUARANTEE_URL } from "v2/Apps/Order/Components/BuyerGuarantee"
+import { shouldRenderBuyerGuaranteeAndSecurePayment } from "v2/Apps/Artwork/Utils/badges"
 
 interface Props {
   artwork: BuyerGuarantee_artwork
 }
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 const BuyerGuarantee: React.FC<Props> = props => {
   const { artwork } = props
-  return (
-    (artwork.is_acquireable || artwork.is_offerable) && (
+
+  if (shouldRenderBuyerGuaranteeAndSecurePayment(artwork)) {
+    return (
       <TrustSignal
         Icon={<CheckCircleIcon />}
         label="Your purchase is protected"
@@ -33,7 +34,9 @@ const BuyerGuarantee: React.FC<Props> = props => {
         }
       />
     )
-  )
+  }
+
+  return null
 }
 
 export const BuyerGuaranteeFragmentContainer = createFragmentContainer(

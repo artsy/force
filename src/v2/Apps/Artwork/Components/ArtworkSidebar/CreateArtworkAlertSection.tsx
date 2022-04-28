@@ -1,5 +1,5 @@
 import React from "react"
-import { Separator, Spacer, Flex, Text, Box } from "@artsy/palette"
+import { Flex, Text, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateArtworkAlertSection_artwork } from "v2/__generated__/CreateArtworkAlertSection_artwork.graphql"
 import {
@@ -87,14 +87,14 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
   }
 
   return (
-    <Box my={2}>
-      <Separator />
-      <Spacer m={2} />
+    <>
+      <Separator mt={2} />
       <Flex
         flexDirection="row"
         py={1}
         alignItems="center"
         justifyContent="space-between"
+        my={2}
       >
         <Text variant="xs" mr={2}>
           Be notified when a similar work is available
@@ -106,7 +106,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
           getAuthModalOptions={getAuthModalOptions}
         />
       </Flex>
-    </Box>
+    </>
   )
 }
 

@@ -7,11 +7,12 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
+import { shouldRenderAuthenticityCertificate } from "v2/Apps/Artwork/Utils/badges"
 
 interface AuthenticityCertificateProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
@@ -32,7 +33,7 @@ export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = (
     setIsShowingModal(true)
   }
 
-  return artwork.hasCertificateOfAuthenticity && !artwork.is_biddable ? (
+  return shouldRenderAuthenticityCertificate(artwork) ? (
     <>
       <TrustSignal
         onClick={handleClick}
