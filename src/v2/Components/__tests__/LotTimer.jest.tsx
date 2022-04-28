@@ -118,7 +118,7 @@ describe("extendedBiddingInfoCopy", () => {
         }
         const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
         const text = wrapper.text()
-        expect(text).toContain("Extended: 1m 59s")
+        expect(text).toContain("Extended: 2m 0s")
       })
     })
     describe("the auction has not yet been extended", () => {
