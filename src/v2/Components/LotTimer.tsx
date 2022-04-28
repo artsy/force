@@ -23,13 +23,12 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
     return null
   }
 
-  const timerInfo = getSaleOrLotTimerInfo(
-    time,
+  const timerInfo = getSaleOrLotTimerInfo(time, {
     hasStarted,
-    false,
-    false,
-    extendedBiddingEndAt
-  )
+    lotsAreClosing: false,
+    isSaleInfo: false,
+    extendedBiddingEndAt,
+  })
 
   return (
     <Flex alignItems="center" flexDirection="column">

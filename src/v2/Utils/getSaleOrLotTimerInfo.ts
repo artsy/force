@@ -14,12 +14,20 @@ interface TimerInfo {
 // parameter refers to the time left in the extended period.
 export const getSaleOrLotTimerInfo = (
   time: Time,
-  hasStarted?: boolean,
-  lotsAreClosing?: boolean,
-  isSaleInfo: boolean = false,
-  extendedBiddingEndAt?: string | null
+  options: {
+    hasStarted?: boolean
+    lotsAreClosing?: boolean
+    isSaleInfo?: boolean
+    extendedBiddingEndAt?: string | null
+  }
 ): TimerInfo => {
   const { days, hours, minutes, seconds } = time
+  const {
+    hasStarted,
+    lotsAreClosing,
+    isSaleInfo,
+    extendedBiddingEndAt,
+  } = options
 
   const parsedDays = parseInt(days, 10)
   const parsedHours = parseInt(hours, 10)
@@ -28,8 +36,6 @@ export const getSaleOrLotTimerInfo = (
 
   let copy = ""
   let color = "blue100"
-
-  console.log(extendedBiddingEndAt)
 
   // Sale has not yet started
   if (!hasStarted) {

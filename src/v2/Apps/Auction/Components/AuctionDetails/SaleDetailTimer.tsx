@@ -19,7 +19,11 @@ export const SaleDetailTimer: React.FC<SaleDetailTimerProps> = ({ sale }) => {
     return null
   }
 
-  const timerCopy = getSaleOrLotTimerInfo(time, hasStarted, hasEnded, true)
+  const timerCopy = getSaleOrLotTimerInfo(time, {
+    hasStarted,
+    lotsAreClosing: hasEnded,
+    isSaleInfo: true,
+  })
 
   return (
     <Flex alignItems="center" flexDirection="column">
