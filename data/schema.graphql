@@ -8646,6 +8646,17 @@ type Image {
   width: Int
 }
 
+type ImageSearch {
+  # File stream transfer encoding
+  encoding: String!
+
+  # File name
+  filename: String!
+
+  # File MIME type. Provided by the client and can’t be trusted
+  mimetype: String!
+}
+
 type ImageURLs {
   normalized: String
 }
@@ -11824,6 +11835,12 @@ type Query {
   ): CreditCard
   departments: [Department!]!
 
+  # Get an image info
+  doNotUseImageSearch(
+    # Image file
+    image: Upload!
+  ): ImageSearch
+
   # A namespace external partners (provided by Galaxy)
   external: External!
 
@@ -14490,6 +14507,9 @@ type UpdateViewingRoomSubsectionsPayload {
   subsections: [ViewingRoomSubsection!]!
 }
 
+# The `Upload` scalar type represents a file upload.
+scalar Upload
+
 type User {
   analytics: AnalyticsUserStats
   cached: Int
@@ -14983,6 +15003,12 @@ type Viewer {
     id: String!
   ): CreditCard
   departments: [Department!]!
+
+  # Get an image info
+  doNotUseImageSearch(
+    # Image file
+    image: Upload!
+  ): ImageSearch
 
   # A namespace external partners (provided by Galaxy)
   external: External!
