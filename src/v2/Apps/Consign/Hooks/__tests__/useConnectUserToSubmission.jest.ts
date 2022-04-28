@@ -16,11 +16,6 @@ jest.mock("cookies-js", () => ({
   expire: jest.fn(),
 }))
 
-const mockUser = {
-  id: "123",
-}
-const mockNonExistentUser = {}
-
 const mockSubmissionId = "12345"
 const mockNonExistentSubmissionId = undefined
 
@@ -31,7 +26,7 @@ describe("connectUserToSubmission", () => {
   it("calls addUser and expires submissionId, when user and submission found", async () => {
     ;(Cookies.get as jest.Mock).mockImplementation(() => mockSubmissionId)
 
-    connectUserToSubmission(mockUser, mockAddUser)
+    connectUserToSubmission(mockAddUser)
 
     await waitFor(() => expect(mockAddUser).toHaveBeenCalled())
     expect(Cookies.expire).toHaveBeenCalledWith("submissionId")
@@ -40,7 +35,7 @@ describe("connectUserToSubmission", () => {
   it("calls addUser with correct input", async () => {
     ;(Cookies.get as jest.Mock).mockImplementation(() => mockSubmissionId)
 
-    connectUserToSubmission(mockUser, mockAddUser)
+    connectUserToSubmission(mockAddUser)
 
     await waitFor(() => {
       expect(mockAddUser).toHaveBeenCalledWith({
@@ -58,15 +53,7 @@ describe("connectUserToSubmission", () => {
       () => mockNonExistentSubmissionId
     )
 
-    connectUserToSubmission(mockUser, mockAddUser)
-
-    await waitFor(() => expect(mockAddUser).not.toHaveBeenCalled())
-  })
-
-  it("does not call addUser, when submission but no user found", async () => {
-    ;(Cookies.get as jest.Mock).mockImplementation(() => mockSubmissionId)
-
-    connectUserToSubmission(mockNonExistentUser, mockAddUser)
+    connectUserToSubmission(mockAddUser)
 
     await waitFor(() => expect(mockAddUser).not.toHaveBeenCalled())
   })
