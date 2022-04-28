@@ -1,4 +1,5 @@
 import { getTimerCopy, LotTimer } from "../LotTimer"
+import { DateTime, Settings } from "luxon"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { LotTimer_saleArtwork } from "v2/__generated__/LotTimer_saleArtwork.graphql"
@@ -98,20 +99,22 @@ describe("extendedBiddingInfoCopy", () => {
       )
     })
     describe("a bid has extended the auction", () => {
+      beforeEach(() => {
+        Settings.now = jest.fn(() =>
+          new Date("2022-03-08T12:33:37.000Z").getTime()
+        )
+      })
       it("shows the extended next to the timer", () => {
-        let startDate = new Date()
-        const startAt = new Date(startDate.setMonth(startDate.getMonth() - 1))
-        let endDate = new Date()
+        let baseDate = DateTime.local().toMillis()
+        let startDate = baseDate - 1000 * 60 * 60 // one hour ago
+        let endDate = baseDate + 1000 * 60 // one minute from now
+        let extendedEndDate = baseDate + 1000 * 60 * 2 // two minutes from now
         const saleArtwork: LotTimer_saleArtwork = {
-          endAt: new Date(
-            endDate.setMinutes(endDate.getMinutes() + 1)
-          ).toISOString(),
+          endAt: new Date(endDate).toISOString(),
           formattedStartDateTime: "",
-          extendedBiddingEndAt: new Date(
-            endDate.setMinutes(endDate.getMinutes() + 1)
-          ).toISOString(),
+          extendedBiddingEndAt: new Date(extendedEndDate).toISOString(),
           sale: {
-            startAt: startAt.toISOString(),
+            startAt: new Date(startDate).toISOString(),
             extendedBiddingPeriodMinutes: 2,
           },
           " $refType": "LotTimer_saleArtwork",
