@@ -12,12 +12,12 @@ import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
-import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
 import { ContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
+import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -277,7 +277,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
     return null
   }
 
-  const timerCopy = getTimerCopy(time, saleHasStarted)
+  const timerCopy = getSaleOrLotTimerInfo(time, { hasStarted: saleHasStarted })
 
   let lotCloseCopy
   let labelColor = "black60"
