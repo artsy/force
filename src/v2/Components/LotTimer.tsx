@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import * as React from "react"
 import { Flex, Text, Spacer } from "@artsy/palette"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
+import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
 
 export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork
@@ -22,12 +23,17 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
     return null
   }
 
-  const timerCopy = getTimerCopy(time, hasStarted, extendedBiddingEndAt)
+  const timerInfo = getSaleOrLotTimerInfo(time, {
+    hasStarted,
+    lotsAreClosing: false,
+    isSaleInfo: false,
+    extendedBiddingEndAt,
+  })
 
   return (
     <Flex alignItems="center" flexDirection="column">
       <Text variant="md" color={"blue100"}>
-        {!hasEnded && <Text color={timerCopy.color}>{timerCopy.copy}</Text>}
+        {!hasEnded && <Text color={timerInfo.color}>{timerInfo.copy}</Text>}
       </Text>
 
       <Text variant="md" color={"black60"}>
@@ -58,59 +64,3 @@ export const LotTimerFragmentContainer = createFragmentContainer(LotTimer, {
     }
   `,
 })
-
-// If `extendedBiddingEndAt` is passed in and non-null, the `time`
-// parameter refers to the time left in the extended period.
-export const getTimerCopy = (
-  time,
-  hasStarted,
-  extendedBiddingEndAt?: string | null
-) => {
-  const { days, hours, minutes, seconds } = time
-
-  const parsedDays = parseInt(days, 10)
-  const parsedHours = parseInt(hours, 10)
-  const parsedMinutes = parseInt(minutes, 10)
-  const parsedSeconds = parseInt(seconds, 10)
-
-  let copy = ""
-  let color = "blue100"
-
-  // Sale has not yet started
-  if (!hasStarted) {
-    copy = `${parsedDays + 1} Day${
-      parsedDays >= 1 ? "s" : ""
-    } Until Bidding Starts`
-    // entered extended bidding
-  } else if (extendedBiddingEndAt) {
-    copy = `Extended: ${parsedMinutes}m ${parsedSeconds}s`
-    color = "red100"
-  } else {
-    // 2mins or fewer until close
-    if (
-      parsedDays < 1 &&
-      parsedHours < 1 &&
-      ((parsedMinutes === 2 && parsedSeconds === 0) || parsedMinutes <= 1)
-    ) {
-      copy = `${parsedMinutes}m ${parsedSeconds}s`
-      color = "red100"
-    }
-
-    // More than 24 hours until close
-    else if (parsedDays >= 1) {
-      copy = `${parsedDays}d ${parsedHours}h`
-    }
-
-    // 1-24 hours until close
-    else if (parsedDays < 1 && parsedHours >= 1) {
-      copy = `${parsedHours}h ${parsedMinutes}m`
-    }
-
-    // 2-60 mins until close
-    else if (parsedDays < 1 && parsedHours < 1 && parsedMinutes >= 2) {
-      copy = `${parsedMinutes}m ${parsedSeconds}s`
-    }
-  }
-
-  return { copy, color }
-}
