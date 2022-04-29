@@ -45,8 +45,11 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   // If we have info about the lot end time (cascading), use that.
   const { sale, saleArtwork, is_sold, is_in_auction } = artwork
   const endAt = saleArtwork?.endAt
+  const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
+  const biddingEndAt = extendedBiddingEndAt ?? endAt
+
   const startAt = sale?.startAt
-  const { hasEnded } = useTimer(endAt!, startAt!)
+  const { hasEnded } = useTimer(biddingEndAt!, startAt!)
 
   const shouldHideDetailsCreateAlertCTA =
     (is_in_auction && hasEnded) ||
@@ -150,6 +153,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         saleArtwork {
           endAt
           endedAt
+          extendedBiddingEndAt
         }
       }
     `,
