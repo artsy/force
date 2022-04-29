@@ -14,10 +14,15 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { useInquiry } from "v2/Components/Inquiry/useInquiry"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
+import styled from "styled-components"
 
 export interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork
 }
+
+const PartnerContainer = styled(Box)`
+  word-break: break-word;
+`
 
 export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
@@ -87,7 +92,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     <>
       <Separator my={2} />
       <Flex justifyContent="space-between">
-        <Box>
+        <PartnerContainer>
           {renderPartnerName()}
           {locationNames && locationNames.length > 0 && (
             <Flex mt={1}>
@@ -99,7 +104,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
               </Flex>
             </Flex>
           )}
-        </Box>
+        </PartnerContainer>
 
         {shouldRenderInquiryButton && (
           <Button
@@ -107,6 +112,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
             size="small"
             borderColor="black30"
             onClick={handleInquiry}
+            ml={1}
           >
             Contact Gallery
           </Button>
