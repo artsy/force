@@ -133,18 +133,18 @@ export const ContactApp: React.FC = () => {
 
         <Column span={2}>
           <Text as="h3" variant="xs" textTransform="uppercase">
-            Associate Editor
+            Staff Writer
           </Text>
 
-          <Text variant="sm">Shannon Lee</Text>
+          <Text variant="sm">Ayanna Dozier</Text>
         </Column>
 
         <Column span={2}>
           <Text as="h3" variant="xs" textTransform="uppercase">
-            Editorial Coordinator
+            Art Market Editor
           </Text>
 
-          <Text variant="sm">Leah Gallant</Text>
+          <Text variant="sm">Brian P. Kelly</Text>
         </Column>
       </GridColumns>
 
