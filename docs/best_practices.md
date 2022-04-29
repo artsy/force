@@ -22,6 +22,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Naming, imports and exports](#naming-imports-and-exports)
 - [Avoid implicit returns on React components](#avoid-implicit-returns-on-react-components)
 - [Write unit tests for new components](#write-unit-tests-for-new-components)
+  - [Manipulating time in unit tests](#manipulating-time-in-unit-tests)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
 - [Adding global script tags](#adding-global-script-tags)
 - [Tracking events](#tracking-events)
