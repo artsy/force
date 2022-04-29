@@ -46,7 +46,7 @@ export type DetailsSidebar_conversation = {
                                 readonly estimatedDeliveryWindow: string | null;
                             } | null;
                             readonly selectedShippingQuote: {
-                                readonly displayName: string;
+                                readonly typeName: string;
                             } | null;
                             readonly fulfillments: {
                                 readonly edges: ReadonlyArray<{
@@ -429,7 +429,7 @@ return {
                                   "alias": null,
                                   "args": null,
                                   "kind": "ScalarField",
-                                  "name": "displayName",
+                                  "name": "typeName",
                                   "storageKey": null
                                 }
                               ],
@@ -716,5 +716,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '3f83cc3109b9546d275e21472eca0e7e';
+(node as any).hash = '974ea6aacf5cd730d3a0236adb1f2a9c';
 export default node;

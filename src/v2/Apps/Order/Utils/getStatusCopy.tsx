@@ -285,18 +285,26 @@ export const approvedTitle = (isOfferFlow): string => {
 
 export const deliverText = (order): React.ReactNode => {
   const selectedShipping =
-    order?.lineItems?.edges?.[0]?.node?.selectedShippingQuote?.displayName
+    order?.lineItems?.edges?.[0]?.node?.selectedShippingQuote?.typeName
 
   let daysToDeliver: string | null = null
   switch (selectedShipping) {
-    case "Rush":
+    case "next_day_air":
       daysToDeliver = "1 business day "
       break
-    case "Express":
+    case "second_day_air":
       daysToDeliver = "2 business days"
       break
-    case "Standard":
+    case "priority":
+      daysToDeliver = "2-4 business days"
+      break
+    case "ground":
+    case "standard":
       daysToDeliver = "3-5 business days"
+      break
+    case "economy":
+      daysToDeliver = "5-7 business days"
+      break
   }
   return daysToDeliver
     ? `Your order will be delivered in ${daysToDeliver} once shipped, plus up to 7 days processing time. `

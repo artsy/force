@@ -3,7 +3,8 @@ import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
-import * as React from "react";
+import { shippingQuoteDisplayNames } from "v2/Apps/Order/Components/ShippingQuotes"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
@@ -27,7 +28,8 @@ const ShippingArtaSummaryItem: React.FC<
   return requestedFulfillment?.__typename === "CommerceShipArta" ? (
     <StepSummaryItem {...others}>
       <Text variant="md" fontWeight={["regular", "bold"]}>
-        {startCase(shippingQuote.displayName)} delivery ({shippingQuote.price})
+        {startCase(shippingQuoteDisplayNames[shippingQuote.typeName])} delivery
+        ({shippingQuote.price})
       </Text>
     </StepSummaryItem>
   ) : null
@@ -45,7 +47,7 @@ export const ShippingArtaSummaryItemFragmentContainer = createFragmentContainer(
           edges {
             node {
               selectedShippingQuote {
-                displayName
+                typeName
                 price(precision: 2)
               }
             }
