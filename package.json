@@ -132,7 +132,7 @@
     "currency.js": "1.2.1",
     "dd-trace": "0.36.2",
     "dotenv": "4.0.0",
-    "ejs": "3.1.5",
+    "ejs": "3.1.7",
     "es7-object-polyfill": "0.0.7",
     "eventemitter3": "4.0.7",
     "express": "4.16.4",
