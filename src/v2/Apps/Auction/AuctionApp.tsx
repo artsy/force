@@ -47,7 +47,10 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
     showBuyNowTab: sale.showBuyNowTab,
   }
 
-  const { cascadingEndTimeIntervalMinutes } = sale
+  const {
+    cascadingEndTimeIntervalMinutes,
+    extendedBiddingIntervalMinutes,
+  } = sale
 
   const isFullBleedHeaderFixed = !cascadingEndTimeIntervalMinutes
 
@@ -69,6 +72,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
         {cascadingEndTimeIntervalMinutes && (
           <CascadingEndTimesBanner
             cascadingEndTimeIntervalMinutes={cascadingEndTimeIntervalMinutes}
+            extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes}
           />
         )}
 
@@ -163,6 +167,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
         internalID
       }
       cascadingEndTimeIntervalMinutes
+      extendedBiddingIntervalMinutes
     }
   `,
   viewer: graphql`
