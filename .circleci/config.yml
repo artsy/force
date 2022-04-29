@@ -5,7 +5,7 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
-  slack: circleci/slack@4.9.3
+  slack: circleci/slack@4.9.4
   yarn: artsy/yarn@6.2.0
 
 jobs:
