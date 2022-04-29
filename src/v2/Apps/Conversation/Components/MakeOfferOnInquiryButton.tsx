@@ -5,7 +5,7 @@ import { tappedMakeOffer } from "@artsy/cohesion"
 import styled from "styled-components"
 import { MakeOfferOnInquiryButton_conversation } from "v2/__generated__/MakeOfferOnInquiryButton_conversation.graphql"
 import {
-  CheckCircleIcon,
+  GuaranteeIcon,
   FLAT_SHADOW,
   Flex,
   Separator,
@@ -48,10 +48,11 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
       <ShadowSeparator />
       <Flex flexDirection="column" p={1}>
         <Flex flexDirection="row">
-          <CheckCircleIcon mr={1} />
+          <GuaranteeIcon mr={1} />
           <Flex flexShrink={1}>
             <Text color="black60" variant="xs" mb={1}>
-              Only purchases completed with our secure checkout are protected by{" "}
+              Always complete purchases with our secure checkout in order to be
+              covered{" "}
               <RouterLink to="/buyer-guarantee" target="_blank">
                 The Artsy Guarantee
               </RouterLink>

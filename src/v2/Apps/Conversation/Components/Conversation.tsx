@@ -7,7 +7,15 @@ import {
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
-import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Spinner,
+  Toast,
+} from "@artsy/palette"
 import compact from "lodash/compact"
 import styled from "styled-components"
 
@@ -17,7 +25,6 @@ import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
-import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
@@ -26,12 +33,15 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
+import { fadeOut } from "v2/Assets/Animations"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
   relay: RelayPaginationProp
   refetch: RelayRefetchProp["refetch"]
+  selectedConversationID: string
 }
 
 export const PAGE_SIZE: number = 15
@@ -162,6 +172,29 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
 
   const [toastBottom, setToastBottom] = useState(0)
+  // Banner
+  const [showBanner, setShowBanner] = useState(false)
+  const [timer, setTimer] = useState()
+  // let bannerTimeout
+
+  useEffect(() => {
+    setShowBanner(true)
+    console.log("before clear", timer)
+    if (timer) {
+      clearTimeout(timer)
+      setTimer(null)
+      console.log("if clear")
+    }
+    setTimer(
+      setTimeout(() => {
+        setShowBanner(false)
+      }, 5000)
+    )
+    console.log("show clear", timer)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [props.selectedConversationID])
 
   // Behaviours
   // -Navigation
@@ -203,12 +236,20 @@ const Conversation: React.FC<ConversationProps> = props => {
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
+      {showBanner && (
+        <FadeOut>
+          <Toast
+            variant="alert"
+            id="alert-toast"
+            message="To protect your payment, always communicate and pay through the Artsy platform."
+          />
+        </FadeOut>
+      )}
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
-              {isOfferable && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}
@@ -277,6 +318,10 @@ const SpinnerContainer = styled.div`
   width: 100%;
   height: 100px;
   position: relative;
+`
+
+const FadeOut = styled.div`
+  animation: ${fadeOut} 0.5s ease 4.5s forwards;
 `
 
 export const ConversationPaginationContainer = createPaginationContainer(

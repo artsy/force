@@ -74,6 +74,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
                 showDetails={showDetails}
                 setShowDetails={setShowDetails}
                 refetch={props.relay.refetch}
+                selectedConversationID={me?.conversation?.internalID ?? ""}
               />
               <DetailsSidebarFragmentContainer
                 conversation={me.conversation!}
