@@ -102,7 +102,6 @@ export class OrderAppTestPage extends RootTestPage {
 
   async selectPaymentMethod(option: number) {
     this.find(BorderedRadio).at(option).simulate("click")
-    this.find(Button).simulate("click")
     await this.update()
   }
 

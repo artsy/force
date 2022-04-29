@@ -209,21 +209,19 @@ describe("Payment", () => {
 
     it("renders selection of payment methods", async () => {
       const page = await buildPage()
-      expect(page.text()).toContain("Credit Card")
-      expect(page.text()).toContain("Bank Transfer")
+      expect(page.text()).toContain("Credit card")
+      expect(page.text()).toContain("Bank transfer")
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
       const page = await buildPage()
       page.selectPaymentMethod(0)
-      expect(page.text()).toContain("Credit card")
       expect(page.find(PaymentPickerFragmentContainer).length).toBe(1)
     })
 
-    it("renders bank element when bank transfer is chosen as payment mehod", async () => {
+    it("renders bank element when bank transfer is chosen as payment method", async () => {
       const page = await buildPage()
       page.selectPaymentMethod(1)
-      expect(page.text()).toContain("Bank transfer")
       expect(page.find(BankDebitProvider).length).toBe(1)
     })
   })
