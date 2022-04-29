@@ -2,6 +2,7 @@ import React from "react"
 import { Motion, spring } from "react-motion"
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "./utils/constants"
 import { getMatrixPosition, getVisualPosition } from "./utils/helpers"
+import styled from "styled-components"
 
 function PuzzleTile(props) {
   const { tile, index, width, height, handleTileClick, imgUrl } = props
@@ -27,25 +28,29 @@ function PuzzleTile(props) {
   return (
     <Motion style={motionStyle}>
       {({ translateX, translateY }) => (
-        <li
+        <PuzzleList
           style={{
             ...tileStyle,
             transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
             // Is last tile?
             opacity: tile === TILE_COUNT - 1 ? 0 : 1,
-            position: "absolute",
-            listStyle: "none",
-            background: "#ec6f66",
-            placeItems: "center",
-            fontSize: 20,
           }}
           onClick={() => handleTileClick(index)}
         >
           {!imgUrl && `${tile + 1}`}
-        </li>
+        </PuzzleList>
       )}
     </Motion>
   )
 }
+
+const PuzzleList = styled.li`
+  position: absolute;
+  list-style: none;
+  background: #ec6f66;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+`
 
 export default PuzzleTile
