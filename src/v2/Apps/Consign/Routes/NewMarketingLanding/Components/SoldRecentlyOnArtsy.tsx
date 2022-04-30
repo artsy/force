@@ -55,10 +55,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
       title="Sold Recently on Artsy"
       getItems={() => {
         return artworks.map(
-          (
-            { artwork, highEstimateUSD, lowEstimateUSD, priceRealized },
-            index
-          ) => {
+          ({ artwork, highEstimate, lowEstimate, priceRealized }, index) => {
             return (
               <Fragment key={artwork!.internalID}>
                 <RouterLink
@@ -87,7 +84,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                     <Text variant="xs">Estimate</Text>
 
                     <Text variant="xs">
-                      US${lowEstimateUSD}—US${highEstimateUSD}
+                      {lowEstimate?.display}—{highEstimate?.display}
                     </Text>
                   </Flex>
 
@@ -99,7 +96,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                   >
                     <Text variant="xs">Sold for (incl. premium)</Text>
 
-                    <Text variant="xs">US${priceRealized}</Text>
+                    <Text variant="xs">{priceRealized?.display}</Text>
                   </Flex>
                 </RouterLink>
               </Fragment>
@@ -124,9 +121,15 @@ const SoldRecentlyOnArtsyFragmentContainer = createFragmentContainer(
               href
               internalID
             }
-            lowEstimateUSD
-            highEstimateUSD
-            priceRealized
+            lowEstimate {
+              display
+            }
+            highEstimate {
+              display
+            }
+            priceRealized {
+              display
+            }
           }
         }
       }

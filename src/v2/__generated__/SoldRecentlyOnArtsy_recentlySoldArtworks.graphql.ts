@@ -13,9 +13,15 @@ export type SoldRecentlyOnArtsy_recentlySoldArtworks = {
                 readonly internalID: string;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
-            readonly lowEstimateUSD: string | null;
-            readonly highEstimateUSD: string | null;
-            readonly priceRealized: string | null;
+            readonly lowEstimate: {
+                readonly display: string | null;
+            } | null;
+            readonly highEstimate: {
+                readonly display: string | null;
+            } | null;
+            readonly priceRealized: {
+                readonly display: string | null;
+            } | null;
         } | null;
     } | null> | null;
     readonly " $refType": "SoldRecentlyOnArtsy_recentlySoldArtworks";
@@ -28,7 +34,17 @@ export type SoldRecentlyOnArtsy_recentlySoldArtworks$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "display",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -96,22 +112,31 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "lowEstimateUSD",
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "lowEstimate",
+              "plural": false,
+              "selections": (v0/*: any*/),
               "storageKey": null
             },
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "highEstimateUSD",
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "highEstimate",
+              "plural": false,
+              "selections": (v0/*: any*/),
               "storageKey": null
             },
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
+              "concreteType": "Money",
+              "kind": "LinkedField",
               "name": "priceRealized",
+              "plural": false,
+              "selections": (v0/*: any*/),
               "storageKey": null
             }
           ],
@@ -124,5 +149,6 @@ const node: ReaderFragment = {
   "type": "RecentlySoldArtworkTypeConnection",
   "abstractKey": null
 };
-(node as any).hash = '37ecd81ac9b840ece5f7beb96d0f7d25';
+})();
+(node as any).hash = '3383851e54e381c51407feb8f1525d5c';
 export default node;

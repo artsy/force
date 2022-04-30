@@ -2,19 +2,20 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { Box, Button, Flex, Text } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { useSystemContext, useTracking } from "v2/System"
+import { useAnalyticsContext, useSystemContext, useTracking } from "v2/System"
 
 export const Header: React.FC = () => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
-  const trackSubmitClick = event => {
+  const trackSubmitClick = () => {
     trackEvent({
       // @ts-ignore
       action: "clickedSubmitAnArtwork",
       // @ts-ignore
       context_module: "Header",
-      context_page_path: "/sell",
+      context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
       destination_path: "/consign/submission/artwork-details",

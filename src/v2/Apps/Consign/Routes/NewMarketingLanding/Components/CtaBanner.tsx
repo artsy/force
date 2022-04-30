@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Sticky } from "v2/Components/Sticky"
-import { useSystemContext, useTracking } from "v2/System"
+import { useAnalyticsContext, useSystemContext, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 
@@ -25,14 +25,15 @@ const FullBleedWithAnimation = styled(FullBleed)`
 export const CtaBanner = () => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
-  const trackSubmitClick = event => {
+  const trackSubmitClick = () => {
     trackEvent({
       // @ts-ignore
       action: "clickedSubmitAnArtwork",
       // @ts-ignore
       context_module: "StickyBanner",
-      context_page_path: "/sell",
+      context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
       destination_path: "/consign/submission/artwork-details",
