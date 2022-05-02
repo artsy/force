@@ -1,9 +1,18 @@
 import { useEffect } from "react"
-import { ConsignMeta } from "./Components/ConsignMeta"
-import { PromoSpace } from "./Components/PromoSpace"
 import { useRouter } from "v2/System/Router/useRouter"
 import { UtmParams } from "../SubmissionFlow/Utils/types"
 import { Join, Spacer } from "@artsy/palette"
+import {
+  ConsignMeta,
+  CtaBanner,
+  FAQ,
+  Header,
+  HowItWorks,
+  PromoSpace,
+  SoldRecentlyOnArtsyQueryRenderer,
+  WhySellWithArtsy,
+} from "./Components"
+import { StickyProvider } from "v2/Components/Sticky"
 
 export const MarketingLandingApp = () => {
   const {
@@ -28,26 +37,20 @@ export const MarketingLandingApp = () => {
   }, [])
 
   return (
-    <>
+    <StickyProvider>
       <ConsignMeta />
 
-      {/* <Header /> */}
+      <Header />
+
+      <CtaBanner />
 
       <Join separator={<Spacer mt={[6, 12]} />}>
         <PromoSpace />
-
-        {/* <ArtsyMissionStatement />
-        <SellArtDifferently />
-        <GetPriceEstimate />
-        <HowToSell />
-        <ContactUs />
-        <ConsignInDemandNow />
-        <SoldRecentlyQueryRenderer />
-        <ReadMore />
-        <BecomePartner />
+        <WhySellWithArtsy />
+        <HowItWorks />
+        <SoldRecentlyOnArtsyQueryRenderer />
         <FAQ />
-        <ArtworkCredits /> */}
       </Join>
-    </>
+    </StickyProvider>
   )
 }
