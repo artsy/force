@@ -60,8 +60,10 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
               <Fragment key={artwork!.internalID}>
                 <RouterLink
                   to={artwork!.href}
+                  data-testid="soldRecentlyItem"
                   display="block"
                   textDecoration="none"
+                  onClick={trackArtworkItemClick(artwork, index)}
                 >
                   <ShelfArtworkFragmentContainer
                     artwork={artwork!}
@@ -71,7 +73,6 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                     lazyLoad
                     // @ts-ignore
                     contextModule={ContextModule.artworkRecentlySoldGrid}
-                    onClick={trackArtworkItemClick(artwork, index)}
                   />
 
                   <Flex
@@ -108,7 +109,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
   )
 }
 
-const SoldRecentlyOnArtsyFragmentContainer = createFragmentContainer(
+export const SoldRecentlyOnArtsyFragmentContainer = createFragmentContainer(
   SoldRecentlyOnArtsy,
   {
     recentlySoldArtworks: graphql`
@@ -140,7 +141,7 @@ const SoldRecentlyOnArtsyFragmentContainer = createFragmentContainer(
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Sold recently on Artsy"
+      title="Sold Recently on Artsy"
       getItems={() => {
         return [...new Array(20)].map((_, i) => {
           return (

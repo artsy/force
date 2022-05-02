@@ -15,9 +15,8 @@ export const PromoSpace: React.FC = () => {
           <HorizontalPadding>
             <Flex justifyContent="space-between" alignItems="center">
               <Text mr={2} variant={["xs", "md"]}>
-                Gallery or art dealer?&nbsp;
-                <u>Become a partner</u>
-                &nbsp;to access the world’s largest online marketplace.
+                Gallery or art dealer? <u>Become a partner</u> to access the
+                world’s largest online marketplace.
               </Text>
               <Flex>
                 <ArrowRightIcon />
