@@ -108,6 +108,7 @@
     "@stripe/stripe-js": "^1.25.0",
     "@styled-system/theme-get": "5.1.2",
     "accounting": "0.4.1",
+    "actioncable": "^5.2.7-1",
     "analytics-node": "2.4.1",
     "artsy-ezel-components": "artsy/artsy-ezel-components",
     "async": "^1.5.2",

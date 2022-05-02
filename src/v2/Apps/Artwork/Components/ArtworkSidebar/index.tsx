@@ -26,6 +26,7 @@ import {
   shouldRenderBuyerGuaranteeAndSecurePayment,
   shouldRenderVerifiedSeller,
 } from "../../Utils/badges"
+import { getENV } from "v2/Utils/getENV"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -49,18 +50,45 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const biddingEndAt = extendedBiddingEndAt ?? endAt
 
   const startAt = sale?.startAt
-  const { hasEnded } = useTimer(biddingEndAt!, startAt!)
-
-  const shouldHideDetailsCreateAlertCTA =
-    (is_in_auction && hasEnded) ||
-    (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
-    is_sold
 
   const shouldRenderArtworkBadges =
     shouldRenderAuthenticityCertificate(artwork) ||
     shouldRenderVerifiedSeller(artwork) ||
     shouldRenderBuyerGuaranteeAndSecurePayment(artwork)
 
+  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = React.useState(
+    biddingEndAt
+  )
+
+  React.useEffect(() => {
+    if (sale?.extendedBiddingIntervalMinutes) {
+      const actionCable = require("actioncable")
+      const CableApp = {} as any
+      CableApp.cable = actionCable.createConsumer(
+        getENV("GRAVITY_WEBSOCKET_URL")
+      )
+
+      CableApp.cable.subscriptions.create(
+        {
+          channel: "SalesChannel",
+          sale_id: sale?.internalID,
+        },
+        {
+          received(data) {
+            if (data.lot_id === saleArtwork?.lotID) {
+              setUpdatedBiddingEndAt(data.extended_bidding_end_at)
+            }
+          },
+        }
+      )
+    }
+  }, [])
+
+  const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
+  const shouldHideDetailsCreateAlertCTA =
+    (is_in_auction && hasEnded) ||
+    (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
+    is_sold
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
@@ -149,11 +177,14 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         sale {
           is_closed: isClosed
           startAt
+          internalID
+          extendedBiddingIntervalMinutes
         }
         saleArtwork {
           endAt
           endedAt
           extendedBiddingEndAt
+          lotID
         }
       }
     `,

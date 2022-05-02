@@ -8,10 +8,12 @@ export type LotTimer_saleArtwork = {
     readonly endAt: string | null;
     readonly formattedStartDateTime: string | null;
     readonly extendedBiddingEndAt: string | null;
+    readonly lotID: string | null;
     readonly sale: {
         readonly startAt: string | null;
         readonly extendedBiddingPeriodMinutes: number | null;
         readonly extendedBiddingIntervalMinutes: number | null;
+        readonly internalID: string;
     } | null;
     readonly " $refType": "LotTimer_saleArtwork";
 };
@@ -53,6 +55,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "lotID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Sale",
       "kind": "LinkedField",
       "name": "sale",
@@ -78,6 +87,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -86,5 +102,5 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = '75f78b4f3becb4651487fac9443e937e';
+(node as any).hash = '55716d023ef3ebdf22143acc9c455550';
 export default node;

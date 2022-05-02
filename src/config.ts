@@ -77,6 +77,7 @@ export const GOOGLE_ADWORDS_ID: any = null
 export const GOOGLE_ANALYTICS_ID: any = "UA-12450662-6"
 export const GOOGLE_CLIENT_ID: any = null
 export const GOOGLE_SECRET: any = null
+export const GRAVITY_WEBSOCKET_URL: any = "wss://stagingapi.artsy.net/cable"
 export const IMAGE_PROXY: any = "GEMINI"
 export const IP_DENYLIST: any = ""
 export const METAPHYSICS_ENDPOINT: any =
