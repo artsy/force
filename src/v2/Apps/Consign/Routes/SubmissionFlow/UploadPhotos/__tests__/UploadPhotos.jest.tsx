@@ -119,7 +119,7 @@ describe("UploadPhotos", () => {
 
     expect(
       screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-    ).toHaveAttribute("href", "/consign/submission/1/artwork-details")
+    ).toHaveAttribute("href", "/sell/submission/1/artwork-details")
     expect(screen.getByText("Save and Continue")).toBeInTheDocument()
   })
 
@@ -260,7 +260,7 @@ describe("UploadPhotos", () => {
       expect(mockAddAsset).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/consign/submission/1/contact-information",
+        pathname: "/sell/submission/1/contact-information",
       })
     })
   })

@@ -83,7 +83,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const handleSubmit = async () => {
     if (submission) {
       router.push({
-        pathname: `/consign/submission/${submission.id}/contact-information`,
+        pathname: `/sell/submission/${submission.id}/contact-information`,
       })
     }
   }
@@ -94,7 +94,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
         py={2}
         mb={6}
         width="min-content"
-        to={`/consign/submission/${submission?.id}/artwork-details`}
+        to={`/sell/submission/${submission?.id}/artwork-details`}
       >
         Back
       </BackLink>

@@ -66,7 +66,7 @@ describe("NavBarMobileMenu", () => {
         ["/shows", "Shows"],
         ["/institutions", "Museums"],
         ["/nft", "NFTs"],
-        ["/consign", "Sell"],
+        ["/sell", "Sell"],
         ["/price-database", "Price Database"],
         ["/articles", "Editorial"],
         ["/signup?intent=signup&contextModule=header", "Sign Up"],

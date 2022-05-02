@@ -16,6 +16,7 @@ export const computeLandingPages = appUrl => {
     { loc: appUrl + "/collect", priority: 1 },
     { loc: appUrl + "/conditions-of-sale" },
     { loc: appUrl + "/consign" },
+    { loc: appUrl + "/sell" },
     { loc: appUrl + "/contact" },
     { loc: appUrl + "/institution-partnerships" },
     { loc: appUrl + "/institutions" },

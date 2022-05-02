@@ -118,7 +118,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             <Separator my={1} />
 
             <NavBarMobileMenuItemLink
-              to="/consign"
+              to="/sell"
               color="black100"
               onClick={handleClick}
             >

@@ -19,12 +19,12 @@ const redirectToIf = (
 }
 
 const checkSubmissionExist = redirectToIf(
-  "/consign/submission/artwork-details",
+  "/sell/submission/artwork-details",
   submission => !submission || !submission.id
 )
 
 const checkArtworkDetailsFormValid = redirectToIf(
-  id => `/consign/submission/${id}/artwork-details`,
+  id => `/sell/submission/${id}/artwork-details`,
   submission =>
     !artworkDetailsValidationSchema.isValidSync(
       getArtworkDetailsFormInitialValues(submission as any)
@@ -32,7 +32,7 @@ const checkArtworkDetailsFormValid = redirectToIf(
 )
 
 const checkUploadPhotosFormValid = redirectToIf(
-  id => `/consign/submission/${id}/upload-photos`,
+  id => `/sell/submission/${id}/upload-photos`,
   submission =>
     !uploadPhotosValidationSchema.isValidSync(
       getUploadPhotosFormInitialValues(submission as any)
@@ -40,7 +40,7 @@ const checkUploadPhotosFormValid = redirectToIf(
 )
 
 export const redirects = {
-  path: "/consign/submission",
+  path: "/sell/submission",
   rules: [],
   children: [
     {
