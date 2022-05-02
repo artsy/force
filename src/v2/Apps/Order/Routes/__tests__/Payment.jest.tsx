@@ -255,7 +255,6 @@ describe("Payment", () => {
         payment_method: "credit_card",
         subject: "click_payment_method",
       })
-    })
 
     it("tracks when the user selects the bank payment method", async () => {
       const env = setupTestEnv()

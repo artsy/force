@@ -5,7 +5,7 @@ import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
 
 interface Props {
-  order: { mode: string; internalID: string }
+  order: { mode: string | null; internalID: string }
 }
 
 export const BankDebitForm: FC<Props> = ({ order }) => {
@@ -16,15 +16,31 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
   const tracking = useTracking()
 
   const trackPaymentElementEvent = event => {
+    const trackedEvents: any[] = []
     if (event.complete) {
-      const trackedEvent = {
+      trackedEvents.push({
         flow: order.mode,
         order_id: order.internalID,
         subject: "bank_acount_selected",
-      }
-
-      tracking.trackEvent(trackedEvent)
+      })
     }
+    if (!event.empty) {
+      trackedEvents.push({
+        flow: order.mode,
+        order_id: order.internalID,
+        subject: "TODO:_not_empty_thing",
+      })
+    }
+
+    trackedEvents.forEach(event => tracking.trackEvent(event))
+  }
+
+  const trackClickedContinue = () => {
+    tracking.trackEvent({
+      flow: order.mode!,
+      order_id: order.internalID,
+      subject: "TODO:_clicked_save_and_continue",
+    })
   }
 
   const handleSubmit = async event => {
@@ -58,7 +74,12 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
           }}
         />
         <Spacer mt={2} />
-        <Button disabled={!stripe} variant="primaryBlack" width="100%">
+        <Button
+          onClick={trackClickedContinue}
+          disabled={!stripe}
+          variant="primaryBlack"
+          width="100%"
+        >
           Save and Continue
         </Button>
       </LoadingArea>

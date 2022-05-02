@@ -105,6 +105,7 @@ export const PaymentContent: FC<Props> = props => {
             choose another payment method.
           </Text>
           <Spacer mb={2} />
+
           <BankDebitProvider order={order} />
         </Collapse>
       </Flex>
