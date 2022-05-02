@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_me = {
+    readonly internalID: string;
     readonly showActiveBids: ReadonlyArray<{
         readonly activeBid: {
             readonly internalID: string;
@@ -23,6 +24,13 @@ export type AuctionApp_me$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
   "kind": "Variable",
   "name": "saleID",
   "variableName": "saleID"
@@ -39,6 +47,7 @@ return {
   "metadata": null,
   "name": "AuctionApp_me",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": "showActiveBids",
       "args": [
@@ -47,7 +56,7 @@ return {
           "name": "live",
           "value": true
         },
-        (v0/*: any*/)
+        (v1/*: any*/)
       ],
       "concreteType": "LotStanding",
       "kind": "LinkedField",
@@ -62,13 +71,7 @@ return {
           "name": "activeBid",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "internalID",
-              "storageKey": null
-            }
+            (v0/*: any*/)
           ],
           "storageKey": null
         }
@@ -77,7 +80,7 @@ return {
     },
     {
       "args": [
-        (v0/*: any*/)
+        (v1/*: any*/)
       ],
       "kind": "FragmentSpread",
       "name": "AuctionActiveBids_me"
@@ -92,5 +95,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ebe98c3104bd0df206f283da3ea1f865';
+(node as any).hash = 'a977828908da87c19ce9bf21ddd97164';
 export default node;
