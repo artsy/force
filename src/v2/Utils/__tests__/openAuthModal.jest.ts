@@ -80,6 +80,7 @@ describe("openAuth Helpers", () => {
           copy: "Sign up to follow Andy Warhol",
           intent: "followArtist",
           mode: "signup",
+          redirectTo: "http://localhost/",
         })
       })
 
@@ -96,6 +97,7 @@ describe("openAuth Helpers", () => {
           copy: "Sign up to follow David Zwirner",
           intent: "followPartner",
           mode: "signup",
+          redirectTo: "http://localhost/",
         })
       })
 
@@ -112,6 +114,7 @@ describe("openAuth Helpers", () => {
           copy: "Sign up to save artworks",
           intent: "saveArtwork",
           mode: "signup",
+          redirectTo: "http://localhost/",
         })
       })
     })

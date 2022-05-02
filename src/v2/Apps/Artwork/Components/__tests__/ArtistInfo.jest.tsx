@@ -118,6 +118,7 @@ describe("ArtistInfo", () => {
         kind: "artist",
         objectId: "pablo-picasso",
       },
+      redirectTo: "http://localhost/",
     })
   })
 })
