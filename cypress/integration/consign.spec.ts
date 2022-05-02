@@ -3,7 +3,7 @@ import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 describe("Consign", () => {
   it("/sell", () => {
     visitWithStatusRetries("sell")
-    cy.get("h1").should("contain", "Sell with Artsy")
+    cy.get("h1").should("contain", "Sell Artworks from Your Collection")
     cy.title().should("eq", "Sell Artwork with Artsy | Art Consignment | Artsy")
   })
   it("/sell/submission", () => {
