@@ -184,6 +184,9 @@ export class ArtworkApp extends React.Component<Props> {
             cascadingEndTimeIntervalMinutes={
               artwork.sale.cascadingEndTimeIntervalMinutes
             }
+            extendedBiddingIntervalMinutes={
+              artwork.sale.extendedBiddingIntervalMinutes
+            }
           />
         )}
         <ArtworkMetaFragmentContainer artwork={artwork} />
@@ -290,6 +293,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         sale {
           internalID
           cascadingEndTimeIntervalMinutes
+          extendedBiddingIntervalMinutes
           slug
         }
         artists {
