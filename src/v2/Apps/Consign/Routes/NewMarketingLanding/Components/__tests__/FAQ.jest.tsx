@@ -2,11 +2,8 @@ import { FAQ } from "../FAQ"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking, AnalyticsSchema } from "v2/System/Analytics"
-import { useRouter } from "v2/System/Router/useRouter"
 
 jest.mock("v2/System/Analytics/useTracking")
-
-jest.mock("v2/System/Router/useRouter")
 
 const trackEvent = jest.fn()
 
@@ -15,11 +12,6 @@ describe("FAQ", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
-      }
-    })
-    ;(useRouter as jest.Mock).mockImplementation(() => {
-      return {
-        match: { params: { id: null } },
       }
     })
   })
@@ -44,7 +36,7 @@ describe("FAQ", () => {
     ).toBeInTheDocument()
   })
 
-  it("doesn't track a FAQ click if submission id not found", () => {
+  it("doesn't track a FAQ click if there is no needs", () => {
     render(<FAQ />)
 
     fireEvent.focus(screen.getByText("What does it cost to sell with Artsy?"))
@@ -52,14 +44,8 @@ describe("FAQ", () => {
     expect(trackEvent).not.toHaveBeenCalled()
   })
 
-  it("tracks a FAQ click with correct params when submission id found", () => {
-    ;(useRouter as jest.Mock).mockImplementation(() => {
-      return {
-        match: { params: { id: "1" } }, //submissionId
-      }
-    })
-
-    render(<FAQ />)
+  it("tracks a FAQ click with correct params", () => {
+    render(<FAQ shouldTrackClickEvent />)
 
     fireEvent.focus(screen.getByText("What does it cost to sell with Artsy?"))
 

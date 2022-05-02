@@ -1,14 +1,16 @@
 import { Expandable, Join, Spacer, Text } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System"
-import { useRouter } from "v2/System/Router/useRouter"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
-export const FAQ: React.FC = () => {
+export interface FAQProps {
+  shouldTrackClickEvent?: boolean
+}
+
+export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
   const { trackEvent } = useTracking()
-  const { match } = useRouter()
 
   const trackClickedFAQ = (label: string) => {
-    if (match?.params?.id) {
+    if (shouldTrackClickEvent) {
       trackEvent({
         action_type: AnalyticsSchema.ActionType.ClickedFAQ,
         context_module: ContextModule.consignSubmissionFlow,
