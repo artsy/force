@@ -26,6 +26,7 @@ const { renderWithRelay } = setupTestWrapperTL<
         conversation={props.node}
         refetch={jest.fn()}
         setShowDetails={jest.fn()}
+        selectedConversationID="123"
         showDetails
       />
     )

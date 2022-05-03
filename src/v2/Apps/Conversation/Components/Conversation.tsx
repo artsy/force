@@ -33,7 +33,6 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
-import { fadeOut } from "v2/Assets/Animations"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -173,27 +172,13 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const [toastBottom, setToastBottom] = useState(0)
   // Banner
-  const [showBanner, setShowBanner] = useState(false)
-
-  let bannerTimeout
+  const [showBanner, setShowBanner] = useState(true)
 
   useEffect(() => {
     setShowBanner(true)
-    console.log("before clear", bannerTimeout)
-    // if (bannerTimeout) {
-    //   clearTimeout(bannerTimeout)
-    //   bannerTimeout = null
-    //   console.log("if clear")
-    // }
-    bannerTimeout = setTimeout(() => {
-      setShowBanner(false)
-    }, 5000)
-    // return () => {
-    //   clearTimeout(bannerTimeout)
-    // }
-    console.log("clear", bannerTimeout)
+    const timer = setTimeout(() => setShowBanner(false), 5000)
+    return () => clearTimeout(timer)
   }, [props.selectedConversationID])
-  console.log("show", showBanner)
 
   // Behaviours
   // -Navigation
@@ -239,13 +224,11 @@ const Conversation: React.FC<ConversationProps> = props => {
         <HorizontalPadding>
           <GridColumns gridRowGap={[6, 4]}>
             <Column span={6}>
-              <FadeOut>
-                <Toast
-                  variant="alert"
-                  id="alert-toast"
-                  message="To protect your payment, always communicate and pay through the Artsy platform."
-                />
-              </FadeOut>
+              <Toast
+                variant="alert"
+                id="alert-toast"
+                message="To protect your payment, always communicate and pay through the Artsy platform."
+              />
             </Column>
           </GridColumns>
         </HorizontalPadding>
@@ -323,10 +306,6 @@ const SpinnerContainer = styled.div`
   width: 100%;
   height: 100px;
   position: relative;
-`
-
-const FadeOut = styled.div`
-  animation: ${fadeOut} 0.5s ease 4.5s forwards;
 `
 
 export const ConversationPaginationContainer = createPaginationContainer(
