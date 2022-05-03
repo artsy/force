@@ -71,6 +71,7 @@ describe("ArtistCard", () => {
         kind: "artist",
         objectId: "percy",
       },
+      redirectTo: "http://localhost/",
     })
   })
 })
