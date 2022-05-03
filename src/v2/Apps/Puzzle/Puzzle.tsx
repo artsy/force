@@ -59,6 +59,7 @@ const Puzzle = () => {
     const newIntervalId = setInterval(() => {
       setTime(prevTime => prevTime + 10)
     }, 10)
+    // @ts-ignore:
     setIntervalId(newIntervalId)
     setIsStarted(true)
   }
