@@ -14,10 +14,24 @@
 4. Use the Unleash [admin API](https://docs.getunleash.io/api/admin/feature-toggles-v2) (not the admin GUI) to create variants with a `stickiness` factor of `sessionId`(the admin GUI doesn't currently support changing the `stickiness` factor).
 
 ```
-  curl --location --request PUT 'https://unleash.artsy.net/api/admin/projects/default/features/<YOUR_FEATURE_NAME>/variants' \
-  --header 'Authorization: 'YOUR_ADMIN_API_KEY' \
-  --header 'Content-Type: application/json' \
-  --data-raw '[[{"name": "control","weightType": "variable","weight": 500,"stickiness": "sessionId"},{"name": "experiment","weightType": "variable","weight": 500,"stickiness": "sessionId"}]]'
+  curl -H "Content-Type: application/json" \
+     -H "Authorization: <YOUR_ADMIN_API_KEY>" \
+     -X PUT \
+     -d '[
+  {
+    "name": "control",
+    "weightType": "variable",
+    "weight": 500,
+	"stickiness": "sessionId"
+  },
+  {
+    "name": "experiment",
+    "weightType": "variable",
+    "weight": 500,
+    "stickiness": "sessionId"
+  }
+]' \
+     https://unleash.artsy.net/api/admin/projects/default/features/:yourFeaturesName/variants
 ```
 
 NOTE: if you haven't already, you will need to create an [admin api token](https://docs.getunleash.io/user_guide/api-token) and set it as the value of `Authorization` in the request header.
@@ -60,7 +74,7 @@ function MyComponent() {
 
   return (
     <div>
-        {if(variant?.name! === 'experiment')
+        {variant?.name! === 'experiment' &&
           ? <ExperimentComponent />
           : <ControlComponent />
         }
@@ -77,7 +91,7 @@ In the component that you added the experiment you just need to add the followin
 import { useFeatureVariant } from "v2/System/useFeatureFlag"
 
 function MyComponent() {
-  { trackFeatureVariant } = useTrackFeatureVariant({
+  const { trackFeatureVariant } = useTrackFeatureVariant({
     experimentName: "my-awesome-experiment",
     variantName: variant?.name!
     // payload is optional
