@@ -263,8 +263,11 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   saleArtwork,
   sale,
 }) => {
+  const { endAt, extendedBiddingEndAt } = saleArtwork
+  const biddingEndAt = extendedBiddingEndAt ?? endAt
+
   const { hasEnded: lotHasClosed, time } = useTimer(
-    saleArtwork.endAt!,
+    biddingEndAt!,
     sale.startAt!
   )
 
@@ -277,7 +280,10 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
     return null
   }
 
-  const timerCopy = getSaleOrLotTimerInfo(time, { hasStarted: saleHasStarted })
+  const timerCopy = getSaleOrLotTimerInfo(time, {
+    hasStarted: saleHasStarted,
+    extendedBiddingEndAt: extendedBiddingEndAt,
+  })
 
   let lotCloseCopy
   let labelColor = "black60"
@@ -288,7 +294,10 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   } else if (saleHasStarted) {
     // Sale has started and lots are <24 hours from closing or are actively closing
     if (parseInt(time.days) < 1 || lotsAreClosing) {
-      lotCloseCopy = `Closes, ${timerCopy.copy}`
+      lotCloseCopy = extendedBiddingEndAt
+        ? // show Extended: timer if bidding has been extended
+          timerCopy.copy
+        : `Closes, ${timerCopy.copy}`
       if (timerCopy.color === "red100") {
         labelColor = "red100"
       } else {
@@ -329,6 +338,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       sale {
         endAt
         cascadingEndTimeIntervalMinutes
+        extendedBiddingIntervalMinutes
         startAt
         is_auction: isAuction
         is_closed: isClosed
@@ -336,6 +346,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       sale_artwork: saleArtwork {
         lotLabel
         endAt
+        extendedBiddingEndAt
         formattedEndDateTime
         counts {
           bidder_positions: bidderPositions

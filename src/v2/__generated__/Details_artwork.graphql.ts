@@ -23,6 +23,7 @@ export type Details_artwork = {
     readonly sale: {
         readonly endAt: string | null;
         readonly cascadingEndTimeIntervalMinutes: number | null;
+        readonly extendedBiddingIntervalMinutes: number | null;
         readonly startAt: string | null;
         readonly is_auction: boolean | null;
         readonly is_closed: boolean | null;
@@ -30,6 +31,7 @@ export type Details_artwork = {
     readonly sale_artwork: {
         readonly lotLabel: string | null;
         readonly endAt: string | null;
+        readonly extendedBiddingEndAt: string | null;
         readonly formattedEndDateTime: string | null;
         readonly counts: {
             readonly bidder_positions: number | null;
@@ -185,6 +187,13 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "extendedBiddingIntervalMinutes",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "startAt",
           "storageKey": null
         },
@@ -221,6 +230,13 @@ return {
           "storageKey": null
         },
         (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingEndAt",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -284,5 +300,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c0dd41967c2168024832749bf2155e6f';
+(node as any).hash = '6006bad99599ca30c58059f7c8554650';
 export default node;
