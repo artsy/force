@@ -148,46 +148,6 @@ describe("AuctionApp", () => {
     })
   })
 
-  describe("explanatory banner for extended end times", () => {
-    it("includes banner when extended end times are enabled", () => {
-      const wrapper = getWrapper({
-        Sale: () => ({
-          cascadingEndTimeIntervalMinutes: 1,
-          extendedBiddingIntervalMinutes: 2,
-        }),
-      })
-      expect(wrapper.text()).toContain(
-        "Closing times may be extended due to last minute competitive bidding"
-      )
-    })
-
-    it("hides banner when extended and cascading bidding are disabled", () => {
-      const wrapper = getWrapper({
-        Sale: () => ({
-          cascadingEndTimeIntervalMinutes: null,
-          extendedBiddingIntervalMinutes: null,
-        }),
-      })
-      expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeFalsy()
-      expect(wrapper.text()).not.toContain(
-        "Closing times may be extended due to last minute competitive bidding"
-      )
-    })
-
-    it("shows the cascading bidding are when cascading is enabled but popcorn is disabled", () => {
-      const wrapper = getWrapper({
-        Sale: () => ({
-          cascadingEndTimeIntervalMinutes: 1,
-          extendedBiddingIntervalMinutes: null,
-        }),
-      })
-      expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeTruthy()
-      expect(wrapper.text()).not.toContain(
-        "Closing times may be extended due to last minute competitive bidding"
-      )
-    })
-  })
-
   describe("Tabs", () => {
     it("hides tab bar if conditions not met", () => {
       const wrapper = getWrapper({
