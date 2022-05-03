@@ -50,6 +50,7 @@ fragment AuctionApp_sale on Sale {
   ...AuctionBuyNowRail_sale
   ...AuctionDetails_sale
   internalID
+  slug
   isClosed
   coverImage {
     url(version: ["wide", "source", "large_rectangle"])
@@ -62,7 +63,8 @@ fragment AuctionApp_sale on Sale {
     internalID
     id
   }
-  cascadingEndTimeInterval
+  cascadingEndTimeIntervalMinutes
+  extendedBiddingIntervalMinutes
 }
 
 fragment AuctionAssociatedSale_sale on Sale {
@@ -114,7 +116,7 @@ fragment AuctionDetails_sale on Sale {
   description(format: HTML)
   href
   isClosed
-  cascadingEndTimeInterval
+  cascadingEndTimeIntervalMinutes
 }
 
 fragment AuctionInfoSidebar_sale on Sale {
@@ -184,7 +186,7 @@ fragment Details_artwork on Artwork {
   }
   sale {
     endAt
-    cascadingEndTimeInterval
+    cascadingEndTimeIntervalMinutes
     startAt
     is_auction: isAuction
     is_closed: isClosed
@@ -205,6 +207,7 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...NewSaveButton_artwork
   ...HoverDetails_artwork
 }
 
@@ -215,7 +218,10 @@ fragment HoverDetails_artwork on Artwork {
     id
   }
   mediumType {
-    name
+    filterGene {
+      name
+      id
+    }
   }
 }
 
@@ -223,6 +229,14 @@ fragment Metadata_artwork on Artwork {
   ...Details_artwork
   ...Contact_artwork
   href
+}
+
+fragment NewSaveButton_artwork on Artwork {
+  id
+  internalID
+  slug
+  is_saved: isSaved
+  title
 }
 
 fragment RegisterButton_sale on Sale {
@@ -369,7 +383,7 @@ v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cascadingEndTimeInterval",
+  "name": "cascadingEndTimeIntervalMinutes",
   "storageKey": null
 },
 v13 = {
@@ -389,6 +403,10 @@ v14 = [
   }
 ],
 v15 = [
+  (v3/*: any*/),
+  (v8/*: any*/)
+],
+v16 = [
   (v2/*: any*/),
   (v8/*: any*/)
 ];
@@ -847,7 +865,9 @@ return {
                                         ],
                                         "storageKey": null
                                       },
+                                      (v8/*: any*/),
                                       (v2/*: any*/),
+                                      (v4/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -855,10 +875,7 @@ return {
                                         "kind": "LinkedField",
                                         "name": "attributionClass",
                                         "plural": false,
-                                        "selections": [
-                                          (v3/*: any*/),
-                                          (v8/*: any*/)
-                                        ],
+                                        "selections": (v15/*: any*/),
                                         "storageKey": null
                                       },
                                       {
@@ -869,7 +886,16 @@ return {
                                         "name": "mediumType",
                                         "plural": false,
                                         "selections": [
-                                          (v3/*: any*/)
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "concreteType": "Gene",
+                                            "kind": "LinkedField",
+                                            "name": "filterGene",
+                                            "plural": false,
+                                            "selections": (v15/*: any*/),
+                                            "storageKey": null
+                                          }
                                         ],
                                         "storageKey": null
                                       },
@@ -880,8 +906,6 @@ return {
                                         "name": "isInquireable",
                                         "storageKey": null
                                       },
-                                      (v8/*: any*/),
-                                      (v4/*: any*/),
                                       {
                                         "alias": "is_biddable",
                                         "args": null,
@@ -981,7 +1005,7 @@ return {
                     "kind": "LinkedField",
                     "name": "registrationStatus",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1045,7 +1069,7 @@ return {
                     "kind": "LinkedField",
                     "name": "associatedSale",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v16/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -1055,7 +1079,14 @@ return {
                     "kind": "LinkedField",
                     "name": "promotedSale",
                     "plural": false,
-                    "selections": (v15/*: any*/),
+                    "selections": (v16/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "extendedBiddingIntervalMinutes",
                     "storageKey": null
                   },
                   (v8/*: any*/)
@@ -1072,12 +1103,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1089002585676dfe0035f22ae42ff717",
+    "cacheID": "01aa0db8dd9eca3eb82a3b45a576586b",
     "id": null,
     "metadata": {},
     "name": "useCreateBidderMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateBidderMutation(\n  $input: CreateBidderInput!\n) {\n  createBidder(input: $input) {\n    bidder {\n      internalID\n      sale {\n        ...AuctionApp_sale\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionApp_sale on Sale {\n  ...AuctionMeta_sale\n  ...AuctionAssociatedSale_sale\n  ...AuctionBuyNowRail_sale\n  ...AuctionDetails_sale\n  internalID\n  isClosed\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n  showAssociatedSale: associatedSale {\n    internalID\n    id\n  }\n  showBuyNowTab: promotedSale {\n    internalID\n    id\n  }\n  cascadingEndTimeInterval\n}\n\nfragment AuctionAssociatedSale_sale on Sale {\n  associatedSale {\n    coverImage {\n      cropped(width: 445, height: 250) {\n        src\n        srcSet\n      }\n    }\n    displayTimelyAt\n    href\n    slug\n    name\n    id\n  }\n}\n\nfragment AuctionBuyNowRail_sale on Sale {\n  promotedSale {\n    href\n    internalID\n    name\n    saleArtworksConnection(first: 99) {\n      edges {\n        node {\n          artwork {\n            ...ShelfArtwork_artwork\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeInterval\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment AuctionMeta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
+    "text": "mutation useCreateBidderMutation(\n  $input: CreateBidderInput!\n) {\n  createBidder(input: $input) {\n    bidder {\n      internalID\n      sale {\n        ...AuctionApp_sale\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment AuctionApp_sale on Sale {\n  ...AuctionMeta_sale\n  ...AuctionAssociatedSale_sale\n  ...AuctionBuyNowRail_sale\n  ...AuctionDetails_sale\n  internalID\n  slug\n  isClosed\n  coverImage {\n    url(version: [\"wide\", \"source\", \"large_rectangle\"])\n  }\n  showAssociatedSale: associatedSale {\n    internalID\n    id\n  }\n  showBuyNowTab: promotedSale {\n    internalID\n    id\n  }\n  cascadingEndTimeIntervalMinutes\n  extendedBiddingIntervalMinutes\n}\n\nfragment AuctionAssociatedSale_sale on Sale {\n  associatedSale {\n    coverImage {\n      cropped(width: 445, height: 250) {\n        src\n        srcSet\n      }\n    }\n    displayTimelyAt\n    href\n    slug\n    name\n    id\n  }\n}\n\nfragment AuctionBuyNowRail_sale on Sale {\n  promotedSale {\n    href\n    internalID\n    name\n    saleArtworksConnection(first: 99) {\n      edges {\n        node {\n          artwork {\n            ...ShelfArtwork_artwork\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  ...SaleDetailTimer_sale\n  internalID\n  name\n  slug\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n  isClosed\n  cascadingEndTimeIntervalMinutes\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment AuctionMeta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isPreview\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n\nfragment SaleDetailTimer_sale on Sale {\n  endAt\n  endedAt\n  startAt\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();

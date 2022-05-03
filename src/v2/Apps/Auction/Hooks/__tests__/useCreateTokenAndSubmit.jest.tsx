@@ -38,9 +38,7 @@ describe("useCreateTokenAndSubmit", () => {
   const mockUseRefreshUserData = useRefreshUserData as jest.Mock
 
   const values = {
-    address: {
-      phoneNumber: "+1 (123) 456-7890",
-    },
+    phoneNumber: "+1 (123) 456-7890",
   }
 
   const helpers = {
@@ -195,7 +193,7 @@ describe("useCreateTokenAndSubmit", () => {
               token: "tokenID",
             },
             profileInput: {
-              phone: values.address.phoneNumber,
+              phone: values.phoneNumber,
             },
           },
         })

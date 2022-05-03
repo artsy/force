@@ -10,10 +10,5 @@ $(() => {
     "/" + (sd.SECTION != null ? sd.SECTION.slug : undefined)
   ) {
     return require("../apps/articles/client/section.coffee").init()
-  } else if (
-    location.pathname ===
-    "/" + (sd.CHANNEL != null ? sd.CHANNEL.slug : undefined)
-  ) {
-    return require("../apps/articles/client/team_channel.coffee").init()
   }
 })

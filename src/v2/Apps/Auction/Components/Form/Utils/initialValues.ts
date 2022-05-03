@@ -5,6 +5,7 @@ export interface AuctionFormValues {
   address: Address
   agreeToTerms: boolean
   creditCard?: boolean
+  phoneNumber?: string
   selectedBid?: string
 }
 
@@ -15,6 +16,7 @@ export const initialValuesForRegistration: Omit<
   address: emptyAddress,
   agreeToTerms: false,
   creditCard: false,
+  phoneNumber: "",
 }
 
 export const initialValuesForBidding: AuctionFormValues = {

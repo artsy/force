@@ -30,7 +30,7 @@ export type Details_Test_QueryRawResponse = {
         }) | null;
         readonly sale: ({
             readonly endAt: string | null;
-            readonly cascadingEndTimeInterval: number | null;
+            readonly cascadingEndTimeIntervalMinutes: number | null;
             readonly startAt: string | null;
             readonly is_auction: boolean | null;
             readonly is_closed: boolean | null;
@@ -51,15 +51,20 @@ export type Details_Test_QueryRawResponse = {
             }) | null;
             readonly id: string;
         }) | null;
+        readonly id: string;
         readonly internalID: string;
+        readonly slug: string;
+        readonly is_saved: boolean | null;
         readonly attributionClass: ({
             readonly name: string | null;
             readonly id: string;
         }) | null;
         readonly mediumType: ({
-            readonly name: string | null;
+            readonly filterGene: ({
+                readonly name: string | null;
+                readonly id: string;
+            }) | null;
         }) | null;
-        readonly id: string;
     }) | null;
 };
 export type Details_Test_Query = {
@@ -97,7 +102,7 @@ fragment Details_artwork on Artwork {
   }
   sale {
     endAt
-    cascadingEndTimeInterval
+    cascadingEndTimeIntervalMinutes
     startAt
     is_auction: isAuction
     is_closed: isClosed
@@ -118,6 +123,7 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...NewSaveButton_artwork
   ...HoverDetails_artwork
 }
 
@@ -128,8 +134,19 @@ fragment HoverDetails_artwork on Artwork {
     id
   }
   mediumType {
-    name
+    filterGene {
+      name
+      id
+    }
   }
+}
+
+fragment NewSaveButton_artwork on Artwork {
+  id
+  internalID
+  slug
+  is_saved: isSaved
+  title
 }
 */
 
@@ -185,19 +202,23 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v7 = [
+  (v4/*: any*/),
+  (v3/*: any*/)
+],
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v9 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -321,7 +342,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "cascadingEndTimeInterval",
+                "name": "cascadingEndTimeIntervalMinutes",
                 "storageKey": null
               },
               {
@@ -414,6 +435,7 @@ return {
             ],
             "storageKey": null
           },
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -424,14 +446,25 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": "is_saved",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isSaved",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AttributionClass",
             "kind": "LinkedField",
             "name": "attributionClass",
             "plural": false,
-            "selections": [
-              (v4/*: any*/),
-              (v3/*: any*/)
-            ],
+            "selections": (v7/*: any*/),
             "storageKey": null
           },
           {
@@ -442,18 +475,26 @@ return {
             "name": "mediumType",
             "plural": false,
             "selections": [
-              (v4/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Gene",
+                "kind": "LinkedField",
+                "name": "filterGene",
+                "plural": false,
+                "selections": (v7/*: any*/),
+                "storageKey": null
+              }
             ],
             "storageKey": null
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
       }
     ]
   },
   "params": {
-    "cacheID": "346e6c0260bc8cecd45e9cec4170210a",
+    "cacheID": "4de87bc5b49324a5bb0e13a142695b50",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -469,56 +510,64 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.href": (v7/*: any*/),
-        "artwork.artists.id": (v8/*: any*/),
-        "artwork.artists.name": (v7/*: any*/),
+        "artwork.artists.href": (v8/*: any*/),
+        "artwork.artists.id": (v9/*: any*/),
+        "artwork.artists.name": (v8/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "artwork.attributionClass.id": (v8/*: any*/),
-        "artwork.attributionClass.name": (v7/*: any*/),
-        "artwork.collecting_institution": (v7/*: any*/),
-        "artwork.cultural_maker": (v7/*: any*/),
-        "artwork.date": (v7/*: any*/),
-        "artwork.href": (v7/*: any*/),
-        "artwork.id": (v8/*: any*/),
-        "artwork.internalID": (v8/*: any*/),
+        "artwork.attributionClass.id": (v9/*: any*/),
+        "artwork.attributionClass.name": (v8/*: any*/),
+        "artwork.collecting_institution": (v8/*: any*/),
+        "artwork.cultural_maker": (v8/*: any*/),
+        "artwork.date": (v8/*: any*/),
+        "artwork.href": (v8/*: any*/),
+        "artwork.id": (v9/*: any*/),
+        "artwork.internalID": (v9/*: any*/),
+        "artwork.is_saved": (v10/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "artwork.mediumType.name": (v7/*: any*/),
+        "artwork.mediumType.filterGene": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "artwork.mediumType.filterGene.id": (v9/*: any*/),
+        "artwork.mediumType.filterGene.name": (v8/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.href": (v7/*: any*/),
-        "artwork.partner.id": (v8/*: any*/),
-        "artwork.partner.name": (v7/*: any*/),
+        "artwork.partner.href": (v8/*: any*/),
+        "artwork.partner.id": (v9/*: any*/),
+        "artwork.partner.name": (v8/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.cascadingEndTimeInterval": {
+        "artwork.sale.cascadingEndTimeIntervalMinutes": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "artwork.sale.endAt": (v7/*: any*/),
-        "artwork.sale.id": (v8/*: any*/),
-        "artwork.sale.is_auction": (v9/*: any*/),
-        "artwork.sale.is_closed": (v9/*: any*/),
-        "artwork.sale.startAt": (v7/*: any*/),
+        "artwork.sale.endAt": (v8/*: any*/),
+        "artwork.sale.id": (v9/*: any*/),
+        "artwork.sale.is_auction": (v10/*: any*/),
+        "artwork.sale.is_closed": (v10/*: any*/),
+        "artwork.sale.startAt": (v8/*: any*/),
         "artwork.sale_artwork": {
           "enumValues": null,
           "nullable": true,
@@ -537,31 +586,32 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
-        "artwork.sale_artwork.endAt": (v7/*: any*/),
-        "artwork.sale_artwork.formattedEndDateTime": (v7/*: any*/),
+        "artwork.sale_artwork.endAt": (v8/*: any*/),
+        "artwork.sale_artwork.formattedEndDateTime": (v8/*: any*/),
         "artwork.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "artwork.sale_artwork.highest_bid.display": (v7/*: any*/),
-        "artwork.sale_artwork.id": (v8/*: any*/),
-        "artwork.sale_artwork.lotLabel": (v7/*: any*/),
+        "artwork.sale_artwork.highest_bid.display": (v8/*: any*/),
+        "artwork.sale_artwork.id": (v9/*: any*/),
+        "artwork.sale_artwork.lotLabel": (v8/*: any*/),
         "artwork.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "artwork.sale_artwork.opening_bid.display": (v7/*: any*/),
-        "artwork.sale_message": (v7/*: any*/),
-        "artwork.title": (v7/*: any*/)
+        "artwork.sale_artwork.opening_bid.display": (v8/*: any*/),
+        "artwork.sale_message": (v8/*: any*/),
+        "artwork.slug": (v9/*: any*/),
+        "artwork.title": (v8/*: any*/)
       }
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n"
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

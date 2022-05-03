@@ -40,6 +40,9 @@ fragment AuctionConfirmRegistrationRoute_me on Me {
   internalID
   identityVerified
   hasQualifiedCreditCards
+  phoneNumber {
+    originalNumber
+  }
 }
 
 fragment AuctionConfirmRegistrationRoute_sale on Sale {
@@ -158,6 +161,24 @@ return {
             "name": "hasQualifiedCreditCards",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "phoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "originalNumber",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v3/*: any*/)
         ],
         "storageKey": null
@@ -239,12 +260,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7551b4131e446fda1f308d5100841467",
+    "cacheID": "48421e72673d81723c79485421121572",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_ConfirmRegistrationRouteQuery",
     "operationKind": "query",
-    "text": "query auctionRoutes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query auctionRoutes_ConfirmRegistrationRouteQuery(\n  $slug: String!\n) {\n  me {\n    ...AuctionConfirmRegistrationRoute_me\n    id\n  }\n  sale(id: $slug) @principalField {\n    ...AuctionConfirmRegistrationRoute_sale\n    id\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_me on Me {\n  internalID\n  identityVerified\n  hasQualifiedCreditCards\n  phoneNumber {\n    originalNumber\n  }\n}\n\nfragment AuctionConfirmRegistrationRoute_sale on Sale {\n  slug\n  name\n  internalID\n  status\n  isClosed\n  isLiveOpen\n  requireIdentityVerification\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
   }
 };
 })();

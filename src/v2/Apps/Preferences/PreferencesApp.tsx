@@ -127,10 +127,9 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Text variant="sm" color="black60">
                   Get all of Artsy’s emails, including recommendations for you,
                   Artsy Editorial, guidance on collecting, and updates on your
-                  favorite artists.
+                  favorite artists
                 </Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={Object.values(values).every(Boolean)}
@@ -144,11 +143,9 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={12}>
                 <Separator />
               </Column>
-
               <Column span={10}>
                 <Text variant="md">Recommended for You</Text>
                 <Text variant="sm" color="black60">
@@ -156,7 +153,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   you’ll love
                 </Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={values.recommendedByArtsy}
@@ -168,7 +164,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={10}>
                 <Text variant="md">Editorial</Text>
                 <Text variant="sm" color="black60">
@@ -176,7 +171,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   art world insights
                 </Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={values.artWorldInsights}
@@ -188,7 +182,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={10}>
                 <Text variant="md">Guidance on Collecting</Text>
                 <Text variant="sm" color="black60">
@@ -196,7 +189,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Artsy specialist
                 </Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={values.guidanceOnCollecting}
@@ -208,14 +200,12 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={10}>
                 <Text variant="md">Custom Alerts</Text>
                 <Text variant="sm" color="black60">
                   A roundup of updates on your favorite artists, chosen by you
                 </Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={values.customAlerts}
@@ -227,14 +217,12 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={10}>
                 <Text variant="md">Product Updates</Text>
                 <Text variant="sm" color="black60">
                   Announcements of new features on Artsy.net and the mobile app
                 </Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={values.productUpdates}
@@ -246,15 +234,12 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={12}>
                 <Separator my={2} />
               </Column>
-
               <Column span={10}>
                 <Text variant="md">Unsubscribe from all</Text>
               </Column>
-
               <Column span={2}>
                 <Checkbox
                   selected={!Object.values(values).some(Boolean)}
@@ -268,7 +253,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                   Email
                 </Checkbox>
               </Column>
-
               <Column span={2} start={10} mt={2}>
                 <Button
                   width="100%"

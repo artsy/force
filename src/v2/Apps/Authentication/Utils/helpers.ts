@@ -1,5 +1,6 @@
 import Cookies from "cookies-js"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import * as qs from "query-string"
 import type { Response } from "express"
@@ -133,7 +134,7 @@ export const handleSubmit = async (
 }
 
 export const setCookies = options => {
-  const { afterSignUpAction, destination } = options
+  const { afterSignUpAction, destination, submissionId } = options
 
   if (afterSignUpAction) {
     Cookies.set("afterSignUpAction", JSON.stringify(afterSignUpAction))
@@ -141,6 +142,12 @@ export const setCookies = options => {
 
   if (destination) {
     Cookies.set("destination", destination, {
+      expires: 60 * 60 * 24,
+    })
+  }
+
+  if (submissionId) {
+    Cookies.set("submissionId", submissionId, {
       expires: 60 * 60 * 24,
     })
   }
@@ -195,7 +202,7 @@ export function getRedirect(type): URL {
         return new URL(location.href, appBaseURL)
       }
     case "signup":
-      return new URL("/personalize", appBaseURL)
+      return new URL("/", appBaseURL)
     default:
       return new URL(window.location.href, appBaseURL)
   }

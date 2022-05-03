@@ -29,6 +29,10 @@ query ConversationPageQuery(
   }
 }
 
+fragment ConfirmArtworkButton_artwork on Artwork {
+  internalID
+}
+
 fragment Contact_artwork on Artwork {
   href
   is_inquireable: isInquireable
@@ -105,7 +109,7 @@ fragment ConversationCTA_conversation on Conversation {
       }
     }
   }
-  ...OpenInquiryModalCTA_conversation
+  ...MakeOfferOnInquiryButton_conversation
 }
 
 fragment ConversationList_me on Me {
@@ -206,7 +210,6 @@ fragment Conversation_conversation on Conversation {
   id
   internalID
   from {
-    name
     email
     id
   }
@@ -353,7 +356,7 @@ fragment DetailsSidebar_conversation on Conversation {
                 id
               }
               selectedShippingQuote {
-                displayName
+                typeName
                 id
               }
               fulfillments {
@@ -436,7 +439,7 @@ fragment Details_artwork on Artwork {
   }
   sale {
     endAt
-    cascadingEndTimeInterval
+    cascadingEndTimeIntervalMinutes
     startAt
     is_auction: isAuction
     is_closed: isClosed
@@ -457,6 +460,7 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...NewSaveButton_artwork
   ...HoverDetails_artwork
 }
 
@@ -467,7 +471,10 @@ fragment HoverDetails_artwork on Artwork {
     id
   }
   mediumType {
-    name
+    filterGene {
+      name
+      id
+    }
   }
 }
 
@@ -514,6 +521,28 @@ fragment Item_item on ConversationItemType {
   }
 }
 
+fragment MakeOfferOnInquiryButton_conversation on Conversation {
+  internalID
+  items {
+    liveArtwork {
+      __typename
+      ... on Artwork {
+        __typename
+        isEdition
+        editionSets {
+          internalID
+          id
+        }
+        ...ConfirmArtworkButton_artwork
+      }
+      ... on Node {
+        __isNode: __typename
+        id
+      }
+    }
+  }
+}
+
 fragment Message_message on Message {
   __typename
   internalID
@@ -538,8 +567,12 @@ fragment Metadata_artwork on Artwork {
   href
 }
 
-fragment OpenInquiryModalCTA_conversation on Conversation {
+fragment NewSaveButton_artwork on Artwork {
+  id
   internalID
+  slug
+  is_saved: isSaved
+  title
 }
 
 fragment OrderUpdate_event on CommerceOrderEventUnion {
@@ -635,7 +668,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
           }
         }
         selectedShippingQuote {
-          displayName
+          typeName
           id
         }
         id
@@ -977,6 +1010,10 @@ v35 = {
   "storageKey": null
 },
 v36 = [
+  (v4/*: any*/),
+  (v3/*: any*/)
+],
+v37 = [
   (v5/*: any*/),
   {
     "alias": null,
@@ -1022,60 +1059,60 @@ v36 = [
     "storageKey": null
   }
 ],
-v37 = {
+v38 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v38 = [
+v39 = [
   {
     "kind": "Literal",
     "name": "precision",
     "value": 2
   }
 ],
-v39 = {
+v40 = {
   "alias": null,
-  "args": (v38/*: any*/),
+  "args": (v39/*: any*/),
   "kind": "ScalarField",
   "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
 },
-v40 = {
+v41 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "shippingTotalCents",
   "storageKey": null
 },
-v41 = {
+v42 = {
   "alias": null,
-  "args": (v38/*: any*/),
+  "args": (v39/*: any*/),
   "kind": "ScalarField",
   "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
 },
-v42 = {
+v43 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "taxTotalCents",
   "storageKey": null
 },
-v43 = {
+v44 = {
   "alias": null,
-  "args": (v38/*: any*/),
+  "args": (v39/*: any*/),
   "kind": "ScalarField",
   "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
 },
-v44 = [
+v45 = [
   (v4/*: any*/),
   {
     "alias": null,
-    "args": (v38/*: any*/),
+    "args": (v39/*: any*/),
     "kind": "ScalarField",
     "name": "amount",
     "storageKey": "amount(precision:2)"
@@ -1087,11 +1124,11 @@ v44 = [
     "name": "amountCents",
     "storageKey": null
   },
-  (v39/*: any*/),
   (v40/*: any*/),
   (v41/*: any*/),
   (v42/*: any*/),
   (v43/*: any*/),
+  (v44/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -1329,7 +1366,6 @@ return {
                 "name": "from",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
                   (v19/*: any*/),
                   (v3/*: any*/)
                 ],
@@ -1783,7 +1819,7 @@ return {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
-                                "name": "cascadingEndTimeInterval",
+                                "name": "cascadingEndTimeIntervalMinutes",
                                 "storageKey": null
                               },
                               {
@@ -1893,6 +1929,20 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": "is_saved",
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isSaved",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "AttributionClass",
                             "kind": "LinkedField",
                             "name": "attributionClass",
@@ -1908,7 +1958,16 @@ return {
                             "name": "mediumType",
                             "plural": false,
                             "selections": [
-                              (v5/*: any*/)
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Gene",
+                                "kind": "LinkedField",
+                                "name": "filterGene",
+                                "plural": false,
+                                "selections": (v6/*: any*/),
+                                "storageKey": null
+                              }
                             ],
                             "storageKey": null
                           },
@@ -1997,7 +2056,24 @@ return {
                         "selections": [
                           (v28/*: any*/),
                           (v29/*: any*/),
-                          (v4/*: any*/)
+                          (v4/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isEdition",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "EditionSet",
+                            "kind": "LinkedField",
+                            "name": "editionSets",
+                            "plural": true,
+                            "selections": (v36/*: any*/),
+                            "storageKey": null
+                          }
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -2090,10 +2166,7 @@ return {
                                         "kind": "LinkedField",
                                         "name": "node",
                                         "plural": false,
-                                        "selections": [
-                                          (v4/*: any*/),
-                                          (v3/*: any*/)
-                                        ],
+                                        "selections": (v36/*: any*/),
                                         "storageKey": null
                                       }
                                     ],
@@ -2207,13 +2280,13 @@ return {
                               },
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v36/*: any*/),
+                                "selections": (v37/*: any*/),
                                 "type": "CommerceShip",
                                 "abstractKey": null
                               },
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v36/*: any*/),
+                                "selections": (v37/*: any*/),
                                 "type": "CommerceShipArta",
                                 "abstractKey": null
                               }
@@ -2256,7 +2329,7 @@ return {
                                           {
                                             "kind": "InlineFragment",
                                             "selections": [
-                                              (v37/*: any*/)
+                                              (v38/*: any*/)
                                             ],
                                             "type": "Artwork",
                                             "abstractKey": null
@@ -2264,7 +2337,7 @@ return {
                                           {
                                             "kind": "InlineFragment",
                                             "selections": [
-                                              (v37/*: any*/),
+                                              (v38/*: any*/),
                                               (v3/*: any*/)
                                             ],
                                             "type": "EditionSet",
@@ -2286,7 +2359,7 @@ return {
                                             "alias": null,
                                             "args": null,
                                             "kind": "ScalarField",
-                                            "name": "displayName",
+                                            "name": "typeName",
                                             "storageKey": null
                                           },
                                           (v3/*: any*/)
@@ -2423,18 +2496,18 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v39/*: any*/),
                           (v40/*: any*/),
                           (v41/*: any*/),
                           (v42/*: any*/),
+                          (v43/*: any*/),
                           {
                             "alias": null,
-                            "args": (v38/*: any*/),
+                            "args": (v39/*: any*/),
                             "kind": "ScalarField",
                             "name": "itemsTotal",
                             "storageKey": "itemsTotal(precision:2)"
                           },
-                          (v43/*: any*/),
+                          (v44/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -2493,7 +2566,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "lastOffer",
                                 "plural": false,
-                                "selections": (v44/*: any*/),
+                                "selections": (v45/*: any*/),
                                 "storageKey": null
                               },
                               {
@@ -2503,7 +2576,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "myLastOffer",
                                 "plural": false,
-                                "selections": (v44/*: any*/),
+                                "selections": (v45/*: any*/),
                                 "storageKey": null
                               },
                               (v25/*: any*/)
@@ -2589,12 +2662,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7ed7926744bff8c2aca5f2af89d5f10a",
+    "cacheID": "72dc361ccef86ce9893a0db34faab4cd",
     "id": null,
     "metadata": {},
     "name": "ConversationPageQuery",
     "operationKind": "query",
-    "text": "query ConversationPageQuery(\n  $conversationID: String!\n) {\n  me {\n    ...Conversation_me_3oGfhn\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...OpenInquiryModalCTA_conversation\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n    ...ConversationMessages_events\n  }\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        isOfferable\n        isOfferableFromInquiry\n        internalID\n      }\n      ...Item_item\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        isOfferable\n        isOfferableFromInquiry\n        internalID\n        __typename\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Conversation_me_3oGfhn on Me {\n  ...ConversationList_me\n  conversation(id: $conversationID) {\n    internalID\n    ...Conversation_conversation\n    ...ConversationCTA_conversation\n    ...DetailsSidebar_conversation\n    id\n  }\n}\n\nfragment CreditCardSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  creditCard {\n    brand\n    lastDigits\n    expirationYear\n    expirationMonth\n    id\n  }\n}\n\nfragment DetailsSidebar_conversation on Conversation {\n  to {\n    name\n    initials\n    id\n  }\n  sidebarOrderConnection: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        displayState\n        mode\n        stateReason\n        code\n        stateExpiresAt(format: \"MMM D\")\n        ...TransactionDetailsSummaryItem_order\n        ...ShippingSummaryItem_order\n        ...CreditCardSummaryItem_order\n        creditCard {\n          brand\n          lastDigits\n          expirationYear\n          expirationMonth\n          id\n        }\n        requestedFulfillment {\n          __typename\n        }\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        lineItems {\n          edges {\n            node {\n              artwork {\n                shippingOrigin\n                id\n              }\n              shipment {\n                trackingNumber\n                trackingUrl\n                carrierName\n                estimatedDeliveryWindow\n                id\n              }\n              selectedShippingQuote {\n                displayName\n                id\n              }\n              fulfillments {\n                edges {\n                  node {\n                    courier\n                    trackingId\n                    estimatedDelivery(format: \"MMM Do, YYYY\")\n                    id\n                  }\n                }\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  attachmentsConnection: messagesConnection(first: 30, sort: DESC) {\n    edges {\n      node {\n        attachments {\n          id\n          contentType\n          fileName\n          downloadURL\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        href\n        ...Metadata_artwork\n        image {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Show {\n        href\n        image: coverImage {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Item_item on ConversationItemType {\n  __isConversationItemType: __typename\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      url(version: [\"large\"])\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n  ... on Show {\n    id\n    fair {\n      name\n      exhibitionPeriod\n      location {\n        city\n        id\n      }\n      id\n    }\n    href\n    name\n    coverImage {\n      url\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment OpenInquiryModalCTA_conversation on Conversation {\n  internalID\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {\n  __isCommerceRequestedFulfillmentUnion: __typename\n  ... on CommerceShip {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n  ... on CommerceShipArta {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n}\n\nfragment ShippingSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  requestedFulfillment {\n    __typename\n    ...ShippingAddress_ship\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          shippingOrigin\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationPageQuery(\n  $conversationID: String!\n) {\n  me {\n    ...Conversation_me_3oGfhn\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...MakeOfferOnInquiryButton_conversation\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n    ...ConversationMessages_events\n  }\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        isOfferable\n        isOfferableFromInquiry\n        internalID\n      }\n      ...Item_item\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        isOfferable\n        isOfferableFromInquiry\n        internalID\n        __typename\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Conversation_me_3oGfhn on Me {\n  ...ConversationList_me\n  conversation(id: $conversationID) {\n    internalID\n    ...Conversation_conversation\n    ...ConversationCTA_conversation\n    ...DetailsSidebar_conversation\n    id\n  }\n}\n\nfragment CreditCardSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  creditCard {\n    brand\n    lastDigits\n    expirationYear\n    expirationMonth\n    id\n  }\n}\n\nfragment DetailsSidebar_conversation on Conversation {\n  to {\n    name\n    initials\n    id\n  }\n  sidebarOrderConnection: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        displayState\n        mode\n        stateReason\n        code\n        stateExpiresAt(format: \"MMM D\")\n        ...TransactionDetailsSummaryItem_order\n        ...ShippingSummaryItem_order\n        ...CreditCardSummaryItem_order\n        creditCard {\n          brand\n          lastDigits\n          expirationYear\n          expirationMonth\n          id\n        }\n        requestedFulfillment {\n          __typename\n        }\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        lineItems {\n          edges {\n            node {\n              artwork {\n                shippingOrigin\n                id\n              }\n              shipment {\n                trackingNumber\n                trackingUrl\n                carrierName\n                estimatedDeliveryWindow\n                id\n              }\n              selectedShippingQuote {\n                typeName\n                id\n              }\n              fulfillments {\n                edges {\n                  node {\n                    courier\n                    trackingId\n                    estimatedDelivery(format: \"MMM Do, YYYY\")\n                    id\n                  }\n                }\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  attachmentsConnection: messagesConnection(first: 30, sort: DESC) {\n    edges {\n      node {\n        attachments {\n          id\n          contentType\n          fileName\n          downloadURL\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        href\n        ...Metadata_artwork\n        image {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Show {\n        href\n        image: coverImage {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Item_item on ConversationItemType {\n  __isConversationItemType: __typename\n  __typename\n  ... on Artwork {\n    internalID\n    id\n    date\n    title\n    artistNames\n    href\n    isOfferableFromInquiry\n    image {\n      url(version: [\"large\"])\n    }\n    listPrice {\n      __typename\n      ... on Money {\n        display\n      }\n      ... on PriceRange {\n        display\n      }\n    }\n  }\n  ... on Show {\n    id\n    fair {\n      name\n      exhibitionPeriod\n      location {\n        city\n        id\n      }\n      id\n    }\n    href\n    name\n    coverImage {\n      url\n    }\n  }\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {\n  __isCommerceRequestedFulfillmentUnion: __typename\n  ... on CommerceShip {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n  ... on CommerceShipArta {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n}\n\nfragment ShippingSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  requestedFulfillment {\n    __typename\n    ...ShippingAddress_ship\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          shippingOrigin\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

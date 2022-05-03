@@ -20,8 +20,9 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
   const contextModule = tabTypeToContextModuleMap.trendingLots as AuthContextModule
 
   const nodes = extractNodes(viewer.trendingLotsConnection)
+  const openLots = nodes.filter(node => !node.sale?.isClosed)
 
-  if (nodes.length === 0) {
+  if (openLots.length === 0) {
     return <CuratorialRailsZeroState />
   }
 
@@ -30,7 +31,7 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
       title="Trending lots"
       subTitle="Works with the most bids today"
       getItems={() => {
-        return nodes.map((node, index) => {
+        return openLots.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -75,6 +76,9 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
             node {
               internalID
               slug
+              sale {
+                isClosed
+              }
               ...ShelfArtwork_artwork @arguments(width: 325)
             }
           }

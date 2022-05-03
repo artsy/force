@@ -256,7 +256,7 @@ const computeProps = ({
 
   const requiresCheckbox = !bidder
   const requiresPaymentInformation =
-    requiresCheckbox || !me.hasQualifiedCreditCards
+    requiresCheckbox && !me.hasQualifiedCreditCards
 
   const {
     validationSchemaForRegisteredUsers,

@@ -12,9 +12,12 @@ import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
-import { getTimerCopy } from "../LotTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
+
+import { ContextModule } from "@artsy/cohesion"
+import { NewSaveButtonFragmentContainer } from "./SaveButton"
+import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -23,6 +26,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
+  shouldShowHoverSaveButton?: boolean
 }
 
 const ConditionalLink: React.FC<
@@ -209,16 +213,17 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
+  shouldShowHoverSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
 
   return (
-    <>
+    <Box>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
           <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
-          {rest?.artwork?.sale?.cascadingEndTimeInterval &&
+          {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
             rest?.artwork?.sale_artwork && (
               <>
                 <Spacer mx={0.5} />
@@ -230,14 +235,22 @@ export const Details: React.FC<DetailsProps> = ({
             )}
         </Flex>
       )}
-      {!hideArtistName && <ArtistLine {...rest} />}
+      <Flex flexDirection="row" justifyContent="space-between">
+        {!hideArtistName && <ArtistLine {...rest} />}
+        {shouldShowHoverSaveButton && (
+          <NewSaveButtonFragmentContainer
+            contextModule={ContextModule.artworkGrid}
+            artwork={rest.artwork}
+          />
+        )}
+      </Flex>
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
-    </>
+    </Box>
   )
 }
 
@@ -264,7 +277,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
     return null
   }
 
-  const timerCopy = getTimerCopy(time, saleHasStarted)
+  const timerCopy = getSaleOrLotTimerInfo(time, { hasStarted: saleHasStarted })
 
   let lotCloseCopy
   let labelColor = "black60"
@@ -315,7 +328,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       }
       sale {
         endAt
-        cascadingEndTimeInterval
+        cascadingEndTimeIntervalMinutes
         startAt
         is_auction: isAuction
         is_closed: isClosed
@@ -334,6 +347,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
           display
         }
       }
+      ...NewSaveButton_artwork
       ...HoverDetails_artwork
     }
   `,

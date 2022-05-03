@@ -19,6 +19,5 @@ interface Window {
   }
   sd: any
   __BOOTSTRAP__?: any
-  PARSELY?: any
   _sift: any
 }

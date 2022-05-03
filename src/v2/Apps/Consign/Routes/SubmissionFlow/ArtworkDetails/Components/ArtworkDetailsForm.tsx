@@ -27,6 +27,7 @@ import {
   Place,
 } from "v2/Components/LocationAutocompleteInput"
 import { compact } from "lodash"
+import { postalCodeValidators } from "../../Utils/validation"
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission
@@ -48,7 +49,9 @@ export const getArtworkDetailsFormInitialValues = (
     city: submission?.locationCity ?? "",
     country: submission?.locationCountry ?? undefined,
     state: submission?.locationState ?? undefined,
+    countryCode: submission?.locationCountryCode ?? undefined,
   },
+  postalCode: submission?.locationPostalCode ?? undefined,
 })
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
@@ -73,6 +76,7 @@ export interface ArtworkDetailsFormModel {
   units: string
   provenance: string
   location: Location
+  postalCode?: string
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
@@ -111,12 +115,21 @@ export const ArtworkDetailsForm: React.FC = () => {
   const handleLocationClose = () => setFieldTouched("location")
   const handleLocationClick = () => setFieldTouched("location", false)
   const handleLocationChange = () => {
+    setFieldValue("postalCode", "")
+    setFieldTouched("postalCode", false)
+
     setFieldValue("location", {})
-    setFieldTouched("artistName", false)
+    setFieldTouched("location", false)
   }
   const handleLocationSelect = (place?: Place) => {
-    setFieldValue("location", normalizePlace(place))
+    setFieldValue("location", normalizePlace(place, true))
   }
+
+  const showPostalCode =
+    values.location.countryCode &&
+    Object.keys(postalCodeValidators).includes(
+      values.location.countryCode?.toUpperCase()
+    )
 
   return (
     <>
@@ -340,7 +353,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6} mt={[30, 0]}>
           <LocationAutocompleteInput
             name="location"
-            title="Location"
+            title="City"
             placeholder="Enter City Where Artwork Is Located"
             maxLength={256}
             spellCheck={false}
@@ -353,6 +366,22 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
       </GridColumns>
+      {showPostalCode && (
+        <GridColumns mt={[4, 2]}>
+          <Column start={7} span={6}>
+            <Input
+              title="Zip/postal code"
+              placeholder="Zip/Postal Code Where Artwork Is Located"
+              name="postalCode"
+              maxLength={256}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.postalCode}
+              error={touched.postalCode && errors.postalCode}
+            />
+          </Column>
+        </GridColumns>
+      )}
     </>
   )
 }

@@ -179,9 +179,14 @@ export class ArtworkApp extends React.Component<Props> {
     return (
       <>
         <UseRecordArtworkView />
-        {artwork.sale?.cascadingEndTimeInterval && (
+        {artwork.sale?.cascadingEndTimeIntervalMinutes && (
           <CascadingEndTimesBanner
-            cascadingEndTimeInterval={artwork.sale.cascadingEndTimeInterval}
+            cascadingEndTimeIntervalMinutes={
+              artwork.sale.cascadingEndTimeIntervalMinutes
+            }
+            extendedBiddingIntervalMinutes={
+              artwork.sale.extendedBiddingIntervalMinutes
+            }
           />
         )}
         <ArtworkMetaFragmentContainer artwork={artwork} />
@@ -287,7 +292,8 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         is_in_auction: isInAuction
         sale {
           internalID
-          cascadingEndTimeInterval
+          cascadingEndTimeIntervalMinutes
+          extendedBiddingIntervalMinutes
           slug
         }
         artists {

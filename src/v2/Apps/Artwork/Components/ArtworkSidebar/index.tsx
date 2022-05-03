@@ -1,4 +1,4 @@
-import { Box, Spacer, Join } from "@artsy/palette"
+import { Box, Spacer, Join, Separator } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
@@ -18,8 +18,15 @@ import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAu
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
-import { BiddingClosedMessage } from "./ArtworkSidebarCurrentBidInfo"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
+import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
+import { lotIsClosed } from "v2/Apps/Artwork/Utils/lotIsClosed"
+import {
+  shouldRenderAuthenticityCertificate,
+  shouldRenderBuyerGuaranteeAndSecurePayment,
+  shouldRenderVerifiedSeller,
+} from "../../Utils/badges"
+import { getENV } from "v2/Utils/getENV"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -32,23 +39,63 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   artwork,
   me,
 }) => {
-  const shouldShowCreateAlertSection = useFeatureFlag(
+  const isCreateAlertButtonForArtworkEnabled = useFeatureFlag(
     "artwork-page-create-alert"
   )
 
   // If we have info about the lot end time (cascading), use that.
-  const { sale, saleArtwork } = artwork
+  const { sale, saleArtwork, is_sold, is_in_auction } = artwork
   const endAt = saleArtwork?.endAt
-  const startAt = sale?.startAt
-  const { hasEnded } = useTimer(endAt!, startAt!)
+  const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
+  const biddingEndAt = extendedBiddingEndAt ?? endAt
 
+  const startAt = sale?.startAt
+
+  const shouldRenderArtworkBadges =
+    shouldRenderAuthenticityCertificate(artwork) ||
+    shouldRenderVerifiedSeller(artwork) ||
+    shouldRenderBuyerGuaranteeAndSecurePayment(artwork)
+
+  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = React.useState(
+    biddingEndAt
+  )
+
+  React.useEffect(() => {
+    if (sale?.extendedBiddingIntervalMinutes) {
+      const actionCable = require("actioncable")
+      const CableApp = {} as any
+      CableApp.cable = actionCable.createConsumer(
+        getENV("GRAVITY_WEBSOCKET_URL")
+      )
+
+      CableApp.cable.subscriptions.create(
+        {
+          channel: "SalesChannel",
+          sale_id: sale?.internalID,
+        },
+        {
+          received(data) {
+            if (data.lot_id === saleArtwork?.lotID) {
+              setUpdatedBiddingEndAt(data.extended_bidding_end_at)
+            }
+          },
+        }
+      )
+    }
+  }, [])
+
+  const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
+  const shouldHideDetailsCreateAlertCTA =
+    (is_in_auction && hasEnded) ||
+    (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
+    is_sold
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
       <Spacer mt={4} />
       <ArtworkSidebarMetadataFragmentContainer artwork={artwork} />
 
-      {artwork.is_in_auction ? (
+      {is_in_auction ? (
         <>
           <Spacer mt={2} />
           <Join separator={<Spacer mt={2} />}>
@@ -56,7 +103,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
               artwork={artwork}
             />
             {hasEnded ? (
-              <BiddingClosedMessage />
+              <ArtworkSidebarBiddingClosedMessageFragmentContainer
+                artwork={artwork}
+              />
             ) : (
               <ArtworkSidebarAuctionPollingRefetchContainer
                 artwork={artwork}
@@ -76,15 +125,22 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
           <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
         </>
       )}
-      <Join separator={<Spacer mt={2} />}>
-        <AuthenticityCertificateFragmentContainer artwork={artwork} />
-        <SecurePaymentFragmentContainer artwork={artwork} />
-        <VerifiedSellerFragmentContainer artwork={artwork} />
-        <BuyerGuaranteeFragmentContainer artwork={artwork} />
-      </Join>
-      {!!shouldShowCreateAlertSection && (
-        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
+
+      {shouldRenderArtworkBadges && (
+        <Join separator={<Spacer mt={2} />}>
+          <Separator mt={2} />
+          <AuthenticityCertificateFragmentContainer artwork={artwork} />
+          <SecurePaymentFragmentContainer artwork={artwork} />
+          <VerifiedSellerFragmentContainer artwork={artwork} />
+          <BuyerGuaranteeFragmentContainer artwork={artwork} />
+        </Join>
       )}
+
+      {isCreateAlertButtonForArtworkEnabled &&
+        !shouldHideDetailsCreateAlertCTA && (
+          <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
+        )}
+
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>
   )
@@ -96,6 +152,14 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkSidebar_artwork on Artwork {
         is_in_auction: isInAuction
+        is_sold: isSold
+        is_biddable: isBiddable
+        is_acquireable: isAcquireable
+        is_offerable: isOfferable
+        hasCertificateOfAuthenticity
+        partner {
+          isVerifiedSeller
+        }
         ...ArtworkSidebarArtists_artwork
         ...ArtworkSidebarMetadata_artwork
         ...ArtworkSidebarAuctionPartnerInfo_artwork
@@ -109,12 +173,18 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...AuthenticityCertificate_artwork
         ...BuyerGuarantee_artwork
         ...CreateArtworkAlertSection_artwork
+        ...ArtworkSidebarBiddingClosedMessage_artwork
         sale {
           is_closed: isClosed
           startAt
+          internalID
+          extendedBiddingIntervalMinutes
         }
         saleArtwork {
           endAt
+          endedAt
+          extendedBiddingEndAt
+          lotID
         }
       }
     `,

@@ -54,7 +54,7 @@ export type ShippingTestQueryRawResponse = {
                 readonly node: ({
                     readonly artwork: ({
                         readonly slug: string;
-                        readonly processWithArtaShipping: boolean | null;
+                        readonly processWithArtsyShippingDomestic: boolean | null;
                         readonly artsyShippingInternational: boolean | null;
                         readonly pickup_available: boolean | null;
                         readonly onlyShipsDomestically: boolean | null;
@@ -68,10 +68,10 @@ export type ShippingTestQueryRawResponse = {
                         readonly edges: ReadonlyArray<({
                             readonly node: ({
                                 readonly id: string;
-                                readonly displayName: string;
                                 readonly isSelected: boolean;
                                 readonly price: string | null;
                                 readonly priceCents: number;
+                                readonly typeName: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
@@ -102,7 +102,7 @@ export type ShippingTestQueryRawResponse = {
                         readonly id: string;
                     }) | null;
                     readonly selectedShippingQuote: ({
-                        readonly displayName: string;
+                        readonly typeName: string;
                         readonly id: string;
                     }) | null;
                 }) | null;
@@ -196,7 +196,7 @@ export type ShippingTestQueryRawResponse = {
                 readonly node: ({
                     readonly artwork: ({
                         readonly slug: string;
-                        readonly processWithArtaShipping: boolean | null;
+                        readonly processWithArtsyShippingDomestic: boolean | null;
                         readonly artsyShippingInternational: boolean | null;
                         readonly pickup_available: boolean | null;
                         readonly onlyShipsDomestically: boolean | null;
@@ -210,10 +210,10 @@ export type ShippingTestQueryRawResponse = {
                         readonly edges: ReadonlyArray<({
                             readonly node: ({
                                 readonly id: string;
-                                readonly displayName: string;
                                 readonly isSelected: boolean;
                                 readonly price: string | null;
                                 readonly priceCents: number;
+                                readonly typeName: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
@@ -244,7 +244,7 @@ export type ShippingTestQueryRawResponse = {
                         readonly id: string;
                     }) | null;
                     readonly selectedShippingQuote: ({
-                        readonly displayName: string;
+                        readonly typeName: string;
                         readonly id: string;
                     }) | null;
                 }) | null;
@@ -417,10 +417,10 @@ fragment SavedAddresses_me on Me {
 fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
   node {
     id
-    displayName
     isSelected
     price(precision: 2)
     priceCents
+    typeName
   }
 }
 
@@ -485,7 +485,7 @@ fragment Shipping_order on CommerceOrder {
       node {
         artwork {
           slug
-          processWithArtaShipping
+          processWithArtsyShippingDomestic
           artsyShippingInternational
           pickup_available: pickupAvailable
           onlyShipsDomestically
@@ -536,7 +536,7 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
           }
         }
         selectedShippingQuote {
-          displayName
+          typeName
           id
         }
         id
@@ -679,20 +679,20 @@ v12 = {
   "name": "id",
   "storageKey": null
 },
-v13 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "displayName",
-  "storageKey": null
-},
-v14 = [
+v13 = [
   {
     "kind": "Literal",
     "name": "precision",
     "value": 2
   }
 ],
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "typeName",
+  "storageKey": null
+},
 v15 = {
   "alias": null,
   "args": null,
@@ -711,7 +711,7 @@ v17 = {
 },
 v18 = {
   "alias": null,
-  "args": (v14/*: any*/),
+  "args": (v13/*: any*/),
   "kind": "ScalarField",
   "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
@@ -725,7 +725,7 @@ v19 = {
 },
 v20 = {
   "alias": null,
-  "args": (v14/*: any*/),
+  "args": (v13/*: any*/),
   "kind": "ScalarField",
   "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
@@ -739,7 +739,7 @@ v21 = {
 },
 v22 = {
   "alias": null,
-  "args": (v14/*: any*/),
+  "args": (v13/*: any*/),
   "kind": "ScalarField",
   "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
@@ -748,7 +748,7 @@ v23 = [
   (v2/*: any*/),
   {
     "alias": null,
-    "args": (v14/*: any*/),
+    "args": (v13/*: any*/),
     "kind": "ScalarField",
     "name": "amount",
     "storageKey": "amount(precision:2)"
@@ -1010,7 +1010,7 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "processWithArtaShipping",
+                            "name": "processWithArtsyShippingDomestic",
                             "storageKey": null
                           },
                           {
@@ -1091,7 +1091,6 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v12/*: any*/),
-                                  (v13/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -1101,7 +1100,7 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v14/*: any*/),
+                                    "args": (v13/*: any*/),
                                     "kind": "ScalarField",
                                     "name": "price",
                                     "storageKey": "price(precision:2)"
@@ -1112,7 +1111,8 @@ return {
                                     "kind": "ScalarField",
                                     "name": "priceCents",
                                     "storageKey": null
-                                  }
+                                  },
+                                  (v14/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -1222,7 +1222,7 @@ return {
                         "name": "selectedShippingQuote",
                         "plural": false,
                         "selections": [
-                          (v13/*: any*/),
+                          (v14/*: any*/),
                           (v12/*: any*/)
                         ],
                         "storageKey": null
@@ -1283,7 +1283,7 @@ return {
           (v21/*: any*/),
           {
             "alias": null,
-            "args": (v14/*: any*/),
+            "args": (v13/*: any*/),
             "kind": "ScalarField",
             "name": "itemsTotal",
             "storageKey": "itemsTotal(precision:2)"
@@ -1463,7 +1463,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "013d506badc21fefb446c950230340c0",
+    "cacheID": "6daa68f30dd83a8a73ca74a3fd16dda3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1576,7 +1576,7 @@ return {
         "order.lineItems.edges.node.artwork.id": (v27/*: any*/),
         "order.lineItems.edges.node.artwork.onlyShipsDomestically": (v33/*: any*/),
         "order.lineItems.edges.node.artwork.pickup_available": (v33/*: any*/),
-        "order.lineItems.edges.node.artwork.processWithArtaShipping": (v33/*: any*/),
+        "order.lineItems.edges.node.artwork.processWithArtsyShippingDomestic": (v33/*: any*/),
         "order.lineItems.edges.node.artwork.shippingCountry": (v26/*: any*/),
         "order.lineItems.edges.node.artwork.shippingOrigin": (v26/*: any*/),
         "order.lineItems.edges.node.artwork.slug": (v27/*: any*/),
@@ -1614,8 +1614,8 @@ return {
         "order.lineItems.edges.node.artworkVersion.title": (v26/*: any*/),
         "order.lineItems.edges.node.id": (v27/*: any*/),
         "order.lineItems.edges.node.selectedShippingQuote": (v34/*: any*/),
-        "order.lineItems.edges.node.selectedShippingQuote.displayName": (v25/*: any*/),
         "order.lineItems.edges.node.selectedShippingQuote.id": (v27/*: any*/),
+        "order.lineItems.edges.node.selectedShippingQuote.typeName": (v25/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions": {
           "enumValues": null,
           "nullable": true,
@@ -1629,11 +1629,11 @@ return {
           "type": "CommerceShippingQuoteEdge"
         },
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node": (v34/*: any*/),
-        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.displayName": (v25/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.id": (v27/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.isSelected": (v28/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.price": (v26/*: any*/),
         "order.lineItems.edges.node.shippingQuoteOptions.edges.node.priceCents": (v29/*: any*/),
+        "order.lineItems.edges.node.shippingQuoteOptions.edges.node.typeName": (v25/*: any*/),
         "order.mode": {
           "enumValues": [
             "BUY",
@@ -1703,7 +1703,7 @@ return {
     },
     "name": "ShippingTestQuery",
     "operationKind": "query",
-    "text": "query ShippingTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Shipping_order\n    id\n  }\n  me {\n    ...Shipping_me\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    displayName\n    isSelected\n    price(precision: 2)\n    priceCents\n  }\n}\n\nfragment Shipping_me on Me {\n  name\n  email\n  id\n  ...SavedAddresses_me\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  requestedFulfillment {\n    __typename\n    ... on CommercePickup {\n      phoneNumber\n    }\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          processWithArtaShipping\n          artsyShippingInternational\n          pickup_available: pickupAvailable\n          onlyShipsDomestically\n          euShippingOrigin\n          shippingCountry\n          id\n        }\n        shippingQuoteOptions {\n          edges {\n            ...ShippingQuotes_shippingQuotes\n            node {\n              id\n              isSelected\n              priceCents\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query ShippingTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Shipping_order\n    id\n  }\n  me {\n    ...Shipping_me\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    isSelected\n    price(precision: 2)\n    priceCents\n    typeName\n  }\n}\n\nfragment Shipping_me on Me {\n  name\n  email\n  id\n  ...SavedAddresses_me\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n\nfragment Shipping_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  requestedFulfillment {\n    __typename\n    ... on CommercePickup {\n      phoneNumber\n    }\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n      phoneNumber\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          processWithArtsyShippingDomestic\n          artsyShippingInternational\n          pickup_available: pickupAvailable\n          onlyShipsDomestically\n          euShippingOrigin\n          shippingCountry\n          id\n        }\n        shippingQuoteOptions {\n          edges {\n            ...ShippingQuotes_shippingQuotes\n            node {\n              id\n              isSelected\n              priceCents\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...ArtworkSummaryItem_order\n  ...TransactionDetailsSummaryItem_order\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

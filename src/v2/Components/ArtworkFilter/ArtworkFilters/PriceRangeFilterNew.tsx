@@ -41,6 +41,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
   const [minValue, maxValue] = range
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
   const bars = getBarsFromAggregations(aggregations)
+  const isAllBarsEmpty = bars.every(bar => bar.count === 0)
 
   const filtersCount = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.priceRange
@@ -109,7 +110,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           />
         </Box>
 
-        <Spacer mx={2} />
+        <Spacer mr={2} />
 
         <Box flex={1}>
           <Text variant="xs" mb={0.5}>
@@ -127,15 +128,16 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Box mt={4} mx={`${RANGE_DOT_SIZE / 2}px`}>
-        {bars.length > 0 ? (
+      <Box mt={2} mx={`${RANGE_DOT_SIZE / 2}px`}>
+        {bars.length > 0 && !isAllBarsEmpty ? (
           <Histogram
             bars={bars}
             selectedRange={[sliderRange[0], sliderRange[1]]}
+            data-testid="PriceFilterHistogram"
           />
         ) : null}
 
-        <Spacer mb={4} />
+        <Spacer pb={2} />
 
         <Range
           min={defaultMinValue}
@@ -150,7 +152,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           ]}
         />
 
-        <Flex justifyContent="space-between" mt={2}>
+        <Flex justifyContent="space-between" mt={1}>
           <Text variant="xs" color="black60">
             ${defaultMinValue}
           </Text>

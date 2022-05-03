@@ -115,6 +115,8 @@ module.exports.beforeSocialAuth = provider =>
 
     if (provider === "apple") {
       options = {}
+    } else if (provider === "google") {
+      options = { scope: ["email", "profile"] }
     } else {
       options = { scope: "email" }
     }
@@ -130,6 +132,7 @@ module.exports.afterSocialAuth = provider =>
     // that we can do a better job explaining and redirecting for.
     const providerName = capitalize(provider)
     const linkingAccount = req.user != null
+
     passport.authenticate(provider)(req, res, function (err) {
       let msg
       if (

@@ -19,6 +19,8 @@ export type consignRoutes_uploadPhotosQueryResponse = {
         readonly locationCity: string | null;
         readonly locationCountry: string | null;
         readonly locationState: string | null;
+        readonly locationPostalCode: string | null;
+        readonly locationCountryCode: string | null;
         readonly year: string | null;
         readonly title: string | null;
         readonly medium: string | null;
@@ -63,6 +65,8 @@ query consignRoutes_uploadPhotosQuery(
     locationCity
     locationCountry
     locationState
+    locationPostalCode
+    locationCountryCode
     year
     title
     medium
@@ -167,80 +171,94 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "year",
+  "name": "locationPostalCode",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "locationCountryCode",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "medium",
+  "name": "year",
   "storageKey": null
 },
 v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "attributionClass",
+  "name": "title",
   "storageKey": null
 },
 v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "editionNumber",
+  "name": "medium",
   "storageKey": null
 },
 v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "editionSize",
+  "name": "attributionClass",
   "storageKey": null
 },
 v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "height",
+  "name": "editionNumber",
   "storageKey": null
 },
 v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
+  "name": "editionSize",
   "storageKey": null
 },
 v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "depth",
+  "name": "height",
   "storageKey": null
 },
 v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "dimensionsMetric",
+  "name": "width",
   "storageKey": null
 },
 v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "provenance",
+  "name": "depth",
   "storageKey": null
 },
 v19 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "dimensionsMetric",
+  "storageKey": null
+},
+v20 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "provenance",
+  "storageKey": null
+},
+v21 = {
   "alias": null,
   "args": null,
   "concreteType": "ConsignmentSubmissionCategoryAsset",
@@ -324,6 +342,8 @@ return {
           (v17/*: any*/),
           (v18/*: any*/),
           (v19/*: any*/),
+          (v20/*: any*/),
+          (v21/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -351,7 +371,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v19/*: any*/),
+          (v21/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -379,19 +399,21 @@ return {
           (v15/*: any*/),
           (v16/*: any*/),
           (v17/*: any*/),
-          (v18/*: any*/)
+          (v18/*: any*/),
+          (v19/*: any*/),
+          (v20/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ad18861ad60191131ddb2ea00737839a",
+    "cacheID": "df2b542efd7d7aedb8625cbe7991c4e6",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_uploadPhotosQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_uploadPhotosQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  id\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query consignRoutes_uploadPhotosQuery(\n  $id: ID!\n  $sessionID: String\n) {\n  submission(id: $id, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    id\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  id\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();

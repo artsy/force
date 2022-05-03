@@ -17,7 +17,7 @@ jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
-      location: { query: {} },
+      location: { query: {}, pathname: "" },
     },
   }),
 }))

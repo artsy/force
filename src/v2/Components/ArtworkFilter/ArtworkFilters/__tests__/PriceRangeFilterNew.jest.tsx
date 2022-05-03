@@ -25,10 +25,11 @@ describe("PriceRangeFilterNew", () => {
   let context: ArtworkFilterContextProps
 
   const renderPriceRangeFilter = (
-    props: PriceRangeFilterNewProps = { expanded: true }
+    props: PriceRangeFilterNewProps = { expanded: true },
+    contextProps = {}
   ) => {
     return render(
-      <ArtworkFilterContextProvider>
+      <ArtworkFilterContextProvider {...contextProps}>
         <PriceRangeFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
@@ -111,6 +112,40 @@ describe("PriceRangeFilterNew", () => {
     })
 
     expect(context.filters?.priceRange).toEqual("*-*")
+  })
+
+  it("should display histogram when some bars are filled", () => {
+    renderPriceRangeFilter(undefined, { aggregations })
+
+    expect(screen.getByTestId("PriceFilterHistogram")).toBeInTheDocument()
+  })
+
+  it("should hide histogram when all bars are empty", () => {
+    const emptyBarsAggregations: Aggregations = [
+      {
+        slice: "SIMPLE_PRICE_HISTOGRAM",
+        counts: [
+          {
+            name: "0",
+            value: "0",
+            count: 0,
+          },
+          {
+            name: "50000",
+            value: "50000",
+            count: 0,
+          },
+          {
+            name: "2000",
+            value: "2000",
+            count: 0,
+          },
+        ],
+      },
+    ]
+    renderPriceRangeFilter(undefined, { aggregations: emptyBarsAggregations })
+
+    expect(screen.queryByTestId("PriceFilterHistogram")).not.toBeInTheDocument()
   })
 
   describe("the `expanded` prop", () => {

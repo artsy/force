@@ -1,5 +1,5 @@
 import { CSSGrid, Text } from "@artsy/palette"
-import { CollectionsHubsNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsNav_marketingHubCollections.graphql"
+import { CollectionsHubsNav_marketingCollections } from "v2/__generated__/CollectionsHubsNav_marketingCollections.graphql"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { FC } from "react"
@@ -8,7 +8,7 @@ import { resize } from "v2/Utils/resizer"
 import { ImageLink } from "./ImageLink"
 
 interface CollectionsHubsNavProps {
-  marketingHubCollections: CollectionsHubsNav_marketingHubCollections
+  marketingCollections: CollectionsHubsNav_marketingCollections
 }
 
 export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
@@ -24,7 +24,7 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
       ]}
       gridGap={20}
     >
-      {props.marketingHubCollections.slice(0, 6).map(hub => (
+      {props.marketingCollections.slice(0, 6).map(hub => (
         <ImageLink
           to={`/collection/${hub.slug}`}
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -54,12 +54,9 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
 export const CollectionsHubsNavFragmentContainer = createFragmentContainer(
   CollectionsHubsNav,
   {
-    marketingHubCollections: graphql`
-      fragment CollectionsHubsNav_marketingHubCollections on MarketingCollection
+    marketingCollections: graphql`
+      fragment CollectionsHubsNav_marketingCollections on MarketingCollection
         @relay(plural: true) {
-        # TODO: Need to add this field back to the MP schema. Even if it's not a
-        #       Node ID /yet/, it can still be used for relay store purposes.
-        # id
         slug
         title
         thumbnail

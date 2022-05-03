@@ -47,14 +47,14 @@ export function useFeatureVariant(featureName: string): Variant | null {
   return variant
 }
 
-export function useTrackVariantView({
+export function useTrackFeatureVariant({
   experimentName,
   variantName,
   payload,
 }: VariantTrackingProperties) {
   const router = useRouter()
 
-  const trackVariantView = () => {
+  const trackFeatureVariant = () => {
     // HACK: Temporary hack while we refactor useAnalyticsContext
     // to update upon page navigation.
     const path = router.match.location.pathname
@@ -64,7 +64,7 @@ export function useTrackVariantView({
 
     const trackFeatureView = shouldTrack(experimentName, variantName)
 
-    if (trackFeatureView) {
+    if (trackFeatureView && variantName !== "disabled") {
       // HACK: We are using window.analytics.track over trackEvent from useTracking because
       // the trackEvent wasn't behaving as expected, it was never firing the event and
       // moving to using the solution below fixed the issue.
@@ -79,7 +79,7 @@ export function useTrackVariantView({
     }
   }
 
-  return { trackVariantView }
+  return { trackFeatureVariant }
 }
 
 export function shouldTrack(featureName: string, variantName: string): boolean {

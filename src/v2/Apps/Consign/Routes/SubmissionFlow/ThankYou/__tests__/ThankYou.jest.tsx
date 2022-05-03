@@ -46,15 +46,10 @@ describe("ThankYou page", () => {
     })
   })
 
-  describe("when ff enabled and user is logged in", () => {
+  describe("when user is logged in", () => {
     beforeEach(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
-          featureFlags: {
-            swa_my_collection: {
-              flagEnabled: true,
-            },
-          },
           isLoggedIn: true,
         }
       })
@@ -86,50 +81,11 @@ describe("ThankYou page", () => {
     })
   })
 
-  describe("when ff enabled or disabled and user is not logged in", () => {
+  describe("when user is not logged in", () => {
     beforeEach(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
           isLoggedIn: false,
-        }
-      })
-    })
-    it("renders correctly", () => {
-      const wrapper = mount(<ThankYou />)
-      const text = wrapper.text()
-
-      expect(text).toContain("Thank you for submitting a work")
-      expect(text).toContain(
-        "We’ll email you within 1–3 business days to let you know the status of your submission."
-      )
-      expect(text).toContain(
-        "In the meantime, feel free to submit another work—and benefit from Artsy’s low fees, informed pricing, and multiple selling options."
-      )
-
-      expect(
-        wrapper.find("button[data-test-id='submit-another-work']").text()
-      ).toContain("Submit Another Work")
-
-      expect(
-        wrapper.find("button[data-test-id='go-to-artsy-homepage']").text()
-      ).toContain("Back to Artsy Homepage")
-
-      expect(text).toContain("View My Collection on the Artsy App")
-
-      expect(wrapper.find("SoldRecentlyQueryRenderer").length).toBe(1)
-      expect(wrapper.find("FAQ").length).toBe(1)
-    })
-  })
-
-  describe("when ff disabled", () => {
-    beforeEach(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => {
-        return {
-          featureFlags: {
-            swa_my_collection: {
-              flagEnabled: false,
-            },
-          },
         }
       })
     })

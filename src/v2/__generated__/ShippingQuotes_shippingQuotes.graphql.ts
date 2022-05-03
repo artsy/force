@@ -7,10 +7,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ShippingQuotes_shippingQuotes = ReadonlyArray<{
     readonly node: {
         readonly id: string;
-        readonly displayName: string;
         readonly isSelected: boolean;
         readonly price: string | null;
         readonly priceCents: number;
+        readonly typeName: string;
     } | null;
     readonly " $refType": "ShippingQuotes_shippingQuotes";
 }>;
@@ -49,13 +49,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "displayName",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "isSelected",
           "storageKey": null
         },
@@ -78,6 +71,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "priceCents",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "typeName",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -86,5 +86,5 @@ const node: ReaderFragment = {
   "type": "CommerceShippingQuoteEdge",
   "abstractKey": null
 };
-(node as any).hash = '1dabc2ba10cf7dd51b73926fb1d4c99f';
+(node as any).hash = 'c15399ea645f153cad7c5409ad44fa49';
 export default node;

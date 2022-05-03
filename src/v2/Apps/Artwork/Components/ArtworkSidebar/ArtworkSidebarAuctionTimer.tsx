@@ -2,7 +2,7 @@ import { Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionTimerFragmentContainer } from "v2/Components/AuctionTimer"
-import { LotTimerFragmentContainer } from "v2/Components/LotTimer"
+import { LotTimerFragmentContainer } from "./LotTimer"
 import { lotIsClosed } from "../../Utils/lotIsClosed"
 import { ArtworkSidebarAuctionTimer_artwork } from "v2/__generated__/ArtworkSidebarAuctionTimer_artwork.graphql"
 
@@ -20,7 +20,7 @@ export const ArtworkSidebarAuctionTimer: React.FC<ArtworkSidebarAuctionTimerProp
       {sale &&
         saleArtwork &&
         !lotIsClosed(sale, saleArtwork) &&
-        (sale?.cascadingEndTimeInterval ? (
+        (sale?.cascadingEndTimeIntervalMinutes ? (
           <>
             <Spacer mt={2} />
             <LotTimerFragmentContainer saleArtwork={saleArtwork} />
@@ -42,7 +42,7 @@ export const ArtworkSidebarAuctionTimerFragmentContainer = createFragmentContain
       fragment ArtworkSidebarAuctionTimer_artwork on Artwork {
         internalID
         sale {
-          cascadingEndTimeInterval
+          cascadingEndTimeIntervalMinutes
           isClosed
           ...AuctionTimer_sale
           startAt

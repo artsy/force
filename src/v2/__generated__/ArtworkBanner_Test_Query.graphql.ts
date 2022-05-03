@@ -35,12 +35,7 @@ fragment ArtworkBanner_artwork on Artwork {
     isBenefit
     isGalleryAuction
     coverImage {
-      cropped(width: 30, height: 30, version: "square") {
-        src
-        srcSet
-        width
-        height
-      }
+      url
     }
     id
   }
@@ -55,12 +50,7 @@ fragment ArtworkBanner_artwork on Artwork {
       href
       profile {
         icon {
-          cropped(width: 30, height: 30, version: "square") {
-            src
-            srcSet
-            width
-            height
-          }
+          url
         }
         id
       }
@@ -70,12 +60,7 @@ fragment ArtworkBanner_artwork on Artwork {
       href
       status
       thumbnail: coverImage {
-        cropped(width: 30, height: 30, version: "square") {
-          src
-          srcSet
-          width
-          height
-        }
+        url
       }
     }
     ... on Node {
@@ -111,58 +96,10 @@ v2 = {
 v3 = [
   {
     "alias": null,
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "height",
-        "value": 30
-      },
-      {
-        "kind": "Literal",
-        "name": "version",
-        "value": "square"
-      },
-      {
-        "kind": "Literal",
-        "name": "width",
-        "value": 30
-      }
-    ],
-    "concreteType": "CroppedImageUrl",
-    "kind": "LinkedField",
-    "name": "cropped",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "src",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "srcSet",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "width",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "height",
-        "storageKey": null
-      }
-    ],
-    "storageKey": "cropped(height:30,version:\"square\",width:30)"
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
   }
 ],
 v4 = {
@@ -197,18 +134,6 @@ v8 = {
   "type": "Image"
 },
 v9 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "CroppedImageUrl"
-},
-v10 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Int"
-},
-v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -410,7 +335,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "889db42b90aa72e9032f34dfc83cfe31",
+    "cacheID": "58001e65a0b8b85a7c7500e6d5fe5e1e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -438,19 +363,11 @@ return {
           "type": "Profile"
         },
         "artwork.context.profile.icon": (v8/*: any*/),
-        "artwork.context.profile.icon.cropped": (v9/*: any*/),
-        "artwork.context.profile.icon.cropped.height": (v10/*: any*/),
-        "artwork.context.profile.icon.cropped.src": (v5/*: any*/),
-        "artwork.context.profile.icon.cropped.srcSet": (v5/*: any*/),
-        "artwork.context.profile.icon.cropped.width": (v10/*: any*/),
+        "artwork.context.profile.icon.url": (v6/*: any*/),
         "artwork.context.profile.id": (v7/*: any*/),
         "artwork.context.status": (v6/*: any*/),
         "artwork.context.thumbnail": (v8/*: any*/),
-        "artwork.context.thumbnail.cropped": (v9/*: any*/),
-        "artwork.context.thumbnail.cropped.height": (v10/*: any*/),
-        "artwork.context.thumbnail.cropped.src": (v5/*: any*/),
-        "artwork.context.thumbnail.cropped.srcSet": (v5/*: any*/),
-        "artwork.context.thumbnail.cropped.width": (v10/*: any*/),
+        "artwork.context.thumbnail.url": (v6/*: any*/),
         "artwork.id": (v7/*: any*/),
         "artwork.partner": {
           "enumValues": null,
@@ -467,20 +384,16 @@ return {
           "type": "Sale"
         },
         "artwork.sale.coverImage": (v8/*: any*/),
-        "artwork.sale.coverImage.cropped": (v9/*: any*/),
-        "artwork.sale.coverImage.cropped.height": (v10/*: any*/),
-        "artwork.sale.coverImage.cropped.src": (v5/*: any*/),
-        "artwork.sale.coverImage.cropped.srcSet": (v5/*: any*/),
-        "artwork.sale.coverImage.cropped.width": (v10/*: any*/),
+        "artwork.sale.coverImage.url": (v6/*: any*/),
         "artwork.sale.id": (v7/*: any*/),
-        "artwork.sale.isAuction": (v11/*: any*/),
-        "artwork.sale.isBenefit": (v11/*: any*/),
-        "artwork.sale.isGalleryAuction": (v11/*: any*/)
+        "artwork.sale.isAuction": (v9/*: any*/),
+        "artwork.sale.isBenefit": (v9/*: any*/),
+        "artwork.sale.isGalleryAuction": (v9/*: any*/)
       }
     },
     "name": "ArtworkBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          url\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();

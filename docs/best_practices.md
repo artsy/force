@@ -22,6 +22,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Naming, imports and exports](#naming-imports-and-exports)
 - [Avoid implicit returns on React components](#avoid-implicit-returns-on-react-components)
 - [Write unit tests for new components](#write-unit-tests-for-new-components)
+  - [Manipulating time in unit tests](#manipulating-time-in-unit-tests)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
 - [Adding global script tags](#adding-global-script-tags)
 - [Tracking events](#tracking-events)
@@ -186,8 +187,12 @@ Some top-level notes:
 
 Here are some great examples of what tests and test coverage should look like.
 
-- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/AuctionDetails/__tests__/RegisterButton.jest.tsx#L1)
+- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
 - [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
+
+#### Manipulating time in unit tests
+
+If you're attempting to write a test that relies on time-related code, it can be handy to manipulate [Luxon's Settings module](https://moment.github.io/luxon/api-docs/index.html#settings) rather than relying on the test environment to behave as you expect ([see example](https://github.com/artsy/force/blob/0c275707c4dc9c467593d8d08bcc88662c925389/src/v2/Components/__tests__/LotTimer.jest.tsx#L103-L105)).
 
 ### Add smoke tests for new routes
 

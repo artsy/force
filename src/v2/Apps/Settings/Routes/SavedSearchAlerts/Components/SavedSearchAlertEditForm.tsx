@@ -15,8 +15,8 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
 import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
-import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { EditAlertEntity } from "../types"
+import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -36,7 +36,11 @@ import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/s
 import { SavedSearchAlertPills } from "v2/Components/SavedSearchAlert/Components/SavedSearchAlertPills"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
+import {
+  convertLabelsToPills,
+  LabelEntity,
+} from "v2/Components/SavedSearchAlert/Utils/convertLabelsToPills"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -51,8 +55,9 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 interface SavedSearchAlertEditFormProps {
   me: SavedSearchAlertEditForm_me
   artist: SavedSearchAlertEditForm_artist
-  artworksConnection: SavedSearchAlertEditForm_artworksConnection
+  artworksConnection?: SavedSearchAlertEditForm_artworksConnection | null
   editAlertEntity: EditAlertEntity
+  shouldFetchLabelsFromMetaphysics?: boolean
   onDeleteClick: () => void
   onCompleted: () => void
 }
@@ -60,6 +65,7 @@ interface SavedSearchAlertEditFormProps {
 const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   me,
   editAlertEntity,
+  shouldFetchLabelsFromMetaphysics,
   onDeleteClick,
   onCompleted,
 }) => {
@@ -73,6 +79,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     criteria,
     isCriteriaChanged,
     removeCriteriaValue,
+    removePill,
   } = useSavedSearchAlertContext()
 
   const initialValues: SavedSearchAleftFormValues = {
@@ -81,7 +88,11 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     email: userAlertSettings.email,
   }
 
-  const removePill = (pill: FilterPill) => {
+  const handleRemovePill = (pill: FilterPill) => {
+    if (shouldFetchLabelsFromMetaphysics) {
+      return removePill(pill)
+    }
+
     if (pill.isDefault) {
       return
     }
@@ -162,7 +173,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 <Flex flexWrap="wrap" mx={-0.5}>
                   <SavedSearchAlertPills
                     items={pills}
-                    onDeletePress={removePill}
+                    onDeletePress={handleRemovePill}
                   />
                 </Flex>
               </Box>
@@ -237,11 +248,15 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 }
 
 const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
-  const { artworksConnection, artist, me } = props
+  const {
+    artworksConnection,
+    artist,
+    me,
+    shouldFetchLabelsFromMetaphysics,
+  } = props
   const { savedSearch } = me
-  const aggregations = artworksConnection.aggregations as Aggregations
+  const aggregations = artworksConnection?.aggregations as Aggregations
   const criteria = getAllowedSearchCriteria(savedSearch as any)
-  const metric = getSupportedMetric(me.lengthUnitPreference)
   const entity: SavedSearchEntity = {
     placeholder: artist.name ?? "",
     artists: [
@@ -260,12 +275,20 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
     },
   }
 
+  let labels: LabelEntity[] | undefined
+  let pills: FilterPill[] | undefined
+
+  if (shouldFetchLabelsFromMetaphysics) {
+    labels = (savedSearch?.labels as LabelEntity[]) ?? []
+    pills = convertLabelsToPills(labels)
+  }
+
   return (
     <SavedSearchAlertContextProvider
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
-      metric={metric}
+      initialPills={pills}
     >
       <SavedSearchAlertEditForm {...props} />
     </SavedSearchAlertContextProvider>
@@ -277,8 +300,10 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
   {
     me: graphql`
       fragment SavedSearchAlertEditForm_me on Me
-        @argumentDefinitions(savedSearchId: { type: "ID" }) {
-        lengthUnitPreference
+        @argumentDefinitions(
+          savedSearchId: { type: "ID" }
+          withAggregations: { type: "Boolean!" }
+        ) {
         savedSearch(id: $savedSearchId) {
           internalID
           acquireable
@@ -289,6 +314,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
           colors
           dimensionRange
           sizes
+          width
           height
           inquireableOnly
           internalID
@@ -303,7 +329,11 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
             email
             push
           }
-          width
+          labels @skip(if: $withAggregations) {
+            field
+            value
+            displayValue
+          }
         }
       }
     `,
@@ -330,9 +360,14 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
 )
 
 const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
-  query SavedSearchAlertEditFormQuery($id: ID!, $artistId: String!) {
+  query SavedSearchAlertEditFormQuery(
+    $id: ID!
+    $artistId: String!
+    $withAggregations: Boolean!
+  ) {
     me {
-      ...SavedSearchAlertEditForm_me @arguments(savedSearchId: $id)
+      ...SavedSearchAlertEditForm_me
+        @arguments(savedSearchId: $id, withAggregations: $withAggregations)
     }
     artist(id: $artistId) {
       ...SavedSearchAlertEditForm_artist
@@ -348,7 +383,7 @@ const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
         PARTNER
         COLOR
       ]
-    ) {
+    ) @include(if: $withAggregations) {
       ...SavedSearchAlertEditForm_artworksConnection
     }
   }
@@ -359,16 +394,38 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
   onDeleteClick,
   onCompleted,
 }) => {
+  const shouldFetchLabelsFromMetaphysics = useFeatureFlag(
+    "force-fetch-alert-labels-from-metaphysics"
+  )
+
   return (
     <SystemQueryRenderer<SavedSearchAlertEditFormQuery>
       query={SAVED_SEARCH_ALERT_EDIT_FORM_QUERY}
-      variables={{ id: editAlertEntity.id, artistId: editAlertEntity.artistId }}
+      variables={{
+        id: editAlertEntity.id,
+        artistId: editAlertEntity.artistId,
+        withAggregations: !shouldFetchLabelsFromMetaphysics,
+      }}
       placeholder={<SavedSearchAlertEditFormPlaceholder />}
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
           return null
+        }
+
+        if (shouldFetchLabelsFromMetaphysics && props?.artist && props.me) {
+          return (
+            <SavedSearchAlertEditFormFragmentContainer
+              me={props.me}
+              artist={props.artist!}
+              editAlertEntity={editAlertEntity}
+              artworksConnection={null}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+              shouldFetchLabelsFromMetaphysics={true}
+            />
+          )
         }
 
         if (props?.artist && props.artworksConnection && props.me) {

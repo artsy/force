@@ -108,13 +108,6 @@ if options.marketo && !sd.THIRD_PARTIES_DISABLED
     }
     }
 
-//- Disable Parsely on non-article pages before loading Segment
-if !sd.THIRD_PARTIES_DISABLED
-  script( type="text/javascript" ).
-    if (!location.pathname.match(new RegExp("#{sd.EDITORIAL_PATHS}"))){
-      window.PARSELY = {autotrack: false}
-    }
-
 //- Segment.io
 if !sd.THIRD_PARTIES_DISABLED
   script( type="text/javascript" ).
@@ -140,10 +133,6 @@ if !sd.THIRD_PARTIES_DISABLED
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other' && !sd.THIRD_PARTIES_DISABLED
   script( src=asset('/assets/legacy-analytics.js') )
-
-//- Prefetch links on hover. See: https://instant.page/
-if sd.ENABLE_INSTANT_PAGE && !sd.THIRD_PARTIES_DISABLED
-  include instant-page
 
 //- Google reCAPTCHA
 if options.grecaptcha && sd.RECAPTCHA_KEY && !sd.EIGEN && !sd.THIRD_PARTIES_DISABLED

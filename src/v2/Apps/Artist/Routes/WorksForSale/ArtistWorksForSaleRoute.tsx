@@ -8,7 +8,7 @@ import { ArtistSeriesRailFragmentContainer } from "v2/Components/ArtistSeriesRai
 import { ContextModule } from "@artsy/cohesion"
 import { computeTitle } from "v2/Apps/Artist/Utils/computeTitle"
 import { Title } from "react-head"
-import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtistWorksForSaleRouteProps {
@@ -26,7 +26,7 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     true
   )
   const { match } = useRouter()
-  const { scrollTo, isReadyForUse } = useScrollTo({
+  const { scrollTo, isReadyForUse } = useScrollToElement({
     selectorOrRef: "#jump--artworkFilter",
     behavior: "smooth",
     offset: 10,

@@ -1,19 +1,11 @@
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  Button,
-  Flex,
-  Message,
-  Modal,
-  Separator,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Button, Flex, ModalDialog, Separator, Spacer } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-
+import { OwnerType } from "@artsy/cohesion"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { CollapsibleArtworkDetailsFragmentContainer } from "./CollapsibleArtworkDetails"
 import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
@@ -52,37 +44,33 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
     }
   }
 
-  return (
-    <Modal
-      show={show}
+  return show ? (
+    <ModalDialog
       onClose={closeModal}
-      title="Confirm Artwork"
-      FixedButton={
+      title="Select edition set"
+      footer={
         <Flex flexGrow={1}>
           <Button variant="secondaryOutline" flexGrow={1} onClick={closeModal}>
             Cancel
           </Button>
-          <Spacer m={2} />
+          <Spacer m={1} />
           <ConfirmArtworkButtonFragmentContainer
             artwork={artwork}
             disabled={!!isEdition && !selectedEdition}
             conversationID={conversationID}
             editionSetID={selectedEdition || null}
+            trackingEvent={{
+              context_module: OwnerType.conversationMakeOfferConfirmArtwork,
+              context_owner_type: OwnerType.conversation,
+            }}
           />
         </Flex>
       }
     >
-      <Text color="black60" variant="md" mb={2}>
-        Make sure the artwork below matches the intended work you’re making an
-        offer on.
-      </Text>
       <CollapsibleArtworkDetailsFragmentContainer artwork={artwork} />
-      <Separator />
+      <Separator mb={2} />
       {!!isEdition && editionSets?.length && (
         <Flex flexDirection="column">
-          <Text mx={2} mt={2} mb={1}>
-            Which edition are you interested in?
-          </Text>
           {editionSets?.map(edition => (
             <EditionSelectBoxFragmentContainer
               edition={edition!}
@@ -93,12 +81,8 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
           ))}
         </Flex>
       )}
-      <Message mt={2} mx={2}>
-        Making an offer doesn’t guarantee you the work, as the seller might be
-        receiving competing offers.
-      </Message>
-    </Modal>
-  )
+    </ModalDialog>
+  ) : null
 }
 
 export const ConfirmArtworkModalFragmentContainer = createFragmentContainer(

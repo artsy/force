@@ -4,9 +4,11 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type SavedSearchesSortEnum = "CREATED_AT_DESC" | "NAME_ASC" | "%future added value";
 export type SavedSearchAlertsAppRefetchQueryVariables = {
     after?: string | null;
     count: number;
+    sort?: SavedSearchesSortEnum | null;
 };
 export type SavedSearchAlertsAppRefetchQueryResponse = {
     readonly me: {
@@ -24,9 +26,10 @@ export type SavedSearchAlertsAppRefetchQuery = {
 query SavedSearchAlertsAppRefetchQuery(
   $after: String
   $count: Int!
+  $sort: SavedSearchesSortEnum
 ) {
   me {
-    ...SavedSearchAlertsApp_me_2QE1um
+    ...SavedSearchAlertsApp_me_3P8D4U
     id
   }
 }
@@ -43,8 +46,8 @@ fragment SavedSearchAlertListItem_item on SearchCriteria {
   }
 }
 
-fragment SavedSearchAlertsApp_me_2QE1um on Me {
-  savedSearchesConnection(first: $count, after: $after) {
+fragment SavedSearchAlertsApp_me_3P8D4U on Me {
+  savedSearchesConnection(first: $count, after: $after, sort: $sort) {
     edges {
       node {
         internalID
@@ -72,6 +75,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "count"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "sort"
   }
 ],
 v1 = {
@@ -79,13 +87,19 @@ v1 = {
   "name": "after",
   "variableName": "after"
 },
-v2 = [
+v2 = {
+  "kind": "Variable",
+  "name": "sort",
+  "variableName": "sort"
+},
+v3 = [
   (v1/*: any*/),
   {
     "kind": "Variable",
     "name": "first",
     "variableName": "count"
-  }
+  },
+  (v2/*: any*/)
 ];
 return {
   "fragment": {
@@ -109,7 +123,8 @@ return {
                 "kind": "Variable",
                 "name": "count",
                 "variableName": "count"
-              }
+              },
+              (v2/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "SavedSearchAlertsApp_me"
@@ -137,7 +152,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "SearchCriteriaConnection",
             "kind": "LinkedField",
             "name": "savedSearchesConnection",
@@ -266,8 +281,10 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
-            "filters": null,
+            "args": (v3/*: any*/),
+            "filters": [
+              "sort"
+            ],
             "handle": "connection",
             "key": "SavedSearchAlertsApp_savedSearchesConnection",
             "kind": "LinkedHandle",
@@ -286,14 +303,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "57b584f1bc01f5542ef29091d76361c1",
+    "cacheID": "f22322436464e7d3f0d87b7696464add",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  savedSearchesConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: SavedSearchesSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  savedSearchesConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '67fb652d034bc04efb73c22b2566f3f2';
+(node as any).hash = 'cc3a87efafde010064adaeb79d565e4c';
 export default node;

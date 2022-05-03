@@ -9,7 +9,6 @@ export type Conversation_conversation = {
     readonly id: string;
     readonly internalID: string | null;
     readonly from: {
-        readonly name: string;
         readonly email: string;
     };
     readonly to: {
@@ -96,24 +95,17 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "isOfferable",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -158,7 +150,6 @@ return {
       "name": "from",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -177,7 +168,13 @@ return {
       "name": "to",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -369,7 +366,7 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                (v3/*: any*/)
+                (v2/*: any*/)
               ],
               "storageKey": null
             },
@@ -414,13 +411,13 @@ return {
           "name": "item",
           "plural": false,
           "selections": [
-            (v3/*: any*/),
+            (v2/*: any*/),
             {
               "kind": "InlineFragment",
               "selections": [
                 (v0/*: any*/),
+                (v3/*: any*/),
                 (v4/*: any*/),
-                (v5/*: any*/),
                 (v1/*: any*/)
               ],
               "type": "Artwork",
@@ -445,10 +442,10 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
+                (v3/*: any*/),
                 (v4/*: any*/),
-                (v5/*: any*/),
                 (v1/*: any*/),
-                (v3/*: any*/)
+                (v2/*: any*/)
               ],
               "type": "Artwork",
               "abstractKey": null
@@ -469,5 +466,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a86f3c8c683ef44a18578820c358f547';
+(node as any).hash = '84aaf500d6c49c45522a2ffe82a8ecb7';
 export default node;

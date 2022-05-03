@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   Avatar,
   Box,
@@ -7,202 +6,143 @@ import {
   Text,
   GridColumns,
   Column,
+  Join,
+  Separator,
 } from "@artsy/palette"
-import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { Media } from "v2/Utils/Responsive"
-import { crop } from "v2/Utils/resizer"
-import { Meta, Title } from "react-head"
+import { MetaTags } from "v2/Components/MetaTags"
+import { FC } from "react"
+import { cropped } from "v2/Utils/resized"
 
-export const MeetTheSpecialistsIndex: React.FC = () => {
-  const resizeImage = (
-    url: string,
-    width = 100,
-    height = 100,
-    quality = 100,
-    convert_to = "jpg"
-  ) =>
-    crop(url, {
-      width,
-      height,
-      quality,
-      convert_to,
-    })
-
+export const MeetTheSpecialistsIndex: FC = () => {
   return (
     <>
-      <Title>Art Advisory, Specialists, and Collector Services | Artsy</Title>
-      <Meta
-        name="description"
-        content="Whether you’re seeking a specific work for your collection or wish to sell, Artsy’s globe-spanning team is ready to source, sell, advise, and research on your behalf. Contact a specialist today."
+      <MetaTags
+        title="Art Advisory, Specialists, and Collector Services | Artsy"
+        description="Whether you’re seeking a specific work for your collection or wish to sell, Artsy’s globe-spanning team is ready to source, sell, advise, and research on your behalf. Contact a specialist today."
+        pathname="/meet-the-specialists"
       />
-      <Box mt={4}>
-        <Text as="h1" variant={["xl", "xxl"]}>
-          Meet the Specialists
-        </Text>
-        <Spacer mb={2} />
-        <Text color="black60" variant={["lg", "xl"]} width={["100%", "50%"]}>
-          Whether you’re seeking a specific work for your growing collection or
-          wish to sell, our globe-spanning team is ready to source, sell,
-          advise, and research on your behalf.
-        </Text>
-      </Box>
-      <Box mt={2}>
-        <Text variant="xs">
-          Have a question about Artsy? Check out our{" "}
-          <RouterLink to={"https://support.artsy.net"}>help center</RouterLink>{" "}
-          or email <a href="mailto:support@artsy.net">support@artsy.net</a>.
-        </Text>
 
-        <Text variant={"xs"}>
-          Have a question about bidding on Artsy? Email{" "}
-          <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
-        </Text>
+      <Spacer mt={4} />
 
-        <Text variant={"xs"}>
-          Have a question about an existing order or offer? Email{" "}
-          <a href="mailto:specialist@artsy.net">orders@artsy.net</a>.
-        </Text>
-      </Box>
-      <Spacer mb={12} />
+      <Text as="h1" variant={["xl", "xxl"]}>
+        Meet the Specialists
+      </Text>
+
+      <Spacer mt={2} />
+
       <GridColumns>
-        <Column span={4} start={1}>
-          <Text variant={["xl", "xxl"]}>Advisory and Private Sales</Text>
-        </Column>
+        <Column span={8}>
+          <Text color="black60" variant={["lg", "xl"]}>
+            Whether you’re seeking a specific work for your growing collection
+            or wish to sell, our globe-spanning team is ready to source, sell,
+            advise, and research on your behalf.
+          </Text>
 
-        <Media lessThan="md">
-          <Spacer mb={4} />
-        </Media>
+          <Spacer mt={2} />
 
-        <Column start={5}>
-          {ADVISORY_SPECIALISTS.map(specialist => (
-            <Box width="100%">
-              <Flex flexDirection={["column", "row"]}>
-                <Avatar
-                  size="md"
-                  src={resizeImage(specialist.photo.url!)!}
-                  mr={[0, 2]}
-                  mb={[2, 0]}
-                />
-
-                <Flex flexDirection="column">
-                  <Text variant="lg">{specialist.name}</Text>
-                  <Text variant="md">{specialist.title}</Text>
-                  <Text variant="md" color="black60">
-                    {specialist.location}
-                  </Text>
-                  <Spacer my={1} />
-                  <RouterLink to={`mailto:${specialist.email}`}>
-                    {specialist.email}
-                  </RouterLink>
-                  <Spacer mb={6} />
-                </Flex>
-              </Flex>
-            </Box>
-          ))}
+          <Text variant="xs">
+            Have a question about Artsy? Check out our{" "}
+            <a href="https://support.artsy.net">help center</a> or email{" "}
+            <a href="mailto:support@artsy.net">support@artsy.net</a>.
+            <br />
+            Have a question about bidding on Artsy? Email{" "}
+            <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+            <br />
+            Have a question about an existing order or offer? Email{" "}
+            <a href="mailto:specialist@artsy.net">orders@artsy.net</a>.
+          </Text>
         </Column>
       </GridColumns>
 
-      <GridColumns>
-        <Column span={4} start={1}>
-          <Text variant={["xl", "xxl"]}>Auctions</Text>
-        </Column>
+      <Spacer mt={12} />
 
-        <Spacer mb={4} />
+      <Join separator={<Separator my={12} />}>
+        {SPECIALISTS.map(({ title, specialists }) => {
+          return (
+            <GridColumns gridRowGap={4}>
+              <Column span={4}>
+                <Text variant="xl">{title}</Text>
+              </Column>
 
-        <Column start={5}>
-          {AUCTION_SPECIALISTS.map((specialist, i) => (
-            <Box width="100%">
-              <Flex flexDirection={["column", "row"]}>
-                <Avatar
-                  size="md"
-                  src={resizeImage(specialist.photo.url!)!}
-                  mr={[0, 2]}
-                  mb={[2, 0]}
-                />
+              <Column span={8}>
+                <Join separator={<Spacer mt={4} />}>
+                  {specialists.map(specialist => (
+                    <Flex key={specialist.email}>
+                      <Avatar
+                        size="md"
+                        lazyLoad
+                        mr={2}
+                        flexShrink={0}
+                        {...cropped(specialist.image, {
+                          width: 100,
+                          height: 100,
+                        })}
+                      />
 
-                <Flex flexDirection="column">
-                  <Text variant="lg">{specialist.name}</Text>
-                  <Text variant="md">{specialist.title}</Text>
-                  <Text variant="md" color="black60">
-                    {specialist.location}
-                  </Text>
-                  <Spacer my={10} />
-                  <RouterLink to={`mailto:${specialist.email}`}>
-                    {specialist.email}
-                  </RouterLink>
-                  <Spacer mb={6} />
-                </Flex>
-              </Flex>
-            </Box>
-          ))}
-        </Column>
-      </GridColumns>
+                      <Box>
+                        <Text variant="lg">{specialist.name}</Text>
 
-      <GridColumns>
-        <Column span={4} start={1}>
-          <Text variant={["xl", "xxl"]}>Collector Services</Text>
-        </Column>
+                        <Text variant="md">{specialist.title}</Text>
 
-        <Spacer mb={4} />
+                        <Text variant="md" color="black60">
+                          {specialist.location}
+                        </Text>
 
-        <Column start={5}>
-          {COLLECTOR_SERVICES_SPECIALISTS.map((specialist, i) => (
-            <Box width="100%">
-              <Flex flexDirection={["column", "row"]}>
-                <Avatar
-                  size="md"
-                  src={resizeImage(specialist.photo.url!)!}
-                  mr={[0, 2]}
-                  mb={[2, 0]}
-                />
+                        <Spacer mt={2} />
 
-                <Flex flexDirection="column">
-                  <Text variant="lg">{specialist.name}</Text>
-                  <Text variant="md">{specialist.title}</Text>
-                  <Text variant="md" color="black60">
-                    {specialist.location}
-                  </Text>
-                  <Spacer my={10} />
-                  <RouterLink to={`mailto:${specialist.email}`}>
-                    {specialist.email}
-                  </RouterLink>
-                  <Spacer mb={6} />
-                </Flex>
-              </Flex>
-            </Box>
-          ))}
-        </Column>
-      </GridColumns>
+                        <Text
+                          variant="md"
+                          as="a"
+                          // @ts-ignore
+                          href={`mailto:${specialist.email}`}
+                        >
+                          {specialist.email}
+                        </Text>
+                      </Box>
+                    </Flex>
+                  ))}
+                </Join>
+              </Column>
+            </GridColumns>
+          )
+        })}
+      </Join>
     </>
   )
 }
 
-const ADVISORY_SPECIALISTS = [
+interface Specialist {
+  email: string
+  image: string
+  location?: string
+  name: string
+  phone?: string
+  title: string
+}
+
+const ADVISORY_SPECIALISTS: Specialist[] = [
   {
     name: "Alexander Forbes",
     title: "Head of Collector Services & Private Sales",
     location: "New York",
     email: "alexander.forbes@artsy.net",
-    photo: {
-      url:
-        "http://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
-    },
+    image:
+      "http://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
   },
   {
     name: "Akanksha Ballaney",
     title: "Associate Director",
     location: "New York",
     email: "akanksha@artsy.net",
-    photo: { url: "http://files.artsy.net/images/akanksha.jpeg" },
+    image: "http://files.artsy.net/images/akanksha.jpeg",
   },
   {
     name: "Natasha Prince",
     title: "Senior Advisor",
     location: "London",
     email: "natasha.prince@artsy.net",
-    phone: " +44 7889 403808 ",
-    photo: { url: "http://files.artsy.net/images/natasha.jpeg" },
+    phone: "+44 7889 403808",
+    image: "http://files.artsy.net/images/natasha.jpeg",
   },
   {
     name: "Robin Roche",
@@ -210,7 +150,7 @@ const ADVISORY_SPECIALISTS = [
     location: "New York",
     email: "robin.roche@artsy.net",
     phone: "+1 646 707 9450",
-    photo: { url: "http://files.artsy.net/images/robin.jpeg" },
+    image: "http://files.artsy.net/images/robin.jpeg",
   },
   {
     name: "Daniela Bianco-Duppen",
@@ -218,7 +158,7 @@ const ADVISORY_SPECIALISTS = [
     location: "London",
     email: "daniela.bianco-duppen@artsy.net",
     phone: "+44 7503 236844",
-    photo: { url: "http://files.artsy.net/images/daniela-bianco-duppen.jpeg" },
+    image: "http://files.artsy.net/images/daniela-bianco-duppen.jpeg",
   },
   {
     name: "Alexandra Freedman",
@@ -226,14 +166,14 @@ const ADVISORY_SPECIALISTS = [
     location: "New York",
     email: "alexandra.freedman@artsy.net",
     phone: "+1 610 405 7151",
-    photo: { url: "http://files.artsy.net/images/alexandra.jpeg" },
+    image: "http://files.artsy.net/images/alexandra.jpeg",
   },
   {
     name: "Meave Hamill",
     title: "Advisor",
     location: "London",
     email: "meave@artsy.net",
-    photo: { url: "http://files.artsy.net/images/meave.jpeg" },
+    image: "http://files.artsy.net/images/meave.jpeg",
   },
   {
     name: "George King",
@@ -241,7 +181,7 @@ const ADVISORY_SPECIALISTS = [
     location: "London",
     email: "george.king@artsy.net",
     phone: "+44 7850 739913",
-    photo: { url: "http://files.artsy.net/images/george.jpeg" },
+    image: "http://files.artsy.net/images/george.jpeg",
   },
   {
     name: "Agnieszka Perche",
@@ -249,7 +189,7 @@ const ADVISORY_SPECIALISTS = [
     location: "London",
     email: "agnieszka.perche@artsy.net",
     phone: "+44 7842 548576",
-    photo: { url: "http://files.artsy.net/images/agnieszka.jpg" },
+    image: "http://files.artsy.net/images/agnieszka.jpg",
   },
   {
     name: "Caroline Perkins",
@@ -257,7 +197,7 @@ const ADVISORY_SPECIALISTS = [
     location: "New York",
     email: "caroline.perkins@artsy.net",
     phone: "+1 540 588 1371",
-    photo: { url: "http://files.artsy.net/images/cperkins_headshot-copy.jpg" },
+    image: "http://files.artsy.net/images/cperkins_headshot-copy.jpg",
   },
   {
     name: "Itziar Ramos Ricoy",
@@ -265,55 +205,52 @@ const ADVISORY_SPECIALISTS = [
     location: "London",
     email: "itziar.ramos@artsy.net",
     phone: "+44 7429 093319",
-    photo: { url: "http://files.artsy.net/images/itziar.jpeg" },
+    image: "http://files.artsy.net/images/itziar.jpeg",
   },
 ]
 
-const AUCTION_SPECIALISTS = [
+const AUCTION_SPECIALISTS: Specialist[] = [
   {
     name: "Shlomi Rabi",
     title: "VP and Head of Auctions",
     location: "New York",
     email: "shlomi.rabi@artsy.net",
-    photo: { url: "http://files.artsy.net/images/shlomi.jpg" },
+    image: "http://files.artsy.net/images/shlomi2.jpg",
   },
   {
     name: "Chloé Bigio",
     title: "Senior Manager, Auction Partnerships",
     location: "New York",
     email: "chloe@artsy.net",
-    photo: { url: "http://files.artsy.net/images/chloe.jpg" },
+    image: "http://files.artsy.net/images/chloe.jpg",
   },
   {
     name: "Lauren Carpinelli",
     title: "Specialist, Prints and Contemporary",
     location: "New York",
     email: "lauren.carpinelli@artsy.net",
-    photo: {
-      url: "http://files.artsy.net/images/lauren.jpg",
-      height: 120,
-    },
+    image: "http://files.artsy.net/images/lauren.jpg",
   },
   {
     name: "Erica Lyon",
     title: "Associate Director of Partner Auctions",
     location: "New York",
     email: "erica@artsy.net",
-    photo: { url: "http://files.artsy.net/images/ericalyonheadshot.jpeg" },
+    image: "http://files.artsy.net/images/ericalyonheadshot.jpeg",
   },
   {
     name: "Laura Martin",
     title: "Specialist, Post-War & Contemporary",
     location: "Los Angeles",
     email: "laura.martin@artsy.net",
-    photo: { url: "http://files.artsy.net/images/laura.jpg" },
+    image: "http://files.artsy.net/images/laura.jpg",
   },
   {
     name: "Adam McCoy",
     title: "Senior Specialist and Head of Prints",
     location: "New York",
     email: "adam.mccoy@artsy.net",
-    photo: { url: "http://files.artsy.net/images/adam.jpg" },
+    image: "http://files.artsy.net/images/adam2.jpg",
   },
 
   {
@@ -321,44 +258,64 @@ const AUCTION_SPECIALISTS = [
     title: "Senior Specialist, Street Art",
     location: "New York",
     email: "alan@artsy.net",
-    photo: { url: "http://files.artsy.net/images/alan.png" },
+    image: "http://files.artsy.net/images/alan.png",
+  },
+  {
+    name: "Celine Cunha",
+    title: "Specialist in Post-War & Contemporary Art",
+    location: "New York",
+    email: "celine.cunha@artsymail.com",
+    image: "http://files.artsy.net/images/Celine_Cunha_Krieger.png",
+  },
+  {
+    name: "Simon Wills",
+    title: "Trusts & Estates Senior Manager",
+    location: "New York",
+    email: "simon.wills@artsymail.com",
+    image: "http://files.artsy.net/images/simon_wills.png",
   },
 ]
 
-const COLLECTOR_SERVICES_SPECIALISTS = [
+const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
   {
     name: "Wendy Wiberg",
     title: "Collector Services Lead",
-    location: "",
+
     email: "wendy.wiberg@artsy.net",
-    photo: { url: "http://files.artsy.net/images/wendy_wiberg.png" },
+    image: "http://files.artsy.net/images/wendy_wiberg.png",
   },
   {
     name: "Eleonora Leo",
     title: "Senior Manager, Collector Services",
-    location: "",
+
     email: "eleonora.leo@artsy.net",
-    photo: { url: "http://files.artsy.net/images/eleonora_leo.png" },
+    image: "http://files.artsy.net/images/eleonora_leo.png",
   },
   {
     name: "Vanessa Zingale",
     title: "Senior Manager, Collector Services",
-    location: "",
+
     email: "vanessa.zingale@artsy.net",
-    photo: { url: "http://files.artsy.net/images/vanessa_zingale.png" },
+    image: "http://files.artsy.net/images/vanessa_zingale.png",
   },
   {
     name: "Isabel Telonis",
     title: "Manager, Collector Services",
-    location: "",
+
     email: "isabel.telonis@artsy.net",
-    photo: { url: "http://files.artsy.net/images/isabel_telonis.png" },
+    image: "http://files.artsy.net/images/isabel_telonis.png",
   },
   {
     name: "Dana Rodriguez",
     title: "Associate, Collector Services",
-    location: "",
+
     email: "dana.rodriguez@artsy.net",
-    photo: { url: "http://files.artsy.net/images/dana_rodriguez.png" },
+    image: "http://files.artsy.net/images/dana_rodriguez.png",
   },
+]
+
+const SPECIALISTS = [
+  { title: "Advisory and Private Sales", specialists: ADVISORY_SPECIALISTS },
+  { title: "Auctions", specialists: AUCTION_SPECIALISTS },
+  { title: "Collector Services", specialists: COLLECTOR_SERVICES_SPECIALISTS },
 ]

@@ -199,7 +199,7 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                       is_open: true,
                       is_preview: false,
                       display_timely_at: "live in 3d",
-                      cascadingEndTimeInterval: null,
+                      cascadingEndTimeIntervalMinutes: null,
 
                       startAt: "2022-03-11T12:33:37.000Z",
                       endAt: "2022-03-12T12:33:37.000Z",

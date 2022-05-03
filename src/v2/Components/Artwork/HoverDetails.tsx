@@ -13,7 +13,7 @@ interface HoverDetailsProps {
 const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
   const labels = compact([
     artwork.attributionClass?.name,
-    artwork.mediumType?.name,
+    artwork.mediumType?.filterGene?.name,
   ])
   const pills = labels.map((label, index) => ({
     id: `${artwork.internalID}-pill-${index}`,
@@ -68,7 +68,9 @@ export const HoverDetailsFragmentContainer = createFragmentContainer(
           name
         }
         mediumType {
-          name
+          filterGene {
+            name
+          }
         }
       }
     `,

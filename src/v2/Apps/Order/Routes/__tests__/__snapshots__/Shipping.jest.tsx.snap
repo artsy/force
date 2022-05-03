@@ -4,7 +4,7 @@ exports[`Shipping with no saved addresses commits set shipping mutation with the
 Array [
   Array [
     Object {
-      "cacheID": "35b1236c8986904e9f731fe7ce8f1e15",
+      "cacheID": "62a32d99e6cab8f40c665305a1f4d041",
       "id": null,
       "metadata": Object {},
       "name": "SetShippingMutation",
@@ -73,10 +73,10 @@ Array [
 fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
   node {
     id
-    displayName
     isSelected
     price(precision: 2)
     priceCents
+    typeName
   }
 }
 ",

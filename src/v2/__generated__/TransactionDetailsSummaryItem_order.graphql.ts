@@ -27,7 +27,7 @@ export type TransactionDetailsSummaryItem_order = {
                     readonly __typename: "%other";
                 }) | null;
                 readonly selectedShippingQuote: {
-                    readonly displayName: string;
+                    readonly typeName: string;
                 } | null;
             } | null;
         } | null> | null;
@@ -270,7 +270,7 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "displayName",
+                      "name": "typeName",
                       "storageKey": null
                     }
                   ],
@@ -343,5 +343,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '71d925480aee61f68ce09f24eea756c8';
+(node as any).hash = '6fbb092aebc67d05abdf31f7a3ff3cf5';
 export default node;

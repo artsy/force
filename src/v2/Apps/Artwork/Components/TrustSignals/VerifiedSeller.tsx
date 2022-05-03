@@ -4,29 +4,29 @@ import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
+import { shouldRenderVerifiedSeller } from "v2/Apps/Artwork/Utils/badges"
 
 interface VerifiedSellerProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
   artwork: VerifiedSeller_artwork
 }
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({
   artwork,
   ...other
 }) => {
-  return (
-    !artwork.is_biddable &&
-    artwork.partner &&
-    artwork.partner.isVerifiedSeller && (
+  if (shouldRenderVerifiedSeller(artwork)) {
+    return (
       <TrustSignal
         Icon={<VerifiedIcon />}
         label="Verified seller"
-        description={`${artwork.partner.name} is a verified Artsy partner.`}
+        description={`${artwork!.partner!.name} is a verified Artsy partner.`}
         {...other}
       />
     )
-  )
+  }
+
+  return null
 }
 
 export const VerifiedSellerFragmentContainer = createFragmentContainer(

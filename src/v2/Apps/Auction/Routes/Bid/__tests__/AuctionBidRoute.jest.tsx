@@ -191,6 +191,20 @@ describe("AuctionBidRoute", () => {
     expect(wrapper.find("ErrorStatus")).toHaveLength(1)
   })
 
+  it("doesn't ask for credit card info if user has one on file", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        bidder: null,
+      }),
+      Me: () => ({
+        hasQualifiedCreditCards: true,
+      }),
+    })
+
+    expect(wrapper.find("AddressFormWithCreditCard")).toHaveLength(0)
+    expect(wrapper.find("ConditionsOfSaleCheckbox")).toHaveLength(1)
+  })
+
   it("submits bid", async () => {
     const spy = jest.fn()
 

@@ -79,6 +79,7 @@ function getDesktopIntentToFollow({
     copy: `Sign up to follow ${entity.name}`,
     intent,
     mode: ModalType.signup,
+    redirectTo: window.location.href,
   }
 }
 
@@ -97,6 +98,7 @@ function getDesktopIntentToSaveArtwork({
     copy: `Sign up to save artworks`,
     intent,
     mode: ModalType.signup,
+    redirectTo: window.location.href,
   }
 }
 

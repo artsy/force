@@ -44,7 +44,7 @@ export type ConversationCTA_conversation = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"OpenInquiryModalCTA_conversation">;
+    readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
     readonly " $refType": "ConversationCTA_conversation";
 };
 export type ConversationCTA_conversation$data = ConversationCTA_conversation;
@@ -261,12 +261,12 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "OpenInquiryModalCTA_conversation"
+      "name": "MakeOfferOnInquiryButton_conversation"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c59d15f5504451a7e41ae6b4e3df0cbb';
+(node as any).hash = 'fd0e23bd666e08d71f577632c543e28f';
 export default node;

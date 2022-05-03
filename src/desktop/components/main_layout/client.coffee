@@ -2,15 +2,11 @@
 CurrentUser = require '../../models/current_user'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
-{ triggerMarketingModal } = require '../marketing_signup_modal/triggerMarketingModal.ts'
 { Intent } = require "@artsy/cohesion"
 
 module.exports = ->
   deprecatedGlobalClientSetup()
   checkForAfterSignUpAction()
-  checkForPersonalizeFlash()
-
-  triggerMarketingModal(Intent.viewFair, true)
 
 checkForAfterSignUpAction = ->
   currentUser = CurrentUser.orNull()
@@ -33,11 +29,3 @@ checkForAfterSignUpAction = ->
     ops and ops(@currentUser, objectId, kind)
 
     Cookies.expire 'afterSignUpAction'
-
-# TODO: Follow up with Christina about this functionality
-checkForPersonalizeFlash = ->
-  # Sometime '/personalize/' can exist as a redirect parameter in the URL.
-  # This causes the flash message to display at unexpected times.
-  # This ensures we check for personalize in the pathname.
-  if document.referrer.split('?')[0].match '^/personalize.*'
-    new FlashMessage message: 'Thank you for personalizing your profile'

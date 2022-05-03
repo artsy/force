@@ -5,6 +5,7 @@ import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import {
   shippingQuoteDescriptions,
+  shippingQuoteDisplayNames,
   ShippingQuotesFragmentContainer,
 } from "../ShippingQuotes"
 import { cloneDeep, compact } from "lodash"
@@ -96,7 +97,11 @@ describe("ShippingQuotes", () => {
       shippingQuote => {
         const quote = shippingQuotes
           .findWhere(shippingQuotesItem =>
-            shippingQuotesItem.text().startsWith(shippingQuote.node.displayName)
+            shippingQuotesItem
+              .text()
+              .startsWith(
+                shippingQuoteDisplayNames[shippingQuote.node.typeName]
+              )
           )
           .first()
 
@@ -106,9 +111,7 @@ describe("ShippingQuotes", () => {
 
         expect(text).toContain(shippingQuote.node.price)
         expect(text).toContain(
-          shippingQuoteDescriptions[
-            shippingQuote.node.displayName.toLowerCase()
-          ]
+          shippingQuoteDescriptions[shippingQuote.node.typeName]
         )
       }
     )

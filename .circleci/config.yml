@@ -1,13 +1,12 @@
 version: 2.1
 
 orbs:
-  artsy-remote-docker: artsy/remote-docker@0.1.14
+  artsy-remote-docker: artsy/remote-docker@volatile
   aws-s3: circleci/aws-s3@2.0.0
-  hokusai: artsy/hokusai@0.10.0
-  horizon: artsy/release@0.0.1
-  node: artsy/node@2.0.0
-  slack: circleci/slack@4.9.3
-  yarn: artsy/yarn@6.1.0
+  hokusai: artsy/hokusai@volatile
+  horizon: artsy/release@volatile
+  slack: circleci/slack@4.9.4
+  yarn: artsy/yarn@6.2.0
 
 jobs:
   run_deepcrawl_automator:
@@ -24,12 +23,10 @@ jobs:
           command: chmod +x automator.sh && ./automator.sh
 
   validate_production_schema:
-    executor: node/build
+    docker:
+      - image: cimg/node:14.19
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
-      practice_web:
-        type: string
-        default: C2TQ4PT8R
       dev:
         type: string
         default: C02BC3HEJ
@@ -40,7 +37,7 @@ jobs:
           command: node scripts/validateSchemas.js production
       - slack/notify:
           event: fail
-          channel: "<< parameters.practice_web >>, << parameters.dev >>"
+          channel: "<< parameters.dev >>"
           custom: |
             {
               "blocks": [
@@ -97,7 +94,7 @@ jobs:
             }
 
   create_or_update_review_app:
-    executor: hokusai/deploy
+    executor: hokusai/beta
     parameters:
       artsy_docker_host:
         type: string
@@ -313,6 +310,7 @@ workflows:
       - artsy-remote-docker/buildkit-build:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: builder-image-build
           pre-steps:
             - run:
@@ -321,6 +319,7 @@ workflows:
       - artsy-remote-docker/buildkit-push:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: builder-image-push
           requires:
             - builder-image-build
@@ -332,6 +331,7 @@ workflows:
       - artsy-remote-docker/buildkit-build:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: electron-runner-image-build
           requires:
             - builder-image-build
@@ -342,6 +342,7 @@ workflows:
       - artsy-remote-docker/buildkit-push:
           <<: *not_staging_or_release
           context: hokusai
+          executor: hokusai/beta
           name: electron-runner-image-push
           requires:
             - electron-runner-image-build
@@ -396,6 +397,7 @@ workflows:
       - artsy-remote-docker/buildkit-build:
           <<: *only_main
           context: hokusai
+          executor: hokusai/beta
           name: production-image-build
           requires:
             - builder-image-build
@@ -403,6 +405,7 @@ workflows:
       - artsy-remote-docker/buildkit-push:
           <<: *only_main
           context: hokusai
+          executor: hokusai/beta
           name: production-image-push
           requires:
             - mocha
@@ -417,6 +420,7 @@ workflows:
           <<: *only_main
           name: deploy-staging
           project-name: force
+          executor: hokusai/beta
           requires:
             - production-image-push
           post-steps:
@@ -458,6 +462,7 @@ workflows:
       # Production
       - hokusai/deploy-production:
           <<: *only_release
+          executor: hokusai/beta
           name: deploy-production
           requires:
             - horizon/block

@@ -87,7 +87,7 @@ export const useCreateTokenAndSubmit = ({
             token: token?.id!,
           },
           profileInput: {
-            phone: values.address?.phoneNumber,
+            phone: values.phoneNumber,
           },
         },
         rejectIf: res => {

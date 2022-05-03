@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import { ShowSubApp_show } from "v2/__generated__/ShowSubApp_show.graphql"
-import { BackLink } from "v2/Components/Links/BackLink"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
+import { TopContextBar } from "v2/Components/TopContextBar"
 
 interface ShowAppProps {
   show: ShowSubApp_show
@@ -20,24 +20,22 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
     <>
       <ShowMeta show={show} />
 
-      <>
-        <AnalyticsContext.Provider
-          value={{
-            contextPageOwnerId: show.internalID,
-            contextPageOwnerSlug,
-            contextPageOwnerType,
-          }}
-        >
-          <BackLink my={2} to={show.href}>
-            Back to {show.name}
-            {!show.isFairBooth && show.partner?.name && (
-              <> at {show.partner.name}</>
-            )}
-          </BackLink>
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: show.internalID,
+          contextPageOwnerSlug,
+          contextPageOwnerType,
+        }}
+      >
+        <TopContextBar displayBackArrow href={show.href}>
+          Back to {show.name}
+          {!show.isFairBooth && show.partner?.name && (
+            <> at {show.partner.name}</>
+          )}
+        </TopContextBar>
 
-          <Box minHeight="50vh">{children}</Box>
-        </AnalyticsContext.Provider>
-      </>
+        <Box minHeight="50vh">{children}</Box>
+      </AnalyticsContext.Provider>
     </>
   )
 }

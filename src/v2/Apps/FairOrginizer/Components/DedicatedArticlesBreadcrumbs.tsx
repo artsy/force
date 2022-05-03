@@ -1,8 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Breadcrumbs, Text, Image, Flex, ArrowLeftIcon } from "@artsy/palette"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { DedicatedArticlesBreadcrumbs_fairOrganizer } from "v2/__generated__/DedicatedArticlesBreadcrumbs_fairOrganizer.graphql"
+import { TopContextBar } from "v2/Components/TopContextBar"
 
 interface DedicatedArticlesBreadcrumbsProps {
   fairOrganizer: DedicatedArticlesBreadcrumbs_fairOrganizer
@@ -14,26 +13,13 @@ export const DedicatedArticlesBreadcrumbs: React.FC<DedicatedArticlesBreadcrumbs
   const { name, slug, profile } = fairOrganizer
 
   return (
-    <Breadcrumbs
-      borderBottom="solid"
-      borderBottomColor="black10"
-      borderBottomWidth={1}
-      py={1}
+    <TopContextBar
+      displayBackArrow
+      href={`/fair-organizer/${slug}`}
+      src={profile?.image?.url}
     >
-      <RouterLink to={`/fair-organizer/${slug}`}>
-        <Flex alignItems="center">
-          <ArrowLeftIcon />
-          <Image
-            width={30}
-            height={30}
-            src={profile?.image?.resized?.src!}
-            srcSet={profile?.image?.resized?.srcSet!}
-            mx={1}
-          />
-          <Text variant="xs">Explore {name} on Artsy</Text>
-        </Flex>
-      </RouterLink>
-    </Breadcrumbs>
+      Explore {name} on Artsy
+    </TopContextBar>
   )
 }
 
@@ -46,10 +32,7 @@ export const DedicatedArticlesBreadcrumbsFragmentContainer = createFragmentConta
         name
         profile {
           image {
-            resized(width: 30, height: 30, version: "square") {
-              src
-              srcSet
-            }
+            url
           }
         }
       }

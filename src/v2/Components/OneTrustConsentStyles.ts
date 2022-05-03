@@ -6,7 +6,7 @@
  * To develop locally:
  * - Go to OneTrust: https://app-eu.onetrust.com/cookies/templates
  * - Edit the CCPA and GDPR templates to remove the Styling > Custom CSS (delete
- *   any code present)
+ *   any code present) and click "Save Template"
  * - Go to Integration > Scripts: https://app-eu.onetrust.com/cookies/script-integration
  * - Click staging.artsy.net
  * - Click "Publish Test" > "Confirm" > "Publish Test Scripts"
@@ -47,9 +47,9 @@ const toStyle = (style: Record<string, string | number | undefined>) => {
     .join("")
 }
 
-const toTokens = (config: Record<string, string>) => {
+const toTokens = (config: Record<string, string | number>) => {
   return Object.entries(config).reduce((acc, [key, value]) => {
-    return { ...acc, [key]: THEME.colors[value] ?? value }
+    return { ...acc, [key]: THEME.space[value] ?? THEME.colors[value] ?? value }
   }, {})
 }
 
@@ -60,14 +60,23 @@ const baseButtonStyles = {
   color: THEME.colors.white100,
   cursor: "pointer",
   fontWeight: "normal",
-  padding: `0 ${THEME.space[4]}`,
   textAlign: "center",
   transition:
     "color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease",
   whiteSpace: "nowrap",
   // Medium size
   ...THEME.textVariants[BUTTON_TEXT_SIZES.medium as TextVariant],
-  ...BUTTON_SIZES.medium,
+  height: BUTTON_SIZES.medium.height,
+  borderRadius: BUTTON_SIZES.medium.borderRadius,
+  padding: `0 ${THEME.space[BUTTON_SIZES.medium.px]}`,
+}
+
+const smallButtonStyles = {
+  ...baseButtonStyles,
+  ...THEME.textVariants[BUTTON_TEXT_SIZES.small as TextVariant],
+  height: BUTTON_SIZES.small.height,
+  borderRadius: BUTTON_SIZES.small.borderRadius,
+  padding: `0 ${THEME.space[BUTTON_SIZES.small.px]}`,
 }
 
 const baseButtonMixin = toStyle(baseButtonStyles)
@@ -402,6 +411,7 @@ export const OneTrustConsentStyles = createGlobalStyle`
     #onetrust-banner-sdk {
       ${toStyle({
         boxShadow: DROP_SHADOW,
+        borderTop: `1px solid ${THEME.colors.black15}`,
       })}
 
       .ot-sdk-container {
@@ -417,12 +427,14 @@ export const OneTrustConsentStyles = createGlobalStyle`
           maxWidth: THEME.breakpoints.lg,
           padding: THEME.space[4],
           margin: "auto",
+          alignItems: "flex-end",
         })}
 
         @media (max-width: ${THEME.breakpoints.sm}) {
           ${toStyle({
             flexDirection: "column",
             padding: THEME.space[2],
+            alignItems: "stretch",
           })}
         }
       }
@@ -432,6 +444,7 @@ export const OneTrustConsentStyles = createGlobalStyle`
       @media (max-width: ${THEME.breakpoints.sm}) {
         ${toStyle({
           width: "100%",
+          padding: 0,
         })}
       }
     }
@@ -472,9 +485,16 @@ export const OneTrustConsentStyles = createGlobalStyle`
         display: "block",
         float: "none",
         fontWeight: "normal",
-        marginBottom: THEME.space["1"],
+        marginBottom: THEME.space["0.5"],
         ...THEME.textVariants.lg,
       })}
+
+      @media (max-width: ${THEME.breakpoints.sm}) {
+        ${toStyle({
+          ...THEME.textVariants.xs,
+          fontWeight: "bold",
+        })}
+      }
     }
 
     #onetrust-policy-text {
@@ -486,6 +506,12 @@ export const OneTrustConsentStyles = createGlobalStyle`
       > a {
         ${toStyle({
           fontWeight: "normal",
+        })}
+      }
+
+      @media (max-width: ${THEME.breakpoints.sm}) {
+        ${toStyle({
+          ...THEME.textVariants.xs,
         })}
       }
     }
@@ -524,21 +550,34 @@ export const OneTrustConsentStyles = createGlobalStyle`
       @media (max-width: ${THEME.breakpoints.sm}) {
         ${toStyle({
           width: "100%",
-          flexDirection: "column-reverse",
+          marginTop: THEME.space[1],
         })}
 
         > button {
           ${toStyle({
             margin: 0,
-            width: "100%",
           })}
 
           &:first-child {
-            ${toStyle({ marginTop: THEME.space[1], marginRight: 0 })},
+            ${toStyle({
+              ...smallButtonStyles,
+              border: "none",
+              color: THEME.colors.black100,
+              backgroundColor: THEME.colors.white100,
+              textDecoration: "underline",
+              flex: 1,
+            })}
+
+            &:hover {
+              ${toStyle({
+                textDecoration: "none",
+              })}
+            }
           }
 
           &:last-child {
-            ${toStyle({ marginTop: THEME.space[2], marginLeft: 0 })},
+            ${toStyle({ ...smallButtonStyles, flex: 1 })},
+            ${buttonVariants.primaryBlack}
           }
         }
       }

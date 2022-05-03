@@ -1,7 +1,6 @@
 import { Box, Flex, Theme } from "@artsy/palette"
 import { useNetworkOfflineMonitor } from "v2/Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
-import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
@@ -19,7 +18,12 @@ import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
-import { MNTNTrackingPixel } from "v2/Components/MNTNTrackingPixel"
+import {
+  MNTNConversionPixel,
+  MNTNTrackingPixel,
+} from "v2/Components/MNTNPixels"
+import { createGlobalStyle } from "styled-components"
+import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -28,6 +32,8 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
+  const isMounted = useDidMount()
+
   useAuthIntent()
   useAuthValidation()
 
@@ -67,9 +73,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
   const nextTheme = routeConfig?.theme ?? "v3"
   const [theme, setTheme] = useState<"v2" | "v3">(nextTheme)
   useRouteComplete({ onComplete: () => setTheme(nextTheme) })
-
-  // TODO: When old backbone inquiry modal goes away, this can be removed
-  useMaybeReloadAfterInquirySignIn()
 
   const { height: navBarHeight } = useNavBarHeight()
 
@@ -119,7 +122,20 @@ export const AppShell: React.FC<AppShellProps> = props => {
         )}
       </Theme>
 
+      <MNTNConversionPixel />
       <MNTNTrackingPixel />
+
+      {isMounted && <OneTrustModalOverlayHotfixStyles />}
     </Flex>
   )
 }
+
+/**
+ * This is a workaround for the cookie consent banner overlay appearing on top
+ * of our modals. This positions it below so that modal buttons are clickable.
+ */
+export const OneTrustModalOverlayHotfixStyles = createGlobalStyle`
+  #onetrust-banner-sdk {
+    z-index: 1 !important;
+  }
+`

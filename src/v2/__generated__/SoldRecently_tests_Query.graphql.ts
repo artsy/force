@@ -81,7 +81,7 @@ fragment Details_artwork on Artwork {
   }
   sale {
     endAt
-    cascadingEndTimeInterval
+    cascadingEndTimeIntervalMinutes
     startAt
     is_auction: isAuction
     is_closed: isClosed
@@ -102,6 +102,7 @@ fragment Details_artwork on Artwork {
     }
     id
   }
+  ...NewSaveButton_artwork
   ...HoverDetails_artwork
 }
 
@@ -126,7 +127,10 @@ fragment HoverDetails_artwork on Artwork {
     id
   }
   mediumType {
-    name
+    filterGene {
+      name
+      id
+    }
   }
 }
 
@@ -134,6 +138,14 @@ fragment Metadata_artwork on Artwork {
   ...Details_artwork
   ...Contact_artwork
   href
+}
+
+fragment NewSaveButton_artwork on Artwork {
+  id
+  internalID
+  slug
+  is_saved: isSaved
+  title
 }
 
 fragment SaveButton_artwork on Artwork {
@@ -205,19 +217,23 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v6 = [
+  (v3/*: any*/),
+  (v2/*: any*/)
+],
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v8 = {
+v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -425,7 +441,7 @@ return {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
-                                "name": "cascadingEndTimeInterval",
+                                "name": "cascadingEndTimeIntervalMinutes",
                                 "storageKey": null
                               },
                               {
@@ -546,6 +562,7 @@ return {
                             ],
                             "storageKey": null
                           },
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -556,14 +573,18 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "AttributionClass",
                             "kind": "LinkedField",
                             "name": "attributionClass",
                             "plural": false,
-                            "selections": [
-                              (v3/*: any*/),
-                              (v2/*: any*/)
-                            ],
+                            "selections": (v6/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -574,7 +595,16 @@ return {
                             "name": "mediumType",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/)
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Gene",
+                                "kind": "LinkedField",
+                                "name": "filterGene",
+                                "plural": false,
+                                "selections": (v6/*: any*/),
+                                "storageKey": null
+                              }
                             ],
                             "storageKey": null
                           },
@@ -583,14 +613,6 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "isInquireable",
-                            "storageKey": null
-                          },
-                          (v2/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "slug",
                             "storageKey": null
                           },
                           {
@@ -632,7 +654,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0dc2aa0c62f790165c134ee9aca86a3a",
+    "cacheID": "b0daf76c813f3001586eda668e30e39a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -672,22 +694,22 @@ return {
           "plural": true,
           "type": "Artist"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists.href": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.artists.name": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.attributionClass.id": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.attributionClass.name": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.date": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.href": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.id": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.attributionClass.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.attributionClass.name": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.collecting_institution": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.cultural_maker": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.date": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.href": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.id": (v8/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.image": {
           "enumValues": null,
           "nullable": true,
@@ -700,52 +722,59 @@ return {
           "plural": false,
           "type": "Float"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.image.url": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.imageTitle": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.internalID": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.is_biddable": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.is_inquireable": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.is_saved": (v9/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.mediumType.name": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.mediumType.filterGene": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Gene"
+        },
+        "targetSupply.microfunnel.artworksConnection.edges.node.mediumType.filterGene.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.mediumType.filterGene.name": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.realizedToEstimate": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.href": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.name": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.partner.type": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.realizedPrice": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.realizedToEstimate": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.cascadingEndTimeInterval": {
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Int"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.endAt": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v8/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale.startAt": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.display_timely_at": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.endAt": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_auction": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_closed": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_live_open": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_open": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.is_preview": (v9/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale.startAt": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork": {
           "enumValues": null,
           "nullable": true,
@@ -764,32 +793,32 @@ return {
           "plural": false,
           "type": "FormattedNumber"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.endAt": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.formattedEndDateTime": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.endAt": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.formattedEndDateTime": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkHighestBid"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.lotLabel": (v6/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.highest_bid.display": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.id": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.lotLabel": (v7/*: any*/),
         "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkOpeningBid"
         },
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v6/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.slug": (v7/*: any*/),
-        "targetSupply.microfunnel.artworksConnection.edges.node.title": (v6/*: any*/)
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_artwork.opening_bid.display": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.sale_message": (v7/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.slug": (v8/*: any*/),
+        "targetSupply.microfunnel.artworksConnection.edges.node.title": (v7/*: any*/)
       }
     },
     "name": "SoldRecently_tests_Query",
     "operationKind": "query",
-    "text": "query SoldRecently_tests_Query {\n  targetSupply {\n    ...SoldRecently_targetSupply\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeInterval\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...HoverDetails_artwork\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    name\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SoldRecently_targetSupply on TargetSupply {\n  microfunnel {\n    artworksConnection {\n      edges {\n        node {\n          ...FillwidthItem_artwork\n          realizedPrice\n          realizedToEstimate\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SoldRecently_tests_Query {\n  targetSupply {\n    ...SoldRecently_targetSupply\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SoldRecently_targetSupply on TargetSupply {\n  microfunnel {\n    artworksConnection {\n      edges {\n        node {\n          ...FillwidthItem_artwork\n          realizedPrice\n          realizedToEstimate\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

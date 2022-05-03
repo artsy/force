@@ -1,111 +1,32 @@
-import React, { useEffect, useState } from "react"
-import { BellIcon, Button, ButtonProps, useToasts } from "@artsy/palette"
-import { useSystemContext, useTracking } from "v2/System"
-import { ActionType } from "@artsy/cohesion"
+import React from "react"
+import { BellIcon, Button, ButtonProps } from "@artsy/palette"
 import {
-  AuthModalOptions,
-  openAuthToSatisfyIntent,
-} from "v2/Utils/openAuthModal"
-import { mediator } from "lib/mediator"
-import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
-import {
-  SavedSearchAlertMutationResult,
-  SavedSearchEntity,
-  SearchCriteriaAttributes,
-} from "../types"
-import { Metric } from "v2/Components/ArtworkFilter/Utils/metrics"
-import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+  SavedSearchCreateAlertButtonContainer,
+  SavedSearchCreateAlertButtonContainerProps,
+} from "./SavedSearchCreateAlertButtonContainer"
 
-export interface SavedSearchCreateAlertButtonProps extends ButtonProps {
-  entity: SavedSearchEntity
-  criteria: SearchCriteriaAttributes
-  metric?: Metric
-  aggregations?: Aggregations
-  getAuthModalOptions: () => AuthModalOptions
+export interface Props extends SavedSearchCreateAlertButtonContainerProps {
+  buttonProps?: ButtonProps
 }
 
-export const SavedSearchCreateAlertButton: React.FC<SavedSearchCreateAlertButtonProps> = ({
-  entity,
-  criteria,
-  metric,
-  aggregations,
-  getAuthModalOptions,
-  ...props
+export const SavedSearchCreateAlertButton: React.FC<Props> = ({
+  buttonProps,
+  ...rest
 }) => {
-  const tracking = useTracking()
-  const { isLoggedIn } = useSystemContext()
-  const [visibleForm, setVisibleForm] = useState(false)
-  const { sendToast } = useToasts()
-
-  const openModal = () => {
-    setVisibleForm(true)
-  }
-
-  useEffect(() => {
-    mediator.on("auth:login:success", openModal)
-
-    return () => {
-      mediator.off("auth:login:success")
-    }
-  }, [])
-
-  const handleOpenForm = () => {
-    openModal()
-  }
-
-  const handleClick = () => {
-    tracking.trackEvent({
-      action: ActionType.clickedCreateAlert,
-      context_page_owner_type: entity.owner.type,
-      context_page_owner_id: entity.owner.id,
-      context_page_owner_slug: entity.owner.slug,
-    })
-
-    if (isLoggedIn) {
-      handleOpenForm()
-    } else {
-      const options = getAuthModalOptions()
-      openAuthToSatisfyIntent(mediator, options)
-    }
-  }
-
-  const handleComplete = (result: SavedSearchAlertMutationResult) => {
-    setVisibleForm(false)
-    const trackInfo = {
-      action_type: ActionType.toggledSavedSearch,
-      context_page_owner_type: entity.owner.type,
-      context_page_owner_id: entity.owner.id,
-      context_page_owner_slug: entity.owner.slug,
-      saved_search_id: result.id,
-    }
-    tracking.trackEvent(trackInfo)
-
-    sendToast({
-      message: "Your Alert has been saved.",
-    })
-  }
-
   return (
-    <>
-      <Button
-        onClick={handleClick}
-        variant="secondaryOutline"
-        size="small"
-        {...props}
-      >
-        <BellIcon mr={0.5} fill="currentColor" />
-        Create Alert
-      </Button>
-      <SavedSearchAlertModalContainer
-        visible={visibleForm}
-        initialValues={{ name: "", email: true, push: false }}
-        entity={entity}
-        criteria={criteria}
-        metric={metric}
-        aggregations={aggregations}
-        onClose={() => setVisibleForm(false)}
-        onComplete={handleComplete}
-      />
-    </>
+    <SavedSearchCreateAlertButtonContainer
+      {...rest}
+      renderButton={({ onClick }) => (
+        <Button
+          onClick={onClick}
+          variant="secondaryOutline"
+          size="small"
+          {...buttonProps}
+        >
+          <BellIcon mr={0.5} fill="currentColor" />
+          Create Alert
+        </Button>
+      )}
+    />
   )
 }

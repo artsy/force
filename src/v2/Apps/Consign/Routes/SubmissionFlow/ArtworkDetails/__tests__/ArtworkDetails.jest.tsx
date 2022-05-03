@@ -21,6 +21,8 @@ const validForm = {
   locationCity: "NY, USA",
   locationCountry: null,
   locationState: null,
+  locationPostalCode: "12345",
+  locationCountryCode: "US",
   year: "2021",
   title: "Some title",
   medium: "materials",
@@ -211,6 +213,31 @@ describe("ArtworkDetails", () => {
       expect(screen.getByTestId("save-button")).toBeDisabled()
     })
 
+    describe("postal code", () => {
+      it("is disabled if postal code empty and US address selected", async () => {
+        getWrapper().renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...validForm,
+            locationPostalCode: null,
+          }),
+        })
+
+        expect(screen.getByTestId("save-button")).toBeDisabled()
+      })
+
+      it("is disabled if postal code empty and selected counry that don't require postal code", async () => {
+        getWrapper().renderWithRelay({
+          ConsignmentSubmission: () => ({
+            ...validForm,
+            locationCountryCode: "BY",
+            locationPostalCode: null,
+          }),
+        })
+
+        expect(screen.getByTestId("save-button")).toBeEnabled()
+      })
+    })
+
     it("is enabled if form is valid", async () => {
       getWrapper().renderWithRelay({
         ConsignmentSubmission: () => validForm,
@@ -262,6 +289,8 @@ describe("ArtworkDetails", () => {
             height: "3",
             id: "1",
             locationCity: "NY, USA",
+            locationPostalCode: "12345",
+            locationCountryCode: "US",
             medium: "materials",
             provenance: "provenance",
             sessionID: undefined,
@@ -276,7 +305,7 @@ describe("ArtworkDetails", () => {
         )
       })
 
-      it("delete spaces before saving to session storage", async () => {
+      it("delete spaces before saving", async () => {
         getWrapper().renderWithRelay({
           ConsignmentSubmission: () => ({
             ...validForm,
@@ -309,6 +338,8 @@ describe("ArtworkDetails", () => {
             height: "3",
             id: "1",
             locationCity: "NY, USA",
+            locationPostalCode: "12345",
+            locationCountryCode: "US",
             medium: "materials",
             provenance: "provenance",
             sessionID: undefined,

@@ -1,20 +1,9 @@
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
 import url from "url"
 import express from "express"
 
-const router = express.Router()
-
-const to = path =>
-  function (req: ArtsyRequest, res: ArtsyResponse) {
-    const queryString = url.parse(req.url).search || ""
-    res.redirect(301, path + queryString)
-  }
-
-// Want to permanently redirect a specific route or route pattern?
-// Put em' here:
-
-const redirects = {
+// Permanently (301) redirect a specific route or route pattern?
+const REDIRECTS = {
   "/partners": "/galleries",
   "/gallery": "/galleries",
   "/institution": "/institutions",
@@ -38,7 +27,6 @@ const redirects = {
   "/about/page/events": "/press/in-the-media",
   "/about/jobs": "/jobs",
   "/lama": "/auction/los-angeles-modern-auctions-march-2015", // HACK: Redirect the "auction" profile to the LAMA auction
-  "/dev": "/inquiry/development",
   "/artist": "/artists",
   "/job/mobile-engineer": "/article/artsy-jobs-mobile-engineer",
   "/article/jesse-kedy-digital-marketing-manager-organic-growth-06-22-15":
@@ -82,11 +70,35 @@ const redirects = {
   "/user/purchases": "/settings/purchases",
   "/user/payments": "/settings/payments",
   "/user/alerts": "/settings/alerts",
+  "/page/collector-faqs-selling-on-artsy": "/consign",
+  "/apply/gallery": "http://apply.artsy.net/galleries",
+  "/apply/institution": "http://apply.artsy.net/institutions",
+  "/apply/auction": "http://apply.artsy.net/auctions",
+  "/apply/fair": "http://apply.artsy.net/fairs",
+  "/apply*": "http://apply.artsy.net/partnerships",
+  "/gallery-partnerships": "https://partners.artsy.net",
+  "/artsy-in-miami": "/fairs",
+  "/armory-week": "/fairs",
+  "/spring-art-fairs": "/fairs",
+  "/london-art-fair-week": "/fairs",
+  "/basel-art-week": "/fairs",
+  "/life-at-artsy": "/channel/life-at-artsy",
+  "/artsy-education": "/channel/artsy-education",
+  "/buying-with-artsy": "/channel/buying-with-artsy",
+  "/personalize": "/",
+  "/personalize/*": "/",
 }
 
-for (let from in redirects) {
-  const path = redirects[from]
-  router.get(from, to(path))
+const router = express.Router()
+
+for (let from in REDIRECTS) {
+  const path = REDIRECTS[from]
+
+  router.get(from, (req: ArtsyRequest, res: ArtsyResponse) => {
+    const queryString = url.parse(req.url).search || ""
+
+    res.redirect(301, path + queryString)
+  })
 }
 
 export const hardcodedRedirectsMiddleware = router

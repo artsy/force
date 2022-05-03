@@ -2,7 +2,6 @@ import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
 import { Footer } from "../Footer"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadges/DownloadAppBadge"
-import { CCPARequest } from "../../CCPARequest"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
 
 describe("Footer", () => {
@@ -54,9 +53,9 @@ describe("Footer", () => {
       )
     })
 
-    it("renders the CCPA request link", () => {
+    it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find(CCPARequest).length).toEqual(1)
+      expect(wrapper.find("button").length).toEqual(1)
     })
   })
 
@@ -67,9 +66,9 @@ describe("Footer", () => {
       expect(wrapper.find(DownloadAppBadge).length).toEqual(2)
     })
 
-    it("renders the CCPA request link", () => {
+    it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find(CCPARequest).length).toEqual(1)
+      expect(wrapper.find("button").length).toEqual(1)
     })
   })
 })

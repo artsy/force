@@ -1,6 +1,6 @@
 //
 // Sets up the express application to be mounted. Includes mounting
-// Artsy flow related callbacks like sending people to /personalize after signup,
+// Artsy flow related callbacks like sending people to / after signup,
 // throwing edge case errors that our API returns, and more.
 //
 

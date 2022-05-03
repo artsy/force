@@ -55,6 +55,6 @@ export const fillAddressForm = (component: any, address: Address) => {
   })
   fillIn(component, { title: "Postal code", value: address.postalCode })
   fillInPhoneNumber(component, {
-    value: address.phoneNumber,
+    value: address.phoneNumber!,
   })
 }

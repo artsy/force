@@ -48,6 +48,25 @@ export const artworkDetailsValidationSchema = yup.object().shape({
       coordinates: yup.array(yup.number()),
     })
     .required(),
+  postalCode: yup.string().when("location", {
+    is: location =>
+      location.countryCode &&
+      Object.keys(postalCodeValidators).includes(
+        location.countryCode.toUpperCase()
+      ),
+    then: yup.string().test("isPostalCodeValid", (postalCode, context) => {
+      const validor =
+        postalCodeValidators[context.parent.location.countryCode.toUpperCase()]
+
+      const isNotEmpty = !!postalCode?.length
+      const isMatchRegex = !!postalCode?.trim().match(validor.match)
+
+      return (
+        (isNotEmpty && isMatchRegex) ||
+        context.createError({ message: validor.errorMessage })
+      )
+    }),
+  }),
 })
 
 export const uploadPhotosValidationSchema = yup.object().shape({
@@ -84,4 +103,43 @@ export const validate = <T>(values: T, validationSchema: yup.AnySchema) => {
   }
 
   return errors
+}
+
+const defaultPostalCodeValidator = {
+  match: /.*\S.*/,
+  errorMessage: "Please enter a valid zip/postal code for your region",
+}
+
+export const postalCodeValidators = {
+  US: {
+    match: /^[0-9]{5}$/,
+    errorMessage: "Please enter a 5-digit US zip code",
+  },
+  AT: defaultPostalCodeValidator, // Austria
+  BE: defaultPostalCodeValidator, // Belgium
+  CA: defaultPostalCodeValidator, // Canada
+  CN: defaultPostalCodeValidator, // China
+  HR: defaultPostalCodeValidator, // Croatia
+  CY: defaultPostalCodeValidator, // Cyprus
+  DK: defaultPostalCodeValidator, // Denmark
+  EE: defaultPostalCodeValidator, // Estonia
+  FI: defaultPostalCodeValidator, // Finland
+  FR: defaultPostalCodeValidator, // France
+  DE: defaultPostalCodeValidator, // Germany
+  GR: defaultPostalCodeValidator, // Greece
+  HU: defaultPostalCodeValidator, // Hungary
+  IS: defaultPostalCodeValidator, // Iceland
+  IL: defaultPostalCodeValidator, // Ireland
+  IT: defaultPostalCodeValidator, // Italy
+  JP: defaultPostalCodeValidator, // Japan
+  LV: defaultPostalCodeValidator, // Latvia
+  MC: defaultPostalCodeValidator, // Monaco
+  NO: defaultPostalCodeValidator, // Norway
+  PL: defaultPostalCodeValidator, // Poland
+  PT: defaultPostalCodeValidator, // Portugal
+  ES: defaultPostalCodeValidator, // Spain
+  SE: defaultPostalCodeValidator, // Sweden
+  CH: defaultPostalCodeValidator, // Switzerland
+  GB: defaultPostalCodeValidator, // United Kingdom
+  NL: defaultPostalCodeValidator, // Netherlands
 }

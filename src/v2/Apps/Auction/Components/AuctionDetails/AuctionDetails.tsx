@@ -32,7 +32,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
     : sale.endAt
 
   const showCascadingEndTimeIntervalMessage: boolean =
-    !!sale.cascadingEndTimeInterval && !sale.isClosed
+    !!sale.cascadingEndTimeIntervalMinutes && !sale.isClosed
 
   return (
     <>
@@ -48,7 +48,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
       </GridColumns>
       <Spacer my={4} />
       <Flex alignItems="center" justifyContent="space-between">
-        {!!sale.cascadingEndTimeInterval && (
+        {!!sale.cascadingEndTimeIntervalMinutes && (
           <>
             <SaleDetailTimerFragmentContainer sale={sale} />
             <Spacer my={2} />
@@ -77,9 +77,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
         <>
           <Spacer my={2} />
           <Text variant="md" pr={2}>
-            {`Lots close at ${
-              sale.cascadingEndTimeInterval! / 60
-            }-minute intervals`}
+            {`Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`}
           </Text>
         </>
       )}
@@ -115,7 +113,7 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         description(format: HTML)
         href
         isClosed
-        cascadingEndTimeInterval
+        cascadingEndTimeIntervalMinutes
       }
     `,
     me: graphql`

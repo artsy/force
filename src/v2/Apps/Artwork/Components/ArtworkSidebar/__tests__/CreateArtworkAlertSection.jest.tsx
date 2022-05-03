@@ -1,9 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import {
-  CreateArtworkAlertSectionFragmentContainer,
-  getAttributionClassIdByLabel,
-} from "../CreateArtworkAlertSection"
+import { CreateArtworkAlertSectionFragmentContainer } from "../CreateArtworkAlertSection"
 import { CreateArtworkAlertSection_Test_Query } from "v2/__generated__/CreateArtworkAlertSection_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -67,6 +64,33 @@ describe("CreateArtworkAlertSection", () => {
 
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("Limited Edition")).toBeInTheDocument()
+    expect(screen.getByText("Prints")).toBeInTheDocument()
+  })
+
+  it("should not render `Rarity` pill if needed data is missing", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        ...Artwork,
+        attributionClass: null,
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Create Alert"))
+
+    expect(screen.queryByText("Limited Edition")).not.toBeInTheDocument()
+  })
+
+  it("should not render `Medium` pill if needed data is missing", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        ...Artwork,
+        mediumType: null,
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Create Alert"))
+
+    expect(screen.queryByText("Prints")).not.toBeInTheDocument()
   })
 
   it("should correctly track event when `Create Alert` button is pressed", () => {
@@ -85,50 +109,6 @@ describe("CreateArtworkAlertSection", () => {
   })
 })
 
-describe("getAttributionClassIdByLabel", () => {
-  it("should return `unique`", () => {
-    const result = getAttributionClassIdByLabel("Unique")
-    expect(result).toEqual(["unique"])
-  })
-
-  it("should return `limited edition`", () => {
-    const result = getAttributionClassIdByLabel("Limited Edition")
-    expect(result).toEqual(["limited edition"])
-  })
-
-  it("should return `open edition`", () => {
-    const result = getAttributionClassIdByLabel("Open Edition")
-    expect(result).toEqual(["open edition"])
-  })
-
-  it("should return `unknown edition`", () => {
-    const result = getAttributionClassIdByLabel("Unknown Edition")
-    expect(result).toEqual(["unknown edition"])
-  })
-
-  describe("Different cases", () => {
-    it("should return correct value when all letters are lowercase", () => {
-      const result = getAttributionClassIdByLabel("unknown edition")
-      expect(result).toEqual(["unknown edition"])
-    })
-
-    it("should return correct value when all letters are uppercase", () => {
-      const result = getAttributionClassIdByLabel("UNKNOWN EDITION")
-      expect(result).toEqual(["unknown edition"])
-    })
-
-    it("should return correct value when all letters are different case", () => {
-      expect(getAttributionClassIdByLabel("Unknown Edition")).toEqual([
-        "unknown edition",
-      ])
-
-      expect(getAttributionClassIdByLabel("UnKnOwN EdItIoN")).toEqual([
-        "unknown edition",
-      ])
-    })
-  })
-})
-
 const Artwork = {
   title: "Some artwork title",
   slug: "artwork-slug",
@@ -141,6 +121,12 @@ const Artwork = {
     },
   ],
   attributionClass: {
-    name: "Limited edition",
+    internalID: "limited edition",
+  },
+  mediumType: {
+    filterGene: {
+      slug: "prints",
+      name: "Prints",
+    },
   },
 }

@@ -41,7 +41,7 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
   return (
     <Rail
       alignItems="flex-start"
-      title="Featured shows"
+      title="Featured Shows"
       countLabel={shows.length}
       viewAllLabel="Explore All Shows"
       viewAllHref="/shows"
@@ -90,7 +90,7 @@ export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Featured shows"
+      title="Featured Shows"
       viewAllLabel="Explore All Shows"
       viewAllHref="/shows"
       getItems={() => {

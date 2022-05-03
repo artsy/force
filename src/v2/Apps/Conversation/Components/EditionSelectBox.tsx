@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, BorderBox, Flex, Text, Radio } from "@artsy/palette"
+import { Box, Flex, Text, BorderedRadio } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
@@ -28,16 +28,13 @@ export const EditionSelectBox: React.FC<Props> = ({
   const isOfferable = !!edition.isOfferableFromInquiry
 
   return (
-    <BorderBox
-      onClick={() => {
+    <BorderedRadio
+      onSelect={() => {
         onSelect(edition.internalID, isOfferable)
       }}
-      mx={2}
-      mb={1}
-      flexDirection="row"
-      alignItems="start"
+      disabled={!isOfferable}
+      selected={selected}
     >
-      <Radio disabled={!isOfferable} selected={selected} />
       <Flex flexGrow={1} flexDirection="column">
         <Text color={isOfferable ? "black100" : "black30"}>
           {edition.dimensions?.in}
@@ -57,7 +54,7 @@ export const EditionSelectBox: React.FC<Props> = ({
           <Text>Unavailable</Text>
         </Flex>
       )}
-    </BorderBox>
+    </BorderedRadio>
   )
 }
 

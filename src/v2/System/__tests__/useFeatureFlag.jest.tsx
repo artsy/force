@@ -1,7 +1,7 @@
 import {
   useFeatureFlag,
   useFeatureVariant,
-  useTrackVariantView,
+  useTrackFeatureVariant,
   shouldTrack,
 } from "../useFeatureFlag"
 import { useSystemContext } from "v2/System/useSystemContext"
@@ -78,7 +78,7 @@ describe("useFeatureVariant", () => {
   })
 })
 
-describe("useTrackVariantView", () => {
+describe("useTrackFeatureVariantView", () => {
   const analytics = window.analytics
 
   beforeEach(() => {
@@ -93,12 +93,12 @@ describe("useTrackVariantView", () => {
   })
 
   it("calls the tracking function with the correct payload", () => {
-    const { trackVariantView } = useTrackVariantView({
+    const { trackFeatureVariant } = useTrackFeatureVariant({
       experimentName: "cool-experiment",
       variantName: "experiment",
     })
 
-    trackVariantView()
+    trackFeatureVariant()
 
     expect(window?.analytics?.track).toHaveBeenLastCalledWith(
       "experimentViewed",
@@ -111,6 +111,17 @@ describe("useTrackVariantView", () => {
         variant_name: "experiment",
       }
     )
+  })
+
+  it("does not call the tracking function if the variantName is disabled", () => {
+    const { trackFeatureVariant } = useTrackFeatureVariant({
+      experimentName: "cool-experiment",
+      variantName: "disabled",
+    })
+
+    trackFeatureVariant()
+
+    expect(window?.analytics?.track).toHaveBeenCalledTimes(0)
   })
 })
 

@@ -21,9 +21,7 @@ export type CCPARequestMutationResponse = {
                 readonly notes: string | null;
             } | null;
             readonly mutationError?: {
-                readonly type: string | null;
                 readonly message: string;
-                readonly detail: string | null;
             } | null;
         } | null;
     } | null;
@@ -50,9 +48,7 @@ mutation CCPARequestMutation(
       }
       ... on CreateAccountRequestMutationFailure {
         mutationError {
-          type
           message
-          detail
         }
       }
     }
@@ -97,21 +93,7 @@ v3 = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "message",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "detail",
           "storageKey": null
         }
       ],
@@ -239,14 +221,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c204624ec6199106e9a4fa62d39f8f3e",
+    "cacheID": "d1b1f778074aa47d433f9a222a60685a",
     "id": null,
     "metadata": {},
     "name": "CCPARequestMutation",
     "operationKind": "mutation",
-    "text": "mutation CCPARequestMutation(\n  $input: CreateAccountRequestMutationInput!\n) {\n  createAccountRequest(input: $input) {\n    accountRequestOrError {\n      __typename\n      ... on CreateAccountRequestMutationSuccess {\n        accountRequest {\n          notes\n          id\n        }\n      }\n      ... on CreateAccountRequestMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CCPARequestMutation(\n  $input: CreateAccountRequestMutationInput!\n) {\n  createAccountRequest(input: $input) {\n    accountRequestOrError {\n      __typename\n      ... on CreateAccountRequestMutationSuccess {\n        accountRequest {\n          notes\n          id\n        }\n      }\n      ... on CreateAccountRequestMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '261c7e53f35fe29653572bf16c4f031a';
+(node as any).hash = 'e1d550810190e2f3e06e6e9f74f413b9';
 export default node;

@@ -16,7 +16,7 @@ import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
-import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 
 interface SettingsSavesArtworksProps {
   me: SettingsSavesArtworks_me
@@ -29,7 +29,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 }) => {
   const [loading, setLoading] = useState(false)
 
-  const { scrollTo } = useScrollTo({
+  const { scrollTo } = useScrollToElement({
     selectorOrRef: "#jump--SettingsSavedArtworks",
     behavior: "smooth",
     offset: 20,

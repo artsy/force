@@ -15,6 +15,8 @@ import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { getENV } from "v2/Utils/getENV"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
+import { useEffect } from "react"
+import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -29,6 +31,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
   viewer,
 }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
+  const { tracking } = useAuctionTracking()
 
   const showActiveBids = me?.showActiveBids?.length && !sale.isClosed
 
@@ -44,9 +47,18 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
     showBuyNowTab: sale.showBuyNowTab,
   }
 
-  const { cascadingEndTimeInterval } = sale
+  const {
+    cascadingEndTimeIntervalMinutes,
+    extendedBiddingIntervalMinutes,
+  } = sale
 
-  const isFullBleedHeaderFixed = !cascadingEndTimeInterval
+  const isFullBleedHeaderFixed = !cascadingEndTimeIntervalMinutes
+
+  // Track page view
+  useEffect(() => {
+    tracking.auctionPageView({ sale, me })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -57,9 +69,10 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           contextPageOwnerType,
         }}
       >
-        {cascadingEndTimeInterval && (
+        {cascadingEndTimeIntervalMinutes && (
           <CascadingEndTimesBanner
-            cascadingEndTimeInterval={cascadingEndTimeInterval}
+            cascadingEndTimeIntervalMinutes={cascadingEndTimeIntervalMinutes}
+            extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes}
           />
         )}
 
@@ -126,7 +139,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       @argumentDefinitions(saleID: { type: "String" }) {
       ...AuctionActiveBids_me @arguments(saleID: $saleID)
       ...AuctionDetails_me
-
+      internalID
       showActiveBids: lotStandings(saleID: $saleID, live: true) {
         activeBid {
           internalID
@@ -142,6 +155,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionDetails_sale
 
       internalID
+      slug
       isClosed
       coverImage {
         url(version: ["wide", "source", "large_rectangle"])
@@ -152,7 +166,8 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       showBuyNowTab: promotedSale {
         internalID
       }
-      cascadingEndTimeInterval
+      cascadingEndTimeIntervalMinutes
+      extendedBiddingIntervalMinutes
     }
   `,
   viewer: graphql`

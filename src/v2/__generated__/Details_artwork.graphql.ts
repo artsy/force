@@ -22,7 +22,7 @@ export type Details_artwork = {
     } | null;
     readonly sale: {
         readonly endAt: string | null;
-        readonly cascadingEndTimeInterval: number | null;
+        readonly cascadingEndTimeIntervalMinutes: number | null;
         readonly startAt: string | null;
         readonly is_auction: boolean | null;
         readonly is_closed: boolean | null;
@@ -41,7 +41,7 @@ export type Details_artwork = {
             readonly display: string | null;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"HoverDetails_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"NewSaveButton_artwork" | "HoverDetails_artwork">;
     readonly " $refType": "Details_artwork";
 };
 export type Details_artwork$data = Details_artwork;
@@ -178,7 +178,7 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "cascadingEndTimeInterval",
+          "name": "cascadingEndTimeIntervalMinutes",
           "storageKey": null
         },
         {
@@ -272,6 +272,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "NewSaveButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "HoverDetails_artwork"
     }
   ],
@@ -279,5 +284,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b29ea4fba3a1a6acb469b0e30ac82ad2';
+(node as any).hash = 'c0dd41967c2168024832749bf2155e6f';
 export default node;

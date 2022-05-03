@@ -228,9 +228,7 @@ describe("Authentication Helpers", () => {
               Object {},
             ]
           `)
-        expect(window.location.assign).toBeCalledWith(
-          "https://artsy.net/personalize"
-        )
+        expect(window.location.assign).toBeCalledWith("https://artsy.net/")
       })
     })
 
@@ -513,9 +511,9 @@ describe("Authentication Helpers", () => {
       expect(redirectTo.toString()).toBe("https://artsy.net/")
     })
 
-    it("Returns /personalize if type is signup", () => {
+    it("Returns / if type is signup", () => {
       const redirectTo = getRedirect("signup")
-      expect(redirectTo.toString()).toBe("https://artsy.net/personalize")
+      expect(redirectTo.toString()).toBe("https://artsy.net/")
     })
 
     it("Returns window.location by default", () => {

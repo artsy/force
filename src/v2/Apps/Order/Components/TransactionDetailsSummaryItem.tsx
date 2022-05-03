@@ -12,6 +12,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { DownloadAppBadges } from "v2/Components/DownloadAppBadges/DownloadAppBadges"
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "v2/Apps/Order/Utils/currencyUtils"
+import { shippingQuoteDisplayNames } from "v2/Apps/Order/Components/ShippingQuotes"
 import { withSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -185,7 +186,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
         .selectedShippingQuote
 
       if (selectedShippingQuote) {
-        return `${selectedShippingQuote.displayName} delivery`
+        return `${
+          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
+        } delivery`
       }
     }
 
@@ -369,7 +372,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
                 }
               }
               selectedShippingQuote {
-                displayName
+                typeName
               }
             }
           }

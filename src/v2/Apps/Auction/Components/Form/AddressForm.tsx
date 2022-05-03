@@ -110,16 +110,16 @@ export const AddressForm = () => {
 
       <Column span={12}>
         <Input
-          name="address.phoneNumber"
+          name="phoneNumber"
           title="Phone Number"
           type="tel"
           description="Required for shipping logistics"
           placeholder="Add phone number"
           autoComplete="tel"
-          value={values.address?.phoneNumber}
+          value={values.phoneNumber}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.address?.phoneNumber && errors.address?.phoneNumber}
+          error={touched.phoneNumber && errors.phoneNumber}
           required
         />
       </Column>

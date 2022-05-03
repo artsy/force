@@ -1,5 +1,4 @@
 import { themeProps } from "@artsy/palette-tokens"
-import { useEffect, useRef } from "react"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useSticky } from "v2/Components/Sticky"
 import { __internal__useMatchMedia } from "./useMatchMedia"
@@ -11,31 +10,24 @@ interface UseScrollTo {
 }
 
 /**
- * Accepts a DOM selector string or a ref to an element, along with some options,
- * and returns a `scrollTo` function that offsets based on the nav and the current
+ * Returns a `scrollTo` function that offsets based on the nav and the current
  * state of the sticky component.
  */
 export const useScrollTo = ({
   behavior,
   offset = 0,
-  selectorOrRef,
-}: UseScrollTo) => {
-  const ref = useRef<HTMLElement | null>(null)
-
-  useEffect(() => {
-    if (typeof selectorOrRef !== "string") return
-    ref.current = document.querySelector(selectorOrRef)
-  }, [selectorOrRef])
-
+}: Omit<UseScrollTo, "selectorOrRef"> = {}) => {
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const { mobile, desktop } = useNavBarHeight()
   const { offsetTop } = useSticky()
 
-  const scrollTo = () => {
+  const scrollTo = (elOrSelector: HTMLElement | string | null) => {
     const el =
-      typeof selectorOrRef === "string" ? ref.current : selectorOrRef.current
+      typeof elOrSelector === "string"
+        ? document.querySelector(elOrSelector)
+        : elOrSelector
 
-    if (!el) return
+    if (!el) return null
 
     const { top } = el.getBoundingClientRect()
 
@@ -48,4 +40,25 @@ export const useScrollTo = ({
   }
 
   return { scrollTo, isReadyForUse: isMobile !== null }
+}
+
+/**
+ * Accepts a DOM selector string or a ref to an element, along with some options,
+ * and returns a `scrollTo` function that offsets based on the nav and the current
+ * state of the sticky component.
+ */
+export const useScrollToElement = ({
+  behavior,
+  offset = 0,
+  selectorOrRef,
+}: UseScrollTo) => {
+  const { scrollTo: _scrollTo, ...rest } = useScrollTo({ behavior, offset })
+
+  const scrollTo = () => {
+    _scrollTo(
+      typeof selectorOrRef === "string" ? selectorOrRef : selectorOrRef.current
+    )
+  }
+
+  return { scrollTo, ...rest }
 }

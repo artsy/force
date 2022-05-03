@@ -2,8 +2,11 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { AuctionAppFragmentContainer } from "../AuctionApp"
 import { AuctionAppTestQuery } from "v2/__generated__/AuctionAppTestQuery.graphql"
+import { useAuctionTracking } from "../Hooks/useAuctionTracking"
+import { flushPromiseQueue } from "v2/DevTools"
 
 jest.unmock("react-relay")
+jest.mock("v2/Apps/Auction/Hooks/useAuctionTracking")
 
 jest.mock("v2/Apps/Auction/Components/AuctionMeta", () => ({
   AuctionMetaFragmentContainer: () => null,
@@ -51,6 +54,8 @@ jest.mock("v2/Utils/getENV", () => ({
 }))
 
 describe("AuctionApp", () => {
+  const mockUseAuctionTracking = useAuctionTracking as jest.Mock
+
   const { getWrapper } = setupTestWrapper<AuctionAppTestQuery>({
     Component: (props: any) => {
       return <AuctionAppFragmentContainer {...props} />
@@ -72,6 +77,29 @@ describe("AuctionApp", () => {
       input: {},
       slug: "auction-slug",
     },
+  })
+
+  beforeEach(() => {
+    mockUseAuctionTracking.mockImplementation(() => ({
+      tracking: {
+        auctionPageView: jest.fn(),
+      },
+    }))
+  })
+
+  it("tracks page view", async () => {
+    const spy = jest.fn()
+
+    mockUseAuctionTracking.mockImplementation(() => ({
+      tracking: {
+        auctionPageView: spy,
+      },
+    }))
+
+    getWrapper()
+
+    await flushPromiseQueue()
+    expect(spy).toHaveBeenCalled()
   })
 
   it("embeds ZenDesk widget", () => {
@@ -104,7 +132,7 @@ describe("AuctionApp", () => {
     it("includes banner when cascading is enabled", () => {
       const wrapper = getWrapper({
         Sale: () => ({
-          cascadingEndTimeInterval: 60,
+          cascadingEndTimeIntervalMinutes: 1,
         }),
       })
       expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeTruthy()
@@ -113,7 +141,7 @@ describe("AuctionApp", () => {
     it("hides banner when cascading is disabled", () => {
       const wrapper = getWrapper({
         Sale: () => ({
-          cascadingEndTimeInterval: null,
+          cascadingEndTimeIntervalMinutes: null,
         }),
       })
       expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeFalsy()

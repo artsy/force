@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { Button } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
-import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 
 interface ViewWorksButtonProps {
   artworksCount: number
@@ -14,7 +14,7 @@ export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
 }) => {
   const tracking = useTracking()
 
-  const { scrollTo } = useScrollTo({
+  const { scrollTo } = useScrollToElement({
     selectorOrRef: "#scrollTo--ViewingRoomTabBar",
     offset: 20,
     behavior: "smooth",

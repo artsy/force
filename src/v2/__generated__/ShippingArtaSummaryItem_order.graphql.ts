@@ -12,7 +12,7 @@ export type ShippingArtaSummaryItem_order = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly selectedShippingQuote: {
-                    readonly displayName: string;
+                    readonly typeName: string;
                     readonly price: string | null;
                 } | null;
             } | null;
@@ -88,7 +88,7 @@ const node: ReaderFragment = {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "displayName",
+                      "name": "typeName",
                       "storageKey": null
                     },
                     {
@@ -120,5 +120,5 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = '53c40d83d3cc92e8fee4ac4b7c2a09d3';
+(node as any).hash = '53837b0dfca37358282774a18a4cdb5a';
 export default node;

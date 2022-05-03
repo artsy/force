@@ -12,6 +12,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
 import { ArtworkImage } from "./ArtworkImage"
+import { isTouch } from "v2/Utils/device"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -69,6 +70,9 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
+  const shouldShowHoverSaveButton =
+    isHoverEffectEnabled && (!!artwork.is_saved || (isHovered && !isTouch))
+
   return (
     <div
       data-id={artwork.internalID}
@@ -101,8 +105,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         </Link>
 
         <Badge artwork={artwork} />
-
-        {isSaveButtonVisible && (
+        {!isHoverEffectEnabled && isSaveButtonVisible && (
           <SaveButtonFragmentContainer
             contextModule={contextModule || ContextModule.artworkGrid}
             artwork={artwork}
@@ -110,7 +113,11 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         )}
       </Box>
 
-      <Metadata artwork={artwork} isHovered={isHovered} />
+      <Metadata
+        artwork={artwork}
+        isHovered={isHovered}
+        shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
+      />
     </div>
   )
 }

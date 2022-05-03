@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_sale = {
     readonly internalID: string;
+    readonly slug: string;
     readonly isClosed: boolean | null;
     readonly coverImage: {
         readonly url: string | null;
@@ -16,7 +17,8 @@ export type AuctionApp_sale = {
     readonly showBuyNowTab: {
         readonly internalID: string;
     } | null;
-    readonly cascadingEndTimeInterval: number | null;
+    readonly cascadingEndTimeIntervalMinutes: number | null;
+    readonly extendedBiddingIntervalMinutes: number | null;
     readonly " $fragmentRefs": FragmentRefs<"AuctionMeta_sale" | "AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale">;
     readonly " $refType": "AuctionApp_sale";
 };
@@ -46,6 +48,13 @@ return {
   "name": "AuctionApp_sale",
   "selections": [
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -105,7 +114,14 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "cascadingEndTimeInterval",
+      "name": "cascadingEndTimeIntervalMinutes",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "extendedBiddingIntervalMinutes",
       "storageKey": null
     },
     {
@@ -133,5 +149,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2811c3a1dd839e419abb7f2314486e97';
+(node as any).hash = '293efbb0946a125a797affc635551741';
 export default node;
