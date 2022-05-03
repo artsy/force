@@ -93,7 +93,7 @@ import { useFeatureVariant } from "v2/System/useFeatureFlag"
 function MyComponent() {
   const { trackFeatureVariant } = useTrackFeatureVariant({
     experimentName: "my-awesome-experiment",
-    variantName: variant?.name!
+    variantName: variant?.name!,
     // payload is optional
     payload: variant?.payload!
   })
