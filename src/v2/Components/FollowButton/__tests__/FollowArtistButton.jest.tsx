@@ -82,7 +82,6 @@ describe("FollowArtistButton", () => {
         copy: "Sign up to follow Damon Zucconi",
         intent: "followArtist",
         mode: "signup",
-        redirectTo: "http://localhost/",
       })
     })
 
