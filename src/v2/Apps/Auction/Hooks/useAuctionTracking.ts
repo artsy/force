@@ -33,6 +33,14 @@ export const useAuctionTracking = () => {
         })
       )
     },
+    auctionPageView: ({ me, sale }) => {
+      trackEvent({
+        action: ActionType.auctionPageView,
+        auction_slug: sale.slug,
+        sale_id: sale.internalID,
+        user_id: me?.internalID,
+      })
+    },
     bidPageView: ({ artwork, me }) => {
       trackEvent({
         action: ActionType.bidPageView,
