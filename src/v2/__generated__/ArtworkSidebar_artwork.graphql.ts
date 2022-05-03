@@ -17,11 +17,14 @@ export type ArtworkSidebar_artwork = {
     readonly sale: {
         readonly is_closed: boolean | null;
         readonly startAt: string | null;
+        readonly internalID: string;
+        readonly extendedBiddingIntervalMinutes: number | null;
     } | null;
     readonly saleArtwork: {
         readonly endAt: string | null;
         readonly endedAt: string | null;
         readonly extendedBiddingEndAt: string | null;
+        readonly lotID: string | null;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork">;
     readonly " $refType": "ArtworkSidebar_artwork";
@@ -121,6 +124,20 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "startAt",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingIntervalMinutes",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -152,6 +169,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "extendedBiddingEndAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotID",
           "storageKey": null
         }
       ],
@@ -231,5 +255,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'b5b1ff7a4a5ab1e29e12c08ac65585d5';
+(node as any).hash = 'cc3c1830e02b49987d1b21d5b7daa4e8';
 export default node;

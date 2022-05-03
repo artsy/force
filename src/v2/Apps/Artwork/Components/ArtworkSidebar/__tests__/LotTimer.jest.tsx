@@ -11,10 +11,12 @@ describe("extendedBiddingInfoCopy", () => {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         extendedBiddingEndAt: "",
+        lotID: "lot-id",
         sale: {
           startAt: "",
           extendedBiddingPeriodMinutes: 2,
           extendedBiddingIntervalMinutes: 2,
+          internalID: "sale-id",
         },
         " $refType": "LotTimer_saleArtwork",
       }
@@ -39,10 +41,12 @@ describe("extendedBiddingInfoCopy", () => {
           endAt: new Date(endDate).toISOString(),
           formattedStartDateTime: "",
           extendedBiddingEndAt: new Date(extendedEndDate).toISOString(),
+          lotID: "lot-id",
           sale: {
             startAt: new Date(startDate).toISOString(),
             extendedBiddingPeriodMinutes: 2,
             extendedBiddingIntervalMinutes: 2,
+            internalID: "sale-id",
           },
           " $refType": "LotTimer_saleArtwork",
         }
@@ -62,10 +66,12 @@ describe("extendedBiddingInfoCopy", () => {
           ).toISOString(),
           formattedStartDateTime: "",
           extendedBiddingEndAt: "",
+          lotID: "lot-id",
           sale: {
             startAt: startAt.toISOString(),
             extendedBiddingPeriodMinutes: 2,
             extendedBiddingIntervalMinutes: 2,
+            internalID: "sale-id",
           },
           " $refType": "LotTimer_saleArtwork",
         }
@@ -77,15 +83,17 @@ describe("extendedBiddingInfoCopy", () => {
   })
 
   describe("when extended bidding feature is off", () => {
-    it("shows the extended bidding info label", () => {
+    it("doesn't show the extended bidding info label", () => {
       const saleArtwork: LotTimer_saleArtwork = {
         endAt: Date.now().toString(),
         formattedStartDateTime: "",
         extendedBiddingEndAt: "",
+        lotID: "lot-id",
         sale: {
           startAt: "",
           extendedBiddingPeriodMinutes: null,
           extendedBiddingIntervalMinutes: null,
+          internalID: "sale-id",
         },
         " $refType": "LotTimer_saleArtwork",
       }
