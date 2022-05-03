@@ -18308,6 +18308,11 @@ react-waypoint@^7.3.3:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
 
+react-web-share@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-web-share/-/react-web-share-1.1.6.tgz#ac99ebe2bc5e291bb3af2d5ffcf533fcbede8aba"
+  integrity sha512-IttmjG4DlIPEWNnS3RBccaPo6zFs2DNYk+92YjW1iPp0L9h0hXCaellxIQx8xhLepLFoiVjOMM/MNbLSZUzzsw==
+
 react-zendesk@0.1.10:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/react-zendesk/-/react-zendesk-0.1.10.tgz#3f2ebe45e06b006b2ceadc09af7bed58cdd015b2"

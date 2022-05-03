@@ -6,7 +6,6 @@ import styled from "styled-components"
 
 function PuzzleTile(props) {
   const { tile, index, width, height, handleTileClick, imgUrl } = props
-  console.log("img in tile", imgUrl)
   const { row, col } = getMatrixPosition(index)
   const visualPos = getVisualPosition(row, col, width, height)
   const tileStyle = {
