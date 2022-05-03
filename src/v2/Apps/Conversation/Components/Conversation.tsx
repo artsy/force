@@ -174,27 +174,26 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [toastBottom, setToastBottom] = useState(0)
   // Banner
   const [showBanner, setShowBanner] = useState(false)
-  const [timer, setTimer] = useState()
-  // let bannerTimeout
+
+  let bannerTimeout
 
   useEffect(() => {
     setShowBanner(true)
-    console.log("before clear", timer)
-    if (timer) {
-      clearTimeout(timer)
-      setTimer(null)
-      console.log("if clear")
-    }
-    setTimer(
-      setTimeout(() => {
-        setShowBanner(false)
-      }, 5000)
-    )
-    console.log("show clear", timer)
-    return () => {
-      clearTimeout(timer)
-    }
+    console.log("before clear", bannerTimeout)
+    // if (bannerTimeout) {
+    //   clearTimeout(bannerTimeout)
+    //   bannerTimeout = null
+    //   console.log("if clear")
+    // }
+    bannerTimeout = setTimeout(() => {
+      setShowBanner(false)
+    }, 5000)
+    // return () => {
+    //   clearTimeout(bannerTimeout)
+    // }
+    console.log("clear", bannerTimeout)
   }, [props.selectedConversationID])
+  console.log("show", showBanner)
 
   // Behaviours
   // -Navigation
@@ -237,13 +236,19 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       {showBanner && (
-        <FadeOut>
-          <Toast
-            variant="alert"
-            id="alert-toast"
-            message="To protect your payment, always communicate and pay through the Artsy platform."
-          />
-        </FadeOut>
+        <HorizontalPadding>
+          <GridColumns gridRowGap={[6, 4]}>
+            <Column span={6}>
+              <FadeOut>
+                <Toast
+                  variant="alert"
+                  id="alert-toast"
+                  message="To protect your payment, always communicate and pay through the Artsy platform."
+                />
+              </FadeOut>
+            </Column>
+          </GridColumns>
+        </HorizontalPadding>
       )}
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
