@@ -17,6 +17,7 @@ export type ArtworkApp_artwork = {
     readonly sale: {
         readonly internalID: string;
         readonly cascadingEndTimeIntervalMinutes: number | null;
+        readonly extendedBiddingIntervalMinutes: number | null;
         readonly slug: string;
     } | null;
     readonly artists: ReadonlyArray<{
@@ -142,6 +143,13 @@ return {
           "name": "cascadingEndTimeIntervalMinutes",
           "storageKey": null
         },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingIntervalMinutes",
+          "storageKey": null
+        },
         (v0/*: any*/)
       ],
       "storageKey": null
@@ -208,5 +216,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '5e4aba72a93f5ab3cff3cf781fb60ef1';
+(node as any).hash = '0d4456679fe9373bee2d6efc2cf8e395';
 export default node;
