@@ -70,6 +70,7 @@ describe("FollowProfileButton", () => {
         copy: "Sign up to follow Salon 94",
         intent: "followPartner",
         mode: "signup",
+        redirectTo: "http://localhost/",
       })
     })
 
