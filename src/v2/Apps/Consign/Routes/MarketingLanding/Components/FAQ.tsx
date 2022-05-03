@@ -125,8 +125,8 @@ export const FAQ: React.FC = () => {
       value: (
         <TextItem>
           To edit your existing submissions or add further details, please
-          contact consign@artsy.net with the subject line “Edit my submission”
-          and one of our specialists will assist you. In the body of your email,
+          contact sell@artsy.net with the subject line “Edit my submission” and
+          one of our specialists will assist you. In the body of your email,
           please include the submission ID number, which can be found in the
           email receipt you received from Artsy.
         </TextItem>
@@ -137,7 +137,7 @@ export const FAQ: React.FC = () => {
       value: (
         <TextItem>
           You can contact an Artsy specialist at any time by emailing
-          consign@artsy.net.
+          sell@artsy.net.
         </TextItem>
       ),
     },

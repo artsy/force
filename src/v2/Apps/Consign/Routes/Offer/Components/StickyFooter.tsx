@@ -1,6 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 
-import { Flex, Link, Sans, Spacer } from "@artsy/palette"
+import { Flex, Link, Text, Spacer } from "@artsy/palette"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const StickyFooter: React.FC = () => {
   return (
@@ -16,9 +17,10 @@ export const StickyFooter: React.FC = () => {
       justifyContent="center"
       backgroundColor="white100"
     >
-      <Sans size="2" color="black60">
-        Need help? <Link href="mailto:consign@artsy.net">Ask a question</Link>.
-      </Sans>
+      <Text variant="xs" color="black60">
+        Need help?{" "}
+        <RouterLink to="mailto: sell@artsy.net">Ask a question</RouterLink>.
+      </Text>
       <Spacer mb={2} />
     </Flex>
   )

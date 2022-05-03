@@ -17,18 +17,16 @@ describe("ContactUs", () => {
   it("contains correct email in body", () => {
     const wrapper = getWrapper()
     expect(wrapper.text()).toContain(
-      "Email us at consign@artsy.net or call +1-646-797-3423 for more information on how Artsy can sell your artwork."
+      "Email us at sell@artsy.net or call +1-646-797-3423 for more information on how Artsy can sell your artwork."
     ) // pull text minus divs
   })
 
   it("has correct email link", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("a").first().props().href).toBe(
-      "mailto:consign@artsy.net"
-    )
+    expect(wrapper.find("a").first().props().href).toBe("mailto:sell@artsy.net")
     const wrapperMobile = getWrapper("xs")
     expect(wrapperMobile.find("a").first().props().href).toBe(
-      "mailto:consign@artsy.net"
+      "mailto:sell@artsy.net"
     )
   })
 })
