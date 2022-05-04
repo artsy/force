@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
 
   return (
     <FullBleedHeader
-      height={600}
+      height={[400, 600]}
       src="https://files.artsy.net/images/swa-hero.png"
       caption="Alex Katz, <i>Forest</i>, 2009."
     >
