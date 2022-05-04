@@ -75,7 +75,7 @@ const { renderWithRelay } = setupTestWrapperTL({
     }
   `,
   variables: {
-    id: "1",
+    externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
   },
 })
 

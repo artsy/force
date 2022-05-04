@@ -33,7 +33,6 @@ const mockEmptyMe = {
 }
 
 const mockSubmission = {
-  id: "1",
   externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
 }
 
@@ -85,7 +84,7 @@ const getWrapper = (user?: User) =>
         me {
           ...ContactInformation_me
         }
-        submission(id: $externalId) {
+        submission(externalId: $externalId) {
           ...ContactInformation_submission
         }
       }
@@ -344,7 +343,7 @@ describe("Contact Information step", () => {
       expect(mockTrackEvent).toHaveBeenCalled()
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: ActionType.consignmentSubmitted,
-        submission_id: "1",
+        submission_id: mockSubmission.externalId,
         user_id: "123",
         user_email: "serge@test.test",
       })
@@ -373,7 +372,7 @@ describe("Contact Information step", () => {
       expect(mockTrackEvent).toHaveBeenCalled()
       expect(mockTrackEvent).toHaveBeenCalledWith({
         action: ActionType.consignmentSubmitted,
-        submission_id: "1",
+        submission_id: mockSubmission.externalId,
         user_id: null,
         user_email: "banksy@test.test",
       })

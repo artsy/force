@@ -81,7 +81,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
         trackEvent({
           action: ActionType.consignmentSubmitted,
-          submission_id: submission.id,
+          submission_id: submission.externalId,
           user_id: me?.internalID,
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
@@ -148,7 +148,6 @@ export const ContactInformationFragmentContainer = createFragmentContainer(
   {
     submission: graphql`
       fragment ContactInformation_submission on ConsignmentSubmission {
-        id
         externalId
       }
     `,

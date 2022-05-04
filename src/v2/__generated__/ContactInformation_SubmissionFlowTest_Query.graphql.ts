@@ -30,7 +30,7 @@ query ContactInformation_SubmissionFlowTest_Query(
     ...ContactInformation_me
     id
   }
-  submission(id: $externalId) {
+  submission(externalId: $externalId) {
     ...ContactInformation_submission
     id
   }
@@ -50,7 +50,6 @@ fragment ContactInformation_me on Me {
 }
 
 fragment ContactInformation_submission on ConsignmentSubmission {
-  id
   externalId
 }
 */
@@ -66,7 +65,7 @@ var v0 = [
 v1 = [
   {
     "kind": "Variable",
-    "name": "id",
+    "name": "externalId",
     "variableName": "externalId"
   }
 ],
@@ -237,21 +236,21 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "externalId",
             "storageKey": null
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5c916dbda5b57a8cf592575b9f2dd3ac",
+    "cacheID": "dc3d7214b8e39e5dee081569ad46db4a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -293,9 +292,9 @@ return {
     },
     "name": "ContactInformation_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(id: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  id\n  externalId\n}\n"
+    "text": "query ContactInformation_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  me {\n    ...ContactInformation_me\n    id\n  }\n  submission(externalId: $externalId) {\n    ...ContactInformation_submission\n    id\n  }\n}\n\nfragment ContactInformation_me on Me {\n  internalID\n  name\n  email\n  phone\n  phoneNumber {\n    isValid\n    international: display(format: INTERNATIONAL)\n    national: display(format: NATIONAL)\n    regionCode\n  }\n}\n\nfragment ContactInformation_submission on ConsignmentSubmission {\n  externalId\n}\n"
   }
 };
 })();
-(node as any).hash = '63a8362b8f7c72ba59d83e2186b97ad0';
+(node as any).hash = '3a25683fc533f44cedfd5528a565c3f7';
 export default node;
