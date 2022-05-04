@@ -155,16 +155,16 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         href: "/gene/trove",
       },
       {
-        text: "Highlights at Auction This Week",
-        href: "/collection/auction-highlights",
+        text: "Iconic Prints",
+        href: "/gene/iconic-prints",
       },
       {
-        text: "Highlights at Fairs This Week",
-        href: "/collection/art-fair-highlights",
+        text: "Finds Under $2500",
+        href: "/gene/finds-under-2500",
       },
       {
-        text: "New in Figurative Painting",
-        href: "/collection/emerging-figurative-painting",
+        text: "The Collectibles Shop",
+        href: "/gene/the-collectibles-shop",
       },
       {
         text: "Price",
