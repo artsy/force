@@ -38,23 +38,15 @@ describe("NavBarSubMenu", () => {
     expect(linkMenuItems.at(0).text()).toContain("Trove")
     expect(linkMenuItems.at(0).prop("href")).toEqual("/gene/trove")
 
-    expect(linkMenuItems.at(1).text()).toContain(
-      "Highlights at Auction This Week"
-    )
-    expect(linkMenuItems.at(1).prop("href")).toEqual(
-      "/collection/auction-highlights"
-    )
+    expect(linkMenuItems.at(1).text()).toContain("Iconic Prints")
+    expect(linkMenuItems.at(1).prop("href")).toEqual("/gene/iconic-prints")
 
-    expect(linkMenuItems.at(2).text()).toContain(
-      "Highlights at Fairs This Week"
-    )
-    expect(linkMenuItems.at(2).prop("href")).toEqual(
-      "/collection/art-fair-highlights"
-    )
+    expect(linkMenuItems.at(2).text()).toContain("Finds Under $2500")
+    expect(linkMenuItems.at(2).prop("href")).toEqual("/gene/finds-under-2500")
 
-    expect(linkMenuItems.at(3).text()).toContain("New in Figurative Painting")
+    expect(linkMenuItems.at(3).text()).toContain("The Collectibles Shop")
     expect(linkMenuItems.at(3).prop("href")).toEqual(
-      "/collection/emerging-figurative-painting"
+      "/gene/the-collectibles-shop"
     )
 
     expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
