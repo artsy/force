@@ -50,7 +50,7 @@ export const CtaBanner = () => {
               style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
               backgroundColor="white100"
             >
-              <AppContainer py={1}>
+              <AppContainer py={[1, 2]}>
                 <HorizontalPadding>
                   <Media at="xs">
                     <Flex>
