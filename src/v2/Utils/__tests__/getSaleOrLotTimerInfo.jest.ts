@@ -166,7 +166,7 @@ describe("getSaleOrLotTimerInfo", () => {
       })
 
       describe("when the timer is on the lots in the grid not the lot grid", () => {
-        const lotGridIntervalMinutes = 1
+        const urgencyIntervalMinutes = 1
         describe("when the close date/time is minutes until close", () => {
           const time = {
             days: "00",
@@ -178,7 +178,7 @@ describe("getSaleOrLotTimerInfo", () => {
           it("formats the timer to show 'xm xs' in red", () => {
             const lotTimerInfo = getSaleOrLotTimerInfo(time, {
               hasStarted,
-              lotGridIntervalMinutes,
+              urgencyIntervalMinutes,
             })
             expect(lotTimerInfo.copy).toEqual("10m 59s")
             expect(lotTimerInfo.color).toEqual("black100")
@@ -196,7 +196,7 @@ describe("getSaleOrLotTimerInfo", () => {
           it("formats the timer to show 'xm xs' in red", () => {
             const lotTimerInfo = getSaleOrLotTimerInfo(time, {
               hasStarted,
-              lotGridIntervalMinutes,
+              urgencyIntervalMinutes,
             })
             expect(lotTimerInfo.copy).toEqual("0m 59s")
             expect(lotTimerInfo.color).toEqual("red100")

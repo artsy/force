@@ -282,8 +282,8 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
 
   const timerCopy = getSaleOrLotTimerInfo(time, {
     hasStarted: saleHasStarted,
-    extendedBiddingEndAt: extendedBiddingEndAt,
-    lotGridIntervalMinutes: sale.cascadingEndTimeIntervalMinutes,
+    extendedBiddingEndAt,
+    urgencyIntervalMinutes: sale.cascadingEndTimeIntervalMinutes,
   })
 
   let lotCloseCopy

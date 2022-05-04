@@ -18,7 +18,7 @@ export const getSaleOrLotTimerInfo = (
     hasStarted?: boolean
     lotsAreClosing?: boolean
     isSaleInfo?: boolean
-    lotGridIntervalMinutes?: number | null
+    urgencyIntervalMinutes?: number | null
     extendedBiddingEndAt?: string | null
   }
 ): TimerInfo => {
@@ -27,7 +27,7 @@ export const getSaleOrLotTimerInfo = (
     hasStarted,
     lotsAreClosing,
     isSaleInfo,
-    lotGridIntervalMinutes,
+    urgencyIntervalMinutes,
     extendedBiddingEndAt,
   } = options
 
@@ -91,10 +91,10 @@ export const getSaleOrLotTimerInfo = (
 
       // less than cascade interval until close
       else if (
-        lotGridIntervalMinutes &&
+        urgencyIntervalMinutes &&
         parsedDays < 1 &&
         parsedHours < 1 &&
-        parsedMinutes < lotGridIntervalMinutes
+        parsedMinutes < urgencyIntervalMinutes
       ) {
         copy = `${parsedMinutes}m ${parsedSeconds}s`
         color = "red100"
@@ -103,7 +103,7 @@ export const getSaleOrLotTimerInfo = (
       // <60 mins until close
       else if (parsedDays < 1 && parsedHours < 1) {
         copy = `${parsedMinutes}m ${parsedSeconds}s`
-        color = lotGridIntervalMinutes ? "black100" : "red100"
+        color = urgencyIntervalMinutes ? "black100" : "red100"
       }
     }
   }
