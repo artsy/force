@@ -21,7 +21,7 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
       trackedEvents.push({
         flow: order.mode,
         order_id: order.internalID,
-        subject: "bank_acount_selected",
+        subject: "bank_account_selected",
       })
     }
     if (!event.empty) {
