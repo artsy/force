@@ -17,7 +17,6 @@ import {
   media,
   Spacer,
   Spinner,
-  Toast,
 } from "@artsy/palette"
 import compact from "lodash/compact"
 import styled from "styled-components"
@@ -226,11 +225,10 @@ const Conversation: React.FC<ConversationProps> = props => {
       {showBanner && (
         <GridColumns>
           <Column start={4} span={6} mt={1}>
-            <BannerWarning variant="brand">
-              <GuaranteeIcon mr={1} fill="white100" />
+            <Banner variant="brand">
               To protect your payment, always communicate and pay through the
               Artsy platform.
-            </BannerWarning>
+            </Banner>
           </Column>
         </GridColumns>
       )}
@@ -308,13 +306,6 @@ const SpinnerContainer = styled.div`
   height: 100px;
   position: relative;
 `
-
-const BannerWarning = styled(Banner)`
-  ${media.xs`
-    text-align: right 
-  `}
-`
-
 export const ConversationPaginationContainer = createPaginationContainer(
   Conversation,
   {
