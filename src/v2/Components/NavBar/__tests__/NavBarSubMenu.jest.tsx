@@ -35,7 +35,7 @@ describe("NavBarSubMenu", () => {
     const linkMenuItems = wrapper.find("a")
 
     // expect(linkMenuItems.length).toBe(5)
-    expect(linkMenuItems.at(0).text()).toContain("Trove")
+    expect(linkMenuItems.at(0).text()).toContain("Trove: Editor's Picks")
     expect(linkMenuItems.at(0).prop("href")).toEqual("/gene/trove")
 
     expect(linkMenuItems.at(1).text()).toContain("Iconic Prints")

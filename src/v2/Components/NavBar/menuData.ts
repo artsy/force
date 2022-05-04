@@ -151,7 +151,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     title: "Artworks",
     links: [
       {
-        text: "Trove",
+        text: "Trove: Editor's Picks",
         href: "/gene/trove",
       },
       {
