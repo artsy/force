@@ -112,86 +112,125 @@ describe("getSaleOrLotTimerInfo", () => {
   })
 
   describe("when the timer is on the lot", () => {
-    describe("getTimerCopy", () => {
-      describe("when the sale is open", () => {
-        const hasStarted = true
-        describe("when the close date/time is more than 24 hrs before closing", () => {
-          const time = { days: "01", hours: "23", minutes: "33", seconds: "00" }
-          it("formats the timer to show 'xd xh' in blue", () => {
-            const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("1d 23h")
-            expect(lotTimerInfo.color).toEqual("blue100")
-          })
+    describe("when the sale is open", () => {
+      const hasStarted = true
+      describe("when the close date/time is more than 24 hrs before closing", () => {
+        const time = { days: "01", hours: "23", minutes: "33", seconds: "00" }
+        it("formats the timer to show 'xd xh' in blue", () => {
+          const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
+          expect(lotTimerInfo.copy).toEqual("1d 23h")
+          expect(lotTimerInfo.color).toEqual("blue100")
         })
+      })
 
-        describe("when the close date/time is between 1 and 24 hours before closing", () => {
-          const time = { days: "00", hours: "23", minutes: "33", seconds: "01" }
+      describe("when the close date/time is between 1 and 24 hours before closing", () => {
+        const time = { days: "00", hours: "23", minutes: "33", seconds: "01" }
 
-          it("formats the timer to show 'xh xm' in blue", () => {
-            const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("23h 33m")
-            expect(lotTimerInfo.color).toEqual("blue100")
-          })
+        it("formats the timer to show 'xh xm' in blue", () => {
+          const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
+          expect(lotTimerInfo.copy).toEqual("23h 33m")
+          expect(lotTimerInfo.color).toEqual("blue100")
         })
+      })
 
-        describe("when the close date/time is less than 1 hour but greater than 2 min until close", () => {
-          const time = { days: "00", hours: "00", minutes: "33", seconds: "01" }
+      describe("when the timer is on the lot page and not the lot grid", () => {
+        describe("when the close date/time is minutes until close", () => {
+          const time = {
+            days: "00",
+            hours: "00",
+            minutes: "10",
+            seconds: "59",
+          }
 
           it("formats the timer to show 'xm xs' in red", () => {
             const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("33m 1s")
+            expect(lotTimerInfo.copy).toEqual("10m 59s")
             expect(lotTimerInfo.color).toEqual("red100")
           })
         })
 
-        describe("when the close date/time is less than 2 min until close", () => {
-          const time = { days: "00", hours: "00", minutes: "01", seconds: "59" }
+        describe("when the close date/time is less than 1 min from close", () => {
+          const time = {
+            days: "00",
+            hours: "00",
+            minutes: "00",
+            seconds: "59",
+          }
 
           it("formats the timer to show 'xm xs' in red", () => {
             const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("1m 59s")
-            expect(lotTimerInfo.color).toEqual("red100")
-          })
-        })
-
-        describe("when the close date/time is 2-3 min until close", () => {
-          const time = { days: "00", hours: "00", minutes: "02", seconds: "59" }
-
-          it("formats the timer to show 'xm xs' in red", () => {
-            const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("2m 59s")
+            expect(lotTimerInfo.copy).toEqual("0m 59s")
             expect(lotTimerInfo.color).toEqual("red100")
           })
         })
       })
 
-      describe("when the sale is not yet open", () => {
-        const hasStarted = false
-        describe("when the open time is less than one day way", () => {
-          const time = { days: "00", hours: "23", minutes: "01", seconds: "59" }
-          it("shows '1 Day Until Bidding Starts'", () => {
-            const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("Bidding Starts Today")
-            expect(lotTimerInfo.color).toEqual("blue100")
+      describe("when the timer is on the lots in the grid not the lot grid", () => {
+        const urgencyIntervalMinutes = 1
+        describe("when the close date/time is minutes until close", () => {
+          const time = {
+            days: "00",
+            hours: "00",
+            minutes: "10",
+            seconds: "59",
+          }
+
+          it("formats the timer to show 'xm xs' in red", () => {
+            const lotTimerInfo = getSaleOrLotTimerInfo(time, {
+              hasStarted,
+              urgencyIntervalMinutes,
+            })
+            expect(lotTimerInfo.copy).toEqual("10m 59s")
+            expect(lotTimerInfo.color).toEqual("black100")
           })
         })
 
-        describe("when the open time is between 1 and 2 days away", () => {
-          const time = { days: "01", hours: "23", minutes: "01", seconds: "59" }
-          it("shows '2 Days Until Bidding Starts'", () => {
-            const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("1 Day Until Bidding Starts")
-            expect(lotTimerInfo.color).toEqual("blue100")
+        describe("when the close date/time is less than the cascade interval (1 min) from close", () => {
+          const time = {
+            days: "00",
+            hours: "00",
+            minutes: "00",
+            seconds: "59",
+          }
+
+          it("formats the timer to show 'xm xs' in red", () => {
+            const lotTimerInfo = getSaleOrLotTimerInfo(time, {
+              hasStarted,
+              urgencyIntervalMinutes,
+            })
+            expect(lotTimerInfo.copy).toEqual("0m 59s")
+            expect(lotTimerInfo.color).toEqual("red100")
           })
         })
+      })
+    })
 
-        describe("when the open time is more than one day away", () => {
-          const time = { days: "02", hours: "23", minutes: "01", seconds: "59" }
-          it("shows '2 Days Until Bidding Starts'", () => {
-            const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("2 Days Until Bidding Starts")
-            expect(lotTimerInfo.color).toEqual("blue100")
-          })
+    describe("when the sale is not yet open", () => {
+      const hasStarted = false
+      describe("when the open time is less than one day way", () => {
+        const time = { days: "00", hours: "23", minutes: "01", seconds: "59" }
+        it("shows '1 Day Until Bidding Starts'", () => {
+          const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
+          expect(lotTimerInfo.copy).toEqual("Bidding Starts Today")
+          expect(lotTimerInfo.color).toEqual("blue100")
+        })
+      })
+
+      describe("when the open time is between 1 and 2 days away", () => {
+        const time = { days: "01", hours: "23", minutes: "01", seconds: "59" }
+        it("shows '2 Days Until Bidding Starts'", () => {
+          const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
+          expect(lotTimerInfo.copy).toEqual("1 Day Until Bidding Starts")
+          expect(lotTimerInfo.color).toEqual("blue100")
+        })
+      })
+
+      describe("when the open time is more than one day away", () => {
+        const time = { days: "02", hours: "23", minutes: "01", seconds: "59" }
+        it("shows '2 Days Until Bidding Starts'", () => {
+          const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
+          expect(lotTimerInfo.copy).toEqual("2 Days Until Bidding Starts")
+          expect(lotTimerInfo.color).toEqual("blue100")
         })
       })
     })
