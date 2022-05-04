@@ -306,6 +306,52 @@ describe("Details", () => {
         const wrapper = await getWrapper(data)
         expect(wrapper.html()).not.toContain("Closes")
       })
+      describe("extended bidding fucntionality", () => {
+        describe("bidding has been extended", () => {
+          it("shows the extended label and the timer reflects the extendedBiddingEndAt", async () => {
+            const data: any = {
+              ...artworkInAuction,
+              sale_artwork: {
+                ...artworkInAuction?.sale_artwork,
+                endAt: "2022-03-18T05:23:37.000Z",
+                extendedBiddingEndAt: "2022-03-18T05:24:32.000Z",
+              },
+              sale: {
+                ...artworkInAuction?.sale,
+                extendedBiddingIntervalMinutes: 2,
+                cascadingEndTimeIntervalMinutes: 2,
+                endAt: "2022-03-18T15:33:37.000Z",
+              },
+            }
+
+            const wrapper = await getWrapper(data)
+
+            expect(wrapper.html()).toContain("Extended: 2m 0s")
+          })
+        })
+        describe("bidding has not yet been extended", () => {
+          it("shows the normal cascading timer copy", async () => {
+            const data: any = {
+              ...artworkInAuction,
+              sale_artwork: {
+                ...artworkInAuction?.sale_artwork,
+                endAt: "2022-03-18T05:23:37.000Z",
+                extendedBiddingEndAt: null,
+              },
+              sale: {
+                ...artworkInAuction?.sale,
+                extendedBiddingIntervalMinutes: 2,
+                cascadingEndTimeIntervalMinutes: 2,
+                endAt: "2022-03-18T15:33:37.000Z",
+              },
+            }
+
+            const wrapper = await getWrapper(data)
+
+            expect(wrapper.html()).toContain("Closes, 1m 5s")
+          })
+        })
+      })
     })
   })
 
@@ -394,6 +440,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     is_auction: true,
     is_closed: false,
     cascadingEndTimeIntervalMinutes: null,
+    extendedBiddingIntervalMinutes: null,
     startAt: "2022-03-11T12:33:37.000Z",
     endAt: "2022-03-12T12:33:37.000Z",
   },
@@ -405,6 +452,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     counts: { bidder_positions: 0 },
     endAt: "2022-03-12T12:33:37.000Z",
     formattedEndDateTime: "Closes, Mar 12 • 12:33pm GMT",
+    extendedBiddingEndAt: null,
   },
   attributionClass: {
     id: "attributionClass-id",

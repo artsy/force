@@ -31,6 +31,7 @@ export type Details_Test_QueryRawResponse = {
         readonly sale: ({
             readonly endAt: string | null;
             readonly cascadingEndTimeIntervalMinutes: number | null;
+            readonly extendedBiddingIntervalMinutes: number | null;
             readonly startAt: string | null;
             readonly is_auction: boolean | null;
             readonly is_closed: boolean | null;
@@ -39,6 +40,7 @@ export type Details_Test_QueryRawResponse = {
         readonly sale_artwork: ({
             readonly lotLabel: string | null;
             readonly endAt: string | null;
+            readonly extendedBiddingEndAt: string | null;
             readonly formattedEndDateTime: string | null;
             readonly counts: ({
                 readonly bidder_positions: number | null;
@@ -103,6 +105,7 @@ fragment Details_artwork on Artwork {
   sale {
     endAt
     cascadingEndTimeIntervalMinutes
+    extendedBiddingIntervalMinutes
     startAt
     is_auction: isAuction
     is_closed: isClosed
@@ -111,6 +114,7 @@ fragment Details_artwork on Artwork {
   sale_artwork: saleArtwork {
     lotLabel
     endAt
+    extendedBiddingEndAt
     formattedEndDateTime
     counts {
       bidder_positions: bidderPositions
@@ -223,6 +227,12 @@ v10 = {
   "nullable": true,
   "plural": false,
   "type": "Boolean"
+},
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -349,6 +359,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "extendedBiddingIntervalMinutes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "startAt",
                 "storageKey": null
               },
@@ -386,6 +403,13 @@ return {
                 "storageKey": null
               },
               (v5/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "extendedBiddingEndAt",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -494,7 +518,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4de87bc5b49324a5bb0e13a142695b50",
+    "cacheID": "c6081674a268672e03657809c7ff9303",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -557,13 +581,9 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.cascadingEndTimeIntervalMinutes": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
+        "artwork.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
         "artwork.sale.endAt": (v8/*: any*/),
+        "artwork.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
         "artwork.sale.id": (v9/*: any*/),
         "artwork.sale.is_auction": (v10/*: any*/),
         "artwork.sale.is_closed": (v10/*: any*/),
@@ -587,6 +607,7 @@ return {
           "type": "FormattedNumber"
         },
         "artwork.sale_artwork.endAt": (v8/*: any*/),
+        "artwork.sale_artwork.extendedBiddingEndAt": (v8/*: any*/),
         "artwork.sale_artwork.formattedEndDateTime": (v8/*: any*/),
         "artwork.sale_artwork.highest_bid": {
           "enumValues": null,
@@ -611,7 +632,7 @@ return {
     },
     "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
