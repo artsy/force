@@ -32,34 +32,34 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     title: "Artists",
     links: [
       {
-        text: "Trending on Artsy",
-        href: "/collection/highlights-this-month",
+        text: "Trending This Week",
+        href: "/gene/trending-this-week",
       },
       {
-        text: "The Artsy Vanguard Artists",
-        href: "/collection/artsy-vanguard-artists",
+        text: "Black Painters On Our Radar",
+        href: "/gene/black-painters-on-our-radar",
       },
       {
-        text: "Limited-Edition Prints by Leading Artists",
-        href: "/collection/limited-edition-prints-trending-artists",
+        text: "Our Top Auction Lots",
+        href: "/gene/our-top-auction-lots",
         dividerBelow: true,
       },
       {
-        text: "New From",
+        text: "Curator's Picks",
         menu: {
-          title: "New From",
+          title: "Curator's Picks",
           links: [
             {
-              text: "Emerging Artists",
-              href: "/collection/new-from-emerging-artists",
+              text: "Artists On The Rise",
+              href: "/gene/artists-on-the-rise",
             },
             {
-              text: "Established Artists",
-              href: "/collection/new-from-established-artists",
+              text: "Emerging Photographers to Watch",
+              href: "/gene/emerging-photographers-to-watch",
             },
             {
-              text: "Street Artists",
-              href: "/collection/street-art-highlights",
+              text: "Street Art Now",
+              href: "/gene/street-art-now-1",
             },
           ],
         },
@@ -151,20 +151,20 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     title: "Artworks",
     links: [
       {
-        text: "Trove",
+        text: "Trove: Editor's Picks",
         href: "/gene/trove",
       },
       {
-        text: "Highlights at Auction This Week",
-        href: "/collection/auction-highlights",
+        text: "Iconic Prints",
+        href: "/gene/iconic-prints",
       },
       {
-        text: "Highlights at Fairs This Week",
-        href: "/collection/art-fair-highlights",
+        text: "Finds Under $2500",
+        href: "/gene/finds-under-2500",
       },
       {
-        text: "New in Figurative Painting",
-        href: "/collection/emerging-figurative-painting",
+        text: "The Collectibles Shop",
+        href: "/gene/the-collectibles-shop",
       },
       {
         text: "Price",
