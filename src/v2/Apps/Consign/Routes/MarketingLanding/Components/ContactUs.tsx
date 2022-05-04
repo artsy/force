@@ -12,7 +12,7 @@ export const ContactUs: React.FC = () => {
             Questions? Speak to an Artsy Specialist
           </Text>
 
-          <Text data-testid="contactUsBody" variant="sm" mb={4}>
+          <Text variant="sm" mb={4}>
             Email us at <a href="mailto:sell@artsy.net">sell@artsy.net</a> or
             call <a href="tel:!1-646-797-3423">+1-646-797-3423</a> for more
             information on how Artsy can sell your artwork.
