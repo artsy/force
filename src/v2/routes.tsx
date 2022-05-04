@@ -42,6 +42,7 @@ import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
+import { newForYouRoutes } from "v2/Apps/NewForYou/newForYouRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -72,6 +73,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: identityVerificationRoutes },
     { routes: jobsRoutes },
     { routes: meetTheSpecialistsRoutes },
+    { routes: newForYouRoutes },
     { routes: orderRoutes },
     { routes: pageRoutes },
     { routes: partnerRoutes },
