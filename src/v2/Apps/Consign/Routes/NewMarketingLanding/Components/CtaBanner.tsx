@@ -36,7 +36,7 @@ export const CtaBanner = () => {
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
-      destination_path: "/consign/submission/artwork-details",
+      destination_path: "/sell/submission/artwork-details",
     })
   }
 
@@ -50,7 +50,7 @@ export const CtaBanner = () => {
               style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
               backgroundColor="white100"
             >
-              <AppContainer py={1}>
+              <AppContainer py={[1, 2]}>
                 <HorizontalPadding>
                   <Media at="xs">
                     <Flex>
@@ -68,7 +68,7 @@ export const CtaBanner = () => {
                       <Button
                         // @ts-ignore
                         as={RouterLink}
-                        to="/consign/submission/artwork-details"
+                        to="/sell/submission/artwork-details"
                         onClick={trackSubmitClick}
                         size="small"
                         width="100%"
@@ -102,7 +102,7 @@ export const CtaBanner = () => {
                           // @ts-ignore
                           as={RouterLink}
                           onClick={trackSubmitClick}
-                          to="/consign/submission/artwork-details"
+                          to="/sell/submission/artwork-details"
                         >
                           Submit an Artwork
                         </Button>

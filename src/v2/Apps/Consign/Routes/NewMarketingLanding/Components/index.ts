@@ -1,4 +1,4 @@
-export * from "./ConsignMeta"
+export * from "./SellMeta"
 export * from "./FAQ"
 export * from "./Header"
 export * from "./HowItWorks"

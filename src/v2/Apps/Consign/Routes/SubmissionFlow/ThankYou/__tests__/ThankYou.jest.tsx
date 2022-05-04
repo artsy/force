@@ -76,7 +76,7 @@ describe("ThankYou page", () => {
 
       expect(text).toContain("View My Collection on the Artsy App")
 
-      expect(wrapper.find("SoldRecentlyQueryRenderer").length).toBe(1)
+      expect(wrapper.find("SoldRecentlyOnArtsyQueryRenderer").length).toBe(1)
       expect(wrapper.find("FAQ").length).toBe(1)
     })
   })
@@ -111,7 +111,7 @@ describe("ThankYou page", () => {
 
       expect(text).toContain("View My Collection on the Artsy App")
 
-      expect(wrapper.find("SoldRecentlyQueryRenderer").length).toBe(1)
+      expect(wrapper.find("SoldRecentlyOnArtsyQueryRenderer").length).toBe(1)
       expect(wrapper.find("FAQ").length).toBe(1)
     })
   })

@@ -1,11 +1,13 @@
 import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
-import { FAQ } from "../../MarketingLanding/Components/FAQ"
-import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { DownloadApps } from "./Components/DownloadApps"
 import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
+import {
+  SoldRecentlyOnArtsyQueryRenderer,
+  FAQ,
+} from "../../NewMarketingLanding/Components"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
@@ -66,7 +68,7 @@ export const ThankYou: React.FC = () => {
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
-        <RouterLink to="/consign/submission/artwork-details">
+        <RouterLink to="/sell/submission/artwork-details">
           <Button
             mr={[0, 150]}
             width={["100%", "auto"]}
@@ -94,9 +96,9 @@ export const ThankYou: React.FC = () => {
 
       <DownloadApps mb={[2, 6]} />
 
-      <SoldRecentlyQueryRenderer />
+      <SoldRecentlyOnArtsyQueryRenderer />
       <Spacer mt={6} />
-      <FAQ />
+      <FAQ shouldTrackClickEvent />
     </>
   )
 }

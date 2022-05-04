@@ -10,7 +10,7 @@ export const SubmissionLayout: React.FC = ({ children }) => {
   return (
     <Box pt={4} mx={[-2, -4]}>
       <Box height={70} px={[2, 4]}>
-        <RouterLink to="/consign">
+        <RouterLink to="/sell">
           <ArtsyLogoBlackIcon />
         </RouterLink>
       </Box>

@@ -3,7 +3,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { UtmParams } from "../SubmissionFlow/Utils/types"
 import { Join, Spacer } from "@artsy/palette"
 import {
-  ConsignMeta,
+  SellMeta,
   CtaBanner,
   FAQ,
   Header,
@@ -38,7 +38,7 @@ export const MarketingLandingApp = () => {
 
   return (
     <StickyProvider>
-      <ConsignMeta />
+      <SellMeta />
 
       <Header />
 

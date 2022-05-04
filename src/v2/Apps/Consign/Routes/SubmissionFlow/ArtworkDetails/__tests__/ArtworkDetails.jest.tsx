@@ -108,7 +108,7 @@ describe("ArtworkDetails", () => {
 
       expect(
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-      ).toHaveAttribute("href", "/consign")
+      ).toHaveAttribute("href", "/sell")
     })
 
     it("renders learn more link with correct href", () => {
@@ -257,10 +257,10 @@ describe("ArtworkDetails", () => {
         await flushPromiseQueue()
 
         expect(mockRouterReplace).toHaveBeenCalledWith({
-          pathname: "/consign/submission/1/artwork-details",
+          pathname: "/sell/submission/1/artwork-details",
         })
         expect(mockRouterPush).toHaveBeenCalledWith({
-          pathname: "/consign/submission/1/upload-photos",
+          pathname: "/sell/submission/1/upload-photos",
         })
       })
 

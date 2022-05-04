@@ -38,7 +38,7 @@ describe("Header", () => {
 
     expect(link).toBeInTheDocument()
     expect(link).toHaveTextContent("Submit an Artwork")
-    expect(link).toHaveAttribute("href", "/consign/submission/artwork-details")
+    expect(link).toHaveAttribute("href", "/sell/submission/artwork-details")
   })
 
   it("tracks click", () => {
@@ -52,7 +52,7 @@ describe("Header", () => {
       context_module: "Header",
       context_page_owner_type: "sell",
       label: "Submit an Artwork",
-      destination_path: "/consign/submission/artwork-details",
+      destination_path: "/sell/submission/artwork-details",
     })
   })
 })

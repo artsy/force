@@ -70,7 +70,7 @@ const REDIRECTS = {
   "/user/purchases": "/settings/purchases",
   "/user/payments": "/settings/payments",
   "/user/alerts": "/settings/alerts",
-  "/page/collector-faqs-selling-on-artsy": "/consign",
+  "/page/collector-faqs-selling-on-artsy": "/sell",
   "/apply/gallery": "http://apply.artsy.net/galleries",
   "/apply/institution": "http://apply.artsy.net/institutions",
   "/apply/auction": "http://apply.artsy.net/auctions",

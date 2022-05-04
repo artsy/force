@@ -187,7 +187,7 @@ export const NavBar: React.FC = track(
                   </Flex>
 
                   <NavBarItemLink
-                    href="/consign"
+                    href="/sell"
                     textDecoration="none"
                     onClick={handleClick}
                   >

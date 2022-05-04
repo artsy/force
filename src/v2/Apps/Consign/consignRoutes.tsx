@@ -15,15 +15,6 @@ const NewMarketingLandingApp = loadable(
   }
 )
 
-const MarketingLandingApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
-    ),
-  {
-    resolveComponent: component => component.MarketingLandingApp,
-  }
-)
 const OfferDetailApp = loadable(
   () =>
     import(
@@ -121,7 +112,7 @@ const prepareSubmissionFlowStepVariables = data => {
 
 export const consignRoutes: AppRouteConfig[] = [
   {
-    path: "/sell2",
+    path: "/sell",
     getComponent: () => NewMarketingLandingApp,
     onClientSideRender: () => {
       NewMarketingLandingApp.preload()
@@ -129,18 +120,33 @@ export const consignRoutes: AppRouteConfig[] = [
   },
   {
     path: "/consign",
-    getComponent: () => MarketingLandingApp,
-    onClientSideRender: () => {
-      MarketingLandingApp.preload()
-    },
+    children: [
+      {
+        path: ":splat*",
+        render: ({ match }) => {
+          throw new RedirectException(
+            `${match.location.pathname.replace("/consign", "/sell")}${
+              match.location.search
+            }`,
+            301
+          )
+        },
+      },
+      {
+        path: "/",
+        render: ({ match }) => {
+          throw new RedirectException("/sell", 301)
+        },
+      },
+    ],
   },
   {
-    path: "/consign/submission",
+    path: "/sell/submission",
     getComponent: () => SubmissionLayout,
     children: [
       new Redirect({
         from: "/",
-        to: "/consign/submission/artwork-details",
+        to: "/sell/submission/artwork-details",
       }) as any,
       {
         path: "artwork-details",
@@ -229,7 +235,7 @@ export const consignRoutes: AppRouteConfig[] = [
     ],
   },
   {
-    path: "/consign/offer/:offerID",
+    path: "/sell/offer/:offerID",
     theme: "v2",
     getComponent: () => OfferDetailApp,
     onClientSideRender: () => {

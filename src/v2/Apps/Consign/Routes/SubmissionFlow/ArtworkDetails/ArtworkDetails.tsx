@@ -100,17 +100,17 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       }
 
       router.replace({
-        pathname: `/consign/submission/${submissionId}/artwork-details`,
+        pathname: `/sell/submission/${submissionId}/artwork-details`,
       })
       router.push({
-        pathname: `/consign/submission/${submissionId}/upload-photos`,
+        pathname: `/sell/submission/${submissionId}/upload-photos`,
       })
     }
   }
 
   return (
     <>
-      <BackLink py={2} mb={6} to="/consign" width="min-content">
+      <BackLink py={2} mb={6} to="/sell" width="min-content">
         Back
       </BackLink>
 

@@ -86,7 +86,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
-        router.push(`/consign/submission/${submission?.id}/thank-you`)
+        router.push(`/sell/submission/${submission?.id}/thank-you`)
       } catch (error) {
         logger.error("Submission error", error)
         openErrorModal()
@@ -101,7 +101,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={`/consign/submission/${submission?.id}/upload-photos`}
+        to={`/sell/submission/${submission?.id}/upload-photos`}
       >
         Back
       </BackLink>

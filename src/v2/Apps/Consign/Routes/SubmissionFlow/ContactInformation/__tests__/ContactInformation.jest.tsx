@@ -137,7 +137,7 @@ describe("Contact Information step", () => {
       expect(screen.getByText("Back")).toBeInTheDocument()
       expect(
         screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-      ).toHaveAttribute("href", "/consign/submission/1/upload-photos")
+      ).toHaveAttribute("href", "/sell/submission/1/upload-photos")
 
       expect(getSubmitButton()).toBeInTheDocument()
     })
@@ -254,7 +254,7 @@ describe("Contact Information step", () => {
           sessionID: "SessionID",
         })
         expect(mockRouterPush).toHaveBeenCalledWith(
-          "/consign/submission/1/thank-you"
+          "/sell/submission/1/thank-you"
         )
       })
     })
@@ -294,7 +294,7 @@ describe("Contact Information step", () => {
           sessionID: "SessionID",
         })
         expect(mockRouterPush).toHaveBeenCalledWith(
-          "/consign/submission/1/thank-you"
+          "/sell/submission/1/thank-you"
         )
       })
     })

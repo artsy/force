@@ -18,13 +18,13 @@ export const Header: React.FC = () => {
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
-      destination_path: "/consign/submission/artwork-details",
+      destination_path: "/sell/submission/artwork-details",
     })
   }
 
   return (
     <FullBleedHeader
-      height={600}
+      height={[400, 600]}
       src="https://files.artsy.net/images/swa-hero.png"
       caption="Alex Katz, <i>Forest</i>, 2009."
     >
@@ -51,7 +51,7 @@ export const Header: React.FC = () => {
               // @ts-ignore
               as={RouterLink}
               variant="primaryWhite"
-              to="/consign/submission/artwork-details"
+              to="/sell/submission/artwork-details"
               onClick={trackSubmitClick}
               mb={[4, 0]}
             >
