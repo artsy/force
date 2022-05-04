@@ -1,8 +1,7 @@
 import { ContactUs } from "../ContactUs"
 import { MockBoot } from "v2/DevTools"
 import { Breakpoint } from "@artsy/palette"
-import { render, screen, within } from "@testing-library/react"
-import { debug } from "console"
+import { render, screen } from "@testing-library/react"
 
 jest.mock("react-tracking")
 
