@@ -1,8 +1,8 @@
 import * as React from "react"
-import { ProgressBar } from "@artsy/palette"
+import { BoxProps, ProgressBar } from "@artsy/palette"
 import { Time } from "v2/Utils/getSaleOrLotTimerInfo"
 
-export interface ArtworkSidebarAuctionProgressBarProps {
+export interface ArtworkSidebarAuctionProgressBarProps extends BoxProps {
   time: Time
   extendedBiddingPeriodMinutes: number
   hasBeenExtended: boolean
@@ -14,6 +14,7 @@ export const ArtworkSidebarAuctionProgressBar: React.FC<ArtworkSidebarAuctionPro
   extendedBiddingPeriodMinutes,
   hasBeenExtended,
   extendedBiddingIntervalMinutes,
+  ...rest
 }) => {
   const { days, hours, minutes, seconds } = time
 
@@ -43,6 +44,7 @@ export const ArtworkSidebarAuctionProgressBar: React.FC<ArtworkSidebarAuctionPro
         <ProgressBar
           highlight="red100"
           percentComplete={percentComplete * 100}
+          {...rest}
         />
       )}
     </>

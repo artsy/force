@@ -1,10 +1,13 @@
 import { ContextModule } from "@artsy/cohesion"
 import { ResponsiveBox, Image, Flex } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
+import { ArtworkSidebarAuctionProgressBar } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionProgressBar"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { userIsTeam } from "v2/Utils/user"
 import { FlatGridItem_artwork } from "v2/__generated__/FlatGridItem_artwork.graphql"
+import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 
@@ -25,6 +28,23 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const handleClick = () => {
     onClick?.()
   }
+
+  const { sale, saleArtwork } = artwork
+
+  const extendedBiddingPeriodMinutes = sale?.extendedBiddingPeriodMinutes
+  const extendedBiddingIntervalMinutes = sale?.extendedBiddingIntervalMinutes
+  const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
+  const isExtendedBiddingEnabledSale =
+    extendedBiddingPeriodMinutes && extendedBiddingIntervalMinutes
+
+  const startAt = sale?.startAt
+  const biddingEndAt = extendedBiddingEndAt ?? saleArtwork?.endAt
+
+  const { time, hasEnded } = useTimer(biddingEndAt!, startAt!)
+
+  const { isAuctionArtwork } = useArtworkGridContext()
+  const shouldRenderProgressBar =
+    isAuctionArtwork && isExtendedBiddingEnabledSale && !hasEnded
 
   return (
     <Flex
@@ -67,6 +87,17 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
         </RouterLink>
       </ResponsiveBox>
 
+      {shouldRenderProgressBar && (
+        <ArtworkSidebarAuctionProgressBar
+          time={time}
+          extendedBiddingPeriodMinutes={extendedBiddingPeriodMinutes!}
+          extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes!}
+          hasBeenExtended={!!extendedBiddingEndAt}
+          mb={0}
+          mt={1}
+        />
+      )}
+
       <Metadata artwork={artwork} />
     </Flex>
   )
@@ -80,6 +111,15 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         ...Metadata_artwork
         ...SaveButton_artwork
 
+        sale {
+          extendedBiddingPeriodMinutes
+          extendedBiddingIntervalMinutes
+          startAt
+        }
+        saleArtwork {
+          endAt
+          extendedBiddingEndAt
+        }
         internalID
         title
         image_title: imageTitle

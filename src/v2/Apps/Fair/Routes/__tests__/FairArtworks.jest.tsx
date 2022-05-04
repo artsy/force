@@ -149,8 +149,15 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               is_preview: false,
               display_timely_at: "live in 3d",
               cascadingEndTimeIntervalMinutes: null,
+              extendedBiddingIntervalMinutes: null,
+              extendedBiddingPeriodMinutes: null,
               startAt: "2022-03-11T12:33:37.000Z",
               endAt: "2022-03-12T12:33:37.000Z",
+            },
+            saleArtwork: {
+              id: "saleArtworkabc123",
+              endAt: "2022-03-12T12:33:37.000Z",
+              extendedBiddingEndAt: null,
             },
             sale_artwork: {
               lotLabel: "0",
@@ -214,6 +221,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             },
             sale: null,
             sale_artwork: null,
+            saleArtwork: null,
             is_inquireable: true,
             is_saved: false,
             is_biddable: false,

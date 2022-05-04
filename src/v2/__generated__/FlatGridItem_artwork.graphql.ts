@@ -5,6 +5,15 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FlatGridItem_artwork = {
+    readonly sale: {
+        readonly extendedBiddingPeriodMinutes: number | null;
+        readonly extendedBiddingIntervalMinutes: number | null;
+        readonly startAt: string | null;
+    } | null;
+    readonly saleArtwork: {
+        readonly endAt: string | null;
+        readonly extendedBiddingEndAt: string | null;
+    } | null;
     readonly internalID: string;
     readonly title: string | null;
     readonly image_title: string | null;
@@ -36,6 +45,63 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "FlatGridItem_artwork",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingPeriodMinutes",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingIntervalMinutes",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "startAt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingEndAt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -157,5 +223,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '747d5e3eaedecaf849591b8c65ebfbf4';
+(node as any).hash = 'ea86c14a11f49f9a6502970b3016fb3e';
 export default node;
