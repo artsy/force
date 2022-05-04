@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { Flex, Link, Text, Spacer } from "@artsy/palette"
+import { Flex, Text, Spacer } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const StickyFooter: React.FC = () => {
