@@ -1,4 +1,4 @@
-import { Box, Join, Spacer, Tab, Tabs } from "@artsy/palette"
+import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
@@ -122,7 +122,18 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
             </Box>
           )}
 
-          <AuctionArtworkFilterRefetchContainer viewer={viewer} />
+          {sale.status === "preview" ? (
+            <Message
+              variant="default"
+              title="Registration for this auction is currently open"
+            >
+              <Text variant="md" color="black60">
+                Auction lots will be published soon.
+              </Text>
+            </Message>
+          ) : (
+            <AuctionArtworkFilterRefetchContainer viewer={viewer} />
+          )}
 
           <Box>{children}</Box>
         </Join>
@@ -168,6 +179,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       }
       cascadingEndTimeIntervalMinutes
       extendedBiddingIntervalMinutes
+      status
     }
   `,
   viewer: graphql`

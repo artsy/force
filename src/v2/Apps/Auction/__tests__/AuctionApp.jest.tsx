@@ -292,4 +292,17 @@ describe("AuctionApp", () => {
       })
     })
   })
+
+  it("shows message instead of artwork grid if status=preview", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        status: "preview",
+      }),
+    })
+    expect(wrapper.text()).toContain(
+      "Registration for this auction is currently open"
+    )
+    expect(wrapper.text()).toContain("Auction lots will be published soon.")
+    expect(wrapper.find("AuctionArtworkFilterRefetchContainer").length).toBe(0)
+  })
 })
