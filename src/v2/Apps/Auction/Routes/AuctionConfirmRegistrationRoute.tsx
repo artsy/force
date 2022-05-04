@@ -23,7 +23,6 @@ import {
   confirmRegistrationValidationSchemas,
 } from "v2/Apps/Auction/Components/Form/Utils"
 import { useEffect } from "react"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { redirectToSaleHome } from "./AuctionRegistrationRoute"
 import { useUpdateMyUserProfile } from "v2/Utils/Hooks/Mutations/useUpdateMyUserProfile"
 
@@ -179,12 +178,7 @@ const ConditionsOfSaleMessage: React.FC<{ additionalText?: string }> = ({
   return (
     <Text variant="md">
       Welcome back. To complete your registration, please confirm that you agree
-      to the{" "}
-      <Text variant="md" display="inline">
-        <RouterLink color="black100" to="/conditions-of-sale" target="_blank">
-          Conditions of Sale
-        </RouterLink>
-      </Text>
+      to the Conditions of Sale
       {additionalText}
     </Text>
   )
