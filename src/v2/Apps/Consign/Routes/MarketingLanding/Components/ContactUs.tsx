@@ -1,5 +1,5 @@
 import { Button, FullBleed, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
@@ -13,8 +13,8 @@ export const ContactUs: React.FC = () => {
           </Text>
 
           <Text variant="sm" mb={4}>
-            Email us at <a href="mailto:consign@artsy.net">consign@artsy.net</a>{" "}
-            or call <a href="tel:!1-646-797-3423">+1-646-797-3423</a> for more
+            Email us at <a href="mailto:sell@artsy.net">sell@artsy.net</a> or
+            call <a href="tel:!1-646-797-3423">+1-646-797-3423</a> for more
             information on how Artsy can sell your artwork.
           </Text>
 
@@ -22,7 +22,7 @@ export const ContactUs: React.FC = () => {
             variant="secondaryOutline"
             // @ts-ignore
             as="a"
-            href="mailto:consign@artsy.net"
+            href="mailto:sell@artsy.net"
           >
             Send an email
           </Button>
