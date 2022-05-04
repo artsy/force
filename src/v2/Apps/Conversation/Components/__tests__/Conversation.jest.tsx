@@ -71,7 +71,9 @@ describe("Conversation", () => {
       })
 
       expect(
-        screen.getByText("Be Protected by The Artsy Guarantee")
+        screen.getByText(
+          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
+        )
       ).toBeInTheDocument()
     })
 
@@ -81,7 +83,9 @@ describe("Conversation", () => {
       })
 
       expect(
-        screen.getByText("Be Protected by The Artsy Guarantee")
+        screen.getByText(
+          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
+        )
       ).toBeInTheDocument()
     })
 
@@ -91,7 +95,9 @@ describe("Conversation", () => {
       })
 
       expect(
-        screen.getByText("Be Protected by The Artsy Guarantee")
+        screen.getByText(
+          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
+        )
       ).toBeInTheDocument()
     })
   })
@@ -109,7 +115,9 @@ describe("Conversation", () => {
       })
 
       expect(
-        screen.queryByText("Be Protected by The Artsy Guarantee")
+        screen.queryByText(
+          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
+        )
       ).not.toBeInTheDocument()
     })
   })

@@ -52,7 +52,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
           <Flex flexShrink={1}>
             <Text color="black60" variant="xs" mb={1}>
               Always complete purchases with our secure checkout in order to be
-              covered{" "}
+              covered by{" "}
               <RouterLink to="/buyer-guarantee" target="_blank">
                 The Artsy Guarantee
               </RouterLink>

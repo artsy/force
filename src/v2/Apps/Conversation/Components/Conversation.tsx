@@ -13,8 +13,6 @@ import {
   Column,
   Flex,
   GridColumns,
-  GuaranteeIcon,
-  media,
   Spacer,
   Spinner,
 } from "@artsy/palette"
