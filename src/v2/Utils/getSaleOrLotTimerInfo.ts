@@ -89,21 +89,15 @@ export const getSaleOrLotTimerInfo = (
         copy = `${parsedHours}h ${parsedMinutes}m`
       }
 
-      // less than cascade interval until close
-      else if (
-        urgencyIntervalMinutes &&
-        parsedDays < 1 &&
-        parsedHours < 1 &&
-        parsedMinutes < urgencyIntervalMinutes
-      ) {
-        copy = `${parsedMinutes}m ${parsedSeconds}s`
-        color = "red100"
-      }
-
       // <60 mins until close
       else if (parsedDays < 1 && parsedHours < 1) {
         copy = `${parsedMinutes}m ${parsedSeconds}s`
-        color = urgencyIntervalMinutes ? "black100" : "red100"
+        // less than cascade interval until close
+        if (urgencyIntervalMinutes && parsedMinutes >= urgencyIntervalMinutes) {
+          color = "black100"
+        } else {
+          color = "red100"
+        }
       }
     }
   }
