@@ -8,10 +8,13 @@ import {
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
 import {
+  Banner,
   Box,
   Column,
   Flex,
   GridColumns,
+  GuaranteeIcon,
+  media,
   Spacer,
   Spinner,
   Toast,
@@ -33,7 +36,6 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
@@ -171,7 +173,8 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
 
   const [toastBottom, setToastBottom] = useState(0)
-  // Banner
+
+  // Show banner
   const [showBanner, setShowBanner] = useState(true)
 
   useEffect(() => {
@@ -221,17 +224,15 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       {showBanner && (
-        <HorizontalPadding>
-          <GridColumns gridRowGap={[6, 4]}>
-            <Column span={6}>
-              <Toast
-                variant="alert"
-                id="alert-toast"
-                message="To protect your payment, always communicate and pay through the Artsy platform."
-              />
-            </Column>
-          </GridColumns>
-        </HorizontalPadding>
+        <GridColumns>
+          <Column start={4} span={6} mt={1}>
+            <BannerWarning variant="brand">
+              <GuaranteeIcon mr={1} fill="white100" />
+              To protect your payment, always communicate and pay through the
+              Artsy platform.
+            </BannerWarning>
+          </Column>
+        </GridColumns>
       )}
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
@@ -306,6 +307,12 @@ const SpinnerContainer = styled.div`
   width: 100%;
   height: 100px;
   position: relative;
+`
+
+const BannerWarning = styled(Banner)`
+  ${media.xs`
+    text-align: right 
+  `}
 `
 
 export const ConversationPaginationContainer = createPaginationContainer(
