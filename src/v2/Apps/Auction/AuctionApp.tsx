@@ -17,6 +17,7 @@ import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAsso
 import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
+import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -123,14 +124,20 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           )}
 
           {sale.status === "preview" ? (
-            <Message
-              variant="default"
-              title="Registration for this auction is currently open"
-            >
-              <Text variant="md" color="black60">
-                Auction lots will be published soon.
-              </Text>
-            </Message>
+            <>
+              <Message
+                variant="default"
+                title="Registration for this auction is currently open"
+              >
+                <Text variant="md" color="black60">
+                  Auction lots will be published soon.
+                </Text>
+              </Message>
+
+              <Spacer my={2} />
+
+              <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
+            </>
           ) : (
             <AuctionArtworkFilterRefetchContainer viewer={viewer} />
           )}
@@ -190,6 +197,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ) {
       ...AuctionArtworkFilter_viewer @arguments(input: $input)
       ...AuctionWorksByFollowedArtistsRail_viewer @arguments(saleID: $saleID)
+      ...AuctionCurrentAuctionsRail_viewer
 
       showFollowedArtistsTab: saleArtworksConnection(
         first: 1
