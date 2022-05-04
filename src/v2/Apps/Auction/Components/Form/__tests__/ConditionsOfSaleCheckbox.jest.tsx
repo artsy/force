@@ -58,4 +58,9 @@ describe("ConditionsOfSaleCheckbox", () => {
     expect(setFieldTouched).toHaveBeenCalledWith("agreeToTerms")
     expect(setFieldValue).toHaveBeenCalledWith("agreeToTerms", true)
   })
+
+  it("links out to conditions of sale", () => {
+    const wrapper = getWrapper()
+    expect(wrapper.html()).toContain('href="/conditions-of-sale"')
+  })
 })
