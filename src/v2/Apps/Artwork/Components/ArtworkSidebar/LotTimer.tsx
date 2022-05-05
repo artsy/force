@@ -6,7 +6,7 @@ import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
 import { ArtworkSidebarAuctionProgressBar } from "./ArtworkSidebarAuctionProgressBar"
 import { useEffect } from "react"
-import { getENV } from "v2/Utils/getENV"
+import { useWebsocketContext } from "v2/System/WebsocketContext"
 
 export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork
@@ -28,30 +28,15 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   )
   const [isExtended, setIsExtended] = React.useState(false)
 
+  const { data } = useWebsocketContext()
+  const { lot_id, extended_bidding_end_at } = data
+  const receivedMessageForThisLot = lot_id === lotID
   useEffect(() => {
-    if (extendedBiddingIntervalMinutes) {
-      const actionCable = require("actioncable")
-      const CableApp = {} as any
-      CableApp.cable = actionCable.createConsumer(
-        getENV("GRAVITY_WEBSOCKET_URL")
-      )
-
-      CableApp.cable.subscriptions.create(
-        {
-          channel: "SalesChannel",
-          sale_id: saleArtwork.sale?.internalID,
-        },
-        {
-          received(data) {
-            if (data.lot_id === lotID) {
-              setUpdatedBiddingEndAt(data.extended_bidding_end_at)
-              setIsExtended(true)
-            }
-          },
-        }
-      )
+    if (receivedMessageForThisLot) {
+      setUpdatedBiddingEndAt(extended_bidding_end_at)
+      setIsExtended(true)
     }
-  }, [])
+  }, [receivedMessageForThisLot, extended_bidding_end_at])
 
   const { hasEnded, time, hasStarted } = useTimer(
     updatedBiddingEndAt!,

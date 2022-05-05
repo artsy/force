@@ -29,6 +29,7 @@ import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
 import { CascadingEndTimesBanner } from "../Auction/Components/AuctionDetails/CascadingEndTimesBanner"
+import { WebsocketContextProvider } from "v2/System/WebsocketContext"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -237,7 +238,7 @@ export class ArtworkApp extends React.Component<Props> {
 
 const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const {
-    artwork: { internalID },
+    artwork: { internalID, sale },
   } = props
   const {
     match: {
@@ -251,6 +252,8 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const referrer = state && state.previousHref
   const { isComplete } = useRouteComplete()
 
+  const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
+
   return (
     <AnalyticsContext.Provider
       value={{
@@ -259,12 +262,20 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
         contextPageOwnerType,
       }}
     >
-      <ArtworkApp
-        {...props}
-        routerPathname={pathname}
-        referrer={referrer}
-        shouldTrackPageView={isComplete}
-      />
+      <WebsocketContextProvider
+        channelInfo={{
+          channel: "SalesChannel",
+          sale_id: sale?.internalID,
+        }}
+        enabled={websocketEnabled}
+      >
+        <ArtworkApp
+          {...props}
+          routerPathname={pathname}
+          referrer={referrer}
+          shouldTrackPageView={isComplete}
+        />
+      </WebsocketContextProvider>
     </AnalyticsContext.Provider>
   )
 }

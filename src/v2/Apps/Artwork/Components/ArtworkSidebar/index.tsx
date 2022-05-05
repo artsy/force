@@ -26,7 +26,7 @@ import {
   shouldRenderBuyerGuaranteeAndSecurePayment,
   shouldRenderVerifiedSeller,
 } from "../../Utils/badges"
-import { getENV } from "v2/Utils/getENV"
+import { useWebsocketContext } from "v2/System/WebsocketContext"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -60,35 +60,21 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     biddingEndAt
   )
 
+  const { data } = useWebsocketContext()
+  const { lot_id, extended_bidding_end_at } = data
+  const receivedMessageForThisLot = lot_id === saleArtwork?.lotID
   React.useEffect(() => {
-    if (sale?.extendedBiddingIntervalMinutes) {
-      const actionCable = require("actioncable")
-      const CableApp = {} as any
-      CableApp.cable = actionCable.createConsumer(
-        getENV("GRAVITY_WEBSOCKET_URL")
-      )
-
-      CableApp.cable.subscriptions.create(
-        {
-          channel: "SalesChannel",
-          sale_id: sale?.internalID,
-        },
-        {
-          received(data) {
-            if (data.lot_id === saleArtwork?.lotID) {
-              setUpdatedBiddingEndAt(data.extended_bidding_end_at)
-            }
-          },
-        }
-      )
+    if (receivedMessageForThisLot) {
+      setUpdatedBiddingEndAt(extended_bidding_end_at)
     }
-  }, [])
+  }, [receivedMessageForThisLot, extended_bidding_end_at])
 
   const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
   const shouldHideDetailsCreateAlertCTA =
     (is_in_auction && hasEnded) ||
     (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
     is_sold
+
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
