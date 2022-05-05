@@ -8,7 +8,7 @@ export type Header_collection = {
     readonly category: string;
     readonly credit: string | null;
     readonly description: string | null;
-    readonly featuredArtistExclusionIds: ReadonlyArray<string> | null;
+    readonly featuredArtistExclusionIds: ReadonlyArray<string>;
     readonly headerImage: string | null;
     readonly id: string;
     readonly query: {
