@@ -13,15 +13,13 @@ describe("ConversationCTA", () => {
   const openInquiryModalFn = jest.fn()
   const openOrderModal = jest.fn()
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: (props: any) => {
-      return (
-        <ConversationCTAFragmentContainer
-          conversation={props.me.conversation}
-          openInquiryModal={openInquiryModalFn}
-          openOrderModal={openOrderModal}
-        />
-      )
-    },
+    Component: (props: any) => (
+      <ConversationCTAFragmentContainer
+        conversation={props.me.conversation}
+        openInquiryModal={openInquiryModalFn}
+        openOrderModal={openOrderModal}
+      />
+    ),
     query: graphql`
       query ConversationCTA_Test_Query @relay_test_operation {
         me {
@@ -156,5 +154,70 @@ describe("ConversationCTA", () => {
     fireEvent.click(screen.getByText("Offer Received"))
 
     expect(openOrderModal).toHaveBeenCalledTimes(1)
+  })
+
+  describe("With no active orders", () => {
+    const mockConversationWithArtwork = artwork => () => ({
+      internalID: "internal-test-id",
+      activeOrders: null,
+      items: [{ liveArtwork: { __typename: "Artwork", ...artwork } }],
+    })
+
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: { "conversational-buy-now": { flagEnabled: true } },
+      }))
+    })
+
+    it("renders a message about buyer guarantee", () => {
+      renderWithRelay({
+        Conversation: () => ({ activeOrders: null }),
+      })
+
+      const link = screen.getByText("The Artsy Guarantee")
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveAttribute("href", "/buyer-guarantee")
+    })
+
+    it("renders Purchase button on BN-only artworks", () => {
+      renderWithRelay({
+        Conversation: mockConversationWithArtwork({ is_acquireable: true }),
+      })
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).not.toBeInTheDocument()
+    })
+
+    it("renders Make Offer button on MO-only artworks", () => {
+      renderWithRelay({
+        Conversation: mockConversationWithArtwork({ is_offerable: true }),
+      })
+
+      expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
+    })
+
+    it("renders Make Offer button on offerable-from-inquiry artworks", () => {
+      renderWithRelay({
+        Conversation: mockConversationWithArtwork({
+          isOfferableFromInquiry: true,
+        }),
+      })
+
+      expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
+    })
+
+    it("renders both Purchase and Make Offer buttons on BNMO artworks", () => {
+      renderWithRelay({
+        Conversation: mockConversationWithArtwork({
+          is_acquireable: true,
+          is_offerable: true,
+        }),
+      })
+
+      expect(screen.queryByText("Purchase")).toBeInTheDocument()
+      expect(screen.queryByText("Make an Offer")).toBeInTheDocument()
+    })
   })
 })

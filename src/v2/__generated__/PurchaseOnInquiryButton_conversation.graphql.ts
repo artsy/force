@@ -4,12 +4,11 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MakeOfferOnInquiryButton_conversation = {
+export type PurchaseOnInquiryButton_conversation = {
     readonly internalID: string | null;
     readonly items: ReadonlyArray<{
         readonly liveArtwork: ({
             readonly __typename: "Artwork";
-            readonly is_acquireable: boolean | null;
             readonly isEdition: boolean | null;
             readonly editionSets: ReadonlyArray<{
                 readonly internalID: string;
@@ -21,12 +20,12 @@ export type MakeOfferOnInquiryButton_conversation = {
             readonly __typename: "%other";
         }) | null;
     } | null> | null;
-    readonly " $refType": "MakeOfferOnInquiryButton_conversation";
+    readonly " $refType": "PurchaseOnInquiryButton_conversation";
 };
-export type MakeOfferOnInquiryButton_conversation$data = MakeOfferOnInquiryButton_conversation;
-export type MakeOfferOnInquiryButton_conversation$key = {
-    readonly " $data"?: MakeOfferOnInquiryButton_conversation$data;
-    readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
+export type PurchaseOnInquiryButton_conversation$data = PurchaseOnInquiryButton_conversation;
+export type PurchaseOnInquiryButton_conversation$key = {
+    readonly " $data"?: PurchaseOnInquiryButton_conversation$data;
+    readonly " $fragmentRefs": FragmentRefs<"PurchaseOnInquiryButton_conversation">;
 };
 
 
@@ -43,7 +42,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "MakeOfferOnInquiryButton_conversation",
+  "name": "PurchaseOnInquiryButton_conversation",
   "selections": [
     (v0/*: any*/),
     {
@@ -70,13 +69,6 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
-                  "storageKey": null
-                },
-                {
-                  "alias": "is_acquireable",
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isAcquireable",
                   "storageKey": null
                 },
                 {
@@ -118,5 +110,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '83495b9f1eccf619be532226b9386ddb';
+(node as any).hash = 'cf67995e69db86db77c3e9b008f6163e';
 export default node;

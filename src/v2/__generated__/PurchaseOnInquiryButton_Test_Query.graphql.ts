@@ -4,26 +4,26 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MakeOfferOnInquiryButton_Test_QueryVariables = {};
-export type MakeOfferOnInquiryButton_Test_QueryResponse = {
+export type PurchaseOnInquiryButton_Test_QueryVariables = {};
+export type PurchaseOnInquiryButton_Test_QueryResponse = {
     readonly me: {
         readonly conversation: {
-            readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
+            readonly " $fragmentRefs": FragmentRefs<"PurchaseOnInquiryButton_conversation">;
         } | null;
     } | null;
 };
-export type MakeOfferOnInquiryButton_Test_Query = {
-    readonly response: MakeOfferOnInquiryButton_Test_QueryResponse;
-    readonly variables: MakeOfferOnInquiryButton_Test_QueryVariables;
+export type PurchaseOnInquiryButton_Test_Query = {
+    readonly response: PurchaseOnInquiryButton_Test_QueryResponse;
+    readonly variables: PurchaseOnInquiryButton_Test_QueryVariables;
 };
 
 
 
 /*
-query MakeOfferOnInquiryButton_Test_Query {
+query PurchaseOnInquiryButton_Test_Query {
   me {
     conversation(id: "123") {
-      ...MakeOfferOnInquiryButton_conversation
+      ...PurchaseOnInquiryButton_conversation
       id
     }
     id
@@ -34,14 +34,13 @@ fragment ConfirmArtworkButton_artwork on Artwork {
   internalID
 }
 
-fragment MakeOfferOnInquiryButton_conversation on Conversation {
+fragment PurchaseOnInquiryButton_conversation on Conversation {
   internalID
   items {
     liveArtwork {
       __typename
       ... on Artwork {
         __typename
-        is_acquireable: isAcquireable
         isEdition
         editionSets {
           internalID
@@ -91,19 +90,13 @@ v4 = {
   "nullable": false,
   "plural": false,
   "type": "String"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MakeOfferOnInquiryButton_Test_Query",
+    "name": "PurchaseOnInquiryButton_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -124,7 +117,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "MakeOfferOnInquiryButton_conversation"
+                "name": "PurchaseOnInquiryButton_conversation"
               }
             ],
             "storageKey": "conversation(id:\"123\")"
@@ -140,7 +133,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "MakeOfferOnInquiryButton_Test_Query",
+    "name": "PurchaseOnInquiryButton_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -185,13 +178,6 @@ return {
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          {
-                            "alias": "is_acquireable",
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "isAcquireable",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": null,
@@ -242,7 +228,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "51f5c4d8b048427cf905728f0dfc9086",
+    "cacheID": "dff8d3ecc98908ddeae3b10a3ed3c885",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -289,16 +275,20 @@ return {
         "me.conversation.items.liveArtwork.editionSets.internalID": (v3/*: any*/),
         "me.conversation.items.liveArtwork.id": (v3/*: any*/),
         "me.conversation.items.liveArtwork.internalID": (v3/*: any*/),
-        "me.conversation.items.liveArtwork.isEdition": (v5/*: any*/),
-        "me.conversation.items.liveArtwork.is_acquireable": (v5/*: any*/),
+        "me.conversation.items.liveArtwork.isEdition": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "me.id": (v3/*: any*/)
       }
     },
-    "name": "MakeOfferOnInquiryButton_Test_Query",
+    "name": "PurchaseOnInquiryButton_Test_Query",
     "operationKind": "query",
-    "text": "query MakeOfferOnInquiryButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...MakeOfferOnInquiryButton_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        is_acquireable: isAcquireable\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PurchaseOnInquiryButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...PurchaseOnInquiryButton_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment PurchaseOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f8635b99d18ab7f828182b1ec14da240';
+(node as any).hash = '6aa62e3f37e0913e9e06397acd03afef';
 export default node;

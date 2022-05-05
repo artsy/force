@@ -12,6 +12,8 @@ export type ConversationCTA_conversation = {
         readonly liveArtwork: ({
             readonly __typename: "Artwork";
             readonly isOfferableFromInquiry: boolean | null;
+            readonly is_acquireable: boolean | null;
+            readonly is_offerable: boolean | null;
         } | {
             /*This will never be '%other', but we need some
             value in case none of the concrete values match.*/
@@ -44,7 +46,7 @@ export type ConversationCTA_conversation = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
+    readonly " $fragmentRefs": FragmentRefs<"PurchaseOnInquiryButton_conversation" | "MakeOfferOnInquiryButton_conversation">;
     readonly " $refType": "ConversationCTA_conversation";
 };
 export type ConversationCTA_conversation$data = ConversationCTA_conversation;
@@ -105,6 +107,20 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "isOfferableFromInquiry",
+                  "storageKey": null
+                },
+                {
+                  "alias": "is_acquireable",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAcquireable",
+                  "storageKey": null
+                },
+                {
+                  "alias": "is_offerable",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isOfferable",
                   "storageKey": null
                 }
               ],
@@ -261,6 +277,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PurchaseOnInquiryButton_conversation"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "MakeOfferOnInquiryButton_conversation"
     }
   ],
@@ -268,5 +289,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'fd0e23bd666e08d71f577632c543e28f';
+(node as any).hash = '0e97464977cfb1bb2c5db00fb50c8f90';
 export default node;
