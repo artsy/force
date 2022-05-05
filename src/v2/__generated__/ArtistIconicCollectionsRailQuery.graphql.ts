@@ -12,7 +12,7 @@ export type ArtistIconicCollectionsRailQueryVariables = {
 export type ArtistIconicCollectionsRailQueryResponse = {
     readonly marketingCollections: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
-    }>;
+    }> | null;
 };
 export type ArtistIconicCollectionsRailQuery = {
     readonly response: ArtistIconicCollectionsRailQueryResponse;

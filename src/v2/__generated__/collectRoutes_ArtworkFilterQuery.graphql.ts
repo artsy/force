@@ -65,7 +65,7 @@ export type collectRoutes_ArtworkFilterQueryVariables = {
 export type collectRoutes_ArtworkFilterQueryResponse = {
     readonly marketingCollections: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"Collect_marketingCollections">;
-    }>;
+    }> | null;
     readonly filterArtworks: {
         readonly " $fragmentRefs": FragmentRefs<"SeoProductsForArtworks_artworks">;
     } | null;
