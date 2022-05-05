@@ -19,7 +19,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
       <GridColumns my={4} gridRowGap={[2, 0]}>
         <Column span={6}>
           <Text as="h1" variant="xl" mb={2}>
-            {gene.name}
+            {gene.displayName || gene.name}
           </Text>
 
           <FollowGeneButtonFragmentContainer
@@ -102,6 +102,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
         )
       ...FollowGeneButton_gene
       name
+      displayName
       formattedDescription: description(format: HTML)
       similar(first: 10) {
         edges {
