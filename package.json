@@ -92,7 +92,7 @@
     "@artsy/gemup": "0.1.0",
     "@artsy/multienv": "^1.2.0",
     "@artsy/palette": "19.6.0",
-    "@artsy/palette-charts": "18.5.1",
+    "@artsy/palette-charts": "18.6.0",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/reaction": "29.8.0",
     "@artsy/stitch": "6.5.0",
