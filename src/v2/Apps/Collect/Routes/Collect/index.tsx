@@ -38,7 +38,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   match: { location, params },
   viewer,
 }) => {
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const medium = params?.medium as Medium
   const color = params?.color as Color
   const { description, breadcrumbTitle, title } = getMetadata({
@@ -134,6 +134,8 @@ export const CollectApp: React.FC<CollectAppProps> = ({
                *
                */
               const newLocation = router.createLocation(url)
+
+              // console.log(match)
 
               router.push({
                 ...newLocation,

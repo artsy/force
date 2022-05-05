@@ -46,6 +46,8 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { SavedSearchEntity } from "../SavedSearchAlert/types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Components/SavedSearchAlertArtworkGridFilterPills"
+import { useRouter } from "v2/System/Router/useRouter"
+import { getInitialFilterState } from "./Utils/getInitialFilterState"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   enableCreateAlert?: boolean
@@ -108,6 +110,7 @@ export const BaseArtworkFilter: React.FC<
   savedSearchEntity,
   ...rest
 }) => {
+  const { router, match } = useRouter()
   const tracking = useTracking()
   const {
     contextPageOwnerId,

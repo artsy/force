@@ -9,6 +9,8 @@ import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
+import { useRouter } from "v2/System/Router/useRouter"
+import { getInitialFilterState } from "./Utils/getInitialFilterState"
 
 /**
  * Initial filter state
@@ -280,6 +282,8 @@ export const ArtworkFilterContextProvider: React.FC<
   sortOptions,
   ZeroState,
 }) => {
+  const { router, match } = useRouter()
+
   const initialFilterState = {
     ...initialArtworkFilterState,
     sort: sortOptions?.[0].value ?? initialArtworkFilterState.sort,
@@ -408,6 +412,11 @@ export const ArtworkFilterContextProvider: React.FC<
       force ? dispatch(action) : dispatchOrStage(action)
     },
   }
+
+  useDeepCompareEffect(() => {
+    const updatedStateFromURL = getInitialFilterState(location.query)
+    // artworkFilterContext.setFilters(updatedStateFromURL ?? {})
+  }, [match.location.query])
 
   return (
     <ArtworkFilterContext.Provider value={artworkFilterContext}>
