@@ -32,6 +32,19 @@ describe("GeneShow", () => {
     const wrapper = getWrapper({
       Gene: () => ({
         name: "Example Gene",
+        displayName: "Display Name",
+      }),
+    })
+
+    expect(wrapper.find("h1")).toHaveLength(1)
+    expect(wrapper.find("h1").text()).toEqual("Display Name")
+  })
+
+  it("renders fallback title correctly", () => {
+    const wrapper = getWrapper({
+      Gene: () => ({
+        name: "Example Gene",
+        displayName: "",
       }),
     })
 
@@ -39,28 +52,39 @@ describe("GeneShow", () => {
     expect(wrapper.find("h1").text()).toEqual("Example Gene")
   })
 
-  it("renders meta description from query", () => {
+  it("renders meta description and title from query", () => {
     const wrapper = getWrapper({
       Gene: () => ({
         meta: { description: "Gene Meta Description" },
+        displayName: "Display Name",
+        name: "name",
       }),
     })
 
     expect(wrapper.find('Meta[name="description"]').first().html()).toEqual(
       '<meta name="description" content="Gene Meta Description">'
     )
+
+    expect(wrapper.find('Meta[name="title"]').first().html()).toEqual(
+      '<meta name="title" content="Display Name | Artsy">'
+    )
   })
 
-  it("renders fallback meta description", () => {
+  it("renders fallback meta description and fallback title", () => {
     const wrapper = getWrapper({
       Gene: () => ({
         name: "Design",
         meta: { description: null },
+        displayName: "",
       }),
     })
 
     expect(wrapper.find('Meta[name="description"]').first().html()).toEqual(
       '<meta name="description" content="Explore Design art on Artsy. Browse works by size, price, and medium.">'
+    )
+
+    expect(wrapper.find('Meta[name="title"]').first().html()).toEqual(
+      '<meta name="title" content="Design | Artsy">'
     )
   })
 })
