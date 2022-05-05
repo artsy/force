@@ -20,6 +20,6 @@ describe("NewForYouApp", () => {
         </SystemContextProvider>
       </MockBoot>
     )
-    expect(screen.getByText("NewForYouApp")).toBeInTheDocument()
+    expect(screen.getByText("New Works For You")).toBeInTheDocument()
   })
 })
