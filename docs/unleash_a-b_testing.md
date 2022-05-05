@@ -112,6 +112,26 @@ function MyComponent() {
 
 The number of segment events sent for an experiment is [throttled](https://github.com/artsy/force/blob/main/src/v2/System/useFeatureFlag.tsx#L65) to one event per user, per variant view.
 
+### Accessing flags on the server
+
+If needing to access a feature flag on the server before rendering any components, all feature flags are located within local sharify data.
+
+#### Example
+
+```tsx
+const routes = [
+  {
+    path: "/foo",
+    onServerSideRender: ({ res }) => {
+      if (!res.locals.sd.FEATURE_FLAGS.myFlag) {
+        res.redirect("/")
+      }
+    },
+    ...
+  }
+]
+```
+
 ### Enabling your experiment for users
 
 - Once you're ready to test, enable the feature on the staging environment via the Unleash UI (this will also enable it for your local dev environment)
