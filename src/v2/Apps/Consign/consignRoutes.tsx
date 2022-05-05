@@ -5,10 +5,10 @@ import { AppRouteConfig } from "v2/System/Router/Route"
 import { getENV } from "v2/Utils/getENV"
 import { getRedirect } from "./Routes/SubmissionFlow/Utils/redirects"
 
-const NewMarketingLandingApp = loadable(
+const MarketingLandingApp = loadable(
   () =>
     import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/NewMarketingLanding/MarketingLandingApp"
+      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
     ),
   {
     resolveComponent: component => component.MarketingLandingApp,
@@ -113,9 +113,9 @@ const prepareSubmissionFlowStepVariables = data => {
 export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell",
-    getComponent: () => NewMarketingLandingApp,
+    getComponent: () => MarketingLandingApp,
     onClientSideRender: () => {
-      NewMarketingLandingApp.preload()
+      MarketingLandingApp.preload()
     },
   },
   {

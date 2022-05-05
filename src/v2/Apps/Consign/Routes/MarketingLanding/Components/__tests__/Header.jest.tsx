@@ -1,39 +1,58 @@
-import { mount } from "enzyme"
-import { MockBoot } from "v2/DevTools"
 import { Header } from "../Header"
-import { Breakpoint } from "@artsy/palette"
+import { fireEvent, render, screen } from "@testing-library/react"
+import { useTracking } from "v2/System/Analytics"
+
+jest.mock("v2/System/Analytics/useTracking")
+
+jest.mock("v2/System/Analytics/AnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerType: "sell",
+  })),
+}))
+
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    match: { params: { id: "1" } },
+  })),
+}))
+
+const trackEvent = useTracking as jest.Mock
 
 describe("Header", () => {
-  const getWrapper = (breakpoint = "lg") => {
-    return mount(
-      <MockBoot breakpoint={breakpoint as Breakpoint}>
-        <Header />
-      </MockBoot>
-    )
-  }
-
-  it("links out to submission flow", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("RouterLink").props().to).toBe(
-      "/consign/submission/artwork-details"
-    )
-  })
-
-  it("tracks click", () => {
-    // todo
-  })
-
-  describe("desktop", () => {
-    it("shows all images", () => {
-      const wrapper = getWrapper()
-      expect(wrapper.find("FullBleedHeader").length).toBe(1)
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
     })
   })
 
-  describe("mobile", () => {
-    it("shows only one image", () => {
-      const wrapper = getWrapper("xs")
-      expect(wrapper.find("FullBleedHeader").length).toBe(1)
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it("links out to submission flow", () => {
+    render(<Header />)
+
+    const link = screen.getByRole("link")
+
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveTextContent("Submit an Artwork")
+    expect(link).toHaveAttribute("href", "/sell/submission/artwork-details")
+  })
+
+  it("tracks click", () => {
+    render(<Header />)
+
+    fireEvent.click(screen.getByRole("link"))
+
+    expect(trackEvent).toHaveBeenCalled()
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedSubmitAnArtwork",
+      context_module: "Header",
+      context_page_owner_type: "sell",
+      label: "Submit an Artwork",
+      destination_path: "/sell/submission/artwork-details",
     })
   })
 })
