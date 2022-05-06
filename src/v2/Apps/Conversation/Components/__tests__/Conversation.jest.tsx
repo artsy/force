@@ -57,50 +57,6 @@ describe("Conversation", () => {
     user = {}
   })
 
-  describe("when the artwork is offerable", () => {
-    beforeEach(() => {
-      user = {
-        type: "NotAdmin",
-      }
-    })
-
-    it("shows the buyer guarantee message if offerable", async () => {
-      renderWithRelay({
-        Artwork: () => ({ isOfferable: true, isOfferableFromInquiry: false }),
-      })
-
-      expect(
-        screen.getByText(
-          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
-        )
-      ).toBeInTheDocument()
-    })
-
-    it("shows the buyer guarantee message if offerable from inquiry", async () => {
-      renderWithRelay({
-        Artwork: () => ({ isOfferableFromInquiry: true, isOfferable: false }),
-      })
-
-      expect(
-        screen.getByText(
-          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
-        )
-      ).toBeInTheDocument()
-    })
-
-    it("shows the buyer guarantee message if offerable and offerable from inquiry", async () => {
-      renderWithRelay({
-        Artwork: () => ({ isOfferableFromInquiry: true, isOfferable: true }),
-      })
-
-      expect(
-        screen.getByText(
-          "Always complete purchases with our secure checkout in order to be covered by The Artsy Guarantee"
-        )
-      ).toBeInTheDocument()
-    })
-  })
-
   describe("when the artwork is not offerable", () => {
     beforeEach(() => {
       user = {
