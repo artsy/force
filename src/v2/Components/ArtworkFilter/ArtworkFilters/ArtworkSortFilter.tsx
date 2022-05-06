@@ -6,7 +6,7 @@ export const ArtworkSortFilter: React.FC = () => {
   const context = useArtworkFilterContext()
   const { sortOptions, filters } = context
 
-  console.log(filters.sort)
+  // console.log(filters.sort)
 
   return (
     <SortFilter
