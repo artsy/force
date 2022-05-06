@@ -112,7 +112,6 @@ export function getFirstContentfulPaint() {
  */
 export function getLoadEventEnd() {
   if (!timingAvailable) return null
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.loadEventEnd)
 }
 
@@ -124,7 +123,6 @@ export function getLoadEventEnd() {
  */
 export function getDomInteractive() {
   if (!timingAvailable) return null
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domInteractive)
 }
 
@@ -138,9 +136,7 @@ export function getDomInteractive() {
 export function getDomContentLoadedStart() {
   if (!timingAvailable) return null
   return sanitizedMetrics(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     perf.timing.requestStart,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     perf.timing.domContentLoadedEventStart
   )
 }
@@ -154,9 +150,7 @@ export function getDomContentLoadedStart() {
 export function getDomContentLoadedEnd() {
   if (!timingAvailable) return null
   return sanitizedMetrics(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     perf.timing.requestStart,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     perf.timing.domContentLoadedEventEnd
   )
 }
@@ -169,7 +163,6 @@ export function getDomContentLoadedEnd() {
  */
 export function getDomComplete() {
   if (!timingAvailable) return null
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domComplete)
 }
 

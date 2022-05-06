@@ -1,11 +1,14 @@
 import qs from "qs"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { some } from "lodash"
-import { data as sd } from "sharify"
 import { Request } from "express"
 import { isV6Format } from "./ip"
+import { getENV } from "v2/Utils/getENV"
 
-const { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT, REQUEST_ID } = sd
+const METAPHYSICS_ENDPOINT = getENV("METAPHYSICS_ENDPOINT")
+const REQUEST_ID = getENV("REQUEST_ID")
+const API_REQUEST_TIMEOUT = getENV("API_REQUEST_TIMEOUT")
 
 const resolveIPv4 = function (ipAddress) {
   if (isV6Format(ipAddress) != null && ipAddress.indexOf("::ffff") >= 0) {
@@ -55,7 +58,6 @@ export const metaphysics = function (
 
     if (token) {
       post.set({ "X-ACCESS-TOKEN": token })
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       post.set({ "X-USER-ID": req.user.id })
     }
 
