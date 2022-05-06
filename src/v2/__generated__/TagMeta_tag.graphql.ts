@@ -17,7 +17,7 @@ export type TagMeta_tag = {
 };
 export type TagMeta_tag$data = TagMeta_tag;
 export type TagMeta_tag$key = {
-    readonly " $data"?: TagMeta_tag$data;
+    readonly " $data"?: TagMeta_tag$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TagMeta_tag">;
 };
 

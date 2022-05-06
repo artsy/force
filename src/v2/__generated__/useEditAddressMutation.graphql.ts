@@ -6,20 +6,20 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type UpdateUserAddressInput = {
     attributes: UserAddressAttributes;
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     userAddressID: string;
 };
 export type UserAddressAttributes = {
     addressLine1: string;
-    addressLine2?: string | null;
-    addressLine3?: string | null;
+    addressLine2?: string | null | undefined;
+    addressLine3?: string | null | undefined;
     city: string;
     country: string;
     name: string;
-    phoneNumber?: string | null;
-    phoneNumberCountryCode?: string | null;
-    postalCode?: string | null;
-    region?: string | null;
+    phoneNumber?: string | null | undefined;
+    phoneNumberCountryCode?: string | null | undefined;
+    postalCode?: string | null | undefined;
+    region?: string | null | undefined;
 };
 export type useEditAddressMutationVariables = {
     input: UpdateUserAddressInput;
@@ -30,10 +30,10 @@ export type useEditAddressMutationResponse = {
             readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
         } | null;
         readonly userAddressOrErrors: {
-            readonly internalID?: string;
+            readonly internalID?: string | undefined;
             readonly errors?: ReadonlyArray<{
                 readonly message: string;
-            }>;
+            }> | undefined;
             readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
         };
     } | null;

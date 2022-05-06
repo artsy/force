@@ -52,7 +52,7 @@ export type TransactionDetailsSummaryItem_order = {
         readonly buyerTotalCents: number | null;
         readonly fromParticipant: CommerceOrderParticipantEnum | null;
         readonly note: string | null;
-    } | null;
+    } | null | undefined;
     readonly myLastOffer?: {
         readonly internalID: string;
         readonly amount: string | null;
@@ -65,12 +65,12 @@ export type TransactionDetailsSummaryItem_order = {
         readonly buyerTotalCents: number | null;
         readonly fromParticipant: CommerceOrderParticipantEnum | null;
         readonly note: string | null;
-    } | null;
+    } | null | undefined;
     readonly " $refType": "TransactionDetailsSummaryItem_order";
 };
 export type TransactionDetailsSummaryItem_order$data = TransactionDetailsSummaryItem_order;
 export type TransactionDetailsSummaryItem_order$key = {
-    readonly " $data"?: TransactionDetailsSummaryItem_order$data;
+    readonly " $data"?: TransactionDetailsSummaryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order">;
 };
 

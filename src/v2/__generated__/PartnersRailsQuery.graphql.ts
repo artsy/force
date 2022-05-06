@@ -7,8 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerCategoryType = "GALLERY" | "INSTITUTION" | "%future added value";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersRailsQueryVariables = {
-    categoryType?: PartnerCategoryType | null;
-    type?: Array<PartnerClassification | null> | null;
+    categoryType?: PartnerCategoryType | null | undefined;
+    type?: Array<PartnerClassification | null> | null | undefined;
 };
 export type PartnersRailsQueryResponse = {
     readonly viewer: {

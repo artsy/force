@@ -12,7 +12,7 @@ export type ArtistConsignHeader_artist = {
 };
 export type ArtistConsignHeader_artist$data = ArtistConsignHeader_artist;
 export type ArtistConsignHeader_artist$key = {
-    readonly " $data"?: ArtistConsignHeader_artist$data;
+    readonly " $data"?: ArtistConsignHeader_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignHeader_artist">;
 };
 

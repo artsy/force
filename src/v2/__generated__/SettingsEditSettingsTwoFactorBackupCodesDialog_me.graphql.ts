@@ -6,13 +6,13 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactorBackupCodesDialog_me = {
     readonly backupSecondFactors: ReadonlyArray<{
-        readonly code?: string;
+        readonly code?: string | undefined;
     } | null> | null;
     readonly " $refType": "SettingsEditSettingsTwoFactorBackupCodesDialog_me";
 };
 export type SettingsEditSettingsTwoFactorBackupCodesDialog_me$data = SettingsEditSettingsTwoFactorBackupCodesDialog_me;
 export type SettingsEditSettingsTwoFactorBackupCodesDialog_me$key = {
-    readonly " $data"?: SettingsEditSettingsTwoFactorBackupCodesDialog_me$data;
+    readonly " $data"?: SettingsEditSettingsTwoFactorBackupCodesDialog_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsTwoFactorBackupCodesDialog_me">;
 };
 

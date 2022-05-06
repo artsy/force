@@ -28,7 +28,7 @@ export type ArtistWorksForSaleRoute_artist = {
 };
 export type ArtistWorksForSaleRoute_artist$data = ArtistWorksForSaleRoute_artist;
 export type ArtistWorksForSaleRoute_artist$key = {
-    readonly " $data"?: ArtistWorksForSaleRoute_artist$data;
+    readonly " $data"?: ArtistWorksForSaleRoute_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistWorksForSaleRoute_artist">;
 };
 

@@ -14,7 +14,7 @@ export type JobApp_job = {
 };
 export type JobApp_job$data = JobApp_job;
 export type JobApp_job$key = {
-    readonly " $data"?: JobApp_job$data;
+    readonly " $data"?: JobApp_job$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"JobApp_job">;
 };
 

@@ -52,7 +52,7 @@ export type Item_item = {
 };
 export type Item_item$data = Item_item;
 export type Item_item$key = {
-    readonly " $data"?: Item_item$data;
+    readonly " $data"?: Item_item$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Item_item">;
 };
 

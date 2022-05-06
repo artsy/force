@@ -22,7 +22,7 @@ export type DeepZoom_image = {
 };
 export type DeepZoom_image$data = DeepZoom_image;
 export type DeepZoom_image$key = {
-    readonly " $data"?: DeepZoom_image$data;
+    readonly " $data"?: DeepZoom_image$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
 };
 

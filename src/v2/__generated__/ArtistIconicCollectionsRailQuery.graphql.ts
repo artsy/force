@@ -5,9 +5,9 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistIconicCollectionsRailQueryVariables = {
-    isFeaturedArtistContent?: boolean | null;
-    size?: number | null;
-    internalID?: string | null;
+    isFeaturedArtistContent?: boolean | null | undefined;
+    size?: number | null | undefined;
+    internalID?: string | null | undefined;
 };
 export type ArtistIconicCollectionsRailQueryResponse = {
     readonly marketingCollections: ReadonlyArray<{

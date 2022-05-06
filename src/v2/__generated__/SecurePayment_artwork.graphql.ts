@@ -11,7 +11,7 @@ export type SecurePayment_artwork = {
 };
 export type SecurePayment_artwork$data = SecurePayment_artwork;
 export type SecurePayment_artwork$key = {
-    readonly " $data"?: SecurePayment_artwork$data;
+    readonly " $data"?: SecurePayment_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SecurePayment_artwork">;
 };
 

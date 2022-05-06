@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SelectedExhibitions_exhibitions = ReadonlyArray<{
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly name: string | null;
     readonly start_at: string | null;
@@ -20,7 +20,7 @@ export type SelectedExhibitions_exhibitions = ReadonlyArray<{
 }>;
 export type SelectedExhibitions_exhibitions$data = SelectedExhibitions_exhibitions;
 export type SelectedExhibitions_exhibitions$key = ReadonlyArray<{
-    readonly " $data"?: SelectedExhibitions_exhibitions$data;
+    readonly " $data"?: SelectedExhibitions_exhibitions$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SelectedExhibitions_exhibitions">;
 }>;
 

@@ -18,7 +18,7 @@ export type FairOrganizerApp_fairOrganizer = {
 };
 export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
 export type FairOrganizerApp_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
+    readonly " $data"?: FairOrganizerApp_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
 };
 

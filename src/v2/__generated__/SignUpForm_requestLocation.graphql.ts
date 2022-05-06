@@ -10,7 +10,7 @@ export type SignUpForm_requestLocation = {
 };
 export type SignUpForm_requestLocation$data = SignUpForm_requestLocation;
 export type SignUpForm_requestLocation$key = {
-    readonly " $data"?: SignUpForm_requestLocation$data;
+    readonly " $data"?: SignUpForm_requestLocation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SignUpForm_requestLocation">;
 };
 

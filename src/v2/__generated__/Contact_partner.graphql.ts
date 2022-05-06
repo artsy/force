@@ -14,7 +14,7 @@ export type Contact_partner = {
 };
 export type Contact_partner$data = Contact_partner;
 export type Contact_partner$key = {
-    readonly " $data"?: Contact_partner$data;
+    readonly " $data"?: Contact_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Contact_partner">;
 };
 

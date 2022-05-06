@@ -4,15 +4,15 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type SubmitInquiryRequestMutationInput = {
-    clientMutationId?: string | null;
-    contactGallery?: boolean | null;
+    clientMutationId?: string | null | undefined;
+    contactGallery?: boolean | null | undefined;
     inquireableID: string;
     inquireableType: string;
-    message?: string | null;
-    questions?: Array<InquiryQuestionInput | null> | null;
+    message?: string | null | undefined;
+    questions?: Array<InquiryQuestionInput | null> | null | undefined;
 };
 export type InquiryQuestionInput = {
-    details?: string | null;
+    details?: string | null | undefined;
     questionID: string;
 };
 export type useArtworkInquiryRequestMutationVariables = {
@@ -24,9 +24,9 @@ export type useArtworkInquiryRequestMutationResponse = {
         readonly inquiryRequest: {
             readonly internalID: string;
             readonly inquireable: {
-                readonly internalID?: string;
-                readonly slug?: string;
-                readonly price?: string | null;
+                readonly internalID?: string | undefined;
+                readonly slug?: string | undefined;
+                readonly price?: string | null | undefined;
             } | null;
         } | null;
     } | null;

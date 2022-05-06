@@ -4,11 +4,11 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type SendFeedbackMutationInput = {
-    clientMutationId?: string | null;
-    email?: string | null;
+    clientMutationId?: string | null | undefined;
+    email?: string | null | undefined;
     message: string;
-    name?: string | null;
-    url?: string | null;
+    name?: string | null | undefined;
+    url?: string | null | undefined;
 };
 export type SendFeedbackSearchResultsMutationVariables = {
     input: SendFeedbackMutationInput;
@@ -18,12 +18,12 @@ export type SendFeedbackSearchResultsMutationResponse = {
         readonly feedbackOrError: {
             readonly feedback?: {
                 readonly message: string;
-            } | null;
+            } | null | undefined;
             readonly mutationError?: {
                 readonly type: string | null;
                 readonly message: string;
                 readonly detail: string | null;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

@@ -17,7 +17,7 @@ export type ChannelArticles_channel = {
 };
 export type ChannelArticles_channel$data = ChannelArticles_channel;
 export type ChannelArticles_channel$key = {
-    readonly " $data"?: ChannelArticles_channel$data;
+    readonly " $data"?: ChannelArticles_channel$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ChannelArticles_channel">;
 };
 

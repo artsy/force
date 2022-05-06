@@ -13,7 +13,7 @@ export type ViewingRooms_edges = ReadonlyArray<{
 }>;
 export type ViewingRooms_edges$data = ViewingRooms_edges;
 export type ViewingRooms_edges$key = ReadonlyArray<{
-    readonly " $data"?: ViewingRooms_edges$data;
+    readonly " $data"?: ViewingRooms_edges$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_edges">;
 }>;
 

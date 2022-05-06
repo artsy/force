@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeleteUserAddressInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     userAddressID: string;
 };
 export type DeleteUserAddressMutationVariables = {
@@ -13,21 +13,21 @@ export type DeleteUserAddressMutationVariables = {
 export type DeleteUserAddressMutationResponse = {
     readonly deleteUserAddress: {
         readonly userAddressOrErrors: {
-            readonly id?: string;
-            readonly internalID?: string;
-            readonly name?: string | null;
-            readonly addressLine1?: string;
-            readonly addressLine2?: string | null;
-            readonly isDefault?: boolean;
-            readonly phoneNumber?: string | null;
-            readonly city?: string;
-            readonly region?: string | null;
-            readonly postalCode?: string | null;
-            readonly country?: string;
+            readonly id?: string | undefined;
+            readonly internalID?: string | undefined;
+            readonly name?: string | null | undefined;
+            readonly addressLine1?: string | undefined;
+            readonly addressLine2?: string | null | undefined;
+            readonly isDefault?: boolean | undefined;
+            readonly phoneNumber?: string | null | undefined;
+            readonly city?: string | undefined;
+            readonly region?: string | null | undefined;
+            readonly postalCode?: string | null | undefined;
+            readonly country?: string | undefined;
             readonly errors?: ReadonlyArray<{
                 readonly code: string;
                 readonly message: string;
-            }>;
+            }> | undefined;
         };
     } | null;
 };

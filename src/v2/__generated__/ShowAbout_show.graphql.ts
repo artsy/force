@@ -10,7 +10,7 @@ export type ShowAbout_show = {
 };
 export type ShowAbout_show$data = ShowAbout_show;
 export type ShowAbout_show$key = {
-    readonly " $data"?: ShowAbout_show$data;
+    readonly " $data"?: ShowAbout_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowAbout_show">;
 };
 

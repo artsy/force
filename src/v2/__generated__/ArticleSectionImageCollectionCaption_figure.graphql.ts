@@ -6,13 +6,13 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionCaption_figure = {
     readonly __typename: string;
-    readonly caption?: string | null;
+    readonly caption?: string | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
     readonly " $refType": "ArticleSectionImageCollectionCaption_figure";
 };
 export type ArticleSectionImageCollectionCaption_figure$data = ArticleSectionImageCollectionCaption_figure;
 export type ArticleSectionImageCollectionCaption_figure$key = {
-    readonly " $data"?: ArticleSectionImageCollectionCaption_figure$data;
+    readonly " $data"?: ArticleSectionImageCollectionCaption_figure$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollectionCaption_figure">;
 };
 

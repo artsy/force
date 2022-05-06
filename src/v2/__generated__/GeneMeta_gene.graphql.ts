@@ -20,7 +20,7 @@ export type GeneMeta_gene = {
 };
 export type GeneMeta_gene$data = GeneMeta_gene;
 export type GeneMeta_gene$key = {
-    readonly " $data"?: GeneMeta_gene$data;
+    readonly " $data"?: GeneMeta_gene$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene">;
 };
 

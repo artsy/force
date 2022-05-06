@@ -29,7 +29,7 @@ export type NearbyGalleryCard_partner = {
 };
 export type NearbyGalleryCard_partner$data = NearbyGalleryCard_partner;
 export type NearbyGalleryCard_partner$key = {
-    readonly " $data"?: NearbyGalleryCard_partner$data;
+    readonly " $data"?: NearbyGalleryCard_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NearbyGalleryCard_partner">;
 };
 

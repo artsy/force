@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type RequestConditionReportInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     saleArtworkID: string;
 };
 export type RequestConditionReportMutationVariables = {

@@ -10,7 +10,7 @@ export type Collect_marketingCollections = ReadonlyArray<{
 }>;
 export type Collect_marketingCollections$data = Collect_marketingCollections;
 export type Collect_marketingCollections$key = ReadonlyArray<{
-    readonly " $data"?: Collect_marketingCollections$data;
+    readonly " $data"?: Collect_marketingCollections$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Collect_marketingCollections">;
 }>;
 

@@ -5,19 +5,19 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShippingAddress_ship = {
-    readonly name?: string | null;
-    readonly addressLine1?: string | null;
-    readonly addressLine2?: string | null;
-    readonly city?: string | null;
-    readonly postalCode?: string | null;
-    readonly region?: string | null;
-    readonly country?: string | null;
-    readonly phoneNumber?: string | null;
+    readonly name?: string | null | undefined;
+    readonly addressLine1?: string | null | undefined;
+    readonly addressLine2?: string | null | undefined;
+    readonly city?: string | null | undefined;
+    readonly postalCode?: string | null | undefined;
+    readonly region?: string | null | undefined;
+    readonly country?: string | null | undefined;
+    readonly phoneNumber?: string | null | undefined;
     readonly " $refType": "ShippingAddress_ship";
 };
 export type ShippingAddress_ship$data = ShippingAddress_ship;
 export type ShippingAddress_ship$key = {
-    readonly " $data"?: ShippingAddress_ship$data;
+    readonly " $data"?: ShippingAddress_ship$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShippingAddress_ship">;
 };
 

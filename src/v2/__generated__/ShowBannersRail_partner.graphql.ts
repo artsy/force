@@ -42,7 +42,7 @@ export type ShowBannersRail_partner = {
 };
 export type ShowBannersRail_partner$data = ShowBannersRail_partner;
 export type ShowBannersRail_partner$key = {
-    readonly " $data"?: ShowBannersRail_partner$data;
+    readonly " $data"?: ShowBannersRail_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowBannersRail_partner">;
 };
 

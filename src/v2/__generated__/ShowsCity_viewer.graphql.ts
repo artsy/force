@@ -10,7 +10,7 @@ export type ShowsCity_viewer = {
 };
 export type ShowsCity_viewer$data = ShowsCity_viewer;
 export type ShowsCity_viewer$key = {
-    readonly " $data"?: ShowsCity_viewer$data;
+    readonly " $data"?: ShowsCity_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsCity_viewer">;
 };
 

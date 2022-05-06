@@ -25,7 +25,7 @@ export type Conversation_conversation = {
             readonly node: {
                 readonly internalID: string;
                 readonly updatedAt: string;
-                readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+                readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
             } | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_events">;
@@ -48,10 +48,10 @@ export type Conversation_conversation = {
     readonly items: ReadonlyArray<{
         readonly item: {
             readonly __typename: string;
-            readonly id?: string;
-            readonly isOfferable?: boolean | null;
-            readonly isOfferableFromInquiry?: boolean | null;
-            readonly internalID?: string;
+            readonly id?: string | undefined;
+            readonly isOfferable?: boolean | null | undefined;
+            readonly isOfferableFromInquiry?: boolean | null | undefined;
+            readonly internalID?: string | undefined;
             readonly " $fragmentRefs": FragmentRefs<"Item_item">;
         } | null;
         readonly liveArtwork: ({
@@ -70,7 +70,7 @@ export type Conversation_conversation = {
 };
 export type Conversation_conversation$data = Conversation_conversation;
 export type Conversation_conversation$key = {
-    readonly " $data"?: Conversation_conversation$data;
+    readonly " $data"?: Conversation_conversation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation">;
 };
 

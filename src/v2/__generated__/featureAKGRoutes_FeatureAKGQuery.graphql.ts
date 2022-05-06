@@ -7,9 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type featureAKGRoutes_FeatureAKGQueryVariables = {
     articleIDs: Array<string | null>;
     selectedWorksSetID: string;
-    collectionRailItemIDs?: Array<string> | null;
-    auctionRailItemIDs?: Array<string> | null;
-    fairRailItemIDs?: Array<string> | null;
+    collectionRailItemIDs?: Array<string> | null | undefined;
+    auctionRailItemIDs?: Array<string> | null | undefined;
+    fairRailItemIDs?: Array<string> | null | undefined;
     hasCollectionRailItems: boolean;
     hasAuctionRailItems: boolean;
     hasFairRailItems: boolean;

@@ -38,13 +38,13 @@ export type Offer_order = {
             } | null;
         } | null> | null;
     } | null;
-    readonly isInquiryOrder?: boolean;
+    readonly isInquiryOrder?: boolean | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "PriceOptions_order">;
     readonly " $refType": "Offer_order";
 };
 export type Offer_order$data = Offer_order;
 export type Offer_order$key = {
-    readonly " $data"?: Offer_order$data;
+    readonly " $data"?: Offer_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Offer_order">;
 };
 

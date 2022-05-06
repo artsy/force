@@ -10,7 +10,7 @@ export type ViewingRoomPullQuote_viewingRoom = {
 };
 export type ViewingRoomPullQuote_viewingRoom$data = ViewingRoomPullQuote_viewingRoom;
 export type ViewingRoomPullQuote_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomPullQuote_viewingRoom$data;
+    readonly " $data"?: ViewingRoomPullQuote_viewingRoom$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomPullQuote_viewingRoom">;
 };
 

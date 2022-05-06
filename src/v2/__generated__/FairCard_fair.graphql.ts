@@ -16,7 +16,7 @@ export type FairCard_fair = {
 };
 export type FairCard_fair$data = FairCard_fair;
 export type FairCard_fair$key = {
-    readonly " $data"?: FairCard_fair$data;
+    readonly " $data"?: FairCard_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairCard_fair">;
 };
 

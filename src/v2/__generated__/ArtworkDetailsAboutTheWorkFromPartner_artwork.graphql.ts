@@ -36,7 +36,7 @@ export type ArtworkDetailsAboutTheWorkFromPartner_artwork = {
 };
 export type ArtworkDetailsAboutTheWorkFromPartner_artwork$data = ArtworkDetailsAboutTheWorkFromPartner_artwork;
 export type ArtworkDetailsAboutTheWorkFromPartner_artwork$key = {
-    readonly " $data"?: ArtworkDetailsAboutTheWorkFromPartner_artwork$data;
+    readonly " $data"?: ArtworkDetailsAboutTheWorkFromPartner_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsAboutTheWorkFromPartner_artwork">;
 };
 

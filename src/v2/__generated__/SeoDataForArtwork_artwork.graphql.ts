@@ -59,7 +59,7 @@ export type SeoDataForArtwork_artwork = {
 };
 export type SeoDataForArtwork_artwork$data = SeoDataForArtwork_artwork;
 export type SeoDataForArtwork_artwork$key = {
-    readonly " $data"?: SeoDataForArtwork_artwork$data;
+    readonly " $data"?: SeoDataForArtwork_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SeoDataForArtwork_artwork">;
 };
 

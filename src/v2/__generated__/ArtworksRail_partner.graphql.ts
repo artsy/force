@@ -18,7 +18,7 @@ export type ArtworksRail_partner = {
 };
 export type ArtworksRail_partner$data = ArtworksRail_partner;
 export type ArtworksRail_partner$key = {
-    readonly " $data"?: ArtworksRail_partner$data;
+    readonly " $data"?: ArtworksRail_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworksRail_partner">;
 };
 

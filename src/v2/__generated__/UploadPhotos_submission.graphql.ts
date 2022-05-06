@@ -17,7 +17,7 @@ export type UploadPhotos_submission = {
 };
 export type UploadPhotos_submission$data = UploadPhotos_submission;
 export type UploadPhotos_submission$key = {
-    readonly " $data"?: UploadPhotos_submission$data;
+    readonly " $data"?: UploadPhotos_submission$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_submission">;
 };
 

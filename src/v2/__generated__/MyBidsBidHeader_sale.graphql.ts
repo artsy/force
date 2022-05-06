@@ -21,7 +21,7 @@ export type MyBidsBidHeader_sale = {
 };
 export type MyBidsBidHeader_sale$data = MyBidsBidHeader_sale;
 export type MyBidsBidHeader_sale$key = {
-    readonly " $data"?: MyBidsBidHeader_sale$data;
+    readonly " $data"?: MyBidsBidHeader_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"MyBidsBidHeader_sale">;
 };
 

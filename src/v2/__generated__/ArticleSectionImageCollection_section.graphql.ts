@@ -15,7 +15,7 @@ export type ArticleSectionImageCollection_section = {
 };
 export type ArticleSectionImageCollection_section$data = ArticleSectionImageCollection_section;
 export type ArticleSectionImageCollection_section$key = {
-    readonly " $data"?: ArticleSectionImageCollection_section$data;
+    readonly " $data"?: ArticleSectionImageCollection_section$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollection_section">;
 };
 

@@ -14,7 +14,7 @@ export type VerifiedSeller_artwork = {
 };
 export type VerifiedSeller_artwork$data = VerifiedSeller_artwork;
 export type VerifiedSeller_artwork$key = {
-    readonly " $data"?: VerifiedSeller_artwork$data;
+    readonly " $data"?: VerifiedSeller_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"VerifiedSeller_artwork">;
 };
 

@@ -15,7 +15,7 @@ export type Badge_artwork = {
 };
 export type Badge_artwork$data = Badge_artwork;
 export type Badge_artwork$key = {
-    readonly " $data"?: Badge_artwork$data;
+    readonly " $data"?: Badge_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Badge_artwork">;
 };
 

@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleInfiniteScrollQueryVariables = {
-    after?: string | null;
+    after?: string | null | undefined;
     channelID: string;
     articleID: string;
 };

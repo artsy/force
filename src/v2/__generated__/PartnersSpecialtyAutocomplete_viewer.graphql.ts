@@ -28,7 +28,7 @@ export type PartnersSpecialtyAutocomplete_viewer = {
 };
 export type PartnersSpecialtyAutocomplete_viewer$data = PartnersSpecialtyAutocomplete_viewer;
 export type PartnersSpecialtyAutocomplete_viewer$key = {
-    readonly " $data"?: PartnersSpecialtyAutocomplete_viewer$data;
+    readonly " $data"?: PartnersSpecialtyAutocomplete_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersSpecialtyAutocomplete_viewer">;
 };
 

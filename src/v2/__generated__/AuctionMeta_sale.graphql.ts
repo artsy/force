@@ -12,7 +12,7 @@ export type AuctionMeta_sale = {
 };
 export type AuctionMeta_sale$data = AuctionMeta_sale;
 export type AuctionMeta_sale$key = {
-    readonly " $data"?: AuctionMeta_sale$data;
+    readonly " $data"?: AuctionMeta_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionMeta_sale">;
 };
 

@@ -63,7 +63,7 @@ export type PaymentPicker_order = {
 };
 export type PaymentPicker_order$data = PaymentPicker_order;
 export type PaymentPicker_order$key = {
-    readonly " $data"?: PaymentPicker_order$data;
+    readonly " $data"?: PaymentPicker_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order">;
 };
 

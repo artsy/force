@@ -21,7 +21,7 @@ export type PartnerApp_partner = {
 };
 export type PartnerApp_partner$data = PartnerApp_partner;
 export type PartnerApp_partner$key = {
-    readonly " $data"?: PartnerApp_partner$data;
+    readonly " $data"?: PartnerApp_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerApp_partner">;
 };
 

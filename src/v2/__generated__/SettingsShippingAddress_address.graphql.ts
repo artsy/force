@@ -19,7 +19,7 @@ export type SettingsShippingAddress_address = {
 };
 export type SettingsShippingAddress_address$data = SettingsShippingAddress_address;
 export type SettingsShippingAddress_address$key = {
-    readonly " $data"?: SettingsShippingAddress_address$data;
+    readonly " $data"?: SettingsShippingAddress_address$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
 };
 

@@ -7,18 +7,18 @@ import { FragmentRefs } from "relay-runtime";
 export type FeaturedRails_viewer = {
     readonly collections?: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"FeaturedCollections_collections">;
-    } | null> | null;
+    } | null> | null | undefined;
     readonly auctions?: {
         readonly " $fragmentRefs": FragmentRefs<"FeaturedAuctions_auctions">;
-    } | null;
+    } | null | undefined;
     readonly fairs?: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"FeaturedFairs_fairs">;
-    } | null> | null;
+    } | null> | null | undefined;
     readonly " $refType": "FeaturedRails_viewer";
 };
 export type FeaturedRails_viewer$data = FeaturedRails_viewer;
 export type FeaturedRails_viewer$key = {
-    readonly " $data"?: FeaturedRails_viewer$data;
+    readonly " $data"?: FeaturedRails_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedRails_viewer">;
 };
 

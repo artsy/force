@@ -39,7 +39,7 @@ export type ArtistMetaCanonicalLink_artist = {
 };
 export type ArtistMetaCanonicalLink_artist$data = ArtistMetaCanonicalLink_artist;
 export type ArtistMetaCanonicalLink_artist$key = {
-    readonly " $data"?: ArtistMetaCanonicalLink_artist$data;
+    readonly " $data"?: ArtistMetaCanonicalLink_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
 };
 

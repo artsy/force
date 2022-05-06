@@ -12,7 +12,7 @@ export type SaleDetailTimer_sale = {
 };
 export type SaleDetailTimer_sale$data = SaleDetailTimer_sale;
 export type SaleDetailTimer_sale$key = {
-    readonly " $data"?: SaleDetailTimer_sale$data;
+    readonly " $data"?: SaleDetailTimer_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SaleDetailTimer_sale">;
 };
 

@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtistsPaginationQueryVariables = {
     count: number;
-    cursor?: string | null;
+    cursor?: string | null | undefined;
     artworkID: string;
 };
 export type ArtworkRelatedArtistsPaginationQueryResponse = {

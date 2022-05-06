@@ -14,7 +14,7 @@ export type ExampleArtistRoute_artist = {
 };
 export type ExampleArtistRoute_artist$data = ExampleArtistRoute_artist;
 export type ExampleArtistRoute_artist$key = {
-    readonly " $data"?: ExampleArtistRoute_artist$data;
+    readonly " $data"?: ExampleArtistRoute_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ExampleArtistRoute_artist">;
 };
 

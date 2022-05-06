@@ -36,7 +36,7 @@ export type ArtworkDetailsAdditionalInfo_artwork = {
 };
 export type ArtworkDetailsAdditionalInfo_artwork$data = ArtworkDetailsAdditionalInfo_artwork;
 export type ArtworkDetailsAdditionalInfo_artwork$key = {
-    readonly " $data"?: ArtworkDetailsAdditionalInfo_artwork$data;
+    readonly " $data"?: ArtworkDetailsAdditionalInfo_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsAdditionalInfo_artwork">;
 };
 

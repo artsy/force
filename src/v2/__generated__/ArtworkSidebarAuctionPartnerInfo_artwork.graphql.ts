@@ -19,7 +19,7 @@ export type ArtworkSidebarAuctionPartnerInfo_artwork = {
 };
 export type ArtworkSidebarAuctionPartnerInfo_artwork$data = ArtworkSidebarAuctionPartnerInfo_artwork;
 export type ArtworkSidebarAuctionPartnerInfo_artwork$key = {
-    readonly " $data"?: ArtworkSidebarAuctionPartnerInfo_artwork$data;
+    readonly " $data"?: ArtworkSidebarAuctionPartnerInfo_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionPartnerInfo_artwork">;
 };
 

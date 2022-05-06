@@ -15,7 +15,7 @@ export type FeatureSet_set = {
         readonly edges: ReadonlyArray<{
             readonly __typename: string;
             readonly node: {
-                readonly id?: string;
+                readonly id?: string | undefined;
                 readonly " $fragmentRefs": FragmentRefs<"FeatureSetItem_setItem">;
             } | null;
         } | null> | null;
@@ -25,7 +25,7 @@ export type FeatureSet_set = {
 };
 export type FeatureSet_set$data = FeatureSet_set;
 export type FeatureSet_set$key = {
-    readonly " $data"?: FeatureSet_set$data;
+    readonly " $data"?: FeatureSet_set$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureSet_set">;
 };
 

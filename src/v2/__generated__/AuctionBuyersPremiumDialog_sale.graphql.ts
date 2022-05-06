@@ -14,7 +14,7 @@ export type AuctionBuyersPremiumDialog_sale = {
 };
 export type AuctionBuyersPremiumDialog_sale$data = AuctionBuyersPremiumDialog_sale;
 export type AuctionBuyersPremiumDialog_sale$key = {
-    readonly " $data"?: AuctionBuyersPremiumDialog_sale$data;
+    readonly " $data"?: AuctionBuyersPremiumDialog_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
 };
 

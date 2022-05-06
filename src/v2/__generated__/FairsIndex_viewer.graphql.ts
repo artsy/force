@@ -45,7 +45,7 @@ export type FairsIndex_viewer = {
 };
 export type FairsIndex_viewer$data = FairsIndex_viewer;
 export type FairsIndex_viewer$key = {
-    readonly " $data"?: FairsIndex_viewer$data;
+    readonly " $data"?: FairsIndex_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairsIndex_viewer">;
 };
 

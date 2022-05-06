@@ -5,9 +5,9 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceCreateOrderWithArtworkInput = {
     artworkId: string;
-    clientMutationId?: string | null;
-    editionSetId?: string | null;
-    quantity?: number | null;
+    clientMutationId?: string | null | undefined;
+    editionSetId?: string | null | undefined;
+    quantity?: number | null | undefined;
 };
 export type createTestEnvOrderMutationVariables = {
     input: CommerceCreateOrderWithArtworkInput;
@@ -17,10 +17,10 @@ export type createTestEnvOrderMutationResponse = {
         readonly orderOrError: {
             readonly order?: {
                 readonly internalID: string;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
-            };
+            } | undefined;
         };
     } | null;
 };

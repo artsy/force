@@ -9,7 +9,7 @@ export type FairBoothRail_show = {
     readonly slug: string;
     readonly href: string | null;
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly counts: {
         readonly artworks: number | null;
@@ -18,7 +18,7 @@ export type FairBoothRail_show = {
 };
 export type FairBoothRail_show$data = FairBoothRail_show;
 export type FairBoothRail_show$key = {
-    readonly " $data"?: FairBoothRail_show$data;
+    readonly " $data"?: FairBoothRail_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
 };
 

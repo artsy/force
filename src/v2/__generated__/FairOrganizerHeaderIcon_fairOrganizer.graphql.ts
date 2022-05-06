@@ -24,7 +24,7 @@ export type FairOrganizerHeaderIcon_fairOrganizer = {
 };
 export type FairOrganizerHeaderIcon_fairOrganizer$data = FairOrganizerHeaderIcon_fairOrganizer;
 export type FairOrganizerHeaderIcon_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerHeaderIcon_fairOrganizer$data;
+    readonly " $data"?: FairOrganizerHeaderIcon_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer">;
 };
 

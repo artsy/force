@@ -20,7 +20,7 @@ export type FairFollowedArtists_fair = {
 };
 export type FairFollowedArtists_fair$data = FairFollowedArtists_fair;
 export type FairFollowedArtists_fair$key = {
-    readonly " $data"?: FairFollowedArtists_fair$data;
+    readonly " $data"?: FairFollowedArtists_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairFollowedArtists_fair">;
 };
 

@@ -60,7 +60,7 @@ export type DetailsSidebar_conversation = {
                         } | null;
                     } | null> | null;
                 } | null;
-                readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+                readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
                 readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
             } | null;
         } | null> | null;
@@ -101,7 +101,7 @@ export type DetailsSidebar_conversation = {
 };
 export type DetailsSidebar_conversation$data = DetailsSidebar_conversation;
 export type DetailsSidebar_conversation$key = {
-    readonly " $data"?: DetailsSidebar_conversation$data;
+    readonly " $data"?: DetailsSidebar_conversation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"DetailsSidebar_conversation">;
 };
 

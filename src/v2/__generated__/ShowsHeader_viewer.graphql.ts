@@ -17,7 +17,7 @@ export type ShowsHeader_viewer = {
 };
 export type ShowsHeader_viewer$data = ShowsHeader_viewer;
 export type ShowsHeader_viewer$key = {
-    readonly " $data"?: ShowsHeader_viewer$data;
+    readonly " $data"?: ShowsHeader_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsHeader_viewer">;
 };
 

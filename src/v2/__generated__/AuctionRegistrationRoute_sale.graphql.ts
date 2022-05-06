@@ -19,7 +19,7 @@ export type AuctionRegistrationRoute_sale = {
 };
 export type AuctionRegistrationRoute_sale$data = AuctionRegistrationRoute_sale;
 export type AuctionRegistrationRoute_sale$key = {
-    readonly " $data"?: AuctionRegistrationRoute_sale$data;
+    readonly " $data"?: AuctionRegistrationRoute_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionRegistrationRoute_sale">;
 };
 

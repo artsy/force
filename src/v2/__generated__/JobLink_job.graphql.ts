@@ -12,7 +12,7 @@ export type JobLink_job = {
 };
 export type JobLink_job$data = JobLink_job;
 export type JobLink_job$key = {
-    readonly " $data"?: JobLink_job$data;
+    readonly " $data"?: JobLink_job$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"JobLink_job">;
 };
 

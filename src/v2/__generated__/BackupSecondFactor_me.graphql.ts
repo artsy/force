@@ -16,7 +16,7 @@ export type BackupSecondFactor_me = {
 };
 export type BackupSecondFactor_me$data = BackupSecondFactor_me;
 export type BackupSecondFactor_me$key = {
-    readonly " $data"?: BackupSecondFactor_me$data;
+    readonly " $data"?: BackupSecondFactor_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"BackupSecondFactor_me">;
 };
 

@@ -13,7 +13,7 @@ export type createTestEnv_artwork = {
 };
 export type createTestEnv_artwork$data = createTestEnv_artwork;
 export type createTestEnv_artwork$key = {
-    readonly " $data"?: createTestEnv_artwork$data;
+    readonly " $data"?: createTestEnv_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"createTestEnv_artwork">;
 };
 

@@ -25,7 +25,7 @@ export type ArtworkSidebarPartnerInfo_artwork = {
 };
 export type ArtworkSidebarPartnerInfo_artwork$data = ArtworkSidebarPartnerInfo_artwork;
 export type ArtworkSidebarPartnerInfo_artwork$key = {
-    readonly " $data"?: ArtworkSidebarPartnerInfo_artwork$data;
+    readonly " $data"?: ArtworkSidebarPartnerInfo_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarPartnerInfo_artwork">;
 };
 

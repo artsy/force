@@ -33,7 +33,7 @@ export type AuctionCard_sale = {
 };
 export type AuctionCard_sale$data = AuctionCard_sale;
 export type AuctionCard_sale$key = {
-    readonly " $data"?: AuctionCard_sale$data;
+    readonly " $data"?: AuctionCard_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionCard_sale">;
 };
 

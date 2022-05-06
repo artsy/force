@@ -14,7 +14,7 @@ export type FollowGeneButton_gene = {
 };
 export type FollowGeneButton_gene$data = FollowGeneButton_gene;
 export type FollowGeneButton_gene$key = {
-    readonly " $data"?: FollowGeneButton_gene$data;
+    readonly " $data"?: FollowGeneButton_gene$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
 };
 

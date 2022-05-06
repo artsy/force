@@ -24,7 +24,7 @@ export type ArtistConsignMeta_artist = {
 };
 export type ArtistConsignMeta_artist$data = ArtistConsignMeta_artist;
 export type ArtistConsignMeta_artist$key = {
-    readonly " $data"?: ArtistConsignMeta_artist$data;
+    readonly " $data"?: ArtistConsignMeta_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignMeta_artist">;
 };
 

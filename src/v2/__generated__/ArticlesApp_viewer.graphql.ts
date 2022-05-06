@@ -10,7 +10,7 @@ export type ArticlesApp_viewer = {
 };
 export type ArticlesApp_viewer$data = ArticlesApp_viewer;
 export type ArticlesApp_viewer$key = {
-    readonly " $data"?: ArticlesApp_viewer$data;
+    readonly " $data"?: ArticlesApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticlesApp_viewer">;
 };
 

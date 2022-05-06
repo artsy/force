@@ -10,7 +10,7 @@ export type NewPayment_me = {
 };
 export type NewPayment_me$data = NewPayment_me;
 export type NewPayment_me$key = {
-    readonly " $data"?: NewPayment_me$data;
+    readonly " $data"?: NewPayment_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NewPayment_me">;
 };
 

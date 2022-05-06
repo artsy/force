@@ -17,7 +17,7 @@ export type ArticleSectionVideo_section = {
 };
 export type ArticleSectionVideo_section$data = ArticleSectionVideo_section;
 export type ArticleSectionVideo_section$key = {
-    readonly " $data"?: ArticleSectionVideo_section$data;
+    readonly " $data"?: ArticleSectionVideo_section$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionVideo_section">;
 };
 

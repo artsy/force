@@ -18,7 +18,7 @@ export type WorksByArtistsYouFollowRail_viewer = {
 };
 export type WorksByArtistsYouFollowRail_viewer$data = WorksByArtistsYouFollowRail_viewer;
 export type WorksByArtistsYouFollowRail_viewer$key = {
-    readonly " $data"?: WorksByArtistsYouFollowRail_viewer$data;
+    readonly " $data"?: WorksByArtistsYouFollowRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksByArtistsYouFollowRail_viewer">;
 };
 

@@ -21,7 +21,7 @@ export type FairsPastFairs_viewer = {
 };
 export type FairsPastFairs_viewer$data = FairsPastFairs_viewer;
 export type FairsPastFairs_viewer$key = {
-    readonly " $data"?: FairsPastFairs_viewer$data;
+    readonly " $data"?: FairsPastFairs_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairsPastFairs_viewer">;
 };
 

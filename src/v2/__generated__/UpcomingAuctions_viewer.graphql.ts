@@ -24,7 +24,7 @@ export type UpcomingAuctions_viewer = {
 };
 export type UpcomingAuctions_viewer$data = UpcomingAuctions_viewer;
 export type UpcomingAuctions_viewer$key = {
-    readonly " $data"?: UpcomingAuctions_viewer$data;
+    readonly " $data"?: UpcomingAuctions_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_viewer">;
 };
 

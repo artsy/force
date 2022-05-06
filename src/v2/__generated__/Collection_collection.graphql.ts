@@ -31,7 +31,7 @@ export type Collection_collection = {
     readonly artworksConnection: {
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -53,7 +53,7 @@ export type Collection_collection = {
 };
 export type Collection_collection$data = Collection_collection;
 export type Collection_collection$key = {
-    readonly " $data"?: Collection_collection$data;
+    readonly " $data"?: Collection_collection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Collection_collection">;
 };
 

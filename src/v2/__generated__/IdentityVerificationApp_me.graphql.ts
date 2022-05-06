@@ -16,7 +16,7 @@ export type IdentityVerificationApp_me = {
 };
 export type IdentityVerificationApp_me$data = IdentityVerificationApp_me;
 export type IdentityVerificationApp_me$key = {
-    readonly " $data"?: IdentityVerificationApp_me$data;
+    readonly " $data"?: IdentityVerificationApp_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_me">;
 };
 

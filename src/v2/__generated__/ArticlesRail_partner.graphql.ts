@@ -19,7 +19,7 @@ export type ArticlesRail_partner = {
 };
 export type ArticlesRail_partner$data = ArticlesRail_partner;
 export type ArticlesRail_partner$key = {
-    readonly " $data"?: ArticlesRail_partner$data;
+    readonly " $data"?: ArticlesRail_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_partner">;
 };
 

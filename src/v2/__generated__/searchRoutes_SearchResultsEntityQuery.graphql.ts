@@ -7,8 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
 export type searchRoutes_SearchResultsEntityQueryVariables = {
     keyword: string;
-    entities?: Array<SearchEntity | null> | null;
-    page?: number | null;
+    entities?: Array<SearchEntity | null> | null | undefined;
+    page?: number | null | undefined;
 };
 export type searchRoutes_SearchResultsEntityQueryResponse = {
     readonly viewer: {

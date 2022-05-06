@@ -10,7 +10,7 @@ export type GalleriesRoute_viewer = {
 };
 export type GalleriesRoute_viewer$data = GalleriesRoute_viewer;
 export type GalleriesRoute_viewer$key = {
-    readonly " $data"?: GalleriesRoute_viewer$data;
+    readonly " $data"?: GalleriesRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GalleriesRoute_viewer">;
 };
 

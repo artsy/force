@@ -6,8 +6,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersSpecialtyAutocompleteQueryVariables = {
-    near?: string | null;
-    type?: Array<PartnerClassification | null> | null;
+    near?: string | null | undefined;
+    type?: Array<PartnerClassification | null> | null | undefined;
 };
 export type PartnersSpecialtyAutocompleteQueryResponse = {
     readonly viewer: {

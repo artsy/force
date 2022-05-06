@@ -20,7 +20,7 @@ export type FeatureApp_feature = {
 };
 export type FeatureApp_feature$data = FeatureApp_feature;
 export type FeatureApp_feature$key = {
-    readonly " $data"?: FeatureApp_feature$data;
+    readonly " $data"?: FeatureApp_feature$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureApp_feature">;
 };
 

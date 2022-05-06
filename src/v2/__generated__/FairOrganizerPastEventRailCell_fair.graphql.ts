@@ -19,7 +19,7 @@ export type FairOrganizerPastEventRailCell_fair = {
 };
 export type FairOrganizerPastEventRailCell_fair$data = FairOrganizerPastEventRailCell_fair;
 export type FairOrganizerPastEventRailCell_fair$key = {
-    readonly " $data"?: FairOrganizerPastEventRailCell_fair$data;
+    readonly " $data"?: FairOrganizerPastEventRailCell_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
 };
 

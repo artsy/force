@@ -11,7 +11,7 @@ export type Works_partner = {
     readonly sidebar: {
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -29,7 +29,7 @@ export type Works_partner = {
 };
 export type Works_partner$data = Works_partner;
 export type Works_partner$key = {
-    readonly " $data"?: Works_partner$data;
+    readonly " $data"?: Works_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Works_partner">;
 };
 

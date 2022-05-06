@@ -22,7 +22,7 @@ export type EntityTooltipArtist_artist = {
 };
 export type EntityTooltipArtist_artist$data = EntityTooltipArtist_artist;
 export type EntityTooltipArtist_artist$key = {
-    readonly " $data"?: EntityTooltipArtist_artist$data;
+    readonly " $data"?: EntityTooltipArtist_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityTooltipArtist_artist">;
 };
 

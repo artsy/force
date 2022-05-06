@@ -12,7 +12,7 @@ export type ShowMeta_show = {
         readonly src: string | null;
     } | null;
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly formattedStartAt: string | null;
     readonly formattedEndAt: string | null;
@@ -20,7 +20,7 @@ export type ShowMeta_show = {
 };
 export type ShowMeta_show$data = ShowMeta_show;
 export type ShowMeta_show$key = {
-    readonly " $data"?: ShowMeta_show$data;
+    readonly " $data"?: ShowMeta_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show">;
 };
 

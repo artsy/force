@@ -32,7 +32,7 @@ export type RelatedCollectionEntity_collection = {
 };
 export type RelatedCollectionEntity_collection$data = RelatedCollectionEntity_collection;
 export type RelatedCollectionEntity_collection$key = {
-    readonly " $data"?: RelatedCollectionEntity_collection$data;
+    readonly " $data"?: RelatedCollectionEntity_collection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"RelatedCollectionEntity_collection">;
 };
 

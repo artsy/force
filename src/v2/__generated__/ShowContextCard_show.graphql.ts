@@ -7,13 +7,13 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_show = {
     readonly isFairBooth: boolean | null;
     readonly partner: {
-        readonly internalID?: string;
-        readonly slug?: string;
-        readonly href?: string | null;
-        readonly name?: string | null;
+        readonly internalID?: string | undefined;
+        readonly slug?: string | undefined;
+        readonly href?: string | null | undefined;
+        readonly name?: string | null | undefined;
         readonly locations?: ReadonlyArray<{
             readonly city: string | null;
-        } | null> | null;
+        } | null> | null | undefined;
         readonly artworksConnection?: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
@@ -22,7 +22,7 @@ export type ShowContextCard_show = {
                     } | null;
                 } | null;
             } | null> | null;
-        } | null;
+        } | null | undefined;
     } | null;
     readonly fair: {
         readonly internalID: string;
@@ -36,7 +36,7 @@ export type ShowContextCard_show = {
 };
 export type ShowContextCard_show$data = ShowContextCard_show;
 export type ShowContextCard_show$key = {
-    readonly " $data"?: ShowContextCard_show$data;
+    readonly " $data"?: ShowContextCard_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowContextCard_show">;
 };
 

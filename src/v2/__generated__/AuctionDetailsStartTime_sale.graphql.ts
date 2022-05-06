@@ -12,7 +12,7 @@ export type AuctionDetailsStartTime_sale = {
 };
 export type AuctionDetailsStartTime_sale$data = AuctionDetailsStartTime_sale;
 export type AuctionDetailsStartTime_sale$key = {
-    readonly " $data"?: AuctionDetailsStartTime_sale$data;
+    readonly " $data"?: AuctionDetailsStartTime_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionDetailsStartTime_sale">;
 };
 

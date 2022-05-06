@@ -9,7 +9,7 @@ export type PartnersFeaturedCarousel_viewer = {
         readonly orderedItemsConnection: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
-                    readonly internalID?: string;
+                    readonly internalID?: string | undefined;
                     readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
                 } | null;
             } | null> | null;
@@ -19,7 +19,7 @@ export type PartnersFeaturedCarousel_viewer = {
 };
 export type PartnersFeaturedCarousel_viewer$data = PartnersFeaturedCarousel_viewer;
 export type PartnersFeaturedCarousel_viewer$key = {
-    readonly " $data"?: PartnersFeaturedCarousel_viewer$data;
+    readonly " $data"?: PartnersFeaturedCarousel_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
 };
 

@@ -20,7 +20,7 @@ export type FairOrganizerLatestArticles_fairOrganizer = {
 };
 export type FairOrganizerLatestArticles_fairOrganizer$data = FairOrganizerLatestArticles_fairOrganizer;
 export type FairOrganizerLatestArticles_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data;
+    readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
 };
 

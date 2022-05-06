@@ -24,7 +24,7 @@ export type UserRegistrationAuctions_me = {
 };
 export type UserRegistrationAuctions_me$data = UserRegistrationAuctions_me;
 export type UserRegistrationAuctions_me$key = {
-    readonly " $data"?: UserRegistrationAuctions_me$data;
+    readonly " $data"?: UserRegistrationAuctions_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"UserRegistrationAuctions_me">;
 };
 

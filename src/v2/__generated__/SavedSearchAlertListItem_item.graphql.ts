@@ -18,7 +18,7 @@ export type SavedSearchAlertListItem_item = {
 };
 export type SavedSearchAlertListItem_item$data = SavedSearchAlertListItem_item;
 export type SavedSearchAlertListItem_item$key = {
-    readonly " $data"?: SavedSearchAlertListItem_item$data;
+    readonly " $data"?: SavedSearchAlertListItem_item$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertListItem_item">;
 };
 

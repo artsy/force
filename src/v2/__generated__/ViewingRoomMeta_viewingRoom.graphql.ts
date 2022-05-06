@@ -17,7 +17,7 @@ export type ViewingRoomMeta_viewingRoom = {
 };
 export type ViewingRoomMeta_viewingRoom$data = ViewingRoomMeta_viewingRoom;
 export type ViewingRoomMeta_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomMeta_viewingRoom$data;
+    readonly " $data"?: ViewingRoomMeta_viewingRoom$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomMeta_viewingRoom">;
 };
 

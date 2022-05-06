@@ -17,7 +17,7 @@ export type ArtistShowsGroup_artist = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly partner: {
-                    readonly name?: string | null;
+                    readonly name?: string | null | undefined;
                 } | null;
                 readonly name: string | null;
                 readonly href: string | null;
@@ -36,7 +36,7 @@ export type ArtistShowsGroup_artist = {
 };
 export type ArtistShowsGroup_artist$data = ArtistShowsGroup_artist;
 export type ArtistShowsGroup_artist$key = {
-    readonly " $data"?: ArtistShowsGroup_artist$data;
+    readonly " $data"?: ArtistShowsGroup_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistShowsGroup_artist">;
 };
 

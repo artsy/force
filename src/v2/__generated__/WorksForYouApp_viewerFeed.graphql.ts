@@ -10,7 +10,7 @@ export type WorksForYouApp_viewerFeed = {
 };
 export type WorksForYouApp_viewerFeed$data = WorksForYouApp_viewerFeed;
 export type WorksForYouApp_viewerFeed$key = {
-    readonly " $data"?: WorksForYouApp_viewerFeed$data;
+    readonly " $data"?: WorksForYouApp_viewerFeed$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerFeed">;
 };
 

@@ -28,7 +28,7 @@ export type FairsFairRow_fair = {
 };
 export type FairsFairRow_fair$data = FairsFairRow_fair;
 export type FairsFairRow_fair$key = {
-    readonly " $data"?: FairsFairRow_fair$data;
+    readonly " $data"?: FairsFairRow_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairsFairRow_fair">;
 };
 

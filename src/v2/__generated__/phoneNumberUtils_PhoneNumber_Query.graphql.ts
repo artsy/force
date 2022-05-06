@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type phoneNumberUtils_PhoneNumber_QueryVariables = {
     phoneNumber: string;
-    regionCode?: string | null;
+    regionCode?: string | null | undefined;
 };
 export type phoneNumberUtils_PhoneNumber_QueryResponse = {
     readonly phoneNumber: {

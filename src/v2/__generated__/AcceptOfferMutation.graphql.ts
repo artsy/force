@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceBuyerAcceptOfferInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     offerId: string;
 };
 export type AcceptOfferMutationVariables = {
@@ -17,13 +17,13 @@ export type AcceptOfferMutationResponse = {
             readonly __typename: "CommerceOrderWithMutationSuccess";
             readonly order?: {
                 readonly internalID: string;
-                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-            };
+                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

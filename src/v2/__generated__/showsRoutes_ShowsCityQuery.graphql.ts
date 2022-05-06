@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type showsRoutes_ShowsCityQueryVariables = {
     slug: string;
-    page?: number | null;
+    page?: number | null | undefined;
 };
 export type showsRoutes_ShowsCityQueryResponse = {
     readonly viewer: {

@@ -14,7 +14,7 @@ export type CellShow_show = {
     readonly isFairBooth: boolean | null;
     readonly exhibitionPeriod: string | null;
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly coverImage: {
         readonly cropped: {
@@ -26,7 +26,7 @@ export type CellShow_show = {
 };
 export type CellShow_show$data = CellShow_show;
 export type CellShow_show$key = {
-    readonly " $data"?: CellShow_show$data;
+    readonly " $data"?: CellShow_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
 };
 

@@ -10,7 +10,7 @@ export type SettingsEditProfileYourGalleryIntro_me = {
 };
 export type SettingsEditProfileYourGalleryIntro_me$data = SettingsEditProfileYourGalleryIntro_me;
 export type SettingsEditProfileYourGalleryIntro_me$key = {
-    readonly " $data"?: SettingsEditProfileYourGalleryIntro_me$data;
+    readonly " $data"?: SettingsEditProfileYourGalleryIntro_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileYourGalleryIntro_me">;
 };
 

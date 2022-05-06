@@ -24,7 +24,7 @@ export type RegisterButton_sale = {
 };
 export type RegisterButton_sale$data = RegisterButton_sale;
 export type RegisterButton_sale$key = {
-    readonly " $data"?: RegisterButton_sale$data;
+    readonly " $data"?: RegisterButton_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale">;
 };
 

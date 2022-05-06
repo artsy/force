@@ -23,7 +23,7 @@ export type CellArticle_article = {
 };
 export type CellArticle_article$data = CellArticle_article;
 export type CellArticle_article$key = {
-    readonly " $data"?: CellArticle_article$data;
+    readonly " $data"?: CellArticle_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
 };
 

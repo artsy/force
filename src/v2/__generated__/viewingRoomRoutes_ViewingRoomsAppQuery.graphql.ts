@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type viewingRoomRoutes_ViewingRoomsAppQueryVariables = {
     count: number;
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type viewingRoomRoutes_ViewingRoomsAppQueryResponse = {
     readonly allViewingRooms: {

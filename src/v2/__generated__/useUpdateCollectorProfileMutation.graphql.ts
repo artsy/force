@@ -5,15 +5,15 @@
 import { ConcreteRequest } from "relay-runtime";
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
-    affiliatedAuctionHouseIds?: Array<string | null> | null;
-    affiliatedFairIds?: Array<string | null> | null;
-    affiliatedGalleryIds?: Array<string | null> | null;
-    clientMutationId?: string | null;
-    institutionalAffiliations?: string | null;
-    intents?: Array<Intents | null> | null;
-    loyaltyApplicant?: boolean | null;
-    professionalBuyer?: boolean | null;
-    selfReportedPurchases?: string | null;
+    affiliatedAuctionHouseIds?: Array<string | null> | null | undefined;
+    affiliatedFairIds?: Array<string | null> | null | undefined;
+    affiliatedGalleryIds?: Array<string | null> | null | undefined;
+    clientMutationId?: string | null | undefined;
+    institutionalAffiliations?: string | null | undefined;
+    intents?: Array<Intents | null> | null | undefined;
+    loyaltyApplicant?: boolean | null | undefined;
+    professionalBuyer?: boolean | null | undefined;
+    selfReportedPurchases?: string | null | undefined;
 };
 export type useUpdateCollectorProfileMutationVariables = {
     input: UpdateCollectorProfileInput;

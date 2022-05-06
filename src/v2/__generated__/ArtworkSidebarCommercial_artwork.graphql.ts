@@ -22,7 +22,7 @@ export type ArtworkSidebarCommercial_artwork = {
     readonly is_offerable: boolean | null;
     readonly is_sold: boolean | null;
     readonly listPrice: {
-        readonly display?: string | null;
+        readonly display?: string | null | undefined;
     } | null;
     readonly priceIncludesTaxDisplay: string | null;
     readonly sale_message: string | null;
@@ -34,7 +34,7 @@ export type ArtworkSidebarCommercial_artwork = {
 };
 export type ArtworkSidebarCommercial_artwork$data = ArtworkSidebarCommercial_artwork;
 export type ArtworkSidebarCommercial_artwork$key = {
-    readonly " $data"?: ArtworkSidebarCommercial_artwork$data;
+    readonly " $data"?: ArtworkSidebarCommercial_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCommercial_artwork">;
 };
 

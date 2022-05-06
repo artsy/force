@@ -19,7 +19,7 @@ export type ArtistGenes_artist = {
 };
 export type ArtistGenes_artist$data = ArtistGenes_artist;
 export type ArtistGenes_artist$key = {
-    readonly " $data"?: ArtistGenes_artist$data;
+    readonly " $data"?: ArtistGenes_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistGenes_artist">;
 };
 

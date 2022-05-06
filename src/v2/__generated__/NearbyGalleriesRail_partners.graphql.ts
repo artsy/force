@@ -14,7 +14,7 @@ export type NearbyGalleriesRail_partners = ReadonlyArray<{
 }>;
 export type NearbyGalleriesRail_partners$data = NearbyGalleriesRail_partners;
 export type NearbyGalleriesRail_partners$key = ReadonlyArray<{
-    readonly " $data"?: NearbyGalleriesRail_partners$data;
+    readonly " $data"?: NearbyGalleriesRail_partners$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NearbyGalleriesRail_partners">;
 }>;
 

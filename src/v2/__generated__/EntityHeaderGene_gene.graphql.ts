@@ -24,7 +24,7 @@ export type EntityHeaderGene_gene = {
 };
 export type EntityHeaderGene_gene$data = EntityHeaderGene_gene;
 export type EntityHeaderGene_gene$key = {
-    readonly " $data"?: EntityHeaderGene_gene$data;
+    readonly " $data"?: EntityHeaderGene_gene$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderGene_gene">;
 };
 

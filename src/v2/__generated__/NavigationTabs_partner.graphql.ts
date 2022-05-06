@@ -32,7 +32,7 @@ export type NavigationTabs_partner = {
 };
 export type NavigationTabs_partner$data = NavigationTabs_partner;
 export type NavigationTabs_partner$key = {
-    readonly " $data"?: NavigationTabs_partner$data;
+    readonly " $data"?: NavigationTabs_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NavigationTabs_partner">;
 };
 

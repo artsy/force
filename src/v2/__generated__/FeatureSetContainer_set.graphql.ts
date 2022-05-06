@@ -18,7 +18,7 @@ export type FeatureSetContainer_set = {
 };
 export type FeatureSetContainer_set$data = FeatureSetContainer_set;
 export type FeatureSetContainer_set$key = {
-    readonly " $data"?: FeatureSetContainer_set$data;
+    readonly " $data"?: FeatureSetContainer_set$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureSetContainer_set">;
 };
 

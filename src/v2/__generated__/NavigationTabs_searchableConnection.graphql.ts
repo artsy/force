@@ -17,7 +17,7 @@ export type NavigationTabs_searchableConnection = {
 };
 export type NavigationTabs_searchableConnection$data = NavigationTabs_searchableConnection;
 export type NavigationTabs_searchableConnection$key = {
-    readonly " $data"?: NavigationTabs_searchableConnection$data;
+    readonly " $data"?: NavigationTabs_searchableConnection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NavigationTabs_searchableConnection">;
 };
 

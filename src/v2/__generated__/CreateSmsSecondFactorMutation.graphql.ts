@@ -5,12 +5,12 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CreateSmsSecondFactorInput = {
     attributes: SmsSecondFactorAttributes;
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     password: string;
 };
 export type SmsSecondFactorAttributes = {
-    countryCode?: string | null;
-    phoneNumber?: string | null;
+    countryCode?: string | null | undefined;
+    phoneNumber?: string | null | undefined;
 };
 export type CreateSmsSecondFactorMutationVariables = {
     input: CreateSmsSecondFactorInput;

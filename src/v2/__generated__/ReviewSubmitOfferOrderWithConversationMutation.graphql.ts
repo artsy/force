@@ -5,8 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSubmitOrderWithOfferInput = {
-    clientMutationId?: string | null;
-    confirmedSetupIntentId?: string | null;
+    clientMutationId?: string | null | undefined;
+    confirmedSetupIntentId?: string | null | undefined;
     offerId: string;
 };
 export type ReviewSubmitOfferOrderWithConversationMutationVariables = {
@@ -17,15 +17,15 @@ export type ReviewSubmitOfferOrderWithConversationMutationResponse = {
         readonly orderOrError: {
             readonly order?: {
                 readonly state: CommerceOrderStateEnum;
-            };
+            } | undefined;
             readonly actionData?: {
                 readonly clientSecret: string;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

@@ -46,7 +46,7 @@ export type ArtworkBanner_artwork = {
 };
 export type ArtworkBanner_artwork$data = ArtworkBanner_artwork;
 export type ArtworkBanner_artwork$key = {
-    readonly " $data"?: ArtworkBanner_artwork$data;
+    readonly " $data"?: ArtworkBanner_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkBanner_artwork">;
 };
 

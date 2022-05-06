@@ -13,7 +13,7 @@ export type ShowEvents_edges = ReadonlyArray<{
 }>;
 export type ShowEvents_edges$data = ShowEvents_edges;
 export type ShowEvents_edges$key = ReadonlyArray<{
-    readonly " $data"?: ShowEvents_edges$data;
+    readonly " $data"?: ShowEvents_edges$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowEvents_edges">;
 }>;
 

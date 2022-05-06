@@ -11,7 +11,7 @@ export type ArticleSectionSocialEmbed_section = {
 };
 export type ArticleSectionSocialEmbed_section$data = ArticleSectionSocialEmbed_section;
 export type ArticleSectionSocialEmbed_section$key = {
-    readonly " $data"?: ArticleSectionSocialEmbed_section$data;
+    readonly " $data"?: ArticleSectionSocialEmbed_section$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionSocialEmbed_section">;
 };
 

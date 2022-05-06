@@ -11,7 +11,7 @@ export type BuyerGuarantee_artwork = {
 };
 export type BuyerGuarantee_artwork$data = BuyerGuarantee_artwork;
 export type BuyerGuarantee_artwork$key = {
-    readonly " $data"?: BuyerGuarantee_artwork$data;
+    readonly " $data"?: BuyerGuarantee_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"BuyerGuarantee_artwork">;
 };
 

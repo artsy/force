@@ -17,7 +17,7 @@ export type PartnerArtistList_artists = ReadonlyArray<{
 }>;
 export type PartnerArtistList_artists$data = PartnerArtistList_artists;
 export type PartnerArtistList_artists$key = ReadonlyArray<{
-    readonly " $data"?: PartnerArtistList_artists$data;
+    readonly " $data"?: PartnerArtistList_artists$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerArtistList_artists">;
 }>;
 

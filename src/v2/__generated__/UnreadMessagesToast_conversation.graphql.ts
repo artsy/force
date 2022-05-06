@@ -22,7 +22,7 @@ export type UnreadMessagesToast_conversation = {
 };
 export type UnreadMessagesToast_conversation$data = UnreadMessagesToast_conversation;
 export type UnreadMessagesToast_conversation$key = {
-    readonly " $data"?: UnreadMessagesToast_conversation$data;
+    readonly " $data"?: UnreadMessagesToast_conversation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"UnreadMessagesToast_conversation">;
 };
 

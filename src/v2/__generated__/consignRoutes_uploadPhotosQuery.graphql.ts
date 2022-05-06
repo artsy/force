@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type consignRoutes_uploadPhotosQueryVariables = {
     id: string;
-    sessionID?: string | null;
+    sessionID?: string | null | undefined;
 };
 export type consignRoutes_uploadPhotosQueryResponse = {
     readonly submission: {

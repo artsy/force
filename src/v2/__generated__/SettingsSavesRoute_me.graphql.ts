@@ -10,7 +10,7 @@ export type SettingsSavesRoute_me = {
 };
 export type SettingsSavesRoute_me$data = SettingsSavesRoute_me;
 export type SettingsSavesRoute_me$key = {
-    readonly " $data"?: SettingsSavesRoute_me$data;
+    readonly " $data"?: SettingsSavesRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsSavesRoute_me">;
 };
 

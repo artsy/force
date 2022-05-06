@@ -21,7 +21,7 @@ export type ArticlesIndexArticle_article = {
 };
 export type ArticlesIndexArticle_article$data = ArticlesIndexArticle_article;
 export type ArticlesIndexArticle_article$key = {
-    readonly " $data"?: ArticlesIndexArticle_article$data;
+    readonly " $data"?: ArticlesIndexArticle_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticlesIndexArticle_article">;
 };
 

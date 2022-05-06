@@ -26,7 +26,7 @@ export type ArtistSeriesApp_artistSeries = {
 };
 export type ArtistSeriesApp_artistSeries$data = ArtistSeriesApp_artistSeries;
 export type ArtistSeriesApp_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesApp_artistSeries$data;
+    readonly " $data"?: ArtistSeriesApp_artistSeries$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesApp_artistSeries">;
 };
 

@@ -6,13 +6,13 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FeatureSetItem_setItem = {
     readonly __typename: string;
-    readonly id?: string;
+    readonly id?: string | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork" | "FeatureFeaturedLink_featuredLink">;
     readonly " $refType": "FeatureSetItem_setItem";
 };
 export type FeatureSetItem_setItem$data = FeatureSetItem_setItem;
 export type FeatureSetItem_setItem$key = {
-    readonly " $data"?: FeatureSetItem_setItem$data;
+    readonly " $data"?: FeatureSetItem_setItem$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureSetItem_setItem">;
 };
 

@@ -14,11 +14,11 @@ export type SearchResultsArtists_viewer = {
         };
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly name?: string | null;
-                readonly internalID?: string;
-                readonly href?: string | null;
-                readonly imageUrl?: string | null;
-                readonly bio?: string | null;
+                readonly name?: string | null | undefined;
+                readonly internalID?: string | undefined;
+                readonly href?: string | null | undefined;
+                readonly imageUrl?: string | null | undefined;
+                readonly bio?: string | null | undefined;
             } | null;
         } | null> | null;
     } | null;
@@ -26,7 +26,7 @@ export type SearchResultsArtists_viewer = {
 };
 export type SearchResultsArtists_viewer$data = SearchResultsArtists_viewer;
 export type SearchResultsArtists_viewer$key = {
-    readonly " $data"?: SearchResultsArtists_viewer$data;
+    readonly " $data"?: SearchResultsArtists_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtists_viewer">;
 };
 

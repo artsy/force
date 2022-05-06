@@ -14,7 +14,7 @@ export type ArticleApp_article = {
 };
 export type ArticleApp_article$data = ArticleApp_article;
 export type ArticleApp_article$key = {
-    readonly " $data"?: ArticleApp_article$data;
+    readonly " $data"?: ArticleApp_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleApp_article">;
 };
 

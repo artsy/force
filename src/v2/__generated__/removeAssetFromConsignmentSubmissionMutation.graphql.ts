@@ -4,9 +4,9 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type RemoveAssetFromConsignmentSubmissionInput = {
-    assetID?: string | null;
-    clientMutationId?: string | null;
-    sessionID?: string | null;
+    assetID?: string | null | undefined;
+    clientMutationId?: string | null | undefined;
+    sessionID?: string | null | undefined;
 };
 export type removeAssetFromConsignmentSubmissionMutationVariables = {
     input: RemoveAssetFromConsignmentSubmissionInput;

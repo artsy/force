@@ -11,7 +11,7 @@ export type AuctionBidRoute_me = {
 };
 export type AuctionBidRoute_me$data = AuctionBidRoute_me;
 export type AuctionBidRoute_me$key = {
-    readonly " $data"?: AuctionBidRoute_me$data;
+    readonly " $data"?: AuctionBidRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionBidRoute_me">;
 };
 

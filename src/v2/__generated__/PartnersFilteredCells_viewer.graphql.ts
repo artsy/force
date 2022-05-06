@@ -18,7 +18,7 @@ export type PartnersFilteredCells_viewer = {
 };
 export type PartnersFilteredCells_viewer$data = PartnersFilteredCells_viewer;
 export type PartnersFilteredCells_viewer$key = {
-    readonly " $data"?: PartnersFilteredCells_viewer$data;
+    readonly " $data"?: PartnersFilteredCells_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersFilteredCells_viewer">;
 };
 

@@ -12,14 +12,14 @@ export type ShowSubApp_show = {
     readonly href: string | null;
     readonly isFairBooth: boolean | null;
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show">;
     readonly " $refType": "ShowSubApp_show";
 };
 export type ShowSubApp_show$data = ShowSubApp_show;
 export type ShowSubApp_show$key = {
-    readonly " $data"?: ShowSubApp_show$data;
+    readonly " $data"?: ShowSubApp_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowSubApp_show">;
 };
 

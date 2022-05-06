@@ -39,7 +39,7 @@ export type ArtistArticlesRoute_artist = {
 };
 export type ArtistArticlesRoute_artist$data = ArtistArticlesRoute_artist;
 export type ArtistArticlesRoute_artist$key = {
-    readonly " $data"?: ArtistArticlesRoute_artist$data;
+    readonly " $data"?: ArtistArticlesRoute_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistArticlesRoute_artist">;
 };
 

@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type fairOrganizerRoutes_FairOrganizerDedicatedArticles_QueryVariables = {
     slug: string;
-    page?: number | null;
+    page?: number | null | undefined;
 };
 export type fairOrganizerRoutes_FairOrganizerDedicatedArticles_QueryResponse = {
     readonly fairOrganizer: {

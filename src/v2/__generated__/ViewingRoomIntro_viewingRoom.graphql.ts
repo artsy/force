@@ -10,7 +10,7 @@ export type ViewingRoomIntro_viewingRoom = {
 };
 export type ViewingRoomIntro_viewingRoom$data = ViewingRoomIntro_viewingRoom;
 export type ViewingRoomIntro_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomIntro_viewingRoom$data;
+    readonly " $data"?: ViewingRoomIntro_viewingRoom$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomIntro_viewingRoom">;
 };
 

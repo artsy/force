@@ -18,7 +18,7 @@ export type FairEditorialRailArticles_fair = {
 };
 export type FairEditorialRailArticles_fair$data = FairEditorialRailArticles_fair;
 export type FairEditorialRailArticles_fair$key = {
-    readonly " $data"?: FairEditorialRailArticles_fair$data;
+    readonly " $data"?: FairEditorialRailArticles_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairEditorialRailArticles_fair">;
 };
 

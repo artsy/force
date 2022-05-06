@@ -17,7 +17,7 @@ export type RelatedCollectionsRail_collections = ReadonlyArray<{
 }>;
 export type RelatedCollectionsRail_collections$data = RelatedCollectionsRail_collections;
 export type RelatedCollectionsRail_collections$key = ReadonlyArray<{
-    readonly " $data"?: RelatedCollectionsRail_collections$data;
+    readonly " $data"?: RelatedCollectionsRail_collections$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"RelatedCollectionsRail_collections">;
 }>;
 

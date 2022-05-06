@@ -48,12 +48,12 @@ export type orderRoutes_OrderQueryResponse = {
         readonly myLastOffer?: {
             readonly internalID: string;
             readonly createdAt: string;
-        } | null;
+        } | null | undefined;
         readonly lastOffer?: {
             readonly internalID: string;
             readonly createdAt: string;
-        } | null;
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        } | null | undefined;
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
     } | null;
 };
 export type orderRoutes_OrderQueryRawResponse = {

@@ -6,8 +6,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerDedicatedArticlesQueryVariables = {
     id: string;
-    first?: number | null;
-    page?: number | null;
+    first?: number | null | undefined;
+    page?: number | null | undefined;
 };
 export type FairOrganizerDedicatedArticlesQueryResponse = {
     readonly fairOrganizer: {

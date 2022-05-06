@@ -26,7 +26,7 @@ export type SettingsEditProfileArtistsYouCollect_me = {
 };
 export type SettingsEditProfileArtistsYouCollect_me$data = SettingsEditProfileArtistsYouCollect_me;
 export type SettingsEditProfileArtistsYouCollect_me$key = {
-    readonly " $data"?: SettingsEditProfileArtistsYouCollect_me$data;
+    readonly " $data"?: SettingsEditProfileArtistsYouCollect_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
 };
 

@@ -10,7 +10,7 @@ export type HomeApp_featuredEventsOrderedSet = {
 };
 export type HomeApp_featuredEventsOrderedSet$data = HomeApp_featuredEventsOrderedSet;
 export type HomeApp_featuredEventsOrderedSet$key = {
-    readonly " $data"?: HomeApp_featuredEventsOrderedSet$data;
+    readonly " $data"?: HomeApp_featuredEventsOrderedSet$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
 };
 

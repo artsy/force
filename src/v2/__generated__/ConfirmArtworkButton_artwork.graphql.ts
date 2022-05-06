@@ -10,7 +10,7 @@ export type ConfirmArtworkButton_artwork = {
 };
 export type ConfirmArtworkButton_artwork$data = ConfirmArtworkButton_artwork;
 export type ConfirmArtworkButton_artwork$key = {
-    readonly " $data"?: ConfirmArtworkButton_artwork$data;
+    readonly " $data"?: ConfirmArtworkButton_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ConfirmArtworkButton_artwork">;
 };
 

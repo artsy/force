@@ -22,7 +22,7 @@ export type ArtistConsignRecentlySold_artist = {
 };
 export type ArtistConsignRecentlySold_artist$data = ArtistConsignRecentlySold_artist;
 export type ArtistConsignRecentlySold_artist$key = {
-    readonly " $data"?: ArtistConsignRecentlySold_artist$data;
+    readonly " $data"?: ArtistConsignRecentlySold_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignRecentlySold_artist">;
 };
 

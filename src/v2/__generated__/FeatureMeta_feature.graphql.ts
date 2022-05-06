@@ -15,7 +15,7 @@ export type FeatureMeta_feature = {
 };
 export type FeatureMeta_feature$data = FeatureMeta_feature;
 export type FeatureMeta_feature$key = {
-    readonly " $data"?: FeatureMeta_feature$data;
+    readonly " $data"?: FeatureMeta_feature$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureMeta_feature">;
 };
 

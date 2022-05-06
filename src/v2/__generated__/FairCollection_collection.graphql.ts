@@ -24,7 +24,7 @@ export type FairCollection_collection = {
 };
 export type FairCollection_collection$data = FairCollection_collection;
 export type FairCollection_collection$key = {
-    readonly " $data"?: FairCollection_collection$data;
+    readonly " $data"?: FairCollection_collection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairCollection_collection">;
 };
 

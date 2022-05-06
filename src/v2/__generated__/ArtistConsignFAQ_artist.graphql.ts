@@ -10,7 +10,7 @@ export type ArtistConsignFAQ_artist = {
 };
 export type ArtistConsignFAQ_artist$data = ArtistConsignFAQ_artist;
 export type ArtistConsignFAQ_artist$key = {
-    readonly " $data"?: ArtistConsignFAQ_artist$data;
+    readonly " $data"?: ArtistConsignFAQ_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignFAQ_artist">;
 };
 

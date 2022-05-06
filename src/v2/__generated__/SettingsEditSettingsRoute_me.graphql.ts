@@ -10,7 +10,7 @@ export type SettingsEditSettingsRoute_me = {
 };
 export type SettingsEditSettingsRoute_me$data = SettingsEditSettingsRoute_me;
 export type SettingsEditSettingsRoute_me$key = {
-    readonly " $data"?: SettingsEditSettingsRoute_me$data;
+    readonly " $data"?: SettingsEditSettingsRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsRoute_me">;
 };
 

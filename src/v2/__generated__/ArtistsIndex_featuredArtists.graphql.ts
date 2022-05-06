@@ -7,14 +7,14 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistsIndex_featuredArtists = ReadonlyArray<{
     readonly name: string | null;
     readonly artists: ReadonlyArray<{
-        readonly internalID?: string;
+        readonly internalID?: string | undefined;
         readonly " $fragmentRefs": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
     } | null> | null;
     readonly " $refType": "ArtistsIndex_featuredArtists";
 }>;
 export type ArtistsIndex_featuredArtists$data = ArtistsIndex_featuredArtists;
 export type ArtistsIndex_featuredArtists$key = ReadonlyArray<{
-    readonly " $data"?: ArtistsIndex_featuredArtists$data;
+    readonly " $data"?: ArtistsIndex_featuredArtists$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistsIndex_featuredArtists">;
 }>;
 

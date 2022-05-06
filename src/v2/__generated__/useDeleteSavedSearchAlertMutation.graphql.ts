@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type DisableSavedSearchInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     searchCriteriaID: string;
 };
 export type useDeleteSavedSearchAlertMutationVariables = {
@@ -13,7 +13,7 @@ export type useDeleteSavedSearchAlertMutationVariables = {
 export type useDeleteSavedSearchAlertMutationResponse = {
     readonly disableSavedSearch: {
         readonly savedSearchOrErrors: {
-            readonly internalID?: string;
+            readonly internalID?: string | undefined;
         };
     } | null;
 };

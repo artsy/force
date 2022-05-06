@@ -12,7 +12,7 @@ export type InquiryBasicInfo_artwork = {
 };
 export type InquiryBasicInfo_artwork$data = InquiryBasicInfo_artwork;
 export type InquiryBasicInfo_artwork$key = {
-    readonly " $data"?: InquiryBasicInfo_artwork$data;
+    readonly " $data"?: InquiryBasicInfo_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"InquiryBasicInfo_artwork">;
 };
 

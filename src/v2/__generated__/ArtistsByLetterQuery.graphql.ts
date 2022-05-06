@@ -6,8 +6,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsByLetterQueryVariables = {
     letter: string;
-    size?: number | null;
-    page?: number | null;
+    size?: number | null | undefined;
+    page?: number | null | undefined;
 };
 export type ArtistsByLetterQueryResponse = {
     readonly viewer: {

@@ -16,7 +16,7 @@ export type CollectionsCategory_category = {
 };
 export type CollectionsCategory_category$data = CollectionsCategory_category;
 export type CollectionsCategory_category$key = {
-    readonly " $data"?: CollectionsCategory_category$data;
+    readonly " $data"?: CollectionsCategory_category$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CollectionsCategory_category">;
 };
 

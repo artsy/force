@@ -20,7 +20,7 @@ export type PaymentPicker_me = {
 };
 export type PaymentPicker_me$data = PaymentPicker_me;
 export type PaymentPicker_me$key = {
-    readonly " $data"?: PaymentPicker_me$data;
+    readonly " $data"?: PaymentPicker_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me">;
 };
 

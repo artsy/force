@@ -28,7 +28,7 @@ export type ArtistIconicCollectionsRail_marketingCollections = ReadonlyArray<{
 }>;
 export type ArtistIconicCollectionsRail_marketingCollections$data = ArtistIconicCollectionsRail_marketingCollections;
 export type ArtistIconicCollectionsRail_marketingCollections$key = ReadonlyArray<{
-    readonly " $data"?: ArtistIconicCollectionsRail_marketingCollections$data;
+    readonly " $data"?: ArtistIconicCollectionsRail_marketingCollections$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
 }>;
 

@@ -31,7 +31,7 @@ export type GeneShow_gene = {
 };
 export type GeneShow_gene$data = GeneShow_gene;
 export type GeneShow_gene$key = {
-    readonly " $data"?: GeneShow_gene$data;
+    readonly " $data"?: GeneShow_gene$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GeneShow_gene">;
 };
 

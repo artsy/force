@@ -19,7 +19,7 @@ export type GeneFamily_geneFamily = {
 };
 export type GeneFamily_geneFamily$data = GeneFamily_geneFamily;
 export type GeneFamily_geneFamily$key = {
-    readonly " $data"?: GeneFamily_geneFamily$data;
+    readonly " $data"?: GeneFamily_geneFamily$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GeneFamily_geneFamily">;
 };
 

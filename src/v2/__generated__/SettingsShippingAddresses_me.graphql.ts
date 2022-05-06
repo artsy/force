@@ -17,7 +17,7 @@ export type SettingsShippingAddresses_me = {
 };
 export type SettingsShippingAddresses_me$data = SettingsShippingAddresses_me;
 export type SettingsShippingAddresses_me$key = {
-    readonly " $data"?: SettingsShippingAddresses_me$data;
+    readonly " $data"?: SettingsShippingAddresses_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddresses_me">;
 };
 

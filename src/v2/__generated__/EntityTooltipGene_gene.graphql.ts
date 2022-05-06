@@ -20,7 +20,7 @@ export type EntityTooltipGene_gene = {
 };
 export type EntityTooltipGene_gene$data = EntityTooltipGene_gene;
 export type EntityTooltipGene_gene$key = {
-    readonly " $data"?: EntityTooltipGene_gene$data;
+    readonly " $data"?: EntityTooltipGene_gene$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityTooltipGene_gene">;
 };
 

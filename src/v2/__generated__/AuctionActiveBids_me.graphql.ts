@@ -37,7 +37,7 @@ export type AuctionActiveBids_me = {
 };
 export type AuctionActiveBids_me$data = AuctionActiveBids_me;
 export type AuctionActiveBids_me$key = {
-    readonly " $data"?: AuctionActiveBids_me$data;
+    readonly " $data"?: AuctionActiveBids_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me">;
 };
 

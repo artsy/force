@@ -18,7 +18,7 @@ export type CellSale_sale = {
 };
 export type CellSale_sale$data = CellSale_sale;
 export type CellSale_sale$key = {
-    readonly " $data"?: CellSale_sale$data;
+    readonly " $data"?: CellSale_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CellSale_sale">;
 };
 

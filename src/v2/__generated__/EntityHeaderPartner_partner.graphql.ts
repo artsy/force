@@ -41,7 +41,7 @@ export type EntityHeaderPartner_partner = {
 };
 export type EntityHeaderPartner_partner$data = EntityHeaderPartner_partner;
 export type EntityHeaderPartner_partner$key = {
-    readonly " $data"?: EntityHeaderPartner_partner$data;
+    readonly " $data"?: EntityHeaderPartner_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
 };
 

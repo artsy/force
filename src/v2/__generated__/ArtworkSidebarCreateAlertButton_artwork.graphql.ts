@@ -26,7 +26,7 @@ export type ArtworkSidebarCreateAlertButton_artwork = {
 };
 export type ArtworkSidebarCreateAlertButton_artwork$data = ArtworkSidebarCreateAlertButton_artwork;
 export type ArtworkSidebarCreateAlertButton_artwork$key = {
-    readonly " $data"?: ArtworkSidebarCreateAlertButton_artwork$data;
+    readonly " $data"?: ArtworkSidebarCreateAlertButton_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
 };
 

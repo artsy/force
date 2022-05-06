@@ -26,7 +26,7 @@ export type ArtworkLightbox_artwork = {
 };
 export type ArtworkLightbox_artwork$data = ArtworkLightbox_artwork;
 export type ArtworkLightbox_artwork$key = {
-    readonly " $data"?: ArtworkLightbox_artwork$data;
+    readonly " $data"?: ArtworkLightbox_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork">;
 };
 

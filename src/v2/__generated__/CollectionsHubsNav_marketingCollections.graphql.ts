@@ -12,7 +12,7 @@ export type CollectionsHubsNav_marketingCollections = ReadonlyArray<{
 }>;
 export type CollectionsHubsNav_marketingCollections$data = CollectionsHubsNav_marketingCollections;
 export type CollectionsHubsNav_marketingCollections$key = ReadonlyArray<{
-    readonly " $data"?: CollectionsHubsNav_marketingCollections$data;
+    readonly " $data"?: CollectionsHubsNav_marketingCollections$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CollectionsHubsNav_marketingCollections">;
 }>;
 

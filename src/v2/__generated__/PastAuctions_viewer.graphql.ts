@@ -21,7 +21,7 @@ export type PastAuctions_viewer = {
 };
 export type PastAuctions_viewer$data = PastAuctions_viewer;
 export type PastAuctions_viewer$key = {
-    readonly " $data"?: PastAuctions_viewer$data;
+    readonly " $data"?: PastAuctions_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PastAuctions_viewer">;
 };
 

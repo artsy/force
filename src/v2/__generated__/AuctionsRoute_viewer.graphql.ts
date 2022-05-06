@@ -21,7 +21,7 @@ export type AuctionsRoute_viewer = {
 };
 export type AuctionsRoute_viewer$data = AuctionsRoute_viewer;
 export type AuctionsRoute_viewer$key = {
-    readonly " $data"?: AuctionsRoute_viewer$data;
+    readonly " $data"?: AuctionsRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionsRoute_viewer">;
 };
 

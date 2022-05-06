@@ -28,7 +28,7 @@ export type CommercePagination_pageCursors = {
 };
 export type CommercePagination_pageCursors$data = CommercePagination_pageCursors;
 export type CommercePagination_pageCursors$key = {
-    readonly " $data"?: CommercePagination_pageCursors$data;
+    readonly " $data"?: CommercePagination_pageCursors$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CommercePagination_pageCursors">;
 };
 

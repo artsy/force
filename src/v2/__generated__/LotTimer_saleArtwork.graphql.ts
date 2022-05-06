@@ -19,7 +19,7 @@ export type LotTimer_saleArtwork = {
 };
 export type LotTimer_saleArtwork$data = LotTimer_saleArtwork;
 export type LotTimer_saleArtwork$key = {
-    readonly " $data"?: LotTimer_saleArtwork$data;
+    readonly " $data"?: LotTimer_saleArtwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
 };
 

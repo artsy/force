@@ -11,9 +11,9 @@ export type ConsignPriceEstimateContext_SearchConnection_QueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly displayLabel: string | null;
-                readonly slug?: string;
-                readonly internalID?: string;
-                readonly imageUrl?: string | null;
+                readonly slug?: string | undefined;
+                readonly internalID?: string | undefined;
+                readonly imageUrl?: string | null | undefined;
             } | null;
         } | null> | null;
     } | null;

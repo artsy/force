@@ -26,12 +26,12 @@ export type OfferSummaryItem_order = {
     readonly myLastOffer?: {
         readonly amount: string | null;
         readonly note: string | null;
-    } | null;
+    } | null | undefined;
     readonly " $refType": "OfferSummaryItem_order";
 };
 export type OfferSummaryItem_order$data = OfferSummaryItem_order;
 export type OfferSummaryItem_order$key = {
-    readonly " $data"?: OfferSummaryItem_order$data;
+    readonly " $data"?: OfferSummaryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OfferSummaryItem_order">;
 };
 

@@ -12,7 +12,7 @@ export type FeaturedFairs_fairs = ReadonlyArray<{
 }>;
 export type FeaturedFairs_fairs$data = FeaturedFairs_fairs;
 export type FeaturedFairs_fairs$key = ReadonlyArray<{
-    readonly " $data"?: FeaturedFairs_fairs$data;
+    readonly " $data"?: FeaturedFairs_fairs$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedFairs_fairs">;
 }>;
 

@@ -18,7 +18,7 @@ export type HomeTrendingArtistsRail_viewer = {
 };
 export type HomeTrendingArtistsRail_viewer$data = HomeTrendingArtistsRail_viewer;
 export type HomeTrendingArtistsRail_viewer$key = {
-    readonly " $data"?: HomeTrendingArtistsRail_viewer$data;
+    readonly " $data"?: HomeTrendingArtistsRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeTrendingArtistsRail_viewer">;
 };
 

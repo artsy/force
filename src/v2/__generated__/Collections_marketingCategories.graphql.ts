@@ -11,7 +11,7 @@ export type Collections_marketingCategories = ReadonlyArray<{
 }>;
 export type Collections_marketingCategories$data = Collections_marketingCategories;
 export type Collections_marketingCategories$key = ReadonlyArray<{
-    readonly " $data"?: Collections_marketingCategories$data;
+    readonly " $data"?: Collections_marketingCategories$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Collections_marketingCategories">;
 }>;
 

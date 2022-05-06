@@ -14,7 +14,7 @@ export type ArticleVerticalRelatedArticles_article = {
 };
 export type ArticleVerticalRelatedArticles_article$data = ArticleVerticalRelatedArticles_article;
 export type ArticleVerticalRelatedArticles_article$key = {
-    readonly " $data"?: ArticleVerticalRelatedArticles_article$data;
+    readonly " $data"?: ArticleVerticalRelatedArticles_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleVerticalRelatedArticles_article">;
 };
 

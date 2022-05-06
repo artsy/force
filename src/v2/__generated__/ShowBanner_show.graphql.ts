@@ -25,7 +25,7 @@ export type ShowBanner_show = {
 };
 export type ShowBanner_show$data = ShowBanner_show;
 export type ShowBanner_show$key = {
-    readonly " $data"?: ShowBanner_show$data;
+    readonly " $data"?: ShowBanner_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
 };
 

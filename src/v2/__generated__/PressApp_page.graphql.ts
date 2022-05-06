@@ -12,7 +12,7 @@ export type PressApp_page = {
 };
 export type PressApp_page$data = PressApp_page;
 export type PressApp_page$key = {
-    readonly " $data"?: PressApp_page$data;
+    readonly " $data"?: PressApp_page$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PressApp_page">;
 };
 

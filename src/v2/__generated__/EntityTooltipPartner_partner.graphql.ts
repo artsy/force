@@ -23,7 +23,7 @@ export type EntityTooltipPartner_partner = {
 };
 export type EntityTooltipPartner_partner$data = EntityTooltipPartner_partner;
 export type EntityTooltipPartner_partner$key = {
-    readonly " $data"?: EntityTooltipPartner_partner$data;
+    readonly " $data"?: EntityTooltipPartner_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityTooltipPartner_partner">;
 };
 

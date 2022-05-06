@@ -22,7 +22,7 @@ export type ViewingRoomsPaginated_partner = {
 };
 export type ViewingRoomsPaginated_partner$data = ViewingRoomsPaginated_partner;
 export type ViewingRoomsPaginated_partner$key = {
-    readonly " $data"?: ViewingRoomsPaginated_partner$data;
+    readonly " $data"?: ViewingRoomsPaginated_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsPaginated_partner">;
 };
 

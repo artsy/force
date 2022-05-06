@@ -6,13 +6,13 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type BackupSecondFactorModalContent_me = {
     readonly backupSecondFactors: ReadonlyArray<{
-        readonly code?: string;
+        readonly code?: string | undefined;
     } | null> | null;
     readonly " $refType": "BackupSecondFactorModalContent_me";
 };
 export type BackupSecondFactorModalContent_me$data = BackupSecondFactorModalContent_me;
 export type BackupSecondFactorModalContent_me$key = {
-    readonly " $data"?: BackupSecondFactorModalContent_me$data;
+    readonly " $data"?: BackupSecondFactorModalContent_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"BackupSecondFactorModalContent_me">;
 };
 

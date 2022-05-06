@@ -7,13 +7,13 @@ import { FragmentRefs } from "relay-runtime";
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
 export type UserInterestInterestType = "ARTIST" | "GENE" | "%future added value";
 export type CreateUserInterestMutationInput = {
-    anonymousSessionId?: string | null;
-    body?: string | null;
+    anonymousSessionId?: string | null | undefined;
+    body?: string | null | undefined;
     category: UserInterestCategory;
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     interestId: string;
     interestType: UserInterestInterestType;
-    sessionID?: string | null;
+    sessionID?: string | null | undefined;
 };
 export type useAddArtistYouCollectMutationVariables = {
     input: CreateUserInterestMutationInput;

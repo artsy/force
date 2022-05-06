@@ -10,7 +10,7 @@ export type FeatureAKGApp_viewer = {
 };
 export type FeatureAKGApp_viewer$data = FeatureAKGApp_viewer;
 export type FeatureAKGApp_viewer$key = {
-    readonly " $data"?: FeatureAKGApp_viewer$data;
+    readonly " $data"?: FeatureAKGApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureAKGApp_viewer">;
 };
 

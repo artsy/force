@@ -17,7 +17,7 @@ export type NewsIndexArticles_viewer = {
 };
 export type NewsIndexArticles_viewer$data = NewsIndexArticles_viewer;
 export type NewsIndexArticles_viewer$key = {
-    readonly " $data"?: NewsIndexArticles_viewer$data;
+    readonly " $data"?: NewsIndexArticles_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NewsIndexArticles_viewer">;
 };
 

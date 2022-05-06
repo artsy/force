@@ -37,7 +37,7 @@ export type SelectedCareerAchievements_artist = {
 };
 export type SelectedCareerAchievements_artist$data = SelectedCareerAchievements_artist;
 export type SelectedCareerAchievements_artist$key = {
-    readonly " $data"?: SelectedCareerAchievements_artist$data;
+    readonly " $data"?: SelectedCareerAchievements_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist">;
 };
 

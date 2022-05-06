@@ -8,8 +8,8 @@ export type ArtistArtworksFilters = "IS_FOR_SALE" | "IS_NOT_FOR_SALE" | "%future
 export type WorksForYouArtistFeedPaginationQueryVariables = {
     artistSlug: string;
     count: number;
-    cursor?: string | null;
-    filter?: Array<ArtistArtworksFilters | null> | null;
+    cursor?: string | null | undefined;
+    filter?: Array<ArtistArtworksFilters | null> | null | undefined;
 };
 export type WorksForYouArtistFeedPaginationQueryResponse = {
     readonly viewer: {

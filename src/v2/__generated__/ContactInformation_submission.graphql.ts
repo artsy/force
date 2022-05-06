@@ -10,7 +10,7 @@ export type ContactInformation_submission = {
 };
 export type ContactInformation_submission$data = ContactInformation_submission;
 export type ContactInformation_submission$key = {
-    readonly " $data"?: ContactInformation_submission$data;
+    readonly " $data"?: ContactInformation_submission$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
 };
 

@@ -13,7 +13,7 @@ export type ShowsAllCities_viewer = {
 };
 export type ShowsAllCities_viewer$data = ShowsAllCities_viewer;
 export type ShowsAllCities_viewer$key = {
-    readonly " $data"?: ShowsAllCities_viewer$data;
+    readonly " $data"?: ShowsAllCities_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsAllCities_viewer">;
 };
 

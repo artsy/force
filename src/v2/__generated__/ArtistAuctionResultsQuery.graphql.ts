@@ -7,19 +7,19 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AuctionResultSorts = "DATE_DESC" | "ESTIMATE_AND_DATE_DESC" | "PRICE_AND_DATE_DESC" | "%future added value";
 export type ArtistAuctionResultsQueryVariables = {
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
-    sort?: AuctionResultSorts | null;
+    first?: number | null | undefined;
+    last?: number | null | undefined;
+    after?: string | null | undefined;
+    before?: string | null | undefined;
+    sort?: AuctionResultSorts | null | undefined;
     artistID: string;
-    organizations?: Array<string | null> | null;
-    keyword?: string | null;
-    categories?: Array<string | null> | null;
-    sizes?: Array<ArtworkSizes | null> | null;
-    createdBeforeYear?: number | null;
-    createdAfterYear?: number | null;
-    allowEmptyCreatedDates?: boolean | null;
+    organizations?: Array<string | null> | null | undefined;
+    keyword?: string | null | undefined;
+    categories?: Array<string | null> | null | undefined;
+    sizes?: Array<ArtworkSizes | null> | null | undefined;
+    createdBeforeYear?: number | null | undefined;
+    createdAfterYear?: number | null | undefined;
+    allowEmptyCreatedDates?: boolean | null | undefined;
 };
 export type ArtistAuctionResultsQueryResponse = {
     readonly artist: {

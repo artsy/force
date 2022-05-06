@@ -16,7 +16,7 @@ export type AuctionCurrentAuctionsRail_viewer = {
 };
 export type AuctionCurrentAuctionsRail_viewer$data = AuctionCurrentAuctionsRail_viewer;
 export type AuctionCurrentAuctionsRail_viewer$key = {
-    readonly " $data"?: AuctionCurrentAuctionsRail_viewer$data;
+    readonly " $data"?: AuctionCurrentAuctionsRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionCurrentAuctionsRail_viewer">;
 };
 

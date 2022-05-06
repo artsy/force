@@ -12,7 +12,7 @@ export type UserBidHistory_me = {
 };
 export type UserBidHistory_me$data = UserBidHistory_me;
 export type UserBidHistory_me$key = {
-    readonly " $data"?: UserBidHistory_me$data;
+    readonly " $data"?: UserBidHistory_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"UserBidHistory_me">;
 };
 

@@ -21,7 +21,7 @@ export type TransactionDetailsSummaryItemOfferProperties = {
 };
 export type TransactionDetailsSummaryItemOfferProperties$data = TransactionDetailsSummaryItemOfferProperties;
 export type TransactionDetailsSummaryItemOfferProperties$key = {
-    readonly " $data"?: TransactionDetailsSummaryItemOfferProperties$data;
+    readonly " $data"?: TransactionDetailsSummaryItemOfferProperties$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItemOfferProperties">;
 };
 

@@ -10,7 +10,7 @@ export type AuctionInfoSidebar_sale = {
 };
 export type AuctionInfoSidebar_sale$data = AuctionInfoSidebar_sale;
 export type AuctionInfoSidebar_sale$key = {
-    readonly " $data"?: AuctionInfoSidebar_sale$data;
+    readonly " $data"?: AuctionInfoSidebar_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionInfoSidebar_sale">;
 };
 

@@ -22,7 +22,7 @@ export type ArtworksRoute_viewer = {
 };
 export type ArtworksRoute_viewer$data = ArtworksRoute_viewer;
 export type ArtworksRoute_viewer$key = {
-    readonly " $data"?: ArtworksRoute_viewer$data;
+    readonly " $data"?: ArtworksRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworksRoute_viewer">;
 };
 

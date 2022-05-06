@@ -11,7 +11,7 @@ export type InquiryArtistsInCollectionQueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly text: string | null;
-                readonly value?: string;
+                readonly value?: string | undefined;
             } | null;
         } | null> | null;
     } | null;

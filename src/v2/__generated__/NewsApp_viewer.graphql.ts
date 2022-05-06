@@ -10,7 +10,7 @@ export type NewsApp_viewer = {
 };
 export type NewsApp_viewer$data = NewsApp_viewer;
 export type NewsApp_viewer$key = {
-    readonly " $data"?: NewsApp_viewer$data;
+    readonly " $data"?: NewsApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NewsApp_viewer">;
 };
 

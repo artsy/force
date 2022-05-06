@@ -34,7 +34,7 @@ export type ArtistSeriesEntity_member = {
 };
 export type ArtistSeriesEntity_member$data = ArtistSeriesEntity_member;
 export type ArtistSeriesEntity_member$key = {
-    readonly " $data"?: ArtistSeriesEntity_member$data;
+    readonly " $data"?: ArtistSeriesEntity_member$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesEntity_member">;
 };
 

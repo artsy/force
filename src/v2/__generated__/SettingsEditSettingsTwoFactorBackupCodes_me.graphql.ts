@@ -16,7 +16,7 @@ export type SettingsEditSettingsTwoFactorBackupCodes_me = {
 };
 export type SettingsEditSettingsTwoFactorBackupCodes_me$data = SettingsEditSettingsTwoFactorBackupCodes_me;
 export type SettingsEditSettingsTwoFactorBackupCodes_me$key = {
-    readonly " $data"?: SettingsEditSettingsTwoFactorBackupCodes_me$data;
+    readonly " $data"?: SettingsEditSettingsTwoFactorBackupCodes_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsTwoFactorBackupCodes_me">;
 };
 

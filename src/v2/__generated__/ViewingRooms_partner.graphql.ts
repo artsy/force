@@ -26,7 +26,7 @@ export type ViewingRooms_partner = {
 };
 export type ViewingRooms_partner$data = ViewingRooms_partner;
 export type ViewingRooms_partner$key = {
-    readonly " $data"?: ViewingRooms_partner$data;
+    readonly " $data"?: ViewingRooms_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_partner">;
 };
 

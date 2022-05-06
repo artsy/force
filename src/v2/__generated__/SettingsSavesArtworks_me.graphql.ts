@@ -27,7 +27,7 @@ export type SettingsSavesArtworks_me = {
 };
 export type SettingsSavesArtworks_me$data = SettingsSavesArtworks_me;
 export type SettingsSavesArtworks_me$key = {
-    readonly " $data"?: SettingsSavesArtworks_me$data;
+    readonly " $data"?: SettingsSavesArtworks_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsSavesArtworks_me">;
 };
 

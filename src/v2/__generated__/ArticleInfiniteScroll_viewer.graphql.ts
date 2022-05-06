@@ -17,7 +17,7 @@ export type ArticleInfiniteScroll_viewer = {
 };
 export type ArticleInfiniteScroll_viewer$data = ArticleInfiniteScroll_viewer;
 export type ArticleInfiniteScroll_viewer$key = {
-    readonly " $data"?: ArticleInfiniteScroll_viewer$data;
+    readonly " $data"?: ArticleInfiniteScroll_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleInfiniteScroll_viewer">;
 };
 

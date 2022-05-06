@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type preferencesRoutes_PreferencesQueryVariables = {
-    authenticationToken?: string | null;
+    authenticationToken?: string | null | undefined;
 };
 export type preferencesRoutes_PreferencesQueryResponse = {
     readonly viewer: {

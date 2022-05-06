@@ -27,17 +27,17 @@ export type Review_order = {
     } | null;
     readonly conversation?: {
         readonly internalID: string | null;
-    } | null;
+    } | null | undefined;
     readonly myLastOffer?: {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
     readonly " $refType": "Review_order";
 };
 export type Review_order$data = Review_order;
 export type Review_order$key = {
-    readonly " $data"?: Review_order$data;
+    readonly " $data"?: Review_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Review_order">;
 };
 

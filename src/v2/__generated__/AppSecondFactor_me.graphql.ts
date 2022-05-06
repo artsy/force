@@ -19,7 +19,7 @@ export type AppSecondFactor_me = {
 };
 export type AppSecondFactor_me$data = AppSecondFactor_me;
 export type AppSecondFactor_me$key = {
-    readonly " $data"?: AppSecondFactor_me$data;
+    readonly " $data"?: AppSecondFactor_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AppSecondFactor_me">;
 };
 

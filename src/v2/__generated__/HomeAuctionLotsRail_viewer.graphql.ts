@@ -22,7 +22,7 @@ export type HomeAuctionLotsRail_viewer = {
 };
 export type HomeAuctionLotsRail_viewer$data = HomeAuctionLotsRail_viewer;
 export type HomeAuctionLotsRail_viewer$key = {
-    readonly " $data"?: HomeAuctionLotsRail_viewer$data;
+    readonly " $data"?: HomeAuctionLotsRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeAuctionLotsRail_viewer">;
 };
 

@@ -11,7 +11,7 @@ export type GeneArtworkFilter_gene = {
     readonly sidebar: {
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -29,7 +29,7 @@ export type GeneArtworkFilter_gene = {
 };
 export type GeneArtworkFilter_gene$data = GeneArtworkFilter_gene;
 export type GeneArtworkFilter_gene$key = {
-    readonly " $data"?: GeneArtworkFilter_gene$data;
+    readonly " $data"?: GeneArtworkFilter_gene$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GeneArtworkFilter_gene">;
 };
 

@@ -4,8 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
-    clientMutationId?: string | null;
-    oneTimeUse?: boolean | null;
+    clientMutationId?: string | null | undefined;
+    oneTimeUse?: boolean | null | undefined;
     token: string;
 };
 export type createTestEnvCreditCardMutationVariables = {
@@ -16,10 +16,10 @@ export type createTestEnvCreditCardMutationResponse = {
         readonly creditCardOrError: {
             readonly creditCard?: {
                 readonly brand: string;
-            } | null;
+            } | null | undefined;
             readonly mutationError?: {
                 readonly type: string | null;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

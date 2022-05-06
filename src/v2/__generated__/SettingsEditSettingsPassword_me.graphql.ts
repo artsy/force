@@ -10,7 +10,7 @@ export type SettingsEditSettingsPassword_me = {
 };
 export type SettingsEditSettingsPassword_me$data = SettingsEditSettingsPassword_me;
 export type SettingsEditSettingsPassword_me$key = {
-    readonly " $data"?: SettingsEditSettingsPassword_me$data;
+    readonly " $data"?: SettingsEditSettingsPassword_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsPassword_me">;
 };
 

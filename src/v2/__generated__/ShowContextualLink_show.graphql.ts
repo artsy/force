@@ -12,15 +12,15 @@ export type ShowContextualLink_show = {
         readonly name: string | null;
     } | null;
     readonly partner: {
-        readonly isLinkable?: boolean | null;
-        readonly name?: string | null;
-        readonly href?: string | null;
+        readonly isLinkable?: boolean | null | undefined;
+        readonly name?: string | null | undefined;
+        readonly href?: string | null | undefined;
     } | null;
     readonly " $refType": "ShowContextualLink_show";
 };
 export type ShowContextualLink_show$data = ShowContextualLink_show;
 export type ShowContextualLink_show$key = {
-    readonly " $data"?: ShowContextualLink_show$data;
+    readonly " $data"?: ShowContextualLink_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show">;
 };
 

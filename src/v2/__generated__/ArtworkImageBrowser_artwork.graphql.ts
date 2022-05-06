@@ -15,7 +15,7 @@ export type ArtworkImageBrowser_artwork = {
 };
 export type ArtworkImageBrowser_artwork$data = ArtworkImageBrowser_artwork;
 export type ArtworkImageBrowser_artwork$key = {
-    readonly " $data"?: ArtworkImageBrowser_artwork$data;
+    readonly " $data"?: ArtworkImageBrowser_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowser_artwork">;
 };
 

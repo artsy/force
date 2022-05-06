@@ -13,7 +13,7 @@ export type PartnerContacts_edges = ReadonlyArray<{
 }>;
 export type PartnerContacts_edges$data = PartnerContacts_edges;
 export type PartnerContacts_edges$key = ReadonlyArray<{
-    readonly " $data"?: PartnerContacts_edges$data;
+    readonly " $data"?: PartnerContacts_edges$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerContacts_edges">;
 }>;
 

@@ -25,7 +25,7 @@ export type ArtistsByLetter_viewer = {
 };
 export type ArtistsByLetter_viewer$data = ArtistsByLetter_viewer;
 export type ArtistsByLetter_viewer$key = {
-    readonly " $data"?: ArtistsByLetter_viewer$data;
+    readonly " $data"?: ArtistsByLetter_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistsByLetter_viewer">;
 };
 

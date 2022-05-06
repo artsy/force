@@ -27,7 +27,7 @@ export type NavBarNotifications_me = {
 };
 export type NavBarNotifications_me$data = NavBarNotifications_me;
 export type NavBarNotifications_me$key = {
-    readonly " $data"?: NavBarNotifications_me$data;
+    readonly " $data"?: NavBarNotifications_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NavBarNotifications_me">;
 };
 

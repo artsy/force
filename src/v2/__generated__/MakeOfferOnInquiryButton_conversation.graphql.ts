@@ -24,7 +24,7 @@ export type MakeOfferOnInquiryButton_conversation = {
 };
 export type MakeOfferOnInquiryButton_conversation$data = MakeOfferOnInquiryButton_conversation;
 export type MakeOfferOnInquiryButton_conversation$key = {
-    readonly " $data"?: MakeOfferOnInquiryButton_conversation$data;
+    readonly " $data"?: MakeOfferOnInquiryButton_conversation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"MakeOfferOnInquiryButton_conversation">;
 };
 

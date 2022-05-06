@@ -21,7 +21,7 @@ export type ViewingRoomWorksArtwork_artwork = {
 };
 export type ViewingRoomWorksArtwork_artwork$data = ViewingRoomWorksArtwork_artwork;
 export type ViewingRoomWorksArtwork_artwork$key = {
-    readonly " $data"?: ViewingRoomWorksArtwork_artwork$data;
+    readonly " $data"?: ViewingRoomWorksArtwork_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksArtwork_artwork">;
 };
 

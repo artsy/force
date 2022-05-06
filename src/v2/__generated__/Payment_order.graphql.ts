@@ -22,7 +22,7 @@ export type Payment_order = {
 };
 export type Payment_order$data = Payment_order;
 export type Payment_order$key = {
-    readonly " $data"?: Payment_order$data;
+    readonly " $data"?: Payment_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Payment_order">;
 };
 

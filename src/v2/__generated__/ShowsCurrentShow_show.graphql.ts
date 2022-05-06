@@ -10,7 +10,7 @@ export type ShowsCurrentShow_show = {
     readonly startAt: string | null;
     readonly endAt: string | null;
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly location: {
         readonly city: string | null;
@@ -28,7 +28,7 @@ export type ShowsCurrentShow_show = {
 };
 export type ShowsCurrentShow_show$data = ShowsCurrentShow_show;
 export type ShowsCurrentShow_show$key = {
-    readonly " $data"?: ShowsCurrentShow_show$data;
+    readonly " $data"?: ShowsCurrentShow_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsCurrentShow_show">;
 };
 

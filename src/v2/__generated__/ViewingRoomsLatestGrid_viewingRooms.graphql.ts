@@ -28,7 +28,7 @@ export type ViewingRoomsLatestGrid_viewingRooms = {
 };
 export type ViewingRoomsLatestGrid_viewingRooms$data = ViewingRoomsLatestGrid_viewingRooms;
 export type ViewingRoomsLatestGrid_viewingRooms$key = {
-    readonly " $data"?: ViewingRoomsLatestGrid_viewingRooms$data;
+    readonly " $data"?: ViewingRoomsLatestGrid_viewingRooms$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
 };
 

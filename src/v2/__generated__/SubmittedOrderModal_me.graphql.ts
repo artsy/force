@@ -25,7 +25,7 @@ export type SubmittedOrderModal_me = {
 };
 export type SubmittedOrderModal_me$data = SubmittedOrderModal_me;
 export type SubmittedOrderModal_me$key = {
-    readonly " $data"?: SubmittedOrderModal_me$data;
+    readonly " $data"?: SubmittedOrderModal_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SubmittedOrderModal_me">;
 };
 

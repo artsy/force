@@ -10,7 +10,7 @@ export type ArtistConsignHowToSell_artist = {
 };
 export type ArtistConsignHowToSell_artist$data = ArtistConsignHowToSell_artist;
 export type ArtistConsignHowToSell_artist$key = {
-    readonly " $data"?: ArtistConsignHowToSell_artist$data;
+    readonly " $data"?: ArtistConsignHowToSell_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignHowToSell_artist">;
 };
 

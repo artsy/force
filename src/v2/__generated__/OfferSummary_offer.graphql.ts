@@ -12,7 +12,7 @@ export type OfferSummary_offer = {
 };
 export type OfferSummary_offer$data = OfferSummary_offer;
 export type OfferSummary_offer$key = {
-    readonly " $data"?: OfferSummary_offer$data;
+    readonly " $data"?: OfferSummary_offer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OfferSummary_offer">;
 };
 

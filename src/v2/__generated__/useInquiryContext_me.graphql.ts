@@ -16,7 +16,7 @@ export type useInquiryContext_me = {
 };
 export type useInquiryContext_me$data = useInquiryContext_me;
 export type useInquiryContext_me$key = {
-    readonly " $data"?: useInquiryContext_me$data;
+    readonly " $data"?: useInquiryContext_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"useInquiryContext_me">;
 };
 

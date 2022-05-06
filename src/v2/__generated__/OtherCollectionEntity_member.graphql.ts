@@ -13,7 +13,7 @@ export type OtherCollectionEntity_member = {
 };
 export type OtherCollectionEntity_member$data = OtherCollectionEntity_member;
 export type OtherCollectionEntity_member$key = {
-    readonly " $data"?: OtherCollectionEntity_member$data;
+    readonly " $data"?: OtherCollectionEntity_member$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OtherCollectionEntity_member">;
 };
 

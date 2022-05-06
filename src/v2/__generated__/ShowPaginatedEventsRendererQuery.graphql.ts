@@ -7,9 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNING" | "RUNNING_AND_UPCOMING" | "UPCOMING" | "%future added value";
 export type ShowPaginatedEventsRendererQueryVariables = {
     partnerId: string;
-    first?: number | null;
-    page?: number | null;
-    status?: EventStatus | null;
+    first?: number | null | undefined;
+    page?: number | null | undefined;
+    status?: EventStatus | null | undefined;
 };
 export type ShowPaginatedEventsRendererQueryResponse = {
     readonly partner: {

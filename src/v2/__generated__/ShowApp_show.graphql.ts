@@ -25,7 +25,7 @@ export type ShowApp_show = {
     readonly sidebar: {
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -43,7 +43,7 @@ export type ShowApp_show = {
 };
 export type ShowApp_show$data = ShowApp_show;
 export type ShowApp_show$key = {
-    readonly " $data"?: ShowApp_show$data;
+    readonly " $data"?: ShowApp_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowApp_show">;
 };
 

@@ -15,7 +15,7 @@ export type ArtistOverviewRoute_artist = {
 };
 export type ArtistOverviewRoute_artist$data = ArtistOverviewRoute_artist;
 export type ArtistOverviewRoute_artist$key = {
-    readonly " $data"?: ArtistOverviewRoute_artist$data;
+    readonly " $data"?: ArtistOverviewRoute_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistOverviewRoute_artist">;
 };
 

@@ -28,7 +28,7 @@ export type Pagination_pageCursors = {
 };
 export type Pagination_pageCursors$data = Pagination_pageCursors;
 export type Pagination_pageCursors$key = {
-    readonly " $data"?: Pagination_pageCursors$data;
+    readonly " $data"?: Pagination_pageCursors$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
 };
 

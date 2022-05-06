@@ -15,7 +15,7 @@ export type SeoProductsForArtworks_artworks = {
             readonly is_acquireable: boolean | null;
             readonly is_price_range: boolean | null;
             readonly listPrice: {
-                readonly display?: string | null;
+                readonly display?: string | null | undefined;
             } | null;
             readonly price_currency: string | null;
             readonly title: string | null;
@@ -52,7 +52,7 @@ export type SeoProductsForArtworks_artworks = {
 };
 export type SeoProductsForArtworks_artworks$data = SeoProductsForArtworks_artworks;
 export type SeoProductsForArtworks_artworks$key = {
-    readonly " $data"?: SeoProductsForArtworks_artworks$data;
+    readonly " $data"?: SeoProductsForArtworks_artworks$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SeoProductsForArtworks_artworks">;
 };
 

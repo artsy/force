@@ -22,7 +22,7 @@ export type JobsFilter_viewer = {
 };
 export type JobsFilter_viewer$data = JobsFilter_viewer;
 export type JobsFilter_viewer$key = {
-    readonly " $data"?: JobsFilter_viewer$data;
+    readonly " $data"?: JobsFilter_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"JobsFilter_viewer">;
 };
 

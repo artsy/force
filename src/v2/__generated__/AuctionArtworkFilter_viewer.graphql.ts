@@ -24,7 +24,7 @@ export type AuctionArtworkFilter_viewer = {
 };
 export type AuctionArtworkFilter_viewer$data = AuctionArtworkFilter_viewer;
 export type AuctionArtworkFilter_viewer$key = {
-    readonly " $data"?: AuctionArtworkFilter_viewer$data;
+    readonly " $data"?: AuctionArtworkFilter_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionArtworkFilter_viewer">;
 };
 

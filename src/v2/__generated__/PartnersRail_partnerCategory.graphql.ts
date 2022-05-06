@@ -18,7 +18,7 @@ export type PartnersRail_partnerCategory = {
 };
 export type PartnersRail_partnerCategory$data = PartnersRail_partnerCategory;
 export type PartnersRail_partnerCategory$key = {
-    readonly " $data"?: PartnersRail_partnerCategory$data;
+    readonly " $data"?: PartnersRail_partnerCategory$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
 };
 

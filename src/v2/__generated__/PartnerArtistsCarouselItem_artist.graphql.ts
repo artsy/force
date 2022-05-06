@@ -34,7 +34,7 @@ export type PartnerArtistsCarouselItem_artist = {
 };
 export type PartnerArtistsCarouselItem_artist$data = PartnerArtistsCarouselItem_artist;
 export type PartnerArtistsCarouselItem_artist$key = {
-    readonly " $data"?: PartnerArtistsCarouselItem_artist$data;
+    readonly " $data"?: PartnerArtistsCarouselItem_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
 };
 

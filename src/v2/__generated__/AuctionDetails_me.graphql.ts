@@ -10,7 +10,7 @@ export type AuctionDetails_me = {
 };
 export type AuctionDetails_me$data = AuctionDetails_me;
 export type AuctionDetails_me$key = {
-    readonly " $data"?: AuctionDetails_me$data;
+    readonly " $data"?: AuctionDetails_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionDetails_me">;
 };
 

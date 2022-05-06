@@ -13,7 +13,7 @@ export type ViewingRoomContentNotAccessible_viewingRoom = {
 };
 export type ViewingRoomContentNotAccessible_viewingRoom$data = ViewingRoomContentNotAccessible_viewingRoom;
 export type ViewingRoomContentNotAccessible_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomContentNotAccessible_viewingRoom$data;
+    readonly " $data"?: ViewingRoomContentNotAccessible_viewingRoom$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomContentNotAccessible_viewingRoom">;
 };
 

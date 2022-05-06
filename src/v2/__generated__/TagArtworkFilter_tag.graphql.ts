@@ -11,7 +11,7 @@ export type TagArtworkFilter_tag = {
     readonly sidebar: {
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -29,7 +29,7 @@ export type TagArtworkFilter_tag = {
 };
 export type TagArtworkFilter_tag$data = TagArtworkFilter_tag;
 export type TagArtworkFilter_tag$key = {
-    readonly " $data"?: TagArtworkFilter_tag$data;
+    readonly " $data"?: TagArtworkFilter_tag$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TagArtworkFilter_tag">;
 };
 
