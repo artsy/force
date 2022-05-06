@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
+import { themeGet } from "@styled-system/theme-get"
 
 const ShadowSeparator = styled(Separator)`
   box-shadow: ${FLAT_SHADOW};
@@ -48,7 +49,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
       <ShadowSeparator />
       <Flex flexDirection="column" p={1}>
         <Flex flexDirection="row">
-          <GuaranteeIcon mr={1} />
+          <GuaranteeIconBlue mr={1} />
           <Flex flexShrink={1}>
             <Text color="black60" variant="xs" mb={1}>
               Always complete purchases with our secure checkout in order to be
@@ -83,6 +84,12 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
     </>
   )
 }
+
+const GuaranteeIconBlue = styled(GuaranteeIcon)`
+  .guarantee-checkmark {
+    fill: ${themeGet("colors.brand")};
+  }
+`
 
 export const MakeOfferOnInquiryButtonFragmentContainer = createFragmentContainer(
   MakeOfferOnInquiryButton,

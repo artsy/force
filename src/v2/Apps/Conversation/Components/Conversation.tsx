@@ -10,9 +10,8 @@ import Waypoint from "react-waypoint"
 import {
   Banner,
   Box,
-  Column,
   Flex,
-  GridColumns,
+  GuaranteeIcon,
   Spacer,
   Spinner,
 } from "@artsy/palette"
@@ -39,7 +38,6 @@ export interface ConversationProps {
   setShowDetails: (showDetails: boolean) => void
   relay: RelayPaginationProp
   refetch: RelayRefetchProp["refetch"]
-  selectedConversationID: string
 }
 
 export const PAGE_SIZE: number = 15
@@ -172,13 +170,13 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [toastBottom, setToastBottom] = useState(0)
 
   // Show banner
-  const [showBanner, setShowBanner] = useState(true)
+  const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
     setShowBanner(true)
     const timer = setTimeout(() => setShowBanner(false), 5000)
     return () => clearTimeout(timer)
-  }, [props.selectedConversationID])
+  }, [conversationID])
 
   // Behaviours
   // -Navigation
@@ -221,14 +219,11 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       {showBanner && (
-        <GridColumns>
-          <Column start={4} span={6} mt={1}>
-            <Banner variant="brand">
-              To protect your payment, always communicate and pay through the
-              Artsy platform.
-            </Banner>
-          </Column>
-        </GridColumns>
+        <Banner variant="brand">
+          <GuaranteeIcon mr={1} fill="white100" />
+          To protect your payment, always communicate and pay through the Artsy
+          platform.
+        </Banner>
       )}
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
@@ -304,6 +299,7 @@ const SpinnerContainer = styled.div`
   height: 100px;
   position: relative;
 `
+
 export const ConversationPaginationContainer = createPaginationContainer(
   Conversation,
   {
