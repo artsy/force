@@ -325,13 +325,21 @@ describe("AuctionApp", () => {
       )
     })
 
-    it("shows auctions rail", () => {
+    it("renders the auction rail", () => {
       const wrapper = getWrapper({
         Sale: () => ({
           status: "preview",
+          eligibleSaleArtworksCount: 0,
         }),
       })
       expect(wrapper.find("AuctionCurrentAuctionsRail").length).toBe(1)
+    })
+
+    it("does not render the auction rail", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({}),
+      })
+      expect(wrapper.find("AuctionCurrentAuctionsRail").length).toBe(0)
     })
   })
 })
