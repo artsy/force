@@ -259,5 +259,9 @@ describe("Payment", () => {
       const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
+
+    // Ran in to the error when following `createTestEnv`
+    // Invariant Violation: commitMutation: expected "environment" to be an instance of "RelayModernEnvironment"
+    it.todo("creates a bank debit setup")
   })
 })
