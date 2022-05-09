@@ -113,12 +113,14 @@ describe("Payment", () => {
   })
 
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows the button spinner while loading the mutation", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
     await page.expectButtonSpinnerWhenSubmitting()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows the default error modal when the payment picker throws an error", async () => {
     paymentPickerMock.useThrownError()
     const env = setupTestEnv()
@@ -127,6 +129,7 @@ describe("Payment", () => {
     await page.expectAndDismissDefaultErrorDialog()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
     paymentPickerMock.useErrorResult()
     const env = setupTestEnv()
@@ -138,6 +141,7 @@ describe("Payment", () => {
     )
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
     paymentPickerMock.useInternalErrorResult()
     const env = setupTestEnv()
@@ -169,6 +173,7 @@ describe("Payment", () => {
     expect(env.routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/review")
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal when there is an error in SetOrderPaymentPayload", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
@@ -177,6 +182,7 @@ describe("Payment", () => {
     await page.expectAndDismissDefaultErrorDialog()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal when there is a network error", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
