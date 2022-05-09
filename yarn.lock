@@ -101,7 +101,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@19.6.1", "@artsy/palette@^19.6.0":
+"@artsy/palette@19.6.0", "@artsy/palette@^19.6.0":
   version "19.6.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.6.0.tgz#60006306e36526df9c13f8c1fa9a1deffb55bd06"
   integrity sha512-PZnWCmkGHcYH/rrVLMtihE2hI7fNm7ojHlYLGdC7rC+exEbw+euJ8NlKXmfoTAmm+Leus6OBcjuL7+tdLyfpEA==
