@@ -1,4 +1,4 @@
-import { Checkbox } from "@artsy/palette"
+import { Checkbox, Collapse } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
@@ -243,15 +243,21 @@ describe("Payment", () => {
     it("renders credit card element when credit card is chosen as payment method", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
-      page.selectPaymentMethod(0)
-      expect(page.find(PaymentPickerFragmentContainer).length).toBe(1)
+      page.selectPaymentMethod(1)
+      const creditCardCollapse = page.find(PaymentPickerFragmentContainer).closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(true)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(false)
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
-      page.selectPaymentMethod(1)
-      expect(page.find(BankDebitProvider).length).toBe(1)
+      page.selectPaymentMethod(0)
+      const creditCardCollapse = page.find(PaymentPickerFragmentContainer).closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(false)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(true)
     })
   })
 })
