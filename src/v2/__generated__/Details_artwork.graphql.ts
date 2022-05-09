@@ -29,6 +29,7 @@ export type Details_artwork = {
         readonly is_closed: boolean | null;
     } | null;
     readonly sale_artwork: {
+        readonly lotID: string | null;
         readonly lotLabel: string | null;
         readonly endAt: string | null;
         readonly extendedBiddingEndAt: string | null;
@@ -226,6 +227,13 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "lotID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "lotLabel",
           "storageKey": null
         },
@@ -300,5 +308,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6006bad99599ca30c58059f7c8554650';
+(node as any).hash = 'be3d2becf54d0dfa23d893950bb22d7d';
 export default node;

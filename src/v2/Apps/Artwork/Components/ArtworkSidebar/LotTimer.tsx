@@ -5,8 +5,7 @@ import { Text, Spacer, Box } from "@artsy/palette"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
 import { ArtworkSidebarAuctionProgressBar } from "./ArtworkSidebarAuctionProgressBar"
-import { useEffect } from "react"
-import { useWebsocketContext } from "v2/System/WebsocketContext"
+import { useAuctionWebsocket } from "v2/Components/useAuctionWebsocket"
 
 export interface LotTimerProps {
   saleArtwork: LotTimer_saleArtwork
@@ -28,15 +27,13 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
   )
   const [isExtended, setIsExtended] = React.useState(false)
 
-  const { data } = useWebsocketContext()
-  const { lot_id, extended_bidding_end_at } = data
-  const receivedMessageForThisLot = lot_id === lotID
-  useEffect(() => {
-    if (receivedMessageForThisLot) {
+  useAuctionWebsocket({
+    lotID: lotID!,
+    onChange: ({ extended_bidding_end_at }) => {
       setUpdatedBiddingEndAt(extended_bidding_end_at)
       setIsExtended(true)
-    }
-  }, [receivedMessageForThisLot, extended_bidding_end_at])
+    },
+  })
 
   const { hasEnded, time, hasStarted } = useTimer(
     updatedBiddingEndAt!,

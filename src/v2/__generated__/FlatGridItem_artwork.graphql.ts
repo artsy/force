@@ -13,6 +13,7 @@ export type FlatGridItem_artwork = {
     readonly saleArtwork: {
         readonly endAt: string | null;
         readonly extendedBiddingEndAt: string | null;
+        readonly lotID: string | null;
     } | null;
     readonly internalID: string;
     readonly title: string | null;
@@ -97,6 +98,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "extendedBiddingEndAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotID",
           "storageKey": null
         }
       ],
@@ -223,5 +231,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'ea86c14a11f49f9a6502970b3016fb3e';
+(node as any).hash = '5f91a71b7095b4cfdbb6715e2896579b';
 export default node;

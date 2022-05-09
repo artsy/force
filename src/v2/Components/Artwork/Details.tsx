@@ -18,6 +18,8 @@ import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { ContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
 import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
+import { useState } from "react"
+import { useAuctionWebsocket } from "v2/Components/useAuctionWebsocket"
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -263,11 +265,22 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   saleArtwork,
   sale,
 }) => {
-  const { endAt, extendedBiddingEndAt } = saleArtwork
+  const { endAt, extendedBiddingEndAt, lotID } = saleArtwork
   const biddingEndAt = extendedBiddingEndAt ?? endAt
 
+  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
+  const [isExtended, setIsExtended] = useState(!!extendedBiddingEndAt)
+
+  useAuctionWebsocket({
+    lotID: lotID!,
+    onChange: ({ extended_bidding_end_at }) => {
+      setUpdatedBiddingEndAt(extended_bidding_end_at)
+      setIsExtended(true)
+    },
+  })
+
   const { hasEnded: lotHasClosed, time } = useTimer(
-    biddingEndAt!,
+    updatedBiddingEndAt!,
     sale.startAt!
   )
 
@@ -282,7 +295,9 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
 
   const timerCopy = getSaleOrLotTimerInfo(time, {
     hasStarted: saleHasStarted,
-    extendedBiddingEndAt,
+    extendedBiddingEndAt: isExtended
+      ? updatedBiddingEndAt
+      : extendedBiddingEndAt,
     urgencyIntervalMinutes: sale.cascadingEndTimeIntervalMinutes,
   })
 
@@ -295,7 +310,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
   } else if (saleHasStarted) {
     // Sale has started and lots are <24 hours from closing or are actively closing
     if (parseInt(time.days) < 1 || lotsAreClosing) {
-      lotCloseCopy = extendedBiddingEndAt
+      lotCloseCopy = isExtended
         ? // show Extended: timer if bidding has been extended
           timerCopy.copy
         : `Closes, ${timerCopy.copy}`
@@ -345,6 +360,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         is_closed: isClosed
       }
       sale_artwork: saleArtwork {
+        lotID
         lotLabel
         endAt
         extendedBiddingEndAt

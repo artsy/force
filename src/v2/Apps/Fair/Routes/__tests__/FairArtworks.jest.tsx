@@ -158,8 +158,10 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               id: "saleArtworkabc123",
               endAt: "2022-03-12T12:33:37.000Z",
               extendedBiddingEndAt: null,
+              lotID: "lot-id",
             },
             sale_artwork: {
+              lotID: "lot-id",
               lotLabel: "0",
               counts: {
                 bidder_positions: 0,
