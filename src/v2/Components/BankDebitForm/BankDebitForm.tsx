@@ -21,12 +21,6 @@ export const BankDebitForm: FC = () => {
       elements,
       confirmParams: {
         return_url: "https://staging.artsy.net/",
-        payment_method_data: {
-          billing_details: {
-            name: user.name,
-            email: user.email,
-          },
-        },
       },
     })
 
@@ -41,14 +35,7 @@ export const BankDebitForm: FC = () => {
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
           onReady={() => setIsPaymentElementLoading(false)}
-          options={{
-            fields: {
-              billingDetails: {
-                name: "never",
-                email: "never",
-              },
-            },
-          }}
+          onChange={event => console.log("event", event)}
         />
         <Spacer mt={2} />
         <Button disabled={!stripe} variant="primaryBlack" width="100%">

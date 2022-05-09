@@ -1,4 +1,4 @@
-import { Checkbox } from "@artsy/palette"
+import { Checkbox, Collapse } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
@@ -32,6 +32,14 @@ jest.mock(
     return require("../../Components/__mocks__/PaymentPicker")
   }
 )
+jest.mock(
+  "v2/Components/BankDebitForm/BankDebitProvider",
+  // not sure why this is neccessary :(
+  // should just work without this extra argument
+  () => {
+    return require("../../Components/__mocks__/BankDebitProvider")
+  }
+)
 jest.mock("v2/System/useSystemContext")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
@@ -39,26 +47,8 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
   internalID: "1234",
 }
 
-describe("Payment", () => {
-  beforeAll(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        featureFlags: {
-          stripe_ACH: {
-            flagEnabled: false,
-          },
-        },
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
-      }
-    })
-  })
-
-  const { buildPage, mutations, routes } = createTestEnv({
+const setupTestEnv = () => {
+  return createTestEnv({
     Component: PaymentFragmentContainer,
     defaultData: {
       order: testOrder,
@@ -101,22 +91,49 @@ describe("Payment", () => {
       }
     },
   })
+}
 
+describe("Payment", () => {
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => {
+      return {
+        featureFlags: {
+          stripe_ACH: {
+            flagEnabled: false,
+          },
+        },
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+          ready: jest.fn(),
+          trigger: jest.fn(),
+        },
+      }
+    })
+  })
+
+
+  // eslint-disable-next-line jest/expect-expect
   it("shows the button spinner while loading the mutation", async () => {
-    const page = await buildPage()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.expectButtonSpinnerWhenSubmitting()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows the default error modal when the payment picker throws an error", async () => {
     paymentPickerMock.useThrownError()
-    const page = await buildPage()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
     await page.expectAndDismissDefaultErrorDialog()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
     paymentPickerMock.useErrorResult()
-    const page = await buildPage()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
     await page.expectAndDismissErrorDialogMatching(
       "This is the description of an error.",
@@ -124,9 +141,11 @@ describe("Payment", () => {
     )
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
     paymentPickerMock.useInternalErrorResult()
-    const page = await buildPage()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
     await page.expectAndDismissErrorDialogMatching(
       "An internal error occurred",
@@ -135,10 +154,11 @@ describe("Payment", () => {
   })
 
   it("commits setOrderPayment mutation with the credit card id", async () => {
-    const page = await buildPage()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
 
-    expect(mutations.lastFetchVariables).toMatchObject({
+    expect(env.mutations.lastFetchVariables).toMatchObject({
       input: {
         creditCardId: "credit-card-id",
         id: "1234",
@@ -147,21 +167,26 @@ describe("Payment", () => {
   })
 
   it("takes the user to the review step", async () => {
-    const page = await buildPage()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
-    expect(routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/review")
+    expect(env.routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/review")
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal when there is an error in SetOrderPaymentPayload", async () => {
-    const page = await buildPage()
-    mutations.useResultsOnce(settingOrderPaymentFailed)
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    env.mutations.useResultsOnce(settingOrderPaymentFailed)
     await page.clickSubmit()
     await page.expectAndDismissDefaultErrorDialog()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal when there is a network error", async () => {
-    const page = await buildPage()
-    mutations.mockNetworkFailureOnce()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    env.mutations.mockNetworkFailureOnce()
 
     await page.clickSubmit()
     await page.expectAndDismissDefaultErrorDialog()
@@ -169,7 +194,8 @@ describe("Payment", () => {
 
   describe("Offer-mode orders", () => {
     it("shows an active offer stepper if the order is an Offer Order", async () => {
-      const page = await buildPage({
+      const env = setupTestEnv()
+      const page = await env.buildPage({
         mockData: {
           order: {
             ...OfferOrderWithShippingDetails,
@@ -208,23 +234,34 @@ describe("Payment", () => {
     })
 
     it("renders selection of payment methods", async () => {
-      const page = await buildPage()
-      expect(page.text()).toContain("Credit Card")
-      expect(page.text()).toContain("Bank Transfer")
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      expect(page.text()).toContain("Credit card")
+      expect(page.text()).toContain("Bank transfer")
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
-      const page = await buildPage()
-      page.selectPaymentMethod(0)
-      expect(page.text()).toContain("Credit card")
-      expect(page.find(PaymentPickerFragmentContainer).length).toBe(1)
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      page.selectPaymentMethod(1)
+      const creditCardCollapse = page.find(PaymentPickerFragmentContainer).closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(true)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(false)
     })
 
-    it("renders bank element when bank transfer is chosen as payment mehod", async () => {
-      const page = await buildPage()
-      page.selectPaymentMethod(1)
-      expect(page.text()).toContain("Bank transfer")
-      expect(page.find(BankDebitProvider).length).toBe(1)
+    it("renders bank element when bank transfer is chosen as payment method", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      page.selectPaymentMethod(0)
+      const creditCardCollapse = page.find(PaymentPickerFragmentContainer).closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(false)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(true)
     })
+
+    // Ran in to the error when following `createTestEnv`
+    // Invariant Violation: commitMutation: expected "environment" to be an instance of "RelayModernEnvironment"
+    it.todo("creates a bank debit setup")
   })
 })

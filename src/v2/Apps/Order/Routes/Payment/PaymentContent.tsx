@@ -1,13 +1,11 @@
 import { FC, RefObject, useState } from "react"
 import {
-  Button,
   Flex,
   Spacer,
   BorderedRadio,
   RadioGroup,
   Text,
   Collapse,
-  Clickable,
 } from "@artsy/palette"
 import {
   PaymentPicker,
@@ -38,23 +36,7 @@ export const PaymentContent: FC<Props> = props => {
     order,
     paymentPicker,
   } = props
-  const [stepOneComplete, setStepOneComplete] = useState(false)
-  const [paymentMethodSelection, setPaymentMethodSelection] = useState("")
-  const [paymentMethod, setPaymentMethod] = useState("")
-
-  const paymentMethodLabel = (paymentMethod: string) => {
-    switch (paymentMethod) {
-      case "credit_card":
-        return "Credit card"
-      case "bank_debit":
-        return "Bank transfer (US bank account)"
-    }
-  }
-
-  const handlePaymentMethodSave = paymentMethodSelection => {
-    setPaymentMethod(paymentMethodSelection)
-    setStepOneComplete(true)
-  }
+  const [paymentMethod, setPaymentMethod] = useState("bank_debit")
 
   return (
     <div>
@@ -62,71 +44,50 @@ export const PaymentContent: FC<Props> = props => {
         flexDirection="column"
         style={isLoading ? { pointerEvents: "none" } : {}}
       >
-        {/* Step One Payment Menthod */}
-        <Flex flexDirection="row" justifyContent="space-between">
-          <Flex flexDirection="column">
-            <Text variant="xs">Step 1 of 2</Text>
-            <Text variant="lg">Payment Method</Text>
-            <Text color="black60">
-              {paymentMethod && paymentMethodLabel(paymentMethod)}
-            </Text>
-          </Flex>
-          {paymentMethod && (
-            <Clickable
-              textDecoration="underline"
-              onClick={() => setStepOneComplete(false)}
-            >
-              <Text variant="xs">Change</Text>
-            </Clickable>
-          )}
-        </Flex>
-        <Collapse open={!stepOneComplete}>
-          <Spacer mb={4} />
-          <RadioGroup
-            onSelect={val => {
-              setPaymentMethodSelection(val)
-            }}
-          >
-            <BorderedRadio value="credit_card" label="Credit Card" />
-            <BorderedRadio value="bank_debit" label="Bank Transfer" />
-          </RadioGroup>
-          <Spacer mb={4} />
-          <Button
-            onClick={() => handlePaymentMethodSave(paymentMethodSelection)}
-            variant="primaryBlack"
-            width="100%"
-          >
-            Save and Continue
-          </Button>
-        </Collapse>
-        <Spacer mb={4} />
-        {/* Step Two Payment Details */}
-        <Text color={stepOneComplete ? "black100" : "black30"} variant="xs">
-          Step 2 of 2
-        </Text>
-        <Text color={stepOneComplete ? "black100" : "black30"} variant="lg">
-          Payment Details
-        </Text>
         <Spacer mb={2} />
-        {paymentMethod && paymentMethod === "credit_card" && (
-          <Collapse open={stepOneComplete}>
-            <PaymentPickerFragmentContainer
-              commitMutation={commitMutation}
-              me={me}
-              order={order}
-              innerRef={paymentPicker}
-            />
-            <Spacer mb={4} />
-            <Media greaterThan="xs">
-              <ContinueButton onClick={onContinue} loading={isLoading} />
-            </Media>
-          </Collapse>
-        )}
-        {paymentMethod && paymentMethod === "bank_debit" && (
-          <Collapse open={stepOneComplete}>
-            <BankDebitProvider order={order} />
-          </Collapse>
-        )}
+        <Text variant="lg">Payment method</Text>
+        <Spacer mb={2} />
+        <RadioGroup
+          onSelect={val => {
+            setPaymentMethod(val)
+          }}
+          defaultValue={paymentMethod}
+        >
+          <BorderedRadio
+            value="bank_debit"
+            label="Bank transfer (US bank account)"
+          />
+          <BorderedRadio value="credit_card" label="Credit card" />
+        </RadioGroup>
+        <Spacer mb={4} />
+        <Text variant="lg">Payment details</Text>
+        <Spacer mb={2} />
+        <Collapse open={paymentMethod === "credit_card"}>
+          <PaymentPickerFragmentContainer
+            commitMutation={commitMutation}
+            me={me}
+            order={order}
+            innerRef={paymentPicker}
+          />
+          <Spacer mb={4} />
+          <Media greaterThan="xs">
+            <ContinueButton onClick={onContinue} loading={isLoading} />
+          </Media>
+        </Collapse>
+        <Collapse open={paymentMethod === "bank_debit"}>
+          <Text color="black60" variant="sm">
+            • Bank transfer is powered by Stripe.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Search for your bank institution or select from the options below.
+          </Text>
+          <Text color="black60" variant="sm">
+            • If you can not find your bank, please check your spelling or
+            choose another payment method.
+          </Text>
+          <Spacer mb={2} />
+          <BankDebitProvider order={order} />
+        </Collapse>
       </Flex>
     </div>
   )
