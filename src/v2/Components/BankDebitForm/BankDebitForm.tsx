@@ -70,7 +70,6 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
           onReady={() => setIsPaymentElementLoading(false)}
           onChange={event => {
             trackPaymentElementEvent(event)
-            console.log("event", event)
           }}
         />
         <Spacer mt={2} />

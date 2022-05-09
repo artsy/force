@@ -114,6 +114,15 @@ describe("Payment", () => {
     })
   })
 
+  beforeEach(() => {
+    const mockTracking = useTracking as jest.Mock
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
   // eslint-disable-next-line jest/expect-expect
   it("shows the button spinner while loading the mutation", async () => {
     const env = setupTestEnv()
@@ -244,7 +253,7 @@ describe("Payment", () => {
     it("tracks when the user selects the credit card payment method", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
-      page.selectPaymentMethod(0)
+      page.selectPaymentMethod(1)
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedChangePaymentMethod",
         amount: "$12,000",
@@ -255,11 +264,12 @@ describe("Payment", () => {
         payment_method: "credit_card",
         subject: "click_payment_method",
       })
+    })
 
     it("tracks when the user selects the bank payment method", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
-      page.selectPaymentMethod(1)
+      page.selectPaymentMethod(0)
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedChangePaymentMethod",
         amount: "$12,000",

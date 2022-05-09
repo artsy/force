@@ -4,20 +4,9 @@ import { useSystemContext, useTracking } from "v2/System"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "../BankDebitForm"
 
+// In our stripe PaymentElement mock
+// we automatically fire this event if defined
 let mockEvent: any
-
-// const MockPaymentElement = ({
-//   onChange,
-// }: {
-//   onChange: (event: any) => void
-// }) => {
-//   useEffect(() => {
-//     if (!!event) {
-//       onChange(event)
-//     }
-//   }, [onChange])
-//   return <div />
-// }
 
 jest.unmock("react-tracking")
 jest.mock("@stripe/react-stripe-js", () => {
