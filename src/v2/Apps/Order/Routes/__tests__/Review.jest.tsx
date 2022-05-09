@@ -335,8 +335,8 @@ describe("Review", () => {
       const text = page.shippingArtaSummary.text()
 
       expect(text).toContain("Shipping")
-      expect(text).toContain("Premium delivery")
-      expect(text).toContain("($5.00)")
+      expect(text).toContain("Standard delivery")
+      expect(text).toContain("($1.00)")
     })
 
     it("ship to section contains shipping address", () => {

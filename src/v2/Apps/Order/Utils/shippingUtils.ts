@@ -152,8 +152,6 @@ export const getDefaultShippingQuoteId = (order: Shipping_order) => {
     order.lineItems?.edges &&
     order.lineItems?.edges[0]?.node?.shippingQuoteOptions
 
-  console.log("hello?")
-
   const cleanQuotes = compact(shippingQuotes?.edges?.map(quote => quote?.node))
 
   return cleanQuotes ? cleanQuotes[0].id : undefined

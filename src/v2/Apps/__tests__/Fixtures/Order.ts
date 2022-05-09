@@ -395,26 +395,14 @@ export const UntouchedBuyOrderWithShippingQuotes = {
             edges: [
               {
                 node: {
-                  id: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
-                  tier: "select",
-                  name: "",
-                  isSelected: false,
-                  priceCents: 500,
-                  priceCurrency: "USD",
-                  price: "$5.00",
-                  typeName: "select",
-                },
-              },
-              {
-                node: {
-                  id: "d8cfee28-8139-4391-8a8d-3010633e885b",
+                  id: "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
                   tier: "parcel",
-                  name: "Next Day Air",
+                  name: "Ground",
                   isSelected: false,
-                  priceCents: 400,
+                  priceCents: 100,
                   priceCurrency: "USD",
-                  price: "$4.00",
-                  typeName: "next_day_air",
+                  price: "$1.00",
+                  typeName: "ground",
                 },
               },
               {
@@ -431,18 +419,6 @@ export const UntouchedBuyOrderWithShippingQuotes = {
               },
               {
                 node: {
-                  id: "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
-                  tier: "parcel",
-                  name: "Ground",
-                  isSelected: false,
-                  priceCents: 100,
-                  priceCurrency: "USD",
-                  price: "$1.00",
-                  typeName: "ground",
-                },
-              },
-              {
-                node: {
                   id: "278ba0c4-f815-4197-8a8d-b97f1883db21",
                   tier: "premium",
                   name: "",
@@ -451,6 +427,30 @@ export const UntouchedBuyOrderWithShippingQuotes = {
                   priceCurrency: "USD",
                   price: "$3.00",
                   typeName: "premium",
+                },
+              },
+              {
+                node: {
+                  id: "d8cfee28-8139-4391-8a8d-3010633e885b",
+                  tier: "parcel",
+                  name: "Next Day Air",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                  typeName: "next_day_air",
+                },
+              },
+              {
+                node: {
+                  id: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                  tier: "select",
+                  name: "",
+                  isSelected: false,
+                  priceCents: 500,
+                  priceCurrency: "USD",
+                  price: "$5.00",
+                  typeName: "select",
                 },
               },
             ],

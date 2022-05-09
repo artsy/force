@@ -971,6 +971,14 @@ describe("Shipping", () => {
         expect(page.find(ShippingRoute).state().shippingQuotes).toHaveLength(5)
       })
 
+      it("default selects the first quote and submit button is enabled", async () => {
+        expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
+          "4a8f8080-23d3-4c0e-9811-7a41a9df6933"
+        )
+
+        expect(page.submitButton.props().disabled).toBeFalsy()
+      })
+
       it("submit button enabled if shipping quote is selected", async () => {
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 

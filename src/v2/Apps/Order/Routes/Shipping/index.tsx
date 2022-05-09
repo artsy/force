@@ -611,27 +611,23 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     const showSavedAddresses =
       shippingSelected && addressList && addressList.length > 0
+
     const isArtaShipping = this.isArtaShipping()
 
-    if (
+    const shippingQuotesPresentAndNoUserSelection =
       isArtaShipping &&
-      shippingQuotes &&
+      !!shippingQuotes &&
       shippingQuotes.length > 0 &&
       !shippingQuoteId
-    ) {
-      console.log("im hit")
 
+    if (shippingQuotesPresentAndNoUserSelection) {
       const defaultShippingQuoteId = getDefaultShippingQuoteId(order)
-      // console.log(defaultShippingQuoteId)
       this.setState({ shippingQuoteId: defaultShippingQuoteId })
     }
 
     const isContinueButtonDisabled = isCommittingMutation
       ? false
-      : isArtaShipping &&
-        !!shippingQuotes &&
-        shippingQuotes.length > 0 &&
-        !shippingQuoteId
+      : shippingQuotesPresentAndNoUserSelection
 
     return (
       <Box data-test="orderShipping">
