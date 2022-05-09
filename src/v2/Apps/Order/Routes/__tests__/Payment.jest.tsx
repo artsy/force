@@ -32,6 +32,14 @@ jest.mock(
     return require("../../Components/__mocks__/PaymentPicker")
   }
 )
+jest.mock(
+  "v2/Components/BankDebitForm/BankDebitProvider",
+  // not sure why this is neccessary :(
+  // should just work without this extra argument
+  () => {
+    return require("../../Components/__mocks__/BankDebitProvider")
+  }
+)
 jest.mock("v2/System/useSystemContext")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
