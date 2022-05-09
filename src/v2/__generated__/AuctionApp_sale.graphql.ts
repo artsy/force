@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionApp_sale = {
     readonly internalID: string;
     readonly slug: string;
+    readonly eligibleSaleArtworksCount: number | null;
     readonly isClosed: boolean | null;
     readonly coverImage: {
         readonly url: string | null;
@@ -54,6 +55,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "eligibleSaleArtworksCount",
       "storageKey": null
     },
     {
@@ -157,5 +165,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a72821a96405db47f24ca6e47fb13529';
+(node as any).hash = '552ff966b43574da7b185c45a27c9e28';
 export default node;

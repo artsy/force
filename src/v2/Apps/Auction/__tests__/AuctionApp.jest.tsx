@@ -294,10 +294,26 @@ describe("AuctionApp", () => {
   })
 
   describe("preview sales", () => {
+    it("does not show message if there are eligible sale artworks", () => {
+      const wrapper = getWrapper({
+        Sale: () => ({
+          status: "preview",
+          eligibleSaleArtworksCount: 1,
+        }),
+      })
+      expect(wrapper.text()).not.toContain(
+        "Registration for this auction is currently open"
+      )
+      expect(wrapper.find("AuctionArtworkFilterRefetchContainer").length).toBe(
+        1
+      )
+    })
+
     it("shows message", () => {
       const wrapper = getWrapper({
         Sale: () => ({
           status: "preview",
+          eligibleSaleArtworksCount: 0,
         }),
       })
       expect(wrapper.text()).toContain(

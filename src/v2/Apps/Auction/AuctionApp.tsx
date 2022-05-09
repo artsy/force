@@ -123,7 +123,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
             </Box>
           )}
 
-          {sale.status === "preview" ? (
+          {sale.status === "preview" && sale.eligibleSaleArtworksCount === 0 ? (
             <>
               <Message
                 variant="default"
@@ -171,9 +171,9 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionAssociatedSale_sale
       ...AuctionBuyNowRail_sale
       ...AuctionDetails_sale
-
       internalID
       slug
+      eligibleSaleArtworksCount
       isClosed
       coverImage {
         url(version: ["wide", "source", "large_rectangle"])
