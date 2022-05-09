@@ -292,30 +292,4 @@ describe("AuctionApp", () => {
       })
     })
   })
-
-  describe("preview sales", () => {
-    it("shows message", () => {
-      const wrapper = getWrapper({
-        Sale: () => ({
-          status: "preview",
-        }),
-      })
-      expect(wrapper.text()).toContain(
-        "Registration for this auction is currently open"
-      )
-      expect(wrapper.text()).toContain("Auction lots will be published soon.")
-      expect(wrapper.find("AuctionArtworkFilterRefetchContainer").length).toBe(
-        0
-      )
-    })
-
-    it("shows auctions rail", () => {
-      const wrapper = getWrapper({
-        Sale: () => ({
-          status: "preview",
-        }),
-      })
-      expect(wrapper.find("AuctionCurrentAuctionsRail").length).toBe(1)
-    })
-  })
 })

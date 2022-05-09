@@ -12,7 +12,7 @@ export type AuctionApp_viewer = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionWorksByFollowedArtistsRail_viewer" | "AuctionCurrentAuctionsRail_viewer">;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworkFilter_viewer" | "AuctionWorksByFollowedArtistsRail_viewer">;
     readonly " $refType": "AuctionApp_viewer";
 };
 export type AuctionApp_viewer$data = AuctionApp_viewer;
@@ -124,15 +124,10 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "AuctionWorksByFollowedArtistsRail_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionCurrentAuctionsRail_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'd761435e9548123e40861cc1ad7ea4a0';
+(node as any).hash = '81a3d2427a24c1551ffb707725a12819';
 export default node;

@@ -1,4 +1,4 @@
-import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { Box, Join, Spacer, Tab, Tabs } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
@@ -17,7 +17,6 @@ import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAsso
 import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
-import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -123,24 +122,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
             </Box>
           )}
 
-          {sale.status === "preview" ? (
-            <>
-              <Message
-                variant="default"
-                title="Registration for this auction is currently open"
-              >
-                <Text variant="md" color="black60">
-                  Auction lots will be published soon.
-                </Text>
-              </Message>
-
-              <Spacer my={2} />
-
-              <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
-            </>
-          ) : (
-            <AuctionArtworkFilterRefetchContainer viewer={viewer} />
-          )}
+          <AuctionArtworkFilterRefetchContainer viewer={viewer} />
 
           <Box>{children}</Box>
         </Join>
@@ -186,7 +168,6 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       }
       cascadingEndTimeIntervalMinutes
       extendedBiddingIntervalMinutes
-      status
     }
   `,
   viewer: graphql`
@@ -197,7 +178,6 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ) {
       ...AuctionArtworkFilter_viewer @arguments(input: $input)
       ...AuctionWorksByFollowedArtistsRail_viewer @arguments(saleID: $saleID)
-      ...AuctionCurrentAuctionsRail_viewer
 
       showFollowedArtistsTab: saleArtworksConnection(
         first: 1
