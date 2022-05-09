@@ -55,7 +55,6 @@ export type Shipping_order = {
                         readonly node: {
                             readonly id: string;
                             readonly isSelected: boolean;
-                            readonly priceCents: number;
                         } | null;
                         readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
                     } | null> | null;
@@ -320,13 +319,6 @@ return {
                               "kind": "ScalarField",
                               "name": "isSelected",
                               "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "priceCents",
-                              "storageKey": null
                             }
                           ],
                           "storageKey": null
@@ -366,5 +358,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'c5986f6ed7b83427ef98fa3779837a22';
+(node as any).hash = '5c1b57a0e809e02a3874e25d4bc51b0a';
 export default node;

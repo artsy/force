@@ -869,7 +869,6 @@ export const ShippingFragmentContainer = createFragmentContainer(
                   node {
                     id
                     isSelected
-                    priceCents
                   }
                 }
               }
