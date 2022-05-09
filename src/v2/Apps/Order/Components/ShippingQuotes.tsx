@@ -58,9 +58,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
   selectedShippingQuoteId,
   ...rest
 }) => {
-  const quotes = compact(
-    shippingQuotes?.map(quote => quote.node)
-  ).sort((a, b) => (a && b ? a.priceCents - b.priceCents : 0))
+  const quotes = compact(shippingQuotes?.map(quote => quote.node))
 
   if (!quotes || !quotes.length) {
     return null

@@ -57,7 +57,6 @@ import {
   startingAddress,
   convertShippingAddressForExchange,
   defaultShippingAddressIndex,
-  getDefaultShippingQuoteId,
   getSelectedShippingQuoteId,
   getShippingQuotes,
   getShippingOption,
@@ -619,8 +618,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       shippingQuotes.length > 0 &&
       !shippingQuoteId
     ) {
-      const defaultShippingQuoteId = getDefaultShippingQuoteId(order)
-      this.setState({ shippingQuoteId: defaultShippingQuoteId })
+      this.setState({ shippingQuoteId: shippingQuotes[0]?.id })
     }
 
     const isContinueButtonDisabled = isCommittingMutation

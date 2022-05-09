@@ -147,18 +147,6 @@ export const getShippingOption = (requestedFulfillmentType?: string) => {
   return result
 }
 
-export const getDefaultShippingQuoteId = (order: Shipping_order) => {
-  const shippingQuotes =
-    order.lineItems?.edges &&
-    order.lineItems?.edges[0]?.node?.shippingQuoteOptions
-
-  const sortedQuotes = compact(
-    shippingQuotes?.edges?.map(quote => quote?.node)
-  ).sort((a, b) => (a && b ? a.priceCents - b.priceCents : 0))
-
-  return sortedQuotes ? sortedQuotes[0].id : undefined
-}
-
 export const getSelectedShippingQuoteId = (order: Shipping_order) => {
   const shippingQuotes =
     order.lineItems?.edges &&
