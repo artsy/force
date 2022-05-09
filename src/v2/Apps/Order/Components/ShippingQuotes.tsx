@@ -68,7 +68,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
     <RadioGroup
       {...rest}
       onSelect={onSelect}
-      defaultValue={selectedShippingQuoteId || quotes[0]?.id}
+      defaultValue={selectedShippingQuoteId}
     >
       {quotes.map(shippingQuote => {
         const { id, price, typeName } = shippingQuote
