@@ -7,7 +7,14 @@ import {
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
-import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
+import {
+  Banner,
+  Box,
+  Flex,
+  GuaranteeIcon,
+  Spacer,
+  Spinner,
+} from "@artsy/palette"
 import compact from "lodash/compact"
 import styled from "styled-components"
 
@@ -17,7 +24,6 @@ import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
-import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
@@ -163,6 +169,15 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const [toastBottom, setToastBottom] = useState(0)
 
+  // Show banner
+  const [showBanner, setShowBanner] = useState(false)
+
+  useEffect(() => {
+    setShowBanner(true)
+    const timer = setTimeout(() => setShowBanner(false), 5000)
+    return () => clearTimeout(timer)
+  }, [conversationID])
+
   // Behaviours
   // -Navigation
   useEffect(() => {
@@ -203,12 +218,18 @@ const Conversation: React.FC<ConversationProps> = props => {
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
+      {showBanner && (
+        <Banner variant="brand">
+          <GuaranteeIcon mr={1} fill="white100" />
+          To protect your payment, always communicate and pay through the Artsy
+          platform.
+        </Banner>
+      )}
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
-              {isOfferable && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}

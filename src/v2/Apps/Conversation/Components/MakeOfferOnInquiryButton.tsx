@@ -5,7 +5,7 @@ import { tappedMakeOffer } from "@artsy/cohesion"
 import styled from "styled-components"
 import { MakeOfferOnInquiryButton_conversation } from "v2/__generated__/MakeOfferOnInquiryButton_conversation.graphql"
 import {
-  CheckCircleIcon,
+  GuaranteeIcon,
   FLAT_SHADOW,
   Flex,
   Separator,
@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
+import { themeGet } from "@styled-system/theme-get"
 
 const ShadowSeparator = styled(Separator)`
   box-shadow: ${FLAT_SHADOW};
@@ -48,10 +49,11 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
       <ShadowSeparator />
       <Flex flexDirection="column" p={1}>
         <Flex flexDirection="row">
-          <CheckCircleIcon mr={1} />
+          <GuaranteeIconBlue mr={1} />
           <Flex flexShrink={1}>
             <Text color="black60" variant="xs" mb={1}>
-              Only purchases completed with our secure checkout are protected by{" "}
+              Always complete purchases with our secure checkout in order to be
+              covered by{" "}
               <RouterLink to="/buyer-guarantee" target="_blank">
                 The Artsy Guarantee
               </RouterLink>
@@ -82,6 +84,12 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
     </>
   )
 }
+
+const GuaranteeIconBlue = styled(GuaranteeIcon)`
+  .guarantee-checkmark {
+    fill: ${themeGet("colors.brand")};
+  }
+`
 
 export const MakeOfferOnInquiryButtonFragmentContainer = createFragmentContainer(
   MakeOfferOnInquiryButton,
