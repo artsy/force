@@ -19,7 +19,6 @@ export type AuctionApp_sale = {
     } | null;
     readonly cascadingEndTimeIntervalMinutes: number | null;
     readonly extendedBiddingIntervalMinutes: number | null;
-    readonly status: string | null;
     readonly " $fragmentRefs": FragmentRefs<"AuctionMeta_sale" | "AuctionAssociatedSale_sale" | "AuctionBuyNowRail_sale" | "AuctionDetails_sale">;
     readonly " $refType": "AuctionApp_sale";
 };
@@ -126,13 +125,6 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "status",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "AuctionMeta_sale"
@@ -157,5 +149,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a72821a96405db47f24ca6e47fb13529';
+(node as any).hash = '293efbb0946a125a797affc635551741';
 export default node;
