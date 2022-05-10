@@ -1,7 +1,17 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Box, Button, Spacer } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
+import {
+  Box,
+  Button,
+  Checkbox,
+  Clickable,
+  Flex,
+  InfoCircleIcon,
+  Tooltip,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
 
@@ -15,6 +25,8 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   const elements = useElements()
   const { user } = useSystemContext()
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
+  const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
+
   const tracking = useTracking()
 
   const trackPaymentElementEvent = event => {
@@ -78,6 +90,36 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
             trackPaymentElementEvent(event)
           }}
         />
+        <Spacer mt={2} />
+        <Flex>
+          <Checkbox
+            selected={isSaveAccountChecked}
+            onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
+            data-test="SaveBankAccountCheckbox"
+          >
+            Save bank account for later use.
+          </Checkbox>
+          <Flex>
+            <Tooltip
+              placement="top"
+              size="lg"
+              width={335}
+              content={
+                <Text fontSize={13}>
+                  If you use Artsy’s services or purchase additional products
+                  periodically pursuant to Artsy’s terms, you authorize Artsy to
+                  debit your bank account periodically. Payments that fall
+                  outside of the regular debits authorized above will only be
+                  debited after your authorization is obtained.
+                </Text>
+              }
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoCircleIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
+        </Flex>
         <Spacer mt={2} />
         <Button
           onClick={trackClickedContinue}
