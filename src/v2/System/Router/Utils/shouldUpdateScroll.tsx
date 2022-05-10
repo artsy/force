@@ -29,6 +29,15 @@ export function shouldUpdateScroll(prevRenderArgs, currentRenderArgs) {
   const { routes } = currentRenderArgs
 
   try {
+    // When using router.push one can pass additional state along, which we
+    // grab here. (This is currently being used in the ArtworkFilter.)
+    const ignoreScrollBehaviorFromRouterState =
+      currentRenderArgs.location?.state?.ignoreScrollBehavior ?? false
+
+    if (ignoreScrollBehaviorFromRouterState) {
+      return false
+    }
+
     // If true, don't reset scroll position on route change, no matter what
     if (routes?.some(route => route.ignoreScrollBehavior)) {
       return false

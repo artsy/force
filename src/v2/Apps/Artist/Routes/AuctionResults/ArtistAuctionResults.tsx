@@ -140,7 +140,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
       if (filtersHaveUpdated) {
-        fetchResults()
+        // fetchResults()
 
         // If user is not logged-in, show auth modal, but only if it was never shown before.
         if (!user && !authShownForFiltering) {

@@ -1,14 +1,17 @@
-import { isArray, omit } from "lodash"
-import { useContext, useReducer, useState } from "react"
+import { debounce, isArray, isEqual, omit, pick } from "lodash"
+import { useContext, useEffect, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { SortOptions } from "../SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
-import { paramsToCamelCase } from "./Utils/urlBuilder"
+import { paramsToCamelCase, removeDefaultValues } from "./Utils/urlBuilder"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
+import { useRouter } from "v2/System/Router/useRouter"
+import { getInitialFilterState } from "./Utils/getInitialFilterState"
+import qs from "qs"
 
 /**
  * Initial filter state
@@ -177,14 +180,17 @@ export enum SelectedFiltersCountsLabels {
   waysToBuy = "waysToBuy",
 }
 
-// TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
-// Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
-// and `BaseFilterContext<AuctionResultFilters>`.
+// TODO: merge or make a generic base of `ArtworkFilterContextProps` and
+// `AuctionResultsFilterContextProps`. Possibly just extend `BaseFilterContext`
+// and make the former ones into `BaseFilterContext<ArtworkFilters>` and
+// `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
-  /** The current artwork filter state (which determines the network request and the url querystring) */
+  // The current artwork filter state (which determines the network request and
+  // the url querystring)
   filters?: ArtworkFiltersState
 
-  /** Interim filter state, to be manipulated before being applied to the current filter state */
+  // Interim filter state, to be manipulated before being applied to the current
+  // filter state
   stagedFilters?: ArtworkFiltersState
 
   /** Getter for the appropriate source of truth to render in the filter UI */
@@ -277,6 +283,8 @@ export const ArtworkFilterContextProvider: React.FC<
   sortOptions,
   ZeroState,
 }) => {
+  const { router, match } = useRouter()
+
   const initialFilterState = {
     ...initialArtworkFilterState,
     sort: sortOptions?.[0].value ?? initialArtworkFilterState.sort,
@@ -289,6 +297,10 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
+  const [routerArtworkFilterState, dispatchToRouter] = useReducer(
+    artworkFilterReducer,
+    initialFilterState
+  )
 
   // TODO: Consolidate this into additional reducer
   const [artworkCounts, setCounts] = useState(counts)
@@ -298,9 +310,21 @@ export const ArtworkFilterContextProvider: React.FC<
 
   useDeepCompareEffect(() => {
     if (onChange) {
-      onChange(omit(artworkFilterState, ["reset"]))
+      // onChange(omit(artworkFilterState, ["reset"]))
     }
   }, [artworkFilterState])
+
+  useDeepCompareEffect(() => {
+    pushChangeToRouter(routerArtworkFilterState)
+  }, [routerArtworkFilterState])
+
+  useDeepCompareEffect(() => {
+    const action: ArtworkFiltersAction = {
+      type: "SET_FILTERS",
+      payload: match.location.query,
+    }
+    dispatch(action)
+  }, [match.location.query])
 
   // If in staged mode, return the staged filters for UI display
   const currentlySelectedFilters = () => {
@@ -312,12 +336,32 @@ export const ArtworkFilterContextProvider: React.FC<
   // If in staged mode, manipulate the staged version of filter state
   // instead of "real" one
   const dispatchOrStage = (action: ArtworkFiltersAction) => {
-    shouldStageFilterChanges ? stage(action) : dispatch(action)
+    // shouldStageFilterChanges ? stage(action) : dispatch(action)
+    shouldStageFilterChanges ? stage(action) : dispatchToRouter(action)
   }
 
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
     currentlySelectedFilters()
   )
+
+  const pushChangeToRouter = state => {
+    const url =
+      window.location.pathname +
+      "?" +
+      qs.stringify(getInitialFilterState(removeDefaultValues(state)))
+    const newLocation = router.createLocation(url)
+    console.log(newLocation)
+
+    // return
+    router.push({
+      ...newLocation,
+      state: {
+        scrollTo: "#jump--artworkFilter",
+        ignoreScrollBehavior: true,
+        hidePageLoader: true,
+      },
+    })
+  }
 
   const artworkFilterContext = {
     mountedContext: true,
