@@ -614,20 +614,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     const isArtaShipping = this.isArtaShipping()
 
-    const shippingQuotesPresentAndNoUserSelection =
+    const useDefaultArtsyShippingQuote =
       isArtaShipping &&
-      !!shippingQuotes &&
+      shippingQuotes &&
       shippingQuotes.length > 0 &&
       !shippingQuoteId
 
-    if (shippingQuotesPresentAndNoUserSelection) {
+    if (useDefaultArtsyShippingQuote) {
       const defaultShippingQuoteId = getDefaultShippingQuoteId(order)
       this.setState({ shippingQuoteId: defaultShippingQuoteId })
     }
-
-    const isContinueButtonDisabled = isCommittingMutation
-      ? false
-      : shippingQuotesPresentAndNoUserSelection
 
     return (
       <Box data-test="orderShipping">
@@ -771,7 +767,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
-                  disabled={isContinueButtonDisabled}
                   variant="primaryBlack"
                   width="100%"
                 >
@@ -798,7 +793,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
-                  disabled={isContinueButtonDisabled}
                   variant="primaryBlack"
                   width="100%"
                 >
