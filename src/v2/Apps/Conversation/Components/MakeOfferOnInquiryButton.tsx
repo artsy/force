@@ -12,6 +12,12 @@ export interface MakeOfferOnInquiryButtonProps {
   conversation: MakeOfferOnInquiryButton_conversation
 }
 
+const trackTappedMakeOffer = (id: string): TappedMakeOffer => ({
+  action: ActionType.tappedMakeOffer,
+  context_owner_type: OwnerType.conversation,
+  impulse_conversation_id: id,
+})
+
 export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> = ({
   openInquiryModal,
   conversation,

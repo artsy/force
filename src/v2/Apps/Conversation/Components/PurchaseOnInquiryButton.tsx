@@ -11,6 +11,13 @@ export interface PurchaseOnInquiryButtonProps {
   conversation: PurchaseOnInquiryButton_conversation
 }
 
+const trackTappedPurchase = (id: string): TappedBuyNow => ({
+  action: ActionType.tappedBuyNow,
+  context_owner_type: OwnerType.conversation,
+  // @ts-ignore
+  impulse_conversation_id: id,
+})
+
 export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = ({
   openInquiryModal,
   conversation,
