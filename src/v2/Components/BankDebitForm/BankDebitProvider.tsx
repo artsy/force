@@ -9,9 +9,10 @@ interface Props {
   order: Payment_order
 }
 
+const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
+
 export const BankDebitProvider: FC<Props> = ({ order }) => {
   const [clientSecret, setClientSecret] = useState("")
-  const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
     <div>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <BankDebitForm />
+          <BankDebitForm order={order} />
         </Elements>
       )}
     </div>

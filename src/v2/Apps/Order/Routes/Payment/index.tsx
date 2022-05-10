@@ -222,6 +222,8 @@ export const PaymentFragmentContainer = createFragmentContainer(
       fragment Payment_order on CommerceOrder {
         internalID
         mode
+        currencyCode
+        buyerTotal(precision: 2)
         lineItems {
           edges {
             node {

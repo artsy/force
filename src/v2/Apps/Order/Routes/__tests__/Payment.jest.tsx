@@ -14,7 +14,7 @@ import {
 } from "../__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
@@ -41,12 +41,14 @@ jest.mock(
   }
 )
 jest.mock("v2/System/useSystemContext")
+jest.mock("v2/System/Analytics/useTracking")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
 }
 
+const trackEvent = jest.fn()
 const setupTestEnv = () => {
   return createTestEnv({
     Component: PaymentFragmentContainer,
@@ -112,6 +114,14 @@ describe("Payment", () => {
     })
   })
 
+  beforeEach(() => {
+    const mockTracking = useTracking as jest.Mock
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
 
   // eslint-disable-next-line jest/expect-expect
   it("shows the button spinner while loading the mutation", async () => {
@@ -240,11 +250,45 @@ describe("Payment", () => {
       expect(page.text()).toContain("Bank transfer")
     })
 
+    it("tracks when the user selects the credit card payment method", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      page.selectPaymentMethod(1)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedChangePaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "credit_card",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("tracks when the user selects the bank payment method", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      page.selectPaymentMethod(0)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedChangePaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "bank_debit",
+        subject: "click_payment_method",
+      })
+    })
+
     it("renders credit card element when credit card is chosen as payment method", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       page.selectPaymentMethod(1)
-      const creditCardCollapse = page.find(PaymentPickerFragmentContainer).closest(Collapse)
+      const creditCardCollapse = page
+        .find(PaymentPickerFragmentContainer)
+        .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(true)
       const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(false)
@@ -254,7 +298,9 @@ describe("Payment", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       page.selectPaymentMethod(0)
-      const creditCardCollapse = page.find(PaymentPickerFragmentContainer).closest(Collapse)
+      const creditCardCollapse = page
+        .find(PaymentPickerFragmentContainer)
+        .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)

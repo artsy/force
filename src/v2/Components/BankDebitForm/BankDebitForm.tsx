@@ -1,14 +1,47 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Box, Button, Spacer } from "@artsy/palette"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
 
-export const BankDebitForm: FC = () => {
+interface Props {
+  order: { mode: string | null; internalID: string }
+}
+
+export const BankDebitForm: FC<Props> = ({ order }) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
+  const tracking = useTracking()
+
+  const trackPaymentElementEvent = event => {
+    const trackedEvents: any[] = []
+    if (event.complete) {
+      trackedEvents.push({
+        flow: order.mode,
+        order_id: order.internalID,
+        subject: "bank_account_selected",
+      })
+    }
+    if (!event.empty) {
+      trackedEvents.push({
+        flow: order.mode,
+        order_id: order.internalID,
+        subject: "TODO:_not_empty_thing",
+      })
+    }
+
+    trackedEvents.forEach(event => tracking.trackEvent(event))
+  }
+
+  const trackClickedContinue = () => {
+    tracking.trackEvent({
+      flow: order.mode!,
+      order_id: order.internalID,
+      subject: "TODO:_clicked_save_and_continue",
+    })
+  }
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -35,10 +68,17 @@ export const BankDebitForm: FC = () => {
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
           onReady={() => setIsPaymentElementLoading(false)}
-          onChange={event => console.log("event", event)}
+          onChange={event => {
+            trackPaymentElementEvent(event)
+          }}
         />
         <Spacer mt={2} />
-        <Button disabled={!stripe} variant="primaryBlack" width="100%">
+        <Button
+          onClick={trackClickedContinue}
+          disabled={!stripe}
+          variant="primaryBlack"
+          width="100%"
+        >
           Save and Continue
         </Button>
       </LoadingArea>
