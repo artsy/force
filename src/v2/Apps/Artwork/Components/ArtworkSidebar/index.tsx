@@ -26,7 +26,7 @@ import {
   shouldRenderBuyerGuaranteeAndSecurePayment,
   shouldRenderVerifiedSeller,
 } from "../../Utils/badges"
-import { useWebsocketContext } from "v2/System/WebsocketContext"
+import { useAuctionWebsocket } from "v2/Components/useAuctionWebsocket"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -60,14 +60,12 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     biddingEndAt
   )
 
-  const { data } = useWebsocketContext()
-  const { lot_id, extended_bidding_end_at } = data
-  const receivedMessageForThisLot = lot_id === saleArtwork?.lotID
-  React.useEffect(() => {
-    if (receivedMessageForThisLot) {
+  useAuctionWebsocket({
+    lotID: saleArtwork?.lotID!,
+    onChange: ({ extended_bidding_end_at }) => {
       setUpdatedBiddingEndAt(extended_bidding_end_at)
-    }
-  }, [receivedMessageForThisLot, extended_bidding_end_at])
+    },
+  })
 
   const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
   const shouldHideDetailsCreateAlertCTA =

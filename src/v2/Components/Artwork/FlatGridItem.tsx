@@ -1,5 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { ResponsiveBox, Image, Flex } from "@artsy/palette"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarAuctionProgressBar } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionProgressBar"
 import { useSystemContext } from "v2/System"
@@ -8,6 +9,7 @@ import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { userIsTeam } from "v2/Utils/user"
 import { FlatGridItem_artwork } from "v2/__generated__/FlatGridItem_artwork.graphql"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
+import { useAuctionWebsocket } from "v2/Components/useAuctionWebsocket"
 import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 
@@ -40,7 +42,16 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const startAt = sale?.startAt
   const biddingEndAt = extendedBiddingEndAt ?? saleArtwork?.endAt
 
-  const { time, hasEnded } = useTimer(biddingEndAt!, startAt!)
+  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
+
+  useAuctionWebsocket({
+    lotID: saleArtwork?.lotID!,
+    onChange: ({ extended_bidding_end_at }) => {
+      setUpdatedBiddingEndAt(extended_bidding_end_at)
+    },
+  })
+
+  const { time, hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
 
   const { isAuctionArtwork } = useArtworkGridContext()
   const shouldRenderProgressBar =
@@ -119,6 +130,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         saleArtwork {
           endAt
           extendedBiddingEndAt
+          lotID
         }
         internalID
         title

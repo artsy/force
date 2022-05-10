@@ -18,6 +18,7 @@ import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEn
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
+import { WebsocketContextProvider } from "v2/System/WebsocketContext"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -51,6 +52,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
   const {
     cascadingEndTimeIntervalMinutes,
     extendedBiddingIntervalMinutes,
+    internalID,
   } = sale
 
   const isFullBleedHeaderFixed = !cascadingEndTimeIntervalMinutes
@@ -61,6 +63,8 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const websocketEnabled = !!extendedBiddingIntervalMinutes
+
   return (
     <>
       <AnalyticsContext.Provider
@@ -70,80 +74,89 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           contextPageOwnerType,
         }}
       >
-        {cascadingEndTimeIntervalMinutes && (
-          <CascadingEndTimesBanner
-            cascadingEndTimeIntervalMinutes={cascadingEndTimeIntervalMinutes}
-            extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes}
-          />
-        )}
-
-        <AuctionMetaFragmentContainer sale={sale} />
-
-        <Join separator={<Spacer my={4} />}>
-          {sale.coverImage?.url ? (
-            <FullBleedHeader
-              fixed={isFullBleedHeaderFixed}
-              src={sale.coverImage.url}
+        <WebsocketContextProvider
+          channelInfo={{
+            channel: "SalesChannel",
+            sale_id: internalID,
+          }}
+          enabled={websocketEnabled}
+        >
+          {cascadingEndTimeIntervalMinutes && (
+            <CascadingEndTimesBanner
+              cascadingEndTimeIntervalMinutes={cascadingEndTimeIntervalMinutes}
+              extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes}
             />
-          ) : (
-            <Spacer my={2} />
           )}
 
-          <AuctionDetailsFragmentContainer sale={sale} me={me} />
+          <AuctionMetaFragmentContainer sale={sale} />
 
-          {tabBar.isVisible && (
-            // `key` is being passed to `Tabs` to ensure re-render
-            // Join is messing with `key` at this level; so `Tabs` are wrapped in a `Box`
-            // https://github.com/artsy/palette/pull/1144
-            <Box>
-              <Tabs key={sale.internalID} mb={4}>
-                {tabBar.showAssociatedSale && (
-                  <Tab name="Associated Sale">
-                    <AuctionAssociatedSaleFragmentContainer sale={sale} />
-                  </Tab>
-                )}
-                {tabBar.showActiveBids && (
-                  <Tab name="Your Active Bids">
-                    <AuctionActiveBidsRefetchContainer me={me} />
-                  </Tab>
-                )}
-                {tabBar.showFollowedArtistsTab && (
-                  <Tab name="Works By Artists You Follow">
-                    <AuctionWorksByFollowedArtistsRailFragmentContainer
-                      viewer={viewer}
-                    />
-                  </Tab>
-                )}
-                {tabBar.showBuyNowTab && (
-                  <Tab name="Buy Now">
-                    <AuctionBuyNowRailFragmentContainer sale={sale} />
-                  </Tab>
-                )}
-              </Tabs>
-            </Box>
-          )}
-
-          {sale.status === "preview" && sale.eligibleSaleArtworksCount === 0 ? (
-            <>
-              <Message
-                variant="default"
-                title="Registration for this auction is currently open"
-              >
-                <Text variant="md" color="black60">
-                  Auction lots will be published soon.
-                </Text>
-              </Message>
-
+          <Join separator={<Spacer my={4} />}>
+            {sale.coverImage?.url ? (
+              <FullBleedHeader
+                fixed={isFullBleedHeaderFixed}
+                src={sale.coverImage.url}
+              />
+            ) : (
               <Spacer my={2} />
+            )}
 
-              <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
-            </>
-          ) : (
-            <AuctionArtworkFilterRefetchContainer viewer={viewer} />
-          )}
+            <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
-          <Box>{children}</Box>
-        </Join>
+            {tabBar.isVisible && (
+              // `key` is being passed to `Tabs` to ensure re-render
+              // Join is messing with `key` at this level; so `Tabs` are wrapped in a `Box`
+              // https://github.com/artsy/palette/pull/1144
+              <Box>
+                <Tabs key={sale.internalID} mb={4}>
+                  {tabBar.showAssociatedSale && (
+                    <Tab name="Associated Sale">
+                      <AuctionAssociatedSaleFragmentContainer sale={sale} />
+                    </Tab>
+                  )}
+                  {tabBar.showActiveBids && (
+                    <Tab name="Your Active Bids">
+                      <AuctionActiveBidsRefetchContainer me={me} />
+                    </Tab>
+                  )}
+                  {tabBar.showFollowedArtistsTab && (
+                    <Tab name="Works By Artists You Follow">
+                      <AuctionWorksByFollowedArtistsRailFragmentContainer
+                        viewer={viewer}
+                      />
+                    </Tab>
+                  )}
+                  {tabBar.showBuyNowTab && (
+                    <Tab name="Buy Now">
+                      <AuctionBuyNowRailFragmentContainer sale={sale} />
+                    </Tab>
+                  )}
+                </Tabs>
+              </Box>
+            )}
+
+            {sale.status === "preview" &&
+            sale.eligibleSaleArtworksCount === 0 ? (
+              <>
+                <Message
+                  variant="default"
+                  title="Registration for this auction is currently open"
+                >
+                  <Text variant="md" color="black60">
+                    Auction lots will be published soon.
+                  </Text>
+                </Message>
+
+                <Spacer my={2} />
+
+                <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
+              </>
+            ) : (
+              <AuctionArtworkFilterRefetchContainer viewer={viewer} />
+            )}
+
+            <Box>{children}</Box>
+          </Join>
+        </WebsocketContextProvider>
       </AnalyticsContext.Provider>
 
       <ZendeskWrapper zdKey={getENV("AUCTION_ZENDESK_KEY")} />

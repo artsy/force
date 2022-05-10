@@ -205,6 +205,7 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                       endAt: "2022-03-12T12:33:37.000Z",
                     },
                     sale_artwork: {
+                      lotID: "lot-id",
                       lotLabel: "0",
                       counts: {
                         bidder_positions: 0,

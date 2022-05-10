@@ -445,6 +445,7 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     endAt: "2022-03-12T12:33:37.000Z",
   },
   sale_artwork: {
+    lotID: "lot-id",
     lotLabel: "0",
     id: "opaque-sale-artwork-id",
     highest_bid: { display: "$2,600" },
