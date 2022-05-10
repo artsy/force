@@ -6,6 +6,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
 import { useRouter } from "v2/System/Router/useRouter"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
@@ -80,6 +81,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       ]}
       counts={counts}
       aggregations={aggregations}
+      onChange={updateUrl}
     >
       <BaseArtworkFilter
         relay={relay}

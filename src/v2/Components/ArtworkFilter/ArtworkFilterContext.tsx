@@ -1,20 +1,15 @@
-import { debounce, isArray, isEqual, omit, pick } from "lodash"
-import { useContext, useEffect, useReducer, useState } from "react"
+import { isArray } from "lodash"
+import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { SortOptions } from "../SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
-import { paramsToCamelCase, removeDefaultValues } from "./Utils/urlBuilder"
-import {
-  updateUrl,
-  getUrlForFilterParams as defaultGetUrlForFilterParams,
-} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "./Utils/urlBuilder"
+import { getUrlForFilterParams as defaultGetUrlForFilterParams } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
 import { useRouter } from "v2/System/Router/useRouter"
-import { getInitialFilterState } from "./Utils/getInitialFilterState"
-import qs from "qs"
 
 /**
  * Initial filter state
@@ -285,8 +280,7 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
-  getUrlForFilterParams, // = defaultGetUrlForFilterParams,
-  onChange = updateUrl,
+  getUrlForFilterParams = defaultGetUrlForFilterParams,
   onFilterClick,
   sortOptions,
   ZeroState,
@@ -299,29 +293,32 @@ export const ArtworkFilterContextProvider: React.FC<
     ...paramsToCamelCase(filters),
   }
 
+  /**
+   * Updating router state is a three phase process:
+   *
+   * 1. Prepare the router filter state by storing all ui interactions
+   * 2. Push prepared router filter state to URL bar
+   * 3. Update the actual filter state once url has fully changed, updating UI
+   */
+  const [
+    routerArtworkFilterState,
+    prepareArtworkFilterStateForRouter,
+  ] = useReducer(artworkFilterReducer, initialFilterState)
+
   const [artworkFilterState, dispatch] = useReducer(
     artworkFilterReducer,
     initialFilterState
   )
 
-  const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
+  // debugger
 
-  const [
-    routerArtworkFilterState,
-    prepareArtworkFilterStateForRouter,
-  ] = useReducer(artworkFilterReducer, initialFilterState)
+  const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
 
   // TODO: Consolidate this into additional reducer
   const [artworkCounts, setCounts] = useState(counts)
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
   )
-
-  useDeepCompareEffect(() => {
-    if (onChange) {
-      // onChange(omit(artworkFilterState, ["reset"]))
-    }
-  }, [artworkFilterState])
 
   // If in staged mode, return the staged filters for UI display
   const currentlySelectedFilters = () => {
@@ -344,17 +341,10 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 
   const pushChangeToRouter = state => {
-    const url = getUrlForFilterParams?.(state)
-    const url2 =
-      window.location.pathname +
-      "?" +
-      qs.stringify(getInitialFilterState(removeDefaultValues(state)))
+    const url = getUrlForFilterParams(state)
     console.log(url)
-    console.log(url2)
-    // // console.log(url)
     const newLocation = router.createLocation(url)
 
-    // return
     router.push({
       ...newLocation,
       state: {

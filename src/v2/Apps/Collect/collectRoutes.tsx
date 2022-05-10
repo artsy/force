@@ -129,13 +129,15 @@ function initializeVariablesWithFilterState(params, props) {
     first: 30,
   }
 
-  return {
+  const filterState = {
     input,
     aggregations,
     slug: collectionSlug,
     sort: "-decayed_merch",
     shouldFetchCounts: !!props.context.user,
   }
+
+  return filterState
 }
 
 function getArtworkFilterQuery() {

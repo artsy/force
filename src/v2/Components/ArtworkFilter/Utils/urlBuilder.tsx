@@ -44,7 +44,8 @@ export const buildUrl = (
   const params = removeDefaultValues(state, {
     defaultValues: options?.defaultValues,
   })
-  const queryString = qs.stringify(paramsToSnakeCase(params))
+
+  const queryString = qs.stringify(params)
 
   let pathname = options?.pathname
   if (!pathname && typeof window !== "undefined") {
@@ -57,21 +58,13 @@ export const buildUrl = (
   return url
 }
 
-export const updateUrl = (state: ArtworkFilters, options?: BuildUrlOptions) => {
-  const url = buildUrl(state, { defaultValues: options?.defaultValues })
-
-  if (typeof window !== "undefined") {
-    window.history.replaceState({}, "", url)
-  }
-}
-
 export const getUrlForFilterParams = (
   state: ArtworkFilters,
   options?: BuildUrlOptions
 ) => {
   const url = buildUrl(state, { defaultValues: options?.defaultValues })
-  console.log(url)
-  return `${window.location.pathname}?${url}`
+  return url
+  // return `${window.location.pathname}?${url}`
 }
 
 export const removeDefaultValues = (
@@ -88,4 +81,13 @@ export const removeDefaultValues = (
     },
     {}
   )
+}
+
+// OLD, can delete
+export const updateUrl = (state: ArtworkFilters, options?: BuildUrlOptions) => {
+  const url = buildUrl(state, { defaultValues: options?.defaultValues })
+
+  if (typeof window !== "undefined") {
+    window.history.replaceState({}, "", url)
+  }
 }
