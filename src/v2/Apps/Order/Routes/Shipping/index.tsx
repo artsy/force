@@ -165,7 +165,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   componentDidMount() {
     if (
-      this.isArtaShipping() &&
+      this.isArtsyShipping() &&
       !this.isCreateNewAddress() &&
       !this.state.shippingQuoteId
     ) {
@@ -179,7 +179,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   isCreateNewAddress = () => this.state.selectedAddressID === NEW_ADDRESS
 
-  isArtaShipping = () => {
+  isArtsyShipping = () => {
     const addresses = this.getAddressList()
     const processWithArtsyShippingDomestic = !!this.getOrderArtwork()
       ?.processWithArtsyShippingDomestic
@@ -202,7 +202,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   onContinueButtonPressed = async () => {
-    if (this.isArtaShipping() && !!this.state.shippingQuoteId) {
+    if (this.isArtsyShipping() && !!this.state.shippingQuoteId) {
       this.selectShippingQuote()
     } else {
       this.selectShipping()
@@ -275,13 +275,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         shippingQuoteId: undefined,
       })
 
-      const isArtaShipping = this.isArtaShipping()
+      const isArtsyShipping = this.isArtsyShipping()
 
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
-            fulfillmentType: isArtaShipping ? "SHIP_ARTA" : shippingOption,
+            fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
             phoneNumber: shipToPhoneNumber,
           },
@@ -295,7 +295,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       // save address when user is entering new address AND save checkbox is selected
       await this.saveAddress()
 
-      if (isArtaShipping) {
+      if (isArtsyShipping) {
         this.setState({
           shippingQuotes: getShippingQuotes(orderOrError?.order),
         })
@@ -425,7 +425,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
-    } else if (this.isArtaShipping() && this.state.shippingQuoteId) {
+    } else if (this.isArtsyShipping() && this.state.shippingQuoteId) {
       this.props.dialog.showErrorDialog({
         message: this.getArtaErrorMessage(),
       })
@@ -485,7 +485,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         { shippingOption, shippingQuotes: null, shippingQuoteId: undefined },
         () => {
           const addressList = this.getAddressList()
-          if (addressList && addressList.length > 0 && this.isArtaShipping()) {
+          if (addressList && addressList.length > 0 && this.isArtsyShipping()) {
             this.selectShipping()
           }
         }
@@ -528,7 +528,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           shippingQuoteId: undefined,
         },
         () => {
-          if (this.isArtaShipping()) {
+          if (this.isArtsyShipping()) {
             this.selectShipping()
           }
         }
@@ -549,7 +549,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           shippingQuoteId: undefined,
         },
         () => {
-          if (this.isArtaShipping()) {
+          if (this.isArtsyShipping()) {
             this.selectShipping()
           }
         }
@@ -612,10 +612,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const showSavedAddresses =
       shippingSelected && addressList && addressList.length > 0
 
-    const isArtaShipping = this.isArtaShipping()
+    const isArtsyShipping = this.isArtsyShipping()
 
     const useDefaultArtsyShippingQuote =
-      isArtaShipping &&
+      isArtsyShipping &&
       shippingQuotes &&
       shippingQuotes.length > 0 &&
       !shippingQuoteId
@@ -677,7 +677,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <Text variant="md" mb="1">
                   Delivery address
                 </Text>
-                {isArtaShipping &&
+                {isArtsyShipping &&
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
                   this.renderArtaErrorMessage()}
@@ -693,7 +693,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               </Collapse>
 
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
-                {isArtaShipping &&
+                {isArtsyShipping &&
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
                   this.renderArtaErrorMessage()}
@@ -743,7 +743,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
               <Collapse
                 open={
-                  isArtaShipping &&
+                  isArtsyShipping &&
                   !!shippingQuotes &&
                   shippingQuotes.length > 0
                 }
