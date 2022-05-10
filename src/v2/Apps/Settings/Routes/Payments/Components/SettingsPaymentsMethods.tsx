@@ -1,4 +1,11 @@
-import { Text, Button, Message, GridColumns, Column } from "@artsy/palette"
+import {
+  Text,
+  Button,
+  Flex,
+  Message,
+  GridColumns,
+  Column,
+} from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
@@ -44,6 +51,27 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
           Please add a payment card for a faster checkout experience in future.
         </Message>
       ) : (
+        <Flex flexDirection="column">
+          <Text mb={2}>Credit Cards</Text>
+          <GridColumns>
+            {methods.map(method => {
+              return (
+                <Column key={method.internalID} span={8} wrap>
+                  <SettingsPaymentsMethodFragmentContainer method={method} />
+                </Column>
+              )
+            })}
+          </GridColumns>
+        </Flex>
+      )}
+
+      <Button mt={4} mb={4} onClick={handleClick}>
+        Add New Card
+      </Button>
+
+      <Flex flexDirection="column">
+        <Text mb={2}>Bank transfer (US bank account)</Text>
+        {/*  TODO: replace with bank account instead of credit card */}
         <GridColumns>
           {methods.map(method => {
             return (
@@ -53,11 +81,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
             )
           })}
         </GridColumns>
-      )}
-
-      <Button mt={4} onClick={handleClick}>
-        Add New Card
-      </Button>
+      </Flex>
     </>
   )
 }
