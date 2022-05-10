@@ -4,7 +4,6 @@ import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -39,7 +38,6 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
-      onChange={updateUrl}
     >
       <BaseArtworkFilter
         relay={relay}

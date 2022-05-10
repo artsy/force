@@ -117,30 +117,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
               { text: "Artwork year (desc.)", value: "-year" },
               { text: "Artwork year (asc.)", value: "year" },
             ]}
-            onChange={filters => {
-              const url = buildUrlForCollectApp(filters)
-
-              if (typeof window !== "undefined") {
-                window.history.replaceState({}, "", url)
-              }
-
-              /**
-             * FIXME: Ideally we route using our router, but are running into
-             * synchronization issues between router state and URL bar state.
-             *
-             * See below example as an illustration:
-             *
-              const newLocation = router.createLocation(url)
-
-              router.replace({
-                ...newLocation,
-                state: {
-                  scrollTo: "#jump--artworkFilter"
-                },
-              })
-            *
-            */
-            }}
+            getUrlForFilterParams={buildUrlForCollectApp}
           />
         </Box>
       </FrameWithRecentlyViewed>

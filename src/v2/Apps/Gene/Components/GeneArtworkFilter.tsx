@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
@@ -25,7 +25,6 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
-      onChange={updateUrl}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },

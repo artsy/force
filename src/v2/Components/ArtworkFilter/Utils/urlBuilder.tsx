@@ -65,6 +65,15 @@ export const updateUrl = (state: ArtworkFilters, options?: BuildUrlOptions) => {
   }
 }
 
+export const getUrlForFilterParams = (
+  state: ArtworkFilters,
+  options?: BuildUrlOptions
+) => {
+  const url = buildUrl(state, { defaultValues: options?.defaultValues })
+  console.log(url)
+  return `${window.location.pathname}?${url}`
+}
+
 export const removeDefaultValues = (
   state: ArtworkFilters,
   options?: BuildUrlOptions

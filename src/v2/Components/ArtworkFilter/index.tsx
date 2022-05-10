@@ -46,6 +46,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { SavedSearchEntity } from "../SavedSearchAlert/types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Components/SavedSearchAlertArtworkGridFilterPills"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   enableCreateAlert?: boolean
@@ -70,6 +71,7 @@ export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
   aggregations,
   counts,
   filters,
+  getUrlForFilterParams,
   onChange,
   onFilterClick,
   sortOptions,
@@ -82,6 +84,7 @@ export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
       aggregations={aggregations}
       counts={counts}
       filters={filters}
+      getUrlForFilterParams={getUrlForFilterParams}
       sortOptions={sortOptions}
       onFilterClick={onFilterClick}
       onChange={onChange}
@@ -108,6 +111,7 @@ export const BaseArtworkFilter: React.FC<
   savedSearchEntity,
   ...rest
 }) => {
+  const { match } = useRouter()
   const tracking = useTracking()
   const {
     contextPageOwnerId,
@@ -122,6 +126,8 @@ export const BaseArtworkFilter: React.FC<
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
+
+  const isLoading = match.location?.state?.isArtworkFilter && isFetching
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -288,7 +294,7 @@ export const BaseArtworkFilter: React.FC<
 
           <ArtworkFilterArtworkGrid
             filtered_artworks={viewer.filtered_artworks!}
-            isLoading={isFetching}
+            isLoading={isLoading}
             offset={offset}
             columnCount={[2, 2, 2, 3]}
           />
@@ -335,7 +341,7 @@ export const BaseArtworkFilter: React.FC<
             {children || (
               <ArtworkFilterArtworkGrid
                 filtered_artworks={viewer.filtered_artworks!}
-                isLoading={isFetching}
+                isLoading={isLoading}
                 offset={offset}
                 columnCount={[2, 2, 2, 3]}
               />

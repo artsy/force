@@ -19,5 +19,5 @@ const buildCollectUrlFragmentFromState = (state: ArtworkFilters): string => {
     return emptyOrSpecificMedium
   }
 
-  return `${emptyOrSpecificMedium}?${qs.stringify(paramsToSnakeCase(params))}`
+  return `${emptyOrSpecificMedium}?${qs.stringify(params)}`
 }

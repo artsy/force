@@ -6,7 +6,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -50,7 +50,6 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
-      onChange={updateUrl}
       aggregations={aggregations}
       counts={counts}
     >

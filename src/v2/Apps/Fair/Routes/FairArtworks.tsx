@@ -74,10 +74,8 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
-      onChange={updateUrl}
       aggregations={
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
     >
       <BaseArtworkFilter mt={6} relay={relay} viewer={fair} Filters={Filters} />

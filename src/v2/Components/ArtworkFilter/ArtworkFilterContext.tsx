@@ -7,7 +7,10 @@ import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase, removeDefaultValues } from "./Utils/urlBuilder"
-import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import {
+  updateUrl,
+  getUrlForFilterParams as defaultGetUrlForFilterParams,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
 import { useRouter } from "v2/System/Router/useRouter"
 import { getInitialFilterState } from "./Utils/getInitialFilterState"
@@ -231,6 +234,9 @@ export interface ArtworkFilterContextProps {
 
   // Has the ArtworkFilterContext been mounted in the tree
   mountedContext?: boolean
+
+  // Returns a url based upon selected filter state
+  getUrlForFilterParams?: (filters: ArtworkFilters) => string
 }
 
 /**
@@ -262,6 +268,7 @@ export type SharedArtworkFilterContextProps = Pick<
   | "aggregations"
   | "counts"
   | "filters"
+  | "getUrlForFilterParams"
   | "sortOptions"
   | "onFilterClick"
   | "ZeroState"
@@ -278,6 +285,7 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
+  getUrlForFilterParams, // = defaultGetUrlForFilterParams,
   onChange = updateUrl,
   onFilterClick,
   sortOptions,
@@ -297,10 +305,11 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
-  const [routerArtworkFilterState, dispatchToRouter] = useReducer(
-    artworkFilterReducer,
-    initialFilterState
-  )
+
+  const [
+    routerArtworkFilterState,
+    prepareArtworkFilterStateForRouter,
+  ] = useReducer(artworkFilterReducer, initialFilterState)
 
   // TODO: Consolidate this into additional reducer
   const [artworkCounts, setCounts] = useState(counts)
@@ -314,18 +323,6 @@ export const ArtworkFilterContextProvider: React.FC<
     }
   }, [artworkFilterState])
 
-  useDeepCompareEffect(() => {
-    pushChangeToRouter(routerArtworkFilterState)
-  }, [routerArtworkFilterState])
-
-  useDeepCompareEffect(() => {
-    const action: ArtworkFiltersAction = {
-      type: "SET_FILTERS",
-      payload: match.location.query,
-    }
-    dispatch(action)
-  }, [match.location.query])
-
   // If in staged mode, return the staged filters for UI display
   const currentlySelectedFilters = () => {
     return shouldStageFilterChanges
@@ -337,7 +334,9 @@ export const ArtworkFilterContextProvider: React.FC<
   // instead of "real" one
   const dispatchOrStage = (action: ArtworkFiltersAction) => {
     // shouldStageFilterChanges ? stage(action) : dispatch(action)
-    shouldStageFilterChanges ? stage(action) : dispatchToRouter(action)
+    shouldStageFilterChanges
+      ? stage(action)
+      : prepareArtworkFilterStateForRouter(action)
   }
 
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
@@ -345,12 +344,15 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 
   const pushChangeToRouter = state => {
-    const url =
+    const url = getUrlForFilterParams?.(state)
+    const url2 =
       window.location.pathname +
       "?" +
       qs.stringify(getInitialFilterState(removeDefaultValues(state)))
+    console.log(url)
+    console.log(url2)
+    // // console.log(url)
     const newLocation = router.createLocation(url)
-    console.log(newLocation)
 
     // return
     router.push({
@@ -358,7 +360,7 @@ export const ArtworkFilterContextProvider: React.FC<
       state: {
         scrollTo: "#jump--artworkFilter",
         ignoreScrollBehavior: true,
-        hidePageLoader: true,
+        isArtworkFilter: true,
       },
     })
   }
@@ -449,6 +451,18 @@ export const ArtworkFilterContextProvider: React.FC<
       force ? dispatch(action) : dispatchOrStage(action)
     },
   }
+
+  // 1) When the state of the router artwork filter changes, push the change
+  // into the URL bar
+  useDeepCompareEffect(() => {
+    pushChangeToRouter(routerArtworkFilterState)
+  }, [routerArtworkFilterState])
+
+  // 2) When the URL changes, update the filter state to resync with router
+  // filter state and URL bar
+  useDeepCompareEffect(() => {
+    artworkFilterContext.setFilters(match.location.query, { force: true })
+  }, [match.location.query])
 
   return (
     <ArtworkFilterContext.Provider value={artworkFilterContext}>

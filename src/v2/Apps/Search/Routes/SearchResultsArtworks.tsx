@@ -24,7 +24,6 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
       mt={4}
       viewer={viewer}
       filters={match.location.query}
-      onChange={updateUrl}
       ZeroState={ZeroState}
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]

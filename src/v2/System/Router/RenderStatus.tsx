@@ -16,11 +16,8 @@ const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 export const RenderPending = props => {
   const { isFetching, setFetching } = useSystemContext()
 
-  const hidePageLoaderFromRouterState =
-    props.location?.state?.hidePageLoader ?? false
-
-  // const hidePageLoaderFromRouterState =
-  // match.location?.state?.hidePageLoader ?? false
+  // Artwork filter has its own loading behavior, so supress top loader bar
+  const isArtworkFilter = props.location?.state?.isArtworkFilter ?? false
 
   /**
    * First, set fetching to ensure that components that are listening for this
@@ -37,7 +34,7 @@ export const RenderPending = props => {
       <>
         <Renderer>{null}</Renderer>
 
-        {!hidePageLoaderFromRouterState && (
+        {!isArtworkFilter && (
           <PageLoader
             className="reactionPageLoader" // positional styling comes from Force body.styl
             showBackground={false}

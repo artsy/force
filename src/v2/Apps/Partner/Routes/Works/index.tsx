@@ -36,7 +36,6 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
-      onChange={updateUrl}
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
