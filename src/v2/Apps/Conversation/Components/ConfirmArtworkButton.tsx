@@ -1,7 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql, RelayProp } from "react-relay"
-import { useTracking } from "react-tracking"
 import { Button, ButtonProps } from "@artsy/palette"
 import { TappedConfirmArtwork } from "@artsy/cohesion"
 
@@ -27,13 +26,12 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = ({
   artwork,
   editionSetID,
   conversationID,
-  trackingEvent,
   createsOfferOrder = true,
   disabled,
   variant,
   children,
+  onClick,
 }) => {
-  const tracking = useTracking()
   const [isCommittingMutation, setIsCommittingMutation] = useState(false)
 
   const commitMutation = createsOfferOrder ? MakeInquiryOffer : MakeInquiryOrder
@@ -44,7 +42,6 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = ({
 
   const handleCreateInquiryOrder = () => {
     if (isCommittingMutation) return
-    if (trackingEvent) tracking.trackEvent(trackingEvent)
     setIsCommittingMutation(true)
 
     if (relay && relay.environment) {
@@ -76,7 +73,10 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = ({
 
   return (
     <Button
-      onClick={() => handleCreateInquiryOrder()}
+      onClick={event => {
+        onClick?.(event)
+        handleCreateInquiryOrder()
+      }}
       loading={isCommittingMutation}
       disabled={disabled}
       variant={variant}

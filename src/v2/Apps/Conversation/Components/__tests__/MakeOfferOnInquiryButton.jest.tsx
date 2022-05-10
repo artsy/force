@@ -31,13 +31,15 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
 })
 
+const trackingSpy = jest.fn()
+
 describe("MakeOfferOnInquiryButton", () => {
   const mockuseTracking = useTracking as jest.Mock
   const mockMakeInquiryOfferMutation = MakeInquiryOffer as jest.Mock
 
   beforeEach(() => {
     mockuseTracking.mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent: trackingSpy,
     }))
   })
 
@@ -63,12 +65,16 @@ describe("MakeOfferOnInquiryButton", () => {
       }),
       Conversation: () => ({
         internalID: "internal-test-id",
-        isEdition: false,
       }),
     })
 
     fireEvent.click(screen.getByText("Make an Offer"))
 
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "tappedMakeOffer",
+      context_owner_type: "conversation",
+      impulse_conversation_id: "internal-test-id",
+    })
     await waitFor(() => {
       expect(mockMakeInquiryOfferMutation).toHaveBeenCalledTimes(1)
     })
@@ -98,6 +104,12 @@ describe("MakeOfferOnInquiryButton", () => {
     })
 
     fireEvent.click(screen.getByText("Make an Offer"))
+
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "tappedMakeOffer",
+      context_owner_type: "conversation",
+      impulse_conversation_id: "internal-test-id",
+    })
 
     await waitFor(() => {
       expect(mockMakeInquiryOfferMutation).toHaveBeenCalledTimes(1)
@@ -132,5 +144,10 @@ describe("MakeOfferOnInquiryButton", () => {
 
     fireEvent.click(screen.getByText("Make an Offer"))
     expect(openInquiryModalFn).toHaveBeenCalledTimes(1)
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "tappedMakeOffer",
+      context_owner_type: "conversation",
+      impulse_conversation_id: "internal-test-id",
+    })
   })
 })

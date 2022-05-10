@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { tappedMakeOffer } from "@artsy/cohesion"
+import { TappedMakeOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import { MakeOfferOnInquiryButton_conversation } from "v2/__generated__/MakeOfferOnInquiryButton_conversation.graphql"
 import { Button, Spacer } from "@artsy/palette"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
@@ -11,6 +11,12 @@ export interface MakeOfferOnInquiryButtonProps {
   openInquiryModal: () => void
   conversation: MakeOfferOnInquiryButton_conversation
 }
+
+const trackTappedMakeOffer = (id: string): TappedMakeOffer => ({
+  action: ActionType.tappedMakeOffer,
+  context_owner_type: OwnerType.conversation,
+  impulse_conversation_id: id,
+})
 
 export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> = ({
   openInquiryModal,
@@ -28,10 +34,6 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
   const isPurchaseButtonPresent = isCBNEnabled && isAcquireable
   const variant = isPurchaseButtonPresent ? "secondaryOutline" : "primaryBlack"
   const conversationID = conversation.internalID!
-  const handleOpenModal = () => {
-    tracking.trackEvent(tappedMakeOffer(conversationID ?? ""))
-    openInquiryModal()
-  }
 
   return (
     <>
@@ -41,7 +43,10 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
         <Button
           size="medium"
           variant={variant}
-          onClick={() => handleOpenModal()}
+          onClick={() => {
+            tracking.trackEvent(trackTappedMakeOffer(conversationID))
+            openInquiryModal()
+          }}
         >
           Make an Offer
         </Button>
@@ -53,6 +58,9 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
           editionSetID={editionSets?.[0]?.internalID || null}
           createsOfferOrder={true}
           variant={variant}
+          onClick={() =>
+            tracking.trackEvent(trackTappedMakeOffer(conversationID))
+          }
         >
           Make an Offer
         </ConfirmArtworkButtonFragmentContainer>

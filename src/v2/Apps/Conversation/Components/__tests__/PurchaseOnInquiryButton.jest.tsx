@@ -28,13 +28,15 @@ const { renderWithRelay } = setupTestWrapperTL({
   `,
 })
 
+const trackingSpy = jest.fn()
+
 describe("PurchaseOnInquiryButton", () => {
   const mockuseTracking = useTracking as jest.Mock
   const mockMakeInquiryOrderMutation = MakeInquiryOrder as jest.Mock
 
   beforeEach(() => {
     mockuseTracking.mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent: trackingSpy,
     }))
   })
 
@@ -60,12 +62,16 @@ describe("PurchaseOnInquiryButton", () => {
       }),
       Conversation: () => ({
         internalID: "internal-test-id",
-        isEdition: false,
       }),
     })
 
     fireEvent.click(screen.getByText("Purchase"))
 
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "tappedBuyNow",
+      context_owner_type: "conversation",
+      impulse_conversation_id: "internal-test-id",
+    })
     await waitFor(() => {
       expect(mockMakeInquiryOrderMutation).toHaveBeenCalledTimes(1)
     })
@@ -96,6 +102,11 @@ describe("PurchaseOnInquiryButton", () => {
 
     fireEvent.click(screen.getByText("Purchase"))
 
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "tappedBuyNow",
+      context_owner_type: "conversation",
+      impulse_conversation_id: "internal-test-id",
+    })
     await waitFor(() => {
       expect(mockMakeInquiryOrderMutation).toHaveBeenCalledTimes(1)
     })
