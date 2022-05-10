@@ -26,18 +26,26 @@ import { Environment, RecordSource, Store } from "relay-runtime"
 import { GlobalData } from "sharify"
 import { mockStripe } from "v2/DevTools/mockStripe"
 
+jest.mock(
+  "v2/Components/BankDebitForm/BankDebitProvider",
+  // not sure why this is neccessary :(
+  // should just work without this extra argument
+  () => {
+    return require("../Components/__mocks__/BankDebitProvider")
+  }
+)
+
 jest.mock("@stripe/stripe-js", () => {
-  let mock = null
+  let mock: null | ReturnType<typeof mockStripe> = null
   return {
     loadStripe: () => {
       if (mock === null) {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
     _mockReset: () => (mock = mockStripe()),
   }
 })
