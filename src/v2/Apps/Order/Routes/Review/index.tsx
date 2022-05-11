@@ -123,22 +123,26 @@ export class ReviewRoute extends Component<ReviewProps> {
           })
       } else {
         const { order, router, isEigen } = this.props
-        // Buy-mode order redirects to the status page. Eigen must keep the user inside the webview.
-        if (order.mode !== "OFFER" || isEigen) {
+        // Make offer and Purchase order redirects to the status page for Eigen, it must keep the user inside the webview.
+        if (isEigen) {
           return router.push(`/orders/${order.internalID}/status`)
         }
-        // Make offer in inquiry redirects to the conversation page
+        // Make offer and Purchase in inquiry redirects to the conversation page
         if (order.source === "inquiry") {
           return router.push(
             `/user/conversations/${order.conversation?.internalID}`
           )
         }
-        // Make offer from artwork page redirects to the artwork page
         const artworkId = get(
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
-        return router.push(`/artwork/${artworkId}?order-submitted=true`)
+        // Make offer from artwork page redirects to the artwork page and show modal
+        if (order.mode === "OFFER") {
+          return router.push(`/artwork/${artworkId}?order-submitted=true`)
+        }
+        // Purchase from artwork page redirects to the artwork page
+        return router.push(`/artwork/${artworkId}`)
       }
     } catch (error) {
       logger.error(error)

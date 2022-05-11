@@ -16,6 +16,8 @@ const trackTappedPurchase = (id: string): TappedBuyNow => ({
   context_owner_type: OwnerType.conversation,
   // @ts-ignore
   impulse_conversation_id: id,
+  context_owner_id: "test",
+  context_owner_slug: "test",
 })
 
 export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = ({
