@@ -1,13 +1,12 @@
-import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { Collections_marketingCategories } from "v2/__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
-import * as React from "react";
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { getENV } from "v2/Utils/getENV"
 
 interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories
@@ -23,7 +22,7 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
   return (
     <>
       <Title>Collections | Artsy</Title>
-      <Meta property="og:url" content={`${sd.APP_URL}/collections`} />
+      <Meta property="og:url" content={`${getENV("APP_URL")}/collections`} />
       <Meta name="description" content={META_DESCRIPTION} />
       <Meta property="og:description" content={META_DESCRIPTION} />
       <Meta property="twitter:description" content={META_DESCRIPTION} />
@@ -44,16 +43,18 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
           </Column>
         </GridColumns>
 
-        <Join separator={<Spacer mt={6} />}>
-          {sorted.map((category, i) => {
-            return (
-              <CollectionsCategoryFragmentContainer
-                key={category.name + i}
-                category={category}
-              />
-            )
-          })}
-        </Join>
+        <Box data-test="collections-list">
+          <Join separator={<Spacer mt={6} />}>
+            {sorted.map((category, i) => {
+              return (
+                <CollectionsCategoryFragmentContainer
+                  key={category.name + i}
+                  category={category}
+                />
+              )
+            })}
+          </Join>
+        </Box>
       </FrameWithRecentlyViewed>
     </>
   )

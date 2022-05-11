@@ -1,5 +1,4 @@
 import { useState } from "react"
-import * as React from "react"
 import {
   Box,
   Button,
@@ -46,7 +45,7 @@ export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
         </>
       )}
 
-      <GridColumns>
+      <GridColumns data-test="collections-category-list">
         {sortedCollections.map((collection, i) => {
           return (
             <Column
