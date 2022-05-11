@@ -58,9 +58,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
   selectedShippingQuoteId,
   ...rest
 }) => {
-  const quotes = compact(
-    shippingQuotes?.map(quote => quote.node)
-  ).sort((a, b) => (a && b ? a.priceCents - b.priceCents : 0))
+  const quotes = compact(shippingQuotes?.map(quote => quote.node))
 
   if (!quotes || !quotes.length) {
     return null
@@ -70,7 +68,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
     <RadioGroup
       {...rest}
       onSelect={onSelect}
-      defaultValue={selectedShippingQuoteId || quotes[0]?.id}
+      defaultValue={selectedShippingQuoteId}
     >
       {quotes.map(shippingQuote => {
         const { id, price, typeName } = shippingQuote
