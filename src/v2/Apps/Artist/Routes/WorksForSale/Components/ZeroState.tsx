@@ -1,6 +1,6 @@
 import { Message, Text } from "@artsy/palette"
 
-export const ZeroState = props => {
+export const ZeroState: React.FC = () => {
   return (
     <Message>
       <Text>No works available by the artist at this time</Text>
