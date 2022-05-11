@@ -1,6 +1,6 @@
 import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { isDefaultFilter } from "v2/Components/ArtworkFilter/Utils/isDefaultFilter"
-import { camelCase, snakeCase } from "lodash"
+import { camelCase, omit, snakeCase } from "lodash"
 import qs from "qs"
 
 // Utility method to convert keys of a hash into snake case.
@@ -62,6 +62,16 @@ export const getUrlForFilterParams = (
   state: ArtworkFilters,
   options?: BuildUrlOptions
 ) => {
+  // DO we need this:
+  // const refetchVariables = {
+  //   input: {
+  //     first: 30,
+  //     ...relayRefetchInputVariables,
+  //     ...allowedFilters(filterContext.filters),
+  //     keyword: filterContext.filters!.term,
+  //   },
+  //   ...relayVariables,
+  // }
   const url = buildUrl(state, { defaultValues: options?.defaultValues })
   return url
   // return `${window.location.pathname}?${url}`
@@ -71,16 +81,20 @@ export const removeDefaultValues = (
   state: ArtworkFilters,
   options?: BuildUrlOptions
 ) => {
-  return Object.entries(state).reduce(
-    (acc, [key, value]: [keyof ArtworkFilters, any]) => {
-      if (isDefaultFilter(key, value, options?.defaultValues)) {
-        return acc
-      } else {
-        return { ...acc, [key]: value }
-      }
-    },
-    {}
+  const values = omit(
+    Object.entries(state).reduce(
+      (acc, [key, value]: [keyof ArtworkFilters, any]) => {
+        if (isDefaultFilter(key, value, options?.defaultValues)) {
+          return acc
+        } else {
+          return { ...acc, [key]: value }
+        }
+      },
+      {}
+    ),
+    ["reset"]
   )
+  return values
 }
 
 // OLD, can delete

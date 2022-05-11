@@ -1,4 +1,4 @@
-import { isArray } from "lodash"
+import { isArray, isEqual } from "lodash"
 import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -287,6 +287,7 @@ export const ArtworkFilterContextProvider: React.FC<
 }) => {
   const { router, match } = useRouter()
 
+  // console.log(sortOptions?.[0].value, initialArtworkFilterState.sort)
   const initialFilterState = {
     ...initialArtworkFilterState,
     sort: sortOptions?.[0].value ?? initialArtworkFilterState.sort,
@@ -309,9 +310,6 @@ export const ArtworkFilterContextProvider: React.FC<
     artworkFilterReducer,
     initialFilterState
   )
-
-  // debugger
-
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
 
   // TODO: Consolidate this into additional reducer
@@ -339,21 +337,6 @@ export const ArtworkFilterContextProvider: React.FC<
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
     currentlySelectedFilters()
   )
-
-  const pushChangeToRouter = state => {
-    const url = getUrlForFilterParams(state)
-    console.log(url)
-    const newLocation = router.createLocation(url)
-
-    router.push({
-      ...newLocation,
-      state: {
-        scrollTo: "#jump--artworkFilter",
-        ignoreScrollBehavior: true,
-        isArtworkFilter: true,
-      },
-    })
-  }
 
   const artworkFilterContext = {
     mountedContext: true,
@@ -440,6 +423,20 @@ export const ArtworkFilterContextProvider: React.FC<
       const { force } = opts
       force ? dispatch(action) : dispatchOrStage(action)
     },
+  }
+
+  const pushChangeToRouter = state => {
+    const url = getUrlForFilterParams(state)
+    const newLocation = router.createLocation(url)
+
+    router.push({
+      ...newLocation,
+      state: {
+        scrollTo: "#jump--artworkFilter",
+        ignoreScrollBehavior: true,
+        isArtworkFilter: true,
+      },
+    })
   }
 
   // 1) When the state of the router artwork filter changes, push the change
