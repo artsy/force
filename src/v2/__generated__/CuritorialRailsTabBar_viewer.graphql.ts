@@ -6,6 +6,11 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CuritorialRailsTabBar_viewer = {
     readonly me: {
+        readonly followsAndSaves: {
+            readonly artistsConnection: {
+                readonly totalCount: number | null;
+            } | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"MyBids_me">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"WorksByArtistsYouFollowRail_viewer" | "TrendingLotsRail_viewer" | "StandoutLotsRail_viewer">;
@@ -34,6 +39,35 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "FollowsAndSaves",
+          "kind": "LinkedField",
+          "name": "followsAndSaves",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FollowArtistConnection",
+              "kind": "LinkedField",
+              "name": "artistsConnection",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "totalCount",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "MyBids_me"
@@ -60,5 +94,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'bdcf372f9a7ca985850f09d7e3cf6068';
+(node as any).hash = '87b5d130808d42cf6b166f52cb9bdcea';
 export default node;
