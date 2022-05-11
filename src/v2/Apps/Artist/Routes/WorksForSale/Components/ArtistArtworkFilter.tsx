@@ -78,9 +78,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         enableCreateAlert
         savedSearchEntity={savedSearchEntity}
       >
-        {artist.counts!.artworks === 0 && (
-          <ZeroState artist={artist} isFollowed={artist.isFollowed} />
-        )}
+        {artist.counts!.artworks === 0 && <ZeroState />}
       </BaseArtworkFilter>
     </ArtworkFilterContextProvider>
   )
