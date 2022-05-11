@@ -9,13 +9,6 @@ export interface PurchaseOnInquiryButtonProps {
   conversation: PurchaseOnInquiryButton_conversation
 }
 
-const trackTappedPurchase = (id: string): TappedBuyNow => ({
-  action: ActionType.tappedBuyNow,
-  context_owner_type: OwnerType.conversation,
-  // @ts-ignore
-  impulse_conversation_id: id,
-})
-
 export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = ({
   conversation,
 }) => {
@@ -25,9 +18,17 @@ export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = (
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
   if (!artwork) return null
 
-  const { isEdition, editionSets } = artwork
+  const { isEdition, editionSets, internalID, slug } = artwork
   const isUniqueArtwork = !isEdition || editionSets?.length! === 1
   const conversationID = conversation.internalID!
+
+  const tappedPurchaseEvent: TappedBuyNow = {
+    action: ActionType.tappedBuyNow,
+    context_owner_type: OwnerType.conversation,
+    context_owner_id: internalID,
+    context_owner_slug: slug,
+    impulse_conversation_id: conversationID,
+  }
 
   return isUniqueArtwork ? (
     <ConfirmArtworkButtonFragmentContainer
@@ -35,7 +36,7 @@ export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = (
       conversationID={conversationID}
       editionSetID={editionSets?.[0]?.internalID || null}
       createsOfferOrder={false}
-      onClick={() => tracking.trackEvent(trackTappedPurchase(conversationID))}
+      onClick={() => tracking.trackEvent(tappedPurchaseEvent)}
     >
       Purchase
     </ConfirmArtworkButtonFragmentContainer>
@@ -53,6 +54,8 @@ export const PurchaseOnInquiryButtonFragmentContainer = createFragmentContainer(
             ... on Artwork {
               __typename
               isEdition
+              internalID
+              slug
               editionSets {
                 internalID
               }

@@ -10,6 +10,8 @@ export type PurchaseOnInquiryButton_conversation = {
         readonly liveArtwork: ({
             readonly __typename: "Artwork";
             readonly isEdition: boolean | null;
+            readonly internalID: string;
+            readonly slug: string;
             readonly editionSets: ReadonlyArray<{
                 readonly internalID: string;
             } | null> | null;
@@ -78,6 +80,14 @@ return {
                   "name": "isEdition",
                   "storageKey": null
                 },
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -110,5 +120,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cf67995e69db86db77c3e9b008f6163e';
+(node as any).hash = '0f3ba5507f24bf17fbeaac4c400d74a3';
 export default node;

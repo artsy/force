@@ -62,6 +62,15 @@ describe("PurchaseOnInquiryButton", () => {
       }),
       Conversation: () => ({
         internalID: "internal-test-id",
+        items: [
+          {
+            liveArtwork: {
+              __typename: "Artwork",
+              internalID: "artwork-internal-id",
+              slug: "artwork-slug",
+            },
+          },
+        ],
       }),
     })
 
@@ -70,6 +79,8 @@ describe("PurchaseOnInquiryButton", () => {
     expect(trackingSpy).toHaveBeenCalledWith({
       action: "tappedBuyNow",
       context_owner_type: "conversation",
+      context_owner_id: "artwork-internal-id",
+      context_owner_slug: "artwork-slug",
       impulse_conversation_id: "internal-test-id",
     })
     await waitFor(() => {
@@ -88,6 +99,8 @@ describe("PurchaseOnInquiryButton", () => {
           {
             liveArtwork: {
               __typename: "Artwork",
+              internalID: "artwork-internal-id",
+              slug: "artwork-slug",
               isEdition: true,
               editionSets: [
                 {
@@ -105,6 +118,8 @@ describe("PurchaseOnInquiryButton", () => {
     expect(trackingSpy).toHaveBeenCalledWith({
       action: "tappedBuyNow",
       context_owner_type: "conversation",
+      context_owner_id: "artwork-internal-id",
+      context_owner_slug: "artwork-slug",
       impulse_conversation_id: "internal-test-id",
     })
     await waitFor(() => {

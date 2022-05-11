@@ -42,6 +42,8 @@ fragment PurchaseOnInquiryButton_conversation on Conversation {
       ... on Artwork {
         __typename
         isEdition
+        internalID
+        slug
         editionSets {
           internalID
           id
@@ -185,6 +187,14 @@ return {
                             "name": "isEdition",
                             "storageKey": null
                           },
+                          (v1/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": null,
@@ -197,8 +207,7 @@ return {
                               (v2/*: any*/)
                             ],
                             "storageKey": null
-                          },
-                          (v1/*: any*/)
+                          }
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -228,7 +237,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dff8d3ecc98908ddeae3b10a3ed3c885",
+    "cacheID": "fd59dc7507907fea0ea30bf01ca040cb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -281,12 +290,13 @@ return {
           "plural": false,
           "type": "Boolean"
         },
+        "me.conversation.items.liveArtwork.slug": (v3/*: any*/),
         "me.id": (v3/*: any*/)
       }
     },
     "name": "PurchaseOnInquiryButton_Test_Query",
     "operationKind": "query",
-    "text": "query PurchaseOnInquiryButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...PurchaseOnInquiryButton_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment PurchaseOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PurchaseOnInquiryButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...PurchaseOnInquiryButton_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment PurchaseOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

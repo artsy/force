@@ -12,12 +12,6 @@ export interface MakeOfferOnInquiryButtonProps {
   conversation: MakeOfferOnInquiryButton_conversation
 }
 
-const trackTappedMakeOffer = (id: string): TappedMakeOffer => ({
-  action: ActionType.tappedMakeOffer,
-  context_owner_type: OwnerType.conversation,
-  impulse_conversation_id: id,
-})
-
 export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> = ({
   openInquiryModal,
   conversation,
@@ -35,6 +29,12 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
   const variant = isPurchaseButtonPresent ? "secondaryOutline" : "primaryBlack"
   const conversationID = conversation.internalID!
 
+  const tappedMakeOfferEvent: TappedMakeOffer = {
+    action: ActionType.tappedMakeOffer,
+    context_owner_type: OwnerType.conversation,
+    impulse_conversation_id: conversationID,
+  }
+
   return (
     <>
       <Spacer ml={isPurchaseButtonPresent ? 1 : 0} />
@@ -44,7 +44,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
           size="medium"
           variant={variant}
           onClick={() => {
-            tracking.trackEvent(trackTappedMakeOffer(conversationID))
+            tracking.trackEvent(tappedMakeOfferEvent)
             openInquiryModal()
           }}
         >
@@ -58,9 +58,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
           editionSetID={editionSets?.[0]?.internalID || null}
           createsOfferOrder={true}
           variant={variant}
-          onClick={() =>
-            tracking.trackEvent(trackTappedMakeOffer(conversationID))
-          }
+          onClick={() => tracking.trackEvent(tappedMakeOfferEvent)}
         >
           Make an Offer
         </ConfirmArtworkButtonFragmentContainer>
