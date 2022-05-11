@@ -27,25 +27,13 @@ const PartnerContainer = styled(Box)`
 export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const {
-    sale,
-    partner,
-    internalID,
-    slug,
-    isOfferable,
-    isInquireable,
-    isPriceRange,
-  } = artwork
+  const { sale, partner, internalID, slug, isInquireable } = artwork
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
   })
   const isCBNEnabled = useFeatureFlag("conversational-buy-now")
   const { trackEvent } = useTracking()
-
-  const shouldRenderInquiryButton =
-    isCBNEnabled &&
-    (!isInquireable || (isInquireable && isOfferable && isPriceRange))
 
   const renderPartnerName = () => {
     if (sale) {
@@ -106,7 +94,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {shouldRenderInquiryButton && (
+        {isCBNEnabled && !isInquireable && (
           <Button
             variant="secondaryOutline"
             size="small"
@@ -131,9 +119,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
       fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
         internalID
         slug
-        isOfferable
         isInquireable
-        isPriceRange
         partner {
           name
           href

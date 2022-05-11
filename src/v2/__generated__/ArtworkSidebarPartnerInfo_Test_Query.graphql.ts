@@ -28,9 +28,7 @@ query ArtworkSidebarPartnerInfo_Test_Query {
 fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
   internalID
   slug
-  isOfferable
   isInquireable
-  isPriceRange
   partner {
     name
     href
@@ -84,12 +82,6 @@ v4 = {
   "type": "ID"
 },
 v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Boolean"
-},
-v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -154,21 +146,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isOfferable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "isInquireable",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isPriceRange",
             "storageKey": null
           },
           {
@@ -225,7 +203,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a2f4e0fb0bedc27ed00015023ae8d047",
+    "cacheID": "ca3f7af4345334d8028e208c5794dc2d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -237,16 +215,19 @@ return {
         },
         "artwork.id": (v4/*: any*/),
         "artwork.internalID": (v4/*: any*/),
-        "artwork.isInquireable": (v5/*: any*/),
-        "artwork.isOfferable": (v5/*: any*/),
-        "artwork.isPriceRange": (v5/*: any*/),
+        "artwork.isInquireable": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.href": (v6/*: any*/),
+        "artwork.partner.href": (v5/*: any*/),
         "artwork.partner.id": (v4/*: any*/),
         "artwork.partner.locations": {
           "enumValues": null,
@@ -254,24 +235,24 @@ return {
           "plural": true,
           "type": "Location"
         },
-        "artwork.partner.locations.city": (v6/*: any*/),
+        "artwork.partner.locations.city": (v5/*: any*/),
         "artwork.partner.locations.id": (v4/*: any*/),
-        "artwork.partner.name": (v6/*: any*/),
+        "artwork.partner.name": (v5/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.href": (v6/*: any*/),
+        "artwork.sale.href": (v5/*: any*/),
         "artwork.sale.id": (v4/*: any*/),
-        "artwork.sale.name": (v6/*: any*/),
+        "artwork.sale.name": (v5/*: any*/),
         "artwork.slug": (v4/*: any*/)
       }
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isOfferable\n  isInquireable\n  isPriceRange\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();
