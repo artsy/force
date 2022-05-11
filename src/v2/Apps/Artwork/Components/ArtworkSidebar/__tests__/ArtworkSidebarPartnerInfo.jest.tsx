@@ -116,7 +116,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
   })
 
   describe("Contact Gallery CTA", () => {
-    it("acquirable artwork (BN only) with exact price displays button", () => {
+    it("acquirable artwork (BN only) displays button", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
@@ -127,7 +127,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
-    it("acquirable and offerable artwork (BNMO) with exact price displays button", () => {
+    it("acquirable and offerable artwork (BNMO) displays button", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
@@ -139,7 +139,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
-    it("offerable artwork (MO only) with exact price displays button", () => {
+    it("offerable artwork (MO only) displays button", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
@@ -150,19 +150,7 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
-    it("offerable artwork (MO only) with price range displays button", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isOfferable: true,
-          isPriceRange: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
-    })
-
-    it("inquirible and offerable artwork with exact price doesn't display button", () => {
+    it("inquirable and offerable artwork doesn't display button", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
@@ -174,36 +162,11 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
     })
 
-    it("inquirible and offerable artwork with price range displays button", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isOfferable: true,
-          isInquireable: true,
-          isPriceRange: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
-    })
-
-    it("inquirible artwork with exact price doesn't display button", () => {
+    it("inquirable artwork doesn't display button", () => {
       renderWithRelay({
         Artwork: () => ({
           ...ArtworkFromPartnerWithLocations,
           isInquireable: true,
-        }),
-      })
-
-      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
-    })
-
-    it("inquirible artwork with price range doesn't display button", () => {
-      renderWithRelay({
-        Artwork: () => ({
-          ...ArtworkFromPartnerWithLocations,
-          isInquireable: true,
-          isPriceRange: true,
         }),
       })
 

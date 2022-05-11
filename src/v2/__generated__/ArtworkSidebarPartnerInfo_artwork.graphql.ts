@@ -7,9 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarPartnerInfo_artwork = {
     readonly internalID: string;
     readonly slug: string;
-    readonly isOfferable: boolean | null;
     readonly isInquireable: boolean | null;
-    readonly isPriceRange: boolean | null;
     readonly partner: {
         readonly name: string | null;
         readonly href: string | null;
@@ -70,21 +68,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isOfferable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "isInquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isPriceRange",
       "storageKey": null
     },
     {
@@ -136,5 +120,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '012d796aba8815d2308f88886305b178';
+(node as any).hash = '1be4cc2dabfd5edd771dea5f135a34bd';
 export default node;
