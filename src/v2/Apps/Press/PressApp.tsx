@@ -31,9 +31,9 @@ const PressApp: FC<PressAppProps> = ({ page }) => {
       <Spacer mt={4} />
 
       <RouteTabs fill>
-        <RouteTab to="/press2/in-the-media">Artsy in the Media</RouteTab>
+        <RouteTab to="/press/in-the-media">Artsy in the Media</RouteTab>
 
-        <RouteTab to="/press2/press-releases">
+        <RouteTab to="/press/press-releases">
           News &amp; Press Releases
         </RouteTab>
       </RouteTabs>

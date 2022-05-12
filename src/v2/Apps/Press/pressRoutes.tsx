@@ -11,7 +11,7 @@ const PressApp = loadable(
 
 export const pressRoutes: AppRouteConfig[] = [
   {
-    path: "/press2/in-the-media",
+    path: "/press/in-the-media",
 
     getComponent: () => PressApp,
     onClientSideRender: () => {
@@ -26,7 +26,7 @@ export const pressRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/press2/press-releases",
+    path: "/press/press-releases",
 
     getComponent: () => PressApp,
     onClientSideRender: () => {
