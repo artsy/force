@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-var Strategy = require("./strategy")
+let Strategy = require("./strategy")
 
 /**
  * Expose `Strategy` directly from package.
