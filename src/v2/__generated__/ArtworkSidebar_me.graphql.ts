@@ -10,7 +10,7 @@ export type ArtworkSidebar_me = {
 };
 export type ArtworkSidebar_me$data = ArtworkSidebar_me;
 export type ArtworkSidebar_me$key = {
-    readonly " $data"?: ArtworkSidebar_me$data;
+    readonly " $data"?: ArtworkSidebar_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_me">;
 };
 

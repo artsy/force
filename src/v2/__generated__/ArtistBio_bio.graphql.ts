@@ -14,7 +14,7 @@ export type ArtistBio_bio = {
 };
 export type ArtistBio_bio$data = ArtistBio_bio;
 export type ArtistBio_bio$key = {
-    readonly " $data"?: ArtistBio_bio$data;
+    readonly " $data"?: ArtistBio_bio$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistBio_bio">;
 };
 

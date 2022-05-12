@@ -19,7 +19,7 @@ export type ArtistCVRoute_viewer = {
 };
 export type ArtistCVRoute_viewer$data = ArtistCVRoute_viewer;
 export type ArtistCVRoute_viewer$key = {
-    readonly " $data"?: ArtistCVRoute_viewer$data;
+    readonly " $data"?: ArtistCVRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistCVRoute_viewer">;
 };
 

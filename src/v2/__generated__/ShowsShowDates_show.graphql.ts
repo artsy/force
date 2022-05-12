@@ -16,7 +16,7 @@ export type ShowsShowDates_show = {
 };
 export type ShowsShowDates_show$data = ShowsShowDates_show;
 export type ShowsShowDates_show$key = {
-    readonly " $data"?: ShowsShowDates_show$data;
+    readonly " $data"?: ShowsShowDates_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsShowDates_show">;
 };
 

@@ -5,11 +5,11 @@
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateAppSecondFactorInput = {
     attributes: AppSecondFactorAttributes;
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     secondFactorID: string;
 };
 export type AppSecondFactorAttributes = {
-    name?: string | null;
+    name?: string | null | undefined;
 };
 export type UpdateAppSecondFactorMutationVariables = {
     input: UpdateAppSecondFactorInput;

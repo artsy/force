@@ -18,7 +18,7 @@ export type CuritorialRailsTabBar_viewer = {
 };
 export type CuritorialRailsTabBar_viewer$data = CuritorialRailsTabBar_viewer;
 export type CuritorialRailsTabBar_viewer$key = {
-    readonly " $data"?: CuritorialRailsTabBar_viewer$data;
+    readonly " $data"?: CuritorialRailsTabBar_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CuritorialRailsTabBar_viewer">;
 };
 

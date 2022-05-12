@@ -20,7 +20,7 @@ export type FairBooths_fair = {
                     readonly artworks: number | null;
                 } | null;
                 readonly partner: {
-                    readonly id?: string;
+                    readonly id?: string | undefined;
                 } | null;
                 readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
             } | null;
@@ -30,7 +30,7 @@ export type FairBooths_fair = {
 };
 export type FairBooths_fair$data = FairBooths_fair;
 export type FairBooths_fair$key = {
-    readonly " $data"?: FairBooths_fair$data;
+    readonly " $data"?: FairBooths_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairBooths_fair">;
 };
 

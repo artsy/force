@@ -13,7 +13,7 @@ export type ArtworkDetailsMediumModal_artwork = {
 };
 export type ArtworkDetailsMediumModal_artwork$data = ArtworkDetailsMediumModal_artwork;
 export type ArtworkDetailsMediumModal_artwork$key = {
-    readonly " $data"?: ArtworkDetailsMediumModal_artwork$data;
+    readonly " $data"?: ArtworkDetailsMediumModal_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsMediumModal_artwork">;
 };
 

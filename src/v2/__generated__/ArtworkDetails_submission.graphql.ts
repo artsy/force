@@ -31,7 +31,7 @@ export type ArtworkDetails_submission = {
 };
 export type ArtworkDetails_submission$data = ArtworkDetails_submission;
 export type ArtworkDetails_submission$key = {
-    readonly " $data"?: ArtworkDetails_submission$data;
+    readonly " $data"?: ArtworkDetails_submission$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
 };
 

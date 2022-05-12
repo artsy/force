@@ -17,7 +17,7 @@ export type FairOrganizerPastEventsRail_fairOrganizer = {
 };
 export type FairOrganizerPastEventsRail_fairOrganizer$data = FairOrganizerPastEventsRail_fairOrganizer;
 export type FairOrganizerPastEventsRail_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerPastEventsRail_fairOrganizer$data;
+    readonly " $data"?: FairOrganizerPastEventsRail_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer">;
 };
 

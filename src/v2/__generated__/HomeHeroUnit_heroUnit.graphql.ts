@@ -16,7 +16,7 @@ export type HomeHeroUnit_heroUnit = {
 };
 export type HomeHeroUnit_heroUnit$data = HomeHeroUnit_heroUnit;
 export type HomeHeroUnit_heroUnit$key = {
-    readonly " $data"?: HomeHeroUnit_heroUnit$data;
+    readonly " $data"?: HomeHeroUnit_heroUnit$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
 };
 

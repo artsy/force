@@ -14,7 +14,7 @@ export type ArticleMetaTags_article = {
 };
 export type ArticleMetaTags_article$data = ArticleMetaTags_article;
 export type ArticleMetaTags_article$key = {
-    readonly " $data"?: ArticleMetaTags_article$data;
+    readonly " $data"?: ArticleMetaTags_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleMetaTags_article">;
 };
 

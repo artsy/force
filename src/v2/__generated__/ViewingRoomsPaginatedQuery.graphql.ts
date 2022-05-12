@@ -6,8 +6,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsPaginatedQueryVariables = {
     partnerId: string;
-    first?: number | null;
-    after?: string | null;
+    first?: number | null | undefined;
+    after?: string | null | undefined;
 };
 export type ViewingRoomsPaginatedQueryResponse = {
     readonly partner: {

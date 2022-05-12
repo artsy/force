@@ -7,11 +7,11 @@ import { FragmentRefs } from "relay-runtime";
 export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNING" | "RUNNING_AND_UPCOMING" | "UPCOMING" | "%future added value";
 export type ShowPaginatedEventsQueryVariables = {
     partnerId: string;
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
-    status?: EventStatus | null;
+    first?: number | null | undefined;
+    last?: number | null | undefined;
+    after?: string | null | undefined;
+    before?: string | null | undefined;
+    status?: EventStatus | null | undefined;
 };
 export type ShowPaginatedEventsQueryResponse = {
     readonly partner: {

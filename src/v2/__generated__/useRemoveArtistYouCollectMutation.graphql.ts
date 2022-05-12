@@ -5,10 +5,10 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserInterestMutationInput = {
-    anonymousSessionId?: string | null;
-    clientMutationId?: string | null;
+    anonymousSessionId?: string | null | undefined;
+    clientMutationId?: string | null | undefined;
     id: string;
-    sessionID?: string | null;
+    sessionID?: string | null | undefined;
 };
 export type useRemoveArtistYouCollectMutationVariables = {
     input: DeleteUserInterestMutationInput;

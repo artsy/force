@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CurrentAuctionsQueryVariables = {
     first: number;
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type CurrentAuctionsQueryResponse = {
     readonly viewer: {

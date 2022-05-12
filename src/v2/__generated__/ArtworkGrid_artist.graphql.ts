@@ -12,7 +12,7 @@ export type ArtworkGrid_artist = {
 };
 export type ArtworkGrid_artist$data = ArtworkGrid_artist;
 export type ArtworkGrid_artist$key = {
-    readonly " $data"?: ArtworkGrid_artist$data;
+    readonly " $data"?: ArtworkGrid_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artist">;
 };
 

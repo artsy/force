@@ -6,8 +6,8 @@ import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceAddInitialOfferToOrderInput = {
     amountCents: number;
-    clientMutationId?: string | null;
-    note?: string | null;
+    clientMutationId?: string | null | undefined;
+    note?: string | null | undefined;
     orderId: string;
 };
 export type OfferMutationVariables = {
@@ -25,13 +25,13 @@ export type OfferMutationResponse = {
                     readonly internalID: string;
                     readonly amountCents: number;
                     readonly note: string | null;
-                } | null;
-            };
+                } | null | undefined;
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

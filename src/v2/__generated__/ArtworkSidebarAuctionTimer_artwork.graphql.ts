@@ -20,7 +20,7 @@ export type ArtworkSidebarAuctionTimer_artwork = {
 };
 export type ArtworkSidebarAuctionTimer_artwork$data = ArtworkSidebarAuctionTimer_artwork;
 export type ArtworkSidebarAuctionTimer_artwork$key = {
-    readonly " $data"?: ArtworkSidebarAuctionTimer_artwork$data;
+    readonly " $data"?: ArtworkSidebarAuctionTimer_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionTimer_artwork">;
 };
 

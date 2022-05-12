@@ -17,7 +17,7 @@ export type SettingsEditProfileAboutYou_me = {
 };
 export type SettingsEditProfileAboutYou_me$data = SettingsEditProfileAboutYou_me;
 export type SettingsEditProfileAboutYou_me$key = {
-    readonly " $data"?: SettingsEditProfileAboutYou_me$data;
+    readonly " $data"?: SettingsEditProfileAboutYou_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileAboutYou_me">;
 };
 

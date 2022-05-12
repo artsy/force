@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesArtistsQueryVariables = {
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type SettingsSavesArtistsQueryResponse = {
     readonly me: {

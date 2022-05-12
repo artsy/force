@@ -22,14 +22,14 @@ export type FairArtworks_fair = {
         readonly id: string;
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "FairArtworks_fair";
 };
 export type FairArtworks_fair$data = FairArtworks_fair;
 export type FairArtworks_fair$key = {
-    readonly " $data"?: FairArtworks_fair$data;
+    readonly " $data"?: FairArtworks_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairArtworks_fair">;
 };
 

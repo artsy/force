@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowNavigationBanner_show = {
     readonly partner: {
-        readonly internalID?: string;
+        readonly internalID?: string | undefined;
     } | null;
     readonly fair: {
         readonly name: string | null;
@@ -16,7 +16,7 @@ export type ShowNavigationBanner_show = {
 };
 export type ShowNavigationBanner_show$data = ShowNavigationBanner_show;
 export type ShowNavigationBanner_show$key = {
-    readonly " $data"?: ShowNavigationBanner_show$data;
+    readonly " $data"?: ShowNavigationBanner_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowNavigationBanner_show">;
 };
 

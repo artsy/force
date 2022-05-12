@@ -21,7 +21,7 @@ export type ShowsCurrentShows_viewer = {
 };
 export type ShowsCurrentShows_viewer$data = ShowsCurrentShows_viewer;
 export type ShowsCurrentShows_viewer$key = {
-    readonly " $data"?: ShowsCurrentShows_viewer$data;
+    readonly " $data"?: ShowsCurrentShows_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsCurrentShows_viewer">;
 };
 

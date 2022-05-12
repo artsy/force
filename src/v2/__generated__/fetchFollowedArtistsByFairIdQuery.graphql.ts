@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type fetchFollowedArtistsByFairIdQueryVariables = {
-    fairID?: string | null;
+    fairID?: string | null | undefined;
 };
 export type fetchFollowedArtistsByFairIdQueryResponse = {
     readonly me: {

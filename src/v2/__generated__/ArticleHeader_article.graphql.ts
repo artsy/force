@@ -11,9 +11,9 @@ export type ArticleHeader_article = {
     readonly vertical: string | null;
     readonly byline: string | null;
     readonly hero: {
-        readonly layout?: ArticleFeatureSectionType;
-        readonly embed?: string | null;
-        readonly media?: string | null;
+        readonly layout?: ArticleFeatureSectionType | undefined;
+        readonly embed?: string | null | undefined;
+        readonly media?: string | null | undefined;
         readonly image?: {
             readonly url: string | null;
             readonly split: {
@@ -24,13 +24,13 @@ export type ArticleHeader_article = {
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
-        } | null;
+        } | null | undefined;
     } | null;
     readonly " $refType": "ArticleHeader_article";
 };
 export type ArticleHeader_article$data = ArticleHeader_article;
 export type ArticleHeader_article$key = {
-    readonly " $data"?: ArticleHeader_article$data;
+    readonly " $data"?: ArticleHeader_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article">;
 };
 

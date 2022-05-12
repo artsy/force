@@ -13,7 +13,7 @@ export type PartnersRails_viewer = {
 };
 export type PartnersRails_viewer$data = PartnersRails_viewer;
 export type PartnersRails_viewer$key = {
-    readonly " $data"?: PartnersRails_viewer$data;
+    readonly " $data"?: PartnersRails_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersRails_viewer">;
 };
 

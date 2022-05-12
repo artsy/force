@@ -22,7 +22,7 @@ export type SubmissionSummary_offer = {
 };
 export type SubmissionSummary_offer$data = SubmissionSummary_offer;
 export type SubmissionSummary_offer$key = {
-    readonly " $data"?: SubmissionSummary_offer$data;
+    readonly " $data"?: SubmissionSummary_offer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SubmissionSummary_offer">;
 };
 

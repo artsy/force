@@ -6,13 +6,13 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
 export type SearchResultsEntityQueryVariables = {
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
+    first?: number | null | undefined;
+    last?: number | null | undefined;
+    after?: string | null | undefined;
+    before?: string | null | undefined;
     term: string;
-    page?: number | null;
-    entities?: Array<SearchEntity | null> | null;
+    page?: number | null | undefined;
+    entities?: Array<SearchEntity | null> | null | undefined;
 };
 export type SearchResultsEntityQueryResponse = {
     readonly viewer: {

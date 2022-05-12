@@ -37,7 +37,7 @@ export type WorksForYouFeed_viewer = {
 };
 export type WorksForYouFeed_viewer$data = WorksForYouFeed_viewer;
 export type WorksForYouFeed_viewer$key = {
-    readonly " $data"?: WorksForYouFeed_viewer$data;
+    readonly " $data"?: WorksForYouFeed_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksForYouFeed_viewer">;
 };
 

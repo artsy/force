@@ -35,7 +35,7 @@ export type CellPartner_partner = {
 };
 export type CellPartner_partner$data = CellPartner_partner;
 export type CellPartner_partner$key = {
-    readonly " $data"?: CellPartner_partner$data;
+    readonly " $data"?: CellPartner_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
 };
 

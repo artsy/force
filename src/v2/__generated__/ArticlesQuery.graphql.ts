@@ -6,10 +6,10 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticlesQueryVariables = {
     partnerId: string;
-    first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
+    first?: number | null | undefined;
+    last?: number | null | undefined;
+    after?: string | null | undefined;
+    before?: string | null | undefined;
 };
 export type ArticlesQueryResponse = {
     readonly partner: {

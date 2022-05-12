@@ -19,7 +19,7 @@ export type ContactInformation_me = {
 };
 export type ContactInformation_me$data = ContactInformation_me;
 export type ContactInformation_me$key = {
-    readonly " $data"?: ContactInformation_me$data;
+    readonly " $data"?: ContactInformation_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
 };
 

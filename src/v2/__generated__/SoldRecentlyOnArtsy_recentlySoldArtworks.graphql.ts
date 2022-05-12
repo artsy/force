@@ -28,7 +28,7 @@ export type SoldRecentlyOnArtsy_recentlySoldArtworks = {
 };
 export type SoldRecentlyOnArtsy_recentlySoldArtworks$data = SoldRecentlyOnArtsy_recentlySoldArtworks;
 export type SoldRecentlyOnArtsy_recentlySoldArtworks$key = {
-    readonly " $data"?: SoldRecentlyOnArtsy_recentlySoldArtworks$data;
+    readonly " $data"?: SoldRecentlyOnArtsy_recentlySoldArtworks$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SoldRecentlyOnArtsy_recentlySoldArtworks">;
 };
 

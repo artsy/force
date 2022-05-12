@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairsPastFairsQueryVariables = {
     first: number;
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type FairsPastFairsQueryResponse = {
     readonly viewer: {

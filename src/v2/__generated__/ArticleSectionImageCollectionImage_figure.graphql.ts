@@ -5,17 +5,17 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionImage_figure = {
-    readonly id?: string;
+    readonly id?: string | undefined;
     readonly image?: {
         readonly url: string | null;
         readonly width: number | null;
         readonly height: number | null;
-    } | null;
+    } | null | undefined;
     readonly " $refType": "ArticleSectionImageCollectionImage_figure";
 };
 export type ArticleSectionImageCollectionImage_figure$data = ArticleSectionImageCollectionImage_figure;
 export type ArticleSectionImageCollectionImage_figure$key = {
-    readonly " $data"?: ArticleSectionImageCollectionImage_figure$data;
+    readonly " $data"?: ArticleSectionImageCollectionImage_figure$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollectionImage_figure">;
 };
 

@@ -45,7 +45,7 @@ export type ArtistApp_sharedMetadata = {
 };
 export type ArtistApp_sharedMetadata$data = ArtistApp_sharedMetadata;
 export type ArtistApp_sharedMetadata$key = {
-    readonly " $data"?: ArtistApp_sharedMetadata$data;
+    readonly " $data"?: ArtistApp_sharedMetadata$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistApp_sharedMetadata">;
 };
 

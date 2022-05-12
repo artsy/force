@@ -13,7 +13,7 @@ export type HomeHeroUnits_homePage = {
 };
 export type HomeHeroUnits_homePage$data = HomeHeroUnits_homePage;
 export type HomeHeroUnits_homePage$key = {
-    readonly " $data"?: HomeHeroUnits_homePage$data;
+    readonly " $data"?: HomeHeroUnits_homePage$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnits_homePage">;
 };
 

@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSelectShippingOptionInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     id: string;
     selectedShippingQuoteId: string;
 };
@@ -28,12 +28,12 @@ export type SelectShippingOptionMutationResponse = {
                         } | null;
                     } | null> | null;
                 } | null;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

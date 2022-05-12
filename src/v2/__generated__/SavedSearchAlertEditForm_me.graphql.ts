@@ -33,13 +33,13 @@ export type SavedSearchAlertEditForm_me = {
             readonly field: string;
             readonly value: string;
             readonly displayValue: string;
-        }>;
+        }> | undefined;
     } | null;
     readonly " $refType": "SavedSearchAlertEditForm_me";
 };
 export type SavedSearchAlertEditForm_me$data = SavedSearchAlertEditForm_me;
 export type SavedSearchAlertEditForm_me$key = {
-    readonly " $data"?: SavedSearchAlertEditForm_me$data;
+    readonly " $data"?: SavedSearchAlertEditForm_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_me">;
 };
 

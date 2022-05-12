@@ -10,7 +10,7 @@ export type ViewingRoomsApp_featuredViewingRooms = {
 };
 export type ViewingRoomsApp_featuredViewingRooms$data = ViewingRoomsApp_featuredViewingRooms;
 export type ViewingRoomsApp_featuredViewingRooms$key = {
-    readonly " $data"?: ViewingRoomsApp_featuredViewingRooms$data;
+    readonly " $data"?: ViewingRoomsApp_featuredViewingRooms$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_featuredViewingRooms">;
 };
 

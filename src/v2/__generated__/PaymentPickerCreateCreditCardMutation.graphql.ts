@@ -4,8 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
-    clientMutationId?: string | null;
-    oneTimeUse?: boolean | null;
+    clientMutationId?: string | null | undefined;
+    oneTimeUse?: boolean | null | undefined;
     token: string;
 };
 export type PaymentPickerCreateCreditCardMutationVariables = {
@@ -27,12 +27,12 @@ export type PaymentPickerCreateCreditCardMutationResponse = {
                 readonly expirationYear: number;
                 readonly lastDigits: string;
                 readonly brand: string;
-            } | null;
+            } | null | undefined;
             readonly mutationError?: {
                 readonly type: string | null;
                 readonly message: string;
                 readonly detail: string | null;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

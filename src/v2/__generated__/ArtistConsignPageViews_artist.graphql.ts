@@ -18,7 +18,7 @@ export type ArtistConsignPageViews_artist = {
 };
 export type ArtistConsignPageViews_artist$data = ArtistConsignPageViews_artist;
 export type ArtistConsignPageViews_artist$key = {
-    readonly " $data"?: ArtistConsignPageViews_artist$data;
+    readonly " $data"?: ArtistConsignPageViews_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignPageViews_artist">;
 };
 

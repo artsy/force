@@ -26,7 +26,7 @@ export type CreateArtworkAlertSection_artwork = {
 };
 export type CreateArtworkAlertSection_artwork$data = CreateArtworkAlertSection_artwork;
 export type CreateArtworkAlertSection_artwork$key = {
-    readonly " $data"?: CreateArtworkAlertSection_artwork$data;
+    readonly " $data"?: CreateArtworkAlertSection_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CreateArtworkAlertSection_artwork">;
 };
 

@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistDetailsListQueryVariables = {
     partnerId: string;
     first: number;
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type PartnerArtistDetailsListQueryResponse = {
     readonly partner: {

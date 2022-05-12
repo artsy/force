@@ -10,9 +10,9 @@ export type ArtistsCarouselCell_featuredLink = {
     readonly subtitle: string | null;
     readonly href: string | null;
     readonly entity: {
-        readonly internalID?: string;
-        readonly name?: string | null;
-        readonly formattedNationalityAndBirthday?: string | null;
+        readonly internalID?: string | undefined;
+        readonly name?: string | null | undefined;
+        readonly formattedNationalityAndBirthday?: string | null | undefined;
     } | null;
     readonly image: {
         readonly thumb: {
@@ -26,7 +26,7 @@ export type ArtistsCarouselCell_featuredLink = {
 };
 export type ArtistsCarouselCell_featuredLink$data = ArtistsCarouselCell_featuredLink;
 export type ArtistsCarouselCell_featuredLink$key = {
-    readonly " $data"?: ArtistsCarouselCell_featuredLink$data;
+    readonly " $data"?: ArtistsCarouselCell_featuredLink$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
 };
 

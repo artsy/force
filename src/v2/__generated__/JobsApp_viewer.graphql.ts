@@ -10,7 +10,7 @@ export type JobsApp_viewer = {
 };
 export type JobsApp_viewer$data = JobsApp_viewer;
 export type JobsApp_viewer$key = {
-    readonly " $data"?: JobsApp_viewer$data;
+    readonly " $data"?: JobsApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"JobsApp_viewer">;
 };
 

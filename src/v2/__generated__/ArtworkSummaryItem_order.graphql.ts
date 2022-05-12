@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type ArtworkSummaryItem_order = {
     readonly sellerDetails: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly currencyCode: string;
     readonly mode: CommerceOrderModeEnum | null;
@@ -45,7 +45,7 @@ export type ArtworkSummaryItem_order = {
 };
 export type ArtworkSummaryItem_order$data = ArtworkSummaryItem_order;
 export type ArtworkSummaryItem_order$key = {
-    readonly " $data"?: ArtworkSummaryItem_order$data;
+    readonly " $data"?: ArtworkSummaryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order">;
 };
 

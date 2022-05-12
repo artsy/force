@@ -16,7 +16,7 @@ export type ConfirmArtworkModal_artwork = {
 };
 export type ConfirmArtworkModal_artwork$data = ConfirmArtworkModal_artwork;
 export type ConfirmArtworkModal_artwork$key = {
-    readonly " $data"?: ConfirmArtworkModal_artwork$data;
+    readonly " $data"?: ConfirmArtworkModal_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ConfirmArtworkModal_artwork">;
 };
 

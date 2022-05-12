@@ -13,7 +13,7 @@ export type SettingsEditSettingsInformation_me = {
 };
 export type SettingsEditSettingsInformation_me$data = SettingsEditSettingsInformation_me;
 export type SettingsEditSettingsInformation_me$key = {
-    readonly " $data"?: SettingsEditSettingsInformation_me$data;
+    readonly " $data"?: SettingsEditSettingsInformation_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsInformation_me">;
 };
 

@@ -10,7 +10,7 @@ export type ExampleArtworkFilterRoute_viewer = {
 };
 export type ExampleArtworkFilterRoute_viewer$data = ExampleArtworkFilterRoute_viewer;
 export type ExampleArtworkFilterRoute_viewer$key = {
-    readonly " $data"?: ExampleArtworkFilterRoute_viewer$data;
+    readonly " $data"?: ExampleArtworkFilterRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkFilterRoute_viewer">;
 };
 

@@ -23,13 +23,13 @@ export type Accept_order = {
     readonly lastOffer?: {
         readonly internalID: string;
         readonly createdAt: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
     readonly " $refType": "Accept_order";
 };
 export type Accept_order$data = Accept_order;
 export type Accept_order$key = {
-    readonly " $data"?: Accept_order$data;
+    readonly " $data"?: Accept_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Accept_order">;
 };
 

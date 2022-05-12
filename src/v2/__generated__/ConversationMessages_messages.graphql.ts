@@ -20,7 +20,7 @@ export type ConversationMessages_messages = {
 };
 export type ConversationMessages_messages$data = ConversationMessages_messages;
 export type ConversationMessages_messages$key = {
-    readonly " $data"?: ConversationMessages_messages$data;
+    readonly " $data"?: ConversationMessages_messages$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
 };
 

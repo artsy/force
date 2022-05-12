@@ -37,7 +37,7 @@ export type FairsFairBanner_fair = {
 };
 export type FairsFairBanner_fair$data = FairsFairBanner_fair;
 export type FairsFairBanner_fair$key = {
-    readonly " $data"?: FairsFairBanner_fair$data;
+    readonly " $data"?: FairsFairBanner_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairsFairBanner_fair">;
 };
 

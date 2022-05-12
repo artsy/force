@@ -11,7 +11,7 @@ export type FeatureSetMeta_set = {
 };
 export type FeatureSetMeta_set$data = FeatureSetMeta_set;
 export type FeatureSetMeta_set$key = {
-    readonly " $data"?: FeatureSetMeta_set$data;
+    readonly " $data"?: FeatureSetMeta_set$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeatureSetMeta_set">;
 };
 

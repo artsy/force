@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConfirmPasswordInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     password: string;
 };
 export type ConfirmPasswordMutationVariables = {

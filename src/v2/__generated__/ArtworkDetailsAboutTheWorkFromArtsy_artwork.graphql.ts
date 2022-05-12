@@ -10,7 +10,7 @@ export type ArtworkDetailsAboutTheWorkFromArtsy_artwork = {
 };
 export type ArtworkDetailsAboutTheWorkFromArtsy_artwork$data = ArtworkDetailsAboutTheWorkFromArtsy_artwork;
 export type ArtworkDetailsAboutTheWorkFromArtsy_artwork$key = {
-    readonly " $data"?: ArtworkDetailsAboutTheWorkFromArtsy_artwork$data;
+    readonly " $data"?: ArtworkDetailsAboutTheWorkFromArtsy_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsAboutTheWorkFromArtsy_artwork">;
 };
 

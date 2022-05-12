@@ -33,14 +33,14 @@ export type ConversationCTA_conversation = {
                 readonly state: CommerceOrderStateEnum;
                 readonly stateReason: string | null;
                 readonly stateExpiresAt: string | null;
-                readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+                readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
                 readonly offers?: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
                             readonly internalID: string;
                         } | null;
                     } | null> | null;
-                } | null;
+                } | null | undefined;
             } | null;
         } | null> | null;
     } | null;
@@ -49,7 +49,7 @@ export type ConversationCTA_conversation = {
 };
 export type ConversationCTA_conversation$data = ConversationCTA_conversation;
 export type ConversationCTA_conversation$key = {
-    readonly " $data"?: ConversationCTA_conversation$data;
+    readonly " $data"?: ConversationCTA_conversation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
 };
 

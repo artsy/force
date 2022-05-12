@@ -20,7 +20,7 @@ export type ShowsRail_partner = {
 };
 export type ShowsRail_partner$data = ShowsRail_partner;
 export type ShowsRail_partner$key = {
-    readonly " $data"?: ShowsRail_partner$data;
+    readonly " $data"?: ShowsRail_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsRail_partner">;
 };
 

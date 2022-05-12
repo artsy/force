@@ -21,7 +21,7 @@ export type StandoutLotsRail_viewer = {
 };
 export type StandoutLotsRail_viewer$data = StandoutLotsRail_viewer;
 export type StandoutLotsRail_viewer$key = {
-    readonly " $data"?: StandoutLotsRail_viewer$data;
+    readonly " $data"?: StandoutLotsRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"StandoutLotsRail_viewer">;
 };
 

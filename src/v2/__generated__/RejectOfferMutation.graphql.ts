@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 export type CommerceCancelReasonTypeEnum = "ADMIN_CANCELED" | "BUYER_LAPSED" | "BUYER_REJECTED" | "SELLER_LAPSED" | "SELLER_REJECTED" | "SELLER_REJECTED_ARTWORK_UNAVAILABLE" | "SELLER_REJECTED_OFFER_TOO_LOW" | "SELLER_REJECTED_OTHER" | "SELLER_REJECTED_SHIPPING_UNAVAILABLE" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceBuyerRejectOfferInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     offerId: string;
-    rejectReason?: CommerceCancelReasonTypeEnum | null;
+    rejectReason?: CommerceCancelReasonTypeEnum | null | undefined;
 };
 export type RejectOfferMutationVariables = {
     input: CommerceBuyerRejectOfferInput;
@@ -19,13 +19,13 @@ export type RejectOfferMutationResponse = {
             readonly __typename: "CommerceOrderWithMutationSuccess";
             readonly order?: {
                 readonly internalID: string;
-                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-            };
+                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

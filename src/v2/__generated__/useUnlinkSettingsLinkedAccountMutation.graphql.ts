@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuthenticationProvider = "APPLE" | "FACEBOOK" | "GOOGLE" | "%future added value";
 export type UnlinkAuthenticationMutationInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     provider: AuthenticationProvider;
 };
 export type useUnlinkSettingsLinkedAccountMutationVariables = {

@@ -61,13 +61,13 @@ export type Status_order = {
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
         readonly taxTotalCents: number | null;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
     readonly " $refType": "Status_order";
 };
 export type Status_order$data = Status_order;
 export type Status_order$key = {
-    readonly " $data"?: Status_order$data;
+    readonly " $data"?: Status_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Status_order">;
 };
 

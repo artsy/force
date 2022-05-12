@@ -11,7 +11,7 @@ export type FeaturedCollections_collections = ReadonlyArray<{
 }>;
 export type FeaturedCollections_collections$data = FeaturedCollections_collections;
 export type FeaturedCollections_collections$key = ReadonlyArray<{
-    readonly " $data"?: FeaturedCollections_collections$data;
+    readonly " $data"?: FeaturedCollections_collections$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedCollections_collections">;
 }>;
 

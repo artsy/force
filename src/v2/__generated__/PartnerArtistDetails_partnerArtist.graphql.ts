@@ -21,7 +21,7 @@ export type PartnerArtistDetails_partnerArtist = {
 };
 export type PartnerArtistDetails_partnerArtist$data = PartnerArtistDetails_partnerArtist;
 export type PartnerArtistDetails_partnerArtist$key = {
-    readonly " $data"?: PartnerArtistDetails_partnerArtist$data;
+    readonly " $data"?: PartnerArtistDetails_partnerArtist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
 };
 

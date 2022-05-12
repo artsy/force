@@ -15,7 +15,7 @@ export type AuctionConfirmRegistrationRoute_me = {
 };
 export type AuctionConfirmRegistrationRoute_me$data = AuctionConfirmRegistrationRoute_me;
 export type AuctionConfirmRegistrationRoute_me$key = {
-    readonly " $data"?: AuctionConfirmRegistrationRoute_me$data;
+    readonly " $data"?: AuctionConfirmRegistrationRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionConfirmRegistrationRoute_me">;
 };
 

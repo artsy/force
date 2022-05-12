@@ -18,7 +18,7 @@ export type FillwidthItem_artwork = {
 };
 export type FillwidthItem_artwork$data = FillwidthItem_artwork;
 export type FillwidthItem_artwork$key = {
-    readonly " $data"?: FillwidthItem_artwork$data;
+    readonly " $data"?: FillwidthItem_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
 };
 

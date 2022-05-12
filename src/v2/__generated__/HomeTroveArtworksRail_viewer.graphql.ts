@@ -19,7 +19,7 @@ export type HomeTroveArtworksRail_viewer = {
 };
 export type HomeTroveArtworksRail_viewer$data = HomeTroveArtworksRail_viewer;
 export type HomeTroveArtworksRail_viewer$key = {
-    readonly " $data"?: HomeTroveArtworksRail_viewer$data;
+    readonly " $data"?: HomeTroveArtworksRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeTroveArtworksRail_viewer">;
 };
 

@@ -11,7 +11,7 @@ export type Metadata_artwork = {
 };
 export type Metadata_artwork$data = Metadata_artwork;
 export type Metadata_artwork$key = {
-    readonly " $data"?: Metadata_artwork$data;
+    readonly " $data"?: Metadata_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
 };
 

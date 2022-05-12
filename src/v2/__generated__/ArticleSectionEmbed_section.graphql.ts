@@ -12,7 +12,7 @@ export type ArticleSectionEmbed_section = {
 };
 export type ArticleSectionEmbed_section$data = ArticleSectionEmbed_section;
 export type ArticleSectionEmbed_section$key = {
-    readonly " $data"?: ArticleSectionEmbed_section$data;
+    readonly " $data"?: ArticleSectionEmbed_section$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionEmbed_section">;
 };
 

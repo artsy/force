@@ -19,7 +19,7 @@ export type SmsSecondFactor_me = {
 };
 export type SmsSecondFactor_me$data = SmsSecondFactor_me;
 export type SmsSecondFactor_me$key = {
-    readonly " $data"?: SmsSecondFactor_me$data;
+    readonly " $data"?: SmsSecondFactor_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SmsSecondFactor_me">;
 };
 

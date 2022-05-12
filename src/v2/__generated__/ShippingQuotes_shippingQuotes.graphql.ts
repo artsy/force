@@ -16,7 +16,7 @@ export type ShippingQuotes_shippingQuotes = ReadonlyArray<{
 }>;
 export type ShippingQuotes_shippingQuotes$data = ShippingQuotes_shippingQuotes;
 export type ShippingQuotes_shippingQuotes$key = ReadonlyArray<{
-    readonly " $data"?: ShippingQuotes_shippingQuotes$data;
+    readonly " $data"?: ShippingQuotes_shippingQuotes$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
 }>;
 

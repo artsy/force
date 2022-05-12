@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type partnerRoutes_ArticlesQueryVariables = {
     partnerId: string;
-    page?: number | null;
+    page?: number | null | undefined;
 };
 export type partnerRoutes_ArticlesQueryResponse = {
     readonly partner: {

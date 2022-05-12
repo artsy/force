@@ -20,7 +20,7 @@ export type FairOrganizerHeader_fairOrganizer = {
 };
 export type FairOrganizerHeader_fairOrganizer$data = FairOrganizerHeader_fairOrganizer;
 export type FairOrganizerHeader_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerHeader_fairOrganizer$data;
+    readonly " $data"?: FairOrganizerHeader_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
 };
 

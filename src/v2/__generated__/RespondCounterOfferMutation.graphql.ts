@@ -6,8 +6,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceBuyerCounterOfferInput = {
     amountCents: number;
-    clientMutationId?: string | null;
-    note?: string | null;
+    clientMutationId?: string | null | undefined;
+    note?: string | null | undefined;
     offerId: string;
 };
 export type RespondCounterOfferMutationVariables = {
@@ -18,12 +18,12 @@ export type RespondCounterOfferMutationResponse = {
         readonly orderOrError: {
             readonly order?: {
                 readonly " $fragmentRefs": FragmentRefs<"Respond_order">;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

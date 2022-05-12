@@ -4,9 +4,9 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeleteAccountInput = {
-    clientMutationId?: string | null;
-    explanation?: string | null;
-    url?: string | null;
+    clientMutationId?: string | null | undefined;
+    explanation?: string | null | undefined;
+    url?: string | null | undefined;
 };
 export type useDeleteAccountMutationVariables = {
     input: DeleteAccountInput;
@@ -14,12 +14,12 @@ export type useDeleteAccountMutationVariables = {
 export type useDeleteAccountMutationResponse = {
     readonly deleteMyAccountMutation: {
         readonly userAccountOrError: {
-            readonly success?: boolean | null;
+            readonly success?: boolean | null | undefined;
             readonly mutationError?: {
                 readonly type: string | null;
                 readonly message: string;
                 readonly detail: string | null;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

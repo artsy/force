@@ -28,11 +28,9 @@ export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {
     <HeaderImageContainer>
       <Flex width="100%" justifyContent="space-between" m="auto">
         <LeftImage>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <LeftImagePhoto {...leftImage} />
         </LeftImage>
         <RightImage>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <RightImagePhoto {...rightImage} />
         </RightImage>
       </Flex>

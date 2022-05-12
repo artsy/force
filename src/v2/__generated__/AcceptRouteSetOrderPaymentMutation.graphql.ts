@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceFixFailedPaymentInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     creditCardId: string;
     offerId: string;
 };
@@ -28,16 +28,16 @@ export type AcceptRouteSetOrderPaymentMutationResponse = {
                     readonly country: string | null;
                     readonly postal_code: string | null;
                 } | null;
-                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-            };
+                readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
+            } | undefined;
             readonly actionData?: {
                 readonly clientSecret: string;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

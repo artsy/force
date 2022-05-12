@@ -13,7 +13,7 @@ export type ArtworkSidebarBidAction_me = {
 };
 export type ArtworkSidebarBidAction_me$data = ArtworkSidebarBidAction_me;
 export type ArtworkSidebarBidAction_me$key = {
-    readonly " $data"?: ArtworkSidebarBidAction_me$data;
+    readonly " $data"?: ArtworkSidebarBidAction_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBidAction_me">;
 };
 

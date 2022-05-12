@@ -10,7 +10,7 @@ export type SettingsAuctionsRoute_me = {
 };
 export type SettingsAuctionsRoute_me$data = SettingsAuctionsRoute_me;
 export type SettingsAuctionsRoute_me$key = {
-    readonly " $data"?: SettingsAuctionsRoute_me$data;
+    readonly " $data"?: SettingsAuctionsRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsAuctionsRoute_me">;
 };
 

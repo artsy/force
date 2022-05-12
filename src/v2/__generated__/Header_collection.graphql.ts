@@ -20,7 +20,7 @@ export type Header_collection = {
 };
 export type Header_collection$data = Header_collection;
 export type Header_collection$key = {
-    readonly " $data"?: Header_collection$data;
+    readonly " $data"?: Header_collection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Header_collection">;
 };
 

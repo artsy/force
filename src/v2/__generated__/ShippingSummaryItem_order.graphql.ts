@@ -24,7 +24,7 @@ export type ShippingSummaryItem_order = {
 };
 export type ShippingSummaryItem_order$data = ShippingSummaryItem_order;
 export type ShippingSummaryItem_order$key = {
-    readonly " $data"?: ShippingSummaryItem_order$data;
+    readonly " $data"?: ShippingSummaryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShippingSummaryItem_order">;
 };
 

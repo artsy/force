@@ -17,7 +17,7 @@ export type SelectedWorks_selectedWorks = {
 };
 export type SelectedWorks_selectedWorks$data = SelectedWorks_selectedWorks;
 export type SelectedWorks_selectedWorks$key = {
-    readonly " $data"?: SelectedWorks_selectedWorks$data;
+    readonly " $data"?: SelectedWorks_selectedWorks$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SelectedWorks_selectedWorks">;
 };
 

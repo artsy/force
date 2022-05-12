@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceBuyerAcceptOfferInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     offerId: string;
 };
 export type createMockNetworkLayerTestMutationResultsMutationVariables = {
@@ -18,11 +18,11 @@ export type createMockNetworkLayerTestMutationResultsMutationResponse = {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
             readonly order?: {
                 readonly internalID: string;
                 readonly state: CommerceOrderStateEnum;
-            };
+            } | undefined;
         };
     } | null;
 };

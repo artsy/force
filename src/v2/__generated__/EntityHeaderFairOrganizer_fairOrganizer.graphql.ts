@@ -26,7 +26,7 @@ export type EntityHeaderFairOrganizer_fairOrganizer = {
 };
 export type EntityHeaderFairOrganizer_fairOrganizer$data = EntityHeaderFairOrganizer_fairOrganizer;
 export type EntityHeaderFairOrganizer_fairOrganizer$key = {
-    readonly " $data"?: EntityHeaderFairOrganizer_fairOrganizer$data;
+    readonly " $data"?: EntityHeaderFairOrganizer_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
 };
 

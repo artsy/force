@@ -11,7 +11,7 @@ export type NavBarMobileMenuAuthentication_me = {
 };
 export type NavBarMobileMenuAuthentication_me$data = NavBarMobileMenuAuthentication_me;
 export type NavBarMobileMenuAuthentication_me$key = {
-    readonly " $data"?: NavBarMobileMenuAuthentication_me$data;
+    readonly " $data"?: NavBarMobileMenuAuthentication_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NavBarMobileMenuAuthentication_me">;
 };
 

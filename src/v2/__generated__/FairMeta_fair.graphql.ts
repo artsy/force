@@ -15,7 +15,7 @@ export type FairMeta_fair = {
 };
 export type FairMeta_fair$data = FairMeta_fair;
 export type FairMeta_fair$key = {
-    readonly " $data"?: FairMeta_fair$data;
+    readonly " $data"?: FairMeta_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair">;
 };
 

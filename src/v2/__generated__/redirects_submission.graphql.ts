@@ -38,7 +38,7 @@ export type redirects_submission = {
 };
 export type redirects_submission$data = redirects_submission;
 export type redirects_submission$key = {
-    readonly " $data"?: redirects_submission$data;
+    readonly " $data"?: redirects_submission$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"redirects_submission">;
 };
 

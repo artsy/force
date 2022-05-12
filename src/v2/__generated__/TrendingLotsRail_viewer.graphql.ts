@@ -24,7 +24,7 @@ export type TrendingLotsRail_viewer = {
 };
 export type TrendingLotsRail_viewer$data = TrendingLotsRail_viewer;
 export type TrendingLotsRail_viewer$key = {
-    readonly " $data"?: TrendingLotsRail_viewer$data;
+    readonly " $data"?: TrendingLotsRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TrendingLotsRail_viewer">;
 };
 

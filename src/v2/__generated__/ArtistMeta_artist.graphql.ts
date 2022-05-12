@@ -75,7 +75,7 @@ export type ArtistMeta_artist = {
 };
 export type ArtistMeta_artist$data = ArtistMeta_artist;
 export type ArtistMeta_artist$key = {
-    readonly " $data"?: ArtistMeta_artist$data;
+    readonly " $data"?: ArtistMeta_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistMeta_artist">;
 };
 

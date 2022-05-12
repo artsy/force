@@ -12,7 +12,7 @@ export type PageApp_page = {
 };
 export type PageApp_page$data = PageApp_page;
 export type PageApp_page$key = {
-    readonly " $data"?: PageApp_page$data;
+    readonly " $data"?: PageApp_page$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PageApp_page">;
 };
 

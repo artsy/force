@@ -16,7 +16,7 @@ export type HomeRecentlyViewedRail_homePage = {
 };
 export type HomeRecentlyViewedRail_homePage$data = HomeRecentlyViewedRail_homePage;
 export type HomeRecentlyViewedRail_homePage$key = {
-    readonly " $data"?: HomeRecentlyViewedRail_homePage$data;
+    readonly " $data"?: HomeRecentlyViewedRail_homePage$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeRecentlyViewedRail_homePage">;
 };
 

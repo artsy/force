@@ -5,8 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 export type SubGroupInputStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 export type updateNotificationPreferencesMutationInput = {
-    authenticationToken?: string | null;
-    clientMutationId?: string | null;
+    authenticationToken?: string | null | undefined;
+    clientMutationId?: string | null | undefined;
     subscriptionGroups: Array<NotificationPreferenceInput>;
 };
 export type NotificationPreferenceInput = {

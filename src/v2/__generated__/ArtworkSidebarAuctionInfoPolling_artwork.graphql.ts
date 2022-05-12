@@ -19,7 +19,7 @@ export type ArtworkSidebarAuctionInfoPolling_artwork = {
 };
 export type ArtworkSidebarAuctionInfoPolling_artwork$data = ArtworkSidebarAuctionInfoPolling_artwork;
 export type ArtworkSidebarAuctionInfoPolling_artwork$key = {
-    readonly " $data"?: ArtworkSidebarAuctionInfoPolling_artwork$data;
+    readonly " $data"?: ArtworkSidebarAuctionInfoPolling_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_artwork">;
 };
 

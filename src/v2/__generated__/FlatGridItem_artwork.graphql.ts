@@ -34,7 +34,7 @@ export type FlatGridItem_artwork = {
 };
 export type FlatGridItem_artwork$data = FlatGridItem_artwork;
 export type FlatGridItem_artwork$key = {
-    readonly " $data"?: FlatGridItem_artwork$data;
+    readonly " $data"?: FlatGridItem_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FlatGridItem_artwork">;
 };
 

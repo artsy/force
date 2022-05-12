@@ -11,7 +11,7 @@ export type ArtistAutocomplete_SearchConnection_QueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly displayLabel: string | null;
-                readonly internalID?: string;
+                readonly internalID?: string | undefined;
                 readonly image?: {
                     readonly cropped: {
                         readonly height: number;
@@ -19,7 +19,7 @@ export type ArtistAutocomplete_SearchConnection_QueryResponse = {
                         readonly srcSet: string;
                         readonly width: number;
                     } | null;
-                } | null;
+                } | null | undefined;
             } | null;
         } | null> | null;
     } | null;

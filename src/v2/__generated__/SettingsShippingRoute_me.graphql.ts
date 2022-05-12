@@ -10,7 +10,7 @@ export type SettingsShippingRoute_me = {
 };
 export type SettingsShippingRoute_me$data = SettingsShippingRoute_me;
 export type SettingsShippingRoute_me$key = {
-    readonly " $data"?: SettingsShippingRoute_me$data;
+    readonly " $data"?: SettingsShippingRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsShippingRoute_me">;
 };
 

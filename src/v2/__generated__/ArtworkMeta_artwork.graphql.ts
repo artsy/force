@@ -59,7 +59,7 @@ export type ArtworkMeta_artwork = {
 };
 export type ArtworkMeta_artwork$data = ArtworkMeta_artwork;
 export type ArtworkMeta_artwork$key = {
-    readonly " $data"?: ArtworkMeta_artwork$data;
+    readonly " $data"?: ArtworkMeta_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkMeta_artwork">;
 };
 

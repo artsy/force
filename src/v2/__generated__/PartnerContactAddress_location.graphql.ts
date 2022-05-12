@@ -16,7 +16,7 @@ export type PartnerContactAddress_location = {
 };
 export type PartnerContactAddress_location$data = PartnerContactAddress_location;
 export type PartnerContactAddress_location$key = {
-    readonly " $data"?: PartnerContactAddress_location$data;
+    readonly " $data"?: PartnerContactAddress_location$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerContactAddress_location">;
 };
 

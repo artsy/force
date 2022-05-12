@@ -16,7 +16,7 @@ export type FeaturedAuctions_auctions = {
 };
 export type FeaturedAuctions_auctions$data = FeaturedAuctions_auctions;
 export type FeaturedAuctions_auctions$key = {
-    readonly " $data"?: FeaturedAuctions_auctions$data;
+    readonly " $data"?: FeaturedAuctions_auctions$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedAuctions_auctions">;
 };
 

@@ -10,7 +10,7 @@ export type ArtistAuctionResultsCount_results = {
 };
 export type ArtistAuctionResultsCount_results$data = ArtistAuctionResultsCount_results;
 export type ArtistAuctionResultsCount_results$key = {
-    readonly " $data"?: ArtistAuctionResultsCount_results$data;
+    readonly " $data"?: ArtistAuctionResultsCount_results$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsCount_results">;
 };
 

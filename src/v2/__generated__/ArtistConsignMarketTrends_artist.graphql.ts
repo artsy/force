@@ -19,7 +19,7 @@ export type ArtistConsignMarketTrends_artist = {
 };
 export type ArtistConsignMarketTrends_artist$data = ArtistConsignMarketTrends_artist;
 export type ArtistConsignMarketTrends_artist$key = {
-    readonly " $data"?: ArtistConsignMarketTrends_artist$data;
+    readonly " $data"?: ArtistConsignMarketTrends_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignMarketTrends_artist">;
 };
 

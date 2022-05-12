@@ -18,7 +18,7 @@ export type SavedSearchAlertEditFormQueryResponse = {
     } | null;
     readonly artworksConnection?: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
-    } | null;
+    } | null | undefined;
 };
 export type SavedSearchAlertEditFormQuery = {
     readonly response: SavedSearchAlertEditFormQueryResponse;

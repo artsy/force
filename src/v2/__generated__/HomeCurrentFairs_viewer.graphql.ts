@@ -31,7 +31,7 @@ export type HomeCurrentFairs_viewer = {
 };
 export type HomeCurrentFairs_viewer$data = HomeCurrentFairs_viewer;
 export type HomeCurrentFairs_viewer$key = {
-    readonly " $data"?: HomeCurrentFairs_viewer$data;
+    readonly " $data"?: HomeCurrentFairs_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairs_viewer">;
 };
 

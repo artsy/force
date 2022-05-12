@@ -14,7 +14,7 @@ export type ExampleApp_system = {
 };
 export type ExampleApp_system$data = ExampleApp_system;
 export type ExampleApp_system$key = {
-    readonly " $data"?: ExampleApp_system$data;
+    readonly " $data"?: ExampleApp_system$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ExampleApp_system">;
 };
 

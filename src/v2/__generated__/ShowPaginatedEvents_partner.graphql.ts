@@ -22,7 +22,7 @@ export type ShowPaginatedEvents_partner = {
 };
 export type ShowPaginatedEvents_partner$data = ShowPaginatedEvents_partner;
 export type ShowPaginatedEvents_partner$key = {
-    readonly " $data"?: ShowPaginatedEvents_partner$data;
+    readonly " $data"?: ShowPaginatedEvents_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowPaginatedEvents_partner">;
 };
 

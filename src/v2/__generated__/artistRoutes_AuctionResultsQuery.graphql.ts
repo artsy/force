@@ -7,12 +7,12 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type artistRoutes_AuctionResultsQueryVariables = {
     artistID: string;
-    organizations?: Array<string | null> | null;
-    categories?: Array<string | null> | null;
-    sizes?: Array<ArtworkSizes | null> | null;
-    createdAfterYear?: number | null;
-    createdBeforeYear?: number | null;
-    allowEmptyCreatedDates?: boolean | null;
+    organizations?: Array<string | null> | null | undefined;
+    categories?: Array<string | null> | null | undefined;
+    sizes?: Array<ArtworkSizes | null> | null | undefined;
+    createdAfterYear?: number | null | undefined;
+    createdBeforeYear?: number | null | undefined;
+    allowEmptyCreatedDates?: boolean | null | undefined;
 };
 export type artistRoutes_AuctionResultsQueryResponse = {
     readonly artist: {

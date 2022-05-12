@@ -26,7 +26,7 @@ export type Overview_partner = {
 };
 export type Overview_partner$data = Overview_partner;
 export type Overview_partner$key = {
-    readonly " $data"?: Overview_partner$data;
+    readonly " $data"?: Overview_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Overview_partner">;
 };
 

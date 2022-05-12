@@ -20,7 +20,7 @@ export type WorksForYouApp_viewerMe = {
 };
 export type WorksForYouApp_viewerMe$data = WorksForYouApp_viewerMe;
 export type WorksForYouApp_viewerMe$key = {
-    readonly " $data"?: WorksForYouApp_viewerMe$data;
+    readonly " $data"?: WorksForYouApp_viewerMe$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerMe">;
 };
 

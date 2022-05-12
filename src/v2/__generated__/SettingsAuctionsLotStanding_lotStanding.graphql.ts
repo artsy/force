@@ -26,7 +26,7 @@ export type SettingsAuctionsLotStanding_lotStanding = {
 };
 export type SettingsAuctionsLotStanding_lotStanding$data = SettingsAuctionsLotStanding_lotStanding;
 export type SettingsAuctionsLotStanding_lotStanding$key = {
-    readonly " $data"?: SettingsAuctionsLotStanding_lotStanding$data;
+    readonly " $data"?: SettingsAuctionsLotStanding_lotStanding$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsAuctionsLotStanding_lotStanding">;
 };
 

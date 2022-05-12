@@ -5,10 +5,10 @@
 import { ConcreteRequest } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersSearchQueryVariables = {
-    near?: string | null;
-    partnerCategories?: Array<string | null> | null;
-    term?: string | null;
-    type?: Array<PartnerClassification | null> | null;
+    near?: string | null | undefined;
+    partnerCategories?: Array<string | null> | null | undefined;
+    term?: string | null | undefined;
+    type?: Array<PartnerClassification | null> | null | undefined;
 };
 export type PartnersSearchQueryResponse = {
     readonly filterPartners: {

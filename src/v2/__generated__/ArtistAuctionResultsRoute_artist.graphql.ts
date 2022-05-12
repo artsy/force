@@ -10,7 +10,7 @@ export type ArtistAuctionResultsRoute_artist = {
 };
 export type ArtistAuctionResultsRoute_artist$data = ArtistAuctionResultsRoute_artist;
 export type ArtistAuctionResultsRoute_artist$key = {
-    readonly " $data"?: ArtistAuctionResultsRoute_artist$data;
+    readonly " $data"?: ArtistAuctionResultsRoute_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
 };
 

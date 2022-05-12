@@ -15,7 +15,7 @@ export type OtherAuctions_salesConnection = {
 };
 export type OtherAuctions_salesConnection$data = OtherAuctions_salesConnection;
 export type OtherAuctions_salesConnection$key = {
-    readonly " $data"?: OtherAuctions_salesConnection$data;
+    readonly " $data"?: OtherAuctions_salesConnection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OtherAuctions_salesConnection">;
 };
 

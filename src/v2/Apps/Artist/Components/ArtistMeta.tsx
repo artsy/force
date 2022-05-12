@@ -4,9 +4,9 @@ import { identity, pickBy } from "lodash"
 import { Component } from "react"
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } from "./ArtistMetaCanonicalLink"
+import { getENV } from "v2/Utils/getENV"
 
 interface Props {
   artist: ArtistMeta_artist
@@ -25,7 +25,7 @@ export const sellerFromPartner = (partner: ArtworkNode["partner"]) => {
       "@type": "ArtGallery",
       image,
       name: partner.name,
-      url: `${sd.APP_URL}${partner.href}`,
+      url: `${getENV("APP_URL")}${partner.href}`,
     }
   }
 }
@@ -101,7 +101,7 @@ export const productAttributes = (
     name: artwork.title,
     offers,
     productionDate: artwork.date,
-    url: `${sd.APP_URL}${artwork.href}`,
+    url: `${getENV("APP_URL")}${artwork.href}`,
   }
 }
 
@@ -144,14 +144,14 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist) => {
     description: artist.meta ? artist.meta.description : "",
     gender: artist.gender,
     image: artist.image ? artist.image.large : "",
-    mainEntityOfPage: `${sd.APP_URL}${artist.href}`,
+    mainEntityOfPage: `${getENV("APP_URL")}${artist.href}`,
     makesOffer,
     name: artist.name,
     nationality: {
       "@type": "Country",
       name: artist.nationality,
     },
-    url: `${sd.APP_URL}${artist.href}`,
+    url: `${getENV("APP_URL")}${artist.href}`,
   }
   return pickBy(attributes, identity)
 }
@@ -166,9 +166,7 @@ export class ArtistMeta extends Component<Props> {
       return (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Meta property="og:image" content={artist.image.large} />
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <Meta name="thumbnail" content={artist.image.square} />
         </>
       )
@@ -214,8 +212,14 @@ export class ArtistMeta extends Component<Props> {
           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
           content={artist.meta.description}
         />
-        <Meta property="og:url" href={`${sd.APP_URL}/artist/${artist.slug}`} />
-        <Meta property="og:type" href={`${sd.FACEBOOK_APP_NAMESPACE}:artist`} />
+        <Meta
+          property="og:url"
+          href={`${getENV("APP_URL")}/artist/${artist.slug}`}
+        />
+        <Meta
+          property="og:type"
+          href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
+        />
         {artist.alternate_names && (
           <Meta
             name="skos:prefLabel"

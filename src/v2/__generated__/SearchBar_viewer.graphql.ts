@@ -11,20 +11,20 @@ export type SearchBar_viewer = {
                 readonly displayLabel: string | null;
                 readonly href: string | null;
                 readonly __typename: string;
-                readonly displayType?: string | null;
-                readonly slug?: string;
+                readonly displayType?: string | null | undefined;
+                readonly slug?: string | undefined;
                 readonly statuses?: {
                     readonly artworks: boolean | null;
                     readonly auctionLots: boolean | null;
-                } | null;
+                } | null | undefined;
             } | null;
         } | null> | null;
-    } | null;
+    } | null | undefined;
     readonly " $refType": "SearchBar_viewer";
 };
 export type SearchBar_viewer$data = SearchBar_viewer;
 export type SearchBar_viewer$key = {
-    readonly " $data"?: SearchBar_viewer$data;
+    readonly " $data"?: SearchBar_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SearchBar_viewer">;
 };
 

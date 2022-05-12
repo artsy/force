@@ -11,7 +11,7 @@ export type SettingsEditSettingsTwoFactor_me = {
 };
 export type SettingsEditSettingsTwoFactor_me$data = SettingsEditSettingsTwoFactor_me;
 export type SettingsEditSettingsTwoFactor_me$key = {
-    readonly " $data"?: SettingsEditSettingsTwoFactor_me$data;
+    readonly " $data"?: SettingsEditSettingsTwoFactor_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsTwoFactor_me">;
 };
 

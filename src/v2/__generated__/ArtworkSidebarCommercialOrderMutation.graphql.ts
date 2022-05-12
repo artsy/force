@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOrderWithArtworkInput = {
     artworkId: string;
-    clientMutationId?: string | null;
-    editionSetId?: string | null;
-    quantity?: number | null;
+    clientMutationId?: string | null | undefined;
+    editionSetId?: string | null | undefined;
+    quantity?: number | null | undefined;
 };
 export type ArtworkSidebarCommercialOrderMutationVariables = {
     input: CommerceCreateOrderWithArtworkInput;
@@ -20,12 +20,12 @@ export type ArtworkSidebarCommercialOrderMutationResponse = {
             readonly order?: {
                 readonly internalID: string;
                 readonly mode: CommerceOrderModeEnum | null;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

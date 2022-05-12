@@ -15,7 +15,7 @@ export type FairExhibitorsGroup_exhibitorsGroup = {
 };
 export type FairExhibitorsGroup_exhibitorsGroup$data = FairExhibitorsGroup_exhibitorsGroup;
 export type FairExhibitorsGroup_exhibitorsGroup$key = {
-    readonly " $data"?: FairExhibitorsGroup_exhibitorsGroup$data;
+    readonly " $data"?: FairExhibitorsGroup_exhibitorsGroup$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairExhibitorsGroup_exhibitorsGroup">;
 };
 

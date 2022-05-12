@@ -26,7 +26,7 @@ export type AuctionApp_sale = {
 };
 export type AuctionApp_sale$data = AuctionApp_sale;
 export type AuctionApp_sale$key = {
-    readonly " $data"?: AuctionApp_sale$data;
+    readonly " $data"?: AuctionApp_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionApp_sale">;
 };
 

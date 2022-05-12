@@ -16,9 +16,9 @@ export type SearchApp_viewer = {
         } | null> | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly slug?: string;
-                readonly displayLabel?: string | null;
-                readonly displayType?: string | null;
+                readonly slug?: string | undefined;
+                readonly displayLabel?: string | null | undefined;
+                readonly displayType?: string | null | undefined;
             } | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"NavigationTabs_searchableConnection">;
@@ -32,7 +32,7 @@ export type SearchApp_viewer = {
 };
 export type SearchApp_viewer$data = SearchApp_viewer;
 export type SearchApp_viewer$key = {
-    readonly " $data"?: SearchApp_viewer$data;
+    readonly " $data"?: SearchApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SearchApp_viewer">;
 };
 

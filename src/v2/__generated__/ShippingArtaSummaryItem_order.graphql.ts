@@ -22,7 +22,7 @@ export type ShippingArtaSummaryItem_order = {
 };
 export type ShippingArtaSummaryItem_order$data = ShippingArtaSummaryItem_order;
 export type ShippingArtaSummaryItem_order$key = {
-    readonly " $data"?: ShippingArtaSummaryItem_order$data;
+    readonly " $data"?: ShippingArtaSummaryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShippingArtaSummaryItem_order">;
 };
 

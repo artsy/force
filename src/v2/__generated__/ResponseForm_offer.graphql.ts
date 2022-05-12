@@ -10,7 +10,7 @@ export type ResponseForm_offer = {
 };
 export type ResponseForm_offer$data = ResponseForm_offer;
 export type ResponseForm_offer$key = {
-    readonly " $data"?: ResponseForm_offer$data;
+    readonly " $data"?: ResponseForm_offer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ResponseForm_offer">;
 };
 

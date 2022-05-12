@@ -36,7 +36,7 @@ export type WorksForYouArtistFeed_viewer = {
 };
 export type WorksForYouArtistFeed_viewer$data = WorksForYouArtistFeed_viewer;
 export type WorksForYouArtistFeed_viewer$key = {
-    readonly " $data"?: WorksForYouArtistFeed_viewer$data;
+    readonly " $data"?: WorksForYouArtistFeed_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksForYouArtistFeed_viewer">;
 };
 

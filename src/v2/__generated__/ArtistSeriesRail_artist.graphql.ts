@@ -17,7 +17,7 @@ export type ArtistSeriesRail_artist = {
 };
 export type ArtistSeriesRail_artist$data = ArtistSeriesRail_artist;
 export type ArtistSeriesRail_artist$key = {
-    readonly " $data"?: ArtistSeriesRail_artist$data;
+    readonly " $data"?: ArtistSeriesRail_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
 };
 

@@ -10,7 +10,7 @@ export type ArticleSectionText_section = {
 };
 export type ArticleSectionText_section$data = ArticleSectionText_section;
 export type ArticleSectionText_section$key = {
-    readonly " $data"?: ArticleSectionText_section$data;
+    readonly " $data"?: ArticleSectionText_section$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSectionText_section">;
 };
 

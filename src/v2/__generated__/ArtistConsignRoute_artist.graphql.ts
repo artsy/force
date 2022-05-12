@@ -10,7 +10,7 @@ export type ArtistConsignRoute_artist = {
 };
 export type ArtistConsignRoute_artist$data = ArtistConsignRoute_artist;
 export type ArtistConsignRoute_artist$key = {
-    readonly " $data"?: ArtistConsignRoute_artist$data;
+    readonly " $data"?: ArtistConsignRoute_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistConsignRoute_artist">;
 };
 

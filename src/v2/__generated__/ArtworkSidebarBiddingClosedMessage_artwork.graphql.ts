@@ -10,7 +10,7 @@ export type ArtworkSidebarBiddingClosedMessage_artwork = {
 };
 export type ArtworkSidebarBiddingClosedMessage_artwork$data = ArtworkSidebarBiddingClosedMessage_artwork;
 export type ArtworkSidebarBiddingClosedMessage_artwork$key = {
-    readonly " $data"?: ArtworkSidebarBiddingClosedMessage_artwork$data;
+    readonly " $data"?: ArtworkSidebarBiddingClosedMessage_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
 };
 

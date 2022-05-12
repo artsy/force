@@ -10,7 +10,7 @@ export type ViewingRoomBody_viewingRoom = {
 };
 export type ViewingRoomBody_viewingRoom$data = ViewingRoomBody_viewingRoom;
 export type ViewingRoomBody_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomBody_viewingRoom$data;
+    readonly " $data"?: ViewingRoomBody_viewingRoom$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomBody_viewingRoom">;
 };
 

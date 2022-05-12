@@ -22,7 +22,7 @@ export type CurrentAuctions_viewer = {
 };
 export type CurrentAuctions_viewer$data = CurrentAuctions_viewer;
 export type CurrentAuctions_viewer$key = {
-    readonly " $data"?: CurrentAuctions_viewer$data;
+    readonly " $data"?: CurrentAuctions_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CurrentAuctions_viewer">;
 };
 

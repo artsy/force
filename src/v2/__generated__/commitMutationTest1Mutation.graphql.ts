@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceSetPaymentInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     creditCardId: string;
     id: string;
 };
@@ -16,7 +16,7 @@ export type commitMutationTest1MutationResponse = {
         readonly orderOrError: {
             readonly error?: {
                 readonly code: string;
-            };
+            } | undefined;
         };
     } | null;
 };

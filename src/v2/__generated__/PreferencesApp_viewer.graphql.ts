@@ -14,7 +14,7 @@ export type PreferencesApp_viewer = {
 };
 export type PreferencesApp_viewer$data = PreferencesApp_viewer;
 export type PreferencesApp_viewer$key = {
-    readonly " $data"?: PreferencesApp_viewer$data;
+    readonly " $data"?: PreferencesApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PreferencesApp_viewer">;
 };
 

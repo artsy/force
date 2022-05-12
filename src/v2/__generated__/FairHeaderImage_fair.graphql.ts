@@ -12,7 +12,7 @@ export type FairHeaderImage_fair = {
 };
 export type FairHeaderImage_fair$data = FairHeaderImage_fair;
 export type FairHeaderImage_fair$key = {
-    readonly " $data"?: FairHeaderImage_fair$data;
+    readonly " $data"?: FairHeaderImage_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairHeaderImage_fair">;
 };
 

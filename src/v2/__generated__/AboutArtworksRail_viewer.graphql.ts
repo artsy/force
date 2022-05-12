@@ -17,7 +17,7 @@ export type AboutArtworksRail_viewer = {
 };
 export type AboutArtworksRail_viewer$data = AboutArtworksRail_viewer;
 export type AboutArtworksRail_viewer$key = {
-    readonly " $data"?: AboutArtworksRail_viewer$data;
+    readonly " $data"?: AboutArtworksRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AboutArtworksRail_viewer">;
 };
 

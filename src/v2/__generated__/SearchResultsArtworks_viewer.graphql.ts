@@ -9,7 +9,7 @@ export type SearchResultsArtworks_viewer = {
     readonly sidebar: {
         readonly counts?: {
             readonly followedArtists: number | null;
-        } | null;
+        } | null | undefined;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -24,7 +24,7 @@ export type SearchResultsArtworks_viewer = {
 };
 export type SearchResultsArtworks_viewer$data = SearchResultsArtworks_viewer;
 export type SearchResultsArtworks_viewer$key = {
-    readonly " $data"?: SearchResultsArtworks_viewer$data;
+    readonly " $data"?: SearchResultsArtworks_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtworks_viewer">;
 };
 

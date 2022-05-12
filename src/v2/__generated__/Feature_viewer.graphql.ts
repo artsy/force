@@ -16,7 +16,7 @@ export type Feature_viewer = {
 };
 export type Feature_viewer$data = Feature_viewer;
 export type Feature_viewer$key = {
-    readonly " $data"?: Feature_viewer$data;
+    readonly " $data"?: Feature_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Feature_viewer">;
 };
 

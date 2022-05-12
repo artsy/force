@@ -35,7 +35,7 @@ export type Shows_partner = {
 };
 export type Shows_partner$data = Shows_partner;
 export type Shows_partner$key = {
-    readonly " $data"?: Shows_partner$data;
+    readonly " $data"?: Shows_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Shows_partner">;
 };
 

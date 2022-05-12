@@ -16,7 +16,7 @@ export type StickyNav_geneFamiliesConnection = {
 };
 export type StickyNav_geneFamiliesConnection$data = StickyNav_geneFamiliesConnection;
 export type StickyNav_geneFamiliesConnection$key = {
-    readonly " $data"?: StickyNav_geneFamiliesConnection$data;
+    readonly " $data"?: StickyNav_geneFamiliesConnection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"StickyNav_geneFamiliesConnection">;
 };
 

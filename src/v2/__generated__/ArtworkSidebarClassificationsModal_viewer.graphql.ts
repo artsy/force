@@ -14,7 +14,7 @@ export type ArtworkSidebarClassificationsModal_viewer = {
 };
 export type ArtworkSidebarClassificationsModal_viewer$data = ArtworkSidebarClassificationsModal_viewer;
 export type ArtworkSidebarClassificationsModal_viewer$key = {
-    readonly " $data"?: ArtworkSidebarClassificationsModal_viewer$data;
+    readonly " $data"?: ArtworkSidebarClassificationsModal_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
 };
 

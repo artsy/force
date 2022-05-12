@@ -37,7 +37,7 @@ export type ArticleBody_article = {
 };
 export type ArticleBody_article$data = ArticleBody_article;
 export type ArticleBody_article$key = {
-    readonly " $data"?: ArticleBody_article$data;
+    readonly " $data"?: ArticleBody_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleBody_article">;
 };
 

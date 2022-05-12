@@ -21,7 +21,7 @@ export type WorksForYouApp_viewerSidebarAggregations = {
 };
 export type WorksForYouApp_viewerSidebarAggregations$data = WorksForYouApp_viewerSidebarAggregations;
 export type WorksForYouApp_viewerSidebarAggregations$key = {
-    readonly " $data"?: WorksForYouApp_viewerSidebarAggregations$data;
+    readonly " $data"?: WorksForYouApp_viewerSidebarAggregations$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerSidebarAggregations">;
 };
 

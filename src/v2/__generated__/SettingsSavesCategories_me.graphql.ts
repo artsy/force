@@ -23,7 +23,7 @@ export type SettingsSavesCategories_me = {
 };
 export type SettingsSavesCategories_me$data = SettingsSavesCategories_me;
 export type SettingsSavesCategories_me$key = {
-    readonly " $data"?: SettingsSavesCategories_me$data;
+    readonly " $data"?: SettingsSavesCategories_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsSavesCategories_me">;
 };
 

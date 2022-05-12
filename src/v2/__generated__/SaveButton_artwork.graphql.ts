@@ -14,7 +14,7 @@ export type SaveButton_artwork = {
 };
 export type SaveButton_artwork$data = SaveButton_artwork;
 export type SaveButton_artwork$key = {
-    readonly " $data"?: SaveButton_artwork$data;
+    readonly " $data"?: SaveButton_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SaveButton_artwork">;
 };
 

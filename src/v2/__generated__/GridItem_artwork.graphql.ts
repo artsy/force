@@ -21,7 +21,7 @@ export type GridItem_artwork = {
 };
 export type GridItem_artwork$data = GridItem_artwork;
 export type GridItem_artwork$key = {
-    readonly " $data"?: GridItem_artwork$data;
+    readonly " $data"?: GridItem_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
 };
 

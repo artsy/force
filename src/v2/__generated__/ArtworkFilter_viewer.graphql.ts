@@ -13,7 +13,7 @@ export type ArtworkFilter_viewer = {
 };
 export type ArtworkFilter_viewer$data = ArtworkFilter_viewer;
 export type ArtworkFilter_viewer$key = {
-    readonly " $data"?: ArtworkFilter_viewer$data;
+    readonly " $data"?: ArtworkFilter_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
 };
 

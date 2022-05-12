@@ -21,7 +21,7 @@ export type AuctionAssociatedSale_sale = {
 };
 export type AuctionAssociatedSale_sale$data = AuctionAssociatedSale_sale;
 export type AuctionAssociatedSale_sale$key = {
-    readonly " $data"?: AuctionAssociatedSale_sale$data;
+    readonly " $data"?: AuctionAssociatedSale_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionAssociatedSale_sale">;
 };
 

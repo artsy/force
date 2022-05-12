@@ -6,10 +6,10 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersFilteredCellsQueryVariables = {
-    after?: string | null;
-    near?: string | null;
-    category?: Array<string | null> | null;
-    type?: Array<PartnerClassification | null> | null;
+    after?: string | null | undefined;
+    near?: string | null | undefined;
+    category?: Array<string | null> | null | undefined;
+    type?: Array<PartnerClassification | null> | null | undefined;
 };
 export type PartnersFilteredCellsQueryResponse = {
     readonly viewer: {

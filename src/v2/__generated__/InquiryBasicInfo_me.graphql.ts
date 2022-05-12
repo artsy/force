@@ -14,7 +14,7 @@ export type InquiryBasicInfo_me = {
 };
 export type InquiryBasicInfo_me$data = InquiryBasicInfo_me;
 export type InquiryBasicInfo_me$key = {
-    readonly " $data"?: InquiryBasicInfo_me$data;
+    readonly " $data"?: InquiryBasicInfo_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"InquiryBasicInfo_me">;
 };
 

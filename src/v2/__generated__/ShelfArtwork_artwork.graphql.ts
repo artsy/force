@@ -24,7 +24,7 @@ export type ShelfArtwork_artwork = {
 };
 export type ShelfArtwork_artwork$data = ShelfArtwork_artwork;
 export type ShelfArtwork_artwork$key = {
-    readonly " $data"?: ShelfArtwork_artwork$data;
+    readonly " $data"?: ShelfArtwork_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
 };
 

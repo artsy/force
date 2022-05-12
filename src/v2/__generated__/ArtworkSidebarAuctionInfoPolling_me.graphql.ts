@@ -10,7 +10,7 @@ export type ArtworkSidebarAuctionInfoPolling_me = {
 };
 export type ArtworkSidebarAuctionInfoPolling_me$data = ArtworkSidebarAuctionInfoPolling_me;
 export type ArtworkSidebarAuctionInfoPolling_me$key = {
-    readonly " $data"?: ArtworkSidebarAuctionInfoPolling_me$data;
+    readonly " $data"?: ArtworkSidebarAuctionInfoPolling_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
 };
 

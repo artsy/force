@@ -11,7 +11,7 @@ export type ArticleVisibilityMetadata_article = {
 };
 export type ArticleVisibilityMetadata_article$data = ArticleVisibilityMetadata_article;
 export type ArticleVisibilityMetadata_article$key = {
-    readonly " $data"?: ArticleVisibilityMetadata_article$data;
+    readonly " $data"?: ArticleVisibilityMetadata_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleVisibilityMetadata_article">;
 };
 

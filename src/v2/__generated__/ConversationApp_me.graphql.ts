@@ -20,7 +20,7 @@ export type ConversationApp_me = {
 };
 export type ConversationApp_me$data = ConversationApp_me;
 export type ConversationApp_me$key = {
-    readonly " $data"?: ConversationApp_me$data;
+    readonly " $data"?: ConversationApp_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ConversationApp_me">;
 };
 

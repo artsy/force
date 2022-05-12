@@ -22,7 +22,7 @@ export type SettingsSavesArtists_me = {
 };
 export type SettingsSavesArtists_me$data = SettingsSavesArtists_me;
 export type SettingsSavesArtists_me$key = {
-    readonly " $data"?: SettingsSavesArtists_me$data;
+    readonly " $data"?: SettingsSavesArtists_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsSavesArtists_me">;
 };
 

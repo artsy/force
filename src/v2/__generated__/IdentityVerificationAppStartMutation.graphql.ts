@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type startIdentityVerificationMutationInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     identityVerificationId: string;
 };
 export type IdentityVerificationAppStartMutationVariables = {
@@ -13,12 +13,12 @@ export type IdentityVerificationAppStartMutationVariables = {
 export type IdentityVerificationAppStartMutationResponse = {
     readonly startIdentityVerification: {
         readonly startIdentityVerificationResponseOrError: {
-            readonly identityVerificationFlowUrl?: string | null;
+            readonly identityVerificationFlowUrl?: string | null | undefined;
             readonly mutationError?: {
                 readonly detail: string | null;
                 readonly error: string | null;
                 readonly message: string;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

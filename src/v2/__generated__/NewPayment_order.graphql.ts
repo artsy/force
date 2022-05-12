@@ -25,13 +25,13 @@ export type NewPayment_order = {
         readonly createdAt: string;
         readonly internalID: string;
         readonly note: string | null;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
     readonly " $refType": "NewPayment_order";
 };
 export type NewPayment_order$data = NewPayment_order;
 export type NewPayment_order$key = {
-    readonly " $data"?: NewPayment_order$data;
+    readonly " $data"?: NewPayment_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NewPayment_order">;
 };
 

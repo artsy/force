@@ -14,7 +14,7 @@ export type ArtworkSidebarSizeInfo_piece = {
 };
 export type ArtworkSidebarSizeInfo_piece$data = ArtworkSidebarSizeInfo_piece;
 export type ArtworkSidebarSizeInfo_piece$key = {
-    readonly " $data"?: ArtworkSidebarSizeInfo_piece$data;
+    readonly " $data"?: ArtworkSidebarSizeInfo_piece$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
 };
 

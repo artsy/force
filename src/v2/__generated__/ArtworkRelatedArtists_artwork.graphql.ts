@@ -25,7 +25,7 @@ export type ArtworkRelatedArtists_artwork = {
 };
 export type ArtworkRelatedArtists_artwork$data = ArtworkRelatedArtists_artwork;
 export type ArtworkRelatedArtists_artwork$key = {
-    readonly " $data"?: ArtworkRelatedArtists_artwork$data;
+    readonly " $data"?: ArtworkRelatedArtists_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork">;
 };
 

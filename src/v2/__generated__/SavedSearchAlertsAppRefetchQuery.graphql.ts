@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchesSortEnum = "CREATED_AT_DESC" | "NAME_ASC" | "%future added value";
 export type SavedSearchAlertsAppRefetchQueryVariables = {
-    after?: string | null;
+    after?: string | null | undefined;
     count: number;
-    sort?: SavedSearchesSortEnum | null;
+    sort?: SavedSearchesSortEnum | null | undefined;
 };
 export type SavedSearchAlertsAppRefetchQueryResponse = {
     readonly me: {

@@ -33,7 +33,7 @@ export type AuctionLotInfo_saleArtwork = {
 };
 export type AuctionLotInfo_saleArtwork$data = AuctionLotInfo_saleArtwork;
 export type AuctionLotInfo_saleArtwork$key = {
-    readonly " $data"?: AuctionLotInfo_saleArtwork$data;
+    readonly " $data"?: AuctionLotInfo_saleArtwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionLotInfo_saleArtwork">;
 };
 

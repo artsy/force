@@ -24,14 +24,14 @@ export type ShowsFeaturedShow_show = {
         } | null;
     } | null;
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ShowsShowDates_show">;
     readonly " $refType": "ShowsFeaturedShow_show";
 };
 export type ShowsFeaturedShow_show$data = ShowsFeaturedShow_show;
 export type ShowsFeaturedShow_show$key = {
-    readonly " $data"?: ShowsFeaturedShow_show$data;
+    readonly " $data"?: ShowsFeaturedShow_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsFeaturedShow_show">;
 };
 

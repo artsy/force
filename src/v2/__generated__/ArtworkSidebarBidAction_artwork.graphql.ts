@@ -37,7 +37,7 @@ export type ArtworkSidebarBidAction_artwork = {
 };
 export type ArtworkSidebarBidAction_artwork$data = ArtworkSidebarBidAction_artwork;
 export type ArtworkSidebarBidAction_artwork$key = {
-    readonly " $data"?: ArtworkSidebarBidAction_artwork$data;
+    readonly " $data"?: ArtworkSidebarBidAction_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
 };
 

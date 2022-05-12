@@ -5,12 +5,12 @@
 import { ConcreteRequest } from "relay-runtime";
 export type IntendedState = "ACCEPTED" | "REJECTED" | "REVIEW" | "%future added value";
 export type CreateOfferResponseMutationInput = {
-    clientMutationId?: string | null;
-    comments?: string | null;
+    clientMutationId?: string | null | undefined;
+    comments?: string | null | undefined;
     intendedState: IntendedState;
     offerId: string;
-    phoneNumber?: string | null;
-    rejectionReason?: string | null;
+    phoneNumber?: string | null | undefined;
+    rejectionReason?: string | null | undefined;
 };
 export type CreateOfferResponseMutationVariables = {
     input: CreateOfferResponseMutationInput;

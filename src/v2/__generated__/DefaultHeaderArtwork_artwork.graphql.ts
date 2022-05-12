@@ -21,7 +21,7 @@ export type DefaultHeaderArtwork_artwork = {
 };
 export type DefaultHeaderArtwork_artwork$data = DefaultHeaderArtwork_artwork;
 export type DefaultHeaderArtwork_artwork$key = {
-    readonly " $data"?: DefaultHeaderArtwork_artwork$data;
+    readonly " $data"?: DefaultHeaderArtwork_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"DefaultHeaderArtwork_artwork">;
 };
 

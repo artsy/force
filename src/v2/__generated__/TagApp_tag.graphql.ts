@@ -11,7 +11,7 @@ export type TagApp_tag = {
 };
 export type TagApp_tag$data = TagApp_tag;
 export type TagApp_tag$key = {
-    readonly " $data"?: TagApp_tag$data;
+    readonly " $data"?: TagApp_tag$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TagApp_tag">;
 };
 

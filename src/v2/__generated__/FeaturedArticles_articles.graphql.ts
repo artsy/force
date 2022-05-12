@@ -24,7 +24,7 @@ export type FeaturedArticles_articles = ReadonlyArray<{
 }>;
 export type FeaturedArticles_articles$data = FeaturedArticles_articles;
 export type FeaturedArticles_articles$key = ReadonlyArray<{
-    readonly " $data"?: FeaturedArticles_articles$data;
+    readonly " $data"?: FeaturedArticles_articles$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedArticles_articles">;
 }>;
 

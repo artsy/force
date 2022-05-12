@@ -10,7 +10,7 @@ export type NavBarMobileMenuInboxNotificationCount_me = {
 };
 export type NavBarMobileMenuInboxNotificationCount_me$data = NavBarMobileMenuInboxNotificationCount_me;
 export type NavBarMobileMenuInboxNotificationCount_me$key = {
-    readonly " $data"?: NavBarMobileMenuInboxNotificationCount_me$data;
+    readonly " $data"?: NavBarMobileMenuInboxNotificationCount_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NavBarMobileMenuInboxNotificationCount_me">;
 };
 

@@ -23,16 +23,16 @@ export type Counter_order = {
     } | null;
     readonly lastOffer?: {
         readonly createdAt: string;
-    } | null;
+    } | null | undefined;
     readonly myLastOffer?: {
         readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "OfferHistoryItem_order">;
     readonly " $refType": "Counter_order";
 };
 export type Counter_order$data = Counter_order;
 export type Counter_order$key = {
-    readonly " $data"?: Counter_order$data;
+    readonly " $data"?: Counter_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Counter_order">;
 };
 

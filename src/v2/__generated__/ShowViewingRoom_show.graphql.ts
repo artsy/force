@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowViewingRoom_show = {
     readonly partner: {
-        readonly name?: string | null;
+        readonly name?: string | null | undefined;
     } | null;
     readonly viewingRoomsConnection: {
         readonly edges: ReadonlyArray<{
@@ -30,7 +30,7 @@ export type ShowViewingRoom_show = {
 };
 export type ShowViewingRoom_show$data = ShowViewingRoom_show;
 export type ShowViewingRoom_show$key = {
-    readonly " $data"?: ShowViewingRoom_show$data;
+    readonly " $data"?: ShowViewingRoom_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowViewingRoom_show">;
 };
 

@@ -5,8 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCurrentShowsQueryVariables = {
-    first?: number | null;
-    after?: string | null;
+    first?: number | null | undefined;
+    after?: string | null | undefined;
 };
 export type ShowsCurrentShowsQueryResponse = {
     readonly viewer: {

@@ -24,7 +24,7 @@ export type EntityHeaderFair_fair = {
 };
 export type EntityHeaderFair_fair$data = EntityHeaderFair_fair;
 export type EntityHeaderFair_fair$key = {
-    readonly " $data"?: EntityHeaderFair_fair$data;
+    readonly " $data"?: EntityHeaderFair_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderFair_fair">;
 };
 

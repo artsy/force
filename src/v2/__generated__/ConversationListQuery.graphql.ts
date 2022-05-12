@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationListQueryVariables = {
     first: number;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
+    last?: number | null | undefined;
+    after?: string | null | undefined;
+    before?: string | null | undefined;
 };
 export type ConversationListQueryResponse = {
     readonly me: {

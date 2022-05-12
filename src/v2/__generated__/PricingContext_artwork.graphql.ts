@@ -45,7 +45,7 @@ export type PricingContext_artwork = {
 };
 export type PricingContext_artwork$data = PricingContext_artwork;
 export type PricingContext_artwork$key = {
-    readonly " $data"?: PricingContext_artwork$data;
+    readonly " $data"?: PricingContext_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PricingContext_artwork">;
 };
 

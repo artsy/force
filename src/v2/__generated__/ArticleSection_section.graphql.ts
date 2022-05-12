@@ -11,7 +11,7 @@ export type ArticleSection_section = {
 };
 export type ArticleSection_section$data = ArticleSection_section;
 export type ArticleSection_section$key = {
-    readonly " $data"?: ArticleSection_section$data;
+    readonly " $data"?: ArticleSection_section$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSection_section">;
 };
 

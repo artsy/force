@@ -29,7 +29,7 @@ export type AuctionFAQsDialog_viewer = {
 };
 export type AuctionFAQsDialog_viewer$data = AuctionFAQsDialog_viewer;
 export type AuctionFAQsDialog_viewer$key = {
-    readonly " $data"?: AuctionFAQsDialog_viewer$data;
+    readonly " $data"?: AuctionFAQsDialog_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionFAQsDialog_viewer">;
 };
 

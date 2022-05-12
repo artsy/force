@@ -11,7 +11,7 @@ export type TwoFactorAuthentication_me = {
 };
 export type TwoFactorAuthentication_me$data = TwoFactorAuthentication_me;
 export type TwoFactorAuthentication_me$key = {
-    readonly " $data"?: TwoFactorAuthentication_me$data;
+    readonly " $data"?: TwoFactorAuthentication_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TwoFactorAuthentication_me">;
 };
 

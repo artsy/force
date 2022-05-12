@@ -17,7 +17,7 @@ export type fetchFollowedArtists_response = {
 };
 export type fetchFollowedArtists_response$data = fetchFollowedArtists_response;
 export type fetchFollowedArtists_response$key = {
-    readonly " $data"?: fetchFollowedArtists_response$data;
+    readonly " $data"?: fetchFollowedArtists_response$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"fetchFollowedArtists_response">;
 };
 

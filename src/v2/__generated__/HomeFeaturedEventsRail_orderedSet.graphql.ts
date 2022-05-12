@@ -32,7 +32,7 @@ export type HomeFeaturedEventsRail_orderedSet = {
 };
 export type HomeFeaturedEventsRail_orderedSet$data = HomeFeaturedEventsRail_orderedSet;
 export type HomeFeaturedEventsRail_orderedSet$key = {
-    readonly " $data"?: HomeFeaturedEventsRail_orderedSet$data;
+    readonly " $data"?: HomeFeaturedEventsRail_orderedSet$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;
 };
 

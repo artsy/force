@@ -11,7 +11,7 @@ export type BackLink_artist = {
 };
 export type BackLink_artist$data = BackLink_artist;
 export type BackLink_artist$key = {
-    readonly " $data"?: BackLink_artist$data;
+    readonly " $data"?: BackLink_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"BackLink_artist">;
 };
 

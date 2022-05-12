@@ -9,7 +9,7 @@ export type ArticleZoomGallery_article = {
         readonly __typename: "ArticleSectionImageCollection";
         readonly figures: ReadonlyArray<{
             readonly __typename: string;
-            readonly id?: string;
+            readonly id?: string | undefined;
             readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
         }>;
     } | {
@@ -17,7 +17,7 @@ export type ArticleZoomGallery_article = {
         readonly title: string | null;
         readonly figures: ReadonlyArray<{
             readonly __typename: string;
-            readonly id?: string;
+            readonly id?: string | undefined;
             readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGalleryFigure_figure" | "ArticleZoomGalleryCaption_figure">;
         }>;
     } | {
@@ -29,7 +29,7 @@ export type ArticleZoomGallery_article = {
 };
 export type ArticleZoomGallery_article$data = ArticleZoomGallery_article;
 export type ArticleZoomGallery_article$key = {
-    readonly " $data"?: ArticleZoomGallery_article$data;
+    readonly " $data"?: ArticleZoomGallery_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGallery_article">;
 };
 

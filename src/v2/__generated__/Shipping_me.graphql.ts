@@ -31,7 +31,7 @@ export type Shipping_me = {
 };
 export type Shipping_me$data = Shipping_me;
 export type Shipping_me$key = {
-    readonly " $data"?: Shipping_me$data;
+    readonly " $data"?: Shipping_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Shipping_me">;
 };
 

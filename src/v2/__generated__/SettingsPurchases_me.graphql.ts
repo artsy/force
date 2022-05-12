@@ -26,7 +26,7 @@ export type SettingsPurchases_me = {
 };
 export type SettingsPurchases_me$data = SettingsPurchases_me;
 export type SettingsPurchases_me$key = {
-    readonly " $data"?: SettingsPurchases_me$data;
+    readonly " $data"?: SettingsPurchases_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsPurchases_me">;
 };
 

@@ -32,8 +32,8 @@ export type OfferHistoryItem_order = {
                 readonly fromParticipant: CommerceOrderParticipantEnum | null;
             } | null;
         } | null> | null;
-    } | null;
-    readonly currencyCode?: string;
+    } | null | undefined;
+    readonly currencyCode?: string | undefined;
     readonly lastOffer?: {
         readonly internalID: string;
         readonly fromParticipant: CommerceOrderParticipantEnum | null;
@@ -41,12 +41,12 @@ export type OfferHistoryItem_order = {
         readonly shippingTotal: string | null;
         readonly taxTotal: string | null;
         readonly note: string | null;
-    } | null;
+    } | null | undefined;
     readonly " $refType": "OfferHistoryItem_order";
 };
 export type OfferHistoryItem_order$data = OfferHistoryItem_order;
 export type OfferHistoryItem_order$key = {
-    readonly " $data"?: OfferHistoryItem_order$data;
+    readonly " $data"?: OfferHistoryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OfferHistoryItem_order">;
 };
 

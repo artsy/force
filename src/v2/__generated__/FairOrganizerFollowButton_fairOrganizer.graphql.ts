@@ -16,7 +16,7 @@ export type FairOrganizerFollowButton_fairOrganizer = {
 };
 export type FairOrganizerFollowButton_fairOrganizer$data = FairOrganizerFollowButton_fairOrganizer;
 export type FairOrganizerFollowButton_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerFollowButton_fairOrganizer$data;
+    readonly " $data"?: FairOrganizerFollowButton_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
 };
 

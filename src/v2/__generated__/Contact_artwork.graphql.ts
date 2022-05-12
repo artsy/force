@@ -31,7 +31,7 @@ export type Contact_artwork = {
 };
 export type Contact_artwork$data = Contact_artwork;
 export type Contact_artwork$key = {
-    readonly " $data"?: Contact_artwork$data;
+    readonly " $data"?: Contact_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Contact_artwork">;
 };
 

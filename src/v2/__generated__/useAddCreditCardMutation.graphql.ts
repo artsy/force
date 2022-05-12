@@ -5,8 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CreditCardInput = {
-    clientMutationId?: string | null;
-    oneTimeUse?: boolean | null;
+    clientMutationId?: string | null | undefined;
+    oneTimeUse?: boolean | null | undefined;
     token: string;
 };
 export type useAddCreditCardMutationVariables = {
@@ -20,10 +20,10 @@ export type useAddCreditCardMutationResponse = {
         readonly creditCardOrError: {
             readonly creditCard?: {
                 readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethod_method">;
-            } | null;
+            } | null | undefined;
             readonly mutationError?: {
                 readonly message: string;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

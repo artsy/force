@@ -37,17 +37,17 @@ export type redirects_order = {
     readonly myLastOffer?: {
         readonly internalID: string;
         readonly createdAt: string;
-    } | null;
+    } | null | undefined;
     readonly lastOffer?: {
         readonly internalID: string;
         readonly createdAt: string;
-    } | null;
-    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+    } | null | undefined;
+    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
     readonly " $refType": "redirects_order";
 };
 export type redirects_order$data = redirects_order;
 export type redirects_order$key = {
-    readonly " $data"?: redirects_order$data;
+    readonly " $data"?: redirects_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"redirects_order">;
 };
 

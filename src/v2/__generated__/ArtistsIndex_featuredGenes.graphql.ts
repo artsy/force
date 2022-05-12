@@ -7,19 +7,19 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistsIndex_featuredGenes = ReadonlyArray<{
     readonly name: string | null;
     readonly genes: ReadonlyArray<{
-        readonly internalID?: string;
-        readonly name?: string | null;
-        readonly href?: string | null;
+        readonly internalID?: string | undefined;
+        readonly name?: string | null | undefined;
+        readonly href?: string | null | undefined;
         readonly trendingArtists?: ReadonlyArray<{
             readonly internalID: string;
             readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
-        } | null> | null;
+        } | null> | null | undefined;
     } | null> | null;
     readonly " $refType": "ArtistsIndex_featuredGenes";
 }>;
 export type ArtistsIndex_featuredGenes$data = ArtistsIndex_featuredGenes;
 export type ArtistsIndex_featuredGenes$key = ReadonlyArray<{
-    readonly " $data"?: ArtistsIndex_featuredGenes$data;
+    readonly " $data"?: ArtistsIndex_featuredGenes$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistsIndex_featuredGenes">;
 }>;
 

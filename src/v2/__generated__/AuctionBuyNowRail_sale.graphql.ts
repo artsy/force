@@ -23,7 +23,7 @@ export type AuctionBuyNowRail_sale = {
 };
 export type AuctionBuyNowRail_sale$data = AuctionBuyNowRail_sale;
 export type AuctionBuyNowRail_sale$key = {
-    readonly " $data"?: AuctionBuyNowRail_sale$data;
+    readonly " $data"?: AuctionBuyNowRail_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionBuyNowRail_sale">;
 };
 

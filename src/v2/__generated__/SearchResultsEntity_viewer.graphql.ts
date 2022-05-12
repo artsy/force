@@ -15,12 +15,12 @@ export type SearchResultsEntity_viewer = {
         };
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly description?: string | null;
-                readonly displayLabel?: string | null;
-                readonly href?: string | null;
-                readonly internalID?: string;
-                readonly imageUrl?: string | null;
-                readonly displayType?: string | null;
+                readonly description?: string | null | undefined;
+                readonly displayLabel?: string | null | undefined;
+                readonly href?: string | null | undefined;
+                readonly internalID?: string | undefined;
+                readonly imageUrl?: string | null | undefined;
+                readonly displayType?: string | null | undefined;
             } | null;
         } | null> | null;
     } | null;
@@ -28,7 +28,7 @@ export type SearchResultsEntity_viewer = {
 };
 export type SearchResultsEntity_viewer$data = SearchResultsEntity_viewer;
 export type SearchResultsEntity_viewer$key = {
-    readonly " $data"?: SearchResultsEntity_viewer$data;
+    readonly " $data"?: SearchResultsEntity_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SearchResultsEntity_viewer">;
 };
 

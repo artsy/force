@@ -11,7 +11,7 @@ export type AuctionTimer_sale = {
 };
 export type AuctionTimer_sale$data = AuctionTimer_sale;
 export type AuctionTimer_sale$key = {
-    readonly " $data"?: AuctionTimer_sale$data;
+    readonly " $data"?: AuctionTimer_sale$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionTimer_sale">;
 };
 

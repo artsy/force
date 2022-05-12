@@ -12,7 +12,7 @@ export type PartnerHeaderImage_profile = {
 };
 export type PartnerHeaderImage_profile$data = PartnerHeaderImage_profile;
 export type PartnerHeaderImage_profile$key = {
-    readonly " $data"?: PartnerHeaderImage_profile$data;
+    readonly " $data"?: PartnerHeaderImage_profile$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerHeaderImage_profile">;
 };
 

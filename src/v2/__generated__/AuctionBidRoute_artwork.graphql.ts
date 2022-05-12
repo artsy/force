@@ -31,7 +31,7 @@ export type AuctionBidRoute_artwork = {
 };
 export type AuctionBidRoute_artwork$data = AuctionBidRoute_artwork;
 export type AuctionBidRoute_artwork$key = {
-    readonly " $data"?: AuctionBidRoute_artwork$data;
+    readonly " $data"?: AuctionBidRoute_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionBidRoute_artwork">;
 };
 

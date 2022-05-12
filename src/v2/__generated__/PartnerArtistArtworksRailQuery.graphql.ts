@@ -7,8 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistArtworksRailQueryVariables = {
     partnerId: string;
     artistId: string;
-    first?: number | null;
-    after?: string | null;
+    first?: number | null | undefined;
+    after?: string | null | undefined;
 };
 export type PartnerArtistArtworksRailQueryResponse = {
     readonly partner: {

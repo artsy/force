@@ -10,7 +10,7 @@ export type SettingsPurchasesRoute_me = {
 };
 export type SettingsPurchasesRoute_me$data = SettingsPurchasesRoute_me;
 export type SettingsPurchasesRoute_me$key = {
-    readonly " $data"?: SettingsPurchasesRoute_me$data;
+    readonly " $data"?: SettingsPurchasesRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRoute_me">;
 };
 

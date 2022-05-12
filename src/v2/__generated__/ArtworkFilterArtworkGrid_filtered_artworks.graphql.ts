@@ -23,7 +23,7 @@ export type ArtworkFilterArtworkGrid_filtered_artworks = {
 };
 export type ArtworkFilterArtworkGrid_filtered_artworks$data = ArtworkFilterArtworkGrid_filtered_artworks;
 export type ArtworkFilterArtworkGrid_filtered_artworks$key = {
-    readonly " $data"?: ArtworkFilterArtworkGrid_filtered_artworks$data;
+    readonly " $data"?: ArtworkFilterArtworkGrid_filtered_artworks$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
 };
 

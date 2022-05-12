@@ -10,7 +10,7 @@ export type PriceOptions_order = {
 };
 export type PriceOptions_order$data = PriceOptions_order;
 export type PriceOptions_order$key = {
-    readonly " $data"?: PriceOptions_order$data;
+    readonly " $data"?: PriceOptions_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PriceOptions_order">;
 };
 

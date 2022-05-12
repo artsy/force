@@ -34,7 +34,7 @@ export type SeoProductsForCollections_ascending_artworks = {
 };
 export type SeoProductsForCollections_ascending_artworks$data = SeoProductsForCollections_ascending_artworks;
 export type SeoProductsForCollections_ascending_artworks$key = {
-    readonly " $data"?: SeoProductsForCollections_ascending_artworks$data;
+    readonly " $data"?: SeoProductsForCollections_ascending_artworks$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SeoProductsForCollections_ascending_artworks">;
 };
 

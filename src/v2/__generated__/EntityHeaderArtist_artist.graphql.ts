@@ -25,7 +25,7 @@ export type EntityHeaderArtist_artist = {
 };
 export type EntityHeaderArtist_artist$data = EntityHeaderArtist_artist;
 export type EntityHeaderArtist_artist$key = {
-    readonly " $data"?: EntityHeaderArtist_artist$data;
+    readonly " $data"?: EntityHeaderArtist_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
 };
 

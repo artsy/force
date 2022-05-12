@@ -16,7 +16,7 @@ export type HomeWorksByArtistsYouFollowRail_homePage = {
 };
 export type HomeWorksByArtistsYouFollowRail_homePage$data = HomeWorksByArtistsYouFollowRail_homePage;
 export type HomeWorksByArtistsYouFollowRail_homePage$key = {
-    readonly " $data"?: HomeWorksByArtistsYouFollowRail_homePage$data;
+    readonly " $data"?: HomeWorksByArtistsYouFollowRail_homePage$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeWorksByArtistsYouFollowRail_homePage">;
 };
 

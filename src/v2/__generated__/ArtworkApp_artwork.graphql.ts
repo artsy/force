@@ -11,7 +11,7 @@ export type ArtworkApp_artwork = {
     readonly is_offerable: boolean | null;
     readonly availability: string | null;
     readonly listPrice: {
-        readonly display?: string | null;
+        readonly display?: string | null | undefined;
     } | null;
     readonly is_in_auction: boolean | null;
     readonly sale: {
@@ -33,7 +33,7 @@ export type ArtworkApp_artwork = {
 };
 export type ArtworkApp_artwork$data = ArtworkApp_artwork;
 export type ArtworkApp_artwork$key = {
-    readonly " $data"?: ArtworkApp_artwork$data;
+    readonly " $data"?: ArtworkApp_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkApp_artwork">;
 };
 

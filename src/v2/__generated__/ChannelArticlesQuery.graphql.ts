@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ChannelArticlesQueryVariables = {
     id: string;
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type ChannelArticlesQueryResponse = {
     readonly channel: {

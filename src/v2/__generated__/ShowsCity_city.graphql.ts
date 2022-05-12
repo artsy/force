@@ -44,7 +44,7 @@ export type ShowsCity_city = {
 };
 export type ShowsCity_city$data = ShowsCity_city;
 export type ShowsCity_city$key = {
-    readonly " $data"?: ShowsCity_city$data;
+    readonly " $data"?: ShowsCity_city$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsCity_city">;
 };
 

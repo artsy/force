@@ -10,8 +10,8 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
             readonly node: ({
                 readonly __typename: "Profile";
                 readonly owner: {
-                    readonly internalID?: string;
-                    readonly slug?: string;
+                    readonly internalID?: string | undefined;
+                    readonly slug?: string | undefined;
                     readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
                 };
             } | {
@@ -25,7 +25,7 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
 };
 export type HomeFeaturedGalleriesRail_orderedSet$data = HomeFeaturedGalleriesRail_orderedSet;
 export type HomeFeaturedGalleriesRail_orderedSet$key = {
-    readonly " $data"?: HomeFeaturedGalleriesRail_orderedSet$data;
+    readonly " $data"?: HomeFeaturedGalleriesRail_orderedSet$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
 };
 

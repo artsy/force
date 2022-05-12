@@ -26,7 +26,7 @@ export type ViewingRoomsFeaturedRail_featuredViewingRooms = {
 };
 export type ViewingRoomsFeaturedRail_featuredViewingRooms$data = ViewingRoomsFeaturedRail_featuredViewingRooms;
 export type ViewingRoomsFeaturedRail_featuredViewingRooms$key = {
-    readonly " $data"?: ViewingRoomsFeaturedRail_featuredViewingRooms$data;
+    readonly " $data"?: ViewingRoomsFeaturedRail_featuredViewingRooms$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsFeaturedRail_featuredViewingRooms">;
 };
 

@@ -16,7 +16,7 @@ export type ArtworkSharePanel_artwork = {
 };
 export type ArtworkSharePanel_artwork$data = ArtworkSharePanel_artwork;
 export type ArtworkSharePanel_artwork$key = {
-    readonly " $data"?: ArtworkSharePanel_artwork$data;
+    readonly " $data"?: ArtworkSharePanel_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSharePanel_artwork">;
 };
 

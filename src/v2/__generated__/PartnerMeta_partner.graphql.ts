@@ -33,7 +33,7 @@ export type PartnerMeta_partner = {
 };
 export type PartnerMeta_partner$data = PartnerMeta_partner;
 export type PartnerMeta_partner$key = {
-    readonly " $data"?: PartnerMeta_partner$data;
+    readonly " $data"?: PartnerMeta_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerMeta_partner">;
 };
 

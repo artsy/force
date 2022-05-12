@@ -12,7 +12,7 @@ export type UserActiveBids_me = {
 };
 export type UserActiveBids_me$data = UserActiveBids_me;
 export type UserActiveBids_me$key = {
-    readonly " $data"?: UserActiveBids_me$data;
+    readonly " $data"?: UserActiveBids_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"UserActiveBids_me">;
 };
 

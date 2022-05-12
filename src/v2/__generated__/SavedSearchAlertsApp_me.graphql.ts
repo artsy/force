@@ -17,7 +17,7 @@ export type SavedSearchAlertsApp_me = {
 };
 export type SavedSearchAlertsApp_me$data = SavedSearchAlertsApp_me;
 export type SavedSearchAlertsApp_me$key = {
-    readonly " $data"?: SavedSearchAlertsApp_me$data;
+    readonly " $data"?: SavedSearchAlertsApp_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
 };
 

@@ -13,7 +13,7 @@ export type SettingsEditSettingsLinkedAccounts_me = {
 };
 export type SettingsEditSettingsLinkedAccounts_me$data = SettingsEditSettingsLinkedAccounts_me;
 export type SettingsEditSettingsLinkedAccounts_me$key = {
-    readonly " $data"?: SettingsEditSettingsLinkedAccounts_me$data;
+    readonly " $data"?: SettingsEditSettingsLinkedAccounts_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsLinkedAccounts_me">;
 };
 

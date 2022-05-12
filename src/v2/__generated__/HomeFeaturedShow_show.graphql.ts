@@ -12,7 +12,7 @@ export type HomeFeaturedShow_show = {
 };
 export type HomeFeaturedShow_show$data = HomeFeaturedShow_show;
 export type HomeFeaturedShow_show$key = {
-    readonly " $data"?: HomeFeaturedShow_show$data;
+    readonly " $data"?: HomeFeaturedShow_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShow_show">;
 };
 

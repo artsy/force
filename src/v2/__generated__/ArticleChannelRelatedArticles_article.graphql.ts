@@ -14,7 +14,7 @@ export type ArticleChannelRelatedArticles_article = {
 };
 export type ArticleChannelRelatedArticles_article$data = ArticleChannelRelatedArticles_article;
 export type ArticleChannelRelatedArticles_article$key = {
-    readonly " $data"?: ArticleChannelRelatedArticles_article$data;
+    readonly " $data"?: ArticleChannelRelatedArticles_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleChannelRelatedArticles_article">;
 };
 

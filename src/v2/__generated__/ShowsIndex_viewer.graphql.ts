@@ -10,7 +10,7 @@ export type ShowsIndex_viewer = {
 };
 export type ShowsIndex_viewer$data = ShowsIndex_viewer;
 export type ShowsIndex_viewer$key = {
-    readonly " $data"?: ShowsIndex_viewer$data;
+    readonly " $data"?: ShowsIndex_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowsIndex_viewer">;
 };
 

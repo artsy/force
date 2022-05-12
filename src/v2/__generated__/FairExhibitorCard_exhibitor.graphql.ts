@@ -19,7 +19,7 @@ export type FairExhibitorCard_exhibitor = {
 };
 export type FairExhibitorCard_exhibitor$data = FairExhibitorCard_exhibitor;
 export type FairExhibitorCard_exhibitor$key = {
-    readonly " $data"?: FairExhibitorCard_exhibitor$data;
+    readonly " $data"?: FairExhibitorCard_exhibitor$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_exhibitor">;
 };
 

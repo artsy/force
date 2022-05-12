@@ -8,19 +8,19 @@ export type PriceOptions_artwork = {
     readonly priceCurrency: string | null;
     readonly isPriceRange: boolean | null;
     readonly listPrice: {
-        readonly major?: number;
+        readonly major?: number | undefined;
         readonly maxPrice?: {
             readonly major: number;
-        } | null;
+        } | null | undefined;
         readonly minPrice?: {
             readonly major: number;
-        } | null;
+        } | null | undefined;
     } | null;
     readonly " $refType": "PriceOptions_artwork";
 };
 export type PriceOptions_artwork$data = PriceOptions_artwork;
 export type PriceOptions_artwork$key = {
-    readonly " $data"?: PriceOptions_artwork$data;
+    readonly " $data"?: PriceOptions_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
 };
 

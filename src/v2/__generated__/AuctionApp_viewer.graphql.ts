@@ -17,7 +17,7 @@ export type AuctionApp_viewer = {
 };
 export type AuctionApp_viewer$data = AuctionApp_viewer;
 export type AuctionApp_viewer$key = {
-    readonly " $data"?: AuctionApp_viewer$data;
+    readonly " $data"?: AuctionApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionApp_viewer">;
 };
 

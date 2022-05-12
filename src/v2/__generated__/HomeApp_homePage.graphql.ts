@@ -10,7 +10,7 @@ export type HomeApp_homePage = {
 };
 export type HomeApp_homePage$data = HomeApp_homePage;
 export type HomeApp_homePage$key = {
-    readonly " $data"?: HomeApp_homePage$data;
+    readonly " $data"?: HomeApp_homePage$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeApp_homePage">;
 };
 

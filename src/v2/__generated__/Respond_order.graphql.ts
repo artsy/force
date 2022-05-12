@@ -24,21 +24,21 @@ export type Respond_order = {
             } | null;
         } | null> | null;
     } | null;
-    readonly isInquiryOrder?: boolean;
+    readonly isInquiryOrder?: boolean | undefined;
     readonly lastOffer?: {
         readonly createdAt: string;
         readonly internalID: string;
         readonly note: string | null;
-    } | null;
+    } | null | undefined;
     readonly myLastOffer?: {
         readonly createdAt: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "OfferHistoryItem_order">;
     readonly " $refType": "Respond_order";
 };
 export type Respond_order$data = Respond_order;
 export type Respond_order$key = {
-    readonly " $data"?: Respond_order$data;
+    readonly " $data"?: Respond_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Respond_order">;
 };
 

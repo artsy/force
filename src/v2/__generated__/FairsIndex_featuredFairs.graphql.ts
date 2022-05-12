@@ -6,8 +6,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairsIndex_featuredFairs = ReadonlyArray<{
     readonly items: ReadonlyArray<{
-        readonly internalID?: string;
-        readonly title?: string | null;
+        readonly internalID?: string | undefined;
+        readonly title?: string | null | undefined;
         readonly image?: {
             readonly cropped: {
                 readonly width: number;
@@ -15,13 +15,13 @@ export type FairsIndex_featuredFairs = ReadonlyArray<{
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
-        } | null;
+        } | null | undefined;
     } | null> | null;
     readonly " $refType": "FairsIndex_featuredFairs";
 }>;
 export type FairsIndex_featuredFairs$data = FairsIndex_featuredFairs;
 export type FairsIndex_featuredFairs$key = ReadonlyArray<{
-    readonly " $data"?: FairsIndex_featuredFairs$data;
+    readonly " $data"?: FairsIndex_featuredFairs$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairsIndex_featuredFairs">;
 }>;
 

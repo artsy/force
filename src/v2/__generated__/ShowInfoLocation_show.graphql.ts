@@ -29,7 +29,7 @@ export type ShowInfoLocation_show = {
 };
 export type ShowInfoLocation_show$data = ShowInfoLocation_show;
 export type ShowInfoLocation_show$key = {
-    readonly " $data"?: ShowInfoLocation_show$data;
+    readonly " $data"?: ShowInfoLocation_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ShowInfoLocation_show">;
 };
 

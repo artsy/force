@@ -5,9 +5,9 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsArtistsQueryVariables = {
-    first?: number | null;
+    first?: number | null | undefined;
     term: string;
-    page?: number | null;
+    page?: number | null | undefined;
 };
 export type SearchResultsArtistsQueryResponse = {
     readonly viewer: {

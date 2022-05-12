@@ -12,7 +12,7 @@ export type ArtworkSidebarClassification_artwork = {
 };
 export type ArtworkSidebarClassification_artwork$data = ArtworkSidebarClassification_artwork;
 export type ArtworkSidebarClassification_artwork$key = {
-    readonly " $data"?: ArtworkSidebarClassification_artwork$data;
+    readonly " $data"?: ArtworkSidebarClassification_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassification_artwork">;
 };
 

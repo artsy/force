@@ -16,7 +16,7 @@ export type ArtistShowsRoute_viewer = {
 };
 export type ArtistShowsRoute_viewer$data = ArtistShowsRoute_viewer;
 export type ArtistShowsRoute_viewer$key = {
-    readonly " $data"?: ArtistShowsRoute_viewer$data;
+    readonly " $data"?: ArtistShowsRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistShowsRoute_viewer">;
 };
 

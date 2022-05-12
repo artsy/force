@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeliverSecondFactorInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     secondFactorID: string;
 };
 export type DeliverSecondFactorMutationVariables = {

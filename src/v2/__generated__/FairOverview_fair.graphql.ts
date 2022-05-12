@@ -21,7 +21,7 @@ export type FairOverview_fair = {
 };
 export type FairOverview_fair$data = FairOverview_fair;
 export type FairOverview_fair$key = {
-    readonly " $data"?: FairOverview_fair$data;
+    readonly " $data"?: FairOverview_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairOverview_fair">;
 };
 

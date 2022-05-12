@@ -35,7 +35,7 @@ export type ArticleVideo_article = {
 };
 export type ArticleVideo_article$data = ArticleVideo_article;
 export type ArticleVideo_article$key = {
-    readonly " $data"?: ArticleVideo_article$data;
+    readonly " $data"?: ArticleVideo_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleVideo_article">;
 };
 

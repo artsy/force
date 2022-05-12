@@ -43,7 +43,7 @@ export type SettingsSavesProfiles_me = {
 };
 export type SettingsSavesProfiles_me$data = SettingsSavesProfiles_me;
 export type SettingsSavesProfiles_me$key = {
-    readonly " $data"?: SettingsSavesProfiles_me$data;
+    readonly " $data"?: SettingsSavesProfiles_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsSavesProfiles_me">;
 };
 

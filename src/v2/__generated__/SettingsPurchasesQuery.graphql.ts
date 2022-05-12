@@ -6,9 +6,9 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type SettingsPurchasesQueryVariables = {
-    states?: Array<CommerceOrderStateEnum> | null;
+    states?: Array<CommerceOrderStateEnum> | null | undefined;
     first: number;
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type SettingsPurchasesQueryResponse = {
     readonly me: {

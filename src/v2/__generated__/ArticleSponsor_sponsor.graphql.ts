@@ -12,7 +12,7 @@ export type ArticleSponsor_sponsor = {
 };
 export type ArticleSponsor_sponsor$data = ArticleSponsor_sponsor;
 export type ArticleSponsor_sponsor$key = {
-    readonly " $data"?: ArticleSponsor_sponsor$data;
+    readonly " $data"?: ArticleSponsor_sponsor$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleSponsor_sponsor">;
 };
 

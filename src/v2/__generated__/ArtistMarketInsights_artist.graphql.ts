@@ -32,7 +32,7 @@ export type ArtistMarketInsights_artist = {
 };
 export type ArtistMarketInsights_artist$data = ArtistMarketInsights_artist;
 export type ArtistMarketInsights_artist$key = {
-    readonly " $data"?: ArtistMarketInsights_artist$data;
+    readonly " $data"?: ArtistMarketInsights_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistMarketInsights_artist">;
 };
 

@@ -10,7 +10,7 @@ export type ViewInRoom_artwork = {
 };
 export type ViewInRoom_artwork$data = ViewInRoom_artwork;
 export type ViewInRoom_artwork$key = {
-    readonly " $data"?: ViewInRoom_artwork$data;
+    readonly " $data"?: ViewInRoom_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewInRoom_artwork">;
 };
 

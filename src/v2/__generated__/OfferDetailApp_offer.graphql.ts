@@ -10,7 +10,7 @@ export type OfferDetailApp_offer = {
 };
 export type OfferDetailApp_offer$data = OfferDetailApp_offer;
 export type OfferDetailApp_offer$key = {
-    readonly " $data"?: OfferDetailApp_offer$data;
+    readonly " $data"?: OfferDetailApp_offer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OfferDetailApp_offer">;
 };
 

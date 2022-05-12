@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type searchRoutes_SearchResultsArtistsQueryVariables = {
     keyword: string;
-    page?: number | null;
+    page?: number | null | undefined;
 };
 export type searchRoutes_SearchResultsArtistsQueryResponse = {
     readonly viewer: {

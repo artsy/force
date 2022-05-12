@@ -18,7 +18,7 @@ export type HoverDetails_artwork = {
 };
 export type HoverDetails_artwork$data = HoverDetails_artwork;
 export type HoverDetails_artwork$key = {
-    readonly " $data"?: HoverDetails_artwork$data;
+    readonly " $data"?: HoverDetails_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HoverDetails_artwork">;
 };
 

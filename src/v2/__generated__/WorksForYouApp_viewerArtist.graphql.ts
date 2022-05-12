@@ -10,7 +10,7 @@ export type WorksForYouApp_viewerArtist = {
 };
 export type WorksForYouApp_viewerArtist$data = WorksForYouApp_viewerArtist;
 export type WorksForYouApp_viewerArtist$key = {
-    readonly " $data"?: WorksForYouApp_viewerArtist$data;
+    readonly " $data"?: WorksForYouApp_viewerArtist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerArtist">;
 };
 

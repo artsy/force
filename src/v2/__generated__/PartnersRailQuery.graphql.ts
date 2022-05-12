@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersRailQueryVariables = {
     id: string;
-    category?: Array<string | null> | null;
+    category?: Array<string | null> | null | undefined;
     type: Array<PartnerClassification>;
 };
 export type PartnersRailQueryResponse = {

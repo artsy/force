@@ -25,7 +25,7 @@ export type PartnersLocationAutocomplete_viewer = {
 };
 export type PartnersLocationAutocomplete_viewer$data = PartnersLocationAutocomplete_viewer;
 export type PartnersLocationAutocomplete_viewer$key = {
-    readonly " $data"?: PartnersLocationAutocomplete_viewer$data;
+    readonly " $data"?: PartnersLocationAutocomplete_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersLocationAutocomplete_viewer">;
 };
 

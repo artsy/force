@@ -18,7 +18,7 @@ export type FairBoothRailArtworks_show = {
 };
 export type FairBoothRailArtworks_show$data = FairBoothRailArtworks_show;
 export type FairBoothRailArtworks_show$key = {
-    readonly " $data"?: FairBoothRailArtworks_show$data;
+    readonly " $data"?: FairBoothRailArtworks_show$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairBoothRailArtworks_show">;
 };
 

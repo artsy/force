@@ -10,7 +10,7 @@ export type ArtistsRoute_partner = {
 };
 export type ArtistsRoute_partner$data = ArtistsRoute_partner;
 export type ArtistsRoute_partner$key = {
-    readonly " $data"?: ArtistsRoute_partner$data;
+    readonly " $data"?: ArtistsRoute_partner$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistsRoute_partner">;
 };
 

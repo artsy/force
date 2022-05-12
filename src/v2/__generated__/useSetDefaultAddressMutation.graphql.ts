@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type UpdateUserDefaultAddressInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     userAddressID: string;
 };
 export type useSetDefaultAddressMutationVariables = {
@@ -19,7 +19,7 @@ export type useSetDefaultAddressMutationResponse = {
         readonly userAddressOrErrors: {
             readonly errors?: ReadonlyArray<{
                 readonly message: string;
-            }>;
+            }> | undefined;
             readonly " $fragmentRefs": FragmentRefs<"SettingsShippingAddress_address">;
         };
     } | null;

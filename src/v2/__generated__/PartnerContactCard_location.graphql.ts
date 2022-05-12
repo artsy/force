@@ -10,7 +10,7 @@ export type PartnerContactCard_location = {
 };
 export type PartnerContactCard_location$data = PartnerContactCard_location;
 export type PartnerContactCard_location$key = {
-    readonly " $data"?: PartnerContactCard_location$data;
+    readonly " $data"?: PartnerContactCard_location$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnerContactCard_location">;
 };
 

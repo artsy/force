@@ -10,7 +10,7 @@ export type InstitutionsRoute_viewer = {
 };
 export type InstitutionsRoute_viewer$data = InstitutionsRoute_viewer;
 export type InstitutionsRoute_viewer$key = {
-    readonly " $data"?: InstitutionsRoute_viewer$data;
+    readonly " $data"?: InstitutionsRoute_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"InstitutionsRoute_viewer">;
 };
 

@@ -12,7 +12,7 @@ export type ExhibitorsLetterNav_fair = {
 };
 export type ExhibitorsLetterNav_fair$data = ExhibitorsLetterNav_fair;
 export type ExhibitorsLetterNav_fair$key = {
-    readonly " $data"?: ExhibitorsLetterNav_fair$data;
+    readonly " $data"?: ExhibitorsLetterNav_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ExhibitorsLetterNav_fair">;
 };
 

@@ -14,8 +14,8 @@ export type ArtistCVGroup_artist = {
             readonly node: {
                 readonly id: string;
                 readonly partner: {
-                    readonly name?: string | null;
-                    readonly href?: string | null;
+                    readonly name?: string | null | undefined;
+                    readonly href?: string | null | undefined;
                 } | null;
                 readonly name: string | null;
                 readonly startAt: string | null;
@@ -28,7 +28,7 @@ export type ArtistCVGroup_artist = {
 };
 export type ArtistCVGroup_artist$data = ArtistCVGroup_artist;
 export type ArtistCVGroup_artist$key = {
-    readonly " $data"?: ArtistCVGroup_artist$data;
+    readonly " $data"?: ArtistCVGroup_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
 };
 

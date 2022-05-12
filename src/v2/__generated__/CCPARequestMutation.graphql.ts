@@ -4,12 +4,12 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateAccountRequestMutationInput = {
-    action?: string | null;
-    clientMutationId?: string | null;
-    email?: string | null;
-    name?: string | null;
+    action?: string | null | undefined;
+    clientMutationId?: string | null | undefined;
+    email?: string | null | undefined;
+    name?: string | null | undefined;
     notes: string;
-    userID?: string | null;
+    userID?: string | null | undefined;
 };
 export type CCPARequestMutationVariables = {
     input: CreateAccountRequestMutationInput;
@@ -19,10 +19,10 @@ export type CCPARequestMutationResponse = {
         readonly accountRequestOrError: {
             readonly accountRequest?: {
                 readonly notes: string | null;
-            } | null;
+            } | null | undefined;
             readonly mutationError?: {
                 readonly message: string;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

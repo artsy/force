@@ -65,7 +65,7 @@ export type SettingsPurchasesRow_order = {
 };
 export type SettingsPurchasesRow_order$data = SettingsPurchasesRow_order;
 export type SettingsPurchasesRow_order$key = {
-    readonly " $data"?: SettingsPurchasesRow_order$data;
+    readonly " $data"?: SettingsPurchasesRow_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRow_order">;
 };
 

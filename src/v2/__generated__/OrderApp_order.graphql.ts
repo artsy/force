@@ -25,7 +25,7 @@ export type OrderApp_order = {
 };
 export type OrderApp_order$data = OrderApp_order;
 export type OrderApp_order$key = {
-    readonly " $data"?: OrderApp_order$data;
+    readonly " $data"?: OrderApp_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"OrderApp_order">;
 };
 

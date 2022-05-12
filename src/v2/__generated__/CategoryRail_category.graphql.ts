@@ -26,7 +26,7 @@ export type CategoryRail_category = {
 };
 export type CategoryRail_category$data = CategoryRail_category;
 export type CategoryRail_category$key = {
-    readonly " $data"?: CategoryRail_category$data;
+    readonly " $data"?: CategoryRail_category$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CategoryRail_category">;
 };
 

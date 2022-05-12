@@ -6,9 +6,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnersFeaturedCarouselCell_profile = {
     readonly owner: {
-        readonly internalID?: string;
-        readonly href?: string | null;
-        readonly name?: string | null;
+        readonly internalID?: string | undefined;
+        readonly href?: string | null | undefined;
+        readonly name?: string | null | undefined;
         readonly featuredShow?: {
             readonly href: string | null;
             readonly name: string | null;
@@ -26,14 +26,14 @@ export type PartnersFeaturedCarouselCell_profile = {
                     readonly srcSet: string;
                 } | null;
             } | null;
-        } | null;
+        } | null | undefined;
     };
     readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     readonly " $refType": "PartnersFeaturedCarouselCell_profile";
 };
 export type PartnersFeaturedCarouselCell_profile$data = PartnersFeaturedCarouselCell_profile;
 export type PartnersFeaturedCarouselCell_profile$key = {
-    readonly " $data"?: PartnersFeaturedCarouselCell_profile$data;
+    readonly " $data"?: PartnersFeaturedCarouselCell_profile$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
 };
 

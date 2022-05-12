@@ -14,7 +14,7 @@ export type FollowProfileButton_profile = {
 };
 export type FollowProfileButton_profile$data = FollowProfileButton_profile;
 export type FollowProfileButton_profile$key = {
-    readonly " $data"?: FollowProfileButton_profile$data;
+    readonly " $data"?: FollowProfileButton_profile$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
 };
 

@@ -7,21 +7,21 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSetShippingInput = {
-    clientMutationId?: string | null;
+    clientMutationId?: string | null | undefined;
     fulfillmentType: CommerceOrderFulfillmentTypeEnum;
     id: string;
-    phoneNumber?: string | null;
-    shipping?: CommerceShippingAttributes | null;
+    phoneNumber?: string | null | undefined;
+    shipping?: CommerceShippingAttributes | null | undefined;
 };
 export type CommerceShippingAttributes = {
-    addressLine1?: string | null;
-    addressLine2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    name?: string | null;
-    phoneNumber?: string | null;
-    postalCode?: string | null;
-    region?: string | null;
+    addressLine1?: string | null | undefined;
+    addressLine2?: string | null | undefined;
+    city?: string | null | undefined;
+    country?: string | null | undefined;
+    name?: string | null | undefined;
+    phoneNumber?: string | null | undefined;
+    postalCode?: string | null | undefined;
+    region?: string | null | undefined;
 };
 export type SetShippingMutationVariables = {
     input: CommerceSetShippingInput;
@@ -69,12 +69,12 @@ export type SetShippingMutationResponse = {
                         } | null;
                     } | null> | null;
                 } | null;
-            };
+            } | undefined;
             readonly error?: {
                 readonly type: string;
                 readonly code: string;
                 readonly data: string | null;
-            };
+            } | undefined;
         };
     } | null;
 };

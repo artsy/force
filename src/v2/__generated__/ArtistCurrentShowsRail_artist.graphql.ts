@@ -22,7 +22,7 @@ export type ArtistCurrentShowsRail_artist = {
 };
 export type ArtistCurrentShowsRail_artist$data = ArtistCurrentShowsRail_artist;
 export type ArtistCurrentShowsRail_artist$key = {
-    readonly " $data"?: ArtistCurrentShowsRail_artist$data;
+    readonly " $data"?: ArtistCurrentShowsRail_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentShowsRail_artist">;
 };
 

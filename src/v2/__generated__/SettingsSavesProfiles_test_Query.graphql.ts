@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesProfiles_test_QueryVariables = {
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type SettingsSavesProfiles_test_QueryResponse = {
     readonly me: {

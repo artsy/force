@@ -28,7 +28,7 @@ export type ArticleZoomGalleryFigure_figure = {
 };
 export type ArticleZoomGalleryFigure_figure$data = ArticleZoomGalleryFigure_figure;
 export type ArticleZoomGalleryFigure_figure$key = {
-    readonly " $data"?: ArticleZoomGalleryFigure_figure$data;
+    readonly " $data"?: ArticleZoomGalleryFigure_figure$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGalleryFigure_figure">;
 };
 

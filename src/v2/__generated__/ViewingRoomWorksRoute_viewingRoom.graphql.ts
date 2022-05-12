@@ -33,7 +33,7 @@ export type ViewingRoomWorksRoute_viewingRoom = {
 };
 export type ViewingRoomWorksRoute_viewingRoom$data = ViewingRoomWorksRoute_viewingRoom;
 export type ViewingRoomWorksRoute_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomWorksRoute_viewingRoom$data;
+    readonly " $data"?: ViewingRoomWorksRoute_viewingRoom$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
 };
 

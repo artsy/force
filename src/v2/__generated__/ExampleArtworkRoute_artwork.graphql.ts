@@ -27,7 +27,7 @@ export type ExampleArtworkRoute_artwork = {
 };
 export type ExampleArtworkRoute_artwork$data = ExampleArtworkRoute_artwork;
 export type ExampleArtworkRoute_artwork$key = {
-    readonly " $data"?: ExampleArtworkRoute_artwork$data;
+    readonly " $data"?: ExampleArtworkRoute_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkRoute_artwork">;
 };
 

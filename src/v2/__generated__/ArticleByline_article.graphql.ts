@@ -22,7 +22,7 @@ export type ArticleByline_article = {
 };
 export type ArticleByline_article$data = ArticleByline_article;
 export type ArticleByline_article$key = {
-    readonly " $data"?: ArticleByline_article$data;
+    readonly " $data"?: ArticleByline_article$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArticleByline_article">;
 };
 

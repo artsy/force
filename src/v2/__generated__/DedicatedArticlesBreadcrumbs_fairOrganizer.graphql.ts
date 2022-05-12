@@ -16,7 +16,7 @@ export type DedicatedArticlesBreadcrumbs_fairOrganizer = {
 };
 export type DedicatedArticlesBreadcrumbs_fairOrganizer$data = DedicatedArticlesBreadcrumbs_fairOrganizer;
 export type DedicatedArticlesBreadcrumbs_fairOrganizer$key = {
-    readonly " $data"?: DedicatedArticlesBreadcrumbs_fairOrganizer$data;
+    readonly " $data"?: DedicatedArticlesBreadcrumbs_fairOrganizer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
 };
 

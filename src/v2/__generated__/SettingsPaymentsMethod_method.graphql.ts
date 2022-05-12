@@ -15,7 +15,7 @@ export type SettingsPaymentsMethod_method = {
 };
 export type SettingsPaymentsMethod_method$data = SettingsPaymentsMethod_method;
 export type SettingsPaymentsMethod_method$key = {
-    readonly " $data"?: SettingsPaymentsMethod_method$data;
+    readonly " $data"?: SettingsPaymentsMethod_method$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethod_method">;
 };
 

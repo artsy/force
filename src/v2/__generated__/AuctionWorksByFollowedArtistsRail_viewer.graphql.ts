@@ -16,7 +16,7 @@ export type AuctionWorksByFollowedArtistsRail_viewer = {
 };
 export type AuctionWorksByFollowedArtistsRail_viewer$data = AuctionWorksByFollowedArtistsRail_viewer;
 export type AuctionWorksByFollowedArtistsRail_viewer$key = {
-    readonly " $data"?: AuctionWorksByFollowedArtistsRail_viewer$data;
+    readonly " $data"?: AuctionWorksByFollowedArtistsRail_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuctionWorksByFollowedArtistsRail_viewer">;
 };
 

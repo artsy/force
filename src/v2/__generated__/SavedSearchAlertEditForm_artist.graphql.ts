@@ -12,7 +12,7 @@ export type SavedSearchAlertEditForm_artist = {
 };
 export type SavedSearchAlertEditForm_artist$data = SavedSearchAlertEditForm_artist;
 export type SavedSearchAlertEditForm_artist$key = {
-    readonly " $data"?: SavedSearchAlertEditForm_artist$data;
+    readonly " $data"?: SavedSearchAlertEditForm_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artist">;
 };
 

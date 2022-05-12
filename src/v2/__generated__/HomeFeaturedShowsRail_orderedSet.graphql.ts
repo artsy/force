@@ -18,7 +18,7 @@ export type HomeFeaturedShowsRail_orderedSet = {
 };
 export type HomeFeaturedShowsRail_orderedSet$data = HomeFeaturedShowsRail_orderedSet;
 export type HomeFeaturedShowsRail_orderedSet$key = {
-    readonly " $data"?: HomeFeaturedShowsRail_orderedSet$data;
+    readonly " $data"?: HomeFeaturedShowsRail_orderedSet$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
 };
 

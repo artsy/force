@@ -15,7 +15,7 @@ export type CreditCardSummaryItem_order = {
 };
 export type CreditCardSummaryItem_order$data = CreditCardSummaryItem_order;
 export type CreditCardSummaryItem_order$key = {
-    readonly " $data"?: CreditCardSummaryItem_order$data;
+    readonly " $data"?: CreditCardSummaryItem_order$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CreditCardSummaryItem_order">;
 };
 

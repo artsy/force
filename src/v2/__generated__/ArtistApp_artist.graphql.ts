@@ -50,7 +50,7 @@ export type ArtistApp_artist = {
 };
 export type ArtistApp_artist$data = ArtistApp_artist;
 export type ArtistApp_artist$key = {
-    readonly " $data"?: ArtistApp_artist$data;
+    readonly " $data"?: ArtistApp_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtistApp_artist">;
 };
 

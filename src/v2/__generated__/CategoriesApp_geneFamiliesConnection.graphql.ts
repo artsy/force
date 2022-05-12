@@ -10,7 +10,7 @@ export type CategoriesApp_geneFamiliesConnection = {
 };
 export type CategoriesApp_geneFamiliesConnection$data = CategoriesApp_geneFamiliesConnection;
 export type CategoriesApp_geneFamiliesConnection$key = {
-    readonly " $data"?: CategoriesApp_geneFamiliesConnection$data;
+    readonly " $data"?: CategoriesApp_geneFamiliesConnection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
 };
 

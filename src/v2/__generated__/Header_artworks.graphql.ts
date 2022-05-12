@@ -23,7 +23,7 @@ export type Header_artworks = {
 };
 export type Header_artworks$data = Header_artworks;
 export type Header_artworks$key = {
-    readonly " $data"?: Header_artworks$data;
+    readonly " $data"?: Header_artworks$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"Header_artworks">;
 };
 

@@ -20,7 +20,7 @@ export type FeaturedCollectionsRails_collectionGroup = {
 };
 export type FeaturedCollectionsRails_collectionGroup$data = FeaturedCollectionsRails_collectionGroup;
 export type FeaturedCollectionsRails_collectionGroup$key = {
-    readonly " $data"?: FeaturedCollectionsRails_collectionGroup$data;
+    readonly " $data"?: FeaturedCollectionsRails_collectionGroup$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedCollectionsRails_collectionGroup">;
 };
 

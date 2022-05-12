@@ -15,7 +15,7 @@ export type GeneFamilies_geneFamiliesConnection = {
 };
 export type GeneFamilies_geneFamiliesConnection$data = GeneFamilies_geneFamiliesConnection;
 export type GeneFamilies_geneFamiliesConnection$key = {
-    readonly " $data"?: GeneFamilies_geneFamiliesConnection$data;
+    readonly " $data"?: GeneFamilies_geneFamiliesConnection$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"GeneFamilies_geneFamiliesConnection">;
 };
 

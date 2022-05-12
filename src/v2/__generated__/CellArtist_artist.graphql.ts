@@ -21,7 +21,7 @@ export type CellArtist_artist = {
 };
 export type CellArtist_artist$data = CellArtist_artist;
 export type CellArtist_artist$key = {
-    readonly " $data"?: CellArtist_artist$data;
+    readonly " $data"?: CellArtist_artist$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
 };
 

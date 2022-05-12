@@ -11,7 +11,7 @@ export type AuthenticityCertificate_artwork = {
 };
 export type AuthenticityCertificate_artwork$data = AuthenticityCertificate_artwork;
 export type AuthenticityCertificate_artwork$key = {
-    readonly " $data"?: AuthenticityCertificate_artwork$data;
+    readonly " $data"?: AuthenticityCertificate_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"AuthenticityCertificate_artwork">;
 };
 

@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticlesIndexArticles_test_QueryVariables = {
-    after?: string | null;
+    after?: string | null | undefined;
 };
 export type ArticlesIndexArticles_test_QueryResponse = {
     readonly viewer: {

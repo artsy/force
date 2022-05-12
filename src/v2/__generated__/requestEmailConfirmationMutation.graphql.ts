@@ -7,11 +7,11 @@ export type requestEmailConfirmationMutationVariables = {};
 export type requestEmailConfirmationMutationResponse = {
     readonly sendConfirmationEmail: {
         readonly confirmationOrError: {
-            readonly unconfirmedEmail?: string | null;
+            readonly unconfirmedEmail?: string | null | undefined;
             readonly mutationError?: {
                 readonly error: string | null;
                 readonly message: string;
-            } | null;
+            } | null | undefined;
         } | null;
     } | null;
 };

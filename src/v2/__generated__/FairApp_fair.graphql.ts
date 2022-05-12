@@ -19,7 +19,7 @@ export type FairApp_fair = {
 };
 export type FairApp_fair$data = FairApp_fair;
 export type FairApp_fair$key = {
-    readonly " $data"?: FairApp_fair$data;
+    readonly " $data"?: FairApp_fair$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"FairApp_fair">;
 };
 

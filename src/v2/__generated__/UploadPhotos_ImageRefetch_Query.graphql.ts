@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type UploadPhotos_ImageRefetch_QueryVariables = {
     id: string;
-    sessionID?: string | null;
+    sessionID?: string | null | undefined;
 };
 export type UploadPhotos_ImageRefetch_QueryResponse = {
     readonly submission: {

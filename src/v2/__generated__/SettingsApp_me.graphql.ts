@@ -10,7 +10,7 @@ export type SettingsApp_me = {
 };
 export type SettingsApp_me$data = SettingsApp_me;
 export type SettingsApp_me$key = {
-    readonly " $data"?: SettingsApp_me$data;
+    readonly " $data"?: SettingsApp_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"SettingsApp_me">;
 };
 

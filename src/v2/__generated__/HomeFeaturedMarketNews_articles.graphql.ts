@@ -31,7 +31,7 @@ export type HomeFeaturedMarketNews_articles = ReadonlyArray<{
 }>;
 export type HomeFeaturedMarketNews_articles$data = HomeFeaturedMarketNews_articles;
 export type HomeFeaturedMarketNews_articles$key = ReadonlyArray<{
-    readonly " $data"?: HomeFeaturedMarketNews_articles$data;
+    readonly " $data"?: HomeFeaturedMarketNews_articles$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
 }>;
 

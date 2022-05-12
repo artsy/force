@@ -35,7 +35,7 @@ export type ItemReview_lineItem = {
 };
 export type ItemReview_lineItem$data = ItemReview_lineItem;
 export type ItemReview_lineItem$key = {
-    readonly " $data"?: ItemReview_lineItem$data;
+    readonly " $data"?: ItemReview_lineItem$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ItemReview_lineItem">;
 };
 

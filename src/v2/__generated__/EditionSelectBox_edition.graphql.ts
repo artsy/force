@@ -9,7 +9,7 @@ export type EditionSelectBox_edition = {
     readonly editionOf: string | null;
     readonly isOfferableFromInquiry: boolean | null;
     readonly listPrice: {
-        readonly display?: string | null;
+        readonly display?: string | null | undefined;
     } | null;
     readonly dimensions: {
         readonly cm: string | null;
@@ -19,7 +19,7 @@ export type EditionSelectBox_edition = {
 };
 export type EditionSelectBox_edition$data = EditionSelectBox_edition;
 export type EditionSelectBox_edition$key = {
-    readonly " $data"?: EditionSelectBox_edition$data;
+    readonly " $data"?: EditionSelectBox_edition$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"EditionSelectBox_edition">;
 };
 
