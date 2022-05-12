@@ -1,19 +1,10 @@
-import React, { FC, useEffect } from "react"
+import React, { FC } from "react"
+
 import { MetaTags } from "v2/Components/MetaTags"
-import { useRouter } from "v2/System/Router/useRouter"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { NewForYouArtworksGridQueryRenderer } from "v2/Apps/NewForYou/Components/NewForYouArtworksGrid"
 
 export const NewForYouApp: FC = () => {
-  const featureFlagEnabled = useFeatureFlag("new_for_you")
-  const { router } = useRouter()
-
-  useEffect(() => {
-    if (!featureFlagEnabled) {
-      router.replace("/")
-    }
-  })
-
   return (
     <>
       <Spacer mt={2} />
@@ -31,6 +22,7 @@ export const NewForYouApp: FC = () => {
         </Column>
       </GridColumns>
       <Spacer mt={4} />
+      <NewForYouArtworksGridQueryRenderer />
     </>
   )
 }
