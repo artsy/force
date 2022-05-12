@@ -122,27 +122,32 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        const { order, router, isEigen } = this.props
-        // Make offer and Purchase order redirects to the status page for Eigen, it must keep the user inside the webview.
-        if (isEigen) {
-          return router.push(`/orders/${order.internalID}/status`)
-        }
-        // Make offer and Purchase in inquiry redirects to the conversation page
-        if (order.source === "inquiry") {
-          return router.push(
-            `/user/conversations/${order.conversation?.internalID}`
-          )
-        }
+        const { order, router, isEigen, featureFlags } = this.props
+        const isCBNEnabled =
+          featureFlags?.["conversational-buy-now"]?.flagEnabled
+        const orderId = order.internalID
+        const conversationId = order.conversation?.internalID
         const artworkId = get(
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
-        // Make offer from artwork page redirects to the artwork page and show modal
+        // Eigen redirects to the status page (must keep the user inside the webview)
+        // TODO: It must be only `if (isEigen) {` after removing the feature flag
+        if ((!isCBNEnabled && order.mode !== "OFFER") || isEigen) {
+          return router.push(`/orders/${orderId}/status`)
+        }
+        // Make offer and Purchase in inquiry redirects to the conversation page
+        if (order.source === "inquiry") {
+          return router.push(`/user/conversations/${conversationId}`)
+        }
+        // Make offer from the artwork page redirects to the artwork page with a confirmation modal
         if (order.mode === "OFFER") {
           return router.push(`/artwork/${artworkId}?order-submitted=true`)
         }
-        // Purchase from artwork page redirects to the artwork page
-        return router.push(`/artwork/${artworkId}`)
+        // Purchase from the artwork page redirects to the status page
+        if (isCBNEnabled) {
+          return router.push(`/orders/${orderId}/status`)
+        }
       }
     } catch (error) {
       logger.error(error)

@@ -392,4 +392,26 @@ describe("Review", () => {
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
     })
   })
+
+  describe("Inquiry buy-mode orders", () => {
+    let page: ReviewTestPage
+    beforeEach(async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...BuyOrderWithShippingDetails,
+            source: "inquiry",
+            conversation: { internalID: "5665" },
+          },
+        },
+      })
+    })
+
+    // TODO: Unskip test when "conversational-buy-now" feature flag is removed
+    it.skip("enables the button and routes to the conversation", async () => {
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+    })
+  })
 })
