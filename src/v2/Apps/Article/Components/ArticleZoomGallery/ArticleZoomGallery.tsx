@@ -22,6 +22,7 @@ import { ArticleZoomGalleryFigureFragmentContainer } from "./ArticleZoomGalleryF
 import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGalleryCaption"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { useArticleContext } from "../ArticleContext"
+import { mapCursorToMax } from "map-cursor-to-max"
 
 interface ArticleZoomGalleryProps {
   article: ArticleZoomGallery_article
@@ -104,6 +105,10 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
                   key={i}
                   figure={figure}
                   active={i === index}
+                  preload={
+                    i === mapCursorToMax(index - 1, figures.length) ||
+                    i === mapCursorToMax(index + 1, figures.length)
+                  }
                 />
               )
             })}

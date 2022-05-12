@@ -11,12 +11,16 @@ import { ArticleZoomGalleryResponsiveBox } from "./ArticleZoomGalleryResponsiveB
 
 interface ArticleZoomGalleryFigureProps {
   figure: ArticleZoomGalleryFigure_figure
+  /* Should display the image? */
   active: boolean
+  /* Should only preload the image? */
+  preload: boolean
 }
 
 const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
   figure,
   active,
+  preload,
 }) => {
   if (
     figure.__typename !== "Artwork" &&
@@ -31,27 +35,42 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
 
   const xl = {
     img: resized(src, { width: 2000, height: 2000 }),
-    media: "(min-width: 1720px)",
+    media: {
+      query: "(min-width: 1720px)",
+      preload: "(min-width: 1720px)",
+    },
   }
 
   const lg = {
     img: resized(src, { width: 1440, height: 1440 }),
-    media: "(min-width: 1232px)",
+    media: {
+      query: "(min-width: 1232px)",
+      preload: "(min-width: 1232px) and (max-width: 1719px)",
+    },
   }
 
   const md = {
     img: resized(src, { width: 1024, height: 1024 }),
-    media: "(min-width: 896px)",
+    media: {
+      query: "(min-width: 896px)",
+      preload: "(min-width: 896px) and (max-width: 1231px)",
+    },
   }
 
   const sm = {
     img: resized(src, { width: 767, height: 767 }),
-    media: "(min-width: 767px)",
+    media: {
+      query: "(min-width: 767px)",
+      preload: "(min-width: 767px) and (max-width: 895px)",
+    },
   }
 
   const xs = {
     img: resized(src, { width: 450, height: 450 }),
-    media: "(max-width: 766px)",
+    media: {
+      query: "(max-width: 766px)",
+      preload: "(max-width: 766px)",
+    },
   }
 
   const sources = [xl, lg, md, sm, xs]
@@ -66,7 +85,11 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
         <picture key={src} style={{ width: "100%", height: "100%" }}>
           {sources.map((source, i) => {
             return (
-              <source key={i} srcSet={source.img.srcSet} media={source.media} />
+              <source
+                key={i}
+                srcSet={source.img.srcSet}
+                media={source.media.query}
+              />
             )
           })}
 
@@ -82,22 +105,26 @@ const ArticleZoomGalleryFigure: FC<ArticleZoomGalleryFigureProps> = ({
     )
   }
 
-  return (
-    <>
-      {sources.map((source, i) => {
-        return (
-          // eslint-disable-next-line jsx-a11y/anchor-is-valid
-          <Link
-            key={i}
-            rel="preload"
-            as="image"
-            imagesrcset={source.img.srcSet}
-            media={source.media}
-          />
-        )
-      })}
-    </>
-  )
+  // See: https://web.dev/preload-responsive-images/#preload-and-lesspicturegreater
+  if (preload)
+    return (
+      <>
+        {sources.map((source, i) => {
+          return (
+            // eslint-disable-next-line jsx-a11y/anchor-is-valid
+            <Link
+              key={i}
+              rel="preload"
+              as="image"
+              imagesrcset={source.img.srcSet}
+              media={source.media.preload}
+            />
+          )
+        })}
+      </>
+    )
+
+  return null
 }
 
 export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer(
