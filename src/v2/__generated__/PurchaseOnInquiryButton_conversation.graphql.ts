@@ -26,7 +26,7 @@ export type PurchaseOnInquiryButton_conversation = {
 };
 export type PurchaseOnInquiryButton_conversation$data = PurchaseOnInquiryButton_conversation;
 export type PurchaseOnInquiryButton_conversation$key = {
-    readonly " $data"?: PurchaseOnInquiryButton_conversation$data;
+    readonly " $data"?: PurchaseOnInquiryButton_conversation$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"PurchaseOnInquiryButton_conversation">;
 };
 
