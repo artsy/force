@@ -15,6 +15,7 @@ import {
   ConfirmArtworkModalQueryResponse,
 } from "v2/__generated__/ConfirmArtworkModalQuery.graphql"
 import { ConfirmArtworkModal_artwork } from "v2/__generated__/ConfirmArtworkModal_artwork.graphql"
+import { useTracking } from "react-tracking"
 
 export interface ConfirmArtworkModalProps {
   artwork: ConfirmArtworkModal_artwork
@@ -34,6 +35,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
   const initialSelectedEdition =
     editionSets?.length === 1 ? editionSets[0]!.internalID : null
 
+  const tracking = useTracking()
   const [selectedEdition, setSelectedEdition] = useState<string | null>(
     initialSelectedEdition
   )
@@ -59,10 +61,12 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
             disabled={!!isEdition && !selectedEdition}
             conversationID={conversationID}
             editionSetID={selectedEdition || null}
-            trackingEvent={{
-              context_module: OwnerType.conversationMakeOfferConfirmArtwork,
-              context_owner_type: OwnerType.conversation,
-            }}
+            onClick={() =>
+              tracking.trackEvent({
+                context_module: OwnerType.conversationMakeOfferConfirmArtwork,
+                context_owner_type: OwnerType.conversation,
+              })
+            }
           />
         </Flex>
       }

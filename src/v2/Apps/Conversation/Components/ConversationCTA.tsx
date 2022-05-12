@@ -1,10 +1,21 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
+import {
+  FLAT_SHADOW,
+  Flex,
+  GuaranteeIcon,
+  Separator,
+  Text,
+} from "@artsy/palette"
+import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
+import { PurchaseOnInquiryButtonFragmentContainer } from "./PurchaseOnInquiryButton"
 import { MakeOfferOnInquiryButtonFragmentContainer } from "./MakeOfferOnInquiryButton"
 import { ConversationCTA_conversation } from "v2/__generated__/ConversationCTA_conversation.graphql"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { themeGet } from "@styled-system/theme-get"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation
@@ -12,11 +23,24 @@ interface ConversationCTAProps {
   openOrderModal: () => void
 }
 
+const ShadowSeparator = styled(Separator)`
+  box-shadow: ${FLAT_SHADOW};
+  width: 100%;
+  height: 0;
+`
+
+const GuaranteeIconBlue = styled(GuaranteeIcon)`
+  .guarantee-checkmark {
+    fill: ${themeGet("colors.brand")};
+  }
+`
+
 export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   conversation,
   openInquiryModal,
   openOrderModal,
 }) => {
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
   // Determine whether we have a conversation about an artwork
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
@@ -27,16 +51,46 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
 
   const conversationID = conversation.internalID!
   const activeOrder = extractNodes(conversation.activeOrders)[0]
+  const {
+    isOfferableFromInquiry,
+    is_offerable: isOfferable,
+    is_acquireable: isAcquireable,
+  } = artwork
 
   if (!activeOrder) {
-    if (artwork.isOfferableFromInquiry) {
-      return (
-        <MakeOfferOnInquiryButtonFragmentContainer
-          openInquiryModal={() => openInquiryModal()}
-          conversation={conversation}
-        />
-      )
-    }
+    return (
+      <>
+        <ShadowSeparator />
+        <Flex flexDirection="column" p={1}>
+          <Flex flexDirection="row">
+            <GuaranteeIconBlue mr={1} />
+            <Flex flexShrink={1}>
+              <Text color="black60" variant="xs" mb={1}>
+                Always complete purchases with our secure checkout in order to
+                be covered by{" "}
+                <RouterLink to="/buyer-guarantee" target="_blank">
+                  The Artsy Guarantee
+                </RouterLink>
+                .
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex flexDirection="row">
+            {isCBNEnabled && isAcquireable && (
+              <PurchaseOnInquiryButtonFragmentContainer
+                conversation={conversation}
+              />
+            )}
+            {(isOfferableFromInquiry || (isCBNEnabled && isOfferable)) && (
+              <MakeOfferOnInquiryButtonFragmentContainer
+                openInquiryModal={() => openInquiryModal()}
+                conversation={conversation}
+              />
+            )}
+          </Flex>
+        </Flex>
+      </>
+    )
   } else {
     const { buyerAction } = activeOrder
     const kind = buyerAction || null
@@ -67,6 +121,8 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
             ... on Artwork {
               __typename
               isOfferableFromInquiry
+              is_acquireable: isAcquireable
+              is_offerable: isOfferable
             }
           }
           item {
@@ -99,6 +155,7 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...PurchaseOnInquiryButton_conversation
         ...MakeOfferOnInquiryButton_conversation
       }
     `,

@@ -42,6 +42,8 @@ fragment ConversationCTA_conversation on Conversation {
       ... on Artwork {
         __typename
         isOfferableFromInquiry
+        is_acquireable: isAcquireable
+        is_offerable: isOfferable
       }
       ... on Node {
         __isNode: __typename
@@ -82,6 +84,7 @@ fragment ConversationCTA_conversation on Conversation {
       }
     }
   }
+  ...PurchaseOnInquiryButton_conversation
   ...MakeOfferOnInquiryButton_conversation
 }
 
@@ -92,7 +95,32 @@ fragment MakeOfferOnInquiryButton_conversation on Conversation {
       __typename
       ... on Artwork {
         __typename
+        is_acquireable: isAcquireable
         isEdition
+        editionSets {
+          internalID
+          id
+        }
+        ...ConfirmArtworkButton_artwork
+      }
+      ... on Node {
+        __isNode: __typename
+        id
+      }
+    }
+  }
+}
+
+fragment PurchaseOnInquiryButton_conversation on Conversation {
+  internalID
+  items {
+    liveArtwork {
+      __typename
+      ... on Artwork {
+        __typename
+        isEdition
+        internalID
+        slug
         editionSets {
           internalID
           id
@@ -268,10 +296,32 @@ return {
                             "storageKey": null
                           },
                           {
+                            "alias": "is_acquireable",
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isAcquireable",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": "is_offerable",
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isOfferable",
+                            "storageKey": null
+                          },
+                          {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
                             "name": "isEdition",
+                            "storageKey": null
+                          },
+                          (v1/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "slug",
                             "storageKey": null
                           },
                           {
@@ -283,8 +333,7 @@ return {
                             "plural": true,
                             "selections": (v4/*: any*/),
                             "storageKey": null
-                          },
-                          (v1/*: any*/)
+                          }
                         ],
                         "type": "Artwork",
                         "abstractKey": null
@@ -453,7 +502,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5c9c18fd03d04dddf47762642385aabc",
+    "cacheID": "3ef1012a0e0f0687c8b34f959a934cae",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -572,12 +621,15 @@ return {
         "me.conversation.items.liveArtwork.internalID": (v7/*: any*/),
         "me.conversation.items.liveArtwork.isEdition": (v10/*: any*/),
         "me.conversation.items.liveArtwork.isOfferableFromInquiry": (v10/*: any*/),
+        "me.conversation.items.liveArtwork.is_acquireable": (v10/*: any*/),
+        "me.conversation.items.liveArtwork.is_offerable": (v10/*: any*/),
+        "me.conversation.items.liveArtwork.slug": (v7/*: any*/),
         "me.id": (v7/*: any*/)
       }
     },
     "name": "ConversationCTA_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationCTA_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      ...ConversationCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...MakeOfferOnInquiryButton_conversation\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationCTA_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      ...ConversationCTA_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isOfferableFromInquiry\n        is_acquireable: isAcquireable\n        is_offerable: isOfferable\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  ...PurchaseOnInquiryButton_conversation\n  ...MakeOfferOnInquiryButton_conversation\n}\n\nfragment MakeOfferOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        is_acquireable: isAcquireable\n        isEdition\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseOnInquiryButton_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

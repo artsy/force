@@ -1,66 +1,60 @@
 import { useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql, RelayProp } from "react-relay"
-import { useTracking } from "react-tracking"
-import { Button } from "@artsy/palette"
+import { Button, ButtonProps } from "@artsy/palette"
 import { TappedConfirmArtwork } from "@artsy/cohesion"
 
 import createLogger from "v2/Utils/logger"
 import { MakeInquiryOffer } from "../Mutation/MakeInquiryOfferMutation"
+import { MakeInquiryOrder } from "../Mutation/MakeInquiryOrderMutation"
 
 import { ConfirmArtworkButton_artwork } from "v2/__generated__/ConfirmArtworkButton_artwork.graphql"
 
 const logger = createLogger("Conversation/Components/ConfirmArtworkButton.tsx")
 
-export interface ConfirmArtworkButtonProps {
+export interface ConfirmArtworkButtonProps extends ButtonProps {
   artwork: ConfirmArtworkButton_artwork
   relay: RelayProp
   editionSetID: string | null
-  disabled?: boolean
+  createsOfferOrder?: boolean
   conversationID: string
-  children?: React.ReactNode
   trackingEvent?: TappedConfirmArtwork
 }
 
-export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props => {
-  const [
-    isCommittingCreateOfferOrderMutation,
-    setIsCommittingCreateOfferOrderMutation,
-  ] = useState(false)
+export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = ({
+  relay,
+  artwork,
+  editionSetID,
+  conversationID,
+  createsOfferOrder = true,
+  disabled,
+  variant,
+  children,
+  onClick,
+}) => {
+  const [isCommittingMutation, setIsCommittingMutation] = useState(false)
 
+  const commitMutation = createsOfferOrder ? MakeInquiryOffer : MakeInquiryOrder
   const onMutationError = (error: Error) => {
     logger.error(error)
     // TODO: trigger error modal?
   }
 
-  const tracking = useTracking()
+  const handleCreateInquiryOrder = () => {
+    if (isCommittingMutation) return
+    setIsCommittingMutation(true)
 
-  const handleCreateInquiryOfferOrder = () => {
-    const {
-      relay,
-      artwork,
-      editionSetID,
-      conversationID,
-      trackingEvent,
-    } = props
-    const { internalID } = artwork
-
-    if (isCommittingCreateOfferOrderMutation) {
-      return
-    }
-    if (trackingEvent) tracking.trackEvent(trackingEvent)
-    setIsCommittingCreateOfferOrderMutation(true)
     if (relay && relay.environment) {
-      return MakeInquiryOffer(
+      return commitMutation(
         relay.environment,
         conversationID,
-        internalID,
+        artwork.internalID,
         editionSetID,
         response => {
-          setIsCommittingCreateOfferOrderMutation(false)
-          const {
-            createInquiryOfferOrder: { orderOrError },
-          } = response
+          setIsCommittingMutation(false)
+          const { orderOrError } = createsOfferOrder
+            ? response.createInquiryOfferOrder
+            : response.createInquiryOrder
           if (orderOrError.__typename === "CommerceOrderWithMutationFailure") {
             onMutationError(orderOrError.error)
           } else if (
@@ -70,7 +64,7 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props =
           }
         },
         _error => {
-          setIsCommittingCreateOfferOrderMutation(false)
+          setIsCommittingMutation(false)
           onMutationError(_error)
         }
       )
@@ -79,12 +73,16 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props =
 
   return (
     <Button
-      onClick={() => handleCreateInquiryOfferOrder()}
-      loading={isCommittingCreateOfferOrderMutation}
-      disabled={props.disabled}
-      flexGrow={1}
+      onClick={event => {
+        onClick?.(event)
+        handleCreateInquiryOrder()
+      }}
+      loading={isCommittingMutation}
+      disabled={disabled}
+      variant={variant}
+      width="100%"
     >
-      {props.children || "Confirm"}
+      {children}
     </Button>
   )
 }
