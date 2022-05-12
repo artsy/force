@@ -6,10 +6,10 @@ import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateInquiryOrderWithArtworkInput = {
     artworkId: string;
-    clientMutationId?: string | null;
-    editionSetId?: string | null;
+    clientMutationId?: string | null | undefined;
+    editionSetId?: string | null | undefined;
     impulseConversationId: string;
-    quantity?: number | null;
+    quantity?: number | null | undefined;
 };
 export type MakeInquiryOrderMutationVariables = {
     input: CommerceCreateInquiryOrderWithArtworkInput;
