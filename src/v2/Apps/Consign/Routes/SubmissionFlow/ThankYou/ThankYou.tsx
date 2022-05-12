@@ -7,7 +7,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import {
   SoldRecentlyOnArtsyQueryRenderer,
   FAQ,
-} from "../../NewMarketingLanding/Components"
+} from "../../MarketingLanding/Components"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()

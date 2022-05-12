@@ -1,21 +1,18 @@
-import { ConsignMeta } from "./Components/ConsignMeta"
-import { Header } from "./Components/Header"
-import { SellArtDifferently } from "./Components/SellArtDifferently"
-import { GetPriceEstimate } from "./Components/GetPriceEstimate/GetPriceEstimate"
-import { HowToSell } from "./Components/HowToSell"
-import { ConsignInDemandNow } from "./Components/InDemandNow/ConsignInDemandNow"
-import { SoldRecentlyQueryRenderer } from "./Components/SoldRecently"
-import { ReadMore } from "./Components/ReadMore"
-import { ContactUs } from "./Components/ContactUs"
-import { FAQ } from "./Components/FAQ"
-import { ArtworkCredits } from "./Components/ArtworkCredits"
-import { PromoSpace } from "./Components/PromoSpace"
-import { BecomePartner } from "./Components/BecomePartner"
-import { ArtsyMissionStatement } from "./Components/ArtsyMissionStatement"
-import { Join, Spacer } from "@artsy/palette"
-import { useRouter } from "v2/System/Router/useRouter"
 import { useEffect } from "react"
+import { useRouter } from "v2/System/Router/useRouter"
 import { UtmParams } from "../SubmissionFlow/Utils/types"
+import { Join, Spacer } from "@artsy/palette"
+import {
+  SellMeta,
+  CtaBanner,
+  FAQ,
+  Header,
+  HowItWorks,
+  PromoSpace,
+  SoldRecentlyOnArtsyQueryRenderer,
+  WhySellWithArtsy,
+} from "./Components"
+import { StickyProvider } from "v2/Components/Sticky"
 
 export const MarketingLandingApp = () => {
   const {
@@ -40,25 +37,20 @@ export const MarketingLandingApp = () => {
   }, [])
 
   return (
-    <>
-      <ConsignMeta />
+    <StickyProvider>
+      <SellMeta />
 
       <Header />
-      <PromoSpace />
 
-      <Join separator={<Spacer mt={6} />}>
-        <ArtsyMissionStatement />
-        <SellArtDifferently />
-        <GetPriceEstimate />
-        <HowToSell />
-        <ContactUs />
-        <ConsignInDemandNow />
-        <SoldRecentlyQueryRenderer />
-        <ReadMore />
-        <BecomePartner />
+      <CtaBanner />
+
+      <Join separator={<Spacer mt={[6, 12]} />}>
+        <PromoSpace />
+        <WhySellWithArtsy />
+        <HowItWorks />
+        <SoldRecentlyOnArtsyQueryRenderer />
         <FAQ />
-        <ArtworkCredits />
       </Join>
-    </>
+    </StickyProvider>
   )
 }
