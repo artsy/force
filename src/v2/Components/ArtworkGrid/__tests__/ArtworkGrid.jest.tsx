@@ -20,6 +20,9 @@ import {
 
 jest.unmock("react-relay")
 global.clearInterval = jest.fn()
+jest.mock("v2/Components/Sticky", () => ({
+  Sticky: ({ children }) => children({ stuck: false }),
+}))
 
 const TestContainer = createFragmentContainer(
   ({
