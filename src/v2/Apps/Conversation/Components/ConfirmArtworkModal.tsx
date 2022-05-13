@@ -67,7 +67,9 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
                 context_owner_type: OwnerType.conversation,
               })
             }
-          />
+          >
+            Confirm
+          </ConfirmArtworkButtonFragmentContainer>
         </Flex>
       }
     >

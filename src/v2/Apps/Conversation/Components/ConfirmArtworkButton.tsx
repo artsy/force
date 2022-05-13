@@ -80,7 +80,7 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = ({
       loading={isCommittingMutation}
       disabled={disabled}
       variant={variant}
-      width="100%"
+      flexGrow={1}
     >
       {children}
     </Button>

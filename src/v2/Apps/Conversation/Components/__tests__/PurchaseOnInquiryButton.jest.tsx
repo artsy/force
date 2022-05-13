@@ -9,11 +9,14 @@ jest.mock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Apps/Conversation/Mutation/MakeInquiryOrderMutation")
 
+const openInquiryModalFn = jest.fn()
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
     return (
       <PurchaseOnInquiryButtonFragmentContainer
         conversation={props.me.conversation}
+        openInquiryModal={openInquiryModalFn}
       />
     )
   },
@@ -124,6 +127,45 @@ describe("PurchaseOnInquiryButton", () => {
     })
     await waitFor(() => {
       expect(mockMakeInquiryOrderMutation).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it("clicking the button on non-unique artworks opens the confirmation modal", () => {
+    renderWithRelay({
+      Me: () => ({
+        Conversation: () => ({ ahot: "there" }),
+      }),
+      Conversation: () => ({
+        internalID: "internal-test-id",
+        items: [
+          {
+            liveArtwork: {
+              __typename: "Artwork",
+              internalID: "artwork-internal-id",
+              slug: "artwork-slug",
+              isEdition: true,
+              editionSets: [
+                {
+                  internalID: "an-edition-set",
+                },
+                {
+                  internalID: "another-edition-set",
+                },
+              ],
+            },
+          },
+        ],
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Purchase"))
+    expect(openInquiryModalFn).toHaveBeenCalledTimes(1)
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "tappedBuyNow",
+      context_owner_type: "conversation",
+      context_owner_id: "artwork-internal-id",
+      context_owner_slug: "artwork-slug",
+      impulse_conversation_id: "internal-test-id",
     })
   })
 })
