@@ -78,6 +78,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
           <Flex flexDirection="row">
             {isCBNEnabled && isAcquireable && (
               <PurchaseOnInquiryButtonFragmentContainer
+                openInquiryModal={() => openInquiryModal()}
                 conversation={conversation}
               />
             )}
