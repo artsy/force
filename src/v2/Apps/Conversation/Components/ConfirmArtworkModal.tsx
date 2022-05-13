@@ -52,7 +52,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
       title="Select edition set"
       footer={
         <Flex flexGrow={1}>
-          <Button variant="secondaryOutline" flexGrow={1} onClick={closeModal}>
+          <Button variant="secondaryOutline" width="100%" onClick={closeModal}>
             Cancel
           </Button>
           <Spacer m={1} />
@@ -67,7 +67,9 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
                 context_owner_type: OwnerType.conversation,
               })
             }
-          />
+          >
+            Confirm
+          </ConfirmArtworkButtonFragmentContainer>
         </Flex>
       }
     >
