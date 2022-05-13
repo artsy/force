@@ -1,6 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
-import { Box, Button, Dialog, Text } from "@artsy/palette"
+import { Button, Flex, ModalDialog, Text } from "@artsy/palette"
 import { useAnalyticsContext, useTracking } from "v2/System"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
@@ -30,22 +30,24 @@ export const WelcomeRoute: React.FC = () => {
   }
 
   return (
-    <Box>
-      <Text variant="title">Welcome to the Example app!</Text>
-
+    <>
+      <Text variant="xl">Welcome to the Example app!</Text>
       <Button onClick={onClick} my={1}>
         Fire a tracking event
       </Button>
 
-      <Dialog
-        show={showDialog}
-        title="The button was clicked"
-        detail="Open your browser console to see the details of the tracking event"
-        primaryCta={{
-          action: () => setShowDialog(!showDialog),
-          text: "Ok",
-        }}
-      />
-    </Box>
+      {showDialog && (
+        <ModalDialog
+          title="The button was clicked"
+          onClose={() => setShowDialog(!showDialog)}
+        >
+          <Flex flexGrow={1}>
+            <Text>
+              Open your browser console to see the details of the tracking event
+            </Text>
+          </Flex>
+        </ModalDialog>
+      )}
+    </>
   )
 }
