@@ -43,7 +43,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
         <Button
           size="medium"
           variant={variant}
-          width="100%"
+          flexGrow={1}
           onClick={() => {
             tracking.trackEvent(tappedMakeOfferEvent)
             openInquiryModal()
