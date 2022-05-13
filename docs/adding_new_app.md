@@ -54,6 +54,7 @@ export function getAppRoutes() {
 ```
 
 - Done! Now, when you visit `http://localhost:5000/new-app` you should see your newly created content above.
+- An example app is available to view and use as a starting point in [Example App](https://github.com/artsy/force/tree/main/src/v2/Apps/Example)
 
 ### Advanced Setup
 

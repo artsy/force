@@ -7,7 +7,7 @@ It includes:
 - [x] Routing
 - [x] Relay
 - [x] @principalField
-- [ ] Testing
+- [x] Testing
 - [ ] Analytics
 - [ ] Mention of adding tests to integrity
 
