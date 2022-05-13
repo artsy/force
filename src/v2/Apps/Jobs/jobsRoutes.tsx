@@ -14,7 +14,7 @@ const JobApp = loadable(
 
 export const jobsRoutes: AppRouteConfig[] = [
   {
-    path: "/jobs2",
+    path: "/jobs",
     getComponent: () => JobsApp,
     onClientSideRender: () => {
       JobsApp.preload()

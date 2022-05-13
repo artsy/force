@@ -4,12 +4,15 @@ import { PurchaseOnInquiryButton_conversation } from "v2/__generated__/PurchaseO
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { useTracking } from "react-tracking"
 import { TappedBuyNow, ActionType, OwnerType } from "@artsy/cohesion"
+import { Button } from "@artsy/palette"
 
 export interface PurchaseOnInquiryButtonProps {
+  openInquiryModal: () => void
   conversation: PurchaseOnInquiryButton_conversation
 }
 
 export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = ({
+  openInquiryModal,
   conversation,
 }) => {
   const tracking = useTracking()
@@ -30,7 +33,20 @@ export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = (
     impulse_conversation_id: conversationID,
   }
 
-  return isUniqueArtwork ? (
+  return !isUniqueArtwork ? (
+    // Opens a modal window to select an edition set on non-unique artworks
+    <Button
+      size="medium"
+      flexGrow={1}
+      onClick={() => {
+        tracking.trackEvent(tappedPurchaseEvent)
+        openInquiryModal()
+      }}
+    >
+      Purchase
+    </Button>
+  ) : (
+    // Creates an order and redirects to the checkout flow
     <ConfirmArtworkButtonFragmentContainer
       artwork={artwork}
       conversationID={conversationID}
@@ -40,7 +56,7 @@ export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = (
     >
       Purchase
     </ConfirmArtworkButtonFragmentContainer>
-  ) : null
+  )
 }
 
 export const PurchaseOnInquiryButtonFragmentContainer = createFragmentContainer(

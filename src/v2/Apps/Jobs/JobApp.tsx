@@ -26,7 +26,7 @@ const JobApp: FC<JobAppProps> = ({ job }) => {
         pathname={`/jobs/${job.id}`}
       />
 
-      <TopContextBar displayBackArrow href="/jobs2">
+      <TopContextBar displayBackArrow href="/jobs">
         Join Our Team
       </TopContextBar>
 
@@ -52,14 +52,13 @@ const JobApp: FC<JobAppProps> = ({ job }) => {
             <Text variant="lg">To Apply</Text>
 
             <Text variant="sm">
-              This position is full-time and starts immediately. To apply,
-              please submit your resumé and a cover letter{" "}
+              To apply, please{" "}
               <a
                 href={job.externalURL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                here
+                submit your application here
               </a>
               . When you apply, you will be directed to a third party site.
             </Text>

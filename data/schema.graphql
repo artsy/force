@@ -9604,6 +9604,9 @@ type Me implements Node {
 
   # This user should receive sale opening/closing notifications
   receiveSaleOpeningClosingNotification: Boolean
+
+  # This user should receive viewing room notifications
+  receiveViewingRoomNotification: Boolean
   recentlyViewedArtworkIds: [String]!
 
   # A list of the current user’s recently viewed artworks.
@@ -14355,6 +14358,9 @@ input UpdateMyProfileInput {
   # This user should receive sale opening/closing notifications
   receiveSaleOpeningClosingNotification: Boolean
 
+  # This user should receive viewing room notifications
+  receiveViewingRoomNotification: Boolean
+
   # Shares FollowArtists, FollowGenes, and FollowProfiles with partners.
   shareFollows: Boolean
 }
@@ -14647,6 +14653,9 @@ type User {
 
   # This user should receive sale opening/closing notifications
   receiveSaleOpeningClosingNotification: Boolean
+
+  # This user should receive viewing room notifications
+  receiveViewingRoomNotification: Boolean
 
   # The sale profile of the user.
   saleProfile: UserSaleProfile

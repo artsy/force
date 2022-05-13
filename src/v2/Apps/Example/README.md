@@ -7,8 +7,8 @@ It includes:
 - [x] Routing
 - [x] Relay
 - [x] @principalField
-- [ ] Testing
-- [ ] Analytics
+- [x] Testing
+- [x] Analytics
 - [ ] Mention of adding tests to integrity
 
 ## Launch checklist
