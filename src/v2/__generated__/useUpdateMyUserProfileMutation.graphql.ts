@@ -37,6 +37,7 @@ export type UpdateMyProfileInput = {
     receivePromotionNotification?: boolean | null | undefined;
     receivePurchaseNotification?: boolean | null | undefined;
     receiveSaleOpeningClosingNotification?: boolean | null | undefined;
+    receiveViewingRoomNotification?: boolean | null | undefined;
     shareFollows?: boolean | null | undefined;
 };
 export type EditableLocation = {
