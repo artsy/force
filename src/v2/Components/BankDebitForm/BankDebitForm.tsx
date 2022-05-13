@@ -3,6 +3,7 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Box, Button, Spacer } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
+import { preventHardReload } from "v2/Apps/Order/OrderApp"
 
 interface Props {
   order: { mode: string | null; internalID: string }
@@ -50,6 +51,10 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
     if (!stripe || !elements || !user) {
       return
     }
+
+    // Disable the "leave/reload site?" confirmation dialog as we're about to
+    // confirm Stripe payment setup which leaves and redirects back.
+    window.removeEventListener("beforeunload", preventHardReload)
 
     const { error } = await stripe.confirmSetup({
       elements,

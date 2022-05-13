@@ -27,6 +27,16 @@ export interface OrderAppProps extends RouterState {
   order: OrderApp_order
 }
 
+export const preventHardReload = event => {
+  // Don't block navigation for status page, as we've completed the flow
+  if (window.location.pathname.includes("/status")) {
+    return false
+  }
+
+  event.preventDefault()
+  event.returnValue = true
+}
+
 class OrderApp extends Component<OrderAppProps, {}> {
   state = { stripe: null }
   removeNavigationListener: () => void
@@ -38,7 +48,7 @@ class OrderApp extends Component<OrderAppProps, {}> {
       )
     }
 
-    window.addEventListener("beforeunload", this.preventHardReload)
+    window.addEventListener("beforeunload", preventHardReload)
 
     // zEmbed represents the Zendesk object
     if (window.zEmbed) {
@@ -51,22 +61,12 @@ class OrderApp extends Component<OrderAppProps, {}> {
       this.removeNavigationListener()
     }
 
-    window.removeEventListener("beforeunload", this.preventHardReload)
+    window.removeEventListener("beforeunload", preventHardReload)
 
     // zEmbed represents the Zendesk object
     if (window.zEmbed) {
       window.zEmbed.hide()
     }
-  }
-
-  preventHardReload = event => {
-    // Don't block navigation for status page, as we've completed the flow
-    if (window.location.pathname.includes("/status")) {
-      return false
-    }
-
-    event.preventDefault()
-    event.returnValue = true
   }
 
   onTransition = newLocation => {
