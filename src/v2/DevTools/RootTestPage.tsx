@@ -13,6 +13,13 @@ export class RootTestPage {
   // these three properties get hydrated by createTestEnv
   readonly root: ReactWrapper
 
+  constructor(wrapper?: ReactWrapper) {
+    if (wrapper) {
+      // @ts-ignore
+      this.root = wrapper
+    }
+  }
+
   async update() {
     await flushPromiseQueue()
     this.root.update()

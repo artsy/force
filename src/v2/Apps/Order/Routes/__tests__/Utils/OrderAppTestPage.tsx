@@ -1,5 +1,6 @@
 import { BorderedRadio, Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
+import { ReactWrapper } from "enzyme"
 import { ArtworkSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "v2/Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -16,6 +17,9 @@ import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 
 export class OrderAppTestPage extends RootTestPage {
   /** COMPONENT SELECTORS **/
+  constructor(wrapper?: ReactWrapper) {
+    super(wrapper)
+  }
 
   get orderStepper() {
     return expectOne(this.root.find(OrderStepper))
@@ -74,6 +78,10 @@ export class OrderAppTestPage extends RootTestPage {
     return expectOne(this.find(PriceOptions))
   }
 
+  isLoading() {
+    return this.submitButton.props().loading
+  }
+
   /** PAGE ACTIONS **/
 
   async clickSubmit() {
@@ -106,6 +114,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   /*** COMMON ASSERTIONS ***/
+
   async expectNoModal() {
     const modal = this.modalDialog.find(ModalButton)
     expect(modal.length).toBe(0)

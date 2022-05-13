@@ -88,7 +88,6 @@ export class Accept extends Component<AcceptProps & StripeProps> {
     try {
       const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
-
       if (!orderOrError?.error) {
         this.props.router.push(`/orders/${this.props.order.internalID}/status`)
         return
@@ -334,7 +333,9 @@ export class Accept extends Component<AcceptProps & StripeProps> {
 }
 
 export const AcceptFragmentContainer = createFragmentContainer(
-  createStripeWrapper(injectCommitMutation(injectDialog(Accept)) as any),
+  createStripeWrapper<AcceptProps>(
+    injectCommitMutation(injectDialog(Accept)) as any
+  ),
   {
     order: graphql`
       fragment Accept_order on CommerceOrder {
