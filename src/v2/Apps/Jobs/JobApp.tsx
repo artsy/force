@@ -26,7 +26,7 @@ const JobApp: FC<JobAppProps> = ({ job }) => {
         pathname={`/jobs/${job.id}`}
       />
 
-      <TopContextBar displayBackArrow href="/jobs2">
+      <TopContextBar displayBackArrow href="/jobs">
         Join Our Team
       </TopContextBar>
 
