@@ -186,7 +186,7 @@ const InnerForm: React.FC<InnerFormProps> = ({
         error={touched.name && errors.name}
         value={values.name}
         onBlur={handleBlur}
-        placeholder="Device Name"
+        placeholder="Device name"
         onChange={handleChange}
         autoFocus
       />
@@ -228,7 +228,7 @@ const InnerForm: React.FC<InnerFormProps> = ({
         name="code"
         value={values.code}
         onChange={handleChange}
-        placeholder="Authentication Code"
+        placeholder="Authentication code"
       />
 
       <Button
