@@ -10,10 +10,11 @@ jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL<ExampleApp_Test_Query>({
   Component: props => {
+    if (!props?.system) return null
+
     return (
       <MockBoot>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        <ExampleAppFragmentContainer {...props} />
+        <ExampleAppFragmentContainer system={props.system} />
       </MockBoot>
     )
   },

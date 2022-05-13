@@ -14,7 +14,8 @@ export interface ExampleAppProps {
 }
 
 const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  if (!system?.time) return null
+
   const { month, day, year } = system.time
 
   return (
