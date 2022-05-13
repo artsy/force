@@ -6,9 +6,10 @@ import { LoadingArea } from "../LoadingArea"
 
 interface Props {
   order: { mode: string | null; internalID: string }
+  returnURL: string
 }
 
-export const BankDebitForm: FC<Props> = ({ order }) => {
+export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
@@ -53,7 +54,7 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: "https://staging.artsy.net/",
+        return_url: returnURL,
       },
     })
 

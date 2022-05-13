@@ -5,6 +5,7 @@ import { getENV } from "v2/Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
+
 interface Props {
   order: Payment_order
 }
@@ -53,11 +54,13 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
     appearance: appearance,
   }
 
+  const returnURL = `${getENV("APP_URL")}/orders/${order.internalID}/payment`
+
   return (
     <div>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <BankDebitForm order={order} />
+          <BankDebitForm order={order} returnURL={returnURL} />
         </Elements>
       )}
     </div>
