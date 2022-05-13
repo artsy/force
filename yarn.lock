@@ -84,12 +84,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@18.6.0":
-  version "18.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-18.6.0.tgz#926ba2645fa3f1af6514c195010e1d2f88f09c8a"
-  integrity sha512-t/dkz9CLgeTdlNDcPsVxUjOJhYxedk2dpDFyCLEZhhIYcx1RqnmPJrb/m5WBE4EfdJA2e9yLCSXMEFgrZirK5g==
+"@artsy/palette-charts@18.7.0":
+  version "18.7.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-18.7.0.tgz#b65bed2186da9cedebf3fe6472f77e4d8094e04b"
+  integrity sha512-xhWqxJ0ZhNfVVFW0/IdajCNUubpUrMS3F0mkE/ykP66pW8uaBP2A1tF9lI9iXDoiwUooUljvBU7LNqP5EIXF1Q==
   dependencies:
-    "@artsy/palette" "^19.6.0"
+    "@artsy/palette" "^19.7.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -101,7 +101,7 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@19.7.0":
+"@artsy/palette@19.7.0", "@artsy/palette@^19.7.0":
   version "19.7.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.7.0.tgz#b988b7018f11644109635b9b6447408906a06937"
   integrity sha512-rXHZAOMqrJRjJYhf/Wz6hfSrccqLp4OAoZm3PJCRqD7sMcf1GjBe0a9ocDE+c9Mg1tXMOUMYVqUmu96ElsXXqA==
@@ -114,25 +114,6 @@
     proportional-scale "^4.0.0"
     react-lazy-load-image-component "1.5.0"
     react-remove-scroll "2.5.0"
-    styled-bootstrap-grid "3.1.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^19.6.0":
-  version "19.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-19.6.0.tgz#60006306e36526df9c13f8c1fa9a1deffb55bd06"
-  integrity sha512-PZnWCmkGHcYH/rrVLMtihE2hI7fNm7ojHlYLGdC7rC+exEbw+euJ8NlKXmfoTAmm+Leus6OBcjuL7+tdLyfpEA==
-  dependencies:
-    "@artsy/palette-tokens" "^2.6.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "^2.3.0"
     styled-bootstrap-grid "3.1.0"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
@@ -18141,14 +18122,6 @@ react-relay@9.1.0:
     nullthrows "^1.1.1"
     relay-runtime "9.1.0"
 
-react-remove-scroll-bar@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.2.0.tgz#d4d545a7df024f75d67e151499a6ab5ac97c8cdd"
-  integrity sha512-UU9ZBP1wdMR8qoUs7owiVcpaPwsQxUDC2lypP6mmixaGlARZa7ZIBx1jcuObLdhMOvCsnZcvetOho0wzPa9PYg==
-  dependencies:
-    react-style-singleton "^2.1.0"
-    tslib "^1.0.0"
-
 react-remove-scroll-bar@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.1.tgz#9f13b05b249eaa57c8d646c1ebb83006b3581f5f"
@@ -18167,17 +18140,6 @@ react-remove-scroll@2.5.0:
     tslib "^2.0.0"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
-
-react-remove-scroll@^2.3.0:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll/-/react-remove-scroll-2.4.3.tgz#83d19b02503b04bd8141ed6e0b9e6691a2e935a6"
-  integrity sha512-lGWYXfV6jykJwbFpsuPdexKKzp96f3RbvGapDSIdcyGvHb7/eqyn46C7/6h+rUzYar1j5mdU+XECITHXCKBk9Q==
-  dependencies:
-    react-remove-scroll-bar "^2.1.0"
-    react-style-singleton "^2.1.0"
-    tslib "^1.0.0"
-    use-callback-ref "^1.2.3"
-    use-sidecar "^1.0.1"
 
 react-shallow-renderer@^16.13.1:
   version "16.14.1"
@@ -18235,15 +18197,6 @@ react-stickynode@^4.0.0:
     prop-types "^15.6.0"
     shallowequal "^1.0.0"
     subscribe-ui-event "^2.0.6"
-
-react-style-singleton@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.1.1.tgz#ce7f90b67618be2b6b94902a30aaea152ce52e66"
-  integrity sha512-jNRp07Jza6CBqdRKNgGhT3u9umWvils1xsuMOjZlghBDH2MU0PL2WZor4PGYjXpnRCa9DQSlHMs/xnABWOwYbA==
-  dependencies:
-    get-nonce "^1.0.0"
-    invariant "^2.2.4"
-    tslib "^1.0.0"
 
 react-style-singleton@^2.2.0:
   version "2.2.0"
@@ -21087,15 +21040,15 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslib@^1.0.0, tslib@^1.9.3:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
-  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
+tslib@^1.9.3:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
+  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
 tslib@^2:
   version "2.4.0"
@@ -21721,11 +21674,6 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-callback-ref@^1.2.3:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
-  integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
-
 use-callback-ref@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.3.0.tgz#772199899b9c9a50526fedc4993fc7fa1f7e32d5"
@@ -21773,14 +21721,6 @@ use-latest@^1.0.0:
   integrity sha512-d2TEuG6nSLKQLAfW3By8mKr8HurOlTkul0sOpxbClIv4SQ4iOd7BYr7VIzdbktUCnv7dua/60xzd8igMU6jmyw==
   dependencies:
     use-isomorphic-layout-effect "^1.0.0"
-
-use-sidecar@^1.0.1:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/use-sidecar/-/use-sidecar-1.0.5.tgz#ffff2a17c1df42e348624b699ba6e5c220527f2b"
-  integrity sha512-k9jnrjYNwN6xYLj1iaGhonDghfvmeTmYjAiGvOr7clwKfPjMXJf4/HOr7oT5tJwYafgp2tG2l3eZEOfoELiMcA==
-  dependencies:
-    detect-node-es "^1.1.0"
-    tslib "^1.9.3"
 
 use-sidecar@^1.1.2:
   version "1.1.2"
