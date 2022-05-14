@@ -2,15 +2,64 @@ import { Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistIconicCollectionsRailQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail"
-import { ArtistNotableWorksRailQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail"
-import { ArtistWorksForSaleRailQueryRenderer } from "./Components/ArtistWorksForSaleRail"
-import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentShowsRail"
-import { ArtistCurrentArticlesRailQueryRenderer } from "./Components/ArtistCurrentArticlesRail"
-import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHighlights"
-import { ArtistRelatedArtistsRailQueryRenderer } from "./Components/ArtistRelatedArtistsRail"
-import { ArtistSellWithArtsyQueryRenderer } from "./Components/ArtistSellWithArtsy"
 import { computeTitle } from "../../Utils/computeTitle"
+import loadable from "@loadable/component"
+
+const ArtistIconicCollectionsRailQueryRenderer = loadable(
+  () => import("./Components/ArtistIconicCollectionsRail"),
+  {
+    resolveComponent: component =>
+      component.ArtistIconicCollectionsRailQueryRenderer,
+  }
+)
+const ArtistNotableWorksRailQueryRenderer = loadable(
+  () => import("./Components/ArtistNotableWorksRail"),
+  {
+    resolveComponent: component =>
+      component.ArtistNotableWorksRailQueryRenderer,
+  }
+)
+const ArtistWorksForSaleRailQueryRenderer = loadable(
+  () => import("./Components/ArtistWorksForSaleRail"),
+  {
+    resolveComponent: component =>
+      component.ArtistWorksForSaleRailQueryRenderer,
+  }
+)
+const ArtistCurrentShowsRailQueryRenderer = loadable(
+  () => import("./Components/ArtistCurrentShowsRail"),
+  {
+    resolveComponent: component =>
+      component.ArtistCurrentShowsRailQueryRenderer,
+  }
+)
+const ArtistCurrentArticlesRailQueryRenderer = loadable(
+  () => import("./Components/ArtistCurrentArticlesRail"),
+  {
+    resolveComponent: component =>
+      component.ArtistCurrentArticlesRailQueryRenderer,
+  }
+)
+const ArtistCareerHighlightsQueryRenderer = loadable(
+  () => import("./Components/ArtistCareerHighlights"),
+  {
+    resolveComponent: component =>
+      component.ArtistCareerHighlightsQueryRenderer,
+  }
+)
+const ArtistRelatedArtistsRailQueryRenderer = loadable(
+  () => import("./Components/ArtistRelatedArtistsRail"),
+  {
+    resolveComponent: component =>
+      component.ArtistRelatedArtistsRailQueryRenderer,
+  }
+)
+const ArtistSellWithArtsyQueryRenderer = loadable(
+  () => import("./Components/ArtistSellWithArtsy"),
+  {
+    resolveComponent: component => component.ArtistSellWithArtsyQueryRenderer,
+  }
+)
 
 interface ArtistOverviewRouteProps {
   artist: any
