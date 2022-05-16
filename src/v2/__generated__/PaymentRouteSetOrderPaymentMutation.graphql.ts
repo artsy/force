@@ -4,8 +4,9 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceSetPaymentInput = {
+    bankAccountId?: string | null | undefined;
     clientMutationId?: string | null | undefined;
-    creditCardId: string;
+    creditCardId?: string | null | undefined;
     id: string;
 };
 export type PaymentRouteSetOrderPaymentMutationVariables = {
