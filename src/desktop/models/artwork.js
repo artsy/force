@@ -154,9 +154,6 @@ export default _Artwork = (function () {
     // Should we include a form or button to contact the partner?
     //
     isContactable() {
-      if (this.isAtLimitedFairPartner()) {
-        return false
-      }
       if (this.get("inquireable") || this.get("is_inquireable")) {
         return true
       }
@@ -277,12 +274,6 @@ export default _Artwork = (function () {
 
     limitedFairPartnershipMessage() {
       return `${this.partnerName()} is an art fair exhibitor, but not an Artsy partner.`
-    }
-
-    isAtLimitedFairPartner() {
-      return (
-        this.has("partner") && this.get("partner").has_limited_fair_partnership
-      )
     }
 
     // For edition sets larger than 1 we render the full list,
@@ -438,10 +429,6 @@ export default _Artwork = (function () {
         return
       }
       if (
-        __guard__(this.get("partner"), x1 => x1.has_limited_fair_partnership)
-      ) {
-        return "Not inquireable"
-      } else if (
         __guard__(this.get("availability"), x2 => x2.indexOf("on hold")) > -1
       ) {
         return _.compact(["On hold", this.get("price")]).join(" - ")
