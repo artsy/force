@@ -50,6 +50,7 @@ export type EditableLocation = {
     address2?: string | null | undefined;
     city?: string | null | undefined;
     country?: string | null | undefined;
+    countryCode?: string | null | undefined;
     postalCode?: string | null | undefined;
     state?: string | null | undefined;
     stateCode?: string | null | undefined;
