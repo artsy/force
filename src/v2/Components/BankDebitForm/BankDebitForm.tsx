@@ -1,7 +1,8 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Box, Button, Spacer } from "@artsy/palette"
+import { Box, Button, Message, Spacer, Text } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
+import { useRouter } from "v2/System/Router/useRouter"
 import { LoadingArea } from "../LoadingArea"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
 
@@ -13,9 +14,15 @@ interface Props {
 export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   const stripe = useStripe()
   const elements = useElements()
-  const { user } = useSystemContext()
-  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const tracking = useTracking()
+  const { router } = useRouter()
+  const { user } = useSystemContext()
+
+  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
+  const [isInsufficientFunds, setIsInsufficientFunds] = useState(false)
+  const [isConfirmingAccountSetup, setIsConfirmingAccountSetup] = useState(
+    false
+  )
 
   const trackPaymentElementEvent = event => {
     const trackedEvents: any[] = []
@@ -47,10 +54,11 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
 
   const handleSubmit = async event => {
     event.preventDefault()
+    setIsInsufficientFunds(false)
+    setIsConfirmingAccountSetup(true)
+    trackClickedContinue()
 
-    if (!stripe || !elements || !user) {
-      return
-    }
+    if (!stripe || !elements || !user) return
 
     // Disable the "leave/reload site?" confirmation dialog as we're about to
     // confirm Stripe payment setup which leaves and redirects back.
@@ -66,6 +74,13 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
     if (error) {
       console.log("error", error)
     }
+
+    // if (setupIntent?.status === "succeeded") {
+    //   // TODO: poll account balance and set state accordingly
+    //   setIsInsufficientFunds(true)
+
+    //   router.push(`/orders/${order.internalID}/review`)
+    // }
   }
 
   return (
@@ -88,9 +103,39 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
           }}
         />
         <Spacer mt={2} />
+
+        {/* loading interface while setup and balance check in progress */}
+        {isConfirmingAccountSetup && (
+          <>
+            <Message title="Processing account details" variant="info">
+              <Text variant="sm">
+                This may take a few seconds. Please do not close or refresh this
+                window until complete.
+              </Text>
+            </Message>
+            <Spacer mt={2} />
+          </>
+        )}
+
+        {/* error interface when account has insufficient funds */}
+        {isInsufficientFunds && (
+          <>
+            <Message
+              title="This bank account doesn’t have enough funds."
+              variant="error"
+            >
+              <Text variant="sm">
+                Please choose or link to another bank account or select another
+                payment method.
+              </Text>
+            </Message>
+            <Spacer mt={2} />
+          </>
+        )}
+
         <Button
-          onClick={trackClickedContinue}
-          disabled={!stripe}
+          loading={isConfirmingAccountSetup}
+          disabled={!stripe || isInsufficientFunds}
           variant="primaryBlack"
           width="100%"
         >
