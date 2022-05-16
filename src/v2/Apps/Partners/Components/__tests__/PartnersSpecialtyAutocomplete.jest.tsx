@@ -38,6 +38,6 @@ describe("PartnersSpecialtyAutocomplete", () => {
   it("renders correctly", () => {
     renderWithRelay()
 
-    expect(screen.getByPlaceholderText("All Specialties")).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("All specialties")).toBeInTheDocument()
   })
 })

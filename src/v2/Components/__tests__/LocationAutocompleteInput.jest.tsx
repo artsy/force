@@ -60,7 +60,7 @@ describe("LocationAutocompleteInput", () => {
       <LocationAutocompleteInput
         name="location"
         title="Location"
-        placeholder="Enter City Where Artwork Is Located"
+        placeholder="Enter city where artwork is located"
         defaultValue={defaultValue}
         onChange={mockOnChange}
       />
@@ -75,7 +75,7 @@ describe("LocationAutocompleteInput", () => {
     const input = wrapper.find(Input)
     expect(wrapper.find(inputSelector).length).toBe(1)
     expect(input.prop("placeholder")).toBe(
-      "Enter City Where Artwork Is Located"
+      "Enter city where artwork is located"
     )
     expect(input.prop("title")).toBe("Location")
   })

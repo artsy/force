@@ -85,7 +85,7 @@ const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({
         },
         ...options,
       ]}
-      placeholder="All Specialties"
+      placeholder="All specialties"
       onChange={handleChange}
       onSelect={handleSelect}
       onClear={handleClear}
@@ -105,7 +105,7 @@ const PartnersSpecialtyAutocompletePlaceholder: FC = () => {
   return (
     <AutocompleteInput
       options={[{ text: "Loading...", value: "all" }]}
-      placeholder="All Specialties"
+      placeholder="All specialties"
       value=""
     />
   )

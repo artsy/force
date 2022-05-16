@@ -48,11 +48,11 @@ describe("ResetPasswordRoute", () => {
   })
 
   it("resets the password and redirects", async () => {
-    fireEvent.change(screen.getByPlaceholderText("New Password"), {
+    fireEvent.change(screen.getByPlaceholderText("New password"), {
       target: { name: "password", value: "secretsecret" },
     })
 
-    fireEvent.change(screen.getByPlaceholderText("Confirm New Password"), {
+    fireEvent.change(screen.getByPlaceholderText("Confirm new password"), {
       target: { name: "passwordConfirmation", value: "secretsecret" },
     })
 
