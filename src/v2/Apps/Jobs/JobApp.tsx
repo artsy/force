@@ -49,7 +49,7 @@ const JobApp: FC<JobAppProps> = ({ job }) => {
 
             <Separator my={2} />
 
-            <Text variant="lg">To Apply</Text>
+            <Text variant="lg-display">To Apply</Text>
 
             <Text variant="sm">
               To apply, please{" "}

@@ -65,7 +65,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg" mb={2}>
+          <Text variant="lg-display" mb={2}>
             Backup Codes
             {me.backupSecondFactors && me.backupSecondFactors.length > 0 && (
               <>

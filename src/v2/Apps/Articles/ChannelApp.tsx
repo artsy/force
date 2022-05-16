@@ -43,7 +43,11 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
                 </Text>
 
                 {channel.tagline && (
-                  <Text variant="lg" color="rgba(255, 255, 255, 0.8)" as="h2">
+                  <Text
+                    variant="lg-display"
+                    color="rgba(255, 255, 255, 0.8)"
+                    as="h2"
+                  >
                     {channel.tagline}
                   </Text>
                 )}
@@ -81,7 +85,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
           </Text>
 
           {channel.tagline && (
-            <Text variant="lg" as="h2">
+            <Text variant="lg-display" as="h2">
               {channel.tagline}
             </Text>
           )}
@@ -90,7 +94,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
 
       <Spacer mt={4} />
 
-      <Text variant="lg">Latest Articles</Text>
+      <Text variant="lg-display">Latest Articles</Text>
 
       <Spacer mt={4} />
 

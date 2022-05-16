@@ -34,7 +34,7 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwo
 
               return (
                 <Column span={6} key={factor.code}>
-                  <Text variant="lg" textAlign="center">
+                  <Text variant="lg-display" textAlign="center">
                     {factor.code}
                   </Text>
                 </Column>
@@ -54,7 +54,7 @@ const SettingsEditSettingsTwoFactorBackupCodesDialog: FC<SettingsEditSettingsTwo
           <GridColumns mt={2}>
             {[...Array(12)].map((_, i) => (
               <Column key={i} span={6}>
-                <SkeletonText variant="lg" textAlign="center">
+                <SkeletonText variant="lg-display" textAlign="center">
                   Pending Code
                 </SkeletonText>
               </Column>

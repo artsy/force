@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Button, Flex, Join, Text, Spacer, ArtsyLogoIcon } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -16,11 +16,11 @@ export const HomeInfoBlurb: React.FC = () => {
         {/* TODO: Unable to adjust width, height, fill, etc... */}
         <ArtsyLogoIcon name="Artsy" />
 
-        <Text as="h1" variant={["lg", "xl"]}>
+        <Text as="h1" variant={["lg-display", "xl"]}>
           Collect art from leading galleries, fairs, and auctions
         </Text>
 
-        <Text as="h2" variant={["md", "lg"]}>
+        <Text as="h2" variant={["sm-display", "lg-display"]}>
           Sign up to get updates about your favorite artists
         </Text>
 

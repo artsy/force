@@ -41,7 +41,7 @@ export const AboutApp: React.FC = () => {
         </Column>
 
         <Column span={6}>
-          <Text variant="md">
+          <Text variant="sm-display">
             Artsy envisions a future where everyone is moved by art every day.
             To get there, we’re expanding the art market to support more artists
             and art around the world. As the leading marketplace to discover,
@@ -326,9 +326,9 @@ const ArtsySpecialists: React.FC = () => {
                     mr={2}
                   />
                   <Flex flexDirection="column">
-                    <Text variant="lg">{specialist.name}</Text>
-                    <Text variant="md">{specialist.title}</Text>
-                    <Text variant="md" color="black60" mb={2}>
+                    <Text variant="lg-display">{specialist.name}</Text>
+                    <Text variant="sm-display">{specialist.title}</Text>
+                    <Text variant="sm-display" color="black60" mb={2}>
                       {specialist.location}
                     </Text>
                     <RouterLink to={`mailto:${specialist.email}`}>

@@ -48,7 +48,7 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
 
   return (
     <>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg-display" mb={2}>
         Your Active Bids
       </Text>
 
@@ -89,12 +89,12 @@ const AuctionActiveBids: React.FC<AuctionActiveBidsProps> = ({ me, relay }) => {
                 />
               </Column>
               <Column justifyContent={["flex-start", "center"]}>
-                <Text variant="md" fontWeight="bold">
+                <Text variant="sm-display" fontWeight="bold">
                   {currentBid}
                 </Text>
 
                 {bidCount > 0 && (
-                  <Text variant="md" color="black60" pl={0.5}>
+                  <Text variant="sm-display" color="black60" pl={0.5}>
                     ({bidCount} bid{bidCount > 1 && "s"})
                   </Text>
                 )}
@@ -220,7 +220,7 @@ const BidButton: React.FC<
         display="flex"
         width="50%"
       >
-        <Text variant="md" color="black100">
+        <Text variant="sm-display" color="black100">
           Bidding Closed
         </Text>
       </Box>

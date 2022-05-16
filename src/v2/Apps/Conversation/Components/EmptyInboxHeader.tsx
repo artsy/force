@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from "react"
 import { Flex, Text } from "@artsy/palette"
 import { color } from "styled-system"
 
@@ -13,7 +13,7 @@ export const EmptyInboxHeader: FC = () => {
       alignItems="flex-end"
       borderBottom={`1px solid ${color("black10")}`}
     >
-      <Text variant="lg">Inbox</Text>
+      <Text variant="lg-display">Inbox</Text>
     </Flex>
   )
 }

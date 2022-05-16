@@ -30,7 +30,7 @@ const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
-      ZeroState={() => <Text variant="md">No Results.</Text>}
+      ZeroState={() => <Text variant="sm-display">No Results.</Text>}
     />
   )
 }

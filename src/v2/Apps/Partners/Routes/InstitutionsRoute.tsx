@@ -47,7 +47,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
           </Text>
 
           <Text
-            variant="md"
+            variant="sm-display"
             as={RouterLink}
             // @ts-ignore
             to="/institution-partnerships"
@@ -72,7 +72,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
 
         <GridColumns>
           <Column span={6} start={4} textAlign="center">
-            <Text variant="lg" mb={2}>
+            <Text variant="lg-display" mb={2}>
               Interested in Listing Your Museum on Artsy?
             </Text>
 

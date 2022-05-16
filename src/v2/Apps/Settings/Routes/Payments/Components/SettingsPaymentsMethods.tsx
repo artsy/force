@@ -35,7 +35,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
         </CreditCardInputProvider>
       )}
 
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Saved Cards
       </Text>
 

@@ -1,5 +1,5 @@
 import { ChevronIcon, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShowsAllCities_viewer } from "v2/__generated__/ShowsAllCities_viewer.graphql"
@@ -32,7 +32,7 @@ export const ShowsAllCities: React.FC<ShowsAllCitiesProps> = ({
             borderColor="black10"
             py={2}
           >
-            <Text variant="md">{city.name}</Text>
+            <Text variant="sm-display">{city.name}</Text>
 
             <ChevronIcon direction="right" color="black60" />
           </RouterLink>

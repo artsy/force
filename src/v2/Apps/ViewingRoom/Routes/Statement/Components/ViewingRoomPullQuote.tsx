@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomPullQuote_viewingRoom } from "v2/__generated__/ViewingRoomPullQuote_viewingRoom.graphql"
@@ -15,7 +15,7 @@ const ViewingRoomPullQuote: React.FC<ViewingRoomPullQuoteProps> = ({
   }
 
   return (
-    <Text variant="xxl" style={{ whiteSpace: "pre-line" }}>
+    <Text variant="bq" style={{ whiteSpace: "pre-line" }}>
       {pullQuote}
     </Text>
   )

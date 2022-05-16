@@ -4,7 +4,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const SettingsEditSettingsDeleteAccount: FC = () => {
   return (
-    <Text variant="md" color="red100">
+    <Text variant="sm-display" color="red100">
       <RouterLink to="delete" textDecoration="none">
         Delete Account
       </RouterLink>

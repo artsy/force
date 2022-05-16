@@ -11,7 +11,7 @@ interface ViewingRoomsProps {
 const ViewingRooms: React.FC<ViewingRoomsProps> = ({ edges, eventTitle }) => {
   return (
     <>
-      <Text color="black" variant="lg" mb={6}>
+      <Text color="black" variant="lg-display" mb={6}>
         {eventTitle}
       </Text>
 

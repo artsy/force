@@ -136,7 +136,7 @@ const EntityTooltipArtistPlaceholder: FC = () => {
         </Join>
       </HorizontalOverflow>
 
-      <SkeletonText variant="md">Artist Name</SkeletonText>
+      <SkeletonText variant="sm-display">Artist Name</SkeletonText>
 
       <SkeletonText variant="xs">American, b 1900</SkeletonText>
 

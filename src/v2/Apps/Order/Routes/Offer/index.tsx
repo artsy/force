@@ -252,12 +252,12 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               )}
               {!isInquiryCheckout && !isEdition && (
                 <>
-                  <Text variant="lg" color="black80" mt={2}>
+                  <Text variant="lg-display" color="black80" mt={2}>
                     Select an Option
                   </Text>
                   {priceNote}
                   <Text
-                    variant="md"
+                    variant="sm-display"
                     color="black80"
                     textTransform="uppercase"
                     mt={4}

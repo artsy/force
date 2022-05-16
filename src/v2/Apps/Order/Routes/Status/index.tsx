@@ -79,7 +79,7 @@ export class StatusRoute extends Component<StatusProps> {
 
           return (
             <>
-              <Text variant="lg" fontWeight="regular" color="black100">
+              <Text variant="lg-display" fontWeight="regular" color="black100">
                 {title}
               </Text>
               <Text

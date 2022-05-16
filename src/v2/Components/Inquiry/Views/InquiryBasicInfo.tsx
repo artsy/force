@@ -90,7 +90,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg" mb={2} pr={2}>
+      <Text variant="lg-display" mb={2} pr={2}>
         Tell {artwork.partner?.name ?? "us"} a little bit about yourself.
       </Text>
 
@@ -147,7 +147,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
 const InquiryBasicInfoPlaceholder: React.FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg" mb={2}>
+      <SkeletonText variant="lg-display" mb={2}>
         Tell Example Partner a little bit about yourself.
       </SkeletonText>
 

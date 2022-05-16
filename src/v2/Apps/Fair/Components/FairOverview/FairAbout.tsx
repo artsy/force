@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   Column,
   GridColumns,
@@ -27,7 +27,7 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
 
         {about && (
           <Column span={6}>
-            <Text variant="md" textTransform="uppercase">
+            <Text variant="sm-display" textTransform="uppercase">
               About
             </Text>
             <Spacer mt={2} />

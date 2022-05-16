@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -11,6 +11,7 @@ import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverview/FairAbout"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
 
@@ -44,7 +45,7 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
 
       {hasCollections && (
         <Box my={6}>
-          <Text variant="lg" as="h3" mb={4}>
+          <Text variant="lg-display" as="h3" mb={4}>
             Curated Highlights
           </Text>
 
@@ -56,7 +57,7 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
 
       {sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB && (
         <>
-          <Text variant="lg" mb={4}>
+          <Text variant="lg-display" mb={4}>
             Booths
           </Text>
           <FairBooths slug={fair.slug} />

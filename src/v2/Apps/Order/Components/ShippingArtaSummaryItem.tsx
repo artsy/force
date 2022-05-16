@@ -27,7 +27,7 @@ const ShippingArtaSummaryItem: React.FC<
 
   return requestedFulfillment?.__typename === "CommerceShipArta" ? (
     <StepSummaryItem {...others}>
-      <Text variant="md" fontWeight={["regular", "bold"]}>
+      <Text variant="sm-display" fontWeight={["regular", "bold"]}>
         {startCase(shippingQuoteDisplayNames[shippingQuote.typeName])} delivery
         ({shippingQuote.price})
       </Text>

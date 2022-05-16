@@ -78,7 +78,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
           />
         ) : (
           <>
-            <Text color={textColor} variant="md" mr={2}>
+            <Text color={textColor} variant="sm-display" mr={2}>
               {attachment.fileName}
             </Text>
             <Flex flexShrink={0}>
@@ -128,7 +128,7 @@ export const Message: React.FC<MessageProps> = props => {
         maxWidth="66.67%"
         width="fit-content"
       >
-        <MessageText variant="md" color={textColor}>
+        <MessageText variant="sm-display" color={textColor}>
           <Linkify componentDecorator={linkTargetDecorator}>{body}</Linkify>
         </MessageText>
       </Box>

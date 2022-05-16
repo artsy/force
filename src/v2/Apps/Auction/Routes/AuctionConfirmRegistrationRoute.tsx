@@ -176,7 +176,7 @@ const ConditionsOfSaleMessage: React.FC<{ additionalText?: string }> = ({
   additionalText,
 }) => {
   return (
-    <Text variant="md">
+    <Text variant="sm-display">
       Welcome back. To complete your registration, please confirm that you agree
       to the Conditions of Sale
       {additionalText}

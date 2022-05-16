@@ -29,9 +29,9 @@ export class ArtworkSidebarSizeInfo extends Component<
 
     return (
       <Box color="black60">
-        {dimensions?.in && <Text variant="md">{dimensions.in}</Text>}
-        {dimensions?.cm && <Text variant="md">{dimensions.cm}</Text>}
-        {edition_of && <Text variant="md">{edition_of}</Text>}
+        {dimensions?.in && <Text variant="sm-display">{dimensions.in}</Text>}
+        {dimensions?.cm && <Text variant="sm-display">{dimensions.cm}</Text>}
+        {edition_of && <Text variant="sm-display">{edition_of}</Text>}
       </Box>
     )
   }

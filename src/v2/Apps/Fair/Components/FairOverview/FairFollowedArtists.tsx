@@ -70,7 +70,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   return (
     <Box {...rest}>
       <Box display="flex" justifyContent="space-between">
-        <Text variant="lg" as="h3" mb={2}>
+        <Text variant="lg-display" as="h3" mb={2}>
           Works by artists you follow
         </Text>
 

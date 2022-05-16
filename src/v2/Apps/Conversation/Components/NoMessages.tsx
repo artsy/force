@@ -14,7 +14,7 @@ export const NoMessages = () => {
         height={["calc(100vh - 250px)", "calc(100vh - 145px)"]}
         px={[2, 4, 1]}
       >
-        <Text variant="lg" mb={1} textAlign="center">
+        <Text variant="lg-display" mb={1} textAlign="center">
           You don't have any messages yet.
         </Text>
         <Text

@@ -76,7 +76,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
         {fair.isActive && (
           <Column span={6}>
             {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-            <Text variant="lg">Part of {fair.name}</Text>
+            <Text variant="lg-display">Part of {fair.name}</Text>
           </Column>
         )}
         <Column span={6}>
@@ -140,7 +140,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     return (
       <GridColumns>
         <Column span={6}>
-          <Text variant="lg">Presented by {partnerName}</Text>
+          <Text variant="lg-display">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}

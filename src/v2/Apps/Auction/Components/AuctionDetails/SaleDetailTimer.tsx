@@ -27,7 +27,7 @@ export const SaleDetailTimer: React.FC<SaleDetailTimerProps> = ({ sale }) => {
 
   return (
     <Flex alignItems="center" flexDirection="column">
-      <Text variant="lg" color={"blue100"}>
+      <Text variant="lg-display" color={"blue100"}>
         {!endedAt && <Text color={timerCopy.color}>{timerCopy.copy}</Text>}
       </Text>
     </Flex>

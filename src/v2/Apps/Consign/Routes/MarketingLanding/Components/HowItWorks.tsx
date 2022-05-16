@@ -22,7 +22,7 @@ const howItWorksImage3 = resized(
 
 export const HowItWorks = () => (
   <>
-    <Text mb={4} variant="lg">
+    <Text mb={4} variant="lg-display">
       How It Works
     </Text>
 
@@ -80,7 +80,7 @@ const HowItWorksCard = ({ src, title, step, text, srcSet }) => (
     <Text mb={0.5} variant="xs" color="blue100">
       {step}
     </Text>
-    <Text mb={0.5} variant={["lg", "xl"]}>
+    <Text mb={0.5} variant={["lg-display", "xl"]}>
       {title}
     </Text>
     <Text variant="sm">{text}</Text>

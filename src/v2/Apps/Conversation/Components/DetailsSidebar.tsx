@@ -140,7 +140,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       {item && (
         <>
           <StackableBorderBox flexDirection="column" p={2}>
-            <Text variant="md" mb={2} fontWeight="bold">
+            <Text variant="sm-display" mb={2} fontWeight="bold">
               {item.__typename}
             </Text>
             <Flex>
@@ -186,7 +186,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       {!!attachments?.length && (
         <StackableBorderBox>
           <Box>
-            <Text variant="md" mb={2} fontWeight="bold">
+            <Text variant="sm-display" mb={2} fontWeight="bold">
               Attachments
             </Text>
             <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
@@ -195,7 +195,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
       )}
       <StackableBorderBox height="100%">
         <Flex flexDirection="column">
-          <Text variant="md" mb={2} fontWeight="bold">
+          <Text variant="sm-display" mb={2} fontWeight="bold">
             Support
           </Text>
           <RouterLink

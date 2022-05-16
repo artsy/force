@@ -30,13 +30,13 @@ const AuctionFAQRoute: React.FC<AuctionFAQRouteProps> = ({ viewer }) => {
     <>
       <MetaTags title="Auction FAQs | Artsy" />
 
-      <Text variant={["lg", "xl"]} mt={2}>
+      <Text variant={["lg-display", "xl"]} mt={2}>
         Auction FAQs
       </Text>
 
       <Spacer my={2} />
 
-      <Text variant="md" color="black100">
+      <Text variant="sm-display" color="black100">
         How can we help you? Below are answers to some of the most common
         questions from collectors.
         <br />

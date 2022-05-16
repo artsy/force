@@ -49,14 +49,14 @@ export const InquiryInstitutionalAffiliations: React.FC = () => {
 
   return (
     <>
-      <Text variant="lg" pr={2}>
+      <Text variant="lg-display" pr={2}>
         Any institutional affiliations?{" "}
         <Box color="black60" as="span">
           (Optional)
         </Box>
       </Text>
 
-      <Text variant="md" color="black60" mb={2}>
+      <Text variant="sm-display" color="black60" mb={2}>
         Collector groups, memberships, etc.
       </Text>
 

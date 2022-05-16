@@ -148,11 +148,11 @@ export const InquiryLogin: React.FC = () => {
   return (
     <>
       <Box as="form" onSubmit={handleSubmit}>
-        <Text variant="lg" mr={4}>
+        <Text variant="lg-display" mr={4}>
           We found an Artsy account associated with {inquiry.email}.
         </Text>
 
-        <Text variant="lg" mr={4} my={1}>
+        <Text variant="lg-display" mr={4} my={1}>
           Please log in to continue.
         </Text>
 

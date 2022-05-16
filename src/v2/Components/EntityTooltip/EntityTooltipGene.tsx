@@ -110,7 +110,7 @@ const EntityTooltipGenePlaceholder: FC = () => {
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
 
-      <SkeletonText variant="md">Gene Name</SkeletonText>
+      <SkeletonText variant="sm-display">Gene Name</SkeletonText>
 
       <SkeletonText variant="xs" mt={0.5}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

@@ -59,7 +59,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
 
       {hasCategories && (
         <Column span={4}>
-          <Text variant="md" mb={2}>
+          <Text variant="sm-display" mb={2}>
             Related categories
           </Text>
 
@@ -104,7 +104,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <Skeleton>
-    <Text variant="lg" mb={4}>
+    <Text variant="lg-display" mb={4}>
       Career highlights
     </Text>
     <SkeletonBox width="100%" height={170} />

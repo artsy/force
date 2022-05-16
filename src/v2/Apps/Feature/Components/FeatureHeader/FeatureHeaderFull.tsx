@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import {
   Box,
@@ -62,7 +62,11 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
             </Text>
 
             {subheadline && (
-              <HTML variant="md" textAlign="center" html={subheadline} />
+              <HTML
+                variant="sm-display"
+                textAlign="center"
+                html={subheadline}
+              />
             )}
           </Join>
         </Box>

@@ -51,7 +51,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Followed Profiles {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -104,7 +104,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
           )}
         </>
       ) : (
-        <Text variant="lg" color="black60">
+        <Text variant="lg-display" color="black60">
           Nothing yet.
         </Text>
       )}
@@ -177,7 +177,7 @@ export const SettingsSavesProfilesPaginationContainer = createPaginationContaine
 const SETTINGS_SAVES_PROFILES_PLACEHOLDER = (
   <>
     <Skeleton>
-      <SkeletonText variant="lg" mb={4}>
+      <SkeletonText variant="lg-display" mb={4}>
         Followed Profiles
       </SkeletonText>
     </Skeleton>

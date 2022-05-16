@@ -26,7 +26,7 @@ export const Timer: React.FC<
   labelWithTimeRemaining,
   labelWithoutTimeRemaining,
   label = "",
-  variant = "md",
+  variant = "sm-display",
   ...rest
 }) => {
   const { hasEnded, time } = useTimer(endDate, startDate)

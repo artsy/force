@@ -22,7 +22,7 @@ export const DeleteAccountRoute: FC = () => {
   return (
     <GridColumns>
       <Column span={8}>
-        <Text variant="lg" mb={4}>
+        <Text variant="lg-display" mb={4}>
           Delete My Account
         </Text>
 
@@ -105,7 +105,7 @@ export const DeleteAccountRoute: FC = () => {
 
         <Separator my={4} />
 
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           <RouterLink to="edit-settings" textDecoration="none">
             Cancel
           </RouterLink>

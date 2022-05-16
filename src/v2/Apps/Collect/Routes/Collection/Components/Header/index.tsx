@@ -15,7 +15,7 @@ import { CollectionDefaultHeaderFragmentContainer } from "v2/Apps/Collect/Routes
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
 import { compact, filter, take } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { slugify } from "underscore.string"
@@ -91,7 +91,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
       {featuredArtists && hasMultipleArtists && (
         <GridColumns>
           <Column span={12}>
-            <Text variant="lg" mb={2}>
+            <Text variant="lg-display" mb={2}>
               Featured Artists
             </Text>
           </Column>

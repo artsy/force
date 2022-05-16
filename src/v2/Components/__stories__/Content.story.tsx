@@ -147,7 +147,7 @@ export const ContentScrollLeftFixedRight = () => {
                 Category
               </Text>
 
-              <Text variant="lg" mb={1}>
+              <Text variant="lg-display" mb={1}>
                 This Artwork Changed My Life: Sally Mann’s “Untitled Film
                 Stills”
               </Text>
@@ -174,7 +174,7 @@ export const ContentScrollLeftFixedRight = () => {
                 Category
               </Text>
 
-              <Text variant="lg" mb={1}>
+              <Text variant="lg-display" mb={1}>
                 Why Painter Eddie Martinez Is Having His Biggest Market Year Yet
               </Text>
 
@@ -188,7 +188,7 @@ export const ContentScrollLeftFixedRight = () => {
                 Category
               </Text>
 
-              <Text variant="lg" mb={1}>
+              <Text variant="lg-display" mb={1}>
                 ‘The Season’s Been Extended Indefinitely’: Manhattan Dealers Who
                 Opened Hamptons Outposts This Summer Are There to Stay
               </Text>
@@ -216,7 +216,7 @@ export const ContentScrollLeftFixedRight = () => {
                 Category
               </Text>
 
-              <Text variant="lg" mb={1}>
+              <Text variant="lg-display" mb={1}>
                 FIAC Has Canceled Its 2020 Fair in Paris, Saying It Could Not
                 Meet the ‘Legitimate Expectations’ of Visitors
               </Text>

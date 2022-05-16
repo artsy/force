@@ -48,7 +48,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
       variant: "mediumText" as TextVariant,
     },
     v3: {
-      variant: "md" as TextVariant,
+      variant: "sm-display" as TextVariant,
     },
   })
 
@@ -93,7 +93,7 @@ const TitleLine: React.FC<DetailsProps> = ({
       variant: "text" as TextVariant,
     },
     v3: {
-      variant: "md" as TextVariant,
+      variant: "sm-display" as TextVariant,
     },
   })
 

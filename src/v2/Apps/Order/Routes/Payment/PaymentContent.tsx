@@ -65,7 +65,7 @@ export const PaymentContent: FC<Props> = props => {
         style={isLoading ? { pointerEvents: "none" } : {}}
       >
         <Spacer mb={2} />
-        <Text variant="lg">Payment method</Text>
+        <Text variant="lg-display">Payment method</Text>
         <Spacer mb={2} />
         <RadioGroup
           onSelect={val => {
@@ -98,7 +98,7 @@ export const PaymentContent: FC<Props> = props => {
           />
         </RadioGroup>
         <Spacer mb={4} />
-        <Text variant="lg">Payment details</Text>
+        <Text variant="lg-display">Payment details</Text>
         <Spacer mb={2} />
         <Collapse open={paymentMethod === "credit_card"}>
           <PaymentPickerFragmentContainer

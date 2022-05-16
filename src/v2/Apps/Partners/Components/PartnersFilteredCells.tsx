@@ -53,7 +53,7 @@ const PartnersFilteredCells: FC<PartnersFilteredCellsProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         {total} Result{total === 1 ? "" : "s"}
       </Text>
 
@@ -152,7 +152,7 @@ const PartnersFilteredCellsPaginationContainer = createPaginationContainer(
 const PartnersFilteredCellsPlaceholder: FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg" mb={4}>
+      <SkeletonText variant="lg-display" mb={4}>
         0 Results
       </SkeletonText>
 

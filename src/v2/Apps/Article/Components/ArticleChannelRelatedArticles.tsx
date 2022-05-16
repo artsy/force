@@ -20,7 +20,7 @@ const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         More From {article.byline}
       </Text>
 
@@ -95,7 +95,7 @@ export const ArticleChannelRelatedArticlesQueryRenderer: FC<ArticleChannelRelate
 const ArticleChannelRelatedArticlesPlaceholder: FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg" mb={4}>
+      <SkeletonText variant="lg-display" mb={4}>
         More From This Author
       </SkeletonText>
 

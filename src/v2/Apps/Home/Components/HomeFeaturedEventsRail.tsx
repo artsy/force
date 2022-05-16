@@ -41,7 +41,7 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Featured
       </Text>
 
@@ -85,7 +85,7 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                         {event.title}
                       </Text>
 
-                      <Text variant="lg">{event.subtitle}</Text>
+                      <Text variant="lg-display">{event.subtitle}</Text>
                     </Box>
                   </Flex>
                 </Media>
@@ -114,7 +114,7 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                     {event.title}
                   </Text>
 
-                  <Text variant="lg">{event.subtitle}</Text>
+                  <Text variant="lg-display">{event.subtitle}</Text>
                 </Media>
               </RouterLink>
             </Column>

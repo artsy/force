@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowInfoLocation_show } from "v2/__generated__/ShowInfoLocation_show.graphql"
@@ -26,7 +26,7 @@ export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({
   return (
     <Box {...rest}>
       {lines.map((line, i) => (
-        <Text variant="md" key={line ?? i}>
+        <Text variant="sm-display" key={line ?? i}>
           {line}
         </Text>
       ))}

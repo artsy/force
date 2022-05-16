@@ -51,7 +51,7 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
         <CloseIcon fill="black100" display="block" />
       </Clickable>
 
-      <Text variant="lg" mb={1}>
+      <Text variant="lg-display" mb={1}>
         What is a Buyer’s Premium?
       </Text>
 
@@ -69,7 +69,7 @@ const AuctionBuyersPremiumDialog: React.FC<AuctionBuyersPremiumDialogProps> = ({
         <>
           <Separator my={1} />
 
-          <Text variant="lg" mb={1}>
+          <Text variant="lg-display" mb={1}>
             Buyer’s Premium For This Auction on Artsy
           </Text>
 

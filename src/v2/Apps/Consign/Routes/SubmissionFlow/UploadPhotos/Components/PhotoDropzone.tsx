@@ -117,16 +117,16 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
         <input data-testid="image-dropzone-input" {...getInputProps()} />
 
         <Media greaterThan="xs">
-          <Text variant="lg">Drag and drop photos here</Text>
+          <Text variant="lg-display">Drag and drop photos here</Text>
         </Media>
         <Media at="xs">
-          <Text variant="lg">Add photos here</Text>
+          <Text variant="lg-display">Add photos here</Text>
         </Media>
 
-        <Text variant="md" color="black60" mt={1}>
+        <Text variant="sm-display" color="black60" mt={1}>
           Files supported: JPG, PNG
         </Text>
-        <Text variant="md" color="black60" mt={1}>
+        <Text variant="sm-display" color="black60" mt={1}>
           Total maximum size: {maxTotalSize} MB
         </Text>
 

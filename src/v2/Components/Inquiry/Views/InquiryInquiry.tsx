@@ -99,7 +99,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg" mr={4}>
+      <Text variant="lg-display" mr={4}>
         Send message to gallery
       </Text>
 
@@ -107,7 +107,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
       {user && (
         <>
-          <Text variant="md" my={2}>
+          <Text variant="sm-display" my={2}>
             <Box display="inline-block" width={60} color="black60">
               From
             </Box>
@@ -118,7 +118,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         </>
       )}
 
-      <Text variant="md" my={2}>
+      <Text variant="sm-display" my={2}>
         <Box display="inline-block" width={60} color="black60">
           To
         </Box>
@@ -139,9 +139,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
         />
 
         <Box ml={2}>
-          <Text variant="md">{artwork.artist?.name}</Text>
+          <Text variant="sm-display">{artwork.artist?.name}</Text>
 
-          <Text variant="md">
+          <Text variant="sm-display">
             {artwork.title} ({artwork.date})
           </Text>
         </Box>
@@ -241,13 +241,13 @@ const InquiryInquiryFragmentContainer = createFragmentContainer(
 export const InquiryInquiryPlaceholder: React.FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg" mr={4}>
+      <SkeletonText variant="lg-display" mr={4}>
         Send message to gallery
       </SkeletonText>
 
       <Separator my={2} />
 
-      <SkeletonText variant="md" my={2}>
+      <SkeletonText variant="sm-display" my={2}>
         <Box display="inline-block" width={60}>
           From
         </Box>
@@ -256,7 +256,7 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
 
       <Separator my={2} />
 
-      <SkeletonText variant="md" my={2}>
+      <SkeletonText variant="sm-display" my={2}>
         <Box display="inline-block" width={60}>
           To
         </Box>
@@ -269,9 +269,9 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
         <SkeletonBox width={60} height={45} />
 
         <Box ml={2}>
-          <SkeletonText variant="md">Artist Name</SkeletonText>
+          <SkeletonText variant="sm-display">Artist Name</SkeletonText>
 
-          <SkeletonText variant="md">Artwork Title (0000)</SkeletonText>
+          <SkeletonText variant="sm-display">Artwork Title (0000)</SkeletonText>
         </Box>
       </Flex>
 

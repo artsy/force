@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { Flex, HTML, Text, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -65,7 +65,12 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
               {name}
             </Text>
             {subheadline && (
-              <HTML variant="md" html={subheadline} textAlign="center" mt={1} />
+              <HTML
+                variant="sm-display"
+                html={subheadline}
+                textAlign="center"
+                mt={1}
+              />
             )}
           </Meta>
         </Container>

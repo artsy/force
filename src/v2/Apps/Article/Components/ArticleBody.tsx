@@ -159,11 +159,15 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                           </Box>
 
                           <Box>
-                            <Text variant="md" lineClamp={2}>
+                            <Text variant="sm-display" lineClamp={2}>
                               {relatedArticle.title}
                             </Text>
 
-                            <Text variant="md" color="black60" lineClamp={1}>
+                            <Text
+                              variant="sm-display"
+                              color="black60"
+                              lineClamp={1}
+                            >
                               {relatedArticle.byline}
                             </Text>
                           </Box>

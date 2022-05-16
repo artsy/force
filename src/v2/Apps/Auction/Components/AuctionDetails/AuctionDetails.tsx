@@ -76,7 +76,7 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
       {showCascadingEndTimeIntervalMessage && (
         <>
           <Spacer my={2} />
-          <Text variant="md" pr={2}>
+          <Text variant="sm-display" pr={2}>
             {`Lots close at ${sale.cascadingEndTimeIntervalMinutes!}-minute intervals`}
           </Text>
         </>

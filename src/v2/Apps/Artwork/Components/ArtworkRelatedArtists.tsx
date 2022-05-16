@@ -72,7 +72,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
 
     return (
       <Box data-test={ContextModule.relatedArtistsRail}>
-        <Text variant="lg">Related artists</Text>
+        <Text variant="lg-display">Related artists</Text>
 
         <Spacer mt={4} />
 
@@ -185,7 +185,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
 
 const PLACEHOLDER = (
   <Skeleton>
-    <Text variant="lg">Related artists</Text>
+    <Text variant="lg-display">Related artists</Text>
 
     <Spacer mt={4} />
 

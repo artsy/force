@@ -70,8 +70,8 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
           return (
             <Fragment key={location}>
               <Column span={4}>
-                <Text variant="lg">{location}</Text>
-                <Text variant="lg" color="black60">
+                <Text variant="lg-display">{location}</Text>
+                <Text variant="lg-display" color="black60">
                   {filteredJobs.length} open position
                   {filteredJobs.length === 1 ? "" : "s"}
                 </Text>
@@ -98,9 +98,9 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
           return (
             <Fragment key={department.id}>
               <Column span={4}>
-                <Text variant="lg">{department.name}</Text>
+                <Text variant="lg-display">{department.name}</Text>
 
-                <Text variant="lg" color="black60">
+                <Text variant="lg-display" color="black60">
                   {department.jobs.length} open position
                   {department.jobs.length === 1 ? "" : "s"}
                 </Text>

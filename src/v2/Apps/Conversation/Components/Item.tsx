@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Image, Link, Text } from "@artsy/palette"
 import { Item_item } from "v2/__generated__/Item_item.graphql"
@@ -28,7 +28,7 @@ export const Item: React.FC<ItemProps> = props => {
   const itemDetails = item => {
     if (item.__typename === "Artwork") {
       return [
-        <Text key={1} variant="md" color="white100">
+        <Text key={1} variant="sm-display" color="white100">
           {item.artistNames}
         </Text>,
         <Text key={2} variant="xs" color="white100">
@@ -43,7 +43,7 @@ export const Item: React.FC<ItemProps> = props => {
     } else if (item.__typename === "Show") {
       const itemLocation = item.fair?.location?.city
       return [
-        <Text key={1} variant="md" color="white100">
+        <Text key={1} variant="sm-display" color="white100">
           {item.fair.name}
         </Text>,
         <Text key={2} variant="xs" color="white100">

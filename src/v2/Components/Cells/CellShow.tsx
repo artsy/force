@@ -64,7 +64,7 @@ const CellShow: FC<CellShowProps> = ({
           </Text>
         )}
 
-        <Text variant="lg" lineClamp={2}>
+        <Text variant="lg-display" lineClamp={2}>
           {show.name}
         </Text>
 
@@ -107,7 +107,7 @@ export const CellShowPlaceholder: FC<CellShowPlaceholderProps> = ({
           </SkeletonText>
         )}
 
-        <SkeletonText variant="lg" lineClamp={2}>
+        <SkeletonText variant="lg-display" lineClamp={2}>
           Example Exhibition Title
         </SkeletonText>
 

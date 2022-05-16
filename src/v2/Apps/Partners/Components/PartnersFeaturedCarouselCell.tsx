@@ -57,11 +57,11 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
               {status} Show
             </Text>
 
-            <Text variant="lg" mb={1}>
+            <Text variant="lg-display" mb={1}>
               {show.name}
             </Text>
 
-            <Text variant="md" mb={2}>
+            <Text variant="sm-display" mb={2}>
               {location}
               {location && (show.statusUpdate || runningDates) ? ", " : ""}
               {show.statusUpdate ? (

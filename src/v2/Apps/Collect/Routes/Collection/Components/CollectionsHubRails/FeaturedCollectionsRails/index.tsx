@@ -95,7 +95,7 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
         />
 
         <Box maxWidth={300}>
-          <Text variant="md" overflowEllipsis>
+          <Text variant="sm-display" overflowEllipsis>
             {title}
           </Text>
 

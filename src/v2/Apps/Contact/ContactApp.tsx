@@ -110,7 +110,7 @@ export const ContactApp: React.FC = () => {
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>
-          <Text as="h2" variant="xl">
+          <Text as="h2" variant="lg-display">
             Editorial Staff
           </Text>
         </Column>
@@ -152,7 +152,7 @@ export const ContactApp: React.FC = () => {
 
       <GridColumns gridRowGap={4}>
         <Column span={4}>
-          <Text as="h2" variant="xl">
+          <Text as="h2" variant="lg-display">
             Address
           </Text>
         </Column>

@@ -60,10 +60,10 @@ const SmallConversationHeader: FC<ConversationHeaderProps> = props => {
       <RouterLink to={`/user/conversations`}>
         <ArrowLeftIcon />
       </RouterLink>
-      <Text variant="md" display={["none", "none", "auto"]}>
+      <Text variant="sm-display" display={["none", "none", "auto"]}>
         Conversation with {partnerName}
       </Text>
-      <Text variant="md" display={["auto", "auto", "none"]}>
+      <Text variant="sm-display" display={["auto", "auto", "none"]}>
         Inquiry with {partnerName}
       </Text>
       <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
@@ -84,7 +84,7 @@ const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
       >
         <Box>
           {partnerName ? (
-            <Text variant="md" mb={0.5} ml={2}>
+            <Text variant="sm-display" mb={0.5} ml={2}>
               Conversation with {partnerName}
             </Text>
           ) : (

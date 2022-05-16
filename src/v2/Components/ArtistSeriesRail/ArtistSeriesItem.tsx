@@ -75,11 +75,11 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
         <Box width={325} height={244} bg="black10" />
       )}
 
-      <Text variant="md" mt={1} overflowEllipsis maxWidth={300}>
+      <Text variant="sm-display" mt={1} overflowEllipsis maxWidth={300}>
         {title}
       </Text>
 
-      <Text variant="md" color="black60">
+      <Text variant="sm-display" color="black60">
         {artworksCountMessage}
       </Text>
     </RouterLink>

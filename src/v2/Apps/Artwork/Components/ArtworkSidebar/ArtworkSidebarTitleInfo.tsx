@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkSidebarTitleInfo_artwork } from "v2/__generated__/ArtworkSidebarTitleInfo_artwork.graphql"
@@ -14,16 +14,18 @@ export class ArtworkSidebarTitleInfo extends Component<
   render() {
     const { artwork } = this.props
 
-    return <>
-      <Text variant="lg" as="h1" color="black60" mb={0.5}>
-        <i>{artwork.title?.trim()}</i>
-        {artwork.date &&
-          artwork.date.replace(/\s+/g, "").length > 0 &&
-          ", " + artwork.date}
-      </Text>
+    return (
+      <>
+        <Text variant="lg-display" as="h1" color="black60" mb={0.5}>
+          <i>{artwork.title?.trim()}</i>
+          {artwork.date &&
+            artwork.date.replace(/\s+/g, "").length > 0 &&
+            ", " + artwork.date}
+        </Text>
 
-      {artwork.medium && <Text variant="md">{artwork.medium}</Text>}
-    </>;
+        {artwork.medium && <Text variant="sm-display">{artwork.medium}</Text>}
+      </>
+    )
   }
 }
 

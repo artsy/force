@@ -39,7 +39,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
 
         return (
           <Box key={letter} id={getExhibitorSectionId(letter)}>
-            <Text variant="lg" my={4}>
+            <Text variant="lg-display" my={4}>
               {letter}
             </Text>
             <FairExhibitorsGroup exhibitorsGroup={exhibitorsGroup} />

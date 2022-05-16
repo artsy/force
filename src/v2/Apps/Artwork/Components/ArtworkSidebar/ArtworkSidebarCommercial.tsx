@@ -92,7 +92,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   renderSaleMessage(saleMessage: string) {
     return (
-      <Text variant="lg" data-test="SaleMessage">
+      <Text variant="lg-display" data-test="SaleMessage">
         {saleMessage === "Contact For Price" ? "Price on request" : saleMessage}
       </Text>
     )

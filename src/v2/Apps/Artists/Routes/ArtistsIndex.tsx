@@ -90,13 +90,13 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
               <React.Fragment key={gene.name ?? i}>
                 <Box display="flex" justifyContent="space-between" mb={2}>
                   <RouterLink to={gene.href!} noUnderline>
-                    <Text variant="lg" as="h2">
+                    <Text variant="lg-display" as="h2">
                       {gene.name}
                     </Text>
                   </RouterLink>
 
                   <RouterLink to={gene.href!} noUnderline>
-                    <Text variant="md" color="black60">
+                    <Text variant="sm-display" color="black60">
                       View
                     </Text>
                   </RouterLink>

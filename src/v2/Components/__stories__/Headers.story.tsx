@@ -151,7 +151,7 @@ const HeadersMetadataExample = () => {
         Secondary Text
       </Text>
 
-      <Text variant="lg" mb={1}>
+      <Text variant="lg-display" mb={1}>
         Sub Headline
       </Text>
 

@@ -129,7 +129,7 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
       <Separator my={2} />
 
       <Flex width="100%" flexDirection="row" justifyContent="space-between">
-        <Text variant="lg" pr={1}>
+        <Text variant="lg-display" pr={1}>
           {bidsPresent ? "Current bid" : "Starting bid"}
         </Text>
 

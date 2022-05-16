@@ -79,18 +79,22 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
     <GridColumns width="100%" gridRowGap={[4, 2]} {...rest}>
       <Column span={6}>
         <FadeBox opacity={active ? 1 : 0}>
-          <Text textTransform="capitalize" variant="md" mb={1}>
+          <Text textTransform="capitalize" variant="sm-display" mb={1}>
             {showType}
           </Text>
           <RouterLink to={href} textDecoration="none">
             {name && <Text variant="xl">{name}</Text>}
             {exhibitionPeriod && (
-              <Text color="black60" variant="lg">
+              <Text color="black60" variant="lg-display">
                 {exhibitionPeriod}
               </Text>
             )}
             {location && location.city && (
-              <Text color="black60" variant="lg" textTransform="capitalize">
+              <Text
+                color="black60"
+                variant="lg-display"
+                textTransform="capitalize"
+              >
                 {location.city}
               </Text>
             )}

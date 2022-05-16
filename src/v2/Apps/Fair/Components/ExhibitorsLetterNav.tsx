@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Text, Flex, Swiper } from "@artsy/palette"
@@ -69,7 +69,7 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
   )
 }
 
-const Letter = styled(Text).attrs({ variant: "md" })`
+const Letter = styled(Text).attrs({ variant: "sm-display" })`
   display: inline-block;
   cursor: pointer;
   white-space: nowrap;

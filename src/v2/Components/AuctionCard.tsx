@@ -1,7 +1,7 @@
 import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { AuctionCard_sale } from "v2/__generated__/AuctionCard_sale.graphql"
 import { DateTime } from "luxon"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -103,13 +103,13 @@ export const AuctionCard: React.FC<AuctionCardProps> = ({ sale }) => {
 
       {sale.partner?.name && (
         <>
-          <Text variant="lg" overflowEllipsis>
+          <Text variant="lg-display" overflowEllipsis>
             {sale.partner?.name}
           </Text>
         </>
       )}
 
-      <Text variant="lg" color="black60" overflowEllipsis>
+      <Text variant="lg-display" color="black60" overflowEllipsis>
         {statusLabel}
       </Text>
     </RouterLink>

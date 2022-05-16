@@ -19,7 +19,7 @@ export const ArtworksRailPlaceholder: React.FC<ArtworksRailPlaceholderProps> = (
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
-        <SkeletonText variant="lg">Featured Artworks</SkeletonText>
+        <SkeletonText variant="lg-display">Featured Artworks</SkeletonText>
         <SkeletonText>View all</SkeletonText>
       </Flex>
 

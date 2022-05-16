@@ -1,5 +1,5 @@
 import { BorderBox, Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArtworkDetailsArticles_artwork } from "v2/__generated__/ArtworkDetailsArticles_artwork.graphql"
@@ -47,11 +47,11 @@ export const ArtworkDetailsArticles: React.FC<ArtworkDetailsArticlesProps> = ({
                     {article.author?.name ?? "Artsy Editorial"}
                   </Text>
 
-                  <Text variant="lg" my={0.5}>
+                  <Text variant="lg-display" my={0.5}>
                     {article.thumbnailTitle}
                   </Text>
 
-                  <Text variant="md">{article.publishedAt}</Text>
+                  <Text variant="sm-display">{article.publishedAt}</Text>
                 </Box>
               </Flex>
             </RouterLink>

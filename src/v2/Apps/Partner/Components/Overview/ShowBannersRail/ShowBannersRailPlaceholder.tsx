@@ -24,12 +24,12 @@ export const ShowBannersRailPlaceholder: React.FC<ShowBannersRailPlaceholderProp
     <Box {...rest}>
       <GridColumns gridRowGap={[3, 2]}>
         <Column span={6}>
-          <SkeletonText variant="md" mb={1}>
+          <SkeletonText variant="sm-display" mb={1}>
             Show type
           </SkeletonText>
           <SkeletonText variant="xl">Show name</SkeletonText>
-          <SkeletonText variant="lg">Exhibition period</SkeletonText>
-          <SkeletonText variant="lg">Location</SkeletonText>
+          <SkeletonText variant="lg-display">Exhibition period</SkeletonText>
+          <SkeletonText variant="lg-display">Location</SkeletonText>
           <SkeletonText mt={1}>
             lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

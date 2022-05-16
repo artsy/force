@@ -72,7 +72,7 @@ export const BuyerGuaranteeIndex: FC = () => {
 
       <GridColumns gridRowGap={4}>
         <Column span={6} start={4} textAlign="center">
-          <Text variant="lg">
+          <Text variant="lg-display">
             Artsy is the safest place to buy the art you love.
             <br />
             Every purchase made exclusively with Artsy’s secure checkout
@@ -83,7 +83,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         <Column span={4} start={3} textAlign="center">
           <VerifiedIcon width={60} height={60} />
 
-          <Text variant="md" fontWeight="bold" mt={2}>
+          <Text variant="sm-display" fontWeight="bold" mt={2}>
             Vetted Sellers
           </Text>
 
@@ -96,7 +96,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         <Column span={4} textAlign="center" wrap>
           <ChatIcon width={60} height={60} />
 
-          <Text variant="md" fontWeight="bold" mt={2}>
+          <Text variant="sm-display" fontWeight="bold" mt={2}>
             Dedicated Support
           </Text>
 
@@ -109,7 +109,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         <Column span={4} textAlign="center">
           <CertificateIcon width={60} height={60} />
 
-          <Text variant="md" fontWeight="bold" mt={2}>
+          <Text variant="sm-display" fontWeight="bold" mt={2}>
             Authenticity Guarantee
           </Text>
 
@@ -133,7 +133,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         <Column span={4} textAlign="center">
           <MoneyBackIcon width={60} height={60} />
 
-          <Text variant="md" fontWeight="bold" mt={2}>
+          <Text variant="sm-display" fontWeight="bold" mt={2}>
             Money-Back Guarantee
           </Text>
 
@@ -157,7 +157,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         <Column span={4} textAlign="center">
           <LockIcon width={60} height={60} />
 
-          <Text variant="md" fontWeight="bold" mt={2}>
+          <Text variant="sm-display" fontWeight="bold" mt={2}>
             Secure Payment
           </Text>
 
@@ -204,7 +204,7 @@ export const BuyerGuaranteeIndex: FC = () => {
           // @ts-ignore
           id="jump--authenticityGuarantee"
         >
-          <Text variant="lg">Authenticity Guarantee</Text>
+          <Text variant="lg-display">Authenticity Guarantee</Text>
 
           <Text variant="sm" mt={2}>
             We are dedicated to being the world’s most trustworthy marketplace
@@ -234,7 +234,7 @@ export const BuyerGuaranteeIndex: FC = () => {
           // @ts-ignore
           id="jump--moneyBackGuarantee"
         >
-          <Text variant="lg">Money-Back Guarantee</Text>
+          <Text variant="lg-display">Money-Back Guarantee</Text>
 
           <Text variant="sm" mt={2}>
             If a work purchased through Artsy’s secure checkout does not arrive,
@@ -293,7 +293,7 @@ export const BuyerGuaranteeIndex: FC = () => {
           // @ts-ignore
           id="jump--securePayment"
         >
-          <Text variant="lg">Secure Payment</Text>
+          <Text variant="lg-display">Secure Payment</Text>
 
           <Text variant="sm" mt={2}>
             Purchases completed through our secure checkout are powered by

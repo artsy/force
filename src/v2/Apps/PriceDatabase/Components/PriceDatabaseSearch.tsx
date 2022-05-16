@@ -94,7 +94,7 @@ export const PriceDatabaseSearch: React.FC = () => {
             </Media>
             <Media greaterThanOrEqual="sm">Artsy Price Database</Media>
           </Text>
-          <Text variant={["sm", "lg"]} mb={[0, 2]}>
+          <Text variant={["sm-display", "lg-display"]} mb={[0, 2]}>
             Unlimited access to millions of auction results and art market
             data—for free.
           </Text>

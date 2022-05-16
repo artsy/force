@@ -13,7 +13,12 @@ export const LiveAuctionToolTip: React.FC<LiveAuctionToolTipProps> = ({
 
   return (
     <Box>
-      <Text variant="md" display="flex" alignItems="center" lineHeight={1}>
+      <Text
+        variant="sm-display"
+        display="flex"
+        alignItems="center"
+        lineHeight={1}
+      >
         Live Auction <Spacer mr={0.5} />
         <Tooltip
           content="Participating in a live auction means you’ll be competing

@@ -88,7 +88,7 @@ const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
                   Artsy Consignments
                 </Text>
 
-                <Text variant="lg" mb={2}>
+                <Text variant="lg-display" mb={2}>
                   Sell Works from Your Collection
                 </Text>
 

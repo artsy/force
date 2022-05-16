@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from "react"
 import { Flex, Text, Separator } from "@artsy/palette"
 
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
@@ -12,7 +12,7 @@ export const ConversationListHeader: FC = props => {
       height={LARGE_SCREEN_HEADER_HEIGHT}
       {...props}
     >
-      <Text variant="lg" ml={1}>
+      <Text variant="lg-display" ml={1}>
         Inbox
       </Text>
       <Separator mt={1} />

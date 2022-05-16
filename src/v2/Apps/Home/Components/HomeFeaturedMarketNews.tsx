@@ -18,7 +18,7 @@ import {
   ResponsiveBox,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "v2/Components/Masonry"
 import { useSystemContext, useTracking } from "v2/System"
@@ -28,7 +28,7 @@ import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedMarketNewsQuery } from "v2/__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import { HomeFeaturedMarketNews_articles } from "v2/__generated__/HomeFeaturedMarketNews_articles.graphql"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get";
+import { themeGet } from "@styled-system/theme-get"
 
 const ARTICLE_COUNT = 6
 
@@ -44,7 +44,7 @@ const StyledRouterLink = styled(RouterLink)`
 `
 
 const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
-  articles
+  articles,
 }) => {
   const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
@@ -91,10 +91,10 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
             <Text variant="xs" textTransform="uppercase" my={1}>
               {firstArticle.vertical}
             </Text>
-          
+
             <Text variant="xl">{firstArticle.title}</Text>
 
-            <Text variant="lg" mt={1}>
+            <Text variant="lg-display" mt={1}>
               By {firstArticle.byline}
             </Text>
           </StyledRouterLink>
@@ -145,10 +145,10 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                     <Text variant="xs" textTransform="uppercase" my={1}>
                       {article.vertical}
                     </Text>
-                    
-                      <Text variant="lg">{article.title}</Text>
-                    
-                    <Text variant="md" mt={1}>
+
+                    <Text variant="lg-display">{article.title}</Text>
+
+                    <Text variant="sm-display" mt={1}>
                       By {article.byline}
                     </Text>
                   </Box>
@@ -247,7 +247,7 @@ const PLACEHOLDER = (
               Essential Tips for Collecting Work by Anni and Josef Albers
             </SkeletonText>
 
-            <SkeletonText variant="lg" mt={1}>
+            <SkeletonText variant="lg-display" mt={1}>
               By Artsy Editorial
             </SkeletonText>
           </Media>
@@ -286,12 +286,12 @@ const PLACEHOLDER = (
                       Art Fairs
                     </SkeletonText>
 
-                    <SkeletonText variant="lg">
+                    <SkeletonText variant="lg-display">
                       Essential Tips for Collecting Work by Anni and Josef
                       Albers
                     </SkeletonText>
 
-                    <SkeletonText variant="md" mt={1}>
+                    <SkeletonText variant="sm-display" mt={1}>
                       By Artsy Editorial
                     </SkeletonText>
                   </Box>

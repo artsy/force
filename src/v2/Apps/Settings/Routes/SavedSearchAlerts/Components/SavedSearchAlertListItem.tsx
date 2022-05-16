@@ -64,7 +64,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           alignItems={["stretch", "center"]}
         >
           <Text
-            variant="lg"
+            variant="lg-display"
             color={variant === "active" ? "blue100" : "black100"}
           >
             {item.userAlertSettings.name}

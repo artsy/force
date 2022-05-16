@@ -36,7 +36,7 @@ export const debugRoutes: AppRouteConfig[] = [
         path: "client-error-404",
         Component: () => {
           return (
-            <Text mt={4} variant="md">
+            <Text mt={4} variant="sm-display">
               <RouterLink to="/artist/example-404">Click to 404</RouterLink>
             </Text>
           )

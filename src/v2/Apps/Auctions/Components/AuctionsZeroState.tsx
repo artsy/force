@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Text } from "@artsy/palette"
 
 export const AuctionsZeroState: React.FC = ({ children }) => {
@@ -9,7 +9,7 @@ export const AuctionsZeroState: React.FC = ({ children }) => {
       mb={12}
       mt={6}
       textAlign="center"
-      variant="md"
+      variant="sm-display"
     >
       {children}
     </Text>

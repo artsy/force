@@ -28,7 +28,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         alignItems="center"
         position="relative"
       >
-        <Text variant="lg">All Events</Text>
+        <Text variant="lg-display">All Events</Text>
 
         {displayFullPartnerPage && (
           <ViewAllButton to={`/partner/${slug}/shows`} />

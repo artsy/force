@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import styled from "styled-components"
@@ -121,7 +121,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                 <Flex width="100%" justifyContent="space-between">
                   <Flex>
                     <TruncatedTitle
-                      variant="md"
+                      variant="sm-display"
                       mr={0.5}
                       color={conversation.unread ? "black" : "black60"}
                     >

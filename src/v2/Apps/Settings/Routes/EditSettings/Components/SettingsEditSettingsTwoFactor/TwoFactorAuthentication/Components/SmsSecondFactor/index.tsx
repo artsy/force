@@ -138,10 +138,10 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg">Use Text Messages</Text>
+          <Text variant="lg-display">Use Text Messages</Text>
 
           {enabledSecondFactorLabel && (
-            <Text variant="lg" color="black60">
+            <Text variant="lg-display" color="black60">
               {enabledSecondFactorLabel}
             </Text>
           )}

@@ -72,11 +72,11 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
             )}
           </Flex>
 
-          <Text as="h4" variant="md" mr={2} display="flex" flex={1}>
+          <Text as="h4" variant="sm-display" mr={2} display="flex" flex={1}>
             {fair.name}
           </Text>
 
-          <Text as="h4" variant="md" display="flex" flex={1}>
+          <Text as="h4" variant="sm-display" display="flex" flex={1}>
             {fair.exhibitionPeriod}
           </Text>
         </Flex>

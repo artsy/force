@@ -118,7 +118,7 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
             <div />
           )}
 
-          <Text variant="md" display="flex">
+          <Text variant="sm-display" display="flex">
             <Clickable
               mr={1}
               onClick={handleEdit}

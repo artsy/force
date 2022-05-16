@@ -647,7 +647,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onSelect={this.onSelectShippingOption.bind(this)}
                     defaultValue={shippingOption}
                   >
-                    <Text variant="md" mb="1">
+                    <Text variant="sm-display" mb="1">
                       Delivery method
                     </Text>
                     <BorderedRadio value="SHIP" label="Shipping" />
@@ -674,7 +674,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 data-test="savedAddressesCollapse"
                 open={!!showSavedAddresses}
               >
-                <Text variant="md" mb="1">
+                <Text variant="sm-display" mb="1">
                   Delivery address
                 </Text>
                 {isArtsyShipping &&

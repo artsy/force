@@ -24,21 +24,23 @@ const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = props =>
 
   return (
     <Join separator={<Spacer my={1} />}>
-      <Text variant="md" fontWeight="bold">
+      <Text variant="sm-display" fontWeight="bold">
         Summary
       </Text>
 
       <Row>
-        <Text variant="md">Your Max Bid</Text>
-        <Text variant="md">{calculatedCost?.bidAmount?.display}</Text>
+        <Text variant="sm-display">Your Max Bid</Text>
+        <Text variant="sm-display">{calculatedCost?.bidAmount?.display}</Text>
       </Row>
       <Row>
-        <Text variant="md">Buyer's Premium</Text>
-        <Text variant="md">{calculatedCost?.buyersPremium?.display}</Text>
+        <Text variant="sm-display">Buyer's Premium</Text>
+        <Text variant="sm-display">
+          {calculatedCost?.buyersPremium?.display}
+        </Text>
       </Row>
       <Row>
-        <Text variant="md">Subtotal</Text>
-        <Text variant="md">{calculatedCost?.subtotal?.display}</Text>
+        <Text variant="sm-display">Subtotal</Text>
+        <Text variant="sm-display">{calculatedCost?.subtotal?.display}</Text>
       </Row>
 
       <Text variant="sm" color="black60">
@@ -55,21 +57,21 @@ const Row: React.FC = ({ children }) => {
 const PLACEHOLDER = (
   <Skeleton>
     <Join separator={<Spacer my={1} />}>
-      <Text variant="md" fontWeight="bold">
+      <Text variant="sm-display" fontWeight="bold">
         Summary
       </Text>
 
       <Row>
-        <Text variant="md">Your Max Bid</Text>
-        <SkeletonText variant="md">20000</SkeletonText>
+        <Text variant="sm-display">Your Max Bid</Text>
+        <SkeletonText variant="sm-display">20000</SkeletonText>
       </Row>
       <Row>
-        <Text variant="md">Buyer's Premium</Text>
-        <SkeletonText variant="md">20000</SkeletonText>
+        <Text variant="sm-display">Buyer's Premium</Text>
+        <SkeletonText variant="sm-display">20000</SkeletonText>
       </Row>
       <Row>
-        <Text variant="md">Subtotal</Text>
-        <SkeletonText variant="md">20000</SkeletonText>
+        <Text variant="sm-display">Subtotal</Text>
+        <SkeletonText variant="sm-display">20000</SkeletonText>
       </Row>
 
       <Text variant="sm" color="black60">

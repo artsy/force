@@ -54,7 +54,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
             {title}
           </Text>
 
-          <Text variant="md" mb={1}>
+          <Text variant="sm-display" mb={1}>
             {artworksCountMessage}
           </Text>
 

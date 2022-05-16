@@ -245,11 +245,13 @@ const ArticleInfiniteScrollPlaceholder: FC = () => {
                   <SkeletonBox width={80} height={60} mr={1} />
 
                   <Box>
-                    <SkeletonText variant="md">
+                    <SkeletonText variant="sm-display">
                       Related Article Title
                     </SkeletonText>
 
-                    <SkeletonText variant="md">Artsy Editors</SkeletonText>
+                    <SkeletonText variant="sm-display">
+                      Artsy Editors
+                    </SkeletonText>
                   </Box>
                 </Flex>
               ))}

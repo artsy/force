@@ -68,11 +68,11 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
     >
       <Flex id={`jump--${exhibitor.partner?.internalID}`}>
         <Box>
-          <Text variant="md" overflow="clip">
+          <Text variant="sm-display" overflow="clip">
             {name}
           </Text>
           {cities?.length ? (
-            <Text variant="md" color="black60" overflow="clip">
+            <Text variant="sm-display" color="black60" overflow="clip">
               {partnerAddress(cities)}
             </Text>
           ) : null}

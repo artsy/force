@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 
 import {
@@ -39,7 +39,11 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
       {showHeading && (
         <Flex justifyContent="space-between" alignItems="baseline" mb={1}>
           {title && (
-            <Text variant={["xs", "md"]} fontWeight="bold" color="black100">
+            <Text
+              variant={["xs", "sm-display"]}
+              fontWeight="bold"
+              color="black100"
+            >
               {title}
             </Text>
           )}

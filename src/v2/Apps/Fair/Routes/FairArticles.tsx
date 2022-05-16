@@ -101,7 +101,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
               to={heroArticle.href}
               style={{ display: "block", textDecoration: "none" }}
             >
-              <Text as="h3" pt={[0, 6]} mb={0.5} variant="lg">
+              <Text as="h3" pt={[0, 6]} mb={0.5} variant="lg-display">
                 {heroArticle.title}
               </Text>
 

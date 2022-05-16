@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { FairBoothRailArtworksQuery } from "v2/__generated__/FairBoothRailArtworksQuery.graphql"
@@ -90,7 +90,7 @@ const PLACEHOLDER = (
             height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             mb={1}
           />
-          <SkeletonText variant="md">Artist Name</SkeletonText>
+          <SkeletonText variant="sm-display">Artist Name</SkeletonText>
           <SkeletonText>Artwork Title</SkeletonText>
           <SkeletonText>Price</SkeletonText>
         </Box>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, HTML, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowLocationHours_location } from "v2/__generated__/ShowLocationHours_location.graphql"
@@ -18,7 +18,7 @@ export const ShowLocationHours: React.FC<ShowLocationHoursProps> = ({
   if (!!openingHours.text) {
     return (
       <Box {...rest}>
-        <HTML variant="md" html={openingHours.text} />
+        <HTML variant="sm-display" html={openingHours.text} />
       </Box>
     )
   }
@@ -31,7 +31,7 @@ export const ShowLocationHours: React.FC<ShowLocationHoursProps> = ({
         }
 
         return (
-          <Text variant="md" key={i}>
+          <Text variant="sm-display" key={i}>
             {[schedule.days, schedule.hours].filter(Boolean).join(", ")}
           </Text>
         )

@@ -51,7 +51,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
 
           <Flex flexShrink={0} mt={[2, 0]}>
             <Text
-              variant="md"
+              variant="sm-display"
               as="a"
               // @ts-ignore
               href="https://partners.artsy.net"
@@ -61,7 +61,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
             </Text>
 
             <Text
-              variant="md"
+              variant="sm-display"
               as="a"
               // @ts-ignore
               href="https://partners.artsy.net/gallery-resources/"
@@ -87,7 +87,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
 
         <GridColumns>
           <Column span={6} textAlign="center">
-            <Text variant="lg" mb={2}>
+            <Text variant="lg-display" mb={2}>
               Interested in Listing Your Gallery on Artsy?
             </Text>
 
@@ -102,7 +102,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
           </Column>
 
           <Column span={6} textAlign="center">
-            <Text variant="lg" mb={2}>
+            <Text variant="lg-display" mb={2}>
               Read Artsy Insights for Galleries
             </Text>
 

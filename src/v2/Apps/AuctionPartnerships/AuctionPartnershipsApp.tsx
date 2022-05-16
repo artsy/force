@@ -62,7 +62,7 @@ const ArtsyForAuctions: React.FC = () => {
           </Text>
         </Column>
         <Column span={6}>
-          <Text variant="lg">
+          <Text variant="lg-display">
             Artsy offers a centralized online platform to promote your auction,
             expand your client base, maximize bids, and support auction
             operations with our suite of cloud-based and mobile tools.
@@ -291,7 +291,7 @@ const PartnerWithArtsyForm: React.FC = () => {
                   selected={values.B2B_TOU_Active_Consent__c}
                   error={!!errors.B2B_TOU_Active_Consent__c}
                 >
-                  <Text variant="md" lineHeight={1}>
+                  <Text variant="sm-display" lineHeight={1}>
                     I agree to Artsy{" "}
                     <a href="/terms" target="_blank">
                       Terms of Use
@@ -398,7 +398,7 @@ const BiddingTools: React.FC = () => {
       <Spacer mt={6} />
       <GridColumns>
         <Column span={6} start={4}>
-          <Text variant="lg" textColor="blue100">
+          <Text variant="lg-display" textColor="blue100">
             “Artsy's technology created a unique user experience which was
             essential to generating our most successful auction in years.”
           </Text>
@@ -575,7 +575,7 @@ const EventServicesInfo: React.FC = () => {
         <Text textTransform="uppercase" mb={1} variant="xs">
           Event Services
         </Text>
-        <Text variant="lg" mb={1}>
+        <Text variant="lg-display" mb={1}>
           Exceptional Services to Reach New Collectors, Drive Bid Activity, and
           Promote Your Brand
         </Text>
@@ -624,9 +624,9 @@ const AuctionsSupportTeam: React.FC = () => {
                     backgroundColor="black100"
                   ></Avatar>
                   <Flex flexDirection="column">
-                    <Text variant="lg">{specialist.name}</Text>
-                    <Text variant="md">{specialist.title}</Text>
-                    <Text variant="md" color="black60" mb={2}>
+                    <Text variant="lg-display">{specialist.name}</Text>
+                    <Text variant="sm-display">{specialist.title}</Text>
+                    <Text variant="sm-display" color="black60" mb={2}>
                       {specialist.location}
                     </Text>
                   </Flex>

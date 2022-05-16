@@ -84,7 +84,7 @@ export const ErrorStatus = () => {
     <>
       <Banner variant={statusVariant} textAlign="left">
         <Flex flexDirection="column" textAlign="left">
-          {title && <Text variant="md">{title}</Text>}
+          {title && <Text variant="sm-display">{title}</Text>}
 
           <Text variant="xs">{message}</Text>
         </Flex>

@@ -23,7 +23,7 @@ export const ModalHeader: React.FC<{
             {title}
           </Serif>
         ) : (
-          <Text variant="lg" my={2}>
+          <Text variant="lg-display" my={2}>
             {title}
           </Text>
         ))}

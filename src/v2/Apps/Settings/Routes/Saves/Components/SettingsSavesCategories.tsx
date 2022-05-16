@@ -53,7 +53,7 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Followed Categories {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -81,7 +81,7 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
           )}
         </>
       ) : (
-        <Text variant="lg" color="black60">
+        <Text variant="lg-display" color="black60">
           Nothing yet.
         </Text>
       )}
@@ -136,7 +136,7 @@ export const SettingsSavesCategoriesPaginationContainer = createPaginationContai
 const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (
   <>
     <Skeleton>
-      <SkeletonText variant="lg" mb={4}>
+      <SkeletonText variant="lg-display" mb={4}>
         Followed Categories
       </SkeletonText>
     </Skeleton>

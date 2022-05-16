@@ -61,7 +61,7 @@ const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
     // @ts-ignore
     <Pill variant="filter" as={RouterLink} my={0.5} mr={1} {...rest}>
       <Flex alignItems="center">
-        <Text variant={["xs", "md"]}>{text}&nbsp;</Text>
+        <Text variant={["xs", "sm-display"]}>{text}&nbsp;</Text>
         <Media greaterThan="xs">
           {count && (
             <Sup variant="xs" color={isActive ? "brand" : "inherit"}>

@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { Title } from "react-head"
 
 export const DebugApp: React.FC<{}> = () => {
@@ -7,7 +7,7 @@ export const DebugApp: React.FC<{}> = () => {
     <>
       <Title>Baseline</Title>
 
-      <Text variant="md">Baseline</Text>
+      <Text variant="sm-display">Baseline</Text>
     </>
   )
 }

@@ -21,7 +21,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
   return (
     <>
       <Checkbox selected={values.agreeToTerms} onSelect={handleCheckboxSelect}>
-        <Text variant="md" ml={0.5}>
+        <Text variant="sm-display" ml={0.5}>
           Agree to{" "}
           <RouterLink
             display="inline"

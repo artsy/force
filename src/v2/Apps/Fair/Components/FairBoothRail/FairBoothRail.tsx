@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import * as React from "react";
+import { useRef } from "react"
+import * as React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairBoothRail_show } from "v2/__generated__/FairBoothRail_show.graphql"
@@ -48,7 +48,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
       <Box ref={ref as any} {...rest}>
         <Flex mb={[2, 4]} pr={[1, 0]}>
           <Box flex="1">
-            <Text as="h3" variant="lg">
+            <Text as="h3" variant="lg-display">
               <RouterLink
                 to={show.href}
                 noUnderline
@@ -59,7 +59,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
             </Text>
 
             {show.counts?.artworks && (
-              <Text as="h3" variant="lg" color="black60" mb={1}>
+              <Text as="h3" variant="lg-display" color="black60" mb={1}>
                 {show.counts.artworks} work
                 {show.counts.artworks === 1 ? "" : "s"}
               </Text>
@@ -68,7 +68,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
 
           {show.href && (
             <Text
-              variant="md"
+              variant="sm-display"
               onClick={() => tracking.trackEvent(tappedViewTrackingData)}
             >
               <RouterLink to={show.href}>View</RouterLink>

@@ -133,7 +133,7 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
       ) : (
         <Box width={44} height={44} backgroundColor="black10" />
       )}
-      <Text ml={1} variant="md">
+      <Text ml={1} variant="sm-display">
         {option.text}
       </Text>
     </Flex>
