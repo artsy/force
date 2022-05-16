@@ -52,8 +52,8 @@ describe("NavBarSubMenu", () => {
       "/gene/the-collectibles-shop"
     )
 
-    expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
-    expect(linkMenuItems.at(4).prop("href")).toEqual("/collect")
+    expect(linkMenuItems.at(5).text()).toContain("View All Artworks")
+    expect(linkMenuItems.at(5).prop("href")).toEqual("/collect")
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
