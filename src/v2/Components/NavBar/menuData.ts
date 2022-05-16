@@ -163,6 +163,10 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         href: "/gene/finds-under-2500",
       },
       {
+        text: "Finds Under $1000",
+        href: "/gene/finds-under-1000",
+      },
+      {
         text: "The Collectibles Shop",
         href: "/gene/the-collectibles-shop",
       },
