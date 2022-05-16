@@ -64,7 +64,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
     if (relayEnvironment) {
       try {
         submissionId = await createOrUpdateConsignSubmission(relayEnvironment, {
-          id: submission?.id,
+          externalId: submission?.externalId,
           artistID: artworkDetailsForm.artistId,
           year: artworkDetailsForm.year,
           title: artworkDetailsForm.title,
@@ -92,7 +92,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         })
       } catch (error) {
         logger.error(
-          `Submission not ${submission?.id ? "updated" : "created"}`,
+          `Submission not ${submission?.externalId ? "updated" : "created"}`,
           error
         )
         openErrorModal()
@@ -168,7 +168,7 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
   {
     submission: graphql`
       fragment ArtworkDetails_submission on ConsignmentSubmission {
-        id
+        externalId
         artist {
           internalID
           name

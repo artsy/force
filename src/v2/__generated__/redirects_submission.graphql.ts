@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type redirects_submission = {
-    readonly id: string;
+    readonly externalId: string;
     readonly artist: {
         readonly internalID: string;
         readonly name: string | null;
@@ -44,21 +44,19 @@ export type redirects_submission$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "redirects_submission",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "externalId",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -204,7 +202,13 @@ return {
       "name": "assets",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -240,6 +244,5 @@ return {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-})();
 (node as any).hash = '48ac3149c54524ad41edd60f316c56e5';
 export default node;

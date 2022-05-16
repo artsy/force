@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ArtworkDetails_submission = {
-    readonly id: string;
+    readonly externalId: string;
     readonly artist: {
         readonly internalID: string;
         readonly name: string | null;
@@ -47,7 +47,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "id",
+      "name": "externalId",
       "storageKey": null
     },
     {
@@ -191,5 +191,5 @@ const node: ReaderFragment = {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = 'c3ab7081a0e1d3f79a17ced903a5280d';
+(node as any).hash = 'b9518757b5006da2539920b75926ded6';
 export default node;

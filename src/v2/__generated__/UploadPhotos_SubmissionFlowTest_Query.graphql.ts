@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type UploadPhotos_SubmissionFlowTest_QueryVariables = {
-    id: string;
+    externalId?: string | null | undefined;
 };
 export type UploadPhotos_SubmissionFlowTest_QueryResponse = {
     readonly submission: {
@@ -21,16 +21,16 @@ export type UploadPhotos_SubmissionFlowTest_Query = {
 
 /*
 query UploadPhotos_SubmissionFlowTest_Query(
-  $id: ID!
+  $externalId: ID
 ) {
-  submission(id: $id) {
+  submission(externalId: $externalId) {
     ...UploadPhotos_submission
     id
   }
 }
 
 fragment UploadPhotos_submission on ConsignmentSubmission {
-  id
+  externalId
   assets {
     id
     imageUrls
@@ -46,14 +46,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "externalId"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "id",
-    "variableName": "id"
+    "name": "externalId",
+    "variableName": "externalId"
   }
 ],
 v2 = {
@@ -116,7 +116,13 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "externalId",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -156,14 +162,15 @@ return {
               }
             ],
             "storageKey": null
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "36646556c8404954a46d223a73865fb1",
+    "cacheID": "dd111c8ae0d473c5b423d2c879701d33",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -189,14 +196,15 @@ return {
           "type": "JSON"
         },
         "submission.assets.size": (v3/*: any*/),
+        "submission.externalId": (v4/*: any*/),
         "submission.id": (v4/*: any*/)
       }
     },
     "name": "UploadPhotos_SubmissionFlowTest_Query",
     "operationKind": "query",
-    "text": "query UploadPhotos_SubmissionFlowTest_Query(\n  $id: ID!\n) {\n  submission(id: $id) {\n    ...UploadPhotos_submission\n    id\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  id\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query UploadPhotos_SubmissionFlowTest_Query(\n  $externalId: ID\n) {\n  submission(externalId: $externalId) {\n    ...UploadPhotos_submission\n    id\n  }\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '64cb94052061e44cd21a134cee81f6b8';
+(node as any).hash = 'cd7943b11af98f793bb6b58f4fe9ed6a';
 export default node;

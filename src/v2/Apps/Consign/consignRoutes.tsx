@@ -104,8 +104,21 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
 }
 
 const prepareSubmissionFlowStepVariables = data => {
+  let searchFields = { id: data.id, externalId: null }
+
+  // This code is here to support externalId UUIDs in url
+  // (i.e. /submissions/:id/something and :id is an UUID).
+  // If :id in url is not a number - the code passes
+  // externalId to metaphysics instead of id.
+  const sequentialIdRegex = new RegExp(/^\d+$/)
+  if (!sequentialIdRegex.test(data.id)) {
+    searchFields.externalId = data.id
+    searchFields.id = null
+  }
+
   return {
     ...data,
+    ...searchFields,
     sessionID: getENV("SESSION_ID"),
   }
 }
@@ -167,10 +180,15 @@ export const consignRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query consignRoutes_artworkDetailsQuery(
-            $id: ID!
+            $id: ID
+            $externalId: ID
             $sessionID: String
           ) {
-            submission(id: $id, sessionID: $sessionID) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
               ...ArtworkDetails_submission
               ...redirects_submission @relay(mask: false)
             }
@@ -188,8 +206,16 @@ export const consignRoutes: AppRouteConfig[] = [
           UploadPhotosFragmentContainer.preload()
         },
         query: graphql`
-          query consignRoutes_uploadPhotosQuery($id: ID!, $sessionID: String) {
-            submission(id: $id, sessionID: $sessionID) {
+          query consignRoutes_uploadPhotosQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
               ...UploadPhotos_submission
               ...redirects_submission @relay(mask: false)
             }
@@ -208,10 +234,15 @@ export const consignRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query consignRoutes_contactInformationQuery(
-            $id: ID!
+            $id: ID
+            $externalId: ID
             $sessionID: String
           ) {
-            submission(id: $id, sessionID: $sessionID) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
               ...ContactInformation_submission
               ...redirects_submission @relay(mask: false)
             }

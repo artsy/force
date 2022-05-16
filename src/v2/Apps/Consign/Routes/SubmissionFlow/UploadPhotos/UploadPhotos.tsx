@@ -83,7 +83,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const handleSubmit = async () => {
     if (submission) {
       router.push({
-        pathname: `/sell/submission/${submission.id}/contact-information`,
+        pathname: `/sell/submission/${submission.externalId}/contact-information`,
       })
     }
   }
@@ -94,7 +94,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
         py={2}
         mb={6}
         width="min-content"
-        to={`/sell/submission/${submission?.id}/artwork-details`}
+        to={`/sell/submission/${submission?.externalId}/artwork-details`}
       >
         Back
       </BackLink>
@@ -143,7 +143,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
           }
 
           const handlePhotoUploaded = async (photo: Photo) => {
-            if (photo.geminiToken && submission?.id) {
+            if (photo.geminiToken && submission?.externalId) {
               photo.loading = true
 
               try {
@@ -152,7 +152,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                     input: {
                       assetType: "image",
                       geminiToken: photo.geminiToken!,
-                      submissionID: submission.id,
+                      externalSubmissionId: submission.externalId,
                       sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
                       filename: photo.name,
                       size: photo.size.toString(),
@@ -197,7 +197,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
             ) {
               photosRefetchingCount.current += 1
 
-              refetchSubmissionAssets(submission.id, relayEnvironment)
+              refetchSubmissionAssets(submission.externalId, relayEnvironment)
                 .then(assets => {
                   updatePhotoUrls(assets)
 
@@ -228,7 +228,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                 mt={4}
                 maxTotalSize={30}
                 onPhotoUploaded={handlePhotoUploaded}
-                submissionId={submission?.id || ""}
+                submissionId={submission?.externalId || ""}
               />
 
               <Box mb={6}>
@@ -267,7 +267,7 @@ const refetchSubmissionAssets = async (
     relayEnvironment,
     graphql`
       query UploadPhotos_ImageRefetch_Query($id: ID!, $sessionID: String) {
-        submission(id: $id, sessionID: $sessionID) {
+        submission(externalId: $id, sessionID: $sessionID) {
           ...UploadPhotos_submission @relay(mask: false)
         }
       }
@@ -286,7 +286,7 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
   {
     submission: graphql`
       fragment UploadPhotos_submission on ConsignmentSubmission {
-        id
+        externalId
         assets {
           id
           imageUrls

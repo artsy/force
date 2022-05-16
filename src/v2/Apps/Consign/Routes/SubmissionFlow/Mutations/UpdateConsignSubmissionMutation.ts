@@ -17,7 +17,7 @@ export const updateConsignSubmissionMutation = (
         ) {
           updateConsignmentSubmission(input: $input) {
             consignmentSubmission {
-              internalID
+              externalId
             }
           }
         }
@@ -33,7 +33,7 @@ export const updateConsignSubmissionMutation = (
         }
 
         resolve(
-          res.updateConsignmentSubmission!.consignmentSubmission!.internalID!
+          res.updateConsignmentSubmission!.consignmentSubmission!.externalId!
         )
       },
     })

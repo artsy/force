@@ -67,20 +67,20 @@ const { renderWithRelay } = setupTestWrapperTL({
     )
   },
   query: graphql`
-    query UploadPhotos_SubmissionFlowTest_Query($id: ID!)
+    query UploadPhotos_SubmissionFlowTest_Query($externalId: ID)
       @relay_test_operation {
-      submission(id: $id) {
+      submission(externalId: $externalId) {
         ...UploadPhotos_submission
       }
     }
   `,
   variables: {
-    id: "1",
+    externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
   },
 })
 
 const submission = {
-  id: "1",
+  externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
   assets: [],
 }
 
@@ -119,7 +119,10 @@ describe("UploadPhotos", () => {
 
     expect(
       screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-    ).toHaveAttribute("href", "/sell/submission/1/artwork-details")
+    ).toHaveAttribute(
+      "href",
+      `/sell/submission/${submission.externalId}/artwork-details`
+    )
     expect(screen.getByText("Save and Continue")).toBeInTheDocument()
   })
 
@@ -260,7 +263,7 @@ describe("UploadPhotos", () => {
       expect(mockAddAsset).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalled()
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/sell/submission/1/contact-information",
+        pathname: `/sell/submission/${submission.externalId}/contact-information`,
       })
     })
   })

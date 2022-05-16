@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type UploadPhotos_submission = {
-    readonly id: string;
+    readonly externalId: string;
     readonly assets: ReadonlyArray<{
         readonly id: string;
         readonly imageUrls: unknown | null;
@@ -23,21 +23,19 @@ export type UploadPhotos_submission$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "UploadPhotos_submission",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "externalId",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -46,7 +44,13 @@ return {
       "name": "assets",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -82,6 +86,5 @@ return {
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-})();
-(node as any).hash = 'f6b524d7b6c49ec4aeb9bac584d857e7';
+(node as any).hash = '8c71b40126392ffdfdd810306a7f861d';
 export default node;

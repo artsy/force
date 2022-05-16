@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ContactInformation_submission = {
-    readonly id: string;
+    readonly externalId: string;
     readonly " $refType": "ContactInformation_submission";
 };
 export type ContactInformation_submission$data = ContactInformation_submission;
@@ -26,12 +26,12 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "id",
+      "name": "externalId",
       "storageKey": null
     }
   ],
   "type": "ConsignmentSubmission",
   "abstractKey": null
 };
-(node as any).hash = '5ae005fd76817564634de5eb1fe5353c';
+(node as any).hash = '403f4a265149c820349eb773cd1f812d';
 export default node;

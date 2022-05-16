@@ -14,13 +14,13 @@ const redirectToIf = (
   predicate: (args: redirects_submission) => boolean
 ) => (args: redirects_submission) => {
   if (predicate(args)) {
-    return isFunction(to) ? to(args?.id) : to
+    return isFunction(to) ? to(args?.externalId) : to
   }
 }
 
 const checkSubmissionExist = redirectToIf(
   "/sell/submission/artwork-details",
-  submission => !submission || !submission.id
+  submission => !submission || !submission.externalId
 )
 
 const checkArtworkDetailsFormValid = redirectToIf(

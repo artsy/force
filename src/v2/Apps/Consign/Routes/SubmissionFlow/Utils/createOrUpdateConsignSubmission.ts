@@ -17,7 +17,7 @@ export const createOrUpdateConsignSubmission = async (
   let submissionId: string
   let input = submission as UpdateSubmissionMutationInput
 
-  if (input.id) {
+  if (input.externalId) {
     submissionId = await updateConsignSubmissionMutation(
       relayEnvironment,
       input
