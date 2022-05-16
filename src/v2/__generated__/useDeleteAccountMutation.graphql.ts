@@ -6,6 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type DeleteAccountInput = {
     clientMutationId?: string | null | undefined;
     explanation?: string | null | undefined;
+    password?: string | null | undefined;
     url?: string | null | undefined;
 };
 export type useDeleteAccountMutationVariables = {
