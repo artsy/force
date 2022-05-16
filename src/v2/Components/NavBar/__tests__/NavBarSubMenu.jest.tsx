@@ -44,13 +44,16 @@ describe("NavBarSubMenu", () => {
     expect(linkMenuItems.at(2).text()).toContain("Finds Under $2500")
     expect(linkMenuItems.at(2).prop("href")).toEqual("/gene/finds-under-2500")
 
-    expect(linkMenuItems.at(3).text()).toContain("The Collectibles Shop")
-    expect(linkMenuItems.at(3).prop("href")).toEqual(
+    expect(linkMenuItems.at(3).text()).toContain("Finds Under $1000")
+    expect(linkMenuItems.at(3).prop("href")).toEqual("/gene/finds-under-1000")
+
+    expect(linkMenuItems.at(4).text()).toContain("The Collectibles Shop")
+    expect(linkMenuItems.at(4).prop("href")).toEqual(
       "/gene/the-collectibles-shop"
     )
 
-    expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
-    expect(linkMenuItems.at(4).prop("href")).toEqual("/collect")
+    expect(linkMenuItems.at(5).text()).toContain("View All Artworks")
+    expect(linkMenuItems.at(5).prop("href")).toEqual("/collect")
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
