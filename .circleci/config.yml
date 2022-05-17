@@ -258,7 +258,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/base:16.14.0
+      - image: cypress/base:17.8.0
         environment:
           TERM: xterm
     working_directory: ~/app
