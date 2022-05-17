@@ -70,7 +70,15 @@ export const DeleteAccountRoute: FC = () => {
             }
           }}
         >
-          {({ errors, isSubmitting, values, isValid, setFieldValue }) => {
+          {({
+            errors,
+            handleChange,
+            isSubmitting,
+            isValid,
+            setFieldValue,
+            touched,
+            values,
+          }) => {
             return (
               <Form>
                 <Checkbox
@@ -98,12 +106,10 @@ export const DeleteAccountRoute: FC = () => {
                   name="password"
                   mt={2}
                   title="Password"
-                  error={errors.password}
+                  error={touched.password && errors.password}
                   placeholder="Enter your password"
                   value={values.password}
-                  onChange={({ value }) => {
-                    setFieldValue("password", value)
-                  }}
+                  onChange={handleChange}
                 />
 
                 <Button
