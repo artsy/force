@@ -14,6 +14,8 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { Formik, Form } from "formik"
 import { useDeleteAccount } from "./useDeleteAccount"
 import { logout } from "v2/Utils/auth"
+import { PasswordInput } from "@artsy/palette"
+import { password } from "v2/Components/Authentication/Validators"
 
 export const DeleteAccountRoute: FC = () => {
   const { sendToast } = useToasts()
@@ -31,16 +33,18 @@ export const DeleteAccountRoute: FC = () => {
           initialValues={{
             explanation: "",
             confirmation: false,
+            password: "",
           }}
           validationSchema={Yup.object().shape({
             explanation: Yup.string().min(1).required(),
             confirmation: Yup.boolean().oneOf([true]),
+            password: password,
           })}
-          onSubmit={async ({ explanation }) => {
+          onSubmit={async ({ explanation, password }) => {
             try {
               await submitMutation({
                 variables: {
-                  input: { explanation, url: window.location.href },
+                  input: { explanation, password, url: window.location.href },
                 },
                 rejectIf: res => {
                   return res.deleteMyAccountMutation?.userAccountOrError
@@ -66,7 +70,7 @@ export const DeleteAccountRoute: FC = () => {
             }
           }}
         >
-          {({ isSubmitting, values, isValid, setFieldValue }) => {
+          {({ errors, isSubmitting, values, isValid, setFieldValue }) => {
             return (
               <Form>
                 <Checkbox
@@ -87,6 +91,18 @@ export const DeleteAccountRoute: FC = () => {
                   required
                   onChange={({ value }) => {
                     setFieldValue("explanation", value)
+                  }}
+                />
+
+                <PasswordInput
+                  name="password"
+                  mt={2}
+                  title="Password"
+                  error={errors.password}
+                  placeholder="Enter your password"
+                  value={values.password}
+                  onChange={({ value }) => {
+                    setFieldValue("password", value)
                   }}
                 />
 
