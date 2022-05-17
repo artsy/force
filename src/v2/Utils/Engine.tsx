@@ -1,6 +1,6 @@
 export type Branch = { [key: string]: Workflow }
 export type Workflow = (string | { [event: string]: Branch })[]
-export type Conditions = Record<string, () => boolean>
+export type Conditions = Record<string, () => boolean | string>
 
 export class Engine {
   workflow: Workflow
