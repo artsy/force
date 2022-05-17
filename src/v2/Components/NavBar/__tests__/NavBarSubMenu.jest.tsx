@@ -41,10 +41,10 @@ describe("NavBarSubMenu", () => {
     expect(linkMenuItems.at(1).text()).toContain("Iconic Prints")
     expect(linkMenuItems.at(1).prop("href")).toEqual("/gene/iconic-prints")
 
-    expect(linkMenuItems.at(2).text()).toContain("Finds Under $2500")
+    expect(linkMenuItems.at(2).text()).toContain("Finds Under $2,500")
     expect(linkMenuItems.at(2).prop("href")).toEqual("/gene/finds-under-2500")
 
-    expect(linkMenuItems.at(3).text()).toContain("Finds Under $1000")
+    expect(linkMenuItems.at(3).text()).toContain("Finds Under $1,000")
     expect(linkMenuItems.at(3).prop("href")).toEqual("/gene/finds-under-1000")
 
     expect(linkMenuItems.at(4).text()).toContain("The Collectibles Shop")

@@ -159,11 +159,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         href: "/gene/iconic-prints",
       },
       {
-        text: "Finds Under $2500",
+        text: "Finds Under $2,500",
         href: "/gene/finds-under-2500",
       },
       {
-        text: "Finds Under $1000",
+        text: "Finds Under $1,000",
         href: "/gene/finds-under-1000",
       },
       {
