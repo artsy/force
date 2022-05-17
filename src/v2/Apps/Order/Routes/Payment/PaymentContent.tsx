@@ -2,13 +2,14 @@ import { FC, RefObject, useState } from "react"
 import {
   Button,
   Clickable,
+  CreditCardIcon,
   Flex,
+  InstitutionIcon,
   Spacer,
   BorderedRadio,
   RadioGroup,
   Text,
   Collapse,
-  InstitutionIcon,
 } from "@artsy/palette"
 import {
   PaymentPicker,
@@ -21,6 +22,7 @@ import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
+import { useRouter } from "v2/System/Router/useRouter"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 
 enum PaymentMethods {
@@ -47,11 +49,15 @@ export const PaymentContent: FC<Props> = props => {
     order,
     paymentPicker,
   } = props
+  const { router } = useRouter()
+  const tracking = useTracking()
+
+  // TODO: check feature flag and whether wire_transfer_enabled for the partner
+  // const isWireTranfer = useFeatureFlag("...") && isWireTransferAllowedForPartner
+
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>(
     PaymentMethods.BankDebit
   )
-
-  const tracking = useTracking()
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
@@ -67,7 +73,10 @@ export const PaymentContent: FC<Props> = props => {
     tracking.trackEvent(event)
   }
 
-  const handleWireTransferSaveAndContinue = () => console.log("yo")
+  const handleWireTransferSaveAndContinue = () => {
+    // TODO: make call to update Order with method
+    router.push(`/orders/${order.internalID}/review`)
+  }
 
   return (
     <Flex
@@ -86,7 +95,12 @@ export const PaymentContent: FC<Props> = props => {
       >
         <BorderedRadio
           value={PaymentMethods.BankDebit}
-          label="Bank transfer (US bank account)"
+          label={
+            <>
+              <InstitutionIcon fill="green100" />
+              <Text ml={1}>Bank transfer (US bank account)</Text>
+            </>
+          }
         />
         <BorderedRadio
           value={PaymentMethods.WireTransfer}
@@ -97,7 +111,15 @@ export const PaymentContent: FC<Props> = props => {
             </>
           }
         />
-        <BorderedRadio value={PaymentMethods.CreditCard} label="Credit card" />
+        <BorderedRadio
+          value={PaymentMethods.CreditCard}
+          label={
+            <>
+              <CreditCardIcon type="Unknown" />
+              <Text ml={1}>Credit card</Text>
+            </>
+          }
+        />
       </RadioGroup>
       <Spacer mb={4} />
       <Text variant="lg">Payment details</Text>
