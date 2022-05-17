@@ -3,6 +3,8 @@ import {
   Flex,
   Spacer,
   BorderedRadio,
+  InstitutionIcon,
+  CreditCardIcon,
   RadioGroup,
   Text,
   Collapse,
@@ -74,9 +76,22 @@ export const PaymentContent: FC<Props> = props => {
         >
           <BorderedRadio
             value="bank_debit"
-            label="Bank transfer (US bank account)"
+            label={
+              <>
+                <InstitutionIcon fill="green100" />
+                <Text ml={1}>Bank transfer (US bank account)</Text>
+              </>
+            }
           />
-          <BorderedRadio value="credit_card" label="Credit card" />
+          <BorderedRadio
+            value="credit_card"
+            label={
+              <>
+                <CreditCardIcon type="Unknown" />
+                <Text ml={1}>Credit card</Text>
+              </>
+            }
+          />
         </RadioGroup>
         <Spacer mb={4} />
         <Text variant="lg">Payment details</Text>
