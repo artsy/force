@@ -3,9 +3,7 @@ import React, { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import ArtworkGridItemFragmentContainer from "v2/Components/Artwork/GridItem"
 import { Masonry } from "v2/Components/Masonry"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { NewForYouArtworksGridQuery } from "v2/__generated__/NewForYouArtworksGridQuery.graphql"
 import { NewForYouArtworksGrid_viewer } from "v2/__generated__/NewForYouArtworksGrid_viewer.graphql"
 
 interface NewForYouArtworksGridProps {
@@ -15,8 +13,7 @@ interface NewForYouArtworksGridProps {
 export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
   viewer,
 }) => {
-  const { artworksForUser } = viewer
-  const artworks = extractNodes(artworksForUser)
+  const artworks = extractNodes(viewer.artworksForUser)
 
   return (
     <Masonry columnCount={[2, 3, 4]}>
@@ -33,37 +30,12 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
   )
 }
 
-export const NewForYouArtworksGridQueryRenderer: React.FC = () => {
-  return (
-    <SystemQueryRenderer<NewForYouArtworksGridQuery>
-      query={graphql`
-        query NewForYouArtworksGridQuery {
-          viewer {
-            ...NewForYouArtworksGrid_viewer
-          }
-        }
-      `}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props?.viewer) {
-          return null
-        }
-        return <NewForYouArtworksGridFragmentContainer viewer={props.viewer} />
-      }}
-    />
-  )
-}
-
 export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
   NewForYouArtworksGrid,
   {
     viewer: graphql`
       fragment NewForYouArtworksGrid_viewer on Viewer {
         artworksForUser {
-          totalCount
           edges {
             node {
               internalID

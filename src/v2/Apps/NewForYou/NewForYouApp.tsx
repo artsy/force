@@ -1,10 +1,15 @@
 import React, { FC } from "react"
-
 import { MetaTags } from "v2/Components/MetaTags"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { NewForYouArtworksGridQueryRenderer } from "v2/Apps/NewForYou/Components/NewForYouArtworksGrid"
+import { createFragmentContainer, graphql } from "react-relay"
+import { NewForYouApp_viewer } from "v2/__generated__/NewForYouApp_viewer.graphql"
+import { NewForYouArtworksGridFragmentContainer } from "v2/Apps/NewForYou/Components/NewForYouArtworksGrid"
 
-export const NewForYouApp: FC = () => {
+interface NewForYouAppProps {
+  viewer: NewForYouApp_viewer
+}
+
+export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
   return (
     <>
       <Spacer mt={2} />
@@ -22,7 +27,18 @@ export const NewForYouApp: FC = () => {
         </Column>
       </GridColumns>
       <Spacer mt={4} />
-      <NewForYouArtworksGridQueryRenderer />
+      {viewer && <NewForYouArtworksGridFragmentContainer viewer={viewer} />}
     </>
   )
 }
+
+export const NewForYouAppFragmentContainer = createFragmentContainer(
+  NewForYouApp,
+  {
+    viewer: graphql`
+      fragment NewForYouApp_viewer on Viewer {
+        ...NewForYouArtworksGrid_viewer
+      }
+    `,
+  }
+)

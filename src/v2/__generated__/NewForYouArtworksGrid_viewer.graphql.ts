@@ -6,7 +6,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type NewForYouArtworksGrid_viewer = {
     readonly artworksForUser: {
-        readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -38,13 +37,6 @@ const node: ReaderFragment = {
       "name": "artworksForUser",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -86,5 +78,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '82a8783da944097a170edcae481b52ce';
+(node as any).hash = '4ffdb71dbc24cb22eff3a467fc003e03';
 export default node;
