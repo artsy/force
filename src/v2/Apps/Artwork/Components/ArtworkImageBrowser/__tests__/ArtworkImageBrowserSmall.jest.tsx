@@ -35,6 +35,9 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserSmall_Test_Query>({
 describe("ArtworkImageBrowserSmall", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
+      Artwork: () => ({
+        figures: [{ __typename: "Image" }],
+      }),
       Image: () => ({ isDefault: true }),
       ResizedImageUrl: () => ({
         width: 800,
