@@ -6,6 +6,10 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type NewForYouArtworksGrid_viewer = {
     readonly artworksForUser: {
+        readonly pageInfo: {
+            readonly hasNextPage: boolean;
+            readonly endCursor: string | null;
+        };
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -24,19 +28,66 @@ export type NewForYouArtworksGrid_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 10,
+      "kind": "LocalArgument",
+      "name": "count"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "cursor"
+    }
+  ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "artworksForUser"
+        ]
+      }
+    ]
+  },
   "name": "NewForYouArtworksGrid_viewer",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworksForUser",
       "args": null,
       "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
-      "name": "artworksForUser",
+      "name": "__NewForYouArtworksGrid_artworksForUser_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -61,11 +112,25 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "GridItem_artwork"
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
           ],
@@ -78,5 +143,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '4ffdb71dbc24cb22eff3a467fc003e03';
+(node as any).hash = '36a784e610d0d444d3d90784111a6e3f';
 export default node;
