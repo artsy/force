@@ -39,7 +39,7 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
       <Casette
         bg="black10"
         mx={[0, 4]}
-        paddingX={[0, 2]}
+        px={[0, 2]}
         // @ts-ignore
         maxWidth={"100%"}
         aspectWidth={activeVideo.width}
