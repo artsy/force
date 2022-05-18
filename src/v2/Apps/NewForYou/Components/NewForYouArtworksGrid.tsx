@@ -1,4 +1,4 @@
-import { Box, Button, Spacer } from "@artsy/palette"
+import { Box, Button, Spacer, Text } from "@artsy/palette"
 import React, { FC, Fragment } from "react"
 import {
   createPaginationContainer,
@@ -38,9 +38,9 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
 
   return (
     <>
-      <Masonry columnCount={[2, 3, 4]}>
-        {artworks?.length > 0 &&
-          artworks.map(artwork => {
+      {artworks?.length > 0 ? (
+        <Masonry columnCount={[2, 3, 4]}>
+          {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
                 <ArtworkGridItemFragmentContainer artwork={artwork} />
@@ -48,7 +48,12 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
               </Fragment>
             )
           })}
-      </Masonry>
+        </Masonry>
+      ) : (
+        <Text variant="lg" mt={4} color="black60">
+          Nothing yet.
+        </Text>
+      )}
       {relay.hasMore() && (
         <Box textAlign="center" mt={4}>
           <Button onClick={loadMore} loading={loading}>
