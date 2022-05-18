@@ -22,7 +22,25 @@ const FullBleedWithAnimation = styled(FullBleed)`
   animation: ${moveDownAnimation} 0.25s linear;
 `
 
-export const CtaBanner = () => {
+export const CtaBanner = () => (
+  <Sticky>
+    {({ stuck }) => {
+      return (
+        stuck && (
+          <FullBleedWithAnimation
+            position="fixed"
+            style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+            backgroundColor="white100"
+          >
+            <CtaBannerContent />
+          </FullBleedWithAnimation>
+        )
+      )
+    }}
+  </Sticky>
+)
+
+export const CtaBannerContent = () => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
@@ -40,81 +58,82 @@ export const CtaBanner = () => {
     })
   }
 
-  return (
-    <Sticky>
-      {({ stuck }) => {
-        return (
-          stuck && (
-            <FullBleedWithAnimation
-              position="fixed"
-              style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-              backgroundColor="white100"
-            >
-              <AppContainer py={[1, 2]}>
-                <HorizontalPadding>
-                  <Media at="xs">
-                    <Flex>
-                      <Button
-                        // @ts-ignore
-                        as={RouterLink}
-                        to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-                        width="100%"
-                        variant="primaryWhite"
-                        size="small"
-                        mr={2}
-                      >
-                        Get in Touch
-                      </Button>
-                      <Button
-                        // @ts-ignore
-                        as={RouterLink}
-                        to="/sell/submission/artwork-details"
-                        onClick={trackSubmitClick}
-                        size="small"
-                        width="100%"
-                      >
-                        Submit an Artwork
-                      </Button>
-                    </Flex>
-                  </Media>
+  const trackGetInTouchClick = () => {
+    trackEvent({
+      // @ts-ignore
+      action: "clickedGetInTouch",
+      // @ts-ignore
+      context_module: "StickyBanner",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Get in Touch",
+      user_id: user?.id,
+      user_email: user?.email,
+    })
+  }
 
-                  <Media greaterThanOrEqual="sm">
-                    <Flex
-                      justifyContent="space-between"
-                      alignItems="center"
-                      flexDirection="row"
-                    >
-                      <Text variant="sm" mr={1}>
-                        Submit an artwork, or contact an Artsy specialist to
-                        discuss selling with us.
-                      </Text>
-                      <Flex>
-                        <Button
-                          // @ts-ignore
-                          as={RouterLink}
-                          to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-                          variant="primaryWhite"
-                          mr={[2, 1, 2]}
-                        >
-                          Get in Touch
-                        </Button>
-                        <Button
-                          // @ts-ignore
-                          as={RouterLink}
-                          onClick={trackSubmitClick}
-                          to="/sell/submission/artwork-details"
-                        >
-                          Submit an Artwork
-                        </Button>
-                      </Flex>
-                    </Flex>
-                  </Media>
-                </HorizontalPadding>
-              </AppContainer>
-            </FullBleedWithAnimation>
-          )
-        )
-      }}
-    </Sticky>
+  return (
+    <AppContainer py={[1, 2]}>
+      <HorizontalPadding>
+        <Media at="xs">
+          <Flex>
+            <Button
+              // @ts-ignore
+              as={RouterLink}
+              to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+              width="100%"
+              onClick={trackGetInTouchClick}
+              variant="primaryWhite"
+              size="small"
+              mr={2}
+            >
+              Get in Touch
+            </Button>
+            <Button
+              // @ts-ignore
+              as={RouterLink}
+              to="/sell/submission/artwork-details"
+              onClick={trackSubmitClick}
+              size="small"
+              width="100%"
+            >
+              Submit an Artwork
+            </Button>
+          </Flex>
+        </Media>
+
+        <Media greaterThanOrEqual="sm">
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            flexDirection="row"
+          >
+            <Text variant="sm" mr={1}>
+              Submit an artwork, or contact an Artsy specialist to discuss
+              selling with us.
+            </Text>
+            <Flex>
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                onClick={trackGetInTouchClick}
+                to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+                variant="primaryWhite"
+                mr={[2, 1, 2]}
+              >
+                Get in Touch
+              </Button>
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                onClick={trackSubmitClick}
+                to="/sell/submission/artwork-details"
+              >
+                Submit an Artwork
+              </Button>
+            </Flex>
+          </Flex>
+        </Media>
+      </HorizontalPadding>
+    </AppContainer>
   )
 }
