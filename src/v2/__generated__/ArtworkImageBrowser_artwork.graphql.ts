@@ -7,8 +7,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork = {
     readonly internalID: string;
     readonly figures: ReadonlyArray<{
-        readonly internalID?: string | null;
-        readonly isDefault?: boolean | null;
+        readonly internalID?: string | null | undefined;
+        readonly isDefault?: boolean | null | undefined;
         readonly type: "Video";
     }>;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;

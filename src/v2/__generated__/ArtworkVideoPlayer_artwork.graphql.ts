@@ -19,7 +19,7 @@ export type ArtworkVideoPlayer_artwork = {
 };
 export type ArtworkVideoPlayer_artwork$data = ArtworkVideoPlayer_artwork;
 export type ArtworkVideoPlayer_artwork$key = {
-    readonly " $data"?: ArtworkVideoPlayer_artwork$data;
+    readonly " $data"?: ArtworkVideoPlayer_artwork$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkVideoPlayer_artwork">;
 };
 
