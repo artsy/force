@@ -40,6 +40,18 @@ export const CtaBanner = () => {
     })
   }
 
+  const trackGetInTouchClick = () => {
+    trackEvent({
+      // @ts-ignore
+      action: "clickedGetInTouch",
+      // @ts-ignore
+      context_module: "StickyBanner",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Submit an Artwork",
+      user_id: user?.id,
+    })
+  }
+
   return (
     <Sticky>
       {({ stuck }) => {
@@ -59,6 +71,7 @@ export const CtaBanner = () => {
                         as={RouterLink}
                         to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
                         width="100%"
+                        onClick={trackGetInTouchClick}
                         variant="primaryWhite"
                         size="small"
                         mr={2}
@@ -92,6 +105,7 @@ export const CtaBanner = () => {
                         <Button
                           // @ts-ignore
                           as={RouterLink}
+                          onClick={trackGetInTouchClick}
                           to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
                           variant="primaryWhite"
                           mr={[2, 1, 2]}
