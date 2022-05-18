@@ -2,6 +2,7 @@ import React, { FC } from "react"
 import { Box, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkVideoPlayer_artwork } from "v2/__generated__/ArtworkVideoPlayer_artwork.graphql"
+import styled from "styled-components"
 
 interface ArtworkVideoPlayerProps {
   activeIndex: number
@@ -26,7 +27,7 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
 
   return (
     <Box
-      my={2}
+      my={4}
       width="100%"
       // This minHeight works for the 10 POC video items
       // Should be replaced with a dynamic value in the future
@@ -35,9 +36,10 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
       alignItems="center"
       justifyContent="center"
     >
-      <ResponsiveBox
+      <Casette
         bg="black10"
-        mx={[0, 2]}
+        mx={[0, 4]}
+        paddingX={[0, 2]}
         // @ts-ignore
         maxWidth={"100%"}
         aspectWidth={activeVideo.width}
@@ -51,10 +53,14 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
           title="vimeo-player"
           style={{ width: "100%", height: "100%" }}
         ></iframe>
-      </ResponsiveBox>
+      </Casette>
     </Box>
   )
 }
+
+const Casette = styled(ResponsiveBox)`
+  background: transparent;
+`
 
 const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
   ArtworkVideoPlayer,
