@@ -79,7 +79,9 @@ export const PaymentContent: FC<Props> = props => {
             label={
               <>
                 <InstitutionIcon fill="green100" />
-                <Text ml={1}>Bank transfer (US bank account)</Text>
+                <Text variant="sm" ml={1}>
+                  Bank transfer (US bank account)
+                </Text>
               </>
             }
           />
@@ -88,7 +90,9 @@ export const PaymentContent: FC<Props> = props => {
             label={
               <>
                 <CreditCardIcon type="Unknown" />
-                <Text ml={1}>Credit card</Text>
+                <Text variant="sm" ml={1}>
+                  Credit card
+                </Text>
               </>
             }
           />
