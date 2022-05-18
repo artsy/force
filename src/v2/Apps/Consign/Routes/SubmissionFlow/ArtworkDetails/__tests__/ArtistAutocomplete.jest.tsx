@@ -98,7 +98,7 @@ describe("ArtistAutocomplete", () => {
   it("renders correctly", () => {
     const input = wrapper.find(Input)
     expect(wrapper.find(inputSelector).length).toBe(1)
-    expect(input.prop("placeholder")).toBe("Enter Full Name")
+    expect(input.prop("placeholder")).toBe("Enter full name")
     expect(input.prop("title")).toBe("Artist")
   })
 

@@ -38,6 +38,6 @@ describe("PartnersLocationAutocomplete", () => {
   it("renders correctly", () => {
     renderWithRelay()
 
-    expect(screen.getByPlaceholderText("All Locations")).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("All locations")).toBeInTheDocument()
   })
 })

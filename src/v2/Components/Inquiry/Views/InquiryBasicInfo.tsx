@@ -121,7 +121,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
       <Input
         title="Phone Number"
         name="phone"
-        placeholder="Phone Number"
+        placeholder="Phone number"
         type="tel"
         onChange={handleInputChange("phone")}
         defaultValue={me?.phone ?? undefined}

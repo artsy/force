@@ -187,7 +187,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6}>
           <Input
             title="Title"
-            placeholder="Add Title or Write 'Unknown'"
+            placeholder="Add title or write 'Unknown'"
             name="title"
             maxLength={256}
             onBlur={handleBlur}
@@ -198,7 +198,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6} mt={[30, 0]}>
           <Input
             title="Materials"
-            placeholder="Add Materials"
+            placeholder="Add materials"
             name="materials"
             maxLength={256}
             onBlur={handleBlur}
@@ -236,7 +236,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
               <Input
                 title="Edition Number"
-                placeholder="Your Work's #"
+                placeholder="Your work's #"
                 name="editionNumber"
                 maxLength={256}
                 onBlur={handleBlur}
@@ -248,7 +248,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               </Box>
               <Input
                 title="Edition Size"
-                placeholder="Total # in Edition"
+                placeholder="Total # in edition"
                 name="editionSize"
                 maxLength={256}
                 onBlur={handleBlur}
@@ -343,7 +343,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
           <Input
             name="provenance"
-            placeholder="Describe How You Acquired the Work"
+            placeholder="Describe how you acquired the work"
             maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -354,7 +354,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           <LocationAutocompleteInput
             name="location"
             title="City"
-            placeholder="Enter City Where Artwork Is Located"
+            placeholder="Enter city where artwork is located"
             maxLength={256}
             spellCheck={false}
             defaultValue={defaultLocation}
@@ -371,7 +371,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           <Column start={7} span={6}>
             <Input
               title="Zip/postal code"
-              placeholder="Zip/Postal Code Where Artwork Is Located"
+              placeholder="Zip/Postal code where artwork is located"
               name="postalCode"
               maxLength={256}
               onBlur={handleBlur}

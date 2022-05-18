@@ -122,7 +122,7 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
                 <PasswordInput
                   name="password"
                   title="New Password"
-                  placeholder="New Password"
+                  placeholder="New password"
                   width="100%"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -136,7 +136,7 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
                 <PasswordInput
                   name="passwordConfirmation"
                   title="Confirm New Password"
-                  placeholder="Confirm New Password"
+                  placeholder="Confirm new password"
                   width="100%"
                   onChange={handleChange}
                   onBlur={handleBlur}

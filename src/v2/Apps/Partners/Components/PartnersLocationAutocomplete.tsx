@@ -78,7 +78,7 @@ const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
   return (
     <AutocompleteInput
       options={[{ text: "All Locations", value: "all" }, ...options]}
-      placeholder="All Locations"
+      placeholder="All locations"
       onChange={handleChange}
       onSelect={handleSelect}
       onClear={handleClear}
@@ -91,7 +91,7 @@ const PartnersLocationAutocompletePlaceholder: FC = () => {
   return (
     <AutocompleteInput
       options={[{ text: "Loading...", value: "all" }]}
-      placeholder="All Locations"
+      placeholder="All locations"
       value=""
     />
   )

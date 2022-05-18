@@ -128,17 +128,17 @@ describe("ArtworkDetails", () => {
         ConsignmentSubmission: () => validForm,
       })
 
-      expect(screen.getByPlaceholderText("Enter Full Name")).toHaveValue(
+      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
         "Banksy"
       )
       expect(screen.getByPlaceholderText("YYYY")).toHaveValue("2021")
       expect(
-        screen.getByPlaceholderText("Add Title or Write 'Unknown'")
+        screen.getByPlaceholderText("Add title or write 'Unknown'")
       ).toHaveValue("Some title")
-      expect(screen.getByPlaceholderText("Add Materials")).toHaveValue(
+      expect(screen.getByPlaceholderText("Add materials")).toHaveValue(
         "materials"
       )
-      expect(screen.getByPlaceholderText("Add Materials")).toHaveValue(
+      expect(screen.getByPlaceholderText("Add materials")).toHaveValue(
         "materials"
       )
       expect(
@@ -146,8 +146,8 @@ describe("ArtworkDetails", () => {
           .getAllByRole("combobox")
           .find(c => c.getAttribute("name") == "rarity")
       ).toHaveValue("limited edition")
-      expect(screen.getByPlaceholderText("Your Work's #")).toHaveValue("1")
-      expect(screen.getByPlaceholderText("Total # in Edition")).toHaveValue("2")
+      expect(screen.getByPlaceholderText("Your work's #")).toHaveValue("1")
+      expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue("2")
       expect(
         screen
           .getAllByRole("textbox")
@@ -167,10 +167,10 @@ describe("ArtworkDetails", () => {
         screen.getAllByRole("radio").find(c => c.textContent == "cm")
       ).toBeChecked()
       expect(
-        screen.getByPlaceholderText("Describe How You Acquired the Work")
+        screen.getByPlaceholderText("Describe how you acquired the work")
       ).toHaveValue("provenance")
       expect(
-        screen.getByPlaceholderText("Enter City Where Artwork Is Located")
+        screen.getByPlaceholderText("Enter city where artwork is located")
       ).toHaveValue("NY, USA")
     })
 
