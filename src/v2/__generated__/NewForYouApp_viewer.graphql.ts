@@ -10,7 +10,7 @@ export type NewForYouApp_viewer = {
 };
 export type NewForYouApp_viewer$data = NewForYouApp_viewer;
 export type NewForYouApp_viewer$key = {
-    readonly " $data"?: NewForYouApp_viewer$data;
+    readonly " $data"?: NewForYouApp_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NewForYouApp_viewer">;
 };
 

@@ -21,7 +21,7 @@ export type NewForYouArtworksGrid_viewer = {
 };
 export type NewForYouArtworksGrid_viewer$data = NewForYouArtworksGrid_viewer;
 export type NewForYouArtworksGrid_viewer$key = {
-    readonly " $data"?: NewForYouArtworksGrid_viewer$data;
+    readonly " $data"?: NewForYouArtworksGrid_viewer$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"NewForYouArtworksGrid_viewer">;
 };
 
