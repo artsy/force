@@ -67,6 +67,7 @@ export const CtaBannerContent = () => {
       context_page_owner_type: contextPageOwnerType,
       label: "Get in Touch",
       user_id: user?.id,
+      user_email: user?.email,
     })
   }
 

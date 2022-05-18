@@ -15,9 +15,11 @@ jest.mock("v2/System/Analytics/AnalyticsContext", () => ({
 
 const trackEvent = useTracking as jest.Mock
 
-const renderWithBreakpoint = (breakpoint: Breakpoint = "lg") =>
+const testUser = { id: "1", email: "test@test.test" }
+
+const renderComponent = (breakpoint: Breakpoint, user?: User) =>
   render(
-    <MockBoot breakpoint={breakpoint}>
+    <MockBoot breakpoint={breakpoint} context={{ user: user }}>
       <CtaBannerContent />
     </MockBoot>
   )
@@ -63,38 +65,82 @@ describe("CtaBannerContent", () => {
   })
 
   describe("mobile", () => {
-    beforeEach(() => {
-      renderWithBreakpoint("xs")
+    describe("not logged in", () => {
+      beforeEach(() => {
+        renderComponent("xs")
+      })
+
+      it("renders correctly", () => {
+        expect(
+          screen.queryByText(
+            "Submit an artwork, or contact an Artsy specialist to discuss selling with us."
+          )
+        ).not.toBeInTheDocument()
+        expect(screen.getByText("Get in Touch")).toBeInTheDocument()
+        expect(screen.getByText("Submit an Artwork")).toBeInTheDocument()
+      })
+
+      sharedTests()
     })
 
-    it("renders correctly", () => {
-      expect(
-        screen.queryByText(
-          "Submit an artwork, or contact an Artsy specialist to discuss selling with us."
-        )
-      ).not.toBeInTheDocument()
-      expect(screen.getByText("Get in Touch")).toBeInTheDocument()
-      expect(screen.getByText("Submit an Artwork")).toBeInTheDocument()
-    })
+    describe("logged in", () => {
+      beforeEach(() => {
+        renderComponent("xs", testUser)
+      })
 
-    sharedTests()
+      it("tracks get in touch click", () => {
+        fireEvent.click(screen.getByText("Get in Touch"))
+
+        expect(trackEvent).toHaveBeenCalled()
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "clickedGetInTouch",
+          context_module: "StickyBanner",
+          context_page_owner_type: "sell",
+          label: "Get in Touch",
+          user_id: testUser.id,
+          user_email: testUser.email,
+        })
+      })
+    })
   })
 
   describe("desktop", () => {
-    beforeEach(() => {
-      renderWithBreakpoint()
+    describe("not logged in", () => {
+      beforeEach(() => {
+        renderComponent("lg")
+      })
+
+      it("renders correctly", () => {
+        expect(
+          screen.queryByText(
+            "Submit an artwork, or contact an Artsy specialist to discuss selling with us."
+          )
+        ).toBeInTheDocument()
+        expect(screen.getByText("Get in Touch")).toBeInTheDocument()
+        expect(screen.getByText("Submit an Artwork")).toBeInTheDocument()
+      })
+
+      sharedTests()
     })
 
-    it("renders correctly", () => {
-      expect(
-        screen.queryByText(
-          "Submit an artwork, or contact an Artsy specialist to discuss selling with us."
-        )
-      ).toBeInTheDocument()
-      expect(screen.getByText("Get in Touch")).toBeInTheDocument()
-      expect(screen.getByText("Submit an Artwork")).toBeInTheDocument()
-    })
+    describe("logged in", () => {
+      beforeEach(() => {
+        renderComponent("lg", testUser)
+      })
 
-    sharedTests()
+      it("tracks get in touch click", () => {
+        fireEvent.click(screen.getByText("Get in Touch"))
+
+        expect(trackEvent).toHaveBeenCalled()
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "clickedGetInTouch",
+          context_module: "StickyBanner",
+          context_page_owner_type: "sell",
+          label: "Get in Touch",
+          user_id: testUser.id,
+          user_email: testUser.email,
+        })
+      })
+    })
   })
 })
