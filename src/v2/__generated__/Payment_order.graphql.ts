@@ -15,6 +15,9 @@ export type Payment_order = {
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
+                    readonly partner: {
+                        readonly name: string | null;
+                    } | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -108,6 +111,24 @@ const node: ReaderFragment = {
                       "kind": "ScalarField",
                       "name": "slug",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Partner",
+                      "kind": "LinkedField",
+                      "name": "partner",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "name",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -140,5 +161,5 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = 'd90b850a736d2adaa3c8ebe1c2616338';
+(node as any).hash = '81ea76448ba96f0a1f6728f8161b0923';
 export default node;

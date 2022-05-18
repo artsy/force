@@ -229,6 +229,11 @@ export const PaymentFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                partner {
+                  name
+                  # TODO: when it is available, pull below field to check if wire T enabled for partner
+                  # wireTransferEnabled
+                }
               }
             }
           }

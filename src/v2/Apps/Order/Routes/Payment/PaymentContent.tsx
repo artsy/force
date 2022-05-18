@@ -1,4 +1,4 @@
-import { FC, RefObject, useState } from "react"
+import React, { FC, RefObject, useState } from "react"
 import {
   Button,
   Clickable,
@@ -8,6 +8,7 @@ import {
   Spacer,
   BorderedRadio,
   RadioGroup,
+  RadioProps,
   Text,
   Collapse,
 } from "@artsy/palette"
@@ -23,7 +24,9 @@ import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { ActionType, OwnerType } from "@artsy/cohesion"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 enum PaymentMethods {
   CreditCard = "credit_card",
@@ -52,12 +55,17 @@ export const PaymentContent: FC<Props> = props => {
   const { router } = useRouter()
   const tracking = useTracking()
 
-  // TODO: check feature flag and whether wire_transfer_enabled for the partner
-  // const isWireTranfer = useFeatureFlag("...") && isWireTransferAllowedForPartner
+  const [currentPaymentMethod, setCurrentPaymentMethod] = useState<
+    PaymentMethods
+  >(PaymentMethods.BankDebit)
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>(
-    PaymentMethods.BankDebit
-  )
+  const isWireTransferEnabled =
+    useFeatureFlag("wire_transfer") &&
+    extractNodes(order.lineItems)[0].artwork?.partner?.name // TODO: instead of partner name, check 'wireTransferEnabled' when available
+
+  const availablePaymentMethods: React.ReactElement<
+    RadioProps
+  >[] = getAvailablePaymentMethods(isWireTransferEnabled)
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
@@ -74,7 +82,7 @@ export const PaymentContent: FC<Props> = props => {
   }
 
   const handleWireTransferSaveAndContinue = () => {
-    // TODO: make call to update Order with method
+    // TODO: re-think this
     router.push(`/orders/${order.internalID}/review`)
   }
 
@@ -89,42 +97,16 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         onSelect={val => {
           trackClickedPaymentMethod(val)
-          setPaymentMethod(val as PaymentMethods)
+          setCurrentPaymentMethod(val as PaymentMethods)
         }}
-        defaultValue={paymentMethod}
+        defaultValue={currentPaymentMethod}
       >
-        <BorderedRadio
-          value={PaymentMethods.BankDebit}
-          label={
-            <>
-              <InstitutionIcon fill="green100" />
-              <Text ml={1}>Bank transfer (US bank account)</Text>
-            </>
-          }
-        />
-        <BorderedRadio
-          value={PaymentMethods.WireTransfer}
-          label={
-            <>
-              <InstitutionIcon fill="green100" />
-              <Text ml={1}>Wire transfer</Text>
-            </>
-          }
-        />
-        <BorderedRadio
-          value={PaymentMethods.CreditCard}
-          label={
-            <>
-              <CreditCardIcon type="Unknown" />
-              <Text ml={1}>Credit card</Text>
-            </>
-          }
-        />
+        {availablePaymentMethods.map(method => method)}
       </RadioGroup>
       <Spacer mb={4} />
       <Text variant="lg">Payment details</Text>
       <Spacer mb={2} />
-      <Collapse open={paymentMethod === PaymentMethods.CreditCard}>
+      <Collapse open={currentPaymentMethod === PaymentMethods.CreditCard}>
         <PaymentPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -136,7 +118,7 @@ export const PaymentContent: FC<Props> = props => {
           <ContinueButton onClick={onContinue} loading={isLoading} />
         </Media>
       </Collapse>
-      <Collapse open={paymentMethod === PaymentMethods.BankDebit}>
+      <Collapse open={currentPaymentMethod === PaymentMethods.BankDebit}>
         <Text color="black60" variant="sm">
           • Bank transfer is powered by Stripe.
         </Text>
@@ -151,7 +133,7 @@ export const PaymentContent: FC<Props> = props => {
 
         <BankDebitProvider order={order} />
       </Collapse>
-      <Collapse open={paymentMethod === PaymentMethods.WireTransfer}>
+      <Collapse open={currentPaymentMethod === PaymentMethods.WireTransfer}>
         <Text color="black60" variant="sm">
           • To pay by wire transfer, complete checkout and one of our support
           specialists will reach out with next steps.
@@ -176,4 +158,51 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
     </Flex>
   )
+}
+
+/*
+returns all available payment methods, with the exception of 'wire transfer' that depends on feature flag
+TODO: when wire_transfer FF is removed, this function can be removed and radios can be moved to PaymentContent
+*/
+const getAvailablePaymentMethods = (
+  isWireTransferEnabled
+): React.ReactElement<RadioProps>[] => {
+  const paymentMethods = [
+    <BorderedRadio
+      value={PaymentMethods.BankDebit}
+      label={
+        <>
+          <InstitutionIcon fill="green100" />
+          <Text ml={1}>Bank transfer (US bank account)</Text>
+        </>
+      }
+    />,
+    <BorderedRadio
+      value={PaymentMethods.CreditCard}
+      label={
+        <>
+          <CreditCardIcon type="Unknown" />
+          <Text ml={1}>Credit card</Text>
+        </>
+      }
+    />,
+  ]
+
+  if (isWireTransferEnabled) {
+    paymentMethods.splice(
+      1,
+      0,
+      <BorderedRadio
+        value={PaymentMethods.WireTransfer}
+        label={
+          <>
+            <InstitutionIcon fill="green100" />
+            <Text ml={1}>Wire transfer</Text>
+          </>
+        }
+      />
+    )
+  }
+
+  return paymentMethods
 }
