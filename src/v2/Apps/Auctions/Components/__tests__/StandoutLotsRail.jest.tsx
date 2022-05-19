@@ -38,7 +38,7 @@ describe("StandoutLotsRail", () => {
   it("guards against null data", () => {
     expect(() =>
       getWrapper({
-        SaleArtworksConnection: () => ({
+        FilterArtworksConnection: () => ({
           edges: null,
         }),
       })
@@ -47,7 +47,7 @@ describe("StandoutLotsRail", () => {
 
   it("does not render if no trending lots", () => {
     const wrapper = getWrapper({
-      SaleArtworksConnection: () => ({
+      FilterArtworksConnection: () => ({
         edges: [],
       }),
     })
@@ -66,7 +66,7 @@ describe("StandoutLotsRail", () => {
 
   it("tracks clicks", () => {
     const wrapper = getWrapper({
-      SaleArtworksConnection: () => ({
+      FilterArtworksConnection: () => ({
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })

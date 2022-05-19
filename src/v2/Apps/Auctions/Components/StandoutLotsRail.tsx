@@ -20,47 +20,42 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap.standoutLots as AuthContextModule
+  const artworks = extractNodes(viewer.standoutLotsRailConnection)
 
-  const nodes = extractNodes(viewer.StandoutLotsRailConnection)
-
-  const liveSaleArtworks = nodes.filter(node => {
-    return !node.sale?.isClosed
-  })
-
-  if (nodes.length === 0 || liveSaleArtworks.length === 0) {
+  if (artworks.length === 0) {
     return <CuratorialRailsZeroState />
-  }
-
-  return (
-    <Rail
-      title="Current Highlights"
-      subTitle="Works that Artsy curators love"
-      getItems={() => {
-        return liveSaleArtworks.map((node, index) => {
-          return (
-            <ShelfArtworkFragmentContainer
-              artwork={node}
-              key={node.slug}
-              contextModule={contextModule}
-              hidePartnerName
-              lazyLoad
-              onClick={() => {
-                trackEvent(
-                  trackHelpers.clickedArtworkGroup(
-                    contextModule,
-                    contextPageOwnerType!,
-                    node.internalID,
-                    node.slug,
-                    index
+  } else {
+    return (
+      <Rail
+        title="Current Highlights"
+        subTitle="Works that Artsy curators love"
+        getItems={() => {
+          return artworks.map((artwork, index) => {
+            return (
+              <ShelfArtworkFragmentContainer
+                artwork={artwork}
+                key={artwork.slug}
+                contextModule={contextModule}
+                hidePartnerName
+                lazyLoad
+                onClick={() => {
+                  trackEvent(
+                    trackHelpers.clickedArtworkGroup(
+                      contextModule,
+                      contextPageOwnerType!,
+                      artwork.internalID,
+                      artwork.slug,
+                      index
+                    )
                   )
-                )
-              }}
-            />
-          )
-        })
-      }}
-    />
-  )
+                }}
+              />
+            )
+          })
+        }}
+      />
+    )
+  }
 }
 
 export const StandoutLotsRailFragmentContainer = createFragmentContainer(
@@ -68,18 +63,16 @@ export const StandoutLotsRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment StandoutLotsRail_viewer on Viewer {
-        StandoutLotsRailConnection: saleArtworksConnection(
+        standoutLotsRailConnection: artworksConnection(
+          forSale: true
           first: 50
-          geneIDs: "highlights-at-auction"
+          geneIDs: ["our-top-auction-lots"]
         ) {
           edges {
             node {
               internalID
               slug
               ...ShelfArtwork_artwork @arguments(width: 325)
-              sale {
-                isClosed
-              }
             }
           }
         }
