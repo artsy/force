@@ -52,7 +52,7 @@ describe("BankDebitForm", () => {
   it("tracks a `complete` event from the onChange handler", () => {
     mockEvent = { complete: true, empty: true }
 
-    render(<BankDebitForm order={testOrder} />)
+    render(<BankDebitForm order={testOrder} returnURL={""} />)
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
@@ -64,7 +64,7 @@ describe("BankDebitForm", () => {
   it("tracks a non-`empty` event from the onChange handler", () => {
     mockEvent = { empty: false }
 
-    render(<BankDebitForm order={testOrder} />)
+    render(<BankDebitForm order={testOrder} returnURL={""} />)
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
@@ -75,7 +75,7 @@ describe("BankDebitForm", () => {
   it("tracks a both complete and non-empty events if both apply", () => {
     mockEvent = { complete: true, empty: false }
 
-    render(<BankDebitForm order={testOrder} />)
+    render(<BankDebitForm order={testOrder} returnURL={""} />)
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
@@ -91,7 +91,7 @@ describe("BankDebitForm", () => {
   })
 
   it("tracks a click on the continue button", () => {
-    const screen = render(<BankDebitForm order={testOrder} />)
+    const screen = render(<BankDebitForm order={testOrder} returnURL={""} />)
 
     fireEvent.click(screen.getByText("Save and Continue"))
     expect(trackEvent).toHaveBeenCalledWith({

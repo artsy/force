@@ -1,8 +1,9 @@
 import { useMutation } from "v2/Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
+import { useSetPaymentMutation } from "/Users/rachel/Artsy/force/src/v2/__generated__/useSetPaymentMutation.graphql"
 
 export const useSetPayment = () => {
-  return useMutation({
+  return useMutation<useSetPaymentMutation>({
     mutation: graphql`
       mutation useSetPaymentMutation($input: CommerceSetPaymentInput!) {
         commerceSetPayment(input: $input) {
