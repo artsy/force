@@ -8,6 +8,7 @@ export type CommerceSetPaymentInput = {
     clientMutationId?: string | null | undefined;
     creditCardId?: string | null | undefined;
     id: string;
+    setupIntentId?: string | null | undefined;
 };
 export type PaymentRouteSetOrderPaymentMutationVariables = {
     input: CommerceSetPaymentInput;
