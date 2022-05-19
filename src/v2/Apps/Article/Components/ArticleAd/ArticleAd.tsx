@@ -3,6 +3,7 @@ import { AdSlot, DFPSlotsProvider } from "react-dfp"
 import { Box, BoxProps, ResponsiveBox, Text } from "@artsy/palette"
 import { AdUnit, AdSize } from "./types"
 import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
+import { useArticleTracking } from "../../useArticleTracking"
 
 export interface ArticleAdProps extends BoxProps {
   unit: AdUnit
@@ -10,6 +11,8 @@ export interface ArticleAdProps extends BoxProps {
 }
 
 export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
+  const { displayedAd } = useArticleTracking()
+
   const [width, height] = size.split("x").map(n => parseInt(n, 10))
 
   // Since ads are iframed we have to calculate a value to use to scale them via transform.
@@ -36,7 +39,11 @@ export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
             transform: `scale(${scale})`,
           }}
         >
-          <AdSlot adUnit={unit} sizes={[[width, height]]} />
+          <AdSlot
+            adUnit={unit}
+            sizes={[[width, height]]}
+            onSlotIsViewable={displayedAd}
+          />
         </Box>
       </ResponsiveBox>
 

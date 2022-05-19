@@ -13,19 +13,43 @@ import { EntityTooltipPartnerQuery } from "v2/__generated__/EntityTooltipPartner
 import { EntityTooltipPartner_partner } from "v2/__generated__/EntityTooltipPartner_partner.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "v2/System"
+import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipPartnerProps {
   partner: EntityTooltipPartner_partner
 }
 
 const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
+  const { trackEvent } = useTracking()
+
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const handleClick = () => {
+    const payload: ClickedTooltip = {
+      action: ActionType.clickedTooltip,
+      context_owner_id: contextPageOwnerId!,
+      context_owner_slug: contextPageOwnerSlug!,
+      context_owner_type: contextPageOwnerType!,
+      destination_path: partner.href!,
+      type: "partner",
+    }
+
+    trackEvent(payload)
+  }
+
   const bio = partner.profile?.fullBio || partner.profile?.bio
   const image = partner.profile?.image?.cropped
 
   return (
     <Box p={2} width={300}>
       {image && (
-        <RouterLink to={partner.href} display="block">
+        <RouterLink to={partner.href} display="block" onClick={handleClick}>
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -50,6 +74,7 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
           display="block"
           textDecoration="none"
           mt={1}
+          onClick={handleClick}
         >
           <Text variant="xs" lineClamp={3}>
             {bio}

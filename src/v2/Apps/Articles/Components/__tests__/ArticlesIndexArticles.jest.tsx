@@ -5,6 +5,10 @@ import { ArticlesIndexArticlesPaginationContainer } from "../ArticlesIndexArticl
 
 jest.unmock("react-relay")
 
+jest.mock("v2/Apps/Article/useArticleTracking", () => ({
+  useArticleTracking: () => ({}),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArticlesIndexArticlesPaginationContainer,
   query: graphql`
