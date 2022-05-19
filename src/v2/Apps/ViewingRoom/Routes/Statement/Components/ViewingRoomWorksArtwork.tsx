@@ -62,16 +62,16 @@ const ViewingRoomWorksArtwork: React.FC<ViewingRoomWorksArtworkProps> = ({
         </ResponsiveBox>
       )}
 
-      <Text variant="md" mt={1}>
+      <Text variant="sm-display" mt={1}>
         {artwork.artistNames}
       </Text>
 
-      <Text variant="md" color="black60" overflowEllipsis>
+      <Text variant="sm-display" color="black60" overflowEllipsis>
         {[artwork.title, artwork.date].filter(s => s).join(", ")}
       </Text>
 
       {artwork.saleMessage && (
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           {artwork.saleMessage}
         </Text>
       )}

@@ -15,7 +15,7 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
 }) => {
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Two-Factor Authentication{" "}
         {me.hasSecondFactorEnabled && <Sup color="green100">Enabled</Sup>}
       </Text>

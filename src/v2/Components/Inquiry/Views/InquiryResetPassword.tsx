@@ -62,12 +62,12 @@ export const InquiryResetPassword: React.FC = () => {
     <>
       {mode === "Resetting" ? (
         <Skeleton>
-          <SkeletonText variant="lg" mr={4}>
+          <SkeletonText variant="lg-display" mr={4}>
             {message}
           </SkeletonText>
         </Skeleton>
       ) : (
-        <Text variant="lg" mr={4}>
+        <Text variant="lg-display" mr={4}>
           {message}
         </Text>
       )}

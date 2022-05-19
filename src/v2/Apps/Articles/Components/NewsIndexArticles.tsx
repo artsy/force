@@ -35,7 +35,7 @@ export const NewsIndexArticles: FC<NewsIndexArticlesProps> = ({
   }
 
   if (articles.length === 0) {
-    return <Text variant="lg">Nothing yet.</Text>
+    return <Text variant="lg-display">Nothing yet.</Text>
   }
 
   return (

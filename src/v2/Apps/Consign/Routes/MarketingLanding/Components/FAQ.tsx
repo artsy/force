@@ -117,7 +117,7 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
 
   return (
     <>
-      <Text mb={4} variant="lg" id="jump--faq">
+      <Text mb={4} variant="lg-display" id="jump--faq">
         Frequently Asked Questions
       </Text>
       <Join separator={<Spacer mt={4} />}>
@@ -133,7 +133,7 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
 
 const TextItem: React.FC = ({ children }) => {
   return (
-    <Text variant="md" color="black60" pr={2}>
+    <Text variant="sm-display" color="black60" pr={2}>
       {children}
     </Text>
   )

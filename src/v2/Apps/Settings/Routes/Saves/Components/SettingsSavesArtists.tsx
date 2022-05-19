@@ -48,7 +48,7 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Followed Artists {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -73,7 +73,7 @@ const SettingsSavesArtists: FC<SettingsSavesArtistsProps> = ({ me, relay }) => {
           )}
         </>
       ) : (
-        <Text variant="lg" color="black60">
+        <Text variant="lg-display" color="black60">
           Nothing yet.
         </Text>
       )}
@@ -127,7 +127,7 @@ export const SettingsSavesArtistsPaginationContainer = createPaginationContainer
 const SETTINGS_SAVES_ARTISTS_PLACEHOLDER = (
   <>
     <Skeleton>
-      <SkeletonText variant="lg" mb={4}>
+      <SkeletonText variant="lg-display" mb={4}>
         Followed Artists
       </SkeletonText>
     </Skeleton>

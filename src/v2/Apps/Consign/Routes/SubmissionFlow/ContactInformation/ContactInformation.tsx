@@ -108,10 +108,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
       <SubmissionStepper currentStep="Contact Information" />
 
-      <Text mt={4} variant="lg">
+      <Text mt={4} variant="lg-display">
         Let us know how to reach you
       </Text>
-      <Text mt={1} variant="md" color="black60">
+      <Text mt={1} variant="sm-display" color="black60">
         We will only use these details to contact you regarding your submission.
       </Text>
 

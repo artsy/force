@@ -33,7 +33,7 @@ export const InquiryCommercialInterest: React.FC = () => {
 
   return (
     <>
-      <Text variant="lg" mb={2} pr={2}>
+      <Text variant="lg-display" mb={2} pr={2}>
         Have you bought art from a gallery or auction house before?
       </Text>
 

@@ -39,7 +39,7 @@ export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
             top={[-MOBILE_NAV_HEIGHT, -DESKTOP_NAV_BAR_HEIGHT]}
           />
 
-          <Text variant="lg" mb={2}>
+          <Text variant="lg-display" mb={2}>
             {category.name}
           </Text>
         </>

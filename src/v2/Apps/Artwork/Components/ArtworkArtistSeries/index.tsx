@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { withSystemContext } from "v2/System"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
@@ -96,10 +96,15 @@ const PLACEHOLDER = (
           return (
             <React.Fragment key={i}>
               <SkeletonBox width={325} height={244} />
-              <SkeletonText variant="md" mt={1} overflowEllipsis maxWidth={300}>
+              <SkeletonText
+                variant="sm-display"
+                mt={1}
+                overflowEllipsis
+                maxWidth={300}
+              >
                 Portraits of Artists and Sculptors
               </SkeletonText>
-              <SkeletonText variant="md">113 available</SkeletonText>
+              <SkeletonText variant="sm-display">113 available</SkeletonText>
             </React.Fragment>
           )
         })

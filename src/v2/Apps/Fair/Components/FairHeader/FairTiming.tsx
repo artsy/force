@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairTiming_fair } from "v2/__generated__/FairTiming_fair.graphql"
@@ -22,10 +22,10 @@ const FairTiming: React.FC<Props> = ({
 
   return (
     <>
-      <Text variant={["lg", "xl"]} color="black60" mb={1}>
+      <Text variant={["lg-display", "xl"]} color="black60" mb={1}>
         {exhibitionPeriod}
       </Text>
-      <Text variant={["md", "lg"]}>{renderEventTiming()}</Text>
+      <Text variant={["sm-display", "lg-display"]}>{renderEventTiming()}</Text>
     </>
   )
 }

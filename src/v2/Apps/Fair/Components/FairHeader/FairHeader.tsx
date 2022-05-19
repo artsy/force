@@ -46,7 +46,7 @@ const Title: React.FC<{ title: string | null; stuck: boolean }> = ({
       </Media>
 
       <Media lessThan="md">
-        <Text as="h1" variant="lg">
+        <Text as="h1" variant="lg-display">
           {title}
         </Text>
       </Media>
@@ -66,7 +66,11 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, stuck = false }) => {
       />
       <Box display="flex" flexDirection="column" justifyContent="flex-start">
         <Title title={name} stuck={stuck} />
-        <FadingText show={!stuck} variant={["lg", "xl"]} color="black60">
+        <FadingText
+          show={!stuck}
+          variant={["lg-display", "xl"]}
+          color="black60"
+        >
           {exhibitionPeriod}
         </FadingText>
       </Box>

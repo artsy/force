@@ -26,7 +26,7 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
   return (
     <GridColumns mb={12} gridRowGap={2}>
       <Column span={6}>
-        <Text variant="lg">About</Text>
+        <Text variant="lg-display">About</Text>
       </Column>
 
       <Column span={6}>

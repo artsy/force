@@ -11,7 +11,7 @@ export interface ContactRouteProps {
 export const ContactRoute: React.FC<ContactRouteProps> = ({ partner }) => {
   return (
     <Box mt={[4, 6]}>
-      <Text variant="lg">Locations</Text>
+      <Text variant="lg-display">Locations</Text>
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <PartnerContacts edges={partner.locations.edges} />
     </Box>

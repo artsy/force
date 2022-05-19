@@ -41,7 +41,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
 
   return (
     <>
-      <Text variant="lg">Your Auctions and Bids</Text>
+      <Text variant="lg-display">Your Auctions and Bids</Text>
 
       <Spacer mt={4} />
 
@@ -136,7 +136,7 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
 const MyBidsPlaceholder: React.FC = () => {
   return (
     <>
-      <Text variant="lg">Your Auctions and Bids</Text>
+      <Text variant="lg-display">Your Auctions and Bids</Text>
 
       <Spacer mt={4} />
 
@@ -162,9 +162,11 @@ const MyBidsPlaceholder: React.FC = () => {
 
                     <Spacer mt={1} />
 
-                    <SkeletonText variant="lg">Sale Name</SkeletonText>
+                    <SkeletonText variant="lg-display">Sale Name</SkeletonText>
 
-                    <SkeletonText variant="lg">Starts at Mon 0</SkeletonText>
+                    <SkeletonText variant="lg-display">
+                      Starts at Mon 0
+                    </SkeletonText>
                   </Box>
                 </StackableBorderBox>
 

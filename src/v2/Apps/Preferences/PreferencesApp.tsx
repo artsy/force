@@ -57,7 +57,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   if (!initialPreferences) {
     return (
       <>
-        <Text variant={["lg", "xl"]} mt={6} mb={6}>
+        <Text variant={["lg-display", "xl"]} mt={6} mb={6}>
           Email Preference Center
         </Text>
 
@@ -71,7 +71,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
   return (
     <>
       <MetaTags title="Preferences | Artsy" pathname="/unsubscribe" />
-      <Text variant={["lg", "xl"]} mt={6} mb={6}>
+      <Text variant={["lg-display", "xl"]} mt={6} mb={6}>
         Email Preference Center
       </Text>
       <Formik<FormValuesForNotificationPreferences>
@@ -123,7 +123,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
           <Form>
             <GridColumns gridRowGap={4}>
               <Column span={10}>
-                <Text variant="md">Subscribe to all</Text>
+                <Text variant="sm-display">Subscribe to all</Text>
                 <Text variant="sm" color="black60">
                   Get all of Artsy’s emails, including recommendations for you,
                   Artsy Editorial, guidance on collecting, and updates on your
@@ -147,7 +147,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Separator />
               </Column>
               <Column span={10}>
-                <Text variant="md">Recommended for You</Text>
+                <Text variant="sm-display">Recommended for You</Text>
                 <Text variant="sm" color="black60">
                   Artworks, shows, fairs, auctions, and collections we think
                   you’ll love
@@ -165,7 +165,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 </Checkbox>
               </Column>
               <Column span={10}>
-                <Text variant="md">Editorial</Text>
+                <Text variant="sm-display">Editorial</Text>
                 <Text variant="sm" color="black60">
                   Market stories, artist profiles, exhibition reviews, and more
                   art world insights
@@ -183,7 +183,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 </Checkbox>
               </Column>
               <Column span={10}>
-                <Text variant="md">Guidance on Collecting</Text>
+                <Text variant="sm-display">Guidance on Collecting</Text>
                 <Text variant="sm" color="black60">
                   Expert advice on buying and selling art, directly from an
                   Artsy specialist
@@ -201,7 +201,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 </Checkbox>
               </Column>
               <Column span={10}>
-                <Text variant="md">Custom Alerts</Text>
+                <Text variant="sm-display">Custom Alerts</Text>
                 <Text variant="sm" color="black60">
                   A roundup of updates on your favorite artists, chosen by you
                 </Text>
@@ -218,7 +218,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 </Checkbox>
               </Column>
               <Column span={10}>
-                <Text variant="md">Product Updates</Text>
+                <Text variant="sm-display">Product Updates</Text>
                 <Text variant="sm" color="black60">
                   Announcements of new features on Artsy.net and the mobile app
                 </Text>
@@ -238,7 +238,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Separator my={2} />
               </Column>
               <Column span={10}>
-                <Text variant="md">Unsubscribe from all</Text>
+                <Text variant="sm-display">Unsubscribe from all</Text>
               </Column>
               <Column span={2}>
                 <Checkbox

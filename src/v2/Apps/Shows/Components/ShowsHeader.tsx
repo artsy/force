@@ -57,7 +57,7 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
                     exact
                     activeClassName="active"
                   >
-                    <Text variant="md">{city.text}</Text>
+                    <Text variant="sm-display">{city.text}</Text>
                   </City>
                 )
               })}

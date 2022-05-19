@@ -116,7 +116,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
       <SubmissionStepper currentStep="Artwork Details" />
 
-      <Text mt={4} variant="lg" as="h1">
+      <Text mt={4} variant="lg-display" as="h1">
         Tell us about your artwork
       </Text>
 

@@ -64,7 +64,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Saved Artworks {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -94,7 +94,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
           />
         </>
       ) : (
-        <Text variant="lg" color="black60">
+        <Text variant="lg-display" color="black60">
           Nothing yet.
         </Text>
       )}
@@ -143,7 +143,7 @@ export const SettingsSavesArtworksRefetchContainer = createRefetchContainer(
 
 const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
   <Skeleton>
-    <SkeletonText variant="lg" mb={4}>
+    <SkeletonText variant="lg-display" mb={4}>
       Saved Artworks
     </SkeletonText>
 
@@ -159,10 +159,10 @@ const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
               <SkeletonBox width="100%" height="100%" />
             </ResponsiveBox>
 
-            <SkeletonText variant="md" mt={1}>
+            <SkeletonText variant="sm-display" mt={1}>
               Artist Name
             </SkeletonText>
-            <SkeletonText variant="md">Artwork Title</SkeletonText>
+            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
             <SkeletonText variant="xs">Partner Name</SkeletonText>
             <SkeletonText variant="xs">US$0,000</SkeletonText>
 

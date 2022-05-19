@@ -25,13 +25,13 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
           Viewing Rooms
         </Text>
 
-        <Text variant="lg">Featured</Text>
+        <Text variant="lg-display">Featured</Text>
 
         <ViewingRoomsFeaturedRailFragmentContainer
           featuredViewingRooms={featuredViewingRooms}
         />
 
-        <Text variant="lg">Latest</Text>
+        <Text variant="lg-display">Latest</Text>
 
         <ViewingRoomsLatestGridFragmentContainer
           viewingRooms={allViewingRooms}

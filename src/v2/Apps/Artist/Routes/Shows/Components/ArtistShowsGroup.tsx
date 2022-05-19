@@ -1,5 +1,5 @@
 import { Text, Flex, Box, Image } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistShowsGroup_artist } from "v2/__generated__/ArtistShowsGroup_artist.graphql"
@@ -85,7 +85,7 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
                   lazyLoad
                 />
               </Box>
-              <Text variant="lg">{show.name}</Text>
+              <Text variant="lg-display">{show.name}</Text>
               {show?.partner?.name && (
                 <Text variant="sm">{show.partner.name}</Text>
               )}

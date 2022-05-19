@@ -78,7 +78,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
 
       <Text
         as="h1"
-        variant="lg"
+        variant="lg-display"
         mt={6}
         id="jump--FairOrganizerDedicatedArticles"
       >

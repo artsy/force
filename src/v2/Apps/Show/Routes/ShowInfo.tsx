@@ -35,7 +35,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
           <Join separator={<Spacer mt={4} />}>
             {about && (
               <Box>
-                <Text as="h3" variant="lg" mb={2}>
+                <Text as="h3" variant="lg-display" mb={2}>
                   Statement
                 </Text>
 
@@ -47,7 +47,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 
             {pressRelease && (
               <Box>
-                <Text as="h3" variant="lg" mb={2}>
+                <Text as="h3" variant="lg-display" mb={2}>
                   Press Release
                 </Text>
 
@@ -70,7 +70,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
             <Join separator={<Spacer mt={4} />}>
               {partner && partner.__typename === "Partner" && (
                 <Box>
-                  <Text as="h2" variant="lg" mb={2}>
+                  <Text as="h2" variant="lg-display" mb={2}>
                     {partner.type}
                   </Text>
 
@@ -79,7 +79,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
               )}
 
               <Box>
-                <Text as="h3" variant="lg" mb={2}>
+                <Text as="h3" variant="lg-display" mb={2}>
                   Location
                 </Text>
 

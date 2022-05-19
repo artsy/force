@@ -148,21 +148,21 @@ export const ArtworkDetailsForm: React.FC = () => {
           </Button>
         }
       >
-        <Text variant="md">
+        <Text variant="sm-display">
           Provenance is the documented history of an artwork’s ownership and
           authenticity.
         </Text>
-        <Text variant="md" mt={2}>
+        <Text variant="sm-display" mt={2}>
           Please list any documentation you have that proves your artwork’s
           provenance, such as:
         </Text>
-        <Text as="li" variant="md" mt={2}>
+        <Text as="li" variant="sm-display" mt={2}>
           Invoices from previous owners
         </Text>
-        <Text as="li" variant="md" mt={1}>
+        <Text as="li" variant="sm-display" mt={1}>
           Certificates of authenticity
         </Text>
-        <Text as="li" variant="md" mt={1}>
+        <Text as="li" variant="sm-display" mt={1}>
           Gallery exhibition catalogues
         </Text>
       </Modal>

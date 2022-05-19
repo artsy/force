@@ -135,7 +135,7 @@ export const LocationAutocompleteInput: FC<LocationAutocompleteInputProps> = ({
 
   const renderOption = (option: AutocompleteInputOptionType) => (
     <Flex alignItems="center" p={1} width="100%">
-      <Text ml={1} variant="md">
+      <Text ml={1} variant="sm-display">
         {option.text}
       </Text>
     </Flex>

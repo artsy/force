@@ -6,7 +6,7 @@ import {
   Text,
   TextVariant,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -25,11 +25,11 @@ const ShowsFeaturedShow: React.FC<ShowsFeaturedShowProps> = ({
   const variants = {
     large: {
       primary: "xl" as TextVariant,
-      secondary: "lg" as TextVariant,
+      secondary: "lg-display" as TextVariant,
     },
     small: {
-      primary: "lg" as TextVariant,
-      secondary: "md" as TextVariant,
+      primary: "lg-display" as TextVariant,
+      secondary: "sm-display" as TextVariant,
     },
   }[size]
   const image = show.coverImage?.[size]

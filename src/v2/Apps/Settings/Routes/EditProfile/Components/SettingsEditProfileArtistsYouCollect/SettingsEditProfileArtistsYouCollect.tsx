@@ -61,7 +61,7 @@ export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtists
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Artists You Collect
       </Text>
 
@@ -91,7 +91,7 @@ export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtists
           return (
             <Text
               key={artist.internalID}
-              variant="md"
+              variant="sm-display"
               display="flex"
               alignItems="center"
               justifyContent="space-between"

@@ -1,5 +1,5 @@
 import { ChevronIcon, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 
 interface ChevronButtonProps {
   direction?: "left" | "right"
@@ -10,7 +10,7 @@ export const ChevronButton: React.FC<ChevronButtonProps> = ({
   direction = "right",
 }) => {
   return (
-    <Text variant="md" py={1}>
+    <Text variant="sm-display" py={1}>
       {direction === "right" ? (
         <>
           {children} <Arrow direction={direction} />

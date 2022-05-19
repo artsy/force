@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Flex, FullBleed, Image, Text, TEXT_SHADOW } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -89,7 +89,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = ({
         </Text>
 
         <Text
-          variant="md"
+          variant="sm-display"
           display="flex"
           position="absolute"
           width="100%"
@@ -159,7 +159,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = ({
       </Box>
 
       <Text
-        variant="md"
+        variant="sm-display"
         color="white100"
         display="flex"
         position="absolute"

@@ -31,7 +31,7 @@ export const BackupSecondFactorReminder: React.FC<BackupSecondFactorReminderProp
 
           return (
             <Column span={6} key={factor}>
-              <Text variant="lg" textAlign="center">
+              <Text variant="lg-display" textAlign="center">
                 {factor}
               </Text>
             </Column>

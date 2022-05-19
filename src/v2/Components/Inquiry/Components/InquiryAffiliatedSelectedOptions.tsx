@@ -1,5 +1,5 @@
 import { Box, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { InquiryAffiliatedRemoveButton } from "./InquiryAffiliatedRemoveButton"
 
 type Option = { text: string; value: string }
@@ -23,7 +23,7 @@ export const InquiryAffiliatedSelectedOptions: React.FC<InquiryAffiliatedSelecte
         return (
           <Text
             key={option.value}
-            variant="md"
+            variant="sm-display"
             display="flex"
             alignItems="center"
             justifyContent="space-between"

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Image, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { resized } from "v2/Utils/resized"
@@ -25,7 +25,7 @@ export const FairsPhonePromo: React.FC<BoxProps> = props => {
           alt="Artsy for iPhone"
         />
 
-        <Text maxWidth="50%" textAlign="center" variant="md">
+        <Text maxWidth="50%" textAlign="center" variant="sm-display">
           Download Artsy for iPhone for a personalized guide to the show.
         </Text>
       </Box>

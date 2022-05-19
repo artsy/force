@@ -47,7 +47,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Box pr={2}>
-        <Text variant="lg" as="h3">
+        <Text variant="lg-display" as="h3">
           <RailHeaderTitle
             title={title}
             viewAllHref={viewAllHref}
@@ -60,7 +60,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
 
         {subTitle && (
           <Box display={["none", "block"]}>
-            <Text as="h3" variant="lg" color="black60" lineClamp={2}>
+            <Text as="h3" variant="lg-display" color="black60" lineClamp={2}>
               {subTitle}
             </Text>
           </Box>

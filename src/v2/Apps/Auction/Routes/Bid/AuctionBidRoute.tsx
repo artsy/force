@@ -111,7 +111,7 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
                   saleArtwork={artwork.saleArtwork!}
                 />
 
-                <Text variant="lg">Set Your Max Bid</Text>
+                <Text variant="lg-display">Set Your Max Bid</Text>
 
                 <Select
                   selected={values.selectedBid}

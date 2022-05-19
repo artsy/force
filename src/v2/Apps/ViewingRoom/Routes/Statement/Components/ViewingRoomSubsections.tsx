@@ -27,7 +27,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
         return (
           <Box key={internalID}>
             {title && (
-              <Text variant="lg" mt={2}>
+              <Text variant="lg-display" mt={2}>
                 {title}
               </Text>
             )}

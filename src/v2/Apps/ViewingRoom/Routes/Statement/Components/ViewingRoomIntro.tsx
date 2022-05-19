@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomIntro_viewingRoom } from "v2/__generated__/ViewingRoomIntro_viewingRoom.graphql"
@@ -14,7 +14,7 @@ const ViewingRoomIntro: React.FC<ViewingRoomIntroProps> = ({
     return null
   }
 
-  return <Text variant="sm">{introStatement}</Text>
+  return <Text variant="md">{introStatement}</Text>
 }
 
 export const ViewingRoomIntroFragmentContainer = createFragmentContainer(

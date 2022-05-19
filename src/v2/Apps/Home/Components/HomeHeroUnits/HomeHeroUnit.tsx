@@ -8,7 +8,6 @@ import {
   Button,
   GridColumns,
   Column,
-  HTML,
 } from "@artsy/palette"
 import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -24,6 +23,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useCallback, useMemo } from "react"
 
 export interface StaticHeroUnit {
   backgroundImageURL: string
@@ -48,7 +48,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const handleTrackEvent = () => {
+  const handleTrackEvent = useCallback(() => {
     const event: ClickedPromoSpace = {
       action: ActionType.clickedPromoSpace,
       context_module: ContextModule.banner,
@@ -57,7 +57,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       subject: "clicking on the promo banner",
     }
     trackEvent(event)
-  }
+  }, [heroUnit.href, trackEvent])
 
   const image = heroUnit.backgroundImageURL
     ? cropped(heroUnit.backgroundImageURL, {
@@ -68,169 +68,190 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       })
     : null
 
-  const figure = (
-    <Column span={6} bg="white100">
-      <RouterLink
-        to={heroUnit.href ?? ""}
-        style={{
-          display: "block",
-          width: "100%",
-          height: "100%",
-        }}
-        tabIndex={-1}
-        onClick={handleTrackEvent}
-      >
-        {image && (
-          <>
-            <Media at="xs">
-              <ResponsiveBox
-                aspectWidth={3}
-                aspectHeight={2}
-                maxWidth="100%"
-                bg="black10"
-              >
-                <Image
-                  src={image.src}
-                  srcSet={image.srcSet}
-                  width="100%"
-                  height="100%"
-                  lazyLoad={index > 0}
-                />
-              </ResponsiveBox>
-            </Media>
-
-            <Media greaterThan="xs">
-              {className => (
-                <Box
-                  className={className}
-                  height={[300, 400, 500]}
-                  position="relative"
+  const figure = useMemo(
+    () => (
+      <Column span={6} bg="white100">
+        <RouterLink
+          to={heroUnit.href ?? ""}
+          style={{
+            display: "block",
+            width: "100%",
+            height: "100%",
+          }}
+          tabIndex={-1}
+          onClick={handleTrackEvent}
+        >
+          {image && (
+            <>
+              <Media at="xs">
+                <ResponsiveBox
+                  aspectWidth={3}
+                  aspectHeight={2}
+                  maxWidth="100%"
+                  bg="black10"
                 >
                   <Image
                     src={image.src}
                     srcSet={image.srcSet}
                     width="100%"
                     height="100%"
-                    style={{ objectFit: "cover" }}
                     lazyLoad={index > 0}
                   />
-
-                  {heroUnit.creditLine && (
-                    <Box
-                      position="absolute"
-                      px={2}
-                      pb={1}
-                      pt={6}
-                      width="100%"
-                      bottom={0}
-                      background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
-                      {...(layout === "a" ? { left: 0 } : { right: 0 })}
-                    >
-                      <HomeHeroUnitCredit>
-                        {heroUnit.creditLine}
-                      </HomeHeroUnitCredit>
-                    </Box>
-                  )}
-                </Box>
-              )}
-            </Media>
-          </>
-        )}
-      </RouterLink>
-    </Column>
-  )
-
-  const description = (
-    <Column span={6}>
-      <GridColumns height="100%">
-        <Column
-          start={[2, 3]}
-          span={[10, 8]}
-          display="flex"
-          justifyContent="center"
-          flexDirection="column"
-          py={4}
-        >
-          <RouterLink
-            to={heroUnit.href ?? ""}
-            tabIndex={-1}
-            style={{ display: "block", textDecoration: "none" }}
-            onClick={handleTrackEvent}
-          >
-            <Media greaterThan="xs">
-              {heroUnit.heading && (
-                <>
-                  <Text variant="xs" textTransform="uppercase" color="black100">
-                    {heroUnit.heading}
-                  </Text>
-
-                  <Spacer mt={2} />
-                </>
-              )}
-            </Media>
-
-            <Text
-              as={index === 0 ? "h1" : "h2"}
-              variant={["lg", "xl", "xxl"]}
-              color="black100"
-            >
-              {heroUnit.title}
-            </Text>
-
-            {heroUnit.subtitle && (
-              <>
-                <Spacer mt={[1, 2]} />
-
-                <HTML
-                  variant={["xs", "md", "lg"]}
-                  color="black60"
-                  html={heroUnit.subtitle}
-                />
-              </>
-            )}
-          </RouterLink>
-
-          {heroUnit.linkText && heroUnit.href && (
-            <>
-              <Media greaterThan="xs">
-                <Spacer
-                  // Unconventional value here to keep visual rhythm
-                  mt="30px"
-                />
-
-                <GridColumns>
-                  <Column span={[12, 12, 6]}>
-                    <Button
-                      variant="secondaryOutline"
-                      // @ts-ignore
-                      as={RouterLink}
-                      to={heroUnit.href}
-                      width="100%"
-                    >
-                      {heroUnit.linkText}
-                    </Button>
-                  </Column>
-                </GridColumns>
+                </ResponsiveBox>
               </Media>
 
-              <Media at="xs">
-                <Spacer mt={1} />
+              <Media greaterThan="xs">
+                {className => (
+                  <Box
+                    className={className}
+                    height={[300, 400, 500]}
+                    position="relative"
+                  >
+                    <Image
+                      src={image.src}
+                      srcSet={image.srcSet}
+                      width="100%"
+                      height="100%"
+                      style={{ objectFit: "cover" }}
+                      lazyLoad={index > 0}
+                    />
 
-                <RouterLink
-                  to={heroUnit.href}
-                  noUnderline
-                  onClick={handleTrackEvent}
-                >
-                  <Text variant="xs" color="black100">
-                    {heroUnit.linkText}
-                  </Text>
-                </RouterLink>
+                    {heroUnit.creditLine && (
+                      <Box
+                        position="absolute"
+                        px={2}
+                        pb={1}
+                        pt={6}
+                        width="100%"
+                        bottom={0}
+                        background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
+                        {...(layout === "a" ? { left: 0 } : { right: 0 })}
+                      >
+                        <HomeHeroUnitCredit>
+                          {heroUnit.creditLine}
+                        </HomeHeroUnitCredit>
+                      </Box>
+                    )}
+                  </Box>
+                )}
               </Media>
             </>
           )}
-        </Column>
-      </GridColumns>
-    </Column>
+        </RouterLink>
+      </Column>
+    ),
+    [handleTrackEvent, heroUnit.creditLine, heroUnit.href, image, index, layout]
+  )
+
+  const description = useMemo(
+    () => (
+      <Column span={6}>
+        <GridColumns height="100%">
+          <Column
+            start={[2, 3]}
+            span={[10, 8]}
+            display="flex"
+            justifyContent="center"
+            flexDirection="column"
+            py={4}
+          >
+            <RouterLink
+              to={heroUnit.href ?? ""}
+              tabIndex={-1}
+              style={{ display: "block", textDecoration: "none" }}
+              onClick={handleTrackEvent}
+            >
+              <Media greaterThan="xs">
+                {heroUnit.heading && (
+                  <>
+                    <Text
+                      variant="xs"
+                      textTransform="uppercase"
+                      color="black100"
+                    >
+                      {heroUnit.heading}
+                    </Text>
+
+                    <Spacer mt={2} />
+                  </>
+                )}
+              </Media>
+
+              <Text
+                as={index === 0 ? "h1" : "h2"}
+                variant={["lg-display", "xl", "xl"]}
+                color="black100"
+                lineClamp={3}
+              >
+                {heroUnit.title}
+              </Text>
+
+              {heroUnit.subtitle && (
+                <>
+                  <Spacer mt={[1, 2]} />
+
+                  <Text
+                    variant={["xs", "sm-display", "lg-display"]}
+                    color="black60"
+                    lineClamp={4}
+                  >
+                    {heroUnit.subtitle}
+                  </Text>
+                </>
+              )}
+            </RouterLink>
+
+            {heroUnit.linkText && heroUnit.href && (
+              <>
+                <Media greaterThan="xs">
+                  <Spacer
+                    // Unconventional value here to keep visual rhythm
+                    mt="30px"
+                  />
+
+                  <GridColumns>
+                    <Column span={[12, 12, 6]}>
+                      <Button
+                        variant="secondaryOutline"
+                        // @ts-ignore
+                        as={RouterLink}
+                        to={heroUnit.href}
+                        width="100%"
+                      >
+                        {heroUnit.linkText}
+                      </Button>
+                    </Column>
+                  </GridColumns>
+                </Media>
+
+                <Media at="xs">
+                  <Spacer mt={1} />
+
+                  <RouterLink
+                    to={heroUnit.href}
+                    noUnderline
+                    onClick={handleTrackEvent}
+                  >
+                    <Text variant="xs" color="black100">
+                      {heroUnit.linkText}
+                    </Text>
+                  </RouterLink>
+                </Media>
+              </>
+            )}
+          </Column>
+        </GridColumns>
+      </Column>
+    ),
+    [
+      handleTrackEvent,
+      heroUnit.heading,
+      heroUnit.href,
+      heroUnit.linkText,
+      heroUnit.subtitle,
+      heroUnit.title,
+      index,
+    ]
   )
 
   return (

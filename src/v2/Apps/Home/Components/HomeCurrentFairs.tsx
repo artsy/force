@@ -78,11 +78,11 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
                   </ResponsiveBox>
                 )}
 
-                <Text variant={["lg", "xl"]} mt={1}>
+                <Text variant="lg-display" mt={1}>
                   {fair.name}
                 </Text>
 
-                <Text variant={["md", "lg"]} color="black60">
+                <Text variant="sm-display" color="black60">
                   {fair.exhibitionPeriod}
                 </Text>
               </RouterLink>
@@ -99,7 +99,7 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="xl">Current Fairs</Text>
+        <Text variant="lg">Current Fairs</Text>
 
         <Text
           variant="sm"
@@ -140,11 +140,11 @@ const PLACEHOLDER = (
                 <SkeletonBox width="100%" height="100%" />
               </ResponsiveBox>
 
-              <SkeletonText variant={["lg", "xl"]} mt={1}>
+              <SkeletonText variant={["lg-display", "xl"]} mt={1}>
                 Name of Fair 0000
               </SkeletonText>
 
-              <SkeletonText variant={["md", "lg"]}>
+              <SkeletonText variant={["sm-display", "lg-display"]}>
                 Jan 00th – Jan 00th 0000
               </SkeletonText>
             </Column>

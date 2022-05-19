@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork } from "v2/__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -23,14 +23,14 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
 
   return (
     <>
-      <Text variant="md">{artistNames}</Text>
+      <Text variant="sm-display">{artistNames}</Text>
 
-      <Text variant="md" color="black60" overflowEllipsis>
+      <Text variant="sm-display" color="black60" overflowEllipsis>
         {[title, date].filter(s => s).join(", ")}
       </Text>
 
       {saleMessage && (
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           {saleMessage}
         </Text>
       )}
@@ -59,7 +59,7 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
       </GridColumns>
 
       {additionalInformation && (
-        <Text variant="sm" mt={4}>
+        <Text variant="md" mt={4}>
           {additionalInformation}
         </Text>
       )}

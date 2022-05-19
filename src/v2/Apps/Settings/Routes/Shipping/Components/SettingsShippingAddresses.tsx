@@ -34,7 +34,7 @@ export const SettingsShippingAddresses: FC<SettingsShippingAddressesProps> = ({
         <SettingsShippingAddressForm onClose={handleClose} />
       )}
 
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Saved Addresses
       </Text>
 

@@ -57,7 +57,7 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
     <>
       <MetaTags title="Works by Artists You Follow | Artsy" />
 
-      <Text variant={["lg", "xl"]} my={[2, 4]}>
+      <Text variant={["lg-display", "xl"]} my={[2, 4]}>
         Works By Artists You Follow
       </Text>
 
@@ -65,8 +65,8 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
 
       {savedArtworks.length === 0 ? (
         <>
-          <Text variant="lg">Nothing yet.</Text>
-          <Text variant="lg" color="black60" mt={1}>
+          <Text variant="lg-display">Nothing yet.</Text>
+          <Text variant="lg-display" color="black60" mt={1}>
             Follow{" "}
             <RouterLink color="black60" to="/artists">
               some artists
@@ -93,10 +93,10 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
           <Column span={9}>
             <GridColumns mt={0.5}>
               <Column span={9}>
-                <Text variant="md" fontWeight="medium">
+                <Text variant="sm-display" fontWeight="medium">
                   In-demand artworks, available to buy now
                 </Text>
-                <Text variant="md" color="black60">
+                <Text variant="sm-display" color="black60">
                   Collect works by today’s top artists, with transparent
                   pricing, easy shipping, and a simple checkout process.
                 </Text>

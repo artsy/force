@@ -140,8 +140,8 @@ const PLACEHOLDER = (
             <Box width={200} key={i}>
               <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
               <Spacer mt={1} />
-              <SkeletonText variant="md">Artist Name</SkeletonText>
-              <SkeletonText variant="md">Artwork Title</SkeletonText>
+              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
               <SkeletonText variant="xs">Partner</SkeletonText>
               <SkeletonText variant="xs">Price</SkeletonText>
             </Box>

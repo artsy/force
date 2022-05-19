@@ -22,6 +22,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
@@ -158,7 +159,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 }
 
 const FairRouteTab = styled(RouteTab).attrs({
-  variant: "md",
+  variant: "sm-display",
   alignItems: "center",
   py: 2,
   height: "auto",

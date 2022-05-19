@@ -38,14 +38,14 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
 
           <Spacer mb={2} />
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Please contact{" "}
             <a href="mailto:support@artsy.net">support@artsy.net</a> with any
             questions.
           </Text>
 
           {children ?? (
-            <Text variant="md" color="black60">
+            <Text variant="sm-display" color="black60">
               <a href="/">Go to Artsy Homepage</a>
             </Text>
           )}

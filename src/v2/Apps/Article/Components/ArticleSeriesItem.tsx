@@ -46,7 +46,7 @@ const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
                 {article.thumbnailTitle ?? article.title}
               </Text>
 
-              <Text variant="lg">{article.description}</Text>
+              <Text variant="lg-display">{article.description}</Text>
             </Box>
 
             <Flex mt={4}>

@@ -63,7 +63,7 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
           })}
         </Shelf>
       ) : (
-        <Text variant="lg" color="black60" textAlign="center">
+        <Text variant="lg-display" color="black60" textAlign="center">
           No works available by the artist at this time.
         </Text>
       )}
@@ -77,7 +77,7 @@ export const ARTIST_RAIL_PLACEHOLDER = (
       <SkeletonBox width={45} height={45} borderRadius="50%" mr={1} />
 
       <Box>
-        <SkeletonText variant="md">Artist Name</SkeletonText>
+        <SkeletonText variant="sm-display">Artist Name</SkeletonText>
         <SkeletonText variant="xs">Country, b. 0000</SkeletonText>
       </Box>
     </Flex>
@@ -95,8 +95,8 @@ export const ARTIST_RAIL_PLACEHOLDER = (
               mb={1}
             />
 
-            <SkeletonText variant="md">Artist Name</SkeletonText>
-            <SkeletonText variant="md">Artwork Title</SkeletonText>
+            <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
             <SkeletonText variant="xs">Partner</SkeletonText>
             <SkeletonText variant="xs">US$0,000</SkeletonText>
           </Fragment>

@@ -1,5 +1,5 @@
 import { groupBy } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistCVGroup_artist } from "v2/__generated__/ArtistCVGroup_artist.graphql"
@@ -68,11 +68,15 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
             return (
               <GridColumns key={index}>
                 <Column span={2} mb={[2, 0]}>
-                  {isFirst && <Text variant="lg">{title}</Text>}
+                  {isFirst && <Text variant="lg-display">{title}</Text>}
                 </Column>
 
                 <Column span={2}>
-                  <Text variant="md" textAlign={["left", "right"]} pr={[2, 4]}>
+                  <Text
+                    variant="sm-display"
+                    textAlign={["left", "right"]}
+                    pr={[2, 4]}
+                  >
                     {year}
                   </Text>
                 </Column>
@@ -81,7 +85,7 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
                   {yearGroup.map((show, yearKey) => {
                     return (
                       <Box mb={1} key={yearKey}>
-                        <Text variant="md" display="inline">
+                        <Text variant="sm-display" display="inline">
                           {show.href ? (
                             <RouterLink to={show.href}>{show.name}</RouterLink>
                           ) : (

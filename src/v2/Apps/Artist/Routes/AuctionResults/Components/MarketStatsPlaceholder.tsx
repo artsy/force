@@ -1,11 +1,13 @@
 import { Box, Column, GridColumns, SkeletonText } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 
 export const MarketStatsPlaceholder: React.FC = () => (
   <Box mb={[4, 12]} mt={[0, 6]}>
-    <SkeletonText variant={["md", "lg"]}>Market Signals</SkeletonText>
+    <SkeletonText variant={["sm-display", "lg-display"]}>
+      Market Signals
+    </SkeletonText>
 
-    <SkeletonText variant={["md", "lg"]} mb={[2, 4]}>
+    <SkeletonText variant={["sm-display", "lg-display"]} mb={[2, 4]}>
       Averages over the last 36 months
     </SkeletonText>
 
@@ -18,7 +20,7 @@ export const MarketStatsPlaceholder: React.FC = () => (
         flexDirection="column"
         pt={0.5}
       >
-        <SkeletonText variant="lg">MEDIUM</SkeletonText>
+        <SkeletonText variant="lg-display">MEDIUM</SkeletonText>
         <SkeletonText variant="xxl">SEL</SkeletonText>
       </Column>
       <Column span={10}>

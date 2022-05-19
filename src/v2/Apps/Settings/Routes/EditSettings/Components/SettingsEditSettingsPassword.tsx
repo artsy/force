@@ -41,7 +41,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Password
       </Text>
 

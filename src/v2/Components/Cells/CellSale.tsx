@@ -53,8 +53,8 @@ const CellSale: FC<CellSaleProps> = ({ sale, ...rest }) => {
 
       <Spacer my={0.5} />
 
-      <Text variant="md">{sale.name}</Text>
-      <Text variant="md" color="black60">
+      <Text variant="sm-display">{sale.name}</Text>
+      <Text variant="sm-display" color="black60">
         {sale.formattedStartDateTime}
       </Text>
     </RouterLink>
@@ -70,10 +70,12 @@ export const CellSalePlaceholder: FC = () => {
 
       <Spacer my={0.5} />
 
-      <SkeletonText variant="md">
+      <SkeletonText variant="sm-display">
         Impact: Artists in Support of Refugees from Ukraine
       </SkeletonText>
-      <SkeletonText variant="md">Ends Apr 14 at 12:00pm EDT</SkeletonText>
+      <SkeletonText variant="sm-display">
+        Ends Apr 14 at 12:00pm EDT
+      </SkeletonText>
     </Box>
   )
 }

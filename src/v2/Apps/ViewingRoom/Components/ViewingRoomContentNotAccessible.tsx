@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -20,7 +20,7 @@ const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleP
   return (
     <GridColumns gridRowGap={4}>
       <Column start={4} span={6}>
-        <Text variant="lg">
+        <Text variant="lg-display">
           {infoText} We invite you to view this gallery's current works.
         </Text>
       </Column>

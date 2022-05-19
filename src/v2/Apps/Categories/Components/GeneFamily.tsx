@@ -1,5 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneFamily_geneFamily } from "v2/__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
@@ -36,7 +36,9 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
           return (
             <Box key={gene?.id}>
               <RouterLink to={`/gene/${gene?.slug}`} textDecoration="none">
-                <Text variant="md">{gene?.displayName || gene?.name}</Text>
+                <Text variant="sm-display">
+                  {gene?.displayName || gene?.name}
+                </Text>
               </RouterLink>
               <Spacer mb={1} />
             </Box>

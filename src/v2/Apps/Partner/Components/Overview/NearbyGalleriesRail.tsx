@@ -28,7 +28,7 @@ const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
-        <Text variant="lg">Nearby Galleries</Text>
+        <Text variant="lg-display">Nearby Galleries</Text>
       </Flex>
 
       <Carousel itemsPerViewport={[2, 2, 3]}>

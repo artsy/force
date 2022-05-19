@@ -44,25 +44,25 @@ const AuctionLotInfo: React.FC<AuctionLotInfoProps> = ({
       </RouterLink>
 
       <Box pl={1}>
-        <Text variant="md">
+        <Text variant="sm-display">
           Lot {saleArtwork.lotLabel}{" "}
           {saleArtwork.formattedEndDateTime &&
             `• ${saleArtwork.formattedEndDateTime}`}
         </Text>
-        <Text variant="md">
+        <Text variant="sm-display">
           <i>{artwork.title}</i>
           {artwork.date && `, ${artwork.date}`}
         </Text>
-        <Text variant="md">{artwork.artistNames}</Text>
+        <Text variant="sm-display">{artwork.artistNames}</Text>
 
         {!hideLotInfo && (
           <>
-            <Text variant="md" fontWeight="bold" mt={1}>
+            <Text variant="sm-display" fontWeight="bold" mt={1}>
               Current Bid: {saleArtwork.currentBid?.display}
             </Text>
 
             {bidCount > 0 && (
-              <Text variant="md" color="black60">
+              <Text variant="sm-display" color="black60">
                 ({bidCount} bid{bidCount > 1 && "s"})
               </Text>
             )}

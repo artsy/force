@@ -17,7 +17,9 @@ export const PartnerArtistDetailsPlaceholder: React.FC = () => {
           <GridColumns gridRowGap={2}>
             <Column span={12}>
               <SkeletonText variant="xl">Artist name</SkeletonText>
-              <SkeletonText variant="lg">Artist brief info</SkeletonText>
+              <SkeletonText variant="lg-display">
+                Artist brief info
+              </SkeletonText>
             </Column>
             <Column span={[12, 6]}>
               <SkeletonBox width="100%" height={40} />
@@ -50,7 +52,7 @@ export const PartnerArtistArtworkCarouselItemPlaceholder: React.FC = () => (
   <Box>
     <SkeletonBox width={220} height={160} mb={1} />
 
-    <SkeletonText variant="md">Artist name</SkeletonText>
+    <SkeletonText variant="sm-display">Artist name</SkeletonText>
 
     <SkeletonText variant="sm">Artwork name</SkeletonText>
 

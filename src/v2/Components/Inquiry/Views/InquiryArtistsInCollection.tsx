@@ -1,5 +1,5 @@
 import { Banner, Box, Button, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { graphql } from "relay-runtime"
 import { InquiryAffiliatedAutocomplete } from "../Components/InquiryAffiliatedAutocomplete"
 import { InquiryAffiliatedSelectedOptions } from "../Components/InquiryAffiliatedSelectedOptions"
@@ -35,7 +35,7 @@ export const InquiryArtistsInCollection: React.FC = () => {
 
   return (
     <>
-      <Text variant="lg" mb={2} pr={2}>
+      <Text variant="lg-display" mb={2} pr={2}>
         What artists do you collect?{" "}
         <Box color="black60" as="span">
           (Optional)

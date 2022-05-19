@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, Text } from "@artsy/palette"
 import { Timer } from "v2/Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,11 +15,15 @@ export const FairTimer: React.FC<FairTimerProps> = ({ fair: { endAt } }) => {
   return (
     <Box my={[2, 0]}>
       {hasEnded ? (
-        <Text variant={["lg", "xl"]}>Closed</Text>
+        <Text variant={["lg-display", "xl"]}>Closed</Text>
       ) : (
         <>
-          <Text variant={["md", "xl"]}>Closes in:</Text>
-          <Timer endDate={endAt!} variant={["lg", "xl"]} alignItems="start" />
+          <Text variant={["sm-display", "xl"]}>Closes in:</Text>
+          <Timer
+            endDate={endAt!}
+            variant={["lg-display", "xl"]}
+            alignItems="start"
+          />
         </>
       )}
     </Box>

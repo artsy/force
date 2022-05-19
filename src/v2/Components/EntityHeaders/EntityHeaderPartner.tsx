@@ -62,11 +62,11 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
         )}
 
         <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
-          <Text variant="md" lineClamp={2}>
+          <Text variant="sm-display" lineClamp={2}>
             {partner.name}
           </Text>
 
-          <Text variant="md">
+          <Text variant="sm-display">
             {badges.map(badge => (
               <Fragment key={badge.slug}>
                 <Badge>{badge.name}</Badge>{" "}

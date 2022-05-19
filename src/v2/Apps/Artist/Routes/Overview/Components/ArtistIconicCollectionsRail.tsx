@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, Type, useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -15,6 +15,7 @@ import { ArtistIconicCollectionsRail_marketingCollections } from "v2/__generated
 import currency from "currency.js"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { useTracking } from "react-tracking"
 import { ArtistIconicCollectionsRailQuery } from "v2/__generated__/ArtistIconicCollectionsRailQuery.graphql"
@@ -80,8 +81,8 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
                 </>
               )}
               <Spacer my={1} />
-              <Text variant="md">{formattedTitle}</Text>
-              <Text variant="md" color="black60">
+              <Text variant="sm-display">{formattedTitle}</Text>
+              <Text variant="sm-display" color="black60">
                 {formattedPrice}
               </Text>
             </RouterLink>
@@ -101,8 +102,8 @@ const PLACEHOLDER = (
           return (
             <>
               <SkeletonBox width={325} height={230} />
-              <SkeletonText variant="md">Works on Paper</SkeletonText>
-              <SkeletonText variant="md">From $500</SkeletonText>
+              <SkeletonText variant="sm-display">Works on Paper</SkeletonText>
+              <SkeletonText variant="sm-display">From $500</SkeletonText>
             </>
           )
         })

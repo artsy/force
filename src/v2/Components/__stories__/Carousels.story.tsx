@@ -13,8 +13,8 @@ import {
   FullBleed,
 } from "@artsy/palette"
 import { random } from "lodash"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { ContentHeaderExample } from "./Components/ContentHeaderExample"
 import { Page } from "./Components/Page"
 import { TombstoneExample } from "./Components/TombstoneExample"
@@ -102,16 +102,16 @@ export const CarouselEditorial = () => {
             Category
           </Text>
 
-          <Text variant="lg" mb={0.5}>
+          <Text variant="lg-display" mb={0.5}>
             ‘The Season’s Been Extended Indefinitely’: Manhattan Dealers Who
             Opened Hamptons Outposts This Summer Are There to Stay
           </Text>
 
-          <Text variant="md" mb={0.5}>
+          <Text variant="sm-display" mb={0.5}>
             By Author Name
           </Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Time Date Year
           </Text>
         </Box>
@@ -126,11 +126,11 @@ export const CarouselEditorial = () => {
             Greener Pastures
           </Text>
 
-          <Text variant="md" mb={0.5}>
+          <Text variant="sm-display" mb={0.5}>
             By Author Name
           </Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Time Date Year
           </Text>
         </Box>
@@ -142,16 +142,16 @@ export const CarouselEditorial = () => {
             Category
           </Text>
 
-          <Text variant="lg" mb={0.5}>
+          <Text variant="lg-display" mb={0.5}>
             FIAC Has Canceled Its 2020 Fair in Paris, Saying It Could Not Meet
             the ‘Legitimate Expectations’ of Visitors
           </Text>
 
-          <Text variant="md" mb={0.5}>
+          <Text variant="sm-display" mb={0.5}>
             By Author Name
           </Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Time Date Year
           </Text>
         </Box>
@@ -163,15 +163,15 @@ export const CarouselEditorial = () => {
             Category
           </Text>
 
-          <Text variant="lg" mb={0.5}>
+          <Text variant="lg-display" mb={0.5}>
             This Artwork Changed My Life: Sally Mann’s “Untitled Film Stills”
           </Text>
 
-          <Text variant="md" mb={0.5}>
+          <Text variant="sm-display" mb={0.5}>
             By Author Name
           </Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Time Date Year
           </Text>
         </Box>
@@ -185,11 +185,11 @@ export const CarouselEditorial = () => {
             5 Must-See Shows from Gallery Weekend Berlin
           </Text>
 
-          <Text variant="md" mb={0.5}>
+          <Text variant="sm-display" mb={0.5}>
             By Author Name
           </Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Time Date Year
           </Text>
         </Box>
@@ -201,15 +201,15 @@ export const CarouselEditorial = () => {
             Category
           </Text>
 
-          <Text variant="lg" mb={0.5}>
+          <Text variant="lg-display" mb={0.5}>
             Why Painter Eddie Martinez Is Having His Biggest Market Year Yet
           </Text>
 
-          <Text variant="md" mb={0.5}>
+          <Text variant="sm-display" mb={0.5}>
             By Author Name
           </Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             Time Date Year
           </Text>
         </Box>
@@ -252,8 +252,8 @@ export const CarouselAuctions = () => {
                 />
               </Flex>
 
-              <Text variant="md">Primary Text</Text>
-              <Text variant="md" color="black60">
+              <Text variant="sm-display">Primary Text</Text>
+              <Text variant="sm-display" color="black60">
                 Secondary Text
               </Text>
               <Text variant="xs">Status</Text>
@@ -276,8 +276,8 @@ export const CarouselViewingRoomsGrid = () => {
             <Box key={i} width={340}>
               <Flex mb={1} justifyContent="space-between" alignItems="center">
                 <Box>
-                  <Text variant="md">Gallery</Text>
-                  <Text variant="md" color="black60">
+                  <Text variant="sm-display">Gallery</Text>
+                  <Text variant="sm-display" color="black60">
                     City
                   </Text>
                 </Box>
@@ -312,8 +312,8 @@ export const CarouselGalleries = () => {
                   <Box bg="black15" borderRadius="50%" size={50} mr={2} />
 
                   <Box flex={1}>
-                    <Text variant="md">Artist Name</Text>
-                    <Text variant="md" color="black60">
+                    <Text variant="sm-display">Artist Name</Text>
+                    <Text variant="sm-display" color="black60">
                       Nationality, b. 1970
                     </Text>
                   </Box>
@@ -341,8 +341,8 @@ export const CarouselArtists = () => {
           return (
             <Box key={i} width={340}>
               <Box height={220} bg="black30" mb={1} />
-              <Text variant="md">Primary Text</Text>
-              <Text variant="md" color="black60">
+              <Text variant="sm-display">Primary Text</Text>
+              <Text variant="sm-display" color="black60">
                 Secondary Text
               </Text>
             </Box>
@@ -374,10 +374,10 @@ export const CarouselShows = () => {
                 height="100%"
                 background="linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);"
               >
-                <Text variant="md" color="white100">
+                <Text variant="sm-display" color="white100">
                   Primary Text
                 </Text>
-                <Text variant="md" color="black15">
+                <Text variant="sm-display" color="black15">
                   Secondary Text
                 </Text>
                 <Text variant="xs" color="white100">

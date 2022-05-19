@@ -54,7 +54,7 @@ const CellPartner: React.FC<CellPartnerProps> = ({
           />
         ) : (
           <Text
-            variant="lg"
+            variant="lg-display"
             bg="black10"
             width="100%"
             height="100%"

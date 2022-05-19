@@ -69,7 +69,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
             />
 
             <Overlay>
-              <Text variant="lg" m={4} color="white100">
+              <Text variant="lg-display" m={4} color="white100">
                 Explore the event
               </Text>
             </Overlay>

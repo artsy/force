@@ -122,8 +122,8 @@ const PLACEHOLDER = (
           return (
             <Box width={325} key={i}>
               <SkeletonBox width={325} height={230} />
-              <SkeletonText variant="lg">Some Artist</SkeletonText>
-              <SkeletonText variant="md">Location</SkeletonText>
+              <SkeletonText variant="lg-display">Some Artist</SkeletonText>
+              <SkeletonText variant="sm-display">Location</SkeletonText>
             </Box>
           )
         })

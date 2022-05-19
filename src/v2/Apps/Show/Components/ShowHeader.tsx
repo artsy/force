@@ -33,7 +33,7 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
           </Text>
         </Box>
 
-        <Text variant="lg">{formattedTime}</Text>
+        <Text variant="lg-display">{formattedTime}</Text>
 
         <Box mt={[1, 0]}>
           <ShowContextualLinkFragmentContainer show={show} />

@@ -55,7 +55,7 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
 
   return (
     <Box textAlign={"center"}>
-      <Text variant="md" color={"blue100"}>
+      <Text variant="sm-display" color={"blue100"}>
         {!hasEnded && <Text color={timerInfo.color}>{timerInfo.copy}</Text>}
       </Text>
 
@@ -68,7 +68,7 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
         />
       )}
 
-      <Text variant="md" color={"black60"}>
+      <Text variant="sm-display" color={"black60"}>
         {saleArtwork.formattedStartDateTime}
       </Text>
 

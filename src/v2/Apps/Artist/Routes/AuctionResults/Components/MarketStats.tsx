@@ -1,8 +1,8 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
 import { rest } from "lodash"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
@@ -76,7 +76,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
 
   return (
     <Box mb={[4, 12]} mt={[0, 6]}>
-      <Text variant={["md", "lg"]}>
+      <Text variant={["sm-display", "lg-display"]}>
         Market Signals{" "}
         <MarketStatsInfoButton
           onClick={() => {
@@ -85,7 +85,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
         />
       </Text>
 
-      <Text variant={["md", "lg"]} color="black60" mb={[2, 4]}>
+      <Text variant={["sm-display", "lg-display"]} color="black60" mb={[2, 4]}>
         Averages over the last 36 months
       </Text>
 

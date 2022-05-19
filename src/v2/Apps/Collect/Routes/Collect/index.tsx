@@ -85,11 +85,11 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             alignItems={["left", "center"]}
             flexDirection={["column", "row"]}
           >
-            <Text variant={["lg", "xl"]}>
+            <Text variant={["lg-display", "xl"]}>
               <h1>Collect art and design online</h1>
             </Text>
             <Spacer my={1} />
-            <Text variant="md">
+            <Text variant="sm-display">
               <RouterLink to="/collections">Browse by collection</RouterLink>
             </Text>
           </Flex>

@@ -5,7 +5,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 export const SettingsEditSettingsEmailPreferences: FC = () => {
   return (
     <>
-      <Text color="black100" variant="lg" mb={4}>
+      <Text color="black100" variant="lg-display" mb={4}>
         Email Preferences
       </Text>
       <Text color="black60" variant="sm" mb={2}>

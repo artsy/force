@@ -14,18 +14,18 @@ export const AddressFormWithCreditCard: React.FC = () => {
 
   return (
     <Join separator={<Spacer my={2} />}>
-      <Text variant="md">
+      <Text variant="sm-display">
         Please enter your credit card information below. The name on your Artsy
         account must match the name on the card, and a valid credit card is
         required in order to bid.
       </Text>
 
-      <Text variant="md">
+      <Text variant="sm-display">
         Registration is free. Artsy will never charge this card without your
         permission, and you are not required to use this card to pay if you win.
       </Text>
 
-      <Text variant="md">Credit Card</Text>
+      <Text variant="sm-display">Credit Card</Text>
 
       <CreditCardInput
         error={touched.creditCard && errors.creditCard}

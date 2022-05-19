@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ExampleArtistRoute_artist } from "v2/__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
@@ -15,7 +15,7 @@ const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
   return (
     <Box>
       <Title>{artist.name} | Artsy</Title>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg-display" mb={2}>
         {artist.name}
       </Text>
       <Box my={2}>

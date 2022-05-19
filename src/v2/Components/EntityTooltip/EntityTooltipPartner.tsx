@@ -118,7 +118,7 @@ const EntityTooltipPartnerPlaceholder: FC = () => {
     <Skeleton p={2} width={300}>
       <SkeletonBox width={260} height={146} />
 
-      <SkeletonText variant="md">Partner Name</SkeletonText>
+      <SkeletonText variant="sm-display">Partner Name</SkeletonText>
 
       <SkeletonText variant="xs">City, New City</SkeletonText>
 

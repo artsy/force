@@ -47,9 +47,9 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
           textDecoration="none"
           aria-label={featuredLink.title ?? entity.name ?? "Unknown Artist"}
         >
-          <Text variant="lg">{featuredLink.title ?? entity.name}</Text>
+          <Text variant="lg-display">{featuredLink.title ?? entity.name}</Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             {featuredLink.subtitle || entity.formattedNationalityAndBirthday}
           </Text>
         </RouterLink>

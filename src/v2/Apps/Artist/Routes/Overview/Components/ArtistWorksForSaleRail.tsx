@@ -121,8 +121,8 @@ const PLACEHOLDER = (
           return (
             <React.Fragment key={i}>
               <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-              <SkeletonText variant="lg">Some Artist</SkeletonText>
-              <SkeletonText variant="md">Location</SkeletonText>
+              <SkeletonText variant="lg-display">Some Artist</SkeletonText>
+              <SkeletonText variant="sm-display">Location</SkeletonText>
             </React.Fragment>
           )
         })

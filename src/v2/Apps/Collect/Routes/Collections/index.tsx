@@ -37,7 +37,7 @@ export const CollectionsApp: React.FC<CollectionsAppProps> = ({
           </Column>
 
           <Column span={6} display="flex" justifyContent="flex-end">
-            <Text variant="md">
+            <Text variant="sm-display">
               <RouterLink to="/collect">View works</RouterLink>
             </Text>
           </Column>

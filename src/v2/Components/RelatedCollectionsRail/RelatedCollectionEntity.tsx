@@ -88,7 +88,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
           )}
         </Flex>
 
-        <Text variant="md" overflowEllipsis maxWidth={375}>
+        <Text variant="sm-display" overflowEllipsis maxWidth={375}>
           {title}
         </Text>
 

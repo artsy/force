@@ -90,7 +90,7 @@ const NearbyGalleryCard: React.FC<NearbyGalleryCardProps> = ({
       <Flex justifyContent="space-between" mt={1}>
         <Box>
           <RouterLink noUnderline to={partnerHref}>
-            <Text variant="lg">{name}</Text>
+            <Text variant="lg-display">{name}</Text>
             {location && <Text color="black60">{location}</Text>}
           </RouterLink>
         </Box>

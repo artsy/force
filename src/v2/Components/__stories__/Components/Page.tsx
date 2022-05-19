@@ -1,6 +1,6 @@
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 
 export const Page: React.FC<BoxProps & { title?: string }> = ({
@@ -12,7 +12,7 @@ export const Page: React.FC<BoxProps & { title?: string }> = ({
     <AppContainer {...rest} py={2} px={4}>
       {children}
 
-      <Text variant="lg" my={6}>
+      <Text variant="lg-display" my={6}>
         {title}
       </Text>
     </AppContainer>

@@ -22,7 +22,7 @@ export const EntityHeaderPlaceholder: FC<EntityHeaderPlaceholderProps> = ({
       )}
 
       <Flex flexDirection="column" justifyContent="center">
-        <SkeletonText variant="md">Artist Name</SkeletonText>
+        <SkeletonText variant="sm-display">Artist Name</SkeletonText>
         <SkeletonText variant="xs">Nationality, b. 9999</SkeletonText>
       </Flex>
     </Skeleton>

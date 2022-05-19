@@ -156,7 +156,7 @@ export class SelectedCareerAchievements extends Component<
       <Box {...this.props}>
         {this.props.onlyCareerHighlights ? (
           <>
-            <Text variant="lg" mb={4}>
+            <Text variant="lg-display" mb={4}>
               Career highlights
             </Text>
             <Flex flexWrap="wrap" pr={2}>

@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = props => {
       pb: 4,
     },
     v3: {
-      header: "md" as TextVariant,
+      header: "sm-display" as TextVariant,
       body: "sm" as TextVariant,
       pt: 4,
       pb: 6,

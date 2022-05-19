@@ -87,7 +87,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
             />
 
             <Text
-              variant="lg"
+              variant="lg-display"
               as="h1"
               color="white100"
               position="absolute"
@@ -177,7 +177,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 justifyContent="center"
                 textAlign="center"
               >
-                <Text variant="lg" px={4} mb={2}>
+                <Text variant="lg-display" px={4} mb={2}>
                   {isLoggedIn
                     ? "Preview and collect from the world's leading art fairs"
                     : "Sign up to follow fairs and be the first to preview them on Artsy"}
@@ -265,7 +265,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
           <Column span={8}>
             <Text
               as={currentFairs.length > 0 ? "h2" : "h1"}
-              variant="lg"
+              variant="lg-display"
               pb={2}
               borderBottom="1px solid"
               borderColor="black10"
@@ -279,7 +279,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
           <Column start={9} span={4}>
             <Text
               as="h2"
-              variant="lg"
+              variant="lg-display"
               pb={2}
               borderBottom="1px solid"
               borderColor="black10"

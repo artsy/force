@@ -51,7 +51,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
       <ModalBase
         dialogProps={{ width: "100%", height: "100%", bg: "white100" }}
       >
-        <Text variant="md" onClick={onNavButtonClick}>
+        <Text variant="sm-display" onClick={onNavButtonClick}>
           <NavBarMobileMenuItemButton
             position="absolute"
             top={0}

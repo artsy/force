@@ -37,7 +37,7 @@ export const WhySellWithArtsy = () => (
     <Column span={[12, 6]}>
       <Box maxWidth={620}>
         <Join separator={<Spacer mt={4} />}>
-          <Text variant="lg">Why Sell with Artsy</Text>
+          <Text variant="lg-display">Why Sell with Artsy</Text>
 
           {reasons.map(reason => (
             <TextSection title={reason.title} text={reason.text} />

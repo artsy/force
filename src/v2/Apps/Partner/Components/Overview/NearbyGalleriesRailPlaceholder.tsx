@@ -19,7 +19,7 @@ export const NearbyGalleriesRailPlaceholder: React.FC<NearbyGalleriesRailPlaceho
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
-        <SkeletonText variant="lg">Nearby Galleries</SkeletonText>
+        <SkeletonText variant="lg-display">Nearby Galleries</SkeletonText>
       </Flex>
 
       <Carousel itemsPerViewport={[2, 2, 3]}>
@@ -37,7 +37,7 @@ export const NearbyGalleriesRailPlaceholder: React.FC<NearbyGalleriesRailPlaceho
 
               <Flex mt={1} justifyContent="space-between">
                 <Box>
-                  <SkeletonText variant="lg">Gallery Name</SkeletonText>
+                  <SkeletonText variant="lg-display">Gallery Name</SkeletonText>
                   <SkeletonText>Gallery location</SkeletonText>
                 </Box>
                 <SkeletonBox height={32} width={90} />

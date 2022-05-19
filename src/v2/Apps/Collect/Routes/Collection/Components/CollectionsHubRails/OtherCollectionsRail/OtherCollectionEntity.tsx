@@ -59,7 +59,7 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
         lazyLoad
       />
 
-      <Text variant="md" overflowEllipsis maxWidth={300} mt={1}>
+      <Text variant="sm-display" overflowEllipsis maxWidth={300} mt={1}>
         {title}
       </Text>
     </RouterLink>

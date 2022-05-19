@@ -26,7 +26,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
 
   return (
     <Box>
-      <Text as="h2" variant="lg">
+      <Text as="h2" variant="lg-display">
         Latest from {name}
       </Text>
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
@@ -32,7 +32,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Column>
 
         <Column span={6}>
-          <Text variant="md">
+          <Text variant="sm-display">
             Bid on works you love with auctions on Artsy. With bidding opening
             daily, Artsy connects collectors like you to art from leading
             auction houses, nonprofit organizations, and sellers across the

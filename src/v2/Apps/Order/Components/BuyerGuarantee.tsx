@@ -1,6 +1,6 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
 import { CircleBlackCheckIcon, Flex, Link, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useTracking } from "v2/System"
 
 export const BUYER_GUARANTEE_URL =
@@ -31,7 +31,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
     <Flex p={2} my={1} backgroundColor="black10">
       <CircleBlackCheckIcon mr={1} />
       <Flex flexDirection="column">
-        <Text fontWeight="bold" variant="md">
+        <Text fontWeight="bold" variant="sm-display">
           Your purchase is protected.
         </Text>
         <Text variant="xs" color="black60">

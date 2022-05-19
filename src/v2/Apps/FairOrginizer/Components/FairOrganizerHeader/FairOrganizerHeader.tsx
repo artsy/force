@@ -57,7 +57,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
               {fairHasNotStarted && (
                 <>
                   <Timer
-                    variant={["lg", "xl"]}
+                    variant={["lg-display", "xl"]}
                     label="Opens in:"
                     startDate={startAt!}
                     endDate=""

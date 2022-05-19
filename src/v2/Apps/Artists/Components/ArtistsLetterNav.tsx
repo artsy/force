@@ -1,6 +1,6 @@
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 
@@ -15,7 +15,7 @@ export const ArtistsLetterNav: React.FC<ArtistsLetterNavProps> = ({
     <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]} {...rest}>
       {LETTERS.map((letter, i) => {
         return (
-          <Text key={letter} variant="md" color="black60">
+          <Text key={letter} variant="sm-display" color="black60">
             <Letter
               key={letter}
               activeClassName="active"

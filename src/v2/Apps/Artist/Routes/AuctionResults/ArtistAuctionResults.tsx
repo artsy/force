@@ -222,7 +222,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Box id="scrollTo--artistAuctionResultsTop" />
 
-      <Text variant={["md", "lg"]}>Auction Results</Text>
+      <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
       <Spacer my={2} />
 
       {showMobileActionSheet && (

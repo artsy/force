@@ -32,7 +32,7 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         About You
       </Text>
 

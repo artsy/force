@@ -34,14 +34,14 @@ const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {
           as="h5"
           textTransform="capitalize"
           color="black"
-          variant="md"
+          variant="sm-display"
           mt={1}
         >
           Viewing Room
         </Text>
       )}
       {title && (
-        <Text as="h4" variant="lg" color="black">
+        <Text as="h4" variant="lg-display" color="black">
           {title}
         </Text>
       )}

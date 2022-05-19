@@ -136,10 +136,10 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg">App Authenticator</Text>
+          <Text variant="lg-display">App Authenticator</Text>
 
           {enabledSecondFactorLabel && (
-            <Text variant="lg" color="black60">
+            <Text variant="lg-display" color="black60">
               {enabledSecondFactorLabel}
             </Text>
           )}

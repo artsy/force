@@ -38,7 +38,7 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
         alignItems="flex-end"
         pb={1}
       >
-        <Text variant="md" ml={2}>
+        <Text variant="sm-display" ml={2}>
           Details
         </Text>
         <CloseIcon

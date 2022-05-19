@@ -9,11 +9,11 @@ import { Text } from "@artsy/palette"
 const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(6)].map((_, i) => {
   return (
     <Box key={i}>
-      <SkeletonText variant="md" borderRadius={2}>
+      <SkeletonText variant="sm-display" borderRadius={2}>
         Pending Name
       </SkeletonText>
 
-      <SkeletonText variant="md" borderRadius={4}>
+      <SkeletonText variant="sm-display" borderRadius={4}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis
         laboriosam perspiciatis natus veniam, tenetur ad cupiditate autem.
       </SkeletonText>
@@ -57,7 +57,7 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
                     {classification.name}
                   </Text>
 
-                  <Text as="dd" variant="md">
+                  <Text as="dd" variant="sm-display">
                     {classification.longDescription}
                   </Text>
                 </Box>

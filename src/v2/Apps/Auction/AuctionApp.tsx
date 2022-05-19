@@ -141,7 +141,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                   variant="default"
                   title="Registration for this auction is currently open"
                 >
-                  <Text variant="md" color="black60">
+                  <Text variant="sm-display" color="black60">
                     Auction lots will be published soon.
                   </Text>
                 </Message>

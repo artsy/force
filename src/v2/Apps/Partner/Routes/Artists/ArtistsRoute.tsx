@@ -46,7 +46,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
 
   return (
     <Box mt={4}>
-      <Text variant="lg" mb={6}>
+      <Text variant="lg-display" mb={6}>
         Artists
       </Text>
       <Media greaterThan="xs">

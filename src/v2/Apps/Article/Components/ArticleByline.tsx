@@ -12,7 +12,7 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
   if (article.authors.length === 0) {
     return (
       <Text
-        variant="md"
+        variant="sm-display"
         fontWeight="bold"
         maxWidth={OPTIMAL_READING_WIDTH}
         mx="auto"
@@ -41,8 +41,8 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
           }
 
           return (
-            <Box>
-              <Text variant="md" fontWeight="bold">
+            <Box key={author.internalID}>
+              <Text variant="sm-display" fontWeight="bold">
                 {author.name || "Artsy Editorial"}
               </Text>
 

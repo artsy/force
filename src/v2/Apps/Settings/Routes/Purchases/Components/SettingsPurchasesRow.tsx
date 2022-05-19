@@ -77,7 +77,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         alignItems="center"
         p={2}
       >
-        <Text variant="md">
+        <Text variant="sm-display">
           {orderCreatedAt.toLocaleString(DateTime.DATE_MED as LocaleOptions)}
         </Text>
 
@@ -95,7 +95,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
 
           {trackingId && (
             <>
-              <Text variant="md" mx={1}>
+              <Text variant="sm-display" mx={1}>
                 •
               </Text>
 
@@ -104,7 +104,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Text variant="md">Track Order</Text>
+                <Text variant="sm-display">Track Order</Text>
               </RouterLink>
             </>
           )}
@@ -127,7 +127,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           )}
 
           <Box ml={1}>
-            <Text variant="md">
+            <Text variant="sm-display">
               <RouterLink
                 to={artwork?.artists?.[0]?.href!}
                 display="block"
@@ -169,9 +169,9 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         </Column>
 
         <Column span={3}>
-          <Text variant="md">Order No.</Text>
+          <Text variant="sm-display">Order No.</Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             {isOrderActive ? (
               <RouterLink to={`/orders/${order.internalID}/status`}>
                 {order.code}
@@ -183,25 +183,25 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         </Column>
 
         <Column span={3}>
-          <Text variant="md">Total</Text>
+          <Text variant="sm-display">Total</Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             {appendCurrencySymbol(order.buyerTotal, order.currencyCode)}
           </Text>
         </Column>
 
         <Column span={3}>
-          <Text variant="md">Payment Method</Text>
+          <Text variant="sm-display">Payment Method</Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             {creditCard?.lastDigits ? `•••• ${creditCard.lastDigits}` : "N/A"}
           </Text>
         </Column>
 
         <Column span={3}>
-          <Text variant="md">Delivery method</Text>
+          <Text variant="sm-display">Delivery method</Text>
 
-          <Text variant="md" color="black60">
+          <Text variant="sm-display" color="black60">
             {requestedFulfillment?.__typename === "CommercePickup"
               ? "Pickup"
               : "Delivery"}
@@ -296,7 +296,7 @@ export const SettingsPurchasesRowPlaceholder: FC = () => {
           alignItems="center"
           p={2}
         >
-          <SkeletonText variant="md">Jan 00, 0000</SkeletonText>
+          <SkeletonText variant="sm-display">Jan 00, 0000</SkeletonText>
 
           <SkeletonText variant="xs" textTransform="uppercase">
             Pending
@@ -308,7 +308,7 @@ export const SettingsPurchasesRowPlaceholder: FC = () => {
             <SkeletonBox width={45} height={45} />
 
             <Flex ml={1} flexDirection="column" justifyContent="center">
-              <SkeletonText variant="md">Artist Name</SkeletonText>
+              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
               <SkeletonText variant="xs">Artwork Title</SkeletonText>
             </Flex>
           </Column>
@@ -322,23 +322,23 @@ export const SettingsPurchasesRowPlaceholder: FC = () => {
           </Column>
 
           <Column span={3}>
-            <SkeletonText variant="md">Order No.</SkeletonText>
-            <SkeletonText variant="md">000000000</SkeletonText>
+            <SkeletonText variant="sm-display">Order No.</SkeletonText>
+            <SkeletonText variant="sm-display">000000000</SkeletonText>
           </Column>
 
           <Column span={3}>
-            <SkeletonText variant="md">Total</SkeletonText>
-            <SkeletonText variant="md">US$00,0000</SkeletonText>
+            <SkeletonText variant="sm-display">Total</SkeletonText>
+            <SkeletonText variant="sm-display">US$00,0000</SkeletonText>
           </Column>
 
           <Column span={3}>
-            <SkeletonText variant="md">Payment Method</SkeletonText>
-            <SkeletonText variant="md">•••• 0000</SkeletonText>
+            <SkeletonText variant="sm-display">Payment Method</SkeletonText>
+            <SkeletonText variant="sm-display">•••• 0000</SkeletonText>
           </Column>
 
           <Column span={3}>
-            <SkeletonText variant="md">Delivery method</SkeletonText>
-            <SkeletonText variant="md">Delivery</SkeletonText>
+            <SkeletonText variant="sm-display">Delivery method</SkeletonText>
+            <SkeletonText variant="sm-display">Delivery</SkeletonText>
           </Column>
         </GridColumns>
 

@@ -1,5 +1,5 @@
 import { Join, Text, Image, Box, Flex, Spacer } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistArticlesRoute_artist } from "v2/__generated__/ArtistArticlesRoute_artist.graphql"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -79,20 +79,20 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
               <Flex justifyContent="space-between" width="100%">
                 <Flex width="100%" flexDirection={["column", "column", "row"]}>
                   <Box width={["100%", "100%", "20%"]}>
-                    <Text variant="md">{article.publishedAt}</Text>
+                    <Text variant="sm-display">{article.publishedAt}</Text>
                   </Box>
 
                   <Spacer mb={1} />
 
                   <Box width={["100%", "100%", "60%"]} pr={2}>
-                    <Text variant={["md", "lg", "lg"]}>
+                    <Text variant={["sm-display", "lg-display", "lg-display"]}>
                       {article.thumbnailTitle}
                     </Text>
 
                     <Spacer mb={1} />
 
                     {article.author?.name && (
-                      <Text variant="md" color="black60">
+                      <Text variant="sm-display" color="black60">
                         {article.author.name}
                       </Text>
                     )}

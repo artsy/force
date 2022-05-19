@@ -107,7 +107,7 @@ export const InquirySignUp: React.FC = () => {
       <EnableRecaptcha />
 
       <Box as="form" onSubmit={handleSubmit}>
-        <Text variant="lg" mr={4}>
+        <Text variant="lg-display" mr={4}>
           Create an account to send your message
         </Text>
 

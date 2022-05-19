@@ -104,7 +104,7 @@ const Section: React.FC<{
           </>
         )}
         <Spacer height={20} />
-        <Text as="h1" variant="lg" mt={2}>
+        <Text as="h1" variant="lg-display" mt={2}>
           {title}
         </Text>
         <Flex mb={1} />

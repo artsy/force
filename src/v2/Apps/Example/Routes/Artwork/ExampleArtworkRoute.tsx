@@ -17,7 +17,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
     <Box>
       <Title>{artwork.title} | Artsy</Title>
       <Box mb={4}>
-        <Text variant="lg" mb={2}>
+        <Text variant="lg-display" mb={2}>
           {artwork.title}
         </Text>
         {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
@@ -27,7 +27,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
         <Text>{artwork.medium}</Text>
       </Box>
       <Box>
-        <Text variant="md">Related Artists</Text>
+        <Text variant="sm-display">Related Artists</Text>
         <Flex my={2}>
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {artwork.artist.related.artistsConnection.edges.map(({ node }) => (

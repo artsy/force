@@ -101,7 +101,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
 
       <SubmissionStepper currentStep="Upload Photos" />
 
-      <Text mt={4} variant="lg">
+      <Text mt={4} variant="lg-display">
         Upload photos of your artwork
       </Text>
       <Text variant="sm" color="black60" mt={1}>

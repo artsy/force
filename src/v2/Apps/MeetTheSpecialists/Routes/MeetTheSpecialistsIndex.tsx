@@ -32,7 +32,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
 
       <GridColumns>
         <Column span={8}>
-          <Text color="black60" variant={["lg", "xl"]}>
+          <Text color="black60" variant={["lg-display", "xl"]}>
             Whether you’re seeking a specific work for your growing collection
             or wish to sell, our globe-spanning team is ready to source, sell,
             advise, and research on your behalf.
@@ -80,18 +80,18 @@ export const MeetTheSpecialistsIndex: FC = () => {
                       />
 
                       <Box>
-                        <Text variant="lg">{specialist.name}</Text>
+                        <Text variant="lg-display">{specialist.name}</Text>
 
-                        <Text variant="md">{specialist.title}</Text>
+                        <Text variant="sm-display">{specialist.title}</Text>
 
-                        <Text variant="md" color="black60">
+                        <Text variant="sm-display" color="black60">
                           {specialist.location}
                         </Text>
 
                         <Spacer mt={2} />
 
                         <Text
-                          variant="md"
+                          variant="sm-display"
                           as="a"
                           // @ts-ignore
                           href={`mailto:${specialist.email}`}

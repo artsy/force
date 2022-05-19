@@ -42,7 +42,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
         )}
 
         <Flex flexDirection="column" mr={1} flex={1} overflow="hidden">
-          <Text variant="md" lineClamp={2}>
+          <Text variant="sm-display" lineClamp={2}>
             {artist.name ?? "Unknown"}
           </Text>
 

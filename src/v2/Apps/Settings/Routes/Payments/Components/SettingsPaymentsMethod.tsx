@@ -70,22 +70,22 @@ const SettingsPaymentsMethod: FC<SettingsPaymentsMethodProps> = ({
           mr={2}
         />
 
-        <Text variant="md" mr={1} display={["none", "block"]}>
+        <Text variant="sm-display" mr={1} display={["none", "block"]}>
           {method.name}
         </Text>
 
-        <Text variant="md" color="black60" mr={1}>
+        <Text variant="sm-display" color="black60" mr={1}>
           ••••{method.lastDigits}
         </Text>
 
-        <Text variant="md" color="black60">
+        <Text variant="sm-display" color="black60">
           Exp {method.expirationMonth.toString().padStart(2, "0")}/
           {method.expirationYear.toString().slice(-2)}
         </Text>
       </Flex>
 
       <Clickable onClick={handleClick} disabled={mode === "Deleting"}>
-        <Text variant="md" color="red100">
+        <Text variant="sm-display" color="red100">
           {mode === "Deleting" ? "Removing" : "Remove"}
         </Text>
       </Clickable>

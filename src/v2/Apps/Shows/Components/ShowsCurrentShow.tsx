@@ -9,7 +9,7 @@ import {
   ResponsiveBox,
   Box,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import GridItem from "v2/Components/Artwork/GridItem"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -31,15 +31,17 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
   return (
     <>
       <RouterLink to={show.href} textDecoration="none" display="block">
-        {show.partner?.name && <Text variant="lg">{show.partner?.name}</Text>}
+        {show.partner?.name && (
+          <Text variant="lg-display">{show.partner?.name}</Text>
+        )}
 
-        <Text variant="lg" color="black60">
+        <Text variant="lg-display" color="black60">
           {show.name}
         </Text>
 
         <Spacer mt={1} />
 
-        <Text variant="md">{subtitle}</Text>
+        <Text variant="sm-display">{subtitle}</Text>
       </RouterLink>
 
       <Spacer mt={4} />
@@ -111,13 +113,13 @@ export const ShowsCurrentShowFragmentContainer = createFragmentContainer(
 
 export const ShowsCurrentShowPlaceholder: React.FC = () => (
   <Skeleton>
-    <SkeletonText variant="lg">Partner Name</SkeletonText>
+    <SkeletonText variant="lg-display">Partner Name</SkeletonText>
 
-    <SkeletonText variant="lg">Name of the Show</SkeletonText>
+    <SkeletonText variant="lg-display">Name of the Show</SkeletonText>
 
     <Spacer mt={1} />
 
-    <SkeletonText variant="md">Jan 0 – Feb 0, City Name</SkeletonText>
+    <SkeletonText variant="sm-display">Jan 0 – Feb 0, City Name</SkeletonText>
 
     <Spacer mt={4} />
 
@@ -135,8 +137,10 @@ export const ShowsCurrentShowPlaceholder: React.FC = () => (
 
             <Spacer mt={1} />
 
-            <SkeletonText variant="md">Artist Name</SkeletonText>
-            <SkeletonText variant="md">Title of Artwork, 1900</SkeletonText>
+            <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+            <SkeletonText variant="sm-display">
+              Title of Artwork, 1900
+            </SkeletonText>
             <SkeletonText variant="xs">Partner Name</SkeletonText>
             <SkeletonText variant="xs">$00,000</SkeletonText>
 

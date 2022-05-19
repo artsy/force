@@ -56,7 +56,7 @@ const VerifyIdentityButton: React.FC<{ id: string }> = ({ id }) => (
 
 const IdentityVerificationDisclaimer: React.FC = () => {
   return (
-    <Text variant="md" color="black60" textAlign="center">
+    <Text variant="sm-display" color="black60" textAlign="center">
       Identity verification required to bid.{" "}
       <Link href="/identity-verification-faq">FAQ</Link>
     </Text>
@@ -312,7 +312,7 @@ export class ArtworkSidebarBidAction extends React.Component<
             <Separator my={2} />
 
             <Flex width="100%" flexDirection="row" alignItems="center">
-              <Text variant="md" color="black100" mr={1}>
+              <Text variant="sm-display" color="black100" mr={1}>
                 Place max bid
               </Text>
 

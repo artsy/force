@@ -117,7 +117,7 @@ export const ResetPasswordRoute: React.FC<ResetPasswordRouteProps> = () => {
               <Join separator={<Spacer mt={2} />}>
                 <ArtsyLogoBlackIcon />
 
-                <Text variant="lg">{verb} Your Password</Text>
+                <Text variant="lg-display">{verb} Your Password</Text>
 
                 <PasswordInput
                   name="password"

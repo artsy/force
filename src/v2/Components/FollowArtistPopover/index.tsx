@@ -27,7 +27,7 @@ const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({
 
   if (suggestedArtists.length === 0) {
     return (
-      <Text variant="md" color="black60">
+      <Text variant="sm-display" color="black60">
         No suggestions at this time
       </Text>
     )

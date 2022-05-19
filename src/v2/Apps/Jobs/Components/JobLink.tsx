@@ -16,9 +16,9 @@ const JobLink: FC<JobLinkProps> = ({ job }) => {
       textDecoration="none"
       key={job.id}
     >
-      <Text variant="md">{job.title}</Text>
+      <Text variant="sm-display">{job.title}</Text>
 
-      <Text variant="md" color="black60">
+      <Text variant="sm-display" color="black60">
         {job.location}
       </Text>
     </RouterLink>

@@ -1,5 +1,5 @@
 import { SkeletonBox, SkeletonText } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { IMG_HEIGHT } from "../Artwork/ShelfArtwork"
 import { Rail } from "../Rail"
 
@@ -34,8 +34,8 @@ export const RecentlyViewedPlaceholder: React.FC = () => {
                 mb={1}
               />
 
-              <SkeletonText variant="md">Artist Name</SkeletonText>
-              <SkeletonText variant="md">Artwork Title</SkeletonText>
+              <SkeletonText variant="sm-display">Artist Name</SkeletonText>
+              <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
               <SkeletonText variant="xs">Partner Name</SkeletonText>
               <SkeletonText variant="xs">Price</SkeletonText>
             </React.Fragment>

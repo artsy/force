@@ -58,17 +58,17 @@ const CellArticle: FC<CellArticleProps> = ({
         {article.vertical}
       </Text>
 
-      <Text variant="lg" mt={0.5} lineClamp={3}>
+      <Text variant="lg-display" mt={0.5} lineClamp={3}>
         {article.thumbnailTitle ?? article.title}
       </Text>
 
       {displayByline && (
-        <Text variant="md" mt={0.5} lineClamp={1}>
+        <Text variant="sm-display" mt={0.5} lineClamp={1}>
           By {article.byline}
         </Text>
       )}
 
-      <Text variant="md" color="black60" mt={0.5}>
+      <Text variant="sm-display" color="black60" mt={0.5}>
         {article.publishedAt}
       </Text>
     </RouterLink>
@@ -116,15 +116,15 @@ export const CellArticlePlaceholder: FC<CellArticlePlaceholderProps> = ({
         Vertical
       </SkeletonText>
 
-      <SkeletonText variant="lg" mt={0.5} lineClamp={3}>
+      <SkeletonText variant="lg-display" mt={0.5} lineClamp={3}>
         The Example Article Title Longer Than The Line
       </SkeletonText>
 
-      <SkeletonText variant="md" mt={0.5} lineClamp={1}>
+      <SkeletonText variant="sm-display" mt={0.5} lineClamp={1}>
         By Example Name
       </SkeletonText>
 
-      <SkeletonText variant="md" mt={0.5}>
+      <SkeletonText variant="sm-display" mt={0.5}>
         Jan 1, 1970
       </SkeletonText>
     </Box>

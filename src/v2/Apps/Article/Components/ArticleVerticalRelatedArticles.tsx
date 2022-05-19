@@ -20,7 +20,7 @@ const ArticleVerticalRelatedArticles: FC<ArticleVerticalRelatedArticlesProps> = 
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         Further Reading in {article.vertical}
       </Text>
 
@@ -95,7 +95,7 @@ export const ArticleVerticalRelatedArticlesQueryRenderer: FC<ArticleVerticalRela
 const ArticleVerticalRelatedArticlesPlaceholder: FC = () => {
   return (
     <Skeleton>
-      <SkeletonText variant="lg" mb={4}>
+      <SkeletonText variant="lg-display" mb={4}>
         Further Reading in Vertical
       </SkeletonText>
 

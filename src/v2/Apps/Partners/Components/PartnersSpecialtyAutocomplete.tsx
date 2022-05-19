@@ -92,7 +92,7 @@ const PartnersSpecialtyAutocomplete: FC<PartnersSpecialtyAutocompleteProps> = ({
       defaultValue={defaultValue}
       renderOption={option => {
         return (
-          <Text variant="md" lineHeight={1} p={2} overflowEllipsis>
+          <Text variant="sm-display" lineHeight={1} p={2} overflowEllipsis>
             {option.text} <Sup color="brand">{option.count}</Sup>
           </Text>
         )

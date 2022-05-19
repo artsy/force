@@ -14,7 +14,7 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({
 
   return (
     <>
-      <Text variant="lg" mb={4}>
+      <Text variant="lg-display" mb={4}>
         {title}
       </Text>
 

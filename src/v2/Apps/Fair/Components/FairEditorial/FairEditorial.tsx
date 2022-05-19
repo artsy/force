@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Text } from "@artsy/palette"
 import { FairEditorialRailArticlesFragmentContainer as FairEditorialRailArticles } from "./FairEditorialRailArticles"
@@ -13,7 +13,7 @@ interface FairEditorialProps {
 export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
   return (
     <>
-      <Text variant="lg" as="h3" mb={4}>
+      <Text variant="lg-display" as="h3" mb={4}>
         Explore Further
       </Text>
 

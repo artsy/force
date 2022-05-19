@@ -126,7 +126,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
                   {article.description && (
                     <Column span={6} start={3}>
                       <HTML
-                        variant={["sm", "lg"]}
+                        variant={["sm-display", "lg"]}
                         color="white100"
                         html={article.description}
                       />
@@ -143,7 +143,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
         <Column span={3} start={3} wrap={!article.media.description}>
           {article.media.credits && (
             <Box mb={4}>
-              <Text variant="lg" mb={2}>
+              <Text variant="lg-display" mb={2}>
                 Credits
               </Text>
 
@@ -167,7 +167,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
 
         {article.media.description && (
           <Column span={5} wrap>
-            <Text variant="lg" mb={2}>
+            <Text variant="lg-display" mb={2}>
               About the Film
             </Text>
 
@@ -178,7 +178,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
         {article.moreRelatedArticles.length > 0 && (
           <>
             <Column span={8} start={3}>
-              <Text variant="lg">
+              <Text variant="lg-display">
                 More in{" "}
                 {article.seriesArticle ? (
                   <RouterLink to={article.seriesArticle.href}>
@@ -211,7 +211,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
               flexDirection="column"
               justifyContent="space-between"
             >
-              <Text variant="lg">About the Series</Text>
+              <Text variant="lg-display">About the Series</Text>
 
               {article.seriesArticle?.sponsor && (
                 <ArticleSponsorFragmentContainer

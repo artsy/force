@@ -18,7 +18,7 @@ export const ViewingRoomsPaginatedPlaceholder: React.FC<ViewingRoomsPaginatedPla
 }) => {
   return (
     <>
-      <SkeletonText variant="lg" mb={6}>
+      <SkeletonText variant="lg-display" mb={6}>
         Past Viewing Rooms
       </SkeletonText>
       <GridColumns mb={6} gridRowGap={[2, 4]} {...rest}>
@@ -33,7 +33,7 @@ export const ViewingRoomsPaginatedPlaceholder: React.FC<ViewingRoomsPaginatedPla
               />
               <Flex mt={1} justifyContent="space-between">
                 <Box>
-                  <SkeletonText variant="lg">Viewing Room</SkeletonText>
+                  <SkeletonText variant="lg-display">Viewing Room</SkeletonText>
                   <SkeletonText>Viewing Room Title</SkeletonText>
                   <SkeletonText>Exhibition Period</SkeletonText>
                 </Box>

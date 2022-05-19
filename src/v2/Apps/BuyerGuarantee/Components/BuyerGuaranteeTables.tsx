@@ -10,31 +10,31 @@ export const BuyerGuaranteeTableDesktop: FC = () => {
         <Td span={2}></Td>
 
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Vetted Sellers
           </Text>
         </Td>
 
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Dedicated Support
           </Text>
         </Td>
 
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Authenticity Guarantee
           </Text>
         </Td>
 
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Money-Back Guarantee
           </Text>
         </Td>
 
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Secure Payment
           </Text>
         </Td>
@@ -42,7 +42,7 @@ export const BuyerGuaranteeTableDesktop: FC = () => {
 
       <Row>
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Making an Inquiry
           </Text>
         </Td>
@@ -64,7 +64,7 @@ export const BuyerGuaranteeTableDesktop: FC = () => {
 
       <Row bg="white100">
         <Td span={2}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Purchasing with Artsy’s Secure Checkout
           </Text>
         </Td>
@@ -100,13 +100,13 @@ export const BuyerGuaranteeTableMobile: FC = () => {
         <Td span={[4]}></Td>
 
         <Td span={[4]}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Making an Inquiry
           </Text>
         </Td>
 
         <Td span={[4]} bg="white100">
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Purchasing with Artsy’s Secure Checkout
           </Text>
         </Td>
@@ -114,7 +114,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
 
       <Row>
         <Td span={[4]}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Vetted Sellers
           </Text>
         </Td>
@@ -130,7 +130,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
 
       <Row>
         <Td span={[4]}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Dedicated Support
           </Text>
         </Td>
@@ -146,7 +146,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
 
       <Row>
         <Td span={[4]}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Authenticity Guarantee
           </Text>
         </Td>
@@ -160,7 +160,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
 
       <Row>
         <Td span={[4]}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Money-Back Guarantee
           </Text>
         </Td>
@@ -174,7 +174,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
 
       <Row>
         <Td span={[4]}>
-          <Text variant="md" fontWeight="bold">
+          <Text variant="sm-display" fontWeight="bold">
             Secure Payment
           </Text>
         </Td>

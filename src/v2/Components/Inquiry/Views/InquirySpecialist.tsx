@@ -72,7 +72,7 @@ export const InquirySpecialist: React.FC = () => {
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg" mr={4}>
+      <Text variant="lg-display" mr={4}>
         Send message to Artsy
       </Text>
 
@@ -87,7 +87,7 @@ export const InquirySpecialist: React.FC = () => {
 
       {user && (
         <>
-          <Text variant="md" my={2}>
+          <Text variant="sm-display" my={2}>
             <Box display="inline-block" width={60} color="black60">
               From
             </Box>

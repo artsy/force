@@ -37,7 +37,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
         <RouterLink to={article.href} display="block" textDecoration="none">
           <Text variant="xxl">{article.title}</Text>
 
-          <Text variant="lg" color="black60">
+          <Text variant="lg-display" color="black60">
             {article.byline}
           </Text>
         </RouterLink>
@@ -65,7 +65,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
 
             <Text variant="xxl">{article.title}</Text>
 
-            <Text variant="lg" color="rgba(255, 255, 255, 0.8)">
+            <Text variant="lg-display" color="rgba(255, 255, 255, 0.8)">
               {article.byline}
             </Text>
           </FullBleedHeaderOverlay>
@@ -87,7 +87,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="lg" color="black60">
+            <Text variant="lg-display" color="black60">
               {article.byline}
             </Text>
           </Box>
@@ -161,7 +161,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="lg" color="black60" mb={2}>
+            <Text variant="lg-display" color="black60" mb={2}>
               {article.byline}
             </Text>
           </Box>
@@ -183,7 +183,7 @@ const ArticleHeader: FC<ArticleHeaderProps> = ({ article }) => {
               {article.title}
             </Text>
 
-            <Text variant="lg" color="black60">
+            <Text variant="lg-display" color="black60">
               {article.byline}
             </Text>
           </Box>

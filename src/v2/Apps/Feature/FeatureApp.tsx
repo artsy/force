@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
@@ -23,11 +23,14 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
           <Spacer my={2} />
           <Join separator={<Spacer my={2} />}>
             {feature.description && (
-              <HTML variant={["md", "lg"]} html={feature.description} />
+              <HTML
+                variant={["sm-display", "lg-display"]}
+                html={feature.description}
+              />
             )}
 
             {feature.callout && (
-              <HTML variant={["xs", "md"]} html={feature.callout} />
+              <HTML variant={["xs", "sm-display"]} html={feature.callout} />
             )}
           </Join>
         </>

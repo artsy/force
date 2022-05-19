@@ -26,7 +26,7 @@ export const PartnerArtistListPlaceholder: React.FC = () => (
   <PartnerArtistListContainer>
     <GridColumns minWidth={[1100, "auto"]} pr={[2, 0]} gridColumnGap={1}>
       <Column span={12}>
-        <SkeletonText variant="md">Represented Artists</SkeletonText>
+        <SkeletonText variant="sm-display">Represented Artists</SkeletonText>
 
         <Box style={{ columnCount: 6 }} mt={2}>
           {[...new Array(60)].map((_, i) => {

@@ -174,7 +174,7 @@ const LargeAuctionItem: FC<Props> = props => {
           pr={6}
         >
           <Box>
-            <Text variant="md" fontWeight="bold">
+            <Text variant="sm-display" fontWeight="bold">
               {title}
               {title && date_text && ", "}
               {date_text}
@@ -190,7 +190,7 @@ const LargeAuctionItem: FC<Props> = props => {
       <Col sm={2}>
         <Flex alignItems="center" height="100%" pr={2}>
           <Box>
-            <Text variant="md" fontWeight="bold">
+            <Text variant="sm-display" fontWeight="bold">
               {dateOfSale}
             </Text>
             <Text variant="xs" color="black60">
@@ -395,7 +395,7 @@ const renderPricing = (
               alignItems="flex-end"
               justifyContent={size === "xs" ? undefined : "flex-end"}
             >
-              <Text variant="md" fontWeight="bold">
+              <Text variant="sm-display" fontWeight="bold">
                 {salePrice}
               </Text>
               {!!showPriceUSD && (
@@ -415,21 +415,21 @@ const renderPricing = (
         )}
         {!salePrice && boughtIn && (
           <Box textAlign={textAlign}>
-            <Text variant="md" fontWeight="bold">
+            <Text variant="sm-display" fontWeight="bold">
               Bought in
             </Text>
           </Box>
         )}
         {!salePrice && awaitingResults && (
           <Box textAlign={textAlign}>
-            <Text variant="md" fontWeight="bold">
+            <Text variant="sm-display" fontWeight="bold">
               Awaiting results
             </Text>
           </Box>
         )}
         {!salePrice && !awaitingResults && !boughtIn && (
           <Box textAlign={textAlign}>
-            <Text variant="md" fontWeight="bold">
+            <Text variant="sm-display" fontWeight="bold">
               Price not available
             </Text>
           </Box>

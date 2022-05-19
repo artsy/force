@@ -58,9 +58,9 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
 
         <Spacer mt={1} />
 
-        <Text variant="lg">{sale.name}</Text>
+        <Text variant="lg-display">{sale.name}</Text>
 
-        <Text variant="lg" color="black60">
+        <Text variant="lg-display" color="black60">
           {sale.formattedStartDateTime}
         </Text>
       </Box>

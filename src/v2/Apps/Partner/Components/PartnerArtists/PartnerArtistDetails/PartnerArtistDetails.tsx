@@ -43,7 +43,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
               <RouterLink to={href} textDecoration="none">
                 <Text variant="xl">{name}</Text>
               </RouterLink>
-              <Text color="black60" variant="lg">
+              <Text color="black60" variant="lg-display">
                 {formattedNationalityAndBirthday}
               </Text>
             </Column>

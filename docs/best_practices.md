@@ -167,7 +167,7 @@ const Foo = props => {
 OK:
 
 ```tsx
-const Foo = ({ title }) => <Text variant="lg">{title}</Text>
+const Foo = ({ title }) => <Text variant="lg-display">{title}</Text>
 ```
 
 The reasoning -- and this should be some kind of "Programmers Law" -- is that code is always returned to, either in the form of additions or for debugging. With implicit returns one can't `console.log` intermediate variables or easily add debugger statements, and if one needed to expand the code with a hook or some other piece of functionality the implicit return would need to be unwound.

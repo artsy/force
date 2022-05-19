@@ -1,5 +1,5 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 
 export const CategoriesIntro: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ export const CategoriesIntro: React.FC = () => {
         </Text>
       </Column>
       <Column span={6}>
-        <Text variant="md">
+        <Text variant="sm-display">
           The Art Genome Project is the classification system and technological
           framework that powers Artsy. It maps the characteristics (we call them
           "genes") that connect artists, artworks, architecture, and design

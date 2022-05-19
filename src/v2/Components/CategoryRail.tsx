@@ -62,7 +62,7 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
           })}
         </Shelf>
       ) : (
-        <Text variant="lg" color="black60" textAlign="center">
+        <Text variant="lg-display" color="black60" textAlign="center">
           No works available in the category at this time.
         </Text>
       )}
@@ -76,7 +76,7 @@ export const CATEGORY_RAIL_PLACEHOLDER = (
       <SkeletonBox width={45} height={45} borderRadius="50%" mr={1} />
 
       <Box>
-        <SkeletonText variant="md">Category Name</SkeletonText>
+        <SkeletonText variant="sm-display">Category Name</SkeletonText>
       </Box>
     </Flex>
 
@@ -93,8 +93,8 @@ export const CATEGORY_RAIL_PLACEHOLDER = (
               mb={1}
             />
 
-            <SkeletonText variant="md">Category Name</SkeletonText>
-            <SkeletonText variant="md">Artwork Title</SkeletonText>
+            <SkeletonText variant="sm-display">Category Name</SkeletonText>
+            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
             <SkeletonText variant="xs">Partner</SkeletonText>
             <SkeletonText variant="xs">US$0,000</SkeletonText>
           </Fragment>

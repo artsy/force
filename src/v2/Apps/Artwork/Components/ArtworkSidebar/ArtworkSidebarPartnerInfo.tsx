@@ -38,7 +38,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
   const renderPartnerName = () => {
     if (sale) {
       return (
-        <Text variant="md">
+        <Text variant="sm-display">
           <RouterLink to={sale.href ?? ""}>{sale.name}</RouterLink>
         </Text>
       )
@@ -49,11 +49,11 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     }
 
     return partner.href ? (
-      <Text variant="md">
+      <Text variant="sm-display">
         <RouterLink to={partner.href}>{partner.name}</RouterLink>
       </Text>
     ) : (
-      <Text variant="md">{partner.name}</Text>
+      <Text variant="sm-display">{partner.name}</Text>
     )
   }
 
