@@ -16,8 +16,16 @@ import { useDeleteAccount } from "./useDeleteAccount"
 import { logout } from "v2/Utils/auth"
 import { PasswordInput } from "@artsy/palette"
 import { password } from "v2/Components/Authentication/Validators"
+import { SettingsDeleteAccountRoute_me } from "v2/__generated__/SettingsDeleteAccountRoute_me.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
 
-export const DeleteAccountRoute: FC = () => {
+interface DeleteAccountRouteProps {
+  me: SettingsDeleteAccountRoute_me
+}
+
+export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
+  me: { hasPassword },
+}) => {
   const { sendToast } = useToasts()
   const { submitMutation } = useDeleteAccount()
 
@@ -72,6 +80,7 @@ export const DeleteAccountRoute: FC = () => {
         >
           {({
             errors,
+            handleBlur,
             handleChange,
             isSubmitting,
             isValid,
@@ -102,15 +111,19 @@ export const DeleteAccountRoute: FC = () => {
                   }}
                 />
 
-                <PasswordInput
-                  name="password"
-                  mt={2}
-                  title="Password"
-                  error={touched.password && errors.password}
-                  placeholder="Enter your password"
-                  value={values.password}
-                  onChange={handleChange}
-                />
+                {hasPassword && (
+                  <PasswordInput
+                    name="password"
+                    mt={2}
+                    title="Password"
+                    error={touched.password && errors.password}
+                    //error={errors.password}
+                    placeholder="Enter your password"
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                )}
 
                 <Button
                   mt={4}
@@ -136,3 +149,14 @@ export const DeleteAccountRoute: FC = () => {
     </GridColumns>
   )
 }
+
+export const SettingsDeleteAccountRouteFragmentContainer = createFragmentContainer(
+  DeleteAccountRoute,
+  {
+    me: graphql`
+      fragment SettingsDeleteAccountRoute_me on Me {
+        hasPassword
+      }
+    `,
+  }
+)

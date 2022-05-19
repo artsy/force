@@ -233,6 +233,13 @@ export const settingsRoutes: AppRouteConfig[] = [
           DeleteAccountRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query settingsRoutes_SettingsDeleteAccountRouteQuery {
+            me {
+              ...SettingsDeleteAccountRoute_me
+            }
+          }
+        `,
       },
       {
         path: "shipping",
