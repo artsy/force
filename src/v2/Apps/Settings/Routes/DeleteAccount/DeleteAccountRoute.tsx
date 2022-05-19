@@ -3,21 +3,21 @@ import {
   Checkbox,
   Column,
   GridColumns,
+  PasswordInput,
   Separator,
   Text,
   TextArea,
   useToasts,
 } from "@artsy/palette"
 import * as Yup from "yup"
+import { password } from "v2/Components/Authentication/Validators"
 import { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { DeleteAccountRoute_me } from "v2/__generated__/DeleteAccountRoute_me.graphql"
+import { useDeleteAccount } from "./useDeleteAccount"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Formik, Form } from "formik"
-import { useDeleteAccount } from "./useDeleteAccount"
 import { logout } from "v2/Utils/auth"
-import { PasswordInput } from "@artsy/palette"
-import { password } from "v2/Components/Authentication/Validators"
-import { DeleteAccountRoute_me } from "v2/__generated__/DeleteAccountRoute_me.graphql"
-import { createFragmentContainer, graphql } from "react-relay"
 
 interface DeleteAccountRouteProps {
   me: DeleteAccountRoute_me
@@ -113,15 +113,15 @@ export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
 
                 {hasPassword && (
                   <PasswordInput
-                    name="password"
-                    mt={2}
-                    title="Password"
                     error={touched.password && errors.password}
-                    //error={errors.password}
-                    placeholder="Enter your password"
-                    value={values.password}
+                    mt={2}
+                    name="password"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    placeholder="Enter your password"
+                    required
+                    title="Password"
+                    value={values.password}
                   />
                 )}
 
