@@ -34,15 +34,12 @@ describe("HomeAuctionLotsRail", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Viewer: () => ({
-        saleArtworksConnection: {
+        artworksConnection: {
           edges: [
             {
               node: {
                 title: "Test Auction",
                 href: "test-href",
-                sale: {
-                  isClosed: false,
-                },
               },
             },
           ],
@@ -60,7 +57,7 @@ describe("HomeAuctionLotsRail", () => {
     it("tracks artwork click", () => {
       const wrapper = getWrapper({
         Viewer: () => ({
-          saleArtworksConnection: {
+          artworksConnection: {
             edges: [
               {
                 node: {
@@ -68,9 +65,6 @@ describe("HomeAuctionLotsRail", () => {
                   title: "Test Auction",
                   slug: "test-href",
                   href: "test-href",
-                  sale: {
-                    isClosed: false,
-                  },
                 },
               },
             ],
@@ -94,15 +88,12 @@ describe("HomeAuctionLotsRail", () => {
     it("tracks view all", () => {
       const wrapper = getWrapper({
         Viewer: () => ({
-          saleArtworksConnection: {
+          artworksConnection: {
             edges: [
               {
                 node: {
                   title: "Test Auction",
                   href: "test-href",
-                  sale: {
-                    isClosed: false,
-                  },
                 },
               },
             ],

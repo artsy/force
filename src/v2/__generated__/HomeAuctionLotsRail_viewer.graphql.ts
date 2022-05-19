@@ -5,15 +5,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type HomeAuctionLotsRail_viewer = {
-    readonly saleArtworksConnection: {
+    readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
                 readonly href: string | null;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -44,19 +41,24 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Literal",
+          "name": "forSale",
+          "value": true
+        },
+        {
+          "kind": "Literal",
           "name": "geneIDs",
-          "value": "highlights-at-auction"
+          "value": "our-top-auction-lots"
         }
       ],
-      "concreteType": "SaleArtworksConnection",
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "saleArtworksConnection",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "SaleArtwork",
+          "concreteType": "FilterArtworksEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -91,24 +93,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Sale",
-                  "kind": "LinkedField",
-                  "name": "sale",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isClosed",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": [
                     {
                       "kind": "Literal",
@@ -126,11 +110,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "saleArtworksConnection(first:50,geneIDs:\"highlights-at-auction\")"
+      "storageKey": "artworksConnection(first:50,forSale:true,geneIDs:\"our-top-auction-lots\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'a430e2aaa5acc09f5768303f6c22c5c8';
+(node as any).hash = '0a78700a9f10a49dc6dc1a2b2ecfc6f7';
 export default node;

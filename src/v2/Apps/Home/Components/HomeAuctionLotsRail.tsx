@@ -31,18 +31,16 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const nodes = extractNodes(viewer.saleArtworksConnection).filter(node => {
-    return !node.sale?.isClosed
-  })
+  const artworks = extractNodes(viewer.artworksConnection)
 
-  if (nodes.length === 0) {
+  if (artworks.length === 0) {
     return null
   }
 
   return (
     <Rail
       title="Auction Lots"
-      countLabel={nodes.length}
+      countLabel={artworks.length}
       viewAllLabel="View All Auctions"
       viewAllHref="/auctions"
       viewAllOnClick={() => {
@@ -56,11 +54,11 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
         trackEvent(trackingEvent)
       }}
       getItems={() => {
-        return nodes.map(node => {
+        return artworks.map(artwork => {
           return (
             <ShelfArtworkFragmentContainer
-              artwork={node}
-              key={node.slug}
+              artwork={artwork}
+              key={artwork.slug}
               contextModule={ContextModule.auctionLots}
               hidePartnerName
               lazyLoad
@@ -69,8 +67,8 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
                   action: ActionType.clickedArtworkGroup,
                   context_module: ContextModule.auctionLots,
                   context_page_owner_type: OwnerType.home,
-                  destination_page_owner_id: node.internalID,
-                  destination_page_owner_slug: node.slug,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
                   destination_page_owner_type: OwnerType.artwork,
                   type: "thumbnail",
                 }
@@ -113,16 +111,17 @@ export const HomeAuctionLotsRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment HomeAuctionLotsRail_viewer on Viewer {
-        saleArtworksConnection(first: 50, geneIDs: "highlights-at-auction") {
+        artworksConnection(
+          forSale: true
+          first: 50
+          geneIDs: "our-top-auction-lots"
+        ) {
           edges {
             node {
               ...ShelfArtwork_artwork @arguments(width: 210)
               internalID
               slug
               href
-              sale {
-                isClosed
-              }
             }
           }
         }
