@@ -16,11 +16,11 @@ import { useDeleteAccount } from "./useDeleteAccount"
 import { logout } from "v2/Utils/auth"
 import { PasswordInput } from "@artsy/palette"
 import { password } from "v2/Components/Authentication/Validators"
-import { SettingsDeleteAccountRoute_me } from "v2/__generated__/SettingsDeleteAccountRoute_me.graphql"
+import { DeleteAccountRoute_me } from "v2/__generated__/DeleteAccountRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface DeleteAccountRouteProps {
-  me: SettingsDeleteAccountRoute_me
+  me: DeleteAccountRoute_me
 }
 
 export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
@@ -150,11 +150,11 @@ export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
   )
 }
 
-export const SettingsDeleteAccountRouteFragmentContainer = createFragmentContainer(
+export const DeleteAccountRouteFragmentContainer = createFragmentContainer(
   DeleteAccountRoute,
   {
     me: graphql`
-      fragment SettingsDeleteAccountRoute_me on Me {
+      fragment DeleteAccountRoute_me on Me {
         hasPassword
       }
     `,

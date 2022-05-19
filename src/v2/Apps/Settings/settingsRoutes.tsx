@@ -234,9 +234,9 @@ export const settingsRoutes: AppRouteConfig[] = [
         },
         onServerSideRender: handleServerSideRender,
         query: graphql`
-          query settingsRoutes_SettingsDeleteAccountRouteQuery {
+          query settingsRoutes_DeleteAccountRouteQuery {
             me {
-              ...SettingsDeleteAccountRoute_me
+              ...DeleteAccountRoute_me
             }
           }
         `,
