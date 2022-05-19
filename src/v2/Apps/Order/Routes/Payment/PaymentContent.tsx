@@ -210,7 +210,7 @@ const getAvailablePaymentMethods = (
       value={PaymentMethods.CreditCard}
       label={
         <>
-          <CreditCardIcon type="Unknown" />
+          <CreditCardIcon type="Unknown" fill="black60" />
           <Text ml={1}>Credit card</Text>
         </>
       }
@@ -223,7 +223,7 @@ const getAvailablePaymentMethods = (
         value={PaymentMethods.WireTransfer}
         label={
           <>
-            <InstitutionIcon fill="green100" />
+            <InstitutionIcon fill="black60" />
             <Text ml={1}>Wire transfer</Text>
           </>
         }
@@ -237,7 +237,7 @@ const getAvailablePaymentMethods = (
         value={PaymentMethods.BankDebit}
         label={
           <>
-            <InstitutionIcon fill="green100" />
+            <InstitutionIcon fill="black60" />
             <Text ml={1}>Bank transfer (US bank account)</Text>
           </>
         }
