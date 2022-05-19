@@ -64,7 +64,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     context.setFilter("page", page)
   }
 
-  const isArtistPage = match.location.pathname.includes("/artist/")
+  const isArtistPage = match.location.pathname?.includes("/artist/")
 
   const hasAppliedFilters = !isEmpty(context?.selectedFiltersCounts)
 
