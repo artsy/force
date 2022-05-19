@@ -83,7 +83,8 @@ const DeleteAccountRoute = loadable(
       /* webpackChunkName: "settingsBundle" */ "./Routes/DeleteAccount/DeleteAccountRoute"
     ),
   {
-    resolveComponent: component => component.DeleteAccountRoute,
+    resolveComponent: component =>
+      component.DeleteAccountRouteFragmentContainer,
   }
 )
 
