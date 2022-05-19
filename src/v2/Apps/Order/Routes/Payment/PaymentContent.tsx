@@ -90,11 +90,26 @@ export const PaymentContent: FC<Props> = props => {
     console.log("wire transfer selected")
   }
 
+  // we can be sure that when 1 method is available, it'll always be credit card
+  if (availablePaymentMethods.length === 1) {
+    return (
+      <PaymentContentWrapper isLoading={isLoading}>
+        <PaymentPickerFragmentContainer
+          commitMutation={props.commitMutation}
+          me={props.me}
+          order={order}
+          innerRef={paymentPicker}
+        />
+        <Spacer mb={4} />
+        <Media greaterThan="xs">
+          <ContinueButton onClick={onContinue} loading={isLoading} />
+        </Media>
+      </PaymentContentWrapper>
+    )
+  }
+
   return (
-    <Flex
-      flexDirection="column"
-      style={isLoading ? { pointerEvents: "none" } : {}}
-    >
+    <PaymentContentWrapper isLoading={isLoading}>
       <Spacer mb={2} />
       <Text variant="lg">Payment method</Text>
       <Spacer mb={2} />
@@ -166,9 +181,21 @@ export const PaymentContent: FC<Props> = props => {
           </Button>
         </Media>
       </Collapse>
-    </Flex>
+    </PaymentContentWrapper>
   )
 }
+
+const PaymentContentWrapper: FC<{ isLoading: boolean }> = ({
+  isLoading,
+  children,
+}) => (
+  <Flex
+    flexDirection="column"
+    style={isLoading ? { pointerEvents: "none" } : {}}
+  >
+    {children}
+  </Flex>
+)
 
 /*
 returns all available payment methods, by checking relevant feature flags
