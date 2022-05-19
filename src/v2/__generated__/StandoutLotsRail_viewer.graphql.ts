@@ -5,14 +5,11 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type StandoutLotsRail_viewer = {
-    readonly StandoutLotsRailConnection: {
+    readonly standoutLotsRailConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -34,7 +31,7 @@ const node: ReaderFragment = {
   "name": "StandoutLotsRail_viewer",
   "selections": [
     {
-      "alias": "StandoutLotsRailConnection",
+      "alias": "standoutLotsRailConnection",
       "args": [
         {
           "kind": "Literal",
@@ -43,19 +40,26 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Literal",
+          "name": "forSale",
+          "value": true
+        },
+        {
+          "kind": "Literal",
           "name": "geneIDs",
-          "value": "highlights-at-auction"
+          "value": [
+            "our-top-auction-lots"
+          ]
         }
       ],
-      "concreteType": "SaleArtworksConnection",
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "saleArtworksConnection",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "SaleArtwork",
+          "concreteType": "FilterArtworksEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -83,24 +87,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Sale",
-                  "kind": "LinkedField",
-                  "name": "sale",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isClosed",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": [
                     {
                       "kind": "Literal",
@@ -118,11 +104,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "saleArtworksConnection(first:50,geneIDs:\"highlights-at-auction\")"
+      "storageKey": "artworksConnection(first:50,forSale:true,geneIDs:[\"our-top-auction-lots\"])"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '014a1939216e5b896476d7c80e82e971';
+(node as any).hash = '627efa328f2de06e4cccd9b7720b4980';
 export default node;
