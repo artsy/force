@@ -5,6 +5,10 @@ import { ArticleVideoFragmentContainer } from "../ArticleVideo"
 
 jest.unmock("react-relay")
 
+jest.mock("../../useArticleTracking", () => ({
+  useArticleTracking: () => ({}),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArticleVideoFragmentContainer,
   query: graphql`

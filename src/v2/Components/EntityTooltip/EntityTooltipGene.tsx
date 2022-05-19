@@ -13,18 +13,42 @@ import { EntityTooltipGeneQuery } from "v2/__generated__/EntityTooltipGeneQuery.
 import { EntityTooltipGene_gene } from "v2/__generated__/EntityTooltipGene_gene.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { EntityHeaderGeneFragmentContainer } from "../EntityHeaders/EntityHeaderGene"
+import { useAnalyticsContext } from "v2/System"
+import { useTracking } from "react-tracking"
+import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipGeneProps {
   gene: EntityTooltipGene_gene
 }
 
 const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
+  const { trackEvent } = useTracking()
+
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const handleClick = () => {
+    const payload: ClickedTooltip = {
+      action: ActionType.clickedTooltip,
+      context_owner_id: contextPageOwnerId!,
+      context_owner_slug: contextPageOwnerSlug!,
+      context_owner_type: contextPageOwnerType!,
+      destination_path: gene.href!,
+      type: "gene",
+    }
+
+    trackEvent(payload)
+  }
+
   const image = gene.image?.cropped
 
   return (
     <Box p={2} width={300}>
       {image && (
-        <RouterLink to={gene.href} display="block">
+        <RouterLink to={gene.href} display="block" onClick={handleClick}>
           <Image
             src={image.src}
             srcSet={image.srcSet}
@@ -44,7 +68,13 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
       />
 
       {gene.description && (
-        <RouterLink to={gene.href} display="block" textDecoration="none" mt={1}>
+        <RouterLink
+          to={gene.href}
+          display="block"
+          textDecoration="none"
+          mt={1}
+          onClick={handleClick}
+        >
           <Text variant="xs" lineClamp={3}>
             {gene.description}
           </Text>

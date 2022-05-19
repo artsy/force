@@ -5,6 +5,10 @@ import { ArticleSeriesFragmentContainer } from "../ArticleSeries"
 
 jest.unmock("react-relay")
 
+jest.mock("../../useArticleTracking", () => ({
+  useArticleTracking: () => ({}),
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArticleSeriesFragmentContainer,
   query: graphql`

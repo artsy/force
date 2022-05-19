@@ -28,12 +28,15 @@ import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 import { ArticleHTML } from "./ArticleHTML"
+import { useArticleTracking } from "../useArticleTracking"
 
 interface ArticleVideoProps {
   article: ArticleVideo_article
 }
 
 const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
+  const { clickedPlayVideo } = useArticleTracking()
+
   const { desktop, mobile } = useNavBarHeight()
 
   const [mode, setMode] = useMode<"Pending" | "Playing">("Pending")
@@ -72,6 +75,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
             bg="black100"
             autoPlay
             controls
+            onPlay={clickedPlayVideo}
           />
         ) : (
           <Cover

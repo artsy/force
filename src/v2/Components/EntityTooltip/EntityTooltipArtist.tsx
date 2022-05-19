@@ -16,18 +16,42 @@ import { EntityTooltipArtistQuery } from "v2/__generated__/EntityTooltipArtistQu
 import { EntityTooltipArtist_artist } from "v2/__generated__/EntityTooltipArtist_artist.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { EntityHeaderArtistFragmentContainer } from "../EntityHeaders/EntityHeaderArtist"
+import { useTracking } from "react-tracking"
+import { ActionType, ClickedTooltip } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/System"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist
 }
 
 const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
+  const { trackEvent } = useTracking()
+
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const handleClick = () => {
+    const payload: ClickedTooltip = {
+      action: ActionType.clickedTooltip,
+      context_owner_id: contextPageOwnerId!,
+      context_owner_slug: contextPageOwnerSlug!,
+      context_owner_type: contextPageOwnerType!,
+      destination_path: artist.href!,
+      type: "artist",
+    }
+
+    trackEvent(payload)
+  }
+
   const images = artist.carousel?.images ?? []
 
   return (
     <Box p={2} width={300}>
       {images.length > 0 && (
-        <RouterLink to={artist.href} display="block">
+        <RouterLink to={artist.href} display="block" onClick={handleClick}>
           <HorizontalOverflow mb={2}>
             <Join separator={<Spacer ml={1} />}>
               {images.map((image, i) => {
@@ -61,6 +85,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
           display="block"
           mt={1}
           textDecoration="none"
+          onClick={handleClick}
         >
           <Text variant="xs" lineClamp={3}>
             {artist.blurb}

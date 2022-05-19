@@ -7,13 +7,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleBody_article = {
     readonly internalID: string;
+    readonly slug: string | null;
     readonly layout: ArticleLayout;
     readonly leadParagraph: string | null;
     readonly title: string | null;
-    readonly newsSource: {
-        readonly title: string | null;
-        readonly url: string | null;
-    } | null;
     readonly href: string | null;
     readonly publishedAt: string | null;
     readonly sections: ReadonlyArray<{
@@ -32,7 +29,7 @@ export type ArticleBody_article = {
             } | null;
         } | null;
     }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article" | "ArticleSectionAd_article">;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article" | "ArticleSectionAd_article" | "ArticleNewsSource_article">;
     readonly " $refType": "ArticleBody_article";
 };
 export type ArticleBody_article$data = ArticleBody_article;
@@ -76,6 +73,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "layout",
       "storageKey": null
     },
@@ -87,25 +91,6 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArticleNewsSource",
-      "kind": "LinkedField",
-      "name": "newsSource",
-      "plural": false,
-      "selections": [
-        (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     (v2/*: any*/),
     {
       "alias": null,
@@ -225,11 +210,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArticleSectionAd_article"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArticleNewsSource_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b8972497704bd06bd42116f0ba9d79b8';
+(node as any).hash = '1156144019027bd3a23b28b581d4d5b8';
 export default node;
