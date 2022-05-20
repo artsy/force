@@ -10,6 +10,7 @@ interface Props {
 }
 
 export const SetPayment: FC<Props> = props => {
+  const { setupIntentId } = props
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   useEffect(() => {
@@ -18,11 +19,9 @@ export const SetPayment: FC<Props> = props => {
         const orderOrError = (
           await setPaymentMutation({
             variables: {
-              // TODO: Instead of sending `creditCardId`, we'll send
-              // `setupIntentId` when the mutation is ready.
               input: {
                 id: props.order.internalID,
-                creditCardId: "627c1945596846000d2ba394",
+                setupIntentId: setupIntentId,
               },
             },
           })
