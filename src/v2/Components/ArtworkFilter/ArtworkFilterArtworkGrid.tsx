@@ -10,10 +10,6 @@ import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { Sticky } from "../Sticky"
-import { isEmpty } from "lodash"
-import { ArtworkGridEmptyState } from "../ArtworkGrid/ArtworkGridEmptyState"
-import { ZeroState } from "v2/Apps/Artist/Routes/WorksForSale/Components/ZeroState"
-import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -26,7 +22,6 @@ interface ArtworkFilterArtworkGridProps {
 const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props => {
   const { user } = useSystemContext()
   const { trackEvent } = useTracking()
-  const { match } = useRouter()
   const {
     contextPageOwnerType,
     contextPageOwnerSlug,
@@ -64,10 +59,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     context.setFilter("page", page)
   }
 
-  const isArtistPage = match.location.pathname?.includes("/artist/")
-
-  const hasAppliedFilters = !isEmpty(context?.selectedFiltersCounts)
-
   return (
     <>
       <LoadingArea isLoading={props.isLoading}>
@@ -78,17 +69,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           itemMargin={40}
           user={user}
           onClearFilters={context.resetFilters}
-          emptyStateComponent={
-            isArtistPage ? (
-              !!hasAppliedFilters ? (
-                <ArtworkGridEmptyState onClearFilters={context.resetFilters} />
-              ) : (
-                <ZeroState />
-              )
-            ) : (
-              context.ZeroState && <context.ZeroState />
-            )
-          }
+          emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
             trackEvent(
               clickedMainArtworkGrid({

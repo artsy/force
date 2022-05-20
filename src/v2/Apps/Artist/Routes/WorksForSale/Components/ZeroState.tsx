@@ -1,7 +1,17 @@
 import { Box, Message, Text } from "@artsy/palette"
+import { isEmpty } from "lodash"
+import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
 import { Sticky } from "v2/Components/Sticky"
 
 export const ZeroState: React.FC = () => {
+  const { selectedFiltersCounts, resetFilters } = useArtworkFilterContext()
+  const hasAppliedFilters = !isEmpty(selectedFiltersCounts)
+
+  if (hasAppliedFilters) {
+    return <ArtworkGridEmptyState onClearFilters={resetFilters} />
+  }
+
   return (
     <Box width="100%" my={1}>
       <Sticky>
