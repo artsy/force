@@ -8,16 +8,14 @@ interface ArtworkGridEmptyStateProps {
 }
 
 export const ArtworkGridEmptyState: React.FC<ArtworkGridEmptyStateProps> = props => (
-  <Box width="100%" my={1}>
+  <Box width="100%">
     <Sticky>
       {({ stuck }) => {
         return (
-          <Box pt={stuck ? 1 : 0}>
+          <Box pt={stuck ? 1 : 0} my={1}>
             <Message width="100%">
-              <>
-                {`There aren't any works available that meet the following
-                criteria at this time. `}
-              </>
+              There aren't any works available that meet the following criteria
+              at this time.
               {props.onClearFilters && (
                 <>
                   Change your filter criteria to view more works.{" "}

@@ -13,14 +13,13 @@ export const ZeroState: React.FC = () => {
   }
 
   return (
-    <Box width="100%" my={1}>
+    <Box width="100%">
       <Sticky>
         {({ stuck }) => {
           return (
-            <Box pt={stuck ? 1 : 0}>
-              <Message>
-                <Text>No works available by the artist at this time</Text>
-                <Text textColor="black60">
+            <Box pt={stuck ? 1 : 0} my={1}>
+              <Message title="No works available by the artist at this time">
+                <Text variant="sm" textColor="black60">
                   Create an Alert to receive notifications when new works are
                   added
                 </Text>
