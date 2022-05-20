@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Engine } from "v2/Utils/Engine"
+import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
 import { Context } from "./useOnboardingContext"
 
 interface UseEngine {
@@ -9,7 +9,7 @@ interface UseEngine {
 
 export const useEngine = ({ context, onDone }: UseEngine) => {
   const engine = useRef(
-    new Engine({
+    new WorkflowEngine({
       workflow: [
         "Welcome",
         "WhatDoYouLoveMost",

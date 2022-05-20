@@ -7,7 +7,7 @@ import {
   useState,
 } from "react"
 import * as React from "react"
-import { Engine } from "v2/Utils/Engine"
+import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
 import { useEngine } from "../config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
 import { useInquiryContext_me } from "v2/__generated__/useInquiryContext_me.graphql"
@@ -52,15 +52,11 @@ export interface InquiryState {
   name?: string
 }
 
-const emptyEngine = new Engine({
-  workflow: [],
-})
-
 const InquiryContext = createContext<{
   artworkID: string
   context: React.RefObject<Context>
   current: string
-  engine: typeof emptyEngine
+  engine: WorkflowEngine
   inquiry: InquiryState
   next(): void
   onClose(): void
@@ -77,7 +73,7 @@ const InquiryContext = createContext<{
   artworkID: "",
   context: React.createRef<Context>(),
   current: "",
-  engine: emptyEngine,
+  engine: new WorkflowEngine({ workflow: [] }),
   inquiry: { message: DEFAULT_MESSAGE },
   next: () => {},
   onClose: () => {},

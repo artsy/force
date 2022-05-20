@@ -9,7 +9,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react"
-import { Engine } from "v2/Utils/Engine"
+import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
 import { useEngine } from "./config"
 
 export type Context = {
@@ -26,7 +26,7 @@ const OnboardingContext = createContext<{
   answers: AnswersState
   context: React.RefObject<Context>
   current: string
-  engine: Engine
+  engine: WorkflowEngine
   next(): void
   onDone(): void
   progress: number
@@ -36,7 +36,7 @@ const OnboardingContext = createContext<{
   answers: [],
   context: createRef<Context>(),
   current: "",
-  engine: new Engine({ workflow: [] }),
+  engine: new WorkflowEngine({ workflow: [] }),
   next: () => {},
   onDone: () => {},
   progress: 0,
