@@ -83,7 +83,8 @@ const DeleteAccountRoute = loadable(
       /* webpackChunkName: "settingsBundle" */ "./Routes/DeleteAccount/DeleteAccountRoute"
     ),
   {
-    resolveComponent: component => component.DeleteAccountRoute,
+    resolveComponent: component =>
+      component.DeleteAccountRouteFragmentContainer,
   }
 )
 
@@ -233,6 +234,13 @@ export const settingsRoutes: AppRouteConfig[] = [
           DeleteAccountRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query settingsRoutes_DeleteAccountRouteQuery {
+            me {
+              ...DeleteAccountRoute_me
+            }
+          }
+        `,
       },
       {
         path: "shipping",
