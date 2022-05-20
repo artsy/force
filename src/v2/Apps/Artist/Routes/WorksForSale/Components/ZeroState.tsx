@@ -17,7 +17,7 @@ export const ZeroState: React.FC<BoxProps> = props => {
       <Sticky>
         {({ stuck }) => {
           return (
-            <Box pt={stuck ? 1 : 0} my={1}>
+            <Box pt={stuck ? 1 : 0}>
               <Message title="No works available by the artist at this time">
                 Create an Alert to receive notifications when new works are
                 added

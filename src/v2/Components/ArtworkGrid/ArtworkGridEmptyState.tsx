@@ -15,7 +15,7 @@ export const ArtworkGridEmptyState: React.FC<ArtworkGridEmptyStateProps> = ({
     <Sticky>
       {({ stuck }) => {
         return (
-          <Box pt={stuck ? 1 : 0} my={1}>
+          <Box pt={stuck ? 1 : 0}>
             <Message width="100%">
               There aren't any works available that meet the following criteria
               at this time.{" "}
