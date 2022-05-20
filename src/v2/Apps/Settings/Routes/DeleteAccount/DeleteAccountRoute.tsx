@@ -39,14 +39,19 @@ export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
         <Formik
           validateOnMount
           initialValues={{
-            explanation: "",
             confirmation: false,
+            explanation: "",
+            hasPassword: hasPassword,
             password: "",
           }}
           validationSchema={Yup.object().shape({
             explanation: Yup.string().min(1).required(),
             confirmation: Yup.boolean().oneOf([true]),
-            password: password,
+            hasPassword: Yup.boolean(),
+            password: password.when("hasPassword", {
+              is: true,
+              otherwise: field => field.notRequired(),
+            }),
           })}
           onSubmit={async ({ explanation, password }) => {
             try {
