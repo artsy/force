@@ -57,6 +57,18 @@ v1 = {
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Conversation",
+  "kind": "LinkedField",
+  "name": "conversation",
+  "plural": false,
+  "selections": [
+    (v0/*: any*/)
+  ],
+  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -158,18 +170,7 @@ return {
     {
       "kind": "InlineFragment",
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Conversation",
-          "kind": "LinkedField",
-          "name": "conversation",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/)
-          ],
-          "storageKey": null
-        },
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -191,6 +192,14 @@ return {
         }
       ],
       "type": "CommerceOfferOrder",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        (v2/*: any*/)
+      ],
+      "type": "CommerceBuyOrder",
       "abstractKey": null
     },
     {
@@ -228,5 +237,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '9f2fb427afbc623a5ba625f4b320fb41';
+(node as any).hash = 'b94adcaed8d0284690994788b7bb9090';
 export default node;

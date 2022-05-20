@@ -487,6 +487,11 @@ export const ReviewFragmentContainer = createFragmentContainer(
             internalID
           }
         }
+        ... on CommerceBuyOrder {
+          conversation {
+            internalID
+          }
+        }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
