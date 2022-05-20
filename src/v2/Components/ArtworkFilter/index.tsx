@@ -28,7 +28,6 @@ import {
   GridColumns,
   Spacer,
   Text,
-  useThemeConfig,
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
@@ -47,6 +46,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { SavedSearchEntity } from "../SavedSearchAlert/types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Components/SavedSearchAlertArtworkGridFilterPills"
+import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   enableCreateAlert?: boolean
@@ -120,9 +120,12 @@ export const BaseArtworkFilter: React.FC<
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
   const { user } = useSystemContext()
+  const { isAuctionArtwork } = useArtworkGridContext()
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
+  const total = viewer.filtered_artworks?.counts?.total ?? 0
+  const totalCountLabel = getTotalCountLabel({ total, isAuctionArtwork })
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -187,19 +190,6 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  const tokens = useThemeConfig({
-    v2: {
-      version: "v2",
-      mt: [0, 0.5],
-      pr: [0, 2],
-    },
-    v3: {
-      version: "v3",
-      mt: undefined,
-      pr: undefined,
-    },
-  })
-
   function fetchResults() {
     toggleFetching(true)
 
@@ -227,7 +217,7 @@ export const BaseArtworkFilter: React.FC<
   }
 
   return (
-    <Box mt={tokens.mt} {...rest}>
+    <Box {...rest}>
       <Box id="jump--artworkFilter" />
 
       {/* Mobile Artwork Filter */}
@@ -294,6 +284,10 @@ export const BaseArtworkFilter: React.FC<
             </>
           )}
 
+          <Text variant="sm" fontWeight="bold">
+            {totalCountLabel}
+          </Text>
+
           <Spacer mb={2} />
 
           <ArtworkFilterArtworkGrid
@@ -307,18 +301,24 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        {tokens.version === "v3" && (
-          <Flex justifyContent="space-between" alignItems="center" mb={4}>
+        <GridColumns mb={4} alignItems="center">
+          <Column span={3}>
             <Text variant="xs" textTransform="uppercase">
               Filter by
             </Text>
-
+          </Column>
+          <Column span={6}>
+            <Text variant="sm" fontWeight="bold">
+              {totalCountLabel}
+            </Text>
+          </Column>
+          <Column span={3}>
             <ArtworkSortFilter />
-          </Flex>
-        )}
+          </Column>
+        </GridColumns>
 
         <GridColumns>
-          <Column span={3} pr={tokens.pr}>
+          <Column span={3}>
             {Filters ? (
               Filters
             ) : (
@@ -335,12 +335,6 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {tokens.version === "v2" && (
-              <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
-                <ArtworkSortFilter />
-              </Box>
-            )}
-
             {enableCreateAlert && savedSearchEntity && (
               <>
                 <SavedSearchAlertArtworkGridFilterPills
@@ -372,8 +366,11 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
       fragment ArtworkFilter_viewer on Viewer
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         filtered_artworks: artworksConnection(input: $input) {
-          id
           ...ArtworkFilterArtworkGrid_filtered_artworks
+          counts {
+            total(format: "0,0")
+          }
+          id
         }
       }
     `,
@@ -432,4 +429,18 @@ const FiltersWithScrollIntoView: React.FC<{
       </ScrollRefContext.Provider>
     </Box>
   )
+}
+
+export const getTotalCountLabel = ({
+  total = "0",
+  isAuctionArtwork,
+}: {
+  total: string
+  isAuctionArtwork: boolean | undefined
+}) => {
+  const artworkType = isAuctionArtwork ? "Lot" : "Artwork"
+  const totalCountLabel = `${total} ${
+    total === "1" ? artworkType : `${artworkType}s`
+  }:`
+  return totalCountLabel
 }
