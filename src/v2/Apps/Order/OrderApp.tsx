@@ -178,6 +178,8 @@ graphql`
     mode
     currencyCode
     itemsTotalCents
+    # TODO: when it is available, pull below field to be able to check if wire_transfer is enabled
+    # additionalPaymentMethods
     lineItems {
       edges {
         node {

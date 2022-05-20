@@ -25,20 +25,14 @@ import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-import { extractNodes } from "v2/Utils/extractNodes"
-
-enum PaymentMethods {
-  CreditCard = "credit_card",
-  BankDebit = "bank_debit",
-  WireTransfer = "wire_transfer",
-}
+import { PaymentMethods } from "./index"
 
 export interface Props {
   order: Payment_order
   me: Payment_me
   commitMutation: CommitMutation
   isLoading: boolean
-  onContinue: () => void
+  onContinue: (paymentMethod: PaymentMethods) => void
   paymentPicker: RefObject<PaymentPicker>
 }
 
@@ -54,11 +48,11 @@ export const PaymentContent: FC<Props> = props => {
   const tracking = useTracking()
 
   const isACHEnabled = useFeatureFlag("stripe_ACH")
-  const isWireTransferEnabled =
-    useFeatureFlag("wire_transfer") &&
-    !!extractNodes(order.lineItems)[0].artwork?.partner?.name // TODO: instead of partner name, check 'wireTransferEnabled' when available
+  const isWireTransferEnabled = useFeatureFlag("wire_transfer")
+  // && order.additionalPaymentMethods.includes(PaymentMethods.WireTransfer)
+  // TODO: uncomment above when additionalPaymentMethods is available on Order
 
-  const [currentPaymentMethod, setCurrentPaymentMethod] = useState<
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     PaymentMethods
   >(
     isACHEnabled
@@ -86,10 +80,6 @@ export const PaymentContent: FC<Props> = props => {
     tracking.trackEvent(event)
   }
 
-  const handleWireTransferSaveAndContinue = () => {
-    console.log("wire transfer selected")
-  }
-
   // we can be sure that when 1 method is available, it'll always be credit card
   if (availablePaymentMethods.length === 1) {
     return (
@@ -102,7 +92,10 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={onContinue} loading={isLoading} />
+          <ContinueButton
+            onClick={() => onContinue(selectedPaymentMethod)}
+            loading={isLoading}
+          />
         </Media>
       </PaymentContentWrapper>
     )
@@ -116,9 +109,9 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         onSelect={val => {
           trackClickedPaymentMethod(val)
-          setCurrentPaymentMethod(val as PaymentMethods)
+          setSelectedPaymentMethod(val as PaymentMethods)
         }}
-        defaultValue={currentPaymentMethod}
+        defaultValue={selectedPaymentMethod}
       >
         {availablePaymentMethods.map(method => method)}
       </RadioGroup>
@@ -127,7 +120,7 @@ export const PaymentContent: FC<Props> = props => {
       <Spacer mb={2} />
 
       {/* Credit Card */}
-      <Collapse open={currentPaymentMethod === PaymentMethods.CreditCard}>
+      <Collapse open={selectedPaymentMethod === PaymentMethods.CreditCard}>
         <PaymentPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -136,12 +129,15 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={onContinue} loading={isLoading} />
+          <ContinueButton
+            onClick={() => onContinue(selectedPaymentMethod)}
+            loading={isLoading}
+          />
         </Media>
       </Collapse>
 
       {/* Bank debit */}
-      <Collapse open={currentPaymentMethod === PaymentMethods.BankDebit}>
+      <Collapse open={selectedPaymentMethod === PaymentMethods.BankDebit}>
         <Text color="black60" variant="sm">
           • Bank transfer is powered by Stripe.
         </Text>
@@ -158,7 +154,7 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* Wire transfer */}
-      <Collapse open={currentPaymentMethod === PaymentMethods.WireTransfer}>
+      <Collapse open={selectedPaymentMethod === PaymentMethods.WireTransfer}>
         <Text color="black60" variant="sm">
           • To pay by wire transfer, complete checkout and one of our support
           specialists will reach out with next steps.
@@ -173,7 +169,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={4} />
         <Media greaterThan="xs">
           <Button
-            onClick={handleWireTransferSaveAndContinue}
+            onClick={() => onContinue(selectedPaymentMethod)}
             variant="primaryBlack"
             width="100%"
           >

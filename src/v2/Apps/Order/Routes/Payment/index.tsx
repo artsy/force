@@ -48,6 +48,12 @@ export interface PaymentProps {
 
 type Props = PaymentProps & StripeProps
 
+export enum PaymentMethods {
+  CreditCard = "credit_card",
+  BankDebit = "bank_debit",
+  WireTransfer = "wire_transfer",
+}
+
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export const PaymentRoute: FC<Props> = props => {
@@ -56,7 +62,48 @@ export const PaymentRoute: FC<Props> = props => {
   const isLoading = isGettingCreditCardId || isCommittingMutation
   const paymentPicker = createRef<PaymentPicker>()
 
-  const onContinue = async () => {
+  const onContinue = async (selectedPaymentMethod: PaymentMethods) => {
+    // figure out what to send to API as input according to payment method
+    const input = {
+      creditCardId: "",
+      id: props.order.internalID!,
+    }
+
+    switch (selectedPaymentMethod) {
+      case PaymentMethods.CreditCard:
+        const creditCardId = await getCreditCardId()
+        if (creditCardId) {
+          input.creditCardId = creditCardId
+        }
+        break
+      case PaymentMethods.BankDebit:
+        // TODO: this is handled by redirect, the case may not be necessary
+        input.creditCardId = "us_debit"
+        break
+      case PaymentMethods.WireTransfer:
+        // TODO
+        input.creditCardId = "wire_transfer"
+        break
+      default:
+        break
+    }
+
+    //  set order payment with input
+    const orderOrError = (
+      await setOrderPayment({
+        input,
+      })
+    ).commerceSetPayment?.orderOrError
+
+    if (orderOrError?.error) {
+      throw orderOrError.error
+    }
+
+    // push to next step
+    props.router.push(`/orders/${props.order.internalID}/review`)
+  }
+
+  const getCreditCardId = async () => {
     try {
       setIsGettingCreditCardId(true)
       const result = await paymentPicker?.current?.getCreditCardId()
@@ -82,23 +129,9 @@ export const PaymentRoute: FC<Props> = props => {
         logger.error(result.error)
         return
       }
-
-      const orderOrError = (
-        await setOrderPayment({
-          input: {
-            creditCardId: result?.creditCardId!,
-            id: props.order.internalID!,
-          },
-        })
-      ).commerceSetPayment?.orderOrError
-
-      if (orderOrError?.error) {
-        throw orderOrError.error
-      }
-
-      props.router.push(`/orders/${props.order.internalID}/review`)
-    } catch (error) {
-      logger.error(error)
+      return result?.creditCardId
+    } catch (err) {
+      logger.error(err)
       props.dialog.showErrorDialog()
     }
   }
@@ -204,11 +237,6 @@ export const PaymentFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
-                partner {
-                  name
-                  # TODO: when it is available, pull below field to check if wire T enabled for partner
-                  # wireTransferEnabled
-                }
               }
             }
           }
