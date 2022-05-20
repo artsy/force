@@ -10,10 +10,16 @@ export function getWorksForSaleRouteVariables(
   // renders (such as tabbing back to this route in your browser) will not.
   const initialFilterState = getInitialFilterState(location?.query ?? {})
   const newPriceFilterFlag = featureFlags["new_price_filter"]
+  const trendingSortFlag = featureFlags["force-trending-sort-for-artists"]
 
   const filterParams = {
     sort: "-decayed_merch",
     ...initialFilterState,
+  }
+
+  if (trendingSortFlag?.flagEnabled) {
+    // TODO: Clarify sort value
+    filterParams.sort = "trending_score"
   }
 
   const aggregations = [

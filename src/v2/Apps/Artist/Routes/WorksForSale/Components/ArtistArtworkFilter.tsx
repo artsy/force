@@ -15,6 +15,7 @@ import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -26,6 +27,9 @@ interface ArtistArtworkFilterProps {
 
 const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { match } = useRouter()
+  const isTrendingSortEnabled = useFeatureFlag(
+    "force-trending-sort-for-artists"
+  )
   const { relay, aggregations, artist, me } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -60,7 +64,11 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       counts={artist.counts as Counts}
       filters={filters}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
+        {
+          // TODO: Clarify trending sort value
+          value: isTrendingSortEnabled ? "trending_score" : "-decayed_merch",
+          text: "Default",
+        },
         { value: "-has_price,-prices", text: "Price (desc.)" },
         { value: "-has_price,prices", text: "Price (asc.)" },
         { value: "-partner_updated_at", text: "Recently updated" },
