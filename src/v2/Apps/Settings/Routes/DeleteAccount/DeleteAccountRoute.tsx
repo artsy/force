@@ -41,7 +41,7 @@ export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
           initialValues={{
             confirmation: false,
             explanation: "",
-            hasPassword: hasPassword,
+            hasPassword,
             password: "",
           }}
           validationSchema={Yup.object().shape({
