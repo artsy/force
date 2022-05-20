@@ -28,7 +28,7 @@ describe("PastAuctions", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,

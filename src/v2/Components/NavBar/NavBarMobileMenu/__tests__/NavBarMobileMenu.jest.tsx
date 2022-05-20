@@ -31,7 +31,7 @@ describe("NavBarMobileMenu", () => {
       .find(NavBarMobileMenuTransition)
       .findWhere(element => element.props().isOpen)
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })

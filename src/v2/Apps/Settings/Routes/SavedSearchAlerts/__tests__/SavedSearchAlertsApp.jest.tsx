@@ -32,7 +32,7 @@ describe("SavedSearchAlertsApp", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     const mockTracking = useTracking as jest.Mock
 
     mockTracking.mockImplementation(() => {

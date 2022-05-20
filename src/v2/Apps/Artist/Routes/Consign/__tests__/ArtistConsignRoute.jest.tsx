@@ -45,7 +45,7 @@ describe("ConsignRoute", () => {
     })
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     const mockTracking = useTracking as jest.Mock
     mockTracking.mockImplementation(() => {
       return {

@@ -16,7 +16,7 @@ describe("InquiryBasicInfo", () => {
 
   const mockNext = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useUpdateCollectorProfile as jest.Mock).mockImplementation(() => ({
       submitUpdateCollectorProfile: mockSubmitUpdateCollectorProfile,
     }))

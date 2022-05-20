@@ -21,7 +21,7 @@ describe("SystemQueryRenderer", () => {
   let mockuseDidMount = useDidMount as jest.Mock
   let mockuseLazyLoadComponent = useLazyLoadComponent as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseLazyLoadComponent.mockImplementation(() => ({
       Waypoint: () => <div />,
       isEnteredView: false,

@@ -27,7 +27,7 @@ describe("extendedBiddingInfoCopy", () => {
       )
     })
     describe("a bid has extended the auction", () => {
-      beforeEach(() => {
+      beforeAll(() => {
         Settings.now = jest.fn(() =>
           new Date("2022-03-08T12:33:37.000Z").getTime()
         )

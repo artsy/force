@@ -32,7 +32,7 @@ describe.skip("CollectionsRail", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       title: "Street Art",
       collections: CollectionsRailFixture,

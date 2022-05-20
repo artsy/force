@@ -23,7 +23,7 @@ describe("StandoutLotsRail", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,

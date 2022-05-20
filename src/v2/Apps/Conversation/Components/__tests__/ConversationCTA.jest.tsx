@@ -35,7 +35,7 @@ describe("ConversationCTA", () => {
   const trackingSpy = jest.fn()
   let useSystemContext = baseUseSystemContext as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
@@ -159,7 +159,7 @@ describe("ConversationCTA", () => {
       items: [{ liveArtwork: { __typename: "Artwork", ...artwork } }],
     })
 
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         featureFlags: { "conversational-buy-now": { flagEnabled: true } },
       }))

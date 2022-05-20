@@ -45,7 +45,7 @@ const { renderWithRelay } = setupTestWrapperTL<SearchResultsArtworks_Query>({
 describe("SearchResultsArtworks", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

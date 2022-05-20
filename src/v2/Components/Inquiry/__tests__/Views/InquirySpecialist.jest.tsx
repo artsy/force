@@ -16,7 +16,7 @@ describe("InquirySpecialist", () => {
   const submitArtworkInquiryRequest = jest.fn()
   let setInqirySpy: jest.SpyInstance
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
       submitArtworkInquiryRequest,
     }))
@@ -38,7 +38,7 @@ describe("InquirySpecialist", () => {
   })
 
   describe("logged out", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         user: null,
       }))
@@ -77,7 +77,7 @@ describe("InquirySpecialist", () => {
   })
 
   describe("logged in", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         user: { name: "Logged In", email: "loggedin@example.com" },
       }))

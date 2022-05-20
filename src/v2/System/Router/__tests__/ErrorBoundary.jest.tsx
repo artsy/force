@@ -4,7 +4,7 @@ import { ErrorBoundary } from "../ErrorBoundary"
 describe("ErrorBoundary", () => {
   const errorLog = console.error
 
-  beforeEach(() => {
+  beforeAll(() => {
     console.error = jest.fn()
   })
 

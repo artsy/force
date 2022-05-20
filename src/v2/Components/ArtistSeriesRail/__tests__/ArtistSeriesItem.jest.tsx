@@ -12,7 +12,7 @@ describe("Artist Series Rail Item", () => {
   let props
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       artistSeries: itemContent,
       contextModule: "context-module",

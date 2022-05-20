@@ -10,7 +10,7 @@ jest.unmock("react-relay")
 
 describe("ArtworkArtistSeries", () => {
   let trackEvent
-  beforeEach(() => {
+  beforeAll(() => {
     trackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {

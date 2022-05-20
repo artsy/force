@@ -20,7 +20,7 @@ describe("ArtistCard", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mediator = {
       ready: () => true,
       trigger: jest.fn(),

@@ -28,7 +28,7 @@ describe("UpcomingAuctions", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,

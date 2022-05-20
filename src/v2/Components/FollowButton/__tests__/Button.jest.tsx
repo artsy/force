@@ -13,7 +13,7 @@ describe("FollowButton", () => {
   }
 
   describe("unit", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       props = {
         handleFollow: jest.fn(),
         isFollowed: false,

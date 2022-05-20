@@ -18,7 +18,7 @@ describe("InquiryLogin", () => {
   const submitArtworkInquiryRequest = jest.fn()
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
       submitArtworkInquiryRequest,
     }))
@@ -48,7 +48,7 @@ describe("InquiryLogin", () => {
   })
 
   describe("without two-factor auth", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(login as jest.Mock).mockImplementation(() =>
         Promise.resolve({ user: { id: "example-id", access_token: "token" } })
       )

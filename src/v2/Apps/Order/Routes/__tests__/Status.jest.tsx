@@ -63,7 +63,7 @@ describe("Status", () => {
     })
   }
 
-  beforeEach(env.clearErrors)
+  beforeAll(env.clearErrors)
 
   afterEach(env.clearMocksAndErrors)
 

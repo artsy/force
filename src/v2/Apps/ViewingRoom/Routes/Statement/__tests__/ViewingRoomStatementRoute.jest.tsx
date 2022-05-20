@@ -84,7 +84,7 @@ describe("ViewingRoomStatementRoute", () => {
     const mockTracking = useTracking as jest.Mock
     let wrapper
 
-    beforeEach(async () => {
+    beforeAll(async () => {
       wrapper = (await getWrapper()).find("ViewingRoomWorks")
       mockTracking.mockImplementation(() => ({ trackEvent }))
     })

@@ -79,7 +79,7 @@ describe("AuctionApp", () => {
     },
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         auctionPageView: jest.fn(),

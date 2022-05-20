@@ -43,7 +43,7 @@ describe("AuctionActiveBids", () => {
     return getWrapper
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         params: {

@@ -19,7 +19,7 @@ const { getWrapper } = setupTestWrapper({
 describe("HomeTroveArtworksRail", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 

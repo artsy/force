@@ -29,7 +29,7 @@ describe("AuctionDetails", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseTracking.mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))

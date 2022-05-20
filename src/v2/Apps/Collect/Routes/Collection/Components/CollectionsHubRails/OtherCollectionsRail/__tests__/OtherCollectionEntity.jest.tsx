@@ -17,7 +17,7 @@ describe.skip("OtherCollectionEntity", () => {
   let props
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       member: CollectionHubFixture.linkedCollections[0].members[0],
       itemNumber: 1,

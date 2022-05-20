@@ -33,7 +33,7 @@ describe("RegisterButton", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         clickedRegisterButton: jest.fn(),

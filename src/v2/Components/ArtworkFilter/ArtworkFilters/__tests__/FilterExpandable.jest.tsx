@@ -13,7 +13,7 @@ describe("FilterExpandable", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     sd.IS_MOBILE = false
   })
 

@@ -55,7 +55,7 @@ describe("RequestConditionReport", () => {
     mediator.on("open:auth", () => {})
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.spyOn(mediator, "trigger")
   })
 

@@ -24,7 +24,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 describe("PartnersLocationAutocomplete", () => {
   const mockUseRouter = useRouter as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseRouter.mockImplementation(() => ({
       router: { push: jest.fn() },
       match: { location: { query: { location: "" }, pathname: "" } },

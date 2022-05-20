@@ -22,7 +22,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("SoldRecentlyOnArtsy", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

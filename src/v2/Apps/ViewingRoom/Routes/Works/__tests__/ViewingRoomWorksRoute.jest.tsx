@@ -50,7 +50,7 @@ describe("ViewingRoomWorksRoute", () => {
 
   const trackEvent = jest.fn()
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const mockTracking = useTracking as jest.Mock
     mockTracking.mockImplementation(() => ({ trackEvent }))
   })
@@ -64,7 +64,7 @@ describe("ViewingRoomWorksRoute", () => {
   describe("ViewingRoomArtworkDetails", () => {
     let wrapper
 
-    beforeEach(async () => {
+    beforeAll(async () => {
       wrapper = (await getWrapper()).find("ViewingRoomArtworkDetails").first()
     })
 

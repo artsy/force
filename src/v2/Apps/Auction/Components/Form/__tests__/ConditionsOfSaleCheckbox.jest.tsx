@@ -20,7 +20,7 @@ describe("ConditionsOfSaleCheckbox", () => {
     return mount(<ConditionsOfSaleCheckbox />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseFormContext.mockImplementation(() => {
       return formProps
     })

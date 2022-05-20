@@ -21,7 +21,7 @@ describe("AddressFormWithCreditCard", () => {
     return mount(<AddressFormWithCreditCard />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseFormContext.mockImplementation(() => {
       return {
         setFieldTouched,

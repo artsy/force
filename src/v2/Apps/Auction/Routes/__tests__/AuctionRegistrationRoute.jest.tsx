@@ -82,7 +82,7 @@ describe("AuctionRegistrationRoute", () => {
     isValid: true,
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         registrationPageView: jest.fn(),

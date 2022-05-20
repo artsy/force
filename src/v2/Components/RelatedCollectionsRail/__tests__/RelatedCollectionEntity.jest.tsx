@@ -12,7 +12,7 @@ describe.skip("RelatedCollectionEntity", () => {
   let props
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       collection: CollectionsRailFixture[0],
       slideIndex: 1,

@@ -52,7 +52,7 @@ describe("InstitutionsRoute", () => {
   const mockTracking = useTracking as jest.Mock
   const mockUseRouter = useRouter as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
     mockUseRouter.mockImplementation(() => ({
       match: { location: { query: {} } },
@@ -75,7 +75,7 @@ describe("InstitutionsRoute", () => {
   })
 
   describe("when querying", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       mockUseRouter.mockImplementation(() => ({
         match: { location: { query: { near: "0,0" } } },
       }))

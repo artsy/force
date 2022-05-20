@@ -28,7 +28,7 @@ describe("CreateArtworkAlertSection", () => {
   const trackEvent = jest.fn()
   const mockuseSystemContext = useSystemContext as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent,
     }))

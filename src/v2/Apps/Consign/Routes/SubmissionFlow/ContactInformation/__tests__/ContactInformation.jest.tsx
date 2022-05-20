@@ -104,7 +104,7 @@ const getInput = name =>
   screen.getAllByRole("textbox").find(c => c.getAttribute("name") === name)
 
 describe("Contact Information step", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseErrorModal.mockImplementation(() => ({
       openErrorModal: mockOpenErrorModal,
     }))

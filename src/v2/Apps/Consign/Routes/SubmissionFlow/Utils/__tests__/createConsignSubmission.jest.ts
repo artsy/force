@@ -22,7 +22,7 @@ const mockUpdateMutation = updateConsignSubmissionMutation as jest.Mock
 describe("createOrUpdateConsignSubmission", () => {
   let submission: SubmissionInput, relayEnvironment: Environment
 
-  beforeEach(() => {
+  beforeAll(() => {
     submission = { artistID: "artistId" }
     jest.clearAllMocks()
   })

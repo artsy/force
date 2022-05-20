@@ -22,7 +22,7 @@ const { getWrapper } = setupTestWrapper<HomeCurrentFairs_Test_Query>({
 
 const trackEvent = jest.fn()
 
-beforeEach(() => {
+beforeAll(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 })
 

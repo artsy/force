@@ -34,7 +34,7 @@ const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
 describe("ShowContextCard", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 

@@ -28,7 +28,7 @@ const { getWrapper } = setupTestWrapper<
 
 const trackEvent = jest.fn()
 
-beforeEach(() => {
+beforeAll(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 })
 

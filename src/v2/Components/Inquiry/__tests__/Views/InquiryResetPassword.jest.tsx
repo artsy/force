@@ -18,7 +18,7 @@ jest.mock("v2/Utils/auth", () => ({
 describe("InquiryResetPassword", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 

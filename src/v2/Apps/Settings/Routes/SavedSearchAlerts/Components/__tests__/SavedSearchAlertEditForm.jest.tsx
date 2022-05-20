@@ -27,7 +27,7 @@ describe("SavedSearchAlertEditForm", () => {
   const mockOnDeleteClick = jest.fn()
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks()
 
     const mockTracking = useTracking as jest.Mock

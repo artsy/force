@@ -6,7 +6,7 @@ describe("ModalCta", () => {
     return mount(<ModalCta {..._props} />)
   }
   let props
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       cta: {
         isFixed: false,

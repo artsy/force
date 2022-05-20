@@ -31,7 +31,7 @@ describe("FairOrganizerFollowButton", () => {
   const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
   const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseSystemContext.mockImplementation(() => ({
       mediator: jest.fn(),
       user: jest.fn(),

@@ -23,7 +23,7 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,

@@ -1,7 +1,7 @@
 import { relativeDate } from "../TimeSince"
 
 describe("relativeDate", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     const dateSpy = jest.spyOn(Date, "now")
     dateSpy.mockReturnValue(1594072253087)
     // EPOCH value for Mon Jul 06 2020 17:50:53 GMT-0400 (Eastern Daylight Time)

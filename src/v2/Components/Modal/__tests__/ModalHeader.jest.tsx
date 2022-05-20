@@ -6,7 +6,7 @@ describe("ModalHeader", () => {
     return mount(<ModalHeader {..._props} />)
   }
   let props
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       hasLogo: false,
       title: "Log In",

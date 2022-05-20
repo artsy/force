@@ -27,7 +27,7 @@ describe("CollectionsRail", () => {
   let props
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[0],
     }

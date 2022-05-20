@@ -23,7 +23,7 @@ describe("Two factor authentication enrollment", () => {
 
   describe("when the browser supports clipboard", () => {
     const mockClipboard = { writeText: jest.fn() }
-    beforeEach(() => {
+    beforeAll(() => {
       Object.assign(navigator, {
         clipboard: mockClipboard,
       })

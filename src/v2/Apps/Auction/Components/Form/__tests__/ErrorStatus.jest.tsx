@@ -18,7 +18,7 @@ describe("ErrorStatus", () => {
     return mount(<ErrorStatus />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     console.error = jest.fn()
   })
 

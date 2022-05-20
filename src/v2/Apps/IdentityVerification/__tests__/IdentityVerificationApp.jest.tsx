@@ -130,7 +130,7 @@ describe("IdentityVerification route", () => {
     })
 
     describe("user enters verification flow", () => {
-      beforeEach(() => {
+      beforeAll(() => {
         mockLocation()
       })
 

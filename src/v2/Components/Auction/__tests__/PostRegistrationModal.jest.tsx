@@ -20,7 +20,7 @@ describe("AuctionRegistrationModal", () => {
     return wrapper
   }
 
-  beforeEach(jest.resetAllMocks)
+  beforeAll(jest.resetAllMocks)
 
   it("renders a registration confirmation modal", async () => {
     const wrapper = await mountModal("registrationConfirmed")

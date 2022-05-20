@@ -23,7 +23,7 @@ describe("SortFilter", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks()
   })
 

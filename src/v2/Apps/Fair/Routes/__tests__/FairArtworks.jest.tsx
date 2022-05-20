@@ -20,7 +20,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 describe("FairArtworks", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

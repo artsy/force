@@ -87,7 +87,7 @@ const simulateSelectSuggestion = async (wrapper: ReactWrapper, idx: number) => {
 describe("ArtistAutocomplete", () => {
   let wrapper: ReactWrapper
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     wrapper = renderArtistAutosuggest(getArtworkDetailsFormInitialValues())
   })
 

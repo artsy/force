@@ -28,7 +28,7 @@ describe("MyBidsBidItem", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,

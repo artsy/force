@@ -43,7 +43,7 @@ const { getWrapper } = setupTestWrapper<Works_Query>({
 describe("PartnerArtworks", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

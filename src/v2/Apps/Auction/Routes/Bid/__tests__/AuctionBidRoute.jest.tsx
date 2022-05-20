@@ -96,7 +96,7 @@ describe("AuctionBidRoute", () => {
     setFieldTouched: jest.fn(),
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         bidPageView: jest.fn(),

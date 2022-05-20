@@ -29,7 +29,7 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebarPartnerInfo", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
     }))

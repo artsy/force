@@ -18,7 +18,7 @@ describe.skip("ArtistSeriesEntity", () => {
   let props
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       member: CollectionsHubLinkedCollections.linkedCollections[0].members[0],
       itemNumber: 1,

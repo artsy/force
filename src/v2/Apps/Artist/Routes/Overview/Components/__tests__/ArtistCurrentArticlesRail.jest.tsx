@@ -24,7 +24,7 @@ describe("ArtistCurrentArticlesRail", () => {
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))

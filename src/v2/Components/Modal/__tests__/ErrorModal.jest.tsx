@@ -9,7 +9,7 @@ describe("ErrorModal", () => {
   }
 
   let props
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       onClose: jest.fn(),
       blurContainerSelector: "",
@@ -17,7 +17,7 @@ describe("ErrorModal", () => {
   })
 
   describe("ErrorModal content", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       props.show = true
     })
 
