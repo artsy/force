@@ -28,6 +28,7 @@ import { homeRoutes } from "v2/Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { jobsRoutes } from "v2/Apps/Jobs/jobsRoutes"
 import { meetTheSpecialistsRoutes } from "v2/Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
+import { onboardingRoutes } from "v2/Apps/Onboarding/onboardingRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { pageRoutes } from "v2/Apps/Page/pageRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
@@ -74,6 +75,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: jobsRoutes },
     { routes: meetTheSpecialistsRoutes },
     { routes: newForYouRoutes },
+    { routes: onboardingRoutes },
     { routes: orderRoutes },
     { routes: pageRoutes },
     { routes: partnerRoutes },
