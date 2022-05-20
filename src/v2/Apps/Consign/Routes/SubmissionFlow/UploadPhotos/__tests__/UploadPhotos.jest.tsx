@@ -148,9 +148,9 @@ describe("UploadPhotos", () => {
       },
     })
 
+    expect(await screen.findByText("0.02 MB")).toBeInTheDocument()
+    expect(await screen.findByText(name)).toBeInTheDocument()
     await waitFor(() => {
-      expect(screen.getByText("0.02 MB")).toBeInTheDocument()
-      expect(screen.getByText(name)).toBeInTheDocument()
       expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
     })
   })

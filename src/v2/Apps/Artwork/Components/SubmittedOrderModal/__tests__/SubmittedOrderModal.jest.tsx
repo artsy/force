@@ -44,23 +44,19 @@ describe("SubmittedOrderModal", () => {
       inboxText: "Negotiation with the gallery will continue in the Inbox.",
     }
 
-    await waitFor(() => {
-      expect(screen.getByText(expected.title)).toBeInTheDocument()
-      expect(screen.getByText(expected.description)).toBeInTheDocument()
-      expect(screen.getByText(expected.inboxText)).toBeInTheDocument()
+    expect(await screen.findByText(expected.title)).toBeInTheDocument()
+    expect(await screen.findByText(expected.description)).toBeInTheDocument()
+    expect(await screen.findByText(expected.inboxText)).toBeInTheDocument()
 
-      const button = screen.getByRole("link")
-      expect(button).toHaveAttribute("href", "/user/conversations")
-      expect(within(button).getByText("Go to Inbox")).toBeInTheDocument()
-    })
+    const button = await screen.findByRole("link")
+    expect(button).toHaveAttribute("href", "/user/conversations")
+    expect(within(button).getByText("Go to Inbox")).toBeInTheDocument()
   })
 
   it("close button closes modal", async () => {
     renderWithRelay(mockedResolver)
 
-    await waitFor(() =>
-      expect(screen.queryByRole("dialog")).toBeInTheDocument()
-    )
+    expect(await screen.findByRole("dialog")).toBeInTheDocument()
 
     fireEvent.click(screen.getByLabelText("Close"))
 
