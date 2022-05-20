@@ -74,7 +74,7 @@ export const NewForYouArtworksGridFragmentContainer = createPaginationContainer(
           count: { type: "Int", defaultValue: 10 }
           cursor: { type: "String" }
         ) {
-        artworksForUser(first: $count, after: $cursor)
+        artworksForUser(first: $count, after: $cursor, includeBackfill: true)
           @connection(key: "NewForYouArtworksGrid_artworksForUser") {
           pageInfo {
             hasNextPage
