@@ -57,7 +57,13 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": "artworksForUser",
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "includeBackfill",
+          "value": true
+        }
+      ],
       "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
       "name": "__NewForYouArtworksGrid_artworksForUser_connection",
@@ -137,11 +143,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "__NewForYouArtworksGrid_artworksForUser_connection(includeBackfill:true)"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '36a784e610d0d444d3d90784111a6e3f';
+(node as any).hash = '37e8704d3bfabdc24d63e3716106c951';
 export default node;
