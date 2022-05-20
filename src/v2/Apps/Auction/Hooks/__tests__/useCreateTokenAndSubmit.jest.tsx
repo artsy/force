@@ -110,10 +110,6 @@ describe("useCreateTokenAndSubmit", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("sets SUBMISSION_FAILED error if stripe not found", async () => {
     mockUseStripe.mockImplementation(() => null)
     await setupHook()

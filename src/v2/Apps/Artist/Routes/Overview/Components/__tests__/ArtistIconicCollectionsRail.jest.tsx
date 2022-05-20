@@ -46,10 +46,6 @@ describe("ArtistIconicCollectionsRail", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("does not render rail if no collections", () => {
     const wrapper = getWrapper({
       MarketingCollection: () => ({

@@ -53,10 +53,6 @@ describe("NavBar", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders Artsy Logo and SearchBar", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("ArtsyMarkBlackIcon").length).toEqual(1)

@@ -28,10 +28,6 @@ describe("SystemQueryRenderer", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("doesn't return anything if environment is null", () => {
     const wrapper = getWrapper({ environment: null })
     expect(wrapper.find("QueryRenderer").length).toBe(0)

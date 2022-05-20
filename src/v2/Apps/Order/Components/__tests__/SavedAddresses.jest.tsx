@@ -29,9 +29,6 @@ describe("Saved Addresses", () => {
       trackEvent,
     }))
   })
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
 
   describe("Saved Addresses mutations", () => {
     const { mutations, buildPage } = createTestEnv({

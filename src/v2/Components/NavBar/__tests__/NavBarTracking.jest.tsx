@@ -27,7 +27,7 @@ describe("NavBarTracking", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   describe("NavBar", () => {

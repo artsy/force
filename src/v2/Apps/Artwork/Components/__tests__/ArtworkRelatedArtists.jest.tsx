@@ -22,10 +22,6 @@ describe("ArtworkRelatedArtists", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders related artists", () => {
     const props = { artwork: { artist: ArtworkRelatedArtistsFixture } }
 

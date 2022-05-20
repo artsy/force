@@ -54,10 +54,6 @@ describe("ConsignRoute", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe("ArtistConsignHeader", () => {
     it("displays artist name in header", async () => {
       const wrapper = await getWrapper()

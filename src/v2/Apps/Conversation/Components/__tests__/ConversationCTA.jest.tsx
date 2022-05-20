@@ -50,10 +50,6 @@ describe("ConversationCTA", () => {
     })
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders the correct CTA when an offer has been received", () => {
     renderWithRelay({
       Conversation: () => ({

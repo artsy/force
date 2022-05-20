@@ -36,10 +36,6 @@ describe("MyBidsBidItem", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders correct components and data", () => {
     const wrapper = getWrapper({
       SaleArtwork: () => ({

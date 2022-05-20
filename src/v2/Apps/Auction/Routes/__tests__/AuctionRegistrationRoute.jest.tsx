@@ -106,10 +106,6 @@ describe("AuctionRegistrationRoute", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("redirects to sale home if condition met", async () => {
     const spy = jest.fn()
 

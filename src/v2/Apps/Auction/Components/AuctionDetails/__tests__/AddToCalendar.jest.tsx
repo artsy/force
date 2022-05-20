@@ -28,10 +28,6 @@ describe("AddToCalendar", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("rendes correct components", () => {
     const getWrapper = () => {
       return mount(<AddToCalendar {...props} />)

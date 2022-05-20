@@ -48,10 +48,6 @@ describe("WorksForYouApp", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders correctly", () => {
     renderWithRelay()
 

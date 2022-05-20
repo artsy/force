@@ -60,10 +60,6 @@ describe("CtaBannerContent", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe("mobile", () => {
     describe("not logged in", () => {
       beforeEach(() => {

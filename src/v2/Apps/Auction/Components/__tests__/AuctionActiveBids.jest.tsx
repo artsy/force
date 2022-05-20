@@ -62,10 +62,6 @@ describe("AuctionActiveBids", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   describe("mobile", () => {
     const getWrapper = setup("sm")
 

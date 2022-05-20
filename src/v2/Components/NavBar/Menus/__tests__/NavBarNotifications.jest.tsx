@@ -15,10 +15,6 @@ describe("NavBarNotifications", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   const getWrapper = (props = NotificationMenuFixture) => {
     // @ts-ignore
     return mount(<NavBarNotifications {...props} />)

@@ -40,10 +40,6 @@ describe("CreateArtworkAlertSection", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("should correctly render placeholder", () => {
     const placeholder = "Artworks like: Some artwork title"
     renderWithRelay({

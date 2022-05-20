@@ -30,10 +30,6 @@ describe("ArtistCurrentArticlesRail", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("does not render rail if no articles", () => {
     const wrapper = getWrapper({
       Artist: () => ({

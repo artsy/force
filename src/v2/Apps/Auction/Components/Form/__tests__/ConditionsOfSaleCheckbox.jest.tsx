@@ -26,10 +26,6 @@ describe("ConditionsOfSaleCheckbox", () => {
     })
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders correct components", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("Checkbox")).toHaveLength(1)

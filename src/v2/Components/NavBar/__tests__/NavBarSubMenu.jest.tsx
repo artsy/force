@@ -26,10 +26,6 @@ describe("NavBarSubMenu", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders simple links", () => {
     const wrapper = getWrapper()
     const linkMenuItems = wrapper.find("a")

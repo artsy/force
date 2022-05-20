@@ -22,10 +22,6 @@ describe("ErrorStatus", () => {
     console.error = jest.fn()
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("does not render if status=null", () => {
     status = null
     const wrapper = getWrapper()

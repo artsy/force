@@ -20,10 +20,6 @@ jest.mock("../Components/BackLink.tsx", () => ({
 describe("ArtistApp", () => {
   let mockfindCurrentRoute = findCurrentRoute as jest.Mock
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   const { getWrapper } = setupTestWrapper<ArtistApp_Test_Query>({
     Component: ArtistAppFragmentContainer,
     query: graphql`

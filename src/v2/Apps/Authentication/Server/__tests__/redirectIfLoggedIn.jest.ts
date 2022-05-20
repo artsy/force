@@ -3,10 +3,6 @@ import { redirectIfLoggedIn } from "../redirectIfLoggedIn"
 describe("redirectIfLoggedIn", () => {
   const redirectSpy = jest.fn()
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   const setup = ({ req = {}, res = {} }) => {
     redirectIfLoggedIn({
       req: {

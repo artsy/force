@@ -16,10 +16,6 @@ describe("FAQ", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("toggles FAQ questions", () => {
     render(<FAQ />)
 

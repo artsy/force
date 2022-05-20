@@ -24,7 +24,7 @@ describe("DownloadAppBadge", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   it("tracks clicks on the app download badge", () => {

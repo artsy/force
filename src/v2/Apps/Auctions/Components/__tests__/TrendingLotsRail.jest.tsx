@@ -31,10 +31,6 @@ describe("TrendingLotsRail", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("guards against null data", () => {
     expect(() =>
       getWrapper({

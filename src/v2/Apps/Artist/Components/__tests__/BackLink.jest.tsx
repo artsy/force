@@ -28,10 +28,6 @@ describe("BackLink", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Artist: () => ({

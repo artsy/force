@@ -74,10 +74,6 @@ describe("buildServerApp", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   const getWrapper = async (
     Component = defaultComponent,
     passedOptions = options

@@ -23,10 +23,6 @@ describe("Artist Series Rail Item", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("tracks the analytics properties when an artwork is clicked on the Notable works rail", () => {
     const component = mount(
       <AnalyticsContext.Provider

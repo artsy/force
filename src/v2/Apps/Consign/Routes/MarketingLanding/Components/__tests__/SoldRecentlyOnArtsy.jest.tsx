@@ -30,10 +30,6 @@ describe("SoldRecentlyOnArtsy", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders correct components", () => {
     renderWithRelay()
 

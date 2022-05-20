@@ -103,10 +103,6 @@ describe("AuctionConfirmRegistrationRoute", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("has the correct ModalDialog title", () => {
     const wrapper = getWrapper({
       Sale: () => ({

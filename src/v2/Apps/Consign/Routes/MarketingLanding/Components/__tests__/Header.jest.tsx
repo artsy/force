@@ -27,10 +27,6 @@ describe("Header", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("links out to submission flow", () => {
     render(<Header />)
 

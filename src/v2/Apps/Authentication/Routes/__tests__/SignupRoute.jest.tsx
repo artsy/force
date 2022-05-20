@@ -16,10 +16,6 @@ describe("SignupRoute", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockUseAuthForm = useAuthForm as jest.Mock
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders correctly", () => {
     const queryParams = {}
 

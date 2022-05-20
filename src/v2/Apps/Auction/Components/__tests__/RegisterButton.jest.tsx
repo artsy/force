@@ -55,10 +55,6 @@ describe("RegisterButton", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("returns null if ecommerce sale", () => {
     const wrapper = getWrapper({
       Sale: () => ({

@@ -31,10 +31,6 @@ describe("MyBids", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders the correct components", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("CarouselRail")).toBeDefined()

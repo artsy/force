@@ -43,9 +43,6 @@ const setupTestEnv = () => {
 }
 
 describe("IdentityVerification route", () => {
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
   describe("for signed-in user", () => {
     describe("unactionable end states", () => {
       it("renders a message about an identity verification that is `passed`", async () => {

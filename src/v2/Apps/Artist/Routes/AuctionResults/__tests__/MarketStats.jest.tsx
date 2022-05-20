@@ -35,10 +35,6 @@ describe("MarketStats", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("does not render if no price insights", () => {
     const wrapper = getWrapper({
       PriceInsightConnection: () => ({

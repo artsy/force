@@ -33,10 +33,6 @@ describe("WorksByArtistsYouFollowRail", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("guards against null data", () => {
     expect(() =>
       getWrapper({

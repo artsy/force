@@ -28,10 +28,6 @@ describe("ArtistNotableWorksRail", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("does not render rail if no works", () => {
     const wrapper = getWrapper({
       Artist: () => ({

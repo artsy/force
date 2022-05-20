@@ -16,10 +16,6 @@ describe("ForgotPasswordRoute", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockUseAuthForm = useAuthForm as jest.Mock
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders forgot password", () => {
     const queryParams = {}
 

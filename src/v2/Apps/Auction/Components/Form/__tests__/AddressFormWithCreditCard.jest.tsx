@@ -32,10 +32,6 @@ describe("AddressFormWithCreditCard", () => {
     })
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders correct components", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("CreditCardInput")).toHaveLength(1)

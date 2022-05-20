@@ -38,10 +38,6 @@ describe("FairOrganizerFollowButton", () => {
     }))
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Profile: () => ({
