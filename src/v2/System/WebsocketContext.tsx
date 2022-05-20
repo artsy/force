@@ -29,7 +29,7 @@ export const WebsocketContextProvider: React.FC<WebsocketContextProviderProps> =
   children,
 }) => {
   const [receivedData, setReceivedData] = useState(initialValues)
-
+  const xapp_token = getENV("ARTSY_XAPP_TOKEN")
   useEffect(() => {
     if (!enabled) return
     const actionCable = require("actioncable")
@@ -37,6 +37,7 @@ export const WebsocketContextProvider: React.FC<WebsocketContextProviderProps> =
     cable.subscriptions.create(
       {
         ...channelInfo,
+        xapp_token,
       },
       {
         received: data => {
