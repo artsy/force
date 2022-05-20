@@ -10,11 +10,11 @@ import {
 import { Match } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
+import { ZeroState } from "./ZeroState"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -68,6 +68,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
+      ZeroState={ZeroState}
     >
       <BaseArtworkFilter
         relay={relay}
@@ -77,11 +78,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         }}
         enableCreateAlert
         savedSearchEntity={savedSearchEntity}
-      >
-        {artist.counts!.artworks === 0 && (
-          <ZeroState artist={artist} isFollowed={artist.isFollowed} />
-        )}
-      </BaseArtworkFilter>
+      />
     </ArtworkFilterContextProvider>
   )
 }

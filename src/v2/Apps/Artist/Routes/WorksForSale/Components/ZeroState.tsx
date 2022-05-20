@@ -1,31 +1,34 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Clickable, Flex, Message, Text } from "@artsy/palette"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
+import { Box, Message, Text } from "@artsy/palette"
+import { isEmpty } from "lodash"
+import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
+import { Sticky } from "v2/Components/Sticky"
 
-export const ZeroState = props => {
-  const { isFollowed, artist } = props
+export const ZeroState: React.FC = () => {
+  const { selectedFiltersCounts, resetFilters } = useArtworkFilterContext()
+  const hasAppliedFilters = !isEmpty(selectedFiltersCounts)
+
+  if (hasAppliedFilters) {
+    return <ArtworkGridEmptyState onClearFilters={resetFilters} />
+  }
 
   return (
-    <Message>
-      There aren’t any works available by the artist at this time.{" "}
-      {!isFollowed && (
-        <Flex>
-          <FollowArtistButton
-            artist={artist}
-            contextModule={ContextModule.worksForSaleRail}
-            render={({ name }) => {
-              return (
-                <Clickable cursor="pointer" textDecoration="underline">
-                  <Text>Follow {name}</Text>
-                </Clickable>
-              )
-            }}
-          />{" "}
-          <Text pl={0.5}>
-            to receive notifications when new works are added.
-          </Text>
-        </Flex>
-      )}
-    </Message>
+    <Box width="100%" my={1}>
+      <Sticky>
+        {({ stuck }) => {
+          return (
+            <Box pt={stuck ? 1 : 0}>
+              <Message>
+                <Text>No works available by the artist at this time</Text>
+                <Text textColor="black60">
+                  Create an Alert to receive notifications when new works are
+                  added
+                </Text>
+              </Message>
+            </Box>
+          )
+        }}
+      </Sticky>
+    </Box>
   )
 }

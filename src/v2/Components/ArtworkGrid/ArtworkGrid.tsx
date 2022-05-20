@@ -2,7 +2,7 @@ import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Column, Flex, GridColumns } from "@artsy/palette"
 import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.graphql"
 import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
-import { isEqual } from "lodash"
+import { isEmpty, isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
 import { ReactNode } from "react"
 import * as React from "react"
@@ -232,7 +232,7 @@ export class ArtworkGridContainer extends React.Component<
       emptyStateComponent,
     } = this.props
 
-    const hasArtworks = artworks && artworks.edges && artworks.edges.length > 0
+    const hasArtworks = !isEmpty(artworks?.edges)
     let artworkGrids
 
     if (isAuctionArtwork) {
