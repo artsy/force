@@ -9,7 +9,7 @@ describe("AuthStatic", () => {
   }
 
   let props
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       type: "login",
       meta: {

@@ -18,7 +18,7 @@ describe("InquirySignUp", () => {
   const submitArtworkInquiryRequest = jest.fn()
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
       submitArtworkInquiryRequest,
     }))
@@ -46,7 +46,7 @@ describe("InquirySignUp", () => {
   })
 
   describe("success", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(signUp as jest.Mock).mockImplementation(() =>
         Promise.resolve({ user: { id: "example-id", access_token: "token" } })
       )
@@ -89,7 +89,7 @@ describe("InquirySignUp", () => {
   })
 
   describe("error", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(signUp as jest.Mock).mockImplementation(() =>
         Promise.reject(new Error("something went wrong"))
       )

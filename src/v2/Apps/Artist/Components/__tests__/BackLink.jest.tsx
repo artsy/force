@@ -22,14 +22,10 @@ describe("BackLink", () => {
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("renders correctly", () => {

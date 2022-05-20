@@ -31,14 +31,10 @@ describe("NavBarMobileMenu", () => {
       .find(NavBarMobileMenuTransition)
       .findWhere(element => element.props().isOpen)
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("calls logout auth action on logout menu click", () => {

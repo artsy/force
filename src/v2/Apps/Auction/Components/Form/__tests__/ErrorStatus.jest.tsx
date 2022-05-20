@@ -18,12 +18,8 @@ describe("ErrorStatus", () => {
     return mount(<ErrorStatus />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     console.error = jest.fn()
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("does not render if status=null", () => {

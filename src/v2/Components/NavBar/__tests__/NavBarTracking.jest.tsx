@@ -20,14 +20,14 @@ describe("NavBarTracking", () => {
     return <SystemContextProvider user={user}>{children}</SystemContextProvider>
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   describe("NavBar", () => {

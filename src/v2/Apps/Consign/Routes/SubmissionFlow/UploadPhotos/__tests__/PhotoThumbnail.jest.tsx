@@ -27,7 +27,7 @@ const getWrapper = (props: PhotoThumbnailProps = defaultProps) =>
 describe("PhotoThumbnail", () => {
   let wrapper: ReactWrapper
 
-  beforeEach(() => {
+  beforeAll(() => {
     deleteFn.mockReset()
     //@ts-ignore
     jest.spyOn(global, "FileReader").mockImplementation(function () {
@@ -67,7 +67,7 @@ describe("PhotoThumbnail", () => {
   describe("error state", () => {
     let props
 
-    beforeEach(() => {
+    beforeAll(() => {
       props = {
         ...defaultProps,
         photo: {
@@ -114,7 +114,7 @@ describe("PhotoThumbnail", () => {
   describe("loading state", () => {
     let props
 
-    beforeEach(() => {
+    beforeAll(() => {
       props = {
         ...defaultProps,
         photo: {
@@ -160,7 +160,7 @@ describe("PhotoThumbnail", () => {
   })
 
   describe("success state", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       wrapper = getWrapper()
     })
 
@@ -198,7 +198,7 @@ describe("PhotoThumbnail", () => {
       geminiToken: "key",
     }
 
-    beforeEach(() => {
+    beforeAll(() => {
       wrapper = getWrapper({
         ...defaultProps,
         photo: photo,

@@ -45,7 +45,7 @@ const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
 describe("GeneArtworkFilter", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

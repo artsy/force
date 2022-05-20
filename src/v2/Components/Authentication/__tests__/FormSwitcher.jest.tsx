@@ -62,7 +62,7 @@ describe("FormSwitcher", () => {
   })
 
   describe("#handleTypeChange", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       mockLocation({ search: "" })
     })
 
@@ -95,7 +95,7 @@ describe("FormSwitcher", () => {
   })
 
   describe("Third party sign in", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       mockLocation({ search: "" })
     })
 

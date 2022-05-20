@@ -45,7 +45,7 @@ const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
 describe("TagArtworkFilter", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

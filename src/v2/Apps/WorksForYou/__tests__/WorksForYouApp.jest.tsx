@@ -40,16 +40,12 @@ const { renderWithRelay } = setupTestWrapperTL({
 describe("WorksForYouApp", () => {
   const mockUseRouter = useRouter as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseRouter.mockImplementation(() => ({
       router: {
         push: jest.fn(),
       },
     }))
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("renders correctly", () => {

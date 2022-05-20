@@ -82,10 +82,6 @@ describe("FeatureAKG", () => {
     })
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe("Page content", () => {
     it("displays the description and sections from the context data", async () => {
       const defaultWrapper = await getWrapper()

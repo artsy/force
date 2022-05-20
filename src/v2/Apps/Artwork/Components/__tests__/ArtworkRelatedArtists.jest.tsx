@@ -14,16 +14,12 @@ describe("ArtworkRelatedArtists", () => {
 
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("renders related artists", () => {

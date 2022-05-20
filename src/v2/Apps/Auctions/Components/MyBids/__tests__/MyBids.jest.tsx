@@ -23,16 +23,12 @@ describe("MyBids", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("renders the correct components", () => {

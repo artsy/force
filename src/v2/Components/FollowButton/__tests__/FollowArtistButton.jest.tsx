@@ -37,7 +37,7 @@ describe("FollowArtistButton", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockLocation()
     mediator = { ready: () => true, trigger: jest.fn() }
     props = {

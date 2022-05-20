@@ -96,7 +96,7 @@ describe("AuctionBidRoute", () => {
     setFieldTouched: jest.fn(),
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         bidPageView: jest.fn(),
@@ -125,10 +125,6 @@ describe("AuctionBidRoute", () => {
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("has the correct ModalDialog title", () => {

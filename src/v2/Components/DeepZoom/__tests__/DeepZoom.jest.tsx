@@ -24,7 +24,7 @@ const { getWrapper } = setupTestWrapper<DeepZoom_Test_Query>({
 })
 
 describe("DeepZoom", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     handleClose.mockReset()
   })
 

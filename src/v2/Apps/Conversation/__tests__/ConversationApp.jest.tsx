@@ -51,7 +51,7 @@ const pageInfo: NonNullable<
 }
 
 describe("Conversation app", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     jest.resetAllMocks()
   })
 

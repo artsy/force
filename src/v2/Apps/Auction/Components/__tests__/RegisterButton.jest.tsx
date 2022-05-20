@@ -33,7 +33,7 @@ describe("RegisterButton", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         clickedRegisterButton: jest.fn(),
@@ -53,10 +53,6 @@ describe("RegisterButton", () => {
         push: jest.fn(),
       },
     }))
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("returns null if ecommerce sale", () => {

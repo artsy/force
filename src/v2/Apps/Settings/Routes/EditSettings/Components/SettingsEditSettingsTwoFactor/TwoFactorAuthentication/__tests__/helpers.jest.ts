@@ -3,7 +3,7 @@ import { afterUpdateRedirect, redirectMessage } from "../helpers"
 const { location: originalLocation } = window
 
 describe("afterUpdateRedirect", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     delete window.location
   })

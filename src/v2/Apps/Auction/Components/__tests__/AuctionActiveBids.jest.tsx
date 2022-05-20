@@ -43,7 +43,7 @@ describe("AuctionActiveBids", () => {
     return getWrapper
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         params: {
@@ -60,10 +60,6 @@ describe("AuctionActiveBids", () => {
         clickedActiveBid: jest.fn(),
       },
     }))
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   describe("mobile", () => {

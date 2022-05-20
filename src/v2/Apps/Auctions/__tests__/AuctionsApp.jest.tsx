@@ -32,7 +32,7 @@ describe("AuctionsApp", () => {
   let useSystemContext = baseUseSystemContext as jest.Mock
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,

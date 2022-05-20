@@ -27,7 +27,7 @@ describe("ArtistInfo", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     context = {
       mediator: { ready: () => true, trigger: jest.fn() },
       relay: { environment: {} } as RelayProp,

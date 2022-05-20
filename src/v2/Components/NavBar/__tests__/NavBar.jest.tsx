@@ -44,17 +44,13 @@ describe("NavBar", () => {
     mediator.on("open:auth", () => {})
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.spyOn(mediator, "trigger")
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("renders Artsy Logo and SearchBar", () => {

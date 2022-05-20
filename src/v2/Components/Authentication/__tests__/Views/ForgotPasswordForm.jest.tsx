@@ -10,7 +10,7 @@ jest.mock("sharify", () => ({ data: { RECAPTCHA_KEY: "recaptcha-api-key" } }))
 describe("ForgotPasswordForm", () => {
   let props
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       handleSubmit: jest.fn(),
       values: { email: "foo@bar.com" },

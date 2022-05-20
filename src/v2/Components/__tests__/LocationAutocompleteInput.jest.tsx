@@ -55,7 +55,7 @@ describe("LocationAutocompleteInput", () => {
     setupGoogleMapsMock()
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = mount(
       <LocationAutocompleteInput
         name="location"

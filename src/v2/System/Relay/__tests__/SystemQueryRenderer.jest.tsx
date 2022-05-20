@@ -21,15 +21,11 @@ describe("SystemQueryRenderer", () => {
   let mockuseDidMount = useDidMount as jest.Mock
   let mockuseLazyLoadComponent = useLazyLoadComponent as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseLazyLoadComponent.mockImplementation(() => ({
       Waypoint: () => <div />,
       isEnteredView: false,
     }))
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("doesn't return anything if environment is null", () => {

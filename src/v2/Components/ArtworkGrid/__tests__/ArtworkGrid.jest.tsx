@@ -138,7 +138,7 @@ describe("ArtworkGrid", () => {
 
     let props: Parameters<typeof getRelayWrapper>[0]
 
-    beforeEach(() => {
+    beforeAll(() => {
       props = { artworks: cloneDeep(ArtworkGridFixture) }
     })
 

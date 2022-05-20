@@ -25,7 +25,7 @@ const { getWrapper } = setupTestWrapper<HomeTrendingArtistsRail_Test_Query>({
 
 const trackEvent = jest.fn()
 
-beforeEach(() => {
+beforeAll(() => {
   ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
 })
 

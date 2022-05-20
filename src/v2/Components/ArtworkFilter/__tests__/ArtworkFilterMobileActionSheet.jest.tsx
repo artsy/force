@@ -25,7 +25,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
   let spy
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

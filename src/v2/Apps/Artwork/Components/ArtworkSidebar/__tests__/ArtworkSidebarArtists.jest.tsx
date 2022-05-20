@@ -18,7 +18,7 @@ describe("ArtworkSidebarArtists", () => {
     mediator.on("open:auth", () => {})
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.spyOn(mediator, "trigger")
     mockLocation()
   })

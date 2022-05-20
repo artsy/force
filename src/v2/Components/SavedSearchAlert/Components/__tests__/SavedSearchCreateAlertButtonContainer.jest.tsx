@@ -67,7 +67,7 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
 
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -91,7 +91,7 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
   })
 
   describe("when logged in", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
           isLoggedIn: true,
@@ -125,7 +125,7 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
   })
 
   describe("when logged out", () => {
-    beforeEach(() => {
+    beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
           isLoggedIn: false,

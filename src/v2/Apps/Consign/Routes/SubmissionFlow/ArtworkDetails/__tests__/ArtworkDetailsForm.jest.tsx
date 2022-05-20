@@ -17,7 +17,7 @@ const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
 
 describe("ArtworkDetailsForm", () => {
   let wrapper: ReactWrapper
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = renderArtworkForm(getArtworkDetailsFormInitialValues())
   })
 

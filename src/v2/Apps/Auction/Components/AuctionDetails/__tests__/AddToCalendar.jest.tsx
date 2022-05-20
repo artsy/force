@@ -20,16 +20,12 @@ describe("AddToCalendar", () => {
     contextModule: ContextModule.aboutTheWork,
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         addToCalendar: trackingSpy,
       },
     }))
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("rendes correct components", () => {

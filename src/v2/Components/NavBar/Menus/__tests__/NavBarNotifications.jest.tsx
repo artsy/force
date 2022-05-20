@@ -7,16 +7,12 @@ jest.mock("v2/System/Analytics/useTracking")
 describe("NavBarNotifications", () => {
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   const getWrapper = (props = NotificationMenuFixture) => {

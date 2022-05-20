@@ -45,17 +45,13 @@ describe("ConsignRoute", () => {
     })
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     const mockTracking = useTracking as jest.Mock
     mockTracking.mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   describe("ArtistConsignHeader", () => {

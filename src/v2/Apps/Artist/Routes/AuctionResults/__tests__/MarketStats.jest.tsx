@@ -29,14 +29,10 @@ describe("MarketStats", () => {
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("does not render if no price insights", () => {

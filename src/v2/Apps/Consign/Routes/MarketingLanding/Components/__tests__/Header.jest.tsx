@@ -19,16 +19,12 @@ jest.mock("v2/System/Router/useRouter", () => ({
 const trackEvent = useTracking as jest.Mock
 
 describe("Header", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("links out to submission flow", () => {

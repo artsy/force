@@ -42,7 +42,7 @@ describe("PriceRangeFilterNew", () => {
 
   const mockGetENV = getENV as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockGetENV.mockImplementation(() => {
       return true
     })

@@ -20,7 +20,7 @@ const mockSubmissionId = "12345"
 const mockNonExistentSubmissionId = undefined
 
 describe("connectUserToSubmission", () => {
-  beforeEach(() => mockAddUser.mockImplementation(() => Promise.resolve()))
+  beforeAll(() => mockAddUser.mockImplementation(() => Promise.resolve()))
   afterEach(() => jest.resetAllMocks())
 
   it("calls addUser and expires submissionId, when user and submission found", async () => {

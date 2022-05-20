@@ -33,10 +33,6 @@ describe("FairExhibitors", () => {
     variables: { id: "fair" },
   })
 
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   it("renders the exhibitors group", () => {
     renderWithRelay(FAIR_FIXTURE)
 

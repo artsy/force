@@ -49,7 +49,7 @@ describe("FairCollection", () => {
     })
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     trackEvent = jest.fn()
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {

@@ -32,7 +32,7 @@ describe("FeaturedCollectionsRails", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[1],
     }

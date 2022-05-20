@@ -25,16 +25,12 @@ describe("WorksByArtistsYouFollowRail", () => {
     `,
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("guards against null data", () => {

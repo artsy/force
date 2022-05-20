@@ -134,19 +134,20 @@ describe("Artwork editions", () => {
 
     await waitFor(() => {
       expect(screen.queryAllByRole("radio")[0]).toBeInTheDocument()
-      expect(screen.getByText("27 3/5 × 9 4/5 × 13 4/5 in")).toBeInTheDocument()
-      expect(screen.getByText("70 × 25 × 35 cm")).toBeInTheDocument()
-      expect(screen.getByText("Edition of 50")).toBeInTheDocument()
-      expect(screen.getByText("$100")).toBeInTheDocument()
     })
+
+    expect(
+      await screen.findByText("27 3/5 × 9 4/5 × 13 4/5 in")
+    ).toBeInTheDocument()
+    expect(await screen.findByText("70 × 25 × 35 cm")).toBeInTheDocument()
+    expect(await screen.findByText("Edition of 50")).toBeInTheDocument()
+    expect(await screen.findByText("$100")).toBeInTheDocument()
   })
 
   it("One edition is always selected", async () => {
     renderWithRelay(mockSingleEdition)
 
-    await waitFor(() => {
-      expect(screen.getByRole("radio")).toBeChecked()
-    })
+    expect(await screen.findByRole("radio")).toBeChecked()
   })
 
   it("Display edititon as disabled when it is not available", async () => {
@@ -162,9 +163,7 @@ describe("Artwork editions", () => {
   it("Display 'Contact for price' if a price not set in listPrice", async () => {
     renderWithRelay(nullListPriceEdition)
 
-    await waitFor(() => {
-      expect(screen.getByText("Contact for price")).toBeInTheDocument()
-    })
+    expect(await screen.findByText("Contact for price")).toBeInTheDocument()
   })
 
   it("Can select editions", async () => {

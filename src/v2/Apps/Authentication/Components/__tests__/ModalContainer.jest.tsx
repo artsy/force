@@ -1,4 +1,5 @@
 import { mount } from "enzyme"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { ModalManager } from "v2/Components/Authentication/ModalManager"
 import { ModalContainer } from "../ModalContainer"
@@ -16,7 +17,7 @@ jest.useFakeTimers()
 const cookieSet = require("cookies-js").set as jest.Mock
 
 describe("ModalContainer", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     cookieSet.mockClear()
     sd.AP = {
       loginPagePath: "/login",

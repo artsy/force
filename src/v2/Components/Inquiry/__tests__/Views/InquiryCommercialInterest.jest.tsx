@@ -14,7 +14,7 @@ describe("InquiryCommercialInterest", () => {
 
   const mockNext = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useUpdateMyUserProfile as jest.Mock).mockImplementation(() => ({
       submitUpdateMyUserProfile: mockSubmitUpdateMyUserProfile,
     }))

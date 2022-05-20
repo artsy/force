@@ -12,7 +12,7 @@ describe("Artist Series Rail Item", () => {
   let props
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       artistSeries: itemContent,
       contextModule: "context-module",
@@ -21,10 +21,6 @@ describe("Artist Series Rail Item", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("tracks the analytics properties when an artwork is clicked on the Notable works rail", () => {

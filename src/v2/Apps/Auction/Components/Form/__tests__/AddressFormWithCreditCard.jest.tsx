@@ -21,7 +21,7 @@ describe("AddressFormWithCreditCard", () => {
     return mount(<AddressFormWithCreditCard />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseFormContext.mockImplementation(() => {
       return {
         setFieldTouched,
@@ -30,10 +30,6 @@ describe("AddressFormWithCreditCard", () => {
         touched: {},
       }
     })
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("renders correct components", () => {

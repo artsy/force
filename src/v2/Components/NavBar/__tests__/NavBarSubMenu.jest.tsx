@@ -20,14 +20,10 @@ describe("NavBarSubMenu", () => {
     )
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("renders simple links", () => {

@@ -63,7 +63,7 @@ describe("FairBooths", () => {
   let wrapper: ReactWrapper
 
   let refetchSpy
-  beforeEach(async () => {
+  beforeAll(async () => {
     wrapper = await getWrapper({})
     refetchSpy = jest.spyOn(
       (wrapper.find("FairBooths").props() as any).relay,

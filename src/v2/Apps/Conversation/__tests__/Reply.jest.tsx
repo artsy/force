@@ -11,7 +11,7 @@ describe("Reply", () => {
   describe("tracking", () => {
     const trackEvent = jest.fn()
 
-    beforeEach(() => {
+    beforeAll(() => {
       const mockTracking = useTracking as jest.Mock
       mockTracking.mockImplementation(() => {
         return {

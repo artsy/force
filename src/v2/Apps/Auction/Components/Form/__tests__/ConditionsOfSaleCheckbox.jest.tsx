@@ -20,14 +20,10 @@ describe("ConditionsOfSaleCheckbox", () => {
     return mount(<ConditionsOfSaleCheckbox />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseFormContext.mockImplementation(() => {
       return formProps
     })
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
   })
 
   it("renders correct components", () => {

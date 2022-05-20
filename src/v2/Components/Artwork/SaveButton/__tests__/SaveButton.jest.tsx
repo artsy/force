@@ -32,7 +32,7 @@ describe("Save artwork", () => {
     mediator.on("open:auth", () => {})
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     const artwork = {
       id: "foo",
       internalID: "abcd1234",

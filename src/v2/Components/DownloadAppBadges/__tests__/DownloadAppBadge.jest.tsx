@@ -14,7 +14,7 @@ describe("DownloadAppBadge", () => {
       "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     const mockTracking = useTracking as jest.Mock
     mockTracking.mockImplementation(() => {
       return {
@@ -24,7 +24,7 @@ describe("DownloadAppBadge", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   it("tracks clicks on the app download badge", () => {

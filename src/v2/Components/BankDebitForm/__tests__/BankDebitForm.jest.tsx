@@ -32,7 +32,7 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 }
 const trackEvent = jest.fn()
 
-beforeEach(() => {
+beforeAll(() => {
   trackEvent.mockClear()
   mockEvent = null
   const mockTracking = useTracking as jest.Mock

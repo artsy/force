@@ -28,16 +28,12 @@ describe("AuctionArtworksRail", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("renders correct components and data", () => {

@@ -24,10 +24,6 @@ describe("redirectPostAuth", () => {
     })
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
   const setup = ({ req = {}, res = {} }) => {
     redirectPostAuth({
       req: {

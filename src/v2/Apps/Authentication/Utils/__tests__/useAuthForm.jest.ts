@@ -25,7 +25,7 @@ describe("useAuthForm", () => {
     objectId: "objectId",
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {

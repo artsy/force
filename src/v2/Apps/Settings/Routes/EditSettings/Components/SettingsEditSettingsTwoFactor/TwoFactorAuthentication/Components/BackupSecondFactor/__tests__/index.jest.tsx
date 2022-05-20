@@ -13,7 +13,7 @@ describe("BackupSecondFactor", () => {
     return mount(<BackupSecondFactor {...passedProps} />)
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     props = {
       me: AppEnabledWithBackupCodesQueryResponse.me,
     }

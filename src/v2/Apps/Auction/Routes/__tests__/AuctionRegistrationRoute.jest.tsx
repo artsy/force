@@ -82,7 +82,7 @@ describe("AuctionRegistrationRoute", () => {
     isValid: true,
   }
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         registrationPageView: jest.fn(),
@@ -104,10 +104,6 @@ describe("AuctionRegistrationRoute", () => {
     mockFormik.mockImplementation(({ children }) => {
       return children(defaultFormikProps)
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("redirects to sale home if condition met", async () => {

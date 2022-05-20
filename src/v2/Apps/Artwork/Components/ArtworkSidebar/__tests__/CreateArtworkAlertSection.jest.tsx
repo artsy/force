@@ -28,7 +28,7 @@ describe("CreateArtworkAlertSection", () => {
   const trackEvent = jest.fn()
   const mockuseSystemContext = useSystemContext as jest.Mock
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent,
     }))
@@ -38,10 +38,6 @@ describe("CreateArtworkAlertSection", () => {
         isLoggedIn: true,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("should correctly render placeholder", () => {

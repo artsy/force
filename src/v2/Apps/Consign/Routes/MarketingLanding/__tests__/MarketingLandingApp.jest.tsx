@@ -28,7 +28,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 describe("MarketingLandingApp", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEventMock }
     })

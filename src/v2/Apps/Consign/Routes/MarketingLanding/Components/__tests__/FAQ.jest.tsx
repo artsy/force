@@ -8,16 +8,12 @@ jest.mock("v2/System/Analytics/useTracking")
 const trackEvent = jest.fn()
 
 describe("FAQ", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
   })
 
   it("toggles FAQ questions", () => {
