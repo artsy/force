@@ -68,7 +68,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
-      ZeroState={ZeroState}
+      ZeroState={() => <ZeroState my={1} />}
     >
       <BaseArtworkFilter
         relay={relay}

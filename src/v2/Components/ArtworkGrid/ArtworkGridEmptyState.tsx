@@ -1,29 +1,30 @@
 import { Sticky } from "../Sticky"
-import { Box, Clickable, Message } from "@artsy/palette"
+import { Box, BoxProps, Clickable, Message } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 
-interface ArtworkGridEmptyStateProps {
+interface ArtworkGridEmptyStateProps extends BoxProps {
   onClearFilters?: () => void
 }
 
-export const ArtworkGridEmptyState: React.FC<ArtworkGridEmptyStateProps> = props => (
-  <Box width="100%" my={1}>
+export const ArtworkGridEmptyState: React.FC<ArtworkGridEmptyStateProps> = ({
+  onClearFilters,
+  ...rest
+}) => (
+  <Box width="100%" {...rest}>
     <Sticky>
       {({ stuck }) => {
         return (
           <Box pt={stuck ? 1 : 0}>
             <Message width="100%">
-              <>
-                {`There aren't any works available that meet the following
-                criteria at this time. `}
-              </>
-              {props.onClearFilters && (
+              There aren't any works available that meet the following criteria
+              at this time.{" "}
+              {onClearFilters && (
                 <>
                   Change your filter criteria to view more works.{" "}
                   <ResetFilterLink
                     textDecoration="underline"
-                    onClick={props.onClearFilters}
+                    onClick={onClearFilters}
                   >
                     Clear all filters
                   </ResetFilterLink>

@@ -48,7 +48,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
    */
   function loadNext() {
     if (hasNextPage) {
-      loadPage(context?.filters?.page! + 1)
+      loadPage((context?.filters?.page ?? 0) + 1)
     }
   }
 
