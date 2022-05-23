@@ -84,7 +84,7 @@ Here's how to make Google auth work with local Force app:
   - Add the ngrok URL under `Authorized JavaScript origins`
   - Add the ngrok URL under `Authorized redirect URIs`, with `/users/auth/google/callback` appended
   - Save
-- Override your local `APP_URL` var to be the ngrok URL. Restart Force.
+- Override your local `APP_URL` var to be the ngrok URL. Restart Force. `GOOGLE_CLIENT_ID` and `GOOGLE_SECRET` are also required but they should already be in shared env.
 
 ## Adding a New Provider
 
