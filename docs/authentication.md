@@ -64,7 +64,7 @@ Here's how to make Google auth work with local Force app:
   ```
   brew install ngrok
   ngrok config add-authtoken <your-ngrok-auth-token>
-  ngrok http 5000 --response-header-add "content-security-policy: self;"
+  ngrok http 5000
   ```
 
   You will see an ngrok url like this one:
