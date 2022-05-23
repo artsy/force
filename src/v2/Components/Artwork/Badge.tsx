@@ -1,8 +1,7 @@
-import { Flex, Text } from "@artsy/palette"
+import { FLAT_SHADOW, Flex, Text } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface BadgeProps {
@@ -41,7 +40,18 @@ const Badge: React.FC<BadgeProps> = ({ artwork, width }) => {
   return (
     <Badges flexDirection={isStackedLayout ? "column" : "row"}>
       {includeBidBadge && (
-        <Label ml={1} mb={1}>
+        <Label
+          bg="white100"
+          borderRadius={2}
+          fontSize={8}
+          letterSpacing={0.3}
+          lineHeight={1}
+          mb={1}
+          ml={1}
+          px={0.5}
+          py="2px"
+          textTransform="uppercase"
+        >
           Bid{saleTimingHint}
         </Label>
       )}
@@ -63,14 +73,7 @@ export default createFragmentContainer(Badge, {
 })
 
 const Label = styled(Text)`
-  background-color: ${themeGet("colors.white100")};
-  border-radius: 2px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-  font-size: 8px;
-  letter-spacing: 0.3px;
-  line-height: 1;
-  padding: 2px 5px;
-  text-transform: uppercase;
+  box-shadow: ${FLAT_SHADOW};
 `
 
 const Badges = styled(Flex)`
