@@ -57,6 +57,7 @@ const EntityTooltipGene: FC<EntityTooltipGeneProps> = ({ gene }) => {
             alt=""
             lazyLoad
             mb={2}
+            style={{ display: "block" }}
           />
         </RouterLink>
       )}

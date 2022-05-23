@@ -10,15 +10,21 @@ import { ArticleSection_section } from "v2/__generated__/ArticleSection_section.
 
 interface ArticleSectionProps {
   section: ArticleSection_section
+  isFirst: boolean
   isLast: boolean
 }
 
-const ArticleSection: FC<ArticleSectionProps> = ({ section, isLast }) => {
+const ArticleSection: FC<ArticleSectionProps> = ({
+  section,
+  isFirst,
+  isLast,
+}) => {
   switch (section.__typename) {
     case "ArticleSectionText": {
       return (
         <ArticleSectionTextFragmentContainer
           section={section}
+          isFirst={isFirst}
           isLast={isLast}
         />
       )

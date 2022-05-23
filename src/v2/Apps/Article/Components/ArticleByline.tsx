@@ -12,10 +12,9 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
   if (article.authors.length === 0) {
     return (
       <Text
-        variant="sm-display"
-        fontWeight="bold"
+        variant={["xs", "md"]}
+        color="black60"
         maxWidth={OPTIMAL_READING_WIDTH}
-        mx="auto"
       >
         {article.byline}
       </Text>
@@ -23,7 +22,7 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
   }
 
   return (
-    <Box maxWidth={OPTIMAL_READING_WIDTH} mx="auto">
+    <Box maxWidth={OPTIMAL_READING_WIDTH}>
       <Join separator={<Spacer mt={2} />}>
         {article.authors.map(author => {
           const image = author.image?.cropped
@@ -42,7 +41,7 @@ const ArticleByline: FC<ArticleBylineProps> = ({ article }) => {
 
           return (
             <Box key={author.internalID}>
-              <Text variant="sm-display" fontWeight="bold">
+              <Text variant={["xs", "md"]} color="black60">
                 {author.name || "Artsy Editorial"}
               </Text>
 

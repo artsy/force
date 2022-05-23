@@ -6,6 +6,11 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 export type ArticleBody_article = {
+    readonly hero: {
+        readonly __typename: string;
+    } | null;
+    readonly vertical: string | null;
+    readonly byline: string | null;
     readonly internalID: string;
     readonly slug: string | null;
     readonly layout: ArticleLayout;
@@ -29,7 +34,7 @@ export type ArticleBody_article = {
             } | null;
         } | null;
     }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article" | "ArticleByline_article" | "ArticleSectionAd_article" | "ArticleNewsSource_article">;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleHero_article" | "ArticleByline_article" | "ArticleSectionAd_article" | "ArticleNewsSource_article">;
     readonly " $refType": "ArticleBody_article";
 };
 export type ArticleBody_article$data = ArticleBody_article;
@@ -45,17 +50,24 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "byline",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -68,7 +80,33 @@ return {
   "metadata": null,
   "name": "ArticleBody_article",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "hero",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "vertical",
+      "storageKey": null
+    },
     (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -90,8 +128,8 @@ return {
       "name": "leadParagraph",
       "storageKey": null
     },
-    (v1/*: any*/),
     (v2/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": [
@@ -136,16 +174,10 @@ return {
       "name": "relatedArticles",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "byline",
-          "storageKey": null
-        },
+        (v3/*: any*/),
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -160,12 +192,12 @@ return {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 60
+                  "value": 100
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 80
+                  "value": 100
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -188,7 +220,7 @@ return {
                   "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:60,width:80)"
+              "storageKey": "cropped(height:100,width:100)"
             }
           ],
           "storageKey": null
@@ -199,7 +231,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArticleHeader_article"
+      "name": "ArticleHero_article"
     },
     {
       "args": null,
@@ -221,5 +253,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1156144019027bd3a23b28b581d4d5b8';
+(node as any).hash = 'ac8b822d668813e496dbeecd5baaab07';
 export default node;

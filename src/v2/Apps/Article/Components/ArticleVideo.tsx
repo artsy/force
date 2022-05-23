@@ -9,7 +9,7 @@ import {
   GridColumns,
   HTML,
   Image,
-  Separator,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -21,7 +21,6 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleShare } from "v2/Components/ArticleShare"
-import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { ArticleVideo_article } from "v2/__generated__/ArticleVideo_article.graphql"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
@@ -29,6 +28,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 import { ArticleHTML } from "./ArticleHTML"
 import { useArticleTracking } from "../useArticleTracking"
+import { useFullBleedHeaderHeight } from "v2/Components/FullBleedHeader"
 
 interface ArticleVideoProps {
   article: ArticleVideo_article
@@ -37,7 +37,7 @@ interface ArticleVideoProps {
 const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
   const { clickedPlayVideo } = useArticleTracking()
 
-  const { desktop, mobile } = useNavBarHeight()
+  const height = useFullBleedHeaderHeight()
 
   const [mode, setMode] = useMode<"Pending" | "Playing">("Pending")
 
@@ -49,11 +49,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
 
   return (
     <>
-      <FullBleed
-        position="relative"
-        height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
-        bg="black10"
-      >
+      <FullBleed position="relative" height={height} bg="black10">
         {article.media.coverImage?.url && (
           <Image
             src={article.media.coverImage.url}
@@ -88,21 +84,21 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
             flexDirection="column"
             alignItems="center"
             justifyContent="flex-end"
-            py={[4, 6]}
+            py={[2, 4]}
             onClick={handleClick}
           >
             <AppContainer>
               <HorizontalPadding>
                 <GridColumns>
-                  <Column span={8} start={3} wrap>
+                  <Column span={12}>
                     <Flex alignItems="center">
                       <Play variant={["sm", "lg"]} mr={[2, 4]} />
 
                       <Box>
                         {(article.seriesArticle || article.media.duration) && (
                           <Text
-                            variant="xs"
-                            textTransform="uppercase"
+                            variant="sm-display"
+                            fontWeight="bold"
                             display="flex"
                             color="white100"
                           >
@@ -111,7 +107,9 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
                             )}
 
                             {article.media.duration && (
-                              <Box>{article.media.duration}</Box>
+                              <Box color="black10">
+                                {article.media.duration}
+                              </Box>
                             )}
                           </Text>
                         )}
@@ -124,10 +122,10 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
                   </Column>
 
                   {article.description && (
-                    <Column span={6} start={3}>
+                    <Column span={12}>
                       <HTML
-                        variant={["sm-display", "lg"]}
-                        color="white100"
+                        variant={["sm-display", "lg-display"]}
+                        color="black10"
                         html={article.description}
                       />
                     </Column>
@@ -139,34 +137,9 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
         )}
       </FullBleed>
 
-      <GridColumns mt={4} gridRowGap={4}>
-        <Column span={3} start={3} wrap={!article.media.description}>
-          {article.media.credits && (
-            <Box mb={4}>
-              <Text variant="lg-display" mb={2}>
-                Credits
-              </Text>
-
-              <HTML variant="sm" html={article.media.credits} />
-            </Box>
-          )}
-
-          <Text variant="xs" textTransform="uppercase">
-            <Box mb={0.5}>{article.media.releaseDate}</Box>
-
-            <Box display="flex" alignItems="center">
-              <Box mr={1}>Share</Box>
-
-              <ArticleShare
-                description={article.title}
-                pathname={article.href}
-              />
-            </Box>
-          </Text>
-        </Column>
-
+      <GridColumns mt={4} gridRowGap={6}>
         {article.media.description && (
-          <Column span={5} wrap>
+          <Column span={7}>
             <Text variant="lg-display" mb={2}>
               About the Film
             </Text>
@@ -175,9 +148,33 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
           </Column>
         )}
 
+        <Column span={4} start={9} wrap={!article.media.description}>
+          {article.media.credits && (
+            <Box mb={4}>
+              <Text variant="lg-display" mb={2}>
+                Credits
+              </Text>
+
+              <HTML variant="sm-display" html={article.media.credits} />
+            </Box>
+          )}
+
+          {article.media.releaseDate && (
+            <Text variant="xs" mb={4} fontWeight="bold">
+              {article.media.releaseDate}
+            </Text>
+          )}
+
+          <Text variant="xs" display="flex" alignItems="center">
+            <Box mr={1}>Share</Box>
+
+            <ArticleShare description={article.title} pathname={article.href} />
+          </Text>
+        </Column>
+
         {article.moreRelatedArticles.length > 0 && (
           <>
-            <Column span={8} start={3}>
+            <Column span={12}>
               <Text variant="lg-display">
                 More in{" "}
                 {article.seriesArticle ? (
@@ -203,36 +200,30 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
         )}
 
         {article.seriesArticle?.description && (
-          <>
-            <Column
-              span={3}
-              start={3}
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-between"
-            >
-              <Text variant="lg-display">About the Series</Text>
+          <Column span={6} start={4}>
+            <Text variant="lg-display">About the Series</Text>
 
-              {article.seriesArticle?.sponsor && (
-                <ArticleSponsorFragmentContainer
-                  mt={4}
-                  sponsor={article.seriesArticle?.sponsor}
-                />
-              )}
-            </Column>
+            {article.seriesArticle?.sponsor && (
+              <ArticleSponsorFragmentContainer
+                mt={4}
+                sponsor={article.seriesArticle?.sponsor}
+              />
+            )}
 
-            <Column span={5}>
-              <HTML variant="sm" html={article.seriesArticle.description} />
-            </Column>
-          </>
+            <HTML
+              mt={4}
+              variant="md"
+              html={article.seriesArticle.description}
+            />
+          </Column>
         )}
-
-        <Column span={12}>
-          <Separator mb={4} />
-
-          <ArticleAd unit="Desktop_InContentLB2" size="970x250" />
-        </Column>
       </GridColumns>
+
+      <Spacer mt={6} />
+
+      <FullBleed bg="black5" p={1}>
+        <ArticleAd unit="Desktop_InContentLB2" size="970x250" />
+      </FullBleed>
     </>
   )
 }

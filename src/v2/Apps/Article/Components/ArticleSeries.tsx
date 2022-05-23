@@ -1,12 +1,12 @@
 import {
-  Box,
   Column,
   GridColumns,
   Join,
   Spacer,
   Text,
   HTML,
-  Separator,
+  FullBleed,
+  Flex,
 } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -28,24 +28,15 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
         {article.byline}
       </TopContextBar>
 
-      <Box>
-        <Text variant="xxl" textAlign="center" mt={4}>
-          {article.title}
-        </Text>
+      <Text variant={["xl", "xxl"]} mt={4}>
+        {article.title}
+      </Text>
 
-        {article.sponsor && (
-          <ArticleSponsorFragmentContainer
-            sponsor={article.sponsor}
-            mt={4}
-            display="flex"
-            flexDirection="column"
-            textAlign="center"
-            alignItems="center"
-          />
-        )}
-      </Box>
+      {article.sponsor && (
+        <ArticleSponsorFragmentContainer sponsor={article.sponsor} mt={4} />
+      )}
 
-      <Spacer mt={12} />
+      <Spacer mt={6} />
 
       <Join separator={<Spacer mt={4} />}>
         {article.relatedArticles.map(relatedArticle => {
@@ -56,49 +47,39 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
             />
           )
         })}
-
-        <GridColumns>
-          {article.series?.description && (
-            <>
-              <Column
-                span={3}
-                start={3}
-                display="flex"
-                flexDirection="column"
-                justifyContent="space-between"
-              >
-                <Box>
-                  <Text variant="xl" mb={2}>
-                    About the Series
-                  </Text>
-
-                  <ArticleShare
-                    description={article.title}
-                    pathname={article.href}
-                  />
-                </Box>
-
-                {article.sponsor && (
-                  <ArticleSponsorFragmentContainer
-                    mt={4}
-                    sponsor={article.sponsor}
-                  />
-                )}
-              </Column>
-
-              <Column span={5}>
-                <HTML variant="sm" html={article.series.description} />
-              </Column>
-            </>
-          )}
-
-          <Column span={12}>
-            <Separator mb={4} />
-
-            <ArticleAd unit="Desktop_InContentLB2" size="970x250" />
-          </Column>
-        </GridColumns>
       </Join>
+
+      <Spacer mt={6} />
+
+      <GridColumns>
+        {article.series?.description && (
+          <Column span={6} start={4}>
+            <Flex alignItems="center" justifyContent="space-between">
+              <Text variant="lg-display">About the Series</Text>
+
+              <ArticleShare
+                description={article.title}
+                pathname={article.href}
+              />
+            </Flex>
+
+            {article.sponsor && (
+              <ArticleSponsorFragmentContainer
+                mt={4}
+                sponsor={article.sponsor}
+              />
+            )}
+
+            <HTML variant="md" mt={4} html={article.series.description} />
+          </Column>
+        )}
+      </GridColumns>
+
+      <Spacer mt={6} />
+
+      <FullBleed p={1} bg="black5">
+        <ArticleAd unit="Desktop_InContentLB2" size="970x250" />
+      </FullBleed>
     </>
   )
 }

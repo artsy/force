@@ -92,7 +92,7 @@ const Container = styled(Box)`
   }
 
   h3 {
-    ${toStyle({ ...THEME.textVariants.lg })}
+    ${toStyle({ ...THEME.textVariants["lg-display"] })}
   }
 
   ul {
@@ -118,11 +118,9 @@ const Container = styled(Box)`
     margin-left: ${themeGet("space.2")};
   }
 
-  /* Text treatment unique to article body copy */
   p,
   li {
-    font-size: 18px;
-    line-height: 30px;
+    ${toStyle({ ...THEME.textVariants.md })}
   }
 
   a {
@@ -141,6 +139,6 @@ const Container = styled(Box)`
   }
 
   blockquote {
-    ${toStyle({ ...THEME.textVariants.lg })}
+    ${toStyle({ ...THEME.textVariants.bq })}
   }
 `

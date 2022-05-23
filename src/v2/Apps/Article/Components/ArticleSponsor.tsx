@@ -19,7 +19,7 @@ const ArticleSponsor: FC<ArticleSponsorProps> = ({ sponsor, ...rest }) => {
 
   return (
     <Box {...rest}>
-      <Text variant="xs" textTransform="uppercase" mb={1}>
+      <Text variant="xs" fontWeight="bold" mb={0.5}>
         Presented in Partnership with
       </Text>
 

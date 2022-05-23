@@ -28,17 +28,15 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   const lg = cropped(src, { width: 1440, height: 600 })
   const xl = cropped(src, { width: 2000, height: 600 })
 
-  const { mobile, desktop } = useNavBarHeight()
-  const { ref, top, height } = useSizeAndPosition()
+  const { ref, ...position } = useSizeAndPosition()
+
+  const height = useFullBleedHeaderHeight()
 
   return (
     <Container
       ref={ref as any}
       bg="black10"
-      height={[
-        `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
-        `max(calc(50vh - ${desktop}px), ${MIN_HEIGHT}px)`,
-      ]}
+      height={height}
       position="relative"
       {...rest}
     >
@@ -47,8 +45,8 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
           style={
             fixed
               ? {
-                  top: `${top}px`,
-                  height: `${height}px`,
+                  top: `${position.top}px`,
+                  height: `${position.height}px`,
                   position: "fixed",
                   width: "100%",
                   left: 0,
@@ -73,8 +71,8 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
           style={
             fixed
               ? {
-                  top: `${top}px`,
-                  height: `${height}px`,
+                  top: `${position.top}px`,
+                  height: `${position.height}px`,
                   position: "fixed",
                   width: "100%",
                   left: 0,
@@ -101,6 +99,15 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
       {children}
     </Container>
   )
+}
+
+export const useFullBleedHeaderHeight = () => {
+  const { mobile, desktop } = useNavBarHeight()
+
+  return [
+    `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+    `max(calc(50vh - ${desktop}px), ${MIN_HEIGHT}px)`,
+  ]
 }
 
 export const FullBleedHeaderOverlay = styled(Flex)`
