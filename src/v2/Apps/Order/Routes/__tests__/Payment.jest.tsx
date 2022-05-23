@@ -238,7 +238,7 @@ describe("Payment", () => {
       })
     })
 
-    it("returns true when the feature is enabled", () => {
+    it("returns true when stripe_ACH is enabled", () => {
       const result = useFeatureFlag("stripe_ACH")
       expect(result).toBe(true)
     })
@@ -309,5 +309,49 @@ describe("Payment", () => {
     // Ran in to the error when following `createTestEnv`
     // Invariant Violation: commitMutation: expected "environment" to be an instance of "RelayModernEnvironment"
     it.todo("creates a bank debit setup")
+  })
+
+  describe("wire transfer enabled", () => {
+    beforeAll(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return {
+          featureFlags: {
+            wire_transfer: {
+              flagEnabled: true,
+            },
+          },
+          mediator: {
+            on: jest.fn(),
+            off: jest.fn(),
+            ready: jest.fn(),
+            trigger: jest.fn(),
+          },
+        }
+      })
+    })
+
+    it("returns true when wire_transfer is enabled", () => {
+      const result = useFeatureFlag("wire_transfer")
+      expect(result).toBe(true)
+    })
+
+    it("renders selection of credit card and bank transfer", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      expect(page.text()).toContain("Credit card")
+      expect(page.text()).toContain("Wire transfer")
+    })
+
+    it("renders credit card collapse when credit card is chosen as payment method", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      page.selectPaymentMethod(0)
+      const creditCardCollapse = page
+        .find(PaymentPickerFragmentContainer)
+        .closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(true)
+    })
+
+    it.todo("transitions to review step when wire transfer is chosen")
   })
 })
