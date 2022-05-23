@@ -25,7 +25,12 @@ import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-import { PaymentMethods } from "./index"
+
+export enum PaymentMethods {
+  CreditCard = "credit_card",
+  BankDebit = "bank_debit",
+  WireTransfer = "wire_transfer",
+}
 
 export interface Props {
   order: Payment_order
@@ -203,6 +208,7 @@ const getAvailablePaymentMethods = (
     />,
   ]
 
+  // push wire transfer as the last option
   if (isWireTransferEnabled) {
     paymentMethods.push(
       <BorderedRadio
@@ -217,6 +223,7 @@ const getAvailablePaymentMethods = (
     )
   }
 
+  // when available, unshift ACH since it's the first option we want to offer
   if (isACHEnabled) {
     paymentMethods.unshift(
       <BorderedRadio

@@ -35,12 +35,6 @@ export const ContinueButton = props => (
   </Button>
 )
 
-export enum PaymentMethods {
-  CreditCard = "credit_card",
-  BankDebit = "bank_debit",
-  WireTransfer = "wire_transfer",
-}
-
 export interface StripeProps {
   stripe: Stripe
   elements: StripeElements
