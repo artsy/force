@@ -58,7 +58,7 @@ Here's how to make Google auth work with local Force app:
 - Set up an Internet-facing URL for local Force app.
   As mentioned, you can use ngrok.
   Sign up for a free ngrok account. And create an auth token.
-  Launch local Force which lisens on port 5000.
+  Launch local Force which listens on port 5000.
   Run ngrok:
 
   ```
