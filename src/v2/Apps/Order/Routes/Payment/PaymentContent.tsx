@@ -48,9 +48,9 @@ export const PaymentContent: FC<Props> = props => {
     paymentPicker,
   } = props
   const isACHEnabled = useFeatureFlag("stripe_ACH")
-  const isWireTransferEnabled =
-    useFeatureFlag("wire_transfer") &&
-    order?.additionalPaymentMethods?.includes(PaymentMethods.WireTransfer)
+  const isWireTransferEnabled = useFeatureFlag("wire_transfer")
+  // TODO
+  //  && order?.additionalPaymentMethods?.includes(PaymentMethods.WireTransfer)
 
   const tracking = useTracking()
 
