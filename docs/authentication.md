@@ -61,22 +61,22 @@ Here's how to make Google auth work with local Force app:
   Launch local Force which lisens on port 5000.
   Run ngrok:
 
-```
-brew install ngrok
-ngrok config add-authtoken <your-ngrok-auth-token>
-ngrok http 5000 --response-header-add "content-security-policy: self;"
-```
+  ```
+  brew install ngrok
+  ngrok config add-authtoken <your-ngrok-auth-token>
+  ngrok http 5000 --response-header-add "content-security-policy: self;"
+  ```
 
-You will see an ngrok url like this one:
+  You will see an ngrok url like this one:
 
-```
-https://4dfe-71-247-23-28.ngrok.io -> http://localhost:5000
-```
+  ```
+  https://4dfe-71-247-23-28.ngrok.io -> http://localhost:5000
+  ```
 
-Visiting that public URL should load your local Force app.
+  Visiting that public URL should load your local Force app.
 
 - Register your ngrok URL on Google Cloud Platform as callback
-  Log into Google Cloud Platform using the creds in 1Pass `GMail` card.
+  - Log into Google Cloud Platform using the creds in 1Pass `GMail` card.
   - In GCP `Console`, select `API Project` from upper left.
   - Click the "Hamburger" at upper left, which shows left sidebar.
   - Click `API & Services > Credentials`
