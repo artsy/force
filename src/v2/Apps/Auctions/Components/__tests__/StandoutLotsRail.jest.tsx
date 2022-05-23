@@ -1,27 +1,28 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { StandoutLotsRailFragmentContainer } from "../StandoutLotsRail"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return <StandoutLotsRailFragmentContainer viewer={props.viewer} />
+  },
+  query: graphql`
+    query StandoutLotsRail_Test_Query @relay_test_operation {
+      viewer {
+        ...StandoutLotsRail_viewer
+      }
+    }
+  `,
+})
+
 describe("StandoutLotsRail", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
-
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => {
-      return <StandoutLotsRailFragmentContainer viewer={props.viewer} />
-    },
-    query: graphql`
-      query StandoutLotsRail_Test_Query @relay_test_operation {
-        viewer {
-          ...StandoutLotsRail_viewer
-        }
-      }
-    `,
-  })
 
   beforeAll(() => {
     useTracking.mockImplementation(() => {
@@ -31,55 +32,77 @@ describe("StandoutLotsRail", () => {
     })
   })
 
-  it("guards against null data", () => {
-    expect(() =>
-      getWrapper({
-        FilterArtworksConnection: () => ({
-          edges: null,
-        }),
-      })
-    ).not.toThrowError()
+  it("renders 'No Works to Show' and no carousel with null data", () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        edges: null,
+      }),
+    })
+
+    expect(
+      screen.queryByText("Works that Artsy curators love")
+    ).not.toBeInTheDocument()
+    expect(screen.getByText("No Works To Show")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
-  it("does not render if no trending lots", () => {
-    const wrapper = getWrapper({
+  it("renders 'No Works To Show' and no carousel when there are no trending lots", () => {
+    renderWithRelay({
       FilterArtworksConnection: () => ({
         edges: [],
       }),
     })
 
-    expect(wrapper.html()).not.toContain("Works that Artsy curators love")
-    expect(wrapper.html()).toContain("No Works To Show")
-    expect(wrapper.find("Carousel").length).toBe(0)
-    expect(wrapper.find("FillwidthItem").length).toBe(0)
+    expect(
+      screen.queryByText("Works that Artsy Curators love")
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText("No Works To Show")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
-  it("renders the correct components", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("Carousel")).toBeDefined()
-    expect(wrapper.find("FillwidthItem")).toBeDefined()
-  })
-
-  it("tracks clicks", () => {
-    const wrapper = getWrapper({
+  it('renders "Works that Artsy curators love" and a carousel', () => {
+    renderWithRelay({
       FilterArtworksConnection: () => ({
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })
-    wrapper.find("RouterLink").first().simulate("click")
+    expect(
+      screen.getByText("Works that Artsy curators love")
+    ).toBeInTheDocument()
+    expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
+  })
+
+  it("tracks clicks", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        edges: [{ node: { sale: { isClosed: false } } }],
+      }),
+    })
+
+    const link = (await screen.findAllByRole("link"))[0]
+
+    fireEvent(
+      link,
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
+    )
+
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "action": "clickedArtworkGroup",
-          "context_module": "standoutLots",
-          "context_page_owner_type": undefined,
-          "destination_page_owner_id": "<Artwork-mock-id-1>",
-          "destination_page_owner_slug": "<Artwork-mock-id-2>",
-          "destination_page_owner_type": "artwork",
-          "horizontal_slide_position": 0,
-          "type": "thumbnail",
-        },
-      ]
-    `)
+        Array [
+          Object {
+            "action": "clickedArtworkGroup",
+            "context_module": "standoutLots",
+            "context_page_owner_type": undefined,
+            "destination_page_owner_id": "<Artwork-mock-id-1>",
+            "destination_page_owner_slug": "<Artwork-mock-id-2>",
+            "destination_page_owner_type": "artwork",
+            "horizontal_slide_position": 0,
+            "type": "thumbnail",
+          },
+        ]
+      `)
   })
 })

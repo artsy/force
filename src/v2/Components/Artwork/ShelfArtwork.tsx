@@ -52,6 +52,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         textDecoration="none"
         onClick={onClick}
         data-test="artworkShelfArtwork"
+        data-testid="ShelfArtwork"
         {...containerProps}
       >
         <ResponsiveContainer artwork={artwork}>

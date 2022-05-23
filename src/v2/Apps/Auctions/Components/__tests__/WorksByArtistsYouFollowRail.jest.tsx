@@ -1,29 +1,30 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "../WorksByArtistsYouFollowRail"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return (
+      <WorksByArtistsYouFollowRailFragmentContainer viewer={props.viewer} />
+    )
+  },
+  query: graphql`
+    query WorksByArtistsYouFollowRail_Test_Query @relay_test_operation {
+      viewer {
+        ...WorksByArtistsYouFollowRail_viewer
+      }
+    }
+  `,
+})
+
 describe("WorksByArtistsYouFollowRail", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
-
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => {
-      return (
-        <WorksByArtistsYouFollowRailFragmentContainer viewer={props.viewer} />
-      )
-    },
-    query: graphql`
-      query WorksByArtistsYouFollowRail_Test_Query @relay_test_operation {
-        viewer {
-          ...WorksByArtistsYouFollowRail_viewer
-        }
-      }
-    `,
-  })
 
   beforeAll(() => {
     useTracking.mockImplementation(() => {
@@ -33,41 +34,64 @@ describe("WorksByArtistsYouFollowRail", () => {
     })
   })
 
-  it("guards against null data", () => {
-    expect(() =>
-      getWrapper({
-        SaleArtworksConnection: () => ({
-          edges: null,
-        }),
-      })
-    ).not.toThrowError()
+  it("renders 'No Works to Show' and no carousel with null data", () => {
+    renderWithRelay({
+      SaleArtworksConnection: () => ({
+        edges: null,
+      }),
+    })
+
+    expect(
+      screen.queryByText("Works at auction by artists you follow")
+    ).not.toBeInTheDocument()
+    expect(screen.getByText("No Works To Show")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
-  it("does not render if no followed artists", () => {
-    const wrapper = getWrapper({
+  it("renders 'No Works To Show' and no carousel when there are no followed artists", () => {
+    renderWithRelay({
       SaleArtworksConnection: () => ({
         edges: [],
       }),
     })
 
-    expect(wrapper.html()).not.toContain(
-      "Works at auction by artists you follow"
+    expect(
+      screen.queryByText("Works at auction by artists you follow")
+    ).not.toBeInTheDocument()
+    expect(screen.getByText("No Works To Show")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
+  })
+
+  it('renders "Works at auction by artists you follow" and a carousel', () => {
+    renderWithRelay({
+      SaleArtworksConnection: () => ({
+        edges: [{ node: { sale: { isClosed: false } } }],
+      }),
+    })
+
+    expect(
+      screen.queryByText("Works at auction by artists you follow")
+    ).toBeInTheDocument()
+    expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
+  })
+
+  it("tracks clicks", async () => {
+    renderWithRelay({
+      SaleArtworksConnection: () => ({
+        edges: [{ node: { sale: { isClosed: false } } }],
+      }),
+    })
+    const link = (await screen.findAllByRole("link"))[0]
+
+    fireEvent(
+      link,
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
     )
-    expect(wrapper.html()).toContain("No Works To Show")
-    expect(wrapper.find("Carousel").length).toBe(0)
-    expect(wrapper.find("FillwidthItem").length).toBe(0)
-  })
 
-  it("renders the correct components", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.html()).toContain("Works at auction by artists you follow")
-    expect(wrapper.find("Carousel")).toBeDefined()
-    expect(wrapper.find("FillwidthItem")).toBeDefined()
-  })
-
-  it("tracks clicks", () => {
-    const wrapper = getWrapper()
-    wrapper.find("RouterLink").first().simulate("click")
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
       Array [
         Object {

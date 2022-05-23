@@ -1,27 +1,28 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { TrendingLotsRailFragmentContainer } from "../TrendingLotsRail"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return <TrendingLotsRailFragmentContainer viewer={props.viewer} />
+  },
+  query: graphql`
+    query TrendingLotsRail_Test_Query @relay_test_operation {
+      viewer {
+        ...TrendingLotsRail_viewer
+      }
+    }
+  `,
+})
+
 describe("TrendingLotsRail", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
-
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => {
-      return <TrendingLotsRailFragmentContainer viewer={props.viewer} />
-    },
-    query: graphql`
-      query TrendingLotsRail_Test_Query @relay_test_operation {
-        viewer {
-          ...TrendingLotsRail_viewer
-        }
-      }
-    `,
-  })
 
   beforeAll(() => {
     useTracking.mockImplementation(() => {
@@ -31,37 +32,49 @@ describe("TrendingLotsRail", () => {
     })
   })
 
-  it("guards against null data", () => {
-    expect(() =>
-      getWrapper({
-        SaleArtworksConnection: () => ({
-          edges: null,
-        }),
-      })
-    ).not.toThrowError()
+  it("renders 'No Works to Show' and no carousel with null data", () => {
+    renderWithRelay({
+      SaleArtworksConnection: () => ({
+        edges: null,
+      }),
+    })
+
+    expect(
+      screen.queryByText("Works with the most bids today")
+    ).not.toBeInTheDocument()
+    expect(screen.getByText("No Works To Show")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
-  it("does not render if no trending lots", () => {
-    const wrapper = getWrapper({
+  it("renders 'No Works To Show' and no carousel when there are no trending lots", () => {
+    renderWithRelay({
       SaleArtworksConnection: () => ({
         edges: [],
       }),
     })
 
-    expect(wrapper.html()).not.toContain("Works with the most bids today")
-    expect(wrapper.html()).toContain("No Works To Show")
-    expect(wrapper.find("Carousel").length).toBe(0)
-    expect(wrapper.find("FillwidthItem").length).toBe(0)
+    expect(
+      screen.queryByText("Works with the most bids today")
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText("No Works To Show")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
   it("renders the correct components", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("Carousel")).toBeDefined()
-    expect(wrapper.find("FillwidthItem")).toBeDefined()
+    renderWithRelay({
+      SaleArtworksConnection: () => ({
+        edges: [{ node: { sale: { isClosed: true } } }],
+      }),
+    })
+    expect(
+      screen.getByText("Works with the most bids today")
+    ).toBeInTheDocument()
+    expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
   })
 
   it("skips closed lots", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Boolean: () => true,
       SaleArtworksConnection: () => {
         return {
@@ -70,16 +83,28 @@ describe("TrendingLotsRail", () => {
       },
     })
 
-    expect(wrapper.text()).toContain("No Works To Show")
+    expect(screen.queryByText("No Works To Show")).toBeInTheDocument()
   })
 
-  it("tracks clicks", () => {
-    const wrapper = getWrapper({
-      SaleArtworksConnection: () => ({
-        edges: [{ node: { sale: { isClosed: false } } }],
-      }),
+  it("tracks clicks", async () => {
+    renderWithRelay({
+      SaleArtworksConnection: () => {
+        return {
+          edges: [{ node: { sale: { isClosed: false } } }],
+        }
+      },
     })
-    wrapper.find("RouterLink").first().simulate("click")
+
+    const link = (await screen.findAllByRole("link"))[0]
+
+    fireEvent(
+      link,
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
+    )
+
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
       Array [
         Object {
