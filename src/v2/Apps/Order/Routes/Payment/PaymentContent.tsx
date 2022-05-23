@@ -204,7 +204,7 @@ const getAvailablePaymentMethods = (
   ]
 
   if (isWireTransferEnabled) {
-    paymentMethods.unshift(
+    paymentMethods.push(
       <BorderedRadio
         value={PaymentMethods.WireTransfer}
         label={
