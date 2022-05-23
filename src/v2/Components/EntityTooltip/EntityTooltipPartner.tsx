@@ -58,6 +58,7 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
             alt=""
             lazyLoad
             mb={2}
+            style={{ display: "block" }}
           />
         </RouterLink>
       )}

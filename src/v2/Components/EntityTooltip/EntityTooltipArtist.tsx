@@ -65,6 +65,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
                     height={image.resized.height}
                     alt=""
                     lazyLoad
+                    style={{ display: "block" }}
                   />
                 )
               })}
