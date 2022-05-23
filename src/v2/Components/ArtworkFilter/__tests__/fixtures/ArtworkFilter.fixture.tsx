@@ -4,6 +4,9 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
   viewer: {
     filtered_artworks: {
       __isArtworkConnectionInterface: "FilterArtworksConnection",
+      counts: {
+        total: 0,
+      },
       id:
         "RmlsdGVyQXJ0d29ya3M6eyJhZ2dyZWdhdGlvbnMiOlsidG90YWwiXSwia2V5d29yZCI6ImFuZHkgd2FyaG9sIn0=",
       pageInfo: { hasNextPage: true, endCursor: "YXJyYXljb25uZWN0aW9uOjI5" },

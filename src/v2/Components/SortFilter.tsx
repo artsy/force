@@ -1,5 +1,5 @@
 import { Box, Flex, Select } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 
 export type SortOptions = Array<{
   value: string

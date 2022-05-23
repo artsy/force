@@ -1,6 +1,10 @@
 import { screen, fireEvent } from "@testing-library/react"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { ArtworkFilter, BaseArtworkFilter } from "v2/Components/ArtworkFilter"
+import {
+  ArtworkFilter,
+  BaseArtworkFilter,
+  getTotalCountLabel,
+} from "v2/Components/ArtworkFilter"
 import { MockBoot } from "v2/DevTools"
 import { renderToString } from "v2/DevTools/__tests__/MockRelayRendererFixtures"
 import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
@@ -286,6 +290,32 @@ describe("ArtworkFilter", () => {
         ...initialArtworkFilterState,
         ...filters,
         sort: "sortTest2",
+      })
+    })
+
+    describe("total count label", () => {
+      it("computs total count correctly", () => {
+        let label = getTotalCountLabel({ total: "0", isAuctionArtwork: false })
+        expect(label).toEqual("0 Artworks:")
+        label = getTotalCountLabel({ total: "1", isAuctionArtwork: false })
+        expect(label).toEqual("1 Artwork:")
+        label = getTotalCountLabel({ total: "10", isAuctionArtwork: false })
+        expect(label).toEqual("10 Artworks:")
+        label = getTotalCountLabel({ total: "1", isAuctionArtwork: true })
+        expect(label).toEqual("1 Lot:")
+        label = getTotalCountLabel({ total: "10", isAuctionArtwork: true })
+        expect(label).toEqual("10 Lots:")
+      })
+
+      it("renders total count", () => {
+        renderWithRelay({
+          FilterArtworksConnection: () => ({
+            counts: {
+              total: 10,
+            },
+          }),
+        })
+        expect(screen.getByText("10 Artworks:")).toBeInTheDocument()
       })
     })
   })
