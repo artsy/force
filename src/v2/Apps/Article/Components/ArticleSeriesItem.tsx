@@ -1,11 +1,11 @@
 import {
   Box,
   Column,
-  Flex,
   GridColumns,
   ResponsiveBox,
   Text,
   Image,
+  Spacer,
 } from "@artsy/palette"
 import { FC } from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -23,42 +23,31 @@ const ArticleSeriesItem: FC<ArticleSeriesItemProps> = ({ article }) => {
 
   return (
     <RouterLink to={article.href} display="block" textDecoration="none">
-      <GridColumns
-        border="1px solid"
-        borderColor="black100"
-        gridRowGap={2}
-        p={[2, 4]}
-      >
+      <GridColumns border="1px solid" borderColor="black10" p={2}>
         <Column span={6} order={[1, 0]}>
-          <Flex
-            flexDirection="column"
-            justifyContent="space-between"
-            height="100%"
-          >
-            <Box>
-              {context && (
-                <Text variant="xs" textTransform="uppercase" mb={0.5}>
-                  {context}
-                </Text>
-              )}
+          {context && (
+            <Text variant="sm-display" fontWeight="bold" mb={1}>
+              {context}
+            </Text>
+          )}
 
-              <Text variant="xl" mb={2}>
-                {article.thumbnailTitle ?? article.title}
-              </Text>
+          <Text variant="xl" mb={1}>
+            {article.thumbnailTitle ?? article.title}
+          </Text>
 
-              <Text variant="lg-display">{article.description}</Text>
-            </Box>
+          <Text variant="lg-display">{article.description}</Text>
 
-            <Flex mt={4}>
-              <Text variant="xs" textTransform="uppercase">
-                {article.byline}
-              </Text>
+          <Spacer mt={4} />
 
-              <Text variant="xs" textTransform="uppercase" ml={2}>
-                {article.publishedAt}
-              </Text>
-            </Flex>
-          </Flex>
+          <Text variant="md" color="black60">
+            {article.byline}
+          </Text>
+
+          <Spacer mt={4} />
+
+          <Text variant="xs" fontWeight="bold">
+            {article.publishedAt}
+          </Text>
         </Column>
 
         <Column span={6}>

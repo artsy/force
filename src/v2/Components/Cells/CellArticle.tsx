@@ -54,7 +54,7 @@ const CellArticle: FC<CellArticleProps> = ({
         )}
       </ResponsiveBox>
 
-      <Text variant="xs" textTransform="uppercase" mt={1}>
+      <Text variant="xs" fontWeight="bold" mt={1}>
         {article.vertical}
       </Text>
 

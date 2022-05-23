@@ -8,13 +8,14 @@ import {
   Text,
   Image,
   FullBleed,
+  Flex,
 } from "@artsy/palette"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleBody_article } from "v2/__generated__/ArticleBody_article.graphql"
 import { ArticleShare } from "v2/Components/ArticleShare"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ArticleHeaderFragmentContainer } from "./ArticleHeader"
+import { ArticleHeroFragmentContainer } from "./ArticleHero"
 import { ArticleBylineFragmentContainer } from "./ArticleByline"
 import { ArticleContextProvider } from "./ArticleContext"
 import { ArticleAd } from "./ArticleAd"
@@ -30,6 +31,8 @@ interface ArticleBodyProps {
 }
 
 const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
+  const centered = article.layout === "FEATURE" || article.layout === "NEWS"
+
   return (
     <AnalyticsContext.Provider
       value={{
@@ -45,56 +48,82 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </FullBleed>
         )}
 
-        <ArticleHeaderFragmentContainer article={article} />
+        <ArticleHeroFragmentContainer article={article} />
 
         <Spacer mt={4} />
 
         <GridColumns gridRowGap={4}>
           <Column
-            span={[12, 8, 8, 6]}
-            // Centers layout for features & news
-            {...(article.layout === "FEATURE" || article.layout === "NEWS"
-              ? { start: [1, 3, 3, 4] }
-              : {})}
+            {...(centered
+              ? { span: [12, 8, 6], start: [1, 3, 4] }
+              : { span: 7 })}
           >
-            <Text
-              variant="xs"
-              textTransform="uppercase"
-              display="flex"
-              alignItems="center"
-              lineHeight={1}
-            >
-              {article.publishedAt}
+            {/* If there's no hero display a normal headline */}
+            {!article.hero && (
+              <>
+                <Text variant="sm" fontWeight="bold">
+                  {article.vertical}
+                </Text>
 
-              <ArticleNewsSourceFragmentContainer article={article} />
+                <RouterLink
+                  to={article.href}
+                  display="block"
+                  textDecoration="none"
+                >
+                  <Text variant={["lg-display", "xl", "xxl"]}>
+                    {article.title}
+                  </Text>
 
-              <Spacer ml={2} />
+                  <Text variant={["md", "lg-display"]} color="black60">
+                    {article.byline}
+                  </Text>
+                </RouterLink>
+
+                <Spacer mt={2} />
+              </>
+            )}
+
+            <Flex justifyContent="space-between">
+              <Text
+                variant="xs"
+                fontWeight="bold"
+                display="flex"
+                alignItems="center"
+                lineHeight={1}
+              >
+                {article.publishedAt}
+
+                <ArticleNewsSourceFragmentContainer article={article} />
+              </Text>
 
               <ArticleShare
                 description={article.title}
                 pathname={article.href}
               />
-            </Text>
+            </Flex>
 
-            <Spacer mt={4} />
+            <Spacer mt={6} />
+
+            {/* Begin article contents */}
 
             {article.leadParagraph && (
               <HTML
-                variant="sm"
+                variant="md"
                 html={article.leadParagraph}
                 maxWidth={OPTIMAL_READING_WIDTH}
-                mx="auto"
                 mb={4}
               />
             )}
 
             <Join separator={<Spacer mt={4} />}>
               {article.sections.map((section, i) => {
+                const isFirst = article.layout === "FEATURE" && i === 0
                 const isLast = i === article.sections.length - 1
 
                 return (
                   <Fragment key={i}>
                     <ArticleSectionFragmentContainer
+                      isFirst={isFirst}
                       isLast={isLast}
                       section={section}
                     />
@@ -112,9 +141,8 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
             {article.postscript && (
               <HTML
-                variant="sm"
+                variant="md"
                 maxWidth={OPTIMAL_READING_WIDTH}
-                mx="auto"
                 mt={4}
                 fontStyle="italic"
                 color="black60"
@@ -124,14 +152,14 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </Column>
 
           {article.layout === "STANDARD" && (
-            <Column span={4}>
+            <Column span={4} start={9}>
               {article.relatedArticles.length > 0 && (
                 <>
-                  <Text variant="xs" textTransform="uppercase" mb={4}>
+                  <Text variant="lg-display" mb={2}>
                     Related Stories
                   </Text>
 
-                  <Join separator={<Spacer mt={1} />}>
+                  <Join separator={<Spacer mt={2} />}>
                     {article.relatedArticles.map(relatedArticle => {
                       const img = relatedArticle.thumbnailImage?.cropped
 
@@ -143,18 +171,18 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                           textDecoration="none"
                           aria-label={`${relatedArticle.title} by ${relatedArticle.byline}`}
                         >
-                          <Box mr={1} flexShrink={0}>
+                          <Box mr={2} flexShrink={0}>
                             {img ? (
                               <Image
-                                width={80}
-                                height={60}
+                                width={100}
+                                height={100}
                                 src={img.src}
                                 srcSet={img.srcSet}
                                 alt=""
                                 lazyLoad
                               />
                             ) : (
-                              <Box bg="black10" width={80} height={60} />
+                              <Box bg="black10" width={100} height={100} />
                             )}
                           </Box>
 
@@ -163,11 +191,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                               {relatedArticle.title}
                             </Text>
 
-                            <Text
-                              variant="sm-display"
-                              color="black60"
-                              lineClamp={1}
-                            >
+                            <Text variant="xs" color="black60" lineClamp={1}>
                               {relatedArticle.byline}
                             </Text>
                           </Box>
@@ -178,7 +202,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 </>
               )}
 
-              <Spacer mt={4} />
+              <Spacer mt={6} />
 
               <ArticleAd
                 bg="black5"
@@ -199,10 +223,15 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
   {
     article: graphql`
       fragment ArticleBody_article on Article {
-        ...ArticleHeader_article
+        ...ArticleHero_article
         ...ArticleByline_article
         ...ArticleSectionAd_article
         ...ArticleNewsSource_article
+        hero {
+          __typename
+        }
+        vertical
+        byline
         internalID
         slug
         layout
@@ -220,7 +249,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
           href
           byline
           thumbnailImage {
-            cropped(width: 80, height: 60) {
+            cropped(width: 100, height: 100) {
               src
               srcSet
             }

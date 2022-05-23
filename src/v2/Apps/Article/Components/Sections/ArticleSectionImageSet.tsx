@@ -80,7 +80,7 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                   />
 
                   <Box ml={2}>
-                    <Text variant="lg-display">
+                    <Text variant="sm-display">
                       {section.title ? (
                         <>
                           {section.title}{" "}
@@ -94,13 +94,13 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                       )}
                     </Text>
 
-                    <Text variant="lg-display" color="black60">
+                    <Text variant="sm-display" color="black60">
                       View Slideshow
                     </Text>
                   </Box>
                 </Flex>
 
-                <ImageSetIcon width={40} height={40} ml={2} />
+                <ImageSetIcon width={20} height={20} ml={2} />
               </Clickable>
             )
 
@@ -132,7 +132,7 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                       style={{ boxShadow: DROP_SHADOW }}
                     >
                       <Box>
-                        <Text variant="lg-display">
+                        <Text variant="sm-display">
                           {section.title ? (
                             <>
                               {section.title}{" "}
@@ -146,12 +146,12 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                           )}
                         </Text>
 
-                        <Text variant="lg-display" color="black60">
+                        <Text variant="sm-display" color="black60">
                           View Slideshow
                         </Text>
                       </Box>
 
-                      <ImageSetIcon width={40} height={40} ml={2} />
+                      <ImageSetIcon width={20} height={20} ml={2} />
                     </Box>
                   </Box>
                 </Clickable>

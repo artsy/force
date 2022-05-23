@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
-export type ArticleHeader_article = {
+export type ArticleHero_article = {
     readonly title: string | null;
     readonly href: string | null;
     readonly vertical: string | null;
@@ -26,12 +26,12 @@ export type ArticleHeader_article = {
             } | null;
         } | null | undefined;
     } | null;
-    readonly " $refType": "ArticleHeader_article";
+    readonly " $refType": "ArticleHero_article";
 };
-export type ArticleHeader_article$data = ArticleHeader_article;
-export type ArticleHeader_article$key = {
-    readonly " $data"?: ArticleHeader_article$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHeader_article">;
+export type ArticleHero_article$data = ArticleHero_article;
+export type ArticleHero_article$key = {
+    readonly " $data"?: ArticleHero_article$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArticleHero_article">;
 };
 
 
@@ -57,7 +57,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArticleHeader_article",
+  "name": "ArticleHero_article",
   "selections": [
     {
       "alias": null,
@@ -186,5 +186,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '94261789d0d9e4966edcbe6cbac8b65f';
+(node as any).hash = '45805b6be826c1703e38be65c93b2225';
 export default node;

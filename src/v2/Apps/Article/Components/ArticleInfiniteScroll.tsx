@@ -235,23 +235,21 @@ const ArticleInfiniteScrollPlaceholder: FC = () => {
           </Column>
 
           <Column span={4}>
-            <SkeletonText variant="xs" mb={4}>
+            <SkeletonText variant="lg-display" mb={2}>
               Related Stories
             </SkeletonText>
 
-            <Join separator={<Spacer mt={1} />}>
+            <Join separator={<Spacer mt={2} />}>
               {new Array(3).fill(0).map((_, i) => (
                 <Flex key={i}>
-                  <SkeletonBox width={80} height={60} mr={1} />
+                  <SkeletonBox width={100} height={100} mr={2} />
 
                   <Box>
                     <SkeletonText variant="sm-display">
                       Related Article Title
                     </SkeletonText>
 
-                    <SkeletonText variant="sm-display">
-                      Artsy Editors
-                    </SkeletonText>
+                    <SkeletonText variant="xs">Artsy Editors</SkeletonText>
                   </Box>
                 </Flex>
               ))}
