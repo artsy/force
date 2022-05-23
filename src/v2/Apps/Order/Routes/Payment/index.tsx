@@ -18,10 +18,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
 import { Box, Button, Flex, Spacer } from "@artsy/palette"
-import {
-  PaymentPicker,
-  PaymentPickerFragmentContainer,
-} from "v2/Apps/Order/Components/PaymentPicker"
+import { PaymentPicker } from "v2/Apps/Order/Components/PaymentPicker"
 import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
 import {
   CommitMutation,

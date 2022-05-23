@@ -52,11 +52,11 @@ export const PaymentContent: FC<Props> = props => {
     useFeatureFlag("wire_transfer") &&
     order?.additionalPaymentMethods?.includes(PaymentMethods.WireTransfer)
 
+  const tracking = useTracking()
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     PaymentMethods
   >(isACHEnabled ? PaymentMethods.BankDebit : PaymentMethods.CreditCard)
-
-  const tracking = useTracking()
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
