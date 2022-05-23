@@ -3,12 +3,14 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Box, Button, Spacer } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
+import { preventHardReload } from "v2/Apps/Order/OrderApp"
 
 interface Props {
   order: { mode: string | null; internalID: string }
+  returnURL: string
 }
 
-export const BankDebitForm: FC<Props> = ({ order }) => {
+export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
@@ -50,10 +52,14 @@ export const BankDebitForm: FC<Props> = ({ order }) => {
       return
     }
 
+    // Disable the "leave/reload site?" confirmation dialog as we're about to
+    // confirm Stripe payment setup which leaves and redirects back.
+    window.removeEventListener("beforeunload", preventHardReload)
+
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: "https://staging.artsy.net/",
+        return_url: returnURL,
       },
     })
 

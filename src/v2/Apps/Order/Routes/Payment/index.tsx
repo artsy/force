@@ -13,6 +13,7 @@ import { Router } from "found"
 import { createRef, FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { getClientParam } from "v2/Utils/getClientParam"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
@@ -27,6 +28,7 @@ import {
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { SetPayment } from "../../Components/SetPayment"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
@@ -149,6 +151,20 @@ export const PaymentRoute: FC<Props> = props => {
     })
   }
 
+  const setupIntentId = getClientParam("setup_intent")
+  const isSettingPayment =
+    setupIntentId &&
+    getClientParam("setup_intent_client_secret") &&
+    getClientParam("redirect_status") === "succeeded"
+
+  const onSetPaymentSuccess = () => {
+    props.router.push(`/orders/${props.order.internalID}/review`)
+  }
+  const onSetPaymentError = error => {
+    logger.error(error)
+    props.dialog.showErrorDialog()
+  }
+
   return (
     <Box data-test="orderPayment">
       <OrderStepper
@@ -158,14 +174,24 @@ export const PaymentRoute: FC<Props> = props => {
       <TwoColumnLayout
         Content={
           isACHEnabled ? (
-            <PaymentContent
-              commitMutation={props.commitMutation}
-              isLoading={isLoading}
-              me={props.me}
-              order={props.order}
-              onContinue={onContinue}
-              paymentPicker={paymentPicker}
-            />
+            <>
+              {isSettingPayment && (
+                <SetPayment
+                  order={order}
+                  setupIntentId={setupIntentId!}
+                  onSuccess={onSetPaymentSuccess}
+                  onError={onSetPaymentError}
+                />
+              )}
+              <PaymentContent
+                commitMutation={props.commitMutation}
+                isLoading={isLoading}
+                me={props.me}
+                order={props.order}
+                onContinue={onContinue}
+                paymentPicker={paymentPicker}
+              />
+            </>
           ) : (
             <Flex
               flexDirection="column"
