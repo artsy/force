@@ -466,6 +466,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         mode
         source
         itemsTotal(precision: 2)
+        impulseConversationId
         lineItems {
           edges {
             node {
@@ -481,14 +482,10 @@ export const ReviewFragmentContainer = createFragmentContainer(
           }
         }
         ... on CommerceOfferOrder {
-          impulseConversationId
           myLastOffer {
             hasDefiniteTotal
             internalID
           }
-        }
-        ... on CommerceBuyOrder {
-          impulseConversationId
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order

@@ -11,6 +11,7 @@ export type Review_order = {
     readonly mode: CommerceOrderModeEnum | null;
     readonly source: CommerceOrderSourceEnum;
     readonly itemsTotal: string | null;
+    readonly impulseConversationId: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -25,7 +26,6 @@ export type Review_order = {
             } | null;
         } | null> | null;
     } | null;
-    readonly impulseConversationId?: string | null | undefined;
     readonly myLastOffer?: {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
@@ -54,13 +54,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "impulseConversationId",
   "storageKey": null
 };
 return {
@@ -96,6 +89,13 @@ return {
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "impulseConversationId",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -163,7 +163,6 @@ return {
     {
       "kind": "InlineFragment",
       "selections": [
-        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -185,14 +184,6 @@ return {
         }
       ],
       "type": "CommerceOfferOrder",
-      "abstractKey": null
-    },
-    {
-      "kind": "InlineFragment",
-      "selections": [
-        (v2/*: any*/)
-      ],
-      "type": "CommerceBuyOrder",
       "abstractKey": null
     },
     {
@@ -230,5 +221,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '577a43e82e2a7d5341691a79f8c138a4';
+(node as any).hash = 'c482565243c19702134ac1b8bd136a80';
 export default node;

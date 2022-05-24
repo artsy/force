@@ -57,7 +57,8 @@ const { _mockStripe } = require("@stripe/stripe-js")
 
 const testOrder: ReviewTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
-  impulseConversationId: "1234",
+  internalID: "1234",
+  impulseConversationId: null,
 }
 
 class ReviewTestPage extends OrderAppTestPage {
@@ -207,7 +208,8 @@ describe("Review", () => {
         mockData: {
           order: {
             ...OfferOrderWithShippingDetails,
-            impulseConversationId: "offer-order-id",
+            internalID: "offer-order-id",
+            impulseConversationId: null,
           },
         },
       })
@@ -239,6 +241,7 @@ describe("Review", () => {
         mockData: {
           order: {
             ...OfferOrderWithShippingDetailsAndNote,
+            impulseConversationId: null,
           },
         },
       })
@@ -318,7 +321,8 @@ describe("Review", () => {
         mockData: {
           order: {
             ...buyOrderWithArtaShippingDetails,
-            impulseConversationId: "1234",
+            internalID: "1234",
+            impulseConversationId: null,
           },
         },
       })
@@ -357,7 +361,12 @@ describe("Review", () => {
     let page: ReviewTestPage
     beforeEach(async () => {
       page = await buildPage({
-        mockData: { order: { ...OfferOrderWithMissingMetadata } },
+        mockData: {
+          order: {
+            ...OfferOrderWithMissingMetadata,
+            impulseConversationId: "5665",
+          },
+        },
       })
     })
 
@@ -378,6 +387,7 @@ describe("Review", () => {
         mockData: {
           order: {
             ...BuyOrderWithShippingDetails,
+            impulseConversationId: null,
           },
         },
       })
@@ -401,7 +411,7 @@ describe("Review", () => {
           order: {
             ...BuyOrderWithShippingDetails,
             source: "inquiry",
-            conversation: { impulseConversationId: "5665" },
+            impulseConversationId: "5665",
           },
         },
       })
