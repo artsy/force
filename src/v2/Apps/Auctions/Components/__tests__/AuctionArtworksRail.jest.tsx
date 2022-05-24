@@ -1,30 +1,31 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { AuctionArtworksRailFragmentContainer } from "../AuctionArtworksRail"
 import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-describe("AuctionArtworksRail", () => {
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => {
-      return (
-        <AuctionArtworksRailFragmentContainer
-          sale={props.sale}
-          tabType="current"
-        />
-      )
-    },
-    query: graphql`
-      query AuctionArtworksRail_Test_Query @relay_test_operation {
-        sale(id: "xxx") {
-          ...AuctionArtworksRail_sale
-        }
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => {
+    return (
+      <AuctionArtworksRailFragmentContainer
+        sale={props.sale}
+        tabType="current"
+      />
+    )
+  },
+  query: graphql`
+    query AuctionArtworksRail_Test_Query @relay_test_operation {
+      sale(id: "xxx") {
+        ...AuctionArtworksRail_sale
       }
-    `,
-  })
+    }
+  `,
+})
 
+describe("AuctionArtworksRail", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 
@@ -37,7 +38,7 @@ describe("AuctionArtworksRail", () => {
   })
 
   it("renders correct components and data", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Sale: () => ({
         internalID: "testid123",
         href: "/auction/test-href",
@@ -46,26 +47,29 @@ describe("AuctionArtworksRail", () => {
       }),
     })
 
-    expect(wrapper.find("Waypoint")).toBeDefined()
-    expect(wrapper.find("RouterLink")).toBeDefined()
-    expect(wrapper.find("RouterLink").first().props().to).toContain(
-      "/auction/test-href"
-    )
-
-    const text = wrapper.text()
-    expect(text).toContain("Test Href")
-    expect(text).toContain("Ends Apr 10 at 8:27pm UTC")
+    expect(screen.getByText("Test Href")).toBeInTheDocument()
+    expect(screen.getByText("Ends Apr 10 at 8:27pm UTC")).toBeInTheDocument()
+    expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
   })
 
-  it("tracks clicks", () => {
-    const wrapper = getWrapper({
+  it("tracks clicks", async () => {
+    renderWithRelay({
       Sale: () => ({
         internalID: "sale-id",
         slug: "sale-slug",
       }),
     })
 
-    wrapper.find("RouterLink").first().simulate("click")
+    const link = (await screen.findAllByRole("link"))[0]
+
+    fireEvent(
+      link,
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      })
+    )
+
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
       Array [
         Object {
