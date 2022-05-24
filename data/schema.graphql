@@ -10213,6 +10213,8 @@ enum MyCollectionArtworkSorts {
 
 # A connection to a list of items.
 type MyCollectionConnection {
+  artistsCount: Int!
+  artworksCount: Int!
   default: Boolean!
   description: String!
 
@@ -10283,6 +10285,8 @@ type MyCollectionEdge {
 }
 
 type MyCollectionInfo {
+  artistsCount: Int!
+  artworksCount: Int!
   default: Boolean!
   description: String!
   includesPurchasedArtworks: Boolean!
