@@ -11,6 +11,7 @@ export type ShowApp_show = {
     readonly internalID: string;
     readonly slug: string;
     readonly about: string | null;
+    readonly isFairBooth: boolean | null;
     readonly viewingRoomsConnection: {
         readonly edges: ReadonlyArray<{
             readonly __typename: string;
@@ -106,6 +107,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isFairBooth",
       "storageKey": null
     },
     {
@@ -349,5 +357,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '338edf3be7508a8349a7c0a5e55f4456';
+(node as any).hash = 'bbf55dca2eade965d8fcdb063ae824be';
 export default node;

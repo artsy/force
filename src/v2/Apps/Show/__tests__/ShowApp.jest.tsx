@@ -28,8 +28,6 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 
-const useRouter = jest.spyOn(require("v2/System/Router/useRouter"), "useRouter")
-
 const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
   Component: ShowAppFragmentContainer,
   query: graphql`
@@ -89,9 +87,10 @@ describe("ShowApp", () => {
     expect(wrapper.find(ShowViewingRoom)).toHaveLength(1)
   })
 
-  it("do not render navigation banner if have not param", () => {
+  it("do not render navigation banner by default", () => {
     const wrapper = getWrapper({
       Show: () => ({
+        isFairBooth: false,
         name: "Example Show",
         fair: { name: "Example Fair", href: "example" },
       }),
@@ -100,19 +99,10 @@ describe("ShowApp", () => {
     expect(wrapper.find("ShowNavigationBanner").length).toEqual(0)
   })
 
-  it("render navigation baner when redirect from fair page", () => {
-    useRouter.mockImplementation(() => ({
-      match: {
-        location: {
-          query: {
-            from_fair: true,
-          },
-        },
-      },
-    }))
-
+  it("render navigation banner on fair booth pages", () => {
     const wrapper = getWrapper({
       Show: () => ({
+        isFairBooth: true,
         name: "Example Show",
         fair: { name: "Example Fair", href: "example" },
       }),
