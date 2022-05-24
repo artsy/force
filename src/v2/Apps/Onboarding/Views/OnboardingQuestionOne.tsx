@@ -9,7 +9,7 @@ import {
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingQuestionOne: FC = () => {
-  const { next, setAnswers } = useOnboardingContext()
+  const { next, setAnswerOne } = useOnboardingContext()
 
   return (
     <Flex flexDirection="column">
@@ -32,7 +32,7 @@ export const OnboardingQuestionOne: FC = () => {
                 size="small"
                 variant="secondaryOutline"
                 onClick={() => {
-                  setAnswers([option])
+                  setAnswerOne(option)
                   next()
                 }}
               >

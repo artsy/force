@@ -10,38 +10,40 @@ import {
   SetStateAction,
 } from "react"
 import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
-import { useEngine } from "./config"
+import { useConfig } from "./config"
 
-export type Context = {
-  answer: string | null
+type Answer = string | null
+
+export type Basis = {
+  answer: Answer
 }
 
-export const DEFAULT_CONTEXT: Context = {
+export const DEFAULT_BASIS: Basis = {
   answer: null,
 }
 
-type AnswersState = [] | [string] | [string, string]
-
 const OnboardingContext = createContext<{
-  answers: AnswersState
-  context: React.RefObject<Context>
+  answers: [Answer, Answer]
+  basis: React.RefObject<Basis>
   current: string
-  engine: WorkflowEngine
+  workflowEngine: WorkflowEngine
   next(): void
   onDone(): void
   progress: number
-  setAnswers: Dispatch<SetStateAction<AnswersState>>
-  setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
+  setAnswerOne: Dispatch<SetStateAction<Answer>>
+  setAnswerTwo: Dispatch<SetStateAction<Answer>>
+  setBasis: (updatedBasis: Partial<Basis>) => React.RefObject<Basis>
 }>({
-  answers: [],
-  context: createRef<Context>(),
+  answers: [null, null],
+  basis: createRef<Basis>(),
   current: "",
-  engine: new WorkflowEngine({ workflow: [] }),
+  workflowEngine: new WorkflowEngine({ workflow: [] }),
   next: () => {},
   onDone: () => {},
   progress: 0,
-  setContext: () => createRef<Context>(),
-  setAnswers: () => {},
+  setBasis: () => createRef<Basis>(),
+  setAnswerOne: () => {},
+  setAnswerTwo: () => {},
 })
 
 interface OnboardingProviderProps {
@@ -52,31 +54,34 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   children,
   onDone,
 }) => {
-  const context = useRef<Context>(DEFAULT_CONTEXT)
+  const basis = useRef<Basis>(DEFAULT_BASIS)
 
-  const { engine, current, next } = useEngine({ context, onDone })
+  const { workflowEngine, current, next } = useConfig({ basis, onDone })
 
-  const setContext = useCallback((updatedContext: Partial<Context>) => {
-    context.current = { ...context.current, ...updatedContext }
-    return context
+  const setBasis = useCallback((updatedBasis: Partial<Basis>) => {
+    basis.current = { ...basis.current, ...updatedBasis }
+    return basis
   }, [])
 
-  const progress = ((engine.position() - 1) / engine.total()) * 100
+  const progress =
+    ((workflowEngine.position() - 1) / workflowEngine.total()) * 100
 
-  const [answers, setAnswers] = useState<AnswersState>([])
+  const [answerOne, setAnswerOne] = useState<null | string>(null)
+  const [answerTwo, setAnswerTwo] = useState<null | string>(null)
 
   return (
     <OnboardingContext.Provider
       value={{
-        answers,
-        context,
+        answers: [answerOne, answerTwo],
+        basis,
         current,
-        engine,
+        workflowEngine,
         next,
         onDone,
         progress,
-        setAnswers,
-        setContext,
+        setAnswerOne,
+        setAnswerTwo,
+        setBasis,
       }}
     >
       {children}

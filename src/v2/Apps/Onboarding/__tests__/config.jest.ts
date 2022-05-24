@@ -2,47 +2,47 @@ import { renderHook } from "@testing-library/react-hooks"
 import {
   OPTION_ARTWORKS_FROM_TRENDING_ARTISTS,
   OPTION_CREATE_AN_ART_WISHLIST,
-  useEngine,
+  useConfig,
 } from "../config"
 
 describe("config", () => {
   it("should move through workflow", () => {
     const {
       result: {
-        current: { engine },
+        current: { workflowEngine },
       },
     } = renderHook(() =>
-      useEngine({
+      useConfig({
         onDone: jest.fn(),
-        context: { current: { answer: OPTION_ARTWORKS_FROM_TRENDING_ARTISTS } },
+        basis: { current: { answer: OPTION_ARTWORKS_FROM_TRENDING_ARTISTS } },
       })
     )
 
-    expect(engine.current()).toEqual("Welcome")
-    expect(engine.next()).toEqual("WhatDoYouLoveMost")
-    expect(engine.next()).toEqual("WhereWouldYouLikeToDiveIn")
-    expect(engine.next()).toEqual("TrendingArtists")
-    expect(engine.next()).toEqual("Done")
+    expect(workflowEngine.current()).toEqual("Welcome")
+    expect(workflowEngine.next()).toEqual("WhatDoYouLoveMost")
+    expect(workflowEngine.next()).toEqual("WhereWouldYouLikeToDiveIn")
+    expect(workflowEngine.next()).toEqual("TrendingArtists")
+    expect(workflowEngine.next()).toEqual("Done")
   })
 
   it("should make a decision", () => {
-    const context = { current: { answer: "" } }
+    const basis = { current: { answer: "" } }
     const {
       result: {
-        current: { engine },
+        current: { workflowEngine },
       },
     } = renderHook(() =>
-      useEngine({
+      useConfig({
         onDone: jest.fn(),
-        context,
+        basis,
       })
     )
 
-    expect(engine.current()).toEqual("Welcome")
-    expect(engine.next()).toEqual("WhatDoYouLoveMost")
-    expect(engine.next()).toEqual("WhereWouldYouLikeToDiveIn")
-    context.current.answer = OPTION_CREATE_AN_ART_WISHLIST
-    expect(engine.next()).toEqual("SearchArtworks")
-    expect(engine.next()).toEqual("Done")
+    expect(workflowEngine.current()).toEqual("Welcome")
+    expect(workflowEngine.next()).toEqual("WhatDoYouLoveMost")
+    expect(workflowEngine.next()).toEqual("WhereWouldYouLikeToDiveIn")
+    basis.current.answer = OPTION_CREATE_AN_ART_WISHLIST
+    expect(workflowEngine.next()).toEqual("SearchArtworks")
+    expect(workflowEngine.next()).toEqual("Done")
   })
 })

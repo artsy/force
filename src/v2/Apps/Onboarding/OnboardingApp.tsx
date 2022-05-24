@@ -12,11 +12,15 @@ import { OnboardingDone } from "./Views/OnboardingDone"
 import {
   VIEW_AUCTION_HIGHLIGHTS,
   VIEW_CURATED_ARTWORKS,
+  VIEW_DONE,
   VIEW_SEARCH_ARTISTS,
   VIEW_SEARCH_ARTWORKS,
   VIEW_SEARCH_GALLERIES,
   VIEW_TRENDING_ARTISTS,
   VIEW_TRENDING_LOTS,
+  VIEW_WELCOME,
+  VIEW_WHAT_DO_YOU_LOVE_MOST,
+  VIEW_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN,
 } from "./config"
 import { OnboardingProgress } from "./Components/OnboardingProgress"
 
@@ -42,10 +46,10 @@ const OnboardingSteps: FC = () => {
   const { current, next } = useOnboardingContext()
 
   switch (current) {
-    case "Welcome":
+    case VIEW_WELCOME:
       return <OnboardingWelcome />
 
-    case "WhatDoYouLoveMost":
+    case VIEW_WHAT_DO_YOU_LOVE_MOST:
       return (
         <>
           <OnboardingProgress />
@@ -54,7 +58,7 @@ const OnboardingSteps: FC = () => {
         </>
       )
 
-    case "WhereWouldYouLikeToDiveIn":
+    case VIEW_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN:
       return (
         <>
           <OnboardingProgress />
@@ -63,7 +67,7 @@ const OnboardingSteps: FC = () => {
         </>
       )
 
-    case "Done":
+    case VIEW_DONE:
       return <OnboardingDone />
 
     case VIEW_AUCTION_HIGHLIGHTS:
@@ -89,7 +93,7 @@ const OnboardingSteps: FC = () => {
 }
 
 const OnboardingDebug: FC = () => {
-  const { current, answers, progress, engine } = useOnboardingContext()
+  const { current, answers, progress, workflowEngine } = useOnboardingContext()
 
   return (
     <Box as="pre" border="1px dotted" borderColor="black60" p={2}>
@@ -97,7 +101,7 @@ const OnboardingDebug: FC = () => {
         {
           current,
           answers,
-          position: `${engine.position()}/${engine.total()}`,
+          position: `${workflowEngine.position()}/${workflowEngine.total()}`,
           progress: `${progress}%`,
         },
         null,

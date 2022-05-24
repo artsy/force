@@ -27,9 +27,10 @@ import {
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingQuestionTwo: FC = () => {
-  const { answers, setAnswers, setContext, next } = useOnboardingContext()
+  const { answers, setAnswerTwo, setBasis, next } = useOnboardingContext()
 
-  const options = QUESTION_2[answers[0]!] as string[]
+  const answerOne = answers[0] as keyof typeof QUESTION_2
+  const options = QUESTION_2[answerOne]
 
   return (
     <Flex flexDirection="column">
@@ -56,12 +57,8 @@ export const OnboardingQuestionTwo: FC = () => {
                 size="small"
                 variant="secondaryOutline"
                 onClick={() => {
-                  setAnswers(
-                    prevAnswers => [...prevAnswers, option] as [string, string]
-                  )
-
-                  setContext({ answer: option })
-
+                  setAnswerTwo(option)
+                  setBasis({ answer: option })
                   next()
                 }}
               >

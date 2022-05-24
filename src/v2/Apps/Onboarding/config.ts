@@ -1,14 +1,14 @@
 import { useRef, useState } from "react"
 import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
-import { Context } from "./useOnboardingContext"
+import { Basis } from "./useOnboardingContext"
 
-interface UseEngine {
-  context: React.RefObject<Context>
+interface UseConfig {
+  basis: React.RefObject<Basis>
   onDone(): void
 }
 
-export const useEngine = ({ context, onDone }: UseEngine) => {
-  const engine = useRef(
+export const useConfig = ({ basis, onDone }: UseConfig) => {
+  const workflowEngine = useRef(
     new WorkflowEngine({
       workflow: [
         "Welcome",
@@ -36,26 +36,26 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
       ],
       conditions: {
         whereWouldYouLikeToDiveIn: () => {
-          return context.current?.answer!
+          return basis.current?.answer!
         },
       },
     })
   )
 
-  const [current, setCurrent] = useState(engine.current.current())
+  const [current, setCurrent] = useState(workflowEngine.current.current())
 
   const next = () => {
-    if (engine.current.isEnd()) {
+    if (workflowEngine.current.isEnd()) {
       onDone()
       return
     }
 
-    setCurrent(engine.current.next())
+    setCurrent(workflowEngine.current.next())
   }
 
   return {
     current,
-    engine: engine.current,
+    workflowEngine: workflowEngine.current,
     next,
   }
 }
@@ -83,6 +83,10 @@ export const OPTION_FINDING_MY_NEXT_GREAT_INVESTMENT =
 export const OPTION_COLLECTING_ART_THAT_MOVES_ME =
   "Collecting art that moves me"
 
+export const VIEW_WELCOME = "Welcome"
+export const VIEW_WHAT_DO_YOU_LOVE_MOST = "WhatDoYouLoveMost"
+export const VIEW_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN = "WhereWouldYouLikeToDiveIn"
+export const VIEW_DONE = "Done"
 export const VIEW_AUCTION_HIGHLIGHTS = "AuctionHighlights"
 export const VIEW_CURATED_ARTWORKS = "CuratedArtworks"
 export const VIEW_SEARCH_ARTISTS = "SearchArtists"
