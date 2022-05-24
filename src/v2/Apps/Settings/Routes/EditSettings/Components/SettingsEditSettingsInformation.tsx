@@ -69,7 +69,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
 
             sendToast({
               variant: "success",
-              message: "Information updated succesfully",
+              message: "Information updated successfully",
             })
 
             // If the email was updated, inform the user that they will need to
