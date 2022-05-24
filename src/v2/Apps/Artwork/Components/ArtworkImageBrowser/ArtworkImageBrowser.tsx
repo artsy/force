@@ -1,5 +1,5 @@
 import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { Box, Spacer } from "@artsy/palette"
@@ -8,6 +8,10 @@ import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowser
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
 import { Media } from "v2/Utils/Responsive"
 import { useCursor } from "use-cursor"
+import { compact } from "lodash"
+import { scale } from "proportional-scale"
+
+const MAX_DIMENSION = 800
 
 export interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork
@@ -16,18 +20,33 @@ export interface ArtworkImageBrowserProps {
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
 }) => {
-  const { images } = artwork
+  const { figures } = artwork
 
   const { index, handleNext, handlePrev, setCursor } = useCursor({
-    max: images?.length ?? 0,
+    max: figures.length,
   })
 
+  const images = compact(artwork.images)
+  const hasGeometry = !!images[0].width
+  const maxHeight = Math.max(
+    ...images.map(image => {
+      const scaled = scale({
+        width: image.width!,
+        height: image.height!,
+        maxWidth: MAX_DIMENSION,
+        maxHeight: MAX_DIMENSION,
+      })
+
+      return hasGeometry ? scaled.height : MAX_DIMENSION
+    })
+  )
+
   const handleSelectDefaultSlide = () => {
-    const defaultIndex = images?.findIndex(image => !!image?.isDefault) ?? 0
+    const defaultIndex = figures?.findIndex(image => !!image?.isDefault) ?? 0
     setCursor(defaultIndex)
   }
 
-  if ((images ?? []).length === 0) {
+  if ((figures ?? []).length === 0) {
     return null
   }
 
@@ -42,6 +61,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           artwork={artwork}
           index={index}
           setIndex={setCursor}
+          maxHeight={maxHeight}
         />
       </Media>
 
@@ -51,6 +71,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           index={index}
           onNext={handleNext}
           onPrev={handlePrev}
+          maxHeight={maxHeight}
         />
       </Media>
 
@@ -74,8 +95,17 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
       ...ArtworkImageBrowserLarge_artwork
       internalID
       images {
-        internalID
-        isDefault
+        width
+        height
+      }
+      figures {
+        ... on Image {
+          internalID
+          isDefault
+        }
+        ... on Video {
+          type: __typename
+        }
       }
     }
   `,

@@ -5,12 +5,19 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowserSmall_artwork = {
-    readonly images: ReadonlyArray<{
+    readonly figures: ReadonlyArray<{
         readonly internalID: string | null;
         readonly isZoomable: boolean | null;
+        readonly type: "Image";
         readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork">;
+    } | {
+        readonly type: "Video";
+    } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
+        readonly type: "%other";
+    }>;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
     readonly " $refType": "ArtworkImageBrowserSmall_artwork";
 };
 export type ArtworkImageBrowserSmall_artwork$data = ArtworkImageBrowserSmall_artwork;
@@ -21,7 +28,15 @@ export type ArtworkImageBrowserSmall_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": "type",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -30,29 +45,45 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "images",
+      "name": "figures",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isZoomable",
+              "storageKey": null
+            },
+            (v0/*: any*/),
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "DeepZoom_image"
+            }
+          ],
+          "type": "Image",
+          "abstractKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isZoomable",
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "DeepZoom_image"
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "type": "Video",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -61,10 +92,16 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkLightbox_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkVideoPlayer_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '0d48fdd3b4bc8ce8bb14b80807dcd103';
+})();
+(node as any).hash = '64fbb26e319b2397d63c4b301ab544bf';
 export default node;

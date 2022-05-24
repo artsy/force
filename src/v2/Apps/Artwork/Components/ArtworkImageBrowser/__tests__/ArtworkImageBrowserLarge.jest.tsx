@@ -17,6 +17,7 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserLarge_Test_Query>({
       <MockBoot>
         <ArtworkImageBrowserLargeFragmentContainer
           artwork={props.artwork}
+          maxHeight={800}
           index={0}
           onNext={jest.fn()}
           onPrev={jest.fn()}
@@ -36,6 +37,9 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserLarge_Test_Query>({
 describe("ArtworkImageBrowserLarge", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
+      Artwork: () => ({
+        figures: [{ __typename: "Image" }],
+      }),
       Image: () => ({ isDefault: true }),
       ResizedImageUrl: () => ({
         width: 800,

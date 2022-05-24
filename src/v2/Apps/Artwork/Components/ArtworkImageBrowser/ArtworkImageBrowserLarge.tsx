@@ -6,20 +6,21 @@ import {
   VisuallyHidden,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
+import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
   index: number
   onNext(): void
   onPrev(): void
+  maxHeight: number
 }
 
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
@@ -27,27 +28,31 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   index,
   onNext,
   onPrev,
+  maxHeight,
 }) => {
-  const images = compact(artwork.images)
+  const { figures } = artwork
 
-  const activeImage = images[index]
+  const activeFigure = figures[index]
 
   const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
 
   const { containerRef } = useNextPrevious({ onNext, onPrevious: onPrev })
 
-  if (images.length === 0) {
+  if (figures.length === 0) {
     return null
   }
 
   return (
     <>
-      {isDeepZoomVisible && (
-        <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
+      {activeFigure.type === "Image" && isDeepZoomVisible && (
+        <DeepZoomFragmentContainer
+          image={activeFigure}
+          onClose={hideDeepZoom}
+        />
       )}
 
       <Box ref={containerRef as any} position="relative">
-        {images.length > 1 && (
+        {figures.length > 1 && (
           <nav>
             <NextPrevious
               onClick={onPrev}
@@ -83,22 +88,34 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
           </nav>
         )}
 
-        <ArtworkLightboxFragmentContainer
-          my={2}
-          artwork={artwork}
-          activeIndex={index}
-          onClick={activeImage.isZoomable ? showDeepZoom : undefined}
-        />
+        {activeFigure.type === "Image" && (
+          <ArtworkLightboxFragmentContainer
+            my={2}
+            maxHeight={maxHeight}
+            artwork={artwork}
+            activeIndex={index}
+            onClick={activeFigure.isZoomable ? showDeepZoom : undefined}
+          />
+        )}
 
-        {images.length > 1 && (
+        {activeFigure.type === "Video" && (
+          <ArtworkVideoPlayerFragmentContainer
+            my={2}
+            maxHeight={maxHeight}
+            activeIndex={index}
+            artwork={artwork}
+          />
+        )}
+
+        {figures.length > 1 && (
           <>
             <VisuallyHidden aria-live="polite" aria-atomic="true">
-              Page {index + 1} of {images.length}
+              Page {index + 1} of {figures.length}
             </VisuallyHidden>
 
             <ProgressDots
               activeIndex={index}
-              amount={images.length}
+              amount={figures.length}
               variant="dash"
             />
           </>
@@ -110,8 +127,8 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
 const NextPrevious = styled(Clickable)`
   position: absolute;
-  top: 0;
-  height: 100%;
+  top: 20%;
+  height: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,10 +147,17 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
     artwork: graphql`
       fragment ArtworkImageBrowserLarge_artwork on Artwork {
         ...ArtworkLightbox_artwork
-        images {
-          internalID
-          isZoomable
-          ...DeepZoom_image
+        ...ArtworkVideoPlayer_artwork
+        figures {
+          ... on Image {
+            type: __typename
+            internalID
+            isZoomable
+            ...DeepZoom_image
+          }
+          ... on Video {
+            type: __typename
+          }
         }
       }
     `,

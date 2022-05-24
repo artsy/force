@@ -1,7 +1,7 @@
 import { Clickable, ClickableProps, Image, ResponsiveBox } from "@artsy/palette"
 import { Link } from "react-head"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkLightbox_artwork } from "v2/__generated__/ArtworkLightbox_artwork.graphql"
 import { useSystemContext } from "v2/System"
@@ -11,6 +11,7 @@ import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
 interface ArtworkLightboxProps extends ClickableProps {
   artwork: ArtworkLightbox_artwork
   activeIndex: number
+  maxHeight: number
   lazyLoad?: boolean
 }
 
@@ -18,16 +19,13 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   artwork,
   activeIndex,
   lazyLoad,
+  maxHeight,
   onClick,
   ...rest
 }) => {
   const images = compact(artwork.images)
   const hasGeometry = !!images[0].resized?.width
-  const maxHeight = Math.max(
-    ...images.map(image =>
-      hasGeometry ? image.resized!.height! : image.fallback!.height!
-    )
-  )
+
   const { resized, fallback, placeholder, isDefault } = images[activeIndex]
   const image = hasGeometry ? resized : fallback
 

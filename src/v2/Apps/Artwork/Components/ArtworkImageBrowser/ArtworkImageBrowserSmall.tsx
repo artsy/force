@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   ProgressDots,
   Swiper,
@@ -7,57 +7,82 @@ import {
   SwiperRail,
   SwiperRailProps,
 } from "@artsy/palette"
-import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkImageBrowserSmall_artwork } from "v2/__generated__/ArtworkImageBrowserSmall_artwork.graphql"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
+import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork
   index: number
   setIndex(index: number): void
+  maxHeight: number
 }
 
 const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
   artwork,
   index,
   setIndex,
+  maxHeight,
 }) => {
-  const images = compact(artwork.images)
-  const activeImage = images[index]
+  const figures = artwork.figures
+  const activeFigure = figures[index]
 
   const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
 
-  if (images.length === 0) {
+  if (figures.length === 0) {
     return null
   }
 
   return (
     <>
-      {isDeepZoomVisible && (
-        <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
+      {activeFigure.type === "Image" && isDeepZoomVisible && (
+        <DeepZoomFragmentContainer
+          image={activeFigure}
+          onClose={hideDeepZoom}
+        />
       )}
 
       <Swiper snap="center" onChange={setIndex} Cell={Cell} Rail={Rail}>
-        {images.map((image, i) => {
-          return (
-            <ArtworkLightboxFragmentContainer
-              key={image.internalID ?? i}
-              my={2}
-              artwork={artwork}
-              activeIndex={i}
-              lazyLoad={i !== 0}
-              onClick={activeImage.isZoomable ? showDeepZoom : undefined}
-            />
-          )
+        {figures.map((figure, i) => {
+          switch (figure.type) {
+            case "Image":
+              return (
+                <ArtworkLightboxFragmentContainer
+                  key={figure.internalID ?? i}
+                  maxHeight={maxHeight}
+                  my={2}
+                  artwork={artwork}
+                  activeIndex={i}
+                  lazyLoad={i !== 0}
+                  onClick={
+                    activeFigure.type === "Image" && activeFigure.isZoomable
+                      ? showDeepZoom
+                      : undefined
+                  }
+                />
+              )
+            case "Video":
+              return (
+                <ArtworkVideoPlayerFragmentContainer
+                  key={i}
+                  activeIndex={i}
+                  my={2}
+                  artwork={artwork}
+                  maxHeight={maxHeight}
+                />
+              )
+            default:
+              return null
+          }
         })}
       </Swiper>
 
-      {images.length > 1 && (
+      {figures.length > 1 && (
         <ProgressDots
           variant="dash"
-          amount={images.length}
+          amount={figures.length}
           activeIndex={index}
         />
       )}
@@ -92,10 +117,17 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
     artwork: graphql`
       fragment ArtworkImageBrowserSmall_artwork on Artwork {
         ...ArtworkLightbox_artwork
-        images {
-          internalID
-          isZoomable
-          ...DeepZoom_image
+        ...ArtworkVideoPlayer_artwork
+        figures {
+          ... on Image {
+            ...DeepZoom_image
+            internalID
+            isZoomable
+            type: __typename
+          }
+          ... on Video {
+            type: __typename
+          }
         }
       }
     `,
