@@ -21,6 +21,7 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
   return (
     <>
       <ExampleAppMeta />
+
       <Box mt={2}>
         <Text variant="xl">Hello Artsy Dev!</Text>
         <Text>
@@ -28,6 +29,7 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
           possibilities.
         </Text>
       </Box>
+
       <Flex mt={2}>
         <Join separator={<Spacer mx={2} />}>
           <RouterLink to="/example" exact>
@@ -42,12 +44,18 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
           <RouterLink to="/example/artwork-filter">
             <Text>Artwork Filter Example</Text>
           </RouterLink>
+          <RouterLink to="/example/add-to-collection">
+            <Text>Add To Collection</Text>
+          </RouterLink>
         </Join>
       </Flex>
+
       <Text my={2}>
         Today is {day}/{month}/{year}.
       </Text>
+
       <Separator />
+
       <Box my={2}>{children}</Box>
     </>
   )
