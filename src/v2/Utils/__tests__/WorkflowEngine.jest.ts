@@ -1,8 +1,8 @@
-import { Engine } from "../Engine"
+import { WorkflowEngine } from "../WorkflowEngine"
 
-describe("Engine", () => {
+describe("WorkflowEngine", () => {
   describe("a straight path", () => {
-    const machine = new Engine({
+    const machine = new WorkflowEngine({
       workflow: ["first", "second", "third", "fourth"],
     })
 
@@ -26,7 +26,7 @@ describe("Engine", () => {
   })
 
   describe("a complex path", () => {
-    const machine = new Engine({
+    const machine = new WorkflowEngine({
       conditions: {
         firstDecision() {
           return false
@@ -80,7 +80,7 @@ describe("Engine", () => {
   })
 
   describe("resumable path", () => {
-    const machine = new Engine({
+    const machine = new WorkflowEngine({
       conditions: {
         second() {
           return true
@@ -135,7 +135,7 @@ describe("Engine", () => {
   })
 
   describe("conditional steps", () => {
-    const machine = new Engine({
+    const machine = new WorkflowEngine({
       conditions: {
         shouldSkip() {
           return true

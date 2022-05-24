@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Engine } from "./Engine"
+import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
 import { Context } from "./Hooks/useInquiryContext"
 import { Visited } from "./Visited"
 import { InquiryAccount } from "./Views/InquiryAccount"
@@ -41,7 +41,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
   const visited = useRef(new Visited("inquiry"))
 
   const engine = useRef(
-    new Engine({
+    new WorkflowEngine({
       workflow: [
         {
           askSpecialist: {
