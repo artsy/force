@@ -126,11 +126,13 @@ export class ReviewRoute extends Component<ReviewProps> {
         const isCBNEnabled =
           featureFlags?.["conversational-buy-now"]?.flagEnabled
         const orderId = order.internalID
-        const conversationId = order.conversation?.internalID
+        const conversationId = order.impulseConversationId
+
         const artworkId = get(
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
+
         // Eigen redirects to the status page (must keep the user inside the webview)
         // TODO: It must be only `if (isEigen) {` after removing the feature flag
         if ((!isCBNEnabled && order.mode !== "OFFER") || isEigen) {
@@ -479,6 +481,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
           }
         }
         ... on CommerceOfferOrder {
+          impulseConversationId
           conversation {
             internalID
           }
@@ -488,6 +491,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
           }
         }
         ... on CommerceBuyOrder {
+          impulseConversationId
           conversation {
             internalID
           }
