@@ -1,19 +1,19 @@
 import React, { FC } from "react"
-import { Box, ResponsiveBox } from "@artsy/palette"
+import { BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkVideoPlayer_artwork } from "v2/__generated__/ArtworkVideoPlayer_artwork.graphql"
-import styled from "styled-components"
 
-interface ArtworkVideoPlayerProps {
+interface ArtworkVideoPlayerProps extends BoxProps {
   activeIndex: number
   artwork: ArtworkVideoPlayer_artwork
-  small?: boolean
+  maxHeight: number
 }
 
 const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
   activeIndex,
   artwork: { figures },
-  small,
+  maxHeight,
+  ...rest
 }) => {
   if (!figures) {
     return null
@@ -26,41 +26,33 @@ const ArtworkVideoPlayer: FC<ArtworkVideoPlayerProps> = ({
   }
 
   return (
-    <Box
-      my={4}
-      width="100%"
-      // This minHeight works for the 10 POC video items
-      // Should be replaced with a dynamic value in the future
-      minHeight={small ? "inherit" : 800}
+    <Flex
       display="flex"
       alignItems="center"
       justifyContent="center"
+      height={[null, null, maxHeight]}
+      width="100%"
+      {...rest}
     >
-      <Casette
-        bg="black10"
-        mx={[0, 4]}
-        px={[0, 2]}
-        // @ts-ignore
-        maxWidth={"100%"}
+      <ResponsiveBox
+        mx={[0, "70px"]}
+        maxWidth="100%"
         aspectWidth={activeVideo.width}
         aspectHeight={activeVideo.height}
       >
         <iframe
           src={activeVideo.url}
-          frameBorder="0"
+          frameBorder={0}
           allow="fullscreen; picture-in-picture"
           allowFullScreen
-          title="vimeo-player"
-          style={{ width: "100%", height: "100%" }}
-        ></iframe>
-      </Casette>
-    </Box>
+          title="Video player"
+          width="100%"
+          height="100%"
+        />
+      </ResponsiveBox>
+    </Flex>
   )
 }
-
-const Casette = styled(ResponsiveBox)`
-  background: transparent;
-`
 
 const ArtworkVideoPlayerFragmentContainer = createFragmentContainer(
   ArtworkVideoPlayer,

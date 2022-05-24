@@ -17,6 +17,7 @@ const { getWrapper } = setupTestWrapper<ArtworkImageBrowserSmall_Test_Query>({
       <MockBoot>
         <ArtworkImageBrowserSmallFragmentContainer
           artwork={props.artwork}
+          maxHeight={800}
           index={0}
           setIndex={jest.fn()}
         />

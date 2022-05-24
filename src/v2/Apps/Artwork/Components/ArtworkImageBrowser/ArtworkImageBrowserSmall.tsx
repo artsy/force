@@ -17,12 +17,14 @@ interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork
   index: number
   setIndex(index: number): void
+  maxHeight: number
 }
 
 const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
   artwork,
   index,
   setIndex,
+  maxHeight,
 }) => {
   const figures = artwork.figures
   const activeFigure = figures[index]
@@ -49,6 +51,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
               return (
                 <ArtworkLightboxFragmentContainer
                   key={figure.internalID ?? i}
+                  maxHeight={maxHeight}
                   my={2}
                   artwork={artwork}
                   activeIndex={i}
@@ -63,10 +66,11 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
             case "Video":
               return (
                 <ArtworkVideoPlayerFragmentContainer
-                  activeIndex={i}
-                  artwork={artwork}
                   key={i}
-                  small
+                  activeIndex={i}
+                  my={2}
+                  artwork={artwork}
+                  maxHeight={maxHeight}
                 />
               )
             default:
@@ -116,10 +120,10 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
         ...ArtworkVideoPlayer_artwork
         figures {
           ... on Image {
+            ...DeepZoom_image
             internalID
             isZoomable
             type: __typename
-            ...DeepZoom_image
           }
           ... on Video {
             type: __typename

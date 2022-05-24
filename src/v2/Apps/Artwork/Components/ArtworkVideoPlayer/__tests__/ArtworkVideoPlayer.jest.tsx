@@ -14,7 +14,7 @@ describe("ArtworkVideoPlayer", () => {
       artwork: {
         figures,
       },
-      small: false,
+      maxHeight: 800,
     } as ArtworkVideoPlayerProps)
 
   it("renders with video figure", () => {

@@ -14,11 +14,13 @@ import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageB
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkVideoPlayerFragmentContainer } from "../ArtworkVideoPlayer"
+
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
   index: number
   onNext(): void
   onPrev(): void
+  maxHeight: number
 }
 
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
@@ -26,6 +28,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   index,
   onNext,
   onPrev,
+  maxHeight,
 }) => {
   const { figures } = artwork
 
@@ -88,6 +91,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
         {activeFigure.type === "Image" && (
           <ArtworkLightboxFragmentContainer
             my={2}
+            maxHeight={maxHeight}
             artwork={artwork}
             activeIndex={index}
             onClick={activeFigure.isZoomable ? showDeepZoom : undefined}
@@ -96,6 +100,8 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
 
         {activeFigure.type === "Video" && (
           <ArtworkVideoPlayerFragmentContainer
+            my={2}
+            maxHeight={maxHeight}
             activeIndex={index}
             artwork={artwork}
           />
