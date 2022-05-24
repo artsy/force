@@ -482,9 +482,6 @@ export const ReviewFragmentContainer = createFragmentContainer(
         }
         ... on CommerceOfferOrder {
           impulseConversationId
-          conversation {
-            internalID
-          }
           myLastOffer {
             hasDefiniteTotal
             internalID
@@ -492,9 +489,6 @@ export const ReviewFragmentContainer = createFragmentContainer(
         }
         ... on CommerceBuyOrder {
           impulseConversationId
-          conversation {
-            internalID
-          }
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order

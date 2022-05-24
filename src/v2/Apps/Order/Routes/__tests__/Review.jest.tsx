@@ -57,7 +57,7 @@ const { _mockStripe } = require("@stripe/stripe-js")
 
 const testOrder: ReviewTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
-  internalID: "1234",
+  impulseConversationId: "1234",
 }
 
 class ReviewTestPage extends OrderAppTestPage {
@@ -207,7 +207,7 @@ describe("Review", () => {
         mockData: {
           order: {
             ...OfferOrderWithShippingDetails,
-            internalID: "offer-order-id",
+            impulseConversationId: "offer-order-id",
           },
         },
       })
@@ -318,7 +318,7 @@ describe("Review", () => {
         mockData: {
           order: {
             ...buyOrderWithArtaShippingDetails,
-            internalID: "1234",
+            impulseConversationId: "1234",
           },
         },
       })
@@ -401,7 +401,7 @@ describe("Review", () => {
           order: {
             ...BuyOrderWithShippingDetails,
             source: "inquiry",
-            conversation: { internalID: "5665" },
+            conversation: { impulseConversationId: "5665" },
           },
         },
       })

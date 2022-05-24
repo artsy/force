@@ -26,9 +26,6 @@ export type Review_order = {
         } | null> | null;
     } | null;
     readonly impulseConversationId?: string | null | undefined;
-    readonly conversation?: {
-        readonly internalID: string | null;
-    } | null | undefined;
     readonly myLastOffer?: {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
@@ -64,18 +61,6 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "impulseConversationId",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Conversation",
-  "kind": "LinkedField",
-  "name": "conversation",
-  "plural": false,
-  "selections": [
-    (v0/*: any*/)
-  ],
   "storageKey": null
 };
 return {
@@ -179,7 +164,6 @@ return {
       "kind": "InlineFragment",
       "selections": [
         (v2/*: any*/),
-        (v3/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -206,8 +190,7 @@ return {
     {
       "kind": "InlineFragment",
       "selections": [
-        (v2/*: any*/),
-        (v3/*: any*/)
+        (v2/*: any*/)
       ],
       "type": "CommerceBuyOrder",
       "abstractKey": null
@@ -247,5 +230,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '1079eb06cb844c61d77b2c15546e8d32';
+(node as any).hash = '577a43e82e2a7d5341691a79f8c138a4';
 export default node;
