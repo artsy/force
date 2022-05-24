@@ -78,7 +78,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
               sendToast({
                 variant: "alert",
                 message:
-                  "Please confirm your new email for this update to take effect.",
+                  "Please confirm your new email for this update to take effect",
               })
             }
 
