@@ -27,7 +27,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   })
 
   const images = compact(artwork.images)
-  const hasGeometry = !!images[0].width
+  const hasGeometry = !!images[0]?.width
   const maxHeight = Math.max(
     ...images.map(image => {
       const scaled = scale({
