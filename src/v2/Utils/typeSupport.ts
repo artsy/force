@@ -35,5 +35,3 @@ interface DeepPartialMap<KeyType, ValueType>
 // tslint:enable
 
 export type Writable<T> = { -readonly [P in keyof T]: T[P] }
-
-export type Override<T1, T2> = Omit<T1, keyof T2> & T2

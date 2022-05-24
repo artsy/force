@@ -65,7 +65,7 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
                 <ArtworkVideoPlayerFragmentContainer
                   activeIndex={i}
                   artwork={artwork}
-                  key={figure.type ?? i}
+                  key={i}
                   small
                 />
               )
