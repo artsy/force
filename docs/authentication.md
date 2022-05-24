@@ -35,7 +35,7 @@ Each of these packages is important for the implementation in
 - [passport](https://www.passportjs.org/)
 - [passport-facebook](https://www.passportjs.org/packages/passport-facebook/)
 - [passport-apple](https://www.passportjs.org/packages/passport-apple/)
-- [passport-google-oath20](https://www.passportjs.org/packages/passport-google-oauth20/)
+- [passport-google-oauth20](https://www.passportjs.org/packages/passport-google-oauth20/)
 - [@artsy/xapp](https://github.com/artsy/artsy-xapp)
 - [artsy/sharify](https://github.com/artsy/sharify)
 
@@ -52,6 +52,39 @@ locally, you can achieve this pretty easily using [ngrok](https://ngrok.com/).
 Alternatively, you can try using [a Review
 App](https://github.com/artsy/force/blob/main/docs/creating_review_app.md#accessing-the-review-app),
 but that approach seems to offer mixed results.
+
+Here's how to make Google auth work with local Force app:
+
+- Set up an Internet-facing URL for local Force app.
+  As mentioned, you can use ngrok.
+  Sign up for a free ngrok account. And create an auth token.
+  Launch local Force which listens on port 5000.
+  Run ngrok:
+
+  ```
+  brew install ngrok
+  ngrok config add-authtoken <your-ngrok-auth-token>
+  ngrok http 5000
+  ```
+
+  You will see an ngrok url like this one:
+
+  ```
+  https://4dfe-71-247-23-28.ngrok.io -> http://localhost:5000
+  ```
+
+  Visiting that public URL should load your local Force app.
+
+- Register your ngrok URL on Google Cloud Platform as callback
+  - Log into Google Cloud Platform using the creds in 1Pass `GMail` card.
+  - In GCP `Console`, select `API Project` from upper left.
+  - Click the "Hamburger" at upper left, which shows left sidebar.
+  - Click `API & Services > Credentials`
+  - Under `OAuth 2.0 Client IDs`, click edit for `Force Staging`
+  - Add the ngrok URL under `Authorized JavaScript origins`
+  - Add the ngrok URL under `Authorized redirect URIs`, with `/users/auth/google/callback` appended
+  - Save
+- Override your local `APP_URL` var to be the ngrok URL. Restart Force. `GOOGLE_CLIENT_ID` and `GOOGLE_SECRET` are also required but they should already be in shared env.
 
 ## Adding a New Provider
 
