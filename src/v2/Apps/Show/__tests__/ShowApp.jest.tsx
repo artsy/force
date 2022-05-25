@@ -87,7 +87,7 @@ describe("ShowApp", () => {
     expect(wrapper.find(ShowViewingRoom)).toHaveLength(1)
   })
 
-  it("do not render navigation banner by default", () => {
+  it("do not render `Back to Fair` banner by default", () => {
     const wrapper = getWrapper({
       Show: () => ({
         isFairBooth: false,
@@ -99,7 +99,7 @@ describe("ShowApp", () => {
     expect(wrapper.find("BackToFairBanner").length).toEqual(0)
   })
 
-  it("render navigation banner on fair booth pages", () => {
+  it("render `Back to Fair` banner on fair booth pages", () => {
     const wrapper = getWrapper({
       Show: () => ({
         isFairBooth: true,
