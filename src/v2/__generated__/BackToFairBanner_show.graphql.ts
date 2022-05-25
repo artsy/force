@@ -5,9 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type BackToFairBanner_show = {
-    readonly partner: {
-        readonly internalID?: string | undefined;
-    } | null;
     readonly fair: {
         readonly name: string | null;
         readonly href: string | null;
@@ -22,45 +19,12 @@ export type BackToFairBanner_show$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "internalID",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "BackToFairBanner_show",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": null,
-      "kind": "LinkedField",
-      "name": "partner",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "InlineFragment",
-          "selections": (v0/*: any*/),
-          "type": "Partner",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": (v0/*: any*/),
-          "type": "ExternalPartner",
-          "abstractKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -90,6 +54,5 @@ return {
   "type": "Show",
   "abstractKey": null
 };
-})();
-(node as any).hash = '0781360de5507863492cdc62c58c15f9';
+(node as any).hash = '52b168c06dea8b901032086f4d6377f6';
 export default node;

@@ -26,20 +26,6 @@ query BackToFairBanner_Test_Query {
 }
 
 fragment BackToFairBanner_show on Show {
-  partner {
-    __typename
-    ... on Partner {
-      internalID
-    }
-    ... on ExternalPartner {
-      internalID
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
   fair {
     name
     href
@@ -60,33 +46,20 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -132,49 +105,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": null,
-            "kind": "LinkedField",
-            "name": "partner",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v1/*: any*/)
-                ],
-                "type": "Partner",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v1/*: any*/),
-                  (v2/*: any*/)
-                ],
-                "type": "ExternalPartner",
-                "abstractKey": null
-              },
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v2/*: any*/)
-                ],
-                "type": "Node",
-                "abstractKey": "__isNode"
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Fair",
             "kind": "LinkedField",
             "name": "fair",
@@ -194,18 +124,18 @@ return {
                 "name": "href",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "show(id:\"show-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "33edc0511b95776a9f421b4afc99de22",
+    "cacheID": "571ed50bd38f5bd9e4ae35cf05c8d18f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -221,25 +151,15 @@ return {
           "plural": false,
           "type": "Fair"
         },
-        "show.fair.href": (v3/*: any*/),
-        "show.fair.id": (v4/*: any*/),
-        "show.fair.name": (v3/*: any*/),
-        "show.id": (v4/*: any*/),
-        "show.partner": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerTypes"
-        },
-        "show.partner.__isNode": (v5/*: any*/),
-        "show.partner.__typename": (v5/*: any*/),
-        "show.partner.id": (v4/*: any*/),
-        "show.partner.internalID": (v4/*: any*/)
+        "show.fair.href": (v2/*: any*/),
+        "show.fair.id": (v3/*: any*/),
+        "show.fair.name": (v2/*: any*/),
+        "show.id": (v3/*: any*/)
       }
     },
     "name": "BackToFairBanner_Test_Query",
     "operationKind": "query",
-    "text": "query BackToFairBanner_Test_Query {\n  show(id: \"show-id\") {\n    ...BackToFairBanner_show\n    id\n  }\n}\n\nfragment BackToFairBanner_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n    }\n    ... on ExternalPartner {\n      internalID\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fair {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query BackToFairBanner_Test_Query {\n  show(id: \"show-id\") {\n    ...BackToFairBanner_show\n    id\n  }\n}\n\nfragment BackToFairBanner_show on Show {\n  fair {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,4 +1,3 @@
-import { useMemo } from "react"
 import { BoxProps } from "@artsy/palette"
 import { BackToFairBanner_show } from "v2/__generated__/BackToFairBanner_show.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,20 +12,9 @@ const BackToFairBanner: React.FC<BackToFairBannerProps & BoxProps> = ({
   show,
 }) => {
   const { match } = useRouter()
-  const { from_fair } = match.location.query
-  const { fair, partner } = show
-  let link = fair?.href
-
-  /**
-   * useMemo is used to ensure that the banner does not disappear immediately
-   * after clicking on the back link, since `from_fair` query param will be removed from url
-   */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const arrivedFromFair = useMemo(() => from_fair ?? false, [])
-
-  if (arrivedFromFair) {
-    link = `${fair?.href}/exhibitors?focused_exhibitor=${partner?.internalID}`
-  }
+  const { back_to_fair_href } = match.location.query
+  const { fair } = show
+  let link = back_to_fair_href ?? fair?.href
 
   if (!fair?.name) {
     return null
@@ -44,14 +32,6 @@ export const BackToFairBannerFragmentContainer = createFragmentContainer(
   {
     show: graphql`
       fragment BackToFairBanner_show on Show {
-        partner {
-          ... on Partner {
-            internalID
-          }
-          ... on ExternalPartner {
-            internalID
-          }
-        }
         fair {
           name
           href

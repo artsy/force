@@ -42,7 +42,10 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
             <Text variant="lg-display" my={4}>
               {letter}
             </Text>
-            <FairExhibitorsGroup exhibitorsGroup={exhibitorsGroup} />
+            <FairExhibitorsGroup
+              exhibitorsGroup={exhibitorsGroup}
+              fair={fair}
+            />
           </Box>
         )
       })}
@@ -55,6 +58,7 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairExhibitors_fair on Fair {
+        ...FairExhibitorsGroup_fair
         exhibitorsGroupedByName {
           letter
           exhibitors {

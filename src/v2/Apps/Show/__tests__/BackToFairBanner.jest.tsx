@@ -32,7 +32,7 @@ describe("BackToFairBanner", () => {
     }))
   })
 
-  it("should render link to partner", async () => {
+  it("should render link to fair by default", async () => {
     renderWithRelay({
       Show: () => ({
         fair: {
@@ -47,12 +47,12 @@ describe("BackToFairBanner", () => {
     expect(link).toHaveAttribute("href", "/fair-link")
   })
 
-  it("should render link with exhibitor id", async () => {
+  it("should render link with `back_to_fair_href` query param", async () => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
           query: {
-            from_fair: true,
+            back_to_fair_href: "/fair/fair-name?param=value",
           },
         },
       },
@@ -65,16 +65,10 @@ describe("BackToFairBanner", () => {
           href: "/fair-link",
         },
       }),
-      Partner: () => ({
-        internalID: "partner-id",
-      }),
     })
     const link = screen.getByRole("link")
 
     expect(link).toHaveTextContent("Back to Fair Name")
-    expect(link).toHaveAttribute(
-      "href",
-      "/fair-link/exhibitors?focused_exhibitor=partner-id"
-    )
+    expect(link).toHaveAttribute("href", "/fair/fair-name?param=value")
   })
 })
