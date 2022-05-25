@@ -72,6 +72,16 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
               message: "Information updated successfully",
             })
 
+            // If the email was updated, inform the user that they will need to
+            // confirm the new email address before we will update it.
+            if (email !== me.email) {
+              sendToast({
+                variant: "alert",
+                message:
+                  "Please confirm your new email for this update to take effect",
+              })
+            }
+
             const updatedMe = updateMyUserProfile?.me
 
             resetForm({
