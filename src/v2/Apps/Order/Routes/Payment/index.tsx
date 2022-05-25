@@ -18,10 +18,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
 import { Box, Button, Flex, Spacer } from "@artsy/palette"
-import {
-  PaymentPicker,
-  PaymentPickerFragmentContainer,
-} from "v2/Apps/Order/Components/PaymentPicker"
+import { PaymentPicker } from "v2/Apps/Order/Components/PaymentPicker"
 import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -31,13 +28,13 @@ import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { SetPayment } from "../../Components/SetPayment"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
     Continue
   </Button>
 )
+
 export interface StripeProps {
   stripe: Stripe
   elements: StripeElements
@@ -61,7 +58,6 @@ export const PaymentRoute: FC<Props> = props => {
   const { order, isCommittingMutation } = props
   const isLoading = isGettingCreditCardId || isCommittingMutation
   const paymentPicker = createRef<PaymentPicker>()
-  const isACHEnabled = useFeatureFlag("stripe_ACH")
 
   const onContinue = async () => {
     try {
@@ -108,6 +104,11 @@ export const PaymentRoute: FC<Props> = props => {
       logger.error(error)
       props.dialog.showErrorDialog()
     }
+  }
+
+  const onWireTransferContinue = () => {
+    console.log("onWireTransferContinue")
+    // TODO: set order payment with wire transfer when ready
   }
 
   const setOrderPayment = (
@@ -173,42 +174,25 @@ export const PaymentRoute: FC<Props> = props => {
       />
       <TwoColumnLayout
         Content={
-          isACHEnabled ? (
-            <>
-              {isSettingPayment && (
-                <SetPayment
-                  order={order}
-                  setupIntentId={setupIntentId!}
-                  onSuccess={onSetPaymentSuccess}
-                  onError={onSetPaymentError}
-                />
-              )}
-              <PaymentContent
-                commitMutation={props.commitMutation}
-                isLoading={isLoading}
-                me={props.me}
-                order={props.order}
-                onContinue={onContinue}
-                paymentPicker={paymentPicker}
-              />
-            </>
-          ) : (
-            <Flex
-              flexDirection="column"
-              style={isLoading ? { pointerEvents: "none" } : {}}
-            >
-              <PaymentPickerFragmentContainer
-                commitMutation={props.commitMutation}
-                me={props.me}
+          <>
+            {isSettingPayment && (
+              <SetPayment
                 order={order}
-                innerRef={paymentPicker}
+                setupIntentId={setupIntentId!}
+                onSuccess={onSetPaymentSuccess}
+                onError={onSetPaymentError}
               />
-              <Spacer mb={4} />
-              <Media greaterThan="xs">
-                <ContinueButton onClick={onContinue} loading={isLoading} />
-              </Media>
-            </Flex>
-          )
+            )}
+            <PaymentContent
+              commitMutation={props.commitMutation}
+              isLoading={isLoading}
+              me={props.me}
+              order={props.order}
+              onContinue={onContinue}
+              onWireTransferContinue={onWireTransferContinue}
+              paymentPicker={paymentPicker}
+            />
+          </>
         }
         Sidebar={
           <Flex flexDirection="column">
@@ -225,9 +209,7 @@ export const PaymentRoute: FC<Props> = props => {
             />
             <Spacer mb={[2, 4]} />
             <Media at="xs">
-              <>
-                <ContinueButton onClick={onContinue} loading={isLoading} />
-              </>
+              <ContinueButton onClick={onContinue} loading={isLoading} />
             </Media>
           </Flex>
         }
