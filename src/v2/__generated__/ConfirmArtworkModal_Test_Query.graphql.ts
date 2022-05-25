@@ -85,6 +85,7 @@ fragment EditionSelectBox_edition on EditionSet {
   internalID
   editionOf
   isOfferableFromInquiry
+  isOfferable
   listPrice {
     __typename
     ... on Money {
@@ -461,6 +462,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "isOfferable",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": null,
                 "kind": "LinkedField",
                 "name": "listPrice",
@@ -512,7 +520,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4eee81aeba0a29e602f93477efdbf4ea",
+    "cacheID": "6166702866245cd74ec299b4604ad400",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -552,6 +560,7 @@ return {
         "artwork.editionSets.editionOf": (v7/*: any*/),
         "artwork.editionSets.id": (v8/*: any*/),
         "artwork.editionSets.internalID": (v8/*: any*/),
+        "artwork.editionSets.isOfferable": (v11/*: any*/),
         "artwork.editionSets.isOfferableFromInquiry": (v11/*: any*/),
         "artwork.editionSets.listPrice": {
           "enumValues": null,
@@ -593,7 +602,7 @@ return {
     },
     "name": "ConfirmArtworkModal_Test_Query",
     "operationKind": "query",
-    "text": "query ConfirmArtworkModal_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ConfirmArtworkModal_artwork\n    id\n  }\n}\n\nfragment CollapsibleArtworkDetails_artwork on Artwork {\n  image {\n    resized(width: 40, height: 40) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  internalID\n  title\n  date\n  saleMessage\n  attributionClass {\n    name\n    id\n  }\n  category\n  manufacturer\n  publisher\n  medium\n  conditionDescription {\n    details\n  }\n  certificateOfAuthenticity {\n    details\n  }\n  framed {\n    details\n  }\n  dimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    details\n  }\n  artistNames\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConfirmArtworkModal_artwork on Artwork {\n  ...CollapsibleArtworkDetails_artwork\n  ...ConfirmArtworkButton_artwork\n  internalID\n  isEdition\n  editionSets {\n    internalID\n    ...EditionSelectBox_edition\n    id\n  }\n}\n\nfragment EditionSelectBox_edition on EditionSet {\n  internalID\n  editionOf\n  isOfferableFromInquiry\n  listPrice {\n    __typename\n    ... on Money {\n      display\n    }\n    ... on PriceRange {\n      display\n    }\n  }\n  dimensions {\n    cm\n    in\n  }\n}\n"
+    "text": "query ConfirmArtworkModal_Test_Query {\n  artwork(id: \"xxx\") {\n    ...ConfirmArtworkModal_artwork\n    id\n  }\n}\n\nfragment CollapsibleArtworkDetails_artwork on Artwork {\n  image {\n    resized(width: 40, height: 40) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  internalID\n  title\n  date\n  saleMessage\n  attributionClass {\n    name\n    id\n  }\n  category\n  manufacturer\n  publisher\n  medium\n  conditionDescription {\n    details\n  }\n  certificateOfAuthenticity {\n    details\n  }\n  framed {\n    details\n  }\n  dimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    details\n  }\n  artistNames\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConfirmArtworkModal_artwork on Artwork {\n  ...CollapsibleArtworkDetails_artwork\n  ...ConfirmArtworkButton_artwork\n  internalID\n  isEdition\n  editionSets {\n    internalID\n    ...EditionSelectBox_edition\n    id\n  }\n}\n\nfragment EditionSelectBox_edition on EditionSet {\n  internalID\n  editionOf\n  isOfferableFromInquiry\n  isOfferable\n  listPrice {\n    __typename\n    ... on Money {\n      display\n    }\n    ... on PriceRange {\n      display\n    }\n  }\n  dimensions {\n    cm\n    in\n  }\n}\n"
   }
 };
 })();

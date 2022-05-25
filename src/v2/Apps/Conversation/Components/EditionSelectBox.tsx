@@ -25,7 +25,7 @@ export const EditionSelectBox: React.FC<Props> = ({
   selected,
   onSelect,
 }) => {
-  const isOfferable = !!edition.isOfferableFromInquiry
+  const isOfferable = !!edition.isOfferableFromInquiry || !!edition.isOfferable
 
   return (
     <BorderedRadio
@@ -66,6 +66,7 @@ export const EditionSelectBoxFragmentContainer = createFragmentContainer(
         internalID
         editionOf
         isOfferableFromInquiry
+        isOfferable
         listPrice {
           ... on Money {
             display
