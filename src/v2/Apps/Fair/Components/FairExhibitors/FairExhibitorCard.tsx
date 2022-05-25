@@ -108,7 +108,6 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
     exhibitor: graphql`
       fragment FairExhibitorCard_exhibitor on FairExhibitor {
         profileID
-        slug
         partner {
           name
           internalID

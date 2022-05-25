@@ -31,7 +31,6 @@ query FairExhibitors_Test_Query(
 
 fragment FairExhibitorCard_exhibitor on FairExhibitor {
   profileID
-  slug
   partner {
     name
     internalID
@@ -266,8 +265,7 @@ return {
                     "kind": "ScalarField",
                     "name": "profileID",
                     "storageKey": null
-                  },
-                  (v5/*: any*/)
+                  }
                 ],
                 "storageKey": null
               }
@@ -281,7 +279,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "80f77c5201bccf8c5b3691f3128f9d15",
+    "cacheID": "5d3b10077ff74149693055b097a645bd",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -337,7 +335,6 @@ return {
         "fair.exhibitorsGroupedByName.exhibitors.partner.slug": (v6/*: any*/),
         "fair.exhibitorsGroupedByName.exhibitors.partnerID": (v7/*: any*/),
         "fair.exhibitorsGroupedByName.exhibitors.profileID": (v7/*: any*/),
-        "fair.exhibitorsGroupedByName.exhibitors.slug": (v6/*: any*/),
         "fair.exhibitorsGroupedByName.letter": (v7/*: any*/),
         "fair.href": (v7/*: any*/),
         "fair.id": (v6/*: any*/)
@@ -345,7 +342,7 @@ return {
     },
     "name": "FairExhibitors_Test_Query",
     "operationKind": "query",
-    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorCard_exhibitor on FairExhibitor {\n  profileID\n  slug\n  partner {\n    name\n    internalID\n    slug\n    cities\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FairExhibitorCard_fair on Fair {\n  href\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      id\n    }\n    ...FairExhibitorCard_exhibitor\n  }\n}\n\nfragment FairExhibitorsGroup_fair on Fair {\n  ...FairExhibitorCard_fair\n}\n\nfragment FairExhibitors_fair on Fair {\n  ...FairExhibitorsGroup_fair\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorCard_exhibitor on FairExhibitor {\n  profileID\n  partner {\n    name\n    internalID\n    slug\n    cities\n    profile {\n      ...FollowProfileButton_profile\n      id\n    }\n    id\n  }\n}\n\nfragment FairExhibitorCard_fair on Fair {\n  href\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      id\n    }\n    ...FairExhibitorCard_exhibitor\n  }\n}\n\nfragment FairExhibitorsGroup_fair on Fair {\n  ...FairExhibitorCard_fair\n}\n\nfragment FairExhibitors_fair on Fair {\n  ...FairExhibitorsGroup_fair\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();

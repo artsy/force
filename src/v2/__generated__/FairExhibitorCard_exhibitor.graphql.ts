@@ -6,7 +6,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairExhibitorCard_exhibitor = {
     readonly profileID: string | null;
-    readonly slug: string;
     readonly partner: {
         readonly name: string | null;
         readonly internalID: string;
@@ -26,15 +25,7 @@ export type FairExhibitorCard_exhibitor$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -47,7 +38,6 @@ return {
       "name": "profileID",
       "storageKey": null
     },
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -70,7 +60,13 @@ return {
           "name": "internalID",
           "storageKey": null
         },
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -101,6 +97,5 @@ return {
   "type": "FairExhibitor",
   "abstractKey": null
 };
-})();
-(node as any).hash = '39005426befcba3b98c1048db30ecdb9';
+(node as any).hash = '05a4102e1727dc4949254af298a9e7ce';
 export default node;
