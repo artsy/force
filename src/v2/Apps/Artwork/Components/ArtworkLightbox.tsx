@@ -24,7 +24,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   ...rest
 }) => {
   const images = compact(artwork.images)
-  const hasGeometry = !!images[0].resized?.width
+  const hasGeometry = !!images[0]?.resized?.width
 
   const { resized, fallback, placeholder, isDefault } = images[activeIndex]
   const image = hasGeometry ? resized : fallback
