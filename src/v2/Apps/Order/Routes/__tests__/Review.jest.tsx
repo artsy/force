@@ -58,6 +58,7 @@ const { _mockStripe } = require("@stripe/stripe-js")
 const testOrder: ReviewTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
+  impulseConversationId: null,
 }
 
 class ReviewTestPage extends OrderAppTestPage {
@@ -208,6 +209,7 @@ describe("Review", () => {
           order: {
             ...OfferOrderWithShippingDetails,
             internalID: "offer-order-id",
+            impulseConversationId: null,
           },
         },
       })
@@ -239,6 +241,7 @@ describe("Review", () => {
         mockData: {
           order: {
             ...OfferOrderWithShippingDetailsAndNote,
+            impulseConversationId: null,
           },
         },
       })
@@ -319,6 +322,7 @@ describe("Review", () => {
           order: {
             ...buyOrderWithArtaShippingDetails,
             internalID: "1234",
+            impulseConversationId: null,
           },
         },
       })
@@ -357,7 +361,12 @@ describe("Review", () => {
     let page: ReviewTestPage
     beforeEach(async () => {
       page = await buildPage({
-        mockData: { order: { ...OfferOrderWithMissingMetadata } },
+        mockData: {
+          order: {
+            ...OfferOrderWithMissingMetadata,
+            impulseConversationId: "5665",
+          },
+        },
       })
     })
 
@@ -378,6 +387,7 @@ describe("Review", () => {
         mockData: {
           order: {
             ...BuyOrderWithShippingDetails,
+            impulseConversationId: null,
           },
         },
       })
@@ -387,6 +397,28 @@ describe("Review", () => {
     })
 
     it("enables the button and routes to the conversation", async () => {
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+    })
+  })
+
+  describe("Inquiry buy-mode orders", () => {
+    let page: ReviewTestPage
+    beforeEach(async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...BuyOrderWithShippingDetails,
+            source: "inquiry",
+            impulseConversationId: "5665",
+          },
+        },
+      })
+    })
+
+    // TODO: Unskip test when "conversational-buy-now" feature flag is removed
+    it.skip("enables the button and routes to the conversation", async () => {
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")

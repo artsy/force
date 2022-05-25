@@ -10,7 +10,6 @@ export interface PurchaseOnInquiryButtonProps {
   openInquiryModal: () => void
   conversation: PurchaseOnInquiryButton_conversation
 }
-
 export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = ({
   openInquiryModal,
   conversation,

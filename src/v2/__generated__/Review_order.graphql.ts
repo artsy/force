@@ -11,6 +11,7 @@ export type Review_order = {
     readonly mode: CommerceOrderModeEnum | null;
     readonly source: CommerceOrderSourceEnum;
     readonly itemsTotal: string | null;
+    readonly impulseConversationId: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -25,9 +26,6 @@ export type Review_order = {
             } | null;
         } | null> | null;
     } | null;
-    readonly conversation?: {
-        readonly internalID: string | null;
-    } | null | undefined;
     readonly myLastOffer?: {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
@@ -91,6 +89,13 @@ return {
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "impulseConversationId",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -161,18 +166,6 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Conversation",
-          "kind": "LinkedField",
-          "name": "conversation",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/)
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "CommerceOffer",
           "kind": "LinkedField",
           "name": "myLastOffer",
@@ -228,5 +221,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '9f2fb427afbc623a5ba625f4b320fb41';
+(node as any).hash = 'c482565243c19702134ac1b8bd136a80';
 export default node;

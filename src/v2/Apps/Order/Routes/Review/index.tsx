@@ -122,23 +122,34 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        const { order, router, isEigen } = this.props
-        // Buy-mode order redirects to the status page. Eigen must keep the user inside the webview.
-        if (order.mode !== "OFFER" || isEigen) {
-          return router.push(`/orders/${order.internalID}/status`)
-        }
-        // Make offer in inquiry redirects to the conversation page
-        if (order.source === "inquiry") {
-          return router.push(
-            `/user/conversations/${order.conversation?.internalID}`
-          )
-        }
-        // Make offer from artwork page redirects to the artwork page
+        const { order, router, isEigen, featureFlags } = this.props
+        const isCBNEnabled =
+          featureFlags?.["conversational-buy-now"]?.flagEnabled
+        const orderId = order.internalID
+        const conversationId = order.impulseConversationId
+
         const artworkId = get(
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
-        return router.push(`/artwork/${artworkId}?order-submitted=true`)
+
+        // Eigen redirects to the status page (must keep the user inside the webview)
+        // TODO: It must be only `if (isEigen) {` after removing the feature flag
+        if ((!isCBNEnabled && order.mode !== "OFFER") || isEigen) {
+          return router.push(`/orders/${orderId}/status`)
+        }
+        // Make offer and Purchase in inquiry redirects to the conversation page
+        if (order.source === "inquiry") {
+          return router.push(`/user/conversations/${conversationId}`)
+        }
+        // Make offer from the artwork page redirects to the artwork page with a confirmation modal
+        if (order.mode === "OFFER") {
+          return router.push(`/artwork/${artworkId}?order-submitted=true`)
+        }
+        // Purchase from the artwork page redirects to the status page
+        if (isCBNEnabled) {
+          return router.push(`/orders/${orderId}/status`)
+        }
       }
     } catch (error) {
       logger.error(error)
@@ -455,6 +466,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         mode
         source
         itemsTotal(precision: 2)
+        impulseConversationId
         lineItems {
           edges {
             node {
@@ -470,9 +482,6 @@ export const ReviewFragmentContainer = createFragmentContainer(
           }
         }
         ... on CommerceOfferOrder {
-          conversation {
-            internalID
-          }
           myLastOffer {
             hasDefiniteTotal
             internalID
