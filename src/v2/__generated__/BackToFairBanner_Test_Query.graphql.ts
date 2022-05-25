@@ -4,28 +4,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowNavigationBanner_Test_QueryVariables = {};
-export type ShowNavigationBanner_Test_QueryResponse = {
+export type BackToFairBanner_Test_QueryVariables = {};
+export type BackToFairBanner_Test_QueryResponse = {
     readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowNavigationBanner_show">;
+        readonly " $fragmentRefs": FragmentRefs<"BackToFairBanner_show">;
     } | null;
 };
-export type ShowNavigationBanner_Test_Query = {
-    readonly response: ShowNavigationBanner_Test_QueryResponse;
-    readonly variables: ShowNavigationBanner_Test_QueryVariables;
+export type BackToFairBanner_Test_Query = {
+    readonly response: BackToFairBanner_Test_QueryResponse;
+    readonly variables: BackToFairBanner_Test_QueryVariables;
 };
 
 
 
 /*
-query ShowNavigationBanner_Test_Query {
+query BackToFairBanner_Test_Query {
   show(id: "show-id") {
-    ...ShowNavigationBanner_show
+    ...BackToFairBanner_show
     id
   }
 }
 
-fragment ShowNavigationBanner_show on Show {
+fragment BackToFairBanner_show on Show {
   partner {
     __typename
     ... on Partner {
@@ -93,7 +93,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ShowNavigationBanner_Test_Query",
+    "name": "BackToFairBanner_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -106,7 +106,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ShowNavigationBanner_show"
+            "name": "BackToFairBanner_show"
           }
         ],
         "storageKey": "show(id:\"show-id\")"
@@ -119,7 +119,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ShowNavigationBanner_Test_Query",
+    "name": "BackToFairBanner_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -205,7 +205,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5013d00a7ac09cd71b8c9e651242db42",
+    "cacheID": "33edc0511b95776a9f421b4afc99de22",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -237,11 +237,11 @@ return {
         "show.partner.internalID": (v4/*: any*/)
       }
     },
-    "name": "ShowNavigationBanner_Test_Query",
+    "name": "BackToFairBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ShowNavigationBanner_Test_Query {\n  show(id: \"show-id\") {\n    ...ShowNavigationBanner_show\n    id\n  }\n}\n\nfragment ShowNavigationBanner_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n    }\n    ... on ExternalPartner {\n      internalID\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fair {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query BackToFairBanner_Test_Query {\n  show(id: \"show-id\") {\n    ...BackToFairBanner_show\n    id\n  }\n}\n\nfragment BackToFairBanner_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n    }\n    ... on ExternalPartner {\n      internalID\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n  fair {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '210657815e492523ca8afc0fc1c48f60';
+(node as any).hash = '52f47020325199c51fd1895e9c5dfa38';
 export default node;

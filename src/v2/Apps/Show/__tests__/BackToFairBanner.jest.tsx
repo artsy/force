@@ -1,27 +1,25 @@
-import { ShowNavigationBanner_Test_Query } from "v2/__generated__/ShowNavigationBanner_Test_Query.graphql"
+import { BackToFairBanner_Test_Query } from "v2/__generated__/BackToFairBanner_Test_Query.graphql"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { ShowNavigationBannerFragmentContainer } from "../Components/ShowNavigationBanner"
+import { BackToFairBannerFragmentContainer } from "../Components/BackToFairBanner"
 import { screen } from "@testing-library/react"
 import { useRouter } from "v2/System/Router/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter")
 
-const { renderWithRelay } = setupTestWrapperTL<ShowNavigationBanner_Test_Query>(
-  {
-    Component: ShowNavigationBannerFragmentContainer,
-    query: graphql`
-      query ShowNavigationBanner_Test_Query @relay_test_operation {
-        show(id: "show-id") {
-          ...ShowNavigationBanner_show
-        }
+const { renderWithRelay } = setupTestWrapperTL<BackToFairBanner_Test_Query>({
+  Component: BackToFairBannerFragmentContainer,
+  query: graphql`
+    query BackToFairBanner_Test_Query @relay_test_operation {
+      show(id: "show-id") {
+        ...BackToFairBanner_show
       }
-    `,
-  }
-)
+    }
+  `,
+})
 
-describe("ShowNavigationBanner", () => {
+describe("BackToFairBanner", () => {
   const mockUseRouter = useRouter as jest.Mock
 
   beforeEach(() => {

@@ -96,7 +96,7 @@ describe("ShowApp", () => {
       }),
     })
 
-    expect(wrapper.find("ShowNavigationBanner").length).toEqual(0)
+    expect(wrapper.find("BackToFairBanner").length).toEqual(0)
   })
 
   it("render navigation banner on fair booth pages", () => {
@@ -108,7 +108,7 @@ describe("ShowApp", () => {
       }),
     })
 
-    expect(wrapper.find("ShowNavigationBanner").text()).toContain(
+    expect(wrapper.find("BackToFairBanner").text()).toContain(
       "Back to Example Fair"
     )
   })

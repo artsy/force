@@ -26,7 +26,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ShowNavigationBannerFragmentContainer as ShowNavigationBanner } from "./Components/ShowNavigationBanner"
+import { BackToFairBannerFragmentContainer as BackToFairBanner } from "./Components/BackToFairBanner"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -53,7 +53,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          {isFairBooth && <ShowNavigationBanner show={show} />}
+          {isFairBooth && <BackToFairBanner show={show} />}
 
           <Spacer mt={4} />
 
@@ -169,7 +169,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       images(default: false, size: 100) {
         url
       }
-      ...ShowNavigationBanner_show
+      ...BackToFairBanner_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show

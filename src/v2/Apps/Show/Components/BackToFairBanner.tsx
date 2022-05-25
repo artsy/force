@@ -1,15 +1,15 @@
 import { useMemo } from "react"
 import { BoxProps } from "@artsy/palette"
-import { ShowNavigationBanner_show } from "v2/__generated__/ShowNavigationBanner_show.graphql"
+import { BackToFairBanner_show } from "v2/__generated__/BackToFairBanner_show.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TopContextBar } from "v2/Components/TopContextBar"
 import { useRouter } from "v2/System/Router/useRouter"
 
-interface ShowNavigationBannerProps {
-  show: ShowNavigationBanner_show
+interface BackToFairBannerProps {
+  show: BackToFairBanner_show
 }
 
-const ShowNavigationBanner: React.FC<ShowNavigationBannerProps & BoxProps> = ({
+const BackToFairBanner: React.FC<BackToFairBannerProps & BoxProps> = ({
   show,
 }) => {
   const { match } = useRouter()
@@ -39,11 +39,11 @@ const ShowNavigationBanner: React.FC<ShowNavigationBannerProps & BoxProps> = ({
   )
 }
 
-export const ShowNavigationBannerFragmentContainer = createFragmentContainer(
-  ShowNavigationBanner,
+export const BackToFairBannerFragmentContainer = createFragmentContainer(
+  BackToFairBanner,
   {
     show: graphql`
-      fragment ShowNavigationBanner_show on Show {
+      fragment BackToFairBanner_show on Show {
         partner {
           ... on Partner {
             internalID

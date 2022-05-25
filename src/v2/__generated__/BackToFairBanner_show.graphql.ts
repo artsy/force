@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowNavigationBanner_show = {
+export type BackToFairBanner_show = {
     readonly partner: {
         readonly internalID?: string | undefined;
     } | null;
@@ -12,12 +12,12 @@ export type ShowNavigationBanner_show = {
         readonly name: string | null;
         readonly href: string | null;
     } | null;
-    readonly " $refType": "ShowNavigationBanner_show";
+    readonly " $refType": "BackToFairBanner_show";
 };
-export type ShowNavigationBanner_show$data = ShowNavigationBanner_show;
-export type ShowNavigationBanner_show$key = {
-    readonly " $data"?: ShowNavigationBanner_show$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ShowNavigationBanner_show">;
+export type BackToFairBanner_show$data = BackToFairBanner_show;
+export type BackToFairBanner_show$key = {
+    readonly " $data"?: BackToFairBanner_show$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"BackToFairBanner_show">;
 };
 
 
@@ -36,7 +36,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ShowNavigationBanner_show",
+  "name": "BackToFairBanner_show",
   "selections": [
     {
       "alias": null,
@@ -91,5 +91,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd30ab7b1227f1703a550d00c5fa3f5a5';
+(node as any).hash = '0781360de5507863492cdc62c58c15f9';
 export default node;
