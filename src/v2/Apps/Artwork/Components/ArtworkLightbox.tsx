@@ -23,14 +23,17 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   onClick,
   ...rest
 }) => {
+  const { user } = useSystemContext()
+  const isTeam = userIsTeam(user)
   const images = compact(artwork.images)
   const hasGeometry = !!images[0]?.resized?.width
 
+  if (!images?.[activeIndex]) {
+    return null
+  }
+
   const { resized, fallback, placeholder, isDefault } = images[activeIndex]
   const image = hasGeometry ? resized : fallback
-
-  const { user } = useSystemContext()
-  const isTeam = userIsTeam(user)
 
   if (!image) {
     return null
