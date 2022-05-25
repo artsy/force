@@ -8,6 +8,7 @@ const ExampleApp = loadable(
     resolveComponent: component => component.ExampleAppFragmentContainer,
   }
 )
+
 const ArtistRoute = loadable(
   () =>
     import(
@@ -38,6 +39,7 @@ const ArtworkFilterRoute = loadable(
       component.ExampleArtworkFilterFragmentContainer,
   }
 )
+
 const WelcomeRoute = loadable(
   () =>
     import(
@@ -48,10 +50,20 @@ const WelcomeRoute = loadable(
   }
 )
 
+const AddToCollectionRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "exampleBundle" */ "./Routes/AddToCollection/AddToCollectionRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.AddToCollectionRouteFragmentContainer,
+  }
+)
+
 export const exampleRoutes: AppRouteConfig[] = [
   {
     path: "/example",
-    theme: "v3",
     getComponent: () => ExampleApp,
     onClientSideRender: () => {
       ExampleApp.preload()
@@ -66,12 +78,10 @@ export const exampleRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "",
-        theme: "v3",
         Component: WelcomeRoute,
       },
       {
         path: "artist/:slug",
-        theme: "v3",
         getComponent: () => ArtistRoute,
         onClientSideRender: () => {
           ArtistRoute.preload()
@@ -87,7 +97,6 @@ export const exampleRoutes: AppRouteConfig[] = [
       },
       {
         path: "artwork/:slug",
-        theme: "v3",
         getComponent: () => ArtworkRoute,
         onClientSideRender: () => {
           ArtworkRoute.preload()
@@ -103,7 +112,6 @@ export const exampleRoutes: AppRouteConfig[] = [
       },
       {
         path: "artwork-filter",
-        theme: "v3",
         getComponent: () => ArtworkFilterRoute,
         onClientSideRender: () => {
           ArtworkRoute.preload()
@@ -122,6 +130,20 @@ export const exampleRoutes: AppRouteConfig[] = [
             },
           }
         },
+      },
+      {
+        path: "add-to-collection",
+        getComponent: () => AddToCollectionRoute,
+        onClientSideRender: () => {
+          AddToCollectionRoute.preload()
+        },
+        query: graphql`
+          query exampleRoutes_AddToCollectionRouteQuery {
+            viewer {
+              ...AddToCollectionRoute_viewer
+            }
+          }
+        `,
       },
     ],
   },
