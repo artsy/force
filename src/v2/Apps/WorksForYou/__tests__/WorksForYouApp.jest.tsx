@@ -30,9 +30,6 @@ const { renderWithRelay } = setupTestWrapperTL({
       viewerMe: viewer {
         ...WorksForYouApp_viewerMe
       }
-      viewerSidebarAggregations: viewer {
-        ...WorksForYouApp_viewerSidebarAggregations
-      }
     }
   `,
 })
