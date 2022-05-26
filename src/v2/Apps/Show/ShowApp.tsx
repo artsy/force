@@ -1,4 +1,3 @@
-import { useMemo } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -27,8 +26,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ShowNavigationBannerFragmentContainer as ShowNavigationBanner } from "./Components/ShowNavigationBanner"
-import { useRouter } from "v2/System/Router/useRouter"
+import { BackToFairBannerFragmentContainer as BackToFairBanner } from "./Components/BackToFairBanner"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -36,18 +34,12 @@ interface ShowAppProps {
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-  const { match } = useRouter()
-  const { from_fair } = match.location.query
-
-  // FIXME: Why is this memoized?
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const arrivedFromFair = useMemo(() => from_fair ?? false, [])
 
   const hasViewingRoom = (show.viewingRoomsConnection?.edges?.length ?? 0) > 0
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
-  const { sidebar } = show
+  const { sidebar, isFairBooth } = show
 
   return (
     <>
@@ -61,7 +53,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          {arrivedFromFair && <ShowNavigationBanner show={show} />}
+          {isFairBooth && <BackToFairBanner show={show} />}
 
           <Spacer mt={4} />
 
@@ -149,6 +141,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       internalID
       slug
       about: description
+      isFairBooth
       viewingRoomsConnection {
         edges {
           __typename
@@ -176,7 +169,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       images(default: false, size: 100) {
         url
       }
-      ...ShowNavigationBanner_show
+      ...BackToFairBanner_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show

@@ -12,6 +12,7 @@ export type FairExhibitors_fair = {
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"FairExhibitorsGroup_exhibitorsGroup">;
     } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorsGroup_fair">;
     readonly " $refType": "FairExhibitors_fair";
 };
 export type FairExhibitors_fair$data = FairExhibitors_fair;
@@ -68,10 +69,15 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairExhibitorsGroup_fair"
     }
   ],
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = '6f683e8763efaec111c2de24f1e4ed37';
+(node as any).hash = '00d47bea3a122986accc34e930ea2698';
 export default node;

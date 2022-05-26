@@ -11,6 +11,7 @@ export type ShowApp_show = {
     readonly internalID: string;
     readonly slug: string;
     readonly about: string | null;
+    readonly isFairBooth: boolean | null;
     readonly viewingRoomsConnection: {
         readonly edges: ReadonlyArray<{
             readonly __typename: string;
@@ -38,7 +39,7 @@ export type ShowApp_show = {
     readonly images: ReadonlyArray<{
         readonly url: string | null;
     } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowNavigationBanner_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
+    readonly " $fragmentRefs": FragmentRefs<"BackToFairBanner_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -106,6 +107,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isFairBooth",
       "storageKey": null
     },
     {
@@ -296,7 +304,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ShowNavigationBanner_show"
+      "name": "BackToFairBanner_show"
     },
     {
       "args": null,
@@ -349,5 +357,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '338edf3be7508a8349a7c0a5e55f4456';
+(node as any).hash = '23479d42cc44afac10eaa90d09324015';
 export default node;

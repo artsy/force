@@ -16,6 +16,7 @@ describe("FairExhibitorsGroup", () => {
     return mount(
       <FairExhibitorsGroupFragmentContainer
         exhibitorsGroup={FAIR_EXHIBITORS_FIXTURE as any}
+        fair={FAIR_FIXTURE as any}
       />
     )
   }
@@ -78,4 +79,8 @@ const FAIR_EXHIBITORS_FIXTURE = {
       partnerID: "5694406501925b322c00010b",
     },
   ],
+}
+
+const FAIR_FIXTURE = {
+  internalID: "fair-id",
 }

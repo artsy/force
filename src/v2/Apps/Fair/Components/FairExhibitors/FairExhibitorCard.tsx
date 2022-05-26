@@ -10,18 +10,21 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { FairExhibitorCard_exhibitor } from "v2/__generated__/FairExhibitorCard_exhibitor.graphql"
+import { FairExhibitorCard_fair } from "v2/__generated__/FairExhibitorCard_fair.graphql"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
 
 interface FairExhibitorCardProps {
   exhibitor: FairExhibitorCard_exhibitor
+  fair: FairExhibitorCard_fair
 }
 
 const VISIBLE_CITIES_NUM = 2
 
 export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
   exhibitor,
+  fair,
 }) => {
   const { name, profile, cities, slug, internalID } = exhibitor.partner!
   const { user } = useSystemContext()
@@ -47,6 +50,8 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   const { focused_exhibitor: focusedExhibitorID } = match.location.query
   const focused = focusedExhibitorID === exhibitor?.partner?.internalID
+  const backToFairHref = `${fair.href}/exhibitors?focused_exhibitor=${internalID}`
+  const encodedBackToFairHref = encodeURIComponent(backToFairHref)
 
   const partnerAddress = (cities: readonly (string | null)[]) => {
     const visibleCities = cities.slice(0, VISIBLE_CITIES_NUM).join(", ")
@@ -60,8 +65,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <RouterLink
-      // use from_fair param to display navigation banner on show
-      to={`/show/${exhibitor.profileID}?from_fair=true`}
+      to={`/show/${exhibitor.profileID}?back_to_fair_href=${encodedBackToFairHref}`}
       textDecoration="none"
       display="block"
       onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
@@ -113,6 +117,11 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
             ...FollowProfileButton_profile
           }
         }
+      }
+    `,
+    fair: graphql`
+      fragment FairExhibitorCard_fair on Fair {
+        href
       }
     `,
   }
