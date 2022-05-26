@@ -159,23 +159,23 @@ const FairBoothsWithContext: FC<FairBoothsProps> = ({ ...props }) => {
   const {
     match: { location },
   } = useRouter()
-  const { hash, query } = location
-  const { scrollTo } = useScrollToElement({
+  const { focused_booths: focusedBooths } = location.query
+  const { scrollTo: scrollToBooths } = useScrollToElement({
     behavior: "smooth",
     selectorOrRef: "#jump--BoothsFilter",
     offset: 160, // Sticky top header
   })
 
   useEffect(() => {
-    if (hash === "#jump--BoothsFilter") {
-      scrollTo()
+    if (focusedBooths) {
+      scrollToBooths()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hash])
+  }, [focusedBooths])
 
   return (
     <BoothFilterContextProvider
-      filters={query}
+      filters={location.query}
       sortOptions={[
         { text: "Relevance", value: "FEATURED_DESC" },
         { text: "Alphabetical (A-Z)", value: "NAME_ASC" },

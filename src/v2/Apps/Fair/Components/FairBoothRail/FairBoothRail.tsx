@@ -18,7 +18,12 @@ import {
   initialBoothFilterState,
   useBoothsFilterContext,
 } from "../BoothFilterContext"
-import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import {
+  paramsToSnakeCase,
+  removeDefaultValues,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import qs from "qs"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface FairBoothRailProps extends BoxProps {
   show: FairBoothRail_show
@@ -36,6 +41,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
     contextPageOwnerType,
   } = useAnalyticsContext()
   const { filters } = useBoothsFilterContext()
+  const { match } = useRouter()
   let link: string | null = null
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
@@ -51,10 +57,15 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
   }
 
   if (show.href) {
-    const url = buildUrl(filters!, {
+    const params = removeDefaultValues(filters!, {
       defaultValues: initialBoothFilterState,
     })
-    const backHref = `${url}#jump--BoothsFilter`
+    const preparedParams = paramsToSnakeCase(params)
+    const queryString = qs.stringify({
+      ...preparedParams,
+      focused_booths: true,
+    })
+    const backHref = `${match.location.pathname}?${queryString}`
     const encodedBackHref = encodeURIComponent(backHref)
 
     link = `${show.href}?back_to_fair_href=${encodedBackHref}`

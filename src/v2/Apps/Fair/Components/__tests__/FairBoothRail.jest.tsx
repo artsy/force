@@ -7,9 +7,11 @@ import { fireEvent, screen } from "@testing-library/react"
 import { AnalyticsContext } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "v2/System/Analytics/useTracking"
+import { useRouter } from "v2/System/Router/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/System/Router/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({
   Component: props => {
@@ -42,29 +44,23 @@ const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({
 
 describe("FairBoothRail", () => {
   const mockTracking = useTracking as jest.Mock
+  const mockUseRouter = useRouter as jest.Mock
   const trackEvent = jest.fn()
-  let originalWindowLocation: Location
 
-  beforeAll(() => {
-    originalWindowLocation = window.location
-
-    // @ts-ignore
-    delete window.location
-    // @ts-ignore
-    window.location = {
-      assign: jest.fn(),
-      pathname: "/fair/slug",
-    }
+  beforeEach(() => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/fair/slug",
+        },
+      },
+    }))
 
     mockTracking.mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-  })
-
-  afterAll(() => {
-    window.location = originalWindowLocation
   })
 
   it("should render links", () => {
@@ -86,7 +82,9 @@ describe("FairBoothRail", () => {
     })
 
     const link = screen.getAllByRole("link")[0]
-    const endcodedUrl = encodeURIComponent("/fair/slug?sort=NAME_ASC&page=2")
+    const endcodedUrl = encodeURIComponent(
+      "/fair/slug?sort=NAME_ASC&page=2&focused_booths=true"
+    )
 
     expect(link).toHaveAttribute(
       "href",
