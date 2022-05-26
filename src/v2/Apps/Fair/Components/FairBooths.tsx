@@ -1,5 +1,5 @@
 import { useState } from "react"
-import * as React from "react"
+import { FC, useEffect } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { Box, Flex, FullBleed, Spacer } from "@artsy/palette"
@@ -25,6 +25,7 @@ import { FairBoothSortFilter } from "./FairBoothSortFilter"
 import { FairBoothRailFragmentContainer as FairBoothRail } from "./FairBoothRail"
 import { defaultSort, isValidSort } from "../Utils/IsValidSort"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 
 const logger = createLogger("FairBooths.tsx")
 
@@ -35,7 +36,7 @@ interface FairBoothsProps {
   relay: RelayRefetchProp
 }
 
-const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
+const FairBooths: FC<FairBoothsProps> = ({ fair, relay }) => {
   const context = useBoothsFilterContext()
   const [isLoading, setIsLoading] = useState(false)
   const previousFilters = usePrevious(context.filters!)
@@ -154,13 +155,27 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
   )
 }
 
-const FairBoothsWithContext: React.FC<FairBoothsProps> = ({ ...props }) => {
+const FairBoothsWithContext: FC<FairBoothsProps> = ({ ...props }) => {
   const {
     match: { location },
   } = useRouter()
+  const { hash, query } = location
+  const { scrollTo } = useScrollToElement({
+    behavior: "smooth",
+    selectorOrRef: "#jump--BoothsFilter",
+    offset: 160, // Sticky top header
+  })
+
+  useEffect(() => {
+    if (hash === "#jump--BoothsFilter") {
+      scrollTo()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hash])
+
   return (
     <BoothFilterContextProvider
-      filters={location.query}
+      filters={query}
       sortOptions={[
         { text: "Relevance", value: "FEATURED_DESC" },
         { text: "Alphabetical (A-Z)", value: "NAME_ASC" },
@@ -232,9 +247,7 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
   `
 )
 
-export const FairBoothsQueryRenderer: React.FC<{ slug: string }> = ({
-  slug,
-}) => {
+export const FairBoothsQueryRenderer: FC<{ slug: string }> = ({ slug }) => {
   const { relayEnvironment } = useSystemContext()
   const {
     match: { location },

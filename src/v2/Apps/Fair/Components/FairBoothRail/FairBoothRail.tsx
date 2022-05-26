@@ -51,9 +51,10 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
   }
 
   if (show.href) {
-    const backHref = buildUrl(filters!, {
+    const url = buildUrl(filters!, {
       defaultValues: initialBoothFilterState,
     })
+    const backHref = `${url}#jump--BoothsFilter`
     const encodedBackHref = encodeURIComponent(backHref)
 
     link = `${show.href}?back_to_fair_href=${encodedBackHref}`
