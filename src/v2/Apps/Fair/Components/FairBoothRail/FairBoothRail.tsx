@@ -14,7 +14,10 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
-import { useBoothsFilterContext } from "../BoothFilterContext"
+import {
+  initialBoothFilterState,
+  useBoothsFilterContext,
+} from "../BoothFilterContext"
 import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
 interface FairBoothRailProps extends BoxProps {
@@ -49,9 +52,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
 
   if (show.href) {
     const backHref = buildUrl(filters!, {
-      defaultValues: {
-        sort: "FEATURED_DESC",
-      },
+      defaultValues: initialBoothFilterState,
     })
     const encodedBackHref = encodeURIComponent(backHref)
 
