@@ -47,7 +47,7 @@ describe("FairBoothRail", () => {
   const mockUseRouter = useRouter as jest.Mock
   const trackEvent = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
