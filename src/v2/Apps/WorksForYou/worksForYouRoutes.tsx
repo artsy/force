@@ -37,9 +37,6 @@ export const worksForYouRoutes: AppRouteConfig[] = [
         viewerMe: viewer {
           ...WorksForYouApp_viewerMe
         }
-        viewerSidebarAggregations: viewer {
-          ...WorksForYouApp_viewerSidebarAggregations
-        }
       }
     `,
     prepareVariables: params => {

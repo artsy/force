@@ -3,7 +3,6 @@ import { MetaTags } from "v2/Components/MetaTags"
 import { WorksForYouApp_viewerArtist } from "v2/__generated__/WorksForYouApp_viewerArtist.graphql"
 import { WorksForYouApp_viewerFeed } from "v2/__generated__/WorksForYouApp_viewerFeed.graphql"
 import { WorksForYouApp_viewerMe } from "v2/__generated__/WorksForYouApp_viewerMe.graphql"
-import { WorksForYouApp_viewerSidebarAggregations } from "v2/__generated__/WorksForYouApp_viewerSidebarAggregations.graphql"
 import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
 import {
   Button,
@@ -24,20 +23,21 @@ interface WorksForYouProps {
   viewerArtist: WorksForYouApp_viewerArtist
   viewerFeed: WorksForYouApp_viewerFeed
   viewerMe: WorksForYouApp_viewerMe
-  viewerSidebarAggregations: WorksForYouApp_viewerSidebarAggregations
 }
 
 const WorksForYouApp: React.FC<WorksForYouProps> = ({
   viewerArtist,
   viewerFeed,
   viewerMe,
-  viewerSidebarAggregations,
 }) => {
   const { router } = useRouter()
 
-  const artists =
-    (viewerSidebarAggregations.sidebarAggregations?.aggregations?.[0]
-      ?.counts as FilterSelectItems) ?? []
+  const followedArtists = extractNodes(
+    viewerMe.me?.followsAndSaves?.artistsConnection
+  ).map(item => ({
+    label: item.artist?.name,
+    value: item.artist?.slug,
+  })) as FilterSelectItems
 
   const savedArtworks = extractNodes(
     viewerMe.me?.followsAndSaves?.bundledArtworksByArtistConnection
@@ -86,7 +86,7 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
                 ["asc", "desc"],
               ]}
               onChange={handleResultsFilterChange}
-              items={artists}
+              items={followedArtists}
             />
           </Column>
 
@@ -149,31 +149,23 @@ export const WorksForYouAppFragmentContainer = createFragmentContainer(
       fragment WorksForYouApp_viewerMe on Viewer {
         me {
           followsAndSaves {
+            artistsConnection(first: 99) {
+              totalCount
+              edges {
+                node {
+                  artist {
+                    name
+                    slug
+                  }
+                }
+              }
+            }
             bundledArtworksByArtistConnection(first: 1, forSale: true) {
               edges {
                 node {
                   id
                 }
               }
-            }
-          }
-        }
-      }
-    `,
-    viewerSidebarAggregations: graphql`
-      fragment WorksForYouApp_viewerSidebarAggregations on Viewer {
-        sidebarAggregations: artworksConnection(
-          aggregations: [ARTIST, FOLLOWED_ARTISTS]
-          first: 1
-        ) {
-          counts {
-            followedArtists
-          }
-          aggregations {
-            counts {
-              label: name
-              value
-              count
             }
           }
         }
