@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairBoothRail_show } from "v2/__generated__/FairBoothRail_show.graphql"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { useTracking } from "react-tracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import {
   ActionType,
   ClickedArtworkGroup,
@@ -14,6 +14,8 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { useBoothsFilterContext } from "../BoothFilterContext"
+import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
 interface FairBoothRailProps extends BoxProps {
   show: FairBoothRail_show
@@ -30,6 +32,8 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+  const { filters } = useBoothsFilterContext()
+  let link: string | null = null
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.galleryBoothRail,
@@ -43,6 +47,17 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
     action: ActionType.clickedArtworkGroup,
   }
 
+  if (show.href) {
+    const backHref = buildUrl(filters!, {
+      defaultValues: {
+        sort: "FEATURED_DESC",
+      },
+    })
+    const encodedBackHref = encodeURIComponent(backHref)
+
+    link = `${show.href}?back_to_fair_href=${encodedBackHref}`
+  }
+
   return (
     <>
       <Box ref={ref as any} {...rest}>
@@ -50,7 +65,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
           <Box flex="1">
             <Text as="h3" variant="lg-display">
               <RouterLink
-                to={show.href}
+                to={link}
                 noUnderline
                 onClick={() => tracking.trackEvent(tappedViewTrackingData)}
               >
@@ -66,12 +81,12 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
             )}
           </Box>
 
-          {show.href && (
+          {link && (
             <Text
               variant="sm-display"
               onClick={() => tracking.trackEvent(tappedViewTrackingData)}
             >
-              <RouterLink to={show.href}>View</RouterLink>
+              <RouterLink to={link}>View</RouterLink>
             </Text>
           )}
         </Flex>
