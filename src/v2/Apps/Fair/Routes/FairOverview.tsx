@@ -1,4 +1,4 @@
-import * as React from "react"
+import { FC, useEffect } from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -14,13 +14,30 @@ import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverv
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
+import { useRouter } from "v2/System/Router/useRouter"
+import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 
 interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair
 }
 
-const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
+const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
   const { user } = useSystemContext()
+  const { match } = useRouter()
+  const { focused_booths: focusedBooths } = match.location.query
+  const { scrollTo: scrollToBooths } = useScrollToElement({
+    behavior: "smooth",
+    selectorOrRef: "#jump--BoothsSection",
+    offset: 160, // Sticky top header
+  })
+
+  useEffect(() => {
+    if (focusedBooths) {
+      scrollToBooths()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusedBooths])
+
   const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
 
@@ -56,12 +73,12 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
       {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
 
       {sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB && (
-        <>
+        <Box id="jump--BoothsSection">
           <Text variant="lg-display" mb={4}>
             Booths
           </Text>
           <FairBooths slug={fair.slug} />
-        </>
+        </Box>
       )}
     </Box>
   )
