@@ -23,6 +23,9 @@ export type Works_partner = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "Works_partner";
@@ -195,6 +198,30 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "format",
+                  "value": "0,0"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": "total(format:\"0,0\")"
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
@@ -206,5 +233,5 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '0176c7bc06efb1faeb063ac7e49a0428';
+(node as any).hash = '8717354f1f5956bc30748da7d832e576';
 export default node;

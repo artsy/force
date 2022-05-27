@@ -23,6 +23,9 @@ export type TagArtworkFilter_tag = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "TagArtworkFilter_tag";
@@ -195,6 +198,30 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "format",
+                  "value": "0,0"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": "total(format:\"0,0\")"
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
@@ -206,5 +233,5 @@ const node: ReaderFragment = {
   "type": "Tag",
   "abstractKey": null
 };
-(node as any).hash = '75fc4603531cd4a9ab6ab823cb814a0a';
+(node as any).hash = '70e71fb21ba5f3997f706a3f931e1452';
 export default node;

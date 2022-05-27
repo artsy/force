@@ -7,6 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesArtworksFilter_artistSeries = {
     readonly filtered_artworks: {
         readonly id: string;
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "ArtistSeriesArtworksFilter_artistSeries";
@@ -53,6 +56,30 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "format",
+                  "value": "0,0"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": "total(format:\"0,0\")"
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
@@ -64,5 +91,5 @@ const node: ReaderFragment = {
   "type": "ArtistSeries",
   "abstractKey": null
 };
-(node as any).hash = '4a11fbffa1639a06de13dd34dbf81eeb';
+(node as any).hash = 'fb3701b3167a44456c7eeeef7cc101d5';
 export default node;

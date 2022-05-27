@@ -6,7 +6,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import * as React from "react";
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -75,6 +75,9 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
+          counts {
+            total(format: "0,0")
+          }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
