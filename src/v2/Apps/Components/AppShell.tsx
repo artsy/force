@@ -24,6 +24,17 @@ import {
 } from "v2/Components/MNTNPixels"
 import { createGlobalStyle } from "styled-components"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"
+import loadable from "@loadable/component"
+
+const CookieConsentManager = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "cookieConsentManagerBundle" */ "v2/Components/CookieConsentManager/CookieConsentManager"
+    ),
+  {
+    resolveComponent: component => component.CookieConsentManager,
+  }
+)
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -120,6 +131,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
             </AppContainer>
           </Flex>
         )}
+
+        {isMounted && <CookieConsentManager />}
       </Theme>
 
       <MNTNConversionPixel />
