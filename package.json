@@ -34,6 +34,7 @@
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
     "mocha": "scripts/mocha.sh",
+    "open-consent-modal": "open http://localhost:5000?otreset=false&otpreview=true&otgeo=gb",
     "prepare": "patch-package",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
     "prettier-write": "yarn run prettier --write",
