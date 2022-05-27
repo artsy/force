@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
@@ -72,6 +72,9 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
         }
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
+          counts {
+            total(format: "0,0")
+          }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
