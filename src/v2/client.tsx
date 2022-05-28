@@ -38,7 +38,8 @@ async function setupClient() {
       })
     }
 
-    loadSegment()
+    // TODO: This is disabled while we experiment with Segment.io consent support
+    // loadSegment()
 
     initAuthModalContainer()
     setupArtistSignUpModal()
