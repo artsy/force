@@ -59,6 +59,8 @@ export const PaymentRoute: FC<Props> = props => {
   const isLoading = isGettingCreditCardId || isCommittingMutation
   const paymentPicker = createRef<PaymentPicker>()
 
+  console.log({ props })
+
   const onContinue = async () => {
     try {
       setIsGettingCreditCardId(true)
@@ -228,6 +230,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        additionalPaymentMethods
         internalID
         mode
         currencyCode
