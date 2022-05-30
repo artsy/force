@@ -806,6 +806,7 @@ export const ArtaShippingDetails = {
 } as const
 
 export const PaymentDetails = {
+  additionalPaymentMethods: [],
   creditCard: {
     brand: "Visa",
     city: "New York",
