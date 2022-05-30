@@ -4,9 +4,10 @@ import { Box, Button, Spacer } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
+import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 
 interface Props {
-  order: { mode: string | null; internalID: string }
+  order: Payment_order
   returnURL: string
 }
 
