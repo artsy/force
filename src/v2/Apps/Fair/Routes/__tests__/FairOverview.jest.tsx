@@ -1,10 +1,18 @@
 import { FairOverviewFragmentContainer } from "../../Routes/FairOverview"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { useRouter } from "v2/System/Router/useRouter"
+import { FairOverview_Test_Query } from "v2/__generated__/FairOverview_Test_Query.graphql"
+
+const mockScrollTo = jest.fn()
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Router/useRouter")
+jest.mock("v2/Utils/Hooks/useScrollTo", () => ({
+  useScrollToElement: () => ({ scrollTo: mockScrollTo }),
+}))
 
-const { getWrapper } = setupTestWrapper({
+const { getWrapper } = setupTestWrapper<FairOverview_Test_Query>({
   Component: FairOverviewFragmentContainer,
   query: graphql`
     query FairOverview_Test_Query @relay_test_operation {
@@ -16,6 +24,20 @@ const { getWrapper } = setupTestWrapper({
 })
 
 describe("FairOverview", () => {
+  const mockUseRouter = useRouter as jest.Mock
+
+  beforeEach(() => {
+    mockScrollTo.mockClear()
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/fair/slug",
+          query: {},
+        },
+      },
+    }))
+  })
+
   it("displays the about information", () => {
     const wrapper = getWrapper({
       Fair: () => ({
@@ -105,5 +127,22 @@ describe("FairOverview", () => {
     })
 
     expect(wrapper.text()).not.toContain("Closes in:")
+  })
+
+  it("scrollTo should be called if url contains `focused_boots` query param", () => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/fair/slug",
+          query: {
+            focused_booths: true,
+          },
+        },
+      },
+    }))
+
+    getWrapper()
+
+    expect(mockScrollTo).toBeCalled()
   })
 })

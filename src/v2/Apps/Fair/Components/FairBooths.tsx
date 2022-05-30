@@ -18,6 +18,7 @@ import { FairBoothsContainerQuery } from "v2/__generated__/FairBoothsContainerQu
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import {
   BoothFilterContextProvider,
+  initialBoothFilterState,
   useBoothsFilterContext,
 } from "./BoothFilterContext"
 import { FairBoothSortFilter } from "./FairBoothSortFilter"
@@ -157,6 +158,7 @@ const FairBoothsWithContext: React.FC<FairBoothsProps> = ({ ...props }) => {
   const {
     match: { location },
   } = useRouter()
+
   return (
     <BoothFilterContextProvider
       filters={location.query}
@@ -165,7 +167,7 @@ const FairBoothsWithContext: React.FC<FairBoothsProps> = ({ ...props }) => {
         { text: "Alphabetical (A-Z)", value: "NAME_ASC" },
       ]}
       onChange={event =>
-        updateUrl(event, { defaultValues: { sort: "FEATURED_DESC" } })
+        updateUrl(event, { defaultValues: initialBoothFilterState })
       }
     >
       <FairBooths {...props} />
