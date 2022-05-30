@@ -335,22 +335,13 @@ describe("Payment", () => {
       expect(result).toBe(true)
     })
 
-    it("renders selection of credit card and bank transfer", async () => {
+    it("does not render wire tranfer as option for uneligible partners", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
-      expect(page.text()).toContain("Credit card")
-      expect(page.text()).toContain("Wire transfer")
+      expect(page.text()).not.toContain("Wire transfer")
     })
 
-    it("renders credit card collapse when credit card is chosen as payment method", async () => {
-      const env = setupTestEnv()
-      const page = await env.buildPage()
-      page.selectPaymentMethod(0)
-      const creditCardCollapse = page
-        .find(PaymentPickerFragmentContainer)
-        .closest(Collapse)
-      expect(creditCardCollapse.first().props().open).toBe(true)
-    })
+    it.todo("renders wire transfer as option for eligible partners")
 
     it.todo("transitions to review step when wire transfer is chosen")
   })

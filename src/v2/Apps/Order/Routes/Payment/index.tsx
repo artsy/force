@@ -228,6 +228,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        additionalPaymentMethods
         internalID
         mode
         currencyCode

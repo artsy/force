@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type Payment_order = {
+    readonly additionalPaymentMethods: ReadonlyArray<string | null> | null;
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly currencyCode: string;
@@ -36,6 +37,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Payment_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "additionalPaymentMethods",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -140,5 +148,5 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = 'd90b850a736d2adaa3c8ebe1c2616338';
+(node as any).hash = '968bfecf39574eb169597fd25ab63f83';
 export default node;
