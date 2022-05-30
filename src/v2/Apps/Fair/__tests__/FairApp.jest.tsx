@@ -134,6 +134,28 @@ describe("FairApp", () => {
     })
   })
 
+  it("tracks clicks to the exhibitors tab", () => {
+    renderWithRelay({
+      Fair: () => ({
+        internalID: "bson-fair",
+        slug: "miart-2020",
+        href: "/fair/miart-2020",
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Exhibitors A-Z"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedNavigationTab",
+      context_module: "fairInfo",
+      context_page_owner_id: "bson-fair",
+      context_page_owner_slug: "miart-2020",
+      context_page_owner_type: "fair",
+      destination_path: "/fair/miart-2020/exhibitors",
+      subject: "Exhibitors",
+    })
+  })
+
   describe("Exhibitors tab", () => {
     beforeEach(() => {
       mockUseRouter.mockImplementation(() => ({
