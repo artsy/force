@@ -7,13 +7,7 @@ import { FairOverview_Test_Query } from "v2/__generated__/FairOverview_Test_Quer
 const mockScrollTo = jest.fn()
 
 jest.unmock("react-relay")
-jest.mock("v2/System/Router/useRouter", () => ({
-  useRouter: () => ({
-    match: {
-      location: { query: {}, pathname: "" },
-    },
-  }),
-}))
+jest.mock("v2/System/Router/useRouter")
 jest.mock("v2/Utils/Hooks/useScrollTo", () => ({
   useScrollToElement: () => ({ scrollTo: mockScrollTo }),
 }))

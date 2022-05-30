@@ -120,12 +120,11 @@ describe("FairApp", () => {
       }),
     })
 
-    fireEvent.click(screen.getByText("Exhibitors A-Z"))
     fireEvent.click(screen.getByText("Artworks"))
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedNavigationTab",
-      context_module: "exhibitorsTab",
+      context_module: "fairInfo",
       context_page_owner_id: "bson-fair",
       context_page_owner_slug: "miart-2020",
       context_page_owner_type: "fair",
