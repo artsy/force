@@ -25,6 +25,7 @@ query SignUpFormLocation_tests_Query(
 ) {
   requestLocation(ip: $ip) {
     ...SignUpForm_requestLocation
+    id
   }
 }
 
@@ -95,6 +96,13 @@ return {
             "kind": "ScalarField",
             "name": "countryCode",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -102,7 +110,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7ff510343d17f80cac21e75a084f7b80",
+    "cacheID": "5242390619aa9e2ae204c41409ea842c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -117,12 +125,18 @@ return {
           "nullable": true,
           "plural": false,
           "type": "String"
+        },
+        "requestLocation.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
         }
       }
     },
     "name": "SignUpFormLocation_tests_Query",
     "operationKind": "query",
-    "text": "query SignUpFormLocation_tests_Query(\n  $ip: String!\n) {\n  requestLocation(ip: $ip) {\n    ...SignUpForm_requestLocation\n  }\n}\n\nfragment SignUpForm_requestLocation on RequestLocation {\n  countryCode\n}\n"
+    "text": "query SignUpFormLocation_tests_Query(\n  $ip: String!\n) {\n  requestLocation(ip: $ip) {\n    ...SignUpForm_requestLocation\n    id\n  }\n}\n\nfragment SignUpForm_requestLocation on RequestLocation {\n  countryCode\n}\n"
   }
 };
 })();
