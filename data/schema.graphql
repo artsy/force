@@ -12597,8 +12597,10 @@ type RequestCredentialsForAssetUploadPayload {
 }
 
 type RequestLocation {
+  cached: Int
   country: String
   countryCode: String
+  id: ID!
 }
 
 type RequestPriceEstimatedMutationFailure {
