@@ -50,7 +50,6 @@ describe("ArtworkSidebarCommercial", () => {
           user={user}
           mediator={mediator}
           relay={{ environment: {} } as RelayProp}
-          isCreateAlertButtonEnabled={true} // TODO: Remove it when "artwork-page-create-alert" flag is released
           {...otherProps}
         />
       </SystemContextProvider>
