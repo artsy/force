@@ -23,6 +23,7 @@ type Mode = "Pending" | "Adding"
 
 const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
   const methods = extractNodes(me.creditCards)
+  const bankAccounts = [] // TODO: pull from API
 
   const [mode, setMode] = useMode<Mode>("Pending")
 
@@ -69,19 +70,21 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
         Add New Card
       </Button>
 
-      <Flex flexDirection="column">
-        <Text mb={2}>Bank transfer (US bank account)</Text>
-        {/*  TODO: replace with bank account instead of credit card */}
-        <GridColumns>
-          {methods.map(method => {
-            return (
-              <Column key={method.internalID} span={8} wrap>
-                <SettingsPaymentsMethodFragmentContainer method={method} />
-              </Column>
-            )
-          })}
-        </GridColumns>
-      </Flex>
+      {bankAccounts?.length && (
+        <Flex flexDirection="column">
+          <Text mb={2}>Bank transfer (US bank account)</Text>
+          {/*  TODO: render bank acount UI */}
+          <GridColumns>
+            {bankAccounts.map((account, idx) => {
+              return (
+                <Column key={idx} span={8} wrap>
+                  <Text>{account}</Text>
+                </Column>
+              )
+            })}
+          </GridColumns>
+        </Flex>
+      )}
     </>
   )
 }
