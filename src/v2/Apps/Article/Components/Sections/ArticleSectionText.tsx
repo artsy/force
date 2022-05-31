@@ -49,10 +49,10 @@ export const ArticleSectionTextFragmentContainer = createFragmentContainer(
  */
 const ArticleHTMLFirstLetter = styled(ArticleHTML)`
   p:first-child::first-letter {
-    font-size: 3em;
+    font-size: 5em;
     float: left;
     margin-right: 0.125em;
-    margin-top: 0.25em;
+    margin-top: 0.33em;
     text-transform: uppercase;
   }
 `

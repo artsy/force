@@ -18,6 +18,7 @@ import {
 } from "@artsy/palette"
 import { ArticleHero_article } from "v2/__generated__/ArticleHero_article.graphql"
 import styled from "styled-components"
+import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
 
 interface ArticleHeroProps {
   article: ArticleHero_article
@@ -137,7 +138,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
           )}
 
           <GridColumns>
-            <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+            <Column {...CENTERED_LAYOUT_COLUMNS}>
               {article.vertical && (
                 <Text variant="sm" fontWeight="bold">
                   {article.vertical}
@@ -163,7 +164,7 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
           <Spacer mt={4} />
 
           <GridColumns>
-            <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+            <Column {...CENTERED_LAYOUT_COLUMNS}>
               <Text variant="sm" fontWeight="bold">
                 {article.vertical}
               </Text>
