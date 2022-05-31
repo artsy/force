@@ -6,6 +6,7 @@ import { ArtworkSidebarAuctionInfoPolling_artwork } from "v2/__generated__/Artwo
 import { ArtworkSidebarAuctionInfoPolling_me } from "v2/__generated__/ArtworkSidebarAuctionInfoPolling_me.graphql"
 import { usePoll } from "v2/Utils/Hooks/usePoll"
 import { useEffect, useRef, useState } from "react"
+import { Spacer } from "@artsy/palette"
 
 type Props = {
   artwork: ArtworkSidebarAuctionInfoPolling_artwork
@@ -54,6 +55,7 @@ export const ArtworkSidebarAuctionPolling: React.FC<Props> = ({
         currentBidChanged={currentBidChanged}
         artwork={artwork}
       />
+      <Spacer my={2} />
       <ArtworkSidebarBidActionFragmentContainer artwork={artwork} me={me} />
     </>
   )
