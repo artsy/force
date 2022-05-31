@@ -15,6 +15,7 @@ const StyledRange = styled(RCRange)`
   height: ${RANGE_DOT_SIZE}px;
   width: 100%;
   touch-action: none;
+  user-select: none;
 
   .rc-slider-rail {
     width: 100%;
