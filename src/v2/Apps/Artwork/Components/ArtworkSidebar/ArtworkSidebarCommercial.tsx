@@ -357,23 +357,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
-  renderSpacer() {
-    const { artwork } = this.props
-    const {
-      is_offerable: isOfferable,
-      is_acquireable: isAcquireable,
-      is_inquireable: isInquireable,
-    } = artwork
-
-    if (isInquireable || isAcquireable || isOfferable) {
-      return artwork.sale_message && <Spacer mt={2} />
-    }
-
-    return <Separator my={2} />
-  }
-
   renderShipAndTaxInformation(artworkEcommerceAvailable: boolean) {
     const { artwork } = this.props
+    const { is_inquireable: isInquireable } = artwork
+    const shouldRenderButtons = artworkEcommerceAvailable || isInquireable
 
     return (
       <>
@@ -389,7 +376,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           </Text>
         )}
 
-        {this.renderSpacer()}
+        {shouldRenderButtons && artwork.sale_message && <Spacer mt={2} />}
       </>
     )
   }
@@ -430,7 +417,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const isSecondaryContactGalleryButton = isOfferable || isSold
 
     if (!artwork.sale_message && !isInquireable) {
-      return <Separator />
+      return null
     }
 
     return (
