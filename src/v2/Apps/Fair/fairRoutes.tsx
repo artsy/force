@@ -2,10 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { defaultSort, isValidSort } from "./Utils/IsValidSort"
 import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
-import { getENV } from "v2/Utils/getENV"
 
 const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
@@ -29,12 +26,6 @@ const FairExhibitorsRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairExhibitors"),
   {
     resolveComponent: component => component.FairExhibitorsFragmentContainer,
-  }
-)
-const FairBoothsRoute = loadable(
-  () => import(/* webpackChunkName: "fairBundle" */ "./Components/FairBooths"),
-  {
-    resolveComponent: component => component.FairBoothsFragmentContainer,
   }
 )
 const FairArtworksRoute = loadable(
@@ -96,51 +87,9 @@ export const fairRoutes: AppRouteConfig[] = [
       },
       {
         path: "booths(.*)?",
-        getComponent: () => FairBoothsRoute,
-        onClientSideRender: () => {
-          FairBoothsRoute.preload()
-        },
-        prepareVariables: ({ slug }, { location }) => {
-          let { sort, page } = location.query
-          if (!isValidSort(sort)) {
-            sort = defaultSort
-          }
-          return { sort, page, slug }
-        },
-        query: graphql`
-          query fairRoutes_FairBoothsQuery(
-            $slug: String!
-            $page: Int
-            $sort: ShowSorts
-          ) {
-            fair(id: $slug) @principalField {
-              ...FairBooths_fair @arguments(sort: $sort, page: $page)
-            }
-          }
-        `,
-        render: ({ Component, props, match }) => {
-          if (!(Component && props)) {
-            return undefined
-          }
-
-          if (getENV("ENABLE_FAIR_PAGE_EXHIBITORS_TAB")) {
-            const slug = match.params.slug
-            throw new RedirectException(`/fair/${slug}`, 301)
-          }
-
-          const {
-            location: {
-              query: { sort, ...otherQuery },
-              pathname,
-            },
-          } = match
-
-          if (!isValidSort(sort)) {
-            const url = buildUrl(otherQuery, { pathname })
-            throw new RedirectException(url)
-          }
-
-          return <Component {...props} />
+        render: ({ match }) => {
+          const slug = match.params.slug
+          throw new RedirectException(`/fair/${slug}`, 301)
         },
       },
       {

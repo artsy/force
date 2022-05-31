@@ -47,7 +47,6 @@ const { renderWithRelay } = setupTestWrapperTL<FairApp_Test_Query>({
     }
   `,
 })
-const sd = require("sharify").data
 
 describe("FairApp", () => {
   const trackEvent = jest.fn()
@@ -86,22 +85,7 @@ describe("FairApp", () => {
     expect(document.title).toBe("Miart 2020 | Artsy")
   })
 
-  it("renders the booths tab with an appropriate href", () => {
-    renderWithRelay({
-      Fair: () => ({
-        href: "/fair/miart-2020",
-      }),
-    })
-
-    expect(screen.getByText("Booths")).toBeInTheDocument()
-    expect(screen.getByText("Booths")).toHaveAttribute(
-      "href",
-      "/fair/miart-2020/booths"
-    )
-  })
-
-  it("renders the exhibitors tab when env variable is true", () => {
-    sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB = true
+  it("renders the exhibitors tab", () => {
     renderWithRelay({
       Fair: () => ({
         href: "/fair/miart-2020",
@@ -113,30 +97,6 @@ describe("FairApp", () => {
       "href",
       "/fair/miart-2020/exhibitors"
     )
-  })
-
-  it("tracks clicks to the booths tab", () => {
-    sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB = false
-
-    renderWithRelay({
-      Fair: () => ({
-        internalID: "bson-fair",
-        slug: "miart-2020",
-        href: "/fair/miart-2020",
-      }),
-    })
-
-    fireEvent.click(screen.getByText("Booths"))
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: "clickedNavigationTab",
-      context_module: "fairInfo",
-      context_page_owner_id: "bson-fair",
-      context_page_owner_slug: "miart-2020",
-      context_page_owner_type: "fair",
-      destination_path: "/fair/miart-2020/booths",
-      subject: "Booths",
-    })
   })
 
   it("renders the artworks tab with a count and appropriate href", () => {
@@ -160,17 +120,38 @@ describe("FairApp", () => {
       }),
     })
 
-    fireEvent.click(screen.getByText("Booths"))
     fireEvent.click(screen.getByText("Artworks"))
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedNavigationTab",
-      context_module: "boothsTab",
+      context_module: "fairInfo",
       context_page_owner_id: "bson-fair",
       context_page_owner_slug: "miart-2020",
       context_page_owner_type: "fair",
       destination_path: "/fair/miart-2020/artworks",
       subject: "Artworks",
+    })
+  })
+
+  it("tracks clicks to the exhibitors tab", () => {
+    renderWithRelay({
+      Fair: () => ({
+        internalID: "bson-fair",
+        slug: "miart-2020",
+        href: "/fair/miart-2020",
+      }),
+    })
+
+    fireEvent.click(screen.getByText("Exhibitors A-Z"))
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedNavigationTab",
+      context_module: "fairInfo",
+      context_page_owner_id: "bson-fair",
+      context_page_owner_slug: "miart-2020",
+      context_page_owner_type: "fair",
+      destination_path: "/fair/miart-2020/exhibitors",
+      subject: "Exhibitors",
     })
   })
 

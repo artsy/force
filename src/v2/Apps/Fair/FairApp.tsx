@@ -22,8 +22,6 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
@@ -67,7 +65,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   }
 
   const artworkCount = fair.counts?.artworks ?? 0
-  const enableFairPageExhibitorsTab = sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB
 
   return (
     <StickyProvider>
@@ -115,33 +112,17 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                       <Text display="inline">&nbsp;({artworkCount})</Text>
                     </FairRouteTab>
 
-                    {enableFairPageExhibitorsTab && (
-                      <FairRouteTab
-                        to={`${fairHref}/exhibitors`}
-                        exact
-                        onClick={trackTabData(
-                          `${fairHref}/exhibitors`,
-                          "Exhibitors",
-                          ContextModule.exhibitorsTab
-                        )}
-                      >
-                        Exhibitors A-Z
-                      </FairRouteTab>
-                    )}
-
-                    {!enableFairPageExhibitorsTab && (
-                      <FairRouteTab
-                        to={`${fairHref}/booths`}
-                        exact
-                        onClick={trackTabData(
-                          `${fairHref}/booths`,
-                          "Booths",
-                          ContextModule.boothsTab
-                        )}
-                      >
-                        Booths
-                      </FairRouteTab>
-                    )}
+                    <FairRouteTab
+                      to={`${fairHref}/exhibitors`}
+                      exact
+                      onClick={trackTabData(
+                        `${fairHref}/exhibitors`,
+                        "Exhibitors",
+                        ContextModule.exhibitorsTab
+                      )}
+                    >
+                      Exhibitors A-Z
+                    </FairRouteTab>
                   </RouteTabs>
                   {match.location.pathname.includes("/exhibitors") && (
                     <ExhibitorsLetterNav fair={fair} />

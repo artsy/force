@@ -11,8 +11,6 @@ import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
 import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverview/FairAbout"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
 import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
@@ -72,14 +70,12 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
 
       {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
 
-      {sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB && (
-        <Box id="jump--BoothsSection">
-          <Text variant="lg-display" mb={4}>
-            Booths
-          </Text>
-          <FairBooths slug={fair.slug} />
-        </Box>
-      )}
+      <Box id="jump--BoothsSection">
+        <Text variant="lg-display" mb={4}>
+          Booths
+        </Text>
+        <FairBooths slug={fair.slug} />
+      </Box>
     </Box>
   )
 }
