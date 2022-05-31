@@ -41,7 +41,7 @@ export const FooterDownloadAppBanner = () => {
         py={[6, 2]}
       >
         <Text variant={tokens.title} textAlign="center" mb={1}>
-          Get More from Artsy—on the App
+          Get the Artsy app
         </Text>
         <Spacer mt={2} />
         <DownloadAppBadges contextModule={ContextModule.footer} />

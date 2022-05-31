@@ -41,9 +41,7 @@ describe("AppShell", () => {
         <ClientApp />
       </SystemContextProvider>
     )
-    expect(
-      screen.getByText("Get More from Artsy—on the App")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Get the Artsy app")).toBeInTheDocument()
   })
 
   it("calls the matched routes `prepare` function if found", async () => {
