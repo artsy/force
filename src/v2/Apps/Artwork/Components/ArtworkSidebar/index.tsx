@@ -15,7 +15,6 @@ import { VerifiedSellerFragmentContainer } from "../TrustSignals/VerifiedSeller"
 import { BuyerGuaranteeFragmentContainer } from "../TrustSignals/BuyerGuarantee"
 import { ArtworkSidebarExtraLinksFragmentContainer } from "./ArtworkSidebarExtraLinks"
 import { ArtworkSidebarAuctionPollingRefetchContainer } from "./ArtworkSidebarAuctionInfoPolling"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreateArtworkAlertSectionFragmentContainer } from "./CreateArtworkAlertSection"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "./ArtworkSidebarAuctionTimer"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
@@ -39,10 +38,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   artwork,
   me,
 }) => {
-  const isCreateAlertButtonForArtworkEnabled = useFeatureFlag(
-    "artwork-page-create-alert"
-  )
-
   // If we have info about the lot end time (cascading), use that.
   const { sale, saleArtwork, is_sold, is_in_auction } = artwork
   const endAt = saleArtwork?.endAt
@@ -120,10 +115,9 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         </Join>
       )}
 
-      {isCreateAlertButtonForArtworkEnabled &&
-        !shouldHideDetailsCreateAlertCTA && (
-          <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
-        )}
+      {!shouldHideDetailsCreateAlertCTA && (
+        <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />
+      )}
 
       <ArtworkSidebarExtraLinksFragmentContainer artwork={artwork} />
     </ArtworkSidebarContainer>

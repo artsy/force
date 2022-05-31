@@ -7,7 +7,6 @@ import {
   setupTestWrapperTL,
 } from "v2/DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
-import { useSystemContext } from "v2/System"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "../ArtworkSidebarBiddingClosedMessage"
 import { Settings } from "luxon"
 
@@ -18,10 +17,6 @@ jest.mock("../ArtworkSidebarClassification", () => ({
 jest.mock("v2/System/Analytics/useTracking", () => ({
   useTracking: () => ({ trackEvent: jest.fn() }),
 }))
-jest.mock("v2/System/useSystemContext")
-
-const mockUseSystemContext = useSystemContext as jest.Mock
-let mockFeatureFlags
 
 const ARTWORKSIDEBAR_TEST_QUERY = graphql`
   query ArtworkSidebar_Test_Query @relay_test_operation {
@@ -45,18 +40,6 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebar", () => {
-  beforeEach(() => {
-    mockFeatureFlags = {
-      featureFlags: {
-        "artwork-page-create-alert": {
-          flagEnabled: false,
-        },
-      },
-    }
-
-    mockUseSystemContext.mockImplementation(() => mockFeatureFlags)
-  })
-
   it("renders ArtworkSidebarArtists component", () => {
     const wrapper = getWrapper()
     expect(wrapper.find(ArtworkSidebarArtists).length).toBe(1)
@@ -119,33 +102,12 @@ describe("ArtworkSidebar", () => {
     })
   })
 
-  describe("artwork-page-create-alert feature flag", () => {
-    it("renders the create alert section when artwork-page-create-alert ff is enabled", () => {
-      mockFeatureFlags = {
-        featureFlags: {
-          "artwork-page-create-alert": {
-            flagEnabled: true,
-          },
-        },
-      }
+  it("renders the create alert section", () => {
+    renderWithRelay()
 
-      mockUseSystemContext.mockImplementationOnce(() => mockFeatureFlags)
-
-      renderWithRelay()
-
-      expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
-      expect(
-        screen.queryByText(/Be notified when a similar work is available/i)
-      ).toBeInTheDocument()
-    })
-
-    it("does not render the create alert section when artwork-page-create-alert ff is disabled", () => {
-      renderWithRelay()
-
-      expect(screen.queryByText(/Create Alert/i)).not.toBeInTheDocument()
-      expect(
-        screen.queryByText(/Be notified when a similar work is available/i)
-      ).not.toBeInTheDocument()
-    })
+    expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
+    expect(
+      screen.queryByText(/Be notified when a similar work is available/i)
+    ).toBeInTheDocument()
   })
 })

@@ -36,7 +36,6 @@ import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSi
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSidebarCreateAlertButton"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 type EditionSet = NonNullable<
   ArtworkSidebarCommercial_artwork["edition_sets"]
@@ -48,7 +47,6 @@ export interface ArtworkSidebarCommercialContainerProps
   mediator: Mediator
   router?: Router
   user?: User
-  isCreateAlertButtonEnabled?: boolean
 }
 
 export interface ArtworkSidebarCommercialContainerState {
@@ -411,7 +409,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   }
 
   render() {
-    const { artwork, inquiryComponent, isCreateAlertButtonEnabled } = this.props
+    const { artwork, inquiryComponent } = this.props
     const {
       is_offerable: isOfferable,
       is_acquireable: isAcquireable,
@@ -429,11 +427,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       artwork.is_acquireable || artwork.is_offerable
     )
 
+    const isSecondaryContactGalleryButton = isOfferable || isSold
+
     if (!artwork.sale_message && !isInquireable) {
       return <Separator />
     }
-
-    const shouldShowCreateAlertButton = isCreateAlertButtonEnabled && isSold
 
     return (
       <>
@@ -480,7 +478,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {shouldShowCreateAlertButton
+          {isSold
             ? this.renderCreateAlertButton()
             : this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
 
@@ -512,13 +510,13 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
           {isInquireable && (
             <>
-              <Spacer mt={isOfferable || shouldShowCreateAlertButton ? 2 : 0} />
+              <Spacer mt={isSecondaryContactGalleryButton ? 2 : 0} />
               <Button
                 width="100%"
                 size="medium"
                 onClick={this.handleInquiry.bind(this)}
                 variant={
-                  isOfferable || shouldShowCreateAlertButton
+                  isSecondaryContactGalleryButton
                     ? "secondaryOutline"
                     : "primaryBlack"
                 }
@@ -551,7 +549,6 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = ({
   const { mediator, router, user } = useContext(SystemContext)
 
   const inquiry = useInquiry({ artworkID: artwork.internalID })
-  const isCreateAlertButtonEnabled = useFeatureFlag("artwork-page-create-alert")
 
   return (
     <ArtworkSidebarCommercialContainer
@@ -560,7 +557,6 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = ({
       mediator={mediator!}
       router={router!}
       user={user}
-      isCreateAlertButtonEnabled={!!isCreateAlertButtonEnabled}
       {...inquiry}
       {...rest}
     />
