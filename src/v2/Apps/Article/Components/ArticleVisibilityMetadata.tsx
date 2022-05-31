@@ -21,11 +21,7 @@ const ArticleVisibilityMetadata: FC<ArticleVisibilityMetadataProps> = ({
 
       document.title = `${article.title} | Artsy`
 
-      window.history.replaceState(
-        {},
-        "",
-        article.href.replace("/article/", "/article2/")
-      )
+      window.history.replaceState({}, "", article.href)
     },
   })
 

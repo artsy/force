@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { RedirectException, RouteRenderArgs } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
@@ -9,9 +10,17 @@ const ArticleApp = loadable(
   }
 )
 
+const redirectToArticle = ({
+  match: {
+    params: { id },
+  },
+}: RouteRenderArgs) => {
+  throw new RedirectException(`/article/${id}`, 301)
+}
+
 export const articleRoutes: AppRouteConfig[] = [
   {
-    path: "/article2/:id",
+    path: "/article/:id",
     Component: ArticleApp,
     onClientSideRender: () => {
       ArticleApp.preload()
@@ -24,4 +33,9 @@ export const articleRoutes: AppRouteConfig[] = [
       }
     `,
   },
+  { path: "/news/:id", render: redirectToArticle },
+  { path: "/video/:id", render: redirectToArticle },
+  { path: "/post/:id", render: redirectToArticle },
+  { path: "/series/:id", render: redirectToArticle },
+  { path: "/series/:ignore/:id", render: redirectToArticle },
 ]

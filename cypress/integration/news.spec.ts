@@ -2,7 +2,7 @@ import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
 describe("News", () => {
   it("renders the page", () => {
-    visitWithStatusRetries("news2")
+    visitWithStatusRetries("news")
     cy.title().should("eq", "News | Artsy")
   })
 })

@@ -103,7 +103,6 @@ mountAndReload(path.resolve("src/desktop"), {
     "@artsy/cohesion",
     "@artsy/fresnel",
     "@artsy/palette",
-    "@artsy/reaction",
     "@artsy/stitch",
   ],
 })
