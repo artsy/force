@@ -25,7 +25,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
-import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "../../Components/OfferSummaryItem"
 import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
@@ -378,7 +378,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                   order={order}
                   onChange={onChangeShippingAddress}
                 />
-                <CreditCardSummaryItem
+                <PaymentMethodSummaryItem
                   order={order}
                   onChange={onChangePayment}
                   title="Payment method"
@@ -474,7 +474,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
-        ...CreditCardSummaryItem_order
+        ...PaymentMethodSummaryItem_order
         ...ShippingArtaSummaryItem_order
         ...OfferSummaryItem_order
       }

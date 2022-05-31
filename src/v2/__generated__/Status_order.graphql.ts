@@ -62,7 +62,7 @@ export type Status_order = {
         readonly taxTotal: string | null;
         readonly taxTotalCents: number | null;
     } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
     readonly " $refType": "Status_order";
 };
 export type Status_order$data = Status_order;
@@ -358,7 +358,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CreditCardSummaryItem_order"
+      "name": "PaymentMethodSummaryItem_order"
     },
     {
       "kind": "InlineFragment",
@@ -426,5 +426,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '9d9d1e9bd3e772980684c2234ede924b';
+(node as any).hash = 'b9d9d73bb92eb7d6ab6ce8b34968dba1';
 export default node;

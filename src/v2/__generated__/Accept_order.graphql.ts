@@ -24,7 +24,7 @@ export type Accept_order = {
         readonly internalID: string;
         readonly createdAt: string;
     } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
     readonly " $refType": "Accept_order";
 };
 export type Accept_order$data = Accept_order;
@@ -172,12 +172,12 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CreditCardSummaryItem_order"
+      "name": "PaymentMethodSummaryItem_order"
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '84d733fc8802dca399f723514c86be5a';
+(node as any).hash = 'e24b3b62b12a9ee09c1ef6803d2fae78';
 export default node;

@@ -33,7 +33,7 @@ export type Respond_order = {
     readonly myLastOffer?: {
         readonly createdAt: string;
     } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "OfferHistoryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "OfferHistoryItem_order">;
     readonly " $refType": "Respond_order";
 };
 export type Respond_order$data = Respond_order;
@@ -236,7 +236,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CreditCardSummaryItem_order"
+      "name": "PaymentMethodSummaryItem_order"
     },
     {
       "args": null,
@@ -248,5 +248,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'd366cfe716f61655fe42b01c7bcff567';
+(node as any).hash = '523fd9e13a22c46e90e9b2e8a75f93f4';
 export default node;

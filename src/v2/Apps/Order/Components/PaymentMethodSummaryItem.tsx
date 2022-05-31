@@ -1,4 +1,4 @@
-import { CreditCardSummaryItem_order } from "v2/__generated__/CreditCardSummaryItem_order.graphql"
+import { PaymentMethodSummaryItem_order } from "v2/__generated__/PaymentMethodSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -6,12 +6,12 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
 
-const CreditCardSummaryItem = ({
+const PaymentMethodSummaryItem = ({
   order: { creditCard },
   textColor = "black100",
   ...others
 }: {
-  order: CreditCardSummaryItem_order
+  order: PaymentMethodSummaryItem_order
   textColor?: string
 } & StepSummaryItemProps) => {
   const cardInfoWithTextColor = {
@@ -26,11 +26,11 @@ const CreditCardSummaryItem = ({
   )
 }
 
-export const CreditCardSummaryItemFragmentContainer = createFragmentContainer(
-  CreditCardSummaryItem,
+export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer(
+  PaymentMethodSummaryItem,
   {
     order: graphql`
-      fragment CreditCardSummaryItem_order on CommerceOrder {
+      fragment PaymentMethodSummaryItem_order on CommerceOrder {
         creditCard {
           brand
           lastDigits

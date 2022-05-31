@@ -4,7 +4,7 @@ import { ReactWrapper } from "enzyme"
 import { ArtworkSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { BuyerGuarantee } from "v2/Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
-import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer } from "v2/Apps/Order/Components/PaymentMethodSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { OrderStepper } from "v2/Apps/Order/Components/OrderStepper"
 import { PriceOptions } from "v2/Apps/Order/Components/PriceOptions"
@@ -43,7 +43,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   get paymentSummary() {
-    return expectOne(this.root.find(CreditCardSummaryItemFragmentContainer))
+    return expectOne(this.root.find(PaymentMethodSummaryItemFragmentContainer))
   }
 
   get shippingArtaSummary() {

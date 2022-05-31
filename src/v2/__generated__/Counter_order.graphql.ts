@@ -27,7 +27,7 @@ export type Counter_order = {
     readonly myLastOffer?: {
         readonly internalID: string;
     } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "OfferHistoryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "OfferHistoryItem_order">;
     readonly " $refType": "Counter_order";
 };
 export type Counter_order$data = Counter_order;
@@ -193,7 +193,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CreditCardSummaryItem_order"
+      "name": "PaymentMethodSummaryItem_order"
     },
     {
       "args": null,
@@ -205,5 +205,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '29c3a1a7bbc6829f3a6fe4bc892da60e';
+(node as any).hash = 'c5a2659e86e09f7d2a9f2469f551f3b7';
 export default node;
