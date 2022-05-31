@@ -1,9 +1,19 @@
 import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Flex, Join, Spacer, Box, FullBleed } from "@artsy/palette"
+import {
+  Flex,
+  Join,
+  Spacer,
+  Box,
+  FullBleed,
+  GridColumns,
+  Column,
+} from "@artsy/palette"
 import { ArticleSectionImageCollection_section } from "v2/__generated__/ArticleSectionImageCollection_section.graphql"
 import { ArticleSectionImageCollectionImageFragmentContainer } from "./ArticleSectionImageCollectionImage"
 import { ArticleSectionImageCollectionCaptionFragmentContainer } from "./ArticleSectionImageCollectionCaption"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { CENTERED_LAYOUT_COLUMNS } from "../../ArticleBody"
 
 const FULLBLEED_IMAGE_WIDTH = 2000
 const MAX_IMAGE_WIDTH = 910
@@ -16,13 +26,13 @@ interface ArticleSectionImageCollectionProps {
 const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
   section,
 }) => {
-  const { Container, targetWidth, px } = useMemo(() => {
+  const { Container, Caption, targetWidth } = useMemo(() => {
     switch (section.layout) {
       case "FILLWIDTH":
         return {
           Container: FullBleed,
+          Caption: FullBleedCaption,
           targetWidth: FULLBLEED_IMAGE_WIDTH,
-          px: 2,
         }
 
       // OVERFLOW_FILLWIDTH
@@ -30,11 +40,11 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
       default:
         return {
           Container: Box,
+          Caption: Box,
           targetWidth:
             (MAX_IMAGE_WIDTH -
               FIGURE_GUTTER_WIDTH * (section.figures.length - 1)) /
             section.figures.length,
-          px: 0,
         }
     }
   }, [section.figures.length, section.layout])
@@ -61,16 +71,28 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
         <Join separator={<Spacer ml={FIGURE_GUTTER_WIDTH} />}>
           {section.figures.map((figure, i) => {
             return (
-              <Box key={i} flex={1} overflow="hidden" px={px}>
-                <ArticleSectionImageCollectionCaptionFragmentContainer
-                  figure={figure}
-                />
+              <Box key={i} flex={1} overflow="hidden">
+                <Caption>
+                  <ArticleSectionImageCollectionCaptionFragmentContainer
+                    figure={figure}
+                  />
+                </Caption>
               </Box>
             )
           })}
         </Join>
       </Flex>
     </Container>
+  )
+}
+
+const FullBleedCaption: FC = ({ children }) => {
+  return (
+    <HorizontalPadding>
+      <GridColumns>
+        <Column {...CENTERED_LAYOUT_COLUMNS}>{children}</Column>
+      </GridColumns>
+    </HorizontalPadding>
   )
 }
 

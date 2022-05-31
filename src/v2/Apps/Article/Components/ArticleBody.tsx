@@ -9,6 +9,8 @@ import {
   Image,
   FullBleed,
   Flex,
+  ColumnSpan,
+  ColumnStart,
 } from "@artsy/palette"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -53,11 +55,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
         <Spacer mt={4} />
 
         <GridColumns gridRowGap={4}>
-          <Column
-            {...(centered
-              ? { span: [12, 8, 6], start: [1, 3, 4] }
-              : { span: 7 })}
-          >
+          <Column {...(centered ? CENTERED_LAYOUT_COLUMNS : { span: 7 })}>
             {/* If there's no hero display a normal headline */}
             {!article.hero && (
               <>
@@ -216,6 +214,14 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
       </ArticleContextProvider>
     </AnalyticsContext.Provider>
   )
+}
+
+export const CENTERED_LAYOUT_COLUMNS: {
+  span: ColumnSpan[]
+  start: ColumnStart[]
+} = {
+  span: [12, 8, 6],
+  start: [1, 3, 4],
 }
 
 export const ArticleBodyFragmentContainer = createFragmentContainer(
