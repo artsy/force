@@ -662,20 +662,4 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     phone: "",
     photo: "http://files.artsy.net/specialist-headshot1.png",
   },
-  {
-    name: "Chloé Bigio",
-    title: "Senior Auction Manager, Partnerships",
-    location: "",
-    email: "",
-    phone: "",
-    photo: "http://files.artsy.net/specialist-headshot2.png",
-  },
-  {
-    name: "Perry Weber",
-    title: "Manager, Auction Partnerships",
-    location: "",
-    email: "",
-    phone: "",
-    photo: "http://files.artsy.net/specialist-headshot3.png",
-  },
 ]
