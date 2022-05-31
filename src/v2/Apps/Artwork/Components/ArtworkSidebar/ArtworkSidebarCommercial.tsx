@@ -427,6 +427,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       artwork.is_acquireable || artwork.is_offerable
     )
 
+    const isSecondaryContactGalleryButton = isOfferable || isSold
+
     if (!artwork.sale_message && !isInquireable) {
       return <Separator />
     }
@@ -508,13 +510,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
           {isInquireable && (
             <>
-              <Spacer mt={isOfferable || isSold ? 2 : 0} />
+              <Spacer mt={isSecondaryContactGalleryButton ? 2 : 0} />
               <Button
                 width="100%"
                 size="medium"
                 onClick={this.handleInquiry.bind(this)}
                 variant={
-                  isOfferable || isSold ? "secondaryOutline" : "primaryBlack"
+                  isSecondaryContactGalleryButton
+                    ? "secondaryOutline"
+                    : "primaryBlack"
                 }
               >
                 Contact Gallery
