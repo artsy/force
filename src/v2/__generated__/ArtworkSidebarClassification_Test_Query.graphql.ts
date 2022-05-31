@@ -10,19 +10,9 @@ export type ArtworkSidebarClassification_Test_QueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassification_artwork">;
     } | null;
 };
-export type ArtworkSidebarClassification_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly attributionClass: ({
-            readonly shortDescription: string | null;
-            readonly id: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
-};
 export type ArtworkSidebarClassification_Test_Query = {
     readonly response: ArtworkSidebarClassification_Test_QueryResponse;
     readonly variables: ArtworkSidebarClassification_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebarClassification_Test_QueryRawResponse;
 };
 
 
@@ -163,5 +153,5 @@ return {
   }
 };
 })();
-(node as any).hash = '3c49cd2d50ccc877d666d64c164a95f1';
+(node as any).hash = 'b0290579f3b2ff6f23b343d8f603b883';
 export default node;
