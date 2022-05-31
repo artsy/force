@@ -359,8 +359,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   renderShipAndTaxInformation(artworkEcommerceAvailable: boolean) {
     const { artwork } = this.props
-    const { is_inquireable: isInquireable } = artwork
-    const shouldRenderButtons = artworkEcommerceAvailable || isInquireable
 
     return (
       <>
@@ -375,8 +373,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             {artwork.shippingInfo}
           </Text>
         )}
-
-        {shouldRenderButtons && artwork.sale_message && <Spacer mt={2} />}
       </>
     )
   }
@@ -413,7 +409,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const artworkEcommerceAvailable = !!(
       artwork.is_acquireable || artwork.is_offerable
     )
-
+    const shouldRenderButtons = artworkEcommerceAvailable || !!isInquireable
     const isSecondaryContactGalleryButton = isOfferable || isSold
 
     if (!artwork.sale_message && !isInquireable) {
@@ -447,7 +443,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          {(artworkEcommerceAvailable || !!isInquireable) &&
+          {shouldRenderButtons &&
             (artwork.shippingOrigin || artwork.shippingInfo) && (
               <Spacer mt={1} />
             )}
@@ -465,9 +461,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {isSold
-            ? this.renderCreateAlertButton()
-            : this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
+          {isSold ? (
+            this.renderCreateAlertButton()
+          ) : (
+            <>
+              {this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
+              {shouldRenderButtons && artwork.sale_message && <Spacer mt={2} />}
+            </>
+          )}
 
           {isAcquireable && (
             <Button
