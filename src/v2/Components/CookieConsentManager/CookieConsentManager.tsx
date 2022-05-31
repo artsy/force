@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ConsentManagerBuilder } from "@segment/consent-manager"
+import ConsentManagerBuilder from "@segment/consent-manager/commonjs/consent-manager-builder"
 import inRegions from "@segment/in-regions"
 import { getENV } from "v2/Utils/getENV"
 import {
