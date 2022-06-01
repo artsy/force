@@ -1,7 +1,6 @@
-import { Flex, InstitutionIcon, Text } from "@artsy/palette"
+import { Flex, InstitutionIcon, Spacer, Text } from "@artsy/palette"
 
 export const BankDebitDetails = ({
-  lastDigits,
   responsive = true,
   textColor = "black100",
 }: {
@@ -14,12 +13,14 @@ export const BankDebitDetails = ({
 }) => (
   <Flex alignItems="center">
     <InstitutionIcon fill="black60" />
+    <Spacer ml={0.5} />
     <Text
       size={responsive ? ["2", "3"] : "3"}
       color={textColor}
       style={{ position: "relative", top: "1px" }}
     >
-      •••• {lastDigits}
+      {/* TODO: insert bank account last digits from order */}
+      Bank transfer •••• 1234
     </Text>
   </Flex>
 )
