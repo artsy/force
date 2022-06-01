@@ -1,10 +1,7 @@
-import { CreditCardIcon, Flex, Text } from "@artsy/palette"
+import { Flex, InstitutionIcon, Text } from "@artsy/palette"
 
 export const BankDebitDetails = ({
-  brand,
   lastDigits,
-  expirationMonth,
-  expirationYear,
   responsive = true,
   textColor = "black100",
 }: {
@@ -16,7 +13,7 @@ export const BankDebitDetails = ({
   textColor?: string
 }) => (
   <Flex alignItems="center">
-    <CreditCardIcon mr={1} type={brand} width="25px" />
+    <InstitutionIcon fill="black60" />
     <Text
       size={responsive ? ["2", "3"] : "3"}
       color={textColor}

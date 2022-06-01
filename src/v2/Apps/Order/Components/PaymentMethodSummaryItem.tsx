@@ -5,6 +5,7 @@ import {
 } from "v2/Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
+import { BankDebitDetails } from "./BankDebitDetails"
 
 const PaymentMethodSummaryItem = ({
   order: { creditCard },
@@ -19,9 +20,12 @@ const PaymentMethodSummaryItem = ({
     ...{ textColor: textColor },
   }
 
+  // TODO: check paymentMethod value from CommerceOrder to conditioanlly
+  // render details.
   return (
     <StepSummaryItem {...others}>
-      <CreditCardDetails {...cardInfoWithTextColor} />
+      {creditCard && <CreditCardDetails {...cardInfoWithTextColor} />}
+      {!creditCard && <BankDebitDetails {...cardInfoWithTextColor} />}
     </StepSummaryItem>
   )
 }
