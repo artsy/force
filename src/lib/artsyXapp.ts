@@ -3,7 +3,7 @@ import artsyXapp from "@artsy/xapp"
 const { API_URL, CLIENT_ID, CLIENT_SECRET } = process.env
 
 export function initializeArtsyXapp(startServerCallback) {
-  console.log("[Force] Initializing artsyXapp...")
+  console.log("\n[Force] Initializing artsyXapp...")
 
   /**
    * If we can't get an xapp token, start the server but retry every 30 seconds.

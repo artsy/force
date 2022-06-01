@@ -26,6 +26,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
   homePage,
   featuredEventsOrderedSet,
 }) => {
+  console.log("hi")
   return (
     <>
       <HomeMeta />

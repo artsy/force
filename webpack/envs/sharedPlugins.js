@@ -3,6 +3,7 @@
 import MomentTimezoneDataPlugin from "moment-timezone-data-webpack-plugin"
 import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
+import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
 import webpack from "webpack"
 import { env } from "../utils/env"
 
@@ -27,6 +28,8 @@ export const sharedPlugins = () => [
     endYear: currentYear + 5,
   }),
 
+  new NodePolyfillPlugin(),
+
   new webpack.DefinePlugin({
     "process.env": {
       NODE_ENV: JSON.stringify(env.nodeEnv),
@@ -40,7 +43,6 @@ export const sharedPlugins = () => [
   // Remove server-only modules from client bundles
   // TODO: Why would these end up in the client bundle?
   new webpack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
-  new webpack.NamedModulesPlugin(),
   new webpack.ProvidePlugin({
     $: "jquery",
     jQuery: "jquery",

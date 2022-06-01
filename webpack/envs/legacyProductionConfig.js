@@ -1,8 +1,8 @@
 // @ts-check
 
 import path from "path"
-import WebpackManifestPlugin from "webpack-manifest-plugin"
-import { HashedModuleIdsPlugin } from "webpack"
+import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
+import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 import { getCSSManifest } from "../utils/getCSSManifest"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
@@ -21,7 +21,7 @@ export const legacyProductionConfig = () => ({
     // @see: https://github.com/artsy/force/blob/master/src/desktop/lib/deprecated_global_client_setup.tsx#L7
   },
   plugins: [
-    new HashedModuleIdsPlugin(),
+    new NodePolyfillPlugin(),
     new WebpackManifestPlugin({
       fileName: path.resolve(basePath, "manifest.json"),
       basePath: "/assets/",

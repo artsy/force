@@ -5,14 +5,9 @@ import { initializeArtsyXapp } from "./artsyXapp"
 import { initializeCache } from "./cacheClient"
 import { errorHandlerMiddleware } from "./middleware/errorHandler"
 import * as Sentry from "@sentry/node"
+import { APP_URL, NODE_ENV, PORT } from "../config"
 
-const {
-  APP_URL,
-  HEADERS_TIMEOUT_SECONDS,
-  KEEPALIVE_TIMEOUT_SECONDS,
-  NODE_ENV,
-  PORT,
-} = process.env
+const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
 
 /**
  * Run start server as a callback for now until waiting on the xapp token and
@@ -26,8 +21,8 @@ export async function startServer(app) {
   initializeArtsyXapp(() => {
     const message =
       NODE_ENV === "development"
-        ? `\n\n  [Force] Booting on ${APP_URL}... \n`
-        : `\n\n  [Force] Started on ${APP_URL}. \n`
+        ? `[Force] Booting on ${APP_URL} \n\n`
+        : `\n[Force] Started on ${APP_URL}. \n`
 
     const server = withGracefulShutdown(http.createServer(app))
 

@@ -16,6 +16,9 @@ const env = {
   buildLegacyClient: yn(process.env.BUILD_LEGACY_CLIENT, { default: false }),
   buildClient: yn(process.env.BUILD_CLIENT, { default: false }),
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
+  compileLegacyClientInDev: yn(process.env.COMPILE_LEGACY_CLIENT_IN_DEV, {
+    default: false,
+  }),
   datadogKey: process.env.WEBPACK_DATADOG_KEY,
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackDatadog: yn(process.env.WEBPACK_DATADOG, { default: false }),

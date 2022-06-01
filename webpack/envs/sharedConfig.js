@@ -9,12 +9,23 @@ export const productionDevtool = env.webpackDevtool || "source-map"
 export const mode = env.webpackDebug ? "development" : env.nodeEnv
 export const stats = env.webpackStats || "errors-only"
 
+export const experiments = {
+  lazyCompilation: {
+    entries: false,
+    imports: false,
+  },
+}
+
+export const cache = {
+  cacheDirectory: path.resolve(process.cwd(), ".cache"),
+  idleTimeout: 5000,
+  type: "filesystem", // or 'memory'
+}
+
 export const minimizer = [
   new TerserPlugin({
-    cache: false,
     // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
     parallel: env.onCi ? env.webpackCiCpuLimit : true,
-    sourceMap: true, // Must be set to true if using source-maps in production
   }),
 ]
 

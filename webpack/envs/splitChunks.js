@@ -10,7 +10,7 @@ export const splitChunks = {
   automaticNameDelimiter: "-",
   cacheGroups: {
     default: false,
-    vendors: false,
+    defaultVendors: false,
     "artsy-framework": {
       name: "artsy-framework",
       chunks: "all",

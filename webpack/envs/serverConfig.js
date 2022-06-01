@@ -2,10 +2,10 @@
 
 import nodeExternals from "webpack-node-externals"
 import path from "path"
-import webpack from "webpack"
 import { basePath, env } from "../utils/env"
 import { minimizer } from "./sharedConfig"
 import { jadeLoader } from "./sharedLoaders"
+import LimitChunkCountPlugin from "webpack/lib/optimize/LimitChunkCountPlugin"
 
 export const serverConfig = () => ({
   devtool: env.webpackDevtool || "source-map",
@@ -50,7 +50,7 @@ export const serverConfig = () => ({
     path: path.resolve(basePath),
   },
   plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({
+    new LimitChunkCountPlugin({
       maxChunks: 1,
     }),
   ],
