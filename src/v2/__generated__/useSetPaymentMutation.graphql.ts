@@ -22,6 +22,7 @@ export type useSetPaymentMutationResponse = {
             readonly order?: {
                 readonly id: string;
                 readonly bankAccountId: string | null;
+                readonly paymentMethod: CommercePaymentMethodEnum | null;
             } | undefined;
             readonly error?: {
                 readonly type: string;
@@ -50,6 +51,7 @@ mutation useSetPaymentMutation(
           __typename
           id
           bankAccountId
+          paymentMethod
         }
       }
       ... on CommerceOrderWithMutationFailure {
@@ -94,6 +96,13 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "paymentMethod",
+  "storageKey": null
+},
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -132,7 +141,7 @@ v4 = {
   "type": "CommerceOrderWithMutationFailure",
   "abstractKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -174,7 +183,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -182,7 +192,7 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -215,7 +225,7 @@ return {
             "name": "orderOrError",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
+              (v6/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -227,9 +237,10 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
+                      (v6/*: any*/),
                       (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -237,7 +248,7 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -247,14 +258,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d3cb74f8bfe83c03af498648271a6f04",
+    "cacheID": "3c309b6a33eafb06783a43c2912e63b8",
     "id": null,
     "metadata": {},
     "name": "useSetPaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          bankAccountId\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useSetPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          bankAccountId\n          paymentMethod\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '72067d11043a3e34d24e2f4d3240b3e1';
+(node as any).hash = 'beda31e3fd0ffebcb4f3c05bf6ea1292';
 export default node;

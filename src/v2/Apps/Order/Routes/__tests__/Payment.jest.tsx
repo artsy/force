@@ -18,12 +18,25 @@ import { useSystemContext, useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
+import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
+
+jest.mock("../../Components/Mutations/useSetPayment", () => {
+  const originalUseSetPayment = jest.requireActual(
+    "../../Components/Mutations/useSetPayment"
+  )
+
+  return {
+    useSetPayment: jest
+      .fn()
+      .mockImplementation(originalUseSetPayment.useSetPayment),
+  }
+})
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
@@ -170,7 +183,8 @@ describe("Payment", () => {
 
     expect(env.mutations.lastFetchVariables).toMatchObject({
       input: {
-        creditCardId: "credit-card-id",
+        paymentMethod: "CREDIT_CARD",
+        paymentMethodId: "credit-card-id",
         id: "1234",
       },
     })
@@ -261,7 +275,7 @@ describe("Payment", () => {
         currency: "USD",
         flow: "BUY",
         order_id: "1234",
-        payment_method: "credit_card",
+        payment_method: "CREDIT_CARD",
         subject: "click_payment_method",
       })
     })
@@ -277,7 +291,7 @@ describe("Payment", () => {
         currency: "USD",
         flow: "BUY",
         order_id: "1234",
-        payment_method: "bank_debit",
+        payment_method: "ACH_TRANSFER",
         subject: "click_payment_method",
       })
     })
@@ -343,6 +357,50 @@ describe("Payment", () => {
 
     it.todo("renders wire transfer as option for eligible partners")
 
-    it.todo("transitions to review step when wire transfer is chosen")
+    it("tracks when the user selects the wire transfer method", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      page.selectPaymentMethod(1)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedChangePaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "WIRE_TRANSFER",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("transitions to review step when wire transfer is chosen", async () => {
+      const submitMutationMock = jest.fn().mockResolvedValue({
+        commerceSetPayment: {
+          orderOrError: {
+            id: 1234,
+          },
+        },
+      })
+      ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+        submitMutation: submitMutationMock,
+      }))
+
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      await page.selectPaymentMethod(1)
+      await page.clickSubmit()
+
+      expect(submitMutationMock).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            id: "1234",
+            paymentMethod: "WIRE_TRANSFER",
+          },
+        },
+      })
+      expect(env.routes.mockPushRoute).toHaveBeenCalledWith(
+        "/orders/1234/review"
+      )
+    })
   })
 })

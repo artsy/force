@@ -28,6 +28,7 @@ import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { SetPayment } from "../../Components/SetPayment"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
+import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
@@ -58,6 +59,7 @@ export const PaymentRoute: FC<Props> = props => {
   const { order, isCommittingMutation } = props
   const isLoading = isGettingCreditCardId || isCommittingMutation
   const paymentPicker = createRef<PaymentPicker>()
+  const { submitMutation: setPaymentMutation } = useSetPayment()
 
   const onContinue = async () => {
     try {
@@ -89,7 +91,8 @@ export const PaymentRoute: FC<Props> = props => {
       const orderOrError = (
         await setOrderPayment({
           input: {
-            creditCardId: result?.creditCardId!,
+            paymentMethod: "CREDIT_CARD",
+            paymentMethodId: result?.creditCardId,
             id: props.order.internalID!,
           },
         })
@@ -106,9 +109,27 @@ export const PaymentRoute: FC<Props> = props => {
     }
   }
 
-  const onWireTransferContinue = () => {
-    // TODO: set order payment with wire transfer
-    props.router.push(`/orders/${props.order.internalID}/review`)
+  const onWireTransferContinue = async () => {
+    try {
+      const orderOrError = (
+        await setPaymentMutation({
+          variables: {
+            input: {
+              id: props.order.internalID,
+              paymentMethod: "WIRE_TRANSFER",
+            },
+          },
+        })
+      ).commerceSetPayment?.orderOrError
+
+      if (orderOrError?.error) {
+        throw orderOrError.error
+      }
+
+      onSetPaymentSuccess()
+    } catch (error) {
+      onSetPaymentError(error)
+    }
   }
 
   const setOrderPayment = (

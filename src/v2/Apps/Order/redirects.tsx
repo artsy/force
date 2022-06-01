@@ -59,8 +59,21 @@ const goToShippingIfShippingIsNotCompleted: OrderPredicate = ({ order }) => {
 }
 
 const goToPaymentIfPaymentIsNotCompleted: OrderPredicate = ({ order }) => {
-  // TODO: check if payment is completed by looking at the payment method and the relevant property
-  if (!order.creditCard && !order.bankAccountId) {
+  let isValid = false
+
+  switch (order.paymentMethod) {
+    case "WIRE_TRANSFER":
+      isValid = true
+      break
+    case "US_BANK_ACCOUNT":
+      isValid = !!order.bankAccountId
+      break
+    case "CREDIT_CARD":
+      isValid = !!order.creditCard
+      break
+  }
+
+  if (!isValid) {
     return {
       path: `/orders/${order.internalID}/payment`,
       reason: "Payment was not yet completed",
@@ -230,6 +243,7 @@ graphql`
     internalID
     mode
     state
+    paymentMethod
     lastTransactionFailed
     ... on CommerceOfferOrder {
       myLastOffer {

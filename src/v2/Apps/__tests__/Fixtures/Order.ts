@@ -282,6 +282,7 @@ export const UntouchedOrder = {
   buyerTotal: "$12,000",
   itemsTotalCents: 1200000,
   code: "abcdefg",
+  paymentMethod: "CREDIT_CARD",
   createdAt: "2022-12-19T06:06:17.171Z",
   creditCard: null,
   currencyCode: "USD",
