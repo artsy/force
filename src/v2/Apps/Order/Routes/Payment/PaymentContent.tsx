@@ -50,9 +50,7 @@ export const PaymentContent: FC<Props> = props => {
   const isACHEnabled = useFeatureFlag("stripe_ACH")
   const isWireTransferEnabled =
     useFeatureFlag("wire_transfer") &&
-    order?.additionalPaymentMethods?.includes(
-      "WIRE_TRANSFER" as CommercePaymentMethodEnum
-    )
+    order?.additionalPaymentMethods?.includes("wire_transfer")
 
   const tracking = useTracking()
 
