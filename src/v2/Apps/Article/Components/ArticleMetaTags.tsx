@@ -11,7 +11,12 @@ interface ArticleMetaTagsProps {
 const ArticleMetaTags: FC<ArticleMetaTagsProps> = ({ article }) => {
   return (
     <>
-      <MetaTags title={`${article.title} | Artsy`} pathname={article.href} />
+      <MetaTags
+        title={`${article.searchTitle || article.title} | Artsy`}
+        pathname={article.href}
+        description={article.searchDescription || article.description}
+        imageURL={article.thumbnailImage?.url}
+      />
 
       <Meta property="og:type" content="article" />
 
@@ -44,6 +49,12 @@ export const ArticleMetaTagsFragmentContainer = createFragmentContainer(
         keywords
         metaPublishedAt: publishedAt
         title
+        searchTitle
+        description
+        searchDescription
+        thumbnailImage {
+          url
+        }
       }
     `,
   }
