@@ -10,9 +10,10 @@ describe("Article", () => {
         "contain",
         "Agnes Denes’s Manhattan Wheatfield Has Only Grown More Poignant"
       )
+      console.log(cy.title())
       cy.title().should(
         "eq",
-        "Remembering Agnes Denes’s Wheatfield in Manhattan - Artsy"
+        "Remembering Agnes Denes’s Wheatfield in Manhattan | Artsy"
       )
     })
 
@@ -26,7 +27,7 @@ describe("Article", () => {
       )
       cy.title().should(
         "eq",
-        "Inside the Forbes Collection, the Library That Holds the World’s Rarest Colors - Artsy"
+        "Inside the Forbes Collection, the Library That Holds the World’s Rarest Colors | Artsy"
       )
     })
 
@@ -37,7 +38,7 @@ describe("Article", () => {
       cy.get("h1").should("contain", "Getting Their Due")
       cy.title().should(
         "eq",
-        "10 Artists Finally Getting Their Due in 2018 - Artsy"
+        "10 Artists Finally Getting Their Due in 2018 | Artsy"
       )
     })
 
@@ -60,14 +61,14 @@ describe("Article", () => {
       cy.get("h1").should("contain", "The Artists To Know Right Now")
       cy.title().should(
         "eq",
-        "The Artsy Vanguard 2019: 50 Artists to Know Right Now - Artsy"
+        "The Artsy Vanguard 2019: 50 Artists to Know Right Now | Artsy"
       )
     })
 
     it("/video/:id", () => {
       visitWithStatusRetries("video/artsy-editors-future-art-carrie-mae-weems")
       cy.get("h1").should("contain", "Carrie Mae Weems")
-      cy.title().should("eq", "Carrie Mae Weems on the Future of Art - Artsy")
+      cy.title().should("eq", "Carrie Mae Weems on the Future of Art | Artsy")
     })
 
     describe("Classic", () => {
@@ -104,7 +105,7 @@ describe("Article", () => {
         )
         cy.title().should(
           "eq",
-          "Opera Gallery Founder Gilles Dyan on Running 11 Galleries Worldwide - Artsy"
+          "Opera Gallery Founder Gilles Dyan on Running 11 Galleries Worldwide | Artsy"
         )
         cy.get("a").should("contain", "Promoted Content")
       })
@@ -119,7 +120,7 @@ describe("Article", () => {
         )
         cy.title().should(
           "eq",
-          "The IFPDA Fine Art Print Fair Announces 2019 Exhibitor List and Dynamic Reboot - Artsy"
+          "The IFPDA Fine Art Print Fair Announces 2019 Exhibitor List and Dynamic Reboot | Artsy"
         )
       })
     })
@@ -151,7 +152,7 @@ describe("Article", () => {
           cy.get("h1").should("contain", "The Artists To Know Right Now")
           cy.title().should(
             "eq",
-            "The Artsy Vanguard 2019: 50 Artists to Know Right Now - Artsy"
+            "The Artsy Vanguard 2019: 50 Artists to Know Right Now | Artsy"
           )
         })
 
@@ -160,7 +161,7 @@ describe("Article", () => {
           cy.get("h1").should("contain", "The Artists To Know Right Now")
           cy.title().should(
             "eq",
-            "15 Artists Getting Their Due in 2019 - Artsy"
+            "15 Artists Getting Their Due in 2019 | Artsy"
           )
         })
       })
@@ -172,7 +173,7 @@ describe("Article", () => {
             "contain",
             "Inside the Biennale"
           )
-          cy.title().should("eq", "Venice Biennale 2017 - Artsy")
+          cy.title().should("eq", "Venice Biennale 2017 | Artsy")
         })
 
         it("/venice-biennale/:slug", () => {
@@ -181,7 +182,7 @@ describe("Article", () => {
             "contain",
             "Inside the Biennale"
           )
-          cy.title().should("eq", "Venice Biennale 2017 - Artsy")
+          cy.title().should("eq", "Venice Biennale 2017 | Artsy")
         })
       })
 
@@ -194,7 +195,7 @@ describe("Article", () => {
       it("/2015-year-in-art", () => {
         visitWithStatusRetries("2015-year-in-art")
         // cy.get("h1").should("contain", "2015: The Year in Art")
-        cy.title().should("eq", "2015: The Year in Art - Artsy")
+        cy.title().should("eq", "2015: The Year in Art | Artsy")
       })
     })
   })

@@ -19,7 +19,7 @@ describe("Articles", () => {
 
     it("/news", () => {
       visitWithStatusRetries("news")
-      cy.title().should("eq", "News")
+      cy.title().should("eq", "News | Artsy")
     })
 
     describe("Editorial features", () => {

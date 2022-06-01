@@ -75,7 +75,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                   display="block"
                   textDecoration="none"
                 >
-                  <Text variant={["lg-display", "xl", "xxl"]}>
+                  <Text as="h1" variant={["lg-display", "xl", "xxl"]}>
                     {article.title}
                   </Text>
 
