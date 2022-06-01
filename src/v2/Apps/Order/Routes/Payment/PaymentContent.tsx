@@ -159,7 +159,9 @@ export const PaymentContent: FC<Props> = props => {
         </Text>
         <Text color="black60" variant="sm">
           • Questions? Email{" "}
-          <Clickable textDecoration="underline">orders@artsy.com</Clickable>
+          <Clickable cursor="text" textDecoration="underline">
+            orders@artsy.com
+          </Clickable>
         </Text>
         <Spacer mb={4} />
         <Media greaterThan="xs">
