@@ -21,9 +21,11 @@ export type ReviewTestQueryRawResponse = {
         readonly __isCommerceOrder: "CommerceOfferOrder";
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
+        readonly code: string;
         readonly source: CommerceOrderSourceEnum;
         readonly itemsTotal: string | null;
         readonly impulseConversationId: string | null;
+        readonly stateExpiresAt: string | null;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -138,7 +140,6 @@ export type ReviewTestQueryRawResponse = {
             readonly __typename: string;
             readonly __isCommerceRequestedFulfillmentUnion: string;
         }) | null;
-        readonly code: string;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
@@ -188,9 +189,11 @@ export type ReviewTestQueryRawResponse = {
         readonly __isCommerceOrder: string;
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
+        readonly code: string;
         readonly source: CommerceOrderSourceEnum;
         readonly itemsTotal: string | null;
         readonly impulseConversationId: string | null;
+        readonly stateExpiresAt: string | null;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -305,7 +308,6 @@ export type ReviewTestQueryRawResponse = {
             readonly __typename: string;
             readonly __isCommerceRequestedFulfillmentUnion: string;
         }) | null;
-        readonly code: string;
         readonly shippingTotal: string | null;
         readonly shippingTotalCents: number | null;
         readonly taxTotal: string | null;
@@ -476,9 +478,11 @@ fragment Review_order on CommerceOrder {
   __isCommerceOrder: __typename
   internalID
   mode
+  code
   source
   itemsTotal(precision: 2)
   impulseConversationId
+  stateExpiresAt(format: "MMM D")
   lineItems {
     edges {
       node {
@@ -1004,6 +1008,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "code",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "source",
             "storageKey": null
           },
@@ -1013,6 +1024,19 @@ return {
             "kind": "ScalarField",
             "name": "itemsTotal",
             "storageKey": "itemsTotal(precision:2)"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "MMM D"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "stateExpiresAt",
+            "storageKey": "stateExpiresAt(format:\"MMM D\")"
           },
           {
             "alias": null,
@@ -1330,13 +1354,6 @@ return {
                 "abstractKey": null
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "code",
             "storageKey": null
           },
           (v15/*: any*/),
@@ -1697,6 +1714,7 @@ return {
           "plural": false,
           "type": "CommerceOrderStateEnum"
         },
+        "order.stateExpiresAt": (v26/*: any*/),
         "order.taxTotal": (v26/*: any*/),
         "order.taxTotalCents": (v30/*: any*/)
       }

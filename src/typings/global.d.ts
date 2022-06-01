@@ -20,4 +20,7 @@ interface Window {
   sd: any
   __BOOTSTRAP__?: any
   _sift: any
+  ReactNativeWebView?: {
+    postMessage: (message: string) => void
+  }
 }

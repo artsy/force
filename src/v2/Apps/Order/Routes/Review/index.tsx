@@ -444,9 +444,11 @@ export const ReviewFragmentContainer = createFragmentContainer(
       fragment Review_order on CommerceOrder {
         internalID
         mode
+        code
         source
         itemsTotal(precision: 2)
         impulseConversationId
+        stateExpiresAt(format: "MMM D")
         lineItems {
           edges {
             node {

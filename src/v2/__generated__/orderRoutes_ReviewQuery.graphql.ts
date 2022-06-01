@@ -166,9 +166,11 @@ fragment Review_order on CommerceOrder {
   __isCommerceOrder: __typename
   internalID
   mode
+  code
   source
   itemsTotal(precision: 2)
   impulseConversationId
+  stateExpiresAt(format: "MMM D")
   lineItems {
     edges {
       node {
@@ -638,6 +640,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "code",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "source",
             "storageKey": null
           },
@@ -647,6 +656,19 @@ return {
             "kind": "ScalarField",
             "name": "itemsTotal",
             "storageKey": "itemsTotal(precision:2)"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "MMM D"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "stateExpiresAt",
+            "storageKey": "stateExpiresAt(format:\"MMM D\")"
           },
           {
             "alias": null,
@@ -964,13 +986,6 @@ return {
                 "abstractKey": null
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "code",
             "storageKey": null
           },
           (v16/*: any*/),
