@@ -21,6 +21,7 @@ interface Window {
   __BOOTSTRAP__?: any
   _sift: any
   ReactNativeWebView?: {
+    // Eigen is expecting messages as stringified JSON
     postMessage: (message: string) => void
   }
 }

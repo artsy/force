@@ -101,6 +101,13 @@ return {
     },
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "impulseConversationId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -111,13 +118,6 @@ return {
       "kind": "ScalarField",
       "name": "stateExpiresAt",
       "storageKey": "stateExpiresAt(format:\"MMM D\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "impulseConversationId",
-      "storageKey": null
     },
     {
       "alias": null,
