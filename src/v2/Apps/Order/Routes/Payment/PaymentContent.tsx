@@ -56,7 +56,7 @@ export const PaymentContent: FC<Props> = props => {
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
-  >(isACHEnabled ? "ACH_TRANSFER" : "CREDIT_CARD")
+  >(isACHEnabled ? "US_BANK_ACCOUNT" : "CREDIT_CARD")
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
@@ -128,7 +128,7 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* Bank debit */}
-      <Collapse open={selectedPaymentMethod === "ACH_TRANSFER"}>
+      <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
         <Text color="black60" variant="sm">
           • Search for your bank institution or select from the options below.
         </Text>
@@ -225,7 +225,7 @@ const getAvailablePaymentMethods = (
   if (isACHEnabled) {
     paymentMethods.unshift(
       <BorderedRadio
-        value={(paymentMethod = "ACH_TRANSFER")}
+        value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
           <>
             <InstitutionIcon fill="black60" />

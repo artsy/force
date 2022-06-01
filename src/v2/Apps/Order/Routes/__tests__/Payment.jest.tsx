@@ -62,11 +62,11 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 }
 
 const trackEvent = jest.fn()
-const setupTestEnv = () => {
+const setupTestEnv = (order = testOrder) => {
   return createTestEnv({
     Component: PaymentFragmentContainer,
     defaultData: {
-      order: testOrder,
+      order: order,
       me: { creditCards: { edges: [] } },
     },
     defaultMutationResults: {
@@ -291,7 +291,7 @@ describe("Payment", () => {
         currency: "USD",
         flow: "BUY",
         order_id: "1234",
-        payment_method: "ACH_TRANSFER",
+        payment_method: "US_BANK_ACCOUNT",
         subject: "click_payment_method",
       })
     })
@@ -355,10 +355,24 @@ describe("Payment", () => {
       expect(page.text()).not.toContain("Wire transfer")
     })
 
-    it.todo("renders wire transfer as option for eligible partners")
+    it("renders wire transfer as option for eligible partners", async () => {
+      const order = {
+        ...testOrder,
+        additionalPaymentMethods: ["wire_transfer"],
+      }
+
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+      expect(page.text()).toContain("Wire transfer")
+    })
 
     it("tracks when the user selects the wire transfer method", async () => {
-      const env = setupTestEnv()
+      const order = {
+        ...testOrder,
+        additionalPaymentMethods: ["wire_transfer"],
+      }
+
+      const env = setupTestEnv(order)
       const page = await env.buildPage()
       page.selectPaymentMethod(1)
       expect(trackEvent).toHaveBeenCalledWith({
@@ -385,7 +399,12 @@ describe("Payment", () => {
         submitMutation: submitMutationMock,
       }))
 
-      const env = setupTestEnv()
+      const order = {
+        ...testOrder,
+        additionalPaymentMethods: ["wire_transfer"],
+      }
+
+      const env = setupTestEnv(order)
       const page = await env.buildPage()
       await page.selectPaymentMethod(1)
       await page.clickSubmit()
