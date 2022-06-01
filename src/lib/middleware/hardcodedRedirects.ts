@@ -112,6 +112,7 @@ const REDIRECTS = {
   "/artsy-vanguard-2019": "/article/artsy-vanguard-2019-50-artists",
   "/series/artsy-vanguard-2019": "/article/artsy-vanguard-2019-50-artists",
   "/venice-biennale-2015": "/partner/56th-venice-biennale",
+  "/2015-year-in-art": "/article/artsy-editorial-2015-the-year-in-art",
 }
 
 const router = express.Router()
