@@ -38,4 +38,6 @@ export const articleRoutes: AppRouteConfig[] = [
   { path: "/post/:id", render: redirectToArticle },
   { path: "/series/:id", render: redirectToArticle },
   { path: "/series/:ignore/:id", render: redirectToArticle },
+  { path: "/:ignore/article/:id", render: redirectToArticle },
+  { path: "/partner/:ignore/article/:id", render: redirectToArticle },
 ]

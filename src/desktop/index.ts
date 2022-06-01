@@ -56,8 +56,6 @@ app.use(require("./apps/shortcuts"))
 // catch conventional app routes.
 app.use(require("./apps/profile"))
 app.use(require("./apps/partner_redirect").app)
-app.use(require("./apps/partner2"))
-app.use(require("./apps/partner"))
 app.use(require("./apps/fair_redirect").app)
 app.use(require("./apps/fair_organizer_redirect").app)
 

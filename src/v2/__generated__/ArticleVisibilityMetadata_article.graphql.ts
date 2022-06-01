@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVisibilityMetadata_article = {
     readonly title: string | null;
+    readonly searchTitle: string | null;
     readonly href: string | null;
     readonly " $refType": "ArticleVisibilityMetadata_article";
 };
@@ -34,6 +35,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "searchTitle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "href",
       "storageKey": null
     }
@@ -41,5 +49,5 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = 'a87f0483d6fd4b53aca999ec6dfa67ae';
+(node as any).hash = '0540aa3c8586f0eb1bcf34d79f2fe8df';
 export default node;
