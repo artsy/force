@@ -29,7 +29,6 @@ export const ArticleTooltip: FC<ArticleTooltipProps> = ({
       {({ anchorRef, anchorProps }) => (
         <EntityTooltipHighlight
           as="span"
-          display="inline-block"
           ref={anchorRef as any}
           {...anchorProps}
         >
