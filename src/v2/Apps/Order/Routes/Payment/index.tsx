@@ -107,8 +107,8 @@ export const PaymentRoute: FC<Props> = props => {
   }
 
   const onWireTransferContinue = () => {
-    console.log("onWireTransferContinue")
-    // TODO: set order payment with wire transfer when ready
+    // TODO: set order payment with wire transfer
+    props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   const setOrderPayment = (

@@ -25,12 +25,7 @@ import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-
-export enum PaymentMethods {
-  CreditCard = "credit_card",
-  BankDebit = "bank_debit",
-  WireTransfer = "wire_transfer",
-}
+import { PaymentMethods } from "../../OrderApp"
 
 export interface Props {
   order: Payment_order
@@ -159,7 +154,9 @@ export const PaymentContent: FC<Props> = props => {
         </Text>
         <Text color="black60" variant="sm">
           • Questions? Email{" "}
-          <Clickable textDecoration="underline">orders@artsy.com</Clickable>
+          <Clickable cursor="text" textDecoration="underline">
+            orders@artsy.com
+          </Clickable>
         </Text>
         <Spacer mb={4} />
         <Media greaterThan="xs">

@@ -23,7 +23,7 @@ import { TransactionDetailsSummaryItemFragmentContainer } from "v2/Apps/Order/Co
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { getStatusCopy } from "v2/Apps/Order/Utils/getStatusCopy"
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
-import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer } from "v2/Apps/Order/Components/PaymentMethodSummaryItem"
 import { SMALL_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 
 const DETAIL_BOX_WIDTH = "376px"
@@ -176,7 +176,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             order={activeOrder}
             textColor="black60"
           />
-          <CreditCardSummaryItemFragmentContainer
+          <PaymentMethodSummaryItemFragmentContainer
             title="Payment Method"
             order={activeOrder}
             textColor="black60"
@@ -243,7 +243,7 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
               stateExpiresAt(format: "MMM D")
               ...TransactionDetailsSummaryItem_order
               ...ShippingSummaryItem_order
-              ...CreditCardSummaryItem_order
+              ...PaymentMethodSummaryItem_order
               creditCard {
                 brand
                 lastDigits

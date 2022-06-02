@@ -18,7 +18,7 @@ import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSum
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
-import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { SystemContextConsumer } from "v2/System/SystemContext"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
@@ -127,7 +127,7 @@ export class StatusRoute extends Component<StatusProps> {
                     <Flex flexDirection="column">
                       <Flex flexDirection="column">
                         <StyledShippingSummaryItem order={order} />
-                        <CreditCardSummaryItem order={order} />
+                        <PaymentMethodSummaryItem order={order} />
                       </Flex>
                     </Flex>
                   )
@@ -187,7 +187,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       ...ArtworkSummaryItem_order
       ...TransactionDetailsSummaryItem_order
       ...ShippingSummaryItem_order
-      ...CreditCardSummaryItem_order
+      ...PaymentMethodSummaryItem_order
       lineItems {
         edges {
           node {

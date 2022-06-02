@@ -8,6 +8,7 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type redirects_order = {
+    readonly bankAccountId: string | null;
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly state: CommerceOrderStateEnum;
@@ -77,6 +78,13 @@ return {
   "metadata": null,
   "name": "redirects_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "bankAccountId",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -259,5 +267,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'dbab609bae5cc4775d5c585e3be67227';
+(node as any).hash = '08f5355d0229206c9d38472336a3f680';
 export default node;

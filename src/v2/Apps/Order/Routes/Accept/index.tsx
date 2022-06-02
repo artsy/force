@@ -25,7 +25,7 @@ import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
-import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { AcceptRouteSetOrderPaymentMutation } from "v2/__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
@@ -301,7 +301,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
                   )}
                 </Media>
                 <ShippingSummaryItem order={order} locked />
-                <CreditCardSummaryItem order={order} locked />
+                <PaymentMethodSummaryItem order={order} locked />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersAccept}
@@ -363,7 +363,7 @@ export const AcceptFragmentContainer = createFragmentContainer(
         ...TransactionDetailsSummaryItem_order
         ...ArtworkSummaryItem_order
         ...ShippingSummaryItem_order
-        ...CreditCardSummaryItem_order
+        ...PaymentMethodSummaryItem_order
       }
     `,
   }

@@ -59,7 +59,8 @@ const goToShippingIfShippingIsNotCompleted: OrderPredicate = ({ order }) => {
 }
 
 const goToPaymentIfPaymentIsNotCompleted: OrderPredicate = ({ order }) => {
-  if (!order.creditCard) {
+  // TODO: check if payment is completed by looking at the payment method and the relevant property
+  if (!order.creditCard && !order.bankAccountId) {
     return {
       path: `/orders/${order.internalID}/payment`,
       reason: "Payment was not yet completed",
@@ -225,6 +226,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
 
 graphql`
   fragment redirects_order on CommerceOrder {
+    bankAccountId
     internalID
     mode
     state
