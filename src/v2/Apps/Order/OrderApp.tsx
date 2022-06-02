@@ -37,6 +37,12 @@ export const preventHardReload = event => {
   event.returnValue = true
 }
 
+export enum PaymentMethods {
+  CreditCard = "credit_card",
+  BankDebit = "bank_debit",
+  WireTransfer = "wire_transfer",
+}
+
 class OrderApp extends Component<OrderAppProps, {}> {
   state = { stripe: null }
   removeNavigationListener: () => void

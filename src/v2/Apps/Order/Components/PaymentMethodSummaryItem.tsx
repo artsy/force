@@ -6,6 +6,9 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { BankDebitDetails } from "./BankDebitDetails"
+// TODO: uncomment when we get paymentMethod from API
+// import { WireTransferDetails } from "./WireTransferDetails"
+// import { PaymentMethods } from "../OrderApp"
 
 const PaymentMethodSummaryItem = ({
   order: { creditCard },
@@ -26,6 +29,7 @@ const PaymentMethodSummaryItem = ({
     <StepSummaryItem {...others}>
       {creditCard && <CreditCardDetails {...cardInfoWithTextColor} />}
       {!creditCard && <BankDebitDetails {...cardInfoWithTextColor} />}
+      {/* {paymentMethod === PaymentMethods.WireTransfer &&  <WireTransferDetails />} */}
     </StepSummaryItem>
   )
 }
@@ -35,6 +39,7 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
   {
     order: graphql`
       fragment PaymentMethodSummaryItem_order on CommerceOrder {
+        # TODO: retrieve payment method
         creditCard {
           brand
           lastDigits

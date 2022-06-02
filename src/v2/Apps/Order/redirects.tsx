@@ -59,6 +59,7 @@ const goToShippingIfShippingIsNotCompleted: OrderPredicate = ({ order }) => {
 }
 
 const goToPaymentIfPaymentIsNotCompleted: OrderPredicate = ({ order }) => {
+  // TODO: check if payment is completed by looking at the payment method and the relevant property
   if (!order.creditCard && !order.bankAccountId) {
     return {
       path: `/orders/${order.internalID}/payment`,
