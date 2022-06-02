@@ -27,6 +27,7 @@ import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 import { AnalyticsContext } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
+import { TopContextBar } from "v2/Components/TopContextBar"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -50,6 +51,12 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </FullBleed>
         )}
 
+        {article.seriesArticle && (
+          <TopContextBar displayBackArrow href={article.seriesArticle.href}>
+            {article.seriesArticle.thumbnailTitle}
+          </TopContextBar>
+        )}
+
         <ArticleHeroFragmentContainer article={article} />
 
         <Spacer mt={4} />
@@ -68,7 +75,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                   display="block"
                   textDecoration="none"
                 >
-                  <Text variant={["lg-display", "xl", "xxl"]}>
+                  <Text as="h1" variant={["lg-display", "xl", "xxl"]}>
                     {article.title}
                   </Text>
 
@@ -235,6 +242,10 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         ...ArticleNewsSource_article
         hero {
           __typename
+        }
+        seriesArticle {
+          thumbnailTitle
+          href
         }
         vertical
         byline

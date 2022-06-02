@@ -49,7 +49,9 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
               {article.vertical}
             </Text>
 
-            <Text variant={["xl", "xxl"]}>{article.title}</Text>
+            <Text as="h1" variant={["xl", "xxl"]}>
+              {article.title}
+            </Text>
 
             <Text
               variant={["md", "lg-display"]}
@@ -78,7 +80,9 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
                 {article.vertical}
               </Text>
 
-              <Text variant={["xl", "xxl"]}>{article.title}</Text>
+              <Text as="h1" variant={["xl", "xxl"]}>
+                {article.title}
+              </Text>
 
               <Text variant={["md", "lg-display"]} color="black60">
                 {article.byline}
@@ -145,7 +149,9 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
                 </Text>
               )}
 
-              <Text variant={["xl", "xxl"]}>{article.title}</Text>
+              <Text as="h1" variant={["xl", "xxl"]}>
+                {article.title}
+              </Text>
 
               <Text variant={["md", "lg-display"]} color="black60" mb={2}>
                 {article.byline}
@@ -169,7 +175,9 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
                 {article.vertical}
               </Text>
 
-              <Text variant={["xl", "xxl"]}>{article.title}</Text>
+              <Text as="h1" variant={["xl", "xxl"]}>
+                {article.title}
+              </Text>
 
               <Text variant={["md", "lg-display"]} color="black60">
                 {article.byline}

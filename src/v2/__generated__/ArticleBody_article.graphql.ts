@@ -9,6 +9,10 @@ export type ArticleBody_article = {
     readonly hero: {
         readonly __typename: string;
     } | null;
+    readonly seriesArticle: {
+        readonly thumbnailTitle: string | null;
+        readonly href: string | null;
+    } | null;
     readonly vertical: string | null;
     readonly byline: string | null;
     readonly internalID: string;
@@ -50,28 +54,28 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "byline",
+  "name": "href",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "byline",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "title",
   "storageKey": null
 };
 return {
@@ -101,12 +105,31 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Article",
+      "kind": "LinkedField",
+      "name": "seriesArticle",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "thumbnailTitle",
+          "storageKey": null
+        },
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "vertical",
       "storageKey": null
     },
-    (v0/*: any*/),
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -128,8 +151,8 @@ return {
       "name": "leadParagraph",
       "storageKey": null
     },
-    (v2/*: any*/),
     (v3/*: any*/),
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -174,10 +197,10 @@ return {
       "name": "relatedArticles",
       "plural": true,
       "selections": [
-        (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
         (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -253,5 +276,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ac8b822d668813e496dbeecd5baaab07';
+(node as any).hash = '60d532719e84110165d4cfe546322592';
 export default node;

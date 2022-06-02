@@ -28,7 +28,7 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
         {article.byline}
       </TopContextBar>
 
-      <Text variant={["xl", "xxl"]} mt={4}>
+      <Text as="h1" variant={["xl", "xxl"]} mt={4}>
         {article.title}
       </Text>
 

@@ -114,7 +114,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
                           </Text>
                         )}
 
-                        <Text variant={["xl", "xxl"]} color="white100">
+                        <Text as="h1" variant={["xl", "xxl"]} color="white100">
                           {article.title}
                         </Text>
                       </Box>

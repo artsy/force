@@ -19,13 +19,16 @@ describe("Articles", () => {
 
     it("/news", () => {
       visitWithStatusRetries("news")
-      cy.title().should("eq", "News")
+      cy.title().should("eq", "News | Artsy")
     })
 
     describe("Editorial features", () => {
       it("/venice-biennale-2015", () => {
         visitWithStatusRetries("venice-biennale-2015")
-        cy.title().should("eq", "Venice Biennale 2015 Guide | Artsy")
+        cy.title().should(
+          "eq",
+          "56th Venice Biennale | Artists, Artworks, and Contact Info | Artsy"
+        )
       })
     })
   })

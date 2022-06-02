@@ -10,6 +10,12 @@ export type ArticleMetaTags_article = {
     readonly keywords: ReadonlyArray<string>;
     readonly metaPublishedAt: string | null;
     readonly title: string | null;
+    readonly searchTitle: string | null;
+    readonly description: string | null;
+    readonly searchDescription: string | null;
+    readonly thumbnailImage: {
+        readonly url: string | null;
+    } | null;
     readonly " $refType": "ArticleMetaTags_article";
 };
 export type ArticleMetaTags_article$data = ArticleMetaTags_article;
@@ -60,10 +66,49 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "title",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "searchTitle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "searchDescription",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "thumbnailImage",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '92dd8b2d44941c30fa8be9f8a6f83398';
+(node as any).hash = '79c17ffae9985576d77cb87aad7750d9';
 export default node;
