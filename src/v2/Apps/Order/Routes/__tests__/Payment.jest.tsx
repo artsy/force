@@ -1,4 +1,4 @@
-import { Checkbox, Collapse } from "@artsy/palette"
+import { BorderedRadio, Checkbox, Collapse } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
@@ -19,6 +19,7 @@ import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { CommercePaymentMethodEnum } from "v2/__generated__/Payment_order.graphql"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -353,6 +354,19 @@ describe("Payment", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       expect(page.text()).not.toContain("Wire transfer")
+    })
+
+    it("preselects payment method from the order", async () => {
+      const order = {
+        ...testOrder,
+        paymentMethod: "WIRE_TRANSFER" as CommercePaymentMethodEnum,
+        additionalPaymentMethods: ["wire_transfer"],
+      }
+
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+
+      expect(page.find(BorderedRadio).at(1).prop("selected")).toBeTruthy()
     })
 
     it("renders wire transfer as option for eligible partners", async () => {

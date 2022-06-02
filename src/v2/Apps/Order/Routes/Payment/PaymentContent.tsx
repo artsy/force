@@ -56,7 +56,7 @@ export const PaymentContent: FC<Props> = props => {
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
-  >(isACHEnabled ? "US_BANK_ACCOUNT" : "CREDIT_CARD")
+  >(order.paymentMethod || (isACHEnabled ? "US_BANK_ACCOUNT" : "CREDIT_CARD"))
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {

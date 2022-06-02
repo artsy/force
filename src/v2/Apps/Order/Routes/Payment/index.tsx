@@ -254,6 +254,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         internalID
         mode
         currencyCode
+        paymentMethod
         buyerTotal(precision: 2)
         lineItems {
           edges {
