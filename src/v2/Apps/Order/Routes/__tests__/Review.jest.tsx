@@ -440,7 +440,8 @@ describe("Review", () => {
       })
     })
 
-    it("shows bank transfer as payment method", () => {
+    // TODO: Unskip test when we get bankAccount details from API
+    it.skip("shows bank transfer as payment method", () => {
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
         "Bank transfer"
       )

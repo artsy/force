@@ -4,10 +4,7 @@ export const BankDebitDetails = ({
   responsive = true,
   textColor = "black100",
 }: {
-  brand: string
   lastDigits: string
-  expirationMonth: number
-  expirationYear: number
   responsive?: boolean
   textColor?: string
 }) => (

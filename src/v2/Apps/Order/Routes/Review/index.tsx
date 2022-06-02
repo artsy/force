@@ -34,6 +34,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import { extractNodes } from "v2/Utils/extractNodes"
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
@@ -53,9 +54,10 @@ const OrdersReviewOwnerType = OwnerType.ordersReview
 
 export const ReviewRoute: FC<ReviewProps> = props => {
   const { trackEvent } = useTracking()
+  const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
 
   const onSubmit = async (setupIntentId?: any) => {
-    const onSubmitEvent = {
+    const submitEvent = {
       action_type:
         props.order.mode === "BUY"
           ? Schema.ActionType.SubmittedOrder
@@ -63,14 +65,13 @@ export const ReviewRoute: FC<ReviewProps> = props => {
       order_id: props.order.internalID,
       products: [
         {
-          product_id:
-            props.order.lineItems?.edges?.[0]?.node?.artwork?.internalID,
+          product_id: productId,
           quantity: 1,
           price: props.order.itemsTotal,
         },
       ],
     }
-    trackEvent(onSubmitEvent)
+    trackEvent(submitEvent)
 
     try {
       const orderOrError =
@@ -348,63 +349,58 @@ export const ReviewRoute: FC<ReviewProps> = props => {
       />
       <TwoColumnLayout
         Content={
-          <>
-            <Join separator={<Spacer mb={4} />}>
-              <Flex flexDirection="column" mb={[2, 4]}>
-                <Message p={[2, 4]} mb={[2, 4]}>
-                  Disruptions caused by COVID-19 may cause delays — we
-                  appreciate your understanding.
-                </Message>
-                {isEigen && (
-                  <>
-                    <Button
-                      variant="primaryBlack"
-                      width="100%"
-                      loading={isCommittingMutation}
-                      onClick={() => onSubmit()}
-                    >
-                      Submit
-                    </Button>
-                    <ConditionsOfSaleDisclaimer
-                      paddingY={2}
-                      textAlign="start"
-                    />
-                  </>
-                )}
-                {order.mode === "OFFER" && (
-                  <OfferSummaryItem order={order} onChange={onChangeOffer} />
-                )}
-                <ShippingSummaryItem
-                  order={order}
-                  onChange={onChangeShippingAddress}
-                />
-                <PaymentMethodSummaryItem
-                  order={order}
-                  onChange={onChangePayment}
-                  title="Payment"
-                />
-                <ShippingArtaSummaryItemFragmentContainer
-                  order={order}
-                  onChange={onChangeShippingMethod}
-                  title="Shipping"
-                />
-              </Flex>
-              <Media greaterThan="xs">
-                <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
-                <Spacer mb={2} />
-                <Button
-                  variant="primaryBlack"
-                  width="100%"
-                  loading={isCommittingMutation}
-                  onClick={() => onSubmit()}
-                >
-                  Submit
-                </Button>
-                <Spacer mb={2} />
-                <ConditionsOfSaleDisclaimer textAlign="center" />
-              </Media>
-            </Join>
-          </>
+          <Join separator={<Spacer mb={4} />}>
+            <Flex flexDirection="column" mb={[2, 4]}>
+              <Message p={[2, 4]} mb={[2, 4]}>
+                Disruptions caused by COVID-19 may cause delays — we appreciate
+                your understanding.
+              </Message>
+              {isEigen && (
+                <>
+                  <Button
+                    variant="primaryBlack"
+                    width="100%"
+                    loading={isCommittingMutation}
+                    onClick={() => onSubmit()}
+                  >
+                    Submit
+                  </Button>
+                  <ConditionsOfSaleDisclaimer paddingY={2} textAlign="start" />
+                </>
+              )}
+              {order.mode === "OFFER" && (
+                <OfferSummaryItem order={order} onChange={onChangeOffer} />
+              )}
+              <ShippingSummaryItem
+                order={order}
+                onChange={onChangeShippingAddress}
+              />
+              <PaymentMethodSummaryItem
+                order={order}
+                onChange={onChangePayment}
+                title="Payment"
+              />
+              <ShippingArtaSummaryItemFragmentContainer
+                order={order}
+                onChange={onChangeShippingMethod}
+                title="Shipping"
+              />
+            </Flex>
+            <Media greaterThan="xs">
+              <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
+              <Spacer mb={2} />
+              <Button
+                variant="primaryBlack"
+                width="100%"
+                loading={isCommittingMutation}
+                onClick={() => onSubmit()}
+              >
+                Submit
+              </Button>
+              <Spacer mb={2} />
+              <ConditionsOfSaleDisclaimer textAlign="center" />
+            </Media>
+          </Join>
         }
         Sidebar={
           <Flex flexDirection="column">
