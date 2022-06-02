@@ -1,4 +1,4 @@
-import { Clickable, Text } from "@artsy/palette"
+import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassification_artwork } from "v2/__generated__/ArtworkSidebarClassification_artwork.graphql"
@@ -30,25 +30,30 @@ export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps>
 
   const closeModal = () => setIsModalOpen(false)
 
-  return artwork.attributionClass ? (
+  if (!artwork.attributionClass) {
+    return null
+  }
+
+  const { shortArrayDescription } = artwork.attributionClass
+
+  return (
     <>
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={closeModal}
         show={isModalOpen}
       />
-
-      <Text variant="xs" mt={2}>
-        <Clickable
-          onClick={openModal}
-          textDecoration="underline"
-          color="black60"
-        >
-          {artwork.attributionClass.shortDescription}
-        </Clickable>
-        .
-      </Text>
+      <Flex mt={2}>
+        <ArtworkIcon mr={1} />
+        <Text variant="xs" color="black100">
+          {shortArrayDescription![0]}{" "}
+          <Clickable onClick={openModal} textDecoration="underline">
+            {shortArrayDescription![1]}
+          </Clickable>
+          .
+        </Text>
+      </Flex>
     </>
-  ) : null
+  )
 }
 
 export const ArtworkSidebarClassificationFragmentContainer = createFragmentContainer(
@@ -57,7 +62,7 @@ export const ArtworkSidebarClassificationFragmentContainer = createFragmentConta
     artwork: graphql`
       fragment ArtworkSidebarClassification_artwork on Artwork {
         attributionClass {
-          shortDescription
+          shortArrayDescription
         }
       }
     `,

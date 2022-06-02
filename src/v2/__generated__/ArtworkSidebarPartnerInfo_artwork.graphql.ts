@@ -11,9 +11,7 @@ export type ArtworkSidebarPartnerInfo_artwork = {
     readonly partner: {
         readonly name: string | null;
         readonly href: string | null;
-        readonly locations: ReadonlyArray<{
-            readonly city: string | null;
-        } | null> | null;
+        readonly cities: ReadonlyArray<string | null> | null;
     } | null;
     readonly sale: {
         readonly name: string | null;
@@ -84,19 +82,8 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "Location",
-          "kind": "LinkedField",
-          "name": "locations",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "city",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "cities",
           "storageKey": null
         }
       ],
@@ -120,5 +107,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1be4cc2dabfd5edd771dea5f135a34bd';
+(node as any).hash = 'bb75716f5769fb1ada0ce2fe83374214';
 export default node;

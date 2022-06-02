@@ -40,18 +40,22 @@ describe("ArtworkSidebarClassification", () => {
     it("displays classification", () => {
       renderWithRelay({
         Artwork: () => ({
-          attributionClass: { shortDescription: "This is a unique work" },
+          attributionClass: {
+            shortArrayDescription: ["This is", "a unique work"],
+          },
         }),
       })
 
-      expect(screen.queryByText("This is a unique work")).toBeInTheDocument()
+      expect(screen.getByText("a unique work")).toBeInTheDocument()
     })
 
     describe("modal pop up", () => {
       it("shows a modal on Classification details click", async () => {
         renderWithRelay({
           Artwork: () => ({
-            attributionClass: { shortDescription: "This is a unique work" },
+            attributionClass: {
+              shortArrayDescription: ["This is", "a unique work"],
+            },
           }),
         })
 
@@ -59,7 +63,7 @@ describe("ArtworkSidebarClassification", () => {
           screen.queryByText("ArtworkSidebarClassificationsModalQueryRenderer")
         ).not.toBeInTheDocument()
 
-        fireEvent.click(screen.getByText("This is a unique work"))
+        fireEvent.click(screen.getByText("a unique work"))
 
         expect(trackEvent).toBeCalledWith({
           action_type: "Click",
@@ -69,7 +73,7 @@ describe("ArtworkSidebarClassification", () => {
         })
 
         expect(
-          screen.queryByText("ArtworkSidebarClassificationsModalQueryRenderer")
+          screen.getByText("ArtworkSidebarClassificationsModalQueryRenderer")
         ).toBeInTheDocument()
       })
     })

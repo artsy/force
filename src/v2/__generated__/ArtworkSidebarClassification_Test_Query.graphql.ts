@@ -27,7 +27,7 @@ query ArtworkSidebarClassification_Test_Query {
 
 fragment ArtworkSidebarClassification_artwork on Artwork {
   attributionClass {
-    shortDescription
+    shortArrayDescription
     id
   }
 }
@@ -107,7 +107,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "shortDescription",
+                "name": "shortArrayDescription",
                 "storageKey": null
               },
               (v1/*: any*/)
@@ -121,7 +121,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e2fee4ac8a516f21734a5b2a8093745",
+    "cacheID": "b60e4e6e164bd5bb3cf6b9c1fe54bc19",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -138,10 +138,10 @@ return {
           "type": "AttributionClass"
         },
         "artwork.attributionClass.id": (v2/*: any*/),
-        "artwork.attributionClass.shortDescription": {
+        "artwork.attributionClass.shortArrayDescription": {
           "enumValues": null,
           "nullable": true,
-          "plural": false,
+          "plural": true,
           "type": "String"
         },
         "artwork.id": (v2/*: any*/)
@@ -149,7 +149,7 @@ return {
     },
     "name": "ArtworkSidebarClassification_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarClassification_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarClassification_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarClassification_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarClassification_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n"
   }
 };
 })();

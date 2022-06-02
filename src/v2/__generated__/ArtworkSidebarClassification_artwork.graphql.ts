@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarClassification_artwork = {
     readonly attributionClass: {
-        readonly shortDescription: string | null;
+        readonly shortArrayDescription: ReadonlyArray<string | null> | null;
     } | null;
     readonly " $refType": "ArtworkSidebarClassification_artwork";
 };
@@ -36,7 +36,7 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "shortDescription",
+          "name": "shortArrayDescription",
           "storageKey": null
         }
       ],
@@ -46,5 +46,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '6a721c8be12ea96c63dfb430081f0a4a';
+(node as any).hash = 'f9a288295e18df0165f1f881a6bff63b';
 export default node;
