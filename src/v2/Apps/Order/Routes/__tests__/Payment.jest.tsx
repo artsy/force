@@ -7,7 +7,6 @@ import {
 import { AddressForm } from "v2/Components/AddressForm"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
-import * as paymentPickerMock from "../../Components/__mocks__/PaymentPicker"
 import {
   settingOrderPaymentFailed,
   settingOrderPaymentSuccess,
@@ -38,12 +37,17 @@ jest.mock("../../Components/Mutations/useSetPayment", () => {
       .mockImplementation(originalUseSetPayment.useSetPayment),
   }
 })
+
+const paymentPickerMock = jest.requireActual(
+  "../../Components/__mocks__/PaymentPicker"
+)
+
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../../Components/__mocks__/PaymentPicker")
+    return jest.requireActual("../../Components/__mocks__/PaymentPicker")
   }
 )
 jest.mock(
@@ -51,7 +55,7 @@ jest.mock(
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../../Components/__mocks__/BankDebitProvider")
+    return jest.requireActual("../../Components/__mocks__/BankDebitProvider")
   }
 )
 jest.mock("v2/System/useSystemContext")
