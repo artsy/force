@@ -1138,6 +1138,7 @@ type ArticleSponsor {
 }
 
 type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Searchable {
+  activeSecondaryMarket: Boolean
   alternateNames: [String]
   articlesConnection(
     after: String
