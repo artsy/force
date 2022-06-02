@@ -9,10 +9,14 @@ import WebpackNotifierPlugin from "webpack-notifier"
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
 import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
+import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
+import { cache, experiments } from "./sharedConfig"
 
 export const legacyDevelopmentConfig = () => ({
+  experiments,
+  cache,
   entry: getEntrypoints(),
   module: {
     // CSS is compiled in dev for in-memory refreshing; in prod its compiled
@@ -49,10 +53,13 @@ export const legacyDevelopmentConfig = () => ({
       format: "compact",
     }),
     new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      formatter: "codeframe",
-      formatterOptions: "highlightCode",
-      watch: ["./src"],
+      typescript: {
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+      },
+      formatter: { type: "codeframe", options: { highlightCode: true } },
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
       excludeWarnings: true,
@@ -65,6 +72,7 @@ export const legacyDevelopmentConfig = () => ({
         notes: [""],
       },
     }),
+    new NodePolyfillPlugin(),
     new WebpackNotifierPlugin(),
     new ReactRefreshWebpackPlugin({
       overlay: false,
