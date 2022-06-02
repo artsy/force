@@ -128,6 +128,7 @@ export const PaymentRoute: FC<Props> = props => {
 
       onSetPaymentSuccess()
     } catch (error) {
+      logger.error(error)
       onSetPaymentError(error)
     }
   }
