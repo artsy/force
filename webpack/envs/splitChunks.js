@@ -6,8 +6,8 @@ const FRAMEWORK_BUNDLES = ["react", "react-dom", "@sentry"]
 const TOTAL_PAGES = 12
 
 export const splitChunks = {
-  chunks: "all",
   automaticNameDelimiter: "-",
+  chunks: "all",
   cacheGroups: {
     default: false,
     defaultVendors: false,
