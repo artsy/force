@@ -429,6 +429,7 @@ describe("Review", () => {
 
   describe("Bank debit orders", () => {
     let page: ReviewTestPage
+
     beforeEach(async () => {
       page = await buildPage({
         mockData: {
@@ -440,7 +441,7 @@ describe("Review", () => {
       })
     })
 
-    // TODO: Unskip test when we get bankAccount details from API
+    // TODO: Unskip test when stripe-ACH feature flag is removed
     it.skip("shows bank transfer as payment method", () => {
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
         "Bank transfer"

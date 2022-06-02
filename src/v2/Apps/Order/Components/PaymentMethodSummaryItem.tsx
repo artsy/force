@@ -5,8 +5,9 @@ import {
 } from "v2/Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
+import { BankDebitDetails } from "./BankDebitDetails"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 // TODO: uncomment when we get paymentMethod from API
-// import { BankDebitDetails } from "./BankDebitDetails"
 // import { WireTransferDetails } from "./WireTransferDetails"
 // import { PaymentMethods } from "../OrderApp"
 
@@ -22,11 +23,14 @@ export const PaymentMethodSummaryItem = ({
     ...creditCard!,
     ...{ textColor: textColor },
   }
+  const isACHEnabled = useFeatureFlag("stripe_ACH")
 
   return (
     <StepSummaryItem {...others}>
       {creditCard && <CreditCardDetails {...cardInfoWithTextColor} />}
-      {/* {paymentMethod === PaymentMethods.BankTranfer && <BankDebitDetails />} */}
+      {isACHEnabled && !creditCard && (
+        <BankDebitDetails {...cardInfoWithTextColor} />
+      )}
       {/* {paymentMethod === PaymentMethods.WireTransfer &&  <WireTransferDetails />} */}
     </StepSummaryItem>
   )
