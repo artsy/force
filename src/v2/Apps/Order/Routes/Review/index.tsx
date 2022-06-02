@@ -130,7 +130,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        if (order.mode === "OFFER" && isEigen) {
+        if (
+          order.mode === "OFFER" &&
+          isEigen &&
+          order.source === "artwork_page"
+        ) {
           window?.ReactNativeWebView?.postMessage(
             JSON.stringify({
               key: "goToInboxOnMakeOfferSubmission",
