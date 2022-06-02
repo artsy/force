@@ -107,13 +107,7 @@ mountAndReload(path.resolve("src/v2/server.ts"), {
 
 // Mount express-reloadable on legacy routes
 mountAndReload(path.resolve("src/desktop"), {
-  watchModules: [
-    path.resolve(process.cwd(), "src/v2"),
-    "@artsy/cohesion",
-    "@artsy/fresnel",
-    "@artsy/palette",
-    "@artsy/stitch",
-  ],
+  watchModules: ["@artsy/palette"],
 })
 
 // Start server

@@ -64,6 +64,7 @@ if (env.onCi || env.logConfig) {
   console.log("  BUILD_SERVER".padEnd(35), chalk.yellow(env.buildServer))
   console.log("  BUILD_CLIENT".padEnd(35), chalk.yellow(env.buildClient))
   console.log("  CI".padEnd(35), chalk.yellow(env.onCi))
+  console.log("  COMPILE_LEGACY_CLIENT_IN_DEV".padEnd(35), chalk.yellow(env.compileLegacyClientInDev))
   console.log("  NODE_ENV == 'isDevelopment'".padEnd(35), chalk.yellow(env.isDevelopment))
   console.log("  NODE_ENV == 'isProduction'".padEnd(35), chalk.yellow(env.isProduction))
   console.log("  NODE_ENV == 'isStaging'".padEnd(35), chalk.yellow(env.isStaging))

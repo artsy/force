@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
+import TimeFixPlugin from "time-fix-plugin"
 import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
@@ -51,11 +52,18 @@ export const clientDevelopmentConfig = () => ({
     concatenateModules: env.webpackConcatenate,
     runtimeChunk: "single", // Extract webpack runtime code into it's own file
     splitChunks,
+
+    // Webpack does extra algorithmic work to optimize the output for size and
+    // load performance. These optimizations are performant for smaller codebases,
+    // but can be costly in larger ones.
+    removeAvailableModules: env.isDevelopment,
+    removeEmptyChunks: env.isDevelopment,
   },
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets/",
+    pathinfo: false,
   },
   plugins: [
     ...sharedPlugins(),
@@ -84,6 +92,7 @@ export const clientDevelopmentConfig = () => ({
     new SimpleProgressWebpackPlugin({
       format: "minimal",
     }),
+    new TimeFixPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets/",
       fileName: path.resolve(basePath, "manifest-novo.json"),
