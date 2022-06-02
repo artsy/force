@@ -357,21 +357,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
-  renderSpacer() {
-    const { artwork } = this.props
-    const {
-      is_offerable: isOfferable,
-      is_acquireable: isAcquireable,
-      is_inquireable: isInquireable,
-    } = artwork
-
-    if (isInquireable || isAcquireable || isOfferable) {
-      return artwork.sale_message && <Spacer mt={2} />
-    }
-
-    return <Separator my={2} />
-  }
-
   renderShipAndTaxInformation(artworkEcommerceAvailable: boolean) {
     const { artwork } = this.props
 
@@ -388,8 +373,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             {artwork.shippingInfo}
           </Text>
         )}
-
-        {this.renderSpacer()}
       </>
     )
   }
@@ -426,11 +409,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const artworkEcommerceAvailable = !!(
       artwork.is_acquireable || artwork.is_offerable
     )
-
+    const shouldRenderButtons = artworkEcommerceAvailable || !!isInquireable
     const isSecondaryContactGalleryButton = isOfferable || isSold
 
     if (!artwork.sale_message && !isInquireable) {
-      return <Separator />
+      return null
     }
 
     return (
@@ -460,7 +443,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          {(artworkEcommerceAvailable || !!isInquireable) &&
+          {shouldRenderButtons &&
             (artwork.shippingOrigin || artwork.shippingInfo) && (
               <Spacer mt={1} />
             )}
@@ -478,9 +461,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </Text>
           )}
 
-          {isSold
-            ? this.renderCreateAlertButton()
-            : this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
+          {isSold ? (
+            this.renderCreateAlertButton()
+          ) : (
+            <>
+              {this.renderShipAndTaxInformation(artworkEcommerceAvailable)}
+              {shouldRenderButtons && artwork.sale_message && <Spacer mt={2} />}
+            </>
+          )}
 
           {isAcquireable && (
             <Button
