@@ -1,6 +1,7 @@
 import { ReviewTestQueryRawResponse } from "v2/__generated__/ReviewTestQuery.graphql"
 import {
   BuyOrderWithArtaShippingDetails,
+  BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
   OfferOrderWithMissingMetadata,
   OfferOrderWithShippingDetails,
@@ -31,6 +32,7 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
+import { PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { cloneDeep } from "lodash"
 import { useTracking } from "v2/System"
 
@@ -422,6 +424,26 @@ describe("Review", () => {
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+    })
+  })
+
+  describe("Bank debit orders", () => {
+    let page: ReviewTestPage
+    beforeEach(async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...BuyOrderWithBankDebitDetails,
+            impulseConversationId: null,
+          },
+        },
+      })
+    })
+
+    it("shows bank transfer as payment method", () => {
+      expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
+        "Bank transfer"
+      )
     })
   })
 })

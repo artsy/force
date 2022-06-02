@@ -10,7 +10,7 @@ import { BankDebitDetails } from "./BankDebitDetails"
 // import { WireTransferDetails } from "./WireTransferDetails"
 // import { PaymentMethods } from "../OrderApp"
 
-const PaymentMethodSummaryItem = ({
+export const PaymentMethodSummaryItem = ({
   order: { creditCard },
   textColor = "black100",
   ...others
@@ -23,7 +23,7 @@ const PaymentMethodSummaryItem = ({
     ...{ textColor: textColor },
   }
 
-  // TODO: check paymentMethod value from CommerceOrder to conditioanlly
+  // TODO: check paymentMethod value from CommerceOrder to conditionally
   // render details.
   return (
     <StepSummaryItem {...others}>
