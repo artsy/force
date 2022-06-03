@@ -1,38 +1,13 @@
-import { Box, Flex, Link, Sans, Text } from "@artsy/palette"
+import { BlueChipIcon, Box, Flex, Link, Sans, Text } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import * as React from "react";
-
-import {
-  AuctionIcon,
-  BlueChipIcon,
-  BookIcon,
-  FairIcon,
-  GroupIcon,
-  MuseumIcon,
-  SoloIcon,
-  TopEmergingIcon,
-  TopEstablishedIcon,
-} from "@artsy/palette"
+import * as React from "react"
 
 interface ArtistInsightProps {
   type: string
   label: string
   value?: string
   entities?: ReadonlyArray<string>
-  themeVersion?: any // FIXME
-}
-
-const ICON_MAPPING = {
-  HIGH_AUCTION: AuctionIcon,
-  SOLO_SHOW: SoloIcon,
-  GROUP_SHOW: GroupIcon,
-  BIENNIAL: FairIcon,
-  REVIEWED: BookIcon,
-  COLLECTED: MuseumIcon,
-  BLUE_CHIP: BlueChipIcon,
-  TOP_ESTABLISHED: TopEstablishedIcon,
-  TOP_EMERGING: TopEmergingIcon,
 }
 
 @track<ArtistInsightProps>(props => ({
@@ -53,40 +28,23 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
     this.setState({ expanded: true })
   }
 
-  getTextByTheme() {
-    if (this.props.themeVersion === "v3") {
-      return props => (
-        <Text variant="sm" {...props}>
-          {props.children}
-        </Text>
-      )
-    } else {
-      return props => (
-        <Sans size="2" {...props}>
-          {props.children}
-        </Sans>
-      )
-    }
-  }
-
   renderEntities() {
     const { entities } = this.props
-    const TextWrapper = this.getTextByTheme()
 
     if (!entities || entities.length < 1) {
       return null
     } else if (this.state.expanded) {
       return (
-        <TextWrapper verticalAlign="top" color="black60">
+        <Text variant="sm" verticalAlign="top" color="black60">
           {entities.join(", ")}.
-        </TextWrapper>
+        </Text>
       )
     } else {
       return (
-        <TextWrapper verticalAlign="top" color="black60" textAlign="left">
-          {entities[0]}
+        <Text variant="sm" verticalAlign="top" color="black60" textAlign="left">
+          {/* {entities[0]} */}
 
-          {entities.length > 1 && (
+          {/* {entities.length > 1 && (
             <>
               , and{" "}
               <Link onClick={this.handleExpand.bind(this)}>
@@ -94,50 +52,31 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
                 &nbsp;more
               </Link>
             </>
-          )}
-        </TextWrapper>
+          )} */}
+        </Text>
       )
     }
   }
 
-  renderIcon(insightType) {
-    const Component = ICON_MAPPING[insightType]
-
-    return <Component />
-  }
-
   render() {
-    const { label, type, value, entities } = this.props
-    const TextWrapper = this.getTextByTheme()
+    const { label, value, entities } = this.props
 
     if (!(value || (entities && entities.length > 0))) {
       return null
     }
 
     return (
-      <Flex
-        mt={1}
-        width={
-          this.props.themeVersion === "v3"
-            ? ["100%", "100%", "100%", "100%", "50%"]
-            : "100%"
-        }
-        position="relative"
-      >
-        <Flex
-          pr={1}
-          top={this.props.themeVersion === "v2" ? 0 : "3px"}
-          position="relative"
-        >
-          {this.renderIcon(type)}
-        </Flex>
-        <Flex flexDirection="column" pr={2}>
-          <Box>
-            <TextWrapper>{label}</TextWrapper>
-            {value && <TextWrapper color="black60">{value}</TextWrapper>}
-            {this.renderEntities()}
-          </Box>
-        </Flex>
+      <Flex mt={1} width={["100%", "100%", "100%", "100%", "50%"]}>
+        <BlueChipIcon mr={2} />
+        <Box>
+          <Text variant="sm">{label}</Text>
+          {value && (
+            <Text variant="sm" color="black60">
+              {value}
+            </Text>
+          )}
+          {this.renderEntities()}
+        </Box>
       </Flex>
     )
   }

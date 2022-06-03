@@ -1,15 +1,6 @@
-import {
-  BorderBox,
-  Box,
-  Flex,
-  Spacer,
-  useThemeConfig,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
-
 import { ArtistInsight } from "v2/Components/ArtistInsight"
-import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
@@ -19,7 +10,6 @@ import { highestCategory, hasSections } from "./ArtistMarketInsights"
 
 export interface SelectedCareerAchievementsProps extends SpaceProps {
   artist: SelectedCareerAchievements_artist
-  themeVersion?: string
   onlyCareerHighlights?: boolean
 }
 
@@ -37,15 +27,11 @@ const CATEGORY_LABEL_MAP = {
 export class SelectedCareerAchievements extends Component<
   SelectedCareerAchievementsProps
 > {
-  state = {
-    showModal: false,
-  }
-
   defaultProps: {
     onlyCareerHighlights: false
   }
 
-  renderAuctionHighlight() {
+  highAuctionRecord() {
     if (
       !this.props.artist.auctionResultsConnection ||
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -65,11 +51,11 @@ export class SelectedCareerAchievements extends Component<
         type="HIGH_AUCTION"
         label="High auction record"
         value={display}
-        themeVersion={this.props.themeVersion}
       />
     )
   }
-  renderGalleryRepresentation() {
+
+  blueChipRepresentation() {
     const { highlights } = this.props.artist
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const { partnersConnection } = highlights
@@ -88,20 +74,33 @@ export class SelectedCareerAchievements extends Component<
           type={type}
           label={label}
           value={CATEGORY_LABEL_MAP[highCategory]}
-          themeVersion={this.props.themeVersion}
         />
       )
     }
   }
 
-  renderInsight(insight) {
+  activeSecondaryMarket() {
+    const isActiveSecondaryMarket = true
+
+    if (isActiveSecondaryMarket) {
+      return (
+        <ArtistInsight
+          key="ACTIVE_SECONDARY_MARKET"
+          type="ACTIVE_SECONDARY_MARKET"
+          label="Active Secondary Market"
+          value="Recent auction results in the Artsy Price Database."
+        />
+      )
+    }
+  }
+
+  careerHighlight(insight) {
     return (
       <ArtistInsight
         key={insight.type}
         type={insight.type}
         label={insight.label}
         entities={insight.entities}
-        themeVersion={this.props.themeVersion}
       />
     )
   }
@@ -122,36 +121,6 @@ export class SelectedCareerAchievements extends Component<
       )
     }
 
-    if (this.props.themeVersion === "v2") {
-      return (
-        <>
-          <ArtistInsightsModal />
-          <Spacer mb={2} />
-
-          <BorderBox pt={1}>
-            <Flex flexDirection="column" alignItems="left" width="100%">
-              <Flex
-                flexDirection="column"
-                flexWrap="wrap"
-                justifyContent="space-between"
-              >
-                {this.renderGalleryRepresentation()}
-                {this.renderAuctionHighlight()}
-
-                {/*  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                {this.props.artist.insights.map(insight => {
-                  return this.renderInsight(insight)
-                })}
-              </Flex>
-            </Flex>
-          </BorderBox>
-
-          {this.props.children}
-        </>
-      )
-    }
-
-    // V3 theme
     return (
       <Box {...this.props}>
         {this.props.onlyCareerHighlights ? (
@@ -161,7 +130,7 @@ export class SelectedCareerAchievements extends Component<
             </Text>
             <Flex flexWrap="wrap" pr={2}>
               {this.props.artist?.insights?.map(insight => {
-                return this.renderInsight(insight)
+                return this.careerHighlight(insight)
               })}
             </Flex>
 
@@ -173,8 +142,9 @@ export class SelectedCareerAchievements extends Component<
           </>
         ) : (
           <Flex flexDirection="column">
-            {this.renderGalleryRepresentation()}
-            {this.renderAuctionHighlight()}
+            {this.activeSecondaryMarket()}
+            {this.blueChipRepresentation()}
+            {this.highAuctionRecord()}
           </Flex>
         )}
       </Box>
@@ -184,18 +154,7 @@ export class SelectedCareerAchievements extends Component<
 
 export const SelectedCareerAchievementsFragmentContainer = createFragmentContainer(
   (props: SelectedCareerAchievementsProps) => {
-    const tokens = useThemeConfig({
-      v2: {
-        version: "v2",
-      },
-      v3: {
-        version: "v3",
-      },
-    })
-
-    return (
-      <SelectedCareerAchievements {...props} themeVersion={tokens.version} />
-    )
+    return <SelectedCareerAchievements {...props} />
   },
   {
     artist: graphql`
