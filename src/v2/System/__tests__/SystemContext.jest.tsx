@@ -2,7 +2,6 @@ import { SystemContextProps } from "v2/System"
 import * as Artsy from "v2/System"
 import { render } from "enzyme"
 import * as React from "react"
-import { setImmediate } from "timers"
 
 jest.mock("v2/System/Relay/createRelaySSREnvironment", () => ({
   createRelaySSREnvironment: config => ({
@@ -56,7 +55,7 @@ describe("Artsy context", () => {
               "setUser",
               "user",
             ])
-            setImmediate(done)
+            setTimeout(done, 0)
             return <div />
           }}
         </Artsy.SystemContextConsumer>

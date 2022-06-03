@@ -10,7 +10,6 @@ import { PageLoader } from "./PageLoader"
 import { AppShell } from "v2/Apps/Components/AppShell"
 import { getENV } from "v2/Utils/getENV"
 import { HttpError } from "found"
-import { setImmediate } from "timers"
 
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
@@ -24,7 +23,7 @@ export const RenderPending = () => {
    * duration of the fetch.
    */
   if (!isFetching) {
-    setImmediate(() => setFetching?.(true))
+    setTimeout(() => setFetching?.(true), 0)
   }
 
   if (isFetching) {
@@ -55,7 +54,7 @@ export const RenderReady = (props: { elements: React.ReactNode }) => {
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    setImmediate(() => setFetching?.(false))
+    setTimeout(() => setFetching?.(false), 0)
   }
 
   if (!isFetching) {
@@ -77,7 +76,7 @@ export const RenderError: React.FC<{
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    setImmediate(() => setFetching?.(false))
+    setTimeout(() => setFetching?.(false), 0)
   }
 
   const message =

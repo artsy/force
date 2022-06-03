@@ -10,7 +10,6 @@ import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/
 import { Breakpoint } from "@artsy/palette"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
-jest.useFakeTimers()
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
   useIsRouteActive: () => false,
