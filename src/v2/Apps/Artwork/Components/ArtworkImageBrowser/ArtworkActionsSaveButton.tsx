@@ -47,6 +47,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
         name="heart"
         Icon={isSaved ? FilledIcon : HeartIcon}
         label={isSaved ? "Saved" : "Save"}
+        longestLabel="Saved"
         onClick={handleSave}
       />
     )
