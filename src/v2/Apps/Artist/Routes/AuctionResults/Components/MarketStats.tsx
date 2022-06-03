@@ -14,6 +14,7 @@ import { MarketStatsQuery } from "v2/__generated__/MarketStatsQuery.graphql"
 import { MarketStats_priceInsightsConnection } from "v2/__generated__/MarketStats_priceInsightsConnection.graphql"
 import { MarketStatsInfoButton } from "./MarketStatsInfoButton"
 import { MarketStatsPlaceholder } from "./MarketStatsPlaceholder"
+import { setImmediate } from "timers"
 
 interface MarketStatsProps {
   priceInsightsConnection: MarketStats_priceInsightsConnection
