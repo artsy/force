@@ -231,6 +231,7 @@
     "styled-system": "5.1.5",
     "stylus": "0.54.5",
     "superagent": "3.8.3",
+    "timers-browserify": "2.0.12",
     "tti-polyfill": "0.2.2",
     "typeahead.js": "0.10.5",
     "underscore": "1.12.1",
