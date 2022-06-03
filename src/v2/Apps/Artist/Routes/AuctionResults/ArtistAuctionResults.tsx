@@ -47,6 +47,7 @@ import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
+import { setImmediate } from "timers"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 

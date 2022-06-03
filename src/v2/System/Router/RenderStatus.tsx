@@ -10,6 +10,7 @@ import { PageLoader } from "./PageLoader"
 import { AppShell } from "v2/Apps/Components/AppShell"
 import { getENV } from "v2/Utils/getENV"
 import { HttpError } from "found"
+import { setImmediate } from "timers"
 
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
