@@ -1,4 +1,4 @@
-import { BlueChipIcon, Box, Flex, Link, Sans, Text } from "@artsy/palette"
+import { BlueChipIcon, Box, Flex, Text } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import * as React from "react"
