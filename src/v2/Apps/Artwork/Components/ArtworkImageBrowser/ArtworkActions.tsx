@@ -420,13 +420,26 @@ const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
   return <Text {...rest}>{label}</Text>
 }
 
+const VisibleText = styled(Text)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
+
+const HiddenText = styled(Text)`
+  opacity: 0;
+  pointer-events: none;
+`
+
 const utilButtonMixin = css`
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${themeGet("colors.black100")};
 
-  &:hover {
+  &:hover,
+  &:hover ${VisibleText} {
     color: ${themeGet("colors.blue100")};
     text-decoration: underline;
   }
@@ -445,18 +458,6 @@ const Container = styled(Flex)`
   user-select: none;
   justify-content: center;
   align-items: center;
-`
-
-const VisibleText = styled(Text)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const HiddenText = styled(Text)`
-  opacity: 0;
-  pointer-events: none;
 `
 
 ArtworkActionsFragmentContainer.displayName = "ArtworkActions"
