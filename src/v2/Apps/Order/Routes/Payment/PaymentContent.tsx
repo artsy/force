@@ -23,7 +23,6 @@ import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import { CommercePaymentMethodEnum } from "v2/__generated__/useSetPaymentMutation.graphql"
 
@@ -47,16 +46,16 @@ export const PaymentContent: FC<Props> = props => {
     order,
     paymentPicker,
   } = props
-  const isACHEnabled = useFeatureFlag("stripe_ACH")
-  const isWireTransferEnabled =
-    useFeatureFlag("wire_transfer") &&
-    order?.additionalPaymentMethods?.includes("wire_transfer")
-
   const tracking = useTracking()
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
-  >(order.paymentMethod || (isACHEnabled ? "US_BANK_ACCOUNT" : "CREDIT_CARD"))
+  >(
+    order.paymentMethod ||
+      (order?.availablePaymentMethods?.includes("US_BANK_ACCOUNT")
+        ? "US_BANK_ACCOUNT"
+        : "CREDIT_CARD")
+  )
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
@@ -72,12 +71,8 @@ export const PaymentContent: FC<Props> = props => {
     tracking.trackEvent(event)
   }
 
-  const availablePaymentMethods: ReactElement<
-    RadioProps
-  >[] = getAvailablePaymentMethods(isWireTransferEnabled, isACHEnabled)
-
   // we can be sure that when 1 method is available, it'll always be credit card
-  if (availablePaymentMethods.length === 1) {
+  if (order.availablePaymentMethods.length === 1) {
     return (
       <PaymentContentWrapper isLoading={isLoading}>
         <PaymentPickerFragmentContainer
@@ -107,7 +102,9 @@ export const PaymentContent: FC<Props> = props => {
         }}
         defaultValue={selectedPaymentMethod}
       >
-        {availablePaymentMethods.map(method => method)}
+        {getAvailablePaymentMethods(order.availablePaymentMethods).map(
+          method => method
+        )}
       </RadioGroup>
       <Spacer mb={4} />
       <Text variant="lg-display">Payment details</Text>
@@ -190,8 +187,7 @@ returns all available payment methods, by checking relevant feature flags
 TODO: when ACH and wire_transfer FFs is removed, this function can be removed and radios can be moved to PaymentContent
 */
 const getAvailablePaymentMethods = (
-  isWireTransferEnabled,
-  isACHEnabled
+  availablePaymentMethods: readonly CommercePaymentMethodEnum[]
 ): ReactElement<RadioProps>[] => {
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
@@ -207,7 +203,7 @@ const getAvailablePaymentMethods = (
   ]
 
   // push wire transfer as the last option
-  if (isWireTransferEnabled) {
+  if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
         value={(paymentMethod = "WIRE_TRANSFER")}
@@ -222,7 +218,7 @@ const getAvailablePaymentMethods = (
   }
 
   // when available, unshift ACH since it's the first option we want to offer
-  if (isACHEnabled) {
+  if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <BorderedRadio
         value={(paymentMethod = "US_BANK_ACCOUNT")}

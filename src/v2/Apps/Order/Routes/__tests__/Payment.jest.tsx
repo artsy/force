@@ -364,7 +364,10 @@ describe("Payment", () => {
       const order = {
         ...testOrder,
         paymentMethod: "WIRE_TRANSFER" as CommercePaymentMethodEnum,
-        additionalPaymentMethods: ["wire_transfer"],
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
       }
 
       const env = setupTestEnv(order)
@@ -376,7 +379,10 @@ describe("Payment", () => {
     it("renders wire transfer as option for eligible partners", async () => {
       const order = {
         ...testOrder,
-        additionalPaymentMethods: ["wire_transfer"],
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
       }
 
       const env = setupTestEnv(order)
@@ -387,7 +393,10 @@ describe("Payment", () => {
     it("tracks when the user selects the wire transfer method", async () => {
       const order = {
         ...testOrder,
-        additionalPaymentMethods: ["wire_transfer"],
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
       }
 
       const env = setupTestEnv(order)
@@ -419,7 +428,10 @@ describe("Payment", () => {
 
       const order = {
         ...testOrder,
-        additionalPaymentMethods: ["wire_transfer"],
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
       }
 
       const env = setupTestEnv(order)
