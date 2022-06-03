@@ -9,7 +9,7 @@ export type IdentityVerificationApp_me = {
     readonly email: string | null;
     readonly identityVerification: {
         readonly internalID: string;
-        readonly userID: string;
+        readonly userID: string | null;
         readonly state: string;
     } | null;
     readonly " $refType": "IdentityVerificationApp_me";
