@@ -47,7 +47,6 @@ import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
-import { setImmediate } from "timers"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -206,7 +205,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     if (!scrollToMarketSignals) return
 
     // Scroll to auction results if the market signals section is not visible
-    setImmediate(visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop)
+    setTimeout(
+      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
+      0
+    )
   }
 
   return (

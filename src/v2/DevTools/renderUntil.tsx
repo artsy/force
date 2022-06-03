@@ -1,6 +1,5 @@
 import { ReactWrapper, RenderUntilPredicate, mount } from "enzyme"
 import * as React from "react"
-import { setImmediate } from "timers"
 
 function renderUntil<
   P = {},
@@ -17,7 +16,7 @@ function renderUntil<
       if (predicate(this)) {
         resolve(this)
       } else {
-        setImmediate(() => {
+        setTimeout(() => {
           /**
            * Except for after the initial render, we need to make sure the
            * tree gets re-rendered to reflect any changes caused by props or
@@ -25,7 +24,7 @@ function renderUntil<
            */
           this.update()
           wait()
-        })
+        }, 0)
       }
     }
     /**
