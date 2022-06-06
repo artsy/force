@@ -24,6 +24,7 @@ import {
   Spacer,
   Text,
   Popover,
+  TextProps,
 } from "@artsy/palette"
 import { userIsAdmin, userIsTeam } from "v2/Utils/user"
 import { themeGet } from "@styled-system/theme-get"
@@ -311,10 +312,17 @@ interface UtilButtonProps {
   download?: string
   selected?: boolean
   label?: string
+  longestLabel?: string
   Icon?: React.ReactNode
   Component?: typeof UtilButtonButton | typeof UtilButtonLink
   onClick?: () => void
 }
+
+type UtilButtonInnerTextProps = Pick<
+  UtilButtonProps,
+  "label" | "longestLabel"
+> &
+  TextProps
 
 export const UtilButton: React.ForwardRefExoticComponent<
   UtilButtonProps & {
@@ -325,6 +333,7 @@ export const UtilButton: React.ForwardRefExoticComponent<
     {
       href,
       label,
+      longestLabel,
       name,
       onClick,
       Icon,
@@ -377,15 +386,51 @@ export const UtilButton: React.ForwardRefExoticComponent<
           <ActionIcon {...rest} fill="currentColor" />
         </Flex>
 
-        {label && (
-          <Text variant="xs" lineHeight={1}>
-            {label}
-          </Text>
-        )}
+        <UtilButtonInnerText
+          label={label}
+          longestLabel={longestLabel}
+          variant="xs"
+          lineHeight={1}
+        />
       </Component>
     )
   }
 )
+
+const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
+  label,
+  longestLabel,
+  ...rest
+}) => {
+  if (!label) {
+    return null
+  }
+
+  if (longestLabel) {
+    return (
+      <Box position="relative">
+        <VisibleText {...rest}>{label}</VisibleText>
+        <HiddenText aria-hidden="true" {...rest}>
+          {longestLabel}
+        </HiddenText>
+      </Box>
+    )
+  }
+
+  return <Text {...rest}>{label}</Text>
+}
+
+const VisibleText = styled(Text)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
+
+const HiddenText = styled(Text)`
+  opacity: 0;
+  pointer-events: none;
+`
 
 const utilButtonMixin = css`
   display: flex;
@@ -393,7 +438,8 @@ const utilButtonMixin = css`
   justify-content: center;
   color: ${themeGet("colors.black100")};
 
-  &:hover {
+  &:hover,
+  &:hover ${VisibleText} {
     color: ${themeGet("colors.blue100")};
     text-decoration: underline;
   }
