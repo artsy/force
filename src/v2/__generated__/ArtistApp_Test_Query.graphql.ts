@@ -1433,9 +1433,14 @@ return {
           "type": "ArtistInsight"
         },
         "artist.insights.__typename": (v25/*: any*/),
-        "artist.insights.entities": (v16/*: any*/),
-        "artist.insights.label": (v23/*: any*/),
-        "artist.insights.type": (v23/*: any*/),
+        "artist.insights.entities": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "String"
+        },
+        "artist.insights.label": (v25/*: any*/),
+        "artist.insights.type": (v25/*: any*/),
         "artist.internalID": (v20/*: any*/),
         "artist.is_followed": (v29/*: any*/),
         "artist.meta": {

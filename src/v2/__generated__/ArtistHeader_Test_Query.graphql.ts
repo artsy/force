@@ -708,12 +708,12 @@ return {
         },
         "artist.insights.entities": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "String"
         },
-        "artist.insights.label": (v10/*: any*/),
-        "artist.insights.type": (v10/*: any*/),
+        "artist.insights.label": (v12/*: any*/),
+        "artist.insights.type": (v12/*: any*/),
         "artist.internalID": (v7/*: any*/),
         "artist.is_followed": {
           "enumValues": null,
