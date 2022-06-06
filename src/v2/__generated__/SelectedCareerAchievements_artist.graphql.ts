@@ -17,9 +17,9 @@ export type SelectedCareerAchievements_artist = {
         } | null;
     } | null;
     readonly insights: ReadonlyArray<{
-        readonly type: string | null;
-        readonly label: string | null;
-        readonly entities: ReadonlyArray<string | null> | null;
+        readonly type: string;
+        readonly label: string;
+        readonly entities: ReadonlyArray<string>;
     } | null> | null;
     readonly auctionResultsConnection: {
         readonly edges: ReadonlyArray<{

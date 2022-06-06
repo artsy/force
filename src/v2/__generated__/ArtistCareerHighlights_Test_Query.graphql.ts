@@ -155,6 +155,12 @@ v7 = {
   "nullable": true,
   "plural": false,
   "type": "Partner"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -618,12 +624,12 @@ return {
         },
         "artist.insights.entities": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "String"
         },
-        "artist.insights.label": (v6/*: any*/),
-        "artist.insights.type": (v6/*: any*/),
+        "artist.insights.label": (v8/*: any*/),
+        "artist.insights.type": (v8/*: any*/),
         "artist.name": (v6/*: any*/),
         "artist.related": {
           "enumValues": null,
