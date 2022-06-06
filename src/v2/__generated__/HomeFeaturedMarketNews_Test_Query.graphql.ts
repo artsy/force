@@ -25,23 +25,35 @@ query HomeFeaturedMarketNews_Test_Query {
   }
 }
 
-fragment HomeFeaturedMarketNews_articles on Article {
-  internalID
-  href
-  byline
-  slug
-  title
-  publishedAt(format: "MMM D YYYY")
+fragment CellArticle_article on Article {
   vertical
+  title
   thumbnailTitle
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
   thumbnailImage {
-    large: cropped(width: 670, height: 720) {
+    cropped(width: 445, height: 334) {
       width
       height
       src
       srcSet
     }
-    small: cropped(width: 325, height: 240) {
+  }
+}
+
+fragment HomeFeaturedMarketNews_articles on Article {
+  ...CellArticle_article
+  internalID
+  href
+  byline
+  slug
+  title
+  publishedAt(format: "MMM D, YYYY")
+  vertical
+  thumbnailTitle
+  thumbnailImage {
+    large: cropped(width: 670, height: 720) {
       width
       height
       src
@@ -157,14 +169,21 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "vertical",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "href",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "thumbnailTitle",
             "storageKey": null
           },
           {
@@ -178,14 +197,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -194,26 +206,12 @@ return {
               {
                 "kind": "Literal",
                 "name": "format",
-                "value": "MMM D YYYY"
+                "value": "MMM D, YYYY"
               }
             ],
             "kind": "ScalarField",
             "name": "publishedAt",
-            "storageKey": "publishedAt(format:\"MMM D YYYY\")"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "vertical",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "thumbnailTitle",
-            "storageKey": null
+            "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
           },
           {
             "alias": null,
@@ -223,6 +221,27 @@ return {
             "name": "thumbnailImage",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 334
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 445
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v0/*: any*/),
+                "storageKey": "cropped(height:334,width:445)"
+              },
               {
                 "alias": "large",
                 "args": [
@@ -243,29 +262,22 @@ return {
                 "plural": false,
                 "selections": (v0/*: any*/),
                 "storageKey": "cropped(height:720,width:670)"
-              },
-              {
-                "alias": "small",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 240
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 325
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v0/*: any*/),
-                "storageKey": "cropped(height:240,width:325)"
               }
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -281,7 +293,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "981cd1efae80e73412f85643c6844058",
+    "cacheID": "1518537bf7ae7fa9f7c8a4f657b1fb81",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -303,16 +315,16 @@ return {
           "plural": false,
           "type": "Image"
         },
+        "articles.thumbnailImage.cropped": (v3/*: any*/),
+        "articles.thumbnailImage.cropped.height": (v4/*: any*/),
+        "articles.thumbnailImage.cropped.src": (v5/*: any*/),
+        "articles.thumbnailImage.cropped.srcSet": (v5/*: any*/),
+        "articles.thumbnailImage.cropped.width": (v4/*: any*/),
         "articles.thumbnailImage.large": (v3/*: any*/),
         "articles.thumbnailImage.large.height": (v4/*: any*/),
         "articles.thumbnailImage.large.src": (v5/*: any*/),
         "articles.thumbnailImage.large.srcSet": (v5/*: any*/),
         "articles.thumbnailImage.large.width": (v4/*: any*/),
-        "articles.thumbnailImage.small": (v3/*: any*/),
-        "articles.thumbnailImage.small.height": (v4/*: any*/),
-        "articles.thumbnailImage.small.src": (v5/*: any*/),
-        "articles.thumbnailImage.small.srcSet": (v5/*: any*/),
-        "articles.thumbnailImage.small.width": (v4/*: any*/),
         "articles.thumbnailTitle": (v1/*: any*/),
         "articles.title": (v1/*: any*/),
         "articles.vertical": (v1/*: any*/)
@@ -320,7 +332,7 @@ return {
     },
     "name": "HomeFeaturedMarketNews_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedMarketNews_Test_Query {\n  articles {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedMarketNews_Test_Query {\n  articles {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  ...CellArticle_article\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

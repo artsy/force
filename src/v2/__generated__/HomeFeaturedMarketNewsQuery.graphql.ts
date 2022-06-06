@@ -25,23 +25,35 @@ query HomeFeaturedMarketNewsQuery {
   }
 }
 
-fragment HomeFeaturedMarketNews_articles on Article {
-  internalID
-  href
-  byline
-  slug
-  title
-  publishedAt(format: "MMM D YYYY")
+fragment CellArticle_article on Article {
   vertical
+  title
   thumbnailTitle
+  byline
+  href
+  publishedAt(format: "MMM D, YYYY")
   thumbnailImage {
-    large: cropped(width: 670, height: 720) {
+    cropped(width: 445, height: 334) {
       width
       height
       src
       srcSet
     }
-    small: cropped(width: 325, height: 240) {
+  }
+}
+
+fragment HomeFeaturedMarketNews_articles on Article {
+  ...CellArticle_article
+  internalID
+  href
+  byline
+  slug
+  title
+  publishedAt(format: "MMM D, YYYY")
+  vertical
+  thumbnailTitle
+  thumbnailImage {
+    large: cropped(width: 670, height: 720) {
       width
       height
       src
@@ -144,14 +156,21 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "vertical",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "href",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "thumbnailTitle",
             "storageKey": null
           },
           {
@@ -165,14 +184,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -181,26 +193,12 @@ return {
               {
                 "kind": "Literal",
                 "name": "format",
-                "value": "MMM D YYYY"
+                "value": "MMM D, YYYY"
               }
             ],
             "kind": "ScalarField",
             "name": "publishedAt",
-            "storageKey": "publishedAt(format:\"MMM D YYYY\")"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "vertical",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "thumbnailTitle",
-            "storageKey": null
+            "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
           },
           {
             "alias": null,
@@ -210,6 +208,27 @@ return {
             "name": "thumbnailImage",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 334
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 445
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v1/*: any*/),
+                "storageKey": "cropped(height:334,width:445)"
+              },
               {
                 "alias": "large",
                 "args": [
@@ -230,29 +249,22 @@ return {
                 "plural": false,
                 "selections": (v1/*: any*/),
                 "storageKey": "cropped(height:720,width:670)"
-              },
-              {
-                "alias": "small",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 240
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 325
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v1/*: any*/),
-                "storageKey": "cropped(height:240,width:325)"
               }
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -268,12 +280,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f56c926a863f77974714f278a832b7ed",
+    "cacheID": "f1cb1212c24b08e83f034ba23864b2b5",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedMarketNewsQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedMarketNewsQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedMarketNewsQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  ...CellArticle_article\n  internalID\n  href\n  byline\n  slug\n  title\n  publishedAt(format: \"MMM D, YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

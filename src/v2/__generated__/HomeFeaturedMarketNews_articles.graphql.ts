@@ -20,13 +20,8 @@ export type HomeFeaturedMarketNews_articles = ReadonlyArray<{
             readonly src: string;
             readonly srcSet: string;
         } | null;
-        readonly small: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
     readonly " $refType": "HomeFeaturedMarketNews_articles";
 }>;
 export type HomeFeaturedMarketNews_articles$data = HomeFeaturedMarketNews_articles;
@@ -37,38 +32,7 @@ export type HomeFeaturedMarketNews_articles$key = ReadonlyArray<{
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "height",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": {
@@ -117,12 +81,12 @@ return {
         {
           "kind": "Literal",
           "name": "format",
-          "value": "MMM D YYYY"
+          "value": "MMM D, YYYY"
         }
       ],
       "kind": "ScalarField",
       "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"MMM D YYYY\")"
+      "storageKey": "publishedAt(format:\"MMM D, YYYY\")"
     },
     {
       "alias": null,
@@ -164,37 +128,49 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": "cropped(height:720,width:670)"
-        },
-        {
-          "alias": "small",
-          "args": [
+          "selections": [
             {
-              "kind": "Literal",
-              "name": "height",
-              "value": 240
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
             },
             {
-              "kind": "Literal",
-              "name": "width",
-              "value": 325
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
             }
           ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": "cropped(height:240,width:325)"
+          "storageKey": "cropped(height:720,width:670)"
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CellArticle_article"
     }
   ],
   "type": "Article",
   "abstractKey": null
 };
-})();
-(node as any).hash = '6621a96fea6a270326d3f30f39a7d49d';
+(node as any).hash = '82d378969890b54e0b2e84237bc130f9';
 export default node;
