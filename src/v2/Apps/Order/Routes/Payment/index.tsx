@@ -1,5 +1,8 @@
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
-import { Payment_order } from "v2/__generated__/Payment_order.graphql"
+import {
+  CommercePaymentMethodEnum,
+  Payment_order,
+} from "v2/__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "v2/__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -62,8 +65,29 @@ export const PaymentRoute: FC<Props> = props => {
     isGettingCreditCardId || isCommittingMutation || isSetPaymentCommitting
   const paymentPicker = createRef<PaymentPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    CommercePaymentMethodEnum
+  >(
+    order.paymentMethod ||
+      (order?.availablePaymentMethods?.includes("US_BANK_ACCOUNT")
+        ? "US_BANK_ACCOUNT"
+        : "CREDIT_CARD")
+  )
 
-  const onContinue = async () => {
+  const setPayment = () => {
+    switch (selectedPaymentMethod) {
+      case "CREDIT_CARD":
+        onCreditCardContinue()
+        break
+      case "WIRE_TRANSFER":
+        onWireTransferContinue()
+        break
+      default:
+        break
+    }
+  }
+
+  const onCreditCardContinue = async () => {
     try {
       setIsGettingCreditCardId(true)
       const result = await paymentPicker?.current?.getCreditCardId()
@@ -215,11 +239,12 @@ export const PaymentRoute: FC<Props> = props => {
               <PaymentContent
                 commitMutation={props.commitMutation}
                 isLoading={isLoading}
+                paymentMethod={selectedPaymentMethod}
                 me={props.me}
                 order={props.order}
-                onContinue={onContinue}
-                onWireTransferContinue={onWireTransferContinue}
                 paymentPicker={paymentPicker}
+                setPayment={setPayment}
+                onPaymentMethodChange={setSelectedPaymentMethod}
               />
             )}
           </>
@@ -238,9 +263,11 @@ export const PaymentRoute: FC<Props> = props => {
               contextPageOwnerType={OwnerType.ordersPayment}
             />
             <Spacer mb={[2, 4]} />
-            <Media at="xs">
-              <ContinueButton onClick={onContinue} loading={isLoading} />
-            </Media>
+            {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
+              <Media at="xs">
+                <ContinueButton onClick={setPayment} loading={isLoading} />
+              </Media>
+            )}
           </Flex>
         }
       />

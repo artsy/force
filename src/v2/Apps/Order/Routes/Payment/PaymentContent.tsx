@@ -1,4 +1,4 @@
-import { FC, RefObject, ReactElement, useState } from "react"
+import { FC, RefObject, ReactElement } from "react"
 import {
   Button,
   Clickable,
@@ -31,8 +31,9 @@ export interface Props {
   me: Payment_me
   commitMutation: CommitMutation
   isLoading: boolean
-  onContinue: () => void
-  onWireTransferContinue: () => void
+  paymentMethod: CommercePaymentMethodEnum
+  setPayment: () => void
+  onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
   paymentPicker: RefObject<PaymentPicker>
 }
 
@@ -40,22 +41,14 @@ export const PaymentContent: FC<Props> = props => {
   const {
     commitMutation,
     isLoading,
-    onContinue,
-    onWireTransferContinue,
+    setPayment,
     me,
     order,
     paymentPicker,
+    paymentMethod,
+    onPaymentMethodChange,
   } = props
   const tracking = useTracking()
-
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    CommercePaymentMethodEnum
-  >(
-    order.paymentMethod ||
-      (order?.availablePaymentMethods?.includes("US_BANK_ACCOUNT")
-        ? "US_BANK_ACCOUNT"
-        : "CREDIT_CARD")
-  )
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
@@ -83,7 +76,7 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={onContinue} loading={isLoading} />
+          <ContinueButton onClick={setPayment} loading={isLoading} />
         </Media>
       </PaymentContentWrapper>
     )
@@ -97,9 +90,9 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         onSelect={val => {
           trackClickedPaymentMethod(val)
-          setSelectedPaymentMethod(val as CommercePaymentMethodEnum)
+          onPaymentMethodChange(val as CommercePaymentMethodEnum)
         }}
-        defaultValue={selectedPaymentMethod}
+        defaultValue={paymentMethod}
       >
         {getAvailablePaymentMethods(order.availablePaymentMethods).map(
           method => method
@@ -110,7 +103,7 @@ export const PaymentContent: FC<Props> = props => {
       <Spacer mb={2} />
 
       {/* Credit card */}
-      <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
+      <Collapse open={paymentMethod === "CREDIT_CARD"}>
         <PaymentPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -119,12 +112,12 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={onContinue} loading={isLoading} />
+          <ContinueButton onClick={setPayment} loading={isLoading} />
         </Media>
       </Collapse>
 
       {/* Bank debit */}
-      <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
+      <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
         <Text color="black60" variant="sm">
           • Search for your bank institution or select from the options below.
         </Text>
@@ -140,7 +133,7 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* Wire transfer */}
-      <Collapse open={selectedPaymentMethod === "WIRE_TRANSFER"}>
+      <Collapse open={paymentMethod === "WIRE_TRANSFER"}>
         <Text color="black60" variant="sm">
           • To pay by wire transfer, complete checkout and one of our support
           specialists will reach out with next steps.
@@ -157,7 +150,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={4} />
         <Media greaterThan="xs">
           <Button
-            onClick={onWireTransferContinue}
+            onClick={setPayment}
             variant="primaryBlack"
             loading={isLoading}
             width="100%"
