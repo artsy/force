@@ -91,7 +91,6 @@ export const PaymentContent: FC<Props> = props => {
 
   return (
     <PaymentContentWrapper isLoading={isLoading}>
-      {selectedPaymentMethod}
       <Spacer mb={2} />
       <Text variant="lg-display">Payment method</Text>
       <Spacer mb={2} />
