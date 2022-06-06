@@ -63,6 +63,8 @@ const ArticleHTMLFirstLetter = styled(ArticleHTML)`
 const ArticleHTMLLastChild = styled(ArticleHTML)`
   p:last-child {
     display: inline-block;
+    /* Since we switch to display: inline-block the margins no longer collapse */
+    margin-top: 0;
 
     &:after {
       content: " ∎";
