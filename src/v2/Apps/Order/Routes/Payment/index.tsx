@@ -56,8 +56,10 @@ const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export const PaymentRoute: FC<Props> = props => {
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
+  const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
   const { order, isCommittingMutation } = props
-  const isLoading = isGettingCreditCardId || isCommittingMutation
+  const isLoading =
+    isGettingCreditCardId || isCommittingMutation || isSetPaymentCommitting
   const paymentPicker = createRef<PaymentPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -111,6 +113,8 @@ export const PaymentRoute: FC<Props> = props => {
 
   const onWireTransferContinue = async () => {
     try {
+      setIsSetPaymentCommitting(true)
+
       const orderOrError = (
         await setPaymentMutation({
           variables: {
@@ -122,12 +126,15 @@ export const PaymentRoute: FC<Props> = props => {
         })
       ).commerceSetPayment?.orderOrError
 
+      setIsSetPaymentCommitting(false)
+
       if (orderOrError?.error) {
         throw orderOrError.error
       }
 
       onSetPaymentSuccess()
     } catch (error) {
+      setIsSetPaymentCommitting(false)
       logger.error(error)
       onSetPaymentError(error)
     }

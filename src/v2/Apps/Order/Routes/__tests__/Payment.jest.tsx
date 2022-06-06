@@ -419,6 +419,13 @@ describe("Payment", () => {
       })
     })
 
+    // eslint-disable-next-line jest/expect-expect
+    it("shows the button spinner while loading the mutation", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      await page.expectButtonSpinnerWhenSubmitting()
+    })
+
     it("transitions to review step when wire transfer is chosen", async () => {
       const submitMutationMock = jest.fn().mockResolvedValue({
         commerceSetPayment: {

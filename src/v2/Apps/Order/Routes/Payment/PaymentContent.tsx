@@ -159,6 +159,7 @@ export const PaymentContent: FC<Props> = props => {
           <Button
             onClick={onWireTransferContinue}
             variant="primaryBlack"
+            loading={isLoading}
             width="100%"
           >
             Save and Continue
