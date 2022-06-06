@@ -67,12 +67,7 @@ export const PaymentRoute: FC<Props> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
-  >(
-    order.paymentMethod ||
-      (order?.availablePaymentMethods?.includes("US_BANK_ACCOUNT")
-        ? "US_BANK_ACCOUNT"
-        : "CREDIT_CARD")
-  )
+  >(order.paymentMethod || "CREDIT_CARD")
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
