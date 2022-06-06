@@ -239,6 +239,8 @@ describe("Payment", () => {
   })
 
   describe("stripe ACH enabled", () => {
+    let achOrder
+
     beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
@@ -255,22 +257,25 @@ describe("Payment", () => {
           },
         }
       })
-    })
 
-    it("returns true when stripe_ACH is enabled", () => {
-      const result = useFeatureFlag("stripe_ACH")
-      expect(result).toBe(true)
+      achOrder = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "US_BANK_ACCOUNT",
+        ] as CommercePaymentMethodEnum[],
+      }
     })
 
     it("renders selection of payment methods", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
     it("tracks when the user selects the credit card payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(1)
       expect(trackEvent).toHaveBeenCalledWith({
@@ -286,7 +291,7 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the bank payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(0)
       expect(trackEvent).toHaveBeenCalledWith({
@@ -302,7 +307,7 @@ describe("Payment", () => {
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(1)
       const creditCardCollapse = page
@@ -314,7 +319,7 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(0)
       const creditCardCollapse = page
