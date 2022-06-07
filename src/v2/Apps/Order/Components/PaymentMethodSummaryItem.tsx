@@ -6,7 +6,6 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { BankDebitDetails } from "./BankDebitDetails"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { WireTransferDetails } from "./WireTransferDetails"
 
 export const PaymentMethodSummaryItem = ({
@@ -21,18 +20,23 @@ export const PaymentMethodSummaryItem = ({
     ...creditCard!,
     ...{ textColor: textColor },
   }
-  const isACHEnabled = useFeatureFlag("stripe_ACH")
-  const isWireTransferEnabled = useFeatureFlag("wire_transfer")
+
+  const renderPaymentMethodSummary = () => {
+    switch (paymentMethod) {
+      case "CREDIT_CARD":
+        return <CreditCardDetails {...cardInfoWithTextColor} />
+      case "US_BANK_ACCOUNT":
+        return <BankDebitDetails {...cardInfoWithTextColor} />
+      case "WIRE_TRANSFER":
+        return <WireTransferDetails />
+      default:
+        null
+    }
+  }
 
   return (
     <StepSummaryItem {...others}>
-      {creditCard ? (
-        <CreditCardDetails {...cardInfoWithTextColor} />
-      ) : isACHEnabled && paymentMethod === "US_BANK_ACCOUNT" ? (
-        <BankDebitDetails {...cardInfoWithTextColor} />
-      ) : isWireTransferEnabled && paymentMethod === "WIRE_TRANSFER" ? (
-        <WireTransferDetails />
-      ) : null}
+      {renderPaymentMethodSummary()}
     </StepSummaryItem>
   )
 }
