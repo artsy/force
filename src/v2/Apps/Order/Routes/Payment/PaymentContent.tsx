@@ -129,17 +129,16 @@ export const PaymentContent: FC<Props> = props => {
       {/* Bank debit */}
       <Collapse open={selectedPaymentMethod === PaymentMethods.BankDebit}>
         <Text color="black60" variant="sm">
-          • Bank transfer is powered by Stripe.
-        </Text>
-        <Text color="black60" variant="sm">
           • Search for your bank institution or select from the options below.
         </Text>
         <Text color="black60" variant="sm">
           • If you can not find your bank, please check your spelling or choose
           another payment method.
         </Text>
+        <Text color="black60" variant="sm">
+          • Bank transfer is powered by Stripe.
+        </Text>
         <Spacer mb={2} />
-
         <BankDebitProvider order={order} />
       </Collapse>
 
