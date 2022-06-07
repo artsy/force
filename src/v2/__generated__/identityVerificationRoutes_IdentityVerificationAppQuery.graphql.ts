@@ -3,25 +3,19 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type identityVerificationRoutes_IdentityVerificationAppQueryVariables = {
     id: string;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_me">;
+    readonly identityVerification: {
+        readonly internalID: string;
+        readonly state: string;
     } | null;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQueryRawResponse = {
-    readonly me: ({
+    readonly identityVerification: ({
         readonly internalID: string;
-        readonly email: string | null;
-        readonly identityVerification: ({
-            readonly internalID: string;
-            readonly userID: string | null;
-            readonly state: string;
-            readonly id: string;
-        }) | null;
+        readonly state: string;
         readonly id: string;
     }) | null;
 };
@@ -37,18 +31,8 @@ export type identityVerificationRoutes_IdentityVerificationAppQuery = {
 query identityVerificationRoutes_IdentityVerificationAppQuery(
   $id: String!
 ) {
-  me {
-    ...IdentityVerificationApp_me_1Bmzm5
-    id
-  }
-}
-
-fragment IdentityVerificationApp_me_1Bmzm5 on Me {
-  internalID
-  email
-  identityVerification(id: $id) {
+  identityVerification(id: $id) @principalField {
     internalID
-    userID
     state
     id
   }
@@ -81,7 +65,7 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "state",
   "storageKey": null
 };
 return {
@@ -93,17 +77,14 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Me",
+        "args": (v1/*: any*/),
+        "concreteType": "IdentityVerification",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "identityVerification",
         "plural": false,
         "selections": [
-          {
-            "args": (v1/*: any*/),
-            "kind": "FragmentSpread",
-            "name": "IdentityVerificationApp_me"
-          }
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -119,62 +100,35 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Me",
+        "args": (v1/*: any*/),
+        "concreteType": "IdentityVerification",
         "kind": "LinkedField",
-        "name": "me",
+        "name": "identityVerification",
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "email",
+            "name": "id",
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "IdentityVerification",
-            "kind": "LinkedField",
-            "name": "identityVerification",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "userID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "state",
-                "storageKey": null
-              },
-              (v3/*: any*/)
-            ],
-            "storageKey": null
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5a6e5e29529fcf826d283a8597ffae57",
+    "cacheID": "e96d9c385025fc0eaa743ca3144fed4a",
     "id": null,
     "metadata": {},
     "name": "identityVerificationRoutes_IdentityVerificationAppQuery",
     "operationKind": "query",
-    "text": "query identityVerificationRoutes_IdentityVerificationAppQuery(\n  $id: String!\n) {\n  me {\n    ...IdentityVerificationApp_me_1Bmzm5\n    id\n  }\n}\n\nfragment IdentityVerificationApp_me_1Bmzm5 on Me {\n  internalID\n  email\n  identityVerification(id: $id) {\n    internalID\n    userID\n    state\n    id\n  }\n}\n"
+    "text": "query identityVerificationRoutes_IdentityVerificationAppQuery(\n  $id: String!\n) {\n  identityVerification(id: $id) @principalField {\n    internalID\n    state\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1afc54ff423d5857bb56616148671525';
+(node as any).hash = '6ed74cc4b517ba7855d731381ff0cbfa';
 export default node;
