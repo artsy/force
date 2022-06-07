@@ -12,6 +12,7 @@ import {
   ColumnSpan,
   ColumnStart,
 } from "@artsy/palette"
+import { DateTime } from "luxon"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleBody_article } from "v2/__generated__/ArticleBody_article.graphql"
@@ -96,7 +97,10 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 alignItems="center"
                 lineHeight={1}
               >
-                {article.publishedAt}
+                {!!article.publishedAt &&
+                  DateTime.fromISO(article.publishedAt).toFormat(
+                    "MMM d, yyyy h:mma"
+                  )}
 
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
@@ -255,7 +259,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         leadParagraph
         title
         href
-        publishedAt(format: "MMM D, YYYY h:mma")
+        publishedAt
         sections {
           ...ArticleSection_section
         }

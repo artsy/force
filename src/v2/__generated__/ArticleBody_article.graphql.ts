@@ -155,16 +155,10 @@ return {
     (v0/*: any*/),
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM D, YYYY h:mma"
-        }
-      ],
+      "args": null,
       "kind": "ScalarField",
       "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"MMM D, YYYY h:mma\")"
+      "storageKey": null
     },
     {
       "alias": null,
@@ -276,5 +270,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '60d532719e84110165d4cfe546322592';
+(node as any).hash = 'fd9c26b60c08d0ed7a2088d777fbbeba';
 export default node;
