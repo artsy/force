@@ -1,6 +1,8 @@
 import { FC, useEffect } from "react"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { useSetPayment } from "v2/Apps/Order/Components/Mutations/useSetPayment"
+import { Spinner } from "@artsy/palette"
+import styled from "styled-components"
 
 interface Props {
   order: Payment_order
@@ -41,5 +43,16 @@ export const SetPayment: FC<Props> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <div>Setting bank debit payment for this order...</div>
+  const SpinnerContainer = styled.div`
+    width: 100%;
+    height: 300px;
+    position: relative;
+  `
+  return (
+    <>
+      <SpinnerContainer>
+        <Spinner position="relative" color="brand" />
+      </SpinnerContainer>
+    </>
+  )
 }
