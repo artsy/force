@@ -1,4 +1,4 @@
-import { FC, RefObject, ReactElement, useState } from "react"
+import { FC, RefObject, ReactElement } from "react"
 import {
   Button,
   Clickable,
@@ -23,17 +23,17 @@ import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-import { PaymentMethods } from "../../OrderApp"
+import { CommercePaymentMethodEnum } from "v2/__generated__/useSetPaymentMutation.graphql"
 
 export interface Props {
   order: Payment_order
   me: Payment_me
   commitMutation: CommitMutation
   isLoading: boolean
-  onContinue: () => void
-  onWireTransferContinue: () => void
+  paymentMethod: CommercePaymentMethodEnum
+  setPayment: () => void
+  onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
   paymentPicker: RefObject<PaymentPicker>
 }
 
@@ -41,22 +41,14 @@ export const PaymentContent: FC<Props> = props => {
   const {
     commitMutation,
     isLoading,
-    onContinue,
-    onWireTransferContinue,
+    setPayment,
     me,
     order,
     paymentPicker,
+    paymentMethod,
+    onPaymentMethodChange,
   } = props
-  const isACHEnabled = useFeatureFlag("stripe_ACH")
-  const isWireTransferEnabled =
-    useFeatureFlag("wire_transfer") &&
-    order?.additionalPaymentMethods?.includes(PaymentMethods.WireTransfer)
-
   const tracking = useTracking()
-
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    PaymentMethods
-  >(isACHEnabled ? PaymentMethods.BankDebit : PaymentMethods.CreditCard)
 
   const trackClickedPaymentMethod = (val: string): void => {
     const event = {
@@ -72,12 +64,8 @@ export const PaymentContent: FC<Props> = props => {
     tracking.trackEvent(event)
   }
 
-  const availablePaymentMethods: ReactElement<
-    RadioProps
-  >[] = getAvailablePaymentMethods(isWireTransferEnabled, isACHEnabled)
-
   // we can be sure that when 1 method is available, it'll always be credit card
-  if (availablePaymentMethods.length === 1) {
+  if (order.availablePaymentMethods.length === 1) {
     return (
       <PaymentContentWrapper isLoading={isLoading}>
         <PaymentPickerFragmentContainer
@@ -88,7 +76,7 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={onContinue} loading={isLoading} />
+          <ContinueButton onClick={setPayment} loading={isLoading} />
         </Media>
       </PaymentContentWrapper>
     )
@@ -102,18 +90,20 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         onSelect={val => {
           trackClickedPaymentMethod(val)
-          setSelectedPaymentMethod(val as PaymentMethods)
+          onPaymentMethodChange(val as CommercePaymentMethodEnum)
         }}
-        defaultValue={selectedPaymentMethod}
+        defaultValue={paymentMethod}
       >
-        {availablePaymentMethods.map(method => method)}
+        {getAvailablePaymentMethods(order.availablePaymentMethods).map(
+          method => method
+        )}
       </RadioGroup>
       <Spacer mb={4} />
       <Text variant="lg-display">Payment details</Text>
       <Spacer mb={2} />
 
       {/* Credit card */}
-      <Collapse open={selectedPaymentMethod === PaymentMethods.CreditCard}>
+      <Collapse open={paymentMethod === "CREDIT_CARD"}>
         <PaymentPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -122,12 +112,12 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={onContinue} loading={isLoading} />
+          <ContinueButton onClick={setPayment} loading={isLoading} />
         </Media>
       </Collapse>
 
       {/* Bank debit */}
-      <Collapse open={selectedPaymentMethod === PaymentMethods.BankDebit}>
+      <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
         <Text color="black60" variant="sm">
           • Search for your bank institution or select from the options below.
         </Text>
@@ -143,7 +133,7 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* Wire transfer */}
-      <Collapse open={selectedPaymentMethod === PaymentMethods.WireTransfer}>
+      <Collapse open={paymentMethod === "WIRE_TRANSFER"}>
         <Text color="black60" variant="sm">
           • To pay by wire transfer, complete checkout and one of our support
           specialists will reach out with next steps.
@@ -160,8 +150,9 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={4} />
         <Media greaterThan="xs">
           <Button
-            onClick={onWireTransferContinue}
+            onClick={setPayment}
             variant="primaryBlack"
+            loading={isLoading}
             width="100%"
           >
             Save and Continue
@@ -189,12 +180,12 @@ returns all available payment methods, by checking relevant feature flags
 TODO: when ACH and wire_transfer FFs is removed, this function can be removed and radios can be moved to PaymentContent
 */
 const getAvailablePaymentMethods = (
-  isWireTransferEnabled,
-  isACHEnabled
+  availablePaymentMethods: readonly CommercePaymentMethodEnum[]
 ): ReactElement<RadioProps>[] => {
+  let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
     <BorderedRadio
-      value={PaymentMethods.CreditCard}
+      value={paymentMethod}
       label={
         <>
           <CreditCardIcon type="Unknown" fill="black60" />
@@ -205,10 +196,10 @@ const getAvailablePaymentMethods = (
   ]
 
   // push wire transfer as the last option
-  if (isWireTransferEnabled) {
+  if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
-        value={PaymentMethods.WireTransfer}
+        value={(paymentMethod = "WIRE_TRANSFER")}
         label={
           <>
             <InstitutionIcon fill="black60" />
@@ -220,10 +211,10 @@ const getAvailablePaymentMethods = (
   }
 
   // when available, unshift ACH since it's the first option we want to offer
-  if (isACHEnabled) {
+  if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <BorderedRadio
-        value={PaymentMethods.BankDebit}
+        value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
           <>
             <InstitutionIcon fill="black60" />

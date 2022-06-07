@@ -1,4 +1,4 @@
-import { Checkbox, Collapse } from "@artsy/palette"
+import { BorderedRadio, Checkbox, Collapse } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
@@ -7,7 +7,6 @@ import {
 import { AddressForm } from "v2/Components/AddressForm"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
-import * as paymentPickerMock from "../../Components/__mocks__/PaymentPicker"
 import {
   settingOrderPaymentFailed,
   settingOrderPaymentSuccess,
@@ -18,18 +17,37 @@ import { useSystemContext, useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
+import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { CommercePaymentMethodEnum } from "v2/__generated__/Payment_order.graphql"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
+
+jest.mock("../../Components/Mutations/useSetPayment", () => {
+  const originalUseSetPayment = jest.requireActual(
+    "../../Components/Mutations/useSetPayment"
+  )
+
+  return {
+    useSetPayment: jest
+      .fn()
+      .mockImplementation(originalUseSetPayment.useSetPayment),
+  }
+})
+
+const paymentPickerMock = jest.requireActual(
+  "../../Components/__mocks__/PaymentPicker"
+)
+
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../../Components/__mocks__/PaymentPicker")
+    return jest.requireActual("../../Components/__mocks__/PaymentPicker")
   }
 )
 jest.mock(
@@ -37,7 +55,7 @@ jest.mock(
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../../Components/__mocks__/BankDebitProvider")
+    return jest.requireActual("../../Components/__mocks__/BankDebitProvider")
   }
 )
 jest.mock("v2/System/useSystemContext")
@@ -49,11 +67,11 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 }
 
 const trackEvent = jest.fn()
-const setupTestEnv = () => {
+const setupTestEnv = (order = testOrder) => {
   return createTestEnv({
     Component: PaymentFragmentContainer,
     defaultData: {
-      order: testOrder,
+      order: order,
       me: { creditCards: { edges: [] } },
     },
     defaultMutationResults: {
@@ -170,7 +188,8 @@ describe("Payment", () => {
 
     expect(env.mutations.lastFetchVariables).toMatchObject({
       input: {
-        creditCardId: "credit-card-id",
+        paymentMethod: "CREDIT_CARD",
+        paymentMethodId: "credit-card-id",
         id: "1234",
       },
     })
@@ -220,6 +239,8 @@ describe("Payment", () => {
   })
 
   describe("stripe ACH enabled", () => {
+    let achOrder
+
     beforeAll(() => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => {
         return {
@@ -236,22 +257,25 @@ describe("Payment", () => {
           },
         }
       })
-    })
 
-    it("returns true when stripe_ACH is enabled", () => {
-      const result = useFeatureFlag("stripe_ACH")
-      expect(result).toBe(true)
+      achOrder = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "US_BANK_ACCOUNT",
+        ] as CommercePaymentMethodEnum[],
+      }
     })
 
     it("renders selection of payment methods", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
     it("tracks when the user selects the credit card payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(1)
       expect(trackEvent).toHaveBeenCalledWith({
@@ -261,13 +285,13 @@ describe("Payment", () => {
         currency: "USD",
         flow: "BUY",
         order_id: "1234",
-        payment_method: "credit_card",
+        payment_method: "CREDIT_CARD",
         subject: "click_payment_method",
       })
     })
 
     it("tracks when the user selects the bank payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(0)
       expect(trackEvent).toHaveBeenCalledWith({
@@ -277,13 +301,13 @@ describe("Payment", () => {
         currency: "USD",
         flow: "BUY",
         order_id: "1234",
-        payment_method: "bank_debit",
+        payment_method: "US_BANK_ACCOUNT",
         subject: "click_payment_method",
       })
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(1)
       const creditCardCollapse = page
@@ -295,7 +319,7 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      const env = setupTestEnv()
+      const env = setupTestEnv(achOrder)
       const page = await env.buildPage()
       page.selectPaymentMethod(0)
       const creditCardCollapse = page
@@ -341,8 +365,103 @@ describe("Payment", () => {
       expect(page.text()).not.toContain("Wire transfer")
     })
 
-    it.todo("renders wire transfer as option for eligible partners")
+    it("preselects payment method from the order", async () => {
+      const order = {
+        ...testOrder,
+        paymentMethod: "WIRE_TRANSFER" as CommercePaymentMethodEnum,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
+      }
 
-    it.todo("transitions to review step when wire transfer is chosen")
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+
+      expect(page.find(BorderedRadio).at(1).prop("selected")).toBeTruthy()
+    })
+
+    it("renders wire transfer as option for eligible partners", async () => {
+      const order = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
+      }
+
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+      expect(page.text()).toContain("Wire transfer")
+    })
+
+    it("tracks when the user selects the wire transfer method", async () => {
+      const order = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
+      }
+
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+      page.selectPaymentMethod(1)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedChangePaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "WIRE_TRANSFER",
+        subject: "click_payment_method",
+      })
+    })
+
+    // eslint-disable-next-line jest/expect-expect
+    it("shows the button spinner while loading the mutation", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      await page.expectButtonSpinnerWhenSubmitting()
+    })
+
+    it("transitions to review step when wire transfer is chosen", async () => {
+      const submitMutationMock = jest.fn().mockResolvedValue({
+        commerceSetPayment: {
+          orderOrError: {
+            id: 1234,
+          },
+        },
+      })
+      ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+        submitMutation: submitMutationMock,
+      }))
+
+      const order = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
+      }
+
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+      await page.selectPaymentMethod(1)
+      await page.clickSubmit()
+
+      expect(submitMutationMock).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            id: "1234",
+            paymentMethod: "WIRE_TRANSFER",
+          },
+        },
+      })
+      expect(env.routes.mockPushRoute).toHaveBeenCalledWith(
+        "/orders/1234/review"
+      )
+    })
   })
 })

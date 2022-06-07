@@ -282,6 +282,7 @@ export const UntouchedOrder = {
   buyerTotal: "$12,000",
   itemsTotalCents: 1200000,
   code: "abcdefg",
+  paymentMethod: "CREDIT_CARD",
   createdAt: "2022-12-19T06:06:17.171Z",
   creditCard: null,
   currencyCode: "USD",
@@ -807,7 +808,7 @@ export const ArtaShippingDetails = {
 } as const
 
 export const CreditCardPaymentDetails = {
-  additionalPaymentMethods: [],
+  availablePaymentMethods: ["CREDIT_CARD"],
   creditCard: {
     brand: "Visa",
     city: "New York",
@@ -826,7 +827,7 @@ export const CreditCardPaymentDetails = {
 } as const
 
 export const BankDebitPaymentDetails = {
-  additionalPaymentMethods: [],
+  availablePaymentMethods: ["CREDIT_CARD"],
   bankAccountId: "bankAccountId",
   bankAccount: {
     last4: "1234",

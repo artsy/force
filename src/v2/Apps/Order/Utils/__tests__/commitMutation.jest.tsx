@@ -3,7 +3,6 @@ import { settingOrderPaymentFailed } from "v2/Apps/Order/Routes/__fixtures__/Mut
 import { SystemContextProvider } from "v2/System"
 import { createMockNetworkLayer2 } from "v2/DevTools"
 import { mount } from "enzyme"
-import * as React from "react";
 import { graphql } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
 import { flushPromiseQueue } from "v2/DevTools"
@@ -63,7 +62,8 @@ describe(injectCommitMutation, () => {
                 .commitMutation<commitMutationTest1Mutation>({
                   variables: {
                     input: {
-                      creditCardId: "card",
+                      paymentMethod: "CREDIT_CARD",
+                      paymentMethodId: "card",
                       id: "order",
                     },
                   },
