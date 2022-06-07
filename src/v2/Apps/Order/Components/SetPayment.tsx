@@ -49,10 +49,8 @@ export const SetPayment: FC<Props> = props => {
     position: relative;
   `
   return (
-    <>
-      <SpinnerContainer>
-        <Spinner position="relative" color="brand" />
-      </SpinnerContainer>
-    </>
+    <SpinnerContainer>
+      <Spinner position="relative" color="brand" />
+    </SpinnerContainer>
   )
 }
