@@ -6,13 +6,10 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { BankDebitDetails } from "./BankDebitDetails"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
-// TODO: uncomment when we get paymentMethod from API
-// import { WireTransferDetails } from "./WireTransferDetails"
-// import { PaymentMethods } from "../OrderApp"
+import { WireTransferDetails } from "./WireTransferDetails"
 
 export const PaymentMethodSummaryItem = ({
-  order: { creditCard },
+  order: { creditCard, paymentMethod },
   textColor = "black100",
   ...others
 }: {
@@ -23,15 +20,23 @@ export const PaymentMethodSummaryItem = ({
     ...creditCard!,
     ...{ textColor: textColor },
   }
-  const isACHEnabled = useFeatureFlag("stripe_ACH")
+
+  const renderPaymentMethodSummary = () => {
+    switch (paymentMethod) {
+      case "CREDIT_CARD":
+        return <CreditCardDetails {...cardInfoWithTextColor} />
+      case "US_BANK_ACCOUNT":
+        return <BankDebitDetails {...cardInfoWithTextColor} />
+      case "WIRE_TRANSFER":
+        return <WireTransferDetails />
+      default:
+        null
+    }
+  }
 
   return (
     <StepSummaryItem {...others}>
-      {creditCard && <CreditCardDetails {...cardInfoWithTextColor} />}
-      {isACHEnabled && !creditCard && (
-        <BankDebitDetails {...cardInfoWithTextColor} />
-      )}
-      {/* {paymentMethod === PaymentMethods.WireTransfer &&  <WireTransferDetails />} */}
+      {renderPaymentMethodSummary()}
     </StepSummaryItem>
   )
 }
@@ -41,7 +46,7 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
   {
     order: graphql`
       fragment PaymentMethodSummaryItem_order on CommerceOrder {
-        # TODO: retrieve payment method
+        paymentMethod
         creditCard {
           brand
           lastDigits
