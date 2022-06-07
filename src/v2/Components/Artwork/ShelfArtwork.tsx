@@ -8,7 +8,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
-import { useHoverMetadata } from "./useHoverMetadata"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 /**
  * The max height for an image in the carousel
@@ -44,7 +44,9 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
-  const { isHovered, isHoverEffectEnabled } = useHoverMetadata()
+  const isHoverEffectEnabled = useFeatureFlag(
+    "force-enable-hover-effect-for-artwork-item"
+  )
 
   const shouldShowHoverSaveButton =
     isHoverEffectEnabled && (!!artwork.is_saved || isSaveButtonVisible)
@@ -88,7 +90,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         <Metadata
           artwork={artwork}
           extended={showExtended}
-          isHovered={isHovered}
           hidePartnerName={hidePartnerName}
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
