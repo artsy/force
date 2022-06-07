@@ -8,6 +8,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
+import { useHoverMetadata } from "./useHoverMetadata"
 
 /**
  * The max height for an image in the carousel
@@ -43,17 +44,22 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
+  const { isHovered, isHoverEffectEnabled } = useHoverMetadata()
+
+  const shouldShowHoverSaveButton =
+    isHoverEffectEnabled && (!!artwork.is_saved || isSaveButtonVisible)
 
   return (
-    <>
+    <div
+      {...containerProps}
+      data-test="artworkShelfArtwork"
+      data-testid="ShelfArtwork"
+    >
       <RouterLink
         to={artwork?.href}
         display="block"
         textDecoration="none"
         onClick={onClick}
-        data-test="artworkShelfArtwork"
-        data-testid="ShelfArtwork"
-        {...containerProps}
       >
         <ResponsiveContainer artwork={artwork}>
           <Image
@@ -65,14 +71,16 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             style={{ objectFit: "contain", display: "block" }}
           />
 
-          <Media greaterThan="sm">
-            {isSaveButtonVisible && (
-              <SaveButtonFragmentContainer
-                contextModule={contextModule!}
-                artwork={artwork}
-              />
-            )}
-          </Media>
+          {!isHoverEffectEnabled && (
+            <Media greaterThan="sm">
+              {isSaveButtonVisible && (
+                <SaveButtonFragmentContainer
+                  contextModule={contextModule!}
+                  artwork={artwork}
+                />
+              )}
+            </Media>
+          )}
         </ResponsiveContainer>
       </RouterLink>
 
@@ -80,13 +88,15 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         <Metadata
           artwork={artwork}
           extended={showExtended}
+          isHovered={isHovered}
           hidePartnerName={hidePartnerName}
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
+          shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
         />
       )}
-    </>
+    </div>
   )
 }
 
