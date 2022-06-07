@@ -175,23 +175,24 @@ export const PaymentRoute: FC<Props> = props => {
       <TwoColumnLayout
         Content={
           <>
-            {isSettingPayment && (
+            {isSettingPayment ? (
               <SetPayment
                 order={order}
                 setupIntentId={setupIntentId!}
                 onSuccess={onSetPaymentSuccess}
                 onError={onSetPaymentError}
               />
+            ) : (
+              <PaymentContent
+                commitMutation={props.commitMutation}
+                isLoading={isLoading}
+                me={props.me}
+                order={props.order}
+                onContinue={onContinue}
+                onWireTransferContinue={onWireTransferContinue}
+                paymentPicker={paymentPicker}
+              />
             )}
-            <PaymentContent
-              commitMutation={props.commitMutation}
-              isLoading={isLoading}
-              me={props.me}
-              order={props.order}
-              onContinue={onContinue}
-              onWireTransferContinue={onWireTransferContinue}
-              paymentPicker={paymentPicker}
-            />
           </>
         }
         Sidebar={
