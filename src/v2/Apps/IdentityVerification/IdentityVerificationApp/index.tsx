@@ -1,5 +1,5 @@
 import { Box, Button, Link, Sans, Serif } from "@artsy/palette"
-import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificationApp_me.graphql"
+import { IdentityVerificationApp_identityVerification } from "v2/__generated__/IdentityVerificationApp_identityVerification.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
@@ -17,23 +17,21 @@ import createLogger from "v2/Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
-import { WrongOwner } from "./WrongOwner"
+// import { WrongOwner } from "./WrongOwner"
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
-  me: IdentityVerificationApp_me
+  identityVerification: IdentityVerificationApp_identityVerification
   relay: RelayProp
 }
 
-const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
-  const { identityVerification } = me
+const IdentityVerificationApp: React.FC<Props> = ({
+  identityVerification,
+  relay,
+}) => {
   const [requesting, setRequesting] = useState(false)
   const [showErrorModal, setShowErrorModal] = useState(false)
   const { trackEvent } = useTracking()
-  if (!identityVerification || identityVerification.userID !== me.internalID) {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    return <WrongOwner email={me.email} />
-  }
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   let AlternateComponent: React.FC = null
@@ -98,8 +96,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
         },
         onError: reject,
         variables: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          input: { identityVerificationId: identityVerification.internalID },
+          input: { identityVerificationId: identityVerification?.internalID },
         },
       })
     })
@@ -202,16 +199,10 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
 export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
   IdentityVerificationApp,
   {
-    me: graphql`
-      fragment IdentityVerificationApp_me on Me
-        @argumentDefinitions(id: { type: "String!" }) {
+    identityVerification: graphql`
+      fragment IdentityVerificationApp_identityVerification on IdentityVerification {
         internalID
-        email
-        identityVerification(id: $id) {
-          internalID
-          userID
-          state
-        }
+        state
       }
     `,
   }
