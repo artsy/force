@@ -10,10 +10,12 @@ export type NewForYouArtworksGrid_viewer = {
             readonly hasNextPage: boolean;
             readonly endCursor: string | null;
         };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+                readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
+            } | null;
+        } | null> | null;
     } | null;
     readonly " $refType": "NewForYouArtworksGrid_viewer";
 };
@@ -28,62 +30,43 @@ export type NewForYouArtworksGrid_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before"
-    },
-    {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "count"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last"
+      "name": "cursor"
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "artworksForUser"
+        ]
+      }
+    ]
+  },
   "name": "NewForYouArtworksGrid_viewer",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworksForUser",
       "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
         {
           "kind": "Literal",
           "name": "includeBackfill",
           "value": true
-        },
-        {
-          "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
         }
       ],
       "concreteType": "ArtworkConnection",
       "kind": "LinkedField",
-      "name": "artworksForUser",
+      "name": "__NewForYouArtworksGrid_artworksForUser_connection",
       "plural": false,
       "selections": [
         {
@@ -114,30 +97,57 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "PageCursors",
+          "concreteType": "ArtworkEdge",
           "kind": "LinkedField",
-          "name": "pageCursors",
-          "plural": false,
+          "name": "edges",
+          "plural": true,
           "selections": [
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "GridItem_artwork"
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkGrid_artworks"
         }
       ],
-      "storageKey": null
+      "storageKey": "__NewForYouArtworksGrid_artworksForUser_connection(includeBackfill:true)"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'c0ffe91d231c0af157f9cbbf5b1161fc';
+(node as any).hash = '37e8704d3bfabdc24d63e3716106c951';
 export default node;
