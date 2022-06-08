@@ -85,20 +85,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
         Artwork: () => ArtworkFromPartnerWithLocations,
       })
 
-      const text = [
-        "New York",
-        "Beverly Hills",
-        "San Francisco",
-        "London",
-        "Paris",
-        "Le Bourget",
-        "Rome",
-        "Geneva",
-        "Athens",
-        "Central",
-        "Hong Kong",
-      ].join(", ")
-      expect(screen.getByText(text)).toBeInTheDocument()
+      expect(
+        screen.getByText("New York, Beverly Hills, +8 more")
+      ).toBeInTheDocument()
     })
 
     it("displays partner without locations", () => {

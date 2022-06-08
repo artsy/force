@@ -73,6 +73,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
       <Spacer mt={4} />
       <ArtworkSidebarMetadataFragmentContainer artwork={artwork} />
+      <AuthenticityCertificateFragmentContainer artwork={artwork} />
 
       {is_in_auction ? (
         <>
@@ -101,19 +102,19 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
         <>
           <Spacer mt={2} />
           <ArtworkSidebarCommercialFragmentContainer artwork={artwork} />
-          <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
         </>
       )}
 
       {shouldRenderArtworkBadges && (
         <Join separator={<Spacer mt={2} />}>
           <Separator mt={2} />
-          <AuthenticityCertificateFragmentContainer artwork={artwork} />
           <SecurePaymentFragmentContainer artwork={artwork} />
           <VerifiedSellerFragmentContainer artwork={artwork} />
           <BuyerGuaranteeFragmentContainer artwork={artwork} />
         </Join>
       )}
+
+      <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
 
       {!shouldHideDetailsCreateAlertCTA && (
         <CreateArtworkAlertSectionFragmentContainer artwork={artwork} />

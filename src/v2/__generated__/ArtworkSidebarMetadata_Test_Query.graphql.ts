@@ -25,7 +25,7 @@ export type ArtworkSidebarMetadata_Test_QueryRawResponse = {
         readonly date: string | null;
         readonly medium: string | null;
         readonly attributionClass: ({
-            readonly shortDescription: string | null;
+            readonly shortArrayDescription: ReadonlyArray<string | null> | null;
             readonly id: string;
         }) | null;
         readonly id: string;
@@ -55,7 +55,7 @@ query ArtworkSidebarMetadata_Test_Query {
 
 fragment ArtworkSidebarClassification_artwork on Artwork {
   attributionClass {
-    shortDescription
+    shortArrayDescription
     id
   }
 }
@@ -243,7 +243,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "shortDescription",
+                "name": "shortArrayDescription",
                 "storageKey": null
               },
               (v1/*: any*/)
@@ -296,7 +296,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d0536723808ebb1873a9413c6f66180b",
+    "cacheID": "7dce01b2c796ca805c4d53fff936446c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -314,7 +314,12 @@ return {
           "type": "AttributionClass"
         },
         "artwork.attributionClass.id": (v3/*: any*/),
-        "artwork.attributionClass.shortDescription": (v4/*: any*/),
+        "artwork.attributionClass.shortArrayDescription": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "String"
+        },
         "artwork.date": (v4/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
@@ -354,7 +359,7 @@ return {
     },
     "name": "ArtworkSidebarMetadata_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarMetadata_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n"
+    "text": "query ArtworkSidebarMetadata_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortArrayDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n"
   }
 };
 })();
