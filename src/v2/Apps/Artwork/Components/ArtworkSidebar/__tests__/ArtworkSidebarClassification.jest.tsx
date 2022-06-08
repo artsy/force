@@ -84,9 +84,7 @@ describe("ArtworkSidebarClassification", () => {
           Artwork: () => ({ attributionClass: null }),
         })
 
-        expect(
-          screen.queryByText("This is a unique work")
-        ).not.toBeInTheDocument()
+        expect(screen.queryByText("a unique work")).not.toBeInTheDocument()
       })
     })
   })

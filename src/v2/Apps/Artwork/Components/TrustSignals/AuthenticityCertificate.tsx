@@ -33,6 +33,7 @@ export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = (
 
   return shouldRenderAuthenticityCertificate(artwork) ? (
     <>
+      <Spacer mt={1} />
       <Flex>
         <CertificateIcon mr={1} />
         <Text variant="xs" color="black100">

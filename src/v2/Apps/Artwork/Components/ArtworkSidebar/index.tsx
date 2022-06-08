@@ -73,7 +73,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
       <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
       <Spacer mt={4} />
       <ArtworkSidebarMetadataFragmentContainer artwork={artwork} />
-      <Spacer mt={1} />
       <AuthenticityCertificateFragmentContainer artwork={artwork} />
 
       {is_in_auction ? (
