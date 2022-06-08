@@ -145,7 +145,8 @@ describe("LoginForm", () => {
 
     it("does not render email errors for social sign ups", done => {
       const wrapper = getWrapper()
-      const socialLink = wrapper.find("IconButton").at(0)
+
+      const socialLink = wrapper.find("Button").at(1)
 
       expect(socialLink.text()).toContain("Continue with Apple")
 

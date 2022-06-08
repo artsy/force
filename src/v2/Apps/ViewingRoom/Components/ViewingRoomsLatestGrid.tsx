@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Button, Card, GridColumns, Column, Box } from "@artsy/palette"
 import {
   RelayPaginationProp,
@@ -82,8 +82,8 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
       {hasMore && (
         <Box textAlign="center" mt={4}>
           <Button
-            variant="secondaryOutline"
-            size="medium"
+            variant="secondaryBlack"
+            size="large"
             onClick={loadMore}
             loading={loading}
           >

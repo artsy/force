@@ -60,7 +60,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
               display="block"
               textDecoration="none"
             >
-              <Button variant="secondaryOutline" display="block" width="100%">
+              <Button variant="secondaryBlack" display="block" width="100%">
                 Read All Articles
               </Button>
             </RouterLink>

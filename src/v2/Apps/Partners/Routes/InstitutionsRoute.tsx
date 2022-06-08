@@ -77,7 +77,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
             </Text>
 
             <Button
-              variant="secondaryOutline"
+              variant="secondaryBlack"
               // @ts-ignore
               as="a"
               href="https://partners.artsy.net/"

@@ -109,6 +109,8 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
     const errors = concatErrors(fileRejections, customErrors)
 
     onReject(errors)
+    // FIXME: Remove this disable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customErrors, fileRejections])
 
   return (
@@ -135,7 +137,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
           width={["100%", "auto"]}
           type="button"
           mt={4}
-          variant="secondaryOutline"
+          variant="secondaryBlack"
           onClick={open}
         >
           Add Photo

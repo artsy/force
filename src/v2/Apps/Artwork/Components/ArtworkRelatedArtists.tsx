@@ -203,7 +203,7 @@ const PLACEHOLDER = (
                   <SkeletonText variant="sm">Georges Braque</SkeletonText>
                   <SkeletonText variant="xs">French 1900-2000</SkeletonText>
                 </Box>
-                <Button variant="secondaryOutline" size="small">
+                <Button variant="secondaryBlack" size="small">
                   Follow
                 </Button>
               </Flex>

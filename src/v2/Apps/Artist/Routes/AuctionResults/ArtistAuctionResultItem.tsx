@@ -442,7 +442,7 @@ const renderPricing = (
     return (
       <Button
         size={btnSize}
-        variant="secondaryGray"
+        variant="primaryGray"
         mb={buttonMargin}
         onClick={() => {
           mediator &&

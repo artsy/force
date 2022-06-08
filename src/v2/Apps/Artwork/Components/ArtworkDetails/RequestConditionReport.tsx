@@ -126,7 +126,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const UnauthenticatedContent: React.FC = () => (
     <Button
       size="small"
-      variant="secondaryGray"
+      variant="primaryGray"
       onClick={handleLoginClick}
       data-test="requestConditionReport"
     >
@@ -137,7 +137,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const AuthenticatedContent: React.FC = () => (
     <Button
       size="small"
-      variant="secondaryGray"
+      variant="primaryGray"
       onClick={handleRequestConditionReportClick}
       loading={requesting}
     >

@@ -43,7 +43,7 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
           artist={artist.node!}
           contextModule={ContextModule.recommendedArtistsRail}
           buttonProps={{
-            variant: "secondaryOutline",
+            variant: "secondaryBlack",
             size: "small",
           }}
         />

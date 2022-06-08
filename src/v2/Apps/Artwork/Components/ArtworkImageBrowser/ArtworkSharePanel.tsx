@@ -15,9 +15,10 @@ import {
   TumblrIcon,
 } from "@artsy/palette"
 import { ArtworkSharePanel_artwork } from "v2/__generated__/ArtworkSharePanel_artwork.graphql"
-import { useRef, useState } from "react";
-import * as React from "react";
+import { useRef, useState } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
 interface ArtworkSharePanelProps extends BoxProps {
@@ -96,7 +97,7 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
         <Button
           ml={2}
           size="small"
-          variant="secondaryOutline"
+          variant="secondaryBlack"
           onClick={handleCopy}
         >
           {copyState.copyLabelText}

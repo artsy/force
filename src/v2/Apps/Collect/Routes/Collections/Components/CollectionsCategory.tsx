@@ -73,8 +73,8 @@ export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
       {!showAll && collections.length > TRUNCATED_AMOUNT && (
         <Box textAlign="center" mt={4}>
           <Button
-            size="medium"
-            variant="secondaryOutline"
+            size="large"
+            variant="secondaryBlack"
             onClick={() => toggleShowAll(true)}
           >
             More in {category.name}

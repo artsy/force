@@ -349,7 +349,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
 
           <Button
             mt={1}
-            variant="secondaryGray"
+            variant="primaryGray"
             onClick={handleClick}
             width="100%"
           >

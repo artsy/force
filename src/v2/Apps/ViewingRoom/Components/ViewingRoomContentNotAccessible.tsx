@@ -29,7 +29,7 @@ const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleP
         <Column start={4} span={2}>
           <Button
             width="100%"
-            variant="secondaryGray"
+            variant="primaryGray"
             // @ts-ignore
             as={RouterLink}
             to={viewingRoom.partner.href}

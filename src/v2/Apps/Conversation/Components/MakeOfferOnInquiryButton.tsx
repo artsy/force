@@ -26,7 +26,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
   const { isEdition, editionSets, is_acquireable: isAcquireable } = artwork
   const isUniqueArtwork = !isEdition || editionSets?.length! === 1
   const isPurchaseButtonPresent = isCBNEnabled && isAcquireable
-  const variant = isPurchaseButtonPresent ? "secondaryOutline" : "primaryBlack"
+  const variant = isPurchaseButtonPresent ? "secondaryBlack" : "primaryBlack"
   const conversationID = conversation.internalID!
 
   const tappedMakeOfferEvent: TappedMakeOffer = {
@@ -41,7 +41,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
       {!isUniqueArtwork ? (
         // Opens a modal window to select an edition set on non-unique artworks
         <Button
-          size="medium"
+          size="large"
           variant={variant}
           flexGrow={1}
           onClick={() => {

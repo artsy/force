@@ -1,6 +1,6 @@
 import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeader } from "@artsy/palette"
 import { AuthContextModule } from "@artsy/cohesion"
@@ -32,7 +32,7 @@ export const ArtistCard: React.FC<ArtistCardProps> = ({
           <FollowArtistButtonFragmentContainer
             artist={artist}
             contextModule={contextModule}
-            buttonProps={{ variant: "secondaryOutline", size: "small" }}
+            buttonProps={{ variant: "secondaryBlack", size: "small" }}
           />
         }
       />

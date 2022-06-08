@@ -1,7 +1,14 @@
-import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
+import {
+  ArtworkIcon,
+  AuctionIcon,
+  Flex,
+  Pill,
+  PillProps,
+  Text,
+} from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -114,14 +121,12 @@ const QuickNavigation: React.FC<{
   return (
     <Flex flexWrap="wrap">
       {!!showArtworksButton && (
-        <QuickNavigationItem to={`${href}/works-for-sale`}>
-          <ArtworkIcon mr={0.5} />
+        <QuickNavigationItem to={`${href}/works-for-sale`} Icon={ArtworkIcon}>
           Artworks
         </QuickNavigationItem>
       )}
       {!!showAuctionResultsButton && (
-        <QuickNavigationItem to={`${href}/auction-results`}>
-          <AuctionIcon mr={0.5} />
+        <QuickNavigationItem to={`${href}/auction-results`} Icon={AuctionIcon}>
           Auction Results
         </QuickNavigationItem>
       )}
@@ -129,7 +134,10 @@ const QuickNavigation: React.FC<{
   )
 }
 
-const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
+const QuickNavigationItem: React.FC<{ to: string } & PillProps> = ({
+  to,
+  ...rest
+}) => {
   const onClick = event => {
     // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
     event.stopPropagation()
@@ -138,11 +146,6 @@ const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
     // FIXME: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
     window.location.assign(to)
   }
-  return (
-    <Flex onClick={onClick} mt={1} mr={1}>
-      <Pill variant="textSquare">
-        <Flex alignItems="center">{children}</Flex>
-      </Pill>
-    </Flex>
-  )
+
+  return <Pill onClick={onClick} mt={1} mr={1} {...rest} />
 }

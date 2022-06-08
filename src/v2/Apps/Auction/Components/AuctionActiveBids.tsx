@@ -204,7 +204,7 @@ const BidButton: React.FC<
     me: AuctionActiveBidsProps["me"]
     size?: ButtonSize
   }
-> = ({ lotStanding, me, size = "medium" }) => {
+> = ({ lotStanding, me, size = "large" }) => {
   const { router } = useRouter()
   const { tracking } = useAuctionTracking()
 

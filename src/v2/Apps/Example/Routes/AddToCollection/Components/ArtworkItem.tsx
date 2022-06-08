@@ -32,7 +32,7 @@ export const ArtworkItem: React.FC<ArtworkItemProps> = ({
 
       <Button
         size="small"
-        variant="secondaryOutline"
+        variant="secondaryBlack"
         width="100%"
         onClick={() => onClick(artwork)}
       >

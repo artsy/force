@@ -92,7 +92,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
             </Text>
 
             <Button
-              variant="secondaryOutline"
+              variant="secondaryBlack"
               // @ts-ignore
               as="a"
               href="https://partners.artsy.net/"
@@ -107,7 +107,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
             </Text>
 
             <Button
-              variant="secondaryOutline"
+              variant="secondaryBlack"
               // @ts-ignore
               as="a"
               href="https://partners.artsy.net/"

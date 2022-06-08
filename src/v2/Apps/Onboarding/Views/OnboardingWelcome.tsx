@@ -22,7 +22,7 @@ export const OnboardingWelcome = () => {
         <Button onClick={next}>Get started</Button>
 
         <Button
-          variant="secondaryOutline"
+          variant="secondaryBlack"
           mt={0.5}
           // @ts-ignore
           as={RouterLink}

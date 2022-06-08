@@ -1,5 +1,5 @@
 import { Button, Collapse, Flex } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 
 interface RevealButtonProps {
   buttonLabel: string
@@ -37,7 +37,7 @@ export class RevealButton extends Component<
           }}
         >
           <Button
-            variant="secondaryGray"
+            variant="primaryGray"
             size="small"
             onClick={() => {
               this.setState({ showing: true })

@@ -19,11 +19,11 @@ export const SavedSearchCreateAlertButton: React.FC<Props> = ({
       renderButton={({ onClick }) => (
         <Button
           onClick={onClick}
-          variant="secondaryOutline"
+          variant="secondaryBlack"
           size="small"
+          Icon={BellIcon}
           {...buttonProps}
         >
-          <BellIcon mr={0.5} fill="currentColor" />
           Create Alert
         </Button>
       )}

@@ -240,7 +240,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
           <Flex justifyContent="space-between" alignItems="center" mt={2}>
             <Button
               flex={1}
-              variant="noOutline"
+              variant="tertiary"
               type="button"
               onClick={e => {
                 form.setStatus(null)

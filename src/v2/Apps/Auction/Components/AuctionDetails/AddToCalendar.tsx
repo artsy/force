@@ -26,7 +26,7 @@ export const AddToCalendar: React.FC<AddToCalendarProps> = props => {
       {({ onVisible, anchorRef }) => {
         return (
           <Button
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             size="small"
             onClick={onVisible}
             ref={anchorRef}

@@ -96,7 +96,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
                         <Button
                           mt={2}
                           size="small"
-                          variant="secondaryOutline"
+                          variant="secondaryBlack"
                           onClick={() => window.location.reload()}
                         >
                           Reload
@@ -111,7 +111,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
                         <Button
                           mt={2}
                           size="small"
-                          variant="secondaryOutline"
+                          variant="secondaryBlack"
                           onClick={() => window.location.reload()}
                         >
                           Reload

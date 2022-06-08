@@ -1,5 +1,5 @@
 import { Pill, Spacer, Flex, HorizontalOverflow } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -36,9 +36,15 @@ const StickyNav: React.FC<StickyNavProps> = props => {
         {geneFamilies.map((geneFamily, i) => {
           return (
             <Flex key={geneFamily.slug} flexDirection="row">
-              <a href={`#jump--${geneFamily.slug}`} onClick={handleClick}>
-                <Pill variant="filter">{geneFamily.name}</Pill>
-              </a>
+              <Pill
+                as="a"
+                onClick={handleClick}
+                // @ts-ignore
+                href={`#jump--${geneFamily.slug}`}
+              >
+                {geneFamily.name}
+              </Pill>
+
               {i !== geneFamilies.length - 1 ? <Spacer pr={1} /> : null}
             </Flex>
           )

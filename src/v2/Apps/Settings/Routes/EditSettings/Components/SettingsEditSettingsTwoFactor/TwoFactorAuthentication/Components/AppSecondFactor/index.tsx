@@ -173,7 +173,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
           {isEnabled ? (
             <>
               <Button
-                variant="secondaryOutline"
+                variant="secondaryBlack"
                 width={["100%", "auto"]}
                 onClick={() => setShowConfirmDisable(true)}
                 loading={isDisabling}

@@ -103,7 +103,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             item.labels.map(label => (
               <AlertPill
                 key={label.displayValue}
-                variant="textSquare"
+                variant="filter"
                 active
                 mr={1}
                 mb={1}

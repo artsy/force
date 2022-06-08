@@ -71,7 +71,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
     }
     case "OFFER_RECEIVED": {
       ctaAttributes = {
-        backgroundColor: "copper100",
+        backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
         message: `${offerType} Received`,
         subMessage: `The offer expires in ${expiresIn}`,
         Icon: AlertCircleFillIcon,
@@ -89,7 +89,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
     }
     case "OFFER_ACCEPTED_CONFIRM_NEEDED": {
       ctaAttributes = {
-        backgroundColor: "copper100",
+        backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
         message: `Offer Accepted - Confirm total`,
         subMessage: `The offer expires in ${expiresIn}`,
         Icon: AlertCircleFillIcon,
@@ -98,7 +98,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
     }
     case "OFFER_RECEIVED_CONFIRM_NEEDED": {
       ctaAttributes = {
-        backgroundColor: "copper100",
+        backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
         message: `Counteroffer Received - Confirm Total`,
         subMessage: `The offer expires in ${expiresIn}`,
         Icon: AlertCircleFillIcon,

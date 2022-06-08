@@ -90,7 +90,7 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
       aggregations={aggregations}
       getAuthModalOptions={getAuthModalOptions}
       renderButton={({ onClick }) => (
-        <Button width="100%" size="medium" onClick={onClick}>
+        <Button width="100%" size="large" onClick={onClick}>
           Create Alert
         </Button>
       )}

@@ -94,7 +94,7 @@ export const ConfirmPasswordModal: FC<ConfirmPasswordModalProps> = ({
             <Flex mt={2}>
               <Button
                 flex={1}
-                variant="noOutline"
+                variant="tertiary"
                 type="button"
                 onClick={onCancel}
               >

@@ -17,6 +17,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Component } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
 
@@ -64,7 +65,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
               <FollowArtistButton
                 artist={artist}
                 contextModule={ContextModule.aboutTheWork}
-                buttonProps={{ size: "small", variant: "secondaryOutline" }}
+                buttonProps={{ size: "small", variant: "secondaryBlack" }}
               />
             }
           />
