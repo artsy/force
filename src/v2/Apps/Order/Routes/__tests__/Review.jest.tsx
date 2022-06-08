@@ -35,6 +35,7 @@ import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetai
 import { PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { cloneDeep } from "lodash"
 import { useTracking } from "v2/System"
+import { waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
@@ -70,19 +71,24 @@ class ReviewTestPage extends OrderAppTestPage {
 }
 
 describe("Review", () => {
+  let isEigen
   beforeAll(() => {
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
+    window.ReactNativeWebView = { postMessage: jest.fn() }
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
   })
 
   beforeEach(() => {
+    isEigen = false
     mockLocation()
   })
 
   const { buildPage, mutations, routes, ...hooks } = createTestEnv({
-    Component: ReviewFragmentContainer,
+    Component: props => (
+      <ReviewFragmentContainer {...props} isEigen={isEigen} />
+    ),
     defaultData: {
       order: testOrder,
     },
@@ -205,6 +211,7 @@ describe("Review", () => {
 
   describe("Offer-mode orders", () => {
     let page: ReviewTestPage
+
     beforeEach(async () => {
       page = await buildPage({
         mockData: {
@@ -307,6 +314,41 @@ describe("Review", () => {
 
       await page.clickSubmit()
       expect(_mockStripe().confirmCardSetup).toBeCalledWith("client-secret")
+    })
+
+    describe("isEigen", () => {
+      let page: ReviewTestPage
+
+      beforeEach(async () => {
+        isEigen = true
+        page = await buildPage({
+          mockData: {
+            order: {
+              ...OfferOrderWithShippingDetails,
+              internalID: "offer-order-id",
+              impulseConversationId: null,
+            },
+          },
+        })
+      })
+
+      it("dispatches message given Eigen when the offer is submitted", async () => {
+        await page.clickSubmit()
+        expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
+          JSON.stringify({
+            key: "goToInboxOnMakeOfferSubmission",
+            orderCode: "abcdefg",
+            message:
+              "The seller will respond to your offer by Jan 15. Keep in mind making an offer doesn’t guarantee you the work.",
+          })
+        )
+
+        await waitFor(() =>
+          expect(routes.mockPushRoute).toHaveBeenCalledWith(
+            "/orders/offer-order-id/status"
+          )
+        )
+      })
     })
   })
 
