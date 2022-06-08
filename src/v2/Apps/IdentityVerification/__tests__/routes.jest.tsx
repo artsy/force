@@ -16,8 +16,7 @@ import { createRender } from "found"
 describe("IdentityVerification/routes", () => {
   const idvID =
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    IdentityVerificationAppQueryResponseFixture.me.identityVerification
-      .internalID
+    IdentityVerificationAppQueryResponseFixture.identityVerification.internalID
   async function render(
     url,
     mockData: identityVerificationRoutes_IdentityVerificationAppQueryRawResponse

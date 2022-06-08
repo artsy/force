@@ -93,33 +93,6 @@ describe("userRequiredMiddleware", () => {
       expect(next).not.toHaveBeenCalled()
     })
 
-    it("performs redirect on an /identity-verification route", () => {
-      const spy = jest.fn()
-      const req = {
-        originalUrl: "/identity-verification/123",
-        path: "/identity-verification/123",
-        query: {
-          "accepted-conditions": false,
-        },
-        url: "/identity-verification/123",
-      }
-      const res = {
-        locals: {
-          sd: {
-            CURRENT_USER: null,
-          },
-        },
-        redirect: spy,
-      }
-      const next = jest.fn()
-
-      userRequiredMiddleware(req, res, next)
-      expect(spy).toHaveBeenCalledWith(
-        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
-      )
-      expect(next).not.toHaveBeenCalled()
-    })
-
     it("redirects when visiting conversations route", () => {
       const req = {
         originalUrl: "/user/conversations",

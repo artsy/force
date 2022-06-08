@@ -4,6 +4,6 @@ export const IdentityVerificationAppQueryResponseFixture: identityVerificationRo
   identityVerification: {
     internalID: "identity-verification-id",
     state: "pending",
-    id: "??????",
+    id: "graphql-id",
   },
 }
