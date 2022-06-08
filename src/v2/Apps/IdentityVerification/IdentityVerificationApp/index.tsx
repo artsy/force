@@ -17,7 +17,6 @@ import createLogger from "v2/Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
-// import { WrongOwner } from "./WrongOwner"
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
@@ -201,8 +200,7 @@ export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
   {
     identityVerification: graphql`
       fragment IdentityVerificationApp_identityVerification on IdentityVerification {
-        internalID
-        state
+        ...IdentityVerificationApp_identityVerification
       }
     `,
   }

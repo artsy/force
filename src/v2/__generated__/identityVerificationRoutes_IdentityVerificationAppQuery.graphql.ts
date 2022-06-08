@@ -3,13 +3,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type identityVerificationRoutes_IdentityVerificationAppQueryVariables = {
     id: string;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQueryResponse = {
     readonly identityVerification: {
-        readonly internalID: string;
-        readonly state: string;
+        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_identityVerification">;
     } | null;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQueryRawResponse = {
@@ -32,10 +32,14 @@ query identityVerificationRoutes_IdentityVerificationAppQuery(
   $id: String!
 ) {
   identityVerification(id: $id) @principalField {
-    internalID
-    state
+    ...IdentityVerificationApp_identityVerification
     id
   }
+}
+
+fragment IdentityVerificationApp_identityVerification on IdentityVerification {
+  internalID
+  state
 }
 */
 
@@ -53,21 +57,7 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "state",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -83,8 +73,11 @@ return {
         "name": "identityVerification",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/)
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "IdentityVerificationApp_identityVerification"
+          }
         ],
         "storageKey": null
       }
@@ -106,8 +99,20 @@ return {
         "name": "identityVerification",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "state",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -121,14 +126,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e96d9c385025fc0eaa743ca3144fed4a",
+    "cacheID": "e28e6326276f3fd4eb66baec683ce340",
     "id": null,
     "metadata": {},
     "name": "identityVerificationRoutes_IdentityVerificationAppQuery",
     "operationKind": "query",
-    "text": "query identityVerificationRoutes_IdentityVerificationAppQuery(\n  $id: String!\n) {\n  identityVerification(id: $id) @principalField {\n    internalID\n    state\n    id\n  }\n}\n"
+    "text": "query identityVerificationRoutes_IdentityVerificationAppQuery(\n  $id: String!\n) {\n  identityVerification(id: $id) @principalField {\n    ...IdentityVerificationApp_identityVerification\n    id\n  }\n}\n\nfragment IdentityVerificationApp_identityVerification on IdentityVerification {\n  internalID\n  state\n}\n"
   }
 };
 })();
-(node as any).hash = '6ed74cc4b517ba7855d731381ff0cbfa';
+(node as any).hash = '65eca2568c3109c8f2d6141671eec6e9';
 export default node;

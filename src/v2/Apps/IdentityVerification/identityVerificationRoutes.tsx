@@ -55,8 +55,7 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
         $id: String!
       ) @raw_response_type {
         identityVerification(id: $id) @principalField {
-          internalID
-          state
+          ...IdentityVerificationApp_identityVerification
         }
       }
     `,
