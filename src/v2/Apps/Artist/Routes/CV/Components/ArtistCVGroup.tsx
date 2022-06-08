@@ -118,8 +118,8 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
         <GridColumns>
           <Column start={5}>
             <Button
-              variant="secondaryGray"
-              size="medium"
+              variant="primaryGray"
+              size="large"
               my={1}
               loading={isLoading}
               onClick={loadMore}

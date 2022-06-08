@@ -40,7 +40,7 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
           <FollowGeneButtonFragmentContainer
             gene={category}
             size="small"
-            variant="secondaryOutline"
+            variant="secondaryBlack"
           >
             Follow
           </FollowGeneButtonFragmentContainer>

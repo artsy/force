@@ -65,10 +65,10 @@ const baseButtonStyles = {
     "color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease",
   whiteSpace: "nowrap",
   // Medium size
-  ...THEME.textVariants[BUTTON_TEXT_SIZES.medium as TextVariant],
-  height: BUTTON_SIZES.medium.height,
-  borderRadius: BUTTON_SIZES.medium.borderRadius,
-  padding: `0 ${THEME.space[BUTTON_SIZES.medium.px]}`,
+  ...THEME.textVariants[BUTTON_TEXT_SIZES.large as TextVariant],
+  height: BUTTON_SIZES.large.height,
+  borderRadius: BUTTON_SIZES.large.borderRadius,
+  padding: `0 ${THEME.space[BUTTON_SIZES.large.px]}`,
 }
 
 const smallButtonStyles = {
@@ -88,17 +88,17 @@ const buttonVariants = {
       ${toStyle(toTokens(BUTTON_VARIANTS.hover.primaryBlack))}
     }
   `,
-  secondaryOutline: css`
-    ${toStyle(toTokens(BUTTON_VARIANTS.default.secondaryOutline))}
+  secondaryBlack: css`
+    ${toStyle(toTokens(BUTTON_VARIANTS.default.secondaryBlack))}
     &:hover {
-      ${toStyle(toTokens(BUTTON_VARIANTS.hover.secondaryOutline))}
+      ${toStyle(toTokens(BUTTON_VARIANTS.hover.secondaryBlack))}
     }
   `,
 }
 
 const modalDialogHeaderHeight = `calc(26px + (${THEME.space[2]} * 2))` // Logo is manually sized to 26px
-const modalDialogFooterHeight = `calc(${BUTTON_SIZES.medium.height} + (${THEME.space[2]} * 2))`
-const modalDialogFooterMobileHeight = `calc((${BUTTON_SIZES.medium.height} * 2) + (${THEME.space[2]} * 2) + ${THEME.space[1]})`
+const modalDialogFooterHeight = `calc(${BUTTON_SIZES.large.height} + (${THEME.space[2]} * 2))`
+const modalDialogFooterMobileHeight = `calc((${BUTTON_SIZES.large.height} * 2) + (${THEME.space[2]} * 2) + ${THEME.space[1]})`
 
 export const OneTrustConsentStyles = createGlobalStyle`
   #onetrust-consent-sdk {
@@ -384,7 +384,7 @@ export const OneTrustConsentStyles = createGlobalStyle`
     }
 
     .ot-pc-refuse-all-handler {
-      ${buttonVariants.secondaryOutline}
+      ${buttonVariants.secondaryBlack}
       ${toStyle({ marginRight: THEME.space[0.5] })}
 
       @media (max-width: ${THEME.breakpoints.sm}) {

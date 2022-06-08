@@ -185,7 +185,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
                 {!isLoggedIn && (
                   <Button
-                    variant="secondaryOutline"
+                    variant="secondaryBlack"
                     onClick={() => {
                       openAuthModal(mediator, {
                         mode: ModalType.signup,

@@ -76,7 +76,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
 
         {isCBNEnabled && !isInquireable && (
           <Button
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             size="small"
             onClick={handleInquiry}
             ml={1}

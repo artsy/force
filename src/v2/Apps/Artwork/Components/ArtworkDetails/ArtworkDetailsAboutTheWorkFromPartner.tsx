@@ -8,6 +8,7 @@ import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { READ_MORE_MAX_CHARS } from "./ArtworkDetailsAboutTheWorkFromArtsy"
 import { ArtworkDetailsAboutTheWorkFromPartner_artwork } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -124,7 +125,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
                       contextModule={ContextModule.aboutTheWork}
                       buttonProps={{
                         size: "small",
-                        variant: "secondaryOutline",
+                        variant: "secondaryBlack",
                       }}
                     />
                   ) : undefined

@@ -182,7 +182,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
                     <Button
                       ml={1}
                       type="button"
-                      variant="secondaryOutline"
+                      variant="secondaryBlack"
                       onClick={handleCancel}
                     >
                       Cancel

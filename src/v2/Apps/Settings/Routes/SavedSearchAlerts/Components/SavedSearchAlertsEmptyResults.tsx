@@ -24,7 +24,7 @@ export const SavedSearchAlertsEmptyResults = () => {
           as={RouterLink}
           to="/artists"
           width="100%"
-          size="medium"
+          size="large"
         >
           Explore Artists
         </Button>

@@ -40,7 +40,8 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
         action = { label: "See details", onClick: () => setShowDetails(true) }
       }
     } else if (offer.fromParticipant === "SELLER") {
-      color = "copper100"
+      // @ts-ignore
+      color = "orange150" // FIXME: Needs v3 typing
       Icon = AlertCircleFillIcon
       if (offer.offerAmountChanged) {
         message = `You received ${

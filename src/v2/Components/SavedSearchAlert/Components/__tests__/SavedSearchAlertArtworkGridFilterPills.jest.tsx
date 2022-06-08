@@ -1,5 +1,5 @@
 import { OwnerType } from "@artsy/cohesion"
-import { render, screen, within, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
@@ -55,15 +55,7 @@ describe("SavedSearchAlertArtworkGridFilterPills", () => {
     renderPills({
       filters: mockedFilters,
     })
-    expect(
-      within(screen.getByText("Banksy")).queryByTitle("Close")
-    ).not.toBeInTheDocument()
-    expect(
-      within(screen.getByText("Red")).getByTitle("Close")
-    ).toBeInTheDocument()
-    expect(
-      within(screen.getByText("Open Edition")).getByTitle("Close")
-    ).toBeInTheDocument()
+
     expect(screen.getAllByTitle("Close")).toHaveLength(2)
   })
 

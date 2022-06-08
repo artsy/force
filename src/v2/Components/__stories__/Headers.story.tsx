@@ -69,7 +69,7 @@ export const HeaderArtist = () => {
 
           <GridColumns>
             <Column span={[6, 6, 3]}>
-              <Button variant="secondaryOutline" width="100%">
+              <Button variant="secondaryBlack" width="100%">
                 Follow
               </Button>
             </Column>

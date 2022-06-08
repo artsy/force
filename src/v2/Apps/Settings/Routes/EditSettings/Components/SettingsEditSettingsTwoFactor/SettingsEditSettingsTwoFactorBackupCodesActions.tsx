@@ -59,7 +59,7 @@ export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsE
             data-test="copyButton"
             flex={1}
             size="small"
-            variant="secondaryOutline"
+            variant="secondaryBlack"
           >
             {mode === "Copied" ? "Copied" : "Copy"}
           </Button>
@@ -73,7 +73,7 @@ export const SettingsEditSettingsTwoFactorBackupCodesActions: React.FC<SettingsE
         data-test="downloadButton"
         flex={1}
         size="small"
-        variant="secondaryOutline"
+        variant="secondaryBlack"
       >
         Download
       </Button>

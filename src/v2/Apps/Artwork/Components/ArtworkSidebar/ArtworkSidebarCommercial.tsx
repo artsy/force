@@ -473,7 +473,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           {isAcquireable && (
             <Button
               width="100%"
-              size="medium"
+              size="large"
               loading={isCommittingCreateOrderMutation}
               onClick={this.handleCreateOrder.bind(this)}
             >
@@ -485,9 +485,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             <>
               <Spacer mt={2} />
               <Button
-                variant={isAcquireable ? "secondaryOutline" : "primaryBlack"}
+                variant={isAcquireable ? "secondaryBlack" : "primaryBlack"}
                 width="100%"
-                size="medium"
+                size="large"
                 loading={isCommittingCreateOfferOrderMutation}
                 onClick={this.handleCreateOfferOrder.bind(this)}
               >
@@ -501,11 +501,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
               <Spacer mt={isSecondaryContactGalleryButton ? 2 : 0} />
               <Button
                 width="100%"
-                size="medium"
+                size="large"
                 onClick={this.handleInquiry.bind(this)}
                 variant={
                   isSecondaryContactGalleryButton
-                    ? "secondaryOutline"
+                    ? "secondaryBlack"
                     : "primaryBlack"
                 }
               >

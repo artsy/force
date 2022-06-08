@@ -44,7 +44,7 @@ export const InquiryCommercialInterest: React.FC = () => {
       )}
 
       <Button
-        variant="secondaryOutline"
+        variant="secondaryBlack"
         width="100%"
         onClick={handleClick(3)}
         loading={mode === "Loading3"}
@@ -55,7 +55,7 @@ export const InquiryCommercialInterest: React.FC = () => {
       </Button>
 
       <Button
-        variant="secondaryOutline"
+        variant="secondaryBlack"
         width="100%"
         onClick={handleClick(2)}
         loading={mode === "Loading2"}

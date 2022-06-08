@@ -127,7 +127,7 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const appleLink = wrapper
-        .find("IconButton")
+        .find("Button")
         .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
 
@@ -144,7 +144,7 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const facebookLink = wrapper
-        .find("IconButton")
+        .find("Button")
         .findWhere(node => node.text().includes("Continue with Facebook"))
         .first()
 
@@ -161,7 +161,7 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const googleLink = wrapper
-        .find("IconButton")
+        .find("Button")
         .findWhere(node => node.text().includes("Continue with Google"))
         .first()
 
@@ -178,7 +178,7 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const appleLink = wrapper
-        .find("IconButton")
+        .find("Button")
         .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
 
@@ -195,7 +195,7 @@ describe("SignUpForm", () => {
       const wrapper = getWrapper()
 
       const appleLink = wrapper
-        .find("IconButton")
+        .find("Button")
         .findWhere(node => node.text().includes("Continue with Apple"))
         .first()
 
@@ -211,6 +211,7 @@ describe("SignUpForm", () => {
   // These tests are skipped due to an issue with the formik onChange handlers that aren’t firing correctly
   // Plan is to explore Cypress integration testing for the Sign Up Flow to cover these tests scope
   // TODO: JIRA TICKET GRO-353: Add Cyprus based integration tests to Sign Up Flow
+  // eslint-disable-next-line jest/no-disabled-tests
   describe.skip("Unit testing that needs to be bundled under Cypress Integration", () => {
     it("clears error after input change", done => {
       passedProps.error = "Some global server error"

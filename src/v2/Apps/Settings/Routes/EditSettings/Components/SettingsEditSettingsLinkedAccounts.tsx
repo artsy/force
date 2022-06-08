@@ -3,11 +3,12 @@ import {
   AppleIcon,
   FacebookIcon,
   GoogleIcon,
-  IconButton,
+  Button,
   Join,
   Spacer,
   Text,
   useToasts,
+  IconProps,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -56,21 +57,21 @@ export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAc
           me={me}
           provider="FACEBOOK"
           href={authenticationPaths?.facebookPath}
-          icon={<FacebookIcon fill="currentColor" />}
+          Icon={FacebookIcon}
         />
 
         <SettingsEditSettingsLinkedAccountsButton
           me={me}
           provider="APPLE"
           href={authenticationPaths?.applePath}
-          icon={<AppleIcon fill="currentColor" />}
+          Icon={AppleIcon}
         />
 
         <SettingsEditSettingsLinkedAccountsButton
           me={me}
           provider="GOOGLE"
           href={authenticationPaths?.googlePath}
-          icon={<GoogleIcon />}
+          Icon={GoogleIcon}
         />
       </Join>
     </>
@@ -91,7 +92,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
 )
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
-  icon: JSX.Element
+  Icon: React.FunctionComponent<IconProps>
   me: SettingsEditSettingsLinkedAccounts_me
   href?: string
   provider: AuthenticationProvider
@@ -100,7 +101,7 @@ interface SettingsEditSettingsLinkedAccountsButtonProps {
 type Mode = "Disconnected" | "Connecting" | "Connected" | "Disconnecting"
 
 const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAccountsButtonProps> = ({
-  icon,
+  Icon,
   me,
   href,
   provider,
@@ -157,19 +158,19 @@ const SettingsEditSettingsLinkedAccountsButton: FC<SettingsEditSettingsLinkedAcc
   }[mode]
 
   return (
-    <IconButton
+    <Button
       onClick={handleClick}
       loading={mode === "Connecting" || mode === "Disconnecting"}
       {...(mode === "Connected"
-        ? { variant: "secondaryOutline" }
+        ? { variant: "secondaryBlack" }
         : {
             variant: "primaryBlack",
             as: "a",
             href: href,
           })}
-      icon={icon}
+      Icon={Icon}
     >
       {action} {provider.charAt(0) + provider.slice(1).toLowerCase()} Account
-    </IconButton>
+    </Button>
   )
 }

@@ -24,7 +24,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
           <FollowGeneButtonFragmentContainer
             gene={gene}
-            variant="secondaryOutline"
+            variant="secondaryBlack"
           />
         </Column>
 

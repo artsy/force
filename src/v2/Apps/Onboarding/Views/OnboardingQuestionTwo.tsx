@@ -55,7 +55,7 @@ export const OnboardingQuestionTwo: FC = () => {
               <Button
                 key={option}
                 size="small"
-                variant="secondaryOutline"
+                variant="secondaryBlack"
                 onClick={() => {
                   setAnswerTwo(option)
                   setBasis({ answer: option })

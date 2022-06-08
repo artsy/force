@@ -52,7 +52,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
                 artist={partnerArtist.node}
                 contextModule={ContextModule.artistHeader}
                 buttonProps={{
-                  variant: "secondaryOutline",
+                  variant: "secondaryBlack",
                   width: "100%",
                 }}
               />

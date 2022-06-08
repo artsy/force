@@ -212,7 +212,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                   <GridColumns>
                     <Column span={[12, 12, 6]}>
                       <Button
-                        variant="secondaryOutline"
+                        variant="secondaryBlack"
                         // @ts-ignore
                         as={RouterLink}
                         to={heroUnit.href}

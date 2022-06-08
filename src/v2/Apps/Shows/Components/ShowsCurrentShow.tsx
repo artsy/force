@@ -63,7 +63,7 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
           <Spacer mt={2} />
 
           <Button
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             m="auto"
             // @ts-ignore
             as={RouterLink}

@@ -2,7 +2,7 @@ import {
   Box,
   BoxProps,
   Clickable,
-  IconButton,
+  Button,
   Join,
   Text,
   Spacer,
@@ -40,33 +40,33 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
             return (
               <>
                 <Join separator={<Spacer mt={2} />}>
-                  <IconButton
+                  <Button
                     color="black100"
                     onClick={onAppleLogin}
-                    variant="secondaryOutline"
-                    icon={<AppleIcon />}
+                    variant="secondaryBlack"
+                    Icon={AppleIcon}
                     width="100%"
                   >
                     Continue with Apple
-                  </IconButton>
-                  <IconButton
+                  </Button>
+                  <Button
                     color="black100"
                     onClick={onGoogleLogin}
-                    variant="secondaryOutline"
-                    icon={<GoogleIcon />}
+                    variant="secondaryBlack"
+                    Icon={GoogleIcon}
                     width="100%"
                   >
                     Continue with Google
-                  </IconButton>
-                  <IconButton
+                  </Button>
+                  <Button
                     color="black100"
                     onClick={onFacebookLogin}
-                    variant="secondaryOutline"
-                    icon={<FacebookIcon fill="blue100" />}
+                    variant="secondaryBlack"
+                    Icon={FacebookIcon}
                     width="100%"
                   >
                     Continue with Facebook
-                  </IconButton>
+                  </Button>
                 </Join>
                 <Spacer mt={2} />
                 <Box>
@@ -114,33 +114,33 @@ export const AuthenticationFooter: React.FC<AuthenticationFooterProps> = ({
               <Join separator={<Spacer mt={1} />}>
                 <Box>
                   <Join separator={<Spacer mt={2} />}>
-                    <IconButton
+                    <Button
                       color="black100"
                       onClick={onAppleLogin}
-                      variant="secondaryOutline"
-                      icon={<AppleIcon />}
+                      variant="secondaryBlack"
+                      Icon={AppleIcon}
                       width="100%"
                     >
                       Continue with Apple
-                    </IconButton>
-                    <IconButton
+                    </Button>
+                    <Button
                       color="black100"
                       onClick={onGoogleLogin}
-                      variant="secondaryOutline"
-                      icon={<GoogleIcon />}
+                      variant="secondaryBlack"
+                      Icon={GoogleIcon}
                       width="100%"
                     >
                       Continue with Google
-                    </IconButton>
-                    <IconButton
+                    </Button>
+                    <Button
                       color="black100"
                       onClick={onFacebookLogin}
-                      variant="secondaryOutline"
-                      icon={<FacebookIcon fill="blue100" />}
+                      variant="secondaryBlack"
+                      Icon={FacebookIcon}
                       width="100%"
                     >
                       Continue with Facebook
-                    </IconButton>
+                    </Button>
                   </Join>
                 </Box>
 

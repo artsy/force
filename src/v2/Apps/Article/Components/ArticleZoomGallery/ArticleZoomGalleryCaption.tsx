@@ -27,7 +27,7 @@ const ArticleZoomGalleryCaption: FC<ArticleZoomGalleryCaptionProps> = ({
           <Button
             mt={[1, 0]}
             size="small"
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             // @ts-ignore
             as={RouterLink}
             to={figure.href}

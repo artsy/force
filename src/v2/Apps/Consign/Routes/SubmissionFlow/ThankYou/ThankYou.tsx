@@ -73,7 +73,7 @@ export const ThankYou: React.FC = () => {
             mr={[0, 150]}
             width={["100%", "auto"]}
             data-test-id="submit-another-work"
-            size="medium"
+            size="large"
             variant="primaryBlack"
             onClick={trackSubmitAnotherWorkClick}
           >
@@ -86,8 +86,8 @@ export const ThankYou: React.FC = () => {
             mt={[4, 0]}
             width={["100%", "auto"]}
             data-test-id="go-to-artsy-homepage"
-            size="medium"
-            variant="noOutline"
+            size="large"
+            variant="tertiary"
           >
             Back to Artsy Homepage
           </Button>

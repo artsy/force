@@ -82,7 +82,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
     >
       <Header p={1}>
         <Button
-          variant="noOutline"
+          variant="tertiary"
           size="small"
           onClick={() => {
             // On close, abandon any staged filter changes
@@ -105,7 +105,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
 
         <Button
           size="small"
-          variant="secondaryGray"
+          variant="primaryGray"
           disabled={isReset}
           onClick={() => {
             // On clear, reset (staged) filter changes to initial state

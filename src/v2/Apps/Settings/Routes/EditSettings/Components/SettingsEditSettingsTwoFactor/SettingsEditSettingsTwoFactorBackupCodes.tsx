@@ -88,7 +88,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
             <>
               <Button
                 onClick={handleShow}
-                variant="secondaryOutline"
+                variant="secondaryBlack"
                 width={["100%", "auto"]}
               >
                 Show

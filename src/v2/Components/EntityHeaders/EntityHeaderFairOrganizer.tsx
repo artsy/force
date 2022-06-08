@@ -71,7 +71,7 @@ const EntityHeaderFairOrganizer: FC<EntityHeaderFairOrganizerProps> = ({
           user={user}
           profile={fairOrganizer.profile!}
           contextModule={ContextModule.fairsHeader}
-          buttonProps={{ size: "small", variant: "secondaryOutline" }}
+          buttonProps={{ size: "small", variant: "secondaryBlack" }}
         />
       )}
     </Flex>

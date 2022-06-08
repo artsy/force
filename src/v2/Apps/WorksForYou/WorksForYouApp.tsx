@@ -103,7 +103,7 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
               </Column>
               <Column span={3}>
                 <Button
-                  size="medium"
+                  size="large"
                   // @ts-ignore
                   as={RouterLink}
                   to="/collect"

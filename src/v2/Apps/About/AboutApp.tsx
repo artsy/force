@@ -301,7 +301,7 @@ const ArtsySpecialists: React.FC = () => {
           <Spacer ml={[0, 0, 0, 2]} mt={[2, 2, 2, 0]} />
 
           <Button
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             // @ts-ignore
             as={RouterLink}
             to="https://support.artsy.net/hc/en-us"

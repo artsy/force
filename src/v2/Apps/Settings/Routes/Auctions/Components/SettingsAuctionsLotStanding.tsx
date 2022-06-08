@@ -104,7 +104,7 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
           as={RouterLink}
           to={artwork.href}
           width="100%"
-          variant={sale.isClosed ? "secondaryOutline" : "primaryBlack"}
+          variant={sale.isClosed ? "secondaryBlack" : "primaryBlack"}
         >
           {sale.isClosed ? "View Lot" : "Bid"}
         </Button>

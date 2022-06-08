@@ -282,7 +282,7 @@ export const CarouselViewingRoomsGrid = () => {
                   </Text>
                 </Box>
 
-                <Button size="small" variant="secondaryOutline">
+                <Button size="small" variant="secondaryBlack">
                   Follow
                 </Button>
               </Flex>
@@ -319,7 +319,7 @@ export const CarouselGalleries = () => {
                   </Box>
                 </Flex>
 
-                <Button size="small" variant="secondaryOutline">
+                <Button size="small" variant="secondaryBlack">
                   Follow
                 </Button>
               </Flex>

@@ -40,7 +40,7 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <Button width="100%" size="medium" mt={1} onClick={onClick} data-test="bid">
+    <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
       Register to bid
     </Button>
   )
@@ -48,7 +48,7 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
 
 const VerifyIdentityButton: React.FC<{ id: string }> = ({ id }) => (
   <a href={`/identity-verification/${id}`}>
-    <Button width="100%" size="medium">
+    <Button width="100%" size="large">
       Verify identity
     </Button>
   </a>
@@ -175,7 +175,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       if (registrationAttempted) {
         if (qualifiedForBidding) {
           PreviewAction = () => (
-            <Button width="100%" size="medium" mt={1} disabled>
+            <Button width="100%" size="large" mt={1} disabled>
               Registration complete
             </Button>
           )
@@ -186,7 +186,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         } else {
           PreviewAction = () => (
-            <Button width="100%" size="medium" mt={1} disabled>
+            <Button width="100%" size="large" mt={1} disabled>
               Registration pending
             </Button>
           )
@@ -220,7 +220,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
             <Button
               width="100%"
-              size="medium"
+              size="large"
               onClick={() => this.redirectToLiveBidding(me)}
             >
               Watch live bidding
@@ -232,7 +232,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           <>
             <Button
               width="100%"
-              size="medium"
+              size="large"
               onClick={() => this.redirectToLiveBidding(me)}
             >
               Enter live bidding
@@ -258,7 +258,7 @@ export class ArtworkSidebarBidAction extends React.Component<
                 id={pendingIdentityVerification.internalID}
               />
             ) : (
-              <Button width="100%" size="medium" disabled>
+              <Button width="100%" size="large" disabled>
                 Registration pending
               </Button>
             )}
@@ -274,7 +274,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
       if (sale.is_registration_closed && !qualifiedForBidding) {
         return (
-          <Button width="100%" size="medium" disabled>
+          <Button width="100%" size="large" disabled>
             Registration closed
           </Button>
         )
@@ -344,7 +344,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
             <Button
               width="100%"
-              size="medium"
+              size="large"
               data-test="bid"
               // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
               onClick={() => this.redirectToBid(firstIncrement.cents)}

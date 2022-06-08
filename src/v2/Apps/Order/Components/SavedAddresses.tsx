@@ -96,6 +96,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   useEffect(() => {
     onChangeAddressCount &&
       onChangeAddressCount(me.addressConnection?.totalCount)
+    // FIXME: Remove this disable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.addressConnection?.totalCount])
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
@@ -255,7 +257,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           mb={2}
           mt={[2, 4]}
           data-test="profileButton"
-          variant="secondaryOutline"
+          variant="secondaryBlack"
           onClick={() => {
             setShowAddressModal(true),
               setModalDetails({
@@ -272,7 +274,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             mt={[2, 4]}
             mb={2}
             data-test="shippingButton"
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             onClick={() => {
               trackAddAddressClick()
               setShowAddressModal(true),

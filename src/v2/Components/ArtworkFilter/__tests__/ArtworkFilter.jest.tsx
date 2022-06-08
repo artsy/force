@@ -95,9 +95,7 @@ describe("ArtworkFilter", () => {
     renderWithRelay()
 
     expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
-    expect(screen.getAllByText("Yellow")[1]).toHaveTextContent("Close")
     expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
-    expect(screen.getAllByText("Pink")[1]).toHaveTextContent("Close")
   })
 
   it("removes pill after click on it", async () => {
@@ -108,7 +106,6 @@ describe("ArtworkFilter", () => {
 
     expect(screen.getAllByText("Yellow")).not.toHaveLength(2)
     expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
-    expect(screen.getAllByText("Pink")[1]).toHaveTextContent("Close")
   })
 
   describe("without any filtered artworks", () => {

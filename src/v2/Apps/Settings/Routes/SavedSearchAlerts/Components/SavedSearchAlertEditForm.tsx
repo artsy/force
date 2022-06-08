@@ -199,7 +199,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
                 <Flex>
                   <Button
-                    variant="secondaryOutline"
+                    variant="secondaryBlack"
                     flex={1}
                     onClick={onDeleteClick}
                   >
@@ -232,7 +232,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 <Spacer mt={1} />
 
                 <Button
-                  variant="secondaryOutline"
+                  variant="secondaryBlack"
                   width="100%"
                   onClick={onDeleteClick}
                 >
