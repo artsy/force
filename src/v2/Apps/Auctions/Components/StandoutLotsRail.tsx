@@ -36,7 +36,6 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
                 artwork={artwork}
                 key={artwork.slug}
                 contextModule={contextModule}
-                hidePartnerName
                 lazyLoad
                 onClick={() => {
                   trackEvent(
