@@ -16,6 +16,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
   const {
     displayState,
     state,
+    paymentMethod,
     requestedFulfillment,
     mode,
     stateReason,
@@ -35,6 +36,16 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
               <>
                 The seller will respond to your offer by {stateExpiresAt}. Keep
                 in mind making an offer doesn’t guarantee you the work.
+              </>
+            ),
+          }
+        : paymentMethod === "WIRE_TRANSFER"
+        ? {
+            title: "Your order has been submitted",
+            description: (
+              <>
+                Thank you for your purchase. After your order is confirmed, a
+                specialist will contact you to coordinate pickup.
               </>
             ),
           }

@@ -168,6 +168,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       internalID
       code
       displayState
+      paymentMethod
       state
       mode
       source
