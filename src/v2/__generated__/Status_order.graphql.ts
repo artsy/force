@@ -8,13 +8,11 @@ export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "OTHER" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type Status_order = {
     readonly __typename: string;
     readonly internalID: string;
     readonly code: string;
     readonly displayState: CommerceOrderDisplayStateEnum;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
     readonly state: CommerceOrderStateEnum;
     readonly mode: CommerceOrderModeEnum | null;
     readonly source: CommerceOrderSourceEnum;
@@ -120,13 +118,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "displayState",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "paymentMethod",
       "storageKey": null
     },
     {
@@ -435,5 +426,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '44abbf0e2405d31a20d44447e92be8f2';
+(node as any).hash = 'b9d9d73bb92eb7d6ab6ce8b34968dba1';
 export default node;
