@@ -21,6 +21,7 @@ import {
 import { useAuctionTracking } from "v2/Apps/Auction/Hooks/useAuctionTracking"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { ErrorStatus } from "../../Components/Form/ErrorStatus"
+import { ArtworkSidebarAuctionTimerFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
 
 interface AuctionBidRouteProps {
   artwork: AuctionBidRoute_artwork
@@ -110,6 +111,9 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
                 <AuctionLotInfoFragmentContainer
                   saleArtwork={artwork.saleArtwork!}
                 />
+                <ArtworkSidebarAuctionTimerFragmentContainer
+                  artwork={artwork}
+                />
 
                 <Text variant="lg-display">Set Your Max Bid</Text>
 
@@ -176,6 +180,7 @@ export const AuctionBidRouteFragmentContainer = createRefetchContainer(
       fragment AuctionBidRoute_artwork on Artwork {
         slug
         internalID
+        ...ArtworkSidebarAuctionTimer_artwork
         saleArtwork {
           ...AuctionLotInfo_saleArtwork
             @arguments(imageWidth: 150, imageHeight: 150)

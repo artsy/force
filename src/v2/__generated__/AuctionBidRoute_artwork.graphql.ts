@@ -27,6 +27,7 @@ export type AuctionBidRoute_artwork = {
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"AuctionLotInfo_saleArtwork">;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarAuctionTimer_artwork">;
     readonly " $refType": "AuctionBidRoute_artwork";
 };
 export type AuctionBidRoute_artwork$data = AuctionBidRoute_artwork;
@@ -179,11 +180,16 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarAuctionTimer_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '1890c5d4be005fc2e66f11a538c56460';
+(node as any).hash = '9cd2d727e0d0c0dbb8242519d05ac7cd';
 export default node;
