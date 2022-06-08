@@ -21,8 +21,6 @@ export const IMG_HEIGHT = {
 interface ShelfArtworkProps {
   artwork: ShelfArtwork_artwork
   contextModule?: AuthContextModule
-  hideArtistName?: boolean
-  hidePartnerName?: boolean
   hideSaleInfo?: boolean
   lazyLoad?: boolean
   showExtended?: boolean
@@ -33,8 +31,6 @@ interface ShelfArtworkProps {
 const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   artwork,
   contextModule,
-  hideArtistName,
-  hidePartnerName,
   hideSaleInfo,
   lazyLoad,
   onClick,
@@ -109,8 +105,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         <Metadata
           artwork={artwork}
           extended={showExtended}
-          hidePartnerName={hidePartnerName}
-          hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
           isHovered={isHovered}
