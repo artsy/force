@@ -21,7 +21,6 @@ import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "./ArtworkSidebarBiddingClosedMessage"
 import { lotIsClosed } from "v2/Apps/Artwork/Utils/lotIsClosed"
 import {
-  shouldRenderAuthenticityCertificate,
   shouldRenderBuyerGuaranteeAndSecurePayment,
   shouldRenderVerifiedSeller,
 } from "../../Utils/badges"
@@ -47,7 +46,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const startAt = sale?.startAt
 
   const shouldRenderArtworkBadges =
-    shouldRenderAuthenticityCertificate(artwork) ||
     shouldRenderVerifiedSeller(artwork) ||
     shouldRenderBuyerGuaranteeAndSecurePayment(artwork)
 
