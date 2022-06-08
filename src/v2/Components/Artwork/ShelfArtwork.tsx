@@ -8,7 +8,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { useHoverMetadata } from "./useHoverMetadata"
 
 /**
  * The max height for an image in the carousel
@@ -44,18 +44,37 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
-  const isHoverEffectEnabled = useFeatureFlag(
-    "force-enable-hover-effect-for-artwork-item"
-  )
+  const {
+    isHovered,
+    isHoverEffectEnabled,
+    onMouseEnter,
+    onMouseLeave,
+  } = useHoverMetadata()
 
   const shouldShowHoverSaveButton =
     isHoverEffectEnabled && (!!artwork.is_saved || isSaveButtonVisible)
+
+  const handleMouseEnter = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    onMouseEnter()
+    containerProps.onMouseEnter(event)
+  }
+
+  const handleMouseLeave = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    onMouseLeave()
+    containerProps.onMouseLeave(event)
+  }
 
   return (
     <div
       {...containerProps}
       data-test="artworkShelfArtwork"
       data-testid="ShelfArtwork"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <RouterLink
         to={artwork?.href}
@@ -94,6 +113,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
+          isHovered={isHovered}
           shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
         />
       )}
