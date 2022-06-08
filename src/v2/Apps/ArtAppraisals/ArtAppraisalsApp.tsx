@@ -38,7 +38,7 @@ const Header: React.FC = () => {
     <FullBleedHeader src="https://files.artsy.net/images/appraisals-header-image.png">
       <Flex
         position="absolute"
-        top={-7}
+        top={0}
         left={0}
         width="100%"
         height="100%"
@@ -63,9 +63,13 @@ const Header: React.FC = () => {
 
             <Spacer mt={4} />
 
-            <a href="mailto:simon.wills@artsymail.com">
-              <Button>Request an Appraisal</Button>
-            </a>
+            <Button
+              // @ts-ignore
+              as="a"
+              href="mailto:simon.wills@artsymail.com"
+            >
+              Request an Appraisal
+            </Button>
           </Column>
         </GridColumns>
       </Flex>
