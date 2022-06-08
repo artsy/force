@@ -64,8 +64,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     trendingSortVariant
   )
 
-  console.log('[Debug]', 'ArtistArtworkFilter');
-
   return (
     <ArtworkFilterContextProvider
       aggregations={aggregations}
