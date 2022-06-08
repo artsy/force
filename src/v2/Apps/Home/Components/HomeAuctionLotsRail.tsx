@@ -60,7 +60,6 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
               artwork={artwork}
               key={artwork.slug}
               contextModule={ContextModule.auctionLots}
-              hidePartnerName
               lazyLoad
               onClick={() => {
                 const trackingEvent: ClickedArtworkGroup = {
