@@ -39,7 +39,7 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
               </>
             ),
           }
-        : paymentMethod === "WIRE_TRANSFER"
+        : isPickup && paymentMethod === "WIRE_TRANSFER"
         ? {
             title: "Your order has been submitted",
             description: (

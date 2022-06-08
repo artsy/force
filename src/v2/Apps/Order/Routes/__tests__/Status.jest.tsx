@@ -324,24 +324,23 @@ describe("Status", () => {
         )
         expect(page.getMessage()).toBe(1)
       })
-    })
 
-    describe("submitted with payment method wire transfer", () => {
-      it("should present a general message and not specify a time for confirmation", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderWithShippingDetails,
-          ...CreditCardPaymentDetails,
-          displayState: "SUBMITTED",
-          paymentMethod: "WIRE_TRANSFER",
+      describe("for pickup with payment method wire transfer", () => {
+        it("should present a general message and not specify a time for confirmation", async () => {
+          const page = await buildPageWithOrder({
+            ...BuyOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "SUBMITTED",
+            paymentMethod: "WIRE_TRANSFER",
+          })
+          expect(page.text()).toContain("Your order has been submitted")
+          expect(page.text()).toContain(
+            "After your order is confirmed, a specialist will contact you to coordinate pickup."
+          )
+          expect(page.text()).not.toContain(
+            "You will receive a confirmation email by"
+          )
         })
-
-        expect(page.text()).toContain("Your order has been submitted")
-        expect(page.text()).not.toContain(
-          "You will receive a confirmation email by"
-        )
-        expect(page.text()).toContain(
-          "After your order is confirmed, a specialist will contact you to coordinate pickup."
-        )
       })
     })
 
