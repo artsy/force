@@ -7,6 +7,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
+import { useHoverMetadata } from "./useHoverMetadata"
 
 /**
  * The max height for an image in the carousel
@@ -19,8 +20,6 @@ export const IMG_HEIGHT = {
 interface ShelfArtworkProps {
   artwork: ShelfArtwork_artwork
   contextModule?: AuthContextModule
-  hideArtistName?: boolean
-  hidePartnerName?: boolean
   hideSaleInfo?: boolean
   lazyLoad?: boolean
   showExtended?: boolean
@@ -31,16 +30,21 @@ interface ShelfArtworkProps {
 const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   artwork,
   contextModule,
-  hideArtistName,
-  hidePartnerName,
   hideSaleInfo,
   lazyLoad,
   onClick,
   showExtended,
   showMetadata = true,
 }) => {
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+
   return (
-    <div data-test="artworkShelfArtwork" data-testid="ShelfArtwork">
+    <div
+      data-test="artworkShelfArtwork"
+      data-testid="ShelfArtwork"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <RouterLink
         to={artwork?.href}
         display="block"
@@ -63,10 +67,10 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         <Metadata
           artwork={artwork}
           extended={showExtended}
-          hidePartnerName={hidePartnerName}
-          hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
+          contextModule={contextModule}
+          isHovered={isHovered}
           showSaveButton
         />
       )}
