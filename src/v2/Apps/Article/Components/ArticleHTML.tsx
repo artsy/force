@@ -66,7 +66,7 @@ const Container = styled(Box)`
   blockquote,
   pre,
   hr {
-    margin: ${themeGet("space.1")} auto;
+    margin: ${themeGet("space.2")} auto;
 
     &:first-child {
       margin-top: 0;

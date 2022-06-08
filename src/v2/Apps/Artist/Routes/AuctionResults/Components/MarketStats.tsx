@@ -240,7 +240,7 @@ export const MarketStatsQueryRenderer: React.FC<{
   const onRender = (visible: boolean) => {
     if (hasRendered) return
 
-    setImmediate(() => setHasRendered(true))
+    setTimeout(() => setHasRendered(true), 0)
     onRendered?.(visible)
   }
 

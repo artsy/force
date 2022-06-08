@@ -278,9 +278,11 @@ const ArtaShipmentNodeNoUrl = {
 }
 
 export const UntouchedOrder = {
+  bankAccountId: null,
   buyerTotal: "$12,000",
   itemsTotalCents: 1200000,
   code: "abcdefg",
+  paymentMethod: "CREDIT_CARD",
   createdAt: "2022-12-19T06:06:17.171Z",
   creditCard: null,
   currencyCode: "USD",
@@ -805,8 +807,8 @@ export const ArtaShippingDetails = {
   },
 } as const
 
-export const PaymentDetails = {
-  additionalPaymentMethods: [],
+export const CreditCardPaymentDetails = {
+  availablePaymentMethods: ["CREDIT_CARD"],
   creditCard: {
     brand: "Visa",
     city: "New York",
@@ -824,28 +826,43 @@ export const PaymentDetails = {
   },
 } as const
 
+export const BankDebitPaymentDetails = {
+  availablePaymentMethods: ["CREDIT_CARD"],
+  bankAccountId: "bankAccountId",
+  bankAccount: {
+    last4: "1234",
+    bank: "Bank of America",
+  },
+} as const
+
 export const BuyOrderWithShippingDetails = {
   ...UntouchedBuyOrder,
   ...ShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
+} as const
+
+export const BuyOrderWithBankDebitDetails = {
+  ...UntouchedBuyOrder,
+  ...ShippingDetails,
+  ...BankDebitPaymentDetails,
 } as const
 
 export const OfferOrderWithShippingDetails = {
   ...OfferOrderWithOffers,
   ...ShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
 } as const
 
 export const OfferOrderWithShippingDetailsAndNote = {
   ...OfferOrderWithOffersAndNote,
   ...ShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
 } as const
 
 export const ArtaShippedWithTrackingIdNoTrackingUrl = {
   ...UntouchedOfferOrder,
   ...ArtaShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
   lineItems: {
     edges: [
       {
@@ -868,7 +885,7 @@ export const ArtaShippedWithTrackingIdNoTrackingUrl = {
 export const ArtaShippedWithNoTrackingIdNoTrackingUrl = {
   ...UntouchedOfferOrder,
   ...ArtaShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
   lineItems: {
     edges: [
       {
@@ -891,13 +908,13 @@ export const ArtaShippedWithNoTrackingIdNoTrackingUrl = {
 export const BuyOrderWithArtaShippingDetails = {
   ...UntouchedBuyOrderWithShippingQuotes,
   ...ArtaShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
 } as const
 
 export const BuyOrderWithSelectedShippingQuote = {
   ...UntouchedBuyOrderWithSelectedShippingQuote,
   ...ArtaShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
 } as const
 
 export const BuyOrderPickup = {
@@ -976,7 +993,7 @@ export const Offers = [
 export const OfferOrderWithMissingMetadata = {
   ...UntouchedInquiryOfferOrder,
   ...ShippingDetails,
-  ...PaymentDetails,
+  ...CreditCardPaymentDetails,
   lastOffer: {
     ...OfferWithoutTotals,
     shippingTotalCents: null,

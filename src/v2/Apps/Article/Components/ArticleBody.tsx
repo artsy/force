@@ -9,7 +9,10 @@ import {
   Image,
   FullBleed,
   Flex,
+  ColumnSpan,
+  ColumnStart,
 } from "@artsy/palette"
+import { DateTime } from "luxon"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleBody_article } from "v2/__generated__/ArticleBody_article.graphql"
@@ -25,6 +28,7 @@ import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 import { AnalyticsContext } from "v2/System"
 import { OwnerType } from "@artsy/cohesion"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
+import { TopContextBar } from "v2/Components/TopContextBar"
 
 interface ArticleBodyProps {
   article: ArticleBody_article
@@ -48,16 +52,18 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           </FullBleed>
         )}
 
+        {article.seriesArticle && (
+          <TopContextBar displayBackArrow href={article.seriesArticle.href}>
+            {article.seriesArticle.thumbnailTitle}
+          </TopContextBar>
+        )}
+
         <ArticleHeroFragmentContainer article={article} />
 
         <Spacer mt={4} />
 
         <GridColumns gridRowGap={4}>
-          <Column
-            {...(centered
-              ? { span: [12, 8, 6], start: [1, 3, 4] }
-              : { span: 7 })}
-          >
+          <Column {...(centered ? CENTERED_LAYOUT_COLUMNS : { span: 7 })}>
             {/* If there's no hero display a normal headline */}
             {!article.hero && (
               <>
@@ -70,7 +76,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                   display="block"
                   textDecoration="none"
                 >
-                  <Text variant={["lg-display", "xl", "xxl"]}>
+                  <Text as="h1" variant={["lg-display", "xl", "xxl"]}>
                     {article.title}
                   </Text>
 
@@ -91,7 +97,10 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
                 alignItems="center"
                 lineHeight={1}
               >
-                {article.publishedAt}
+                {!!article.publishedAt &&
+                  DateTime.fromISO(article.publishedAt).toFormat(
+                    "MMM d, yyyy h:mma"
+                  )}
 
                 <ArticleNewsSourceFragmentContainer article={article} />
               </Text>
@@ -218,6 +227,14 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
   )
 }
 
+export const CENTERED_LAYOUT_COLUMNS: {
+  span: ColumnSpan[]
+  start: ColumnStart[]
+} = {
+  span: [12, 8, 6],
+  start: [1, 3, 4],
+}
+
 export const ArticleBodyFragmentContainer = createFragmentContainer(
   ArticleBody,
   {
@@ -230,6 +247,10 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         hero {
           __typename
         }
+        seriesArticle {
+          thumbnailTitle
+          href
+        }
         vertical
         byline
         internalID
@@ -238,7 +259,7 @@ export const ArticleBodyFragmentContainer = createFragmentContainer(
         leadParagraph
         title
         href
-        publishedAt(format: "MMM D, YYYY h:mma")
+        publishedAt
         sections {
           ...ArticleSection_section
         }

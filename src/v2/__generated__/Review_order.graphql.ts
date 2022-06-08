@@ -30,7 +30,7 @@ export type Review_order = {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
     } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
     readonly " $refType": "Review_order";
 };
 export type Review_order$data = Review_order;
@@ -204,7 +204,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "CreditCardSummaryItem_order"
+      "name": "PaymentMethodSummaryItem_order"
     },
     {
       "args": null,
@@ -221,5 +221,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'c482565243c19702134ac1b8bd136a80';
+(node as any).hash = '2df49f777561afa0549c095117c3bf10';
 export default node;

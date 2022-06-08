@@ -1,6 +1,8 @@
 import { graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarClassification"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { screen, fireEvent } from "@testing-library/react"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { useTracking } from "react-tracking"
 
 jest.mock(
   "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal",
@@ -12,13 +14,16 @@ jest.mock(
 )
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper({
-  Component: ArtworkSidebarClassificationFragmentContainer,
+const trackEvent = jest.fn()
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: (props: any) => (
+    <ArtworkSidebarClassificationFragmentContainer artwork={props.artwork} />
+  ),
   query: graphql`
-    query ArtworkSidebarClassification_Test_Query
-      @raw_response_type
-      @relay_test_operation {
+    query ArtworkSidebarClassification_Test_Query @relay_test_operation {
       artwork(id: "josef-albers-homage-to-the-square-85") {
         ...ArtworkSidebarClassification_artwork
       }
@@ -27,40 +32,59 @@ const { getWrapper } = setupTestWrapper({
 })
 
 describe("ArtworkSidebarClassification", () => {
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+  })
+
   describe("for artwork with classification", () => {
     it("displays classification", () => {
-      const wrapper = getWrapper({
-        AttributionClass: () => ({
-          shortDescription: "This is a unique works",
+      renderWithRelay({
+        Artwork: () => ({
+          attributionClass: {
+            shortArrayDescription: ["This is", "a unique work"],
+          },
         }),
       })
 
-      expect(wrapper.html()).toContain("This is a unique work")
+      expect(screen.getByText("a unique work")).toBeInTheDocument()
     })
 
     describe("modal pop up", () => {
-      it("shows a modal on Classification details click", () => {
-        const wrapper = getWrapper()
+      it("shows a modal on Classification details click", async () => {
+        renderWithRelay({
+          Artwork: () => ({
+            attributionClass: {
+              shortArrayDescription: ["This is", "a unique work"],
+            },
+          }),
+        })
 
-        expect(wrapper.html()).not.toContain(
-          "ArtworkSidebarClassificationsModalQueryRenderer"
-        )
+        expect(
+          screen.queryByText("ArtworkSidebarClassificationsModalQueryRenderer")
+        ).not.toBeInTheDocument()
 
-        wrapper.find("button").simulate("click")
+        fireEvent.click(screen.getByText("a unique work"))
 
-        expect(wrapper.html()).toContain(
-          "ArtworkSidebarClassificationsModalQueryRenderer"
-        )
+        expect(trackEvent).toBeCalledWith({
+          action_type: "Click",
+          context_module: "Sidebar",
+          subject: "Classification info",
+          type: "Link",
+        })
+
+        expect(
+          screen.getByText("ArtworkSidebarClassificationsModalQueryRenderer")
+        ).toBeInTheDocument()
       })
     })
 
     describe("for artwork without classification", () => {
       it("does not render anything", () => {
-        const wrapper = getWrapper({
+        renderWithRelay({
           Artwork: () => ({ attributionClass: null }),
         })
 
-        expect(wrapper.html()).toBeFalsy()
+        expect(screen.queryByText("a unique work")).not.toBeInTheDocument()
       })
     })
   })

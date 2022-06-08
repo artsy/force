@@ -184,14 +184,6 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     image: "http://files.artsy.net/images/george.jpeg",
   },
   {
-    name: "Agnieszka Perche",
-    title: "Advisor",
-    location: "London",
-    email: "agnieszka.perche@artsy.net",
-    phone: "+44 7842 548576",
-    image: "http://files.artsy.net/images/agnieszka.jpg",
-  },
-  {
     name: "Caroline Perkins",
     title: "Advisor",
     location: "New York",
@@ -216,13 +208,6 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "shlomi.rabi@artsy.net",
     image: "http://files.artsy.net/images/shlomi2.jpg",
-  },
-  {
-    name: "Chloé Bigio",
-    title: "Senior Manager, Auction Partnerships",
-    location: "New York",
-    email: "chloe@artsy.net",
-    image: "http://files.artsy.net/images/chloe.jpg",
   },
   {
     name: "Lauren Carpinelli",

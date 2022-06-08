@@ -27,7 +27,6 @@ import { MockPayloadGenerator } from "relay-test-utils"
 
 describe("AuctionResults", () => {
   // @ts-ignore
-  window.setImmediate = jest.fn()
   let breakpoint
   const trackEvent = jest.fn()
   const mockOpenAuthModal = openAuthModal as jest.Mock

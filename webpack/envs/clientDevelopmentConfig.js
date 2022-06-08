@@ -1,10 +1,11 @@
 // @ts-check
 
-import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
-import WebpackManifestPlugin from "webpack-manifest-plugin"
+import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
+import TimeFixPlugin from "time-fix-plugin"
+import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
 import webpack from "webpack"
@@ -21,9 +22,18 @@ import {
   mjsLoader,
 } from "./sharedLoaders"
 
-import { externals, devtool, mode, resolve, stats } from "./sharedConfig"
+import {
+  cache,
+  devtool,
+  experiments,
+  externals,
+  mode,
+  resolve,
+  stats,
+} from "./sharedConfig"
 
 export const clientDevelopmentConfig = () => ({
+  cache,
   devtool,
   entry: {
     "artsy-entry": [
@@ -31,6 +41,7 @@ export const clientDevelopmentConfig = () => ({
       path.resolve(process.cwd(), "src/v2/client.tsx"),
     ],
   },
+  experiments,
   externals,
   mode,
   module: {
@@ -41,29 +52,34 @@ export const clientDevelopmentConfig = () => ({
     concatenateModules: env.webpackConcatenate,
     runtimeChunk: "single", // Extract webpack runtime code into it's own file
     splitChunks,
+
+    // Webpack does extra algorithmic work to optimize the output for size and
+    // load performance. These optimizations are performant for smaller codebases,
+    // but can be costly in larger ones.
+    removeAvailableModules: env.isDevelopment,
+    removeEmptyChunks: env.isDevelopment,
   },
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets/",
+    pathinfo: false,
   },
   plugins: [
     ...sharedPlugins(),
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      formatter: "codeframe",
-      formatterOptions: "highlightCode",
-      watch: ["./src/v2"],
+      typescript: {
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+      },
+      formatter: { type: "codeframe", options: { highlightCode: true } },
     }),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),
-    }),
-    new HashedModuleIdsPlugin(),
-    new WebpackManifestPlugin({
-      basePath: "/assets/",
-      fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
@@ -72,6 +88,14 @@ export const clientDevelopmentConfig = () => ({
     }),
     new ReactRefreshWebpackPlugin({
       overlay: false,
+    }),
+    new SimpleProgressWebpackPlugin({
+      format: "minimal",
+    }),
+    new TimeFixPlugin(),
+    new WebpackManifestPlugin({
+      basePath: "/assets/",
+      fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
   ],
   resolve,

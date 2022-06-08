@@ -1,6 +1,5 @@
 import { mount } from "enzyme"
 import * as React from "react"
-import { setImmediate } from "timers"
 import { Responsive } from "v2/Utils/Responsive"
 import { MockBoot } from "../MockBoot"
 import { renderUntil } from "../renderUntil"
@@ -16,9 +15,9 @@ class Component extends React.Component {
         data: "Loading",
       },
       () =>
-        setImmediate(() => {
+        setTimeout(() => {
           this.setState({ data: "ohai" })
-        })
+        }, 0)
     )
   }
 

@@ -1,5 +1,8 @@
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
-import { Payment_order } from "v2/__generated__/Payment_order.graphql"
+import {
+  CommercePaymentMethodEnum,
+  Payment_order,
+} from "v2/__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "v2/__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -28,6 +31,7 @@ import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { SetPayment } from "../../Components/SetPayment"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
+import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
@@ -55,11 +59,30 @@ const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export const PaymentRoute: FC<Props> = props => {
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
+  const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
   const { order, isCommittingMutation } = props
-  const isLoading = isGettingCreditCardId || isCommittingMutation
+  const isLoading =
+    isGettingCreditCardId || isCommittingMutation || isSetPaymentCommitting
   const paymentPicker = createRef<PaymentPicker>()
+  const { submitMutation: setPaymentMutation } = useSetPayment()
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    CommercePaymentMethodEnum
+  >(order.paymentMethod || "CREDIT_CARD")
 
-  const onContinue = async () => {
+  const setPayment = () => {
+    switch (selectedPaymentMethod) {
+      case "CREDIT_CARD":
+        onCreditCardContinue()
+        break
+      case "WIRE_TRANSFER":
+        onWireTransferContinue()
+        break
+      default:
+        break
+    }
+  }
+
+  const onCreditCardContinue = async () => {
     try {
       setIsGettingCreditCardId(true)
       const result = await paymentPicker?.current?.getCreditCardId()
@@ -89,7 +112,8 @@ export const PaymentRoute: FC<Props> = props => {
       const orderOrError = (
         await setOrderPayment({
           input: {
-            creditCardId: result?.creditCardId!,
+            paymentMethod: "CREDIT_CARD",
+            paymentMethodId: result?.creditCardId,
             id: props.order.internalID!,
           },
         })
@@ -106,9 +130,33 @@ export const PaymentRoute: FC<Props> = props => {
     }
   }
 
-  const onWireTransferContinue = () => {
-    console.log("onWireTransferContinue")
-    // TODO: set order payment with wire transfer when ready
+  const onWireTransferContinue = async () => {
+    try {
+      setIsSetPaymentCommitting(true)
+
+      const orderOrError = (
+        await setPaymentMutation({
+          variables: {
+            input: {
+              id: props.order.internalID,
+              paymentMethod: "WIRE_TRANSFER",
+            },
+          },
+        })
+      ).commerceSetPayment?.orderOrError
+
+      setIsSetPaymentCommitting(false)
+
+      if (orderOrError?.error) {
+        throw orderOrError.error
+      }
+
+      onSetPaymentSuccess()
+    } catch (error) {
+      setIsSetPaymentCommitting(false)
+      logger.error(error)
+      onSetPaymentError(error)
+    }
   }
 
   const setOrderPayment = (
@@ -175,23 +223,25 @@ export const PaymentRoute: FC<Props> = props => {
       <TwoColumnLayout
         Content={
           <>
-            {isSettingPayment && (
+            {isSettingPayment ? (
               <SetPayment
                 order={order}
                 setupIntentId={setupIntentId!}
                 onSuccess={onSetPaymentSuccess}
                 onError={onSetPaymentError}
               />
+            ) : (
+              <PaymentContent
+                commitMutation={props.commitMutation}
+                isLoading={isLoading}
+                paymentMethod={selectedPaymentMethod}
+                me={props.me}
+                order={props.order}
+                paymentPicker={paymentPicker}
+                setPayment={setPayment}
+                onPaymentMethodChange={setSelectedPaymentMethod}
+              />
             )}
-            <PaymentContent
-              commitMutation={props.commitMutation}
-              isLoading={isLoading}
-              me={props.me}
-              order={props.order}
-              onContinue={onContinue}
-              onWireTransferContinue={onWireTransferContinue}
-              paymentPicker={paymentPicker}
-            />
           </>
         }
         Sidebar={
@@ -208,9 +258,11 @@ export const PaymentRoute: FC<Props> = props => {
               contextPageOwnerType={OwnerType.ordersPayment}
             />
             <Spacer mb={[2, 4]} />
-            <Media at="xs">
-              <ContinueButton onClick={onContinue} loading={isLoading} />
-            </Media>
+            {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
+              <Media at="xs">
+                <ContinueButton onClick={setPayment} loading={isLoading} />
+              </Media>
+            )}
           </Flex>
         }
       />
@@ -228,10 +280,11 @@ export const PaymentFragmentContainer = createFragmentContainer(
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
-        additionalPaymentMethods
+        availablePaymentMethods
         internalID
         mode
         currencyCode
+        paymentMethod
         buyerTotal(precision: 2)
         lineItems {
           edges {

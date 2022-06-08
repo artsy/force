@@ -19,13 +19,9 @@ const ArticleVisibilityMetadata: FC<ArticleVisibilityMetadataProps> = ({
     onIntersection: () => {
       if (!article.href) return
 
-      document.title = `${article.title} | Artsy`
+      document.title = `${article.searchTitle || article.title} | Artsy`
 
-      window.history.replaceState(
-        {},
-        "",
-        article.href.replace("/article/", "/article2/")
-      )
+      window.history.replaceState({}, "", article.href)
     },
   })
 
@@ -38,6 +34,7 @@ export const ArticleVisibilityMetadataFragmentContainer = createFragmentContaine
     article: graphql`
       fragment ArticleVisibilityMetadata_article on Article {
         title
+        searchTitle
         href
       }
     `,

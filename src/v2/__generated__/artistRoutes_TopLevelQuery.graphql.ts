@@ -40,7 +40,7 @@ export type artistRoutes_TopLevelQueryResponse = {
             } | null;
         } | null;
         readonly insights: ReadonlyArray<{
-            readonly type: string | null;
+            readonly type: string;
         } | null> | null;
         readonly biographyBlurb: {
             readonly text: string | null;

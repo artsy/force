@@ -5,7 +5,6 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import {
-  Box,
   Image,
   Text,
   Spacer,
@@ -27,35 +26,29 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedMarketNewsQuery } from "v2/__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import { HomeFeaturedMarketNews_articles } from "v2/__generated__/HomeFeaturedMarketNews_articles.graphql"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
+import {
+  CellArticleFragmentContainer,
+  CellArticlePlaceholder,
+} from "v2/Components/Cells/CellArticle"
 
 const ARTICLE_COUNT = 6
 
 interface HomeFeaturedMarketNewsProps {
   articles: HomeFeaturedMarketNews_articles
 }
-
-const StyledRouterLink = styled(RouterLink)`
-  text-decoration: none;
-  &:hover {
-    color: ${themeGet("colors.blue100")};
-  }
-`
-
 const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
   articles,
 }) => {
   const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
+  const truncatedRestOfArticles = take(restOfArticles, ARTICLE_COUNT)
   const firstImage = firstArticle.thumbnailImage?.large
-  const articlesList = take(restOfArticles, ARTICLE_COUNT)
 
   return (
     <HomeFeaturedMarketNewsContainer>
       <GridColumns>
         <Column span={[12, 6]} mb={[4, 0]}>
-          <StyledRouterLink
+          <RouterLink
             key={firstArticle.internalID}
             to={firstArticle.href ?? ""}
             display="block"
@@ -88,71 +81,34 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
               </ResponsiveBox>
             )}
 
-            <Text variant="xs" textTransform="uppercase" my={1}>
+            <Text variant="xs" fontWeight="bold" mt={1}>
               {firstArticle.vertical}
             </Text>
 
-            <Text variant="xl">{firstArticle.title}</Text>
+            <Text variant="xl" mt={0.5}>
+              {firstArticle.title}
+            </Text>
 
             <Text variant="lg-display" mt={1}>
               By {firstArticle.byline}
             </Text>
-          </StyledRouterLink>
+
+            <Text variant="lg-display" color="black60" mt={0.5}>
+              {firstArticle.publishedAt}
+            </Text>
+          </RouterLink>
         </Column>
 
         <Column span={[12, 6]}>
           <Masonry columnCount={2}>
-            {articlesList.map(article => {
-              const image = article.thumbnailImage?.small
-
+            {truncatedRestOfArticles.map(article => {
               return (
-                <StyledRouterLink
+                <CellArticleFragmentContainer
                   key={article.internalID}
-                  to={article.href ?? ""}
-                  textDecoration="none"
-                  onClick={() => {
-                    const trackingEvent: ClickedArticleGroup = {
-                      action: ActionType.clickedArticleGroup,
-                      context_module: ContextModule.marketNews,
-                      context_page_owner_type: OwnerType.home,
-                      context_page_owner_id: article.internalID,
-                      context_page_owner_slug: article.slug ?? "",
-                      destination_page_owner_type: OwnerType.article,
-                      type: "thumbnail",
-                    }
-                    trackEvent(trackingEvent)
-                  }}
-                >
-                  <Box mb={4}>
-                    {image && (
-                      <ResponsiveBox
-                        aspectWidth={image.width}
-                        aspectHeight={image.height}
-                        maxWidth="100%"
-                        display="block"
-                      >
-                        <Image
-                          width="100%"
-                          height="100%"
-                          src={image.src}
-                          srcSet={image.srcSet}
-                          style={{ display: "block" }}
-                          lazyLoad
-                        />
-                      </ResponsiveBox>
-                    )}
-
-                    <Text variant="xs" textTransform="uppercase" my={1}>
-                      {article.vertical}
-                    </Text>
-
-                    <Text variant="lg-display">{article.title}</Text>
-
-                    <Text variant="sm-display" mt={1}>
-                      By {article.byline}
-                    </Text>
-                  </Box>
-                </StyledRouterLink>
+                  article={article}
+                  mode="GRID"
+                  mb={4}
+                />
               )
             })}
           </Masonry>
@@ -171,7 +127,7 @@ const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
         <Text variant="xl">Market News</Text>
 
         <Text
-          variant="sm"
+          variant="sm-display"
           textAlign="right"
           as={RouterLink}
           // @ts-ignore
@@ -203,23 +159,17 @@ export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
   {
     articles: graphql`
       fragment HomeFeaturedMarketNews_articles on Article @relay(plural: true) {
+        ...CellArticle_article
         internalID
         href
         byline
         slug
         title
-        publishedAt(format: "MMM D YYYY")
+        publishedAt(format: "MMM D, YYYY")
         vertical
         thumbnailTitle
         thumbnailImage {
           large: cropped(width: 670, height: 720) {
-            width
-            height
-            src
-            srcSet
-          }
-
-          small: cropped(width: 325, height: 240) {
             width
             height
             src
@@ -256,47 +206,7 @@ const PLACEHOLDER = (
         <Column span={[12, 6]}>
           <Masonry columnCount={2}>
             {[...new Array(8)].map((_, i) => {
-              return (
-                <React.Fragment key={i}>
-                  <Box mb={4}>
-                    <Media at="xs">
-                      <SkeletonBox
-                        bg="black30"
-                        width="100%"
-                        height={300}
-                        mb={1}
-                      />
-                    </Media>
-                    <Media greaterThan="xs">
-                      <ResponsiveBox
-                        aspectWidth={325}
-                        aspectHeight={280}
-                        maxWidth="100%"
-                      >
-                        <SkeletonBox
-                          bg="black30"
-                          height="100%"
-                          width="100%"
-                          mb={1}
-                        />
-                      </ResponsiveBox>
-                    </Media>
-
-                    <SkeletonText variant="xs" textTransform="uppercase" my={1}>
-                      Art Fairs
-                    </SkeletonText>
-
-                    <SkeletonText variant="lg-display">
-                      Essential Tips for Collecting Work by Anni and Josef
-                      Albers
-                    </SkeletonText>
-
-                    <SkeletonText variant="sm-display" mt={1}>
-                      By Artsy Editorial
-                    </SkeletonText>
-                  </Box>
-                </React.Fragment>
-              )
+              return <CellArticlePlaceholder key={i} />
             })}
           </Masonry>
         </Column>

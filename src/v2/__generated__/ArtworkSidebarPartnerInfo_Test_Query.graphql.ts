@@ -32,10 +32,7 @@ fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
   partner {
     name
     href
-    locations {
-      city
-      id
-    }
+    cities
     id
   }
   sale {
@@ -162,20 +159,8 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Location",
-                "kind": "LinkedField",
-                "name": "locations",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "city",
-                    "storageKey": null
-                  },
-                  (v3/*: any*/)
-                ],
+                "kind": "ScalarField",
+                "name": "cities",
                 "storageKey": null
               },
               (v3/*: any*/)
@@ -203,7 +188,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ca3f7af4345334d8028e208c5794dc2d",
+    "cacheID": "916ad489ad35fc1b25e8db0a5e26c9a4",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -227,16 +212,14 @@ return {
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.href": (v5/*: any*/),
-        "artwork.partner.id": (v4/*: any*/),
-        "artwork.partner.locations": {
+        "artwork.partner.cities": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
-          "type": "Location"
+          "type": "String"
         },
-        "artwork.partner.locations.city": (v5/*: any*/),
-        "artwork.partner.locations.id": (v4/*: any*/),
+        "artwork.partner.href": (v5/*: any*/),
+        "artwork.partner.id": (v4/*: any*/),
         "artwork.partner.name": (v5/*: any*/),
         "artwork.sale": {
           "enumValues": null,
@@ -252,7 +235,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

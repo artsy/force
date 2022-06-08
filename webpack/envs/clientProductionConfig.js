@@ -1,10 +1,9 @@
 // @ts-check
 import path from "path"
 
-import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
-import WebpackManifestPlugin from "webpack-manifest-plugin"
+import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 
 import { basePath, env } from "../utils/env"
 import { sharedPlugins } from "./sharedPlugins"
@@ -41,7 +40,6 @@ export const clientProductionConfig = () => ({
     concatenateModules: env.webpackConcatenate,
     minimize: !env.webpackDebug && !env.fastProductionBuild,
     minimizer,
-    moduleIds: "hashed",
     runtimeChunk: "single", // Extract webpack runtime code into it's own file
     splitChunks,
   },
@@ -56,7 +54,6 @@ export const clientProductionConfig = () => ({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),
     }),
-    new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets/",
       fileName: path.resolve(basePath, "manifest-novo.json"),

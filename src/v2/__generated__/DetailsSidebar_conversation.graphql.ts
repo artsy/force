@@ -61,7 +61,7 @@ export type DetailsSidebar_conversation = {
                     } | null> | null;
                 } | null;
                 readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
-                readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order">;
+                readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
             } | null;
         } | null> | null;
     } | null;
@@ -517,7 +517,7 @@ return {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "CreditCardSummaryItem_order"
+                  "name": "PaymentMethodSummaryItem_order"
                 },
                 {
                   "kind": "InlineFragment",
@@ -716,5 +716,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '974ea6aacf5cd730d3a0236adb1f2a9c';
+(node as any).hash = '03a20151de349b9033ff8aff288c3ba7';
 export default node;

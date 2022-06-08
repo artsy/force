@@ -29,7 +29,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
-import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "../../Components/OfferHistoryItem"
 import {
   OrderStepper,
@@ -326,7 +326,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <ShippingSummaryItem order={order} locked />
-                <CreditCardSummaryItem order={order} locked />
+                <PaymentMethodSummaryItem order={order} locked />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersRespond}
@@ -389,7 +389,7 @@ export const RespondFragmentContainer = createFragmentContainer(
         ...TransactionDetailsSummaryItem_order
         ...ArtworkSummaryItem_order
         ...ShippingSummaryItem_order
-        ...CreditCardSummaryItem_order
+        ...PaymentMethodSummaryItem_order
         ...OfferHistoryItem_order
       }
     `,

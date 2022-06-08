@@ -18,7 +18,7 @@ export type identityVerificationRoutes_IdentityVerificationAppQueryRawResponse =
         readonly email: string | null;
         readonly identityVerification: ({
             readonly internalID: string;
-            readonly userID: string;
+            readonly userID: string | null;
             readonly state: string;
             readonly id: string;
         }) | null;

@@ -3,7 +3,7 @@ import { Counter_order } from "v2/__generated__/Counter_order.graphql"
 import { CounterSubmitMutation } from "v2/__generated__/CounterSubmitMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
-import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "v2/Apps/Order/Components/CreditCardSummaryItem"
+import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "v2/Apps/Order/Components/PaymentMethodSummaryItem"
 import {
   OrderStepper,
   counterofferFlowSteps,
@@ -174,7 +174,7 @@ export class CounterRoute extends Component<CounterProps> {
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <ShippingSummaryItem order={order} locked />
-                <CreditCardSummaryItem order={order} locked />
+                <PaymentMethodSummaryItem order={order} locked />
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersCounter}
@@ -236,7 +236,7 @@ export const CounterFragmentContainer = createFragmentContainer(
         ...TransactionDetailsSummaryItem_order
         ...ArtworkSummaryItem_order
         ...ShippingSummaryItem_order
-        ...CreditCardSummaryItem_order
+        ...PaymentMethodSummaryItem_order
         ...OfferHistoryItem_order
       }
     `,

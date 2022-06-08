@@ -11,6 +11,8 @@ export const useSetPayment = () => {
             ... on CommerceOrderWithMutationSuccess {
               order {
                 id
+                bankAccountId
+                paymentMethod
               }
             }
             ... on CommerceOrderWithMutationFailure {

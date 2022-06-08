@@ -2,7 +2,7 @@
 
 require("coffeescript/register")
 require("@babel/register")({
-  extensions: [".ts", ".js", ".tsx", ".jsx"],
+  extensions: [".ts", ".js", ".tsx", ".jsx", ".ejs"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
 require("@artsy/multienv").loadEnvs(".env.shared", ".env")
@@ -17,6 +17,7 @@ const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
 const { getDevelopmentWebpackConfig } = require("../webpack")
 const { initializeMiddleware } = require("./middleware")
+const { env } = require("../webpack/utils/env")
 
 /**
  * Force resolution of potentially `yarn link`'d modules to the local i
@@ -36,15 +37,21 @@ setAliases({
 })
 
 const webpackConfig = getDevelopmentWebpackConfig("client.dev")
-const legacyWebpackConfig = getDevelopmentWebpackConfig("legacy.dev")
-const compiler = webpack([webpackConfig, legacyWebpackConfig])
+
+const webpackConfigsToCompile = [webpackConfig]
+
+if (env.compileLegacyClientInDev) {
+  const legacyWebpackConfig = getDevelopmentWebpackConfig("legacy.dev")
+  webpackConfigsToCompile.push(legacyWebpackConfig)
+}
+
+const compiler = webpack(webpackConfigsToCompile)
 const app = express()
 
 const wdm = webpackDevMiddleware(compiler, {
-  publicPath: legacyWebpackConfig.output.publicPath,
-  quiet: true,
+  publicPath: webpackConfig.output.publicPath,
   serverSideRender: true,
-  stats: legacyWebpackConfig.stats,
+  stats: webpackConfig.stats,
   writeToDisk(filePath) {
     /**
      * Emit the stats file to disk during dev so that loadable-compoents can
@@ -73,18 +80,20 @@ app.use(
 
 // Mount css middleware for legacy pages. Mostly applies to server-side jade
 // code. Client-side runs through webpack
-app.use(
-  require("stylus").middleware({
-    dest: path.resolve(__dirname, "./desktop/public"),
-    src: path.resolve(__dirname, "./desktop"),
-  })
-)
-app.use(
-  require("stylus").middleware({
-    dest: path.resolve(__dirname, "./mobile/public"),
-    src: path.resolve(__dirname, "./mobile"),
-  })
-)
+if (env.compileLegacyClientInDev) {
+  app.use(
+    require("stylus").middleware({
+      dest: path.resolve(__dirname, "./desktop/public"),
+      src: path.resolve(__dirname, "./desktop"),
+    })
+  )
+  app.use(
+    require("stylus").middleware({
+      dest: path.resolve(__dirname, "./mobile/public"),
+      src: path.resolve(__dirname, "./mobile"),
+    })
+  )
+}
 
 // Mount middleware
 initializeMiddleware(app)
@@ -98,14 +107,7 @@ mountAndReload(path.resolve("src/v2/server.ts"), {
 
 // Mount express-reloadable on legacy routes
 mountAndReload(path.resolve("src/desktop"), {
-  watchModules: [
-    path.resolve(process.cwd(), "src/v2"),
-    "@artsy/cohesion",
-    "@artsy/fresnel",
-    "@artsy/palette",
-    "@artsy/reaction",
-    "@artsy/stitch",
-  ],
+  watchModules: ["@artsy/palette"],
 })
 
 // Start server

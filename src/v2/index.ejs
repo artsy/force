@@ -22,8 +22,10 @@
   <link rel="preload" href="<%%= fontUrl %>/ll-unica77_medium.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="<%%= fontUrl %>/ll-unica77_italic.woff2" as="font" type="font/woff2" crossorigin />
 
-  <!-- Create preload tags for dynamic chunks -->
-  <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.tagName = 'link'; tag.attributes['href'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['rel'] = 'preload'; tag.attributes['as'] = 'script'; delete tag.attributes.src; return tag; }) %>
+  <%% if (!disable.scripts) { %>
+    <!-- Create preload tags for dynamic chunks -->
+    <%- htmlWebpackPlugin.tags.headTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; return tag; }) %>
+  <%% } %>
 
   <link rel="icon" type="image/png" href="<%%= icons.favicon %>" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="<%%= icons.faviconSVG %>" />
@@ -54,9 +56,10 @@
   <div id="react-root"><%%- content.body %></div>
 
   <%% if (!disable.scripts) { %>
-  <!-- String concatenation is needed allow outputting a template tag -->
-  <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['async'] = true; return tag; }) %>
+    <!-- String concatenation is needed allow outputting a template tag -->
+    <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['async'] = true; return tag; }) %>
   <%% } %>
+
 
   <%% if (!disable.segment && !sd.THIRD_PARTIES_DISABLED && sd.SEGMENT_WRITE_KEY) { %>
   <script type="text/javascript" defer>

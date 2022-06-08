@@ -32,7 +32,7 @@ export const articlesRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/news2",
+    path: "/news",
     Component: NewsApp,
     onClientSideRender: () => {
       NewsApp.preload()

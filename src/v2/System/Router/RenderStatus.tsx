@@ -23,7 +23,7 @@ export const RenderPending = () => {
    * duration of the fetch.
    */
   if (!isFetching) {
-    setImmediate(() => setFetching?.(true))
+    setTimeout(() => setFetching?.(true), 0)
   }
 
   if (isFetching) {
@@ -54,7 +54,7 @@ export const RenderReady = (props: { elements: React.ReactNode }) => {
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    setImmediate(() => setFetching?.(false))
+    setTimeout(() => setFetching?.(false), 0)
   }
 
   if (!isFetching) {
@@ -76,7 +76,7 @@ export const RenderError: React.FC<{
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    setImmediate(() => setFetching?.(false))
+    setTimeout(() => setFetching?.(false), 0)
   }
 
   const message =

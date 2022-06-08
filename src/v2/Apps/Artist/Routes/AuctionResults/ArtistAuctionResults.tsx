@@ -205,7 +205,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     if (!scrollToMarketSignals) return
 
     // Scroll to auction results if the market signals section is not visible
-    setImmediate(visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop)
+    setTimeout(
+      visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
+      0
+    )
   }
 
   return (

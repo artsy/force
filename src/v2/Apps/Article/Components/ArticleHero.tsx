@@ -18,6 +18,7 @@ import {
 } from "@artsy/palette"
 import { ArticleHero_article } from "v2/__generated__/ArticleHero_article.graphql"
 import styled from "styled-components"
+import { CENTERED_LAYOUT_COLUMNS } from "./ArticleBody"
 
 interface ArticleHeroProps {
   article: ArticleHero_article
@@ -48,7 +49,9 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
               {article.vertical}
             </Text>
 
-            <Text variant={["xl", "xxl"]}>{article.title}</Text>
+            <Text as="h1" variant={["xl", "xxl"]}>
+              {article.title}
+            </Text>
 
             <Text
               variant={["md", "lg-display"]}
@@ -77,7 +80,9 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
                 {article.vertical}
               </Text>
 
-              <Text variant={["xl", "xxl"]}>{article.title}</Text>
+              <Text as="h1" variant={["xl", "xxl"]}>
+                {article.title}
+              </Text>
 
               <Text variant={["md", "lg-display"]} color="black60">
                 {article.byline}
@@ -137,14 +142,16 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
           )}
 
           <GridColumns>
-            <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+            <Column {...CENTERED_LAYOUT_COLUMNS}>
               {article.vertical && (
                 <Text variant="sm" fontWeight="bold">
                   {article.vertical}
                 </Text>
               )}
 
-              <Text variant={["xl", "xxl"]}>{article.title}</Text>
+              <Text as="h1" variant={["xl", "xxl"]}>
+                {article.title}
+              </Text>
 
               <Text variant={["md", "lg-display"]} color="black60" mb={2}>
                 {article.byline}
@@ -163,12 +170,14 @@ const ArticleHero: FC<ArticleHeroProps> = ({ article, fixed = true }) => {
           <Spacer mt={4} />
 
           <GridColumns>
-            <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+            <Column {...CENTERED_LAYOUT_COLUMNS}>
               <Text variant="sm" fontWeight="bold">
                 {article.vertical}
               </Text>
 
-              <Text variant={["xl", "xxl"]}>{article.title}</Text>
+              <Text as="h1" variant={["xl", "xxl"]}>
+                {article.title}
+              </Text>
 
               <Text variant={["md", "lg-display"]} color="black60">
                 {article.byline}

@@ -1,5 +1,5 @@
 import { ReactWrapper } from "enzyme"
-import * as React from "react";
+import * as React from "react"
 
 declare module "enzyme" {
   export type RenderUntilPredicate<P, S, C> = (
@@ -29,9 +29,9 @@ declare module "enzyme" {
 
         // After mounting and the initial render, trigger another render with data.
         componentDidMount() {
-          setImmediate(() => {
+          setTimeout(() => {
             this.setState({ data: "ohai" })
-          })
+          }, 0)
         }
 
         render() {

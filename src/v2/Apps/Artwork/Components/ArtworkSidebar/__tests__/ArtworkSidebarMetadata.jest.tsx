@@ -13,10 +13,18 @@ import {
 import { ArtworkSidebarClassification } from "../../ArtworkSidebar/ArtworkSidebarClassification"
 import { ArtworkSidebarMetadataFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarMetadata"
 import { ArtworkSidebarSizeInfo } from "../../ArtworkSidebar/ArtworkSidebarSizeInfo"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 describe("ArtworkSidebarMetadata", () => {
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
   let wrapper: ReactWrapper
 
   const getWrapper = async (
@@ -40,7 +48,7 @@ describe("ArtworkSidebarMetadata", () => {
   }
 
   describe("for non editioned artwork", () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       wrapper = await getWrapper()
     })
 
@@ -62,7 +70,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.html()).toContain("This is a unique work")
+      expect(wrapper?.text()).toContain("This is a unique work")
     })
   })
 
@@ -90,7 +98,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.html()).toContain("This is part of a limited edition set")
+      expect(wrapper?.text()).toContain("This is part of a limited edition set")
     })
   })
 
@@ -117,7 +125,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.html()).toContain("This is part of a limited edition set")
+      expect(wrapper?.text()).toContain("This is part of a limited edition set")
     })
   })
 
@@ -180,7 +188,7 @@ describe("ArtworkSidebarMetadata", () => {
     })
 
     it("displays classification", () => {
-      expect(wrapper?.html()).toContain("This is part of a limited edition set")
+      expect(wrapper?.text()).toContain("This is part of a limited edition set")
     })
   })
 })

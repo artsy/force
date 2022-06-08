@@ -27,9 +27,9 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
             }) | null;
         }) | null;
         readonly insights: ReadonlyArray<({
-            readonly type: string | null;
-            readonly label: string | null;
-            readonly entities: ReadonlyArray<string | null> | null;
+            readonly type: string;
+            readonly label: string;
+            readonly entities: ReadonlyArray<string>;
         }) | null> | null;
         readonly auctionResultsConnection: ({
             readonly edges: ReadonlyArray<({
@@ -130,6 +130,12 @@ v3 = {
 v4 = {
   "enumValues": null,
   "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
   "plural": false,
   "type": "String"
 };
@@ -473,12 +479,12 @@ return {
         },
         "artist.insights.entities": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "String"
         },
-        "artist.insights.label": (v4/*: any*/),
-        "artist.insights.type": (v4/*: any*/),
+        "artist.insights.label": (v5/*: any*/),
+        "artist.insights.type": (v5/*: any*/),
         "artist.slug": (v3/*: any*/)
       }
     },

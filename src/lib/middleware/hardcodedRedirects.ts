@@ -2,7 +2,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import url from "url"
 import express from "express"
 
-// Permanently (301) redirect a specific route or route pattern?
+// Permanently (301) redirect a specific route or route pattern
 const REDIRECTS = {
   "/partners": "/galleries",
   "/gallery": "/galleries",
@@ -87,6 +87,32 @@ const REDIRECTS = {
   "/buying-with-artsy": "/channel/buying-with-artsy",
   "/personalize": "/",
   "/personalize/*": "/",
+  "/article/elena-soboleva-what-we-learned-from-writing-7-000-artist-bios":
+    "https://partners.artsy.net/resource/what-we-learned-from-writing-artist-bios",
+  "/article/gallery-insights-practical-digital-security-for-your-gallery":
+    "https://partners.artsy.net/resource/digital-security-for-your-gallery",
+  "/article/gallery-insights-brett-gorvy-new-storefont":
+    "https://partners.artsy.net/resource/brett-gorvy-online-storefront",
+  "/article/gallery-insights-the-pop-up-gallery-checklist":
+    "https://partners.artsy.net/resource/pop-up-galleries",
+  "/article/gallery-insights-artful-pitch":
+    "https://partners.artsy.net/resource/press-for-your-gallery",
+  "/article/elena-soboleva-how-to-write-an-effective-press-release":
+    "https://partners.artsy.net/resource/write-an-effective-press-release-for-your-gallery",
+  "/article/gallery-insights-3-misconceptions-about-professional-art-buyers":
+    "https://partners.artsy.net/resource/professional-art-buyers",
+  "/article/gallery-insights-vr-galleries-04-04-17":
+    "https://partners.artsy.net/resource/vr-for-galleries",
+  "/article/gallery-insights-focus-in-on-better-gallery-photography":
+    "https://partners.artsy.net/resource/focus-in-on-better-gallery-photography",
+  "/article/elena-soboleva-sale-scam-verifying-online-inquiries":
+    "https://partners.artsy.net/resource/verify-online-inquiries",
+  "/article/gallery-insights-collectors-engaged":
+    "https://partners.artsy.net/resource/keep-collectors-engaged",
+  "/artsy-vanguard-2019": "/article/artsy-vanguard-2019-50-artists",
+  "/series/artsy-vanguard-2019": "/article/artsy-vanguard-2019-50-artists",
+  "/venice-biennale-2015": "/partner/56th-venice-biennale",
+  "/2015-year-in-art": "/article/artsy-editorial-2015-the-year-in-art",
 }
 
 const router = express.Router()

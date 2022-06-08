@@ -16,7 +16,7 @@ export type IdentityVerificationAppTestQueryRawResponse = {
         readonly email: string | null;
         readonly identityVerification: ({
             readonly internalID: string;
-            readonly userID: string;
+            readonly userID: string | null;
             readonly state: string;
             readonly id: string;
         }) | null;
@@ -75,15 +75,15 @@ v2 = {
 },
 v3 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 },
 v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 };
 return {
   "fragment": {
@@ -178,24 +178,24 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.email": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
-        "me.id": (v3/*: any*/),
+        "me.email": (v3/*: any*/),
+        "me.id": (v4/*: any*/),
         "me.identityVerification": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "IdentityVerification"
         },
-        "me.identityVerification.id": (v3/*: any*/),
-        "me.identityVerification.internalID": (v3/*: any*/),
-        "me.identityVerification.state": (v4/*: any*/),
-        "me.identityVerification.userID": (v4/*: any*/),
-        "me.internalID": (v3/*: any*/)
+        "me.identityVerification.id": (v4/*: any*/),
+        "me.identityVerification.internalID": (v4/*: any*/),
+        "me.identityVerification.state": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "me.identityVerification.userID": (v3/*: any*/),
+        "me.internalID": (v4/*: any*/)
       }
     },
     "name": "IdentityVerificationAppTestQuery",

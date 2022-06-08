@@ -46,10 +46,8 @@ app.use(require("./apps/clear_cache"))
 app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
 app.use(require("./apps/dev"))
-app.use(require("./apps/article").app)
 
 // Non-profile dynamic vanity url apps
-app.use(require("./apps/articles").app)
 app.use(require("./apps/shortcuts"))
 
 // Apps that need to fetch a profile.
@@ -58,8 +56,6 @@ app.use(require("./apps/shortcuts"))
 // catch conventional app routes.
 app.use(require("./apps/profile"))
 app.use(require("./apps/partner_redirect").app)
-app.use(require("./apps/partner2"))
-app.use(require("./apps/partner"))
 app.use(require("./apps/fair_redirect").app)
 app.use(require("./apps/fair_organizer_redirect").app)
 

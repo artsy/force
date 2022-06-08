@@ -49,10 +49,10 @@ export const ArticleSectionTextFragmentContainer = createFragmentContainer(
  */
 const ArticleHTMLFirstLetter = styled(ArticleHTML)`
   p:first-child::first-letter {
-    font-size: 3em;
+    font-size: 5em;
     float: left;
     margin-right: 0.125em;
-    margin-top: 0.25em;
+    margin-top: 0.33em;
     text-transform: uppercase;
   }
 `
@@ -63,6 +63,8 @@ const ArticleHTMLFirstLetter = styled(ArticleHTML)`
 const ArticleHTMLLastChild = styled(ArticleHTML)`
   p:last-child {
     display: inline-block;
+    /* Since we switch to display: inline-block the margins no longer collapse */
+    margin-top: 0;
 
     &:after {
       content: " ∎";
