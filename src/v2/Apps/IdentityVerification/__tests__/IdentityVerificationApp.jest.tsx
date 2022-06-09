@@ -104,26 +104,6 @@ describe("IdentityVerification route", () => {
       expect(page.text()).toContain("Artsy identity verification")
     })
 
-    // it("shows a message if the user does not own the identity verification", async () => {
-    //   const env = setupTestEnv()
-
-    //   const page = await env.buildPage({
-    //     mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
-    //       me: {
-    //         email: "barry@example.com",
-    //         internalID: "some-guy",
-    //         identityVerification: {
-    //           userID: "someone-else",
-    //         },
-    //       },
-    //     }),
-    //   })
-
-    //   expect(page.text()).toContain(
-    //     "You are currently logged in as barry@example.com. To complete identity verification, please log out of this account, and log back into the account that received the email."
-    //   )
-    // })
-
     describe("user enters verification flow", () => {
       beforeAll(() => {
         mockLocation()
