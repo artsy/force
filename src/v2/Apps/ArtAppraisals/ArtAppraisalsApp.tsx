@@ -93,8 +93,8 @@ const WhyUseArtsy: React.FC = () => {
   const { src, srcSet } = resized(
     "https://files.artsy.net/images/shinpei-kusanagi-stop-talking-to-yourself-you-will-be-alright-number-3.jpeg",
     {
-      width: 2070,
-      height: 2160,
+      width: 850,
+      height: 887,
     }
   )
 
