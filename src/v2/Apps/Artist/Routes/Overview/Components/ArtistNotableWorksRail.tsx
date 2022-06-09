@@ -65,7 +65,6 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
             <ShelfArtworkFragmentContainer
               artwork={node}
               contextModule={ContextModule.topWorksRail}
-              hideArtistName
               hidePartnerName
               key={index}
               showExtended={false}
