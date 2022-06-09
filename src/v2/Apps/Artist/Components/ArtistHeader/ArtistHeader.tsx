@@ -16,6 +16,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
+import { ArtistInsightsBadgesFragmentContainer } from "v2/Components/ArtistInsightsBadges"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -127,6 +128,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
             )}
 
             <SelectedCareerAchievementsFragmentContainer artist={artist} />
+            <ArtistInsightsBadgesFragmentContainer artist={artist} />
           </Column>
         </GridColumns>
       </Box>
@@ -138,32 +140,11 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   ArtistHeader,
   {
     artist: graphql`
-      fragment ArtistHeader_artist on Artist
-        @argumentDefinitions(
-          partnerCategory: {
-            type: "[String]"
-            defaultValue: ["blue-chip", "top-established", "top-emerging"]
-          }
-        ) {
+      fragment ArtistHeader_artist on Artist {
         ...FollowArtistButton_artist
         ...SelectedCareerAchievements_artist
+        ...ArtistInsightsBadges_artist
 
-        artistHighlights: highlights {
-          partnersConnection(
-            first: 10
-            displayOnPartnerProfile: true
-            representedBy: true
-            partnerCategory: $partnerCategory
-          ) {
-            edges {
-              node {
-                categories {
-                  slug
-                }
-              }
-            }
-          }
-        }
         auctionResultsConnection(
           recordsTrusted: true
           first: 1
