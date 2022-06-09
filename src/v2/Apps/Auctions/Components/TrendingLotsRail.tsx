@@ -37,7 +37,6 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
               artwork={node}
               key={node.slug}
               contextModule={contextModule}
-              hidePartnerName
               lazyLoad
               onClick={() => {
                 trackEvent(
