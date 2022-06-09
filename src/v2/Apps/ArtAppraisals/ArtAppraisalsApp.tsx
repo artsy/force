@@ -36,7 +36,7 @@ export const ArtAppraisalsApp: React.FC = () => {
 
 const Header: React.FC = () => {
   return (
-    <FullBleedHeader src="https://files.artsy.net/images/appraisals-header-image.png">
+    <FullBleedHeader src="https://files.artsy.net/images/appraisals-header.jpg">
       <Flex
         position="absolute"
         top={0}
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
 
 const WhyUseArtsy: React.FC = () => {
   const { src, srcSet } = resized(
-    "https://files.artsy.net/images/appraisals-main-image.png",
+    "https://files.artsy.net/images/shinpei-kusanagi-stop-talking-to-yourself-you-will-be-alright-number-3.jpeg",
     {
       width: 2070,
       height: 2160,
