@@ -5,10 +5,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "OTHER" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type ShippingSummaryItem_order = {
     readonly state: CommerceOrderStateEnum;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
     readonly requestedFulfillment: {
         readonly __typename: string;
         readonly " $fragmentRefs": FragmentRefs<"ShippingAddress_ship">;
@@ -43,13 +41,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "state",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "paymentMethod",
       "storageKey": null
     },
     {
@@ -130,5 +121,5 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = '6b6c70e787b01d75b4bf97f952905b88';
+(node as any).hash = '6a6edab4e4acbfb55e55f5fb1d9c4ae0';
 export default node;

@@ -15,7 +15,7 @@ import { ShippingAddressFragmentContainer as ShippingAddress } from "./ShippingA
 const showPickupCopy = state => state !== "FULFILLED" && state !== "CANCELED"
 
 const ShippingSummaryItem = ({
-  order: { state, requestedFulfillment, lineItems, paymentMethod },
+  order: { state, requestedFulfillment, lineItems },
   textColor = "black100",
   ...others
 }: {
@@ -40,9 +40,8 @@ const ShippingSummaryItem = ({
     >
       {showPickupCopy(state) && (
         <Text variant="xs" color={textColor}>
-          {paymentMethod === "WIRE_TRANSFER"
-            ? "After your order is confirmed, a specialist will contact you to coordinate pickup."
-            : "After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup."}
+          After your order is confirmed, a specialist will contact you within 2
+          business days to coordinate pickup.
         </Text>
       )}
     </StepSummaryItem>
@@ -55,7 +54,6 @@ export const ShippingSummaryItemFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment ShippingSummaryItem_order on CommerceOrder {
         state
-        paymentMethod
         requestedFulfillment {
           __typename
           ...ShippingAddress_ship

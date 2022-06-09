@@ -660,7 +660,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       <Collapse open={shippingOption === "PICKUP"}>
                         <Text variant="xs" color="black60">
                           After your order is confirmed, a specialist will
-                          contact you to coordinate pickup.
+                          contact you within 2 business days to coordinate
+                          pickup.
                         </Text>
                       </Collapse>
                     </BorderedRadio>

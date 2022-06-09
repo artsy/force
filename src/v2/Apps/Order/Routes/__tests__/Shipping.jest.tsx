@@ -798,7 +798,7 @@ describe("Shipping", () => {
           .map(node => node.text())
       ).toEqual([
         "Shipping",
-        "Arrange for pickup (free)After your order is confirmed, a specialist will contact you to coordinate pickup.",
+        "Arrange for pickup (free)After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup.",
         "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit",
         "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
       ])
