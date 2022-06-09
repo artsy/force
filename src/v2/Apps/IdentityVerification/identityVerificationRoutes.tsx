@@ -29,7 +29,6 @@ const Error = loadable(
 export const identityVerificationRoutes: AppRouteConfig[] = [
   {
     path: "/identity-verification/processing",
-    theme: "v2",
     getComponent: () => Processing,
     onClientSideRender: () => {
       Processing.preload()
@@ -37,7 +36,6 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
   },
   {
     path: "/identity-verification/error",
-    theme: "v2",
     getComponent: () => Error,
     onClientSideRender: () => {
       Error.preload()
@@ -45,7 +43,6 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
   },
   {
     path: "/identity-verification/:id",
-    theme: "v2",
     getComponent: () => IdentityVerificationApp,
     onClientSideRender: () => {
       IdentityVerificationApp.preload()
