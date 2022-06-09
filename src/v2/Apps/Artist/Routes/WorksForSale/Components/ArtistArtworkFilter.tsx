@@ -7,6 +7,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { getDefaultSort } from "v2/Apps/Artist/Routes/WorksForSale/Utils/getDefaultSort"
 import { Match } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -15,6 +16,7 @@ import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
+import { useFeatureVariant } from "v2/System/useFeatureFlag"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -29,6 +31,9 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { relay, aggregations, artist, me } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
+  const trendingSortVariant = useFeatureVariant(
+    "trending-sort-for-artist-artwork-grids"
+  )
 
   if (!hasFilter) {
     return null
@@ -54,13 +59,18 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     ...match.location.query,
   }
 
+  const defaultSortValue = getDefaultSort(
+    filters.sort ?? "-decayed_merch",
+    trendingSortVariant
+  )
+
   return (
     <ArtworkFilterContextProvider
       aggregations={aggregations}
       counts={artist.counts as Counts}
       filters={filters}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
+        { value: defaultSortValue, text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
         { value: "-has_price,prices", text: "Price (asc.)" },
         { value: "-partner_updated_at", text: "Recently updated" },

@@ -1,3 +1,4 @@
+import { getDefaultSort } from "v2/Apps/Artist/Routes/WorksForSale/Utils/getDefaultSort"
 import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
 export function getWorksForSaleRouteVariables(
@@ -15,6 +16,13 @@ export function getWorksForSaleRouteVariables(
     sort: "-decayed_merch",
     ...initialFilterState,
   }
+
+  const trendingScoreSortFlag =
+    featureFlags["trending-sort-for-artist-artwork-grids"]
+  filterParams.sort = getDefaultSort(
+    filterParams.sort,
+    trendingScoreSortFlag?.variant
+  )
 
   const aggregations = [
     "MEDIUM",
