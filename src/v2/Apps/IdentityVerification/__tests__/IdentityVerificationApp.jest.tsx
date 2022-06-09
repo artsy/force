@@ -125,7 +125,10 @@ describe("IdentityVerification route", () => {
       })
 
       expect(page.text()).toContain(
-        "You are currently logged in as barry@example.com. To complete identity verification, please log out of this account, and log back into the account that received the email."
+        "You are currently logged in as barry@example.com."
+      )
+      expect(page.text()).toContain(
+        "To complete identity verification, please log out of this account, and log back into the account that received the email."
       )
     })
 

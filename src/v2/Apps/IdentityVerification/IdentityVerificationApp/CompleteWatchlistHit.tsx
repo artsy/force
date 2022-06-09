@@ -1,39 +1,32 @@
-import { Box, Button, Sans, Serif } from "@artsy/palette"
+import { Button, Message, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import * as React from "react";
-import { Title as HeadTitle } from "react-head"
+import * as React from "react"
 
 export const CompleteWatchlistHit: React.FC = () => {
   return (
     <>
-      <HeadTitle>Artsy | ID Verification</HeadTitle>
+      <Text variant="xl">Artsy is reviewing your identity verification</Text>
 
-      <Box
-        px={[2, 3]}
-        mb={6}
-        mt={4}
-        mx="auto"
-        width={[335, "80%"]}
-        maxWidth="400px"
-        textAlign="center"
+      <Spacer mt={2} />
+
+      <Message
+        variant="info"
+        title="Thank you for completing identity verification."
       >
-        <Serif size="6" color="black100">
-          Artsy is reviewing your identity verification
-        </Serif>
+        We are reviewing your verification result and will update you as soon as
+        possible. In the meantime, you can still browse works on Artsy.
+      </Message>
 
-        <Sans size="4" color="black100" mt={2}>
-          Thank you for completing identity verification. We are reviewing your
-          verification result and will update you as soon as possible.
-        </Sans>
-        <Sans size="4" color="black100" mt={2}>
-          In the meantime, you can still browse works on Artsy.
-        </Sans>
-        <RouterLink to="/">
-          <Button width="100%" mt={2}>
-            Return home
-          </Button>
-        </RouterLink>
-      </Box>
+      <Spacer mt={2} />
+
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        to="/"
+        width="100%"
+      >
+        Return home
+      </Button>
     </>
   )
 }
