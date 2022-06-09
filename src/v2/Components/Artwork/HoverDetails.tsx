@@ -28,17 +28,16 @@ const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
     <HoverContainer>
       <Join separator={<Spacer mr={0.5} />}>
         {pills.map((pill, index) => {
-          // Truncate text for last pill
-          if (index === pills.length - 1) {
-            return (
-              <TruncatedTextPill key={pill.id} variant="filter" disabled>
-                {pill.label}
-              </TruncatedTextPill>
-            )
-          }
+          const isLastPill = index === pills.length - 1
 
           return (
-            <Pill key={pill.id} variant="filter" disabled>
+            <Pill
+              key={pill.id}
+              variant="filter"
+              disabled
+              // Truncate text for last pill
+              {...(isLastPill ? { minWidth: 0 } : {})}
+            >
               {pill.label}
             </Pill>
           )
@@ -56,13 +55,6 @@ const HoverContainer = styled(Box)`
   display: flex;
   align-items: center;
   background-color: ${themeGet("colors.white100")};
-`
-
-const TruncatedTextPill = styled(Pill)`
-  overflow: hidden;
-  min-width: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `
 
 export const HoverDetailsFragmentContainer = createFragmentContainer(
