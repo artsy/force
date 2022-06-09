@@ -1,117 +1,110 @@
-import { Box, Button, Spacer, Text } from "@artsy/palette"
-import React, { FC, Fragment } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  RelayPaginationProp,
-} from "react-relay"
-import ArtworkGridItemFragmentContainer from "v2/Components/Artwork/GridItem"
-import { Masonry } from "v2/Components/Masonry"
-import { extractNodes } from "v2/Utils/extractNodes"
+import { Text } from "@artsy/palette"
+import React, { FC } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import ArtworkGrid from "v2/Components/ArtworkGrid"
+import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { NewForYouArtworksGrid_viewer } from "v2/__generated__/NewForYouArtworksGrid_viewer.graphql"
 
 interface NewForYouArtworksGridProps {
   viewer: NewForYouArtworksGrid_viewer
-  relay: RelayPaginationProp
+  relay: RelayRefetchProp
 }
+
+const PAGE_SIZE = 10
 
 export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
   viewer,
   relay,
 }) => {
+  const { hasNextPage, endCursor } = viewer.artworksForUser?.pageInfo ?? {}
   const [loading, setLoading] = React.useState(false)
-  const artworks = extractNodes(viewer.artworksForUser)
 
-  const loadMore = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
-
+  const loadAfter = (cursor: string) => {
     setLoading(true)
-
-    relay.loadMore(25, err => {
-      if (err) console.error(err)
-
-      setTimeout(() => {
+    relay.refetch(
+      {
+        first: PAGE_SIZE,
+        after: cursor,
+        before: null,
+        last: null,
+      },
+      null,
+      (error: Error) => {
+        if (error) {
+          console.log(error)
+        }
         setLoading(false)
-      }, 2500)
-    })
+      }
+    )
+  }
+  const loadNext = () => {
+    if (hasNextPage && endCursor) {
+      loadAfter(endCursor)
+    }
   }
 
   return (
     <>
-      {artworks?.length > 0 ? (
-        <Masonry columnCount={[2, 3, 4]}>
-          {artworks.map(artwork => {
-            return (
-              <Fragment key={artwork.internalID}>
-                <ArtworkGridItemFragmentContainer artwork={artwork} />
-                <Spacer mt={4} />
-              </Fragment>
-            )
-          })}
-        </Masonry>
+      {viewer.artworksForUser ? (
+        <>
+          <ArtworkGrid artworks={viewer.artworksForUser} loading={loading} />
+          <PaginationFragmentContainer
+            hasNextPage={!!hasNextPage}
+            onClick={loadAfter}
+            onNext={loadNext}
+            pageCursors={viewer.artworksForUser.pageCursors}
+          />
+        </>
       ) : (
         <Text variant="lg" mt={4} color="black60">
           Nothing yet.
         </Text>
       )}
-      {relay.hasMore() && (
-        <Box textAlign="center" mt={4}>
-          <Button onClick={loadMore} loading={loading}>
-            Show More
-          </Button>
-        </Box>
-      )}
     </>
   )
 }
 
-export const NewForYouArtworksGridFragmentContainer = createPaginationContainer(
+export const NewForYouArtworkGridRefetchContainer = createRefetchContainer(
   NewForYouArtworksGrid,
   {
     viewer: graphql`
       fragment NewForYouArtworksGrid_viewer on Viewer
         @argumentDefinitions(
-          count: { type: "Int", defaultValue: 10 }
-          cursor: { type: "String" }
+          first: { type: "Int", defaultValue: 10 }
+          last: { type: "Int" }
+          after: { type: "String" }
+          before: { type: "String" }
         ) {
-        artworksForUser(first: $count, after: $cursor, includeBackfill: true)
-          @connection(key: "NewForYouArtworksGrid_artworksForUser") {
+        artworksForUser(
+          first: $first
+          last: $last
+          after: $after
+          before: $before
+          includeBackfill: true
+        ) {
+          ...ArtworkGrid_artworks
+          pageCursors {
+            ...Pagination_pageCursors
+          }
           pageInfo {
             hasNextPage
             endCursor
-          }
-          edges {
-            node {
-              internalID
-              ...GridItem_artwork
-            }
           }
         }
       }
     `,
   },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
+  graphql`
+    query NewForYouArtworksGridRefetchQuery(
+      $first: Int
+      $last: Int
+      $after: String
+      $before: String
+    ) {
+      viewer {
+        ...NewForYouArtworksGrid_viewer
+          @arguments(first: $first, last: $last, after: $after, before: $before)
       }
-    },
-    getVariables(_props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        cursor,
-      }
-    },
-    query: graphql`
-      query NewForYouArtworksGridQuery($count: Int!, $cursor: String) {
-        viewer {
-          ...NewForYouArtworksGrid_viewer
-            @arguments(count: $count, cursor: $cursor)
-        }
-      }
-    `,
-  }
+    }
+  `
 )
