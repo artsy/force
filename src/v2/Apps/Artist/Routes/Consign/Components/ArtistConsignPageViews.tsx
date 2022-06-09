@@ -1,10 +1,8 @@
 import * as React from "react"
-
-import { Box, Sans, Spacer } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-
 import { ArtistConsignPageViews_artist } from "v2/__generated__/ArtistConsignPageViews_artist.graphql"
 
 interface ArtistConsignPageViewsProps {
@@ -25,22 +23,18 @@ export const ArtistConsignPageViews: React.FC<ArtistConsignPageViewsProps> = pro
   } = props
 
   return (
-    <SectionContainer background="black10">
-      <Box textAlign="center">
-        <Subheader>
-          {name} works have received more than {roundedViews} views on Artsy
-          this month
-        </Subheader>
+    <SectionContainer bg="black10" textAlign="center">
+      <Subheader>
+        {name} works have received more than {roundedViews} views on Artsy this
+        month
+      </Subheader>
 
-        <Spacer my={1} />
+      <Spacer my={1} />
 
-        <Box>
-          <Sans size="6">
-            Over {roundedUniqueVisitors} Artsy collectors are looking for works
-            by this artist
-          </Sans>
-        </Box>
-      </Box>
+      <Text variant="lg-display">
+        Over {roundedUniqueVisitors} Artsy collectors are looking for works by
+        this artist
+      </Text>
     </SectionContainer>
   )
 }

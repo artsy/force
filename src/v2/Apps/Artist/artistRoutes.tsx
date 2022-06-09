@@ -185,7 +185,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
 
       // Routes not in tabs
-
       {
         path: "articles",
         hideNavigationTabs: true,
@@ -203,7 +202,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "consign",
-        theme: "v2",
         displayFullPage: true,
         hideNavigationTabs: true,
         getComponent: () => ConsignRoute,
@@ -214,7 +212,6 @@ export const artistRoutes: AppRouteConfig[] = [
           query artistRoutes_ArtistConsignQuery($artistID: String!) {
             artist(id: $artistID) {
               ...ArtistConsignRoute_artist
-
               targetSupply {
                 isInMicrofunnel
               }
