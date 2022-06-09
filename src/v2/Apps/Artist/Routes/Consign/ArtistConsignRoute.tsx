@@ -1,19 +1,16 @@
-import { Box } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ArtistConsignRoute_artist } from "v2/__generated__/ArtistConsignRoute_artist.graphql"
-
-import { ArtistConsignFAQFragmentContainer as ArtistConsignFAQ } from "./Components/ArtistConsignFAQ"
-import { ArtistConsignHeaderFragmentContainer as ArtistConsignHeader } from "./Components/ArtistConsignHeader"
-import { ArtistConsignHowtoSellFragmentContainer as ArtistConsignHowtoSell } from "./Components/ArtistConsignHowToSell"
-import { ArtistConsignMarketTrendsFragmentContainer as ArtistConsignMarketTrends } from "./Components/ArtistConsignMarketTrends"
-import { ArtistConsignMetaFragmentContainer as ArtistConsignMeta } from "./Components/ArtistConsignMeta"
-import { ArtistConsignPageViewsFragmentContainer as ArtistConsignPageViews } from "./Components/ArtistConsignPageViews"
-import { ArtistConsignRecentlySoldFragmentContainer as ArtistConsignRecentlySold } from "./Components/ArtistConsignRecentlySold"
-import { ArtistConsignSellArtFragmentContainer as ArtistConsignSellArt } from "./Components/ArtistConsignSellArt"
-
+import { ArtistConsignFAQFragmentContainer } from "./Components/ArtistConsignFAQ"
+import { ArtistConsignHeaderFragmentContainer } from "./Components/ArtistConsignHeader"
+import { ArtistConsignHowtoSellFragmentContainer } from "./Components/ArtistConsignHowToSell"
+import { ArtistConsignMarketTrendsFragmentContainer } from "./Components/ArtistConsignMarketTrends"
+import { ArtistConsignMetaFragmentContainer } from "./Components/ArtistConsignMeta"
+import { ArtistConsignPageViewsFragmentContainer } from "./Components/ArtistConsignPageViews"
+import { ArtistConsignRecentlySoldFragmentContainer } from "./Components/ArtistConsignRecentlySold"
+import { ArtistConsignSellArtFragmentContainer } from "./Components/ArtistConsignSellArt"
 import { track } from "v2/System"
+import { Spacer } from "@artsy/palette"
 
 export interface ConsignRouteProps {
   artist: ArtistConsignRoute_artist
@@ -21,16 +18,19 @@ export interface ConsignRouteProps {
 
 const ArtistConsignRoute: React.FC<ConsignRouteProps> = ({ artist }) => {
   return (
-    <Box>
-      <ArtistConsignMeta artist={artist} />
-      <ArtistConsignHeader artist={artist} />
-      <ArtistConsignRecentlySold artist={artist} />
-      <ArtistConsignPageViews artist={artist} />
-      <ArtistConsignMarketTrends artist={artist} />
-      <ArtistConsignHowtoSell artist={artist} />
-      <ArtistConsignFAQ artist={artist} />
-      <ArtistConsignSellArt artist={artist} />
-    </Box>
+    <>
+      {/* Offset needed to combat the spacer that exists in the Artist page layout */}
+      <Spacer mt={[-2, -4]} />
+
+      <ArtistConsignMetaFragmentContainer artist={artist} />
+      <ArtistConsignHeaderFragmentContainer artist={artist} />
+      <ArtistConsignRecentlySoldFragmentContainer artist={artist} />
+      <ArtistConsignPageViewsFragmentContainer artist={artist} />
+      <ArtistConsignMarketTrendsFragmentContainer artist={artist} />
+      <ArtistConsignHowtoSellFragmentContainer artist={artist} />
+      <ArtistConsignFAQFragmentContainer artist={artist} />
+      <ArtistConsignSellArtFragmentContainer artist={artist} />
+    </>
   )
 }
 

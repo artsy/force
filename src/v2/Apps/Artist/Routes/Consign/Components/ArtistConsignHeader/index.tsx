@@ -1,16 +1,19 @@
-import { Box, Button, Flex, Sans, Serif } from "@artsy/palette"
-import { ArtistConsignHeader_artist } from "v2/__generated__/ArtistConsignHeader_artist.graphql"
 import {
-  LightPurpleColor,
-  SectionContainer,
-} from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
+  Button,
+  Column,
+  GridColumns,
+  Text,
+  Image,
+  ResponsiveBox,
+} from "@artsy/palette"
+import { ArtistConsignHeader_artist } from "v2/__generated__/ArtistConsignHeader_artist.graphql"
+import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Media } from "v2/Utils/Responsive"
 import { getConsignSubmissionUrl } from "../Utils/getConsignSubmissionUrl"
-import { ArtistConsignHeaderImagesFragmentContainer as ArtistConsignHeaderImages } from "./ArtistConsignHeaderImages"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ArtistConsignHeaderProps {
   artist: ArtistConsignHeader_artist
@@ -21,43 +24,59 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
 }) => {
   const tracking = useTracking()
 
-  return (
-    <SectionContainer background={LightPurpleColor}>
-      <Media greaterThan="sm">
-        {classNames => {
-          return (
-            <Flex
-              className={classNames}
-              position="absolute"
-              width="70%"
-              height="100%"
-              justifyContent="center"
-            >
-              <ArtistConsignHeaderImages artist={artist} />
-            </Flex>
-          )
-        }}
-      </Media>
+  const [leftArtwork, rightArtwork] = extractNodes(
+    artist.targetSupply?.microfunnel?.artworksConnection
+  )
 
-      <Box textAlign="center" position="relative" zIndex={1}>
-        <Box>
-          <Serif element="h1" size={["10", "12"]}>
+  return (
+    <SectionContainer bg="black10">
+      <GridColumns>
+        <Column
+          span={[12, 3, 4]}
+          display={["none", "flex"]}
+          alignItems="center"
+          justifyContent="center"
+        >
+          {leftArtwork && (
+            <ResponsiveBox
+              aspectWidth={leftArtwork.image.cropped.width}
+              aspectHeight={leftArtwork.image.cropped.height}
+              maxWidth={leftArtwork.image.cropped.width}
+            >
+              <Image
+                src={leftArtwork.image.cropped.src}
+                srcSet={leftArtwork.image.cropped.srcSet}
+                width="100%"
+                height="100%"
+                alt=""
+                lazyLoad
+              />
+            </ResponsiveBox>
+          )}
+        </Column>
+
+        <Column
+          span={[12, 6, 4]}
+          textAlign="center"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text as="h1" variant={["xl", "xxl"]}>
             Sell Works by <br />
             {artist.name}
-          </Serif>
-        </Box>
+          </Text>
 
-        <Box mt={3} mb={4}>
-          <Sans element="h2" size="4t">
+          <Text as="h2" variant={["sm-display", "lg-display"]} mt={2} mb={4}>
             With Artsy's expert guidance, selling is simple
-          </Sans>
-        </Box>
+          </Text>
 
-        <Box>
-          <RouterLink
+          <Button
+            // @ts-ignore
+            as={RouterLink}
             to={getConsignSubmissionUrl({
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              contextPath: artist.href,
+              contextPath: artist.href!,
               subject: AnalyticsSchema.Subject.RequestPriceEstimate,
             })}
             onClick={() => {
@@ -69,10 +88,34 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
               })
             }}
           >
-            <Button>Request a price estimate</Button>
-          </RouterLink>
-        </Box>
-      </Box>
+            Request a price estimate
+          </Button>
+        </Column>
+
+        <Column
+          span={[12, 3, 4]}
+          display={["none", "flex"]}
+          alignItems="center"
+          justifyContent="center"
+        >
+          {rightArtwork && (
+            <ResponsiveBox
+              aspectWidth={rightArtwork.image.cropped.width}
+              aspectHeight={rightArtwork.image.cropped.height}
+              maxWidth={rightArtwork.image.cropped.width}
+            >
+              <Image
+                src={rightArtwork.image.cropped.src}
+                srcSet={rightArtwork.image.cropped.srcSet}
+                width="100%"
+                height="100%"
+                alt=""
+                lazyLoad
+              />
+            </ResponsiveBox>
+          )}
+        </Column>
+      </GridColumns>
     </SectionContainer>
   )
 }
@@ -82,9 +125,26 @@ export const ArtistConsignHeaderFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistConsignHeader_artist on Artist {
-        ...ArtistConsignHeaderImages_artist
         name
         href
+        targetSupply {
+          microfunnel {
+            artworksConnection {
+              edges {
+                node {
+                  image {
+                    cropped(width: 300, height: 300) {
+                      width
+                      height
+                      src
+                      srcSet
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     `,
   }
