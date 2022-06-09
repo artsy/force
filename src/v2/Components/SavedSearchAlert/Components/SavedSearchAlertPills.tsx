@@ -1,9 +1,6 @@
 import React from "react"
-import { CloseIcon, Pill } from "@artsy/palette"
-import styled from "styled-components"
+import { Pill } from "@artsy/palette"
 import { FilterPill } from "../types"
-
-const CLOSE_ICON_SIZE = 15
 
 export interface SavedSearchAlertPillsProps {
   items: FilterPill[]
@@ -20,34 +17,24 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
 
         if (item.isDefault) {
           return (
-            <DefaultPill key={key} variant="textSquare" mx={0.5} mb={1}>
+            <Pill key={key} variant="filter" mx={0.5} mb={1} disabled>
               {item.displayValue}
-            </DefaultPill>
+            </Pill>
           )
         }
 
         return (
           <Pill
             key={key}
-            variant="textSquare"
+            variant="filter"
             mx={0.5}
             mb={1}
             onClick={() => onDeletePress(item)}
           >
             {item.displayValue}
-            <CloseIcon
-              fill="currentColor"
-              width={CLOSE_ICON_SIZE}
-              height={CLOSE_ICON_SIZE}
-              ml={0.5}
-            />
           </Pill>
         )
       })}
     </>
   )
 }
-
-const DefaultPill = styled(Pill)`
-  pointer-events: none;
-`

@@ -130,7 +130,27 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        // Eigen redirects to the status page (must keep the user inside the webview)
+        if (
+          order.mode === "OFFER" &&
+          isEigen &&
+          order.source === "artwork_page"
+        ) {
+          window?.ReactNativeWebView?.postMessage(
+            JSON.stringify({
+              key: "goToInboxOnMakeOfferSubmission",
+              orderCode: order.code,
+              message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+            })
+          )
+          // We cannot expect Eigen to respond all the time to messages sent from the webview
+          // a default fallback page is safer for old/broken Eigen versions
+          setTimeout(() => {
+            router.push(`/orders/${order.internalID}/status`)
+          }, 500)
+          return
+        }
+
+        // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
         // TODO: It must be only `if (isEigen) {` after removing the feature flag
         if ((!isCBNEnabled && order.mode !== "OFFER") || isEigen) {
           return router.push(`/orders/${orderId}/status`)
@@ -444,9 +464,11 @@ export const ReviewFragmentContainer = createFragmentContainer(
       fragment Review_order on CommerceOrder {
         internalID
         mode
+        code
         source
         itemsTotal(precision: 2)
         impulseConversationId
+        stateExpiresAt(format: "MMM D")
         lineItems {
           edges {
             node {

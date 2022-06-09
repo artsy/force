@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react"
 import { isEqual, omit } from "lodash"
 import styled from "styled-components"
 import {
@@ -77,7 +77,7 @@ export const AuctionFilterMobileActionSheet: FC<{
     >
       <Header p={1}>
         <Button
-          variant="noOutline"
+          variant="tertiary"
           size="small"
           onClick={() => {
             // On close, abandon any staged filter changes
@@ -96,7 +96,7 @@ export const AuctionFilterMobileActionSheet: FC<{
 
         <Button
           size="small"
-          variant="secondaryGray"
+          variant="primaryGray"
           disabled={isReset}
           onClick={() => {
             // On clear, reset (staged) filter changes to initial state

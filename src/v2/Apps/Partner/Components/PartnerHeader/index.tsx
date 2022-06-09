@@ -85,7 +85,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
             user={user}
             contextModule={ContextModule.partnerHeader}
             buttonProps={{
-              variant: "secondaryOutline",
+              variant: "secondaryBlack",
               width: "100%",
             }}
           />

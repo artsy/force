@@ -35,7 +35,7 @@ export const PurchaseOnInquiryButton: React.FC<PurchaseOnInquiryButtonProps> = (
   return !isUniqueArtwork ? (
     // Opens a modal window to select an edition set on non-unique artworks
     <Button
-      size="medium"
+      size="large"
       flexGrow={1}
       onClick={() => {
         tracking.trackEvent(tappedPurchaseEvent)

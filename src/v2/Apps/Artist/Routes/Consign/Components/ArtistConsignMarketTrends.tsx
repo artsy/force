@@ -1,11 +1,10 @@
-import { Box, Button, Flex, Sans, Serif, color } from "@artsy/palette"
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
-
 import { ArtistConsignMarketTrends_artist } from "v2/__generated__/ArtistConsignMarketTrends_artist.graphql"
 
 interface ArtistConsignMarketTrendsProps {
@@ -28,42 +27,47 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
   } = props
 
   return (
-    <SectionContainer background="black100">
-      <Subheader color="white100">Market trends</Subheader>
+    <SectionContainer bg="black100">
+      <Subheader textColor="white100">Market trends</Subheader>
 
-      <Box my={[2, 4]}>
-        <Flex flexDirection={["column", "row"]}>
-          <Statistic
-            top="Highest realized price"
-            middle="All time"
-            bottom={highestRealized}
-          />
-          <Statistic
-            top="Sell through rate"
-            middle="Last 12 months"
-            bottom={str}
-          />
-          <Statistic
-            top="Realized price over estimate"
-            middle="Last 12 months"
-            bottom={realized}
-          />
-        </Flex>
-      </Box>
+      <Spacer mt={4} />
 
-      <Box>
-        <RouterLink
-          to={`${href}/auction-results`}
-          onClick={() => {
-            tracking.trackEvent({
-              action_type: AnalyticsSchema.ActionType.Click,
-              subject: AnalyticsSchema.Subject.ExploreAuctionResults,
-            })
-          }}
-        >
-          <Button variant="primaryWhite">Explore auction results</Button>
-        </RouterLink>
-      </Box>
+      <GridColumns>
+        <Statistic
+          top="Highest realized price"
+          middle="All time"
+          bottom={highestRealized}
+        />
+
+        <Statistic
+          top="Sell through rate"
+          middle="Last 12 months"
+          bottom={str}
+        />
+
+        <Statistic
+          top="Realized price over estimate"
+          middle="Last 12 months"
+          bottom={realized}
+        />
+      </GridColumns>
+
+      <Spacer mt={4} />
+
+      <Button
+        variant="primaryWhite"
+        // @ts-ignore
+        as={RouterLink}
+        to={`${href}/auction-results`}
+        onClick={() => {
+          tracking.trackEvent({
+            action_type: AnalyticsSchema.ActionType.Click,
+            subject: AnalyticsSchema.Subject.ExploreAuctionResults,
+          })
+        }}
+      >
+        Explore auction results
+      </Button>
     </SectionContainer>
   )
 }
@@ -74,30 +78,19 @@ const Statistic: React.FC<{ top: string; middle: string; bottom: string }> = ({
   bottom,
 }) => {
   return (
-    <Flex
-      flexDirection="column"
-      width={["100%", 335]}
-      py={[2, 0]}
-      style={{
-        textAlign: "center",
-      }}
-    >
-      <Box>
-        <Sans size="6" weight="medium" color="white">
-          {top}
-        </Sans>
-      </Box>
-      <Box>
-        <Sans size="4" color={color("black10")}>
-          {middle}
-        </Sans>
-      </Box>
-      <Box>
-        <Serif size="12" color="white">
-          {bottom}
-        </Serif>
-      </Box>
-    </Flex>
+    <Column span={4} textAlign="center">
+      <Text variant="lg-display" color="white100">
+        {top}
+      </Text>
+
+      <Text variant="sm-display" color="black10">
+        {middle}
+      </Text>
+
+      <Text variant="xl" color="white100" mt={1}>
+        {bottom}
+      </Text>
+    </Column>
   )
 }
 

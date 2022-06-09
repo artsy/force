@@ -65,7 +65,7 @@ const EntityHeaderFair: FC<EntityHeaderFairProps> = ({
           user={user}
           profile={fair.profile!}
           contextModule={ContextModule.fairsHeader}
-          buttonProps={{ size: "small", variant: "secondaryOutline" }}
+          buttonProps={{ size: "small", variant: "secondaryBlack" }}
         />
       )}
     </Flex>

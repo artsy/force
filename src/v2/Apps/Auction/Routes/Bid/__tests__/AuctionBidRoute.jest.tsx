@@ -241,7 +241,7 @@ describe("AuctionBidRoute", () => {
     ;(wrapper.find("Select").props() as any).onSelect("1000")
 
     expect(spy).toHaveBeenCalledWith({
-      bidderID: "<Bidder-mock-id-7>",
+      bidderID: "<Bidder-mock-id-6>",
       maxBid: "1000",
     })
 

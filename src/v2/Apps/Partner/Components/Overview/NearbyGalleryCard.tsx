@@ -101,7 +101,7 @@ const NearbyGalleryCard: React.FC<NearbyGalleryCardProps> = ({
             contextModule={ContextModule.partnerHeader}
             buttonProps={{
               size: "small",
-              variant: "secondaryOutline",
+              variant: "secondaryBlack",
             }}
           />
         )}

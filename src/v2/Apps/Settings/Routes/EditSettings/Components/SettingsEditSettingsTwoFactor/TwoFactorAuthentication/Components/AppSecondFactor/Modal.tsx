@@ -208,7 +208,7 @@ const InnerForm: React.FC<InnerFormProps> = ({
         ) : (
           <Button
             size="small"
-            variant="secondaryGray"
+            variant="primaryGray"
             onClick={() => setShowSecret(true)}
           >
             Show secret

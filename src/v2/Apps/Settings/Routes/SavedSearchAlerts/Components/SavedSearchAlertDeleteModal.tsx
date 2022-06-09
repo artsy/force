@@ -50,7 +50,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
             <Flex>
               <Button
                 flex={1}
-                variant="secondaryOutline"
+                variant="secondaryBlack"
                 size="large"
                 onClick={onCloseClick}
                 mr={1}
@@ -78,7 +78,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
               Delete
             </Button>
             <Button
-              variant="secondaryOutline"
+              variant="secondaryBlack"
               size="large"
               width="100%"
               onClick={onCloseClick}

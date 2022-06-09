@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  LocationIcon,
-  Separator,
-  Text,
-} from "@artsy/palette"
-import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
+import { Box, Button, Flex, Separator, Text } from "@artsy/palette"
+import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FC } from "react"
 import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
@@ -68,35 +61,22 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     showInquiry()
   }
 
-  const locationNames =
-    artwork &&
-    partner &&
-    partner.locations &&
-    partner.locations.length > 0 &&
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    filterLocations(partner.locations)
-
   return (
     <>
       <Separator my={2} />
       <Flex justifyContent="space-between">
         <PartnerContainer>
           {renderPartnerName()}
-          {locationNames && locationNames.length > 0 && (
-            <Flex mt={1}>
-              <LocationIcon />
-              <Flex flexDirection="column">
-                <Text variant="xs" color="black60" pl={1}>
-                  {locationNames.join(", ")}
-                </Text>
-              </Flex>
-            </Flex>
+          {partner?.cities && partner.cities.length > 0 && (
+            <Text variant="xs" color="black60" mt={0.5}>
+              {limitWithCount(partner.cities as string[], 2).join(", ")}
+            </Text>
           )}
         </PartnerContainer>
 
         {isCBNEnabled && !isInquireable && (
           <Button
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             size="small"
             onClick={handleInquiry}
             ml={1}
@@ -122,9 +102,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         partner {
           name
           href
-          locations {
-            city
-          }
+          cities
         }
         sale {
           name

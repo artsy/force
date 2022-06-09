@@ -45,7 +45,7 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
   const ShowButton = props => (
     <Button
       onClick={() => setShowModal(true)}
-      variant="secondaryOutline"
+      variant="secondaryBlack"
       {...props}
     >
       Show
@@ -90,7 +90,7 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
                 width={["100%", "auto"]}
                 ml={[0, 1]}
                 mt={[1, 0]}
-                variant="secondaryGray"
+                variant="primaryGray"
               >
                 Regenerate
               </SetupButton>

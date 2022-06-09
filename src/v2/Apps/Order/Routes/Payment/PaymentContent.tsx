@@ -88,6 +88,7 @@ export const PaymentContent: FC<Props> = props => {
       <Text variant="lg-display">Payment method</Text>
       <Spacer mb={2} />
       <RadioGroup
+        data-test="payment-methods"
         onSelect={val => {
           trackClickedPaymentMethod(val)
           onPaymentMethodChange(val as CommercePaymentMethodEnum)

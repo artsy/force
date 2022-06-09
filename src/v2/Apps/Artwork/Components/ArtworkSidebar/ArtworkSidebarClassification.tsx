@@ -1,9 +1,8 @@
-import { Clickable, Text } from "@artsy/palette"
-import { Component } from "react";
+import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
+import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassification_artwork } from "v2/__generated__/ArtworkSidebarClassification_artwork.graphql"
-import * as Schema from "v2/System/Analytics/Schema"
-import track from "react-tracking"
+import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 // TODO:
@@ -13,60 +12,48 @@ export interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork
 }
 
-interface State {
-  isModalOpen: boolean
-}
+export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps> = ({
+  artwork,
+}) => {
+  const { trackEvent } = useTracking()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-@track()
-export class ArtworkSidebarClassification extends Component<
-  ArtworkSidebarClassificationProps,
-  State
-> {
-  state = {
-    isModalOpen: false,
+  const openModal = () => {
+    trackEvent({
+      action_type: AnalyticsSchema.ActionType.Click,
+      context_module: AnalyticsSchema.ContextModule.Sidebar,
+      subject: AnalyticsSchema.Subject.Classification,
+      type: AnalyticsSchema.Type.Link,
+    })
+    setIsModalOpen(true)
   }
 
-  @track({
-    action_type: Schema.ActionType.Click,
-    context_module: Schema.ContextModule.Sidebar,
-    subject: Schema.Subject.Classification,
-    type: Schema.Type.Link,
-  })
-  openModal() {
-    this.setState({ isModalOpen: true })
+  const closeModal = () => setIsModalOpen(false)
+
+  if (!artwork.attributionClass) {
+    return null
   }
 
-  closeModal = () => {
-    this.setState({ isModalOpen: false })
-  }
+  const { shortArrayDescription } = artwork.attributionClass
 
-  render() {
-    const { artwork } = this.props
-
-    if (!artwork.attributionClass) {
-      return null
-    }
-
-    return (
-      <>
-        <ArtworkSidebarClassificationsModalQueryRenderer
-          onClose={this.closeModal}
-          show={this.state.isModalOpen}
-        />
-
-        <Text variant="xs" mt={2}>
-          <Clickable
-            onClick={this.openModal.bind(this)}
-            textDecoration="underline"
-            color="black60"
-          >
-            {artwork.attributionClass.shortDescription}
+  return (
+    <>
+      <ArtworkSidebarClassificationsModalQueryRenderer
+        onClose={closeModal}
+        show={isModalOpen}
+      />
+      <Flex mt={2}>
+        <ArtworkIcon mr={1} />
+        <Text variant="xs" color="black100">
+          {shortArrayDescription![0]}{" "}
+          <Clickable onClick={openModal} textDecoration="underline">
+            {shortArrayDescription![1]}
           </Clickable>
           .
         </Text>
-      </>
-    )
-  }
+      </Flex>
+    </>
+  )
 }
 
 export const ArtworkSidebarClassificationFragmentContainer = createFragmentContainer(
@@ -75,7 +62,7 @@ export const ArtworkSidebarClassificationFragmentContainer = createFragmentConta
     artwork: graphql`
       fragment ArtworkSidebarClassification_artwork on Artwork {
         attributionClass {
-          shortDescription
+          shortArrayDescription
         }
       }
     `,

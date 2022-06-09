@@ -47,8 +47,8 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
 
   return (
     <Button
-      variant="secondaryOutline"
-      size="medium"
+      variant="secondaryBlack"
+      size="large"
       display="block"
       width="100%"
       onClick={handleClick}

@@ -77,7 +77,7 @@ export const InquiryResetPassword: React.FC = () => {
       <Button
         display="block"
         width="100%"
-        variant="secondaryOutline"
+        variant="secondaryBlack"
         onClick={handleClick}
       >
         Login

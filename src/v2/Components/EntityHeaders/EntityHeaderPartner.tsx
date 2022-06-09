@@ -1,6 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Avatar, BoxProps, Text, Flex } from "@artsy/palette"
-import { Badge } from "@artsy/palette/dist/elements/Badge/Badge" // TODO: Fix me
+import { Avatar, BoxProps, Text, Flex, Label } from "@artsy/palette"
 import { compact, uniq } from "lodash"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -69,7 +68,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
           <Text variant="sm-display">
             {badges.map(badge => (
               <Fragment key={badge.slug}>
-                <Badge>{badge.name}</Badge>{" "}
+                <Label>{badge.name}</Label>{" "}
               </Fragment>
             ))}
           </Text>
@@ -88,7 +87,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
             user={user}
             profile={partner.profile!}
             contextModule={ContextModule.partnerHeader}
-            buttonProps={{ size: "small", variant: "secondaryOutline" }}
+            buttonProps={{ size: "small", variant: "secondaryBlack" }}
           />
         ))}
     </Flex>

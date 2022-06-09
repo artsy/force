@@ -221,7 +221,7 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
 
           <Button
             mt={1}
-            variant="secondaryGray"
+            variant="primaryGray"
             onClick={handleClick}
             width="100%"
           >

@@ -120,7 +120,7 @@ export const BuyerGuaranteeIndex: FC = () => {
 
           <Button
             mt={2}
-            variant="noOutline"
+            variant="tertiary"
             onClick={() => {
               scrollTo("#jump--authenticityGuarantee")
             }}
@@ -144,7 +144,7 @@ export const BuyerGuaranteeIndex: FC = () => {
 
           <Button
             mt={2}
-            variant="noOutline"
+            variant="tertiary"
             onClick={() => {
               scrollTo("#jump--moneyBackGuarantee")
             }}
@@ -168,7 +168,7 @@ export const BuyerGuaranteeIndex: FC = () => {
 
           <Button
             mt={2}
-            variant="noOutline"
+            variant="tertiary"
             onClick={() => {
               scrollTo("#jump--securePayment")
             }}
@@ -216,7 +216,7 @@ export const BuyerGuaranteeIndex: FC = () => {
 
           <Button
             mt={2}
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             // @ts-ignore
             as="a"
             href={SUPPORT_ARTICLE_URL}
@@ -245,7 +245,7 @@ export const BuyerGuaranteeIndex: FC = () => {
 
           <Button
             mt={2}
-            variant="secondaryOutline"
+            variant="secondaryBlack"
             // @ts-ignore
             as="a"
             href={SUPPORT_ARTICLE_URL}

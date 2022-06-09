@@ -62,7 +62,7 @@ describe("NearbyGalleryCard with London as a preferred city", () => {
     expect(text).toContain(name)
     expect(text).toContain(location.city)
 
-    expect(wrapper.find(Text).length).toEqual(2)
+    expect(wrapper.find(Text).length).toEqual(3)
     expect(wrapper.find(RouterLink).length).toEqual(2)
     expect(wrapper.find(Image).length).toEqual(1)
     expect(wrapper.find(FollowProfileButtonFragmentContainer).length).toEqual(1)

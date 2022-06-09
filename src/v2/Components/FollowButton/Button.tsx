@@ -1,6 +1,6 @@
 import { Box, Button, ButtonProps } from "@artsy/palette"
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 
 interface FollowButtonProps {
   isFollowed?: boolean
@@ -23,7 +23,7 @@ export const FollowButton: React.ForwardRefExoticComponent<
     return (
       <Button
         ref={forwardedRef}
-        variant={isFollowed ? "secondaryOutline" : "primaryBlack"}
+        variant={isFollowed ? "secondaryBlack" : "primaryBlack"}
         onClick={handleFollow}
         onMouseEnter={() => setShowUnfollow(true)}
         onMouseLeave={() => setShowUnfollow(false)}

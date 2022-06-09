@@ -39,9 +39,26 @@ query AuctionBidRouteTestQuery {
   }
 }
 
+fragment ArtworkSidebarAuctionTimer_artwork on Artwork {
+  internalID
+  sale {
+    cascadingEndTimeIntervalMinutes
+    isClosed
+    ...AuctionTimer_sale
+    startAt
+    id
+  }
+  saleArtwork {
+    ...LotTimer_saleArtwork
+    endAt
+    id
+  }
+}
+
 fragment AuctionBidRoute_artwork on Artwork {
   slug
   internalID
+  ...ArtworkSidebarAuctionTimer_artwork
   saleArtwork {
     ...AuctionLotInfo_saleArtwork_1WWOz5
     minimumNextBid {
@@ -104,6 +121,25 @@ fragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {
     id
   }
 }
+
+fragment AuctionTimer_sale on Sale {
+  liveStartAt
+  endAt
+}
+
+fragment LotTimer_saleArtwork on SaleArtwork {
+  endAt
+  formattedStartDateTime
+  extendedBiddingEndAt
+  lotID
+  sale {
+    startAt
+    extendedBiddingPeriodMinutes
+    extendedBiddingIntervalMinutes
+    internalID
+    id
+  }
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -132,76 +168,90 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "display",
+  "name": "endAt",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "startAt",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cents",
+  "name": "id",
   "storageKey": null
 },
 v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Artwork"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "display",
+  "storageKey": null
 },
 v7 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cents",
+  "storageKey": null
 },
 v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Artwork"
 },
 v9 = {
   "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Int"
-},
-v10 = {
-  "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
-v11 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "Float"
-},
-v12 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Sale"
 },
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Int"
+},
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
 v13 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Bidder"
+  "type": "Boolean"
 },
 v14 = {
   "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v15 = {
+  "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Boolean"
+  "type": "Float"
+},
+v16 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Bidder"
 };
 return {
   "fragment": {
@@ -281,11 +331,129 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Sale",
+            "kind": "LinkedField",
+            "name": "sale",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cascadingEndTimeIntervalMinutes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isClosed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "liveStartAt",
+                "storageKey": null
+              },
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
             "name": "saleArtwork",
             "plural": false,
             "selections": [
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "formattedStartDateTime",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "extendedBiddingEndAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "lotID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Sale",
+                "kind": "LinkedField",
+                "name": "sale",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "extendedBiddingPeriodMinutes",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "extendedBiddingIntervalMinutes",
+                    "storageKey": null
+                  },
+                  (v2/*: any*/),
+                  (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Bidder",
+                    "kind": "LinkedField",
+                    "name": "bidder",
+                    "plural": false,
+                    "selections": [
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Bidder",
+                    "kind": "LinkedField",
+                    "name": "registrationStatus",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "qualifiedForBidding",
+                        "storageKey": null
+                      },
+                      (v5/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -319,7 +487,7 @@ return {
                 "name": "currentBid",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -434,7 +602,7 @@ return {
                     "storageKey": null
                   },
                   (v1/*: any*/),
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -446,7 +614,7 @@ return {
                 "name": "minimumNextBid",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -464,61 +632,15 @@ return {
                 "name": "increments",
                 "plural": true,
                 "selections": [
-                  (v5/*: any*/),
-                  (v3/*: any*/)
+                  (v7/*: any*/),
+                  (v6/*: any*/)
                 ],
                 "storageKey": "increments(useMyMaxBid:true)"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Sale",
-                "kind": "LinkedField",
-                "name": "sale",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Bidder",
-                    "kind": "LinkedField",
-                    "name": "bidder",
-                    "plural": false,
-                    "selections": [
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  (v1/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Bidder",
-                    "kind": "LinkedField",
-                    "name": "registrationStatus",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "qualifiedForBidding",
-                        "storageKey": null
-                      },
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  (v4/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v4/*: any*/)
+              }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "artwork(id:\"foo\")"
       },
@@ -538,7 +660,7 @@ return {
             "name": "hasQualifiedCreditCards",
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       },
@@ -552,30 +674,37 @@ return {
         "selections": [
           (v2/*: any*/),
           (v1/*: any*/),
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "sale(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "cacheID": "a15223260af92c38a35a19016265f1e1",
+    "cacheID": "dcb39735a2da5e868ac90142ba00cdb8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "artwork": (v6/*: any*/),
-        "artwork.id": (v7/*: any*/),
-        "artwork.internalID": (v7/*: any*/),
+        "artwork": (v8/*: any*/),
+        "artwork.id": (v9/*: any*/),
+        "artwork.internalID": (v9/*: any*/),
+        "artwork.sale": (v10/*: any*/),
+        "artwork.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
+        "artwork.sale.endAt": (v12/*: any*/),
+        "artwork.sale.id": (v9/*: any*/),
+        "artwork.sale.isClosed": (v13/*: any*/),
+        "artwork.sale.liveStartAt": (v12/*: any*/),
+        "artwork.sale.startAt": (v12/*: any*/),
         "artwork.saleArtwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtwork"
         },
-        "artwork.saleArtwork.artwork": (v6/*: any*/),
-        "artwork.saleArtwork.artwork.artistNames": (v8/*: any*/),
-        "artwork.saleArtwork.artwork.date": (v8/*: any*/),
-        "artwork.saleArtwork.artwork.id": (v7/*: any*/),
+        "artwork.saleArtwork.artwork": (v8/*: any*/),
+        "artwork.saleArtwork.artwork.artistNames": (v12/*: any*/),
+        "artwork.saleArtwork.artwork.date": (v12/*: any*/),
+        "artwork.saleArtwork.artwork.id": (v9/*: any*/),
         "artwork.saleArtwork.artwork.image": {
           "enumValues": null,
           "nullable": true,
@@ -588,14 +717,14 @@ return {
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "artwork.saleArtwork.artwork.image.resized.height": (v9/*: any*/),
-        "artwork.saleArtwork.artwork.image.resized.src": (v10/*: any*/),
-        "artwork.saleArtwork.artwork.image.resized.srcSet": (v10/*: any*/),
-        "artwork.saleArtwork.artwork.image.resized.width": (v9/*: any*/),
-        "artwork.saleArtwork.artwork.imageUrl": (v8/*: any*/),
-        "artwork.saleArtwork.artwork.internalID": (v7/*: any*/),
-        "artwork.saleArtwork.artwork.slug": (v7/*: any*/),
-        "artwork.saleArtwork.artwork.title": (v8/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.height": (v11/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.src": (v14/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.srcSet": (v14/*: any*/),
+        "artwork.saleArtwork.artwork.image.resized.width": (v11/*: any*/),
+        "artwork.saleArtwork.artwork.imageUrl": (v12/*: any*/),
+        "artwork.saleArtwork.artwork.internalID": (v9/*: any*/),
+        "artwork.saleArtwork.artwork.slug": (v9/*: any*/),
+        "artwork.saleArtwork.artwork.title": (v12/*: any*/),
         "artwork.saleArtwork.counts": {
           "enumValues": null,
           "nullable": true,
@@ -614,53 +743,60 @@ return {
           "plural": false,
           "type": "SaleArtworkCurrentBid"
         },
-        "artwork.saleArtwork.currentBid.display": (v8/*: any*/),
-        "artwork.saleArtwork.formattedEndDateTime": (v8/*: any*/),
-        "artwork.saleArtwork.id": (v7/*: any*/),
+        "artwork.saleArtwork.currentBid.display": (v12/*: any*/),
+        "artwork.saleArtwork.endAt": (v12/*: any*/),
+        "artwork.saleArtwork.extendedBiddingEndAt": (v12/*: any*/),
+        "artwork.saleArtwork.formattedEndDateTime": (v12/*: any*/),
+        "artwork.saleArtwork.formattedStartDateTime": (v12/*: any*/),
+        "artwork.saleArtwork.id": (v9/*: any*/),
         "artwork.saleArtwork.increments": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "BidIncrementsFormatted"
         },
-        "artwork.saleArtwork.increments.cents": (v11/*: any*/),
-        "artwork.saleArtwork.increments.display": (v8/*: any*/),
-        "artwork.saleArtwork.lotLabel": (v8/*: any*/),
+        "artwork.saleArtwork.increments.cents": (v15/*: any*/),
+        "artwork.saleArtwork.increments.display": (v12/*: any*/),
+        "artwork.saleArtwork.lotID": (v12/*: any*/),
+        "artwork.saleArtwork.lotLabel": (v12/*: any*/),
         "artwork.saleArtwork.minimumNextBid": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "SaleArtworkMinimumNextBid"
         },
-        "artwork.saleArtwork.minimumNextBid.cents": (v11/*: any*/),
-        "artwork.saleArtwork.sale": (v12/*: any*/),
-        "artwork.saleArtwork.sale.bidder": (v13/*: any*/),
-        "artwork.saleArtwork.sale.bidder.id": (v7/*: any*/),
-        "artwork.saleArtwork.sale.id": (v7/*: any*/),
-        "artwork.saleArtwork.sale.internalID": (v7/*: any*/),
-        "artwork.saleArtwork.sale.registrationStatus": (v13/*: any*/),
-        "artwork.saleArtwork.sale.registrationStatus.id": (v7/*: any*/),
-        "artwork.saleArtwork.sale.registrationStatus.qualifiedForBidding": (v14/*: any*/),
-        "artwork.saleArtwork.sale.slug": (v7/*: any*/),
-        "artwork.slug": (v7/*: any*/),
+        "artwork.saleArtwork.minimumNextBid.cents": (v15/*: any*/),
+        "artwork.saleArtwork.sale": (v10/*: any*/),
+        "artwork.saleArtwork.sale.bidder": (v16/*: any*/),
+        "artwork.saleArtwork.sale.bidder.id": (v9/*: any*/),
+        "artwork.saleArtwork.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
+        "artwork.saleArtwork.sale.extendedBiddingPeriodMinutes": (v11/*: any*/),
+        "artwork.saleArtwork.sale.id": (v9/*: any*/),
+        "artwork.saleArtwork.sale.internalID": (v9/*: any*/),
+        "artwork.saleArtwork.sale.registrationStatus": (v16/*: any*/),
+        "artwork.saleArtwork.sale.registrationStatus.id": (v9/*: any*/),
+        "artwork.saleArtwork.sale.registrationStatus.qualifiedForBidding": (v13/*: any*/),
+        "artwork.saleArtwork.sale.slug": (v9/*: any*/),
+        "artwork.saleArtwork.sale.startAt": (v12/*: any*/),
+        "artwork.slug": (v9/*: any*/),
         "me": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Me"
         },
-        "me.hasQualifiedCreditCards": (v14/*: any*/),
-        "me.id": (v7/*: any*/),
-        "me.internalID": (v7/*: any*/),
-        "sale": (v12/*: any*/),
-        "sale.id": (v7/*: any*/),
-        "sale.internalID": (v7/*: any*/),
-        "sale.slug": (v7/*: any*/)
+        "me.hasQualifiedCreditCards": (v13/*: any*/),
+        "me.id": (v9/*: any*/),
+        "me.internalID": (v9/*: any*/),
+        "sale": (v10/*: any*/),
+        "sale.id": (v9/*: any*/),
+        "sale.internalID": (v9/*: any*/),
+        "sale.slug": (v9/*: any*/)
       }
     },
     "name": "AuctionBidRouteTestQuery",
     "operationKind": "query",
-    "text": "query AuctionBidRouteTestQuery {\n  artwork(id: \"foo\") {\n    ...AuctionBidRoute_artwork\n    id\n  }\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionBidRoute_sale\n    id\n  }\n}\n\nfragment AuctionBidRoute_artwork on Artwork {\n  slug\n  internalID\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork_1WWOz5\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment AuctionBidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n"
+    "text": "query AuctionBidRouteTestQuery {\n  artwork(id: \"foo\") {\n    ...AuctionBidRoute_artwork\n    id\n  }\n  me {\n    ...AuctionBidRoute_me\n    id\n  }\n  sale(id: \"foo\") {\n    ...AuctionBidRoute_sale\n    id\n  }\n}\n\nfragment ArtworkSidebarAuctionTimer_artwork on Artwork {\n  internalID\n  sale {\n    cascadingEndTimeIntervalMinutes\n    isClosed\n    ...AuctionTimer_sale\n    startAt\n    id\n  }\n  saleArtwork {\n    ...LotTimer_saleArtwork\n    endAt\n    id\n  }\n}\n\nfragment AuctionBidRoute_artwork on Artwork {\n  slug\n  internalID\n  ...ArtworkSidebarAuctionTimer_artwork\n  saleArtwork {\n    ...AuctionLotInfo_saleArtwork_1WWOz5\n    minimumNextBid {\n      cents\n    }\n    increments(useMyMaxBid: true) {\n      cents\n      display\n    }\n    sale {\n      internalID\n      bidder {\n        id\n      }\n      slug\n      registrationStatus {\n        qualifiedForBidding\n        id\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment AuctionBidRoute_me on Me {\n  internalID\n  hasQualifiedCreditCards\n}\n\nfragment AuctionBidRoute_sale on Sale {\n  internalID\n  slug\n}\n\nfragment AuctionLotInfo_saleArtwork_1WWOz5 on SaleArtwork {\n  counts {\n    bidderPositions\n  }\n  lotLabel\n  currentBid {\n    display\n  }\n  formattedEndDateTime\n  artwork {\n    internalID\n    date\n    title\n    image {\n      resized(width: 150, height: 150, version: \"medium\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    imageUrl\n    artistNames\n    slug\n    id\n  }\n}\n\nfragment AuctionTimer_sale on Sale {\n  liveStartAt\n  endAt\n}\n\nfragment LotTimer_saleArtwork on SaleArtwork {\n  endAt\n  formattedStartDateTime\n  extendedBiddingEndAt\n  lotID\n  sale {\n    startAt\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

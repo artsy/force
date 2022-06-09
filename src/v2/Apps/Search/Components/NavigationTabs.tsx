@@ -1,22 +1,18 @@
 import * as React from "react"
 import {
   BoxProps,
-  Flex,
   Pill,
-  Sup,
   Swiper,
   SwiperCell,
   SwiperCellProps,
   SwiperRail,
   SwiperRailProps,
-  Text,
 } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext, useTracking } from "v2/System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { useIsRouteActive } from "v2/System/Router/useRouter"
-import { Media } from "v2/Utils/Responsive"
 import {
   ActionType,
   ClickedNavigationTab,
@@ -59,17 +55,16 @@ const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
 
   return (
     // @ts-ignore
-    <Pill variant="filter" as={RouterLink} my={0.5} mr={1} {...rest}>
-      <Flex alignItems="center">
-        <Text variant={["xs", "sm-display"]}>{text}&nbsp;</Text>
-        <Media greaterThan="xs">
-          {count && (
-            <Sup variant="xs" color={isActive ? "brand" : "inherit"}>
-              {count}
-            </Sup>
-          )}
-        </Media>
-      </Flex>
+    <Pill
+      variant="search"
+      count={count}
+      as={RouterLink}
+      my={0.5}
+      mr={1}
+      active={isActive}
+      {...rest}
+    >
+      {text}
     </Pill>
   )
 }

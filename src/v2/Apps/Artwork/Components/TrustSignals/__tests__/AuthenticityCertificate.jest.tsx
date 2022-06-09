@@ -26,7 +26,9 @@ describe("AuthenticityCertificate", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(0)
+    expect(component.text()).not.toContain(
+      "This work includes a Certificate of Authenticity."
+    )
   })
 
   it("Doesn't render when the artwork is biddable", async () => {
@@ -39,7 +41,9 @@ describe("AuthenticityCertificate", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(0)
+    expect(component.text()).not.toContain(
+      "This work includes a Certificate of Authenticity."
+    )
   })
 
   it("Renders when there's a certificate of authenticity, but the work is not biddable", async () => {
@@ -52,7 +56,9 @@ describe("AuthenticityCertificate", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(1)
+    expect(component.text()).toContain(
+      "This work includes a Certificate of Authenticity."
+    )
   })
 
   it.todo("Click on certificate of authenticity link opens modal")

@@ -89,7 +89,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
               contextModule={ContextModule.partnerHeader}
               buttonProps={{
                 size: "small",
-                variant: "secondaryOutline",
+                variant: "secondaryBlack",
                 width: 70,
                 height: 30,
                 focus: focused,

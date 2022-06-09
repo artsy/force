@@ -145,7 +145,7 @@ export const NavBar: React.FC = track(
                   // @ts-ignore
                   as={RouterLink}
                   to="/signup"
-                  variant="secondaryOutline"
+                  variant="secondaryBlack"
                   flex={1}
                   size="small"
                 >
@@ -219,7 +219,7 @@ export const NavBar: React.FC = track(
                   <Flex alignItems="center">
                     <Button
                       mx={1}
-                      variant="secondaryOutline"
+                      variant="secondaryBlack"
                       size="small"
                       onClick={() => {
                         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

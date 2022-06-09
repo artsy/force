@@ -9,9 +9,11 @@ export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future adde
 export type Review_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
+    readonly code: string;
     readonly source: CommerceOrderSourceEnum;
     readonly itemsTotal: string | null;
     readonly impulseConversationId: string | null;
+    readonly stateExpiresAt: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -74,6 +76,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "code",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "source",
       "storageKey": null
     },
@@ -96,6 +105,19 @@ return {
       "kind": "ScalarField",
       "name": "impulseConversationId",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMM D"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "stateExpiresAt",
+      "storageKey": "stateExpiresAt(format:\"MMM D\")"
     },
     {
       "alias": null,
@@ -221,5 +243,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '2df49f777561afa0549c095117c3bf10';
+(node as any).hash = '17c52de285dfc72367eb8046571bf136';
 export default node;

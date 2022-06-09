@@ -44,7 +44,6 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
             return (
               <Pill
                 key={location}
-                variant="filter"
                 mr={1}
                 mb={1}
                 active={selection.includes(location)}

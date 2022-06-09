@@ -2858,6 +2858,23 @@ type BackupSecondFactors {
 # A list of backup second factors or errors
 union BackupSecondFactorsOrErrorsUnion = BackupSecondFactors | Errors
 
+type BankAccount {
+  # Name on the bank account
+  accountHolderName: String
+
+  # Bank name
+  bankName: String!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # Last four characters of the account identifier
+  last4: String!
+}
+
 type Bidder implements Node {
   createdAt(
     format: String
@@ -3422,7 +3439,9 @@ type CommerceBuyOrder implements CommerceOrder {
   ): CommerceLineItemConnection
   mode: CommerceOrderModeEnum
   orderHistory: [CommerceOrderEventUnion!]!
+  orderUpdateState: String
   paymentMethod: CommercePaymentMethodEnum
+  paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
@@ -4175,7 +4194,9 @@ type CommerceOfferOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   orderHistory: [CommerceOrderEventUnion!]!
+  orderUpdateState: String
   paymentMethod: CommercePaymentMethodEnum
+  paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
@@ -4376,7 +4397,9 @@ interface CommerceOrder {
   ): CommerceLineItemConnection
   mode: CommerceOrderModeEnum
   orderHistory: [CommerceOrderEventUnion!]!
+  orderUpdateState: String
   paymentMethod: CommercePaymentMethodEnum
+  paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
@@ -8783,17 +8806,40 @@ type IdentityVerificationEdge {
 }
 
 type IdentityVerificationEmail {
+  created_at(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # Email of the identity verification's owner
+  email: String
+
   # A globally unique ID.
   id: ID!
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
 
+  # Name of the identity verification's owner
+  name: String
+
   # Identity verification lifecycle state
   state: String!
+  updated_at(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 
   # User ID of the identity verification's owner
-  userID: String!
+  userID: String
 }
 
 type IdentityVerificationEmailMutationFailureType {
@@ -11298,6 +11344,8 @@ enum PartnersSortType {
 
 union PartnerTypes = ExternalPartner | Partner
 
+union PaymentMethodUnion = BankAccount | CreditCard | WireTransfer
+
 enum PhoneNumberErrors {
   INVALID_COUNTRY_CODE
   INVALID_NUMBER
@@ -11975,6 +12023,12 @@ type Query {
   # `LOGGED_IN` because we don't know whether or not the authentication is valid
   # (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # A user's bank account
+  bankAccount(
+    # The ID of the bank account
+    id: String!
+  ): BankAccount
   channel(id: ID!): Channel!
 
   # A list of cities
@@ -12969,6 +13023,7 @@ type Sale implements Node {
     # List of sale artwork internal IDs to fetch
     internalIDs: [ID]
     last: Int
+    status: SaleArtworkStatus
   ): SaleArtworkConnection
   saleType: String
 
@@ -13289,6 +13344,11 @@ type SaleArtworksConnection implements ArtworkConnectionInterface {
   # Information to aid in pagination.
   pageInfo: PageInfo!
   totalCount: Int
+}
+
+enum SaleArtworkStatus {
+  CLOSED
+  OPEN
 }
 
 type SaleCascadingEndTime {
@@ -13711,6 +13771,11 @@ union SendFeedbackMutationType =
 
 input SendIdentityVerificationEmailMutationInput {
   clientMutationId: String
+
+  # The email for the user undergoing identity verificaiton
+  email: String
+
+  # The user Id for the user undergoing identity verificaiton
   userID: String
 }
 
@@ -15357,6 +15422,12 @@ type Viewer {
   # `LOGGED_IN` because we don't know whether or not the authentication is valid
   # (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # A user's bank account
+  bankAccount(
+    # The ID of the bank account
+    id: String!
+  ): BankAccount
   channel(id: ID!): Channel!
 
   # A list of cities
@@ -15972,6 +16043,10 @@ input ViewingRoomSubsectionInput {
   delete: Boolean = false
   image: ARImageInput
   internalID: ID
+}
+
+type WireTransfer {
+  isManualPayment: Boolean!
 }
 
 type YearRange {

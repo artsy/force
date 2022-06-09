@@ -159,7 +159,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
           {isEnabled ? (
             <>
               <Button
-                variant="secondaryOutline"
+                variant="secondaryBlack"
                 width={["100%", "auto"]}
                 onClick={() => setShowConfirmDisable(true)}
                 loading={isDisabling}

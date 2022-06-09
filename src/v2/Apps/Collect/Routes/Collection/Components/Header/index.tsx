@@ -123,7 +123,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
                       contextModule={ContextModule.featuredArtistsRail}
                       buttonProps={{
                         size: "small",
-                        variant: "secondaryOutline",
+                        variant: "secondaryBlack",
                       }}
                     />
                   }

@@ -5,6 +5,7 @@ export const computeLandingPages = appUrl => {
     { loc: appUrl + "/all-cities" },
     { loc: appUrl + "/art-fairs" },
     { loc: appUrl + "/articles" },
+    { loc: appUrl + "/art-appraisals" },
     { loc: appUrl + "/artists", priority: 1 },
     { loc: appUrl + "/artsy-education" },
     { loc: appUrl + "/auction-info" },

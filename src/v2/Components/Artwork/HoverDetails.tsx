@@ -28,9 +28,9 @@ const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
     <HoverContainer>
       <Join separator={<Spacer mr={0.5} />}>
         {pills.map(pill => (
-          <NonClickablePill key={pill.id} variant="textSquare">
+          <Pill key={pill.id} variant="filter" disabled>
             {pill.label}
-          </NonClickablePill>
+          </Pill>
         ))}
       </Join>
     </HoverContainer>
@@ -45,17 +45,6 @@ const HoverContainer = styled(Box)`
   display: flex;
   align-items: center;
   background-color: ${themeGet("colors.white100")};
-`
-
-const NonClickablePill = styled(Pill)`
-  pointer-events: none;
-
-  &:last-child {
-    overflow: hidden;
-    min-width: 0;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
 `
 
 export const HoverDetailsFragmentContainer = createFragmentContainer(

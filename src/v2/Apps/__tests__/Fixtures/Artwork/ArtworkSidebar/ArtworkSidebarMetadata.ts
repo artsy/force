@@ -6,7 +6,7 @@ export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawRe
   __isSellable: "Artwork",
   attributionClass: {
     id: "opaque-attribution-class-id",
-    shortDescription: "This is a unique work",
+    shortArrayDescription: ["This is", "a unique work"],
   },
   date: "1995",
   dimensions: {
@@ -27,7 +27,7 @@ export const FilledOutMetadataNoSizeInfo: ArtworkSidebarMetadata_Test_QueryRawRe
   __isSellable: "Artwork",
   attributionClass: {
     id: "opaque-attribution-class-id",
-    shortDescription: "This is a unique work",
+    shortArrayDescription: ["This is", "a unique work"],
   },
   date: "1995",
   dimensions: {
@@ -48,7 +48,7 @@ export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRa
   __isSellable: "Artwork",
   attributionClass: {
     id: "opauqe-attribution-class-id",
-    shortDescription: "This is part of a limited edition set",
+    shortArrayDescription: ["This is part of", "a limited edition set"],
   },
   date: "1972",
   dimensions: { cm: "35.6 × 45.7 cm", in: "14 × 18 in" },
@@ -75,7 +75,7 @@ export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Q
   __isSellable: "Artwork",
   attributionClass: {
     id: "opauqe-attribution-class-id",
-    shortDescription: "This is part of a limited edition set",
+    shortArrayDescription: ["This is part of", "a limited edition set"],
   },
   date: "2018",
   dimensions: { cm: "101.6 × 106.7 cm", in: "40 × 42 in" },
@@ -175,7 +175,7 @@ export const MetadataForAuctionWork: ArtworkSidebarMetadata_Test_QueryRawRespons
   __isSellable: "Artwork",
   attributionClass: {
     id: "opauqe-attribution-class-id",
-    shortDescription: "This is part of a limited edition set",
+    shortArrayDescription: ["This is part of", "a limited edition set"],
   },
   date: "1948",
   dimensions: { cm: "43.2 × 33 cm", in: "17 × 13 in" },

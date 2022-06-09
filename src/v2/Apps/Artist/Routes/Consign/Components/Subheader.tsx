@@ -1,20 +1,20 @@
-import { Box, Color, Serif } from "@artsy/palette"
-import * as React from "react";
+import { Text, TextProps } from "@artsy/palette"
+import * as React from "react"
 
-interface SubheaderProps {
+interface SubheaderProps extends TextProps {
   children: React.ReactNode
-  color?: Color
 }
 
-export const Subheader: React.FC<SubheaderProps> = ({
-  children,
-  color = "black100",
-}) => {
+export const Subheader: React.FC<SubheaderProps> = ({ children, ...rest }) => {
   return (
-    <Box maxWidth="80%" m="auto">
-      <Serif element="h2" size="10" color={color}>
-        {children}
-      </Serif>
-    </Box>
+    <Text
+      as="h2"
+      variant={["lg-display", "xl"]}
+      maxWidth={["100%", "80%"]}
+      m="auto"
+      {...rest}
+    >
+      {children}
+    </Text>
   )
 }
