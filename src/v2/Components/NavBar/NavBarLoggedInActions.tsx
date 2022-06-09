@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
-import { AnalyticsSchema, SystemContext, useTracking } from "v2/System"
+import { SystemContext } from "v2/System"
 import {
   BellIcon,
   Dropdown,
@@ -24,19 +24,13 @@ import {
 } from "./helpers"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import {
-  NavBarItemButton,
-  NavBarItemLink,
-  NavBarItemUnfocusableAnchor,
-} from "./NavBarItem"
+import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "v2/Apps/Components/constants"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQueryResponse
 >> = ({ me }) => {
-  const { trackEvent } = useTracking()
-
   const hasUnreadNotifications =
     (me?.unreadNotificationsCount ?? 0) > 0 || getNotificationCount() > 0
   const hasUnreadConversations =
@@ -52,6 +46,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
         dropdown={<NavBarNotificationsQueryRenderer />}
         placement="bottom-end"
         offset={0}
+        openDropdownByClick
       >
         {({ anchorRef, anchorProps, visible }) => (
           <NavBarItemButton
@@ -59,18 +54,6 @@ export const NavBarLoggedInActions: React.FC<Partial<
             active={visible}
             {...anchorProps}
           >
-            <NavBarItemUnfocusableAnchor
-              href="/works-for-you"
-              onClick={() => {
-                trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Click,
-                  subject: AnalyticsSchema.Subject.NotificationBell,
-                  new_notification_count: getNotificationCount(),
-                  destination_path: "/works-for-you",
-                })
-              }}
-            />
-
             <BellIcon
               title="Notifications"
               // @ts-ignore
@@ -101,6 +84,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
         dropdown={<NavBarUserMenu />}
         placement="bottom-end"
         offset={0}
+        openDropdownByClick
       >
         {({ anchorRef, anchorProps, visible }) => (
           <NavBarItemButton
