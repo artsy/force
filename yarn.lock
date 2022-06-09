@@ -44,10 +44,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.1.0.tgz#f7ae5041893b859ff9f6bc305fd318d2f5132745"
   integrity sha512-cdHMDcGpYuItSBvelAWEWxWipVGw/8Yzk7YoMvO+qWjZsHJtIF2hACtL5QFQxcf9K3j/eTXNSFlPmfZAe9Byew==
 
-"@artsy/eigen-web-association@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.5.1.tgz#6cec1c2ad9b8c0e7b10f6495462ea42bcf39b60c"
-  integrity sha512-Fkc0Gj5MUqr3QsfjNzEfqb40wOmW1RoeFw7TQk9E/BfLnoaa9Pwa4qWMc82O6nst+4fOjM2jNcleSdTCjtAMig==
+"@artsy/eigen-web-association@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.5.3.tgz#741c831a472c9b68cbad05a4656d50674c8cdcb2"
+  integrity sha512-/F+0BRAGE2I63xDynXO5RtkAD89btn1WSqaUD5HpaSuSfC6NtwJNRDEe93XAn31r5OMsKac9RT51Xz7YNmtqew==
   dependencies:
     express "^4.15.0"
 
