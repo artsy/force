@@ -1,7 +1,7 @@
 import { Match, Router, withRouter } from "found"
 import { flatten } from "lodash"
-import { useEffect } from "react";
-import * as React from "react";
+import { useEffect } from "react"
+import * as React from "react"
 
 import { AppShell } from "v2/Apps/Components/AppShell"
 import { useSystemContext } from "v2/System/SystemContext"

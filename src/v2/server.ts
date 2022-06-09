@@ -8,6 +8,20 @@ import type { NextFunction } from "express"
 const app = express()
 const { routes, routePaths } = getRouteConfig()
 
+// Experiment with overwriting segment consent cookie with server-side version
+app.get("/set-tracking-preferences", (req, res, next) => {
+  const cookie = req.query.trackingPreferences
+
+  res.cookie("tracking-preferences", cookie, {
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+    httpOnly: false,
+    secure: true,
+    // sameSite: "strict",
+  })
+
+  res.send("Consent cookie set")
+})
+
 /**
  * Mount routes that will connect to global SSR router
  */
