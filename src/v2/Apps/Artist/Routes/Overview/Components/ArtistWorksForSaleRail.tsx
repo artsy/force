@@ -60,6 +60,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
               <ShelfArtworkFragmentContainer
                 artwork={node}
                 contextModule={ContextModule.worksForSaleRail}
+                hidePartnerName
                 key={index}
                 showExtended={false}
                 showMetadata

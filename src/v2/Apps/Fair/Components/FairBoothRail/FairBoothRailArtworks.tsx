@@ -62,6 +62,7 @@ const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
             key={artwork.internalID}
             contextModule={ContextModule.fairRail}
             artwork={artwork}
+            hidePartnerName
             lazyLoad
             onClick={() =>
               tracking.trackEvent(

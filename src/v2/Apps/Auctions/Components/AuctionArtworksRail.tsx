@@ -68,6 +68,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
               artwork={node}
               key={node.slug}
               contextModule={contextModule}
+              hidePartnerName
               lazyLoad
               onClick={() => {
                 trackEvent(
