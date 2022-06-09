@@ -265,6 +265,7 @@ export class PaymentPicker extends React.Component<
         {userHasExistingCards && (
           <>
             <RadioGroup
+              data-test="credit-cards"
               onSelect={val => {
                 if (val === "new") {
                   this.setState({ creditCardSelection: { type: "new" } })
