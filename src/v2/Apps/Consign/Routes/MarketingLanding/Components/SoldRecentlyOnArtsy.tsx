@@ -68,6 +68,7 @@ export const SoldRecentlyOnArtsy: React.FC<SoldRecentlyOnArtsyProps> = ({
                   <ShelfArtworkFragmentContainer
                     artwork={artwork!}
                     key={artwork!.internalID}
+                    hidePartnerName
                     hideSaleInfo
                     lazyLoad
                     // @ts-ignore

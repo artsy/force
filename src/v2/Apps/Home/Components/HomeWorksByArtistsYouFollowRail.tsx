@@ -47,6 +47,7 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
             key={index}
             // TODO: Add home type to cohesion once we have tracking
             contextModule={null as any}
+            hidePartnerName
             lazyLoad
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {
