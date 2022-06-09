@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { cropped, resized } from "v2/Utils/resized"
+import { Media } from "v2/Utils/Responsive"
 
 export const ArtAppraisalsApp: React.FC = () => {
   return (
@@ -49,12 +50,11 @@ const Header: React.FC = () => {
       >
         <GridColumns>
           <Column span={[12, 12, 8, 6]}>
-            <Text variant={["xl", "xxl"]} as="h1" color="white100">
-              Art Appraisals for Your <br />
-              Collection
+            <Text variant={["lg", "xxl"]} as="h1" color="white100">
+              Art Appraisals for Your Collection
             </Text>
 
-            <Text variant="sm" as="h2" color="white100">
+            <Text variant={["xs", "sm"]} as="h2" color="white100">
               Artsy offers a full range of services to appraise trusts, estates,
               and art collections. We act as a trusted partner for collectors,
               their advisors, as well as executors, fiduciaries, and
@@ -63,13 +63,25 @@ const Header: React.FC = () => {
 
             <Spacer mt={4} />
 
-            <Button
-              // @ts-ignore
-              as="a"
-              href="mailto:simon.wills@artsymail.com"
-            >
-              Request an Appraisal
-            </Button>
+            <Media greaterThan="xs">
+              <Button
+                // @ts-ignore
+                as="a"
+                href="mailto:simon.wills@artsymail.com"
+              >
+                Request an Appraisal
+              </Button>
+            </Media>
+            <Media at="xs">
+              <Button
+                // @ts-ignore
+                as="a"
+                href="mailto:simon.wills@artsymail.com"
+                size="small"
+              >
+                Request an Appraisal
+              </Button>
+            </Media>
           </Column>
         </GridColumns>
       </Flex>
@@ -88,7 +100,7 @@ const WhyUseArtsy: React.FC = () => {
 
   return (
     <GridColumns>
-      <Column span={6} pr={6}>
+      <Column span={6} pr={[0, 6]}>
         <ResponsiveBox aspectWidth={690} aspectHeight={720} maxWidth="100%">
           <Image
             src={src}
