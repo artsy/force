@@ -199,8 +199,10 @@ export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
   IdentityVerificationApp,
   {
     identityVerification: graphql`
-      fragment IdentityVerificationApp_identityVerification on IdentityVerification {
-        ...IdentityVerificationApp_identityVerification
+      fragment IdentityVerificationApp_identityVerification on IdentityVerification
+        @argumentDefinitions(id: { type: "String!" }) {
+        internalID
+        state
       }
     `,
   }

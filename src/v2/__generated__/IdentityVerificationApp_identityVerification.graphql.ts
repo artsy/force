@@ -18,7 +18,13 @@ export type IdentityVerificationApp_identityVerification$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "id"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "IdentityVerificationApp_identityVerification",
@@ -41,5 +47,5 @@ const node: ReaderFragment = {
   "type": "IdentityVerification",
   "abstractKey": null
 };
-(node as any).hash = '2f42fce8d99c04ba8268fcaff52184a1';
+(node as any).hash = 'f5673cefdba0db453e337eed1e3b9425';
 export default node;
