@@ -16,7 +16,10 @@ import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
-import { useFeatureVariant } from "v2/System/useFeatureFlag"
+import {
+  useFeatureVariant,
+  useTrackFeatureVariant,
+} from "v2/System/useFeatureFlag"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -34,6 +37,14 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const trendingSortVariant = useFeatureVariant(
     "trending-sort-for-artist-artwork-grids"
   )
+  const { trackFeatureVariant } = useTrackFeatureVariant({
+    experimentName: "trending-sort-for-artist-artwork-grids",
+    variantName: trendingSortVariant?.name!,
+  })
+
+  React.useEffect(() => {
+    trackFeatureVariant()
+  })
 
   if (!hasFilter) {
     return null
