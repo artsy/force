@@ -11,10 +11,12 @@ import { WireTransferDetails } from "./WireTransferDetails"
 export const PaymentMethodSummaryItem = ({
   order: { creditCard, paymentMethod },
   textColor = "black100",
+  withDescription = true,
   ...others
 }: {
   order: PaymentMethodSummaryItem_order
   textColor?: string
+  withDescription?: boolean
 } & StepSummaryItemProps) => {
   const cardInfoWithTextColor = {
     ...creditCard!,
@@ -28,7 +30,7 @@ export const PaymentMethodSummaryItem = ({
       case "US_BANK_ACCOUNT":
         return <BankDebitDetails {...cardInfoWithTextColor} />
       case "WIRE_TRANSFER":
-        return <WireTransferDetails />
+        return <WireTransferDetails withDescription={withDescription} />
       default:
         null
     }

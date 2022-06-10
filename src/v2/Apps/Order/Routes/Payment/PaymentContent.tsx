@@ -136,8 +136,8 @@ export const PaymentContent: FC<Props> = props => {
       {/* Wire transfer */}
       <Collapse open={paymentMethod === "WIRE_TRANSFER"}>
         <Text color="black60" variant="sm">
-          • To pay by wire transfer, complete checkout and one of our support
-          specialists will reach out with next steps.
+          • To pay by wire transfer, complete checkout and a member of the Artsy
+          team will contact you with next steps by email.
         </Text>
         <Text color="black60" variant="sm">
           • Your bank may charge a fee for the transaction.
@@ -189,7 +189,7 @@ const getAvailablePaymentMethods = (
       value={paymentMethod}
       label={
         <>
-          <CreditCardIcon type="Unknown" fill="black60" />
+          <CreditCardIcon type="Unknown" fill="black100" />
           <Text ml={1}>Credit card</Text>
         </>
       }
@@ -203,7 +203,7 @@ const getAvailablePaymentMethods = (
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
           <>
-            <InstitutionIcon fill="black60" />
+            <InstitutionIcon fill="green100" />
             <Text ml={1}>Wire transfer</Text>
           </>
         }
@@ -218,7 +218,7 @@ const getAvailablePaymentMethods = (
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
           <>
-            <InstitutionIcon fill="black60" />
+            <InstitutionIcon fill="green100" />
             <Text ml={1}>Bank transfer (US bank account)</Text>
           </>
         }
