@@ -74,7 +74,7 @@ function MyComponent() {
 
   return (
     <div>
-        {variant?.name! === 'experiment' &&
+        {variant?.name === 'experiment' &&
           ? <ExperimentComponent />
           : <ControlComponent />
         }
