@@ -44,7 +44,7 @@ const setupTestEnv = () => {
 }
 
 describe("IdentityVerification route", () => {
-  describe("for signed-in user", () => {
+  describe("for a visitor", () => {
     describe("unactionable end states", () => {
       it("renders a message about an identity verification that is `passed`", async () => {
         const env = setupTestEnv()

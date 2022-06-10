@@ -18,6 +18,7 @@ import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { MetaTags } from "v2/Components/MetaTags"
+import { HttpError } from "found"
 
 const logger = createLogger("IdentityVerificationApp.tsx")
 
@@ -36,6 +37,9 @@ const IdentityVerificationApp: React.FC<Props> = ({
   const { trackEvent } = useTracking()
 
   const alternateComponent = useMemo(() => {
+    if (!identityVerification) {
+      throw new HttpError(404)
+    }
     if (identityVerification.state === "failed") {
       return <CompleteFailed />
     }
