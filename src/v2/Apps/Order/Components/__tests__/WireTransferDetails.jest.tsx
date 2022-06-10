@@ -19,7 +19,7 @@ describe("WireTransferDetails", () => {
     ).toBeInTheDocument()
   })
 
-  it("does not render description texts when withDescription dictates otherwise", () => {
+  it("does not render description texts when withDescription dictates so", () => {
     render(<WireTransferDetails withDescription={false} />)
     expect(
       screen.queryByText("• Your bank may charge a fee for the transaction.")
