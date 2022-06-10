@@ -3,11 +3,11 @@ import { Flex, InstitutionIcon, Text } from "@artsy/palette"
 export const WireTransferDetails = ({
   responsive = true,
   textColor = "black100",
-  currentStep,
+  withDescription,
 }: {
   responsive?: boolean
   textColor?: string
-  currentStep?: string
+  withDescription?: boolean
 }) => (
   <Flex flexDirection="column">
     <Flex alignItems="center">
@@ -20,7 +20,7 @@ export const WireTransferDetails = ({
         Wire transfer
       </Text>
     </Flex>
-    {currentStep !== "status" && (
+    {withDescription && (
       <Flex flexDirection="column" mt={0.5} ml={4}>
         <Text color="black60" fontSize={13}>
           • To pay by wire transfer, complete checkout and a member of the Artsy

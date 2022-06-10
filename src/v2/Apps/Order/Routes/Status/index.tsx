@@ -129,7 +129,7 @@ export class StatusRoute extends Component<StatusProps> {
                         <StyledShippingSummaryItem order={order} />
                         <PaymentMethodSummaryItem
                           order={order}
-                          currentStep="status"
+                          withDescription={false}
                           title="Payment method"
                         />
                       </Flex>
