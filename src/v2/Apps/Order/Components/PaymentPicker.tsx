@@ -405,7 +405,6 @@ export class PaymentPicker extends React.Component<
   private createCreditCard(
     variables: PaymentPickerCreateCreditCardMutation["variables"]
   ) {
-    console.log("createCreditCard", this.props.commitMutation)
     return this.props.commitMutation<PaymentPickerCreateCreditCardMutation>({
       variables,
       mutation: graphql`

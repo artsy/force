@@ -149,7 +149,7 @@ describe("Payment", () => {
     let wrapper = getWrapper()
     let page = new OrderAppTestPage(wrapper)
 
-    expect(page.isLoading).toBeTruthy()
+    expect(page.isLoading()).toBeTruthy()
   })
 
   it("commits fixFailedPayment mutation with Gravity credit card id", async () => {

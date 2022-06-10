@@ -154,7 +154,7 @@ describe("Submit Pending Counter Offer", () => {
       })
       let page = new OrderAppTestPage(wrapper)
 
-      expect(page.isLoading).toBeTruthy()
+      expect(page.isLoading()).toBeTruthy()
     })
   })
 
