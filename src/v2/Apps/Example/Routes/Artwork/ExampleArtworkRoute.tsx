@@ -3,8 +3,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
 import { ExampleArtworkRoute_artwork } from "v2/__generated__/ExampleArtworkRoute_artwork.graphql"
-import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
-import { ContextModule } from "@artsy/cohesion"
+import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 
 export interface ExampleArtworkRouteProps {
   artwork: ExampleArtworkRoute_artwork
@@ -32,10 +31,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           {artwork.artist.related.artistsConnection.edges.map(({ node }) => (
             <Box width={["100%", "25%"]} pr={[0, "20px"]}>
-              <ArtistCard
-                artist={node}
-                contextModule={ContextModule.relatedArtistsRail}
-              />
+              <EntityHeaderArtistFragmentContainer artist={node} />
             </Box>
           ))}
         </Flex>
@@ -86,7 +82,7 @@ export const ExampleArtworkRouteFragmentContainer = createFragmentContainer(
               @connection(key: "ArtworkRelatedArtists_artistsConnection") {
               edges {
                 node {
-                  ...ArtistCard_artist
+                  ...EntityHeaderArtist_artist
                 }
               }
             }

@@ -12,9 +12,7 @@ export const AppContainer: React.FC<AppContainerProps> = ({
   maxWidth: defaultMaxWidth,
   ...rest
 }) => {
-  const {
-    theme: { breakpoints },
-  } = useTheme<ThemeV3>()
+  const { theme: { breakpoints = { lg: null } } = {} } = useTheme<ThemeV3>()
 
   const maxWidth = breakpoints.lg
   const appShellMaxWidth = defaultMaxWidth ?? maxWidth
