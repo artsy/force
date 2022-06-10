@@ -17,6 +17,7 @@ import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { ArtistInsightsBadgesFragmentContainer } from "v2/Components/ArtistInsightsBadges"
+import { ArtistInsightsPillsFragmentContainer } from "v2/Components/ArtistInsightsPills"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -129,6 +130,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
             <SelectedCareerAchievementsFragmentContainer artist={artist} />
             <ArtistInsightsBadgesFragmentContainer artist={artist} />
+            <ArtistInsightsPillsFragmentContainer artist={artist} />
           </Column>
         </GridColumns>
       </Box>
@@ -144,6 +146,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         ...FollowArtistButton_artist
         ...SelectedCareerAchievements_artist
         ...ArtistInsightsBadges_artist
+        ...ArtistInsightsPills_artist
 
         auctionResultsConnection(
           recordsTrusted: true

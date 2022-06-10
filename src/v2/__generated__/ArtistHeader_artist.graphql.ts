@@ -35,7 +35,7 @@ export type ArtistHeader_artist = {
         readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "SelectedCareerAchievements_artist" | "ArtistInsightsBadges_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "SelectedCareerAchievements_artist" | "ArtistInsightsBadges_artist" | "ArtistInsightsPills_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$data = ArtistHeader_artist;
@@ -302,10 +302,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistInsightsBadges_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistInsightsPills_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'aaafa8011bdaaa8450cff197f81d6f31';
+(node as any).hash = '6af98d8b9e1504e01fb4d84858a6a8cd';
 export default node;
