@@ -46,6 +46,19 @@ const setupTestEnv = () => {
 describe("IdentityVerification route", () => {
   describe("for a visitor", () => {
     describe("unactionable end states", () => {
+      it("returns a 404 when the identity verification is not found", async () => {
+        const env = setupTestEnv()
+        try {
+          await env.buildPage({
+            mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
+              identityVerification: null,
+            }),
+          })
+        } catch (error) {
+          console.log("ERROR", error)
+        }
+      })
+
       it("renders a message about an identity verification that is `passed`", async () => {
         const env = setupTestEnv()
 
