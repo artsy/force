@@ -1,6 +1,6 @@
 import { Flex, Sans, color } from "@artsy/palette"
 import { ModalWidth, ModalWrapper } from "v2/Components/Modal/ModalWrapper"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 
 export interface CtaProps {
@@ -18,6 +18,9 @@ export interface ModalDialogProps {
   width?: ModalWidth
 }
 
+/**
+ * @deprecated Use `ModalDialog` from `@artsy/palette`
+ */
 export class ModalDialog extends React.Component<ModalDialogProps> {
   static defaultProps = {
     width: ModalWidth.Narrow,
