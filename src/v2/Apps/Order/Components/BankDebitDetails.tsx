@@ -9,7 +9,7 @@ export const BankDebitDetails = ({
   textColor?: string
 }) => (
   <Flex alignItems="center">
-    <InstitutionIcon fill="black60" />
+    <InstitutionIcon fill="green100" />
     <Spacer ml={0.5} />
     <Text
       size={responsive ? ["2", "3"] : "3"}

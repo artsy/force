@@ -398,7 +398,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               <PaymentMethodSummaryItem
                 order={order}
                 onChange={onChangePayment}
-                title="Payment"
+                title="Payment method"
               />
               <ShippingArtaSummaryItemFragmentContainer
                 order={order}
