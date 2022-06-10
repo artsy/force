@@ -486,7 +486,7 @@ describe("Review", () => {
 
     it("shows bank transfer as payment method", () => {
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
-        "Bank transfer"
+        "Bank transfer •••• 1234"
       )
     })
   })
