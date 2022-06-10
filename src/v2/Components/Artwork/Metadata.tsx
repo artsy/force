@@ -54,7 +54,6 @@ export default createFragmentContainer(Metadata, {
   artwork: graphql`
     fragment Metadata_artwork on Artwork {
       ...Details_artwork
-      ...Contact_artwork
       href
     }
   `,
