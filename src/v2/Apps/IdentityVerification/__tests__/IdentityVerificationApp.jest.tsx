@@ -8,12 +8,14 @@ import { IdentityVerificationAppQueryResponseFixture } from "../__fixtures__/rou
 import { IdentityVerificationAppFragmentContainer } from "../IdentityVerificationApp"
 import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
 import { mockLocation } from "v2/DevTools/mockLocation"
+import { HttpError } from "found"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
+jest.mock("found")
 
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
@@ -47,16 +49,14 @@ describe("IdentityVerification route", () => {
   describe("for a visitor", () => {
     describe("unactionable end states", () => {
       it("returns a 404 when the identity verification is not found", async () => {
+        const mockHttpError = HttpError as jest.Mock
         const env = setupTestEnv()
-        try {
-          await env.buildPage({
-            mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
-              identityVerification: null,
-            }),
-          })
-        } catch (error) {
-          console.log("ERROR", error)
-        }
+        await env.buildPage({
+          mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
+            identityVerification: null,
+          }),
+        })
+        expect(mockHttpError).toHaveBeenCalledWith(404)
       })
 
       it("renders a message about an identity verification that is `passed`", async () => {
