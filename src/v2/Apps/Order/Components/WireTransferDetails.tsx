@@ -3,7 +3,7 @@ import { Flex, InstitutionIcon, Text } from "@artsy/palette"
 export const WireTransferDetails = ({
   responsive = true,
   textColor = "black100",
-  withDescription,
+  withDescription = true,
 }: {
   responsive?: boolean
   textColor?: string
