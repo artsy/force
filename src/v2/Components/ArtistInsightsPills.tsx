@@ -1,4 +1,4 @@
-import { Box, Join, Pill, Spacer, Text } from "@artsy/palette"
+import { Box, Join, Pill, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"

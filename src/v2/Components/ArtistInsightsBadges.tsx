@@ -56,7 +56,7 @@ interface HighAuctionRecordBadgeProps {
 export const HighAuctionRecordBadge: FC<HighAuctionRecordBadgeProps> = ({
   highAuctionResults,
 }) => {
-  const highAuctionRecord = `${highAuctionResults.price_realized.display}, ${highAuctionResults.organization}, ${highAuctionResults.sale_date}`
+  // const highAuctionRecord = `${highAuctionResults.price_realized.display}, ${highAuctionResults.organization}, ${highAuctionResults.sale_date}`
 
   return (
     <Flex flexDirection="row">
@@ -65,7 +65,7 @@ export const HighAuctionRecordBadge: FC<HighAuctionRecordBadgeProps> = ({
         <Text variant="sm" color="blue100">
           High Auction Record
         </Text>
-        <Text color="black60">{highAuctionRecord}</Text>
+        {/* <Text color="black60">{highAuctionRecord}</Text> */}
       </Flex>
     </Flex>
   )
