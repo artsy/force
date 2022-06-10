@@ -3,6 +3,7 @@ import {
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
+  BuyOrderWithWireTransferDetails,
   OfferOrderWithMissingMetadata,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
@@ -483,10 +484,30 @@ describe("Review", () => {
       })
     })
 
-    // TODO: Unskip test when stripe-ACH feature flag is removed
-    it.skip("shows bank transfer as payment method", () => {
+    it("shows bank transfer as payment method", () => {
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
         "Bank transfer"
+      )
+    })
+  })
+
+  describe("Wire transfer orders", () => {
+    let page: ReviewTestPage
+
+    beforeEach(async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...BuyOrderWithWireTransferDetails,
+            impulseConversationId: null,
+          },
+        },
+      })
+    })
+
+    it("shows wire transfer as payment method", () => {
+      expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
+        "Wire transfer"
       )
     })
   })

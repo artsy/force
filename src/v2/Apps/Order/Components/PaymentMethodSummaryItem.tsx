@@ -18,18 +18,17 @@ export const PaymentMethodSummaryItem = ({
   textColor?: string
   withDescription?: boolean
 } & StepSummaryItemProps) => {
-  const cardInfoWithTextColor = {
-    ...paymentMethodDetails,
-    ...{ textColor: textColor },
-  }
-
   const renderPaymentMethodSummary = () => {
-    switch (paymentMethod) {
-      case "CREDIT_CARD":
+    switch (paymentMethodDetails?.__typename) {
+      case "CreditCard":
+        const cardInfoWithTextColor = {
+          ...paymentMethodDetails,
+          ...{ textColor: textColor },
+        }
         return <CreditCardDetails {...cardInfoWithTextColor} />
-      case "US_BANK_ACCOUNT":
+      case "BankAccount":
         return <BankDebitDetails {...paymentMethodDetails} />
-      case "WIRE_TRANSFER":
+      case "WireTransfer":
         return <WireTransferDetails withDescription={withDescription} />
       default:
         null
@@ -59,6 +58,9 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
           }
           ... on BankAccount {
             last4
+          }
+          ... on WireTransfer {
+            isManualPayment
           }
         }
       }

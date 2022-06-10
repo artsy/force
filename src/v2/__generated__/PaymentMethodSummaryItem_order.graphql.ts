@@ -17,6 +17,9 @@ export type PaymentMethodSummaryItem_order = {
         readonly __typename: "BankAccount";
         readonly last4: string;
     } | {
+        readonly __typename: "WireTransfer";
+        readonly isManualPayment: boolean;
+    } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
@@ -107,6 +110,20 @@ const node: ReaderFragment = {
           ],
           "type": "BankAccount",
           "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isManualPayment",
+              "storageKey": null
+            }
+          ],
+          "type": "WireTransfer",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -115,5 +132,5 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = 'efd7bc1d4157138c9cd887e099ac86f6';
+(node as any).hash = '4938da2b1934e0f537ef9e699c47eff8';
 export default node;

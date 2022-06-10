@@ -809,7 +809,8 @@ export const ArtaShippingDetails = {
 
 export const CreditCardPaymentDetails = {
   availablePaymentMethods: ["CREDIT_CARD"],
-  creditCard: {
+  paymentMethodDetails: {
+    __typename: "CreditCard",
     brand: "Visa",
     city: "New York",
     country: "US",
@@ -827,11 +828,25 @@ export const CreditCardPaymentDetails = {
 } as const
 
 export const BankDebitPaymentDetails = {
-  availablePaymentMethods: ["CREDIT_CARD"],
+  availablePaymentMethods: ["US_BANK_ACCOUNT"],
+  paymentMethod: "US_BANK_ACCOUNT",
   bankAccountId: "bankAccountId",
-  bankAccount: {
+  paymentMethodDetails: {
+    __typename: "BankAccount",
     last4: "1234",
-    bank: "Bank of America",
+    bankName: "Bank of America",
+    accountHolderName: "Dr. Collector",
+    id: "relay-node-id",
+    internalID: "gravity-bank-account-id",
+  },
+} as const
+
+export const WireTransferPaymentDetails = {
+  availablePaymentMethods: ["WIRE_TRANSFER"],
+  paymentMethod: "WIRE_TRANSFER",
+  paymentMethodDetails: {
+    __typename: "WireTransfer",
+    isManualPayment: true,
   },
 } as const
 
@@ -845,6 +860,12 @@ export const BuyOrderWithBankDebitDetails = {
   ...UntouchedBuyOrder,
   ...ShippingDetails,
   ...BankDebitPaymentDetails,
+} as const
+
+export const BuyOrderWithWireTransferDetails = {
+  ...UntouchedBuyOrder,
+  ...ShippingDetails,
+  ...WireTransferPaymentDetails,
 } as const
 
 export const OfferOrderWithShippingDetails = {

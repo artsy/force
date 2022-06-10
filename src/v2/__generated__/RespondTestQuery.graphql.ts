@@ -127,6 +127,9 @@ export type RespondTestQueryRawResponse = {
             readonly last4: string;
             readonly id: string;
         } | {
+            readonly __typename: "WireTransfer";
+            readonly isManualPayment: boolean;
+        } | {
             readonly __typename: string;
         }) | null;
         readonly id: string;
@@ -284,6 +287,9 @@ export type RespondTestQueryRawResponse = {
             readonly last4: string;
             readonly id: string;
         } | {
+            readonly __typename: "WireTransfer";
+            readonly isManualPayment: boolean;
+        } | {
             readonly __typename: string;
         }) | null;
         readonly id: string;
@@ -424,6 +430,9 @@ fragment PaymentMethodSummaryItem_order on CommerceOrder {
     ... on BankAccount {
       last4
       id
+    }
+    ... on WireTransfer {
+      isManualPayment
     }
   }
 }
@@ -795,23 +804,29 @@ v23 = {
 },
 v24 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Int"
+  "type": "Boolean"
 },
 v25 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CommerceOffer"
+  "type": "Int"
 },
 v26 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CommerceOffer"
+},
+v27 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v27 = {
+v28 = {
   "enumValues": [
     "BUYER",
     "SELLER"
@@ -1220,6 +1235,20 @@ return {
                 ],
                 "type": "BankAccount",
                 "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isManualPayment",
+                    "storageKey": null
+                  }
+                ],
+                "type": "WireTransfer",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -1343,7 +1372,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c1eea0eb32a8928ac6109a597b1e1f73",
+    "cacheID": "21aafe818867304daa2fb1560913da48",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -1360,28 +1389,23 @@ return {
         "order.currencyCode": (v21/*: any*/),
         "order.id": (v23/*: any*/),
         "order.internalID": (v23/*: any*/),
-        "order.isInquiryOrder": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Boolean"
-        },
+        "order.isInquiryOrder": (v24/*: any*/),
         "order.itemsTotal": (v22/*: any*/),
-        "order.itemsTotalCents": (v24/*: any*/),
-        "order.lastOffer": (v25/*: any*/),
+        "order.itemsTotalCents": (v25/*: any*/),
+        "order.lastOffer": (v26/*: any*/),
         "order.lastOffer.amount": (v22/*: any*/),
-        "order.lastOffer.amountCents": (v26/*: any*/),
+        "order.lastOffer.amountCents": (v27/*: any*/),
         "order.lastOffer.buyerTotal": (v22/*: any*/),
-        "order.lastOffer.buyerTotalCents": (v24/*: any*/),
+        "order.lastOffer.buyerTotalCents": (v25/*: any*/),
         "order.lastOffer.createdAt": (v21/*: any*/),
-        "order.lastOffer.fromParticipant": (v27/*: any*/),
+        "order.lastOffer.fromParticipant": (v28/*: any*/),
         "order.lastOffer.id": (v23/*: any*/),
         "order.lastOffer.internalID": (v23/*: any*/),
         "order.lastOffer.note": (v22/*: any*/),
         "order.lastOffer.shippingTotal": (v22/*: any*/),
-        "order.lastOffer.shippingTotalCents": (v24/*: any*/),
+        "order.lastOffer.shippingTotalCents": (v25/*: any*/),
         "order.lastOffer.taxTotal": (v22/*: any*/),
-        "order.lastOffer.taxTotalCents": (v24/*: any*/),
+        "order.lastOffer.taxTotalCents": (v25/*: any*/),
         "order.lineItems": {
           "enumValues": null,
           "nullable": true,
@@ -1461,20 +1485,20 @@ return {
           "plural": false,
           "type": "CommerceOrderModeEnum"
         },
-        "order.myLastOffer": (v25/*: any*/),
+        "order.myLastOffer": (v26/*: any*/),
         "order.myLastOffer.amount": (v22/*: any*/),
-        "order.myLastOffer.amountCents": (v26/*: any*/),
+        "order.myLastOffer.amountCents": (v27/*: any*/),
         "order.myLastOffer.buyerTotal": (v22/*: any*/),
-        "order.myLastOffer.buyerTotalCents": (v24/*: any*/),
+        "order.myLastOffer.buyerTotalCents": (v25/*: any*/),
         "order.myLastOffer.createdAt": (v21/*: any*/),
-        "order.myLastOffer.fromParticipant": (v27/*: any*/),
+        "order.myLastOffer.fromParticipant": (v28/*: any*/),
         "order.myLastOffer.id": (v23/*: any*/),
         "order.myLastOffer.internalID": (v23/*: any*/),
         "order.myLastOffer.note": (v22/*: any*/),
         "order.myLastOffer.shippingTotal": (v22/*: any*/),
-        "order.myLastOffer.shippingTotalCents": (v24/*: any*/),
+        "order.myLastOffer.shippingTotalCents": (v25/*: any*/),
         "order.myLastOffer.taxTotal": (v22/*: any*/),
-        "order.myLastOffer.taxTotalCents": (v24/*: any*/),
+        "order.myLastOffer.taxTotalCents": (v25/*: any*/),
         "order.offers": {
           "enumValues": null,
           "nullable": true,
@@ -1487,10 +1511,10 @@ return {
           "plural": true,
           "type": "CommerceOfferEdge"
         },
-        "order.offers.edges.node": (v25/*: any*/),
+        "order.offers.edges.node": (v26/*: any*/),
         "order.offers.edges.node.amount": (v22/*: any*/),
         "order.offers.edges.node.createdAt": (v21/*: any*/),
-        "order.offers.edges.node.fromParticipant": (v27/*: any*/),
+        "order.offers.edges.node.fromParticipant": (v28/*: any*/),
         "order.offers.edges.node.id": (v23/*: any*/),
         "order.offers.edges.node.internalID": (v23/*: any*/),
         "order.paymentMethod": {
@@ -1513,9 +1537,10 @@ return {
         },
         "order.paymentMethodDetails.__typename": (v21/*: any*/),
         "order.paymentMethodDetails.brand": (v21/*: any*/),
-        "order.paymentMethodDetails.expirationMonth": (v26/*: any*/),
-        "order.paymentMethodDetails.expirationYear": (v26/*: any*/),
+        "order.paymentMethodDetails.expirationMonth": (v27/*: any*/),
+        "order.paymentMethodDetails.expirationYear": (v27/*: any*/),
         "order.paymentMethodDetails.id": (v23/*: any*/),
+        "order.paymentMethodDetails.isManualPayment": (v24/*: any*/),
         "order.paymentMethodDetails.last4": (v21/*: any*/),
         "order.paymentMethodDetails.lastDigits": (v21/*: any*/),
         "order.requestedFulfillment": {
@@ -1545,7 +1570,7 @@ return {
         "order.sellerDetails.id": (v23/*: any*/),
         "order.sellerDetails.name": (v22/*: any*/),
         "order.shippingTotal": (v22/*: any*/),
-        "order.shippingTotalCents": (v24/*: any*/),
+        "order.shippingTotalCents": (v25/*: any*/),
         "order.state": {
           "enumValues": [
             "ABANDONED",
@@ -1562,12 +1587,12 @@ return {
         },
         "order.stateExpiresAt": (v22/*: any*/),
         "order.taxTotal": (v22/*: any*/),
-        "order.taxTotalCents": (v24/*: any*/)
+        "order.taxTotalCents": (v25/*: any*/)
       }
     },
     "name": "RespondTestQuery",
     "operationKind": "query",
-    "text": "query RespondTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Respond_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    currencyCode\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n\nfragment PaymentMethodSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n  }\n}\n\nfragment Respond_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  currencyCode\n  itemsTotal(precision: 2)\n  itemsTotalCents\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          price\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    isInquiryOrder\n    lastOffer {\n      createdAt\n      internalID\n      note\n      id\n    }\n    myLastOffer {\n      createdAt\n      id\n    }\n  }\n  ...TransactionDetailsSummaryItem_order\n  ...ArtworkSummaryItem_order\n  ...ShippingSummaryItem_order\n  ...PaymentMethodSummaryItem_order\n  ...OfferHistoryItem_order\n}\n\nfragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {\n  __isCommerceRequestedFulfillmentUnion: __typename\n  ... on CommerceShip {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n  ... on CommerceShipArta {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n}\n\nfragment ShippingSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  paymentMethod\n  requestedFulfillment {\n    __typename\n    ...ShippingAddress_ship\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          shippingOrigin\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query RespondTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Respond_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  currencyCode\n  mode\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        artwork {\n          date\n          shippingOrigin\n          id\n        }\n        artworkVersion {\n          artistNames\n          title\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    currencyCode\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n\nfragment PaymentMethodSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      brand\n      lastDigits\n      expirationYear\n      expirationMonth\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n\nfragment Respond_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  currencyCode\n  itemsTotal(precision: 2)\n  itemsTotalCents\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          price\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    isInquiryOrder\n    lastOffer {\n      createdAt\n      internalID\n      note\n      id\n    }\n    myLastOffer {\n      createdAt\n      id\n    }\n  }\n  ...TransactionDetailsSummaryItem_order\n  ...ArtworkSummaryItem_order\n  ...ShippingSummaryItem_order\n  ...PaymentMethodSummaryItem_order\n  ...OfferHistoryItem_order\n}\n\nfragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {\n  __isCommerceRequestedFulfillmentUnion: __typename\n  ... on CommerceShip {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n  ... on CommerceShipArta {\n    name\n    addressLine1\n    addressLine2\n    city\n    postalCode\n    region\n    country\n    phoneNumber\n  }\n}\n\nfragment ShippingSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  paymentMethod\n  requestedFulfillment {\n    __typename\n    ...ShippingAddress_ship\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          shippingOrigin\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();
