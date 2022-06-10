@@ -17,7 +17,6 @@ import {
   PaymentPickerFragmentContainer,
 } from "../../Components/PaymentPicker"
 import { Media } from "v2/Utils/Responsive"
-import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { ContinueButton } from "./index"
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
@@ -25,6 +24,7 @@ import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import { CommercePaymentMethodEnum } from "v2/__generated__/useSetPaymentMutation.graphql"
+import { BankAccountPicker } from "../../Components/BankAccountPicker"
 
 export interface Props {
   order: Payment_order
@@ -130,7 +130,7 @@ export const PaymentContent: FC<Props> = props => {
           • Bank transfer is powered by Stripe.
         </Text>
         <Spacer mb={2} />
-        <BankDebitProvider order={order} />
+        <BankAccountPicker order={order} />
       </Collapse>
 
       {/* Wire transfer */}
