@@ -159,6 +159,23 @@ describe("SavedSearchAlertEditForm", () => {
     `)
   })
 
+  it("should display error message when user tries to edit a deleted alert", () => {
+    renderWithRelay({
+      Artist: () => artistMocked,
+      FilterArtworksConnection: () => filterArtworksConnectionMocked,
+      Me: () => ({
+        ...meMocked,
+        savedSearch: null,
+      }),
+    })
+
+    const title = "Edit action cannot be performed"
+    const message = "This alert has been deleted in another tab or mobile app"
+
+    expect(screen.getByText(title)).toBeInTheDocument()
+    expect(screen.getByText(message)).toBeInTheDocument()
+  })
+
   describe("Save Alert button", () => {
     it("should be disabled by default", () => {
       renderWithRelay({

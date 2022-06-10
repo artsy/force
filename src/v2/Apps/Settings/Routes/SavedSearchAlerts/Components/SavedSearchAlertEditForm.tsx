@@ -5,6 +5,7 @@ import {
   Flex,
   Input,
   Join,
+  Message,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -256,7 +257,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   } = props
   const { savedSearch } = me
   const aggregations = artworksConnection?.aggregations as Aggregations
-  const criteria = getAllowedSearchCriteria(savedSearch as any)
+  const criteria = getAllowedSearchCriteria((savedSearch as any) ?? {})
   const entity: SavedSearchEntity = {
     placeholder: artist.name ?? "",
     artists: [
@@ -281,6 +282,16 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   if (shouldFetchLabelsFromMetaphysics) {
     labels = (savedSearch?.labels as LabelEntity[]) ?? []
     pills = convertLabelsToPills(labels)
+  }
+
+  if (savedSearch === null) {
+    return (
+      <Box>
+        <Message variant="error" title="Edit action cannot be performed">
+          This alert has been deleted in another tab or mobile app
+        </Message>
+      </Box>
+    )
   }
 
   return (
