@@ -51,8 +51,8 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
       query identityVerificationRoutes_IdentityVerificationAppQuery(
         $id: String!
       ) @raw_response_type {
-        me {
-          ...IdentityVerificationApp_me @arguments(id: $id)
+        identityVerification(id: $id) {
+          ...IdentityVerificationApp_identityVerification @arguments(id: $id)
         }
       }
     `,
