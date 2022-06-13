@@ -5,15 +5,7 @@ import {
   useAuctionResultsFilterContext,
   initialAuctionResultsFilterState,
 } from "../AuctionResultsFilterContext"
-import {
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  ModalBase,
-  color,
-  Sans,
-} from "@artsy/palette"
+import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 
 export const AuctionFilterMobileActionSheet: FC<{
   children: JSX.Element
@@ -71,11 +63,17 @@ export const AuctionFilterMobileActionSheet: FC<{
       dialogProps={{
         width: "100%",
         height: "100%",
-        background: color("white100"),
+        bg: "white100",
         flexDirection: "column",
       }}
     >
-      <Header p={1}>
+      <Flex
+        p={1}
+        width="100%"
+        alignItems="center"
+        borderBottom="1px solid"
+        borderColor="black10"
+      >
         <Button
           variant="tertiary"
           size="small"
@@ -88,10 +86,10 @@ export const AuctionFilterMobileActionSheet: FC<{
           Cancel
         </Button>
 
-        <Clickable flex="1" width="100%" onClick={handleScrollToTop}>
-          <FilterTitle size="3" weight="medium" textAlign="center">
+        <Clickable flex={1} width="100%" onClick={handleScrollToTop}>
+          <Text variant="xs" textAlign="center" fontWeight="bold">
             Filter
-          </FilterTitle>
+          </Text>
         </Clickable>
 
         <Button
@@ -105,15 +103,13 @@ export const AuctionFilterMobileActionSheet: FC<{
         >
           Clear all
         </Button>
-      </Header>
+      </Flex>
 
-      <Content ref={contentRef as any}>
-        <Box width="100%" px={2} pt={2}>
-          {children}
-        </Box>
+      <Content ref={contentRef as any} px={2} pt={2}>
+        {children}
       </Content>
 
-      <Footer p={1}>
+      <Flex p={1} width="100%">
         <Button
           variant="primaryBlack"
           width="100%"
@@ -122,30 +118,14 @@ export const AuctionFilterMobileActionSheet: FC<{
         >
           Show Results
         </Button>
-      </Footer>
+      </Flex>
     </ModalBase>
   )
 }
 
-const Header = styled(Flex)`
-  width: 100%;
-  align-items: center;
-  border-bottom: 1px solid ${color("black10")};
-`
-
-const Footer = styled(Flex)`
-  width: 100%;
-`
-
-const Content = styled(Flex)`
+const Content = styled(Box)`
   flex: 1;
   width: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 `
-
-const FilterTitle = styled(Sans)`
-  flex: 1;
-`
-
-FilterTitle.displayName = "FilterTitle"

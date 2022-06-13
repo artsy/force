@@ -113,6 +113,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
             }}
           />
         </Column>
+
         <Column span={9}>
           <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
             <Column

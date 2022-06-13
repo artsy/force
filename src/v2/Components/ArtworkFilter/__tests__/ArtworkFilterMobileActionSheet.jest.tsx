@@ -57,7 +57,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("Button").first().text()).toEqual("Cancel")
 
-    expect(wrapper.find("FilterTitle").text()).toEqual("Filter")
+    expect(wrapper.find("Clickable").first().text()).toEqual("Filter")
 
     expect(wrapper.find("Button").last().text()).toEqual("Show Results")
   })

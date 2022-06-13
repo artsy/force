@@ -2,69 +2,48 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  BorderBox,
+  Box,
+  Button,
   Clickable,
-  Col,
   Collapse,
-  Row,
-  Sans,
+  Column,
+  Flex,
+  GridColumns,
+  Image,
+  ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { Box, Button, Flex, Separator, Spacer } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult } from "v2/__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { AnalyticsSchema, SystemContextProps } from "v2/System"
+import {
+  AnalyticsSchema,
+  SystemContextProps,
+  useSystemContext,
+} from "v2/System"
 import { SystemContext } from "v2/System"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
 import { FC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import styled from "styled-components"
-import { get } from "v2/Utils/get"
 import { openAuthModal } from "v2/Utils/openAuthModal"
-import { Media } from "v2/Utils/Responsive"
-import {
-  ImageWithFallback,
-  renderFallbackImage,
-} from "./Components/ImageWithFallback"
-import { Mediator } from "lib/mediator"
 import { AuctionResultPerformance } from "v2/Components/AuctionResultPerformance"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
   auctionResult: ArtistAuctionResultItem_auctionResult
-  index: number
-  mediator?: Mediator
-  lastChild: boolean
   filtersAtDefault: boolean
 }
 
-const FullWidthBorderBox = styled(BorderBox)`
-  display: block;
-  padding: 0;
-  cursor: pointer;
-`
-
-const StyledImage = styled(ImageWithFallback)`
-  max-height: 100%;
-  max-width: 100%;
-`
-
-const Capitalize = styled.span`
-  text-transform: capitalize;
-`
-
-// TODO: This whole component should be refactored to use less `Media` decisions
 export const ArtistAuctionResultItem: FC<Props> = props => {
-  const { user, mediator } = useContext(SystemContext)
-
   const tracking = useTracking()
+
   const [expanded, setExpanded] = useState(false)
 
   const toggle = () => {
     const expand = !expanded
 
     setExpanded(!expanded)
+
     tracking.trackEvent({
       context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
       action_type: AnalyticsSchema.ActionType.AuctionResultItemClicked,
@@ -76,218 +55,92 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
 
   return (
     <>
-      <Media at="xs">
-        <FullWidthBorderBox mb={1} onClick={toggle}>
-          <Row height="120px" p={2}>
-            <ExtraSmallAuctionItem
-              {...props}
-              expanded={expanded}
-              mediator={mediator}
-              user={user}
-            />
-          </Row>
-          <Box>
-            {renderSmallCollapse(
-              { ...props, expanded },
-              user,
-              mediator,
-              props.filtersAtDefault
-            )}
-          </Box>
-        </FullWidthBorderBox>
-      </Media>
+      <Clickable
+        display="block"
+        width="100%"
+        border="1px solid"
+        borderColor="black10"
+        p={2}
+        onClick={toggle}
+      >
+        <ArtistAuctionResultItemTop {...props} expanded={expanded} />
+      </Clickable>
 
-      <Media greaterThanOrEqual="sm">
-        <FullWidthBorderBox mb={1} onClick={toggle}>
-          <Box p={2} minHeight="120px">
-            <Row minHeight="80px">
-              <LargeAuctionItem
-                {...props}
-                expanded={expanded}
-                mediator={mediator}
-                user={user}
-              />
-            </Row>
-          </Box>
-          <Box>
-            {renderLargeCollapse(
-              { ...props, expanded },
-              user,
-              mediator,
-              props.filtersAtDefault
-            )}
-          </Box>
-        </FullWidthBorderBox>
-      </Media>
-      <Spacer />
+      <ArtistAuctionResultItemBottom {...props} expanded={expanded} />
     </>
   )
 }
 
-const LargeAuctionItem: FC<Props> = props => {
+const ArtistAuctionResultItemTop: FC<Props> = props => {
   const {
     expanded,
     auctionResult: {
       images,
-      currency,
       date_text,
       organization,
       title,
       mediumText,
       saleDate,
-      boughtIn,
-      performance,
     },
-    salePrice,
-    salePriceUSD,
   } = getProps(props)
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const imageUrl = get(images, i => i.thumbnail.url, "")
   const dateOfSale = getDisplaySaleDate(saleDate)
+  const image = images?.larger?.cropped
 
   return (
-    <>
-      <Col sm={2}>
-        <Flex
-          alignItems="center"
-          justifyContent="center"
-          height="80px"
-          width="80px"
+    <GridColumns>
+      <Column span={2}>
+        <ResponsiveBox
+          aspectWidth={1}
+          aspectHeight={1}
+          maxWidth={100}
+          bg="black10"
         >
-          {imageUrl ? (
-            <StyledImage
-              src={imageUrl}
-              Fallback={() => renderFallbackImage()}
+          {image && (
+            <Image
+              src={image.src}
+              srcSet={image.srcSet}
+              width="100%"
+              height="100%"
+              alt=""
+              lazyLoad
             />
-          ) : (
-            renderFallbackImage()
           )}
-        </Flex>
-      </Col>
-      <Col sm={4}>
-        <Flex
-          flexDirection="row"
-          alignItems="center"
-          height="100%"
-          pl={1}
-          pr={6}
-        >
-          <Box>
-            <Text variant="sm-display" fontWeight="bold">
-              {title}
-              {title && date_text && ", "}
-              {date_text}
-            </Text>
-            {mediumText !== "Unknown" && (
-              <Text variant="xs" color="black60">
-                <Capitalize>{mediumText}</Capitalize>
-              </Text>
-            )}
-          </Box>
-        </Flex>
-      </Col>
-      <Col sm={2}>
-        <Flex alignItems="center" height="100%" pr={2}>
-          <Box>
-            <Text variant="sm-display" fontWeight="bold">
-              {dateOfSale}
-            </Text>
-            <Text variant="xs" color="black60">
-              {organization}
-            </Text>
-          </Box>
-        </Flex>
-      </Col>
-      <Col sm={4}>
-        <Flex alignItems="center" height="100%">
-          <Flex width="90%" pr="10px" justifyContent="flex-end">
-            {renderPricing(
-              currency,
-              salePrice,
-              salePriceUSD,
-              saleDate,
-              props.user,
-              props.mediator,
-              "lg",
-              props.filtersAtDefault,
-              boughtIn,
-              performance?.mid ?? null
-            )}
-          </Flex>
-          <Flex width="10%" justifyContent="flex-end">
-            <div>{expanded ? <ArrowUpIcon /> : <ArrowDownIcon />}</div>
-          </Flex>
-        </Flex>
-      </Col>
-    </>
-  )
-}
+        </ResponsiveBox>
+      </Column>
 
-const ExtraSmallAuctionItem: FC<Props> = props => {
-  const {
-    expanded,
-    auctionResult: {
-      images,
-      date_text,
-      title,
-      currency,
-      saleDate,
-      boughtIn,
-      performance,
-    },
-    salePrice,
-    salePriceUSD,
-  } = getProps(props)
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const imageUrl = get(images, i => i.thumbnail.url, "")
-  const dateOfSale = getDisplaySaleDate(saleDate)
-
-  return (
-    <Flex data-test={ContextModule.auctionResults} width="100%">
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        height="80px"
-        width="80px"
-      >
-        {imageUrl ? (
-          <StyledImage
-            src={imageUrl}
-            Fallback={() => renderFallbackImage()}
-            key={imageUrl}
-          />
-        ) : (
-          renderFallbackImage()
-        )}
-      </Flex>
-      <Flex ml={2} flexDirection="column" justifyContent="center" width="100%">
-        <Text variant="xs" color="black100">
-          {title}
-          {title && date_text && ", "}
-          {date_text}
+      <Column span={4}>
+        <Text variant="sm-display">
+          {[title, date_text].filter(Boolean).join(", ")}
         </Text>
+
+        {mediumText !== "Unknown" && (
+          <Text variant="xs" color="black60" lineClamp={4}>
+            {mediumText}
+          </Text>
+        )}
+      </Column>
+
+      <Column span={2}>
+        <Text variant="sm-display">{dateOfSale}</Text>
+
         <Text variant="xs" color="black60">
-          Sold on {dateOfSale}
+          {organization}
         </Text>
-        <Spacer mt="1" />
-        {renderPricing(
-          currency,
-          salePrice,
-          salePriceUSD,
-          saleDate,
-          props.user,
-          props.mediator,
-          "xs",
-          props.filtersAtDefault,
-          boughtIn,
-          performance?.mid ?? null
-        )}
-      </Flex>
-      <Flex justifyContent="flex-end" alignItems="center" height="100%">
-        <div>{expanded ? <ArrowUpIcon /> : <ArrowDownIcon />}</div>
-      </Flex>
-    </Flex>
+      </Column>
+
+      <Column span={4} display="flex" justifyContent="flex-end">
+        <ArtistAuctionResultItemPrice {...props} />
+
+        <Box ml={1}>
+          {expanded ? (
+            <ArrowUpIcon display="block" />
+          ) : (
+            <ArrowDownIcon display="block" />
+          )}
+        </Box>
+      </Column>
+    </GridColumns>
   )
 }
 
@@ -300,8 +153,13 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         dimension_text: dimensionText
         organization
         images {
-          thumbnail {
-            url
+          larger {
+            cropped(width: 100, height: 100) {
+              src
+              srcSet
+              width
+              height
+            }
           }
         }
         mediumText
@@ -326,29 +184,190 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
   }
 )
 
-const FullDescriptionLink = styled.span`
-  cursor: pointer;
-  text-decoration: underline;
-`
+const ArtistAuctionResultItemPrice: FC<Props> = props => {
+  const {
+    filtersAtDefault,
+    salePrice,
+    salePriceUSD,
+    auctionResult: { saleDate, currency, performance, boughtIn },
+  } = getProps(props)
 
-FullDescriptionLink.displayName = "FullDescriptionLink"
+  const { user, mediator } = useContext(SystemContext)
 
-// Helpers
+  // If user is logged in we show prices
+  if (user || filtersAtDefault) {
+    const dateOfSale = DateTime.fromISO(saleDate!, { zone: "utc" })
+    const awaitingResults = dateOfSale > DateTime.local()
+    const showPriceUSD = salePriceUSD && currency !== "USD"
 
-const getSalePrice = price_realized =>
-  price_realized.cents_usd === 0 ? null : price_realized.display
+    return (
+      <Box textAlign="right" mb={0.5} mr={0.5}>
+        {salePrice && (
+          <>
+            <Flex>
+              <Text variant="sm-display">{salePrice}</Text>
 
-const getSalePriceUSD = price_realized =>
-  price_realized.cents_usd === 0 ? null : price_realized.display_usd
+              {!!showPriceUSD && (
+                <Text variant="xs" color="black60" ml={0.5}>
+                  {salePriceUSD}
+                </Text>
+              )}
+            </Flex>
+
+            <Text variant="xs" color="black60">
+              Realized price
+            </Text>
+
+            {/* TODO: */}
+            <AuctionResultPerformance value={performance?.mid!} align="right" />
+          </>
+        )}
+
+        {!salePrice && boughtIn && <Text variant="sm-display">Bought in</Text>}
+
+        {!salePrice && awaitingResults && (
+          <Text variant="sm-display">Awaiting results</Text>
+        )}
+
+        {!salePrice && !awaitingResults && !boughtIn && (
+          <Text variant="sm-display">Price not available</Text>
+        )}
+      </Box>
+    )
+  }
+
+  // Otherwise we show prices only when filters at default
+  return (
+    <Button
+      size="small"
+      variant="primaryGray"
+      onClick={() => {
+        mediator &&
+          openAuthModal(mediator, {
+            mode: ModalType.signup,
+            copy: "Sign up to see full auction records — for free",
+            contextModule: ContextModule.auctionResults,
+            intent: Intent.seePriceAuctionRecords,
+          })
+      }}
+    >
+      Sign up to see price
+    </Button>
+  )
+}
+
+const ArtistAuctionResultItemBottom: FC<Props> = props => {
+  const {
+    expanded,
+    auctionResult: { dimension_text, organization, saleDate, categoryText },
+    salePrice,
+    estimatedPrice,
+    filtersAtDefault,
+  } = getProps(props)
+
+  const { user, mediator } = useSystemContext()
+
+  const dateOfSale = getDisplaySaleDate(saleDate)
+
+  return (
+    <Collapse open={!!expanded}>
+      <GridColumns border="1px solid" borderColor="black10" p={2} mt="-1px">
+        <Column span={2}>
+          <Text variant="xs">
+            {categoryText !== "Unknown" ? "Artwork Info" : "Artwork Dimension"}
+          </Text>
+        </Column>
+
+        <Column span={4}>
+          <Text variant="xs">
+            {categoryText !== "Unknown" && (
+              <>
+                {categoryText}
+                <br />
+              </>
+            )}
+
+            {dimension_text}
+          </Text>
+        </Column>
+
+        <Column span={2}>
+          <Text variant="xs">Estimate</Text>
+        </Column>
+
+        <Column span={4}>
+          {user ? (
+            <Text variant="xs">
+              {estimatedPrice || "Estimate not available"}
+            </Text>
+          ) : (
+            <Clickable
+              textDecoration="underline"
+              onClick={() => {
+                mediator &&
+                  openAuthModal(mediator, {
+                    mode: ModalType.signup,
+                    copy: "Sign up to see full auction records — for free",
+                    contextModule: ContextModule.auctionResults,
+                    intent: Intent.seeEstimateAuctionRecords,
+                  })
+              }}
+            >
+              <Text variant="xs">Sign up to see estimate</Text>
+            </Clickable>
+          )}
+        </Column>
+
+        <Column span={2}>
+          <Text variant="xs">Auction Sale</Text>
+        </Column>
+
+        <Column span={4}>
+          <Text variant="xs">
+            {dateOfSale}
+            <br />
+            {organization}
+          </Text>
+        </Column>
+
+        <Column span={2}>
+          <Text variant="xs">Realized Price</Text>
+        </Column>
+
+        <Column span={4}>
+          {user || filtersAtDefault ? (
+            <Text variant="xs">{salePrice || "Price not available"}</Text>
+          ) : (
+            <Clickable
+              textDecoration="underline"
+              onClick={() => {
+                mediator &&
+                  openAuthModal(mediator, {
+                    mode: ModalType.signup,
+                    copy: "Sign up to see full auction records — for free",
+                    contextModule: ContextModule.auctionResults,
+                    intent: Intent.seeRealizedPriceAuctionRecords,
+                  })
+              }}
+            >
+              <Text variant="xs">Sign up to see realized price</Text>
+            </Clickable>
+          )}
+        </Column>
+      </GridColumns>
+    </Collapse>
+  )
+}
 
 const getProps = (props: Props) => {
   const {
     auctionResult: { estimate, price_realized },
   } = props
 
-  const salePrice = getSalePrice(price_realized)
-  const salePriceUSD = getSalePriceUSD(price_realized)
-
+  const salePrice =
+    (price_realized?.cents_usd ?? 0) === 0 ? null : price_realized?.display
+  const salePriceUSD =
+    (price_realized?.cents_usd ?? 0) === 0 ? null : price_realized?.display_usd
   const estimatedPrice = estimate?.display
 
   return {
@@ -359,320 +378,10 @@ const getProps = (props: Props) => {
   }
 }
 
-const getDisplaySaleDate = saleDate => {
+const getDisplaySaleDate = (saleDate: string | null) => {
+  if (!saleDate) return null
+
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
     DateTime.DATE_MED as LocaleOptions
-  )
-}
-
-const renderPricing = (
-  currency,
-  salePrice,
-  salePriceUSD,
-  saleDate,
-  user,
-  mediator,
-  size,
-  filtersAtDefault,
-  boughtIn,
-  performance: string | null
-) => {
-  // If user is logged in we show prices. Otherwise we show prices only when filters at default.
-  if (user || filtersAtDefault) {
-    const textAlign = size === "xs" ? "left" : "right"
-
-    const dateOfSale = DateTime.fromISO(saleDate, { zone: "utc" })
-    const now = DateTime.local()
-    const awaitingResults = dateOfSale > now
-
-    const showPriceUSD = salePriceUSD && currency !== "USD"
-
-    return (
-      <Box textAlign={textAlign} mb={0.5} mr={0.5}>
-        {salePrice && (
-          <>
-            <Flex
-              alignItems="flex-end"
-              justifyContent={size === "xs" ? undefined : "flex-end"}
-            >
-              <Text variant="sm-display" fontWeight="bold">
-                {salePrice}
-              </Text>
-              {!!showPriceUSD && (
-                <Text variant="xs" color="black60" ml={0.5}>
-                  {salePriceUSD}
-                </Text>
-              )}
-            </Flex>
-            <Text variant="xs" color="black60">
-              Realized price
-            </Text>
-            <AuctionResultPerformance
-              value={performance}
-              align={size === "xs" ? "left" : "right"}
-            />
-          </>
-        )}
-        {!salePrice && boughtIn && (
-          <Box textAlign={textAlign}>
-            <Text variant="sm-display" fontWeight="bold">
-              Bought in
-            </Text>
-          </Box>
-        )}
-        {!salePrice && awaitingResults && (
-          <Box textAlign={textAlign}>
-            <Text variant="sm-display" fontWeight="bold">
-              Awaiting results
-            </Text>
-          </Box>
-        )}
-        {!salePrice && !awaitingResults && !boughtIn && (
-          <Box textAlign={textAlign}>
-            <Text variant="sm-display" fontWeight="bold">
-              Price not available
-            </Text>
-          </Box>
-        )}
-      </Box>
-    )
-  } else {
-    const btnSize = size === "xs" || "sm" ? "small" : "large"
-    const buttonMargin = size === "xs" ? 1 : 0
-    return (
-      <Button
-        size={btnSize}
-        variant="primaryGray"
-        mb={buttonMargin}
-        onClick={() => {
-          mediator &&
-            openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
-              contextModule: ContextModule.auctionResults,
-              intent: Intent.seePriceAuctionRecords,
-            })
-        }}
-      >
-        Sign up to see price
-      </Button>
-    )
-  }
-}
-
-const renderEstimate = (estimatedPrice, user, mediator) => {
-  let body: JSX.Element
-  if (user) {
-    if (estimatedPrice) {
-      body = <Sans size="2">{estimatedPrice}</Sans>
-    } else {
-      body = <Sans size="2">Estimate not available</Sans>
-    }
-  } else {
-    body = (
-      <Clickable
-        onClick={() => {
-          mediator &&
-            openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
-              contextModule: ContextModule.auctionResults,
-              intent: Intent.seeEstimateAuctionRecords,
-            })
-        }}
-        textDecoration="underline"
-      >
-        <Sans size="2">Sign up to see estimate</Sans>
-      </Clickable>
-    )
-  }
-
-  return <Flex justifyContent="flex-start">{body}</Flex>
-}
-
-const renderRealizedPrice = (
-  realizedPrice,
-  user,
-  mediator,
-  filtersAtDefault
-) => {
-  // Show prices if user is logged in. Otherwise, show prices only when filters at default.
-  let body: JSX.Element
-  if (user || filtersAtDefault) {
-    if (realizedPrice) {
-      body = <Sans size="2">{realizedPrice}</Sans>
-    } else {
-      body = <Sans size="2">Price not available</Sans>
-    }
-  } else {
-    body = (
-      <Clickable
-        onClick={() => {
-          mediator &&
-            openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
-              contextModule: ContextModule.auctionResults,
-              intent: Intent.seeRealizedPriceAuctionRecords,
-            })
-        }}
-        textDecoration="underline"
-      >
-        <Text variant="sm">Sign up to see realized price</Text>
-      </Clickable>
-    )
-  }
-
-  return <Flex justifyContent="flex-start">{body}</Flex>
-}
-
-const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
-  const {
-    expanded,
-    auctionResult: { dimension_text, organization, saleDate, categoryText },
-    salePrice,
-    estimatedPrice,
-  } = getProps(props)
-
-  const dateOfSale = getDisplaySaleDate(saleDate)
-
-  return (
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    <Collapse open={expanded}>
-      <Separator />
-      <Box p={2}>
-        <Row>
-          <Col sm={2}>
-            <Text variant="xs" fontWeight="bold">
-              {categoryText !== "Unknown"
-                ? "Artwork Info"
-                : "Artwork Dimension"}
-            </Text>
-          </Col>
-          <Col sm={4}>
-            <Box pl={1} pr={6}>
-              {categoryText !== "Unknown" && (
-                <Text variant="xs">{categoryText}</Text>
-              )}
-              <Text variant="xs">{dimension_text}</Text>
-            </Box>
-          </Col>
-          <Col sm={2}>
-            <Box pr={2}>
-              <Text variant="xs" fontWeight="bold">
-                Estimate
-              </Text>
-            </Box>
-          </Col>
-          <Col sm={4} pr="4.5%">
-            {renderEstimate(estimatedPrice, user, mediator)}
-          </Col>
-        </Row>
-
-        <Row>
-          <Col sm={2}>
-            <Text variant="xs" fontWeight="bold">
-              Auction Sale
-            </Text>
-          </Col>
-          <Col sm={4}>
-            <Box pl={1} pr={6}>
-              <Text variant="xs">{dateOfSale}</Text>
-              <Text variant="xs">{organization}</Text>
-            </Box>
-          </Col>
-
-          <Col sm={2}>
-            <Box pr={2}>
-              <Text variant="xs" fontWeight="bold">
-                Realized Price
-              </Text>
-            </Box>
-          </Col>
-          <Col sm={4} pr="4.5%">
-            {renderRealizedPrice(salePrice, user, mediator, filtersAtDefault)}
-          </Col>
-        </Row>
-      </Box>
-    </Collapse>
-  )
-}
-
-const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
-  const {
-    expanded,
-    auctionResult: {
-      dimension_text,
-      organization,
-      categoryText,
-      mediumText,
-      saleDate,
-    },
-    salePrice,
-    estimatedPrice,
-  } = getProps(props)
-
-  const dateOfSale = getDisplaySaleDate(saleDate)
-
-  return (
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    <Collapse open={expanded}>
-      <Separator />
-      <Box p={2}>
-        <Row mb={2}>
-          <Col xs={4}>
-            <Text variant="xs" fontWeight="bold">
-              {categoryText !== "Unknown" && mediumText !== "Unknown"
-                ? "Artwork Info"
-                : "Artwork Dimension"}
-            </Text>
-          </Col>
-          <Col xs={8}>
-            <Box>
-              {categoryText !== "Unknown" && (
-                <Text variant="xs">{categoryText}</Text>
-              )}
-              {mediumText !== "Unknown" && (
-                <Text variant="xs">
-                  <Capitalize>{mediumText}</Capitalize>
-                </Text>
-              )}
-              <Text variant="xs">{dimension_text}</Text>
-            </Box>
-          </Col>
-        </Row>
-        <Row mb={2}>
-          <Col xs={4}>
-            <Text variant="xs" fontWeight="bold">
-              Estimate
-            </Text>
-          </Col>
-          <Col xs={8}>{renderEstimate(estimatedPrice, user, mediator)}</Col>
-        </Row>
-
-        <Row mb={2}>
-          <Col xs={4}>
-            <Text variant="xs" fontWeight="bold">
-              Realized Price
-            </Text>
-          </Col>
-          <Col xs={8}>
-            {renderRealizedPrice(salePrice, user, mediator, filtersAtDefault)}
-          </Col>
-        </Row>
-
-        <Row mb={2}>
-          <Col xs={4}>
-            <Text variant="xs" fontWeight="bold">
-              Auction Sale
-            </Text>
-          </Col>
-          <Col xs={8}>
-            <Text variant="xs">{dateOfSale}</Text>
-            <Text variant="xs">{organization}</Text>
-          </Col>
-        </Row>
-      </Box>
-    </Collapse>
   )
 }
