@@ -360,7 +360,6 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/status",
       mockResolver({
         ...OfferOrderWithShippingDetails,
-
         awaitingResponseFrom: "BUYER",
         state: "SUBMITTED",
       })
