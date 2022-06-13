@@ -1,5 +1,4 @@
 import { BorderedRadio, Button } from "@artsy/palette"
-import { RespondTestQueryRawResponse } from "v2/__generated__/RespondTestQuery.graphql"
 import {
   Buyer,
   OfferOrderWithShippingDetails,
@@ -10,6 +9,15 @@ import {
 import { OfferHistoryItemFragmentContainer } from "v2/Apps/Order/Components/OfferHistoryItem"
 import { DateTime } from "luxon"
 import { RespondFragmentContainer } from "../Respond"
+import { expectOne } from "v2/DevTools/RootTestPage"
+import { graphql } from "react-relay"
+import {
+  buyerCounterOfferFailed,
+  buyerCounterOfferSuccess,
+} from "../__fixtures__/MutationResults/buyerCounterOffer"
+import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { MockBoot } from "v2/DevTools"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 // Need to mock Utils/Events instead of using mockTracking because
 // Boot's `dispatch` tracking prop overrides the one injected by
@@ -25,35 +33,25 @@ jest.mock("v2/Utils/logger")
 
 const NOW = "2018-12-05T13:47:16.446Z"
 const realSetInterval = global.setInterval
-
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
 jest.unmock("react-relay")
 
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children, onClose, footer }) => {
-      return (
-        <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
-          {title}
-          {children}
-          {footer}
-        </div>
-      )
-    },
-  }
-})
+const mockShowErrorDialog = jest.fn()
+jest.mock("v2/Apps/Order/Dialogs", () => ({
+  ...jest.requireActual("../../Dialogs"),
+  injectDialog: Component => props => (
+    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
+  ),
+}))
 
-import { createTestEnv } from "v2/DevTools/createTestEnv"
-import { expectOne } from "v2/DevTools/RootTestPage"
-import { graphql } from "react-relay"
-import {
-  buyerCounterOfferFailed,
-  buyerCounterOfferSuccess,
-} from "../__fixtures__/MutationResults/buyerCounterOffer"
-import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+const mockCommitMutation = jest.fn()
+jest.mock("v2/Apps/Order/Utils/commitMutation", () => ({
+  ...jest.requireActual("../../Utils/commitMutation"),
+  injectCommitMutation: Component => props => (
+    <Component {...props} commitMutation={mockCommitMutation} />
+  ),
+}))
 
 const testOrder = {
   ...OfferOrderWithShippingDetails,
@@ -85,40 +83,32 @@ class RespondTestPage extends OrderAppTestPage {
 
   async selectAcceptRadio() {
     const radio = this.findRadioWithText("Accept seller's offer")
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    radio.props().onSelect({ selected: true, value: "ACCEPT" })
+    radio.props().onSelect?.({ selected: true, value: "ACCEPT" })
     await this.update()
   }
 
   async selectDeclineRadio() {
     const radio = this.findRadioWithText("Decline seller's offer")
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    radio.props().onSelect({ selected: true, value: "DECLINE" })
+    radio.props().onSelect?.({ selected: true, value: "DECLINE" })
     await this.update()
   }
 
   async selectCounterRadio() {
     const radio = this.findRadioWithText("Send counteroffer")
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    radio.props().onSelect({ selected: true, value: "COUNTER" })
+    radio.props().onSelect?.({ selected: true, value: "COUNTER" })
     await this.update()
   }
 }
 
 describe("The respond page", () => {
-  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
-    Component: RespondFragmentContainer,
-    defaultData: ({
-      order: testOrder,
-      system: {
-        time: {
-          unix: 222,
-        },
-      },
-    } as unknown) as RespondTestQueryRawResponse,
-    defaultMutationResults: {
-      ...buyerCounterOfferSuccess,
-    },
+  const pushMock = jest.fn()
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot>
+        <RespondFragmentContainer {...props} router={{ push: pushMock }} />
+      </MockBoot>
+    ),
     query: graphql`
       query RespondTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
@@ -126,145 +116,104 @@ describe("The respond page", () => {
         }
       }
     `,
-    TestPage: RespondTestPage,
   })
 
   beforeEach(() => {
     mockPostEvent.mockReset()
-    hooks.clearErrors()
-  })
-
-  afterEach(() => {
-    hooks.clearMocksAndErrors()
+    jest.clearAllMocks()
   })
 
   describe("the page layout", () => {
-    let page: RespondTestPage
     beforeAll(async () => {
       global.setInterval = jest.fn()
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...testOrder,
-
-            stateExpiresAt: DateTime.fromISO(NOW)
-              .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
-              .toString(),
-          },
-        },
-      })
     })
 
     afterAll(() => {
       global.setInterval = realSetInterval
     })
 
-    it("shows the countdown timer", () => {
+    it("renders", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...testOrder,
+
+          stateExpiresAt: DateTime.fromISO(NOW)
+            .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
+            .toString(),
+        }),
+      })
+      const page = new RespondTestPage(wrapper)
+
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
-    })
-
-    it("shows the offer input", () => {
       expect(page.offerInput.text()).toContain("Your offer")
-    })
-
-    it("shows the stepper", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
         `"RespondNavigate rightReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Respond")
-    })
-
-    it("shows a note if there is one", async () => {
-      const pageWithNote = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithShippingDetailsAndNote,
-
-            stateExpiresAt: DateTime.fromISO(NOW)
-              .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
-              .toString(),
-          },
-        },
-      })
-      expect(pageWithNote.text()).toContain("Seller's noteAnother note!")
-    })
-
-    it("does not show a note if there is none", () => {
       expect(page.text()).not.toContain("Your note")
-    })
-
-    it("shows the offer history item", () => {
-      expect(page.showOfferHistoryButton.text()).toMatch("Show offer history")
-
-      page.showOfferHistoryButton
-        .props()
-        .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>)
-
-      expect(page.offerHistory.text()).toMatch(
-        "You (May 21)US$1,200.00Seller (Apr 30)US$1,500.00You (Apr 5)US$1,100.00"
-      )
-    })
-
-    it("shows the transaction summary", () => {
       expect(page.transactionSummary.text()).toMatch("Seller's offerUS$14,000")
-    })
-
-    it("shows the artwork summary", () => {
       expect(page.artworkSummary.text()).toMatch(
         "Lisa BreslowGramercy Park South"
       )
-    })
-
-    it("shows the shipping details", () => {
       expect(page.shippingSummary.text()).toMatch(
         "Ship toLockedJoelle Van Dyne401 Broadway"
       )
-    })
-
-    it("shows the payment details", () => {
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
         `"Lockedvisa•••• 4444   Exp 03/21"`
       )
-    })
-
-    it("shows buyer guarentee", () => {
       expect(page.buyerGuarantee.length).toBe(1)
-    })
-
-    it("shows the continue button", () => {
       expect(page.submitButton.text()).toBe("Continue")
-    })
 
-    it("shows three radio buttons with response choices", () => {
       const radios = page.find(BorderedRadio)
       expect(radios).toHaveLength(3)
 
       expect(radios.first().text()).toMatch("Accept seller's offer")
       expect(radios.at(1).text()).toMatch("Send counteroffer")
       expect(radios.at(2).text()).toMatch("Decline seller's offer")
-    })
 
-    it("shows offer note button", () => {
       const offerNote = page.find("OfferNote")
       expect(offerNote).toHaveLength(1)
     })
 
-    it("hides offer note button for inquiry order", async () => {
-      const inquiryOrderPage = await buildPage({
-        mockData: {
-          order: {
-            ...testOrder,
-            isInquiryOrder: true,
-          },
-        },
+    it("shows a note if there is one", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => OfferOrderWithShippingDetailsAndNote,
       })
+      const page = new RespondTestPage(wrapper)
 
-      expect(inquiryOrderPage.find("OfferNote")).toHaveLength(0)
+      expect(page.text()).toContain("Seller's noteAnother note!")
+    })
+
+    it("shows the offer history item", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
+
+      expect(page.showOfferHistoryButton.text()).toMatch("Show offer history")
+
+      page.showOfferHistoryButton.props().onClick({})
+
+      expect(page.offerHistory.text()).toMatch(
+        "You (May 21)US$1,200.00Seller (Apr 30)US$1,500.00You (Apr 5)US$1,100.00"
+      )
+    })
+
+    it("hides offer note button for inquiry order", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...testOrder,
+          isInquiryOrder: true,
+        }),
+      })
+      const page = new RespondTestPage(wrapper)
+
+      expect(page.find("OfferNote")).toHaveLength(0)
     })
   })
 
   describe("taking action", () => {
-    let page: RespondTestPage
+    // let page: RespondTestPage
 
     afterAll(() => {
       global.setInterval = realSetInterval
@@ -272,23 +221,33 @@ describe("The respond page", () => {
 
     beforeEach(async () => {
       global.setInterval = jest.fn()
-      page = await buildPage()
+      // page = await buildPage()
     })
 
     it("Accepting the seller's offer works", async () => {
+      mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
       await page.selectAcceptRadio()
       await page.clickSubmit()
 
-      expect(routes.mockPushRoute).toHaveBeenCalledWith(
+      expect(pushMock).toHaveBeenCalledWith(
         `/orders/${testOrder.internalID}/review/accept`
       )
     })
 
     it("Declining the seller's offer works", async () => {
+      mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
       await page.selectDeclineRadio()
       await page.clickSubmit()
 
-      expect(routes.mockPushRoute).toHaveBeenCalledWith(
+      expect(pushMock).toHaveBeenCalledWith(
         `/orders/${testOrder.internalID}/review/decline`
       )
     })
@@ -301,93 +260,123 @@ describe("The respond page", () => {
       afterAll(() => {
         global.setInterval = realSetInterval
       })
+
       it("doesn't work if nothing was typed in", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new RespondTestPage(wrapper)
+
         await page.selectCounterRadio()
         expect(page.offerInput.props().showError).toBe(false)
         await page.clickSubmit()
+
         expect(page.offerInput.props().showError).toBe(true)
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
+        expect(mockCommitMutation).not.toHaveBeenCalled()
       })
 
       it("doesn't let the user continue if the offer value is not positive", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new RespondTestPage(wrapper)
         await page.selectCounterRadio()
         await page.setOfferAmount(0)
 
         expect(page.offerInput.props().showError).toBe(false)
         await page.clickSubmit()
         expect(page.offerInput.props().showError).toBe(true)
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
+        expect(mockCommitMutation).not.toHaveBeenCalled()
       })
 
       it("works when a valid number is inputted", async () => {
+        mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new RespondTestPage(wrapper)
         await page.selectCounterRadio()
         await page.setOfferAmount(9000)
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(0)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(0)
         await page.clickSubmit()
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(mutations.lastFetchVariables).toMatchObject({
-          input: {
-            offerId: "myoffer-id",
-            amountCents: 9000 * 100,
-          },
-        })
-        expect(routes.mockPushRoute).toHaveBeenCalledWith(
-          "/orders/2939023/review/counter"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+        expect(mockCommitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                offerId: "myoffer-id",
+                amountCents: 9000 * 100,
+                note: "",
+              },
+            },
+          })
         )
+        expect(pushMock).toHaveBeenCalledWith("/orders/2939023/review/counter")
       })
 
       it("works when a valid number is inputted for a non-usd currency", async () => {
-        const nonUSDPage = await buildPage({
-          mockData: {
-            order: {
-              ...testOrder,
-              currencyCode: "GBP",
-            },
-          },
+        mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({ ...testOrder, currencyCode: "GBP" }),
         })
-        await nonUSDPage.selectCounterRadio()
-        await nonUSDPage.setOfferAmount(9000)
+        const page = new RespondTestPage(wrapper)
+        await page.selectCounterRadio()
+        await page.setOfferAmount(9000)
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(0)
-        await nonUSDPage.clickSubmit()
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(mutations.lastFetchVariables).toMatchObject({
-          input: {
-            offerId: "myoffer-id",
-            amountCents: 9000 * 100,
-          },
-        })
-        expect(routes.mockPushRoute).toHaveBeenCalledWith(
-          "/orders/2939023/review/counter"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(0)
+        await page.clickSubmit()
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+        expect(mockCommitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                offerId: "myoffer-id",
+                amountCents: 9000 * 100,
+                note: "",
+              },
+            },
+          })
         )
+        expect(pushMock).toHaveBeenCalledWith("/orders/2939023/review/counter")
       })
     })
 
     it("shows the error modal if submitting a counter offer fails at network level", async () => {
+      mockCommitMutation.mockRejectedValue({})
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
+
       await page.selectCounterRadio()
       await page.setOfferAmount(9000)
-      mutations.mockNetworkFailureOnce()
 
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(0)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(0)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
-      expect(routes.mockPushRoute).not.toHaveBeenCalled()
-      await page.expectAndDismissDefaultErrorDialog()
+      expect(pushMock).not.toHaveBeenCalled()
+      expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
 
     it("shows the error modal if submitting a counter offer fails for business reasons", async () => {
-      mutations.useResultsOnce(buyerCounterOfferFailed)
+      mockCommitMutation.mockResolvedValue(buyerCounterOfferFailed)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
       await page.selectCounterRadio()
       await page.setOfferAmount(9000)
 
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(0)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(0)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
-      expect(routes.mockPushRoute).not.toHaveBeenCalled()
-      await page.expectAndDismissDefaultErrorDialog()
+      expect(pushMock).not.toHaveBeenCalled()
+      expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
 
     describe("The 'amount too small' speed bump", () => {
@@ -398,26 +387,33 @@ describe("The respond page", () => {
       afterAll(() => {
         global.setInterval = realSetInterval
       })
+
       it("shows if the offer amount is too small", async () => {
+        mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new RespondTestPage(wrapper)
         await page.selectCounterRadio()
         await page.setOfferAmount(1000)
 
         await page.clickSubmit()
 
-        await page.expectAndDismissErrorDialogMatching(
-          "Offer may be too low",
-          "Offers within 25% of the seller's offer are most likely to receive a response",
-          "OK"
-        )
+        expect(mockShowErrorDialog).toHaveBeenLastCalledWith({
+          title: "Offer may be too low",
+          message:
+            "Offers within 25% of the seller's offer are most likely to receive a response.",
+          continueButtonText: "OK",
+        })
 
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-        expect(routes.mockPushRoute).not.toHaveBeenCalled()
+        expect(mockCommitMutation).not.toHaveBeenCalled()
+        expect(pushMock).not.toHaveBeenCalled()
 
         // should work after clicking submit again
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(routes.mockPushRoute).toHaveBeenCalledTimes(1)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(pushMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -429,36 +425,37 @@ describe("The respond page", () => {
       afterAll(() => {
         global.setInterval = realSetInterval
       })
+
       it("shows if the offer amount is too high", async () => {
+        mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new RespondTestPage(wrapper)
         await page.selectCounterRadio()
         await page.setOfferAmount(17000)
 
         await page.clickSubmit()
 
-        await page.expectAndDismissErrorDialogMatching(
-          "Offer higher than seller's offer",
-          "You’re making an offer higher than the seller's offer",
-          "OK"
-        )
+        expect(mockShowErrorDialog).toHaveBeenLastCalledWith({
+          title: "Offer higher than seller's offer",
+          message: "You’re making an offer higher than the seller's offer.",
+          continueButtonText: "OK",
+        })
 
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-        expect(routes.mockPushRoute).not.toHaveBeenCalled()
+        expect(mockCommitMutation).not.toHaveBeenCalled()
+        expect(pushMock).not.toHaveBeenCalled()
 
         // should work after clicking submit again
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(routes.mockPushRoute).toHaveBeenCalledTimes(1)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(pushMock).toHaveBeenCalledTimes(1)
       })
     })
   })
 
   describe("Analytics", () => {
-    let page: RespondTestPage
-    beforeEach(async () => {
-      page = await buildPage()
-    })
-
     beforeAll(() => {
       global.setInterval = jest.fn()
     })
@@ -468,6 +465,10 @@ describe("The respond page", () => {
     })
 
     it("tracks the offer input focus", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
       await page.selectCounterRadio()
 
       expect(mockPostEvent).not.toHaveBeenCalled()
@@ -483,6 +484,10 @@ describe("The respond page", () => {
     })
 
     it("tracks viwing the low offer speedbump", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
       await page.selectCounterRadio()
       await page.setOfferAmount(1000)
 
@@ -498,6 +503,10 @@ describe("The respond page", () => {
     })
 
     it("tracks viwing the high offer speedbump", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new RespondTestPage(wrapper)
       await page.selectCounterRadio()
       await page.setOfferAmount(20000)
 
