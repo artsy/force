@@ -47,6 +47,7 @@ export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecon
 
 export const DisabledQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
   me: {
+    email: "email@example.com",
     id: "id",
     hasSecondFactorEnabled: false,
     appSecondFactors: [],
@@ -57,6 +58,7 @@ export const DisabledQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
 
 export const AppEnabledWithBackupCodesQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
   me: {
+    email: "email@example.com",
     id: "id",
     hasSecondFactorEnabled: true,
     appSecondFactors: [
@@ -69,6 +71,7 @@ export const AppEnabledWithBackupCodesQueryResponse: TwoFactorAuthenticationQuer
 
 export const AppEnabledWithoutBackupCodesQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
   me: {
+    email: "email@example.com",
     id: "id",
     hasSecondFactorEnabled: true,
     appSecondFactors: [

@@ -47,6 +47,7 @@ fragment BackupSecondFactor_me on Me {
 }
 
 fragment SmsSecondFactor_me on Me {
+  email
   hasSecondFactorEnabled
   smsSecondFactors: secondFactors(kinds: [sms]) {
     __typename
@@ -189,6 +190,13 @@ return {
             "storageKey": "secondFactors(kinds:[\"app\"])"
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
             "alias": "smsSecondFactors",
             "args": [
               {
@@ -256,7 +264,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "217937b69dd222df050709edf76ac379",
+    "cacheID": "ff590de386eb4b7e406f1ef0fec85184",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -272,6 +280,7 @@ return {
         "me.appSecondFactors.name": (v5/*: any*/),
         "me.backupSecondFactors": (v2/*: any*/),
         "me.backupSecondFactors.__typename": (v3/*: any*/),
+        "me.email": (v5/*: any*/),
         "me.hasSecondFactorEnabled": {
           "enumValues": null,
           "nullable": false,
@@ -287,7 +296,7 @@ return {
     },
     "name": "TwoFactorAuthenticationTestQuery",
     "operationKind": "query",
-    "text": "query TwoFactorAuthenticationTestQuery {\n  me {\n    ...TwoFactorAuthentication_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n\nfragment TwoFactorAuthentication_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n"
+    "text": "query TwoFactorAuthenticationTestQuery {\n  me {\n    ...TwoFactorAuthentication_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n\nfragment TwoFactorAuthentication_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n"
   }
 };
 })();

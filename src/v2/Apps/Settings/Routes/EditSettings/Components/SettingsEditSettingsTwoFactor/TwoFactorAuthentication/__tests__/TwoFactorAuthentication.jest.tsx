@@ -49,6 +49,7 @@ const setupTestEnv = () => {
     },
     defaultData: {
       me: {
+        email: "user@example.com",
         hasSecondFactorEnabled: false,
         appSecondFactors: [],
         smsSecondFactors: [],
