@@ -8,7 +8,7 @@ const defaultProps = {
   onClose: closeMock,
 }
 
-describe("AuctionRegistrationModal", () => {
+describe("PostRegistrationModal", () => {
   const mountModal = async (key: ContentKey) => {
     const wrapper = mount(
       <PostRegistrationModal onClose={closeMock} contentKey={key} />

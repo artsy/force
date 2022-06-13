@@ -7,7 +7,6 @@ import {
   Flex,
   MenuIcon,
   Sans,
-  Serif,
   media,
 } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
@@ -60,7 +59,7 @@ export const Header: React.SFC<HeaderProps> = props => {
   )
 }
 
-const Title = styled(Serif)`
+const Title = styled(Sans)`
   flex: 2;
   text-transform: uppercase;
   text-align: center;

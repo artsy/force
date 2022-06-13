@@ -5,7 +5,6 @@ import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSm
 import { DeliverSecondFactorMutationResponse } from "v2/__generated__/DeliverSecondFactorMutation.graphql"
 import { DisableSecondFactorMutationResponse } from "v2/__generated__/DisableSecondFactorMutation.graphql"
 import { EnableSecondFactorMutationResponse } from "v2/__generated__/EnableSecondFactorMutation.graphql"
-import { TwoFactorAuthenticationQueryRawResponse } from "v2/__generated__/TwoFactorAuthenticationQuery.graphql"
 import { UpdateAppSecondFactorMutationResponse } from "v2/__generated__/UpdateAppSecondFactorMutation.graphql"
 import { UpdateSmsSecondFactorMutationResponse } from "v2/__generated__/UpdateSmsSecondFactorMutation.graphql"
 
@@ -42,40 +41,6 @@ export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecon
       __typename: "BackupSecondFactors",
       secondFactors: BackupSecondFactors,
     },
-  },
-}
-
-export const DisabledQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
-  me: {
-    id: "id",
-    hasSecondFactorEnabled: false,
-    appSecondFactors: [],
-    smsSecondFactors: [],
-    backupSecondFactors: [],
-  },
-}
-
-export const AppEnabledWithBackupCodesQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
-  me: {
-    id: "id",
-    hasSecondFactorEnabled: true,
-    appSecondFactors: [
-      { __typename: "AppSecondFactor", internalID: "id", name: "Test Device" },
-    ],
-    smsSecondFactors: [],
-    backupSecondFactors: BackupSecondFactors,
-  },
-}
-
-export const AppEnabledWithoutBackupCodesQueryResponse: TwoFactorAuthenticationQueryRawResponse = {
-  me: {
-    id: "id",
-    hasSecondFactorEnabled: true,
-    appSecondFactors: [
-      { __typename: "AppSecondFactor", internalID: "id", name: "Test Device" },
-    ],
-    smsSecondFactors: [],
-    backupSecondFactors: [],
   },
 }
 
