@@ -3,9 +3,7 @@ import {
   Box,
   Column,
   CSSGrid,
-  Flex,
   GridColumns,
-  Join,
   Spacer,
   Text,
 } from "@artsy/palette"

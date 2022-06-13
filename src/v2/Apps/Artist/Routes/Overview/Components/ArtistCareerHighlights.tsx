@@ -30,7 +30,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   const { credit, partner, text } = artist.biographyBlurb!
   const showCredit = Boolean(credit) && partner?.profile?.href
   const partnerHref = `${getENV("APP_URL")}${partner?.profile?.href}`
-  const hasCategories = Boolean(artist.related?.genes?.edges?.length)
+  // const hasCategories = Boolean(artist.related?.genes?.edges?.length)
 
   return (
     <GridColumns gridRowGap={4}>

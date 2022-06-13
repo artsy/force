@@ -7,7 +7,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ChevronButton } from "./ChevronButton"
-import { highestCategory, hasSections } from "./ArtistMarketInsights"
+import { hasSections } from "./ArtistMarketInsights"
 
 export interface SelectedCareerAchievementsProps extends SpaceProps {
   artist: SelectedCareerAchievements_artist
@@ -15,16 +15,16 @@ export interface SelectedCareerAchievementsProps extends SpaceProps {
   onlyCareerHighlights?: boolean
 }
 
-const CATEGORIES = {
-  "blue-chip": "Blue-chip representation",
-  "top-established": "Established representation",
-  "top-emerging": "Emerging representation",
-}
-const CATEGORY_LABEL_MAP = {
-  "blue-chip": "Represented by internationally reputable galleries.",
-  "top-established": "Represented by industry leading galleries.",
-  "top-emerging": "Represented by up-and-coming galleries.",
-}
+// const CATEGORIES = {
+//   "blue-chip": "Blue-chip representation",
+//   "top-established": "Established representation",
+//   "top-emerging": "Emerging representation",
+// }
+// const CATEGORY_LABEL_MAP = {
+//   "blue-chip": "Represented by internationally reputable galleries.",
+//   "top-established": "Represented by industry leading galleries.",
+//   "top-emerging": "Represented by up-and-coming galleries.",
+// }
 
 export class SelectedCareerAchievements extends Component<
   SelectedCareerAchievementsProps
@@ -135,7 +135,7 @@ export class SelectedCareerAchievements extends Component<
           </>
         ) : (
           <Flex flexDirection="column">
-            {this.renderGalleryRepresentation()}
+            {/* {this.renderGalleryRepresentation()} */}
             {/* {this.renderAuctionHighlight()} */}
           </Flex>
         )}
