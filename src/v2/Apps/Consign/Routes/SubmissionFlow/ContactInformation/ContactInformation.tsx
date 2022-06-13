@@ -1,4 +1,4 @@
-import { Text, Button } from "@artsy/palette"
+import { Text, Button, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext, useTracking } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -16,7 +16,6 @@ import {
   validate,
 } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
-import { useErrorModal } from "../Utils/useErrorModal"
 import { getENV } from "v2/Utils/getENV"
 import { recaptcha, RecaptchaAction } from "v2/Utils/recaptcha"
 import { ActionType } from "@artsy/cohesion"
@@ -48,7 +47,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 }) => {
   const { trackEvent } = useTracking()
   const { router } = useRouter()
-  const { openErrorModal } = useErrorModal()
+  const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const initialValue = getContactInformationFormInitialValues(me)
   const initialErrors = validate(
@@ -89,7 +88,13 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         router.push(`/sell/submission/${submission?.externalId}/thank-you`)
       } catch (error) {
         logger.error("Submission error", error)
-        openErrorModal()
+
+        sendToast({
+          variant: "error",
+          message: "An error occurred",
+          description: "Please contact consign@artsymail.com",
+        })
+
         return
       }
     }
