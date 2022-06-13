@@ -25,7 +25,7 @@ export type ArtistCareerHighlights_artist = {
         } | null;
     } | null;
     readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist" | "ArtistGenes_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist" | "ArtistGenes_artist" | "ArtistInsightsBadges_artist">;
     readonly " $refType": "ArtistCareerHighlights_artist";
 };
 export type ArtistCareerHighlights_artist$data = ArtistCareerHighlights_artist;
@@ -181,10 +181,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistGenes_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistInsightsBadges_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '92970956080f67ee7d6e29aed6a75de3';
+(node as any).hash = 'adb86a11d94f13842c7abd9b27223c46';
 export default node;

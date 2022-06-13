@@ -1,4 +1,4 @@
-import { Box, Join, Pill, Spacer } from "@artsy/palette"
+import { Flex, Join, Pill, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -31,11 +31,9 @@ interface ArtistPillProps {
 }
 
 export const ArtistPill: FC<ArtistPillProps> = ({ pillType }) => {
-  const title = ARTIST_PILLS_TEMPLATE[pillType].title
-
   return (
     <Pill variant="badge" disabled>
-      {title}
+      {ARTIST_PILLS_TEMPLATE[pillType].title}
     </Pill>
   )
 }
@@ -43,12 +41,17 @@ export const ArtistPill: FC<ArtistPillProps> = ({ pillType }) => {
 export const ArtistInsightsPills: FC<ArtistInsightsPillsProps> = ({
   artist,
 }) => {
-  if (
-    !artist.insights ||
-    !artist.artistHighlights ||
-    !artist.auctionResultsConnection
-  )
+  if (!artist.insights) {
     return null
+  }
+
+  if (!artist.artistHighlights) {
+    return null
+  }
+
+  if (!artist.auctionResultsConnection) {
+    return null
+  }
 
   const blueChipRepresentation = extractNodes(
     artist.artistHighlights.partnersConnection
@@ -57,21 +60,14 @@ export const ArtistInsightsPills: FC<ArtistInsightsPillsProps> = ({
   const highAuctionResults = extractNodes(artist.auctionResultsConnection)[0]
 
   return (
-    <Box>
-      <Join separator={<Spacer mb={2} />}>
-        {blueChipRepresentation.length > 0 && (
-          <ArtistPill pillType="BLUE_CHIP_REPRESENTATION" />
-        )}
-        {Object.hasOwn(highAuctionResults, "sale_date") && (
-          <ArtistPill pillType="HIGH_AUCTION_RECORD" />
-        )}
-        {/* {artist.insights.map(insight => {
-          if (insight?.type) {
-            return <ArtistBadge badgeType={insight.type} />
-          }
-        })} */}
-      </Join>
-    </Box>
+    <Flex flexDirection="row" flexWrap="wrap">
+      {blueChipRepresentation?.length > 0 && (
+        <ArtistPill pillType="BLUE_CHIP_REPRESENTATION" />
+      )}
+      {highAuctionResults.price_realized?.display && (
+        <ArtistPill pillType="HIGH_AUCTION_RECORD" />
+      )}
+    </Flex>
   )
 }
 

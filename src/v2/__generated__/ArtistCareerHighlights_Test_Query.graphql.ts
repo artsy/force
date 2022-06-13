@@ -28,6 +28,7 @@ query ArtistCareerHighlights_Test_Query {
 fragment ArtistCareerHighlights_artist on Artist {
   ...SelectedCareerAchievements_artist
   ...ArtistGenes_artist
+  ...ArtistInsightsBadges_artist
   biographyBlurb(format: HTML, partnerBio: false) {
     partner {
       profile {
@@ -61,6 +62,40 @@ fragment ArtistGenes_artist on Artist {
           name
           id
         }
+      }
+    }
+  }
+}
+
+fragment ArtistInsightsBadges_artist on Artist {
+  insights {
+    type
+    label
+    entities
+  }
+  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
+    edges {
+      node {
+        price_realized: priceRealized {
+          display(format: "0.0a")
+        }
+        organization
+        sale_date: saleDate(format: "YYYY")
+        id
+      }
+    }
+  }
+  artistHighlights: highlights {
+    partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
+      edges {
+        node {
+          categories {
+            slug
+            id
+          }
+          id
+        }
+        id
       }
     }
   }
@@ -124,39 +159,107 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "PartnerArtistEdge",
+    "kind": "LinkedField",
+    "name": "edges",
+    "plural": true,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Partner",
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PartnerCategory",
+            "kind": "LinkedField",
+            "name": "categories",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v2/*: any*/)
+        ],
+        "storageKey": null
+      },
+      (v2/*: any*/)
+    ],
+    "storageKey": null
+  }
+],
+v4 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 1
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v5 = {
+v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtistHighlights"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "PartnerArtistConnection"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": true,
+  "type": "PartnerArtistEdge"
+},
+v10 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v7 = {
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Partner"
 },
-v8 = {
+v12 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": true,
+  "type": "PartnerCategory"
+},
+v13 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v14 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -243,45 +346,7 @@ return {
                 "kind": "LinkedField",
                 "name": "partnersConnection",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PartnerArtistEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Partner",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "PartnerCategory",
-                            "kind": "LinkedField",
-                            "name": "categories",
-                            "plural": true,
-                            "selections": [
-                              (v1/*: any*/),
-                              (v2/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v2/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v3/*: any*/),
                 "storageKey": "partnersConnection(displayOnPartnerProfile:true,first:10,partnerCategory:[\"blue-chip\",\"top-established\",\"top-emerging\"],representedBy:true)"
               }
             ],
@@ -322,11 +387,7 @@ return {
           {
             "alias": null,
             "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 1
-              },
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "recordsTrusted",
@@ -446,8 +507,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
-                          (v4/*: any*/),
+                          (v5/*: any*/),
+                          (v6/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -457,6 +518,36 @@ return {
                   }
                 ],
                 "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": "artistHighlights",
+            "args": null,
+            "concreteType": "ArtistHighlights",
+            "kind": "LinkedField",
+            "name": "highlights",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  (v4/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "partnerCategory",
+                    "value": [
+                      "blue-chip"
+                    ]
+                  }
+                ],
+                "concreteType": "PartnerArtistConnection",
+                "kind": "LinkedField",
+                "name": "partnersConnection",
+                "plural": false,
+                "selections": (v3/*: any*/),
+                "storageKey": "partnersConnection(first:1,partnerCategory:[\"blue-chip\"])"
               }
             ],
             "storageKey": null
@@ -496,7 +587,7 @@ return {
                     "name": "profile",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      (v5/*: any*/),
                       (v2/*: any*/)
                     ],
                     "storageKey": null
@@ -522,7 +613,7 @@ return {
             ],
             "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
           },
-          (v4/*: any*/),
+          (v6/*: any*/),
           (v2/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
@@ -530,7 +621,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f0b303ef9f6e10c54f884e55da22d5d1",
+    "cacheID": "b9cbb7e32c6e8701a36fe6fc522a6ab2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -540,6 +631,15 @@ return {
           "plural": false,
           "type": "Artist"
         },
+        "artist.artistHighlights": (v7/*: any*/),
+        "artist.artistHighlights.partnersConnection": (v8/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges": (v9/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.id": (v10/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node": (v11/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.categories": (v12/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.categories.id": (v10/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.categories.slug": (v10/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.id": (v10/*: any*/),
         "artist.auctionResultsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -558,64 +658,44 @@ return {
           "plural": false,
           "type": "AuctionResult"
         },
-        "artist.auctionResultsConnection.edges.node.id": (v5/*: any*/),
-        "artist.auctionResultsConnection.edges.node.organization": (v6/*: any*/),
+        "artist.auctionResultsConnection.edges.node.id": (v10/*: any*/),
+        "artist.auctionResultsConnection.edges.node.organization": (v13/*: any*/),
         "artist.auctionResultsConnection.edges.node.price_realized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AuctionResultPriceRealized"
         },
-        "artist.auctionResultsConnection.edges.node.price_realized.display": (v6/*: any*/),
-        "artist.auctionResultsConnection.edges.node.sale_date": (v6/*: any*/),
+        "artist.auctionResultsConnection.edges.node.price_realized.display": (v13/*: any*/),
+        "artist.auctionResultsConnection.edges.node.sale_date": (v13/*: any*/),
         "artist.biographyBlurb": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistBlurb"
         },
-        "artist.biographyBlurb.credit": (v6/*: any*/),
-        "artist.biographyBlurb.partner": (v7/*: any*/),
-        "artist.biographyBlurb.partner.id": (v5/*: any*/),
+        "artist.biographyBlurb.credit": (v13/*: any*/),
+        "artist.biographyBlurb.partner": (v11/*: any*/),
+        "artist.biographyBlurb.partner.id": (v10/*: any*/),
         "artist.biographyBlurb.partner.profile": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Profile"
         },
-        "artist.biographyBlurb.partner.profile.href": (v6/*: any*/),
-        "artist.biographyBlurb.partner.profile.id": (v5/*: any*/),
-        "artist.biographyBlurb.text": (v6/*: any*/),
-        "artist.highlights": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistHighlights"
-        },
-        "artist.highlights.partnersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerArtistConnection"
-        },
-        "artist.highlights.partnersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerArtistEdge"
-        },
-        "artist.highlights.partnersConnection.edges.id": (v5/*: any*/),
-        "artist.highlights.partnersConnection.edges.node": (v7/*: any*/),
-        "artist.highlights.partnersConnection.edges.node.categories": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerCategory"
-        },
-        "artist.highlights.partnersConnection.edges.node.categories.id": (v5/*: any*/),
-        "artist.highlights.partnersConnection.edges.node.categories.slug": (v5/*: any*/),
-        "artist.highlights.partnersConnection.edges.node.id": (v5/*: any*/),
-        "artist.id": (v5/*: any*/),
+        "artist.biographyBlurb.partner.profile.href": (v13/*: any*/),
+        "artist.biographyBlurb.partner.profile.id": (v10/*: any*/),
+        "artist.biographyBlurb.text": (v13/*: any*/),
+        "artist.highlights": (v7/*: any*/),
+        "artist.highlights.partnersConnection": (v8/*: any*/),
+        "artist.highlights.partnersConnection.edges": (v9/*: any*/),
+        "artist.highlights.partnersConnection.edges.id": (v10/*: any*/),
+        "artist.highlights.partnersConnection.edges.node": (v11/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.categories": (v12/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.categories.id": (v10/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.categories.slug": (v10/*: any*/),
+        "artist.highlights.partnersConnection.edges.node.id": (v10/*: any*/),
+        "artist.id": (v10/*: any*/),
         "artist.insights": {
           "enumValues": null,
           "nullable": false,
@@ -628,9 +708,9 @@ return {
           "plural": true,
           "type": "String"
         },
-        "artist.insights.label": (v8/*: any*/),
-        "artist.insights.type": (v8/*: any*/),
-        "artist.name": (v6/*: any*/),
+        "artist.insights.label": (v14/*: any*/),
+        "artist.insights.type": (v14/*: any*/),
+        "artist.name": (v13/*: any*/),
         "artist.related": {
           "enumValues": null,
           "nullable": true,
@@ -655,15 +735,15 @@ return {
           "plural": false,
           "type": "Gene"
         },
-        "artist.related.genes.edges.node.href": (v6/*: any*/),
-        "artist.related.genes.edges.node.id": (v5/*: any*/),
-        "artist.related.genes.edges.node.name": (v6/*: any*/),
-        "artist.slug": (v5/*: any*/)
+        "artist.related.genes.edges.node.href": (v13/*: any*/),
+        "artist.related.genes.edges.node.id": (v10/*: any*/),
+        "artist.related.genes.edges.node.name": (v13/*: any*/),
+        "artist.slug": (v10/*: any*/)
       }
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...SelectedCareerAchievements_artist\n  ...ArtistGenes_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...SelectedCareerAchievements_artist\n  ...ArtistGenes_artist\n  ...ArtistInsightsBadges_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistInsightsBadges_artist on Artist {\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n"
   }
 };
 })();

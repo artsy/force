@@ -37,54 +37,54 @@ export class SelectedCareerAchievements extends Component<
     onlyCareerHighlights: false
   }
 
-  renderAuctionHighlight() {
-    if (
-      !this.props.artist.auctionResultsConnection ||
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      this.props.artist.auctionResultsConnection.edges.length < 1
-    ) {
-      return null
-    }
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
-      .node
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const display = `${topAuctionResult.price_realized.display}, ${topAuctionResult.organization}, ${topAuctionResult.sale_date}`
+  // renderAuctionHighlight() {
+  //   if (
+  //     !this.props.artist.auctionResultsConnection ||
+  //     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  //     this.props.artist.auctionResultsConnection.edges.length < 1
+  //   ) {
+  //     return null
+  //   }
+  //   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  //   const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
+  //     .node
+  //   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  //   const display = `${topAuctionResult.price_realized.display}, ${topAuctionResult.organization}, ${topAuctionResult.sale_date}`
 
-    return (
-      <ArtistInsight
-        key="HIGH_AUCTION"
-        type="HIGH_AUCTION"
-        label="High auction record"
-        value={display}
-        themeVersion={this.props.themeVersion}
-      />
-    )
-  }
-  renderGalleryRepresentation() {
-    const { highlights } = this.props.artist
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const { partnersConnection } = highlights
-    if (
-      partnersConnection &&
-      partnersConnection.edges &&
-      partnersConnection.edges.length > 0
-    ) {
-      const highCategory = highestCategory(partnersConnection.edges)
-      const type = highCategory.toUpperCase().replace("-", "_")
-      const label = CATEGORIES[highCategory]
+  //   return (
+  //     <ArtistInsight
+  //       key="HIGH_AUCTION"
+  //       type="HIGH_AUCTION"
+  //       label="High auction record"
+  //       value={display}
+  //       themeVersion={this.props.themeVersion}
+  //     />
+  //   )
+  // }
+  // renderGalleryRepresentation() {
+  //   const { highlights } = this.props.artist
+  //   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  //   const { partnersConnection } = highlights
+  //   if (
+  //     partnersConnection &&
+  //     partnersConnection.edges &&
+  //     partnersConnection.edges.length > 0
+  //   ) {
+  //     const highCategory = highestCategory(partnersConnection.edges)
+  //     const type = highCategory.toUpperCase().replace("-", "_")
+  //     const label = CATEGORIES[highCategory]
 
-      return (
-        <ArtistInsight
-          key={type}
-          type={type}
-          label={label}
-          value={CATEGORY_LABEL_MAP[highCategory]}
-          themeVersion={this.props.themeVersion}
-        />
-      )
-    }
-  }
+  //     return (
+  //       <ArtistInsight
+  //         key={type}
+  //         type={type}
+  //         label={label}
+  //         value={CATEGORY_LABEL_MAP[highCategory]}
+  //         themeVersion={this.props.themeVersion}
+  //       />
+  //     )
+  //   }
+  // }
 
   renderInsight(insight) {
     return (
@@ -136,7 +136,7 @@ export class SelectedCareerAchievements extends Component<
         ) : (
           <Flex flexDirection="column">
             {this.renderGalleryRepresentation()}
-            {this.renderAuctionHighlight()}
+            {/* {this.renderAuctionHighlight()} */}
           </Flex>
         )}
       </Box>

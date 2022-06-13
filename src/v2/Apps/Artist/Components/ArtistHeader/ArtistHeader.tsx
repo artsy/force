@@ -7,6 +7,7 @@ import {
   Image,
   ReadMore,
   ResponsiveBox,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { Link } from "react-head"
@@ -14,9 +15,7 @@ import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
-import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { ArtistInsightsBadgesFragmentContainer } from "v2/Components/ArtistInsightsBadges"
 import { ArtistInsightsPillsFragmentContainer } from "v2/Components/ArtistInsightsPills"
 
 interface ArtistHeaderProps {
@@ -112,6 +111,9 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
+            <ArtistInsightsPillsFragmentContainer artist={artist} />
+            <Spacer mb={4} />
+
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
                 <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
@@ -127,10 +129,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 </Text>
               </>
             )}
-
-            <SelectedCareerAchievementsFragmentContainer artist={artist} />
-            <ArtistInsightsBadgesFragmentContainer artist={artist} />
-            <ArtistInsightsPillsFragmentContainer artist={artist} />
           </Column>
         </GridColumns>
       </Box>
@@ -144,8 +142,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistHeader_artist on Artist {
         ...FollowArtistButton_artist
-        ...SelectedCareerAchievements_artist
-        ...ArtistInsightsBadges_artist
         ...ArtistInsightsPills_artist
 
         auctionResultsConnection(

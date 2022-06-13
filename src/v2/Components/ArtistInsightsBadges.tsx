@@ -1,4 +1,14 @@
-import { BlueChipIcon, Box, Flex, Join, Spacer, Text } from "@artsy/palette"
+import {
+  BlueChipIcon,
+  Box,
+  Column,
+  CSSGrid,
+  Flex,
+  GridColumns,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -26,85 +36,93 @@ const ARTIST_BADGES_TEMPLATE = {
     description:
       "Featured in Artsy's annual list of the most promising artists working today.",
   },
+  HIGH_AUCTION_RECORD: {
+    title: "High Auction Record",
+  },
 }
 
 interface ArtistBadgeProps {
   badgeType: string
+  description?: string
 }
 
-export const ArtistBadge: FC<ArtistBadgeProps> = ({ badgeType }) => {
-  const title = ARTIST_BADGES_TEMPLATE[badgeType].title
-  const description = ARTIST_BADGES_TEMPLATE[badgeType].description
-
-  return (
-    <Flex flexDirection="row">
-      <BlueChipIcon mr={3} fill="blue100" />
-      <Flex flexDirection="column">
-        <Text variant="sm" color="blue100">
-          {title}
-        </Text>
-        <Text color="black60">{description}</Text>
-      </Flex>
-    </Flex>
-  )
-}
-
-interface HighAuctionRecordBadgeProps {
-  highAuctionResults: object
-}
-
-export const HighAuctionRecordBadge: FC<HighAuctionRecordBadgeProps> = ({
-  highAuctionResults,
+export const ArtistBadge: FC<ArtistBadgeProps> = ({
+  badgeType,
+  description,
 }) => {
-  // const highAuctionRecord = `${highAuctionResults.price_realized.display}, ${highAuctionResults.organization}, ${highAuctionResults.sale_date}`
-
   return (
-    <Flex flexDirection="row">
-      <BlueChipIcon mr={3} fill="blue100" />
-      <Flex flexDirection="column">
-        <Text variant="sm" color="blue100">
-          High Auction Record
-        </Text>
-        {/* <Text color="black60">{highAuctionRecord}</Text> */}
-      </Flex>
-    </Flex>
+    <CSSGrid gridTemplateColumns="auto 1fr" gridTemplateRows="auto 1fr">
+      <Box
+        style={{ gridArea: "1 / 1 / 2 / 2" }}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <BlueChipIcon mr={0.5} fill="blue100" />
+      </Box>
+      <Text
+        variant="sm"
+        color="blue100"
+        style={{ gridArea: "1 / 2 / 2 / 3" }}
+        display="flex"
+        alignItems="center"
+      >
+        {ARTIST_BADGES_TEMPLATE[badgeType].title}
+      </Text>
+      <Text color="black60" style={{ gridArea: "2 / 2 / 3 / 3" }}>
+        {description ?? ARTIST_BADGES_TEMPLATE[badgeType].description}
+      </Text>
+    </CSSGrid>
   )
 }
 
 export const ArtistInsightsBadges: FC<ArtistInsightsBadgesProps> = ({
   artist,
 }) => {
-  if (
-    !artist.insights ||
-    !artist.artistHighlights ||
-    !artist.auctionResultsConnection
-  )
+  if (!artist.insights) {
     return null
+  }
+
+  if (!artist.artistHighlights) {
+    return null
+  }
+
+  if (!artist.auctionResultsConnection) {
+    return null
+  }
 
   const blueChipRepresentation = extractNodes(
     artist.artistHighlights.partnersConnection
   )
 
-  const highAuctionResults = extractNodes(artist.auctionResultsConnection)[0]
+  const highAuctionResult = extractNodes(artist.auctionResultsConnection)[0]
+  const highAuctionRecord = highAuctionResult
+    ? `${highAuctionResult.price_realized?.display}, ${highAuctionResult.organization}, ${highAuctionResult.sale_date}`
+    : null
 
   return (
-    <Box>
+    <>
       <Text variant="lg-display" color="black100">
         Artist Badges
       </Text>
       <Spacer mb={4} />
-      <Join separator={<Spacer mb={2} />}>
+      <GridColumns>
         {blueChipRepresentation.length > 0 && (
-          <ArtistBadge badgeType="BLUE_CHIP_REPRESENTATION" />
+          <Column span={6}>
+            <ArtistBadge badgeType="BLUE_CHIP_REPRESENTATION" />
+          </Column>
         )}
-        <HighAuctionRecordBadge highAuctionResults={highAuctionResults} />
-        {/* {artist.insights.map(insight => {
-          if (insight?.type) {
-            return <ArtistBadge badgeType={insight.type} />
-          }
-        })} */}
-      </Join>
-    </Box>
+
+        {highAuctionRecord && (
+          <Column span={6}>
+            <ArtistBadge
+              badgeType="HIGH_AUCTION_RECORD"
+              description={highAuctionRecord}
+            />
+          </Column>
+        )}
+      </GridColumns>
+    </>
   )
 }
 

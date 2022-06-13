@@ -15,10 +15,10 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
-import { ArtistGenesFragmentContainer } from "./ArtistGenes"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { getENV } from "v2/Utils/getENV"
+import { ArtistInsightsBadgesFragmentContainer } from "v2/Components/ArtistInsightsBadges"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -34,7 +34,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
 
   return (
     <GridColumns gridRowGap={4}>
-      <Column span={8}>
+      <Column span={6}>
         <Join separator={<Spacer mt={4} />}>
           <SelectedCareerAchievementsFragmentContainer
             artist={artist}
@@ -57,7 +57,11 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
         </Join>
       </Column>
 
-      {hasCategories && (
+      <Column span={6}>
+        <ArtistInsightsBadgesFragmentContainer artist={artist} />
+      </Column>
+
+      {/* {hasCategories && (
         <Column span={4}>
           <Text variant="sm-display" mb={2}>
             Related categories
@@ -65,7 +69,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
 
           <ArtistGenesFragmentContainer artist={artist} />
         </Column>
-      )}
+      )} */}
     </GridColumns>
   )
 }
@@ -77,6 +81,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
       fragment ArtistCareerHighlights_artist on Artist {
         ...SelectedCareerAchievements_artist
         ...ArtistGenes_artist
+        ...ArtistInsightsBadges_artist
         biographyBlurb(format: HTML, partnerBio: false) {
           partner {
             profile {
