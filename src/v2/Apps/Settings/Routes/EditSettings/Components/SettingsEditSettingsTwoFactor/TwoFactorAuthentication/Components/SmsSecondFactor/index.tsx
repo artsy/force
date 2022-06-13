@@ -6,6 +6,7 @@ import {
   ModalDialog,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
@@ -18,7 +19,6 @@ import { SmsSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 import { CreateSmsSecondFactorInput } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me } from "v2/__generated__/SmsSecondFactor_me.graphql"
-import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
@@ -29,6 +29,7 @@ interface SmsSecondFactorProps {
   relay: RelayRefetchProp
 }
 
+// TODO: This needs to be rebuilt from scratch
 export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   me,
   relay,
@@ -41,9 +42,21 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
     false
   )
-  const [apiErrors, setApiErrors] = useState<ApiError[]>([])
-  const [isDisabling] = useState(false)
+  const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
+
+  // Reset's _all_ of these state flags.
+  // NOTE: Don't do this. Just hacking around the architecture here.
+  const resetState = () => {
+    setShowConfirmDisable(false)
+    setShowConfirmPassword(false)
+    setShowSetupModal(false)
+    setShowCompleteModal(false)
+    setShowCompleteRedirectModal(false)
+    setCreating(false)
+  }
+
+  const { sendToast } = useToasts()
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
 
@@ -100,12 +113,18 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     }
   }
 
-  function handleMutationError(errors: ApiError[]) {
-    if (!Array.isArray(errors)) {
-      throw errors
-    }
+  function handleMutationError(err: ApiError[]) {
+    console.error(err)
 
-    setApiErrors(errors)
+    const error = Array.isArray(err) ? err[0] : err
+
+    resetState()
+
+    sendToast({
+      variant: "error",
+      message: "An error occurred",
+      description: error.message,
+    })
   }
 
   async function createSecondFactor(
@@ -231,12 +250,6 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
         secondFactor={stagedSecondFactor}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
-      />
-
-      <ApiErrorModal
-        onClose={() => setApiErrors([])}
-        show={!!apiErrors.length}
-        errors={apiErrors}
       />
 
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}

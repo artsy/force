@@ -1,4 +1,4 @@
-import { Button, Link, Modal, Text } from "@artsy/palette"
+import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
@@ -9,7 +9,6 @@ import {
   useTracking,
 } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 
@@ -38,7 +37,8 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
 
   const [requesting, setRequesting] = useState(false)
   const [showRequestedModal, setShowRequestedModal] = useState(false)
-  const [showErrorModal, setShowErrorModal] = useState(false)
+
+  const { sendToast } = useToasts()
 
   const { me, artwork } = props
   const isLoggedIn = Boolean(me)
@@ -46,8 +46,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const requestConditionReport = () => {
     return new Promise<RequestConditionReportMutationResponse>(
       async (resolve, reject) => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        commitMutation<RequestConditionReportMutation>(relayEnvironment, {
+        commitMutation<RequestConditionReportMutation>(relayEnvironment!, {
           onCompleted: data => {
             resolve(data)
           },
@@ -66,8 +65,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
             }
           `,
           variables: {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            input: { saleArtworkID: artwork.saleArtwork.internalID },
+            input: { saleArtworkID: artwork.saleArtwork?.internalID! },
           },
         })
       }
@@ -78,7 +76,12 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     logger.error(error)
 
     setRequesting(false)
-    setShowErrorModal(true)
+
+    sendToast({
+      variant: "error",
+      message:
+        "Something went wrong. Please try again or contact support@artsy.net.",
+    })
   }
 
   function trackRequestClick() {
@@ -145,42 +148,39 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     </Button>
   )
 
-  const RequestedConditionReportModal: React.FC = () => (
-    <Modal
-      title="Condition report requested"
-      onClose={() => {
-        setShowRequestedModal(false)
-      }}
-      show={showRequestedModal}
-    >
-      <Text variant="sm" mt={1} color="black100" textAlign="center">
-        We have received your request. The condition report will be sent to{" "}
-        {me && me.email}.
-      </Text>
+  const handleClose = () => setShowRequestedModal(false)
 
-      <Text variant="sm" mt={2} textAlign="center" color="black100">
-        For questions, contact{" "}
-        <Link href="mailto:specialist@artsy.net">specialist@artsy.net</Link>.
-      </Text>
+  const RequestedConditionReportModal: React.FC = () => {
+    if (!showRequestedModal) return null
 
-      <Button mt={4} onClick={() => setShowRequestedModal(false)}>
-        OK
-      </Button>
-    </Modal>
-  )
+    return (
+      <ModalDialog
+        title="Condition report requested"
+        onClose={handleClose}
+        footer={
+          <Button onClick={handleClose} width="100%">
+            OK
+          </Button>
+        }
+      >
+        <Text variant="sm">
+          We have received your request. The condition report will be sent to{" "}
+          <strong>{me && me.email}</strong>.
+        </Text>
+
+        <Text variant="sm" mt={1}>
+          For questions, contact{" "}
+          <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+        </Text>
+      </ModalDialog>
+    )
+  }
 
   return (
     <>
       {isLoggedIn ? <AuthenticatedContent /> : <UnauthenticatedContent />}
 
       <RequestedConditionReportModal />
-
-      <ErrorModal
-        show={showErrorModal}
-        onClose={() => {
-          setShowErrorModal(false)
-        }}
-      />
     </>
   )
 }

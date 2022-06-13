@@ -1,14 +1,13 @@
 import { IdentityVerificationAppTestQueryRawResponse } from "v2/__generated__/IdentityVerificationAppTestQuery.graphql"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import deepMerge from "deepmerge"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
-import { expectOne } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import { IdentityVerificationAppQueryResponseFixture } from "../__fixtures__/routes_IdentityVerificationAppQuery"
 import { IdentityVerificationAppFragmentContainer } from "../IdentityVerificationApp"
 import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { HttpError } from "found"
+import { Toasts, ToastsProvider } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -22,7 +21,12 @@ const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 const setupTestEnv = () => {
   return createTestEnv({
     TestPage: IdentityVerificationAppTestPage,
-    Component: IdentityVerificationAppFragmentContainer,
+    Component: props => (
+      <ToastsProvider>
+        <Toasts />
+        <IdentityVerificationAppFragmentContainer {...props} />
+      </ToastsProvider>
+    ),
     query: graphql`
       query IdentityVerificationAppTestQuery
         @raw_response_type
@@ -144,7 +148,7 @@ describe("IdentityVerification route", () => {
         expect(window.location.assign).toHaveBeenCalledWith("www.identity.biz")
       })
 
-      it("user sees an error modal if the mutation fails", async () => {
+      it("user sees an error toast if the mutation fails", async () => {
         const env = setupTestEnv()
         const page = await env.buildPage()
         const badResult = {
@@ -161,8 +165,6 @@ describe("IdentityVerification route", () => {
         env.mutations.useResultsOnce(badResult)
 
         await page.clickStartVerification()
-        const errorModal = expectOne(page.find(ErrorModal))
-        expect(errorModal.props().show).toBe(true)
         expect(page.text()).toContain(
           "Something went wrong. Please try again or contact verification@artsy.net."
         )
@@ -174,8 +176,6 @@ describe("IdentityVerification route", () => {
         env.mutations.mockNetworkFailureOnce()
 
         await page.clickStartVerification()
-        const errorModal = expectOne(page.find(ErrorModal))
-        expect(errorModal.props().show).toBe(true)
         expect(page.text()).toContain(
           "Something went wrong. Please try again or contact verification@artsy.net."
         )

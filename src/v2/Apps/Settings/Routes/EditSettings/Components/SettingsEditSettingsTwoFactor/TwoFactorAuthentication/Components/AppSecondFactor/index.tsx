@@ -1,4 +1,12 @@
-import { Button, Flex, Box, Text, Spacer, ModalDialog } from "@artsy/palette"
+import {
+  Button,
+  Flex,
+  Box,
+  Text,
+  Spacer,
+  ModalDialog,
+  useToasts,
+} from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
@@ -7,7 +15,6 @@ import request from "superagent"
 import { useSystemContext } from "v2/System"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { ApiError } from "../../ApiError"
-import { ApiErrorModal } from "../ApiErrorModal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
@@ -21,11 +28,11 @@ interface AppSecondFactorProps {
   relay: RelayRefetchProp
 }
 
+// TODO: This needs to be rebuilt from scratch
 export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
   me,
   relay,
 }) => {
-  const [apiErrors, setApiErrors] = useState<ApiError[]>([])
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
@@ -34,8 +41,22 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
     false
   )
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
-  const [isDisabling] = useState(false)
+  const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
+
+  // Reset's _all_ of these state flags.
+  // NOTE: Don't do this. Just hacking around the architecture here.
+  const resetState = () => {
+    setShowConfirmDisable(false)
+    setShowConfirmPassword(false)
+    setShowSetupModal(false)
+    setShowCompleteModal(false)
+    setShowCompleteRedirectModal(false)
+    setStagedSecondFactor(null)
+    setCreating(false)
+  }
+
+  const { sendToast } = useToasts()
 
   const { relayEnvironment } = useSystemContext()
 
@@ -91,12 +112,18 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
     }
   }
 
-  function handleMutationError(errors: ApiError[]) {
-    if (!Array.isArray(errors)) {
-      throw errors
-    }
+  function handleMutationError(err: ApiError[]) {
+    console.error(err)
 
-    setApiErrors(errors)
+    const error = Array.isArray(err) ? err[0] : err
+
+    resetState()
+
+    sendToast({
+      variant: "error",
+      message: "An error occurred",
+      description: error.message,
+    })
   }
 
   async function createSecondFactor(
@@ -221,12 +248,6 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
         secondFactor={stagedSecondFactor}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
-      />
-
-      <ApiErrorModal
-        onClose={() => setApiErrors([])}
-        show={!!apiErrors.length}
-        errors={apiErrors}
       />
 
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}

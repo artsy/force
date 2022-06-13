@@ -1,8 +1,14 @@
-import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Spacer,
+  Text,
+  useToasts,
+} from "@artsy/palette"
 import { IdentityVerificationApp_identityVerification } from "v2/__generated__/IdentityVerificationApp_identityVerification.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { useMemo, useState } from "react"
 import * as React from "react"
 import {
@@ -32,7 +38,8 @@ const IdentityVerificationApp: React.FC<Props> = ({
   relay,
 }) => {
   const [requesting, setRequesting] = useState(false)
-  const [showErrorModal, setShowErrorModal] = useState(false)
+
+  const { sendToast } = useToasts()
 
   const { trackEvent } = useTracking()
 
@@ -128,7 +135,12 @@ const IdentityVerificationApp: React.FC<Props> = ({
 
   const handleMutationError = (error: Error) => {
     logger.error("Error when trying to start identity verification", error)
-    setShowErrorModal(true)
+
+    sendToast({
+      variant: "error",
+      message:
+        "Something went wrong. Please try again or contact verification@artsy.net.",
+    })
   }
 
   return (
@@ -143,13 +155,6 @@ const IdentityVerificationApp: React.FC<Props> = ({
             alternateComponent
           ) : (
             <>
-              {/* TODO: Replace this with toast */}
-              <ErrorModal
-                show={showErrorModal}
-                contactEmail="verification@artsy.net"
-                onClose={() => setShowErrorModal(false)}
-              />
-
               <Text variant="xl" textAlign="center">
                 Artsy identity verification
               </Text>
