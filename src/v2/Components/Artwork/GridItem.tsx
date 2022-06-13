@@ -107,7 +107,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         <Badge artwork={artwork} />
         {!isHoverEffectEnabled && isSaveButtonVisible && (
           <SaveButtonFragmentContainer
-            contextModule={contextModule || ContextModule.artworkGrid}
+            contextModule={contextModule ?? ContextModule.artworkGrid}
             artwork={artwork}
           />
         )}
@@ -117,7 +117,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         artwork={artwork}
         isHovered={isHovered}
         shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
-        contextModule={contextModule || ContextModule.artworkGrid}
+        contextModule={contextModule ?? ContextModule.artworkGrid}
       />
     </div>
   )
