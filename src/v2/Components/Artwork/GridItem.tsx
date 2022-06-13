@@ -117,6 +117,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         artwork={artwork}
         isHovered={isHovered}
         shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
+        contextModule={contextModule || ContextModule.artworkGrid}
       />
     </div>
   )
