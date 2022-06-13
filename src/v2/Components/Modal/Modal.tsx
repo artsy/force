@@ -1,14 +1,12 @@
 import { CloseIcon, Clickable } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { ModalWidth, ModalWrapper } from "v2/Components/Modal/ModalWrapper"
 import { media } from "../Helpers"
-import { CtaProps, ModalCta } from "./ModalCta"
 import { ModalHeader } from "./ModalHeader"
 
 export interface ModalProps extends React.HTMLProps<Modal> {
   blurContainerSelector?: string
-  cta?: CtaProps
   onClose?: () => void
   hasLogo?: boolean
   isWide?: boolean
@@ -16,7 +14,6 @@ export interface ModalProps extends React.HTMLProps<Modal> {
   show?: boolean
   title?: string
   disableCloseOnBackgroundClick?: boolean
-  theme?: "v2" | "v3"
 }
 
 /**
@@ -53,7 +50,6 @@ export class Modal extends React.Component<ModalProps> {
   render(): JSX.Element {
     const {
       children,
-      cta,
       hasLogo,
       image,
       isWide,
@@ -61,19 +57,16 @@ export class Modal extends React.Component<ModalProps> {
       show,
       title,
       disableCloseOnBackgroundClick,
-      theme,
     } = this.props
 
     return (
       <ModalWrapper
-        cta={cta}
         onClose={onClose}
         show={show}
         width={isWide ? ModalWidth.Wide : ModalWidth.Normal}
         image={image}
         fullscreenResponsiveModal
         disableCloseOnBackgroundClick={disableCloseOnBackgroundClick}
-        theme={theme}
       >
         <Clickable
           position="absolute"
@@ -88,16 +81,12 @@ export class Modal extends React.Component<ModalProps> {
 
         {image && <Image image={image} />}
 
-        <ModalContent cta={cta} hasImage={!!image}>
+        <ModalContent hasImage={!!image}>
           {(hasLogo || title) && (
             <ModalHeader title={title} hasLogo={hasLogo} />
           )}
 
           <div>{children}</div>
-
-          {cta && (
-            <ModalCta cta={cta} hasImage={!!image} onClose={this.close} />
-          )}
         </ModalContent>
       </ModalWrapper>
     )
@@ -105,23 +94,15 @@ export class Modal extends React.Component<ModalProps> {
 }
 
 export const ModalContent = styled.div<{
-  cta?: CtaProps
   hasImage: boolean
 }>`
-  padding: ${props =>
-    props.cta
-      ? props.cta.isFixed
-        ? "20px 40px 100px"
-        : "20px 40px 0"
-      : "20px 40px 40px"};
-
+  padding: 20px 40px 40px;
   width: ${props => (props.hasImage ? "50%" : "100%")};
   ${props => props.hasImage && "margin-left: 50%"};
   ${media.sm`
     width: 100%;
     margin: 0;
-    padding: ${(props: { cta?: CtaProps }) =>
-      props.cta && props.cta.isFixed ? "20px 20px 110px" : "20px"};
+    padding: 20px;
   `};
 `
 
