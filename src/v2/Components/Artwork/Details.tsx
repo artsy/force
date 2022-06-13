@@ -43,6 +43,7 @@ const ConditionalLink: React.FC<
 const ArtistLine: React.FC<DetailsProps> = ({
   artwork: { cultural_maker, artists },
   includeLinks,
+  shouldShowHoverSaveButton,
 }) => {
   const tokens = useThemeConfig({
     v2: {
@@ -62,6 +63,14 @@ const ArtistLine: React.FC<DetailsProps> = ({
   }
 
   if (!artists?.length) {
+    if (shouldShowHoverSaveButton) {
+      return (
+        <Text variant={tokens.variant} overflowEllipsis>
+          Artist Unavailable
+        </Text>
+      )
+    }
+
     return null
   }
 
