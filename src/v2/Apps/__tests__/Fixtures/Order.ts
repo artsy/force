@@ -809,6 +809,10 @@ export const ArtaShippingDetails = {
 
 export const CreditCardPaymentDetails = {
   availablePaymentMethods: ["CREDIT_CARD"],
+  creditCard: {
+    id: "relay-node-id",
+    internalID: "gravity-credit-card-id",
+  },
   paymentMethodDetails: {
     __typename: "CreditCard",
     brand: "Visa",

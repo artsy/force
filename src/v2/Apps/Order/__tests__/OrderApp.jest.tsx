@@ -360,10 +360,6 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/status",
       mockResolver({
         ...OfferOrderWithShippingDetails,
-        creditCard: {
-          id: "relay-node-id",
-          internalID: "gravity-credit-card-id",
-        },
         awaitingResponseFrom: "BUYER",
         state: "SUBMITTED",
       })
