@@ -810,8 +810,19 @@ export const ArtaShippingDetails = {
 export const CreditCardPaymentDetails = {
   availablePaymentMethods: ["CREDIT_CARD"],
   creditCard: {
+    brand: "Visa",
+    city: "New York",
+    country: "US",
+    expirationMonth: 3,
+    expirationYear: 21,
     id: "relay-node-id",
     internalID: "gravity-credit-card-id",
+    lastDigits: "4444",
+    name: "Dr. Collector",
+    postalCode: "90210",
+    state: "NY",
+    street1: "1 Art st",
+    street2: null,
   },
   paymentMethodDetails: {
     __typename: "CreditCard",
