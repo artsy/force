@@ -9,7 +9,7 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { getDefaultSort } from "v2/Apps/Artist/Routes/WorksForSale/Utils/getDefaultSort"
 import { Match } from "found"
-import * as React from "react"
+import { useEffect } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
@@ -42,7 +42,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     variantName: trendingSortVariant?.name!,
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     trackFeatureVariant()
   })
 
