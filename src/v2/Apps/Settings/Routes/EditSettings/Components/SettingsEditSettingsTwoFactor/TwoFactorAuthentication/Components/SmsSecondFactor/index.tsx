@@ -22,6 +22,7 @@ import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { isArtsyEmail } from "./isArtsyEmail"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me
@@ -137,11 +138,11 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     })
   }
 
-  const show2FAWarning = /@artsymail.com$/.test(me.email!)
+  const show2FAWarning = isArtsyEmail(me.email!)
 
   return (
     <>
-      <Flex flexDirection={"column"} border="1px solid" borderColor="black10">
+      <Flex flexDirection="column" border="1px solid" borderColor="black10">
         {show2FAWarning && (
           <Message variant="warning">
             <Text>
