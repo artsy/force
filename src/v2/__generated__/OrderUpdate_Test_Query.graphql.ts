@@ -483,6 +483,7 @@ return {
             "CANCELED",
             "FULFILLED",
             "PENDING",
+            "PROCESSING_APPROVAL",
             "REFUNDED",
             "SUBMITTED"
           ],
