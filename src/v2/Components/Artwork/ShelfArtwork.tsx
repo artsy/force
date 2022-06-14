@@ -2,13 +2,12 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
-import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
+import { useSaveButton } from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 /**
  * The max height for an image in the carousel
@@ -44,12 +43,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const { containerProps, isSaveButtonVisible } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
-  const isHoverEffectEnabled = useFeatureFlag(
-    "force-enable-hover-effect-for-artwork-item"
-  )
-
-  const showHoverSaveButton =
-    isHoverEffectEnabled && (!!artwork.is_saved || isSaveButtonVisible)
+  const showHoverSaveButton = !!artwork.is_saved || isSaveButtonVisible
 
   return (
     <div
@@ -72,17 +66,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             lazyLoad={lazyLoad}
             style={{ objectFit: "contain", display: "block" }}
           />
-
-          {!isHoverEffectEnabled && (
-            <Media greaterThan="sm">
-              {isSaveButtonVisible && (
-                <SaveButtonFragmentContainer
-                  contextModule={contextModule!}
-                  artwork={artwork}
-                />
-              )}
-            </Media>
-          )}
         </ResponsiveContainer>
       </RouterLink>
 

@@ -7,12 +7,12 @@ import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
+import { useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
-import { ArtworkImage } from "./ArtworkImage"
 import { isTouch } from "v2/Utils/device"
+import { MagnifyImage } from "../MagnifyImage"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -31,15 +31,10 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 
-  const { containerProps, isSaveButtonVisible } = useSaveButton({
+  const { containerProps } = useSaveButton({
     isSaved: !!artwork.is_saved,
   })
-  const {
-    isHovered,
-    isHoverEffectEnabled,
-    onMouseEnter,
-    onMouseLeave,
-  } = useHoverMetadata()
+  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -70,8 +65,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
-  const showHoverSaveButton =
-    isHoverEffectEnabled && (!!artwork.is_saved || (isHovered && !isTouch))
+  const showHoverSaveButton = !!artwork.is_saved || (isHovered && !isTouch)
 
   return (
     <div
@@ -93,24 +87,16 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
         >
-          <ArtworkImage
-            title={artwork.title ?? undefined}
+          <MagnifyImage
             alt={artwork.image_title ?? ""}
             src={src}
             srcSet={srcSet}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
-            shouldZoomOnHover={!!isHoverEffectEnabled}
           />
         </Link>
 
         <Badge artwork={artwork} />
-        {!isHoverEffectEnabled && isSaveButtonVisible && (
-          <SaveButtonFragmentContainer
-            contextModule={contextModule ?? ContextModule.artworkGrid}
-            artwork={artwork}
-          />
-        )}
       </Box>
 
       <Metadata
