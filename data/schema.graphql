@@ -8926,6 +8926,9 @@ type IdentityVerification {
     timezone: String
   ): String
 
+  # Email of the identity verification's owner
+  email: String
+
   # A globally unique ID.
   id: ID!
 
@@ -8939,6 +8942,9 @@ type IdentityVerification {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+
+  # Name of the identity verification's owner
+  name: String
 
   # The overrides associated with an identity verification
   overrides: [IdentityVerificationOverride]
