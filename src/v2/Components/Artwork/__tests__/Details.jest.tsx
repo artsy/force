@@ -376,6 +376,16 @@ describe("Details", () => {
     })
   })
 
+  it("should display save artwork button by default when showSaveButton prop is passed", async () => {
+    props = {
+      showSaveButton: true,
+      contextModule: ContextModule.artworkGrid,
+    }
+    const wrapper = await getWrapper(artworkInAuction, props)
+
+    expect(wrapper.find("button[data-test='saveButton']").length).toBe(1)
+  })
+
   it("should pass correct analytics data to the auth modal when save button is pressed and user is not logged in", async () => {
     props = {
       showSaveButton: true,
