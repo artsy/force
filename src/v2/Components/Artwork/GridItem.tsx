@@ -7,11 +7,9 @@ import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import { useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
-import { isTouch } from "v2/Utils/device"
 import { MagnifyImage } from "../MagnifyImage"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -30,10 +28,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
-
-  const { containerProps } = useSaveButton({
-    isSaved: !!artwork.is_saved,
-  })
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
@@ -53,7 +47,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     onMouseEnter()
-    containerProps.onMouseEnter(event)
     rest.onMouseEnter?.(event)
   }
 
@@ -61,17 +54,13 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     onMouseLeave()
-    containerProps.onMouseLeave(event)
     rest.onMouseLeave?.(event)
   }
-
-  const showHoverSaveButton = !!artwork.is_saved || (isHovered && !isTouch)
 
   return (
     <div
       data-id={artwork.internalID}
       data-test="artworkGridItem"
-      {...containerProps}
       {...rest}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -102,8 +91,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
       <Metadata
         artwork={artwork}
         isHovered={isHovered}
-        showHoverSaveButton={!!showHoverSaveButton}
         contextModule={contextModule ?? ContextModule.artworkGrid}
+        showHoverSaveButton
       />
     </div>
   )
@@ -137,7 +126,6 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         }
         artistNames
         href
-        is_saved: isSaved
         ...Metadata_artwork
         ...SaveButton_artwork
         ...Badge_artwork
