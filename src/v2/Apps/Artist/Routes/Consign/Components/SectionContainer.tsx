@@ -1,35 +1,19 @@
-import { Color, Flex, FlexProps, color } from "@artsy/palette"
-import * as React from "react";
+import { BoxProps, FullBleed } from "@artsy/palette"
+import * as React from "react"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
-// Doesn't exist in design system
-export const LightPurpleColor = "#DDDADC"
-
-interface SectionContainerProps extends FlexProps {
-  background?: Color | typeof LightPurpleColor
-}
+interface SectionContainerProps extends BoxProps {}
 
 export const SectionContainer: React.FC<SectionContainerProps> = ({
   children,
-  background = "white100",
   ...rest
 }) => {
-  // For sections with bg-colors outside of our design system
-  const bg =
-    background === LightPurpleColor ? LightPurpleColor : color(background)
-
   return (
-    <Flex
-      background={bg}
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      px={[2, 4]}
-      py={6}
-      position="relative"
-      top={-1}
-      {...rest}
-    >
-      {children}
-    </Flex>
+    <FullBleed overflow="hidden" textAlign="center" py={6} {...rest}>
+      <AppContainer>
+        <HorizontalPadding>{children}</HorizontalPadding>
+      </AppContainer>
+    </FullBleed>
   )
 }

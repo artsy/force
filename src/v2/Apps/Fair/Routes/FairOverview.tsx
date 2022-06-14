@@ -29,9 +29,15 @@ const FairOverview: FC<FairOverviewProps> = ({ fair }) => {
     offset: 160, // Sticky top header
   })
 
+  /**
+   * scrollTo without requestAnimationFrame doesn't scroll to container
+   * when it is used in useEffect hook
+   */
   useEffect(() => {
     if (focusedBooths) {
-      scrollToBooths()
+      requestAnimationFrame(() => {
+        scrollToBooths()
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusedBooths])

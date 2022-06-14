@@ -27,11 +27,21 @@ const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {
   return (
     <HoverContainer>
       <Join separator={<Spacer mr={0.5} />}>
-        {pills.map(pill => (
-          <Pill key={pill.id} variant="filter" disabled>
-            {pill.label}
-          </Pill>
-        ))}
+        {pills.map((pill, index) => {
+          const isLastPill = index === pills.length - 1
+
+          return (
+            <Pill
+              key={pill.id}
+              variant="filter"
+              disabled
+              // Truncate text for last pill
+              {...(isLastPill ? { minWidth: 0 } : {})}
+            >
+              {pill.label}
+            </Pill>
+          )
+        })}
       </Join>
     </HoverContainer>
   )

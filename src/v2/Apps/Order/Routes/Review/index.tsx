@@ -371,7 +371,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         Content={
           <Join separator={<Spacer mb={4} />}>
             <Flex flexDirection="column" mb={[2, 4]}>
-              <Message p={[2, 4]} mb={[2, 4]}>
+              <Message mb={[2, 4]}>
                 Disruptions caused by COVID-19 may cause delays — we appreciate
                 your understanding.
               </Message>
@@ -398,7 +398,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               <PaymentMethodSummaryItem
                 order={order}
                 onChange={onChangePayment}
-                title="Payment"
+                title="Payment method"
               />
               <ShippingArtaSummaryItemFragmentContainer
                 order={order}

@@ -31,6 +31,17 @@ describe("ColorFilter", () => {
     expect(wrapper.find("Checkbox")).toHaveLength(6)
   })
 
+  it("renders all the colors when 'Show more' is clicked", () => {
+    const wrapper = getWrapper()
+
+    wrapper
+      .findWhere(t => t.text() === "Show more")
+      .first()
+      .simulate("click")
+
+    expect(wrapper.find("Checkbox")).toHaveLength(10)
+  })
+
   it("selects a color when clicked", () => {
     const wrapper = getWrapper()
 

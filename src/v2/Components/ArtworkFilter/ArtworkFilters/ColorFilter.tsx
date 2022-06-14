@@ -28,6 +28,7 @@ export const COLOR_OPTIONS = [
   { hex: "#0A1AB4", value: "blue", name: "Blue" },
   { hex: "#7B3D91", value: "purple", name: "Purple" },
   { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
+  { hex: "#7B5927", value: "brown", name: "Brown" },
   { hex: "#C2C2C2", value: "gray", name: "Gray" },
   { hex: "#E1ADCD", value: "pink", name: "Pink" },
 ]

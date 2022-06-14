@@ -8,19 +8,17 @@ export class IdentityVerificationAppTestPage extends RootTestPage {
   }
 
   get finishButton() {
-    return this.find("button").filterWhere(btn => btn.text().includes("Finish"))
+    return this.find("a").filterWhere(btn => btn.text().includes("Finish"))
   }
 
   get contactSupportButton() {
-    return this.find("button").filterWhere(btn =>
+    return this.find("a").filterWhere(btn =>
       btn.text().includes("Contact support")
     )
   }
 
   get returnHomeButton() {
-    return this.find("button").filterWhere(btn =>
-      btn.text().includes("Return home")
-    )
+    return this.find("a").filterWhere(btn => btn.text().includes("Return home"))
   }
 
   async clickStartVerification() {

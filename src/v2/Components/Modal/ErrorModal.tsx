@@ -15,6 +15,9 @@ export interface ErrorModalProps {
   ctaAction?: () => void
 }
 
+/**
+ * @deprecated: Use `useToasts` from `@artsy/palette` with `variant="error"` instead.
+ */
 export class ErrorModal extends Component<ErrorModalProps> {
   static defaultProps = {
     closeText: "Continue",

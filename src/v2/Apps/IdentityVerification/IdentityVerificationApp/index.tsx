@@ -1,11 +1,10 @@
-import { Box, Button, Link, Sans, Serif } from "@artsy/palette"
-import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificationApp_me.graphql"
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { IdentityVerificationApp_identityVerification } from "v2/__generated__/IdentityVerificationApp_identityVerification.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import * as React from "react"
-import { Title as HeadTitle } from "react-head"
 import {
   RelayProp,
   commitMutation,
@@ -17,42 +16,54 @@ import createLogger from "v2/Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
-import { WrongOwner } from "./WrongOwner"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { MetaTags } from "v2/Components/MetaTags"
+import { HttpError } from "found"
+
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
-  me: IdentityVerificationApp_me
+  identityVerification: IdentityVerificationApp_identityVerification
   relay: RelayProp
 }
 
-const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
-  const { identityVerification } = me
+const IdentityVerificationApp: React.FC<Props> = ({
+  identityVerification,
+  relay,
+}) => {
   const [requesting, setRequesting] = useState(false)
   const [showErrorModal, setShowErrorModal] = useState(false)
+
   const { trackEvent } = useTracking()
-  if (!identityVerification || identityVerification.userID !== me.internalID) {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    return <WrongOwner email={me.email} />
-  }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  let AlternateComponent: React.FC = null
+  const alternateComponent = useMemo(() => {
+    if (!identityVerification) {
+      throw new HttpError(404)
+    }
+    if (identityVerification.state === "failed") {
+      return <CompleteFailed />
+    }
 
-  if (identityVerification.state === "failed") {
-    AlternateComponent = CompleteFailed
-  } else if (identityVerification.state === "passed") {
-    AlternateComponent = CompletePassed
-  } else if (identityVerification.state === "watchlist_hit") {
-    AlternateComponent = CompleteWatchlistHit
-  }
+    if (identityVerification.state === "passed") {
+      return <CompletePassed />
+    }
+
+    if (identityVerification.state === "watchlist_hit") {
+      return <CompleteWatchlistHit />
+    }
+
+    return null
+  }, [identityVerification])
+
   const trackClickedContinueToVerification = () => {
     trackEvent({
       action_type: Schema.ActionType.ClickedContinueToIdVerification,
       context_page: Schema.PageName.IdentityVerificationPage,
-      context_page_owner_id: identityVerification.internalID,
+      context_page_owner_id: identityVerification?.internalID,
     })
   }
 
+  // TODO: Replace this with `useMutation`
   function startIdentityVerification() {
     const mutation = new Promise<string>((resolve, reject) => {
       commitMutation<IdentityVerificationAppStartMutation>(relay.environment, {
@@ -98,8 +109,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
         },
         onError: reject,
         variables: {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          input: { identityVerificationId: identityVerification.internalID },
+          input: { identityVerificationId: identityVerification?.internalID },
         },
       })
     })
@@ -123,78 +133,100 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
 
   return (
     <>
-      <HeadTitle>Artsy | ID Verification</HeadTitle>
-      {AlternateComponent ? (
-        <AlternateComponent />
-      ) : (
-        <>
-          <ErrorModal
-            show={showErrorModal}
-            contactEmail="verification@artsy.net"
-            onClose={() => setShowErrorModal(false)}
-          />
+      <MetaTags title="Artsy | ID Verification" />
 
-          <Box px="2" mb="6" mt="3" mx="auto" width="100%" maxWidth="400px">
-            <Serif size="6" textAlign="center">
-              Artsy identity verification
-            </Serif>
+      <Spacer mt={4} />
 
-            <Sans size="4" mt="2" weight="medium">
-              You’ll need
-            </Sans>
-            <Sans size="4">
-              • Your non-expired government id
-              <br />• A camera on your mobile device or computer to take a
-              picture of yourself
-            </Sans>
+      <GridColumns>
+        <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+          {alternateComponent ? (
+            alternateComponent
+          ) : (
+            <>
+              {/* TODO: Replace this with toast */}
+              <ErrorModal
+                show={showErrorModal}
+                contactEmail="verification@artsy.net"
+                onClose={() => setShowErrorModal(false)}
+              />
 
-            <Sans size="4" mt="2" weight="medium">
-              Keep in mind
-            </Sans>
-            <Sans size="4">
-              • The verification process can take up to 5 minutes, and needs to
-              be completed at one time
-              <br />
-              • You will have to enable permissions to your camera to take a
-              photo of your ID and yourself
-              <br />• All four corners of your ID must be captured
-              <br />• Artsy can not accept emails of your personal documents,
-              they must be submitted to our secure identity verification partner
-              during this process
-            </Sans>
-            <Sans size="4" mt="2" weight="medium">
-              Compatible browsers
-            </Sans>
-            <Sans size="4">
-              • iOS: Safari
-              <br />• Android: Chrome, Samsung Internet
-              <br />• Mac/PC: Safari, Chrome, Firefox, Microsoft Edge
-              <br />
-              <br />
-              By clicking the button, you'll be redirected to our identity
-              verification partner.
-            </Sans>
+              <Text variant="xl" textAlign="center">
+                Artsy identity verification
+              </Text>
 
-            <Button
-              mt="4"
-              width="100%"
-              loading={requesting}
-              onClick={() => {
-                setRequesting(true)
-                trackClickedContinueToVerification()
-                startIdentityVerification()
-              }}
-            >
-              Continue to verification
-            </Button>
+              <Spacer mt={4} />
 
-            <Sans mt="4" size="4" color="black60">
-              For more information, see the{" "}
-              <Link href="/identity-verification-faq">FAQ</Link>.
-            </Sans>
-          </Box>
-        </>
-      )}
+              <Text variant="lg-display">You’ll need</Text>
+
+              <Spacer mt={1} />
+
+              <Text variant="sm">
+                • Your non-expired government id
+                <br />• A camera on your mobile device or computer to take a
+                picture of yourself
+              </Text>
+
+              <Spacer mt={4} />
+
+              <Text variant="lg-display">Keep in mind</Text>
+
+              <Spacer mt={1} />
+
+              <Text variant="sm">
+                • The verification process can take up to 5 minutes, and needs
+                to be completed at one time
+                <br />
+                • You will have to enable permissions to your camera to take a
+                photo of your ID and yourself
+                <br />• All four corners of your ID must be captured
+                <br />• Artsy can not accept emails of your personal documents,
+                they must be submitted to our secure identity verification
+                partner during this process
+              </Text>
+
+              <Spacer mt={4} />
+
+              <Text variant="lg-display">Compatible browsers</Text>
+
+              <Spacer mt={1} />
+
+              <Text>
+                • iOS: Safari
+                <br />• Android: Chrome, Samsung Internet
+                <br />• Mac/PC: Safari, Chrome, Firefox, Microsoft Edge
+              </Text>
+
+              <Spacer mt={4} />
+
+              <Text variant="xs" textAlign="center">
+                By clicking the button, you'll be redirected to our identity
+                verification partner.
+              </Text>
+
+              <Spacer mt={1} />
+
+              <Button
+                width="100%"
+                loading={requesting}
+                onClick={() => {
+                  setRequesting(true)
+                  trackClickedContinueToVerification()
+                  startIdentityVerification()
+                }}
+              >
+                Continue to verification
+              </Button>
+
+              <Spacer mt={1} />
+
+              <Text variant="xs" color="black60" textAlign="center">
+                For more information, see the{" "}
+                <RouterLink to="/identity-verification-faq">FAQ</RouterLink>.
+              </Text>
+            </>
+          )}
+        </Column>
+      </GridColumns>
     </>
   )
 }
@@ -202,16 +234,11 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
 export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
   IdentityVerificationApp,
   {
-    me: graphql`
-      fragment IdentityVerificationApp_me on Me
+    identityVerification: graphql`
+      fragment IdentityVerificationApp_identityVerification on IdentityVerification
         @argumentDefinitions(id: { type: "String!" }) {
         internalID
-        email
-        identityVerification(id: $id) {
-          internalID
-          userID
-          state
-        }
+        state
       }
     `,
   }

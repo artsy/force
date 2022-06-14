@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import qs from "qs"
 import { graphql } from "react-relay"
 import { Banner } from "@artsy/palette"
@@ -19,6 +19,7 @@ interface FlashBannerProps {
 }
 
 /**
+ * @deprecated: Use `useToasts` from `@artsy/palette`
  * The component responsible for selecting a determining and displaying a flash message
  */
 export const FlashBanner: React.FC<FlashBannerProps> = ({

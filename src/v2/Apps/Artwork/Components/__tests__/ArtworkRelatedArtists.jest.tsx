@@ -27,7 +27,7 @@ describe("ArtworkRelatedArtists", () => {
 
     const wrapper = getWrapper(props)
 
-    expect(wrapper.find("ArtistCard").length).toEqual(4)
+    expect(wrapper.find("EntityHeaderArtist").length).toEqual(4)
   })
 
   it("tracks ArtistCard clicks", () => {
@@ -37,7 +37,8 @@ describe("ArtworkRelatedArtists", () => {
 
     const wrapper = getWrapper(props)
 
-    const artistCard = wrapper.find("ArtistCard").at(0)
+    const artistCard = wrapper.find("EntityHeaderArtist").at(0).find("a")
+
     artistCard.simulate("click")
 
     expect(trackEvent).toBeCalledWith({

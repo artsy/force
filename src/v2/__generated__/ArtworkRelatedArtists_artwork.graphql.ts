@@ -15,7 +15,7 @@ export type ArtworkRelatedArtists_artwork = {
                 };
                 readonly edges: ReadonlyArray<{
                     readonly node: {
-                        readonly " $fragmentRefs": FragmentRefs<"ArtistCard_artist">;
+                        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
                     } | null;
                 } | null> | null;
             } | null;
@@ -34,7 +34,7 @@ export type ArtworkRelatedArtists_artwork$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 4,
+      "defaultValue": 6,
       "kind": "LocalArgument",
       "name": "count"
     },
@@ -156,7 +156,7 @@ const node: ReaderFragment = {
                         {
                           "args": null,
                           "kind": "FragmentSpread",
-                          "name": "ArtistCard_artist"
+                          "name": "EntityHeaderArtist_artist"
                         }
                       ],
                       "storageKey": null
@@ -184,5 +184,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '4df1872cc84dffa4698fd299b4459457';
+(node as any).hash = '58def2ad4d787dbc12f883e88be33351';
 export default node;

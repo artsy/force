@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Metadata_artwork = {
     readonly href: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"Details_artwork" | "Contact_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
     readonly " $refType": "Metadata_artwork";
 };
 export type Metadata_artwork$data = Metadata_artwork;
@@ -34,15 +34,10 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Details_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "Contact_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '5e64e5a09dbf4016cd89ec6a41b009e5';
+(node as any).hash = '685a1962cf32184578290a19262bb4cb';
 export default node;

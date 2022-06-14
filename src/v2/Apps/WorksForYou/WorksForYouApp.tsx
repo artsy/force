@@ -90,7 +90,12 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
             />
           </Column>
 
-          <Column span={9}>
+          <Column
+            span={9}
+            // Fix for issue in Firefox where contents overflow container.
+            // Safe to remove once artwork masonry uses CSS grid.
+            width="100%"
+          >
             <GridColumns mt={0.5}>
               <Column span={9}>
                 <Text variant="sm-display" fontWeight="medium">

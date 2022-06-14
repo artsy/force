@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  ModalBase,
-  Sans,
-  color,
-} from "@artsy/palette"
+import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { useEffect, useRef } from "react"
 import * as React from "react"
 import styled from "styled-components"
@@ -16,6 +8,7 @@ import {
 } from "./ArtworkFilterContext"
 import { isEqual, omit } from "lodash"
 import { countChangedFilters } from "./Utils/countChangedFilters"
+import { themeGet } from "@styled-system/theme-get"
 
 export const ArtworkFilterMobileActionSheet: React.FC<{
   children: JSX.Element
@@ -65,8 +58,10 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
   const applyFilters = () => {
     // On apply, replace the actual filter state with the
     // hitherto staged filters
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    filterContext.setFilters(filterContext.stagedFilters)
+    if (filterContext.stagedFilters) {
+      filterContext.setFilters?.(filterContext.stagedFilters)
+    }
+
     onClose()
   }
 
@@ -76,7 +71,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
       dialogProps={{
         width: "100%",
         height: "100%",
-        background: color("white100"),
+        bg: "white100",
         flexDirection: "column",
       }}
     >
@@ -86,22 +81,18 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
           size="small"
           onClick={() => {
             // On close, abandon any staged filter changes
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            filterContext.setStagedFilters({})
+            filterContext?.setStagedFilters?.({})
             onClose()
           }}
         >
           Cancel
         </Button>
 
-        {/* TODO: This extraneous Flex is not necessary, Clickable (and Box) should have Flex props*/}
-        <Flex flex="1">
-          <Clickable width="100%" onClick={handleScrollToTop}>
-            <FilterTitle size="3" weight="medium" textAlign="center">
-              Filter
-            </FilterTitle>
-          </Clickable>
-        </Flex>
+        <Clickable width="100%" onClick={handleScrollToTop} flex={1}>
+          <Text variant="xs" fontWeight="bold" textAlign="center">
+            Filter
+          </Text>
+        </Clickable>
 
         <Button
           size="small"
@@ -116,10 +107,8 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
         </Button>
       </Header>
 
-      <Content ref={contentRef as any}>
-        <Box width="100%" px={2} pt={2}>
-          {children}
-        </Box>
+      <Content ref={contentRef as any} width="100%" px={2} pt={2}>
+        {children}
       </Content>
 
       <Footer p={1}>
@@ -139,22 +128,16 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
 const Header = styled(Flex)`
   width: 100%;
   align-items: center;
-  border-bottom: 1px solid ${color("black10")};
+  border-bottom: 1px solid ${themeGet("colors.black10")};
 `
 
 const Footer = styled(Flex)`
   width: 100%;
 `
 
-const Content = styled(Flex)`
+const Content = styled(Box)`
   flex: 1;
   width: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 `
-
-const FilterTitle = styled(Sans)`
-  flex: 1;
-`
-
-FilterTitle.displayName = "FilterTitle"

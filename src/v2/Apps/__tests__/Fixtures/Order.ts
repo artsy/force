@@ -824,14 +824,44 @@ export const CreditCardPaymentDetails = {
     street1: "1 Art st",
     street2: null,
   },
+  paymentMethodDetails: {
+    __typename: "CreditCard",
+    brand: "Visa",
+    city: "New York",
+    country: "US",
+    expirationMonth: 3,
+    expirationYear: 21,
+    id: "relay-node-id",
+    internalID: "gravity-credit-card-id",
+    lastDigits: "4444",
+    name: "Dr. Collector",
+    postalCode: "90210",
+    state: "NY",
+    street1: "1 Art st",
+    street2: null,
+  },
 } as const
 
 export const BankDebitPaymentDetails = {
-  availablePaymentMethods: ["CREDIT_CARD"],
+  availablePaymentMethods: ["US_BANK_ACCOUNT"],
+  paymentMethod: "US_BANK_ACCOUNT",
   bankAccountId: "bankAccountId",
-  bankAccount: {
+  paymentMethodDetails: {
+    __typename: "BankAccount",
     last4: "1234",
-    bank: "Bank of America",
+    bankName: "Bank of America",
+    accountHolderName: "Dr. Collector",
+    id: "relay-node-id",
+    internalID: "gravity-bank-account-id",
+  },
+} as const
+
+export const WireTransferPaymentDetails = {
+  availablePaymentMethods: ["WIRE_TRANSFER"],
+  paymentMethod: "WIRE_TRANSFER",
+  paymentMethodDetails: {
+    __typename: "WireTransfer",
+    isManualPayment: true,
   },
 } as const
 
@@ -845,6 +875,12 @@ export const BuyOrderWithBankDebitDetails = {
   ...UntouchedBuyOrder,
   ...ShippingDetails,
   ...BankDebitPaymentDetails,
+} as const
+
+export const BuyOrderWithWireTransferDetails = {
+  ...UntouchedBuyOrder,
+  ...ShippingDetails,
+  ...WireTransferPaymentDetails,
 } as const
 
 export const OfferOrderWithShippingDetails = {

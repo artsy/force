@@ -1,31 +1,23 @@
-import { Box, Link, Text } from "@artsy/palette"
-import * as React from "react";
-import { Title as HeadTitle } from "react-head"
+import { Column, GridColumns, Message, Spacer } from "@artsy/palette"
+import * as React from "react"
+import { MetaTags } from "v2/Components/MetaTags"
 
 export const Error: React.FC = () => {
   return (
     <>
-      <HeadTitle>Artsy | ID Verification</HeadTitle>
+      <MetaTags title="Artsy | ID Verification" />
 
-      <Box px={[2, 3]} mb={6} mt={4}>
-        <Box mx="auto" width={[335, "80%"]} maxWidth="400px" textAlign="center">
-          <Text variant="title" color="black100">
-            Your verification has failed
-          </Text>
+      <Spacer mt={4} />
 
-          <Text variant="text" mt={2}>
-            We were unable to complete your identity verification.
-          </Text>
-
-          <Text variant="mediumText" mt={2}>
-            For assistance, please contact Artsy verification support at{" "}
-            <Link href="mailto:verification@artsy.net">
-              verification@artsy.net
-            </Link>
-            .
-          </Text>
-        </Box>
-      </Box>
+      <GridColumns>
+        <Column span={[12, 8, 6]} start={[1, 3, 4]}>
+          <Message variant="error" title="Your verification has failed">
+            We were unable to complete your identity verification. For
+            assistance, please contact Artsy verification support at{" "}
+            <a href="mailto:verification@artsy.net">verification@artsy.net</a>.
+          </Message>
+        </Column>
+      </GridColumns>
     </>
   )
 }

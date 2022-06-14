@@ -2,7 +2,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps, Image } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { userIsTeam } from "v2/Utils/user"
@@ -31,6 +31,9 @@ export interface FillwidthItemProps extends BoxProps {
   onClick?: () => void
 }
 
+/**
+ * @deprecated Use `ShelfArtwork`
+ */
 export const FillwidthItem: React.FC<FillwidthItemProps> = ({
   artwork,
   contextModule,

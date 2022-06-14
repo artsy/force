@@ -15,16 +15,6 @@ const MarketingLandingApp = loadable(
   }
 )
 
-const OfferDetailApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/Offer/OfferDetailApp"
-    ),
-  {
-    resolveComponent: component => component.OfferDetailAppFragmentContainer,
-  }
-)
-
 const SubmissionLayout = loadable(
   () =>
     import(
@@ -264,20 +254,5 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
     ],
-  },
-  {
-    path: "/sell/offer/:offerID",
-    theme: "v2",
-    getComponent: () => OfferDetailApp,
-    onClientSideRender: () => {
-      OfferDetailApp.preload()
-    },
-    query: graphql`
-      query consignRoutes_OfferDetailQuery($offerID: ID!) {
-        offer(id: $offerID) {
-          ...OfferDetailApp_offer
-        }
-      }
-    `,
   },
 ]
