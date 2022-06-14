@@ -4,6 +4,7 @@ import { oneTrustReady } from "../oneTrustReady"
 
 jest.mock("../delay")
 jest.mock("../oneTrustReady")
+jest.mock("../setServerSideCookie")
 
 describe("getOneTrustConsent", () => {
   const delayMock = delay as jest.Mock

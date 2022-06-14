@@ -1,5 +1,6 @@
 import { delay } from "./delay"
 import { oneTrustReady } from "./oneTrustReady"
+import { setServerSideCookie } from "./setServerSideCookie"
 
 export async function getOneTrustConsent() {
   let attempts = 0
@@ -12,6 +13,8 @@ export async function getOneTrustConsent() {
   }
 
   if (oneTrustReady()) {
+    setServerSideCookie()
+
     // OneTrust stores consent in window.OnetrustActiveGroups.
     return window.OnetrustActiveGroups
   } else {
