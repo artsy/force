@@ -4,25 +4,27 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertEditForm_artist = {
+export type SavedSearchAlertEditForm_artists = ReadonlyArray<{
     readonly internalID: string;
     readonly name: string | null;
     readonly slug: string;
-    readonly " $refType": "SavedSearchAlertEditForm_artist";
-};
-export type SavedSearchAlertEditForm_artist$data = SavedSearchAlertEditForm_artist;
-export type SavedSearchAlertEditForm_artist$key = {
-    readonly " $data"?: SavedSearchAlertEditForm_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artist">;
-};
+    readonly " $refType": "SavedSearchAlertEditForm_artists";
+}>;
+export type SavedSearchAlertEditForm_artists$data = SavedSearchAlertEditForm_artists;
+export type SavedSearchAlertEditForm_artists$key = ReadonlyArray<{
+    readonly " $data"?: SavedSearchAlertEditForm_artists$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_artists">;
+}>;
 
 
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
-  "name": "SavedSearchAlertEditForm_artist",
+  "metadata": {
+    "plural": true
+  },
+  "name": "SavedSearchAlertEditForm_artists",
   "selections": [
     {
       "alias": null,
@@ -49,5 +51,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'ccdcd948b1202d1dc9a3c87bab8c71fc';
+(node as any).hash = '5f5806c4409466904f531226140bd6aa';
 export default node;

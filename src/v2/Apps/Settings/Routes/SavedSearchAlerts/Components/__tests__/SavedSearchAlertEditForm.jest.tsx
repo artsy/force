@@ -4,7 +4,10 @@ import { MockBoot } from "v2/DevTools"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchAlertEditForm_Test_Query } from "v2/__generated__/SavedSearchAlertEditForm_Test_Query.graphql"
 import { EditAlertEntity } from "../../types"
-import { SavedSearchAlertEditFormFragmentContainer } from "../SavedSearchAlertEditForm"
+import {
+  SavedSearchAlertEditFormFragmentContainer,
+  Artist,
+} from "../SavedSearchAlertEditForm"
 import { useTracking } from "react-tracking"
 
 const mockEditSavedSearchAlert = jest.fn()
@@ -19,7 +22,7 @@ jest.mock("../../useEditSavedSearchAlert", () => ({
 const defaultEditAlertEntity: EditAlertEntity = {
   id: "alert-id",
   name: "Alert Name",
-  artistId: "artist-id",
+  artistIds: ["artist-id"],
 }
 
 describe("SavedSearchAlertEditForm", () => {
@@ -46,7 +49,7 @@ describe("SavedSearchAlertEditForm", () => {
         <MockBoot breakpoint="lg">
           <SavedSearchAlertEditFormFragmentContainer
             me={props.me!}
-            artist={props.artist!}
+            artists={props.artists as Artist[]}
             artworksConnection={props.artworksConnection!}
             editAlertEntity={defaultEditAlertEntity}
             onCompleted={mockOnCompleted}
@@ -56,17 +59,18 @@ describe("SavedSearchAlertEditForm", () => {
       )
     },
     query: graphql`
-      query SavedSearchAlertEditForm_Test_Query @raw_response_type {
+      query SavedSearchAlertEditForm_Test_Query($artistIDs: [String!])
+        @raw_response_type {
         me {
           ...SavedSearchAlertEditForm_me
             @arguments(savedSearchId: "id", withAggregations: true)
         }
-        artist(id: "artistId") {
-          ...SavedSearchAlertEditForm_artist
+        artists(ids: $artistIDs) {
+          ...SavedSearchAlertEditForm_artists
         }
         artworksConnection(
           first: 0
-          artistID: "artistId"
+          artistIDs: $artistIDs
           aggregations: [
             ARTIST
             LOCATION_CITY
@@ -80,6 +84,9 @@ describe("SavedSearchAlertEditForm", () => {
         }
       }
     `,
+    variables: {
+      artistIDs: ["artist-id"],
+    },
   })
 
   it("renders pills", () => {
