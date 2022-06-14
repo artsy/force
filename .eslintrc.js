@@ -113,6 +113,10 @@ module.exports = {
         name: "sharify",
         message: "Please use getENV instead.",
       },
+      {
+        name: "unstated",
+        message: "Please just use React state.",
+      },
     ],
   },
   overrides: [
