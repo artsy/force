@@ -9037,6 +9037,7 @@ type IdentityVerificationOverride {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  creator: User
 
   # A globally unique ID.
   id: ID!
