@@ -26,11 +26,11 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                 }) | null> | null;
             }) | null;
         }) | null;
-        readonly insights: ReadonlyArray<{
+        readonly insights: ReadonlyArray<({
             readonly type: string;
             readonly label: string;
             readonly entities: ReadonlyArray<string>;
-        }>;
+        }) | null> | null;
         readonly auctionResultsConnection: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -473,7 +473,7 @@ return {
         "artist.id": (v3/*: any*/),
         "artist.insights": {
           "enumValues": null,
-          "nullable": false,
+          "nullable": true,
           "plural": true,
           "type": "ArtistInsight"
         },

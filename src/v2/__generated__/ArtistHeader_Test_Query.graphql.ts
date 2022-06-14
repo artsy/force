@@ -702,7 +702,7 @@ return {
         "artist.image.cropped.srcSet": (v12/*: any*/),
         "artist.insights": {
           "enumValues": null,
-          "nullable": false,
+          "nullable": true,
           "plural": true,
           "type": "ArtistInsight"
         },

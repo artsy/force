@@ -41,7 +41,7 @@ export type artistRoutes_TopLevelQueryResponse = {
         } | null;
         readonly insights: ReadonlyArray<{
             readonly type: string;
-        }>;
+        } | null> | null;
         readonly biographyBlurb: {
             readonly text: string | null;
         } | null;

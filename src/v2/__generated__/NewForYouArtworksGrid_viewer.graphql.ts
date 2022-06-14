@@ -30,22 +30,17 @@ export type NewForYouArtworksGrid_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": 20,
       "kind": "LocalArgument",
-      "name": "count"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "cursor"
+      "name": "first"
     }
   ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": "count",
-        "cursor": "cursor",
+        "count": "first",
+        "cursor": null,
         "direction": "forward",
         "path": [
           "artworksForUser"
@@ -149,5 +144,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '37e8704d3bfabdc24d63e3716106c951';
+(node as any).hash = '06bae3c120c3902914277382e8f51b72';
 export default node;
