@@ -99,9 +99,6 @@ type Admin {
     # The sort order of the results
     sortBy: FeatureFlagsSortBy
   ): [FeatureFlag]
-
-  # A globally unique ID.
-  id: ID!
 }
 
 input AdminCreateFeatureFlagInput {
