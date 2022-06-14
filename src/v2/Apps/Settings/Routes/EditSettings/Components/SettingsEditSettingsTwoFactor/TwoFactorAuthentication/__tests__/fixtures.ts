@@ -1,6 +1,4 @@
-import { BackupSecondFactorModalContentQueryRawResponse } from "v2/__generated__/BackupSecondFactorModalContentQuery.graphql"
 import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
-import { CreateBackupSecondFactorsMutationResponse } from "v2/__generated__/CreateBackupSecondFactorsMutation.graphql"
 import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { DeliverSecondFactorMutationResponse } from "v2/__generated__/DeliverSecondFactorMutation.graphql"
 import { DisableSecondFactorMutationResponse } from "v2/__generated__/DisableSecondFactorMutation.graphql"
@@ -34,22 +32,6 @@ export const RecoveryCodes = [
   "asd0893n2d",
   "a9zmemiejs",
 ]
-
-export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecondFactorsMutationResponse = {
-  createBackupSecondFactors: {
-    secondFactorsOrErrors: {
-      __typename: "BackupSecondFactors",
-      secondFactors: BackupSecondFactors,
-    },
-  },
-}
-
-export const BackupSecondFactorModalContentQueryResponse: BackupSecondFactorModalContentQueryRawResponse = {
-  me: {
-    id: "id",
-    backupSecondFactors: BackupSecondFactors,
-  },
-}
 
 export const CreateSmsSecondFactorMutationSuccessResponse: CreateSmsSecondFactorMutationResponse = {
   createSmsSecondFactor: {
