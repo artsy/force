@@ -23,9 +23,11 @@ describe("SmsSecondFactor", () => {
         Me: () => ({ email: "user@gmail.com" }),
       })
 
+      //
+
       expect(
         screen.queryByText(
-          'Artsy employees are encouraged to use the "App Authenticator" 2FA method via 1Password (or your preferred password manager).'
+          "Artsy employees are encouraged to use the “App Authenticator” 2FA method via 1Password (or your preferred password manager)."
         )
       ).not.toBeInTheDocument()
     })
@@ -37,7 +39,7 @@ describe("SmsSecondFactor", () => {
 
       expect(
         screen.getByText(
-          'Artsy employees are encouraged to use the "App Authenticator" 2FA method via 1Password (or your preferred password manager).'
+          "Artsy employees are encouraged to use the “App Authenticator” 2FA method via 1Password (or your preferred password manager)."
         )
       ).toBeInTheDocument()
     })

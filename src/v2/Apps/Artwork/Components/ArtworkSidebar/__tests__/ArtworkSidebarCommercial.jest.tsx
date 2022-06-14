@@ -15,13 +15,11 @@ import {
   OrderWithSuccess,
 } from "v2/Apps/__tests__/Fixtures/Artwork/MutationResults"
 
-import { Button } from "@artsy/palette"
+import { Button, Toasts, ToastsProvider } from "@artsy/palette"
 import { mount } from "enzyme"
 import { RelayProp, commitMutation as _commitMutation } from "react-relay"
 
 import { ArtworkSidebarCommercialContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercial"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { ModalButton } from "v2/Components/Modal/ModalDialog"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { SystemContextProvider } from "v2/System"
 import { mediator } from "lib/mediator"
@@ -44,14 +42,17 @@ describe("ArtworkSidebarCommercial", () => {
   const getWrapper = (artwork, otherProps = {}) => {
     return mount(
       <SystemContextProvider>
-        <ArtworkSidebarCommercialContainerWithInquiry
-          artworkID={artwork.internalID}
-          artwork={artwork}
-          user={user}
-          mediator={mediator}
-          relay={{ environment: {} } as RelayProp}
-          {...otherProps}
-        />
+        <ToastsProvider>
+          <Toasts />
+          <ArtworkSidebarCommercialContainerWithInquiry
+            artworkID={artwork.internalID}
+            artwork={artwork}
+            user={user}
+            mediator={mediator}
+            relay={{ environment: {} } as RelayProp}
+            {...otherProps}
+          />
+        </ToastsProvider>
       </SystemContextProvider>
     )
   }
@@ -170,7 +171,7 @@ describe("ArtworkSidebarCommercial", () => {
     expect(spy).toHaveBeenCalledWith("/orders/orderId")
   })
 
-  it("displays an error modal when a Buy Now mutation fails", () => {
+  it("displays an error toast when a Buy Now mutation fails", () => {
     mockLocation()
     const component = getWrapper(ArtworkBuyNow)
 
@@ -183,15 +184,9 @@ describe("ArtworkSidebarCommercial", () => {
     expect(commitMutation).toHaveBeenCalledTimes(1)
     expect(window.location.assign).not.toHaveBeenCalled()
 
-    const errorComponent = component.find(ErrorModal)
-    expect(errorComponent.props().show).toBe(true)
-    expect(errorComponent.text()).toContain("An error occurred")
-    expect(errorComponent.text()).toContain(
+    expect(component.text()).toContain(
       "Something went wrong. Please try again or contact orders@artsy.net."
     )
-
-    component.find(ModalButton).simulate("click")
-    expect(component.find(ErrorModal).props().show).toBe(false)
   })
 
   it("creates a Make Offer order and redirects to the order offer page", () => {
@@ -226,15 +221,9 @@ describe("ArtworkSidebarCommercial", () => {
     expect(commitMutation).toHaveBeenCalledTimes(1)
     expect(window.location.assign).not.toHaveBeenCalled()
 
-    const errorComponent = component.find(ErrorModal)
-    expect(errorComponent.props().show).toBe(true)
-    expect(errorComponent.text()).toContain("An error occurred")
-    expect(errorComponent.text()).toContain(
+    expect(component.text()).toContain(
       "Something went wrong. Please try again or contact orders@artsy.net."
     )
-
-    component.find(ModalButton).simulate("click")
-    expect(component.find(ErrorModal).props().show).toBe(false)
   })
 
   it("displays 'Create Alert' button when artwork is sold", () => {

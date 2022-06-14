@@ -9,6 +9,7 @@ import {
   Separator,
   Spacer,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarCommercial_artwork } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
@@ -17,10 +18,9 @@ import { SystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import currency from "currency.js"
 import { Router } from "found"
-import { FC, useContext } from "react"
+import { FC, useContext, useEffect } from "react"
 import * as React from "react"
 import {
   RelayProp,
@@ -514,15 +514,34 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             </>
           )}
 
-          <ErrorModal
+          <ErrorToast
             onClose={this.onCloseModal}
             show={this.state.isErrorModalOpen}
-            contactEmail="orders@artsy.net"
           />
         </Box>
       </>
     )
   }
+}
+
+const ErrorToast: FC<{ onClose(): void; show: boolean }> = ({
+  show,
+  onClose,
+}) => {
+  const { sendToast } = useToasts()
+
+  useEffect(() => {
+    if (!show) return
+
+    sendToast({
+      variant: "error",
+      message:
+        "Something went wrong. Please try again or contact orders@artsy.net.",
+      onClose,
+    })
+  }, [onClose, sendToast, show])
+
+  return null
 }
 
 interface ArtworkSidebarCommercialProps {
