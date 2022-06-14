@@ -29,7 +29,7 @@ describe("Details", () => {
       hideArtistName: boolean
       isHovered: boolean
       contextModule?: AuthContextModule
-      showHoverSaveButton?: boolean
+      showSaveButton?: boolean
     }
   ) => {
     return await renderRelayTree({
@@ -378,7 +378,7 @@ describe("Details", () => {
 
   it("should pass correct analytics data to the auth modal when save button is pressed and user is not logged in", async () => {
     props = {
-      showHoverSaveButton: true,
+      showSaveButton: true,
       contextModule: ContextModule.artworkGrid,
     }
     const wrapper = await getWrapper(artworkInAuction, props)

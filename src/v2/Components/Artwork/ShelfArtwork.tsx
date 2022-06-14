@@ -67,7 +67,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
-          showHoverSaveButton
+          showSaveButton
         />
       )}
     </div>
