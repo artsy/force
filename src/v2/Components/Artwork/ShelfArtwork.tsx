@@ -2,7 +2,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
-import { useSaveButton } from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
@@ -40,17 +39,8 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   showExtended,
   showMetadata = true,
 }) => {
-  const { containerProps, isSaveButtonVisible } = useSaveButton({
-    isSaved: !!artwork.is_saved,
-  })
-  const showHoverSaveButton = !!artwork.is_saved || isSaveButtonVisible
-
   return (
-    <div
-      {...containerProps}
-      data-test="artworkShelfArtwork"
-      data-testid="ShelfArtwork"
-    >
+    <div data-test="artworkShelfArtwork" data-testid="ShelfArtwork">
       <RouterLink
         to={artwork?.href}
         display="block"
@@ -77,7 +67,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
-          showHoverSaveButton={!!showHoverSaveButton}
+          showHoverSaveButton
         />
       )}
     </div>
@@ -144,7 +134,6 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         imageTitle
         title
         href
-        is_saved: isSaved
         ...Metadata_artwork
         ...SaveButton_artwork
         ...Badge_artwork
