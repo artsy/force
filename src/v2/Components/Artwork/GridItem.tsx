@@ -70,7 +70,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
-  const shouldShowHoverSaveButton =
+  const showHoverSaveButton =
     isHoverEffectEnabled && (!!artwork.is_saved || (isHovered && !isTouch))
 
   return (
@@ -116,7 +116,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
       <Metadata
         artwork={artwork}
         isHovered={isHovered}
-        shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
+        showHoverSaveButton={!!showHoverSaveButton}
         contextModule={contextModule ?? ContextModule.artworkGrid}
       />
     </div>

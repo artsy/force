@@ -48,7 +48,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
     "force-enable-hover-effect-for-artwork-item"
   )
 
-  const shouldShowHoverSaveButton =
+  const showHoverSaveButton =
     isHoverEffectEnabled && (!!artwork.is_saved || isSaveButtonVisible)
 
   return (
@@ -94,7 +94,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
-          shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
+          showHoverSaveButton={!!showHoverSaveButton}
         />
       )}
     </div>
