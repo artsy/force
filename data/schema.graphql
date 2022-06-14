@@ -113,7 +113,6 @@ input AdminCreateFeatureFlagInput {
 
 type AdminCreateFeatureFlagPayload {
   clientMutationId: String
-  featureFlag: FeatureFlag
 
   # A list of feature flags
   featureFlags(
@@ -171,7 +170,12 @@ input AdminUpdateFeatureFlagInput {
 
 type AdminUpdateFeatureFlagPayload {
   clientMutationId: String
-  featureFlag: FeatureFlag
+
+  # A list of feature flags
+  featureFlags(
+    # The sort order of the results
+    sortBy: FeatureFlagsSortBy
+  ): [FeatureFlag]
 }
 
 # One item in an aggregation
