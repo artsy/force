@@ -8,14 +8,32 @@ interface ArtistInsightPillsProps {
   artist: ArtistInsightPills_artist
 }
 
-interface ArtistPillProps {
-  title: string
+const ARTIST_PILLS = {
+  ACTIVE_SECONDARY_MARKET: {
+    title: "Active Secondary Market",
+  },
+  BLUE_CHIP_REPRESENTATION: {
+    title: "Blue Chip Representation",
+  },
+  CRITICALLY_ACCLAIMED: {
+    title: "Critically Acclaimed",
+  },
+  ARTSY_VANGUARD: {
+    title: "The Artsy Vanguard",
+  },
+  HIGH_AUCTION_RECORD: {
+    title: "High Auction Record",
+  },
 }
 
-export const ArtistPill: FC<ArtistPillProps> = ({ title }) => {
+interface ArtistPillProps {
+  type: string
+}
+
+export const ArtistPill: FC<ArtistPillProps> = ({ type }) => {
   return (
     <Pill variant="badge" disabled>
-      {title}
+      {ARTIST_PILLS[type].title}
     </Pill>
   )
 }
@@ -39,14 +57,22 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
 
   const highAuctionResults = extractNodes(artist.auctionResultsConnection)[0]
 
+  console.log(blueChipRepresentation)
+
   return (
     <Flex flexDirection="row" flexWrap="wrap">
       {blueChipRepresentation?.length > 0 && (
-        <ArtistPill title="Blue Chip Representation" />
+        <ArtistPill type="BLUE_CHIP_REPRESENTATION" />
       )}
       {highAuctionResults.price_realized?.display && (
-        <ArtistPill title="High Auction Record" />
+        <ArtistPill type="HIGH_AUCTION_RECORD" />
       )}
+
+      {artist.insights.map(insight => {
+        return ARTIST_PILLS[insight!.type] ? (
+          <ArtistPill type={insight!.type} />
+        ) : null
+      })}
     </Flex>
   )
 }

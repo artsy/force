@@ -1,80 +1,111 @@
-import { render, screen } from "@testing-library/react"
-import { ArtistInsightPills } from "../ArtistInsightPills"
-import { ArtistInsightPills_artist } from "v2/__generated__/ArtistInsightPills_artist.graphql"
+import { screen } from "@testing-library/react"
+import { ArtistInsightPillsFragmentContainer } from "../ArtistInsightPills"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
 
-let artist
+jest.unmock("react-relay")
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: ArtistInsightPillsFragmentContainer,
+  query: graphql`
+    query ArtistInsightPills_Test_Query @relay_test_operation {
+      artist(id: "example") {
+        ...ArtistInsightPills_artist
+      }
+    }
+  `,
+})
 
 describe("ArtistInsightPills", () => {
-  beforeEach(() => {
-    artist = ({
-      insights: [
-        {
-          type: "ACTIVE_SECONDARY_MARKET",
-          label: "",
-          entities: [],
-        },
-      ],
-      auctionResultsConnection: {
-        edges: [
-          {
-            node: {
-              price_realized: {
-                display: "US$93.1m",
-              },
-              organization: "Christies",
-              sale_date: "2021",
-            },
-          },
-        ],
-      },
-      artistHighlights: {
-        partnersConnection: {
-          edges: [
-            {
-              node: {
-                categories: [
-                  {
-                    slug: "blue-chip",
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-    } as unknown) as ArtistInsightPills_artist
-  })
+  // beforeEach(() => {
+  //   artist = ({
+  //     insights: [
+  //       {
+  //         type: "ACTIVE_SECONDARY_MARKET",
+  //         label: "Active Secondary Market",
+  //         entities: [],
+  //       },
+  //     ],
+  //     auctionResultsConnection: {
+  //       edges: [
+  //         {
+  //           node: {
+  //             price_realized: {
+  //               display: "US$93.1m",
+  //             },
+  //             organization: "Christies",
+  //             sale_date: "2021",
+  //           },
+  //         },
+  //       ],
+  //     },
+  //     artistHighlights: {
+  //       partnersConnection: {
+  //         edges: [
+  //           {
+  //             node: {
+  //               categories: [
+  //                 {
+  //                   slug: "blue-chip",
+  //                 },
+  //               ],
+  //             },
+  //           },
+  //         ],
+  //       },
+  //     },
+  //   } as unknown) as ArtistInsightPills_artist
+  // })
 
   it("renders artist insight pills", () => {
-    render(<ArtistInsightPills artist={artist} />)
-    expect(screen.queryByText("Blue Chip Representation")).toBeInTheDocument()
-    expect(screen.queryByText("High Auction Record")).toBeInTheDocument()
+    renderWithRelay({
+      Artist: () => ({
+        insights: [
+          {
+            type: "ACTIVE_SECONDARY_MARKET",
+          },
+        ],
+      }),
+    })
+
+    expect(screen.getByText("Blue Chip Representation")).toBeInTheDocument()
+    expect(screen.getByText("High Auction Record")).toBeInTheDocument()
+    expect(screen.getByText("Active Secondary Market")).toBeInTheDocument()
   })
 
   it("does not render high auction record pill if not present on artist", () => {
-    artist.auctionResultsConnection = null
+    renderWithRelay({
+      Artist: () => ({
+        auctionResultsConnection: null,
+      }),
+    })
 
-    render(<ArtistInsightPills artist={artist} />)
     expect(screen.queryByText("High Auction Record")).not.toBeInTheDocument()
   })
 
   it("does not render blue chip pill if not present on artist", () => {
-    artist.artistHighlights.partnersConnection = []
+    renderWithRelay({
+      ArtistHighlights: () => ({
+        partnersConnection: { edges: [] },
+      }),
+    })
 
-    render(<ArtistInsightPills artist={artist} />)
     expect(
       screen.queryByText("Blue Chip Representation")
     ).not.toBeInTheDocument()
   })
 
   it("does not render active secondary market pill if not present on artist", () => {
-    artist.insights = [
-      {
-        type: "MAJOR_SOLO",
-      },
-    ]
+    renderWithRelay({
+      Artist: () => ({
+        insights: [
+          {
+            type: "MAJOR_SOLO",
+          },
+        ],
+      }),
+    })
 
-    render(<ArtistInsightPills artist={artist} />)
     expect(
       screen.queryByText("Active Secondary Market")
     ).not.toBeInTheDocument()

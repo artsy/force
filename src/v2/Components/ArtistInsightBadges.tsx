@@ -16,7 +16,7 @@ interface ArtistInsightBadgesProps {
   artist: ArtistInsightBadges_artist
 }
 
-const ARTIST_BADGES_TEMPLATE = {
+const ARTIST_BADGES = {
   ACTIVE_SECONDARY_MARKET: {
     title: "Active Secondary Market",
     description: "Recent auction results in the Artsy Price Database.",
@@ -40,14 +40,11 @@ const ARTIST_BADGES_TEMPLATE = {
 }
 
 interface ArtistBadgeProps {
-  badgeType: string
+  type: string
   description?: string
 }
 
-export const ArtistBadge: FC<ArtistBadgeProps> = ({
-  badgeType,
-  description,
-}) => {
+export const ArtistBadge: FC<ArtistBadgeProps> = ({ type, description }) => {
   return (
     <CSSGrid gridTemplateColumns="auto 1fr" gridTemplateRows="auto 1fr">
       <Box
@@ -65,10 +62,10 @@ export const ArtistBadge: FC<ArtistBadgeProps> = ({
         display="flex"
         alignItems="center"
       >
-        {ARTIST_BADGES_TEMPLATE[badgeType].title}
+        {ARTIST_BADGES[type].title}
       </Text>
       <Text color="black60" style={{ gridArea: "2 / 2 / 3 / 3" }}>
-        {description ?? ARTIST_BADGES_TEMPLATE[badgeType].description}
+        {description ?? ARTIST_BADGES[type].description}
       </Text>
     </CSSGrid>
   )
@@ -107,18 +104,24 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
       <GridColumns>
         {blueChipRepresentation.length > 0 && (
           <Column span={6}>
-            <ArtistBadge badgeType="BLUE_CHIP_REPRESENTATION" />
+            <ArtistBadge type="BLUE_CHIP_REPRESENTATION" />
           </Column>
         )}
 
         {highAuctionRecord && (
           <Column span={6}>
             <ArtistBadge
-              badgeType="HIGH_AUCTION_RECORD"
+              type="HIGH_AUCTION_RECORD"
               description={highAuctionRecord}
             />
           </Column>
         )}
+
+        {artist.insights.map(insight => {
+          return ARTIST_BADGES[insight!.type] ? (
+            <ArtistBadge type={insight!.type} />
+          ) : null
+        })}
       </GridColumns>
     </>
   )
