@@ -1,4 +1,12 @@
-import { Box, Button, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Flex,
+  Message,
+  ModalDialog,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
@@ -14,6 +22,7 @@ import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { isArtsyEmail } from "./isArtsyEmail"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me
@@ -129,66 +138,81 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     })
   }
 
+  const show2FAWarning = isArtsyEmail(me.email!)
+
   return (
     <>
-      <Flex
-        p={2}
-        border="1px solid"
-        borderColor="black10"
-        flexDirection={["column", "row"]}
-      >
-        <Box flexBasis="50%">
-          <Text variant="lg-display">Use Text Messages</Text>
-
-          {enabledSecondFactorLabel && (
-            <Text variant="lg-display" color="black60">
-              {enabledSecondFactorLabel}
+      <Flex flexDirection="column" border="1px solid" borderColor="black10">
+        {show2FAWarning && (
+          <Message variant="warning">
+            <Text>
+              Artsy employees are encouraged to use the "App Authenticator" 2FA
+              method via 1Password (or your preferred password manager).
             </Text>
-          )}
+            <Text variant="xs" color="black60">
+              You may find a detailed walkthrough{" "}
+              <a href="https://artsy.net/employees-mfa-instructions">
+                here in Notion
+              </a>
+              .
+            </Text>
+          </Message>
+        )}
 
-          <Spacer mt={2} />
+        <Flex p={2} flexDirection={["column", "row"]}>
+          <Box flexBasis="50%">
+            <Text variant="lg-display">Use Text Messages</Text>
 
-          <Text variant="sm" color="black60">
-            Security codes will be sent to your mobile phone.
-          </Text>
-        </Box>
+            {enabledSecondFactorLabel && (
+              <Text variant="lg-display" color="black60">
+                {enabledSecondFactorLabel}
+              </Text>
+            )}
 
-        <Spacer ml={[0, 2]} mt={[2, 0]} />
+            <Spacer mt={2} />
 
-        <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
-          {isEnabled ? (
-            <>
-              <Button
-                variant="secondaryBlack"
-                width={["100%", "auto"]}
-                onClick={() => setShowConfirmDisable(true)}
-                loading={isDisabling}
-                disabled={isDisabling}
-              >
-                Disable
-              </Button>
+            <Text variant="sm" color="black60">
+              Security codes will be sent to your mobile phone.
+            </Text>
+          </Box>
 
-              <Spacer ml={1} />
+          <Spacer ml={[0, 2]} mt={[2, 0]} />
 
+          <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
+            {isEnabled ? (
+              <>
+                <Button
+                  variant="secondaryBlack"
+                  width={["100%", "auto"]}
+                  onClick={() => setShowConfirmDisable(true)}
+                  loading={isDisabling}
+                  disabled={isDisabling}
+                >
+                  Disable
+                </Button>
+
+                <Spacer ml={1} />
+
+                <Button
+                  width={["100%", "auto"]}
+                  onClick={() => setShowConfirmPassword(true)}
+                  loading={isCreating}
+                  disabled={isCreating}
+                >
+                  Edit
+                </Button>
+              </>
+            ) : (
               <Button
                 width={["100%", "auto"]}
                 onClick={() => setShowConfirmPassword(true)}
                 loading={isCreating}
                 disabled={isCreating}
               >
-                Edit
+                Set up
               </Button>
-            </>
-          ) : (
-            <Button
-              width={["100%", "auto"]}
-              onClick={() => setShowConfirmPassword(true)}
-              loading={isCreating}
-              disabled={isCreating}
-            >
-              Set up
-            </Button>
-          )}
+            )}
+          </Flex>
         </Flex>
       </Flex>
 
@@ -265,6 +289,7 @@ export const SmsSecondFactorRefetchContainer = createRefetchContainer(
   {
     me: graphql`
       fragment SmsSecondFactor_me on Me {
+        email
         hasSecondFactorEnabled
 
         smsSecondFactors: secondFactors(kinds: [sms]) {

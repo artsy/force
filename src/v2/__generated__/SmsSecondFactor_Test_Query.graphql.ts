@@ -4,21 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SmsSecondFactorRefetchQueryVariables = {};
-export type SmsSecondFactorRefetchQueryResponse = {
+export type SmsSecondFactor_Test_QueryVariables = {};
+export type SmsSecondFactor_Test_QueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SmsSecondFactor_me">;
     } | null;
 };
-export type SmsSecondFactorRefetchQuery = {
-    readonly response: SmsSecondFactorRefetchQueryResponse;
-    readonly variables: SmsSecondFactorRefetchQueryVariables;
+export type SmsSecondFactor_Test_Query = {
+    readonly response: SmsSecondFactor_Test_QueryResponse;
+    readonly variables: SmsSecondFactor_Test_QueryVariables;
 };
 
 
 
 /*
-query SmsSecondFactorRefetchQuery {
+query SmsSecondFactor_Test_Query {
   me {
     ...SmsSecondFactor_me
     id
@@ -39,12 +39,25 @@ fragment SmsSecondFactor_me on Me {
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SmsSecondFactorRefetchQuery",
+    "name": "SmsSecondFactor_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -70,7 +83,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SmsSecondFactorRefetchQuery",
+    "name": "SmsSecondFactor_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -154,13 +167,45 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "9550b3c56002c636c161cfadb608925a",
+    "cacheID": "6806993c93488fb084c153a5cd6a3323",
     "id": null,
-    "metadata": {},
-    "name": "SmsSecondFactorRefetchQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.email": (v0/*: any*/),
+        "me.hasSecondFactorEnabled": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "me.id": (v1/*: any*/),
+        "me.smsSecondFactors": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SecondFactor"
+        },
+        "me.smsSecondFactors.__typename": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        },
+        "me.smsSecondFactors.formattedPhoneNumber": (v0/*: any*/),
+        "me.smsSecondFactors.internalID": (v1/*: any*/)
+      }
+    },
+    "name": "SmsSecondFactor_Test_Query",
     "operationKind": "query",
-    "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SmsSecondFactor_Test_Query {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
-(node as any).hash = 'bb3f464bd834c3a55e0098e887384d50';
+})();
+(node as any).hash = '6d42d89bbae259c4dba68b0b72d4603b';
 export default node;
