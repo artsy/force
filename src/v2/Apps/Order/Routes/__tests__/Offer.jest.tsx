@@ -33,6 +33,22 @@ jest.mock("v2/Utils/user", () => ({
   userHasLabFeature: jest.fn().mockReturnValue(false),
 }))
 
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    ModalDialog: ({ title, children, onClose, footer }) => {
+      return (
+        <div data-testid="ModalDialog">
+          <button onClick={onClose}>close</button>
+          {title}
+          {children}
+          {footer}
+        </div>
+      )
+    },
+  }
+})
+
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 const testOffer: OfferTestQueryRawResponse["order"] = {
@@ -300,7 +316,6 @@ describe("Offer InitialMutation", () => {
         expect(mutations.mockFetch).not.toHaveBeenCalled()
 
         await page.clickSubmit()
-        expect(page.modalDialog.props().show).toBeFalsy()
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       })

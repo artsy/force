@@ -30,6 +30,22 @@ require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
 jest.unmock("react-relay")
 
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    ModalDialog: ({ title, children, onClose, footer }) => {
+      return (
+        <div data-testid="ModalDialog">
+          <button onClick={onClose}>close</button>
+          {title}
+          {children}
+          {footer}
+        </div>
+      )
+    },
+  }
+})
+
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { expectOne } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
