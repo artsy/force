@@ -163,18 +163,16 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     <>
       <Flex flexDirection="column" border="1px solid" borderColor="black10">
         {show2FAWarning && (
-          <Message variant="warning">
-            <Text>
-              Artsy employees are encouraged to use the "App Authenticator" 2FA
-              method via 1Password (or your preferred password manager).
-            </Text>
-            <Text variant="xs" color="black60">
-              You may find a detailed walkthrough{" "}
-              <a href="https://artsy.net/employees-mfa-instructions">
-                here in Notion
-              </a>
-              .
-            </Text>
+          <Message
+            variant="warning"
+            title="Artsy employees are encouraged to use the “App Authenticator” 2FA
+          method via 1Password (or your preferred password manager)."
+          >
+            You may find a detailed walkthrough{" "}
+            <a href="https://artsy.net/employees-mfa-instructions">
+              here in Notion
+            </a>
+            .
           </Message>
         )}
 
