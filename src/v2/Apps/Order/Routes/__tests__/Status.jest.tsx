@@ -11,13 +11,14 @@ import {
   CreditCardPaymentDetails,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
-import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { expectOne } from "v2/DevTools/RootTestPage"
-import { render } from "enzyme"
 import { produce } from "immer"
 import { graphql } from "react-relay"
 import { StatusFragmentContainer } from "../Status"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { MockBoot } from "v2/DevTools"
+import { Title } from "react-head"
 
 jest.unmock("react-relay")
 
@@ -37,47 +38,49 @@ const testOrder: StatusQueryRawResponse["order"] = {
   displayState: "SUBMITTED",
 }
 
-const testEnvProps = {
-  Component: StatusFragmentContainer,
-  query: graphql`
-    query StatusQuery @raw_response_type @relay_test_operation {
-      order: commerceOrder(id: "42") {
-        ...Status_order
-      }
-    }
-  `,
-  defaultData: {
-    order: testOrder,
-  },
-  TestPage: StatusTestPage,
-}
-
 describe("Status", () => {
-  const env = createTestEnv(testEnvProps)
+  let isEigen
+  const pushMock = jest.fn()
 
-  function buildPageWithOrder<Order>(order: Order) {
-    return env.buildPage({
-      mockData: {
-        order,
-      },
-    })
-  }
+  beforeEach(() => {
+    jest.clearAllMocks()
+    isEigen = false
+  })
 
-  beforeAll(env.clearErrors)
-
-  afterEach(env.clearMocksAndErrors)
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot context={{ isEigen }}>
+        <StatusFragmentContainer
+          {...props}
+          router={{ push: pushMock } as any}
+        />
+      </MockBoot>
+    ),
+    query: graphql`
+      query StatusQuery @raw_response_type @relay_test_operation {
+        order: commerceOrder(id: "42") {
+          ...Status_order
+        }
+      }
+    `,
+  })
 
   describe("offers", () => {
     it("should should have a title containing status", async () => {
-      expect(env.headTags.length).toEqual(0)
-      await env.buildPage()
-      expect(env.headTags.length).toEqual(1)
-      expect(render(env.headTags[0]).text()).toBe("Offer status | Artsy")
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+
+      expect(wrapper.find(Title).text()).toContain("Offer status | Artsy")
     })
 
     describe("submitted", () => {
       it("should say order submitted and have message box", async () => {
-        const page = await env.buildPage()
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+        })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your offer has been submitted")
         expect(page.text()).toContain(
           "The seller will respond to your offer by Jan 15"
@@ -88,16 +91,17 @@ describe("Status", () => {
         expect(page.getMessage()).toBe(1)
         expect(page.text()).toContain("Kathryn Markel Fine Arts")
         expect(page.text()).toContain("List price")
+        expect(page.text()).toContain("Your noteAnother note!")
+        expect(page.getMessage()).toBe(1)
       })
 
       it("should say order submitted and have message to continue to inbox on Eigen", async () => {
-        const env = createTestEnv({
-          ...testEnvProps,
-          systemContextProps: {
-            isEigen: true,
-          },
+        isEigen = true
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
         })
-        const page = await env.buildPage()
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your offer has been submitted")
         expect(page.text()).toContain(
           "The seller will respond to your offer by Jan 15"
@@ -110,29 +114,30 @@ describe("Status", () => {
         expect(page.text()).not.toContain("List price")
       })
 
-      it("should show a note section", async () => {
-        const page = await env.buildPage()
-        expect(page.text()).toContain("Your noteAnother note!")
-        expect(page.getMessage()).toBe(1)
-      })
-
       it("should not show a note section if none exists", async () => {
-        const page = await buildPageWithOrder(
-          produce(testOrder, order => {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            order.lastOffer.note = null
-          })
-        )
+        const wrapper = getWrapper({
+          CommerceOrder: () =>
+            produce(testOrder, order => {
+              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+              order.lastOffer.note = null
+            }),
+        })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).not.toContain("Your note")
       })
     })
 
     describe("approved", () => {
       it("should say confirmed and have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          displayState: "APPROVED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "APPROVED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Offer accepted")
         expect(page.getMessage()).toBe(1)
       })
@@ -140,53 +145,62 @@ describe("Status", () => {
 
     describe("processing", () => {
       it("should say confirmed and have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          displayState: "PROCESSING",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "PROCESSING",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Offer accepted")
         expect(page.getMessage()).toBe(1)
       })
     })
 
     describe("in transit", () => {
-      it("should say confirmed and have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          displayState: "IN_TRANSIT",
+      it("should say confirmed, have message box and the tracking URL", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "IN_TRANSIT",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order has shipped")
         expect(page.getMessage()).toBe(1)
-      })
-
-      it("should display non linked tracking number if no Url", async () => {
-        const page = await buildPageWithOrder({
-          ...ArtaShippedWithTrackingIdNoTrackingUrl,
-          displayState: "IN_TRANSIT",
-        })
-        expect(page.text()).toContain("oxa")
-        expect(
-          page.find(Message).find("Message").find("RouterLink").length
-        ).toBe(0)
-      })
-
-      it("should display link to tracking URL if present", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          displayState: "IN_TRANSIT",
-        })
         expect(page.text()).toContain("steve")
         expect(
           page.find(Message).find("Message").find("RouterLink").html()
         ).toContain(`href="steves-house"`)
       })
 
-      it("should display note about shipping when tracking is not available", async () => {
-        const page = await buildPageWithOrder({
-          ...ArtaShippedWithNoTrackingIdNoTrackingUrl,
-          ...CreditCardPaymentDetails,
-          displayState: "IN_TRANSIT",
+      it("should display non linked tracking number if no Url", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...ArtaShippedWithTrackingIdNoTrackingUrl,
+            displayState: "IN_TRANSIT",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain("oxa")
+        expect(
+          page.find(Message).find("Message").find("RouterLink").length
+        ).toBe(0)
+      })
+
+      it("should display note about shipping when tracking is not available", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...ArtaShippedWithNoTrackingIdNoTrackingUrl,
+            ...CreditCardPaymentDetails,
+            displayState: "IN_TRANSIT",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain(
           "Our delivery provider will call you to provide a delivery window when it arrives in your area."
         )
@@ -195,30 +209,31 @@ describe("Status", () => {
 
     describe("fulfilled (ship)", () => {
       it("should say order has shipped and have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          displayState: "FULFILLED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "FULFILLED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order has shipped")
         expect(page.getMessage()).toBe(1)
-      })
-
-      it("should not contain a note section", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          displayState: "FULFILLED",
-        })
         expect(page.text()).not.toContain("Your note")
       })
     })
 
     describe("fulfilled (pickup)", () => {
       it("should say order has been picked up and NOT have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "FULFILLED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "FULFILLED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order has been picked up")
         expect(page.getMessage()).toBe(0)
       })
@@ -226,12 +241,16 @@ describe("Status", () => {
 
     describe("buyer rejected", () => {
       it("should say that offer was declined", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
-          stateReason: "buyer_rejected",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+            stateReason: "buyer_rejected",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Offer declined")
         expect(page.getMessage()).toBe(1)
       })
@@ -239,12 +258,16 @@ describe("Status", () => {
 
     describe("seller rejected", () => {
       it("should say that offer was declined", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
-          stateReason: "seller_rejected",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+            stateReason: "seller_rejected",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Offer declined")
         expect(page.getMessage()).toBe(1)
       })
@@ -252,12 +275,16 @@ describe("Status", () => {
 
     describe("seller lapsed", () => {
       it("should say that offer expired", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
-          stateReason: "seller_lapsed",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+            stateReason: "seller_lapsed",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("offer expired")
         expect(page.getMessage()).toBe(1)
       })
@@ -265,12 +292,16 @@ describe("Status", () => {
 
     describe("buyer lapsed", () => {
       it("should say that offer expired", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
-          stateReason: "buyer_lapsed",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+            stateReason: "buyer_lapsed",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("offer expired")
         expect(page.getMessage()).toBe(1)
       })
@@ -278,11 +309,15 @@ describe("Status", () => {
 
     describe("refunded", () => {
       it("should say that order was canceled", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "REFUNDED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "REFUNDED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order was canceled and refunded")
         expect(page.getMessage()).toBe(1)
       })
@@ -290,12 +325,16 @@ describe("Status", () => {
 
     describe("canceled after accept", () => {
       it("should say that order was canceled", async () => {
-        const page = await buildPageWithOrder({
-          ...OfferOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
-          stateReason: null,
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+            stateReason: null,
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order was canceled and refunded")
         expect(page.getMessage()).toBe(1)
         expect(page.find(TransactionDetailsSummaryItem).length).toBe(1)
@@ -305,19 +344,24 @@ describe("Status", () => {
 
   describe("orders", () => {
     it("should should have a title containing status", async () => {
-      expect(env.headTags.length).toEqual(0)
-      await env.buildPage({ mockData: { order: BuyOrderWithShippingDetails } })
-      expect(env.headTags.length).toEqual(1)
-      expect(render(env.headTags[0]).text()).toBe("Order status | Artsy")
+      const wrapper = getWrapper({
+        CommerceOrder: () => BuyOrderWithShippingDetails,
+      })
+
+      expect(wrapper.find(Title).text()).toBe("Order status | Artsy")
     })
 
     describe("submitted", () => {
       it("should say order submitted and have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderWithShippingDetails,
-          ...CreditCardPaymentDetails,
-          displayState: "SUBMITTED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "SUBMITTED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order has been submitted")
         expect(page.text()).toContain(
           "You will receive a confirmation email by Jan 15"
@@ -328,22 +372,30 @@ describe("Status", () => {
 
     describe("approved", () => {
       it("should say confirmed", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderWithShippingDetails,
-          ...CreditCardPaymentDetails,
-          displayState: "APPROVED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "APPROVED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order is confirmed")
       })
     })
 
     describe("fulfilled (ship)", () => {
       it("should say order has shipped and have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderWithShippingDetails,
-          ...CreditCardPaymentDetails,
-          displayState: "FULFILLED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "FULFILLED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order has shipped")
         expect(page.getMessage()).toBe(1)
       })
@@ -351,11 +403,15 @@ describe("Status", () => {
 
     describe("fulfilled (pickup)", () => {
       it("should say order has been picked up and NOT have message box", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "FULFILLED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "FULFILLED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order has been picked up")
         expect(page.find(Message).length).toBe(0)
       })
@@ -363,11 +419,15 @@ describe("Status", () => {
 
     describe("canceled (ship)", () => {
       it("should say that order was canceled", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderWithShippingDetails,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order was canceled and refunded")
         expect(page.getMessage()).toBe(1)
       })
@@ -375,11 +435,15 @@ describe("Status", () => {
 
     describe("canceled (pickup)", () => {
       it("should say that order was canceled", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "CANCELED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "CANCELED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order was canceled and refunded")
         expect(page.getMessage()).toBe(1)
       })
@@ -387,11 +451,15 @@ describe("Status", () => {
 
     describe("refunded", () => {
       it("should say that order was canceled", async () => {
-        const page = await buildPageWithOrder({
-          ...BuyOrderPickup,
-          ...CreditCardPaymentDetails,
-          displayState: "REFUNDED",
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderPickup,
+            ...CreditCardPaymentDetails,
+            displayState: "REFUNDED",
+          }),
         })
+        const page = new StatusTestPage(wrapper)
+
         expect(page.text()).toContain("Your order was canceled and refunded")
         expect(page.getMessage()).toBe(1)
       })
