@@ -2,45 +2,25 @@ import { Flex, Pill } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistInsightsPills_artist } from "v2/__generated__/ArtistInsightsPills_artist.graphql"
+import { ArtistInsightPills_artist } from "v2/__generated__/ArtistInsightPills_artist.graphql"
 
-interface ArtistInsightsPillsProps {
-  artist: ArtistInsightsPills_artist
-}
-
-const ARTIST_PILLS_TEMPLATE = {
-  ACTIVE_SECONDARY_MARKET: {
-    title: "Active Secondary Market",
-  },
-  BLUE_CHIP_REPRESENTATION: {
-    title: "Blue Chip Representation",
-  },
-  CRITICALLY_ACCLAIMED: {
-    title: "Critically Acclaimed",
-  },
-  ARTSY_VANGUARD: {
-    title: "The Artsy Vanguard",
-  },
-  HIGH_AUCTION_RECORD: {
-    title: "High Auction Record",
-  },
+interface ArtistInsightPillsProps {
+  artist: ArtistInsightPills_artist
 }
 
 interface ArtistPillProps {
-  pillType: string
+  title: string
 }
 
-export const ArtistPill: FC<ArtistPillProps> = ({ pillType }) => {
+export const ArtistPill: FC<ArtistPillProps> = ({ title }) => {
   return (
     <Pill variant="badge" disabled>
-      {ARTIST_PILLS_TEMPLATE[pillType].title}
+      {title}
     </Pill>
   )
 }
 
-export const ArtistInsightsPills: FC<ArtistInsightsPillsProps> = ({
-  artist,
-}) => {
+export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
   if (!artist.insights) {
     return null
   }
@@ -62,20 +42,20 @@ export const ArtistInsightsPills: FC<ArtistInsightsPillsProps> = ({
   return (
     <Flex flexDirection="row" flexWrap="wrap">
       {blueChipRepresentation?.length > 0 && (
-        <ArtistPill pillType="BLUE_CHIP_REPRESENTATION" />
+        <ArtistPill title="Blue Chip Representation" />
       )}
       {highAuctionResults.price_realized?.display && (
-        <ArtistPill pillType="HIGH_AUCTION_RECORD" />
+        <ArtistPill title="High Auction Record" />
       )}
     </Flex>
   )
 }
 
-export const ArtistInsightsPillsFragmentContainer = createFragmentContainer(
-  ArtistInsightsPills,
+export const ArtistInsightPillsFragmentContainer = createFragmentContainer(
+  ArtistInsightPills,
   {
     artist: graphql`
-      fragment ArtistInsightsPills_artist on Artist {
+      fragment ArtistInsightPills_artist on Artist {
         insights {
           type
           label

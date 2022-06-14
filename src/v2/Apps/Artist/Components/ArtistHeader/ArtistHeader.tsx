@@ -16,7 +16,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { ArtistInsightsPillsFragmentContainer } from "v2/Components/ArtistInsightsPills"
+import { ArtistInsightPillsFragmentContainer } from "v2/Components/ArtistInsightPills"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -111,7 +111,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
-            <ArtistInsightsPillsFragmentContainer artist={artist} />
+            <ArtistInsightPillsFragmentContainer artist={artist} />
             <Spacer mb={4} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
@@ -142,7 +142,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistHeader_artist on Artist {
         ...FollowArtistButton_artist
-        ...ArtistInsightsPills_artist
+        ...ArtistInsightPills_artist
 
         auctionResultsConnection(
           recordsTrusted: true

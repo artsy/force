@@ -10,10 +10,10 @@ import {
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistInsightsBadges_artist } from "v2/__generated__/ArtistInsightsBadges_artist.graphql"
+import { ArtistInsightBadges_artist } from "v2/__generated__/ArtistInsightBadges_artist.graphql"
 
-interface ArtistInsightsBadgesProps {
-  artist: ArtistInsightsBadges_artist
+interface ArtistInsightBadgesProps {
+  artist: ArtistInsightBadges_artist
 }
 
 const ARTIST_BADGES_TEMPLATE = {
@@ -74,7 +74,7 @@ export const ArtistBadge: FC<ArtistBadgeProps> = ({
   )
 }
 
-export const ArtistInsightsBadges: FC<ArtistInsightsBadgesProps> = ({
+export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
   artist,
 }) => {
   if (!artist.insights) {
@@ -124,11 +124,11 @@ export const ArtistInsightsBadges: FC<ArtistInsightsBadgesProps> = ({
   )
 }
 
-export const ArtistInsightsBadgesFragmentContainer = createFragmentContainer(
-  ArtistInsightsBadges,
+export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
+  ArtistInsightBadges,
   {
     artist: graphql`
-      fragment ArtistInsightsBadges_artist on Artist {
+      fragment ArtistInsightBadges_artist on Artist {
         insights {
           type
           label

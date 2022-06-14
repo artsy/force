@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInsightsBadges_artist = {
+export type ArtistInsightBadges_artist = {
     readonly insights: ReadonlyArray<{
         readonly type: string;
         readonly label: string;
@@ -32,12 +32,12 @@ export type ArtistInsightsBadges_artist = {
             } | null> | null;
         } | null;
     } | null;
-    readonly " $refType": "ArtistInsightsBadges_artist";
+    readonly " $refType": "ArtistInsightBadges_artist";
 };
-export type ArtistInsightsBadges_artist$data = ArtistInsightsBadges_artist;
-export type ArtistInsightsBadges_artist$key = {
-    readonly " $data"?: ArtistInsightsBadges_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightsBadges_artist">;
+export type ArtistInsightBadges_artist$data = ArtistInsightBadges_artist;
+export type ArtistInsightBadges_artist$key = {
+    readonly " $data"?: ArtistInsightBadges_artist$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist">;
 };
 
 
@@ -52,7 +52,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistInsightsBadges_artist",
+  "name": "ArtistInsightBadges_artist",
   "selections": [
     {
       "alias": null,
@@ -251,5 +251,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'dd5bb6b2de4b63da899f0bb91579e5ae';
+(node as any).hash = '008252a29103f7cc14ab3478b720fe17';
 export default node;
