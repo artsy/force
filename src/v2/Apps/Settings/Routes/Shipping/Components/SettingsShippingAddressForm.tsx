@@ -57,10 +57,9 @@ interface SettingsShippingAddressFormProps {
   }
 }
 
-export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> = ({
-  onClose,
-  address,
-}) => {
+export const SettingsShippingAddressForm: FC<
+  SettingsShippingAddressFormProps
+> = ({ onClose, address }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const { submitMutation: submitEditAddress } = useEditAddress()
   const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
@@ -93,7 +92,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
 
             sendToast({
               variant: "success",
-              message: `Address updated sucessfully.`,
+              message: `Address updated successfully.`,
             })
           } else {
             // Adding new address
