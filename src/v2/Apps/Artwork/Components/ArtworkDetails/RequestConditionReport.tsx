@@ -126,62 +126,66 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
       })
   }
 
-  const UnauthenticatedContent: React.FC = () => (
-    <Button
-      size="small"
-      variant="primaryGray"
-      onClick={handleLoginClick}
-      data-test="requestConditionReport"
-    >
-      Log in to request
-    </Button>
-  )
-
-  const AuthenticatedContent: React.FC = () => (
-    <Button
-      size="small"
-      variant="primaryGray"
-      onClick={handleRequestConditionReportClick}
-      loading={requesting}
-    >
-      Request condition report
-    </Button>
-  )
-
   const handleClose = () => setShowRequestedModal(false)
-
-  const RequestedConditionReportModal: React.FC = () => {
-    if (!showRequestedModal) return null
-
-    return (
-      <ModalDialog
-        title="Condition report requested"
-        onClose={handleClose}
-        footer={
-          <Button onClick={handleClose} width="100%">
-            OK
-          </Button>
-        }
-      >
-        <Text variant="sm">
-          We have received your request. The condition report will be sent to{" "}
-          <strong>{me && me.email}</strong>.
-        </Text>
-
-        <Text variant="sm" mt={1}>
-          For questions, contact{" "}
-          <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
-        </Text>
-      </ModalDialog>
-    )
-  }
 
   return (
     <>
-      {isLoggedIn ? <AuthenticatedContent /> : <UnauthenticatedContent />}
+      {isLoggedIn ? (
+        <Button
+          size="small"
+          variant="primaryGray"
+          onClick={handleRequestConditionReportClick}
+          loading={requesting}
+        >
+          Request condition report
+        </Button>
+      ) : (
+        <Button
+          size="small"
+          variant="primaryGray"
+          onClick={handleLoginClick}
+          data-test="requestConditionReport"
+        >
+          Log in to request
+        </Button>
+      )}
 
-      <RequestedConditionReportModal />
+      <RequestedConditionReportModal
+        show={showRequestedModal}
+        onClose={handleClose}
+        email={me?.email ?? "Unknown"}
+      />
     </>
+  )
+}
+
+const RequestedConditionReportModal: React.FC<{
+  onClose(): void
+  show: boolean
+  email: string
+}> = ({ onClose, show, email }) => {
+  if (!show) return null
+
+  return (
+    <ModalDialog
+      title="Condition report requested"
+      onClose={onClose}
+      footer={
+        <Button onClick={onClose} width="100%">
+          OK
+        </Button>
+      }
+    >
+      <Text variant="sm">
+        We have received your request. The condition report will be sent to{" "}
+        <strong>{email}</strong>.
+      </Text>
+
+      <Text variant="sm" mt={1}>
+        For questions, contact{" "}
+        <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+      </Text>
+    </ModalDialog>
   )
 }
 
