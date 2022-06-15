@@ -618,7 +618,7 @@ return {
         "artist.id": (v5/*: any*/),
         "artist.insights": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "ArtistInsight"
         },
