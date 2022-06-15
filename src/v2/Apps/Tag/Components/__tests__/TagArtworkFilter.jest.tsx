@@ -103,21 +103,27 @@ describe("TagArtworkFilter", () => {
       },
       {
         label: "Material",
+        expanded: true,
       },
       {
         label: "Artist Nationality or Ethnicity",
+        expanded: true,
       },
       {
         label: "Artwork Location",
+        expanded: true,
       },
       {
         label: "Time Period",
+        expanded: true,
       },
       {
         label: "Color",
+        expanded: true,
       },
       {
         label: "Galleries and Institutions",
+        expanded: true,
       },
     ]
 

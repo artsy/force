@@ -97,18 +97,23 @@ describe("ArtistSeriesArtworksFilter", () => {
       },
       {
         label: "Material",
+        expanded: true,
       },
       {
         label: "Artwork Location",
+        expanded: true,
       },
       {
         label: "Time Period",
+        expanded: true,
       },
       {
         label: "Color",
+        expanded: true,
       },
       {
         label: "Galleries and Institutions",
+        expanded: true,
       },
     ]
 
