@@ -84,7 +84,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               onEditAlertClick({
                 id: item.internalID,
                 name: item.userAlertSettings.name!,
-                artistId: item.artistIDs![0],
+                artistIds: item.artistIDs as string[],
               })
             }}
           >

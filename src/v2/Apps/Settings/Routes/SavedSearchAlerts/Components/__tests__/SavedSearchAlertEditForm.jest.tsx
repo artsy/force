@@ -16,10 +16,12 @@ jest.mock("../../useEditSavedSearchAlert", () => ({
   }),
 }))
 
+const artistIDs = ["artist-one-id", "artist-two-id", "artist-three-id"]
+
 const defaultEditAlertEntity: EditAlertEntity = {
   id: "alert-id",
   name: "Alert Name",
-  artistId: "artist-id",
+  artistIds: artistIDs,
 }
 
 describe("SavedSearchAlertEditForm", () => {
@@ -46,7 +48,7 @@ describe("SavedSearchAlertEditForm", () => {
         <MockBoot breakpoint="lg">
           <SavedSearchAlertEditFormFragmentContainer
             me={props.me!}
-            artist={props.artist!}
+            artistsConnection={props.artistsConnection!}
             artworksConnection={props.artworksConnection!}
             editAlertEntity={defaultEditAlertEntity}
             onCompleted={mockOnCompleted}
@@ -56,17 +58,18 @@ describe("SavedSearchAlertEditForm", () => {
       )
     },
     query: graphql`
-      query SavedSearchAlertEditForm_Test_Query @raw_response_type {
+      query SavedSearchAlertEditForm_Test_Query($artistIDs: [String!])
+        @raw_response_type {
         me {
           ...SavedSearchAlertEditForm_me
             @arguments(savedSearchId: "id", withAggregations: true)
         }
-        artist(id: "artistId") {
-          ...SavedSearchAlertEditForm_artist
+        artistsConnection(slugs: $artistIDs) {
+          ...SavedSearchAlertEditForm_artistsConnection
         }
         artworksConnection(
           first: 0
-          artistID: "artistId"
+          artistIDs: $artistIDs
           aggregations: [
             ARTIST
             LOCATION_CITY
@@ -80,11 +83,14 @@ describe("SavedSearchAlertEditForm", () => {
         }
       }
     `,
+    variables: {
+      artistIDs,
+    },
   })
 
   it("renders pills", () => {
     renderWithRelay({
-      Artist: () => artistMocked,
+      ArtistConnection: () => artistsConnectionMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
       Me: () => meMocked,
     })
@@ -96,9 +102,21 @@ describe("SavedSearchAlertEditForm", () => {
     expect(screen.getByText("Small (under 40cm)")).toBeInTheDocument()
   })
 
+  it("should render multiple artist pills", () => {
+    renderWithRelay({
+      ArtistConnection: () => artistsConnectionMocked,
+      FilterArtworksConnection: () => filterArtworksConnectionMocked,
+      Me: () => meMocked,
+    })
+
+    expect(screen.getByText("Banksy")).toBeInTheDocument()
+    expect(screen.getByText("KAWS")).toBeInTheDocument()
+    expect(screen.getByText("David Shrigley")).toBeInTheDocument()
+  })
+
   it('should call delete alert handler when "Delete Alert" button is pressed', () => {
     renderWithRelay({
-      Artist: () => artistMocked,
+      ArtistConnection: () => artistsConnectionMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
       Me: () => meMocked,
     })
@@ -110,7 +128,7 @@ describe("SavedSearchAlertEditForm", () => {
 
   it("should call complete handler when alert info is successfully updated", async () => {
     renderWithRelay({
-      Artist: () => artistMocked,
+      ArtistConnection: () => artistsConnectionMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
       Me: () => meMocked,
     })
@@ -130,7 +148,7 @@ describe("SavedSearchAlertEditForm", () => {
 
   it("should track editedSavedSearch event when alert info is successfully updated", async () => {
     renderWithRelay({
-      Artist: () => artistMocked,
+      ArtistConnection: () => artistsConnectionMocked,
       FilterArtworksConnection: () => filterArtworksConnectionMocked,
       SearchCriteria: () => savedSearchAlertMocked,
     })
@@ -162,7 +180,7 @@ describe("SavedSearchAlertEditForm", () => {
   describe("Save Alert button", () => {
     it("should be disabled by default", () => {
       renderWithRelay({
-        Artist: () => artistMocked,
+        ArtistConnection: () => artistsConnectionMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
         Me: () => meMocked,
       })
@@ -175,7 +193,7 @@ describe("SavedSearchAlertEditForm", () => {
 
     it("should be enabled if alert name is changed", () => {
       renderWithRelay({
-        Artist: () => artistMocked,
+        ArtistConnection: () => artistsConnectionMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
         Me: () => meMocked,
       })
@@ -193,7 +211,7 @@ describe("SavedSearchAlertEditForm", () => {
 
     it("should be disabled if all notification checkboxes are disabled", () => {
       renderWithRelay({
-        Artist: () => artistMocked,
+        ArtistConnection: () => artistsConnectionMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
         Me: () => meMocked,
       })
@@ -212,7 +230,7 @@ describe("SavedSearchAlertEditForm", () => {
 
     it("should be enabled if pills are changed", () => {
       renderWithRelay({
-        Artist: () => artistMocked,
+        ArtistConnection: () => artistsConnectionMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
         Me: () => meMocked,
       })
@@ -228,7 +246,7 @@ describe("SavedSearchAlertEditForm", () => {
 
     it("should be enabled if notification checkboxes are changed", () => {
       renderWithRelay({
-        Artist: () => artistMocked,
+        ArtistConnection: () => artistsConnectionMocked,
         FilterArtworksConnection: () => filterArtworksConnectionMocked,
         Me: () => meMocked,
       })
@@ -247,10 +265,30 @@ describe("SavedSearchAlertEditForm", () => {
   })
 })
 
-const artistMocked = {
-  internalID: "artistId",
-  name: "Banksy",
-  slug: "banksy",
+const artistsConnectionMocked = {
+  edges: [
+    {
+      node: {
+        internalID: "artist-one-id",
+        name: "Banksy",
+        slug: "banksy",
+      },
+    },
+    {
+      node: {
+        internalID: "artist-two-id",
+        name: "KAWS",
+        slug: "kaws",
+      },
+    },
+    {
+      node: {
+        internalID: "artist-three-id",
+        name: "David Shrigley",
+        slug: "david-shrigley",
+      },
+    },
+  ],
 }
 
 const savedSearchAlertLabelsMocked = [
@@ -258,6 +296,16 @@ const savedSearchAlertLabelsMocked = [
     field: "artistIDs",
     value: "artist-id",
     displayValue: "Banksy",
+  },
+  {
+    field: "artistIDs",
+    value: "artist-two-id",
+    displayValue: "KAWS",
+  },
+  {
+    field: "artistIDs",
+    value: "artist-three-id",
+    displayValue: "David Shrigley",
   },
   {
     field: "sizes",
@@ -290,7 +338,7 @@ const savedSearchAlertMocked = {
   internalID: "alert-id",
   acquireable: true,
   additionalGeneIDs: [],
-  artistIDs: ["artistId"],
+  artistIDs,
   atAuction: true,
   attributionClass: [],
   colors: [],
