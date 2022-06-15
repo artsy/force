@@ -156,6 +156,11 @@ export interface Counts {
   followedArtists?: number
 }
 
+export type FollowedArtists = Array<{
+  slug: string
+  internalID: string
+}>
+
 export type SelectedFiltersCounts = {
   [Name in FilterParamName | "waysToBuy"]: number
 }
@@ -201,6 +206,9 @@ export interface ArtworkFilterContextProps {
   aggregations?: Aggregations
   counts?: Counts
   setCounts?: (counts: Counts) => void
+
+  followedArtists?: FollowedArtists
+  setFollowedArtists?: (artists: FollowedArtists) => void
 
   // Handlers
   onFilterClick?: (
@@ -259,6 +267,7 @@ export type SharedArtworkFilterContextProps = Pick<
   | "sortOptions"
   | "onFilterClick"
   | "ZeroState"
+  | "followedArtists"
 > & {
   onChange?: (filterState) => void
 }
@@ -272,6 +281,7 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
+  followedArtists: _followedArtists = [],
   onChange = updateUrl,
   onFilterClick,
   sortOptions,
@@ -294,6 +304,9 @@ export const ArtworkFilterContextProvider: React.FC<
   const [artworkCounts, setCounts] = useState(counts)
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
+  )
+  const [followedArtists, setFollowedArtists] = useState<FollowedArtists>(
+    _followedArtists
   )
 
   useDeepCompareEffect(() => {
@@ -336,6 +349,8 @@ export const ArtworkFilterContextProvider: React.FC<
     aggregations,
     counts: artworkCounts,
     setCounts,
+    followedArtists,
+    setFollowedArtists,
 
     // Components
     ZeroState,

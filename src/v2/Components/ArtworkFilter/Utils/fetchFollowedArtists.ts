@@ -3,11 +3,7 @@ import { graphql } from "react-relay"
 import { fetchFollowedArtistsByFairIdQuery } from "v2/__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
 import { fetchFollowedArtistsRawQuery } from "v2/__generated__/fetchFollowedArtistsRawQuery.graphql"
 import { compact, isString } from "lodash"
-
-export type FollowedArtistList = Array<{
-  slug: string
-  internalID: string
-}>
+import { FollowedArtists } from "../ArtworkFilterContext"
 
 graphql`
   fragment fetchFollowedArtists_response on FollowArtistConnection {
@@ -58,7 +54,7 @@ interface Args extends FetchFollowedArtistsArgs {
 
 export async function fetchFollowedArtists(
   args: Args
-): Promise<FollowedArtistList> {
+): Promise<FollowedArtists> {
   const { relayEnvironment, ...props } = args
 
   const query = isString(props.fairID) ? queryByFairId : rawQuery
