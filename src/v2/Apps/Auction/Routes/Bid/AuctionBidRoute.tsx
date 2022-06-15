@@ -1,4 +1,12 @@
-import { Button, Join, ModalDialog, Select, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Join,
+  ModalDialog,
+  Select,
+  Spacer,
+  Text,
+  useDidMount,
+} from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AuctionBidRoute_sale } from "v2/__generated__/AuctionBidRoute_sale.graphql"
@@ -39,6 +47,8 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
   const { match, router } = useRouter()
   const { tracking } = useAuctionTracking()
 
+  const mounted = useDidMount()
+
   const {
     artworkSlug,
     bidderID,
@@ -75,8 +85,9 @@ const AuctionBidRoute: React.FC<AuctionBidRouteProps> = ({
   // Track initial load
   useEffect(() => {
     tracking.bidPageView({ artwork, me })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [artwork, me, tracking])
+
+  if (!mounted) return null
 
   return (
     <ModalDialog
