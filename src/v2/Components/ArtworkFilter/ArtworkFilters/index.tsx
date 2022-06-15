@@ -30,12 +30,12 @@ export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
-      <MaterialsFilter />
-      <ArtistNationalityFilter />
-      <ArtworkLocationFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-      <PartnersFilter />
+      <MaterialsFilter expanded />
+      <ArtistNationalityFilter expanded />
+      <ArtworkLocationFilter expanded />
+      <TimePeriodFilter expanded />
+      <ColorFilter expanded />
+      <PartnersFilter expanded />
     </>
   )
 }
