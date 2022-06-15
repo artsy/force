@@ -43,6 +43,7 @@ jest.mock("v2/Apps/Auction/Routes/Bid/Components/AuctionLotInfo", () => ({
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
   ModalDialog: ({ children }) => children,
+  useDidMount: () => true,
 }))
 
 jest.mock("formik", () => ({
