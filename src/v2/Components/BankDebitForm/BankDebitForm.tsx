@@ -77,6 +77,14 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
           onChange={event => {
             trackPaymentElementEvent(event)
           }}
+          options={{
+            defaultValues: {
+              billingDetails: {
+                name: user?.name,
+                email: user?.email,
+              },
+            },
+          }}
         />
         <Spacer mt={2} />
         <Button
