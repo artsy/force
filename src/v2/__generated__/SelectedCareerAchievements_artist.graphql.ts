@@ -20,7 +20,7 @@ export type SelectedCareerAchievements_artist = {
         readonly type: string;
         readonly label: string;
         readonly entities: ReadonlyArray<string>;
-    } | null> | null;
+    }>;
     readonly auctionResultsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
