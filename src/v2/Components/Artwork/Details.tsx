@@ -28,7 +28,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
-  shouldShowHoverSaveButton?: boolean
+  showSaveButton?: boolean
   contextModule?: AuthContextModule
 }
 
@@ -216,7 +216,7 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
-  shouldShowHoverSaveButton,
+  showSaveButton,
   contextModule,
   ...rest
 }) => {
@@ -241,7 +241,7 @@ export const Details: React.FC<DetailsProps> = ({
       )}
       <Flex flexDirection="row" justifyContent="space-between">
         {!hideArtistName && <ArtistLine {...rest} />}
-        {shouldShowHoverSaveButton && (
+        {showSaveButton && (
           <NewSaveButtonFragmentContainer
             contextModule={contextModule!}
             artwork={rest.artwork}

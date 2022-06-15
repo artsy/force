@@ -2,13 +2,11 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
-import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 /**
  * The max height for an image in the carousel
@@ -41,22 +39,8 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   showExtended,
   showMetadata = true,
 }) => {
-  const { containerProps, isSaveButtonVisible } = useSaveButton({
-    isSaved: !!artwork.is_saved,
-  })
-  const isHoverEffectEnabled = useFeatureFlag(
-    "force-enable-hover-effect-for-artwork-item"
-  )
-
-  const shouldShowHoverSaveButton =
-    isHoverEffectEnabled && (!!artwork.is_saved || isSaveButtonVisible)
-
   return (
-    <div
-      {...containerProps}
-      data-test="artworkShelfArtwork"
-      data-testid="ShelfArtwork"
-    >
+    <div data-test="artworkShelfArtwork" data-testid="ShelfArtwork">
       <RouterLink
         to={artwork?.href}
         display="block"
@@ -72,17 +56,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             lazyLoad={lazyLoad}
             style={{ objectFit: "contain", display: "block" }}
           />
-
-          {!isHoverEffectEnabled && (
-            <Media greaterThan="sm">
-              {isSaveButtonVisible && (
-                <SaveButtonFragmentContainer
-                  contextModule={contextModule!}
-                  artwork={artwork}
-                />
-              )}
-            </Media>
-          )}
         </ResponsiveContainer>
       </RouterLink>
 
@@ -94,7 +67,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
-          shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
+          showSaveButton
         />
       )}
     </div>
@@ -161,7 +134,6 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         imageTitle
         title
         href
-        is_saved: isSaved
         ...Metadata_artwork
         ...SaveButton_artwork
         ...Badge_artwork
