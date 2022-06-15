@@ -59,8 +59,7 @@ fragment OrderUpdate_event on CommerceOrderEventUnion {
   __typename
   ... on CommerceOrderStateChangedEvent {
     createdAt
-    stateReason
-    state
+    orderUpdateState
   }
   ... on CommerceOfferSubmittedEvent {
     createdAt
@@ -318,14 +317,7 @@ return {
                                     "alias": null,
                                     "args": null,
                                     "kind": "ScalarField",
-                                    "name": "stateReason",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "state",
+                                    "name": "orderUpdateState",
                                     "storageKey": null
                                   }
                                 ],
@@ -411,7 +403,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4adb98caa6a7744e6f7936053144a8c9",
+    "cacheID": "5e1b2d94a03841570e4cbbd9efd25649",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -476,28 +468,13 @@ return {
         },
         "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v11/*: any*/),
         "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v7/*: any*/),
-        "me.conversation.orderConnection.edges.node.orderHistory.state": {
-          "enumValues": [
-            "ABANDONED",
-            "APPROVED",
-            "CANCELED",
-            "FULFILLED",
-            "PENDING",
-            "PROCESSING_APPROVAL",
-            "REFUNDED",
-            "SUBMITTED"
-          ],
-          "nullable": false,
-          "plural": false,
-          "type": "CommerceOrderStateEnum"
-        },
-        "me.conversation.orderConnection.edges.node.orderHistory.stateReason": (v9/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.orderUpdateState": (v9/*: any*/),
         "me.id": (v7/*: any*/)
       }
     },
     "name": "OrderUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      orderConnection(first: 10, participantType: BUYER) {\n        edges {\n          node {\n            __typename\n            orderHistory {\n              __typename\n              ...OrderUpdate_event\n            }\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      orderConnection(first: 10, participantType: BUYER) {\n        edges {\n          node {\n            __typename\n            orderHistory {\n              __typename\n              ...OrderUpdate_event\n            }\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
