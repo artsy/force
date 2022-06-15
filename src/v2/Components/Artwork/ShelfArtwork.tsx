@@ -69,8 +69,8 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           extended={showExtended}
           hideSaleInfo={hideSaleInfo}
           maxWidth={artwork.image?.resized?.width}
-          contextModule={contextModule}
           isHovered={isHovered}
+          contextModule={contextModule}
           showSaveButton
         />
       )}

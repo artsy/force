@@ -43,7 +43,7 @@ const ConditionalLink: React.FC<
 const ArtistLine: React.FC<DetailsProps> = ({
   artwork: { cultural_maker, artists },
   includeLinks,
-  shouldShowHoverSaveButton,
+  showSaveButton,
 }) => {
   const tokens = useThemeConfig({
     v2: {
@@ -63,7 +63,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   }
 
   if (!artists?.length) {
-    if (shouldShowHoverSaveButton) {
+    if (showSaveButton) {
       return (
         <Text variant={tokens.variant} overflowEllipsis>
           Artist Unavailable
@@ -249,7 +249,9 @@ export const Details: React.FC<DetailsProps> = ({
         </Flex>
       )}
       <Flex flexDirection="row" justifyContent="space-between">
-        {!hideArtistName && <ArtistLine {...rest} />}
+        {!hideArtistName && (
+          <ArtistLine showSaveButton={showSaveButton} {...rest} />
+        )}
         {showSaveButton && (
           <NewSaveButtonFragmentContainer
             contextModule={contextModule!}
