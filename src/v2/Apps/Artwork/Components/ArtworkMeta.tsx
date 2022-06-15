@@ -1,8 +1,8 @@
 import { ArtworkMeta_artwork } from "v2/__generated__/ArtworkMeta_artwork.graphql"
-import { Component } from "react";
+import { Component } from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
+// import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 
 import { withSystemContext } from "v2/System"
@@ -156,7 +156,9 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         <SeoDataForArtwork artwork={artwork} />
         {this.renderImageMetaTags()}
         {this.renderGoogleAdSnippet()}
-        {this.renderZendeskScript()}
+
+        {/* FIXME: Uncomment this -- testing if this fixes issue */}
+        {/* {this.renderZendeskScript()} */}
       </>
     )
   }
