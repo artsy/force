@@ -53,11 +53,11 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
-      <MaterialsFilter />
-      <ArtistNationalityFilter />
-      <ArtworkLocationFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
+      <MaterialsFilter expanded />
+      <ArtistNationalityFilter expanded />
+      <ArtworkLocationFilter expanded />
+      <TimePeriodFilter expanded />
+      <ColorFilter expanded />
     </>
   )
 
