@@ -1,3 +1,3 @@
 export { ArtistInsightPillsFragmentContainer } from "./ArtistInsightPills"
 export { ArtistInsightBadgesFragmentContainer } from "./ArtistInsightBadges"
-export { ArtistInsightAchievements } from "./ArtistInsightAchievements"
+export { ArtistInsightAchievementsFragmentContainer } from "./ArtistInsightAchievements"

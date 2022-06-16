@@ -17,7 +17,8 @@ import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighli
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { getENV } from "v2/Utils/getENV"
-import { ArtistInsightBadgesFragmentContainer } from "v2/Components/ArtistInsights/ArtistInsightBadges"
+import { ArtistInsightBadgesFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
+import { ArtistInsightAchievementsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -35,10 +36,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
     <GridColumns gridRowGap={4}>
       <Column span={6}>
         <Join separator={<Spacer mt={4} />}>
-          {/* <SelectedCareerAchievementsFragmentContainer
-            artist={artist}
-            onlyCareerHighlights
-          /> */}
+          <ArtistInsightAchievementsFragmentContainer artist={artist} />
 
           {showCredit && text && (
             <Box>
@@ -59,16 +57,6 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
       <Column span={6}>
         <ArtistInsightBadgesFragmentContainer artist={artist} />
       </Column>
-
-      {/* {hasCategories && (
-        <Column span={4}>
-          <Text variant="sm-display" mb={2}>
-            Related categories
-          </Text>
-
-          <ArtistGenesFragmentContainer artist={artist} />
-        </Column>
-      )} */}
     </GridColumns>
   )
 }
@@ -80,6 +68,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
       fragment ArtistCareerHighlights_artist on Artist {
         ...ArtistGenes_artist
         ...ArtistInsightBadges_artist
+        ...ArtistInsightAchievements_artist
         biographyBlurb(format: HTML, partnerBio: false) {
           partner {
             profile {

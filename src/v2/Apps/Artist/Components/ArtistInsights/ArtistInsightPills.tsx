@@ -57,8 +57,6 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
 
   const highAuctionResults = extractNodes(artist.auctionResultsConnection)[0]
 
-  console.log(blueChipRepresentation)
-
   return (
     <Flex flexDirection="row" flexWrap="wrap">
       {blueChipRepresentation?.length > 0 && (

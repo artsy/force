@@ -16,7 +16,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { ArtistInsightPillsFragmentContainer } from "v2/Components/ArtistInsightPills"
+import { ArtistInsightPillsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
