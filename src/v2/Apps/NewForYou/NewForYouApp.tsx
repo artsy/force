@@ -20,14 +20,16 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
       <Text variant="xl" mt={4}>
         New Works For You
       </Text>
-      <Spacer mt={2} />
+      <Spacer mt={4} />
       {!isLoggedIn && (
-        <Message variant="warning">
-          Already have an account? <RouterLink to="/login">Log in</RouterLink>{" "}
-          to see your personalized recommendations.
-        </Message>
+        <>
+          <Message variant="warning">
+            Already have an account? <RouterLink to="/login">Log in</RouterLink>{" "}
+            to see your personalized recommendations.
+          </Message>
+          <Spacer mt={4} />
+        </>
       )}
-      <Spacer mt={2} />
       {viewer && <NewForYouArtworksGridFragmentContainer viewer={viewer} />}
     </>
   )
