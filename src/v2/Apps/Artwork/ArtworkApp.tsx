@@ -8,7 +8,6 @@ import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/Artwo
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
-import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -180,10 +179,6 @@ export class ArtworkApp extends React.Component<Props> {
         <Spacer mt={6} />
 
         <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
-
-        <Spacer mt={6} />
-
-        <OtherWorksQueryRenderer slug={artwork.slug} />
       </>
     )
   }
