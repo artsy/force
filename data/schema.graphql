@@ -2336,8 +2336,11 @@ union ArtworkMutationType =
 union ArtworkOrEditionSetType = Artwork | EditionSet
 
 type ArtworkPriceInsights {
+  annualLotsSold: Int
+  annualValueSoldCents: FormattedNumber
   artistId: String
   demandRank: Float
+  lastAuctionResultDate: String
   medium: String
 }
 
@@ -10032,6 +10035,9 @@ type Me implements Node {
     page: Int
     size: Int
     sort: MyCollectionArtworkSorts
+
+    # Sort by most recent price insight updates and filter out artworks without insights.
+    sortByLastAuctionResultDate: Boolean = false
   ): MyCollectionConnection
 
   # Info about the current user's my-collection
