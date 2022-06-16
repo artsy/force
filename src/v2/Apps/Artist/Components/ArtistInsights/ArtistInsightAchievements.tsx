@@ -53,6 +53,8 @@ export const ArtistInsightAchievementsFragmentContainer = createFragmentContaine
           type
           label
           entities
+          kind
+          description
         }
         auctionResultsConnection(
           recordsTrusted: true
