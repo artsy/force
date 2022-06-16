@@ -16,7 +16,7 @@ describe("order utils", () => {
     })
 
     describe("credit card", () => {
-      it("returns false if payment method is wire transfer", () => {
+      it("returns true", () => {
         expect(isPaymentValid({ __typename: "CreditCard", id: "id" })).toEqual(
           true
         )
