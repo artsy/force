@@ -4,10 +4,10 @@ import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "v2/Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
-import { Payment_order } from "v2/__generated__/Payment_order.graphql"
+import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_order.graphql"
 
 interface Props {
-  order: Payment_order
+  order: BankAccountPicker_order
 }
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))

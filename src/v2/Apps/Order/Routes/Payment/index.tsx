@@ -296,6 +296,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment Payment_me on Me {
         ...PaymentPicker_me
+        ...BankAccountPicker_me
       }
     `,
     order: graphql`
@@ -316,6 +317,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         }
         ...Payment_validation @relay(mask: false)
         ...PaymentPicker_order
+        ...BankAccountPicker_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
       }

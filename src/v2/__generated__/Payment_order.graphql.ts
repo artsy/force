@@ -36,7 +36,7 @@ export type Payment_order = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order" | "BankAccountPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
     readonly " $refType": "Payment_order";
 };
 export type Payment_order$data = Payment_order;
@@ -214,6 +214,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "BankAccountPicker_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
     },
     {
@@ -226,5 +231,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '954c89019e650b8bed2b7dce460962e5';
+(node as any).hash = '2f297eae00ed23d9059ba18e10f2c026';
 export default node;
