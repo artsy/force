@@ -1,4 +1,4 @@
-import { Column, GridColumns, Spacer } from "@artsy/palette"
+import { Column, GridColumns } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
@@ -8,7 +8,6 @@ import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/Artwo
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
-import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -175,10 +174,6 @@ export class ArtworkApp extends React.Component<Props> {
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
           </Column>
         </GridColumns>
-
-        <Spacer mt={6} />
-
-        <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
       </>
     )
   }
