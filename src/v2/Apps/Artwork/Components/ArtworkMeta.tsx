@@ -1,14 +1,12 @@
 import { ArtworkMeta_artwork } from "v2/__generated__/ArtworkMeta_artwork.graphql"
-import { Component } from "react";
+import { Component } from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
-
 import { withSystemContext } from "v2/System"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
-import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
-import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
@@ -16,19 +14,6 @@ interface ArtworkMetaProps {
 }
 
 export class ArtworkMeta extends Component<ArtworkMetaProps> {
-  componentDidMount() {
-    // zEmbed represents the Zendesk object
-    if (window.zEmbed) {
-      window.zEmbed.show()
-    }
-  }
-
-  componentWillUnmount() {
-    if (window.zEmbed) {
-      window.zEmbed.hide()
-    }
-  }
-
   renderImageMetaTags() {
     const { artwork } = this.props
     const { metaImage, isShareable } = artwork
@@ -101,36 +86,6 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     return isInquireable && !isAcquireable && !isOfferable
   }
 
-  renderZendeskScript() {
-    if (this.isInquiryArtwork) {
-      return
-    }
-    if (typeof window !== "undefined" && window.zEmbed) {
-      return
-    }
-
-    const listPrice = this.props.artwork.listPrice
-    const price =
-      listPrice?.__typename === "Money"
-        ? listPrice
-        : listPrice?.__typename === "PriceRange"
-        ? listPrice.maxPrice
-        : null
-
-    if (
-      !price ||
-      !isExceededZendeskThreshold(price.major, price.currencyCode)
-    ) {
-      return
-    }
-
-    const zdKey = this.props.artwork.isInAuction
-      ? sd.AUCTION_ZENDESK_KEY
-      : sd.ZENDESK_KEY
-
-    return <ZendeskWrapper zdKey={zdKey} />
-  }
-
   render() {
     const { artwork } = this.props
     const imageURL = get(artwork, a => a.metaImage?.resized?.url)
@@ -156,7 +111,6 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         <SeoDataForArtwork artwork={artwork} />
         {this.renderImageMetaTags()}
         {this.renderGoogleAdSnippet()}
-        {this.renderZendeskScript()}
       </>
     )
   }
