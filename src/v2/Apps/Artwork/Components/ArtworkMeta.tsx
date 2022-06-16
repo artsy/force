@@ -41,24 +41,24 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   }
 
   renderGoogleAdSnippet() {
-    const { artwork, googleAdId: fromPropsGoogleAdId } = this.props
-    const { GOOGLE_ADWORDS_ID: fromSharifyGoogleAdId } = sd
-    const { isInAuction, isAcquireable, internalID } = artwork
-    if (!isInAuction && !isAcquireable) return
+    // const { artwork, googleAdId: fromPropsGoogleAdId } = this.props
+    // const { GOOGLE_ADWORDS_ID: fromSharifyGoogleAdId } = sd
+    // const { isInAuction, isAcquireable, internalID } = artwork
+    // if (!isInAuction && !isAcquireable) return
 
-    // TODO: Investigate always being able to select from sharify.
-    const googleAdId = fromSharifyGoogleAdId || fromPropsGoogleAdId
-    if (!googleAdId) return
+    // // TODO: Investigate always being able to select from sharify.
+    // const googleAdId = fromSharifyGoogleAdId || fromPropsGoogleAdId
+    // if (!googleAdId) return
 
-    const script = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', "${googleAdId}");
-      gtag('event', 'page_view', {
-        'send_to': "${googleAdId}",
-        'dynx_itemid': "${internalID}"
-      });`
+    // const script = `
+    //   window.dataLayer = window.dataLayer || [];
+    //   function gtag(){dataLayer.push(arguments);}
+    //   gtag('js', new Date());
+    //   gtag('config', "${googleAdId}");
+    //   gtag('event', 'page_view', {
+    //     'send_to': "${googleAdId}",
+    //     'dynx_itemid': "${internalID}"
+    //   });`
 
     // The below might be a useful guard if scripts start to be evaluated twice.
     // const isServer = typeof window === "undefined"
@@ -66,7 +66,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
     return (
       <>
-        <Meta
+        {/* <Meta
           tag="script"
           type="text/javascript"
           async
@@ -76,7 +76,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
           tag="script"
           type="text/javascript"
           dangerouslySetInnerHTML={{ __html: script }}
-        />
+        /> */}
       </>
     )
   }
