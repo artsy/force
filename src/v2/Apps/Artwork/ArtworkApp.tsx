@@ -7,7 +7,6 @@ import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
-import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
@@ -185,14 +184,6 @@ export class ArtworkApp extends React.Component<Props> {
         <Spacer mt={6} />
 
         <OtherWorksQueryRenderer slug={artwork.slug} />
-
-        {artwork.artist && (
-          <>
-            <Spacer mt={6} />
-
-            <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
-          </>
-        )}
       </>
     )
   }
