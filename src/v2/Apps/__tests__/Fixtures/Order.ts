@@ -330,6 +330,7 @@ export const UntouchedOrder = {
   taxTotal: null,
   taxTotalCents: null,
   totalListPriceCents: 1200000,
+  paymentMethodDetails: null,
 } as const
 
 export const UntouchedBuyOrder = {

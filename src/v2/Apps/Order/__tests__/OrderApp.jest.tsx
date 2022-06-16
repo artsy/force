@@ -31,7 +31,7 @@ jest.mock(
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../Components/__mocks__/BankDebitProvider")
+    return jest.requireActual("../Components/__mocks__/BankDebitProvider")
   }
 )
 
@@ -217,7 +217,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        creditCard: null,
+        paymentMethodDetails: null,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },

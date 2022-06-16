@@ -32,6 +32,7 @@ import { SetPayment } from "../../Components/SetPayment"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
@@ -67,7 +68,7 @@ export const PaymentRoute: FC<Props> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
-  >(order.paymentMethod || "CREDIT_CARD")
+  >(getInitialPaymentMethodValue(order))
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -174,7 +175,7 @@ export const PaymentRoute: FC<Props> = props => {
               ... on CommerceOrderWithMutationSuccess {
                 order {
                   id
-                  paymentMethod
+                  ...Payment_validation
                   creditCard {
                     internalID
                     name
@@ -271,6 +272,24 @@ export const PaymentRoute: FC<Props> = props => {
   )
 }
 
+graphql`
+  fragment Payment_validation on CommerceOrder {
+    paymentMethod
+    paymentMethodDetails {
+      __typename
+      ... on CreditCard {
+        id
+      }
+      ... on BankAccount {
+        id
+      }
+      ... on WireTransfer {
+        isManualPayment
+      }
+    }
+  }
+`
+
 export const PaymentFragmentContainer = createFragmentContainer(
   injectCommitMutation(injectDialog(PaymentRoute)),
   {
@@ -285,7 +304,6 @@ export const PaymentFragmentContainer = createFragmentContainer(
         internalID
         mode
         currencyCode
-        paymentMethod
         buyerTotal(precision: 2)
         lineItems {
           edges {
@@ -296,6 +314,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...Payment_validation @relay(mask: false)
         ...PaymentPicker_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
