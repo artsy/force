@@ -5,7 +5,6 @@ import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
-import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { withSystemContext } from "v2/System"
@@ -166,9 +165,7 @@ export class ArtworkApp extends React.Component<Props> {
         <ArtworkBannerFragmentContainer artwork={artwork} />
 
         <GridColumns>
-          <Column span={8}>
-            <ArtworkImageBrowserFragmentContainer artwork={artwork} />
-          </Column>
+          <Column span={8}>image</Column>
 
           <Column span={4} pt={[0, 2]}>
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
