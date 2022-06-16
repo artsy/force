@@ -76,8 +76,7 @@ describe("ConversationMessages", () => {
                   __typename: "CommerceOrderStateChangedEvent",
                   internalID: "7adde1e2-bdd4-4360-9484-989d6dde",
                   createdAt: Date.now().toString(),
-                  state: "APPROVED",
-                  stateReason: null,
+                  orderUpdateState: "offer_approved",
                   offer: {
                     amount: "£40,000",
                     fromParticipant: "SELLER",

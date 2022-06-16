@@ -55,16 +55,20 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
       return null
     }
   } else if (event.__typename === "CommerceOrderStateChangedEvent") {
-    const { state, stateReason } = event
-    if (state === "APPROVED") {
+    const { orderUpdateState } = event
+    if (orderUpdateState === "offer_approved") {
       color = "green100"
       message = `Offer Accepted`
-    } else if (state === "CANCELED" && stateReason?.includes("_rejected")) {
+    } else if (orderUpdateState === "offer_rejected") {
       color = "red100"
       message = `Offer Declined`
-    } else if (state === "CANCELED" && stateReason?.includes("_lapsed")) {
+    } else if (orderUpdateState === "offer_lapsed") {
       color = "black60"
       message = `Offer Expired`
+    } else if (orderUpdateState === "buy_submitted") {
+      color = "black100"
+      message = `You purchased this artwork`
+      action = { label: "See details", onClick: () => setShowDetails(true) }
     } else {
       return null
     }
@@ -113,8 +117,7 @@ export const OrderUpdateFragmentContainer = createFragmentContainer(
         __typename
         ... on CommerceOrderStateChangedEvent {
           createdAt
-          stateReason
-          state
+          orderUpdateState
         }
         ... on CommerceOfferSubmittedEvent {
           createdAt

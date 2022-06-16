@@ -98,8 +98,7 @@ fragment OrderUpdate_event on CommerceOrderEventUnion {
   __typename
   ... on CommerceOrderStateChangedEvent {
     createdAt
-    stateReason
-    state
+    orderUpdateState
   }
   ... on CommerceOfferSubmittedEvent {
     createdAt
@@ -442,7 +441,7 @@ return {
                                     "alias": null,
                                     "args": null,
                                     "kind": "ScalarField",
-                                    "name": "stateReason",
+                                    "name": "orderUpdateState",
                                     "storageKey": null
                                   },
                                   {
@@ -450,6 +449,13 @@ return {
                                     "args": null,
                                     "kind": "ScalarField",
                                     "name": "state",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "stateReason",
                                     "storageKey": null
                                   }
                                 ],
@@ -535,7 +541,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9c8544ae85f736c389e6287345c77693",
+    "cacheID": "8ccc5be4e35475e090f0f96ecab7bf13",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -647,6 +653,7 @@ return {
         },
         "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v10/*: any*/),
         "me.conversation.orderConnection.edges.node.orderHistory.offer.respondsTo.id": (v6/*: any*/),
+        "me.conversation.orderConnection.edges.node.orderHistory.orderUpdateState": (v8/*: any*/),
         "me.conversation.orderConnection.edges.node.orderHistory.state": {
           "enumValues": [
             "ABANDONED",
@@ -668,7 +675,7 @@ return {
     },
     "name": "ConversationMessages_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationMessages_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      messagesConnection(first: 10) {\n        ...ConversationMessages_messages\n      }\n      orderConnection(first: 10) {\n        ...ConversationMessages_events\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationMessages_Test_Query {\n  me {\n    conversation(id: \"1234\") {\n      messagesConnection(first: 10) {\n        ...ConversationMessages_messages\n      }\n      orderConnection(first: 10) {\n        ...ConversationMessages_events\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {\n  edges {\n    node {\n      __typename\n      orderHistory {\n        ...OrderUpdate_event\n        __typename\n        ... on CommerceOrderStateChangedEvent {\n          state\n          stateReason\n          createdAt\n        }\n        ... on CommerceOfferSubmittedEvent {\n          createdAt\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      __typename\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -195,7 +195,7 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOrderStateChangedEvent",
-                    state: "APPROVED",
+                    orderUpdateState: "offer_approved",
                   },
                 ],
               },
@@ -217,8 +217,7 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOrderStateChangedEvent",
-                    state: "CANCELED",
-                    stateReason: ["_rejected"],
+                    orderUpdateState: "offer_rejected",
                   },
                 ],
               },
@@ -240,8 +239,7 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOrderStateChangedEvent",
-                    state: "CANCELED",
-                    stateReason: ["_lapsed"],
+                    orderUpdateState: "offer_lapsed",
                   },
                 ],
               },
@@ -252,5 +250,27 @@ describe("testing different statuses", () => {
     })
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
+  })
+  it("render Purchase Submitted", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        orderConnection: {
+          edges: [
+            {
+              node: {
+                orderHistory: [
+                  {
+                    __typename: "CommerceOrderStateChangedEvent",
+                    orderUpdateState: "buy_submitted",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }),
+    })
+    expect(screen.getByText("You purchased this artwork.")).toBeInTheDocument()
+    expect(screen.queryByText("See details.")).toBeInTheDocument()
   })
 })
