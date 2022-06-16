@@ -1,9 +1,17 @@
+import { Column, GridColumns, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
+import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
+import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
+import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
+import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
+import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
+import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
+import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrderModal"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -13,7 +21,9 @@ import {
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
+import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
+import { CascadingEndTimesBanner } from "../Auction/Components/AuctionDetails/CascadingEndTimesBanner"
 import { WebsocketContextProvider } from "v2/System/WebsocketContext"
 
 export interface Props {
@@ -144,7 +154,52 @@ export class ArtworkApp extends React.Component<Props> {
 
     return (
       <>
-        <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+        <UseRecordArtworkView />
+        {artwork.sale?.cascadingEndTimeIntervalMinutes && (
+          <CascadingEndTimesBanner
+            cascadingEndTimeIntervalMinutes={
+              artwork.sale.cascadingEndTimeIntervalMinutes
+            }
+            extendedBiddingIntervalMinutes={
+              artwork.sale.extendedBiddingIntervalMinutes
+            }
+          />
+        )}
+        <ArtworkMetaFragmentContainer artwork={artwork} />
+
+        <ArtworkBannerFragmentContainer artwork={artwork} />
+
+        <GridColumns>
+          <Column span={8}>
+            <ArtworkImageBrowserFragmentContainer artwork={artwork} />
+          </Column>
+
+          <Column span={4} pt={[0, 2]}>
+            <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+          </Column>
+        </GridColumns>
+
+        <Spacer mt={6} />
+
+        <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
+
+        <Spacer mt={6} />
+
+        <OtherWorksQueryRenderer slug={artwork.slug} />
+
+        {artwork.artist && (
+          <>
+            <Spacer mt={6} />
+
+            <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
+          </>
+        )}
+
+        <Spacer mt={6} />
+
+        {this.shouldRenderSubmittedOrderModal() && (
+          <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
+        )}
       </>
     )
   }
