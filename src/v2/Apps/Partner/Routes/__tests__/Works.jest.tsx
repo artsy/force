@@ -99,15 +99,19 @@ describe("PartnerArtworks", () => {
       },
       {
         label: "Material",
+        expanded: true,
       },
       {
         label: "Artist Nationality or Ethnicity",
+        expanded: true,
       },
       {
         label: "Time Period",
+        expanded: true,
       },
       {
         label: "Color",
+        expanded: true,
       },
     ]
 

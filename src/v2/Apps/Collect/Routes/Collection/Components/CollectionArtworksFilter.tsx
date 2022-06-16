@@ -22,6 +22,7 @@ import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilt
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
@@ -46,12 +47,12 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       <PriceRangeFilter expanded />
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
-      <MaterialsFilter />
-      {!isArtistCollection && <ArtistNationalityFilter />}
-      <ArtworkLocationFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-      <PartnersFilter />
+      <MaterialsFilter expanded />
+      {!isArtistCollection && <ArtistNationalityFilter expanded />}
+      <ArtworkLocationFilter expanded />
+      <TimePeriodFilter expanded />
+      <ColorFilter expanded />
+      <PartnersFilter expanded />
     </>
   )
 
