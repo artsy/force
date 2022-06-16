@@ -11,6 +11,7 @@ import { orderRoutes_OrderQueryRawResponse } from "v2/__generated__/orderRoutes_
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
+  CreditCardPaymentDetails,
   OfferOrderWithShippingDetails,
   OfferWithTotals,
   UntouchedBuyOrder,
@@ -232,10 +233,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        creditCard: {
-          id: "",
-          internalID: "29390235",
-        },
+        ...CreditCardPaymentDetails,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
@@ -268,10 +266,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/status",
       mockResolver({
         ...UntouchedBuyOrder,
-        creditCard: {
-          id: "",
-          internalID: "29390235",
-        },
+        ...CreditCardPaymentDetails,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
