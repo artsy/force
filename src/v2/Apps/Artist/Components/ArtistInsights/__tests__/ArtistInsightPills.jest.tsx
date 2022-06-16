@@ -17,46 +17,6 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtistInsightPills", () => {
-  // beforeEach(() => {
-  //   artist = ({
-  //     insights: [
-  //       {
-  //         type: "ACTIVE_SECONDARY_MARKET",
-  //         label: "Active Secondary Market",
-  //         entities: [],
-  //       },
-  //     ],
-  //     auctionResultsConnection: {
-  //       edges: [
-  //         {
-  //           node: {
-  //             price_realized: {
-  //               display: "US$93.1m",
-  //             },
-  //             organization: "Christies",
-  //             sale_date: "2021",
-  //           },
-  //         },
-  //       ],
-  //     },
-  //     artistHighlights: {
-  //       partnersConnection: {
-  //         edges: [
-  //           {
-  //             node: {
-  //               categories: [
-  //                 {
-  //                   slug: "blue-chip",
-  //                 },
-  //               ],
-  //             },
-  //           },
-  //         ],
-  //       },
-  //     },
-  //   } as unknown) as ArtistInsightPills_artist
-  // })
-
   it("renders artist insight pills", () => {
     renderWithRelay({
       Artist: () => ({

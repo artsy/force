@@ -12,13 +12,12 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { getENV } from "v2/Utils/getENV"
-import { ArtistInsightBadgesFragmentContainer } from "v2/Components/ArtistInsightBadges"
+import { ArtistInsightBadgesFragmentContainer } from "v2/Components/ArtistInsights/ArtistInsightBadges"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -36,10 +35,10 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
     <GridColumns gridRowGap={4}>
       <Column span={6}>
         <Join separator={<Spacer mt={4} />}>
-          <SelectedCareerAchievementsFragmentContainer
+          {/* <SelectedCareerAchievementsFragmentContainer
             artist={artist}
             onlyCareerHighlights
-          />
+          /> */}
 
           {showCredit && text && (
             <Box>
@@ -79,7 +78,6 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCareerHighlights_artist on Artist {
-        ...SelectedCareerAchievements_artist
         ...ArtistGenes_artist
         ...ArtistInsightBadges_artist
         biographyBlurb(format: HTML, partnerBio: false) {
