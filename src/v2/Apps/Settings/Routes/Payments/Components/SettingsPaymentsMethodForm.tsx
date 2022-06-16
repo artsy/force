@@ -39,9 +39,9 @@ interface SettingsPaymentsMethodFormProps {
   onClose(): void
 }
 
-export const SettingsPaymentsMethodForm: FC<
-  SettingsPaymentsMethodFormProps
-> = ({ onClose }) => {
+export const SettingsPaymentsMethodForm: FC<SettingsPaymentsMethodFormProps> = ({
+  onClose,
+}) => {
   const { sendToast } = useToasts()
 
   const stripe = useStripe()
@@ -95,7 +95,7 @@ export const SettingsPaymentsMethodForm: FC<
 
           sendToast({
             variant: "success",
-            message: "Card added successfully.",
+            message: "Card added sucessfully.",
           })
 
           resetForm()

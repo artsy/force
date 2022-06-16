@@ -26,7 +26,6 @@ query SmsSecondFactorRefetchQuery {
 }
 
 fragment SmsSecondFactor_me on Me {
-  email
   hasSecondFactorEnabled
   smsSecondFactors: secondFactors(kinds: [sms]) {
     __typename
@@ -80,13 +79,6 @@ const node: ConcreteRequest = {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "email",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -154,12 +146,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "9550b3c56002c636c161cfadb608925a",
+    "cacheID": "c69fc0ea5dfcec9b9ca6d8e73e5aefb0",
     "id": null,
     "metadata": {},
     "name": "SmsSecondFactorRefetchQuery",
     "operationKind": "query",
-    "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query SmsSecondFactorRefetchQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 (node as any).hash = 'bb3f464bd834c3a55e0098e887384d50';

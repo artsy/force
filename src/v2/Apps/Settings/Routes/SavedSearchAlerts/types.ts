@@ -1,7 +1,7 @@
 export interface EditAlertEntity {
   id: string
   name: string
-  artistIds: string[]
+  artistId: string
 }
 
 export interface EditAlertFormBase {

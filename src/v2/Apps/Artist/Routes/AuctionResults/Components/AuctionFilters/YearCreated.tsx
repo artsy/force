@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import * as React from "react"
-import { Text, Checkbox, Clickable, Flex, Select, Spacer } from "@artsy/palette"
+import { Box, Checkbox, Flex, Select, Spacer } from "@artsy/palette"
+import { FilterResetLink } from "v2/Components/FilterResetLink"
 import createLogger from "v2/Utils/logger"
 import {
   useAuctionResultsFilterContext,
@@ -70,40 +71,30 @@ export const YearCreated: React.FC = () => {
             <Select
               title="Earliest"
               options={fullDateRange}
-              onSelect={year => {
+              onSelect={(year: string) => {
                 setFilter?.("createdAfterYear", parseInt(year))
               }}
               selected={`${createdAfterYear}`}
             />
             <Spacer mr={1} />
-
             <Select
               title="Latest"
               options={fullDateRange}
-              onSelect={year => {
+              onSelect={(year: string) => {
                 setFilter?.("createdBeforeYear", parseInt(year))
               }}
               selected={`${createdBeforeYear}`}
             />
           </Flex>
-
           {hasChanges && (
-            <Clickable
-              mt={0.5}
-              onClick={resetFilter}
-              textDecoration="underline"
-            >
-              <Text variant="xs" color="black60">
-                Reset
-              </Text>
-            </Clickable>
+            <Box my={0.5}>
+              <FilterResetLink onReset={resetFilter} hasChanges={hasChanges} />
+            </Box>
           )}
-
-          <Spacer mt={2} />
-
+          <Spacer mt={1} />
           <Checkbox
             selected={allowEmptyCreatedDates}
-            onSelect={allowEmpty => {
+            onSelect={(allowEmpty: boolean) => {
               setFilter?.("allowEmptyCreatedDates", allowEmpty)
             }}
           >

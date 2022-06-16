@@ -15,7 +15,7 @@ import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 
-import { AuthContextModule } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { NewSaveButtonFragmentContainer } from "./SaveButton"
 import { getSaleOrLotTimerInfo } from "v2/Utils/getSaleOrLotTimerInfo"
 import { useState } from "react"
@@ -28,8 +28,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
-  showSaveButton?: boolean
-  contextModule?: AuthContextModule
+  shouldShowHoverSaveButton?: boolean
 }
 
 const ConditionalLink: React.FC<
@@ -216,8 +215,7 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
-  showSaveButton,
-  contextModule,
+  shouldShowHoverSaveButton,
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()
@@ -241,9 +239,9 @@ export const Details: React.FC<DetailsProps> = ({
       )}
       <Flex flexDirection="row" justifyContent="space-between">
         {!hideArtistName && <ArtistLine {...rest} />}
-        {showSaveButton && (
+        {shouldShowHoverSaveButton && (
           <NewSaveButtonFragmentContainer
-            contextModule={contextModule!}
+            contextModule={ContextModule.artworkGrid}
             artwork={rest.artwork}
           />
         )}

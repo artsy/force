@@ -1,6 +1,7 @@
 import { match } from "path-to-regexp"
 
 const USER_REQUIRED_ROUTES = [
+  "/identity-verification(.*)",
   "/orders(.*)",
   "/user/conversations(.*)",
   "/settings/purchases(.*)",

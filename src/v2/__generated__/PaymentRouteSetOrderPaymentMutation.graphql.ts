@@ -5,10 +5,13 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "OTHER" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
+    bankAccountId?: string | null | undefined;
     clientMutationId?: string | null | undefined;
+    creditCardId?: string | null | undefined;
     id: string;
-    paymentMethod: CommercePaymentMethodEnum;
+    paymentMethod?: CommercePaymentMethodEnum | null | undefined;
     paymentMethodId?: string | null | undefined;
+    setupIntentId?: string | null | undefined;
 };
 export type PaymentRouteSetOrderPaymentMutationVariables = {
     input: CommerceSetPaymentInput;
@@ -18,7 +21,6 @@ export type PaymentRouteSetOrderPaymentMutationResponse = {
         readonly orderOrError: {
             readonly order?: {
                 readonly id: string;
-                readonly paymentMethod: CommercePaymentMethodEnum | null;
                 readonly creditCard: {
                     readonly internalID: string;
                     readonly name: string | null;
@@ -56,7 +58,6 @@ mutation PaymentRouteSetOrderPaymentMutation(
         order {
           __typename
           id
-          paymentMethod
           creditCard {
             internalID
             name
@@ -108,66 +109,59 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "paymentMethod",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "name",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "street1",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "street1",
+  "name": "street2",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "street2",
+  "name": "city",
   "storageKey": null
 },
 v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "city",
+  "name": "state",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "state",
-  "storageKey": null
-},
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "country",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": "postal_code",
   "args": null,
   "kind": "ScalarField",
   "name": "postalCode",
   "storageKey": null
 },
-v12 = {
+v11 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -206,7 +200,7 @@ v12 = {
   "type": "CommerceOrderWithMutationFailure",
   "abstractKey": null
 },
-v13 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -248,7 +242,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -257,14 +250,14 @@ return {
                         "name": "creditCard",
                         "plural": false,
                         "selections": [
+                          (v3/*: any*/),
                           (v4/*: any*/),
                           (v5/*: any*/),
                           (v6/*: any*/),
                           (v7/*: any*/),
                           (v8/*: any*/),
                           (v9/*: any*/),
-                          (v10/*: any*/),
-                          (v11/*: any*/)
+                          (v10/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -275,7 +268,7 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v12/*: any*/)
+              (v11/*: any*/)
             ],
             "storageKey": null
           }
@@ -308,7 +301,7 @@ return {
             "name": "orderOrError",
             "plural": false,
             "selections": [
-              (v13/*: any*/),
+              (v12/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -320,9 +313,8 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v13/*: any*/),
+                      (v12/*: any*/),
                       (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -331,6 +323,7 @@ return {
                         "name": "creditCard",
                         "plural": false,
                         "selections": [
+                          (v3/*: any*/),
                           (v4/*: any*/),
                           (v5/*: any*/),
                           (v6/*: any*/),
@@ -338,7 +331,6 @@ return {
                           (v8/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/),
-                          (v11/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -350,7 +342,7 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v12/*: any*/)
+              (v11/*: any*/)
             ],
             "storageKey": null
           }
@@ -360,14 +352,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1a005fc3ad764ec377e2ba1951e0493c",
+    "cacheID": "7fee53d0f619278501d5ea29d6d70bec",
     "id": null,
     "metadata": {},
     "name": "PaymentRouteSetOrderPaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation PaymentRouteSetOrderPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          paymentMethod\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation PaymentRouteSetOrderPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '303451c8107efadd38d5c3e6147b68a4';
+(node as any).hash = '9f6f0e6355061eef5365c03092fd6237';
 export default node;

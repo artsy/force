@@ -13,12 +13,12 @@ import {
   Clickable,
   Modal,
   Button,
-  useToasts,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { useErrorModal } from "../../Utils/useErrorModal"
 import { ArtworkDetails_submission } from "v2/__generated__/ArtworkDetails_submission.graphql"
 import {
   Location,
@@ -80,7 +80,7 @@ export interface ArtworkDetailsFormModel {
 }
 
 export const ArtworkDetailsForm: React.FC = () => {
-  const { sendToast } = useToasts()
+  const { openErrorModal } = useErrorModal()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
@@ -104,12 +104,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {
-      sendToast({
-        variant: "error",
-        message: "An error occurred",
-        description: "Please contact consign@artsymail.com",
-      })
-
+      openErrorModal()
       return
     }
 

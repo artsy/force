@@ -34,7 +34,7 @@ export type ArtistMetaCanonicalLink_artist = {
     } | null;
     readonly insights: ReadonlyArray<{
         readonly __typename: string;
-    }>;
+    } | null> | null;
     readonly " $refType": "ArtistMetaCanonicalLink_artist";
 };
 export type ArtistMetaCanonicalLink_artist$data = ArtistMetaCanonicalLink_artist;

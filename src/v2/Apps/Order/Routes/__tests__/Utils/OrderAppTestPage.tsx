@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-standalone-expect */
 import { BorderedRadio, Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
 import { ReactWrapper } from "enzyme"
@@ -13,6 +12,7 @@ import { ShippingArtaSummaryItemFragmentContainer } from "v2/Apps/Order/Componen
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
+import { ModalButton, ModalDialog } from "v2/Components/Modal/ModalDialog"
 import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 
 export class OrderAppTestPage extends RootTestPage {
@@ -63,7 +63,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   get modalDialog() {
-    return this.root.find('[data-testid="ModalDialog"]')
+    return expectOne(this.root.find(ModalDialog))
   }
 
   get submitButton() {
@@ -104,7 +104,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   async dismissModal() {
-    this.modalDialog.find("button").last().simulate("click")
+    this.modalDialog.find(ModalButton).last().simulate("click")
     await this.update()
   }
 
@@ -116,7 +116,8 @@ export class OrderAppTestPage extends RootTestPage {
   /*** COMMON ASSERTIONS ***/
 
   async expectNoModal() {
-    expect(this.modalDialog.length).toBe(0)
+    const modal = this.modalDialog.find(ModalButton)
+    expect(modal.length).toBe(0)
   }
 
   async expectAndDismissDefaultErrorDialog() {
@@ -131,17 +132,18 @@ export class OrderAppTestPage extends RootTestPage {
     message: string,
     buttonText?: string
   ) {
+    expect(this.modalDialog.props().show).toBe(true)
     expect(this.modalDialog.text()).toContain(title)
     expect(this.modalDialog.text()).toContain(message)
-
     if (buttonText) {
-      const button = this.modalDialog.find("button")
-      expect(button.last().text()).toMatch(buttonText)
+      const button = this.modalDialog.find(ModalButton)
+      expect(button.length).toBe(1)
+      expect(button.text()).toMatch(buttonText)
     }
 
     await this.dismissModal()
 
-    expect(this.modalDialog.length).toBe(0)
+    expect(this.modalDialog.props().show).toBe(false)
   }
 
   async setOfferAmount(amount: number) {

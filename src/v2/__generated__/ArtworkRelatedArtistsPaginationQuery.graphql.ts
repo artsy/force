@@ -33,6 +33,20 @@ query ArtworkRelatedArtistsPaginationQuery(
   }
 }
 
+fragment ArtistCard_artist on Artist {
+  name
+  slug
+  href
+  image {
+    cropped(width: 45, height: 45) {
+      src
+      srcSet
+    }
+  }
+  formatted_nationality_and_birthday: formattedNationalityAndBirthday
+  ...FollowArtistButton_artist
+}
+
 fragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {
   slug
   artist {
@@ -45,7 +59,7 @@ fragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {
         }
         edges {
           node {
-            ...EntityHeaderArtist_artist
+            ...ArtistCard_artist
             id
             __typename
           }
@@ -57,22 +71,14 @@ fragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {
   }
 }
 
-fragment EntityHeaderArtist_artist on Artist {
+fragment FollowArtistButton_artist on Artist {
+  id
   internalID
-  href
-  slug
   name
-  initials
-  formattedNationalityAndBirthday
+  slug
+  is_followed: isFollowed
   counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
+    follows
   }
 }
 */
@@ -269,59 +275,13 @@ return {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
-                                "name": "internalID",
-                                "storageKey": null
-                              },
-                              (v5/*: any*/),
-                              (v4/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
                                 "name": "name",
                                 "storageKey": null
                               },
+                              (v4/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "initials",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "formattedNationalityAndBirthday",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "ArtistCounts",
-                                "kind": "LinkedField",
-                                "name": "counts",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "artworks",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "forSaleArtworks",
-                                    "storageKey": null
-                                  }
-                                ],
-                                "storageKey": null
-                              },
-                              {
-                                "alias": "avatar",
                                 "args": null,
                                 "concreteType": "Image",
                                 "kind": "LinkedField",
@@ -367,7 +327,46 @@ return {
                                 ],
                                 "storageKey": null
                               },
+                              {
+                                "alias": "formatted_nationality_and_birthday",
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "formattedNationalityAndBirthday",
+                                "storageKey": null
+                              },
                               (v7/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "internalID",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": "is_followed",
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isFollowed",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "ArtistCounts",
+                                "kind": "LinkedField",
+                                "name": "counts",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "follows",
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": null
+                              },
                               {
                                 "alias": null,
                                 "args": null,
@@ -416,12 +415,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "90f73ecd491f6580e0197a29452d45a8",
+    "cacheID": "92873877821a15fed37145052cd1bc30",
     "id": null,
     "metadata": {},
     "name": "ArtworkRelatedArtistsPaginationQuery",
     "operationKind": "query",
-    "text": "query ArtworkRelatedArtistsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkRelatedArtists_artwork_1G22uz\n    id\n  }\n}\n\nfragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {\n  slug\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: $count, after: $cursor) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtworkRelatedArtistsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkRelatedArtists_artwork_1G22uz\n    id\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {\n  slug\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: $count, after: $cursor) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

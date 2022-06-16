@@ -1,4 +1,4 @@
-import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
+import { Button, Link, Modal, Text } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
@@ -9,6 +9,7 @@ import {
   useTracking,
 } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 
@@ -37,8 +38,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
 
   const [requesting, setRequesting] = useState(false)
   const [showRequestedModal, setShowRequestedModal] = useState(false)
-
-  const { sendToast } = useToasts()
+  const [showErrorModal, setShowErrorModal] = useState(false)
 
   const { me, artwork } = props
   const isLoggedIn = Boolean(me)
@@ -46,7 +46,8 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const requestConditionReport = () => {
     return new Promise<RequestConditionReportMutationResponse>(
       async (resolve, reject) => {
-        commitMutation<RequestConditionReportMutation>(relayEnvironment!, {
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        commitMutation<RequestConditionReportMutation>(relayEnvironment, {
           onCompleted: data => {
             resolve(data)
           },
@@ -65,7 +66,8 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
             }
           `,
           variables: {
-            input: { saleArtworkID: artwork.saleArtwork?.internalID! },
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            input: { saleArtworkID: artwork.saleArtwork.internalID },
           },
         })
       }
@@ -76,12 +78,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     logger.error(error)
 
     setRequesting(false)
-
-    sendToast({
-      variant: "error",
-      message:
-        "Something went wrong. Please try again or contact support@artsy.net.",
-    })
+    setShowErrorModal(true)
   }
 
   function trackRequestClick() {
@@ -126,66 +123,65 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
       })
   }
 
-  const handleClose = () => setShowRequestedModal(false)
+  const UnauthenticatedContent: React.FC = () => (
+    <Button
+      size="small"
+      variant="primaryGray"
+      onClick={handleLoginClick}
+      data-test="requestConditionReport"
+    >
+      Log in to request
+    </Button>
+  )
+
+  const AuthenticatedContent: React.FC = () => (
+    <Button
+      size="small"
+      variant="primaryGray"
+      onClick={handleRequestConditionReportClick}
+      loading={requesting}
+    >
+      Request condition report
+    </Button>
+  )
+
+  const RequestedConditionReportModal: React.FC = () => (
+    <Modal
+      title="Condition report requested"
+      onClose={() => {
+        setShowRequestedModal(false)
+      }}
+      show={showRequestedModal}
+    >
+      <Text variant="sm" mt={1} color="black100" textAlign="center">
+        We have received your request. The condition report will be sent to{" "}
+        {me && me.email}.
+      </Text>
+
+      <Text variant="sm" mt={2} textAlign="center" color="black100">
+        For questions, contact{" "}
+        <Link href="mailto:specialist@artsy.net">specialist@artsy.net</Link>.
+      </Text>
+
+      <Button mt={4} onClick={() => setShowRequestedModal(false)}>
+        OK
+      </Button>
+    </Modal>
+  )
 
   return (
     <>
-      {isLoggedIn ? (
-        <Button
-          size="small"
-          variant="primaryGray"
-          onClick={handleRequestConditionReportClick}
-          loading={requesting}
-        >
-          Request condition report
-        </Button>
-      ) : (
-        <Button
-          size="small"
-          variant="primaryGray"
-          onClick={handleLoginClick}
-          data-test="requestConditionReport"
-        >
-          Log in to request
-        </Button>
-      )}
+      {isLoggedIn ? <AuthenticatedContent /> : <UnauthenticatedContent />}
 
-      <RequestedConditionReportModal
-        show={showRequestedModal}
-        onClose={handleClose}
-        email={me?.email ?? "Unknown"}
+      <RequestedConditionReportModal />
+
+      <ErrorModal
+        show={showErrorModal}
+        onClose={() => {
+          setShowErrorModal(false)
+        }}
       />
     </>
-  )
-}
-
-const RequestedConditionReportModal: React.FC<{
-  onClose(): void
-  show: boolean
-  email: string
-}> = ({ onClose, show, email }) => {
-  if (!show) return null
-
-  return (
-    <ModalDialog
-      title="Condition report requested"
-      onClose={onClose}
-      footer={
-        <Button onClick={onClose} width="100%">
-          OK
-        </Button>
-      }
-    >
-      <Text variant="sm">
-        We have received your request. The condition report will be sent to{" "}
-        <strong>{email}</strong>.
-      </Text>
-
-      <Text variant="sm" mt={1}>
-        For questions, contact{" "}
-        <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
-      </Text>
-    </ModalDialog>
   )
 }
 

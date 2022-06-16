@@ -14,7 +14,7 @@ import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
-import { SavedSearchAlertEditForm_artistsConnection } from "v2/__generated__/SavedSearchAlertEditForm_artistsConnection.graphql"
+import { SavedSearchAlertEditForm_artist } from "v2/__generated__/SavedSearchAlertEditForm_artist.graphql"
 import { EditAlertEntity } from "../types"
 import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
@@ -41,7 +41,6 @@ import {
   LabelEntity,
 } from "v2/Components/SavedSearchAlert/Utils/convertLabelsToPills"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
-import { extractNodes } from "v2/Utils/extractNodes"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -55,7 +54,7 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 
 interface SavedSearchAlertEditFormProps {
   me: SavedSearchAlertEditForm_me
-  artistsConnection: SavedSearchAlertEditForm_artistsConnection
+  artist: SavedSearchAlertEditForm_artist
   artworksConnection?: SavedSearchAlertEditForm_artworksConnection | null
   editAlertEntity: EditAlertEntity
   shouldFetchLabelsFromMetaphysics?: boolean
@@ -251,25 +250,22 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
   const {
     artworksConnection,
-    artistsConnection,
+    artist,
     me,
     shouldFetchLabelsFromMetaphysics,
   } = props
   const { savedSearch } = me
   const aggregations = artworksConnection?.aggregations as Aggregations
   const criteria = getAllowedSearchCriteria(savedSearch as any)
-  const artists = extractNodes(artistsConnection)
-  const formattedArtists = artists.map(artist => {
-    return {
-      id: artist.internalID,
-      name: artist.name ?? "",
-      slug: artist.slug,
-    }
-  })
-
   const entity: SavedSearchEntity = {
-    placeholder: formattedArtists[0].name,
-    artists: formattedArtists,
+    placeholder: artist.name ?? "",
+    artists: [
+      {
+        id: artist.internalID,
+        name: artist.name ?? "",
+        slug: artist.slug ?? "",
+      },
+    ],
     owner: {
       type: OwnerType.savedSearch,
       id: savedSearch?.internalID!,
@@ -341,15 +337,11 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
         }
       }
     `,
-    artistsConnection: graphql`
-      fragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {
-        edges {
-          node {
-            internalID
-            name
-            slug
-          }
-        }
+    artist: graphql`
+      fragment SavedSearchAlertEditForm_artist on Artist {
+        internalID
+        name
+        slug
       }
     `,
     artworksConnection: graphql`
@@ -370,21 +362,19 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
 const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
   query SavedSearchAlertEditFormQuery(
     $id: ID!
-    $artistIds: [String!]
+    $artistId: String!
     $withAggregations: Boolean!
   ) {
     me {
       ...SavedSearchAlertEditForm_me
         @arguments(savedSearchId: $id, withAggregations: $withAggregations)
     }
-    # If we pass artist IDs using ids argument, we will get an empty array.
-    # For this reason we use slugs argument, in which ids can also be passed
-    artistsConnection(slugs: $artistIds) {
-      ...SavedSearchAlertEditForm_artistsConnection
+    artist(id: $artistId) {
+      ...SavedSearchAlertEditForm_artist
     }
     artworksConnection(
       first: 0
-      artistIDs: $artistIds
+      artistID: $artistId
       aggregations: [
         ARTIST
         LOCATION_CITY
@@ -413,7 +403,7 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
       query={SAVED_SEARCH_ALERT_EDIT_FORM_QUERY}
       variables={{
         id: editAlertEntity.id,
-        artistIds: editAlertEntity.artistIds,
+        artistId: editAlertEntity.artistId,
         withAggregations: !shouldFetchLabelsFromMetaphysics,
       }}
       placeholder={<SavedSearchAlertEditFormPlaceholder />}
@@ -424,15 +414,11 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           return null
         }
 
-        if (
-          shouldFetchLabelsFromMetaphysics &&
-          props?.artistsConnection &&
-          props.me
-        ) {
+        if (shouldFetchLabelsFromMetaphysics && props?.artist && props.me) {
           return (
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
-              artistsConnection={props.artistsConnection}
+              artist={props.artist!}
               editAlertEntity={editAlertEntity}
               artworksConnection={null}
               onDeleteClick={onDeleteClick}
@@ -442,11 +428,11 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           )
         }
 
-        if (props?.artistsConnection && props.artworksConnection && props.me) {
+        if (props?.artist && props.artworksConnection && props.me) {
           return (
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
-              artistsConnection={props.artistsConnection}
+              artist={props.artist!}
               artworksConnection={props.artworksConnection!}
               editAlertEntity={editAlertEntity}
               onDeleteClick={onDeleteClick}

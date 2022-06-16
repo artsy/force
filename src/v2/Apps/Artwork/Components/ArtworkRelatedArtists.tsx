@@ -14,6 +14,7 @@ import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedAr
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { track, useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
+import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
 import { useState } from "react"
 import * as React from "react"
 import {
@@ -26,7 +27,6 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ArtworkRelatedArtistsQuery } from "v2/__generated__/ArtworkRelatedArtistsQuery.graphql"
 import { useSystemContext } from "v2/System"
-import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
@@ -35,7 +35,7 @@ export interface ArtworkRelatedArtistsProps {
   relay: RelayPaginationProp
 }
 
-const PAGE_SIZE = 6
+const PAGE_SIZE = 4
 
 export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track()(
   props => {
@@ -79,9 +79,10 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
         <GridColumns>
           {artists.map((node, index) => {
             return (
-              <Column key={index} span={[12, 6, 4, 4]}>
-                <EntityHeaderArtistFragmentContainer
+              <Column key={index} span={[12, 6, 3, 3]}>
+                <ArtistCard
                   artist={node}
+                  contextModule={ContextModule.relatedArtistsRail}
                   onClick={() => {
                     trackEvent({
                       context_module: Schema.ContextModule.RelatedArtists,
@@ -124,7 +125,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
     artwork: graphql`
       fragment ArtworkRelatedArtists_artwork on Artwork
         @argumentDefinitions(
-          count: { type: "Int", defaultValue: 6 }
+          count: { type: "Int", defaultValue: 4 }
           cursor: { type: "String", defaultValue: "" }
         ) {
         slug
@@ -138,7 +139,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
               }
               edges {
                 node {
-                  ...EntityHeaderArtist_artist
+                  ...ArtistCard_artist
                 }
               }
             }
@@ -150,7 +151,8 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
   {
     direction: "forward",
     getConnectionFromProps(props) {
-      return props.artwork.artist?.related?.artistsConnection
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      return props.artwork.artist.related.artistsConnection
     },
     getFragmentVariables(prevVars, count) {
       return {

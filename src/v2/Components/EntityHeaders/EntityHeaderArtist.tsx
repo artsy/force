@@ -12,7 +12,6 @@ export interface EntityHeaderArtistProps extends BoxProps {
   displayCounts?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
-  onClick?(): void
 }
 
 const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
@@ -21,7 +20,6 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
   displayCounts = false,
   displayLink = true,
   FollowButton,
-  onClick,
   ...rest
 }) => {
   const initials = artist.initials ?? artist.name?.[0]
@@ -38,7 +36,6 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
         alignItems="center"
         minWidth={0}
         flex={1}
-        onClick={onClick}
       >
         {displayAvatar && (image || initials) && (
           <Avatar size="xs" mr={1} initials={initials} lazyLoad {...image} />

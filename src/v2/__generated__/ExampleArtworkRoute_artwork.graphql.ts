@@ -17,7 +17,7 @@ export type ExampleArtworkRoute_artwork = {
             readonly artistsConnection: {
                 readonly edges: ReadonlyArray<{
                     readonly node: {
-                        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
+                        readonly " $fragmentRefs": FragmentRefs<"ArtistCard_artist">;
                     } | null;
                 } | null> | null;
             } | null;
@@ -157,7 +157,7 @@ const node: ReaderFragment = {
                         {
                           "args": null,
                           "kind": "FragmentSpread",
-                          "name": "EntityHeaderArtist_artist"
+                          "name": "ArtistCard_artist"
                         }
                       ],
                       "storageKey": null
@@ -210,5 +210,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '48e949f2d2071b986181176ba9fde9d6';
+(node as any).hash = 'f1b4e3070df07103039646cd7f21bb77';
 export default node;

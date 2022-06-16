@@ -1,17 +1,36 @@
-import { BorderBox, Text, THEME_V3 } from "@artsy/palette"
-import { borderMixin } from "v2/Components/Mixins"
+import {
+  BorderBox,
+  useThemeConfig,
+  Text,
+  getThemeConfig,
+  THEME_V3,
+  THEME_V2,
+  THEME,
+  TextVariant,
+} from "@artsy/palette"
+import { borderMixin, v3BorderMixin } from "v2/Components/Mixins"
 import * as React from "react"
 import type {
   StripeCardNumberElementChangeEvent,
   StripeError,
 } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { useState } from "react"
+import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 
-export const StyledCardElement = styled(CardElement)`
+export const StyledCardElement = styled(CardElement)<{ isV3?: boolean }>`
+  ${props => {
+    const states = getThemeConfig(props, {
+      v2: { padding: "9px 10px" },
+      v3: { padding: "12px 10px" },
+    })
+
+    return css`
+      padding: ${states.padding};
+    `
+  }}
   width: 100%;
-  padding: 12px 10px;
 `
 
 // Re-uses old input border behavior
@@ -20,7 +39,16 @@ export interface BorderProps {
 }
 
 const StyledBorderBox = styled(BorderBox)<BorderProps>`
-  ${borderMixin}
+  ${props => {
+    const states = getThemeConfig(props, {
+      v2: { marginBottom: "0px", mixin: borderMixin },
+      v3: { marginBottom: "20px", mixin: v3BorderMixin },
+    })
+
+    return css`
+      ${states.mixin}
+    `
+  }}
   padding: 0;
 `
 
@@ -34,6 +62,25 @@ interface CreditCardInputProps {
  */
 export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
   const [focused, setFocused] = useState(false)
+
+  const styles = useThemeConfig({
+    v2: {
+      fontSize: THEME_V2.fontSizes.size3,
+      fieldHeight: THEME.space[4],
+      fontColor: THEME_V3.colors.black30,
+      fontFamily: fontFamily.sans.regular as string,
+      lineHeight: THEME.space[2],
+      variant: "text" as TextVariant,
+    },
+    v3: {
+      fontSize: THEME_V3.textVariants.sm.fontSize,
+      fieldHeight: THEME.space[5],
+      fontColor: THEME_V3.colors.black60,
+      fontFamily: THEME_V3.fonts.sans,
+      lineHeight: THEME_V3.textVariants.sm.lineHeight,
+      variant: "sm" as TextVariant,
+    },
+  })
 
   const onChange = (response: StripeCardNumberElementChangeEvent) => {
     if (props.onChange) {
@@ -49,7 +96,7 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
         className={`${focused ? "focused" : ""}`}
         hasError={!!message}
         p={1}
-        height={THEME_V3.space[5]}
+        height={styles.fieldHeight}
       >
         <StyledCardElement
           options={{
@@ -57,10 +104,10 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
             style: {
               base: {
                 "::placeholder": { color: THEME_V3.colors.black60 },
-                fontSize: THEME_V3.textVariants.sm.fontSize,
-                fontFamily: THEME_V3.fonts.sans,
+                fontSize: styles.fontSize,
+                fontFamily: styles.fontFamily,
                 fontSmoothing: "antialiased",
-                lineHeight: THEME_V3.textVariants.sm.lineHeight,
+                lineHeight: styles.lineHeight,
               },
             },
           }}
@@ -69,9 +116,8 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
           onBlur={() => setFocused(false)}
         />
       </StyledBorderBox>
-
       {message && (
-        <Text mt={0.5} variant="xs" color="red100">
+        <Text pt={1} variant={styles.variant} color="red100">
           {message}
         </Text>
       )}

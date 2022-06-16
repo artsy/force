@@ -1,5 +1,6 @@
 import { mount } from "enzyme"
 import { Image, Modal, ModalContent } from "../Modal"
+import { ModalCta } from "../ModalCta"
 import { ModalHeader } from "../ModalHeader"
 
 describe("Modal", () => {
@@ -38,6 +39,17 @@ describe("Modal", () => {
 
       expect(component.find(ModalHeader)).toHaveLength(1)
       expect(component.find("Icon")).toHaveLength(2)
+    })
+
+    it("Renders ModalCta if props.cta", () => {
+      props.cta = {
+        text: "Learn More",
+        onClick: jest.fn(),
+      }
+      const component = getWrapper(props)
+
+      expect(component.find(ModalCta)).toHaveLength(1)
+      expect(component.html()).toMatch("Learn More")
     })
 
     it("Renders Image if props.image", () => {

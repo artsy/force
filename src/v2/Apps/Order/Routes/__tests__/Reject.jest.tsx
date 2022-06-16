@@ -15,22 +15,6 @@ jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children, onClose, footer }) => {
-      return (
-        <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
-          {title}
-          {children}
-          {footer}
-        </div>
-      )
-    },
-  }
-})
-
 jest.unmock("react-relay")
 const realSetInterval = global.setInterval
 

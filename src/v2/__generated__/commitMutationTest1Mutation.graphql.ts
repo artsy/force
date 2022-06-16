@@ -5,10 +5,13 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "OTHER" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
+    bankAccountId?: string | null | undefined;
     clientMutationId?: string | null | undefined;
+    creditCardId?: string | null | undefined;
     id: string;
-    paymentMethod: CommercePaymentMethodEnum;
+    paymentMethod?: CommercePaymentMethodEnum | null | undefined;
     paymentMethodId?: string | null | undefined;
+    setupIntentId?: string | null | undefined;
 };
 export type commitMutationTest1MutationVariables = {
     input: CommerceSetPaymentInput;

@@ -174,7 +174,6 @@ export const PaymentRoute: FC<Props> = props => {
               ... on CommerceOrderWithMutationSuccess {
                 order {
                   id
-                  paymentMethod
                   creditCard {
                     internalID
                     name

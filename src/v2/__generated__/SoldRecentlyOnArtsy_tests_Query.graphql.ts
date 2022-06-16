@@ -34,6 +34,34 @@ fragment Badge_artwork on Artwork {
   }
 }
 
+fragment Contact_artwork on Artwork {
+  href
+  is_inquireable: isInquireable
+  sale {
+    is_auction: isAuction
+    is_live_open: isLiveOpen
+    is_open: isOpen
+    is_closed: isClosed
+    id
+  }
+  partner(shallow: true) {
+    type
+    id
+  }
+  sale_artwork: saleArtwork {
+    highest_bid: highestBid {
+      display
+    }
+    opening_bid: openingBid {
+      display
+    }
+    counts {
+      bidder_positions: bidderPositions
+    }
+    id
+  }
+}
+
 fragment Details_artwork on Artwork {
   href
   title
@@ -97,6 +125,7 @@ fragment HoverDetails_artwork on Artwork {
 
 fragment Metadata_artwork on Artwork {
   ...Details_artwork
+  ...Contact_artwork
   href
 }
 
@@ -130,6 +159,7 @@ fragment ShelfArtwork_artwork_20bRBg on Artwork {
   imageTitle
   title
   href
+  is_saved: isSaved
   ...Metadata_artwork
   ...SaveButton_artwork
   ...Badge_artwork
@@ -390,6 +420,13 @@ return {
                       },
                       (v1/*: any*/),
                       {
+                        "alias": "is_saved",
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isSaved",
+                        "storageKey": null
+                      },
+                      {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
@@ -441,7 +478,14 @@ return {
                         "selections": [
                           (v4/*: any*/),
                           (v1/*: any*/),
-                          (v3/*: any*/)
+                          (v3/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "type",
+                            "storageKey": null
+                          }
                         ],
                         "storageKey": "partner(shallow:true)"
                       },
@@ -490,6 +534,20 @@ return {
                             "storageKey": null
                           },
                           (v3/*: any*/),
+                          {
+                            "alias": "is_live_open",
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isLiveOpen",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": "is_open",
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isOpen",
+                            "storageKey": null
+                          },
                           {
                             "alias": "is_preview",
                             "args": null,
@@ -602,13 +660,6 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "is_saved",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isSaved",
-                        "storageKey": null
-                      },
-                      {
                         "alias": null,
                         "args": null,
                         "concreteType": "AttributionClass",
@@ -637,6 +688,13 @@ return {
                             "storageKey": null
                           }
                         ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "is_inquireable",
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isInquireable",
                         "storageKey": null
                       },
                       {
@@ -691,7 +749,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "715acd6a577e6a68ccde6c1b95c631ae",
+    "cacheID": "8cd32e0df48df1a4394f7530bfe0abab",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -767,6 +825,7 @@ return {
         "recentlySoldArtworks.edges.node.artwork.imageTitle": (v8/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.internalID": (v9/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.is_biddable": (v12/*: any*/),
+        "recentlySoldArtworks.edges.node.artwork.is_inquireable": (v12/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.is_saved": (v12/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.mediumType": {
           "enumValues": null,
@@ -791,6 +850,7 @@ return {
         "recentlySoldArtworks.edges.node.artwork.partner.href": (v8/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.partner.id": (v9/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.partner.name": (v8/*: any*/),
+        "recentlySoldArtworks.edges.node.artwork.partner.type": (v8/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.sale": {
           "enumValues": null,
           "nullable": true,
@@ -804,6 +864,8 @@ return {
         "recentlySoldArtworks.edges.node.artwork.sale.id": (v9/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.sale.is_auction": (v12/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.sale.is_closed": (v12/*: any*/),
+        "recentlySoldArtworks.edges.node.artwork.sale.is_live_open": (v12/*: any*/),
+        "recentlySoldArtworks.edges.node.artwork.sale.is_open": (v12/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.sale.is_preview": (v12/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.sale.startAt": (v8/*: any*/),
         "recentlySoldArtworks.edges.node.artwork.sale_artwork": {
@@ -857,7 +919,7 @@ return {
     },
     "name": "SoldRecentlyOnArtsy_tests_Query",
     "operationKind": "query",
-    "text": "query SoldRecentlyOnArtsy_tests_Query {\n  recentlySoldArtworks {\n    ...SoldRecentlyOnArtsy_recentlySoldArtworks\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment SoldRecentlyOnArtsy_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...ShelfArtwork_artwork_20bRBg\n        slug\n        href\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n    }\n  }\n}\n"
+    "text": "query SoldRecentlyOnArtsy_tests_Query {\n  recentlySoldArtworks {\n    ...SoldRecentlyOnArtsy_recentlySoldArtworks\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment SoldRecentlyOnArtsy_recentlySoldArtworks on RecentlySoldArtworkTypeConnection {\n  edges {\n    node {\n      artwork {\n        ...ShelfArtwork_artwork_20bRBg\n        slug\n        href\n        internalID\n        id\n      }\n      lowEstimate {\n        display\n      }\n      highEstimate {\n        display\n      }\n      priceRealized {\n        display\n      }\n    }\n  }\n}\n"
   }
 };
 })();

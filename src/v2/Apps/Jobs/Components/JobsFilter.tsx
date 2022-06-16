@@ -46,7 +46,7 @@ const JobsFilter: FC<JobsFilterProps> = ({ viewer }) => {
                 key={location}
                 mr={1}
                 mb={1}
-                selected={selection.includes(location)}
+                active={selection.includes(location)}
                 onClick={handleClick(location)}
               >
                 {location}

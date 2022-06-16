@@ -6,9 +6,6 @@ const BORDER_RADIUS_BASE = 6
 export const RANGE_DOT_SIZE = 24
 
 // TODO: Add styles for vertical mode, tooltip
-/**
- * @depreacted Use `Range` from `@artsy/palette` instead
- */
 export const Range: React.FC<RangeProps> = props => {
   return <StyledRange {...props} />
 }

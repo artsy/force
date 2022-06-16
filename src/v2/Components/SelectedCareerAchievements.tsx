@@ -1,7 +1,15 @@
-import { Box, Flex, Spacer, useThemeConfig, Text } from "@artsy/palette"
+import {
+  BorderBox,
+  Box,
+  Flex,
+  Spacer,
+  useThemeConfig,
+  Text,
+} from "@artsy/palette"
 import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
 
 import { ArtistInsight } from "v2/Components/ArtistInsight"
+import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
 import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
@@ -114,6 +122,36 @@ export class SelectedCareerAchievements extends Component<
       )
     }
 
+    if (this.props.themeVersion === "v2") {
+      return (
+        <>
+          <ArtistInsightsModal />
+          <Spacer mb={2} />
+
+          <BorderBox pt={1}>
+            <Flex flexDirection="column" alignItems="left" width="100%">
+              <Flex
+                flexDirection="column"
+                flexWrap="wrap"
+                justifyContent="space-between"
+              >
+                {this.renderGalleryRepresentation()}
+                {this.renderAuctionHighlight()}
+
+                {/*  @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+                {this.props.artist.insights.map(insight => {
+                  return this.renderInsight(insight)
+                })}
+              </Flex>
+            </Flex>
+          </BorderBox>
+
+          {this.props.children}
+        </>
+      )
+    }
+
+    // V3 theme
     return (
       <Box {...this.props}>
         {this.props.onlyCareerHighlights ? (

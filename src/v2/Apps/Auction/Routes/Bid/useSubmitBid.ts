@@ -211,7 +211,7 @@ const setupCheckBidStatus = (props: {
         setTimeout(() => {
           sendToast({
             variant: "success",
-            message: "Bid successfully placed.",
+            message: "Bid sucessfully placed.",
           })
           // Time is arbitrary, but we need to wait for the page to finish
           // transitioning to artwork/id

@@ -1,7 +1,7 @@
-import { Box, Flex, Link, Text } from "@artsy/palette"
+import { Box, Flex, Link, Sans, Text } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import * as React from "react"
+import * as React from "react";
 
 import {
   AuctionIcon,
@@ -54,11 +54,19 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
   }
 
   getTextByTheme() {
-    return props => (
-      <Text variant="sm" {...props}>
-        {props.children}
-      </Text>
-    )
+    if (this.props.themeVersion === "v3") {
+      return props => (
+        <Text variant="sm" {...props}>
+          {props.children}
+        </Text>
+      )
+    } else {
+      return props => (
+        <Sans size="2" {...props}>
+          {props.children}
+        </Sans>
+      )
+    }
   }
 
   renderEntities() {
@@ -80,8 +88,7 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
 
           {entities.length > 1 && (
             <>
-              , and {/* TODO: Should be a `Clickable` */}
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              , and{" "}
               <Link onClick={this.handleExpand.bind(this)}>
                 {entities.length - 1}
                 &nbsp;more

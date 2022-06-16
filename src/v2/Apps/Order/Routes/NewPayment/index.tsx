@@ -8,7 +8,7 @@ import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { track } from "v2/System/Analytics"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { RouteConfig, Router } from "found"
-import { createRef, Component } from "react"
+import { createRef, Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
@@ -294,7 +294,7 @@ export class NewPaymentRoute extends Component<
 }
 
 export const NewPaymentFragmentContainer = createFragmentContainer(
-  createStripeWrapper<NewPaymentProps>(
+  createStripeWrapper(
     injectCommitMutation(injectDialog(NewPaymentRoute)) as any
   ),
   {

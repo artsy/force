@@ -1428,7 +1428,7 @@ return {
         "artist.image.versions": (v16/*: any*/),
         "artist.insights": {
           "enumValues": null,
-          "nullable": false,
+          "nullable": true,
           "plural": true,
           "type": "ArtistInsight"
         },

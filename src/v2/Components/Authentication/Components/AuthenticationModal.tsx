@@ -1,6 +1,6 @@
 import { ModalOptions } from "v2/Components/Authentication/Types"
 import Modal, { ModalProps } from "v2/Components/Modal/Modal"
-import { Component } from "react"
+import { Component } from "react";
 import track from "react-tracking"
 import { TrackingProp } from "react-tracking"
 import Events from "v2/Utils/Events"
@@ -31,7 +31,13 @@ export class AuthenticationModal extends Component<AuthenticationModalProps> {
     const title = this.props.subtitle || "The art world online"
 
     return (
-      <Modal {...this.props} onClose={this.onClose} title={title} hasLogo>
+      <Modal
+        {...this.props}
+        onClose={this.onClose}
+        title={title}
+        hasLogo
+        theme="v3"
+      >
         {this.props.children}
       </Modal>
     )

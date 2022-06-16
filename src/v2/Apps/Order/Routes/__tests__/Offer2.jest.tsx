@@ -8,6 +8,7 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
+
 const testOfferHiddenPrice: OfferTestQueryRawResponse["order"] = {
   ...UntouchedOfferOrderPriceHidden,
   internalID: "1234",

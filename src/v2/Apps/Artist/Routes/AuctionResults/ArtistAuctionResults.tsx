@@ -4,7 +4,6 @@ import {
   Column,
   Flex,
   GridColumns,
-  Join,
   Message,
   Spacer,
   Text,
@@ -13,6 +12,7 @@ import {
 import { isEqual } from "lodash"
 import { useContext, useState } from "react"
 import * as React from "react"
+import { Title } from "react-head"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -33,7 +33,7 @@ import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
-import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultItem"
+import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
   initialAuctionResultsFilterState,
@@ -47,8 +47,6 @@ import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
-import { MetaTags } from "v2/Components/MetaTags"
-import { extractNodes } from "v2/Utils/extractNodes"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -70,8 +68,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const { pageInfo } = artist.auctionResultsConnection ?? {}
   const { hasNextPage, endCursor } = pageInfo ?? {}
   const artistName = artist.name
-
-  const results = extractNodes(artist.auctionResultsConnection)
 
   const { match } = useRouter()
   const { scrollToMarketSignals } = paramsToCamelCase(
@@ -199,6 +195,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     })
   }
 
+  const auctionResultsLength =
+    artist.auctionResultsConnection?.edges?.length ?? 0
+
   const titleString = `${artist.name} - Auction Results on Artsy`
 
   const handleMarketStatsRendered = (visible: boolean) => {
@@ -214,7 +213,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   return (
     <>
-      <MetaTags title={titleString} />
+      <Title>{titleString}</Title>
 
       <Box id="scrollTo--marketSignalsTop" />
 
@@ -227,7 +226,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       <Box id="scrollTo--artistAuctionResultsTop" />
 
       <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
-
       <Spacer my={2} />
 
       {showMobileActionSheet && (
@@ -237,7 +235,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <AuctionFilters />
         </AuctionFilterMobileActionSheet>
       )}
-
       <Media greaterThan="xs">
         <GridColumns>
           <Column span={3} pr={[0, 2]}>
@@ -245,13 +242,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
               Filter by
             </Text>
           </Column>
-
           <Column span={9}>
             <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
               <Flex flex={1} pr={1} style={{ flexFlow: "column" }}>
                 <KeywordFilter />
               </Flex>
-
               <Flex>
                 <SortSelect />
               </Flex>
@@ -259,7 +254,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           </Column>
         </GridColumns>
       </Media>
-
       <GridColumns>
         <Column span={3} pr={[0, 2]}>
           <Media greaterThan="xs">
@@ -274,19 +268,21 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           <Spacer mt={[2, 0]} />
 
-          {results.length > 0 ? (
+          {auctionResultsLength > 0 ? (
             <LoadingArea isLoading={isLoading}>
-              <Join separator={<Spacer mt={2} />}>
-                {results.map((result, index) => {
-                  return (
-                    <ArtistAuctionResultItemFragmentContainer
-                      key={index}
-                      auctionResult={result}
+              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+              {artist.auctionResultsConnection.edges.map(({ node }, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <AuctionResultItem
+                      index={index}
+                      auctionResult={node}
+                      lastChild={index === auctionResultsLength - 1}
                       filtersAtDefault={filtersAtDefault}
                     />
-                  )
-                })}
-              </Join>
+                  </React.Fragment>
+                )
+              })}
             </LoadingArea>
           ) : (
             <Message>
@@ -304,6 +300,12 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             onNext={() => loadNext()}
             scrollTo="#jumpto-ArtistHeader"
           />
+        </Column>
+      </GridColumns>
+
+      <GridColumns>
+        <Column>
+          <Box></Box>
         </Column>
       </GridColumns>
     </>
@@ -365,6 +367,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           latestCreatedYear: $createdBeforeYear
           allowEmptyCreatedDates: $allowEmptyCreatedDates
         ) {
+          ...ArtistAuctionResultsCount_results
           createdYearRange {
             startAt
             endAt
@@ -379,6 +382,15 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           totalCount
           edges {
             node {
+              title
+              dimension_text: dimensionText
+              images {
+                thumbnail {
+                  url
+                }
+              }
+              description
+              date_text: dateText
               ...ArtistAuctionResultItem_auctionResult
             }
           }

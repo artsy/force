@@ -1,12 +1,12 @@
-import { Text, Spacer, Shelf } from "@artsy/palette"
+import { Box, Flex, Text, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { ArtistConsignRecentlySold_artist } from "v2/__generated__/ArtistConsignRecentlySold_artist.graphql"
 import { ContextModule } from "@artsy/cohesion"
+import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 
 interface ArtistConsignRecentlySoldProps {
   artist: ArtistConsignRecentlySold_artist
@@ -29,24 +29,26 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
 
       <Spacer my={4} />
 
-      <Shelf>
-        {artworks.map(artwork => (
-          <>
-            <ShelfArtworkFragmentContainer
-              key={artwork.internalID}
-              artwork={artwork}
-              showExtended={false}
-              contextModule={ContextModule.artistRecentlySold}
-            />
+      <Flex justifyContent="center" flexWrap="wrap" my={-2}>
+        {artworks.map((node, i) => {
+          return (
+            <Box key={i} p={2} textAlign="left">
+              <FillwidthItem
+                artwork={node}
+                imageHeight={150}
+                showExtended={false}
+                contextModule={ContextModule.artistRecentlySold}
+              />
 
-            {artwork.realizedPrice && (
-              <Text variant="xs" fontWeight="bold" textAlign="left">
-                Sold for {artwork.realizedPrice}
-              </Text>
-            )}
-          </>
-        ))}
-      </Shelf>
+              {node.realizedPrice && (
+                <Text variant="xs" fontWeight="bold">
+                  Sold for {node.realizedPrice}
+                </Text>
+              )}
+            </Box>
+          )
+        })}
+      </Flex>
     </SectionContainer>
   )
 }
@@ -56,21 +58,19 @@ export const ArtistConsignRecentlySoldFragmentContainer = createFragmentContaine
   {
     artist: graphql`
       fragment ArtistConsignRecentlySold_artist on Artist {
-        name
         targetSupply {
           microfunnel {
             artworksConnection {
               edges {
                 node {
                   ...FillwidthItem_artwork
-                  ...ShelfArtwork_artwork
-                  internalID
                   realizedPrice
                 }
               }
             }
           }
         }
+        name
       }
     `,
   }

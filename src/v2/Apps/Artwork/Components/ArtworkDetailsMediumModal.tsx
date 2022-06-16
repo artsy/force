@@ -1,4 +1,4 @@
-import { Button, ModalDialog, Text } from "@artsy/palette"
+import { Button, Modal, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDetailsMediumModal_artwork } from "v2/__generated__/ArtworkDetailsMediumModal_artwork.graphql"
@@ -14,20 +14,21 @@ export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps>
   show,
   onClose,
 }) => {
-  if (!show || !artwork.mediumType) return null
-
   return (
-    <ModalDialog
+    <Modal
+      show={show}
       onClose={onClose}
-      title={artwork.mediumType.name ?? "Unknown"}
-      footer={
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      title={artwork.mediumType.name}
+      FixedButton={
         <Button onClick={onClose} width="100%">
           OK
         </Button>
       }
     >
-      <Text variant="sm">{artwork.mediumType.longDescription}</Text>
-    </ModalDialog>
+      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
+      <Text color="black100">{artwork.mediumType.longDescription}</Text>
+    </Modal>
   )
 }
 

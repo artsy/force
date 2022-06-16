@@ -1,14 +1,8 @@
-import {
-  Button,
-  Column,
-  GridColumns,
-  Spacer,
-  Text,
-  useToasts,
-} from "@artsy/palette"
-import { IdentityVerificationApp_identityVerification } from "v2/__generated__/IdentityVerificationApp_identityVerification.graphql"
+import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificationApp_me.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { useMemo, useState } from "react"
 import * as React from "react"
 import {
@@ -22,31 +16,33 @@ import createLogger from "v2/Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
+import { WrongOwner } from "./WrongOwner"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { MetaTags } from "v2/Components/MetaTags"
-import { HttpError } from "found"
 
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
-  identityVerification: IdentityVerificationApp_identityVerification
+  me: IdentityVerificationApp_me
   relay: RelayProp
 }
 
-const IdentityVerificationApp: React.FC<Props> = ({
-  identityVerification,
-  relay,
-}) => {
-  const [requesting, setRequesting] = useState(false)
+const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
+  const { identityVerification } = me
 
-  const { sendToast } = useToasts()
+  const [requesting, setRequesting] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false)
 
   const { trackEvent } = useTracking()
 
   const alternateComponent = useMemo(() => {
-    if (!identityVerification) {
-      throw new HttpError(404)
+    if (
+      !identityVerification ||
+      identityVerification.userID !== me.internalID
+    ) {
+      return <WrongOwner email={me.email!} />
     }
+
     if (identityVerification.state === "failed") {
       return <CompleteFailed />
     }
@@ -60,7 +56,7 @@ const IdentityVerificationApp: React.FC<Props> = ({
     }
 
     return null
-  }, [identityVerification])
+  }, [identityVerification, me.email, me.internalID])
 
   const trackClickedContinueToVerification = () => {
     trackEvent({
@@ -116,7 +112,8 @@ const IdentityVerificationApp: React.FC<Props> = ({
         },
         onError: reject,
         variables: {
-          input: { identityVerificationId: identityVerification?.internalID },
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          input: { identityVerificationId: identityVerification.internalID },
         },
       })
     })
@@ -135,12 +132,7 @@ const IdentityVerificationApp: React.FC<Props> = ({
 
   const handleMutationError = (error: Error) => {
     logger.error("Error when trying to start identity verification", error)
-
-    sendToast({
-      variant: "error",
-      message:
-        "Something went wrong. Please try again or contact verification@artsy.net.",
-    })
+    setShowErrorModal(true)
   }
 
   return (
@@ -155,6 +147,13 @@ const IdentityVerificationApp: React.FC<Props> = ({
             alternateComponent
           ) : (
             <>
+              {/* TODO: Replace this with toast */}
+              <ErrorModal
+                show={showErrorModal}
+                contactEmail="verification@artsy.net"
+                onClose={() => setShowErrorModal(false)}
+              />
+
               <Text variant="xl" textAlign="center">
                 Artsy identity verification
               </Text>
@@ -239,11 +238,16 @@ const IdentityVerificationApp: React.FC<Props> = ({
 export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
   IdentityVerificationApp,
   {
-    identityVerification: graphql`
-      fragment IdentityVerificationApp_identityVerification on IdentityVerification
+    me: graphql`
+      fragment IdentityVerificationApp_me on Me
         @argumentDefinitions(id: { type: "String!" }) {
         internalID
-        state
+        email
+        identityVerification(id: $id) {
+          internalID
+          userID
+          state
+        }
       }
     `,
   }

@@ -3,7 +3,6 @@ import {
   BuyOrderWithArtaShippingDetails,
   BuyOrderWithBankDebitDetails,
   BuyOrderWithShippingDetails,
-  BuyOrderWithWireTransferDetails,
   OfferOrderWithMissingMetadata,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
@@ -54,22 +53,6 @@ jest.mock("@stripe/stripe-js", () => {
     _mockStripe: () => mock,
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     _mockReset: () => (mock = mockStripe()),
-  }
-})
-
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children, onClose, footer }) => {
-      return (
-        <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
-          {title}
-          {children}
-          {footer}
-        </div>
-      )
-    },
   }
 })
 
@@ -500,30 +483,10 @@ describe("Review", () => {
       })
     })
 
-    it("shows bank transfer as payment method", () => {
+    // TODO: Unskip test when stripe-ACH feature flag is removed
+    it.skip("shows bank transfer as payment method", () => {
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
-        "Bank transfer •••• 1234"
-      )
-    })
-  })
-
-  describe("Wire transfer orders", () => {
-    let page: ReviewTestPage
-
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...BuyOrderWithWireTransferDetails,
-            impulseConversationId: null,
-          },
-        },
-      })
-    })
-
-    it("shows wire transfer as payment method", () => {
-      expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
-        "Wire transfer"
+        "Bank transfer"
       )
     })
   })

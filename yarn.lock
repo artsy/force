@@ -44,10 +44,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.1.0.tgz#f7ae5041893b859ff9f6bc305fd318d2f5132745"
   integrity sha512-cdHMDcGpYuItSBvelAWEWxWipVGw/8Yzk7YoMvO+qWjZsHJtIF2hACtL5QFQxcf9K3j/eTXNSFlPmfZAe9Byew==
 
-"@artsy/eigen-web-association@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.5.3.tgz#741c831a472c9b68cbad05a4656d50674c8cdcb2"
-  integrity sha512-/F+0BRAGE2I63xDynXO5RtkAD89btn1WSqaUD5HpaSuSfC6NtwJNRDEe93XAn31r5OMsKac9RT51Xz7YNmtqew==
+"@artsy/eigen-web-association@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@artsy/eigen-web-association/-/eigen-web-association-1.5.1.tgz#6cec1c2ad9b8c0e7b10f6495462ea42bcf39b60c"
+  integrity sha512-Fkc0Gj5MUqr3QsfjNzEfqb40wOmW1RoeFw7TQk9E/BfLnoaa9Pwa4qWMc82O6nst+4fOjM2jNcleSdTCjtAMig==
   dependencies:
     express "^4.15.0"
 
@@ -84,12 +84,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@20.1.1":
-  version "20.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-20.1.1.tgz#c82d8fe7dd4eb7b40763bef485bd42134f2db329"
-  integrity sha512-2w3gKf3Evtzbb4dtVKHsDEDsUazzVreQIw9VXvSde1Imb9fL2hPfyxC2wOHTi0VX4zMGPPQaPo06TtMAeS6vOA==
+"@artsy/palette-charts@20.0.0":
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-20.0.0.tgz#1a4a4917027394802ca1ee643cf62ef6371ca712"
+  integrity sha512-pM/FJtJoUo3474yfOef5XF6Zx2PRMbwcMt9N/yv2MXLRYXXPTeRbT+E7TKCYUFLoNvFjOwuV2EgvPqZbDgWPSQ==
   dependencies:
-    "@artsy/palette" "^21.1.1"
+    "@artsy/palette" "^21.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -101,10 +101,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.0.tgz#ee0d157ad73ca0e2e252f896a21fba798b20d4d9"
   integrity sha512-Os2fimLkHgxWLZZ8xRPWm4t3mBTMMBsKO+Iqgn2d44VjhcN7w9XxAp8VK8sRSLJmcrajnTczZZtFy273lYeqaA==
 
-"@artsy/palette@21.1.1", "@artsy/palette@^21.1.1":
-  version "21.1.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-21.1.1.tgz#2e7af85c79bdb1bae98d615d7fe823fc086df314"
-  integrity sha512-4gKjI5/FyeroZ0lrQc6Ha0j6L3G47dY1WTUmKSe4Ycd8zlzrjah9iBWqEM/7o6sMFp5FsNODWpWvEKUIip3pFA==
+"@artsy/palette@21.0.0", "@artsy/palette@^21.0.0":
+  version "21.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-21.0.0.tgz#66d30cf9c1958e85512e07d662069a46a0c1195c"
+  integrity sha512-1BH0/Hi31sL1E9lbf9hHGoql0MZazpFAD+NWxZuB2wVk7woUxYBCsiD4JnScszplLI2tO+6o+ipQhG8iFfSN3g==
   dependencies:
     "@artsy/palette-tokens" "^4.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -14432,10 +14432,10 @@ json-schema-traverse@^0.4.1:
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
   integrity sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==
 
-json-schema@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.4.0.tgz#f7de4cf6efab838ebaeb3236474cbba5a1930ab5"
-  integrity sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==
+json-schema@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
+  integrity sha1-tIDIkuWaLwWVTOcnvT8qTogvnhM=
 
 json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
@@ -14530,13 +14530,13 @@ jsonwebtoken@^8.4.0, jsonwebtoken@^8.5.1:
     semver "^5.6.0"
 
 jsprim@^1.2.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.2.tgz#712c65533a15c878ba59e9ed5f0e26d5b77c5feb"
-  integrity sha512-P2bSOMAc/ciLz6DzgjVlGJP9+BrJWu5UDGK70C2iweC5QBIeFf0ZXRvGjEj2uYgrY2MkAAhsSWHDWlFtEroZWw==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
+  integrity sha1-MT5mvB5cwG5Di8G3SZwuXFastqI=
   dependencies:
     assert-plus "1.0.0"
     extsprintf "1.3.0"
-    json-schema "0.4.0"
+    json-schema "0.2.3"
     verror "1.10.0"
 
 jstransformer@0.0.2:

@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Message,
-  ModalDialog,
-  Spacer,
-  Text,
-  useToasts,
-} from "@artsy/palette"
+import { Box, Button, Flex, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
@@ -19,17 +10,16 @@ import { SmsSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 import { CreateSmsSecondFactorInput } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me } from "v2/__generated__/SmsSecondFactor_me.graphql"
+import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { afterUpdateRedirect } from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
-import { isArtsyEmail } from "./isArtsyEmail"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me
   relay: RelayRefetchProp
 }
 
-// TODO: This needs to be rebuilt from scratch
 export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   me,
   relay,
@@ -42,21 +32,9 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
     false
   )
-  const [isDisabling] = useState(false) // ???
+  const [apiErrors, setApiErrors] = useState<ApiError[]>([])
+  const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)
-
-  // Reset's _all_ of these state flags.
-  // NOTE: Don't do this. Just hacking around the architecture here.
-  const resetState = () => {
-    setShowConfirmDisable(false)
-    setShowConfirmPassword(false)
-    setShowSetupModal(false)
-    setShowCompleteModal(false)
-    setShowCompleteRedirectModal(false)
-    setCreating(false)
-  }
-
-  const { sendToast } = useToasts()
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
 
@@ -113,18 +91,12 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     }
   }
 
-  function handleMutationError(err: ApiError[]) {
-    console.error(err)
+  function handleMutationError(errors: ApiError[]) {
+    if (!Array.isArray(errors)) {
+      throw errors
+    }
 
-    const error = Array.isArray(err) ? err[0] : err
-
-    resetState()
-
-    sendToast({
-      variant: "error",
-      message: "An error occurred",
-      description: error.message,
-    })
+    setApiErrors(errors)
   }
 
   async function createSecondFactor(
@@ -157,79 +129,66 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     })
   }
 
-  const show2FAWarning = isArtsyEmail(me.email!)
-
   return (
     <>
-      <Flex flexDirection="column" border="1px solid" borderColor="black10">
-        {show2FAWarning && (
-          <Message
-            variant="warning"
-            title="Artsy employees are encouraged to use the “App Authenticator” 2FA
-          method via 1Password (or your preferred password manager)."
-          >
-            You may find a detailed walkthrough{" "}
-            <a href="https://artsy.net/employees-mfa-instructions">
-              here in Notion
-            </a>
-            .
-          </Message>
-        )}
+      <Flex
+        p={2}
+        border="1px solid"
+        borderColor="black10"
+        flexDirection={["column", "row"]}
+      >
+        <Box flexBasis="50%">
+          <Text variant="lg-display">Use Text Messages</Text>
 
-        <Flex p={2} flexDirection={["column", "row"]}>
-          <Box flexBasis="50%">
-            <Text variant="lg-display">Use Text Messages</Text>
-
-            {enabledSecondFactorLabel && (
-              <Text variant="lg-display" color="black60">
-                {enabledSecondFactorLabel}
-              </Text>
-            )}
-
-            <Spacer mt={2} />
-
-            <Text variant="sm" color="black60">
-              Security codes will be sent to your mobile phone.
+          {enabledSecondFactorLabel && (
+            <Text variant="lg-display" color="black60">
+              {enabledSecondFactorLabel}
             </Text>
-          </Box>
+          )}
 
-          <Spacer ml={[0, 2]} mt={[2, 0]} />
+          <Spacer mt={2} />
 
-          <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
-            {isEnabled ? (
-              <>
-                <Button
-                  variant="secondaryBlack"
-                  width={["100%", "auto"]}
-                  onClick={() => setShowConfirmDisable(true)}
-                  loading={isDisabling}
-                  disabled={isDisabling}
-                >
-                  Disable
-                </Button>
+          <Text variant="sm" color="black60">
+            Security codes will be sent to your mobile phone.
+          </Text>
+        </Box>
 
-                <Spacer ml={1} />
+        <Spacer ml={[0, 2]} mt={[2, 0]} />
 
-                <Button
-                  width={["100%", "auto"]}
-                  onClick={() => setShowConfirmPassword(true)}
-                  loading={isCreating}
-                  disabled={isCreating}
-                >
-                  Edit
-                </Button>
-              </>
-            ) : (
+        <Flex flexBasis="50%" alignItems="center" justifyContent="flex-end">
+          {isEnabled ? (
+            <>
+              <Button
+                variant="secondaryBlack"
+                width={["100%", "auto"]}
+                onClick={() => setShowConfirmDisable(true)}
+                loading={isDisabling}
+                disabled={isDisabling}
+              >
+                Disable
+              </Button>
+
+              <Spacer ml={1} />
+
               <Button
                 width={["100%", "auto"]}
                 onClick={() => setShowConfirmPassword(true)}
                 loading={isCreating}
                 disabled={isCreating}
               >
-                Set up
+                Edit
               </Button>
-            )}
-          </Flex>
+            </>
+          ) : (
+            <Button
+              width={["100%", "auto"]}
+              onClick={() => setShowConfirmPassword(true)}
+              loading={isCreating}
+              disabled={isCreating}
+            >
+              Set up
+            </Button>
+          )}
         </Flex>
       </Flex>
 
@@ -248,6 +207,12 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
         secondFactor={stagedSecondFactor}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
+      />
+
+      <ApiErrorModal
+        onClose={() => setApiErrors([])}
+        show={!!apiErrors.length}
+        errors={apiErrors}
       />
 
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
@@ -300,7 +265,6 @@ export const SmsSecondFactorRefetchContainer = createRefetchContainer(
   {
     me: graphql`
       fragment SmsSecondFactor_me on Me {
-        email
         hasSecondFactorEnabled
 
         smsSecondFactors: secondFactors(kinds: [sms]) {

@@ -5,20 +5,19 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignRecentlySold_artist = {
-    readonly name: string | null;
     readonly targetSupply: {
         readonly microfunnel: {
             readonly artworksConnection: {
                 readonly edges: ReadonlyArray<{
                     readonly node: {
-                        readonly internalID: string;
                         readonly realizedPrice: string | null;
-                        readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork" | "ShelfArtwork_artwork">;
+                        readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                     } | null;
                 } | null> | null;
             } | null;
         } | null;
     } | null;
+    readonly name: string | null;
     readonly " $refType": "ArtistConsignRecentlySold_artist";
 };
 export type ArtistConsignRecentlySold_artist$data = ArtistConsignRecentlySold_artist;
@@ -35,13 +34,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistConsignRecentlySold_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -86,13 +78,6 @@ const node: ReaderFragment = {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
-                          "name": "internalID",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
                           "name": "realizedPrice",
                           "storageKey": null
                         },
@@ -100,11 +85,6 @@ const node: ReaderFragment = {
                           "args": null,
                           "kind": "FragmentSpread",
                           "name": "FillwidthItem_artwork"
-                        },
-                        {
-                          "args": null,
-                          "kind": "FragmentSpread",
-                          "name": "ShelfArtwork_artwork"
                         }
                       ],
                       "storageKey": null
@@ -120,10 +100,17 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'bd39241ec1b71ab357e0663a4fbbee3b';
+(node as any).hash = '4bb367f104df6c1ffe6a26b0eeb0555b';
 export default node;

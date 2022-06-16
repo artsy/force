@@ -13,11 +13,16 @@ import {
 } from "@artsy/palette"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SavedSearchAlertListItem_item } from "v2/__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "../types"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
+
+const AlertPill = styled(Pill)<{ active: boolean }>`
+  pointer-events: none;
+`
 
 interface SavedSearchAlertListItemProps {
   item: SavedSearchAlertListItem_item
@@ -79,7 +84,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
               onEditAlertClick({
                 id: item.internalID,
                 name: item.userAlertSettings.name!,
-                artistIds: item.artistIDs as string[],
+                artistId: item.artistIDs![0],
               })
             }}
           >
@@ -96,15 +101,15 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
         <Column span={[12, 8]}>
           {isExpanded &&
             item.labels.map(label => (
-              <Pill
+              <AlertPill
                 key={label.displayValue}
                 variant="filter"
-                disabled
+                active
                 mr={1}
                 mb={1}
               >
                 {label.displayValue}
-              </Pill>
+              </AlertPill>
             ))}
         </Column>
       </GridColumns>

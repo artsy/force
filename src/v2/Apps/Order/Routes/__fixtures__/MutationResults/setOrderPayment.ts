@@ -4,7 +4,6 @@ export const settingOrderPaymentSuccess = {
       order: {
         __typename: "CommerceBuyOrder",
         id: "1234",
-        paymentMethod: "CREDIT_CARD",
         creditCard: {
           id: "credit-card-id",
           internalID: "credit-card-id",

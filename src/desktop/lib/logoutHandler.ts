@@ -1,4 +1,6 @@
+import { mediator } from "lib/mediator"
 import type { LogoutEventOptions } from "lib/mediator"
+import { MODAL_EROR_OPEN } from "v2/Components/Modal/FlashModal"
 
 export function logoutEventHandler(
   options: LogoutEventOptions = {}
@@ -24,6 +26,6 @@ export function logoutEventHandler(
       }
     })
     .catch(message => {
-      alert(message)
+      mediator.trigger(MODAL_EROR_OPEN, { message })
     })
 }

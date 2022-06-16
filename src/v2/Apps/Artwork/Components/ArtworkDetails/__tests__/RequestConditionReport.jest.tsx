@@ -7,7 +7,6 @@ import { AnalyticsSchema as Schema } from "v2/System"
 import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
 import { mediator } from "lib/mediator"
-import { Toasts, ToastsProvider } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -16,27 +15,12 @@ jest.mock("v2/Utils/Events", () => ({
 }))
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children }) => (
-      <div>
-        {title}
-        <div>{children}</div>
-      </div>
-    ),
-  }
-})
-
 const setupTestEnv = () => {
   return createTestEnv({
     TestPage: RequestConditionReportTestPage,
     Component: (props: RequestConditionReportQueryResponse) => (
-      <ToastsProvider>
-        <Toasts />
-        {/* @ts-ignore */}
-        <RequestConditionReportFragmentContainer {...props} />
-      </ToastsProvider>
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      <RequestConditionReportFragmentContainer {...props} />
     ),
     query: graphql`
       query RequestConditionReportTestQuery
@@ -102,7 +86,7 @@ describe("RequestConditionReport", () => {
     expect(page.text()).toContain("Condition report requested")
   })
 
-  it("shows a toast if the mutation fails", async () => {
+  it("shows a modal if the mutation fails", async () => {
     const env = setupTestEnv()
     env.mutations.useResultsOnce({
       requestConditionReport: null,

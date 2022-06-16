@@ -95,7 +95,9 @@ export class StatusRoute extends Component<StatusProps> {
                   <>
                     <Title>{flowName} status | Artsy</Title>
                     <Join separator={<Spacer mb={[2, 4]} />}>
-                      {description && <Message>{description}</Message>}
+                      {description && (
+                        <Message p={[2, 4]}>{description}</Message>
+                      )}
                       {shouldContinueToInbox ? (
                         <>
                           <Spacer mb={2} />
@@ -125,11 +127,7 @@ export class StatusRoute extends Component<StatusProps> {
                     <Flex flexDirection="column">
                       <Flex flexDirection="column">
                         <StyledShippingSummaryItem order={order} />
-                        <PaymentMethodSummaryItem
-                          order={order}
-                          withDescription={false}
-                          title="Payment method"
-                        />
+                        <PaymentMethodSummaryItem order={order} />
                       </Flex>
                     </Flex>
                   )

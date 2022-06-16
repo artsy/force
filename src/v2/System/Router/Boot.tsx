@@ -25,6 +25,7 @@ import {
 } from "v2/Utils/Responsive"
 import { AnalyticsContext } from "../Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
+import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
 
@@ -84,6 +85,7 @@ export const Boot = track(undefined, {
                   >
                     <ToastsProvider>
                       <Grid fluid maxWidth="100%">
+                        <FlashMessage />
                         <FocusVisible />
                         <SiftContainer />
                         {children}

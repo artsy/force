@@ -3,10 +3,12 @@ import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
 } from "v2/Apps/__tests__/Fixtures/Order"
+import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
 import * as paymentPickerMock from "../../Components/__mocks__/PaymentPicker"
 import {
+  creatingCreditCardSuccess,
   fixFailedPaymentFailure,
   fixFailedPaymentInsufficientInventoryFailure,
   fixFailedPaymentSuccess,
@@ -17,8 +19,6 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { MockBoot } from "v2/DevTools"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -59,22 +59,6 @@ jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
-const mockShowErrorDialog = jest.fn()
-jest.mock("v2/Apps/Order/Dialogs", () => ({
-  ...jest.requireActual("../../Dialogs"),
-  injectDialog: Component => props => (
-    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
-  ),
-}))
-
-const mockCommitMutation = jest.fn()
-jest.mock("v2/Apps/Order/Utils/commitMutation", () => ({
-  ...jest.requireActual("../../Utils/commitMutation"),
-  injectCommitMutation: Component => props => (
-    <Component {...props} commitMutation={mockCommitMutation} />
-  ),
-}))
-
 const testOrder: NewPaymentTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   internalID: "1234",
@@ -87,26 +71,24 @@ const testOrder: NewPaymentTestQueryRawResponse["order"] = {
 }
 
 describe("Payment", () => {
-  const pushMock = jest.fn()
-  let isCommittingMutation
-
   beforeAll(() => {
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
-
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <MockBoot>
-        {/* @ts-ignore */}
-        <NewPaymentFragmentContainer
-          router={{ push: pushMock } as any}
-          route={{ onTransition: jest.fn() }}
-          order={props.order}
-          // @ts-ignore
-          isCommittingMutation={isCommittingMutation}
-        />
-      </MockBoot>
-    ),
+  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
+    Component: NewPaymentFragmentContainer,
+    defaultData: {
+      order: testOrder,
+      me: { creditCards: { edges: [] } },
+      system: {
+        time: {
+          unix: 222,
+        },
+      },
+    },
+    defaultMutationResults: {
+      ...creatingCreditCardSuccess,
+      ...fixFailedPaymentSuccess,
+    },
     query: graphql`
       query NewPaymentTestQuery @raw_response_type @relay_test_operation {
         me {
@@ -117,97 +99,84 @@ describe("Payment", () => {
         }
       }
     `,
+    TestPage: OrderAppTestPage,
   })
 
   beforeEach(() => {
-    jest.clearAllMocks()
     mockLocation()
-    isCommittingMutation = false
+    hooks.clearErrors()
     global.setInterval = jest.fn()
   })
 
   afterEach(() => {
+    hooks.clearMocksAndErrors()
     global.setInterval = realSetInterval
   })
 
   it("shows the countdown timer", async () => {
-    let wrapper = getWrapper({
-      CommerceOrder: () => ({
-        ...testOrder,
-        stateExpiresAt: DateTime.fromISO(NOW)
-          .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
-          .toString(),
-      }),
+    const page = await buildPage({
+      mockData: {
+        order: {
+          ...testOrder,
+          stateExpiresAt: DateTime.fromISO(NOW)
+            .plus({ days: 1, hours: 4, minutes: 22, seconds: 59 })
+            .toString(),
+        },
+      },
     })
-    let page = new OrderAppTestPage(wrapper)
 
     expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
   })
 
   it("shows the button spinner while loading the mutation", async () => {
-    isCommittingMutation = true
-    let wrapper = getWrapper()
-    let page = new OrderAppTestPage(wrapper)
-
-    expect(page.isLoading()).toBeTruthy()
+    const page = await buildPage()
+    await page.expectButtonSpinnerWhenSubmitting()
   })
 
   it("commits fixFailedPayment mutation with Gravity credit card id", async () => {
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
+    const page = await buildPage()
     await page.clickSubmit()
 
-    expect(mockCommitMutation).toHaveBeenCalledWith(
-      expect.objectContaining({
-        variables: {
-          input: {
-            creditCardId: "credit-card-id",
-            offerId: "myoffer-id",
-          },
-        },
-      })
-    )
+    expect(mutations.lastFetchVariables).toMatchObject({
+      input: {
+        creditCardId: "credit-card-id",
+        offerId: "myoffer-id",
+      },
+    })
   })
 
   it("takes the user to the status page", async () => {
-    mockCommitMutation.mockResolvedValue(fixFailedPaymentSuccess)
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
+    const page = await buildPage()
     await page.clickSubmit()
-
-    expect(pushMock).toHaveBeenCalledWith("/orders/1234/status")
+    expect(routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/status")
   })
 
   it("does not do anything when there are form errors", async () => {
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
+    const page = await buildPage()
     paymentPickerMock.useInvalidFormResult()
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).not.toHaveBeenCalled()
+    expect(mutations.mockFetch).not.toHaveBeenCalled()
+    expect(routes.mockPushRoute).not.toHaveBeenCalled()
+    expect(page.modalDialog.props().show).toBeFalsy()
   })
 
   it("shows the default error modal when the payment picker throws an error", async () => {
     paymentPickerMock.useThrownError()
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
-
+    const page = await buildPage()
     await page.clickSubmit()
-    expect(mockShowErrorDialog).toHaveBeenCalledWith()
+    await page.expectAndDismissDefaultErrorDialog()
   })
 
   it("shows an error modal and redirects to artist page when not enough inventory", async () => {
-    mockCommitMutation.mockResolvedValueOnce(
-      fixFailedPaymentInsufficientInventoryFailure
-    )
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
-    await page.clickSubmit()
+    const page = await buildPage()
 
-    expect(mockShowErrorDialog).toHaveBeenCalledWith({
-      title: "Not available",
-      message: "Sorry, the work is no longer available.",
-    })
+    mutations.useResultsOnce(fixFailedPaymentInsufficientInventoryFailure)
+
+    await page.clickSubmit()
+    await page.expectAndDismissErrorDialogMatching(
+      "Not available",
+      "Sorry, the work is no longer available."
+    )
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const artistId = testOrder.lineItems.edges[0].node.artwork.artists[0].slug
     expect(window.location.assign).toHaveBeenCalledWith(`/artist/${artistId}`)
@@ -215,56 +184,47 @@ describe("Payment", () => {
 
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
     paymentPickerMock.useErrorResult()
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
+    const page = await buildPage()
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith({
-      title: "This is the description of an error.",
-      message:
-        "Please enter another payment method or contact your bank for more information.",
-    })
+    await page.expectAndDismissErrorDialogMatching(
+      "This is the description of an error.",
+      "Please enter another payment method or contact your bank for more information."
+    )
   })
 
   it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
     paymentPickerMock.useInternalErrorResult()
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
+    const page = await buildPage()
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith({
-      title: "An internal error occurred",
-    })
+    await page.expectAndDismissErrorDialogMatching(
+      "An internal error occurred",
+      "Please try again or contact orders@artsy.net."
+    )
   })
 
   it("shows an error modal when fixing the failed payment fails", async () => {
-    mockCommitMutation.mockResolvedValueOnce(fixFailedPaymentFailure)
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
+    const page = await buildPage()
+    mutations.useResultsOnce(fixFailedPaymentFailure)
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith({
-      title: "Charge failed",
-      message:
-        "Payment authorization has been declined. Please contact your card provider and try again.",
-    })
+    await page.expectAndDismissErrorDialogMatching(
+      "Charge failed",
+      "Payment authorization has been declined. Please contact your card provider and try again."
+    )
   })
 
   it("shows an error modal when there is a network error", async () => {
-    mockCommitMutation.mockRejectedValue({})
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
-    await page.clickSubmit()
+    const page = await buildPage()
+    mutations.mockNetworkFailureOnce()
 
-    expect(mockShowErrorDialog).toHaveBeenCalledWith()
+    await page.clickSubmit()
+    await page.expectAndDismissDefaultErrorDialog()
   })
 
   it("shows SCA modal when required", async () => {
-    mockCommitMutation.mockResolvedValue(fixFailedPaymentWithActionRequired)
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
-    let page = new OrderAppTestPage(wrapper)
-    await page.clickSubmit()
+    const page = await buildPage()
+    mutations.useResultsOnce(fixFailedPaymentWithActionRequired)
 
+    await page.clickSubmit()
     expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
   })
 })

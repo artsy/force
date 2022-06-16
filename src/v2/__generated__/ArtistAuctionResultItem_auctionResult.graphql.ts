@@ -9,13 +9,8 @@ export type ArtistAuctionResultItem_auctionResult = {
     readonly dimension_text: string | null;
     readonly organization: string | null;
     readonly images: {
-        readonly larger: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
+        readonly thumbnail: {
+            readonly url: string | null;
         } | null;
     } | null;
     readonly mediumText: string | null;
@@ -93,58 +88,15 @@ return {
           "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "larger",
+          "name": "thumbnail",
           "plural": false,
           "selections": [
             {
               "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 100
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 100
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "width",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "height",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "cropped(height:100,width:100)"
+              "args": null,
+              "kind": "ScalarField",
+              "name": "url",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -255,5 +207,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'aa76b5ea027deae82c223d182589b741';
+(node as any).hash = '020d2a4b841e81cceb4dd87c2e1d161b';
 export default node;

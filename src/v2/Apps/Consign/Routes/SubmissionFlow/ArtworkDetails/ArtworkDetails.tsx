@@ -1,4 +1,4 @@
-import { Button, Text, useToasts } from "@artsy/palette"
+import { Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"
 import {
@@ -9,6 +9,7 @@ import {
 import { useRouter } from "v2/System/Router/useRouter"
 import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { useErrorModal } from "../Utils/useErrorModal"
 import { useSystemContext } from "v2/System"
 import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -30,8 +31,8 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
 }) => {
   const { router } = useRouter()
+  const { openErrorModal } = useErrorModal()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
-  const { sendToast } = useToasts()
   const initialValue = getArtworkDetailsFormInitialValues(submission)
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
@@ -94,13 +95,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           `Submission not ${submission?.externalId ? "updated" : "created"}`,
           error
         )
-
-        sendToast({
-          variant: "error",
-          message: "An error occurred",
-          description: "Please contact consign@artsymail.com",
-        })
-
+        openErrorModal()
         return
       }
 

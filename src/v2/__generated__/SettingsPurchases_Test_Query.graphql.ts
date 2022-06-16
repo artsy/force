@@ -786,7 +786,6 @@ return {
             "IN_TRANSIT",
             "PENDING",
             "PROCESSING",
-            "PROCESSING_APPROVAL",
             "REFUNDED",
             "SUBMITTED"
           ],
@@ -893,7 +892,6 @@ return {
             "CANCELED",
             "FULFILLED",
             "PENDING",
-            "PROCESSING_APPROVAL",
             "REFUNDED",
             "SUBMITTED"
           ],

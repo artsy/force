@@ -6,4 +6,6 @@ export default {
   Events,
 }
 
+export * from "./Placeholder"
 export * from "./ScrollIntoView"
+export * from "./Section"

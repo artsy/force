@@ -41,22 +41,6 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children, onClose, footer }) => {
-      return (
-        <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
-          {title}
-          {children}
-          {footer}
-        </div>
-      )
-    },
-  }
-})
-
 const testOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",

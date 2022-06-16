@@ -6,14 +6,20 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type IdentityVerificationAppTestQueryVariables = {};
 export type IdentityVerificationAppTestQueryResponse = {
-    readonly identityVerification: {
-        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_identityVerification">;
+    readonly me: {
+        readonly " $fragmentRefs": FragmentRefs<"IdentityVerificationApp_me">;
     } | null;
 };
 export type IdentityVerificationAppTestQueryRawResponse = {
-    readonly identityVerification: ({
+    readonly me: ({
         readonly internalID: string;
-        readonly state: string;
+        readonly email: string | null;
+        readonly identityVerification: ({
+            readonly internalID: string;
+            readonly userID: string | null;
+            readonly state: string;
+            readonly id: string;
+        }) | null;
         readonly id: string;
     }) | null;
 };
@@ -27,15 +33,21 @@ export type IdentityVerificationAppTestQuery = {
 
 /*
 query IdentityVerificationAppTestQuery {
-  identityVerification(id: "identity-verification-id") {
-    ...IdentityVerificationApp_identityVerification_23LfNj
+  me {
+    ...IdentityVerificationApp_me_3zaPSf
     id
   }
 }
 
-fragment IdentityVerificationApp_identityVerification_23LfNj on IdentityVerification {
+fragment IdentityVerificationApp_me_3zaPSf on Me {
   internalID
-  state
+  email
+  identityVerification(id: "idv-id") {
+    internalID
+    userID
+    state
+    id
+  }
 }
 */
 
@@ -44,10 +56,30 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "identity-verification-id"
+    "value": "idv-id"
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -62,19 +94,19 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "IdentityVerification",
+        "args": null,
+        "concreteType": "Me",
         "kind": "LinkedField",
-        "name": "identityVerification",
+        "name": "me",
         "plural": false,
         "selections": [
           {
             "args": (v0/*: any*/),
             "kind": "FragmentSpread",
-            "name": "IdentityVerificationApp_identityVerification"
+            "name": "IdentityVerificationApp_me"
           }
         ],
-        "storageKey": "identityVerification(id:\"identity-verification-id\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -88,64 +120,89 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "IdentityVerification",
+        "args": null,
+        "concreteType": "Me",
         "kind": "LinkedField",
-        "name": "identityVerification",
+        "name": "me",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "email",
             "storageKey": null
           },
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "state",
-            "storageKey": null
+            "args": (v0/*: any*/),
+            "concreteType": "IdentityVerification",
+            "kind": "LinkedField",
+            "name": "identityVerification",
+            "plural": false,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "userID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": "identityVerification(id:\"idv-id\")"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
         ],
-        "storageKey": "identityVerification(id:\"identity-verification-id\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "ea8260e0c55e22ddc91992d33ff92c52",
+    "cacheID": "8b65aa859d5eb88e45e38bd744455251",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "identityVerification": {
+        "me": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Me"
+        },
+        "me.email": (v3/*: any*/),
+        "me.id": (v4/*: any*/),
+        "me.identityVerification": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "IdentityVerification"
         },
-        "identityVerification.id": (v1/*: any*/),
-        "identityVerification.internalID": (v1/*: any*/),
-        "identityVerification.state": {
+        "me.identityVerification.id": (v4/*: any*/),
+        "me.identityVerification.internalID": (v4/*: any*/),
+        "me.identityVerification.state": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "String"
-        }
+        },
+        "me.identityVerification.userID": (v3/*: any*/),
+        "me.internalID": (v4/*: any*/)
       }
     },
     "name": "IdentityVerificationAppTestQuery",
     "operationKind": "query",
-    "text": "query IdentityVerificationAppTestQuery {\n  identityVerification(id: \"identity-verification-id\") {\n    ...IdentityVerificationApp_identityVerification_23LfNj\n    id\n  }\n}\n\nfragment IdentityVerificationApp_identityVerification_23LfNj on IdentityVerification {\n  internalID\n  state\n}\n"
+    "text": "query IdentityVerificationAppTestQuery {\n  me {\n    ...IdentityVerificationApp_me_3zaPSf\n    id\n  }\n}\n\nfragment IdentityVerificationApp_me_3zaPSf on Me {\n  internalID\n  email\n  identityVerification(id: \"idv-id\") {\n    internalID\n    userID\n    state\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9316ff0e3bc38252639859899937ecef';
+(node as any).hash = 'ce0e064167e6a0c0679bcbb559733078';
 export default node;

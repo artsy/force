@@ -9,17 +9,14 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { getDefaultSort } from "v2/Apps/Artist/Routes/WorksForSale/Utils/getDefaultSort"
 import { Match } from "found"
-import { useEffect } from "react"
+import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
-import {
-  useFeatureVariant,
-  useTrackFeatureVariant,
-} from "v2/System/useFeatureFlag"
+import { useFeatureVariant } from "v2/System/useFeatureFlag"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -37,14 +34,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const trendingSortVariant = useFeatureVariant(
     "trending-sort-for-artist-artwork-grids"
   )
-  const { trackFeatureVariant } = useTrackFeatureVariant({
-    experimentName: "trending-sort-for-artist-artwork-grids",
-    variantName: trendingSortVariant?.name!,
-  })
-
-  useEffect(() => {
-    trackFeatureVariant()
-  })
 
   if (!hasFilter) {
     return null

@@ -1,0 +1,37 @@
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type ResponseForm_offer = {
+    readonly id: string;
+    readonly " $refType": "ResponseForm_offer";
+};
+export type ResponseForm_offer$data = ResponseForm_offer;
+export type ResponseForm_offer$key = {
+    readonly " $data"?: ResponseForm_offer$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ResponseForm_offer">;
+};
+
+
+
+const node: ReaderFragment = {
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ResponseForm_offer",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    }
+  ],
+  "type": "ConsignmentOffer",
+  "abstractKey": null
+};
+(node as any).hash = 'fb724895fbbee96b863701cb60123d7b';
+export default node;

@@ -23,9 +23,19 @@ export type ArtistAuctionResults_artist = {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly title: string | null;
+                readonly dimension_text: string | null;
+                readonly images: {
+                    readonly thumbnail: {
+                        readonly url: string | null;
+                    } | null;
+                } | null;
+                readonly description: string | null;
+                readonly date_text: string | null;
                 readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
             } | null;
         } | null> | null;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsCount_results">;
     } | null;
     readonly " $refType": "ArtistAuctionResults_artist";
 };
@@ -284,6 +294,63 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "title",
+                  "storageKey": null
+                },
+                {
+                  "alias": "dimension_text",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "dimensionText",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "AuctionLotImages",
+                  "kind": "LinkedField",
+                  "name": "images",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Image",
+                      "kind": "LinkedField",
+                      "name": "thumbnail",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "url",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "description",
+                  "storageKey": null
+                },
+                {
+                  "alias": "date_text",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "dateText",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "ArtistAuctionResultItem_auctionResult"
@@ -293,6 +360,11 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistAuctionResultsCount_results"
         }
       ],
       "storageKey": null
@@ -301,5 +373,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'df6ab7baf8f01679243929bd694898ea';
+(node as any).hash = '6564a53d57824f81b3eeae63f0bfcc9c';
 export default node;

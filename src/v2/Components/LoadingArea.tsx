@@ -1,5 +1,5 @@
 import Spinner from "v2/Components/Spinner"
-import { ReactNode, SFC } from "react"
+import { ReactNode, SFC } from "react";
 import styled from "styled-components"
 
 export interface LoadingAreaState {
@@ -12,9 +12,6 @@ interface Props extends LoadingAreaState {
   transitionTime?: string
 }
 
-/**
- * @deprecated Instead build a content-specific skeleton using Skeleton components from Palette
- */
 export const LoadingArea: SFC<Props> = props => {
   const { transitionTime } = props
   const loaderClass = props.isLoading ? "loading" : ""

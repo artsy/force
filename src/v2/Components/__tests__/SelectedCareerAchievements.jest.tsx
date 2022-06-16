@@ -1,3 +1,4 @@
+import { Sans } from "@artsy/palette"
 import { SelectedCareerAchievementsTestQueryRawResponse } from "v2/__generated__/SelectedCareerAchievementsTestQuery.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { ReactWrapper } from "enzyme"
@@ -31,8 +32,26 @@ describe("SelectedCareerAchievements", () => {
     })
   }
 
-  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
-  it.skip("renders the Artists CV link regardless of career achievements", async () => {
+  const careerHighlightsText = (currentWrapper: ReactWrapper) => {
+    return currentWrapper.find(Sans).map(t => t.text())
+  }
+
+  it("renders selected career achievements", async () => {
+    wrapper = await getWrapper(artistResponse)
+
+    const text = careerHighlightsText(wrapper)
+
+    expect(text).toContain("Blue-chip representation")
+    expect(text).toContain("High auction record")
+    expect(text).toContain("Collected by a major institution")
+    expect(text).toContain("Solo show at a major institution")
+    expect(text).toContain("Group show at a major institution")
+    expect(text).toContain("Reviewed by a major art publication")
+    expect(text).toContain("Included in a major biennial")
+  })
+
+  it("renders selected career achievements if no auction results or partner highlights", async () => {
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
@@ -41,7 +60,64 @@ describe("SelectedCareerAchievements", () => {
         ...artistResponse.highlights,
         partnersConnection: null,
       },
-      // @ts-ignore
+    })
+
+    const text = careerHighlightsText(wrapper)
+
+    expect(text).toContain("Collected by a major institution")
+    expect(text).toContain("Solo show at a major institution")
+    expect(text).toContain("Group show at a major institution")
+    expect(text).toContain("Reviewed by a major art publication")
+    expect(text).toContain("Included in a major biennial")
+  })
+
+  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
+  it("doesn't render selected career achievements if no auction results, partner highlights, or insights", async () => {
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    wrapper = await getWrapper({
+      ...artistResponse,
+      auctionResultsConnection: null,
+      highlights: {
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        ...artistResponse.highlights,
+        partnersConnection: null,
+      },
+      insights: [],
+    })
+    const text = careerHighlightsText(wrapper)
+
+    expect(text.length).toEqual(0)
+  })
+
+  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
+  it("doesn't render selected career achievements if no auction results or partner highlights and insights is null", async () => {
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    wrapper = await getWrapper({
+      ...artistResponse,
+      auctionResultsConnection: null,
+      highlights: {
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        ...artistResponse.highlights,
+        partnersConnection: null,
+      },
+      insights: null,
+    })
+    const text = careerHighlightsText(wrapper)
+
+    expect(text.length).toEqual(0)
+  })
+
+  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
+  it("renders the Artists CV link regardless of career achievements", async () => {
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    wrapper = await getWrapper({
+      ...artistResponse,
+      auctionResultsConnection: null,
+      highlights: {
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        ...artistResponse.highlights,
+        partnersConnection: null,
+      },
       insights: null,
     })
     expect(wrapper.find("RouterLink").length).toBe(1)

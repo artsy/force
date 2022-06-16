@@ -47,13 +47,8 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
   dimension_text: dimensionText
   organization
   images {
-    larger {
-      cropped(width: 100, height: 100) {
-        src
-        srcSet
-        width
-        height
-      }
+    thumbnail {
+      url
     }
   }
   mediumText
@@ -75,6 +70,10 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
   }
 }
 
+fragment ArtistAuctionResultsCount_results on AuctionResultConnection {
+  totalCount
+}
+
 fragment ArtistAuctionResultsRoute_artist_20ZuLB on Artist {
   ...ArtistAuctionResults_artist_20ZuLB
 }
@@ -84,6 +83,7 @@ fragment ArtistAuctionResults_artist_20ZuLB on Artist {
   internalID
   name
   auctionResultsConnection(first: 10, sort: DATE_DESC, organizations: $organizations, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {
+    ...ArtistAuctionResultsCount_results
     createdYearRange {
       startAt
       endAt
@@ -98,6 +98,15 @@ fragment ArtistAuctionResults_artist_20ZuLB on Artist {
     totalCount
     edges {
       node {
+        title
+        dimension_text: dimensionText
+        images {
+          thumbnail {
+            url
+          }
+        }
+        description
+        date_text: dateText
         ...ArtistAuctionResultItem_auctionResult
         id
       }
@@ -359,6 +368,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "YearRange",
                 "kind": "LinkedField",
                 "name": "createdYearRange",
@@ -463,13 +479,6 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
                 "concreteType": "AuctionResultEdge",
                 "kind": "LinkedField",
                 "name": "edges",
@@ -500,13 +509,6 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "organization",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "AuctionLotImages",
                         "kind": "LinkedField",
                         "name": "images",
@@ -517,63 +519,41 @@ return {
                             "args": null,
                             "concreteType": "Image",
                             "kind": "LinkedField",
-                            "name": "larger",
+                            "name": "thumbnail",
                             "plural": false,
                             "selections": [
                               {
                                 "alias": null,
-                                "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 100
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 100
-                                  }
-                                ],
-                                "concreteType": "CroppedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "cropped",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "src",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "srcSet",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "width",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "height",
-                                    "storageKey": null
-                                  }
-                                ],
-                                "storageKey": "cropped(height:100,width:100)"
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "url",
+                                "storageKey": null
                               }
                             ],
                             "storageKey": null
                           }
                         ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "description",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": "date_text",
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "dateText",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "organization",
                         "storageKey": null
                       },
                       {
@@ -588,13 +568,6 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "categoryText",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": "date_text",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "dateText",
                         "storageKey": null
                       },
                       {
@@ -691,12 +664,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9a20d9a3fc97eee29acf86c4a48930c9",
+    "cacheID": "e406fc4494011fd1b4dbf224ee99e838",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_AuctionResultsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_AuctionResultsQuery(\n  $artistID: String!\n  $organizations: [String]\n  $categories: [String]\n  $sizes: [ArtworkSizes]\n  $createdAfterYear: Int\n  $createdBeforeYear: Int\n  $allowEmptyCreatedDates: Boolean\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist_20ZuLB\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    larger {\n      cropped(width: 100, height: 100) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsRoute_artist_20ZuLB on Artist {\n  ...ArtistAuctionResults_artist_20ZuLB\n}\n\nfragment ArtistAuctionResults_artist_20ZuLB on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, organizations: $organizations, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_AuctionResultsQuery(\n  $artistID: String!\n  $organizations: [String]\n  $categories: [String]\n  $sizes: [ArtworkSizes]\n  $createdAfterYear: Int\n  $createdBeforeYear: Int\n  $allowEmptyCreatedDates: Boolean\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist_20ZuLB\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment ArtistAuctionResultsRoute_artist_20ZuLB on Artist {\n  ...ArtistAuctionResults_artist_20ZuLB\n}\n\nfragment ArtistAuctionResults_artist_20ZuLB on Artist {\n  slug\n  internalID\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC, organizations: $organizations, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {\n    ...ArtistAuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

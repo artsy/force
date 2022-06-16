@@ -4,7 +4,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
 import { BoxProps } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { AuthContextModule } from "@artsy/cohesion"
 
 export interface MetadataProps
   extends BoxProps,
@@ -15,8 +14,7 @@ export interface MetadataProps
   hideArtistName?: boolean
   hideSaleInfo?: boolean
   isHovered?: boolean
-  showSaveButton?: boolean
-  contextModule?: AuthContextModule
+  shouldShowHoverSaveButton?: boolean
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -27,8 +25,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   hideArtistName,
   hideSaleInfo,
   isHovered,
-  showSaveButton,
-  contextModule,
+  shouldShowHoverSaveButton,
   ...rest
 }) => {
   return (
@@ -47,8 +44,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
-        showSaveButton={showSaveButton}
-        contextModule={contextModule}
+        shouldShowHoverSaveButton={shouldShowHoverSaveButton}
       />
     </RouterLink>
   )
@@ -58,6 +54,7 @@ export default createFragmentContainer(Metadata, {
   artwork: graphql`
     fragment Metadata_artwork on Artwork {
       ...Details_artwork
+      ...Contact_artwork
       href
     }
   `,

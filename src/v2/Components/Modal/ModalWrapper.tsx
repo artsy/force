@@ -4,6 +4,7 @@ import styled, { createGlobalStyle, keyframes } from "styled-components"
 import { getViewportDimensions } from "v2/Utils/viewport"
 import FadeTransition from "../Animation/FadeTransition"
 import { media } from "../Helpers"
+import { CtaProps } from "./ModalCta"
 
 export enum ModalWidth {
   Narrow = "280px",
@@ -14,12 +15,14 @@ export enum ModalWidth {
 
 export interface ModalWrapperProps extends React.HTMLProps<ModalWrapper> {
   blurContainerSelector?: string
+  cta?: CtaProps
   onClose?: () => void
   width?: ModalWidth
   fullscreenResponsiveModal?: boolean
   image?: string
   show?: boolean
   disableCloseOnBackgroundClick?: boolean
+  theme?: "v2" | "v3"
 }
 
 export interface ModalWrapperState {
@@ -123,7 +126,13 @@ export class ModalWrapper extends React.Component<
   }
 
   render(): JSX.Element {
-    const { children, width, fullscreenResponsiveModal, image } = this.props
+    const {
+      children,
+      width,
+      fullscreenResponsiveModal,
+      image,
+      theme,
+    } = this.props
     const { isShown, isAnimating } = this.state
     const { width: viewportWidth } = getViewportDimensions()
 
@@ -134,7 +143,7 @@ export class ModalWrapper extends React.Component<
     }
 
     return (
-      <Theme theme="v3">
+      <Theme theme={theme}>
         <Wrapper isShown={isShown || isAnimating}>
           <GlobalStyle suppressMultiMountWarning />
           {isShown && (

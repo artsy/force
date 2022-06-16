@@ -6,7 +6,6 @@ import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "v2/System"
 import { useState } from "react"
-import { isTouch } from "v2/Utils/device"
 
 export interface SaveTrackingProps {
   context_page?: string
@@ -51,15 +50,11 @@ export const NewSaveButton: React.FC<SaveButtonProps> = ({
   }
 
   const handleMouseEnter = () => {
-    if (!isTouch) {
-      setIsHovered(true)
-    }
+    setIsHovered(true)
   }
 
   const handleMouseLeave = () => {
-    if (!isTouch) {
-      setIsHovered(false)
-    }
+    setIsHovered(false)
   }
 
   const title = isSaved ? "Unsave" : "Save"

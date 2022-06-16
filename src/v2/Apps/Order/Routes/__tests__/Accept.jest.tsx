@@ -45,22 +45,6 @@ jest.mock("@stripe/stripe-js", () => {
   }
 })
 
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children, onClose, footer }) => {
-      return (
-        <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
-          {title}
-          {children}
-          {footer}
-        </div>
-      )
-    },
-  }
-})
-
 const realSetInterval = global.setInterval
 
 const testOrder = {

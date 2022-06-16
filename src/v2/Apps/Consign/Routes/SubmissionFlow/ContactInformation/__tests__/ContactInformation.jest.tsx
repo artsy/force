@@ -2,6 +2,7 @@ import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SystemContextProvider, useTracking } from "v2/System"
 import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
+import { useErrorModal } from "../../Utils/useErrorModal"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 import { ContactInformationFragmentContainer } from "../ContactInformation"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
@@ -43,14 +44,10 @@ jest.mock("v2/System/Router/useRouter", () => ({
   })),
 }))
 
-const mockSendToast = jest.fn()
-
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    useToasts: () => ({ sendToast: mockSendToast }),
-  }
-})
+const mockOpenErrorModal = jest.fn()
+jest.mock("../../Utils/useErrorModal", () => ({
+  useErrorModal: jest.fn(),
+}))
 
 jest.mock("sharify", () => ({
   data: { SESSION_ID: "SessionID", RECAPTCHA_KEY: "recaptcha-api-key" },
@@ -68,6 +65,7 @@ jest.mock("../../Utils/phoneNumberUtils", () => ({
 
 const mockCreateOrUpdateConsignSubmission = createOrUpdateConsignSubmission as jest.Mock
 const mockGetPhoneNumberInformation = getPhoneNumberInformation as jest.Mock
+const mockUseErrorModal = useErrorModal as jest.Mock
 const mockTracking = useTracking as jest.Mock
 const mockTrackEvent = jest.fn()
 
@@ -107,6 +105,9 @@ const getInput = name =>
 
 describe("Contact Information step", () => {
   beforeAll(() => {
+    mockUseErrorModal.mockImplementation(() => ({
+      openErrorModal: mockOpenErrorModal,
+    }))
     mockGetPhoneNumberInformation.mockResolvedValue(mockMe.phoneNumber)
     mockTracking.mockImplementation(() => ({
       trackEvent: mockTrackEvent,
@@ -212,7 +213,7 @@ describe("Contact Information step", () => {
       fireEvent.click(getSubmitButton())
 
       await waitFor(() => {
-        expect(mockSendToast).toBeCalled()
+        expect(mockOpenErrorModal).toBeCalled()
       })
     })
   })

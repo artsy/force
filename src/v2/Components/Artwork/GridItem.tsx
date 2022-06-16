@@ -7,10 +7,12 @@ import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
+import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
-import { MagnifyImage } from "../MagnifyImage"
+import { ArtworkImage } from "./ArtworkImage"
+import { isTouch } from "v2/Utils/device"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -28,7 +30,16 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
 }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
-  const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
+
+  const { containerProps, isSaveButtonVisible } = useSaveButton({
+    isSaved: !!artwork.is_saved,
+  })
+  const {
+    isHovered,
+    isHoverEffectEnabled,
+    onMouseEnter,
+    onMouseLeave,
+  } = useHoverMetadata()
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 445
@@ -47,6 +58,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     onMouseEnter()
+    containerProps.onMouseEnter(event)
     rest.onMouseEnter?.(event)
   }
 
@@ -54,13 +66,18 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     onMouseLeave()
+    containerProps.onMouseLeave(event)
     rest.onMouseLeave?.(event)
   }
+
+  const shouldShowHoverSaveButton =
+    isHoverEffectEnabled && (!!artwork.is_saved || (isHovered && !isTouch))
 
   return (
     <div
       data-id={artwork.internalID}
       data-test="artworkGridItem"
+      {...containerProps}
       {...rest}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -76,23 +93,30 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
         >
-          <MagnifyImage
+          <ArtworkImage
+            title={artwork.title ?? undefined}
             alt={artwork.image_title ?? ""}
             src={src}
             srcSet={srcSet}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
+            shouldZoomOnHover={!!isHoverEffectEnabled}
           />
         </Link>
 
         <Badge artwork={artwork} />
+        {!isHoverEffectEnabled && isSaveButtonVisible && (
+          <SaveButtonFragmentContainer
+            contextModule={contextModule || ContextModule.artworkGrid}
+            artwork={artwork}
+          />
+        )}
       </Box>
 
       <Metadata
         artwork={artwork}
         isHovered={isHovered}
-        contextModule={contextModule ?? ContextModule.artworkGrid}
-        showSaveButton
+        shouldShowHoverSaveButton={!!shouldShowHoverSaveButton}
       />
     </div>
   )
@@ -126,6 +150,7 @@ export const ArtworkGridItemFragmentContainer = createFragmentContainer(
         }
         artistNames
         href
+        is_saved: isSaved
         ...Metadata_artwork
         ...SaveButton_artwork
         ...Badge_artwork

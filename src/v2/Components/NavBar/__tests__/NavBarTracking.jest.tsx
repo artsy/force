@@ -30,6 +30,29 @@ describe("NavBarTracking", () => {
     jest.clearAllMocks()
   })
 
+  describe("NavBar", () => {
+    it("tracks NavBar notification badge clicks", () => {
+      const wrapper = mount(
+        <Wrapper>
+          <NavBar />
+        </Wrapper>
+      )
+
+      wrapper
+        .find("a")
+        .find({ href: "/works-for-you" })
+        .first()
+        .simulate("click")
+
+      expect(trackEvent).toBeCalledWith({
+        action_type: AnalyticsSchema.ActionType.Click,
+        subject: AnalyticsSchema.Subject.NotificationBell,
+        destination_path: "/works-for-you",
+        new_notification_count: 0,
+      })
+    })
+  })
+
   describe("NavBarUserMenu", () => {
     it("tracks NavBarUserMenu clicks", () => {
       const wrapper = mount(

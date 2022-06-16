@@ -3,7 +3,6 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { useRouter } from "v2/System/Router/useRouter"
 import { FairOverview_Test_Query } from "v2/__generated__/FairOverview_Test_Query.graphql"
-import { waitFor } from "@testing-library/react"
 
 const mockScrollTo = jest.fn()
 
@@ -130,7 +129,7 @@ describe("FairOverview", () => {
     expect(wrapper.text()).not.toContain("Closes in:")
   })
 
-  it("scrollTo should be called if url contains `focused_boots` query param", async () => {
+  it("scrollTo should be called if url contains `focused_boots` query param", () => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
@@ -144,6 +143,6 @@ describe("FairOverview", () => {
 
     getWrapper()
 
-    await waitFor(() => expect(mockScrollTo).toBeCalled())
+    expect(mockScrollTo).toBeCalled()
   })
 })

@@ -3,13 +3,9 @@ import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "../Details"
 import { ArtworkGridContextProvider } from "v2/Components/ArtworkGrid/ArtworkGridContext"
-import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
-import { useSystemContext } from "v2/System"
 
 jest.unmock("react-relay")
-jest.mock("v2/Utils/openAuthModal")
-jest.mock("v2/System/useSystemContext")
+
 jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(
@@ -17,8 +13,6 @@ require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(
 )
 
 describe("Details", () => {
-  const mockOpenAuthToSatisfyIntent = openAuthToSatisfyIntent as jest.Mock
-  const mockUseSystemContext = useSystemContext as jest.Mock
   let props
 
   const getWrapper = async (
@@ -28,8 +22,6 @@ describe("Details", () => {
       hidePartnerName: boolean
       hideArtistName: boolean
       isHovered: boolean
-      contextModule?: AuthContextModule
-      showSaveButton?: boolean
     }
   ) => {
     return await renderRelayTree({
@@ -50,19 +42,6 @@ describe("Details", () => {
       } as Details_Test_QueryRawResponse,
     })
   }
-
-  beforeEach(() => {
-    mockUseSystemContext.mockImplementation(() => {
-      return {
-        isLoggedIn: false,
-        mediator: jest.fn(),
-      }
-    })
-  })
-
-  afterEach(() => {
-    mockOpenAuthToSatisfyIntent.mockClear()
-  })
 
   describe("in artist Notable Works rail", () => {
     it("removes artwork's partner and artist name metadata", async () => {
@@ -374,40 +353,6 @@ describe("Details", () => {
         })
       })
     })
-  })
-
-  it("should display save artwork button by default when showSaveButton prop is passed", async () => {
-    props = {
-      showSaveButton: true,
-      contextModule: ContextModule.artworkGrid,
-    }
-    const wrapper = await getWrapper(artworkInAuction, props)
-
-    expect(wrapper.find("button[data-test='saveButton']").length).toBe(1)
-  })
-
-  it("should pass correct analytics data to the auth modal when save button is pressed and user is not logged in", async () => {
-    props = {
-      showSaveButton: true,
-      contextModule: ContextModule.artworkGrid,
-    }
-    const wrapper = await getWrapper(artworkInAuction, props)
-
-    wrapper.find("button[data-test='saveButton']").simulate("click")
-
-    expect(mockOpenAuthToSatisfyIntent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        [MockFunction],
-        Object {
-          "contextModule": "artworkGrid",
-          "entity": Object {
-            "name": "Tulips (P17)",
-            "slug": "gerhard-richter-tulips-p17-14",
-          },
-          "intent": "saveArtwork",
-        },
-      ]
-    `)
   })
 
   describe("alternate metadata when hovering", () => {

@@ -1,6 +1,21 @@
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
+export const news = `
+  query RSSNewsQuery {
+    articles(
+      published: true,
+      channel_id: "${sd.ARTSY_EDITORIAL_CHANNEL}",
+      sort: "-published_at",
+      exclude_google_news: false,
+      limit: 50
+    ) {
+      ${articleBody}
+    }
+  }
+  ${sectionFragments}
+`
+
 const articleBody = `
   id
   title
@@ -199,19 +214,4 @@ const sectionFragments = `
     width
     height
   }
-`
-
-export const news = `
-  query RSSNewsQuery {
-    articles(
-      published: true,
-      channel_id: "${sd.ARTSY_EDITORIAL_CHANNEL}",
-      sort: "-published_at",
-      exclude_google_news: false,
-      limit: 50
-    ) {
-      ${articleBody}
-    }
-  }
-  ${sectionFragments}
 `

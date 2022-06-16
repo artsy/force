@@ -9,27 +9,26 @@ import { BankDebitDetails } from "./BankDebitDetails"
 import { WireTransferDetails } from "./WireTransferDetails"
 
 export const PaymentMethodSummaryItem = ({
-  order: { paymentMethod, paymentMethodDetails },
+  order: { creditCard, paymentMethod },
   textColor = "black100",
-  withDescription = true,
   ...others
 }: {
   order: PaymentMethodSummaryItem_order
   textColor?: string
-  withDescription?: boolean
 } & StepSummaryItemProps) => {
+  const cardInfoWithTextColor = {
+    ...creditCard!,
+    ...{ textColor: textColor },
+  }
+
   const renderPaymentMethodSummary = () => {
-    switch (paymentMethodDetails?.__typename) {
-      case "CreditCard":
-        const cardInfoWithTextColor = {
-          ...paymentMethodDetails,
-          ...{ textColor: textColor },
-        }
+    switch (paymentMethod) {
+      case "CREDIT_CARD":
         return <CreditCardDetails {...cardInfoWithTextColor} />
-      case "BankAccount":
-        return <BankDebitDetails {...paymentMethodDetails} />
-      case "WireTransfer":
-        return <WireTransferDetails withDescription={withDescription} />
+      case "US_BANK_ACCOUNT":
+        return <BankDebitDetails {...cardInfoWithTextColor} />
+      case "WIRE_TRANSFER":
+        return <WireTransferDetails />
       default:
         null
     }
@@ -48,20 +47,11 @@ export const PaymentMethodSummaryItemFragmentContainer = createFragmentContainer
     order: graphql`
       fragment PaymentMethodSummaryItem_order on CommerceOrder {
         paymentMethod
-        paymentMethodDetails {
-          __typename
-          ... on CreditCard {
-            brand
-            lastDigits
-            expirationYear
-            expirationMonth
-          }
-          ... on BankAccount {
-            last4
-          }
-          ... on WireTransfer {
-            isManualPayment
-          }
+        creditCard {
+          brand
+          lastDigits
+          expirationYear
+          expirationMonth
         }
       }
     `,

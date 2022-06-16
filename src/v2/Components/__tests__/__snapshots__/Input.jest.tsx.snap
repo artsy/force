@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input renders as a snapshot 1`] = `
+.c2 {
+  padding: 10px;
+  box-shadow: none;
+  -webkit-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+  margin-right: 10px;
+  resize: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+  border: 1px solid #f7625a;
+  -webkit-transition: border-color 0.25s;
+  transition: border-color 0.25s;
+  background-clip: padding-box;
+  border-radius: 0;
+}
+
+.c2::-webkit-input-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c2::-moz-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c2:-ms-input-placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c2::placeholder {
+  color: #cccccc;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.c2:hover,
+.c2:focus,
+.c2.focused {
+  border-color: #f7625a;
+  outline: 0;
+}
+
+.c2:disabled {
+  border: 2px dotted #e5e5e5;
+}
+
+.c0 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 17px;
+  line-height: 1.1em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.c1 {
+  font-family: 'Adobe Garamond W08','adobe-garamond-pro','AGaramondPro-Regular','Times New Roman',Times,serif;
+  font-size: 15px;
+  line-height: 1.25em;
+  -webkit-font-smoothing: antialiased;
+  color: #666;
+  margin: 3px 0 0;
+}
+
+.c3 {
+  font-family: Unica77LLWebRegular,Arial,serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 12px;
+  line-height: 1.4em;
+  margin-top: 10px;
+  color: #E82F1D;
+  -webkit-transition: visibility 0.2s linear;
+  transition: visibility 0.2s linear;
+  -webkit-animation: hqnQVQ 0.25s linear;
+  animation: hqnQVQ 0.25s linear;
+  height: 16px;
+}
+
+<div
+  className="Box-sc-15se88d-0"
+>
+  <div
+    className="c0"
+  >
+    hello
+  </div>
+  <div
+    className="c1"
+  >
+    This is a field
+  </div>
+  <input
+    className="c2"
+    placeholder="a placeholder"
+    type="password"
+  />
+  <div
+    className="c3"
+  >
+    But something went wrong!
+  </div>
+</div>
+`;

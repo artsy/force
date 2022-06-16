@@ -1,23 +1,7 @@
-import { Button, Text } from "@artsy/palette"
-import { ModalDialog } from "@artsy/palette"
-import * as React from "react"
-// TODO: Replace with normal React state
-// eslint-disable-next-line no-restricted-imports
+import { Link } from "@artsy/palette"
+import { ModalDialog, ModalDialogProps } from "v2/Components/Modal/ModalDialog"
+import * as React from "react";
 import { Container, Subscribe } from "unstated"
-
-interface CtaProps {
-  action(): void
-  text: React.ReactNode
-}
-
-interface ModalDialogProps {
-  show?: boolean
-  heading?: string
-  detail?: React.ReactNode
-  primaryCta: CtaProps
-  secondaryCta?: CtaProps
-  onClose: () => void
-}
 
 interface DialogState {
   props: ModalDialogProps
@@ -27,9 +11,8 @@ interface DialogState {
 export class DialogContainer extends Container<DialogState> {
   state: DialogState = {
     props: {
-      onClose: () => {},
       show: false,
-      heading: undefined,
+      heading: null,
       detail: null,
       primaryCta: {
         text: "",
@@ -79,7 +62,7 @@ export class DialogContainer extends Container<DialogState> {
     confirmButtonText = "Continue",
     cancelButtonText = "Cancel",
   }: {
-    title: string
+    title: React.ReactNode
     message: React.ReactNode
     confirmButtonText?: string
     cancelButtonText?: string
@@ -124,7 +107,7 @@ export class DialogContainer extends Container<DialogState> {
     message = (
       <>
         Something went wrong. Please try again or contact{" "}
-        <a href={`mailto:${supportEmail}}`}>{supportEmail}</a>.
+        <Link href={`mailto:${supportEmail}}`}>{supportEmail}</Link>.
       </>
     ),
     continueButtonText = "Continue",
@@ -194,36 +177,6 @@ export function injectDialog<R extends { dialog: Dialog }>(
 
 export const ConnectedModalDialog = () => (
   <Subscribe to={[DialogContainer]}>
-    {(dialogs: DialogContainer) => {
-      const { props } = dialogs.state
-
-      if (!props.show) {
-        return null
-      }
-
-      return (
-        <ModalDialog
-          title={props.heading}
-          onClose={props.onClose}
-          footer={
-            <Button width="100%" onClick={props.primaryCta.action}>
-              {props.primaryCta.text}
-            </Button>
-          }
-        >
-          {props.detail && <Text variant="sm-display">{props.detail}</Text>}
-
-          {props.secondaryCta && (
-            <Button
-              mt={1}
-              variant="secondaryBlack"
-              onClick={props.secondaryCta.action}
-            >
-              {props.secondaryCta.text}
-            </Button>
-          )}
-        </ModalDialog>
-      )
-    }}
+    {(dialogs: DialogContainer) => <ModalDialog {...dialogs.state.props} />}
   </Subscribe>
 )

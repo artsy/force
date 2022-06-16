@@ -5,8 +5,12 @@ import {
   OfferOrderWithShippingDetails,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { AddressForm } from "v2/Components/AddressForm"
+import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
-import { settingOrderPaymentFailed } from "../__fixtures__/MutationResults"
+import {
+  settingOrderPaymentFailed,
+  settingOrderPaymentSuccess,
+} from "../__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useSystemContext, useTracking } from "v2/System"
@@ -15,8 +19,6 @@ import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "v2/__generated__/Payment_order.graphql"
-import { MockBoot } from "v2/DevTools"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -59,67 +61,22 @@ jest.mock(
 jest.mock("v2/System/useSystemContext")
 jest.mock("v2/System/Analytics/useTracking")
 
-const mockShowErrorDialog = jest.fn()
-jest.mock("v2/Apps/Order/Dialogs", () => ({
-  ...jest.requireActual("../../Dialogs"),
-  injectDialog: Component => props => (
-    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
-  ),
-}))
-
-const mockCommitMutation = jest.fn()
-jest.mock("v2/Apps/Order/Utils/commitMutation", () => ({
-  ...jest.requireActual("../../Utils/commitMutation"),
-  injectCommitMutation: Component => props => (
-    <Component {...props} commitMutation={mockCommitMutation} />
-  ),
-}))
-const trackEvent = jest.fn()
-
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
 }
 
-class PaymentTestPage extends OrderAppTestPage {
-  get nameInput() {
-    return this.find("input[placeholder='Add full name']")
-  }
-
-  get sameAddressCheckbox() {
-    return this.find(Checkbox)
-  }
-
-  get addressForm() {
-    return this.find(AddressForm)
-  }
-
-  async toggleSameAddressCheckbox() {
-    this.sameAddressCheckbox.simulate("click")
-    await this.update()
-  }
-
-  setName(name: string) {
-    ;(this.nameInput.instance() as any).value = name
-    this.nameInput.simulate("change")
-  }
-}
-
-describe("Payment", () => {
-  const pushMock = jest.fn()
-  let isCommittingMutation
-
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <MockBoot>
-        <PaymentFragmentContainer
-          router={{ push: pushMock } as any}
-          order={props.order}
-          // @ts-ignore
-          isCommittingMutation={isCommittingMutation}
-        />
-      </MockBoot>
-    ),
+const trackEvent = jest.fn()
+const setupTestEnv = (order = testOrder) => {
+  return createTestEnv({
+    Component: PaymentFragmentContainer,
+    defaultData: {
+      order: order,
+      me: { creditCards: { edges: [] } },
+    },
+    defaultMutationResults: {
+      ...settingOrderPaymentSuccess,
+    },
     query: graphql`
       query PaymentTestQuery @raw_response_type @relay_test_operation {
         me {
@@ -130,8 +87,33 @@ describe("Payment", () => {
         }
       }
     `,
-  })
+    TestPage: class PaymentTestPage extends OrderAppTestPage {
+      get nameInput() {
+        return this.find("input[placeholder='Add full name']")
+      }
 
+      get sameAddressCheckbox() {
+        return this.find(Checkbox)
+      }
+
+      get addressForm() {
+        return this.find(AddressForm)
+      }
+
+      async toggleSameAddressCheckbox() {
+        this.sameAddressCheckbox.simulate("click")
+        await this.update()
+      }
+
+      setName(name: string) {
+        ;(this.nameInput.instance() as any).value = name
+        this.nameInput.simulate("change")
+      }
+    },
+  })
+}
+
+describe("Payment", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
       return {
@@ -151,123 +133,104 @@ describe("Payment", () => {
   })
 
   beforeEach(() => {
-    jest.clearAllMocks()
     const mockTracking = useTracking as jest.Mock
     mockTracking.mockImplementation(() => {
       return {
         trackEvent,
       }
     })
-    isCommittingMutation = false
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows the button spinner while loading the mutation", async () => {
-    isCommittingMutation = true
-    let wrapper = getWrapper()
-    let page = new PaymentTestPage(wrapper)
-
-    expect(page.isLoading()).toBeTruthy()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    await page.expectButtonSpinnerWhenSubmitting()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows the default error modal when the payment picker throws an error", async () => {
     paymentPickerMock.useThrownError()
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith()
+    await page.expectAndDismissDefaultErrorDialog()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
     paymentPickerMock.useErrorResult()
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith({
-      title: "This is the description of an error.",
-      message:
-        "Please enter another payment method or contact your bank for more information.",
-    })
-  })
-
-  it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
-    paymentPickerMock.useInternalErrorResult()
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
-    await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith({
-      title: "An internal error occurred",
-    })
-  })
-
-  it("commits setOrderPayment mutation with the credit card id", async () => {
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
-    await page.clickSubmit()
-
-    expect(mockCommitMutation).toHaveBeenCalledWith(
-      expect.objectContaining({
-        variables: {
-          input: {
-            paymentMethod: "CREDIT_CARD",
-            paymentMethodId: "credit-card-id",
-            id: "1234",
-          },
-        },
-      })
+    await page.expectAndDismissErrorDialogMatching(
+      "This is the description of an error.",
+      "Please enter another payment method or contact your bank for more information."
     )
   })
 
+  // eslint-disable-next-line jest/expect-expect
+  it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
+    paymentPickerMock.useInternalErrorResult()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    await page.clickSubmit()
+    await page.expectAndDismissErrorDialogMatching(
+      "An internal error occurred",
+      "Please try again or contact orders@artsy.net."
+    )
+  })
+
+  it("commits setOrderPayment mutation with the credit card id", async () => {
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    await page.clickSubmit()
+
+    expect(env.mutations.lastFetchVariables).toMatchObject({
+      input: {
+        paymentMethod: "CREDIT_CARD",
+        paymentMethodId: "credit-card-id",
+        id: "1234",
+      },
+    })
+  })
+
   it("takes the user to the review step", async () => {
-    mockCommitMutation.mockResolvedValue({})
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
+    const env = setupTestEnv()
+    const page = await env.buildPage()
     await page.clickSubmit()
-
-    expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
+    expect(env.routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/review")
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal when there is an error in SetOrderPaymentPayload", async () => {
-    mockCommitMutation.mockResolvedValue(settingOrderPaymentFailed)
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    env.mutations.useResultsOnce(settingOrderPaymentFailed)
     await page.clickSubmit()
-
-    expect(mockShowErrorDialog).toHaveBeenCalledWith()
+    await page.expectAndDismissDefaultErrorDialog()
   })
 
+  // eslint-disable-next-line jest/expect-expect
   it("shows an error modal when there is a network error", async () => {
-    mockCommitMutation.mockRejectedValue({})
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
-    let page = new PaymentTestPage(wrapper)
-    await page.clickSubmit()
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+    env.mutations.mockNetworkFailureOnce()
 
-    expect(mockShowErrorDialog).toHaveBeenCalledWith()
+    await page.clickSubmit()
+    await page.expectAndDismissDefaultErrorDialog()
   })
 
   describe("Offer-mode orders", () => {
     it("shows an active offer stepper if the order is an Offer Order", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => OfferOrderWithShippingDetails,
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: {
+          order: {
+            ...OfferOrderWithShippingDetails,
+          },
+        },
       })
-      let page = new PaymentTestPage(wrapper)
-
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
         `"CheckOfferNavigate rightCheckShippingNavigate rightPaymentNavigate rightReview"`
       )
@@ -305,22 +268,16 @@ describe("Payment", () => {
     })
 
     it("renders selection of payment methods", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
-
+      const env = setupTestEnv(achOrder)
+      const page = await env.buildPage()
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
     it("tracks when the user selects the credit card payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+      const env = setupTestEnv(achOrder)
+      const page = await env.buildPage()
       page.selectPaymentMethod(1)
-
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedChangePaymentMethod",
         amount: "$12,000",
@@ -334,12 +291,9 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the bank payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+      const env = setupTestEnv(achOrder)
+      const page = await env.buildPage()
       page.selectPaymentMethod(0)
-
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedChangePaymentMethod",
         amount: "$12,000",
@@ -353,12 +307,9 @@ describe("Payment", () => {
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+      const env = setupTestEnv(achOrder)
+      const page = await env.buildPage()
       page.selectPaymentMethod(1)
-
       const creditCardCollapse = page
         .find(PaymentPickerFragmentContainer)
         .closest(Collapse)
@@ -368,12 +319,9 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+      const env = setupTestEnv(achOrder)
+      const page = await env.buildPage()
       page.selectPaymentMethod(0)
-
       const creditCardCollapse = page
         .find(PaymentPickerFragmentContainer)
         .closest(Collapse)
@@ -412,10 +360,8 @@ describe("Payment", () => {
     })
 
     it("does not render wire tranfer as option for uneligible partners", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+      const env = setupTestEnv()
+      const page = await env.buildPage()
       expect(page.text()).not.toContain("Wire transfer")
     })
 
@@ -428,10 +374,9 @@ describe("Payment", () => {
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
+
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
 
       expect(page.find(BorderedRadio).at(1).prop("selected")).toBeTruthy()
     })
@@ -444,11 +389,9 @@ describe("Payment", () => {
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
 
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
       expect(page.text()).toContain("Wire transfer")
     })
 
@@ -460,12 +403,10 @@ describe("Payment", () => {
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
-      page.selectPaymentMethod(1)
 
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
+      page.selectPaymentMethod(1)
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedChangePaymentMethod",
         amount: "$12,000",
@@ -476,6 +417,13 @@ describe("Payment", () => {
         payment_method: "WIRE_TRANSFER",
         subject: "click_payment_method",
       })
+    })
+
+    // eslint-disable-next-line jest/expect-expect
+    it("shows the button spinner while loading the mutation", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+      await page.expectButtonSpinnerWhenSubmitting()
     })
 
     it("transitions to review step when wire transfer is chosen", async () => {
@@ -498,10 +446,8 @@ describe("Payment", () => {
         ] as CommercePaymentMethodEnum[],
       }
 
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
+      const env = setupTestEnv(order)
+      const page = await env.buildPage()
       await page.selectPaymentMethod(1)
       await page.clickSubmit()
 
@@ -513,7 +459,9 @@ describe("Payment", () => {
           },
         },
       })
-      expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
+      expect(env.routes.mockPushRoute).toHaveBeenCalledWith(
+        "/orders/1234/review"
+      )
     })
   })
 })

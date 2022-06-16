@@ -14,6 +14,9 @@ import { Box } from "@artsy/palette"
 
 export { StitchWrapper } from "./StitchWrapper"
 export { NavBar } from "./NavBar"
+export {
+  TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
+} from "v2/Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"
 import { Footer as BaseFooter } from "v2/Components/Footer"
 
