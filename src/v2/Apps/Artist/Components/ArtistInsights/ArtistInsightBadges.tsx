@@ -16,35 +16,12 @@ interface ArtistInsightBadgesProps {
   artist: ArtistInsightBadges_artist
 }
 
-const ARTIST_BADGES = {
-  ACTIVE_SECONDARY_MARKET: {
-    title: "Active Secondary Market",
-    description: "Recent auction results in the Artsy Price Database.",
-  },
-  BLUE_CHIP_REPRESENTATION: {
-    title: "Blue Chip Representation",
-    description: "Represented by internationally reputable galleries.",
-  },
-  CRITICALLY_ACCLAIMED: {
-    title: "Critically Acclaimed",
-    description: "Recognized by major institutions and publications.",
-  },
-  ARTSY_VANGUARD: {
-    title: "The Artsy Vanguard",
-    description:
-      "Featured in Artsy's annual list of the most promising artists working today.",
-  },
-  HIGH_AUCTION_RECORD: {
-    title: "High Auction Record",
-  },
-}
-
 interface ArtistBadgeProps {
-  type: string
+  label: string
   description?: string
 }
 
-export const ArtistBadge: FC<ArtistBadgeProps> = ({ type, description }) => {
+export const ArtistBadge: FC<ArtistBadgeProps> = ({ label, description }) => {
   return (
     <CSSGrid gridTemplateColumns="auto 1fr" gridTemplateRows="auto 1fr">
       <Box
@@ -62,10 +39,10 @@ export const ArtistBadge: FC<ArtistBadgeProps> = ({ type, description }) => {
         display="flex"
         alignItems="center"
       >
-        {ARTIST_BADGES[type].title}
+        {label}
       </Text>
       <Text color="black60" style={{ gridArea: "2 / 2 / 3 / 3" }}>
-        {description ?? ARTIST_BADGES[type].description}
+        {description}
       </Text>
     </CSSGrid>
   )
@@ -104,24 +81,32 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
       <GridColumns>
         {blueChipRepresentation.length > 0 && (
           <Column span={6}>
-            <ArtistBadge type="BLUE_CHIP_REPRESENTATION" />
+            <ArtistBadge
+              label="Blue Chip Representation"
+              description="Represented by internationally reputable galleries."
+            />
           </Column>
         )}
 
         {highAuctionRecord && (
           <Column span={6}>
             <ArtistBadge
-              type="HIGH_AUCTION_RECORD"
+              label="High Auction Record"
               description={highAuctionRecord}
             />
           </Column>
         )}
 
-        {artist.insights.map(insight => {
-          return ARTIST_BADGES[insight!.type] ? (
-            <ArtistBadge type={insight!.type} />
-          ) : null
-        })}
+        {/* TODO: uncomment once new artist metadata is imported into gravity i.e. active_secondary_market */}
+
+        {/* {artist.insights.map(insight => {
+          return (
+            <ArtistBadge
+              label={insight.label}
+              description={insight.description}
+            />
+          )
+        })} */}
       </GridColumns>
     </>
   )
@@ -132,10 +117,12 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistInsightBadges_artist on Artist {
-        insights {
+        insights(kind: [ACTIVE_SECONDARY_MARKET]) {
           type
           label
           entities
+          kind
+          description
         }
         auctionResultsConnection(
           recordsTrusted: true

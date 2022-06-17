@@ -4,11 +4,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "BIENNIAL" | "COLLECTED" | "GROUP_SHOW" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 export type ArtistInsightBadges_artist = {
     readonly insights: ReadonlyArray<{
         readonly type: string;
         readonly label: string;
         readonly entities: ReadonlyArray<string>;
+        readonly kind: ArtistInsightKind | null;
+        readonly description: string | null;
     }>;
     readonly auctionResultsConnection: {
         readonly edges: ReadonlyArray<{
@@ -56,7 +59,15 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "kind",
+          "value": [
+            "ACTIVE_SECONDARY_MARKET"
+          ]
+        }
+      ],
       "concreteType": "ArtistInsight",
       "kind": "LinkedField",
       "name": "insights",
@@ -82,9 +93,23 @@ return {
           "kind": "ScalarField",
           "name": "entities",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "kind",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
     },
     {
       "alias": null,
@@ -251,5 +276,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '008252a29103f7cc14ab3478b720fe17';
+(node as any).hash = '87f53ac0842cb6d6bea9aa519b3fe9c0';
 export default node;

@@ -69,6 +69,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         ...ArtistGenes_artist
         ...ArtistInsightBadges_artist
         ...ArtistInsightAchievements_artist
+
         biographyBlurb(format: HTML, partnerBio: false) {
           partner {
             profile {

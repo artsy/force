@@ -32,7 +32,7 @@ interface ArtistPillProps {
 
 export const ArtistPill: FC<ArtistPillProps> = ({ type }) => {
   return (
-    <Pill variant="badge" disabled>
+    <Pill variant="badge" disabled mr={1}>
       {ARTIST_PILLS[type].title}
     </Pill>
   )

@@ -83,10 +83,12 @@ fragment ArtistInsightAchievements_artist on Artist {
 }
 
 fragment ArtistInsightBadges_artist on Artist {
-  insights {
+  insights(kind: [ACTIVE_SECONDARY_MARKET]) {
     type
     label
     entities
+    kind
+    description
   }
   auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
     edges {
@@ -153,33 +155,49 @@ v4 = {
   "name": "id",
   "storageKey": null
 },
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "type",
-  "storageKey": null
-},
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "type",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "label",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "entities",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "kind",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "description",
+    "storageKey": null
+  }
+],
 v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "label",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "entities",
-  "storageKey": null
-},
-v8 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v9 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -276,22 +294,26 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "kind",
+                "value": [
+                  "ACTIVE_SECONDARY_MARKET"
+                ]
+              }
+            ],
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
             "name": "insights",
             "plural": true,
-            "selections": [
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
-            ],
-            "storageKey": null
+            "selections": (v5/*: any*/),
+            "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
           },
           {
             "alias": null,
             "args": [
-              (v8/*: any*/),
+              (v6/*: any*/),
               {
                 "kind": "Literal",
                 "name": "recordsTrusted",
@@ -389,7 +411,7 @@ return {
               {
                 "alias": null,
                 "args": [
-                  (v8/*: any*/),
+                  (v6/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "partnerCategory",
@@ -427,7 +449,7 @@ return {
                             "name": "categories",
                             "plural": true,
                             "selections": [
-                              (v9/*: any*/),
+                              (v7/*: any*/),
                               (v4/*: any*/)
                             ],
                             "storageKey": null
@@ -446,7 +468,7 @@ return {
             ],
             "storageKey": null
           },
-          (v9/*: any*/),
+          (v7/*: any*/),
           {
             "alias": "insightsList",
             "args": [
@@ -466,25 +488,7 @@ return {
             "kind": "LinkedField",
             "name": "insights",
             "plural": true,
-            "selections": [
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "kind",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
-                "storageKey": null
-              }
-            ],
+            "selections": (v5/*: any*/),
             "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
           },
           {
@@ -556,12 +560,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b7b79284888839899bcd8c075383888e",
+    "cacheID": "4007c4c512ceb44a6b6cbebb6152993d",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistGenes_artist\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistCareerHighlightsQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistGenes_artist\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
