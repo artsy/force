@@ -5,12 +5,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
-import { withSystemContext } from "v2/System"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
+import { ArtworkZendeskFragmentContainer } from "./ArtworkZendesk"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
-  googleAdId?: string
 }
 
 export class ArtworkMeta extends Component<ArtworkMetaProps> {
@@ -33,16 +32,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
       )
     }
 
-    return (
-      <>
-        <Meta property="twitter:card" content="summary" />
-      </>
-    )
-  }
-
-  get isInquiryArtwork() {
-    const { isAcquireable, isInquireable, isOfferable } = this.props.artwork
-    return isInquireable && !isAcquireable && !isOfferable
+    return <Meta property="twitter:card" content="summary" />
   }
 
   render() {
@@ -52,58 +42,47 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     return (
       <>
         <Title>{artwork.meta?.title}</Title>
+
         <Meta name="description" content={artwork.meta?.description} />
+
         {imageURL && <Meta name="thumbnail" content={imageURL} />}
+
         <Link rel="canonical" href={`${sd.APP_URL}${artwork.href}`} />
+
         <Meta
           property="twitter:description"
           content={artwork.meta?.longDescription}
         />
+
         <Meta property="og:title" content={artwork.meta?.title} />
+
         <Meta property="og:description" content={artwork.meta?.description} />
+
         <Meta property="og:url" content={`${sd.APP_URL}${artwork.href}`} />
+
         <Meta
           property="og:type"
           content={`${sd.FACEBOOK_APP_NAMESPACE}:artwork`}
         />
 
         <SeoDataForArtwork artwork={artwork} />
+
         {this.renderImageMetaTags()}
+
+        <ArtworkZendeskFragmentContainer artwork={artwork} />
       </>
     )
   }
 }
 
 export const ArtworkMetaFragmentContainer = createFragmentContainer(
-  withSystemContext(ArtworkMeta),
+  ArtworkMeta,
   {
     artwork: graphql`
       fragment ArtworkMeta_artwork on Artwork {
+        ...SeoDataForArtwork_artwork
+        ...ArtworkZendesk_artwork
         href
-        internalID
-        date
-        artistNames
-        sale_message: saleMessage
-        listPrice {
-          __typename
-          ... on Money {
-            currencyCode
-            major
-          }
-          ... on PriceRange {
-            maxPrice {
-              currencyCode
-              major
-            }
-          }
-        }
-        partner {
-          name
-        }
-        isInAuction
-        isAcquireable
-        isInquireable
-        isOfferable
         isShareable
         metaImage: image {
           resized(
@@ -121,14 +100,6 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
           description(limit: 155)
           longDescription: description(limit: 200)
         }
-        context {
-          __typename
-          ... on Fair {
-            slug
-            name
-          }
-        }
-        ...SeoDataForArtwork_artwork
       }
     `,
   }

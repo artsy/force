@@ -49,11 +49,6 @@ class OrderApp extends Component<OrderAppProps, {}> {
     }
 
     window.addEventListener("beforeunload", preventHardReload)
-
-    // zEmbed represents the Zendesk object
-    if (window.zEmbed) {
-      window.zEmbed.show()
-    }
   }
 
   componentWillUnmount() {
@@ -62,11 +57,6 @@ class OrderApp extends Component<OrderAppProps, {}> {
     }
 
     window.removeEventListener("beforeunload", preventHardReload)
-
-    // zEmbed represents the Zendesk object
-    if (window.zEmbed) {
-      window.zEmbed.hide()
-    }
   }
 
   onTransition = newLocation => {
@@ -92,11 +82,11 @@ class OrderApp extends Component<OrderAppProps, {}> {
 
     const price = itemsTotalCents! / 100
 
-    if (!price || !isExceededZendeskThreshold(price, currencyCode)) return
+    if (!price || !isExceededZendeskThreshold(price, currencyCode)) {
+      return null
+    }
 
-    if (typeof window !== "undefined" && window.zEmbed) return
-
-    return <ZendeskWrapper zdKey={getENV("ZENDESK_KEY")} />
+    return <ZendeskWrapper />
   }
 
   render() {

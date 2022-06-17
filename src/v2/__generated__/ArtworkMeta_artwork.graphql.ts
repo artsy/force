@@ -6,32 +6,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork = {
     readonly href: string | null;
-    readonly internalID: string;
-    readonly date: string | null;
-    readonly artistNames: string | null;
-    readonly sale_message: string | null;
-    readonly listPrice: ({
-        readonly __typename: "Money";
-        readonly currencyCode: string;
-        readonly major: number;
-    } | {
-        readonly __typename: "PriceRange";
-        readonly maxPrice: {
-            readonly currencyCode: string;
-            readonly major: number;
-        } | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly partner: {
-        readonly name: string | null;
-    } | null;
-    readonly isInAuction: boolean | null;
-    readonly isAcquireable: boolean | null;
-    readonly isInquireable: boolean | null;
-    readonly isOfferable: boolean | null;
     readonly isShareable: boolean | null;
     readonly metaImage: {
         readonly resized: {
@@ -45,16 +19,7 @@ export type ArtworkMeta_artwork = {
         readonly description: string | null;
         readonly longDescription: string | null;
     } | null;
-    readonly context: ({
-        readonly __typename: "Fair";
-        readonly slug: string;
-        readonly name: string | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $fragmentRefs": FragmentRefs<"SeoDataForArtwork_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"SeoDataForArtwork_artwork" | "ArtworkZendesk_artwork">;
     readonly " $refType": "ArtworkMeta_artwork";
 };
 export type ArtworkMeta_artwork$data = ArtworkMeta_artwork;
@@ -65,38 +30,7 @@ export type ArtworkMeta_artwork$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "currencyCode",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "major",
-    "storageKey": null
-  }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -107,109 +41,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "date",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artistNames",
-      "storageKey": null
-    },
-    {
-      "alias": "sale_message",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleMessage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": null,
-      "kind": "LinkedField",
-      "name": "listPrice",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
-          "type": "Money",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Money",
-              "kind": "LinkedField",
-              "name": "maxPrice",
-              "plural": false,
-              "selections": (v1/*: any*/),
-              "storageKey": null
-            }
-          ],
-          "type": "PriceRange",
-          "abstractKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Partner",
-      "kind": "LinkedField",
-      "name": "partner",
-      "plural": false,
-      "selections": [
-        (v2/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isAcquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInquireable",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isOfferable",
       "storageKey": null
     },
     {
@@ -327,41 +158,18 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "concreteType": null,
-      "kind": "LinkedField",
-      "name": "context",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "slug",
-              "storageKey": null
-            },
-            (v2/*: any*/)
-          ],
-          "type": "Fair",
-          "abstractKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "SeoDataForArtwork_artwork"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SeoDataForArtwork_artwork"
+      "name": "ArtworkZendesk_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-})();
-(node as any).hash = '31f3bd396402fb7d7c0f370fe4b9bf2d';
+(node as any).hash = '06d9ed8a7f9afd95cb581cb3b5adee60';
 export default node;
