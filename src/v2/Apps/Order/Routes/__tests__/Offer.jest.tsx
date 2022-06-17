@@ -1,11 +1,11 @@
 import { OfferTestQueryRawResponse } from "v2/__generated__/OfferTestQuery.graphql"
-import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
 import {
   UntouchedOfferOrder,
   UntouchedOfferOrderInPounds,
   UntouchedOfferOrderWithRange,
   UntouchedOfferOrderEditionSet,
+  UntouchedOfferOrderPriceHidden,
 } from "../../../__tests__/Fixtures/Order"
 import {
   initialOfferFailedAmountIsInvalid,
@@ -14,6 +14,8 @@ import {
 } from "../__fixtures__/MutationResults"
 import { OfferFragmentContainer } from "../Offer"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { MockBoot } from "v2/DevTools"
 
 // Need to mock Utils/Events instead of using mockTracking because
 // Boot's `dispatch` tracking prop overrides the one injected by
@@ -51,21 +53,41 @@ jest.mock("@artsy/palette", () => {
 
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
+const mockShowErrorDialog = jest.fn()
+jest.mock("v2/Apps/Order/Dialogs", () => ({
+  ...jest.requireActual("../../Dialogs"),
+  injectDialog: Component => props => (
+    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
+  ),
+}))
+
+const mockCommitMutation = jest.fn()
+jest.mock("v2/Apps/Order/Utils/commitMutation", () => ({
+  ...jest.requireActual("../../Utils/commitMutation"),
+  injectCommitMutation: Component => props => (
+    <Component {...props} commitMutation={mockCommitMutation} />
+  ),
+}))
+
 const testOffer: OfferTestQueryRawResponse["order"] = {
   ...UntouchedOfferOrder,
   internalID: "1234",
 }
 
 describe("Offer InitialMutation", () => {
-  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
-    Component: OfferFragmentContainer,
-    TestPage: OrderAppTestPage,
-    defaultData: {
-      order: testOffer,
-    },
-    defaultMutationResults: {
-      ...initialOfferSuccess,
-    },
+  const pushMock = jest.fn()
+  let isCommittingMutation
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot>
+        <OfferFragmentContainer
+          {...props}
+          router={{ push: pushMock }}
+          isCommittingMutation={isCommittingMutation}
+        />
+      </MockBoot>
+    ),
     query: graphql`
       query OfferTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
@@ -75,27 +97,31 @@ describe("Offer InitialMutation", () => {
     `,
   })
 
-  beforeEach(hooks.clearErrors)
-
-  afterEach(hooks.clearMocksAndErrors)
+  beforeEach(() => {
+    jest.clearAllMocks()
+    isCommittingMutation = false
+  })
 
   describe("the page layout", () => {
-    let page: OrderAppTestPage
-    beforeAll(async () => {
-      page = await buildPage()
-    })
-
     it("has 4 price options", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       expect(page.priceOptions).toHaveLength(1)
       expect(page.priceOptions.find("BorderedRadio")).toHaveLength(4)
-    })
-
-    it("shows the list price", () => {
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: US$16,000")
+      expect(page.text()).toContain("All offers are binding")
     })
 
     it("can receive input, which updates the transaction summary", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       expect(page.transactionSummary.text()).toContain("Your offer")
       await page.setOfferAmount(1)
       expect(page.transactionSummary.text()).toContain("Your offerUS$1.00")
@@ -105,6 +131,11 @@ describe("Offer InitialMutation", () => {
     })
 
     it("can select a price option which updates the transaction summary", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       expect(page.transactionSummary.text()).toContain("Your offer")
 
       await page.selectPriceOption(0)
@@ -116,31 +147,27 @@ describe("Offer InitialMutation", () => {
       await page.selectPriceOption(2)
       expect(page.transactionSummary.text()).toContain("Your offerUS$12,800.00")
     })
-
-    it("shows final offer binding notice", () => {
-      expect(page.text()).toContain("All offers are binding")
-    })
   })
 
   describe("a non-usd currency", () => {
-    let page: OrderAppTestPage
-    beforeAll(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...testOffer,
-            ...UntouchedOfferOrderInPounds,
-          },
-        },
-      })
-    })
+    const offer = { ...testOffer, ...UntouchedOfferOrderInPounds }
 
     it("shows the list price just below the input", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => offer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: £16,000")
     })
 
     it("can receive input, which updates the transaction summary", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => offer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       expect(page.transactionSummary.text()).toContain("Your offer")
       await page.setOfferAmount(1)
       expect(page.transactionSummary.text()).toContain("Your offer£1.00")
@@ -151,63 +178,61 @@ describe("Offer InitialMutation", () => {
   })
 
   describe("an offer on the work with range display", () => {
-    let page: OrderAppTestPage
-    beforeAll(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...testOffer,
-            ...UntouchedOfferOrderWithRange,
-          },
-        },
-      })
-    })
+    const offer = { ...testOffer, ...UntouchedOfferOrderWithRange }
 
     it("shows the list price as a range", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => offer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: US$14,000 - 18,000")
     })
 
     it("does not show the offer is too small warning", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => offer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       await page.setOfferAmount(1000)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
     })
 
     it("does not show the offer amount is too high warning", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => offer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       await page.setOfferAmount(17000)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
     })
   })
 
   describe("a offer note", () => {
-    let page: OrderAppTestPage
-
     describe("non inquiry order offer", () => {
-      beforeAll(async () => {
-        page = await buildPage()
-      })
-
       it("displays OfferNote button", () => {
+        let wrapper = getWrapper({
+          CommerceOrder: () => testOffer,
+        })
+        let page = new OrderAppTestPage(wrapper)
+
         const offerNote = page.find("OfferNote")
         expect(offerNote).toHaveLength(1)
       })
     })
 
     describe("inquiry order offer", () => {
-      beforeAll(async () => {
-        page = await buildPage({
-          mockData: {
-            order: {
-              ...testOffer,
-              isInquiryOrder: true,
-            },
-          },
-        })
-      })
-
       it("hides the OfferNote button for an inquiry order", () => {
+        let wrapper = getWrapper({
+          CommerceOrder: () => ({ ...testOffer, isInquiryOrder: true }),
+        })
+        let page = new OrderAppTestPage(wrapper)
+
         const offerNote = page.find("OfferNote")
         expect(offerNote).toHaveLength(0)
       })
@@ -215,42 +240,58 @@ describe("Offer InitialMutation", () => {
   })
 
   describe("mutation", () => {
-    let page: OrderAppTestPage
-    beforeEach(async () => {
-      page = await buildPage()
-    })
-
     it("doesn't let the user continue if they haven't clicked any option", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       await page.clickSubmit()
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+      expect(mockCommitMutation).not.toHaveBeenCalled()
       expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
     })
 
     it("doesn't let the user continue if they haven't typed anything in", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       page.selectCustomAmount()
+
       expect(page.offerInput.text()).not.toMatch(
         "Offer amount missing or invalid."
       )
       await page.clickSubmit()
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
+      expect(mockCommitMutation).not.toHaveBeenCalled()
       expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
     })
 
     it("doesn't let the user continue if the offer value is not positive", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       await page.setOfferAmount(0)
+
       expect(page.offerInput.text()).not.toMatch(
         "Offer amount missing or invalid."
       )
       await page.clickSubmit()
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
+      expect(mockCommitMutation).not.toHaveBeenCalled()
       expect(page.offerInput.text()).toMatch("Offer amount missing or invalid.")
     })
 
     it("routes to shipping screen after mutation completes - option", async () => {
+      mockCommitMutation.mockResolvedValue(initialOfferSuccess)
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       await page.selectRandomPriceOption()
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalled()
-      expect(routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/shipping")
+
+      expect(mockCommitMutation).toHaveBeenCalled()
+      expect(pushMock).toHaveBeenCalledWith("/orders/1234/shipping")
     })
 
     it("adds a custom note given no note present", async () => {
@@ -258,78 +299,109 @@ describe("Offer InitialMutation", () => {
     })
 
     it("routes to shipping screen after mutation completes - custom amount", async () => {
+      mockCommitMutation.mockResolvedValue(initialOfferSuccess)
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       await page.setOfferAmount(16000)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalled()
-      expect(routes.mockPushRoute).toHaveBeenCalledWith("/orders/1234/shipping")
+
+      expect(mockCommitMutation).toHaveBeenCalled()
+      expect(pushMock).toHaveBeenCalledWith("/orders/1234/shipping")
     })
 
     it("shows the button spinner while committing the mutation", async () => {
-      await page.setOfferAmount(15000)
-      await page.expectButtonSpinnerWhenSubmitting()
+      isCommittingMutation = true
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
+      expect(page.isLoading()).toBeTruthy()
     })
 
     it("shows an error modal when there is an error from the server", async () => {
-      mutations.useResultsOnce(initialOfferFailedCannotOffer)
+      mockCommitMutation.mockResolvedValue(initialOfferFailedCannotOffer)
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       await page.setOfferAmount(16000)
       await page.clickSubmit()
-      await page.expectAndDismissDefaultErrorDialog()
-      expect(mutations.mockFetch).toHaveBeenCalled()
+
+      expect(mockCommitMutation).toHaveBeenCalled()
+      expect(mockShowErrorDialog).lastCalledWith()
     })
 
     it("shows a helpful error message in a modal when there is an error from the server because the amount is invalid", async () => {
-      mutations.useResultsOnce(initialOfferFailedAmountIsInvalid)
-
+      mockCommitMutation.mockResolvedValue(initialOfferFailedAmountIsInvalid)
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
       await page.setOfferAmount(16000)
       await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Invalid offer",
-        "The offer amount is either missing or invalid. Please try again."
-      )
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Invalid offer",
+        message:
+          "The offer amount is either missing or invalid. Please try again.",
+      })
+    })
+
+    it("shows no modal warning when an offer made on work with hidden price", async () => {
+      mockCommitMutation.mockResolvedValue(initialOfferSuccess)
+      let wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...UntouchedOfferOrderPriceHidden,
+          internalID: "1234",
+          __isCommerceOrder: "",
+          price: "",
+        }),
+      })
+      let page = new OrderAppTestPage(wrapper)
+
+      await page.setOfferAmount(2)
+      await page.clickSubmit()
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(mockShowErrorDialog).not.toHaveBeenCalled()
     })
 
     describe("The 'amount too small' speed bump", () => {
-      let page: OrderAppTestPage
-      beforeEach(async () => {
-        page = await buildPage({
-          mockData: {
-            order: {
-              ...UntouchedOfferOrderEditionSet,
-              internalID: "1234",
-            },
-          },
-        })
-      })
-
       it("shows if the offer amount is too small", async () => {
+        let wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...UntouchedOfferOrderEditionSet,
+            internalID: "1234",
+          }),
+        })
+        let page = new OrderAppTestPage(wrapper)
         await page.setOfferAmount(1000)
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-
-        await page.expectAndDismissErrorDialogMatching(
-          "Offer may be too low",
-          "Offers within 20% of the list price are most likely to receive a response",
-          "OK"
-        )
-
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
+        expect(mockCommitMutation).not.toHaveBeenCalled()
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: "Offer may be too low",
+          message:
+            "Offers within 20% of the list price are most likely to receive a response.",
+          continueButtonText: "OK",
+        })
+        expect(mockCommitMutation).not.toHaveBeenCalled()
 
         await page.clickSubmit()
-
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
       })
     })
   })
 
   describe("Analytics", () => {
-    let page: OrderAppTestPage
-    beforeEach(async () => {
-      page = await buildPage()
-      mockPostEvent.mockReset()
-    })
-
     it("tracks the offer input focus", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+
       expect(mockPostEvent).not.toHaveBeenCalled()
       page.selectCustomAmount()
       page.find("input").simulate("focus")
@@ -347,6 +419,10 @@ describe("Offer InitialMutation", () => {
         flow: "Make offer",
         order_id: "1234",
       }
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
 
       await page.setOfferAmount(1000)
 
