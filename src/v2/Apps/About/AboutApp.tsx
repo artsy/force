@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Column,
@@ -18,8 +17,7 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import styled from "styled-components"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { cropped, resized } from "v2/Utils/resized"
-import { Fragment } from "react"
+import { resized } from "v2/Utils/resized"
 import { AboutArtworksRailQueryRenderer } from "./AboutArtworksRail"
 
 export const AboutApp: React.FC = () => {
@@ -310,67 +308,9 @@ const ArtsySpecialists: React.FC = () => {
           </Button>
         </Flex>
       </Column>
-
-      <Column span={6}>
-        <Join separator={<Separator my={2} />}>
-          {ADVISORY_SPECIALISTS.map(specialist => {
-            const image = cropped(specialist.photo, { width: 100, height: 100 })
-
-            return (
-              <Fragment key={specialist.name}>
-                <Flex flexDirection="row">
-                  <Avatar
-                    size="md"
-                    src={image.src}
-                    srcSet={image.srcSet}
-                    mr={2}
-                  />
-                  <Flex flexDirection="column">
-                    <Text variant="lg-display">{specialist.name}</Text>
-                    <Text variant="sm-display">{specialist.title}</Text>
-                    <Text variant="sm-display" color="black60" mb={2}>
-                      {specialist.location}
-                    </Text>
-                    <RouterLink to={`mailto:${specialist.email}`}>
-                      {specialist.email}
-                    </RouterLink>
-                  </Flex>
-                </Flex>
-              </Fragment>
-            )
-          })}
-        </Join>
-      </Column>
     </GridColumns>
   )
 }
-
-const ADVISORY_SPECIALISTS = [
-  {
-    name: "Robin Roche",
-    title: "Senior Advisor",
-    location: "New York",
-    email: "robin.roche@artsy.net",
-    phone: "+1 646 707 9450",
-    photo: "http://files.artsy.net/images/robin.jpeg",
-  },
-  {
-    name: "Itziar Ramos Ricoy",
-    title: "Advisor",
-    location: "London",
-    email: "itziar.ramos@artsy.net",
-    phone: "+44 7429 093319",
-    photo: "http://files.artsy.net/images/itziar.jpeg",
-  },
-  {
-    name: "Caroline Perkins",
-    title: "Advisor",
-    location: "New York",
-    email: "caroline.perkins@artsy.net",
-    phone: "+1 540 588 1371",
-    photo: "http://files.artsy.net/images/cperkins_headshot-copy.jpg",
-  },
-]
 
 const Container = styled(FullBleed)`
   overflow: hidden;
