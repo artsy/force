@@ -103,16 +103,11 @@ export const fairRoutes: AppRouteConfig[] = [
           query fairRoutes_FairArtworksQuery(
             $slug: String!
             $input: FilterArtworksInput
-            $shouldFetchCounts: Boolean!
             $aggregations: [ArtworkAggregation]
           ) {
             fair(id: $slug) @principalField {
               ...FairArtworks_fair
-                @arguments(
-                  input: $input
-                  shouldFetchCounts: $shouldFetchCounts
-                  aggregations: $aggregations
-                )
+                @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `,
@@ -178,7 +173,6 @@ function initializeVariablesWithFilterState({ slug }, props) {
   return {
     slug,
     input,
-    shouldFetchCounts: !!props.context.user,
     aggregations,
   }
 }

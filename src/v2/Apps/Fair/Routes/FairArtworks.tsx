@@ -91,7 +91,6 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
     fair: graphql`
       fragment FairArtworks_fair on Fair
         @argumentDefinitions(
-          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
           input: { type: "FilterArtworksInput" }
           aggregations: { type: "[ArtworkAggregation]" }
         ) {
@@ -112,8 +111,9 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         }
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
-          counts @include(if: $shouldFetchCounts) {
+          counts {
             followedArtists
+            total(format: "0,0")
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
@@ -121,14 +121,9 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query FairArtworksQuery(
-      $slug: String!
-      $input: FilterArtworksInput
-      $shouldFetchCounts: Boolean!
-    ) {
+    query FairArtworksQuery($slug: String!, $input: FilterArtworksInput) {
       fair(id: $slug) {
-        ...FairArtworks_fair
-          @arguments(input: $input, shouldFetchCounts: $shouldFetchCounts)
+        ...FairArtworks_fair @arguments(input: $input)
       }
     }
   `

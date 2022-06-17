@@ -44,7 +44,7 @@ describe("FairArtworks", () => {
           @raw_response_type
           @relay_test_operation {
           fair(id: $slug) {
-            ...FairArtworks_fair @arguments(shouldFetchCounts: true)
+            ...FairArtworks_fair
           }
         }
       `,
@@ -80,6 +80,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
       id: "filteredartworksabc123",
       counts: {
         followedArtists: 10,
+        total: 10,
       },
       pageInfo: {
         hasNextPage: true,
