@@ -57,8 +57,6 @@ export const ENABLE_WEB_CRAWLING: any = false
 export const EOY_2016_ARTICLE: any = "58472d93b7b31d00116f5ab0"
 export const EOY_2016: any = "5829db77b5989e6f98f779a5"
 export const FACEBOOK_APP_NAMESPACE: any = "artsyinc"
-export const FACEBOOK_DOMAIN_VERIFICATION: any =
-  "yeg3dqrlq548zc77ggvfipouil1l1e"
 export const FACEBOOK_ID: any = null
 export const FACEBOOK_SECRET: any = null
 export const FEATURE_FLAGS: any = null
