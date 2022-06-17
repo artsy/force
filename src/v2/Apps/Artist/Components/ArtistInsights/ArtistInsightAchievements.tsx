@@ -1,42 +1,76 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Column, GridColumns, Text } from "@artsy/palette"
+import {
+  Box,
+  Clickable,
+  Column,
+  GridColumns,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { ArtistInsightAchievements_artist } from "v2/__generated__/ArtistInsightAchievements_artist.graphql"
-import { RouterLink } from "v2/System/Router/RouterLink"
-
 interface ArtistInsightAchievementsProps {
   artist: ArtistInsightAchievements_artist
 }
 
 interface ArtistAchievementProps {
-  type: string
-  description?: string
+  label: string
+  entities: readonly string[]
 }
 
-export const ArtistAchievement: FC<ArtistAchievementProps> = ({
-  type,
-  description,
-}) => {
-  return <h1>Artist Achievement</h1>
+const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
+  const [expanded, setExpanded] = useState(false)
+
+  const [first, ...remaining] = entities
+
+  return (
+    <Box>
+      <Text variant="sm-display" color="black100">
+        {label}
+      </Text>
+      <Box>
+        <Text variant="sm-display" color="black60">
+          {entities.length > 1 ? `${first}, and ` : `${first}`}
+          {expanded ? (
+            `${remaining.join(", ")}`
+          ) : (
+            <Clickable
+              onClick={() => setExpanded(true)}
+              color="black100"
+              textDecoration="underline"
+            >
+              {remaining.length} more
+            </Clickable>
+          )}
+        </Text>
+      </Box>
+    </Box>
+  )
 }
 
 export const ArtistInsightAchievements: FC<ArtistInsightAchievementsProps> = ({
   artist,
 }) => {
-  if (!artist.achievements) {
+  if (!artist.insightsList) {
     return null
   }
 
   return (
     <>
       <Text variant="lg">Career Highlights</Text>
-      <GridColumns gridColumnGap={[2, 4]} gridColumn={[1, 2]}>
-        <Column>Column</Column>
-        <Column>Column</Column>
+      <Spacer mb={4} />
+      <GridColumns>
+        {artist.insightsList.map(insight => {
+          return (
+            <Column key={insight.label} span={6}>
+              <ArtistAchievement
+                label={insight.label}
+                entities={insight.entities}
+              />
+            </Column>
+          )
+        })}
       </GridColumns>
-      <RouterLink to={`${artist.slug}/cv`}>
-        See all past shows and fair booths
-      </RouterLink>
     </>
   )
 }
@@ -47,7 +81,7 @@ export const ArtistInsightAchievementsFragmentContainer = createFragmentContaine
     artist: graphql`
       fragment ArtistInsightAchievements_artist on Artist {
         slug
-        achievements: insights(
+        insightsList: insights(
           kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
         ) {
           type
@@ -55,32 +89,6 @@ export const ArtistInsightAchievementsFragmentContainer = createFragmentContaine
           entities
           kind
           description
-        }
-        auctionResultsConnection(
-          recordsTrusted: true
-          first: 1
-          sort: PRICE_AND_DATE_DESC
-        ) {
-          edges {
-            node {
-              price_realized: priceRealized {
-                display(format: "0.0a")
-              }
-              organization
-              sale_date: saleDate(format: "YYYY")
-            }
-          }
-        }
-        artistHighlights: highlights {
-          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
-            edges {
-              node {
-                categories {
-                  slug
-                }
-              }
-            }
-          }
         }
       }
     `,
