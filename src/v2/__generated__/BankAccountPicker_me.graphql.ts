@@ -5,11 +5,11 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type BankAccountPicker_me = {
-    readonly creditCards: {
+    readonly bankAccounts: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly lastDigits: string;
+                readonly last4: string;
             } | null;
         } | null> | null;
     } | null;
@@ -38,15 +38,15 @@ const node: ReaderFragment = {
           "value": 100
         }
       ],
-      "concreteType": "CreditCardConnection",
+      "concreteType": "BankAccountConnection",
       "kind": "LinkedField",
-      "name": "creditCards",
+      "name": "bankAccounts",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CreditCardEdge",
+          "concreteType": "BankAccountEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -54,7 +54,7 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "CreditCard",
+              "concreteType": "BankAccount",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -70,7 +70,7 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "lastDigits",
+                  "name": "last4",
                   "storageKey": null
                 }
               ],
@@ -80,11 +80,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "creditCards(first:100)"
+      "storageKey": "bankAccounts(first:100)"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '8a00e464bb180ac247de767d22468e38';
+(node as any).hash = '903c46229440013b8ff64bfcb566b4fe';
 export default node;
