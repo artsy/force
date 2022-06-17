@@ -29,7 +29,7 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
   const placeholder = `Artworks like: ${artwork.title!}`
   const entity: SavedSearchEntity = {
     placeholder,
-    artists: artists.map(artist => ({
+    defaultArtists: artists.map(artist => ({
       id: artist.internalID,
       name: artist.name ?? "",
       slug: artist.slug,

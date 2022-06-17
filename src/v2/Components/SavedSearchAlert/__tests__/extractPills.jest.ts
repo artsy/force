@@ -3,7 +3,7 @@ import { extractArtistPills } from "../Utils/extractPills"
 
 describe("extractArtistPills", () => {
   it("returns artist pill", () => {
-    const artists: SavedSearchEntityArtist[] = [
+    const defaultArtists: SavedSearchEntityArtist[] = [
       {
         id: "id",
         slug: "slug",
@@ -11,7 +11,7 @@ describe("extractArtistPills", () => {
       },
     ]
 
-    expect(extractArtistPills(artists)).toEqual([
+    expect(extractArtistPills(defaultArtists)).toEqual([
       {
         isDefault: true,
         field: "artistIDs",

@@ -38,7 +38,7 @@ export const getSearchCriteriaFromFilters = (
   filters: ArtworkFiltersState
 ): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
-  const artistIDs = entity.artists.map(artist => artist.id)
+  const artistIDs = entity.defaultArtists.map(artist => artist.id)
 
   return {
     artistIDs,

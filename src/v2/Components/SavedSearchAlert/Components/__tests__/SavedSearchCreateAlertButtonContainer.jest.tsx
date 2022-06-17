@@ -17,7 +17,7 @@ jest.mock("v2/Utils/openAuthModal")
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "placeholder-label",
-  artists: [
+  defaultArtists: [
     {
       id: "test-artist-id",
       name: "test-artist-name",
