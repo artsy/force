@@ -20,10 +20,10 @@ export type FairArtworks_fair = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
-        readonly counts?: {
+        readonly counts: {
             readonly followedArtists: number | null;
             readonly total: number | null;
-        } | null | undefined;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "FairArtworks_fair";
@@ -47,11 +47,6 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchCounts"
     }
   ],
   "kind": "Fragment",
@@ -171,42 +166,35 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
+              "kind": "ScalarField",
+              "name": "followedArtists",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": [
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "format",
-                      "value": "0,0"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "total",
-                  "storageKey": "total(format:\"0,0\")"
+                  "kind": "Literal",
+                  "name": "format",
+                  "value": "0,0"
                 }
               ],
-              "storageKey": null
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": "total(format:\"0,0\")"
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
           "args": null,
@@ -220,5 +208,5 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = 'd7eb65a018a6fb6d67923c1d5eceac19';
+(node as any).hash = '881b35e298f799206cd1355de43898b3';
 export default node;
