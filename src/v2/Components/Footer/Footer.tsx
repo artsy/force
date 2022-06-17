@@ -134,6 +134,10 @@ export const Footer: React.FC<FooterProps> = props => {
                 Talk to a Specialist
               </FooterLink>
 
+              <FooterLink my={2} to="/art-appraisals">
+                Art Appraisals
+              </FooterLink>
+
               <FooterLink my={2} to="https://support.artsy.net">
                 Visit our Help Center
               </FooterLink>
