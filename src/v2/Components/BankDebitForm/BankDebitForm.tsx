@@ -77,6 +77,15 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
           onChange={event => {
             trackPaymentElementEvent(event)
           }}
+          options={{
+            // @ts-ignore TODO: remove when Stripe updates StripePaymentElementOptions
+            defaultValues: {
+              billingDetails: {
+                name: user?.name,
+                email: user?.email,
+              },
+            },
+          }}
         />
         <Spacer mt={2} />
         <Button
