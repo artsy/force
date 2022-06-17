@@ -22,6 +22,7 @@ export type FairArtworks_fair = {
         readonly id: string;
         readonly counts?: {
             readonly followedArtists: number | null;
+            readonly total: number | null;
         } | null | undefined;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
@@ -188,6 +189,19 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "followedArtists",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "format",
+                      "value": "0,0"
+                    }
+                  ],
+                  "kind": "ScalarField",
+                  "name": "total",
+                  "storageKey": "total(format:\"0,0\")"
                 }
               ],
               "storageKey": null
@@ -206,5 +220,5 @@ const node: ReaderFragment = {
   "type": "Fair",
   "abstractKey": null
 };
-(node as any).hash = 'd68487016b3bf8847ebc7a31cb6f66af';
+(node as any).hash = 'd7eb65a018a6fb6d67923c1d5eceac19';
 export default node;

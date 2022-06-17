@@ -114,6 +114,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           id
           counts @include(if: $shouldFetchCounts) {
             followedArtists
+            total(format: "0,0")
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
