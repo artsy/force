@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightPills_artist = {
-    readonly insights: ReadonlyArray<{
+    readonly insightsList: ReadonlyArray<{
         readonly type: string;
         readonly label: string;
         readonly entities: ReadonlyArray<string>;
@@ -55,8 +55,16 @@ return {
   "name": "ArtistInsightPills_artist",
   "selections": [
     {
-      "alias": null,
-      "args": null,
+      "alias": "insightsList",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "kind",
+          "value": [
+            "ACTIVE_SECONDARY_MARKET"
+          ]
+        }
+      ],
       "concreteType": "ArtistInsight",
       "kind": "LinkedField",
       "name": "insights",
@@ -84,7 +92,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
     },
     {
       "alias": null,
@@ -251,5 +259,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '91d690bd49ad6a4bd431448c22132426';
+(node as any).hash = 'a4a31b39f2ce6e68ea849c6bb1ff6c0b';
 export default node;

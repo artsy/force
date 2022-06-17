@@ -8,38 +8,20 @@ interface ArtistInsightPillsProps {
   artist: ArtistInsightPills_artist
 }
 
-const ARTIST_PILLS = {
-  ACTIVE_SECONDARY_MARKET: {
-    title: "Active Secondary Market",
-  },
-  BLUE_CHIP_REPRESENTATION: {
-    title: "Blue Chip Representation",
-  },
-  CRITICALLY_ACCLAIMED: {
-    title: "Critically Acclaimed",
-  },
-  ARTSY_VANGUARD: {
-    title: "The Artsy Vanguard",
-  },
-  HIGH_AUCTION_RECORD: {
-    title: "High Auction Record",
-  },
-}
-
 interface ArtistPillProps {
-  type: string
+  label: string
 }
 
-export const ArtistPill: FC<ArtistPillProps> = ({ type }) => {
+export const ArtistPill: FC<ArtistPillProps> = ({ label }) => {
   return (
     <Pill variant="badge" disabled mr={1}>
-      {ARTIST_PILLS[type].title}
+      {label}
     </Pill>
   )
 }
 
 export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
-  if (!artist.insights) {
+  if (!artist.insightsList) {
     return null
   }
 
@@ -60,17 +42,16 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
   return (
     <Flex flexDirection="row" flexWrap="wrap">
       {blueChipRepresentation?.length > 0 && (
-        <ArtistPill type="BLUE_CHIP_REPRESENTATION" />
+        <ArtistPill label="Blue Chip Representation" />
       )}
       {highAuctionResults.price_realized?.display && (
-        <ArtistPill type="HIGH_AUCTION_RECORD" />
+        <ArtistPill label="High Auction Record" />
       )}
 
-      {artist.insights.map(insight => {
-        return ARTIST_PILLS[insight!.type] ? (
-          <ArtistPill type={insight!.type} />
-        ) : null
-      })}
+      {/* TODO: uncomment once new artist metadata is imported into gravity i.e. active_secondary_market */}
+      {/* {artist.insightsList.map(insight => {
+        return <ArtistPill label={insight.label} />
+      })} */}
     </Flex>
   )
 }
@@ -80,7 +61,7 @@ export const ArtistInsightPillsFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistInsightPills_artist on Artist {
-        insights {
+        insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
           type
           label
           entities
