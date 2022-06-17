@@ -1,19 +1,16 @@
 import { useEffect } from "react"
 
-interface UseLoadScript {
+type UseLoadScript = {
   id: string
-  src?: string
   onReady?(): void
   removeOnUnmount?: boolean
-  text?: string
-}
+} & ({ src: string } | { text: string })
 
 export const useLoadScript = ({
   id,
-  src,
-  text,
   onReady,
   removeOnUnmount = false,
+  ...rest
 }: UseLoadScript) => {
   useEffect(() => {
     if (document.getElementById(id)) {
@@ -27,11 +24,12 @@ export const useLoadScript = ({
     script.async = true
     script.onload = () => onReady?.()
 
-    if (src) {
-      script.src = src
+    if ("src" in rest) {
+      script.src = rest.src
     }
-    if (text) {
-      script.text = text
+
+    if ("text" in rest) {
+      script.text = rest.text
     }
 
     document.body.appendChild(script)
@@ -39,10 +37,11 @@ export const useLoadScript = ({
     return () => {
       if (removeOnUnmount) {
         const script = document.getElementById(id)
+
         if (script) {
           document.body.removeChild(script)
         }
       }
     }
-  }, [id, onReady, src, text, removeOnUnmount])
+  }, [id, onReady, removeOnUnmount, rest])
 }
