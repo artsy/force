@@ -9,7 +9,6 @@ import {
   OfferOrderWithShippingDetailsAndNote,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { OfferSummaryItemFragmentContainer } from "v2/Apps/Order/Components/OfferSummaryItem"
-import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { expectOne } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import {
@@ -37,6 +36,8 @@ import { PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryI
 import { cloneDeep } from "lodash"
 import { useTracking } from "v2/System"
 import { waitFor } from "@testing-library/react"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { MockBoot } from "v2/DevTools"
 
 jest.unmock("react-relay")
 
@@ -56,24 +57,23 @@ jest.mock("@stripe/stripe-js", () => {
     _mockReset: () => (mock = mockStripe()),
   }
 })
-
-jest.mock("@artsy/palette", () => {
-  return {
-    ...jest.requireActual("@artsy/palette"),
-    ModalDialog: ({ title, children, onClose, footer }) => {
-      return (
-        <div data-testid="ModalDialog">
-          <button onClick={onClose}>close</button>
-          {title}
-          {children}
-          {footer}
-        </div>
-      )
-    },
-  }
-})
-
 const { _mockStripe } = require("@stripe/stripe-js")
+
+const mockShowErrorDialog = jest.fn()
+jest.mock("v2/Apps/Order/Dialogs", () => ({
+  ...jest.requireActual("../../Dialogs"),
+  injectDialog: Component => props => (
+    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
+  ),
+}))
+
+const mockCommitMutation = jest.fn()
+jest.mock("v2/Apps/Order/Utils/commitMutation", () => ({
+  ...jest.requireActual("../../Utils/commitMutation"),
+  injectCommitMutation: Component => props => (
+    <Component {...props} commitMutation={mockCommitMutation} />
+  ),
+}))
 
 const testOrder: ReviewTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
@@ -89,6 +89,8 @@ class ReviewTestPage extends OrderAppTestPage {
 
 describe("Review", () => {
   let isEigen
+  const pushMock = jest.fn()
+
   beforeAll(() => {
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
     window.ReactNativeWebView = { postMessage: jest.fn() }
@@ -99,20 +101,20 @@ describe("Review", () => {
 
   beforeEach(() => {
     isEigen = false
+    jest.clearAllMocks()
     mockLocation()
   })
 
-  const { buildPage, mutations, routes, ...hooks } = createTestEnv({
-    Component: props => (
-      <ReviewFragmentContainer {...props} isEigen={isEigen} />
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot context={{ isEigen }}>
+        <ReviewFragmentContainer
+          {...props}
+          router={{ push: pushMock } as any}
+          route={{ onTransition: jest.fn() }}
+        />
+      </MockBoot>
     ),
-    defaultData: {
-      order: testOrder,
-    },
-    defaultMutationResults: {
-      ...submitOrderSuccess,
-      ...submitOfferOrderSuccess,
-    },
     query: graphql`
       query ReviewTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
@@ -120,237 +122,330 @@ describe("Review", () => {
         }
       }
     `,
-    TestPage: ReviewTestPage,
   })
 
-  beforeEach(hooks.clearErrors)
+  // beforeEach(hooks.clearErrors)
 
-  afterEach(hooks.clearMocksAndErrors)
+  // afterEach(hooks.clearMocksAndErrors)
 
   describe("buy-mode orders", () => {
-    let page: ReviewTestPage
-    beforeEach(async () => {
-      page = await buildPage()
-    })
-
     it("enables the button and routes to the payoff page", async () => {
+      mockCommitMutation.mockResolvedValue(submitOrderSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/status")
+
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(pushMock).toBeCalledWith("/orders/1234/status")
     })
 
     it("takes the user back to the /shipping view", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       page.shippingSummary
         .find("Clickable[data-test='change-link']")
         .simulate("click")
-      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/shipping")
+
+      expect(pushMock).toBeCalledWith("/orders/1234/shipping")
     })
 
     it("takes the user back to the /payment view", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       page.paymentSummary
         .find("Clickable[data-test='change-link']")
         .simulate("click")
-      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/payment")
+
+      expect(pushMock).toBeCalledWith("/orders/1234/payment")
     })
 
     it("shows buyer guarentee", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
+
       expect(page.buyerGuarantee.length).toBe(1)
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
-      mutations.useResultsOnce(submitOrderWithFailure)
+      mockCommitMutation.mockResolvedValue(submitOrderWithFailure)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissDefaultErrorDialog()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
 
     it("shows an error modal when there is a network error", async () => {
-      mutations.mockNetworkFailureOnce()
+      mockCommitMutation.mockRejectedValue({})
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissDefaultErrorDialog()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
-      mutations.useResultsOnce(submitOrderWithVersionMismatchFailure)
-      await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Work has been updated",
-        "Something about the work changed since you started checkout. Please review the work before submitting your order."
+      mockCommitMutation.mockResolvedValue(
+        submitOrderWithVersionMismatchFailure
       )
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Work has been updated",
+        message:
+          "Something about the work changed since you started checkout. Please review the work before submitting your order.",
+      })
       expect(window.location.assign).toBeCalledWith("/artwork/artworkId")
     })
 
     it("shows a modal with a helpful error message if a user has not entered shipping and payment information", async () => {
-      mutations.useResultsOnce(submitOrderWithMissingInfo)
-
+      mockCommitMutation.mockResolvedValue(submitOrderWithMissingInfo)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Missing information",
-        "Please review and update your shipping and/or payment details and try again."
-      )
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Missing information",
+        message:
+          "Please review and update your shipping and/or payment details and try again.",
+      })
     })
 
     it("shows a modal with a helpful error message if the user's card is declined", async () => {
-      mutations.useResultsOnce(submitOrderWithFailureCardDeclined)
-
+      mockCommitMutation.mockResolvedValue(submitOrderWithFailureCardDeclined)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Charge failed",
-        "Payment authorization has been declined. Please contact your card provider and try again."
-      )
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Charge failed",
+        message:
+          "Payment authorization has been declined. Please contact your card provider and try again.",
+      })
     })
 
     it("shows a modal with a helpful error message if the user's card is declined due to insufficient funds", async () => {
-      mutations.useResultsOnce(submitOrderWithFailureInsufficientFunds)
-
-      await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Insufficient funds",
-        "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card."
+      mockCommitMutation.mockResolvedValue(
+        submitOrderWithFailureInsufficientFunds
       )
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Insufficient funds",
+        message:
+          "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card.",
+      })
     })
 
     it("shows a modal that redirects to the artist page if there is an insufficient inventory", async () => {
-      mutations.useResultsOnce(submitOrderWithNoInventoryFailure)
+      mockCommitMutation.mockResolvedValue(submitOrderWithNoInventoryFailure)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Not available",
-        "Sorry, the work is no longer available."
-      )
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Not available",
+        message: "Sorry, the work is no longer available.",
+      })
       expect(window.location.assign).toBeCalledWith("/artist/artistId")
     })
-    it("shows SCA modal when required", async () => {
-      mutations.useResultsOnce(submitOrderWithActionRequired)
 
+    it("shows SCA modal when required", async () => {
+      mockCommitMutation.mockResolvedValue(submitOrderWithActionRequired)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
+
       expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
     })
   })
 
   describe("Offer-mode orders", () => {
-    let page: ReviewTestPage
-
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithShippingDetails,
-            internalID: "offer-order-id",
-            impulseConversationId: null,
-          },
-        },
-      })
-    })
+    const testOffer = {
+      ...OfferOrderWithShippingDetails,
+      internalID: "offer-order-id",
+      impulseConversationId: null,
+    }
 
     it("shows an active offer stepper if the order is an Offer Order", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
+
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
         `"CheckOfferNavigate rightCheckShippingNavigate rightCheckPaymentNavigate rightReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Review")
+      expect(page.offerSummary.text()).not.toMatch("Your note")
     })
 
     it("shows an offer section in the shipping and payment review", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
+
       expect(page.offerSummary.text()).toMatch("Your offer")
       page.offerSummary
         .find("Clickable[data-test='change-link']")
         .simulate("click")
-      expect(routes.mockPushRoute).toBeCalledWith(
-        "/orders/offer-order-id/offer"
-      )
-    })
-
-    it("does not show the offer note section if the offer has no note", () => {
-      expect(page.offerSummary.text()).not.toMatch("Your note")
+      expect(pushMock).toBeCalledWith("/orders/offer-order-id/offer")
     })
 
     it("shows an offer note if one exists", async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithShippingDetailsAndNote,
-            impulseConversationId: null,
-          },
-        },
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...OfferOrderWithShippingDetailsAndNote,
+          impulseConversationId: null,
+        }),
       })
+      const page = new ReviewTestPage(wrapper)
+
       expect(page.offerSummary.text()).toMatch("Your noteThis is a note!")
     })
 
     it("enables the button and routes to the artwork page", async () => {
+      mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith(
-        "/artwork/artworkId?order-submitted=true"
-      )
+
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(pushMock).toBeCalledWith("/artwork/artworkId?order-submitted=true")
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
-      mutations.useResultsOnce(submitOfferOrderWithFailure)
+      mockCommitMutation.mockResolvedValue(submitOfferOrderWithFailure)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissDefaultErrorDialog()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
 
     it("shows an error modal when there is a network error", async () => {
-      mutations.mockNetworkFailureOnce()
+      mockCommitMutation.mockRejectedValue({})
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      await page.expectAndDismissDefaultErrorDialog()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith()
     })
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
-      mutations.useResultsOnce(submitOfferOrderWithVersionMismatchFailure)
-
+      mockCommitMutation.mockResolvedValue(
+        submitOfferOrderWithVersionMismatchFailure
+      )
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
 
-      await page.expectAndDismissErrorDialogMatching(
-        "Work has been updated",
-        "Something about the work changed since you started checkout. Please review the work before submitting your order."
-      )
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Work has been updated",
+        message:
+          "Something about the work changed since you started checkout. Please review the work before submitting your order.",
+      })
       expect(window.location.assign).toBeCalledWith("/artwork/artworkId")
     })
 
     it("shows a modal if there is a payment_method_confirmation_failed", async () => {
-      mutations.useResultsOnce(submitOfferOrderFailedConfirmation)
-
+      mockCommitMutation.mockResolvedValue(submitOfferOrderFailedConfirmation)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
 
-      await page.expectAndDismissErrorDialogMatching(
-        "Your card was declined",
-        "We couldn't authorize your credit card. Please enter another payment method or contact your bank for more information."
-      )
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Your card was declined",
+        message:
+          "We couldn't authorize your credit card. Please enter another payment method or contact your bank for more information.",
+      })
     })
 
     it("shows a modal that redirects to the artist page if there is an insufficient inventory", async () => {
-      mutations.useResultsOnce(submitOfferOrderWithNoInventoryFailure)
-      await page.clickSubmit()
-      await page.expectAndDismissErrorDialogMatching(
-        "Not available",
-        "Sorry, the work is no longer available."
+      mockCommitMutation.mockResolvedValue(
+        submitOfferOrderWithNoInventoryFailure
       )
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Not available",
+        message: "Sorry, the work is no longer available.",
+      })
     })
 
     it("shows SCA modal when required", async () => {
-      mutations.useResultsOnce(submitOfferOrderWithActionRequired)
-
+      mockCommitMutation.mockResolvedValue(submitOfferOrderWithActionRequired)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
+
       expect(_mockStripe().confirmCardSetup).toBeCalledWith("client-secret")
     })
 
     describe("isEigen", () => {
-      let page: ReviewTestPage
+      const testOffer = {
+        ...OfferOrderWithShippingDetails,
+        internalID: "offer-order-id",
+        impulseConversationId: null,
+      }
 
       beforeEach(async () => {
         isEigen = true
-        page = await buildPage({
-          mockData: {
-            order: {
-              ...OfferOrderWithShippingDetails,
-              internalID: "offer-order-id",
-              impulseConversationId: null,
-            },
-          },
-        })
       })
 
       it("dispatches message given Eigen when the offer is submitted", async () => {
+        mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOffer,
+        })
+        const page = new ReviewTestPage(wrapper)
         await page.clickSubmit()
+
         expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
           JSON.stringify({
             key: "goToInboxOnMakeOfferSubmission",
@@ -361,146 +456,136 @@ describe("Review", () => {
         )
 
         await waitFor(() =>
-          expect(routes.mockPushRoute).toHaveBeenCalledWith(
-            "/orders/offer-order-id/status"
-          )
+          expect(pushMock).toHaveBeenCalledWith("/orders/offer-order-id/status")
         )
       })
     })
   })
 
   describe("Arta shipping", () => {
-    let page: ReviewTestPage
-    beforeEach(async () => {
-      const buyOrderWithArtaShippingDetails = cloneDeep(
-        BuyOrderWithArtaShippingDetails
-      ) as any
-      buyOrderWithArtaShippingDetails.lineItems.edges[0].node.selectedShippingQuote =
-        buyOrderWithArtaShippingDetails.lineItems.edges[0].node.shippingQuoteOptions.edges[0].node
-
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...buyOrderWithArtaShippingDetails,
-            internalID: "1234",
-            impulseConversationId: null,
-          },
-        },
-      })
-    })
+    const buyOrderWithArtaShippingDetails = cloneDeep(
+      BuyOrderWithArtaShippingDetails
+    ) as any
+    buyOrderWithArtaShippingDetails.lineItems.edges[0].node.selectedShippingQuote =
+      buyOrderWithArtaShippingDetails.lineItems.edges[0].node.shippingQuoteOptions.edges[0].node
+    const testOrder = {
+      ...buyOrderWithArtaShippingDetails,
+      internalID: "1234",
+      impulseConversationId: null,
+    }
 
     it("takes the user back to the /shipping view", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
       page.shippingArtaSummary
         .find("Clickable[data-test='change-link']")
         .simulate("click")
-      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/shipping")
+
+      expect(pushMock).toBeCalledWith("/orders/1234/shipping")
     })
 
-    it("contains correct Arta shipping infirmation", () => {
-      const text = page.shippingArtaSummary.text()
+    it("renders shipping information", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
 
-      expect(text).toContain("Shipping")
-      expect(text).toContain("Standard delivery")
-      expect(text).toContain("($1.00)")
-    })
+      const shippingArtaSummary = page.shippingArtaSummary.text()
+      expect(shippingArtaSummary).toContain("Shipping")
+      expect(shippingArtaSummary).toContain("Standard delivery")
+      expect(shippingArtaSummary).toContain("($1.00)")
 
-    it("ship to section contains shipping address", () => {
-      const text = page.shippingSummary.text()
-
-      expect(text).toContain("401 Broadway")
-      expect(text).toContain("Suite 25")
-      expect(text).toContain("New York")
-      expect(text).toContain("United States")
-      expect(text).toContain("Joelle Van Dyne")
-      expect(text).toContain("10013")
-      expect(text).toContain("NY")
-      expect(text).toContain("120938120983")
+      const shippingSummary = page.shippingSummary.text()
+      expect(shippingSummary).toContain("401 Broadway")
+      expect(shippingSummary).toContain("Suite 25")
+      expect(shippingSummary).toContain("New York")
+      expect(shippingSummary).toContain("United States")
+      expect(shippingSummary).toContain("Joelle Van Dyne")
+      expect(shippingSummary).toContain("10013")
+      expect(shippingSummary).toContain("NY")
+      expect(shippingSummary).toContain("120938120983")
     })
   })
 
   describe("Inquiry offer orders", () => {
-    let page: ReviewTestPage
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithMissingMetadata,
-            impulseConversationId: "5665",
-          },
-        },
+    it("renders with inquiry extra information", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...OfferOrderWithMissingMetadata,
+          impulseConversationId: "5665",
+        }),
       })
-    })
+      const page = new ReviewTestPage(wrapper)
 
-    it("shows a placeholder override for inquiry offers with missing metadata", () => {
       expect(page.root.find(TransactionDetailsSummaryItem).text()).toMatch(
         "Waiting for final costs"
       )
-    })
-
-    it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", () => {
       expect(page.text()).toMatch(
         "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
       )
     })
 
     it("does not show message about shipping and tax confirmation for buy now orders", async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...BuyOrderWithShippingDetails,
-            impulseConversationId: null,
-          },
-        },
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...BuyOrderWithShippingDetails,
+          impulseConversationId: null,
+        }),
       })
+      const page = new ReviewTestPage(wrapper)
+
       expect(page.text()).not.toMatch(
         "*Shipping and taxes to be confirmed by gallery"
       )
     })
 
     it("enables the button and routes to the conversation", async () => {
+      mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...OfferOrderWithMissingMetadata,
+          impulseConversationId: "5665",
+        }),
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(pushMock).toBeCalledWith("/user/conversations/5665")
     })
   })
 
   describe("Inquiry buy-mode orders", () => {
-    let page: ReviewTestPage
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...BuyOrderWithShippingDetails,
-            source: "inquiry",
-            impulseConversationId: "5665",
-          },
-        },
-      })
-    })
-
     // TODO: Unskip test when "conversational-buy-now" feature flag is removed
     it.skip("enables the button and routes to the conversation", async () => {
+      mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...BuyOrderWithShippingDetails,
+          source: "inquiry",
+          impulseConversationId: "5665",
+        }),
+      })
+      const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
+
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(pushMock).toBeCalledWith("/user/conversations/5665")
     })
   })
 
   describe("Bank debit orders", () => {
-    let page: ReviewTestPage
-
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...BuyOrderWithBankDebitDetails,
-            impulseConversationId: null,
-          },
-        },
-      })
-    })
-
     it("shows bank transfer as payment method", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...BuyOrderWithBankDebitDetails,
+          impulseConversationId: null,
+        }),
+      })
+      const page = new ReviewTestPage(wrapper)
+
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
         "Bank transfer •••• 1234"
       )
@@ -508,20 +593,15 @@ describe("Review", () => {
   })
 
   describe("Wire transfer orders", () => {
-    let page: ReviewTestPage
-
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...BuyOrderWithWireTransferDetails,
-            impulseConversationId: null,
-          },
-        },
+    it("shows bank transfer as payment method", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...BuyOrderWithWireTransferDetails,
+          impulseConversationId: null,
+        }),
       })
-    })
+      const page = new ReviewTestPage(wrapper)
 
-    it("shows wire transfer as payment method", () => {
       expect(page.root.find(PaymentMethodSummaryItem).text()).toMatch(
         "Wire transfer"
       )

@@ -8,19 +8,19 @@ import {
   ShippingDetails,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { creatingCreditCardSuccess } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
-import { injectCommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 import {
   fillCountrySelect,
   fillIn,
   validAddress,
 } from "v2/Components/__tests__/Utils/addressForm"
 import { Address, AddressForm } from "v2/Components/AddressForm"
-import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import { PaymentPicker, PaymentPickerFragmentContainer } from "../PaymentPicker"
 import type { Token, StripeError } from "@stripe/stripe-js"
 import { mockStripe } from "v2/DevTools/mockStripe"
+import { MockBoot } from "v2/DevTools"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.mock("sharify", () => ({
   data: {
@@ -148,13 +148,20 @@ const defaultData: PaymentPickerTestQueryRawResponse = {
 }
 
 describe("PaymentPickerFragmentContainer", () => {
-  const env = createTestEnv({
-    Component: injectCommitMutation(PaymentPickerFragmentContainer as any),
-    TestPage: PaymentPickerTestPage,
-    defaultData,
-    defaultMutationResults: {
-      ...creatingCreditCardSuccess,
-    },
+  const mockCommitMutation = jest.fn()
+  let isEigen
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot context={{ isEigen }}>
+        {/* @ts-ignore */}
+        <PaymentPickerFragmentContainer
+          order={props.order}
+          commitMutation={mockCommitMutation}
+          me={props.me}
+        />
+      </MockBoot>
+    ),
     query: graphql`
       query PaymentPickerTestQuery @raw_response_type @relay_test_operation {
         me {
@@ -165,73 +172,49 @@ describe("PaymentPickerFragmentContainer", () => {
         }
       }
     `,
-    systemContextProps: { isEigen: false },
-  })
-
-  const eigenEnv = createTestEnv({
-    Component: injectCommitMutation(PaymentPickerFragmentContainer as any),
-    TestPage: PaymentPickerTestPage,
-    defaultData,
-    defaultMutationResults: {
-      ...creatingCreditCardSuccess,
-    },
-    query: graphql`
-      query PaymentPickerEigenTestQuery
-        @raw_response_type
-        @relay_test_operation {
-        me {
-          ...PaymentPicker_me
-        }
-        order: commerceOrder(id: "unused") {
-          ...PaymentPicker_order
-        }
-      }
-    `,
-    systemContextProps: { isEigen: true },
   })
 
   beforeEach(() => {
     mockPostEvent.mockReset()
+    mockCommitMutation.mockClear()
     _mockReset()
     _mockStripe().createToken.mockImplementation(() =>
       Promise.resolve({ error: "bad error" })
     )
-    env.clearErrors()
-    eigenEnv.clearErrors()
-  })
-
-  afterEach(() => {
-    env.clearMocksAndErrors()
-    eigenEnv.clearMocksAndErrors()
+    isEigen = false
   })
 
   describe("with no existing cards", () => {
-    let page: PaymentPickerTestPage
-    let eigenPage: PaymentPickerTestPage
-    beforeAll(async () => {
-      page = await env.buildPage()
-      eigenPage = await eigenEnv.buildPage()
-    })
-    it("always shows the 'use new card' section", () => {
+    it("renders", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
+
       expect(page.useNewCardSectionIsVisible).toBeTruthy()
-    })
-    it("does not show any radio buttons", () => {
       expect(page.radios).toHaveLength(0)
-    })
-    it("does not show the 'manage cards' link if not eigen", () => {
       expect(page.find(Link)).toHaveLength(0)
     })
+
     it("does not show the 'manage cards' link if eigen", () => {
-      expect(eigenPage.find(Link)).toHaveLength(0)
+      isEigen = true
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
+
+      expect(page.find(Link)).toHaveLength(0)
     })
   })
 
   it("always shows the billing address form without checkbox when the user selected 'pick' shipping option", async () => {
-    const page = await env.buildPage({
-      mockData: {
-        order: BuyOrderPickup,
-      },
+    const wrapper = getWrapper({
+      CommerceOrder: () => BuyOrderPickup,
     })
+    const page = new PaymentPickerTestPage(wrapper)
+
     expect(page.sameAddressCheckbox).toHaveLength(0)
     expect(page.text()).not.toMatch(
       "Billing and shipping addresses are the same."
@@ -240,28 +223,27 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("does not pre-populate with available details when returning to the payment route", async () => {
-    const page = await env.buildPage({
-      mockData: {
-        order: {
-          ...BuyOrderPickup,
-          id: "1234",
-          creditCard: {
-            internalID: "credit-card-id",
-            name: "Artsy UK Ltd",
-            street1: "14 Gower's Walk",
-            street2: "Suite 2.5, The Loom",
-            city: "London",
-            state: "Whitechapel",
-            country: "UK",
-            postalCode: "E1 8PY",
-            expirationMonth: 12,
-            expirationYear: 2022,
-            lastDigits: "1234",
-            brand: "Visa",
-          },
+    const wrapper = getWrapper({
+      CommerceOrder: () => ({
+        ...BuyOrderPickup,
+        id: "1234",
+        creditCard: {
+          internalID: "credit-card-id",
+          name: "Artsy UK Ltd",
+          street1: "14 Gower's Walk",
+          street2: "Suite 2.5, The Loom",
+          city: "London",
+          state: "Whitechapel",
+          country: "UK",
+          postalCode: "E1 8PY",
+          expirationMonth: 12,
+          expirationYear: 2022,
+          lastDigits: "1234",
+          brand: "Visa",
         },
-      },
+      }),
     })
+    const page = new PaymentPickerTestPage(wrapper)
 
     expect(page.addressForm.props().value).toEqual({
       name: "",
@@ -276,15 +258,15 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("always uses the billing address for stripe tokenization when the user selected 'pick' shipping option", async () => {
-    const page = await env.buildPage({
-      mockData: {
-        order: {
-          ...BuyOrderPickup,
-          id: "1234",
-          creditCard: null,
-        },
-      },
+    const wrapper = getWrapper({
+      CommerceOrder: () => ({
+        ...BuyOrderPickup,
+        id: "1234",
+        creditCard: null,
+      }),
+      Me: () => defaultData.me,
     })
+    const page = new PaymentPickerTestPage(wrapper)
 
     fillAddressForm(page.root, validAddress)
 
@@ -302,7 +284,11 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("tokenizes credit card information using shipping address as billing address", async () => {
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      CommerceOrder: () => defaultData.order,
+      Me: () => defaultData.me,
+    })
+    const page = new PaymentPickerTestPage(wrapper)
 
     await page.getCreditCardId()
 
@@ -318,7 +304,11 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("tokenizes credit card information with a different billing address", async () => {
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      CommerceOrder: () => defaultData.order,
+      Me: () => defaultData.me,
+    })
+    const page = new PaymentPickerTestPage(wrapper)
     await page.toggleSameAddressCheckbox()
     fillAddressForm(page.root, validAddress)
     await page.getCreditCardId()
@@ -335,55 +325,45 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("commits createCreditCard mutation with stripe token id", async () => {
-    const stripeToken: { token: Token } = {
+    mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
+    const stripeToken: { token: Partial<Token> } = {
       token: {
         id: "tokenId",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        object: null,
-        client_ip: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        created: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        livemode: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        type: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        used: null,
       },
     }
-
     _mockStripe().createToken.mockReturnValue(Promise.resolve(stripeToken))
-
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      CommerceOrder: () => defaultData.order,
+      Me: () => defaultData.me,
+    })
+    const page = new PaymentPickerTestPage(wrapper)
     await page.getCreditCardId()
 
-    expect(env.mutations.mockFetch.mock.calls[0][1]).toMatchObject({
-      input: {
-        token: "tokenId",
-      },
-    })
+    expect(mockCommitMutation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: {
+          input: {
+            token: "tokenId",
+            oneTimeUse: false,
+          },
+        },
+      })
+    )
   })
 
   it("shows an error message when CreateToken passes in an error", async () => {
-    const stripeError: { error: StripeError } = {
+    mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
+    const stripeError: { error: Partial<StripeError> } = {
       error: {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        type: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        charge: null,
         message: "Your card number is invalid.",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        code: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        decline_code: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        param: null,
       },
     }
-
     _mockStripe().createToken.mockReturnValue(Promise.resolve(stripeError))
-
-    const page = await env.buildPage()
+    const wrapper = getWrapper({
+      CommerceOrder: () => defaultData.order,
+      Me: () => defaultData.me,
+    })
+    const page = new PaymentPickerTestPage(wrapper)
 
     expect(page.root.text()).not.toContain("Your card number is invalid.")
 
@@ -458,170 +438,205 @@ describe("PaymentPickerFragmentContainer", () => {
       creditCard: unsavedOrderCard,
     }
 
-    function getPage(_cards: typeof cards, _order) {
-      return env.buildPage({
-        mockData: {
-          me: {
-            creditCards: {
-              edges: _cards.map(node => ({ node })),
-            },
-          },
-          order: _order,
-        },
-      })
-    }
-
-    function getEigenPage(_cards: typeof cards, _order) {
-      return eigenEnv.buildPage({
-        mockData: {
-          me: {
-            creditCards: {
-              edges: _cards.map(node => ({ node })),
-            },
-          },
-          order: _order,
-        },
-      })
-    }
-
     describe("with one card", () => {
-      let page: PaymentPickerTestPage
-      let eigenPage: PaymentPickerTestPage
-      beforeAll(async () => {
-        page = await getPage(cards.slice(0, 1), orderWithoutCard)
-        eigenPage = await getEigenPage(cards.slice(0, 1), orderWithoutCard)
-      })
-      it("has two radio buttons", async () => {
+      it("renders", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
+
         expect(page.radios).toHaveLength(2)
-      })
-      it("shows the 'manage cards' link if not eigen", () => {
         expect(page.find(Link)).toHaveLength(1)
         expect(page.find(Link).props().href).toMatchInlineSnapshot(
           `"/user/payments"`
         )
-      })
-      it("has no 'manage cards' link if eigen", () => {
-        expect(eigenPage.find(Link)).toHaveLength(0)
-      })
-      it("has the credit card option at the top", async () => {
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
           `"mastercard•••• 1234   Exp 01/18"`
         )
-      })
-      it("has the 'use new card' option at the bottom", async () => {
         expect(page.radios.at(1).text()).toMatchInlineSnapshot(
           `"Add another card."`
         )
-      })
-      it("starts with the top radio selected", async () => {
         expect(page.radios.at(0).props().selected).toBeTruthy()
         expect(page.radios.at(1).props().selected).toBeFalsy()
-      })
-
-      it("hides the 'use new card' stuff initially", async () => {
         expect(page.useNewCardSectionIsVisible).toBeFalsy()
-      })
-      it("returns the relevant credit card id if requested", async () => {
         expect(await page.getCreditCardId()).toMatchObject({
           type: "success",
           creditCardId: "card-id-1",
         })
       })
+
+      it("has no 'manage cards' link if eigen", () => {
+        isEigen = true
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
+        expect(page.find(Link)).toHaveLength(0)
+      })
+
       it("shows the 'use new card' section when you select that option", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
         await page.clickRadio(1)
+
         expect(page.useNewCardSectionIsVisible).toBeTruthy()
       })
+
       it("hides the 'use new card' section if you select the card again", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
         await page.clickRadio(0)
+
         expect(page.useNewCardSectionIsVisible).toBeFalsy()
       })
     })
 
     describe("with two cards", () => {
-      let page: PaymentPickerTestPage
-      let eigenPage: PaymentPickerTestPage
-      beforeAll(async () => {
-        page = await getPage(cards, orderWithoutCard)
-        eigenPage = await getEigenPage(cards, orderWithoutCard)
-      })
       it("has three radio buttons", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }, { node: cards[1] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
+
         expect(page.radios).toHaveLength(3)
-      })
-      it("shows the 'manage cards' link if not eigen", () => {
         expect(page.find(Link)).toHaveLength(1)
         expect(page.find(Link).props().href).toMatchInlineSnapshot(
           `"/user/payments"`
         )
-      })
-      it("shows the 'manage cards' link if eigen", () => {
-        expect(eigenPage.find(Link)).toHaveLength(0)
-      })
-      it("has the credit card options at the top", async () => {
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
           `"mastercard•••• 1234   Exp 01/18"`
         )
         expect(page.radios.at(1).text()).toMatchInlineSnapshot(
           `"visa•••• 2345   Exp 01/19"`
         )
-      })
-      it("has the 'use new card' option at the bottom", async () => {
         expect(page.radios.at(2).text()).toMatchInlineSnapshot(
           `"Add another card."`
         )
-      })
-      it("starts with the top radio selected", async () => {
         expect(page.radios.at(0).props().selected).toBeTruthy()
         expect(page.radios.at(1).props().selected).toBeFalsy()
         expect(page.radios.at(2).props().selected).toBeFalsy()
-      })
-      it("hides the 'use new card' stuff initially", async () => {
         expect(page.useNewCardSectionIsVisible).toBeFalsy()
-      })
-      it("returns the relevant credit card id if requested", async () => {
         expect(await page.getCreditCardId()).toMatchObject({
           type: "success",
           creditCardId: "card-id-1",
         })
       })
+
+      it("shows the 'manage cards' link if eigen", () => {
+        isEigen = true
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }, { node: cards[1] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
+
+        expect(page.find(Link)).toHaveLength(0)
+      })
+
       it("returns the relevante credit card id if you select a different card", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }, { node: cards[1] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
         await page.clickRadio(1)
+
         expect(await page.getCreditCardId()).toMatchObject({
           type: "success",
           creditCardId: "card-id-2",
         })
       })
+
       it("shows the 'use new card' section when you select that option", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => orderWithoutCard,
+          Me: () => ({
+            creditCards: {
+              edges: [{ node: cards[0] }, { node: cards[1] }],
+            },
+          }),
+        })
+        const page = new PaymentPickerTestPage(wrapper)
         await page.clickRadio(2)
+
         expect(page.useNewCardSectionIsVisible).toBeTruthy()
       })
     })
 
     describe("when returning to the payment page when the initial card is saved", () => {
-      let page: PaymentPickerTestPage
-      beforeAll(async () => {
-        page = await getPage(cards, orderWithCard)
-      })
       describe("with two cards", () => {
         it("the card associated with the order is selected", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => orderWithCard,
+            Me: () => ({
+              creditCards: {
+                edges: [{ node: cards[0] }, { node: cards[1] }],
+              },
+            }),
+          })
+          const page = new PaymentPickerTestPage(wrapper)
+
           expect(page.radios.at(1).props().selected).toBeTruthy()
           expect(page.radios.at(0).props().selected).toBeFalsy()
           expect(page.radios.at(2).props().selected).toBeFalsy()
         })
       })
     })
+
     describe("when returning to the payment page when the initial card is not saved", () => {
-      let page: PaymentPickerTestPage
-      beforeAll(async () => {
-        page = await getPage(cards, orderWithUnsavedCard)
-      })
       describe("with two saved cards", () => {
-        it("shows a radio button for the unsaved card", async () => {
+        it("shows a radio button for the unsaved card with a selected radio", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => orderWithUnsavedCard,
+            Me: () => ({
+              creditCards: {
+                edges: [{ node: cards[0] }, { node: cards[1] }],
+              },
+            }),
+          })
+          const page = new PaymentPickerTestPage(wrapper)
+
           expect(page.radios).toHaveLength(4)
           expect(page.radios.at(0).text()).toMatchInlineSnapshot(
             `"visa•••• 6789   Exp 12/22"`
           )
-        })
-        it("the card associated with the order is selected", async () => {
           expect(page.radios.at(0).props().selected).toBeTruthy()
           expect(page.radios.at(1).props().selected).toBeFalsy()
           expect(page.radios.at(2).props().selected).toBeFalsy()
@@ -633,32 +648,68 @@ describe("PaymentPickerFragmentContainer", () => {
 
   describe("saving a card", () => {
     it("by default saves new cards", async () => {
+      mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } })
       )
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
+
       expect(page.saveCardCheckbox.props().selected).toBe(true)
       await page.getCreditCardId()
-      expect(env.mutations.lastFetchVariables.input.oneTimeUse).toBe(false)
+      expect(mockCommitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              token: "tokenId",
+              oneTimeUse: false,
+            },
+          },
+        })
+      )
     })
 
     it("can also not save new cards", async () => {
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
+
       expect(page.saveCardCheckbox.props().selected).toBe(true)
       page.saveCardCheckbox.simulate("click")
+
       await page.update()
       expect(page.saveCardCheckbox.props().selected).toBe(false)
+
       await page.getCreditCardId()
-      expect(env.mutations.lastFetchVariables.input.oneTimeUse).toBe(true)
+      expect(mockCommitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              token: "tokenId",
+              oneTimeUse: true,
+            },
+          },
+        })
+      )
     })
   })
 
   describe("Analytics", () => {
     it("tracks click when use shipping address checkbox transitions from checked to unchecked but not from unchecked to checked", async () => {
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
+
       // Initial state is checked
       await page.toggleSameAddressCheckbox()
       expect(mockPostEvent).toBeCalledWith({
@@ -678,22 +729,27 @@ describe("PaymentPickerFragmentContainer", () => {
     })
 
     it("doesn't track clicks on the address checkbox when order status is not pending", async () => {
-      const page = await env.buildPage({
-        mockData: {
-          order: {
-            ...OfferOrderWithShippingDetails,
-            state: "SUBMITTED",
-          },
-        },
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...OfferOrderWithShippingDetails,
+          state: "SUBMITTED",
+        }),
+        Me: () => defaultData.me,
       })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
+
       expect(mockPostEvent).not.toHaveBeenCalled()
     })
   })
 
   describe("Validations", () => {
     it("says a required field is required with billing address exposed", async () => {
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
       await page.getCreditCardId()
 
@@ -704,7 +760,11 @@ describe("PaymentPickerFragmentContainer", () => {
     })
 
     it("before submit, only shows a validation error on inputs that have been touched", async () => {
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       fillIn(page.root, { title: "Name on card", value: "Erik David" })
@@ -720,7 +780,11 @@ describe("PaymentPickerFragmentContainer", () => {
     })
 
     it("after submit, shows all validation errors on inputs that have been touched", async () => {
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       fillIn(page.root, { title: "Name on card", value: "Erik David" })
@@ -736,25 +800,40 @@ describe("PaymentPickerFragmentContainer", () => {
     })
 
     it("does not submit an empty form with billing address exposed", async () => {
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
+
       await page.toggleSameAddressCheckbox()
       await page.getCreditCardId()
 
-      expect(env.mutations.mockFetch).not.toBeCalled()
+      expect(mockCommitMutation).not.toHaveBeenCalled()
     })
 
     it("does not submit the mutation with an incomplete form with billing address exposed", async () => {
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
       await page.getCreditCardId()
-      expect(env.mutations.mockFetch).not.toBeCalled()
+
+      expect(mockCommitMutation).not.toHaveBeenCalled()
     })
 
     it("allows a missing postal code if the selected country is not US or Canada", async () => {
+      mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       const address = {
@@ -772,14 +851,19 @@ describe("PaymentPickerFragmentContainer", () => {
       await page.update()
       await page.getCreditCardId()
       expect(_mockStripe().createToken).toBeCalled()
-      expect(env.mutations.mockFetch).toBeCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
     })
 
     it("allows a missing state/province if the selected country is not US or Canada", async () => {
+      mockCommitMutation.mockResolvedValue(creatingCreditCardSuccess)
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
-      const page = await env.buildPage()
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       const address = {
@@ -798,12 +882,12 @@ describe("PaymentPickerFragmentContainer", () => {
       await page.getCreditCardId()
 
       expect(_mockStripe().createToken).toBeCalled()
-      expect(env.mutations.mockFetch).toBeCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
     })
+
     it("overwrites null shipping address items with empty string when shipping address is selected for billing", async () => {
-      const defaultDataWithIncompleteShipping = {
-        ...defaultData,
-        order: {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
           ...BuyOrderWithShippingDetails,
           creditCard: null,
           buyerPhoneNumber: 123456,
@@ -811,11 +895,10 @@ describe("PaymentPickerFragmentContainer", () => {
             ...ShippingDetails.requestedFulfillment,
             addressLine2: null,
           },
-        },
-      }
-      const page = await env.buildPage({
-        mockData: defaultDataWithIncompleteShipping,
+        }),
+        Me: () => defaultData.me,
       })
+      const page = new PaymentPickerTestPage(wrapper)
       await page.getCreditCardId()
 
       expect(_mockStripe().createToken).toHaveBeenCalledWith(
