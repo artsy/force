@@ -213,7 +213,6 @@
     "react-relay-network-modern-ssr": "1.4.0",
     "react-stickynode": "^4.0.0",
     "react-waypoint": "8.0.0",
-    "react-zendesk": "0.1.10",
     "redis": "3.1.2",
     "redux": "3.6.0",
     "redux-logger": "2.10.2",

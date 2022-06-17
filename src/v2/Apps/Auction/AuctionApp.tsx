@@ -12,7 +12,6 @@ import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/Auc
 import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRail"
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
-import { getENV } from "v2/Utils/getENV"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
 import { useEffect } from "react"
@@ -159,7 +158,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
         </WebsocketContextProvider>
       </AnalyticsContext.Provider>
 
-      <ZendeskWrapper zdKey={getENV("AUCTION_ZENDESK_KEY")} />
+      <ZendeskWrapper mode="auction" />
     </>
   )
 }
