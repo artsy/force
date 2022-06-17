@@ -1,17 +1,37 @@
-import * as React from "react"
-import Zendesk from "react-zendesk"
+import { FC, useEffect } from "react"
+import { getENV } from "v2/Utils/getENV"
+import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 
-export const ZendeskWrapper: React.FC<{ zdKey: string }> = ({ zdKey }) => {
-  if (!zdKey) {
-    return null
-  }
+const MODES = {
+  default: getENV("ZENDESK_KEY"),
+  auction: getENV("AUCTION_ZENDESK_KEY"),
+} as const
 
-  const zendeskAlreadyEmbedded = typeof window !== "undefined" && window.zEmbed
-  if (zendeskAlreadyEmbedded) {
-    return null
-  }
+interface ZendeskWrapperProps {
+  mode?: keyof typeof MODES
+}
 
-  return <Zendesk defer zendeskKey={zdKey} />
+export const ZendeskWrapper: FC<ZendeskWrapperProps> = ({
+  mode = "default",
+}) => {
+  const key = MODES[mode]
+
+  useLoadScript({
+    id: "ze-snippet",
+    src: `https://static.zdassets.com/ekr/snippet.js?key=${key}`,
+    removeOnUnmount: true,
+    onReady: () => {
+      window.zEmbed?.show?.()
+    },
+  })
+
+  useEffect(() => {
+    return () => {
+      window.zEmbed?.hide?.()
+    }
+  }, [])
+
+  return null
 }
 
 ZendeskWrapper.displayName = "ZendeskWrapper"
