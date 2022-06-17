@@ -269,7 +269,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
 
   const entity: SavedSearchEntity = {
     placeholder: formattedArtists[0].name,
-    artists: formattedArtists,
+    defaultArtists: formattedArtists,
     owner: {
       type: OwnerType.savedSearch,
       id: savedSearch?.internalID!,

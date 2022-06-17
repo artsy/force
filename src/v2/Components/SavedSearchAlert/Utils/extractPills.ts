@@ -190,9 +190,9 @@ export const extractPillsFromCriteria = ({
 }
 
 export const extractArtistPills = (
-  artists: SavedSearchEntityArtist[] = []
+  defaultArtists: SavedSearchEntityArtist[] = []
 ): FilterPill[] => {
-  return artists.map(artist => {
+  return defaultArtists.map(artist => {
     return {
       isDefault: true,
       value: artist.id,
@@ -213,12 +213,12 @@ export const extractPills = ({
   entity?: SavedSearchEntity
   metric?: Metric
 }) => {
-  const artistPills = extractArtistPills(entity?.artists)
+  const defaultArtistPills = extractArtistPills(entity?.defaultArtists)
   const pillsFromCriteria = extractPillsFromCriteria({
     criteria,
     aggregations,
     metric,
   })
 
-  return compact([...artistPills, ...pillsFromCriteria])
+  return compact([...defaultArtistPills, ...pillsFromCriteria])
 }

@@ -15,7 +15,7 @@ const formInitialValues = {
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "Test Artist",
-  artists: [
+  defaultArtists: [
     {
       id: "test-artist-id",
       name: "Test Artist",

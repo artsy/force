@@ -23,7 +23,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "Test Artist",
-  artists: [
+  defaultArtists: [
     {
       id: "test-artist-id",
       name: "Test Artist",
