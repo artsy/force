@@ -35,6 +35,7 @@ export interface Props {
   setPayment: () => void
   onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
   paymentPicker: RefObject<PaymentPicker>
+  isUserHasEnoughFunds: boolean
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -47,6 +48,7 @@ export const PaymentContent: FC<Props> = props => {
     paymentPicker,
     paymentMethod,
     onPaymentMethodChange,
+    isUserHasEnoughFunds,
   } = props
   const tracking = useTracking()
 
@@ -130,7 +132,10 @@ export const PaymentContent: FC<Props> = props => {
           • Bank transfer is powered by Stripe.
         </Text>
         <Spacer mb={2} />
-        <BankDebitProvider order={order} />
+        <BankDebitProvider
+          isUserHasEnoughFunds={isUserHasEnoughFunds}
+          order={order}
+        />
       </Collapse>
 
       {/* Wire transfer */}

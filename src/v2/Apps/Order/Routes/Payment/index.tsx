@@ -13,7 +13,7 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import { createRef, FC, useState } from "react"
+import { createRef, FC, useState, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { getClientParam } from "v2/Utils/getClientParam"
@@ -68,6 +68,7 @@ export const PaymentRoute: FC<Props> = props => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(order.paymentMethod || "CREDIT_CARD")
+  const [isUserHasEnoughFunds, setIsUserHasEnoughFunds] = useState(false)
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -207,6 +208,20 @@ export const PaymentRoute: FC<Props> = props => {
     getClientParam("setup_intent_client_secret") &&
     getClientParam("redirect_status") === "succeeded"
 
+  useEffect(() => {
+    if (setupIntentId && isSettingPayment) {
+      // TODO: poll balance for 6-7 seconds if it is null (Query commerceBankAccountBalance(setupIntentId: setupIntent.id ))
+      // TODO: if we still get null after 6-7 seconds, or we get it and it is higher than the order value, do nothing!
+
+      const mockBalanceCents = 100 // TODO: get this with from Query commerceBankAccountBalance(setupIntentId: setupIntent.id )
+      const mockOrderValueCents = 50 // TODO: get this from Order
+
+      if (mockBalanceCents > mockOrderValueCents || mockBalanceCents === null) {
+        setIsUserHasEnoughFunds(true)
+      }
+    }
+  }, [setupIntentId, isSettingPayment])
+
   const onSetPaymentSuccess = () => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
@@ -224,7 +239,7 @@ export const PaymentRoute: FC<Props> = props => {
       <TwoColumnLayout
         Content={
           <>
-            {isSettingPayment ? (
+            {isSettingPayment && isUserHasEnoughFunds ? (
               <SetPayment
                 order={order}
                 setupIntentId={setupIntentId!}
@@ -241,6 +256,7 @@ export const PaymentRoute: FC<Props> = props => {
                 paymentPicker={paymentPicker}
                 setPayment={setPayment}
                 onPaymentMethodChange={setSelectedPaymentMethod}
+                isUserHasEnoughFunds={isUserHasEnoughFunds}
               />
             )}
           </>

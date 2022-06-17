@@ -2,24 +2,26 @@ import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Box, Button, Message, Spacer, Text } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
-import { useRouter } from "v2/System/Router/useRouter"
 import { LoadingArea } from "../LoadingArea"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
 
 interface Props {
   order: { mode: string | null; internalID: string }
   returnURL: string
+  isUserHasEnoughFunds: boolean
 }
 
-export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
+export const BankDebitForm: FC<Props> = ({
+  order,
+  returnURL,
+  isUserHasEnoughFunds,
+}) => {
   const stripe = useStripe()
   const elements = useElements()
   const tracking = useTracking()
-  const { router } = useRouter()
   const { user } = useSystemContext()
 
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
-  const [isInsufficientFunds, setIsInsufficientFunds] = useState(false)
   const [isConfirmingAccountSetup, setIsConfirmingAccountSetup] = useState(
     false
   )
@@ -54,7 +56,6 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-    setIsInsufficientFunds(false)
     setIsConfirmingAccountSetup(true)
     trackClickedContinue()
 
@@ -64,23 +65,23 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
     // confirm Stripe payment setup which leaves and redirects back.
     window.removeEventListener("beforeunload", preventHardReload)
 
-    const { error } = await stripe.confirmSetup({
-      elements,
-      confirmParams: {
-        return_url: returnURL,
-      },
-    })
+    try {
+      // confirm setup
+      const { error } = await stripe.confirmSetup({
+        elements,
+        confirmParams: {
+          return_url: returnURL,
+        },
+      })
 
-    if (error) {
+      if (error) {
+        console.log("error", error)
+      }
+    } catch (error) {
       console.log("error", error)
+    } finally {
+      setIsConfirmingAccountSetup(false)
     }
-
-    // if (setupIntent?.status === "succeeded") {
-    //   // TODO: poll account balance and set state accordingly
-    //   setIsInsufficientFunds(true)
-
-    //   router.push(`/orders/${order.internalID}/review`)
-    // }
   }
 
   return (
@@ -104,7 +105,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
         />
         <Spacer mt={2} />
 
-        {/* loading interface while setup and balance check in progress */}
+        {/* loading while setup and balance check in progress */}
         {isConfirmingAccountSetup && (
           <>
             <Message title="Processing account details" variant="info">
@@ -117,8 +118,8 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
           </>
         )}
 
-        {/* error interface when account has insufficient funds */}
-        {isInsufficientFunds && (
+        {/* error when account has insufficient funds */}
+        {!isUserHasEnoughFunds && (
           <>
             <Message
               title="This bank account doesn’t have enough funds."
@@ -135,7 +136,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
 
         <Button
           loading={isConfirmingAccountSetup}
-          disabled={!stripe || isInsufficientFunds}
+          disabled={!stripe || !isUserHasEnoughFunds}
           variant="primaryBlack"
           width="100%"
         >
