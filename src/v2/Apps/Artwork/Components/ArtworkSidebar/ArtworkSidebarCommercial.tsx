@@ -414,7 +414,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       artwork.is_acquireable || artwork.is_offerable
     )
     const shouldRenderButtons = artworkEcommerceAvailable || !!isInquireable
-    const isSecondaryContactGalleryButton = isOfferable || isSold
+    const createAlertAvailable = isSold && (artwork.artists?.length ?? 0) > 0
+    const isSecondaryContactGalleryButton = isOfferable || createAlertAvailable
 
     if (!artwork.sale_message && !isInquireable) {
       return null
