@@ -380,6 +380,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   renderCreateAlertButton() {
     const { artwork } = this.props
 
+    if (artwork.artists?.length === 0) {
+      return null
+    }
+
     return (
       <>
         <Text variant="sm" color="black60">
@@ -582,6 +586,9 @@ export const ArtworkSidebarCommercialFragmentContainer = createFragmentContainer
           is_offerable: isOfferable
           sale_message: saleMessage
           ...ArtworkSidebarSizeInfo_piece
+        }
+        artists {
+          internalID
         }
         internalID
         isOfferableFromInquiry

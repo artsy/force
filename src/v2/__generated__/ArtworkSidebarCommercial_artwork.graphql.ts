@@ -13,6 +13,9 @@ export type ArtworkSidebarCommercial_artwork = {
         readonly sale_message: string | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
     } | null> | null;
+    readonly artists: ReadonlyArray<{
+        readonly internalID: string;
+    } | null> | null;
     readonly internalID: string;
     readonly isOfferableFromInquiry: boolean | null;
     readonly isPriceHidden: boolean | null;
@@ -108,6 +111,18 @@ return {
           "kind": "FragmentSpread",
           "name": "ArtworkSidebarSizeInfo_piece"
         }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -211,5 +226,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '40d8e070c3175f02d1f53a7a659335b8';
+(node as any).hash = 'fa1b44a872f484b512f07d4f65494d0b';
 export default node;
