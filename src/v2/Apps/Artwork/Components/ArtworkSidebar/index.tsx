@@ -64,7 +64,8 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const shouldHideDetailsCreateAlertCTA =
     (is_in_auction && hasEnded) ||
     (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
-    is_sold
+    is_sold ||
+    artwork.artists?.length === 0
 
   return (
     <ArtworkSidebarContainer data-test={ContextModule.artworkSidebar}>
@@ -162,6 +163,9 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           endedAt
           extendedBiddingEndAt
           lotID
+        }
+        artists {
+          internalID
         }
       }
     `,
