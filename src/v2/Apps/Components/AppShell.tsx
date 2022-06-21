@@ -16,6 +16,7 @@ import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
+import { useBrazeInAppMessage } from "v2/Utils/Hooks/useBrazeInAppMessage"
 import { useAuthValidation } from "v2/Utils/Hooks/useAuthValidation"
 import { Z } from "./constants"
 import {
@@ -78,6 +79,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
+  useBrazeInAppMessage()
 
   return (
     <Flex
