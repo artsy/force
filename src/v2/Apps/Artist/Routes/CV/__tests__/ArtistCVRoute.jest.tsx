@@ -4,11 +4,8 @@ import { ArtistCVRouteFragmentContainer } from "../ArtistCVRoute"
 import { ArtistCVRoute_Test_Query } from "v2/__generated__/ArtistCVRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("react-head", () => ({
-  Title: () => null,
-}))
-jest.mock("v2/Components/Pagination", () => ({
-  PaginationFragmentContainer: () => null,
+jest.mock("v2/Components/MetaTags", () => ({
+  MetaTags: () => null,
 }))
 
 describe("ArtistCVRoute", () => {
@@ -43,6 +40,7 @@ describe("ArtistCVRoute", () => {
     })
 
     const text = wrapper.text()
+
     expect(text).toContain(
       'Fair booths<mock-value-for-field-"startAt"><mock-value-for-field-"name">, <mock-value-for-field-"name">'
     )

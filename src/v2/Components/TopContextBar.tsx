@@ -43,7 +43,13 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
           : {})}
       >
         {displayBackArrow && (
-          <ChevronIcon direction="left" height={14} mr={1} />
+          <ChevronIcon
+            direction="left"
+            height={14}
+            mr={1}
+            title=""
+            aria-hidden
+          />
         )}
 
         {image && (

@@ -32,17 +32,16 @@ describe("BackLink", () => {
     const wrapper = getWrapper({
       Artist: () => ({
         name: "artistName",
-        slug: "artistSlug",
       }),
     })
 
-    expect(wrapper.text()).toContain("Chevron Arrow Icon Back to artistName")
+    expect(wrapper.text()).toContain("Back to artistName")
   })
 
   it("tracks correctly", () => {
     const wrapper = getWrapper({
       Artist: () => ({
-        slug: "artistSlug",
+        href: "/artist/artistSlug",
       }),
     })
     wrapper.simulate("click")

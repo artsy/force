@@ -5,7 +5,7 @@ import { graphql } from "react-relay"
 jest.mock("@artsy/palette", () => {
   return {
     ...jest.requireActual("@artsy/palette"),
-    Modal: ({ children }) => children,
+    ModalDialog: ({ children }) => children,
   }
 })
 
@@ -16,7 +16,9 @@ const getWrapperWithResponsibilityMessage = (showDisclaimer?: boolean) =>
     Component: (props: any) => {
       return (
         <ArtworkSidebarClassificationsModalFragmentContainer
-          {...{ ...props, showDisclaimer }}
+          {...props}
+          show
+          showDisclaimer={showDisclaimer}
         />
       )
     },
