@@ -1,22 +1,16 @@
 import {
-  Box,
   Column,
   GridColumns,
-  HTML,
-  Join,
   Skeleton,
   SkeletonBox,
-  Spacer,
   Text,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
-import { getENV } from "v2/Utils/getENV"
 import { ArtistInsightBadgesFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 
@@ -27,31 +21,10 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
-  const { credit, partner, text } = artist.biographyBlurb!
-  const showCredit = Boolean(credit) && partner?.profile?.href
-  const partnerHref = `${getENV("APP_URL")}${partner?.profile?.href}`
-  // const hasCategories = Boolean(artist.related?.genes?.edges?.length)
-
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6}>
-        <Join separator={<Spacer mt={4} />}>
-          <ArtistInsightAchievementsFragmentContainer artist={artist} />
-
-          {showCredit && text && (
-            <Box>
-              <Text variant="xs" textTransform="uppercase" mb={1}>
-                Bio
-              </Text>
-
-              <Text mb={1} variant="sm">
-                <RouterLink to={partnerHref}>{credit}</RouterLink>
-              </Text>
-
-              <HTML html={text} variant="sm" />
-            </Box>
-          )}
-        </Join>
+        <ArtistInsightAchievementsFragmentContainer artist={artist} />
       </Column>
 
       <Column span={6}>
@@ -66,30 +39,8 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCareerHighlights_artist on Artist {
-        ...ArtistGenes_artist
         ...ArtistInsightBadges_artist
         ...ArtistInsightAchievements_artist
-
-        biographyBlurb(format: HTML, partnerBio: false) {
-          partner {
-            profile {
-              href
-            }
-          }
-          credit
-          text
-        }
-        name
-        related {
-          genes {
-            edges {
-              node {
-                id
-              }
-            }
-          }
-        }
-        slug
       }
     `,
   }

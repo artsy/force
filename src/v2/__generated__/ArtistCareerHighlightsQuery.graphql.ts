@@ -30,45 +30,8 @@ query ArtistCareerHighlightsQuery(
 }
 
 fragment ArtistCareerHighlights_artist on Artist {
-  ...ArtistGenes_artist
   ...ArtistInsightBadges_artist
   ...ArtistInsightAchievements_artist
-  biographyBlurb(format: HTML, partnerBio: false) {
-    partner {
-      profile {
-        href
-        id
-      }
-      id
-    }
-    credit
-    text
-  }
-  name
-  related {
-    genes {
-      edges {
-        node {
-          id
-        }
-      }
-    }
-  }
-  slug
-}
-
-fragment ArtistGenes_artist on Artist {
-  related {
-    genes {
-      edges {
-        node {
-          href
-          name
-          id
-        }
-      }
-    }
-  }
 }
 
 fragment ArtistInsightAchievements_artist on Artist {
@@ -134,28 +97,7 @@ v1 = [
     "variableName": "slug"
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v5 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -192,12 +134,19 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v3 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v7 = {
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -247,53 +196,6 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "ArtistRelatedData",
-            "kind": "LinkedField",
-            "name": "related",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "GeneConnection",
-                "kind": "LinkedField",
-                "name": "genes",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "GeneEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Gene",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          (v2/*: any*/),
-                          (v3/*: any*/),
-                          (v4/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -307,13 +209,13 @@ return {
             "kind": "LinkedField",
             "name": "insights",
             "plural": true,
-            "selections": (v5/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
           },
           {
             "alias": null,
             "args": [
-              (v6/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "recordsTrusted",
@@ -411,7 +313,7 @@ return {
               {
                 "alias": null,
                 "args": [
-                  (v6/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "partnerCategory",
@@ -449,7 +351,7 @@ return {
                             "name": "categories",
                             "plural": true,
                             "selections": [
-                              (v7/*: any*/),
+                              (v5/*: any*/),
                               (v4/*: any*/)
                             ],
                             "storageKey": null
@@ -468,7 +370,7 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/),
+          (v5/*: any*/),
           {
             "alias": "insightsList",
             "args": [
@@ -488,71 +390,9 @@ return {
             "kind": "LinkedField",
             "name": "insights",
             "plural": true,
-            "selections": (v5/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
           },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "HTML"
-              },
-              {
-                "kind": "Literal",
-                "name": "partnerBio",
-                "value": false
-              }
-            ],
-            "concreteType": "ArtistBlurb",
-            "kind": "LinkedField",
-            "name": "biographyBlurb",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Partner",
-                "kind": "LinkedField",
-                "name": "partner",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Profile",
-                    "kind": "LinkedField",
-                    "name": "profile",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  (v4/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "credit",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "text",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-          },
-          (v3/*: any*/),
           (v4/*: any*/)
         ],
         "storageKey": null
@@ -560,12 +400,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4007c4c512ceb44a6b6cbebb6152993d",
+    "cacheID": "6d7a16073ba4c9fa60ddaa421b476b15",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistGenes_artist\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistCareerHighlightsQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

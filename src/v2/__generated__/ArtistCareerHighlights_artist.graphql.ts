@@ -5,27 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlights_artist = {
-    readonly biographyBlurb: {
-        readonly partner: {
-            readonly profile: {
-                readonly href: string | null;
-            } | null;
-        } | null;
-        readonly credit: string | null;
-        readonly text: string | null;
-    } | null;
-    readonly name: string | null;
-    readonly related: {
-        readonly genes: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                } | null;
-            } | null> | null;
-        } | null;
-    } | null;
-    readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistGenes_artist" | "ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
     readonly " $refType": "ArtistCareerHighlights_artist";
 };
 export type ArtistCareerHighlights_artist$data = ArtistCareerHighlights_artist;
@@ -43,141 +23,6 @@ const node: ReaderFragment = {
   "name": "ArtistCareerHighlights_artist",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "HTML"
-        },
-        {
-          "kind": "Literal",
-          "name": "partnerBio",
-          "value": false
-        }
-      ],
-      "concreteType": "ArtistBlurb",
-      "kind": "LinkedField",
-      "name": "biographyBlurb",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Partner",
-          "kind": "LinkedField",
-          "name": "partner",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Profile",
-              "kind": "LinkedField",
-              "name": "profile",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "credit",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "text",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistRelatedData",
-      "kind": "LinkedField",
-      "name": "related",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "GeneConnection",
-          "kind": "LinkedField",
-          "name": "genes",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "GeneEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Gene",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistGenes_artist"
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistInsightBadges_artist"
@@ -191,5 +36,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'cee01dc85dcac00999e676df781084e1';
+(node as any).hash = '10063707d02c6ca8a76d1ad1e577a84d';
 export default node;
