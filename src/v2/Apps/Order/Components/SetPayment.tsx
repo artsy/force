@@ -23,7 +23,7 @@ export const SetPayment: FC<Props> = props => {
             variables: {
               input: {
                 id: props.order.internalID,
-                paymentMethod: "ACH_TRANSFER",
+                paymentMethod: "US_BANK_ACCOUNT",
                 paymentMethodId: setupIntentId,
               },
             },

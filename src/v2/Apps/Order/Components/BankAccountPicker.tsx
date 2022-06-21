@@ -45,7 +45,7 @@ export const BankAccountPicker: FC<Props> = props => {
           variables: {
             input: {
               id: order.internalID,
-              paymentMethod: "ACH_TRANSFER",
+              paymentMethod: "US_BANK_ACCOUNT",
               paymentMethodId: bankAccountSelection.id,
             },
           },
@@ -102,15 +102,19 @@ export const BankAccountPicker: FC<Props> = props => {
         </RadioGroup>
       )}
       <Spacer mb={4} />
-      <Collapse open={bankAccountSelection.type === "new"}>
+      <Collapse
+        open={
+          bankAccountSelection.type === "new" || !userHasExistingBankAccounts
+        }
+      >
         <BankDebitProvider order={order} />
       </Collapse>
-      {bankAccountSelection.type !== "new" && (
+      {bankAccountSelection.type !== "new" && userHasExistingBankAccounts && (
         <Button
           onClick={handleContinue}
           disabled={!bankAccountSelection.type}
           variant="primaryBlack"
-          width="100%"
+          width="50%"
         >
           Save and Continue
         </Button>
