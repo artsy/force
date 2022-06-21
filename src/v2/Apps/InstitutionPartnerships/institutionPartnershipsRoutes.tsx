@@ -11,7 +11,7 @@ const InstitutionPartnershipsApp = loadable(
 
 export const institutionPartnershipsRoutes: AppRouteConfig[] = [
   {
-    path: "/institution-partnerships2",
+    path: "/institution-partnerships",
     getComponent: () => InstitutionPartnershipsApp,
   },
 ]
