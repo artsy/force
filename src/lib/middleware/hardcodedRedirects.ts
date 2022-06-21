@@ -115,6 +115,9 @@ const REDIRECTS = {
   "/2015-year-in-art": "/article/artsy-editorial-2015-the-year-in-art",
   "/campaign/art-keeps-going":
     "https://www.artsy.net/collections#art-keeps-going",
+  "/the-future-of-art":
+    "https://www.wsj.com/articles/carter-cleveland-says-art-in-the-future-will-be-for-everyone-1404762157",
+  "/christies-spring-auctions-2015": "/auctions",
 }
 
 const router = express.Router()
