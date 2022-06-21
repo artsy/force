@@ -1,23 +1,14 @@
 import { groupBy } from "lodash"
-import * as React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistCVGroup_artist } from "v2/__generated__/ArtistCVGroup_artist.graphql"
-import {
-  Text,
-  Box,
-  GridColumns,
-  Column,
-  Button,
-  Spacer,
-  Join,
-} from "@artsy/palette"
+import { Text, Box, GridColumns, Column, Button } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { useState } from "react"
+import { useState, Fragment, FC } from "react"
 
 const REFETCH_PAGE_SIZE = 10
 
@@ -27,11 +18,7 @@ interface ArtistCVGroupProps {
   title: string
 }
 
-const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
-  artist,
-  relay,
-  title,
-}) => {
+const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
   const [isLoading, setIsLoading] = useState(false)
   const hasMore = artist.showsConnection?.pageInfo.hasNextPage
 
@@ -56,80 +43,69 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
   const groupedByYear = groupBy(nodes, show => show.startAt)
 
   return (
-    <>
-      <Join separator={<Spacer my={[1, 4]} />} data-test="artistCVGroup">
-        {Object.keys(groupedByYear)
-          .sort()
-          .reverse()
-          .map((year, index) => {
-            const isFirst = index === 0
-            const yearGroup = groupedByYear[year]
+    <GridColumns>
+      {Object.keys(groupedByYear)
+        .sort()
+        .reverse()
+        .map((year, index) => {
+          const isFirst = index === 0
+          const yearGroup = groupedByYear[year]
 
-            return (
-              <GridColumns key={index}>
-                <Column span={2} mb={[2, 0]}>
-                  {isFirst && <Text variant="lg-display">{title}</Text>}
-                </Column>
+          return (
+            <Fragment key={index}>
+              <Column span={12}>
+                {isFirst && <Text variant="lg-display">{title}</Text>}
+              </Column>
 
-                <Column span={2}>
-                  <Text
-                    variant="sm-display"
-                    textAlign={["left", "right"]}
-                    pr={[2, 4]}
-                  >
-                    {year}
-                  </Text>
-                </Column>
+              <Column span={1} start={4}>
+                <Text variant="sm-display">{year}</Text>
+              </Column>
 
-                <Column span={5}>
-                  {yearGroup.map((show, yearKey) => {
-                    return (
-                      <Box mb={1} key={yearKey}>
-                        <Text variant="sm-display" display="inline">
-                          {show.href ? (
-                            <RouterLink to={show.href}>{show.name}</RouterLink>
-                          ) : (
-                            <>{show.name}</>
-                          )}
+              <Column span={8}>
+                {yearGroup.map((show, yearKey) => {
+                  return (
+                    <Box mb={1} key={yearKey}>
+                      <Text variant="sm-display" display="inline">
+                        {show.href ? (
+                          <RouterLink to={show.href}>{show.name}</RouterLink>
+                        ) : (
+                          <>{show.name}</>
+                        )}
 
-                          {show.partner && (
-                            <>
-                              ,{" "}
-                              {show.partner.href ? (
-                                <RouterLink to={show.partner.href}>
-                                  {show.partner.name}
-                                </RouterLink>
-                              ) : (
-                                <span>{show.partner.name}</span>
-                              )}
-                            </>
-                          )}
-                        </Text>
-                      </Box>
-                    )
-                  })}
-                </Column>
-              </GridColumns>
-            )
-          })}
-      </Join>
+                        {show.partner && (
+                          <>
+                            ,{" "}
+                            {show.partner.href ? (
+                              <RouterLink to={show.partner.href}>
+                                {show.partner.name}
+                              </RouterLink>
+                            ) : (
+                              <span>{show.partner.name}</span>
+                            )}
+                          </>
+                        )}
+                      </Text>
+                    </Box>
+                  )
+                })}
+              </Column>
+            </Fragment>
+          )
+        })}
 
       {hasMore && (
-        <GridColumns>
-          <Column start={5}>
-            <Button
-              variant="primaryGray"
-              size="large"
-              my={1}
-              loading={isLoading}
-              onClick={loadMore}
-            >
-              Load More
-            </Button>
-          </Column>
-        </GridColumns>
+        <Column start={5} span={8}>
+          <Button
+            variant="primaryGray"
+            size="small"
+            loading={isLoading}
+            onClick={loadMore}
+          >
+            Load More
+          </Button>
+        </Column>
       )}
-    </>
+    </GridColumns>
   )
 }
 

@@ -27,7 +27,7 @@ query BackLink_Test_Query {
 
 fragment BackLink_artist on Artist {
   name
-  slug
+  href
 }
 */
 
@@ -41,9 +41,9 @@ var v0 = [
 ],
 v1 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "ID"
+  "type": "String"
 };
 return {
   "fragment": {
@@ -97,7 +97,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -113,7 +113,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "abb7344101fff911d425adadeec5d980",
+    "cacheID": "ed9989e4feec2fb66669c2baee7581c7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -123,19 +123,19 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.id": (v1/*: any*/),
-        "artist.name": {
+        "artist.href": (v1/*: any*/),
+        "artist.id": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
-          "type": "String"
+          "type": "ID"
         },
-        "artist.slug": (v1/*: any*/)
+        "artist.name": (v1/*: any*/)
       }
     },
     "name": "BackLink_Test_Query",
     "operationKind": "query",
-    "text": "query BackLink_Test_Query {\n  artist(id: \"example\") {\n    ...BackLink_artist\n    id\n  }\n}\n\nfragment BackLink_artist on Artist {\n  name\n  slug\n}\n"
+    "text": "query BackLink_Test_Query {\n  artist(id: \"example\") {\n    ...BackLink_artist\n    id\n  }\n}\n\nfragment BackLink_artist on Artist {\n  name\n  href\n}\n"
   }
 };
 })();

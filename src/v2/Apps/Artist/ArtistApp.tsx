@@ -37,10 +37,11 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   // Sub-page with a back button
   if (route.hideNavigationTabs) {
     return (
-      <PageWrapper artist={artist}>
+      <>
         {!isEigen && <BackLinkFragmentContainer artist={artist} />}
-        <Box mt={2}>{children}</Box>
-      </PageWrapper>
+
+        <PageWrapper artist={artist}>{children}</PageWrapper>
+      </>
     )
   }
 
