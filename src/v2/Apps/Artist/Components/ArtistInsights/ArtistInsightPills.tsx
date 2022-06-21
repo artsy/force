@@ -48,10 +48,9 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
         <ArtistPill label="High Auction Record" />
       )}
 
-      {/* TODO: uncomment once new artist metadata is imported into gravity i.e. active_secondary_market */}
-      {/* {artist.insightsList.map(insight => {
+      {artist.insightsList.map(insight => {
         return <ArtistPill label={insight.label} />
-      })} */}
+      })}
     </Flex>
   )
 }

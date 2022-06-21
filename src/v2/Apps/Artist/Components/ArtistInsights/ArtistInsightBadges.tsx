@@ -87,7 +87,6 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
             />
           </Column>
         )}
-
         {highAuctionRecord && (
           <Column span={6}>
             <ArtistBadge
@@ -97,16 +96,14 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
           </Column>
         )}
 
-        {/* TODO: uncomment once new artist metadata is imported into gravity i.e. active_secondary_market */}
-
-        {/* {artist.insights.map(insight => {
+        {artist.insights.map(insight => {
           return (
             <ArtistBadge
               label={insight.label}
-              description={insight.description}
+              description={insight.description!}
             />
           )
-        })} */}
+        })}
       </GridColumns>
     </>
   )
