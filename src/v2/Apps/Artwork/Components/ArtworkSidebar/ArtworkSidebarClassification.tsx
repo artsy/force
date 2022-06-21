@@ -5,9 +5,6 @@ import { ArtworkSidebarClassification_artwork } from "v2/__generated__/ArtworkSi
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
-// TODO:
-// - Check classification modal
-
 export interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork
 }
