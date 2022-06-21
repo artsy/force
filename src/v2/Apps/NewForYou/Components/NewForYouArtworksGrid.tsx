@@ -13,8 +13,8 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
 }) => {
   return (
     <>
-      {viewer.artworksForUser ? (
-        <ArtworkGrid artwork={viewer.artworksForUser} />
+      {viewer.artworksForUser?.totalCount! > 0 ? (
+        <ArtworkGrid artworks={viewer.artworksForUser} />
       ) : (
         <Text variant="lg" mt={4} color="black60">
           Nothing yet.
@@ -31,6 +31,7 @@ export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
       fragment NewForYouArtworksGrid_viewer on Viewer
         @argumentDefinitions(first: { type: "Int", defaultValue: 20 }) {
         artworksForUser(first: $first, includeBackfill: true) {
+          totalCount
           ...ArtworkGrid_artworks
           pageInfo {
             hasNextPage
