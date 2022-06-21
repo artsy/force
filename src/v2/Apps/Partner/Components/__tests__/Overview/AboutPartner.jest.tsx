@@ -1,8 +1,10 @@
 import { AboutPartnerFragmentContainer } from "../../Overview/AboutPartner"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper({
   Component: ({ partner }: any) => {
@@ -18,6 +20,15 @@ const { getWrapper } = setupTestWrapper({
 })
 
 describe("AboutPartner", () => {
+  const mockuseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
+  beforeAll(() => {
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+  })
+
   it("renders correctly", () => {
     const website = "http://www.theunitldn.com"
     const vatNumber = "GB204716728"
@@ -45,9 +56,30 @@ describe("AboutPartner", () => {
     expect(wrapper.find("Text").at(2).text()).toEqual(fullBio)
     expect(wrapper.find("Text").at(3).text()).toEqual(website)
     expect(wrapper.find("Text").at(4).text()).toEqual(`VAT ID#: ${vatNumber}`)
-    expect(wrapper.find("RouterLink").props().to).toEqual(
-      "http://www.theunitldn.com"
-    )
+    expect(wrapper.find("a").props().href).toEqual("http://www.theunitldn.com")
+  })
+
+  it("tracks correctly", () => {
+    const website = "http://www.theunitldn.com"
+    const slug = "the-unit-ldn"
+    const internalID = "1234asdf"
+
+    const wrapper = getWrapper({
+      Partner: () => ({
+        website,
+        slug,
+        internalID,
+        displayFullPartnerPage: true,
+      }),
+    })
+    wrapper.find("a").simulate("click")
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action: "clickedPartnerLink",
+      context_owner_id: internalID,
+      context_owner_slug: slug,
+      context_owner_type: "partner",
+      destination_path: website,
+    })
   })
 
   it("doesn't render the text if data is empty", () => {

@@ -12,6 +12,8 @@ export type AboutPartner_partner = {
     readonly website: string | null;
     readonly vatNumber: string | null;
     readonly displayFullPartnerPage: boolean | null;
+    readonly slug: string;
+    readonly internalID: string;
     readonly " $refType": "AboutPartner_partner";
 };
 export type AboutPartner_partner$data = AboutPartner_partner;
@@ -73,10 +75,24 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "displayFullPartnerPage",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     }
   ],
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = 'f4275bcda7bfe647ae27ca92d8475c3d';
+(node as any).hash = '7c27887a0038117640fd4334cd98deff';
 export default node;
