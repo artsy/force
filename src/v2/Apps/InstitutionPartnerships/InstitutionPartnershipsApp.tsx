@@ -313,20 +313,9 @@ export const InstitutionPartnershipsApp: FC = () => {
 
 const PROFILES = [
   {
-    name: "Liz Luna",
-    title: "Director",
-    src: "https://files.artsy.net/images/institutions-avatar-liz-luna.jpg",
-  },
-  {
     name: "Erica Lyon",
     title: "Associate Director, Auction & Institutional Partnerships",
     src: "https://files.artsy.net/images/institutions-avatar-erica-lyon.jpg",
-  },
-  {
-    name: "John Elderfield",
-    title: "Senior Auciton Manager, Partnerships",
-    src:
-      "https://files.artsy.net/images/institutions-avatar-john-elderfield.jpg",
   },
   {
     name: "Perry Weber",
