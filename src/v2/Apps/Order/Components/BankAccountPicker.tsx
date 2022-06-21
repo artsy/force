@@ -2,15 +2,22 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FC, useState } from "react"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { BankAccountPicker_me } from "v2/__generated__/BankAccountPicker_me.graphql"
-import { BorderedRadio, RadioGroup, Spacer, Collapse } from "@artsy/palette"
+import {
+  BorderedRadio,
+  RadioGroup,
+  Spacer,
+  Collapse,
+  Button,
+} from "@artsy/palette"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_order.graphql"
-import { useRouter } from "v2/System/Router/useRouter"
-import { getENV } from "v2/Utils/getENV"
+import { useSetPayment } from "v2/Apps/Order/Components/Mutations/useSetPayment"
 
 interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
+  onSetPaymentSuccess: () => void
+  onSetPaymentError: (error: Error) => void
 }
 export const BankAccountPicker: FC<Props> = props => {
   const [bankAccountSelection, setBankAccountSelection] = useState({
@@ -21,19 +28,39 @@ export const BankAccountPicker: FC<Props> = props => {
   const {
     me: { bankAccounts },
     order,
+    onSetPaymentSuccess,
+    onSetPaymentError,
   } = props
 
   const bankAccountsArray = bankAccounts?.edges?.map(e => e?.node)!
 
   const userHasExistingBankAccounts = bankAccountsArray.length > 0
 
-  const { router } = useRouter()
+  const { submitMutation: setPaymentMutation } = useSetPayment()
 
-  const returnURL = `${getENV("APP_URL")}/orders/${order.internalID}/payment`
+  const handleContinue = async () => {
+    try {
+      const orderOrError = (
+        await setPaymentMutation({
+          variables: {
+            input: {
+              id: order.internalID,
+              paymentMethod: "ACH_TRANSFER",
+              paymentMethodId: bankAccountSelection.id,
+            },
+          },
+        })
+      ).commerceSetPayment?.orderOrError
 
-  // if (bankAccountSelection.type === "existing") {
-  //   router.push(returnURL)
-  // }
+      if (orderOrError?.error) {
+        throw orderOrError.error
+      }
+
+      onSetPaymentSuccess()
+    } catch (error) {
+      onSetPaymentError(error)
+    }
+  }
 
   return (
     <>
@@ -78,6 +105,16 @@ export const BankAccountPicker: FC<Props> = props => {
       <Collapse open={bankAccountSelection.type === "new"}>
         <BankDebitProvider order={order} />
       </Collapse>
+      {bankAccountSelection.type !== "new" && (
+        <Button
+          onClick={handleContinue}
+          disabled={!bankAccountSelection.type}
+          variant="primaryBlack"
+          width="100%"
+        >
+          Save and Continue
+        </Button>
+      )}
     </>
   )
 }
@@ -101,16 +138,6 @@ export const BankAccountPickerFragmentContainer = createFragmentContainer(
       fragment BankAccountPicker_order on CommerceOrder {
         internalID
         mode
-        state
-        lineItems {
-          edges {
-            node {
-              artwork {
-                slug
-              }
-            }
-          }
-        }
       }
     `,
   }

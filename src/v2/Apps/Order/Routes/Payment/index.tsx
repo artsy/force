@@ -242,6 +242,8 @@ export const PaymentRoute: FC<Props> = props => {
                 paymentPicker={paymentPicker}
                 setPayment={setPayment}
                 onPaymentMethodChange={setSelectedPaymentMethod}
+                onSetPaymentSuccess={onSetPaymentSuccess}
+                onSetPaymentError={onSetPaymentError}
               />
             )}
           </>
