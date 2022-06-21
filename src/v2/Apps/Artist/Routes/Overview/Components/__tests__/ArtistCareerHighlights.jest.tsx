@@ -18,9 +18,18 @@ const { renderWithRelay } = setupTestWrapperTL({
 
 describe("ArtistCareerHighlights", () => {
   it("renders correctly", () => {
-    renderWithRelay()
+    renderWithRelay({
+      Artist: () => ({
+        insights: [
+          {
+            type: "ACTIVE_SECONDARY_MARKET",
+          },
+        ],
+      }),
+    })
 
-    expect(screen.queryByText("Career Highlights")).toBeInTheDocument()
-    expect(screen.queryByText("Artist Badges")).toBeInTheDocument()
+    expect(screen.getByText("Career Highlights")).toBeInTheDocument()
+    expect(screen.getByText("Artist Badges")).toBeInTheDocument()
+    expect(screen.getByText("Active Secondary Market")).toBeInTheDocument()
   })
 })
