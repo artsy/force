@@ -16,6 +16,7 @@ export interface TopContextBarProps {
   href?: string | null
   /** Should the biggest size image available */
   src?: string | null
+  onClick?(): void
 }
 
 export const TopContextBar: React.FC<TopContextBarProps> = ({
@@ -23,6 +24,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
   displayBackArrow = false,
   href,
   src,
+  onClick,
 }) => {
   const image = src ? cropped(src, { width: 60, height: 60 }) : null
 
@@ -36,6 +38,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
               as: RouterLink,
               to: href,
               textDecoration: "none",
+              onClick,
             }
           : {})}
       >
