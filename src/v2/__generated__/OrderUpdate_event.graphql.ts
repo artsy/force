@@ -5,10 +5,13 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type OrderUpdate_event = {
     readonly __typename: "CommerceOrderStateChangedEvent";
     readonly createdAt: string;
     readonly orderUpdateState: string | null;
+    readonly state: CommerceOrderStateEnum;
+    readonly stateReason: string | null;
     readonly " $refType": "OrderUpdate_event";
 } | {
     readonly __typename: "CommerceOfferSubmittedEvent";
@@ -75,6 +78,20 @@ return {
           "kind": "ScalarField",
           "name": "orderUpdateState",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "state",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "stateReason",
+          "storageKey": null
         }
       ],
       "type": "CommerceOrderStateChangedEvent",
@@ -138,5 +155,5 @@ return {
   "abstractKey": "__isCommerceOrderEventUnion"
 };
 })();
-(node as any).hash = 'fcc1831d8d23106cca5ff447038d2852';
+(node as any).hash = '087066fcfb5302123982253c10d7f895';
 export default node;
