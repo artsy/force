@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Flex, Text, BorderedRadio } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 import { EditionSelectBox_edition } from "v2/__generated__/EditionSelectBox_edition.graphql"
 
@@ -25,28 +26,32 @@ export const EditionSelectBox: React.FC<Props> = ({
   selected,
   onSelect,
 }) => {
-  const isOfferable = !!edition.isOfferableFromInquiry || !!edition.isOfferable
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
+  const isActionable =
+    !!edition.isOfferableFromInquiry ||
+    !!edition.isOfferable ||
+    (!!isCBNEnabled && !!edition.isAcquireable)
 
   return (
     <BorderedRadio
       onSelect={() => {
-        onSelect(edition.internalID, isOfferable)
+        onSelect(edition.internalID, isActionable)
       }}
-      disabled={!isOfferable}
+      disabled={!isActionable}
       selected={selected}
     >
       <Flex flexGrow={1} flexDirection="column">
-        <Text color={isOfferable ? "black100" : "black30"}>
+        <Text color={isActionable ? "black100" : "black30"}>
           {edition.dimensions?.in}
         </Text>
-        <Text color={isOfferable ? "black60" : "black30"}>
+        <Text color={isActionable ? "black60" : "black30"}>
           {edition.dimensions?.cm}
         </Text>
-        <Text color={isOfferable ? "black60" : "black30"}>
+        <Text color={isActionable ? "black60" : "black30"}>
           {edition.editionOf}
         </Text>
       </Flex>
-      {isOfferable ? (
+      {isActionable ? (
         <Text>{edition.listPrice?.display || "Contact for price"}</Text>
       ) : (
         <Flex flexDirection="row" alignItems="baseline">
@@ -67,6 +72,7 @@ export const EditionSelectBoxFragmentContainer = createFragmentContainer(
         editionOf
         isOfferableFromInquiry
         isOfferable
+        isAcquireable
         listPrice {
           ... on Money {
             display

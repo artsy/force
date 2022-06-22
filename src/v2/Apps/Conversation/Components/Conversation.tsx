@@ -29,6 +29,7 @@ import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "../Utils/useOnScreen"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -53,9 +54,11 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
-
-  const isOfferable =
-    !!artwork?.isOfferable || !!artwork?.isOfferableFromInquiry
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
+  const isActionable =
+    !!artwork?.isOfferable ||
+    !!artwork?.isOfferableFromInquiry ||
+    (!!isCBNEnabled && !!artwork?.isAcquireable)
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
@@ -260,7 +263,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           openOrderModal={() => setShowOrderModal(true)}
         />
       </NoScrollFlex>
-      {isOfferable && (
+      {isActionable && (
         <ConfirmArtworkModalQueryRenderer
           artworkID={artwork?.internalID!}
           conversationID={conversation.internalID!}
@@ -268,7 +271,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           closeModal={() => setShowConfirmArtworkModal(false)}
         />
       )}
-      {isOfferable && (
+      {isActionable && (
         <OrderModal
           path={url!}
           orderID={orderID}
@@ -373,6 +376,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
             ... on Artwork {
               isOfferable
               isOfferableFromInquiry
+              isAcquireable
               internalID
               __typename
             }

@@ -9,6 +9,7 @@ export type EditionSelectBox_edition = {
     readonly editionOf: string | null;
     readonly isOfferableFromInquiry: boolean | null;
     readonly isOfferable: boolean | null;
+    readonly isAcquireable: boolean | null;
     readonly listPrice: {
         readonly display?: string | null | undefined;
     } | null;
@@ -73,6 +74,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isAcquireable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "listPrice",
@@ -123,5 +131,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'b31cac2e039131114a5188f46251511e';
+(node as any).hash = '4cd25677b71982b6bd46c8a9d9af5a5a';
 export default node;

@@ -2,6 +2,7 @@ import { ConfirmArtworkModalFragmentContainer } from "../ConfirmArtworkModal"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
+import { useSystemContext as baseUseSystemContext } from "v2/System/useSystemContext"
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -9,6 +10,8 @@ jest.mock("@artsy/palette", () => {
     Modal: ({ children }) => children,
   }
 })
+
+jest.mock("v2/System/useSystemContext")
 
 jest.unmock("react-relay")
 
@@ -65,6 +68,12 @@ describe("ConfirmArtworkModal", () => {
 })
 
 describe("Artwork editions", () => {
+  let useSystemContext = baseUseSystemContext as jest.Mock
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: { "conversational-buy-now": { flagEnabled: true } },
+    }))
+  })
   const mockEditions = {
     Artwork: () => ({
       isEdition: true,
@@ -129,6 +138,42 @@ describe("Artwork editions", () => {
     }),
   }
 
+  const mockActionableEditionCases = {
+    Artwork: () => ({
+      isEdition: true,
+      editionSets: [
+        {
+          internalID: "edition-1",
+          editionOf: "offerable-from-inquiry",
+          isOfferableFromInquiry: true,
+          isOfferable: false,
+          isAcquireable: false,
+        },
+        {
+          internalID: "edition-2",
+          editionOf: "offerable",
+          isOfferableFromInquiry: false,
+          isOfferable: true,
+          isAcquireable: false,
+        },
+        {
+          internalID: "edition-3",
+          editionOf: "acquirable",
+          isOfferableFromInquiry: false,
+          isOfferable: false,
+          isAcquireable: true,
+        },
+        {
+          internalID: "edition-4",
+          editionOf: "unavailable",
+          isOfferableFromInquiry: false,
+          isOfferable: false,
+          isAcquireable: false,
+        },
+      ],
+    }),
+  }
+
   it("An Edition renders correctly", async () => {
     renderWithRelay(mockSingleEdition)
 
@@ -185,6 +230,26 @@ describe("Artwork editions", () => {
       fireEvent.click(editions[1])
       expect(radios[0]).not.toBeChecked()
       expect(radios[1]).toBeChecked()
+    })
+  })
+
+  it("Correctly displays availability for all relevant cases", async () => {
+    renderWithRelay(mockActionableEditionCases)
+
+    await waitFor(() => {
+      const radios = screen.getAllByRole("radio")
+      expect(radios).toHaveLength(4)
+
+      // Test unavailable edition
+      const lastRadio = radios.pop()
+      expect(lastRadio).toHaveAttribute("disabled")
+      expect(lastRadio).toHaveTextContent("Unavailable")
+
+      // Make sure the rest are not disabled
+      for (const radio of radios) {
+        expect(radio).toBeEnabled()
+        expect(radio).not.toHaveTextContent("Unavailable")
+      }
     })
   })
 })
