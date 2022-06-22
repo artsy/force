@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "OTHER" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
     clientMutationId?: string | null | undefined;
@@ -18,8 +19,7 @@ export type useSetPaymentMutationResponse = {
         readonly orderOrError: {
             readonly order?: {
                 readonly id: string;
-                readonly bankAccountId: string | null;
-                readonly paymentMethod: CommercePaymentMethodEnum | null;
+                readonly " $fragmentRefs": FragmentRefs<"Payment_validation">;
             } | undefined;
             readonly error?: {
                 readonly type: string;
@@ -47,8 +47,7 @@ mutation useSetPaymentMutation(
         order {
           __typename
           id
-          bankAccountId
-          paymentMethod
+          ...Payment_validation
         }
       }
       ... on CommerceOrderWithMutationFailure {
@@ -58,6 +57,23 @@ mutation useSetPaymentMutation(
           data
         }
       }
+    }
+  }
+}
+
+fragment Payment_validation on CommerceOrder {
+  __isCommerceOrder: __typename
+  paymentMethod
+  paymentMethodDetails {
+    __typename
+    ... on CreditCard {
+      id
+    }
+    ... on BankAccount {
+      id
+    }
+    ... on WireTransfer {
+      isManualPayment
     }
   }
 }
@@ -86,20 +102,6 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "bankAccountId",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "paymentMethod",
-  "storageKey": null
-},
-v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -138,13 +140,16 @@ v5 = {
   "type": "CommerceOrderWithMutationFailure",
   "abstractKey": null
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
-};
+},
+v5 = [
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -180,8 +185,11 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "Payment_validation"
+                      }
                     ],
                     "storageKey": null
                   }
@@ -189,7 +197,7 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -222,7 +230,7 @@ return {
             "name": "orderOrError",
             "plural": false,
             "selections": [
-              (v6/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -234,10 +242,57 @@ return {
                     "name": "order",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
+                      (v4/*: any*/),
                       (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      {
+                        "kind": "TypeDiscriminator",
+                        "abstractKey": "__isCommerceOrder"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "paymentMethod",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "paymentMethodDetails",
+                        "plural": false,
+                        "selections": [
+                          (v4/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v5/*: any*/),
+                            "type": "CreditCard",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v5/*: any*/),
+                            "type": "BankAccount",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isManualPayment",
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "WireTransfer",
+                            "abstractKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   }
@@ -245,7 +300,7 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -255,14 +310,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3c309b6a33eafb06783a43c2912e63b8",
+    "cacheID": "d9a0652b5458e2688918b22054cb0fbe",
     "id": null,
     "metadata": {},
     "name": "useSetPaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          bankAccountId\n          paymentMethod\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useSetPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'beda31e3fd0ffebcb4f3c05bf6ea1292';
+(node as any).hash = '6414437f3efef0a24a8a4e470b7c8226';
 export default node;

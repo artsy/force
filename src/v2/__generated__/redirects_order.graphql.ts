@@ -13,7 +13,6 @@ export type redirects_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly state: CommerceOrderStateEnum;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
     readonly lastTransactionFailed: boolean | null;
     readonly requestedFulfillment: {
         readonly __typename: string;
@@ -37,6 +36,21 @@ export type redirects_order = {
     readonly creditCard: {
         readonly internalID: string;
     } | null;
+    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly paymentMethodDetails: ({
+        readonly __typename: "CreditCard";
+        readonly id: string;
+    } | {
+        readonly __typename: "BankAccount";
+        readonly id: string;
+    } | {
+        readonly __typename: "WireTransfer";
+        readonly isManualPayment: boolean;
+    } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    }) | null;
     readonly myLastOffer?: {
         readonly internalID: string;
         readonly createdAt: string;
@@ -64,7 +78,23 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "id",
+    "storageKey": null
+  }
+],
+v3 = [
   (v0/*: any*/),
   {
     "alias": null,
@@ -106,13 +136,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "paymentMethod",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "lastTransactionFailed",
       "storageKey": null
     },
@@ -124,13 +147,7 @@ return {
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        }
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -238,6 +255,51 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "paymentMethod",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "paymentMethodDetails",
+      "plural": false,
+      "selections": [
+        (v1/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "CreditCard",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "BankAccount",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isManualPayment",
+              "storageKey": null
+            }
+          ],
+          "type": "WireTransfer",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "kind": "InlineFragment",
       "selections": [
         {
@@ -247,7 +309,7 @@ return {
           "kind": "LinkedField",
           "name": "myLastOffer",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": null
         },
         {
@@ -257,7 +319,7 @@ return {
           "kind": "LinkedField",
           "name": "lastOffer",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": null
         },
         {
@@ -276,5 +338,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '6e57cb94376f7c6a763705e93e079d90';
+(node as any).hash = 'db92b1c01ce47c7377afa9f5670a4ce0';
 export default node;

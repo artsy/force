@@ -11,6 +11,7 @@ import { orderRoutes_OrderQueryRawResponse } from "v2/__generated__/orderRoutes_
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
+  CreditCardPaymentDetails,
   OfferOrderWithShippingDetails,
   OfferWithTotals,
   UntouchedBuyOrder,
@@ -31,7 +32,7 @@ jest.mock(
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../Components/__mocks__/BankDebitProvider")
+    return jest.requireActual("../Components/__mocks__/BankDebitProvider")
   }
 )
 
@@ -217,7 +218,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        creditCard: null,
+        paymentMethodDetails: null,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
@@ -232,10 +233,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        creditCard: {
-          id: "",
-          internalID: "29390235",
-        },
+        ...CreditCardPaymentDetails,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
@@ -268,10 +266,7 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/status",
       mockResolver({
         ...UntouchedBuyOrder,
-        creditCard: {
-          id: "",
-          internalID: "29390235",
-        },
+        ...CreditCardPaymentDetails,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
