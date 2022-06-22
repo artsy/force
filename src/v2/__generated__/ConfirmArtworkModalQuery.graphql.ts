@@ -90,6 +90,7 @@ fragment EditionSelectBox_edition on EditionSet {
   editionOf
   isOfferableFromInquiry
   isOfferable
+  isAcquireable
   listPrice {
     __typename
     ... on Money {
@@ -438,6 +439,13 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "isAcquireable",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": null,
                 "kind": "LinkedField",
                 "name": "listPrice",
@@ -489,12 +497,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "70d7e347a770d9e3323200388db46054",
+    "cacheID": "e7463a6746ea28139ca8e3ba08ec5d50",
     "id": null,
     "metadata": {},
     "name": "ConfirmArtworkModalQuery",
     "operationKind": "query",
-    "text": "query ConfirmArtworkModalQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ConfirmArtworkModal_artwork\n    id\n  }\n}\n\nfragment CollapsibleArtworkDetails_artwork on Artwork {\n  image {\n    resized(width: 40, height: 40) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  internalID\n  title\n  date\n  saleMessage\n  attributionClass {\n    name\n    id\n  }\n  category\n  manufacturer\n  publisher\n  medium\n  conditionDescription {\n    details\n  }\n  certificateOfAuthenticity {\n    details\n  }\n  framed {\n    details\n  }\n  dimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    details\n  }\n  artistNames\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConfirmArtworkModal_artwork on Artwork {\n  ...CollapsibleArtworkDetails_artwork\n  ...ConfirmArtworkButton_artwork\n  internalID\n  isEdition\n  editionSets {\n    internalID\n    ...EditionSelectBox_edition\n    id\n  }\n}\n\nfragment EditionSelectBox_edition on EditionSet {\n  internalID\n  editionOf\n  isOfferableFromInquiry\n  isOfferable\n  listPrice {\n    __typename\n    ... on Money {\n      display\n    }\n    ... on PriceRange {\n      display\n    }\n  }\n  dimensions {\n    cm\n    in\n  }\n}\n"
+    "text": "query ConfirmArtworkModalQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ConfirmArtworkModal_artwork\n    id\n  }\n}\n\nfragment CollapsibleArtworkDetails_artwork on Artwork {\n  image {\n    resized(width: 40, height: 40) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  internalID\n  title\n  date\n  saleMessage\n  attributionClass {\n    name\n    id\n  }\n  category\n  manufacturer\n  publisher\n  medium\n  conditionDescription {\n    details\n  }\n  certificateOfAuthenticity {\n    details\n  }\n  framed {\n    details\n  }\n  dimensions {\n    in\n    cm\n  }\n  signatureInfo {\n    details\n  }\n  artistNames\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment ConfirmArtworkModal_artwork on Artwork {\n  ...CollapsibleArtworkDetails_artwork\n  ...ConfirmArtworkButton_artwork\n  internalID\n  isEdition\n  editionSets {\n    internalID\n    ...EditionSelectBox_edition\n    id\n  }\n}\n\nfragment EditionSelectBox_edition on EditionSet {\n  internalID\n  editionOf\n  isOfferableFromInquiry\n  isOfferable\n  isAcquireable\n  listPrice {\n    __typename\n    ... on Money {\n      display\n    }\n    ... on PriceRange {\n      display\n    }\n  }\n  dimensions {\n    cm\n    in\n  }\n}\n"
   }
 };
 })();

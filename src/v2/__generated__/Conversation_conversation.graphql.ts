@@ -57,6 +57,7 @@ export type Conversation_conversation = {
         readonly liveArtwork: ({
             readonly isOfferable: boolean | null;
             readonly isOfferableFromInquiry: boolean | null;
+            readonly isAcquireable: boolean | null;
             readonly internalID: string;
             readonly __typename: "Artwork";
         } | {
@@ -444,6 +445,13 @@ return {
               "selections": [
                 (v3/*: any*/),
                 (v4/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAcquireable",
+                  "storageKey": null
+                },
                 (v1/*: any*/),
                 (v2/*: any*/)
               ],
@@ -466,5 +474,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '84aaf500d6c49c45522a2ffe82a8ecb7';
+(node as any).hash = '2f0e1f0f168a2e60d8ff9cc274ca549d';
 export default node;

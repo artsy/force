@@ -54,8 +54,10 @@ const Conversation: React.FC<ConversationProps> = props => {
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
-  const isOfferable =
-    !!artwork?.isOfferable || !!artwork?.isOfferableFromInquiry
+  const isActionable =
+    !!artwork?.isOfferable ||
+    !!artwork?.isOfferableFromInquiry ||
+    !!artwork?.isAcquireable
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
@@ -260,7 +262,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           openOrderModal={() => setShowOrderModal(true)}
         />
       </NoScrollFlex>
-      {isOfferable && (
+      {isActionable && (
         <ConfirmArtworkModalQueryRenderer
           artworkID={artwork?.internalID!}
           conversationID={conversation.internalID!}
@@ -268,7 +270,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           closeModal={() => setShowConfirmArtworkModal(false)}
         />
       )}
-      {isOfferable && (
+      {isActionable && (
         <OrderModal
           path={url!}
           orderID={orderID}
@@ -373,6 +375,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
             ... on Artwork {
               isOfferable
               isOfferableFromInquiry
+              isAcquireable
               internalID
               __typename
             }
