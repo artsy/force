@@ -53,10 +53,15 @@ export const useConfig = ({ basis, onDone }: UseConfig) => {
     setCurrent(workflowEngine.current.next())
   }
 
+  const reset = () => {
+    setCurrent(workflowEngine.current.reset())
+  }
+
   return {
     current,
     workflowEngine: workflowEngine.current,
     next,
+    reset,
   }
 }
 
@@ -94,3 +99,19 @@ export const VIEW_SEARCH_ARTWORKS = "SearchArtworks"
 export const VIEW_SEARCH_GALLERIES = "SearchGalleries"
 export const VIEW_TRENDING_ARTISTS = "TrendingArtists"
 export const VIEW_TRENDING_LOTS = "TrendingLots"
+
+export const VIEWS = [
+  VIEW_WELCOME,
+  VIEW_WHAT_DO_YOU_LOVE_MOST,
+  VIEW_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN,
+  VIEW_DONE,
+  VIEW_AUCTION_HIGHLIGHTS,
+  VIEW_CURATED_ARTWORKS,
+  VIEW_SEARCH_ARTISTS,
+  VIEW_SEARCH_ARTWORKS,
+  VIEW_SEARCH_GALLERIES,
+  VIEW_TRENDING_ARTISTS,
+  VIEW_TRENDING_LOTS,
+] as const
+
+export type View = typeof VIEWS[number]
