@@ -29,7 +29,11 @@ const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
         {label}
       </Text>
       <Box>
-        <Text variant="sm-display" color="black60">
+        <Text
+          variant="sm-display"
+          color="black60"
+          data-testid="expandable-dropdownlist"
+        >
           {entities.length > 1 ? `${first}, and ` : `${first}`}
           {expanded ? (
             `${remaining.join(", ")}`
