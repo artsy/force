@@ -1,7 +1,7 @@
 import { ConfirmArtworkModalFragmentContainer } from "../ConfirmArtworkModal"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { screen, fireEvent, waitFor, getNodeText } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/react"
 
 jest.mock("@artsy/palette", () => {
   return {
