@@ -34,6 +34,8 @@ fragment AboutPartner_partner on Partner {
   website
   vatNumber
   displayFullPartnerPage
+  slug
+  internalID
 }
 */
 
@@ -152,6 +154,20 @@ return {
             "name": "displayFullPartnerPage",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": "partner(id:\"unit-london\")"
@@ -159,7 +175,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6878cdd431ec07a8b8064e3cdf3bbdd5",
+    "cacheID": "8976284eb30d3ed62a610b15d83a157d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -176,6 +192,7 @@ return {
           "type": "Boolean"
         },
         "partner.id": (v2/*: any*/),
+        "partner.internalID": (v2/*: any*/),
         "partner.profile": {
           "enumValues": null,
           "nullable": true,
@@ -185,13 +202,14 @@ return {
         "partner.profile.bio": (v3/*: any*/),
         "partner.profile.fullBio": (v3/*: any*/),
         "partner.profile.id": (v2/*: any*/),
+        "partner.slug": (v2/*: any*/),
         "partner.vatNumber": (v3/*: any*/),
         "partner.website": (v3/*: any*/)
       }
     },
     "name": "AboutPartner_Test_Query",
     "operationKind": "query",
-    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  displayFullPartnerPage\n}\n"
+    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  displayFullPartnerPage\n  slug\n  internalID\n}\n"
   }
 };
 })();
