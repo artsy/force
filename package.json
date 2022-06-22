@@ -169,7 +169,7 @@
     "jquery.fillwidth": "0.1.7",
     "jquery.iframe-transport": "1.0.0",
     "jquery.transition": "artsy/jquery.transition",
-    "jsdom": "11.6.2",
+    "jsdom": "16.5.0",
     "jwt-decode": "2.2.0",
     "knox": "0.9.2",
     "lodash": "4.17.21",
