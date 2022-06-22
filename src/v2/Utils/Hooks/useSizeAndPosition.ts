@@ -1,6 +1,6 @@
 import { useIsomorphicLayoutEffect, useMutationObserver } from "@artsy/palette"
 import { debounce } from "lodash"
-import { useCallback, useRef, useState } from "react"
+import { MutableRefObject, useCallback, useRef, useState } from "react"
 
 interface Geometry {
   top: number
@@ -20,6 +20,7 @@ interface UseSizeAndPosition {
   debounce?: number
   trackMutation?: boolean
   trackResize?: boolean
+  targetRef?: MutableRefObject<HTMLElement | null>
 }
 
 /**
@@ -31,21 +32,24 @@ export const useSizeAndPosition = ({
   debounce: debounceMs = 0,
   trackMutation = false,
   trackResize = true,
+  targetRef,
 }: UseSizeAndPosition = {}) => {
   const ref = useRef<HTMLElement | null>(null)
 
   const [geometry, setGeometry] = useState<Geometry>(DEFAULT_GEOMETRY)
 
   const handleUpdate = useCallback(() => {
-    if (!ref.current) return
+    const el = targetRef?.current || ref.current
+
+    if (!el) return
 
     setGeometry({
-      top: ref.current.offsetTop,
-      left: ref.current.offsetLeft,
-      width: ref.current.offsetWidth,
-      height: ref.current.offsetHeight,
+      top: el.offsetTop,
+      left: el.offsetLeft,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
     })
-  }, [])
+  }, [targetRef])
 
   const handler = debounceMs ? debounce(handleUpdate, debounceMs) : handleUpdate
 
