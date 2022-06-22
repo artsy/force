@@ -359,7 +359,8 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/shipping`)
   }
 
-  const { order, isCommittingMutation, isEigen } = props
+  const { order, isCommittingMutation, isEigen, stripe } = props
+  const submittable = !!stripe
 
   return (
     <Box data-test="orderReview">
@@ -381,6 +382,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                     variant="primaryBlack"
                     width="100%"
                     loading={isCommittingMutation}
+                    disabled={!submittable}
                     onClick={() => onSubmit()}
                   >
                     Submit
@@ -413,6 +415,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 variant="primaryBlack"
                 width="100%"
                 loading={isCommittingMutation}
+                disabled={!submittable}
                 onClick={() => onSubmit()}
               >
                 Submit
@@ -441,6 +444,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 variant="primaryBlack"
                 width="100%"
                 loading={isCommittingMutation}
+                disabled={!submittable}
                 onClick={() => onSubmit()}
               >
                 Submit
