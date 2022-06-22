@@ -19,11 +19,27 @@ interface Props {
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
 }
+
 export const BankAccountPicker: FC<Props> = props => {
-  const [bankAccountSelection, setBankAccountSelection] = useState({
-    type: "",
-    id: "",
-  })
+  const getInitialBankAccountSelection = () => {
+    if (props.order.bankAccountId) {
+      return {
+        type: "existing",
+        id: props.order.bankAccountId,
+      }
+    } else {
+      return props.me.bankAccounts?.edges?.length
+        ? {
+            type: "existing",
+            id: props.me.bankAccounts.edges[0]?.node?.internalID!,
+          }
+        : { type: "new" }
+    }
+  }
+
+  const [bankAccountSelection, setBankAccountSelection] = useState(
+    getInitialBankAccountSelection()
+  )
 
   const {
     me: { bankAccounts },
@@ -110,14 +126,17 @@ export const BankAccountPicker: FC<Props> = props => {
         <BankDebitProvider order={order} />
       </Collapse>
       {bankAccountSelection.type !== "new" && userHasExistingBankAccounts && (
-        <Button
-          onClick={handleContinue}
-          disabled={!bankAccountSelection.type}
-          variant="primaryBlack"
-          width="50%"
-        >
-          Save and Continue
-        </Button>
+        <>
+          <Button
+            onClick={handleContinue}
+            disabled={!bankAccountSelection.type}
+            variant="primaryBlack"
+            width="50%"
+          >
+            Save and Continue
+          </Button>
+          <Spacer mb={4} />
+        </>
       )}
     </>
   )
@@ -142,6 +161,7 @@ export const BankAccountPickerFragmentContainer = createFragmentContainer(
       fragment BankAccountPicker_order on CommerceOrder {
         internalID
         mode
+        bankAccountId
       }
     `,
   }
