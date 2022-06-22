@@ -2,6 +2,7 @@ import { ConfirmArtworkModalFragmentContainer } from "../ConfirmArtworkModal"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
+import { useSystemContext as baseUseSystemContext } from "v2/System/useSystemContext"
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -9,6 +10,8 @@ jest.mock("@artsy/palette", () => {
     Modal: ({ children }) => children,
   }
 })
+
+jest.mock("v2/System/useSystemContext")
 
 jest.unmock("react-relay")
 
@@ -65,6 +68,12 @@ describe("ConfirmArtworkModal", () => {
 })
 
 describe("Artwork editions", () => {
+  let useSystemContext = baseUseSystemContext as jest.Mock
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: { "conversational-buy-now": { flagEnabled: true } },
+    }))
+  })
   const mockEditions = {
     Artwork: () => ({
       isEdition: true,
@@ -231,7 +240,7 @@ describe("Artwork editions", () => {
       const radios = screen.getAllByRole("radio")
       expect(radios).toHaveLength(4)
 
-      //Test unavailable edition
+      // Test unavailable edition
       const lastRadio = radios.pop()
       expect(lastRadio).toHaveAttribute("disabled")
       expect(lastRadio).toHaveTextContent("Unavailable")

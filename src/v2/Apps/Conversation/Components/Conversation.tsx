@@ -29,6 +29,7 @@ import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "../Utils/useOnScreen"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -53,11 +54,11 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
-
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
   const isActionable =
     !!artwork?.isOfferable ||
     !!artwork?.isOfferableFromInquiry ||
-    !!artwork?.isAcquireable
+    (!!isCBNEnabled && !!artwork?.isAcquireable)
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean

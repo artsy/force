@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Flex, Text, BorderedRadio } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 import { EditionSelectBox_edition } from "v2/__generated__/EditionSelectBox_edition.graphql"
 
@@ -25,10 +26,11 @@ export const EditionSelectBox: React.FC<Props> = ({
   selected,
   onSelect,
 }) => {
+  const isCBNEnabled = useFeatureFlag("conversational-buy-now")
   const isActionable =
     !!edition.isOfferableFromInquiry ||
     !!edition.isOfferable ||
-    !!edition.isAcquireable
+    (!!isCBNEnabled && !!edition.isAcquireable)
 
   return (
     <BorderedRadio
