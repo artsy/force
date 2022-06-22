@@ -23,7 +23,7 @@ describe("extendedBiddingInfoCopy", () => {
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
       expect(text).toContain(
-        "*Closure times may be extended to accomodate last minute bids"
+        "*Closure times may be extended to accommodate last minute bids"
       )
     })
     describe("a bid has extended the auction", () => {
@@ -100,7 +100,7 @@ describe("extendedBiddingInfoCopy", () => {
       const wrapper = mount(<LotTimer saleArtwork={saleArtwork} />)
       const text = wrapper.text()
       expect(text).not.toContain(
-        "*Closure times may be extended to accomodate last minute bids"
+        "*Closure times may be extended to accommodate last minute bids"
       )
     })
   })

@@ -76,7 +76,7 @@ export const LotTimer: React.FC<LotTimerProps> = ({ saleArtwork }) => {
         <>
           <Spacer mt={1} />
           <Text variant="xs" color={"black60"}>
-            *Closure times may be extended to accomodate last minute bids
+            *Closure times may be extended to accommodate last minute bids
           </Text>
         </>
       )}
