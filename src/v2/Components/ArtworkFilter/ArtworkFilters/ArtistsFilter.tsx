@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect } from "react"
 import * as React from "react"
 import { sortBy } from "lodash"
 import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
@@ -7,10 +7,7 @@ import {
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
-import {
-  FollowedArtistList,
-  fetchFollowedArtists,
-} from "../Utils/fetchFollowedArtists"
+import { fetchFollowedArtists } from "../Utils/fetchFollowedArtists"
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
@@ -84,14 +81,18 @@ const ArtistItem: React.FC<
 
 export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
   const { relayEnvironment, user } = useSystemContext()
-  const { aggregations, ...filterContext } = useArtworkFilterContext()
+  const {
+    aggregations,
+    followedArtists = [],
+    setFollowedArtists,
+    ...filterContext
+  } = useArtworkFilterContext()
   const artists = aggregations?.find(agg => agg.slice === "ARTIST")
   const {
     artistIDs = [],
     includeArtworksByFollowedArtists,
   } = useCurrentlySelectedFilters()
 
-  const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
   const followedArtistSlugs = followedArtists.map(({ slug }) => slug)
 
   const filtersCount = useFilterLabelCountByKey(
@@ -107,7 +108,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
   useEffect(() => {
     if (artists?.counts && relayEnvironment && user) {
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
-        setFollowedArtists(data)
+        setFollowedArtists!(data)
       })
     }
 
