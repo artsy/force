@@ -22,16 +22,44 @@ describe("ArtistInsightPills", () => {
       Artist: () => ({
         insightsList: [
           {
-            label: "Active Secondary Market",
+            label: "The FooBar Vanguard",
+          },
+          {
+            label: "FooBar Secondary Market",
           },
         ],
+        auctionResultsConnection: {
+          edges: [
+            {
+              node: {
+                price_realized: {
+                  display: "US$93.1m",
+                },
+                organization: "Christies",
+                sale_date: "2021",
+              },
+            },
+          ],
+        },
+        artistHighlights: {
+          partnersConnection: {
+            edges: {
+              node: {
+                categories: [{ slug: "blue-chip" }],
+              },
+            },
+          },
+        },
       }),
     })
 
-    expect(screen.getByText("Active Secondary Market")).toBeInTheDocument()
+    expect(screen.getByText("FooBar Secondary Market")).toBeInTheDocument()
+    expect(screen.getByText("The FooBar Vanguard")).toBeInTheDocument()
+    expect(screen.getByText("High Auction Record")).toBeInTheDocument()
+    expect(screen.getByText("Blue Chip Representation")).toBeInTheDocument()
   })
 
-  it("does not render high auction record pill if not present on artist", () => {
+  it("does not render high auction record if not present on artist", () => {
     renderWithRelay({
       Artist: () => ({
         auctionResultsConnection: null,
@@ -41,33 +69,17 @@ describe("ArtistInsightPills", () => {
     expect(screen.queryByText("High Auction Record")).not.toBeInTheDocument()
   })
 
-  it("does not render blue chip pill if not present on artist", () => {
+  it("does not render blue chip representation if not present on artist", () => {
     renderWithRelay({
-      ArtistHighlights: () => ({
-        partnersConnection: { edges: [] },
+      Artist: () => ({
+        artistHighlights: {
+          partnersConnection: null,
+        },
       }),
     })
 
     expect(
       screen.queryByText("Blue Chip Representation")
-    ).not.toBeInTheDocument()
-  })
-
-  it("does not render active secondary market pill if not present on artist", () => {
-    renderWithRelay({
-      Artist: () => ({
-        insightsList: [
-          {
-            label: "Solo show at a major institution",
-            entities: ["Foo Museum"],
-            kind: "SOLO_SHOW",
-          },
-        ],
-      }),
-    })
-
-    expect(
-      screen.queryByText("Active Secondary Market")
     ).not.toBeInTheDocument()
   })
 })
