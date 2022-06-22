@@ -2,8 +2,12 @@ import { WorkflowEngine } from "../WorkflowEngine"
 
 describe("WorkflowEngine", () => {
   describe("a straight path", () => {
-    const machine = new WorkflowEngine({
-      workflow: ["first", "second", "third", "fourth"],
+    let machine: WorkflowEngine
+
+    beforeEach(() => {
+      machine = new WorkflowEngine({
+        workflow: ["first", "second", "third", "fourth"],
+      })
     })
 
     describe("#current", () => {
@@ -21,6 +25,18 @@ describe("WorkflowEngine", () => {
         expect(machine.next()).toEqual("fourth")
         expect(machine.isEnd()).toBe(true)
         expect(machine.next()).toEqual("fourth")
+      })
+    })
+
+    describe("#reset", () => {
+      it("resets the workflow to the first step", () => {
+        expect(machine.current()).toEqual("first")
+        machine.next()
+        expect(machine.current()).toEqual("second")
+        machine.next()
+        expect(machine.current()).toEqual("third")
+        machine.reset()
+        expect(machine.current()).toEqual("first")
       })
     })
   })
