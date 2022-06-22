@@ -3,6 +3,11 @@ import {
   Payment_order,
 } from "v2/__generated__/Payment_order.graphql"
 
+const initialPaymentMethods: CommercePaymentMethodEnum[] = [
+  "US_BANK_ACCOUNT",
+  "CREDIT_CARD",
+]
+
 export const isPaymentSet = (
   paymentMethodDetails: Payment_order["paymentMethodDetails"]
 ): boolean => {
@@ -25,6 +30,6 @@ export const getInitialPaymentMethodValue = ({
 }: Payment_order): CommercePaymentMethodEnum =>
   isPaymentSet(paymentMethodDetails)
     ? paymentMethod!
-    : availablePaymentMethods.includes("US_BANK_ACCOUNT")
-    ? "US_BANK_ACCOUNT"
-    : "CREDIT_CARD"
+    : initialPaymentMethods.find(method =>
+        availablePaymentMethods.includes(method)
+      )!
