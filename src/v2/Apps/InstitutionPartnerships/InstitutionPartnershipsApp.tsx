@@ -12,12 +12,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { FC } from "react"
-import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { MetaTags } from "v2/Components/MetaTags"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
-import { AppContainer } from "../Components/AppContainer"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
+import { InstitutionPartnershipsHero } from "./Components/InstitutionPartnershipsHero"
 import { InstitutionPartnershipsProfilesQueryRenderer } from "./Components/InstitutionPartnershipsProfiles"
 import { InstitutionPartnershipsShowsQueryRenderer } from "./Components/InstitutionPartnershipsShows"
 
@@ -30,51 +28,7 @@ export const InstitutionPartnershipsApp: FC = () => {
       />
 
       <Join separator={<Spacer mt={6} />}>
-        <FullBleedHeader
-          src="https://files.artsy.net/images/institution-partnerships.jpg"
-          caption="Cour Napoléon et pyramide 2013 Musée du Louvre / Olivier Ouadah"
-        >
-          <Box position="absolute" top={0} left={0} width="100%" height="100%">
-            <AppContainer height="100%">
-              <HorizontalPadding
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                height="100%"
-              >
-                <GridColumns>
-                  <Column span={[12, 8, 6, 5]}>
-                    <Text variant={["xl", "xxl"]} as="h1" color="white100">
-                      Artsy for Museums
-                    </Text>
-
-                    <Spacer mt={2} />
-
-                    <Text variant="sm" color="white100">
-                      Promoting the collections and exhibitions of the Musée du
-                      Louvre, J. Paul Getty Museum, Robert Rauschenberg
-                      Foundation, and over 700 major museums and institutions
-                      worldwide.
-                    </Text>
-
-                    <Spacer mt={[4, 6]} />
-
-                    <Button
-                      size={["small", "large"]}
-                      variant="primaryWhite"
-                      // @ts-ignore
-                      as="a"
-                      target="_blank"
-                      href="https://apply.artsy.net/institutions"
-                    >
-                      Apply to Join
-                    </Button>
-                  </Column>
-                </GridColumns>
-              </HorizontalPadding>
-            </AppContainer>
-          </Box>
-        </FullBleedHeader>
+        <InstitutionPartnershipsHero />
 
         <GridColumns>
           <Column span={6}>
