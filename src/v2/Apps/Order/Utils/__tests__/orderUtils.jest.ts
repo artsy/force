@@ -1,5 +1,5 @@
 import { getInitialPaymentMethodValue } from "./../orderUtils"
-import { isPaymentValid } from "../orderUtils"
+import { isPaymentSet } from "../orderUtils"
 import {
   CommercePaymentMethodEnum,
   Payment_order,
@@ -8,16 +8,16 @@ import {
 describe("order utils", () => {
   describe("is payment valid", () => {
     it("returns false if payment method unknown", () => {
-      expect(isPaymentValid({ __typename: "%other" })).toEqual(false)
+      expect(isPaymentSet({ __typename: "%other" })).toEqual(false)
     })
 
     it("returns false if payment method details empty", () => {
-      expect(isPaymentValid(null)).toEqual(false)
+      expect(isPaymentSet(null)).toEqual(false)
     })
 
     describe("credit card", () => {
       it("returns true", () => {
-        expect(isPaymentValid({ __typename: "CreditCard", id: "id" })).toEqual(
+        expect(isPaymentSet({ __typename: "CreditCard", id: "id" })).toEqual(
           true
         )
       })
@@ -26,14 +26,14 @@ describe("order utils", () => {
     describe("wire transfer", () => {
       it("returns true", () => {
         expect(
-          isPaymentValid({ __typename: "WireTransfer", isManualPayment: true })
+          isPaymentSet({ __typename: "WireTransfer", isManualPayment: true })
         ).toEqual(true)
       })
     })
 
     describe("bank account", () => {
       it("returns true", () => {
-        expect(isPaymentValid({ __typename: "BankAccount", id: "id" })).toEqual(
+        expect(isPaymentSet({ __typename: "BankAccount", id: "id" })).toEqual(
           true
         )
       })
