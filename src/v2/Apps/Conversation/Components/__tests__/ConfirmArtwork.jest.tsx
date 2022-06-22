@@ -248,6 +248,7 @@ describe("Artwork editions", () => {
       // Make sure the rest are not disabled
       for (const radio of radios) {
         expect(radio).toBeEnabled()
+        expect(radio).not.toHaveTextContent("Unavailable")
       }
     })
   })
