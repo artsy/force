@@ -56,18 +56,15 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
     }
   } else if (event.__typename === "CommerceOrderStateChangedEvent") {
     const { orderUpdateState, state, stateReason } = event
-    const reasonRejected = stateReason?.includes("_rejected")
     const reasonLapsed = stateReason?.includes("_lapsed")
     if (state === "APPROVED") {
       color = "green100"
       message = `${
         orderUpdateState === "offer_approved" ? "Offer" : "Purchase"
       } Accepted`
-    } else if (state === "CANCELED" && reasonRejected) {
+    } else if (orderUpdateState === "offer_rejected") {
       color = "red100"
-      message = `${
-        orderUpdateState === "offer_rejected" ? "Offer" : "Purchase"
-      } Declined`
+      message = `Offer Declined`
     } else if (state === "CANCELED" && reasonLapsed) {
       color = "red100"
       message = `${

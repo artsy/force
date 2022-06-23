@@ -300,29 +300,6 @@ describe("testing different statuses", () => {
     })
     expect(screen.getByText("Purchase Accepted")).toBeInTheDocument()
   })
-  it("render Purchase Declined", () => {
-    renderWithRelay({
-      Conversation: () => ({
-        orderConnection: {
-          edges: [
-            {
-              node: {
-                orderHistory: [
-                  {
-                    __typename: "CommerceOrderStateChangedEvent",
-                    orderUpdateState: "buy_rejected",
-                    state: "CANCELED",
-                    stateReason: ["_rejected"],
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      }),
-    })
-    expect(screen.getByText("Purchase Declined")).toBeInTheDocument()
-  })
   it("render Purchase Expired", () => {
     renderWithRelay({
       Conversation: () => ({
