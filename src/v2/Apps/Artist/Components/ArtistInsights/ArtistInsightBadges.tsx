@@ -4,7 +4,6 @@ import {
   Column,
   CSSGrid,
   GridColumns,
-  Spacer,
   Text,
 } from "@artsy/palette"
 import { FC } from "react"
@@ -31,51 +30,43 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
 
   if (
     artist.insights.length === 0 &&
-    !artist.artistHighlights &&
-    !artist.auctionResultsConnection
+    blueChipRepresentation.length === 0 &&
+    !highAuctionResult
   ) {
     return null
   }
 
   return (
-    <>
-      <Text variant="lg-display" color="black100">
-        Artist Badges
-      </Text>
+    <GridColumns>
+      {blueChipRepresentation.length > 0 && (
+        <Column span={6}>
+          <ArtistBadge
+            label="Blue Chip Representation"
+            description="Represented by internationally reputable galleries."
+          />
+        </Column>
+      )}
 
-      <Spacer mb={4} />
+      {highAuctionRecord && (
+        <Column span={6}>
+          <ArtistBadge
+            label="High Auction Record"
+            description={highAuctionRecord}
+          />
+        </Column>
+      )}
 
-      <GridColumns>
-        {blueChipRepresentation.length > 0 && (
-          <Column span={6}>
-            <ArtistBadge
-              label="Blue Chip Representation"
-              description="Represented by internationally reputable galleries."
-            />
-          </Column>
-        )}
-
-        {highAuctionRecord && (
-          <Column span={6}>
-            <ArtistBadge
-              label="High Auction Record"
-              description={highAuctionRecord}
-            />
-          </Column>
-        )}
-
-        {artist.insights.map(insight => {
-          return (
-            <ArtistBadge
-              // TODO: Mark kind as non-nullable
-              key={insight.kind!}
-              label={insight.label}
-              description={insight.description!}
-            />
-          )
-        })}
-      </GridColumns>
-    </>
+      {artist.insights.map(insight => {
+        return (
+          <ArtistBadge
+            // TODO: Mark kind as non-nullable
+            key={insight.kind!}
+            label={insight.label}
+            description={insight.description!}
+          />
+        )
+      })}
+    </GridColumns>
   )
 }
 

@@ -20,7 +20,7 @@ describe("ArtistInsightAchievements", () => {
   it("renders artist insight achievements", () => {
     renderWithRelay({
       Artist: () => ({
-        insightsList: [
+        insightAchievements: [
           {
             label: "Solo show at a major institution",
             entities: ["Foo Museum", "FooBar of American Art", "FooFrieze"],
@@ -43,7 +43,7 @@ describe("ArtistInsightAchievements", () => {
   it("renders multiple achievements if present on the artist", () => {
     renderWithRelay({
       Artist: () => ({
-        insightsList: [
+        insightAchievements: [
           {
             label: "Reviewed by a major art publication",
             entities: [
@@ -69,7 +69,7 @@ describe("ArtistInsightAchievements", () => {
   it("does not render achievements if there are no insights on artist", () => {
     renderWithRelay({
       Artist: () => ({
-        insightsList: [],
+        insightAchievements: [],
       }),
     })
 

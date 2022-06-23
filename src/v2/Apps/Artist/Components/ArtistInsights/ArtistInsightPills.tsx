@@ -14,22 +14,23 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
   )
 
   // The first result is the highest auction result
-  const highAuctionResults = extractNodes(artist.auctionResultsConnection)[0]
+  const highAuctionResult = extractNodes(artist.auctionResultsConnection)[0]
 
   if (
-    artist.insightsList.length == 0 ||
-    !artist.artistHighlights ||
-    !artist.auctionResultsConnection
+    artist.insightsList.length === 0 &&
+    blueChipRepresentation.length === 0 &&
+    !highAuctionResult
   ) {
     return null
   }
 
   return (
     <Flex flexDirection="row" flexWrap="wrap">
-      {blueChipRepresentation?.length > 0 && (
+      {blueChipRepresentation.length > 0 && (
         <ArtistPill label="Blue Chip Representation" />
       )}
-      {highAuctionResults.priceRealized?.display && (
+
+      {highAuctionResult?.priceRealized?.display && (
         <ArtistPill label="High Auction Record" />
       )}
 

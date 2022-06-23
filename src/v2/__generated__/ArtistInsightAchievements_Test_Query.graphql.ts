@@ -27,7 +27,7 @@ query ArtistInsightAchievements_Test_Query {
 
 fragment ArtistInsightAchievements_artist on Artist {
   slug
-  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
+  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
     label
     entities
   }
@@ -97,7 +97,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "insightsList",
+            "alias": "insightAchievements",
             "args": [
               {
                 "kind": "Literal",
@@ -146,7 +146,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e094ef1f0c0d42370f675c166feccee0",
+    "cacheID": "c04bdcf009ee74459be4ee7fe6f0094f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -157,19 +157,19 @@ return {
           "type": "Artist"
         },
         "artist.id": (v1/*: any*/),
-        "artist.insightsList": {
+        "artist.insightAchievements": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtistInsight"
         },
-        "artist.insightsList.entities": {
+        "artist.insightAchievements.entities": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "String"
         },
-        "artist.insightsList.label": {
+        "artist.insightAchievements.label": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
@@ -180,7 +180,7 @@ return {
     },
     "name": "ArtistInsightAchievements_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n"
+    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n"
   }
 };
 })();

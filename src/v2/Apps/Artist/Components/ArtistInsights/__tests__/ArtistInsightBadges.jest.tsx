@@ -32,11 +32,11 @@ describe("ArtistInsightBadges", () => {
           edges: [
             {
               node: {
-                price_realized: {
+                priceRealized: {
                   display: "US$93.1m",
                 },
                 organization: "Christies",
-                sale_date: "2021",
+                saleDate: "2021",
               },
             },
           ],
@@ -66,11 +66,11 @@ describe("ArtistInsightBadges", () => {
           edges: [
             {
               node: {
-                price_realized: {
+                priceRealized: {
                   display: "US$100m",
                 },
                 organization: "Foos",
-                sale_date: "1990",
+                saleDate: "1990",
               },
             },
           ],

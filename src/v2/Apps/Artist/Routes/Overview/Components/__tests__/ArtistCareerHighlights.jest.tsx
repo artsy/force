@@ -20,7 +20,7 @@ describe("ArtistCareerHighlights", () => {
   it("renders Career Highlights correctly", () => {
     renderWithRelay({
       Artist: () => ({
-        insightsList: [
+        insightAchievements: [
           {
             label: "Solo show at a major institution",
             entities: ["Foo Museum"],
@@ -51,7 +51,6 @@ describe("ArtistCareerHighlights", () => {
       }),
     })
 
-    expect(screen.getByText("Artist Badges")).toBeInTheDocument()
     expect(screen.getByText("Active Secondary Market")).toBeInTheDocument()
     expect(
       screen.getByText("Recent auction results in the Artsy Price Database")

@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightAchievements_artist = {
     readonly slug: string;
-    readonly insightsList: ReadonlyArray<{
+    readonly insightAchievements: ReadonlyArray<{
         readonly label: string;
         readonly entities: ReadonlyArray<string>;
     }>;
@@ -34,7 +34,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "insightsList",
+      "alias": "insightAchievements",
       "args": [
         {
           "kind": "Literal",
@@ -74,5 +74,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '87b8f98d4bf32cdbc1edfe4f6bb55a03';
+(node as any).hash = 'bf060451a4d8351860174c98ea9322d0';
 export default node;

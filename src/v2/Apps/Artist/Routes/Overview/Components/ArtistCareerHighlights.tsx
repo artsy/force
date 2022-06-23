@@ -1,10 +1,4 @@
-import {
-  Column,
-  GridColumns,
-  Skeleton,
-  SkeletonBox,
-  Text,
-} from "@artsy/palette"
+import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
@@ -13,6 +7,8 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { ArtistInsightBadgesFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
+import { ArtistInsightAchievementsPlaceholder } from "v2/Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -21,15 +17,34 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
+  const displayInsightAchievements = artist.insightAchievements.length > 0
+  // TODO: Replace with just `insightBadges.length` check
+  const displayInsightBadges =
+    artist.insightBadges.length > 0 ||
+    (artist.auctionResultsConnection?.totalCount ?? 0) > 0 ||
+    extractNodes(artist.artistHighlights?.partnersConnection).length > 0
+
+  if (!displayInsightAchievements && !displayInsightBadges) {
+    return null
+  }
+
   return (
     <GridColumns gridRowGap={4}>
-      <Column span={6}>
-        <ArtistInsightAchievementsFragmentContainer artist={artist} />
+      <Column span={12}>
+        <Text variant="lg-display">Career Highlights</Text>
       </Column>
 
-      <Column span={6}>
-        <ArtistInsightBadgesFragmentContainer artist={artist} />
-      </Column>
+      {displayInsightAchievements && (
+        <Column span={6}>
+          <ArtistInsightAchievementsFragmentContainer artist={artist} />
+        </Column>
+      )}
+
+      {displayInsightBadges && (
+        <Column span={6}>
+          <ArtistInsightBadgesFragmentContainer artist={artist} />
+        </Column>
+      )}
     </GridColumns>
   )
 }
@@ -41,18 +56,45 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
       fragment ArtistCareerHighlights_artist on Artist {
         ...ArtistInsightBadges_artist
         ...ArtistInsightAchievements_artist
+        insightAchievements: insights(
+          kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
+        ) {
+          __typename
+        }
+        insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
+          __typename
+        }
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
+        ) {
+          totalCount
+        }
+        artistHighlights: highlights {
+          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
+            edges {
+              node {
+                __typename
+              }
+            }
+          }
+        }
       }
     `,
   }
 )
 
 const PLACEHOLDER = (
-  <Skeleton>
-    <Text variant="lg-display" mb={4}>
-      Career highlights
-    </Text>
-    <SkeletonBox width="100%" height={170} />
-  </Skeleton>
+  <GridColumns gridRowGap={4}>
+    <Column span={12}>
+      <Text variant="lg-display">Career Highlights</Text>
+    </Column>
+
+    <Column span={6}>
+      <ArtistInsightAchievementsPlaceholder />
+    </Column>
+  </GridColumns>
 )
 
 export const ArtistCareerHighlightsQueryRenderer: React.FC<{
@@ -78,9 +120,11 @@ export const ArtistCareerHighlightsQueryRenderer: React.FC<{
           console.error(error)
           return null
         }
+
         if (!props) {
           return PLACEHOLDER
         }
+
         if (props.artist) {
           return (
             <ArtistCareerHighlightsFragmentContainer artist={props.artist} />

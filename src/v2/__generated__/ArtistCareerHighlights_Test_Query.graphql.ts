@@ -28,11 +28,31 @@ query ArtistCareerHighlights_Test_Query {
 fragment ArtistCareerHighlights_artist on Artist {
   ...ArtistInsightBadges_artist
   ...ArtistInsightAchievements_artist
+  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
+    __typename
+  }
+  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
+    __typename
+  }
+  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
+    totalCount
+  }
+  artistHighlights: highlights {
+    partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
+      edges {
+        node {
+          __typename
+          id
+        }
+        id
+      }
+    }
+  }
 }
 
 fragment ArtistInsightAchievements_artist on Artist {
   slug
-  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
+  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
     label
     entities
   }
@@ -81,55 +101,71 @@ var v0 = [
     "value": "example"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "kind",
+    "value": [
+      "ACTIVE_SECONDARY_MARKET"
+    ]
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "label",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
 v6 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
 },
 v7 = {
   "enumValues": null,
   "nullable": false,
-  "plural": true,
-  "type": "ArtistInsight"
+  "plural": false,
+  "type": "ID"
 },
 v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v10 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": true,
+  "type": "ArtistInsight"
 };
 return {
   "fragment": {
@@ -174,15 +210,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "kind",
-                "value": [
-                  "ACTIVE_SECONDARY_MARKET"
-                ]
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
             "name": "insights",
@@ -195,7 +223,7 @@ return {
                 "name": "kind",
                 "storageKey": null
               },
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -209,7 +237,7 @@ return {
           {
             "alias": null,
             "args": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "recordsTrusted",
@@ -286,11 +314,18 @@ return {
                         "name": "saleDate",
                         "storageKey": "saleDate(format:\"YYYY\")"
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
                 "storageKey": null
               }
             ],
@@ -307,7 +342,7 @@ return {
               {
                 "alias": null,
                 "args": [
-                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "partnerCategory",
@@ -345,16 +380,17 @@ return {
                             "name": "categories",
                             "plural": true,
                             "selections": [
-                              (v4/*: any*/),
-                              (v3/*: any*/)
+                              (v5/*: any*/),
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v4/*: any*/),
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -364,9 +400,9 @@ return {
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v5/*: any*/),
           {
-            "alias": "insightsList",
+            "alias": "insightAchievements",
             "args": [
               {
                 "kind": "Literal",
@@ -385,25 +421,38 @@ return {
             "name": "insights",
             "plural": true,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "entities",
                 "storageKey": null
-              }
+              },
+              (v6/*: any*/)
             ],
             "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
           },
-          (v3/*: any*/)
+          {
+            "alias": "insightBadges",
+            "args": (v1/*: any*/),
+            "concreteType": "ArtistInsight",
+            "kind": "LinkedField",
+            "name": "insights",
+            "plural": true,
+            "selections": [
+              (v6/*: any*/)
+            ],
+            "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
+          },
+          (v4/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "4b6e48673e9f5bc414086c4d51eb2a76",
+    "cacheID": "d173c20abc53a267eb7fd381d4fcc338",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -431,22 +480,23 @@ return {
           "plural": true,
           "type": "PartnerArtistEdge"
         },
-        "artist.artistHighlights.partnersConnection.edges.id": (v5/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.id": (v7/*: any*/),
         "artist.artistHighlights.partnersConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
+        "artist.artistHighlights.partnersConnection.edges.node.__typename": (v8/*: any*/),
         "artist.artistHighlights.partnersConnection.edges.node.categories": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "PartnerCategory"
         },
-        "artist.artistHighlights.partnersConnection.edges.node.categories.id": (v5/*: any*/),
-        "artist.artistHighlights.partnersConnection.edges.node.categories.slug": (v5/*: any*/),
-        "artist.artistHighlights.partnersConnection.edges.node.id": (v5/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.categories.id": (v7/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.categories.slug": (v7/*: any*/),
+        "artist.artistHighlights.partnersConnection.edges.node.id": (v7/*: any*/),
         "artist.auctionResultsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -465,19 +515,36 @@ return {
           "plural": false,
           "type": "AuctionResult"
         },
-        "artist.auctionResultsConnection.edges.node.id": (v5/*: any*/),
-        "artist.auctionResultsConnection.edges.node.organization": (v6/*: any*/),
+        "artist.auctionResultsConnection.edges.node.id": (v7/*: any*/),
+        "artist.auctionResultsConnection.edges.node.organization": (v9/*: any*/),
         "artist.auctionResultsConnection.edges.node.priceRealized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AuctionResultPriceRealized"
         },
-        "artist.auctionResultsConnection.edges.node.priceRealized.display": (v6/*: any*/),
-        "artist.auctionResultsConnection.edges.node.saleDate": (v6/*: any*/),
-        "artist.id": (v5/*: any*/),
-        "artist.insights": (v7/*: any*/),
-        "artist.insights.description": (v6/*: any*/),
+        "artist.auctionResultsConnection.edges.node.priceRealized.display": (v9/*: any*/),
+        "artist.auctionResultsConnection.edges.node.saleDate": (v9/*: any*/),
+        "artist.auctionResultsConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "artist.id": (v7/*: any*/),
+        "artist.insightAchievements": (v10/*: any*/),
+        "artist.insightAchievements.__typename": (v8/*: any*/),
+        "artist.insightAchievements.entities": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": true,
+          "type": "String"
+        },
+        "artist.insightAchievements.label": (v8/*: any*/),
+        "artist.insightBadges": (v10/*: any*/),
+        "artist.insightBadges.__typename": (v8/*: any*/),
+        "artist.insights": (v10/*: any*/),
+        "artist.insights.description": (v9/*: any*/),
         "artist.insights.kind": {
           "enumValues": [
             "ACTIVE_SECONDARY_MARKET",
@@ -492,20 +559,12 @@ return {
           "type": "ArtistInsightKind"
         },
         "artist.insights.label": (v8/*: any*/),
-        "artist.insightsList": (v7/*: any*/),
-        "artist.insightsList.entities": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "String"
-        },
-        "artist.insightsList.label": (v8/*: any*/),
-        "artist.slug": (v5/*: any*/)
+        "artist.slug": (v7/*: any*/)
       }
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...ArtistInsightBadges_artist\n  ...ArtistInsightAchievements_artist\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    __typename\n  }\n  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    __typename\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    totalCount\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          __typename\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
