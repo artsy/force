@@ -196,6 +196,7 @@ describe("testing different statuses", () => {
                   {
                     __typename: "CommerceOrderStateChangedEvent",
                     orderUpdateState: "offer_approved",
+                    state: "APPROVED",
                   },
                 ],
               },
@@ -218,6 +219,8 @@ describe("testing different statuses", () => {
                   {
                     __typename: "CommerceOrderStateChangedEvent",
                     orderUpdateState: "offer_rejected",
+                    state: "CANCELED",
+                    stateReason: ["_rejected"],
                   },
                 ],
               },
@@ -240,6 +243,8 @@ describe("testing different statuses", () => {
                   {
                     __typename: "CommerceOrderStateChangedEvent",
                     orderUpdateState: "offer_lapsed",
+                    state: "CANCELED",
+                    stateReason: ["_lapsed"],
                   },
                 ],
               },
@@ -272,5 +277,50 @@ describe("testing different statuses", () => {
     })
     expect(screen.getByText("You purchased this artwork.")).toBeInTheDocument()
     expect(screen.queryByText("See details.")).toBeInTheDocument()
+  })
+  it("render Purchase Accepted", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        orderConnection: {
+          edges: [
+            {
+              node: {
+                orderHistory: [
+                  {
+                    __typename: "CommerceOrderStateChangedEvent",
+                    orderUpdateState: "buy_approved",
+                    state: "APPROVED",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }),
+    })
+    expect(screen.getByText("Purchase Accepted")).toBeInTheDocument()
+  })
+  it("render Purchase Expired", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        orderConnection: {
+          edges: [
+            {
+              node: {
+                orderHistory: [
+                  {
+                    __typename: "CommerceOrderStateChangedEvent",
+                    orderUpdateState: "buy_lapsed",
+                    state: "CANCELED",
+                    stateReason: ["_lapsed"],
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }),
+    })
+    expect(screen.getByText("Purchase Expired")).toBeInTheDocument()
   })
 })
