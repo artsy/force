@@ -2,15 +2,11 @@ import { LabeledInput, MagnifyingGlassIcon } from "@artsy/palette"
 import { FilterExpandable } from "./FilterExpandable"
 import React, { useEffect, useMemo } from "react"
 import { debounce } from "lodash"
-import {
-  useCurrentlySelectedFilters,
-  useArtworkFilterContext,
-} from "../ArtworkFilterContext"
+import { useArtworkFilterContext } from "../ArtworkFilterContext"
 
-const DEBOUNCE_DELAY = 100
+const DEBOUNCE_DELAY = 300
 
 export const KeywordFilter: React.FC = () => {
-  const { keyword = [] } = useCurrentlySelectedFilters()
   const filterContext = useArtworkFilterContext()
 
   const updateKeywordFilter = (text: string) => {
@@ -31,7 +27,7 @@ export const KeywordFilter: React.FC = () => {
   return (
     <FilterExpandable label="Keyword Search" expanded={true}>
       <LabeledInput
-        value={keyword}
+        defaultValue={filterContext.filters!.keyword}
         placeholder="Enter a search term"
         onChange={event => handleChangeText(event.currentTarget.value)}
         type="text"
