@@ -4,15 +4,11 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "BIENNIAL" | "COLLECTED" | "GROUP_SHOW" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 export type ArtistInsightAchievements_artist = {
     readonly slug: string;
     readonly insightsList: ReadonlyArray<{
-        readonly type: string;
         readonly label: string;
         readonly entities: ReadonlyArray<string>;
-        readonly kind: ArtistInsightKind | null;
-        readonly description: string | null;
     }>;
     readonly " $refType": "ArtistInsightAchievements_artist";
 };
@@ -61,13 +57,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "type",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "label",
           "storageKey": null
         },
@@ -77,20 +66,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "entities",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "kind",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
         }
       ],
       "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
@@ -99,5 +74,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '14d4cb6c65d32c56abf2499cce9d93fb';
+(node as any).hash = '87b8f98d4bf32cdbc1edfe4f6bb55a03';
 export default node;

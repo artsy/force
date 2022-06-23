@@ -7,20 +7,18 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "BIENNIAL" | "COLLECTED" | "GROUP_SHOW" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 export type ArtistInsightBadges_artist = {
     readonly insights: ReadonlyArray<{
-        readonly type: string;
-        readonly label: string;
-        readonly entities: ReadonlyArray<string>;
         readonly kind: ArtistInsightKind | null;
+        readonly label: string;
         readonly description: string | null;
     }>;
     readonly auctionResultsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly price_realized: {
+                readonly priceRealized: {
                     readonly display: string | null;
                 } | null;
                 readonly organization: string | null;
-                readonly sale_date: string | null;
+                readonly saleDate: string | null;
             } | null;
         } | null> | null;
     } | null;
@@ -77,7 +75,7 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "type",
+          "name": "kind",
           "storageKey": null
         },
         {
@@ -85,20 +83,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "label",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "entities",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "kind",
           "storageKey": null
         },
         {
@@ -148,7 +132,7 @@ return {
               "plural": false,
               "selections": [
                 {
-                  "alias": "price_realized",
+                  "alias": null,
                   "args": null,
                   "concreteType": "AuctionResultPriceRealized",
                   "kind": "LinkedField",
@@ -179,7 +163,7 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": "sale_date",
+                  "alias": null,
                   "args": [
                     {
                       "kind": "Literal",
@@ -276,5 +260,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '87f53ac0842cb6d6bea9aa519b3fe9c0';
+(node as any).hash = '387b9cf3756b57cb0633fff5240f001f';
 export default node;

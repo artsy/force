@@ -27,14 +27,14 @@ query ArtistInsightPills_Test_Query {
 
 fragment ArtistInsightPills_artist on Artist {
   insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
-    type
+    kind
     label
     entities
   }
   auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
     edges {
       node {
-        price_realized: priceRealized {
+        priceRealized {
           display(format: "0.0a")
         }
         organization
@@ -89,12 +89,6 @@ v3 = {
 v4 = {
   "enumValues": null,
   "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": false,
   "plural": false,
   "type": "String"
 };
@@ -159,7 +153,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "type",
+                "name": "kind",
                 "storageKey": null
               },
               {
@@ -216,7 +210,7 @@ return {
                     "plural": false,
                     "selections": [
                       {
-                        "alias": "price_realized",
+                        "alias": null,
                         "args": null,
                         "concreteType": "AuctionResultPriceRealized",
                         "kind": "LinkedField",
@@ -350,7 +344,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e1b79201b00424ccb627d4c93cac1cdf",
+    "cacheID": "4a51aee44a08836976d21e868b217ef5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -414,13 +408,13 @@ return {
         },
         "artist.auctionResultsConnection.edges.node.id": (v3/*: any*/),
         "artist.auctionResultsConnection.edges.node.organization": (v4/*: any*/),
-        "artist.auctionResultsConnection.edges.node.price_realized": {
+        "artist.auctionResultsConnection.edges.node.priceRealized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AuctionResultPriceRealized"
         },
-        "artist.auctionResultsConnection.edges.node.price_realized.display": (v4/*: any*/),
+        "artist.auctionResultsConnection.edges.node.priceRealized.display": (v4/*: any*/),
         "artist.auctionResultsConnection.edges.node.sale_date": (v4/*: any*/),
         "artist.id": (v3/*: any*/),
         "artist.insightsList": {
@@ -435,13 +429,30 @@ return {
           "plural": true,
           "type": "String"
         },
-        "artist.insightsList.label": (v5/*: any*/),
-        "artist.insightsList.type": (v5/*: any*/)
+        "artist.insightsList.kind": {
+          "enumValues": [
+            "ACTIVE_SECONDARY_MARKET",
+            "BIENNIAL",
+            "COLLECTED",
+            "GROUP_SHOW",
+            "REVIEWED",
+            "SOLO_SHOW"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistInsightKind"
+        },
+        "artist.insightsList.label": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        }
       }
     },
     "name": "ArtistInsightPills_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightPills_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightPills_artist\n    id\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistInsightPills_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightPills_artist\n    id\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -28,11 +28,8 @@ query ArtistInsightAchievements_Test_Query {
 fragment ArtistInsightAchievements_artist on Artist {
   slug
   insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
-    type
     label
     entities
-    kind
-    description
   }
 }
 */
@@ -50,12 +47,6 @@ v1 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
-},
-v2 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
@@ -129,13 +120,6 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "type",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "label",
                 "storageKey": null
               },
@@ -144,20 +128,6 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "entities",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "kind",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "description",
                 "storageKey": null
               }
             ],
@@ -176,7 +146,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b9f97b0dac161705ce5490b8a913b0b9",
+    "cacheID": "e094ef1f0c0d42370f675c166feccee0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -193,39 +163,24 @@ return {
           "plural": true,
           "type": "ArtistInsight"
         },
-        "artist.insightsList.description": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
         "artist.insightsList.entities": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "String"
         },
-        "artist.insightsList.kind": {
-          "enumValues": [
-            "ACTIVE_SECONDARY_MARKET",
-            "BIENNIAL",
-            "COLLECTED",
-            "GROUP_SHOW",
-            "REVIEWED",
-            "SOLO_SHOW"
-          ],
-          "nullable": true,
+        "artist.insightsList.label": {
+          "enumValues": null,
+          "nullable": false,
           "plural": false,
-          "type": "ArtistInsightKind"
+          "type": "String"
         },
-        "artist.insightsList.label": (v2/*: any*/),
-        "artist.insightsList.type": (v2/*: any*/),
         "artist.slug": (v1/*: any*/)
       }
     },
     "name": "ArtistInsightAchievements_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n}\n"
+    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightsList: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n"
   }
 };
 })();

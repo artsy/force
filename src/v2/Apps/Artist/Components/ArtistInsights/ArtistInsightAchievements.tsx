@@ -24,7 +24,7 @@ const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
   const [first, ...remaining] = entities
 
   return (
-    <Box>
+    <>
       <Text variant="sm" color="black100">
         {label}
       </Text>
@@ -36,34 +36,41 @@ const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
           data-testid="expandable-dropdownlist"
         >
           {entities.length > 1 ? `${first}, and ` : `${first}`}
-          {expanded ? (
-            `${remaining.join(", ")}`
-          ) : (
-            <Clickable
-              onClick={() => setExpanded(true)}
-              color="black100"
-              textDecoration="underline"
-            >
-              {remaining.length} more
-            </Clickable>
+
+          {remaining.length > 0 && (
+            <>
+              {expanded ? (
+                `${remaining.join(", ")}`
+              ) : (
+                <Clickable
+                  onClick={() => setExpanded(true)}
+                  color="black100"
+                  textDecoration="underline"
+                >
+                  {remaining.length} more
+                </Clickable>
+              )}
+            </>
           )}
         </Text>
       </Box>
-    </Box>
+    </>
   )
 }
 
 export const ArtistInsightAchievements: FC<ArtistInsightAchievementsProps> = ({
   artist,
 }) => {
-  if (!artist.insightsList) {
+  if (artist.insightsList.length === 0) {
     return null
   }
 
   return (
     <>
       <Text variant="lg">Career Highlights</Text>
+
       <Spacer mb={4} />
+
       <GridColumns>
         {artist.insightsList.map(insight => {
           return (
@@ -89,11 +96,8 @@ export const ArtistInsightAchievementsFragmentContainer = createFragmentContaine
         insightsList: insights(
           kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
         ) {
-          type
           label
           entities
-          kind
-          description
         }
       }
     `,

@@ -16,6 +16,110 @@ interface ArtistInsightBadgesProps {
   artist: ArtistInsightBadges_artist
 }
 
+export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
+  artist,
+}) => {
+  const blueChipRepresentation = extractNodes(
+    artist.artistHighlights?.partnersConnection
+  )
+
+  // The first result is the highest auction result
+  const highAuctionResult = extractNodes(artist.auctionResultsConnection)[0]
+  const highAuctionRecord = highAuctionResult
+    ? `${highAuctionResult.priceRealized?.display}, ${highAuctionResult.organization}, ${highAuctionResult.saleDate}`
+    : null
+
+  if (
+    artist.insights.length === 0 &&
+    !artist.artistHighlights &&
+    !artist.auctionResultsConnection
+  ) {
+    return null
+  }
+
+  return (
+    <>
+      <Text variant="lg-display" color="black100">
+        Artist Badges
+      </Text>
+
+      <Spacer mb={4} />
+
+      <GridColumns>
+        {blueChipRepresentation.length > 0 && (
+          <Column span={6}>
+            <ArtistBadge
+              label="Blue Chip Representation"
+              description="Represented by internationally reputable galleries."
+            />
+          </Column>
+        )}
+
+        {highAuctionRecord && (
+          <Column span={6}>
+            <ArtistBadge
+              label="High Auction Record"
+              description={highAuctionRecord}
+            />
+          </Column>
+        )}
+
+        {artist.insights.map(insight => {
+          return (
+            <ArtistBadge
+              // TODO: Mark kind as non-nullable
+              key={insight.kind!}
+              label={insight.label}
+              description={insight.description!}
+            />
+          )
+        })}
+      </GridColumns>
+    </>
+  )
+}
+
+export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
+  ArtistInsightBadges,
+  {
+    artist: graphql`
+      fragment ArtistInsightBadges_artist on Artist {
+        insights(kind: [ACTIVE_SECONDARY_MARKET]) {
+          kind
+          label
+          description
+        }
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
+        ) {
+          edges {
+            node {
+              priceRealized {
+                display(format: "0.0a")
+              }
+              organization
+              saleDate(format: "YYYY")
+            }
+          }
+        }
+        artistHighlights: highlights {
+          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
+            edges {
+              node {
+                categories {
+                  slug
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)
+
 interface ArtistBadgeProps {
   label: string
   description?: string
@@ -49,107 +153,3 @@ export const ArtistBadge: FC<ArtistBadgeProps> = ({ label, description }) => {
     </CSSGrid>
   )
 }
-
-export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
-  artist,
-}) => {
-  if (!artist.insights) {
-    return null
-  }
-
-  if (!artist.artistHighlights) {
-    return null
-  }
-
-  if (!artist.auctionResultsConnection) {
-    return null
-  }
-
-  const blueChipRepresentation = extractNodes(
-    artist.artistHighlights.partnersConnection
-  )
-
-  const highAuctionResult = extractNodes(artist.auctionResultsConnection)[0]
-  const highAuctionRecord = highAuctionResult
-    ? `${highAuctionResult.price_realized?.display}, ${highAuctionResult.organization}, ${highAuctionResult.sale_date}`
-    : null
-
-  return (
-    <>
-      <Text variant="lg-display" color="black100">
-        Artist Badges
-      </Text>
-      <Spacer mb={4} />
-      <GridColumns>
-        {blueChipRepresentation.length > 0 && (
-          <Column span={6}>
-            <ArtistBadge
-              label="Blue Chip Representation"
-              description="Represented by internationally reputable galleries."
-            />
-          </Column>
-        )}
-        {highAuctionRecord && (
-          <Column span={6}>
-            <ArtistBadge
-              label="High Auction Record"
-              description={highAuctionRecord}
-            />
-          </Column>
-        )}
-
-        {artist.insights.map(insight => {
-          return (
-            <ArtistBadge
-              label={insight.label}
-              description={insight.description!}
-            />
-          )
-        })}
-      </GridColumns>
-    </>
-  )
-}
-
-export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
-  ArtistInsightBadges,
-  {
-    artist: graphql`
-      fragment ArtistInsightBadges_artist on Artist {
-        insights(kind: [ACTIVE_SECONDARY_MARKET]) {
-          type
-          label
-          entities
-          kind
-          description
-        }
-        auctionResultsConnection(
-          recordsTrusted: true
-          first: 1
-          sort: PRICE_AND_DATE_DESC
-        ) {
-          edges {
-            node {
-              price_realized: priceRealized {
-                display(format: "0.0a")
-              }
-              organization
-              sale_date: saleDate(format: "YYYY")
-            }
-          }
-        }
-        artistHighlights: highlights {
-          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
-            edges {
-              node {
-                categories {
-                  slug
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-  }
-)

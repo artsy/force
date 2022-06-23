@@ -27,20 +27,18 @@ query ArtistInsightBadges_Test_Query {
 
 fragment ArtistInsightBadges_artist on Artist {
   insights(kind: [ACTIVE_SECONDARY_MARKET]) {
-    type
-    label
-    entities
     kind
+    label
     description
   }
   auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {
     edges {
       node {
-        price_realized: priceRealized {
+        priceRealized {
           display(format: "0.0a")
         }
         organization
-        sale_date: saleDate(format: "YYYY")
+        saleDate(format: "YYYY")
         id
       }
     }
@@ -91,12 +89,6 @@ v3 = {
 v4 = {
   "enumValues": null,
   "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": false,
   "plural": false,
   "type": "String"
 };
@@ -161,7 +153,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "type",
+                "name": "kind",
                 "storageKey": null
               },
               {
@@ -169,20 +161,6 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "label",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "entities",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "kind",
                 "storageKey": null
               },
               {
@@ -232,7 +210,7 @@ return {
                     "plural": false,
                     "selections": [
                       {
-                        "alias": "price_realized",
+                        "alias": null,
                         "args": null,
                         "concreteType": "AuctionResultPriceRealized",
                         "kind": "LinkedField",
@@ -263,7 +241,7 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "sale_date",
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -366,7 +344,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dd72a5f5184bc9a3b0031b6ed7b85468",
+    "cacheID": "830a5597aa5dad51c08ed0a95cdf9b22",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -430,14 +408,14 @@ return {
         },
         "artist.auctionResultsConnection.edges.node.id": (v3/*: any*/),
         "artist.auctionResultsConnection.edges.node.organization": (v4/*: any*/),
-        "artist.auctionResultsConnection.edges.node.price_realized": {
+        "artist.auctionResultsConnection.edges.node.priceRealized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AuctionResultPriceRealized"
         },
-        "artist.auctionResultsConnection.edges.node.price_realized.display": (v4/*: any*/),
-        "artist.auctionResultsConnection.edges.node.sale_date": (v4/*: any*/),
+        "artist.auctionResultsConnection.edges.node.priceRealized.display": (v4/*: any*/),
+        "artist.auctionResultsConnection.edges.node.saleDate": (v4/*: any*/),
         "artist.id": (v3/*: any*/),
         "artist.insights": {
           "enumValues": null,
@@ -446,12 +424,6 @@ return {
           "type": "ArtistInsight"
         },
         "artist.insights.description": (v4/*: any*/),
-        "artist.insights.entities": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "String"
-        },
         "artist.insights.kind": {
           "enumValues": [
             "ACTIVE_SECONDARY_MARKET",
@@ -465,13 +437,17 @@ return {
           "plural": false,
           "type": "ArtistInsightKind"
         },
-        "artist.insights.label": (v5/*: any*/),
-        "artist.insights.type": (v5/*: any*/)
+        "artist.insights.label": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "String"
+        }
       }
     },
     "name": "ArtistInsightBadges_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightBadges_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightBadges_artist\n    id\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    type\n    label\n    entities\n    kind\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistInsightBadges_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightBadges_artist\n    id\n  }\n}\n\nfragment ArtistInsightBadges_artist on Artist {\n  insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    description\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

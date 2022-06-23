@@ -4,16 +4,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "BIENNIAL" | "COLLECTED" | "GROUP_SHOW" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 export type ArtistInsightPills_artist = {
     readonly insightsList: ReadonlyArray<{
-        readonly type: string;
+        readonly kind: ArtistInsightKind | null;
         readonly label: string;
         readonly entities: ReadonlyArray<string>;
     }>;
     readonly auctionResultsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly price_realized: {
+                readonly priceRealized: {
                     readonly display: string | null;
                 } | null;
                 readonly organization: string | null;
@@ -74,7 +75,7 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "type",
+          "name": "kind",
           "storageKey": null
         },
         {
@@ -131,7 +132,7 @@ return {
               "plural": false,
               "selections": [
                 {
-                  "alias": "price_realized",
+                  "alias": null,
                   "args": null,
                   "concreteType": "AuctionResultPriceRealized",
                   "kind": "LinkedField",
@@ -259,5 +260,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a4a31b39f2ce6e68ea849c6bb1ff6c0b';
+(node as any).hash = 'ade5fddb229c40d8a6bac380c748638c';
 export default node;

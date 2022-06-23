@@ -8,48 +8,33 @@ interface ArtistInsightPillsProps {
   artist: ArtistInsightPills_artist
 }
 
-interface ArtistPillProps {
-  label: string
-}
-
-export const ArtistPill: FC<ArtistPillProps> = ({ label }) => {
-  return (
-    <Pill variant="badge" disabled mr={1}>
-      {label}
-    </Pill>
-  )
-}
-
 export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
-  if (!artist.insightsList) {
-    return null
-  }
-
-  if (!artist.artistHighlights) {
-    return null
-  }
-
-  if (!artist.auctionResultsConnection) {
-    return null
-  }
-
   const blueChipRepresentation = extractNodes(
-    artist.artistHighlights.partnersConnection
+    artist.artistHighlights?.partnersConnection
   )
 
+  // The first result is the highest auction result
   const highAuctionResults = extractNodes(artist.auctionResultsConnection)[0]
+
+  if (
+    artist.insightsList.length == 0 ||
+    !artist.artistHighlights ||
+    !artist.auctionResultsConnection
+  ) {
+    return null
+  }
 
   return (
     <Flex flexDirection="row" flexWrap="wrap">
       {blueChipRepresentation?.length > 0 && (
         <ArtistPill label="Blue Chip Representation" />
       )}
-      {highAuctionResults.price_realized?.display && (
+      {highAuctionResults.priceRealized?.display && (
         <ArtistPill label="High Auction Record" />
       )}
 
       {artist.insightsList.map(insight => {
-        return <ArtistPill label={insight.label} />
+        return <ArtistPill key={insight.kind!} label={insight.label} />
       })}
     </Flex>
   )
@@ -61,7 +46,7 @@ export const ArtistInsightPillsFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistInsightPills_artist on Artist {
         insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
-          type
+          kind
           label
           entities
         }
@@ -72,7 +57,7 @@ export const ArtistInsightPillsFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
-              price_realized: priceRealized {
+              priceRealized {
                 display(format: "0.0a")
               }
               organization
@@ -95,3 +80,15 @@ export const ArtistInsightPillsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+interface ArtistPillProps {
+  label: string
+}
+
+export const ArtistPill: FC<ArtistPillProps> = ({ label }) => {
+  return (
+    <Pill variant="badge" disabled mr={1}>
+      {label}
+    </Pill>
+  )
+}
