@@ -2,6 +2,7 @@ import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
+import { OnboardingWelcomeAnimatedPanel } from "../Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingWelcome = () => {
@@ -10,7 +11,7 @@ export const OnboardingWelcome = () => {
 
   return (
     <OnboardingSplitLayout
-      left={<div>TODO: Animated panel</div>}
+      left={<OnboardingWelcomeAnimatedPanel />}
       right={
         <Flex flexDirection="column" justifyContent="space-between" p={4}>
           {/* Vertically centers next Box */}
