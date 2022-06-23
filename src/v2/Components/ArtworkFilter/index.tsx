@@ -198,7 +198,7 @@ export const BaseArtworkFilter: React.FC<
         first: 30,
         ...relayRefetchInputVariables,
         ...allowedFilters(filterContext.filters),
-        keyword: filterContext.filters!.term,
+        keyword: filterContext.filters!.term || filterContext.filters!.keyword,
       },
       ...relayVariables,
     }

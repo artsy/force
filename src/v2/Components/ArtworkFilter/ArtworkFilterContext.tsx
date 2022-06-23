@@ -23,6 +23,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   partnerIDs: [],
   additionalGeneIDs: [],
   colors: [],
+  keyword: undefined,
   locationCities: [],
   artistNationalities: [],
   materialsTerms: [],
@@ -472,6 +473,7 @@ const artworkFilterReducer = (
       const stringFilterTypes: Array<keyof ArtworkFilters> = [
         "color",
         "height",
+        "keyword",
         "medium",
         "partnerID",
         "priceRange",
