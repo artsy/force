@@ -77,6 +77,8 @@ describe("ConversationMessages", () => {
                   internalID: "7adde1e2-bdd4-4360-9484-989d6dde",
                   createdAt: Date.now().toString(),
                   orderUpdateState: "offer_approved",
+                  state: "APPROVED",
+                  stateReason: null,
                   offer: {
                     amount: "£40,000",
                     fromParticipant: "SELLER",
