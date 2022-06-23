@@ -4,8 +4,25 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SelectedCareerAchievements_artist = {
-    readonly highlights: {
+export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "BIENNIAL" | "COLLECTED" | "GROUP_SHOW" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
+export type ArtistInsightPills_artist = {
+    readonly insightsList: ReadonlyArray<{
+        readonly kind: ArtistInsightKind | null;
+        readonly label: string;
+        readonly entities: ReadonlyArray<string>;
+    }>;
+    readonly auctionResultsConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly priceRealized: {
+                    readonly display: string | null;
+                } | null;
+                readonly organization: string | null;
+                readonly sale_date: string | null;
+            } | null;
+        } | null> | null;
+    } | null;
+    readonly artistHighlights: {
         readonly partnersConnection: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
@@ -16,137 +33,39 @@ export type SelectedCareerAchievements_artist = {
             } | null> | null;
         } | null;
     } | null;
-    readonly insights: ReadonlyArray<{
-        readonly type: string;
-        readonly label: string;
-        readonly entities: ReadonlyArray<string>;
-    }>;
-    readonly auctionResultsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly price_realized: {
-                    readonly display: string | null;
-                } | null;
-                readonly organization: string | null;
-                readonly sale_date: string | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly slug: string;
-    readonly " $refType": "SelectedCareerAchievements_artist";
+    readonly " $refType": "ArtistInsightPills_artist";
 };
-export type SelectedCareerAchievements_artist$data = SelectedCareerAchievements_artist;
-export type SelectedCareerAchievements_artist$key = {
-    readonly " $data"?: SelectedCareerAchievements_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist">;
+export type ArtistInsightPills_artist$data = ArtistInsightPills_artist;
+export type ArtistInsightPills_artist$key = {
+    readonly " $data"?: ArtistInsightPills_artist$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightPills_artist">;
 };
 
 
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
+  "kind": "Literal",
+  "name": "first",
+  "value": 1
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": [
-        "blue-chip",
-        "top-established",
-        "top-emerging"
-      ],
-      "kind": "LocalArgument",
-      "name": "partnerCategory"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SelectedCareerAchievements_artist",
+  "name": "ArtistInsightPills_artist",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistHighlights",
-      "kind": "LinkedField",
-      "name": "highlights",
-      "plural": false,
-      "selections": [
+      "alias": "insightsList",
+      "args": [
         {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "displayOnPartnerProfile",
-              "value": true
-            },
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 10
-            },
-            {
-              "kind": "Variable",
-              "name": "partnerCategory",
-              "variableName": "partnerCategory"
-            },
-            {
-              "kind": "Literal",
-              "name": "representedBy",
-              "value": true
-            }
-          ],
-          "concreteType": "PartnerArtistConnection",
-          "kind": "LinkedField",
-          "name": "partnersConnection",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PartnerArtistEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Partner",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "PartnerCategory",
-                      "kind": "LinkedField",
-                      "name": "categories",
-                      "plural": true,
-                      "selections": [
-                        (v0/*: any*/)
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
+          "kind": "Literal",
+          "name": "kind",
+          "value": [
+            "ACTIVE_SECONDARY_MARKET"
+          ]
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "ArtistInsight",
       "kind": "LinkedField",
       "name": "insights",
@@ -156,7 +75,7 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "type",
+          "name": "kind",
           "storageKey": null
         },
         {
@@ -174,16 +93,12 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
     },
     {
       "alias": null,
       "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
+        (v0/*: any*/),
         {
           "kind": "Literal",
           "name": "recordsTrusted",
@@ -217,7 +132,7 @@ return {
               "plural": false,
               "selections": [
                 {
-                  "alias": "price_realized",
+                  "alias": null,
                   "args": null,
                   "concreteType": "AuctionResultPriceRealized",
                   "kind": "LinkedField",
@@ -269,11 +184,81 @@ return {
       ],
       "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
     },
-    (v0/*: any*/)
+    {
+      "alias": "artistHighlights",
+      "args": null,
+      "concreteType": "ArtistHighlights",
+      "kind": "LinkedField",
+      "name": "highlights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "partnerCategory",
+              "value": [
+                "blue-chip"
+              ]
+            }
+          ],
+          "concreteType": "PartnerArtistConnection",
+          "kind": "LinkedField",
+          "name": "partnersConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PartnerArtistEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Partner",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "PartnerCategory",
+                      "kind": "LinkedField",
+                      "name": "categories",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "slug",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": "partnersConnection(first:1,partnerCategory:[\"blue-chip\"])"
+        }
+      ],
+      "storageKey": null
+    }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 })();
-(node as any).hash = '8e829ce6cc9df224ffb965345017b4a0';
+(node as any).hash = 'ade5fddb229c40d8a6bac380c748638c';
 export default node;

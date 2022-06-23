@@ -7,6 +7,7 @@ import {
   Image,
   ReadMore,
   ResponsiveBox,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import { Link } from "react-head"
@@ -14,8 +15,8 @@ import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
-import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
+import { ArtistInsightPillsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -40,7 +41,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
       )}
 
       <Box data-test="artistHeader">
-        <GridColumns>
+        <GridColumns gridRowGap={2}>
           <Column span={6}>
             <GridColumns>
               {avatar && (
@@ -110,6 +111,10 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
+            <ArtistInsightPillsFragmentContainer artist={artist} />
+
+            <Spacer mb={4} />
+
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
                 <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
@@ -125,8 +130,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 </Text>
               </>
             )}
-
-            <SelectedCareerAchievementsFragmentContainer artist={artist} />
           </Column>
         </GridColumns>
       </Box>
@@ -138,32 +141,10 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   ArtistHeader,
   {
     artist: graphql`
-      fragment ArtistHeader_artist on Artist
-        @argumentDefinitions(
-          partnerCategory: {
-            type: "[String]"
-            defaultValue: ["blue-chip", "top-established", "top-emerging"]
-          }
-        ) {
+      fragment ArtistHeader_artist on Artist {
         ...FollowArtistButton_artist
-        ...SelectedCareerAchievements_artist
+        ...ArtistInsightPills_artist
 
-        artistHighlights: highlights {
-          partnersConnection(
-            first: 10
-            displayOnPartnerProfile: true
-            representedBy: true
-            partnerCategory: $partnerCategory
-          ) {
-            edges {
-              node {
-                categories {
-                  slug
-                }
-              }
-            }
-          }
-        }
         auctionResultsConnection(
           recordsTrusted: true
           first: 1

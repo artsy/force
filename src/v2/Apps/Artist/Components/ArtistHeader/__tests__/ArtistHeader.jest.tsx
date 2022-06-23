@@ -1,31 +1,39 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ArtistHeaderFragmentContainer } from "../ArtistHeader"
-import { ArtistHeader_Test_Query } from "v2/__generated__/ArtistHeader_Test_Query.graphql"
 import { useTracking } from "react-tracking"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("v2/Components/SelectedCareerAchievements", () => ({
-  SelectedCareerAchievementsFragmentContainer: () => null,
+
+jest.mock("react-head", () => ({
+  Link: () => null,
 }))
-jest.mock("react-head", () => ({ Link: () => null }))
+
+jest.mock("v2/Apps/Artist/Components/ArtistInsights", () => {
+  return {
+    ArtistInsightPillsFragmentContainer: () => {
+      return null
+    },
+  }
+})
+
+const mockuseTracking = useTracking as jest.Mock
+const trackingSpy = jest.fn()
+
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: ArtistHeaderFragmentContainer,
+  query: graphql`
+    query ArtistHeader_Test_Query @relay_test_operation {
+      artist(id: "example") {
+        ...ArtistHeader_artist
+      }
+    }
+  `,
+})
 
 describe("ArtistHeader", () => {
-  const { getWrapper } = setupTestWrapper<ArtistHeader_Test_Query>({
-    Component: ArtistHeaderFragmentContainer,
-    query: graphql`
-      query ArtistHeader_Test_Query @relay_test_operation {
-        artist(id: "example") {
-          ...ArtistHeader_artist
-        }
-      }
-    `,
-  })
-
-  const mockuseTracking = useTracking as jest.Mock
-  const trackingSpy = jest.fn()
-
   beforeAll(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
@@ -33,41 +41,39 @@ describe("ArtistHeader", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Artist: () => ({
         name: "artistName",
         slug: "artistSlug",
         counts: { follows: 111 },
+        formattedNationalityAndBirthday: "USA, Jan 1 1980",
         biographyBlurb: { text: "biographyBlurbText", credit: false },
       }),
     })
 
-    expect(wrapper.text()).toContain("artistName")
-    expect(wrapper.text()).toContain("formattedNationalityAndBirthday")
-    expect(wrapper.text()).toContain("111 Followers")
-    expect(wrapper.text()).toContain("biographyBlurbText")
-    expect(
-      wrapper.find("SelectedCareerAchievementsFragmentContainer").length
-    ).toBe(1)
+    expect(screen.getByText("artistName")).toBeInTheDocument()
+    expect(screen.getByText("USA, Jan 1 1980")).toBeInTheDocument()
+    expect(screen.getByText("111 Followers")).toBeInTheDocument()
+    expect(screen.getByText("biographyBlurbText")).toBeInTheDocument()
   })
 
   it("hides bio section if partner supplied bio", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Artist: () => ({
         biographyBlurb: { text: "biographyBlurbText", credit: true },
       }),
     })
 
-    expect(wrapper.text()).not.toContain("biographyBlurbText")
+    expect(screen.queryByText("biographyBlurbText")).not.toBeInTheDocument()
   })
 
   it("hides follows if count is zero", () => {
-    const wrapper = getWrapper({
+    renderWithRelay({
       Artist: () => ({
         counts: { follows: 0 },
       }),
     })
 
-    expect(wrapper.text()).not.toContain("0 Followers")
+    expect(screen.queryByText("0 Followers")).not.toBeInTheDocument()
   })
 })

@@ -5,17 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeader_artist = {
-    readonly artistHighlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly categories: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null> | null;
-        } | null;
-    } | null;
     readonly auctionResultsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -46,7 +35,7 @@ export type ArtistHeader_artist = {
         readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "SelectedCareerAchievements_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "ArtistInsightPills_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$data = ArtistHeader_artist;
@@ -57,107 +46,12 @@ export type ArtistHeader_artist$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-};
-return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": [
-        "blue-chip",
-        "top-established",
-        "top-emerging"
-      ],
-      "kind": "LocalArgument",
-      "name": "partnerCategory"
-    }
-  ],
+const node: ReaderFragment = {
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistHeader_artist",
   "selections": [
-    {
-      "alias": "artistHighlights",
-      "args": null,
-      "concreteType": "ArtistHighlights",
-      "kind": "LinkedField",
-      "name": "highlights",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "displayOnPartnerProfile",
-              "value": true
-            },
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 10
-            },
-            {
-              "kind": "Variable",
-              "name": "partnerCategory",
-              "variableName": "partnerCategory"
-            },
-            {
-              "kind": "Literal",
-              "name": "representedBy",
-              "value": true
-            }
-          ],
-          "concreteType": "PartnerArtistConnection",
-          "kind": "LinkedField",
-          "name": "partnersConnection",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PartnerArtistEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Partner",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "PartnerCategory",
-                      "kind": "LinkedField",
-                      "name": "categories",
-                      "plural": true,
-                      "selections": [
-                        (v0/*: any*/)
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -305,7 +199,13 @@ return {
       "name": "internalID",
       "storageKey": null
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -396,12 +296,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SelectedCareerAchievements_artist"
+      "name": "ArtistInsightPills_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-})();
-(node as any).hash = '0c7fdc6d321e90f7862116f0a97ecf4a';
+(node as any).hash = 'eb000cc18318c5dce6b691a24ca1ca87';
 export default node;

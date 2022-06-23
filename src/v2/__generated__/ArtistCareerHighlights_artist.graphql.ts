@@ -5,27 +5,25 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlights_artist = {
-    readonly biographyBlurb: {
-        readonly partner: {
-            readonly profile: {
-                readonly href: string | null;
-            } | null;
-        } | null;
-        readonly credit: string | null;
-        readonly text: string | null;
+    readonly insightAchievements: ReadonlyArray<{
+        readonly __typename: string;
+    }>;
+    readonly insightBadges: ReadonlyArray<{
+        readonly __typename: string;
+    }>;
+    readonly auctionResultsConnection: {
+        readonly totalCount: number | null;
     } | null;
-    readonly name: string | null;
-    readonly related: {
-        readonly genes: {
+    readonly artistHighlights: {
+        readonly partnersConnection: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
-                    readonly id: string;
+                    readonly __typename: string;
                 } | null;
             } | null> | null;
         } | null;
     } | null;
-    readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist" | "ArtistGenes_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
     readonly " $refType": "ArtistCareerHighlights_artist";
 };
 export type ArtistCareerHighlights_artist$data = ArtistCareerHighlights_artist;
@@ -36,104 +34,126 @@ export type ArtistCareerHighlights_artist$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "__typename",
+    "storageKey": null
+  }
+],
+v1 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 1
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistCareerHighlights_artist",
   "selections": [
     {
-      "alias": null,
+      "alias": "insightAchievements",
       "args": [
         {
           "kind": "Literal",
-          "name": "format",
-          "value": "HTML"
+          "name": "kind",
+          "value": [
+            "SOLO_SHOW",
+            "GROUP_SHOW",
+            "COLLECTED",
+            "REVIEWED",
+            "BIENNIAL"
+          ]
+        }
+      ],
+      "concreteType": "ArtistInsight",
+      "kind": "LinkedField",
+      "name": "insights",
+      "plural": true,
+      "selections": (v0/*: any*/),
+      "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
+    },
+    {
+      "alias": "insightBadges",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "kind",
+          "value": [
+            "ACTIVE_SECONDARY_MARKET"
+          ]
+        }
+      ],
+      "concreteType": "ArtistInsight",
+      "kind": "LinkedField",
+      "name": "insights",
+      "plural": true,
+      "selections": (v0/*: any*/),
+      "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\"])"
+    },
+    {
+      "alias": null,
+      "args": [
+        (v1/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "recordsTrusted",
+          "value": true
         },
         {
           "kind": "Literal",
-          "name": "partnerBio",
-          "value": false
+          "name": "sort",
+          "value": "PRICE_AND_DATE_DESC"
         }
       ],
-      "concreteType": "ArtistBlurb",
+      "concreteType": "AuctionResultConnection",
       "kind": "LinkedField",
-      "name": "biographyBlurb",
+      "name": "auctionResultsConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "Partner",
-          "kind": "LinkedField",
-          "name": "partner",
-          "plural": false,
-          "selections": [
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
+    },
+    {
+      "alias": "artistHighlights",
+      "args": null,
+      "concreteType": "ArtistHighlights",
+      "kind": "LinkedField",
+      "name": "highlights",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            (v1/*: any*/),
             {
-              "alias": null,
-              "args": null,
-              "concreteType": "Profile",
-              "kind": "LinkedField",
-              "name": "profile",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
+              "kind": "Literal",
+              "name": "partnerCategory",
+              "value": [
+                "blue-chip"
+              ]
             }
           ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "credit",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "text",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistRelatedData",
-      "kind": "LinkedField",
-      "name": "related",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "GeneConnection",
+          "concreteType": "PartnerArtistConnection",
           "kind": "LinkedField",
-          "name": "genes",
+          "name": "partnersConnection",
           "plural": false,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "GeneEdge",
+              "concreteType": "PartnerArtistEdge",
               "kind": "LinkedField",
               "name": "edges",
               "plural": true,
@@ -141,50 +161,36 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Gene",
+                  "concreteType": "Partner",
                   "kind": "LinkedField",
                   "name": "node",
                   "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    }
-                  ],
+                  "selections": (v0/*: any*/),
                   "storageKey": null
                 }
               ],
               "storageKey": null
             }
           ],
-          "storageKey": null
+          "storageKey": "partnersConnection(first:1,partnerCategory:[\"blue-chip\"])"
         }
       ],
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "ArtistInsightBadges_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SelectedCareerAchievements_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistGenes_artist"
+      "name": "ArtistInsightAchievements_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '92970956080f67ee7d6e29aed6a75de3';
+})();
+(node as any).hash = '1af88c93077783ff46c75ec4312bc463';
 export default node;

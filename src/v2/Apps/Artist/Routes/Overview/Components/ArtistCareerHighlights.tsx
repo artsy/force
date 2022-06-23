@@ -1,24 +1,14 @@
-import {
-  Box,
-  Column,
-  GridColumns,
-  HTML,
-  Join,
-  Skeleton,
-  SkeletonBox,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
-import { ArtistGenesFragmentContainer } from "./ArtistGenes"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
-import { getENV } from "v2/Utils/getENV"
+import { ArtistInsightBadgesFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
+import { ArtistInsightAchievementsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
+import { ArtistInsightAchievementsPlaceholder } from "v2/Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -27,43 +17,32 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
-  const { credit, partner, text } = artist.biographyBlurb!
-  const showCredit = Boolean(credit) && partner?.profile?.href
-  const partnerHref = `${getENV("APP_URL")}${partner?.profile?.href}`
-  const hasCategories = Boolean(artist.related?.genes?.edges?.length)
+  const displayInsightAchievements = artist.insightAchievements.length > 0
+  // TODO: Replace with just `insightBadges.length` check
+  const displayInsightBadges =
+    artist.insightBadges.length > 0 ||
+    (artist.auctionResultsConnection?.totalCount ?? 0) > 0 ||
+    extractNodes(artist.artistHighlights?.partnersConnection).length > 0
+
+  if (!displayInsightAchievements && !displayInsightBadges) {
+    return null
+  }
 
   return (
     <GridColumns gridRowGap={4}>
-      <Column span={8}>
-        <Join separator={<Spacer mt={4} />}>
-          <SelectedCareerAchievementsFragmentContainer
-            artist={artist}
-            onlyCareerHighlights
-          />
-
-          {showCredit && text && (
-            <Box>
-              <Text variant="xs" textTransform="uppercase" mb={1}>
-                Bio
-              </Text>
-
-              <Text mb={1} variant="sm">
-                <RouterLink to={partnerHref}>{credit}</RouterLink>
-              </Text>
-
-              <HTML html={text} variant="sm" />
-            </Box>
-          )}
-        </Join>
+      <Column span={12}>
+        <Text variant="lg-display">Career Highlights</Text>
       </Column>
 
-      {hasCategories && (
-        <Column span={4}>
-          <Text variant="sm-display" mb={2}>
-            Related categories
-          </Text>
+      {displayInsightAchievements && (
+        <Column span={6}>
+          <ArtistInsightAchievementsFragmentContainer artist={artist} />
+        </Column>
+      )}
 
-          <ArtistGenesFragmentContainer artist={artist} />
+      {displayInsightBadges && (
+        <Column span={6}>
+          <ArtistInsightBadgesFragmentContainer artist={artist} />
         </Column>
       )}
     </GridColumns>
@@ -75,40 +54,47 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCareerHighlights_artist on Artist {
-        ...SelectedCareerAchievements_artist
-        ...ArtistGenes_artist
-        biographyBlurb(format: HTML, partnerBio: false) {
-          partner {
-            profile {
-              href
-            }
-          }
-          credit
-          text
+        ...ArtistInsightBadges_artist
+        ...ArtistInsightAchievements_artist
+        insightAchievements: insights(
+          kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
+        ) {
+          __typename
         }
-        name
-        related {
-          genes {
+        insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET]) {
+          __typename
+        }
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
+        ) {
+          totalCount
+        }
+        artistHighlights: highlights {
+          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
             edges {
               node {
-                id
+                __typename
               }
             }
           }
         }
-        slug
       }
     `,
   }
 )
 
 const PLACEHOLDER = (
-  <Skeleton>
-    <Text variant="lg-display" mb={4}>
-      Career highlights
-    </Text>
-    <SkeletonBox width="100%" height={170} />
-  </Skeleton>
+  <GridColumns gridRowGap={4}>
+    <Column span={12}>
+      <Text variant="lg-display">Career Highlights</Text>
+    </Column>
+
+    <Column span={6}>
+      <ArtistInsightAchievementsPlaceholder />
+    </Column>
+  </GridColumns>
 )
 
 export const ArtistCareerHighlightsQueryRenderer: React.FC<{
@@ -134,9 +120,11 @@ export const ArtistCareerHighlightsQueryRenderer: React.FC<{
           console.error(error)
           return null
         }
+
         if (!props) {
           return PLACEHOLDER
         }
+
         if (props.artist) {
           return (
             <ArtistCareerHighlightsFragmentContainer artist={props.artist} />
