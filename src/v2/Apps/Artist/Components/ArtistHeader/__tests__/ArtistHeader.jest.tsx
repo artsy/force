@@ -6,6 +6,11 @@ import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+
+jest.mock("react-head", () => ({
+  Link: () => null,
+}))
+
 jest.mock("v2/Apps/Artist/Components/ArtistInsights", () => {
   return {
     ArtistInsightPillsFragmentContainer: () => {
@@ -27,8 +32,6 @@ const { renderWithRelay } = setupTestWrapperTL({
     }
   `,
 })
-
-// TODO: FIX ME
 
 describe("ArtistHeader", () => {
   beforeAll(() => {
