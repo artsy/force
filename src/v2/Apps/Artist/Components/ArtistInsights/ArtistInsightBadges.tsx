@@ -32,6 +32,7 @@ export const ArtistBadge: FC<ArtistBadgeProps> = ({ label, description }) => {
       >
         <BlueChipIcon mr={0.5} fill="blue100" />
       </Box>
+
       <Text
         variant="sm"
         color="blue100"
@@ -41,7 +42,8 @@ export const ArtistBadge: FC<ArtistBadgeProps> = ({ label, description }) => {
       >
         {label}
       </Text>
-      <Text color="black60" style={{ gridArea: "2 / 2 / 3 / 3" }}>
+
+      <Text variant="sm" color="black60" style={{ gridArea: "2 / 2 / 3 / 3" }}>
         {description}
       </Text>
     </CSSGrid>

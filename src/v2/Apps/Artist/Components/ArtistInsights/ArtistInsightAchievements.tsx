@@ -25,12 +25,13 @@ const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
 
   return (
     <Box>
-      <Text variant="sm-display" color="black100">
+      <Text variant="sm" color="black100">
         {label}
       </Text>
+
       <Box>
         <Text
-          variant="sm-display"
+          variant="sm"
           color="black60"
           data-testid="expandable-dropdownlist"
         >

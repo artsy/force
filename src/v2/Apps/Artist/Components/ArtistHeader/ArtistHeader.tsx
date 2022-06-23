@@ -41,7 +41,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
       )}
 
       <Box data-test="artistHeader">
-        <GridColumns>
+        <GridColumns gridRowGap={2}>
           <Column span={6}>
             <GridColumns>
               {avatar && (
@@ -112,6 +112,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
           <Column span={6}>
             <ArtistInsightPillsFragmentContainer artist={artist} />
+
             <Spacer mb={4} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
