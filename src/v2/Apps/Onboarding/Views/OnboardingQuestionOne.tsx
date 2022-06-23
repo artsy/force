@@ -1,54 +1,63 @@
-import { Flex, Spacer, Text, Box, Join, Button } from "@artsy/palette"
+import { Flex, Spacer, Text, Box, Join, Button, Pill } from "@artsy/palette"
 import { FC } from "react"
+import { OnboardingProgress } from "../Components/OnboardingProgress"
+import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
-  OPTION_COLLECTING_ART_THAT_MOVES_ME,
-  OPTION_FINDING_MY_NEXT_GREAT_INVESTMENT,
-  OPTION_GROW_MY_TASTE_IN_ART,
-  OPTION_KEEPING_TRACK_OF_ART_I_AM_INTERESTED_IN,
+  OPTION_NO_IM_JUST_STARTING_OUT,
+  OPTION_YES_I_LOVE_COLLECTING_ART,
 } from "../config"
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingQuestionOne: FC = () => {
-  const { next, setAnswerOne } = useOnboardingContext()
+  const { next, dispatch, state } = useOnboardingContext()
 
   return (
-    <Flex flexDirection="column">
-      <Text variant="xs">First, choose the option that fits you best.</Text>
+    <OnboardingSplitLayout
+      left={<div>TODO: Image</div>}
+      right={
+        <Flex
+          flexDirection="column"
+          p={4}
+          justifyContent="space-between"
+          width="100%"
+        >
+          <OnboardingProgress />
 
-      <Spacer mt={1} />
+          <Box width="100%">
+            <Text variant="lg-display">Have you bought art before?</Text>
 
-      <Text variant="lg-display">
-        What do you love most about collecting art?
-      </Text>
+            <Spacer mt={4} />
 
-      <Spacer mt={4} />
+            <Box>
+              <Join separator={<Spacer mt={2} />}>
+                {QUESTION_1.map(option => {
+                  return (
+                    <Pill
+                      key={option}
+                      size="small"
+                      selected={state.questionOne === option}
+                      onClick={() => {
+                        dispatch({ type: "SET_ANSWER_ONE", payload: option })
+                      }}
+                    >
+                      {option}
+                    </Pill>
+                  )
+                })}
+              </Join>
+            </Box>
+          </Box>
 
-      <Box>
-        <Join separator={<Spacer mt={2} />}>
-          {QUESTION_1.map(option => {
-            return (
-              <Button
-                key={option}
-                size="small"
-                variant="secondaryBlack"
-                onClick={() => {
-                  setAnswerOne(option)
-                  next()
-                }}
-              >
-                {option}
-              </Button>
-            )
-          })}
-        </Join>
-      </Box>
-    </Flex>
+          <Button disabled={!state.questionOne} onClick={next} width="100%">
+            Next
+          </Button>
+        </Flex>
+      }
+    />
   )
 }
 
 const QUESTION_1 = [
-  OPTION_GROW_MY_TASTE_IN_ART,
-  OPTION_KEEPING_TRACK_OF_ART_I_AM_INTERESTED_IN,
-  OPTION_FINDING_MY_NEXT_GREAT_INVESTMENT,
-  OPTION_COLLECTING_ART_THAT_MOVES_ME,
+  OPTION_YES_I_LOVE_COLLECTING_ART,
+  OPTION_NO_IM_JUST_STARTING_OUT,
 ]

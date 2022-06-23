@@ -2,48 +2,87 @@ import {
   FC,
   createContext,
   createRef,
-  useCallback,
   useRef,
   useContext,
-  useState,
-  Dispatch,
-  SetStateAction,
+  useReducer,
+  useEffect,
 } from "react"
 import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
 import { useConfig } from "./config"
 
-type Answer = string | null
-
-export type Basis = {
-  answer: Answer
+type State = {
+  questionOne: string | null
+  questionTwo: string[]
+  questionThree: string | null
 }
 
-export const DEFAULT_BASIS: Basis = {
-  answer: null,
+export const DEFAULT_STATE: State = {
+  questionOne: null,
+  questionTwo: [],
+  questionThree: null,
 }
+
+type Action =
+  | { type: "RESET" }
+  | { type: "SET_ANSWER_ONE"; payload: string }
+  | { type: "SET_ANSWER_TWO"; payload: string }
+  | { type: "SET_ANSWER_THREE"; payload: string }
+
+const reducer = (onReset: () => void) => (state: State, action: Action) => {
+  switch (action.type) {
+    case "RESET":
+      onReset()
+      return DEFAULT_STATE
+
+    case "SET_ANSWER_ONE":
+      return {
+        ...state,
+        questionOne: action.payload,
+      }
+
+    case "SET_ANSWER_TWO":
+      return {
+        ...state,
+        questionTwo: state.questionTwo.includes(action.payload)
+          ? state.questionTwo.filter(answer => answer !== action.payload)
+          : [...state.questionTwo, action.payload],
+      }
+
+    case "SET_ANSWER_THREE":
+      return {
+        ...state,
+        questionThree: action.payload,
+      }
+
+    default:
+      return state
+  }
+}
+
+/**
+ * Basis is just State stored in a ref.
+ * It is used to make decisions in the workflow.
+ */
+export type Basis = State
 
 const OnboardingContext = createContext<{
-  answers: [Answer, Answer]
   basis: React.RefObject<Basis>
   current: string
-  workflowEngine: WorkflowEngine
+  dispatch: React.Dispatch<Action>
   next(): void
   onDone(): void
   progress: number
-  setAnswerOne: Dispatch<SetStateAction<Answer>>
-  setAnswerTwo: Dispatch<SetStateAction<Answer>>
-  setBasis: (updatedBasis: Partial<Basis>) => React.RefObject<Basis>
+  state: State
+  workflowEngine: WorkflowEngine
 }>({
-  answers: [null, null],
   basis: createRef<Basis>(),
   current: "",
-  workflowEngine: new WorkflowEngine({ workflow: [] }),
+  dispatch: () => {},
   next: () => {},
   onDone: () => {},
   progress: 0,
-  setBasis: () => createRef<Basis>(),
-  setAnswerOne: () => {},
-  setAnswerTwo: () => {},
+  state: DEFAULT_STATE,
+  workflowEngine: new WorkflowEngine({ workflow: [] }),
 })
 
 interface OnboardingProviderProps {
@@ -54,34 +93,33 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   children,
   onDone,
 }) => {
-  const basis = useRef<Basis>(DEFAULT_BASIS)
+  const basis = useRef<Basis>(DEFAULT_STATE)
 
-  const { workflowEngine, current, next } = useConfig({ basis, onDone })
-
-  const setBasis = useCallback((updatedBasis: Partial<Basis>) => {
-    basis.current = { ...basis.current, ...updatedBasis }
-    return basis
-  }, [])
+  const { workflowEngine, current, next, reset: __reset__ } = useConfig({
+    basis,
+    onDone,
+  })
 
   const progress =
     ((workflowEngine.position() - 1) / workflowEngine.total()) * 100
 
-  const [answerOne, setAnswerOne] = useState<null | string>(null)
-  const [answerTwo, setAnswerTwo] = useState<null | string>(null)
+  const [state, dispatch] = useReducer(reducer(__reset__), DEFAULT_STATE)
+
+  useEffect(() => {
+    basis.current = state
+  }, [state])
 
   return (
     <OnboardingContext.Provider
       value={{
-        answers: [answerOne, answerTwo],
         basis,
         current,
-        workflowEngine,
+        dispatch,
         next,
         onDone,
         progress,
-        setAnswerOne,
-        setAnswerTwo,
-        setBasis,
+        state,
+        workflowEngine,
       }}
     >
       {children}

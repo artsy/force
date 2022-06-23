@@ -1,36 +1,50 @@
-import { Flex, Text, Spacer, Join, Button } from "@artsy/palette"
+import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
+import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingWelcome = () => {
+  const { user } = useSystemContext()
   const { next } = useOnboardingContext()
 
   return (
-    <Flex flexDirection="column">
-      <Text variant="xl">Ready to find art you love?</Text>
+    <OnboardingSplitLayout
+      left={<div>TODO: Animated panel</div>}
+      right={
+        <Flex flexDirection="column" justifyContent="space-between" p={4}>
+          {/* Vertically centers next Box */}
+          <Box />
 
-      <Spacer mt={4} />
+          <Box width="100%">
+            <Text variant={["xl", "xxl"]}>Welcome to Artsy, {user?.name}.</Text>
 
-      <Text variant="lg-display">
-        Give us a feel for your art tastes, and we’ll match you with art you
-        love.
-      </Text>
+            <Spacer mt={4} />
 
-      <Spacer mt={4} />
+            <Text variant="lg-display">
+              Ready to find art you love? Start building your profile and tailor
+              Artsy to your tastes.
+            </Text>
+          </Box>
 
-      <Join separator={<Spacer mt={0.5} />}>
-        <Button onClick={next}>Get started</Button>
+          <Box width="100%">
+            <Button onClick={next} width="100%">
+              Get started
+            </Button>
 
-        <Button
-          variant="secondaryBlack"
-          mt={0.5}
-          // @ts-ignore
-          as={RouterLink}
-          to="/"
-        >
-          Maybe later
-        </Button>
-      </Join>
-    </Flex>
+            <Button
+              variant="tertiary"
+              mt={1}
+              width="100%"
+              // @ts-ignore
+              as={RouterLink}
+              to="/"
+            >
+              Skip
+            </Button>
+          </Box>
+        </Flex>
+      }
+    />
   )
 }

@@ -3,6 +3,7 @@ export type Workflow = (string | { [event: string]: Branch })[]
 export type Conditions = Record<string, () => boolean | string>
 
 export class WorkflowEngine {
+  __workflow__: Workflow
   workflow: Workflow
   conditions: Conditions
   moves = 0
@@ -15,6 +16,7 @@ export class WorkflowEngine {
     workflow: Workflow
     conditions?: Conditions
   }) {
+    this.__workflow__ = workflow
     this.workflow = workflow
     this.conditions = conditions
   }
@@ -72,5 +74,13 @@ export class WorkflowEngine {
 
   end() {
     return this.workflow.length - 1
+  }
+
+  reset() {
+    this.moves = 0
+    this.index = 0
+    this.workflow = this.__workflow__
+
+    return this.current()
   }
 }
