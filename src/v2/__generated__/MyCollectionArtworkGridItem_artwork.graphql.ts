@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionGridItem_artwork = {
+export type MyCollectionArtworkGridItem_artwork = {
     readonly internalID: string;
     readonly title: string | null;
     readonly image_title: string | null;
@@ -15,12 +15,12 @@ export type MyCollectionGridItem_artwork = {
     } | null;
     readonly artistNames: string | null;
     readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
-    readonly " $refType": "MyCollectionGridItem_artwork";
+    readonly " $refType": "MyCollectionArtworkGridItem_artwork";
 };
-export type MyCollectionGridItem_artwork$data = MyCollectionGridItem_artwork;
-export type MyCollectionGridItem_artwork$key = {
-    readonly " $data"?: MyCollectionGridItem_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionGridItem_artwork">;
+export type MyCollectionArtworkGridItem_artwork$data = MyCollectionArtworkGridItem_artwork;
+export type MyCollectionArtworkGridItem_artwork$key = {
+    readonly " $data"?: MyCollectionArtworkGridItem_artwork$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkGridItem_artwork">;
 };
 
 
@@ -29,7 +29,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "MyCollectionGridItem_artwork",
+  "name": "MyCollectionArtworkGridItem_artwork",
   "selections": [
     {
       "alias": null,
@@ -106,5 +106,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '8c44cdef5dc192d2368eed6a09895200';
+(node as any).hash = 'a2b20ca9059af93de876c1d9f1622f4f';
 export default node;

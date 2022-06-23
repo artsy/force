@@ -1,6 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, ResponsiveBox } from "@artsy/palette"
-import { MyCollectionGridItem_artwork } from "v2/__generated__/MyCollectionGridItem_artwork.graphql"
+import { MyCollectionArtworkGridItem_artwork } from "v2/__generated__/MyCollectionArtworkGridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -12,7 +12,7 @@ import { MagnifyImage } from "v2/Components/MagnifyImage"
 
 interface MyCollectionArtworkGridItemProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  artwork: MyCollectionGridItem_artwork
+  artwork: MyCollectionArtworkGridItem_artwork
   contextModule?: AuthContextModule
   lazyLoad?: boolean
   onClick?: () => void
@@ -118,7 +118,7 @@ export const MyCollectionArtworkGridItemFragmentContainer = createFragmentContai
   MyCollectionArtworkGridItem,
   {
     artwork: graphql`
-      fragment MyCollectionGridItem_artwork on Artwork {
+      fragment MyCollectionArtworkGridItem_artwork on Artwork {
         internalID
         title
         image_title: imageTitle

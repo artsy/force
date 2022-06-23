@@ -16,7 +16,7 @@ import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
-import { MyCollectionArtworkGridItemFragmentContainer } from "./MyCollectionGridItem"
+import { MyCollectionArtworkGridItemFragmentContainer } from "./MyCollectionArtworkGridItem"
 
 interface SettingsMyCollectionArtworksProps {
   me: SettingsMyCollectionArtworks_me
@@ -135,7 +135,7 @@ export const SettingsMyCollectionArtworksRefetchContainer = createRefetchContain
           edges {
             node {
               internalID
-              ...MyCollectionGridItem_artwork
+              ...MyCollectionArtworkGridItem_artwork
             }
           }
         }
