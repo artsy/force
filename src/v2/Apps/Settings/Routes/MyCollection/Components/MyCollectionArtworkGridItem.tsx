@@ -30,7 +30,7 @@ export const MyCollectionArtworkGridItem: React.FC<MyCollectionArtworkGridItemPr
 
   const { onMouseEnter, onMouseLeave } = useHoverMetadata()
 
-  const aspectRatio = artwork.image?.aspect_ratio ?? 1
+  const aspectRatio = artwork.image?.aspectRatio ?? 1
   const width = 445
   const height = Math.floor(width / aspectRatio)
   const transform = aspectRatio === 1 ? cropped : resized
@@ -74,7 +74,7 @@ export const MyCollectionArtworkGridItem: React.FC<MyCollectionArtworkGridItemPr
           >
             <MagnifyImage
               title={artwork.title ?? undefined}
-              alt={artwork.image_title ?? ""}
+              alt={artwork.imageTitle ?? ""}
               src={src}
               srcSet={srcSet}
               lazyLoad={lazyLoad}
@@ -121,11 +121,11 @@ export const MyCollectionArtworkGridItemFragmentContainer = createFragmentContai
       fragment MyCollectionArtworkGridItem_artwork on Artwork {
         internalID
         title
-        image_title: imageTitle
+        imageTitle
         image {
           placeholder
           url(version: "large")
-          aspect_ratio: aspectRatio
+          aspectRatio
         }
         artistNames
         ...Details_artwork

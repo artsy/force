@@ -93,11 +93,11 @@ fragment HoverDetails_artwork on Artwork {
 fragment MyCollectionArtworkGridItem_artwork on Artwork {
   internalID
   title
-  image_title: imageTitle
+  imageTitle
   image {
     placeholder
     url(version: "large")
-    aspect_ratio: aspectRatio
+    aspectRatio
   }
   artistNames
   ...Details_artwork
@@ -431,7 +431,7 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "image_title",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "imageTitle",
@@ -466,7 +466,7 @@ return {
                             "storageKey": "url(version:\"large\")"
                           },
                           {
-                            "alias": "aspect_ratio",
+                            "alias": null,
                             "args": null,
                             "kind": "ScalarField",
                             "name": "aspectRatio",
@@ -745,12 +745,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d882b103e9234b64e0bdff1424b06695",
+    "cacheID": "8d7fba4066aff1deb01825f9e1922ac5",
     "id": null,
     "metadata": {},
     "name": "SettingsMyCollectionArtworksQuery",
     "operationKind": "query",
-    "text": "query SettingsMyCollectionArtworksQuery(\n  $page: Int\n) {\n  me {\n    ...SettingsMyCollectionArtworks_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment MyCollectionArtworkGridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  ...Details_artwork\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsMyCollectionArtworks_me_2Pg8Wv on Me {\n  myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...MyCollectionArtworkGridItem_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query SettingsMyCollectionArtworksQuery(\n  $page: Int\n) {\n  me {\n    ...SettingsMyCollectionArtworks_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment MyCollectionArtworkGridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspectRatio\n  }\n  artistNames\n  ...Details_artwork\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsMyCollectionArtworks_me_2Pg8Wv on Me {\n  myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...MyCollectionArtworkGridItem_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();

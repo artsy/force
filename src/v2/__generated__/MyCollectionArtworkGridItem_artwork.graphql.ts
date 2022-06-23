@@ -7,11 +7,11 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGridItem_artwork = {
     readonly internalID: string;
     readonly title: string | null;
-    readonly image_title: string | null;
+    readonly imageTitle: string | null;
     readonly image: {
         readonly placeholder: string | null;
         readonly url: string | null;
-        readonly aspect_ratio: number;
+        readonly aspectRatio: number;
     } | null;
     readonly artistNames: string | null;
     readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
@@ -46,7 +46,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "image_title",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "imageTitle",
@@ -81,7 +81,7 @@ const node: ReaderFragment = {
           "storageKey": "url(version:\"large\")"
         },
         {
-          "alias": "aspect_ratio",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
@@ -106,5 +106,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'a2b20ca9059af93de876c1d9f1622f4f';
+(node as any).hash = 'b2379f482a24338550a494ba39f4f278';
 export default node;
