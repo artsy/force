@@ -7,10 +7,10 @@ import { OnboardingSteps } from "./OnboardingSteps"
 
 export const OnboardingDebug: FC = () => {
   const {
-    answers,
+    state,
     current,
     progress,
-    reset,
+    dispatch,
     workflowEngine,
   } = useOnboardingContext()
 
@@ -21,7 +21,7 @@ export const OnboardingDebug: FC = () => {
         {JSON.stringify(
           {
             current,
-            answers,
+            state,
             position: `${workflowEngine.position()}/${workflowEngine.total()}`,
             progress: `${progress}%`,
           },
@@ -43,7 +43,7 @@ export const OnboardingDebug: FC = () => {
           variant="secondaryBlack"
           ml={1}
           onClick={() => {
-            reset()
+            dispatch({ type: "RESET" })
           }}
         >
           Reset

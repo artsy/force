@@ -1,96 +1,74 @@
-import {
-  Flex,
-  Spacer,
-  Text,
-  Join,
-  Box,
-  CheckCircleFillIcon,
-  Button,
-} from "@artsy/palette"
+import { Flex, Spacer, Text, Join, Box, Pill, Button } from "@artsy/palette"
 import { FC } from "react"
+import { OnboardingProgress } from "../Components/OnboardingProgress"
+import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
-  OPTION_ARTWORKS_FROM_TRENDING_ARTISTS,
-  OPTION_AUCTION_HIGHLIGHTS_FROM_THIS_WEEK,
-  OPTION_A_CURATED_SELECTION_OF_ARTWORKS,
   OPTION_COLLECTING_ART_THAT_MOVES_ME,
-  OPTION_CREATE_AN_ART_WISHLIST,
-  OPTION_CURRENTLY_TRENDING_ARTISTS,
-  OPTION_FINDING_MY_NEXT_GREAT_INVESTMENT,
-  OPTION_FIND_NEW_ART_FROM_ARTISTS_THAT_I_COLLECT,
-  OPTION_FOLLOW_ARTISTS_I_COLLECT,
-  OPTION_FOLLOW_GALLERIES_I_LOVE,
-  OPTION_GROW_MY_TASTE_IN_ART,
-  OPTION_KEEPING_TRACK_OF_ART_I_AM_INTERESTED_IN,
-  OPTION_KEEP_TRACK_OF_ARTIST_CAREER,
-  OPTION_POPULAR_AUCTION_LOTS,
+  OPTION_DEVELOPING_MY_ART_TASTES,
+  OPTION_FINDING_GREAT_INVESTMENTS,
+  OPTION_KEEP_TRACK_OF_ART,
 } from "../config"
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingQuestionTwo: FC = () => {
-  const { answers, setAnswerTwo, setBasis, next } = useOnboardingContext()
-
-  const answerOne = answers[0] as keyof typeof QUESTION_2
-  const options = QUESTION_2[answerOne]
+  const { state, dispatch, next } = useOnboardingContext()
 
   return (
-    <Flex flexDirection="column">
-      <Text variant="xs">Help Artsy get to know what you like.</Text>
+    <OnboardingSplitLayout
+      left={<div>TODO: Image</div>}
+      right={
+        <Flex
+          flexDirection="column"
+          p={4}
+          justifyContent="space-between"
+          width="100%"
+        >
+          <OnboardingProgress />
 
-      <Spacer mt={1} />
+          <Box width="100%">
+            <Text variant="lg-display">
+              What do you love most about exploring art?
+            </Text>
 
-      <Text variant="lg-display">Where would you like to dive in first?</Text>
+            <Spacer mt={1} />
 
-      <Spacer mt={4} />
+            <Text variant="sm-display">Choose as many as you like.</Text>
+          </Box>
 
-      <Box>
-        <Join separator={<Spacer mt={2} />}>
-          <Flex alignItems="center">
-            <CheckCircleFillIcon fill="blue100" mr={1} />
+          <Box>
+            <Join separator={<Spacer mt={2} />}>
+              {QUESTION_2.map(option => {
+                return (
+                  <Pill
+                    key={option}
+                    selected={state.questionTwo.includes(option)}
+                    onClick={() => {
+                      dispatch({ type: "SET_ANSWER_TWO", payload: option })
+                    }}
+                  >
+                    {option}
+                  </Pill>
+                )
+              })}
+            </Join>
+          </Box>
 
-            <Text variant="xs">{answers[0]}</Text>
-          </Flex>
-
-          {options.map(option => {
-            return (
-              <Button
-                key={option}
-                size="small"
-                variant="secondaryBlack"
-                onClick={() => {
-                  setAnswerTwo(option)
-                  setBasis({ answer: option })
-                  next()
-                }}
-              >
-                {option}
-              </Button>
-            )
-          })}
-        </Join>
-      </Box>
-    </Flex>
+          <Button
+            disabled={state.questionTwo.length === 0}
+            onClick={next}
+            width="100%"
+          >
+            Next
+          </Button>
+        </Flex>
+      }
+    />
   )
 }
 
-const QUESTION_2 = {
-  [OPTION_GROW_MY_TASTE_IN_ART]: [
-    OPTION_AUCTION_HIGHLIGHTS_FROM_THIS_WEEK,
-    OPTION_CURRENTLY_TRENDING_ARTISTS,
-    OPTION_A_CURATED_SELECTION_OF_ARTWORKS,
-  ],
-  [OPTION_KEEPING_TRACK_OF_ART_I_AM_INTERESTED_IN]: [
-    OPTION_FIND_NEW_ART_FROM_ARTISTS_THAT_I_COLLECT,
-    OPTION_ARTWORKS_FROM_TRENDING_ARTISTS,
-    OPTION_AUCTION_HIGHLIGHTS_FROM_THIS_WEEK,
-  ],
-  [OPTION_FINDING_MY_NEXT_GREAT_INVESTMENT]: [
-    OPTION_KEEP_TRACK_OF_ARTIST_CAREER,
-    OPTION_CURRENTLY_TRENDING_ARTISTS,
-    OPTION_POPULAR_AUCTION_LOTS,
-  ],
-  [OPTION_COLLECTING_ART_THAT_MOVES_ME]: [
-    OPTION_FOLLOW_ARTISTS_I_COLLECT,
-    OPTION_FOLLOW_GALLERIES_I_LOVE,
-    OPTION_CREATE_AN_ART_WISHLIST,
-  ],
-}
+const QUESTION_2 = [
+  OPTION_DEVELOPING_MY_ART_TASTES,
+  OPTION_KEEP_TRACK_OF_ART,
+  OPTION_FINDING_GREAT_INVESTMENTS,
+  OPTION_COLLECTING_ART_THAT_MOVES_ME,
+]

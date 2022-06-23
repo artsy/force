@@ -1,9 +1,12 @@
 import { renderHook } from "@testing-library/react-hooks"
 import {
-  OPTION_ARTWORKS_FROM_TRENDING_ARTISTS,
-  OPTION_CREATE_AN_ART_WISHLIST,
+  OPTION_DEVELOPING_MY_ART_TASTES,
+  OPTION_FOLLOW_GALLERIES_I_LOVE,
+  OPTION_TOP_AUCTION_LOTS,
+  OPTION_YES_I_LOVE_COLLECTING_ART,
   useConfig,
 } from "../config"
+import { Basis } from "../useOnboardingContext"
 
 describe("config", () => {
   it("should move through workflow", () => {
@@ -14,35 +17,42 @@ describe("config", () => {
     } = renderHook(() =>
       useConfig({
         onDone: jest.fn(),
-        basis: { current: { answer: OPTION_ARTWORKS_FROM_TRENDING_ARTISTS } },
+        basis: {
+          current: {
+            questionOne: OPTION_YES_I_LOVE_COLLECTING_ART,
+            questionTwo: [OPTION_DEVELOPING_MY_ART_TASTES],
+            questionThree: OPTION_TOP_AUCTION_LOTS,
+          },
+        },
       })
     )
 
-    expect(workflowEngine.current()).toEqual("Welcome")
-    expect(workflowEngine.next()).toEqual("WhatDoYouLoveMost")
-    expect(workflowEngine.next()).toEqual("WhereWouldYouLikeToDiveIn")
-    expect(workflowEngine.next()).toEqual("TrendingArtists")
-    expect(workflowEngine.next()).toEqual("Done")
+    expect(workflowEngine.current()).toEqual("VIEW_WELCOME")
+    expect(workflowEngine.next()).toEqual("VIEW_QUESTION_ONE")
+    expect(workflowEngine.next()).toEqual("VIEW_QUESTION_TWO")
+    expect(workflowEngine.next()).toEqual("VIEW_QUESTION_THREE")
+    expect(workflowEngine.next()).toEqual("VIEW_TOP_AUCTION_LOTS")
   })
 
   it("should make a decision", () => {
-    const basis = { current: { answer: "" } }
+    const basis = {
+      current: {
+        questionOne: OPTION_YES_I_LOVE_COLLECTING_ART,
+        questionTwo: [OPTION_DEVELOPING_MY_ART_TASTES],
+        questionThree: null,
+      } as Basis,
+    }
     const {
       result: {
         current: { workflowEngine },
       },
-    } = renderHook(() =>
-      useConfig({
-        onDone: jest.fn(),
-        basis,
-      })
-    )
+    } = renderHook(() => useConfig({ onDone: jest.fn(), basis }))
 
-    expect(workflowEngine.current()).toEqual("Welcome")
-    expect(workflowEngine.next()).toEqual("WhatDoYouLoveMost")
-    expect(workflowEngine.next()).toEqual("WhereWouldYouLikeToDiveIn")
-    basis.current.answer = OPTION_CREATE_AN_ART_WISHLIST
-    expect(workflowEngine.next()).toEqual("SearchArtworks")
-    expect(workflowEngine.next()).toEqual("Done")
+    expect(workflowEngine.current()).toEqual("VIEW_WELCOME")
+    expect(workflowEngine.next()).toEqual("VIEW_QUESTION_ONE")
+    expect(workflowEngine.next()).toEqual("VIEW_QUESTION_TWO")
+    expect(workflowEngine.next()).toEqual("VIEW_QUESTION_THREE")
+    basis.current.questionThree = OPTION_FOLLOW_GALLERIES_I_LOVE
+    expect(workflowEngine.next()).toEqual("VIEW_FOLLOW_GALLERIES")
   })
 })
