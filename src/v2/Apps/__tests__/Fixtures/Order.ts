@@ -88,7 +88,7 @@ const OrderArtworkNodeWithoutShipping = {
   slug: "artworkId",
   title: "Gramercy Park South",
   isPriceRange: false,
-  isEdition: false,
+  editionSets: null,
 }
 
 const OrderArtworkVersionNode = {
@@ -761,7 +761,7 @@ export const UntouchedOfferOrderWithRange = {
           shippingQuoteOptions: null,
           artwork: {
             ...OrderArtworkNode.artwork,
-            isEdition: true,
+            editionSets: [{ internalID: "1" }, { internalID: "2" }],
           },
           ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Range,
