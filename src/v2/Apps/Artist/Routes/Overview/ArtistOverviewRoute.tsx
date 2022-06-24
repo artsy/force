@@ -4,7 +4,7 @@ import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { computeTitle } from "../../Utils/computeTitle"
 import loadable from "@loadable/component"
-import { ArtistRelatedCategoriesFragmentContainer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistRelatedCategories"
+import { ArtistRelatedCategoriesQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistRelatedCategories"
 
 const ArtistIconicCollectionsRailQueryRenderer = loadable(
   () => import("./Components/ArtistIconicCollectionsRail"),
@@ -86,7 +86,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
         <ArtistCurrentShowsRailQueryRenderer slug={artist.slug} />
         <ArtistCurrentArticlesRailQueryRenderer slug={artist.slug} />
         <ArtistRelatedArtistsRailQueryRenderer slug={artist.slug} />
-        <ArtistRelatedCategoriesFragmentContainer artist={artist} />
+        <ArtistRelatedCategoriesQueryRenderer slug={artist.slug} />
       </Join>
     </>
   )
@@ -103,7 +103,6 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
           artworks
         }
         internalID
-        ...ArtistRelatedCategories_artist
       }
     `,
   }

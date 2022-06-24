@@ -11,7 +11,6 @@ export type ArtistOverviewRoute_artist = {
         readonly artworks: number | null;
     } | null;
     readonly internalID: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedCategories_artist">;
     readonly " $refType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$data = ArtistOverviewRoute_artist;
@@ -66,15 +65,10 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistRelatedCategories_artist"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'd8b831130625b277164d8cb792e1f84c';
+(node as any).hash = '8406e33d38f3f4802a073421c8463b10';
 export default node;
