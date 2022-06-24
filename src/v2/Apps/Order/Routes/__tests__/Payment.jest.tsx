@@ -115,6 +115,7 @@ describe("Payment", () => {
         <PaymentFragmentContainer
           router={{ push: pushMock } as any}
           order={props.order}
+          me={props.me}
           // @ts-ignore
           isCommittingMutation={isCommittingMutation}
         />
@@ -373,7 +374,7 @@ describe("Payment", () => {
       })
       let page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(0)
-
+      page.selectPaymentMethod(3)
       const creditCardCollapse = page
         .find(PaymentPickerFragmentContainer)
         .closest(Collapse)
