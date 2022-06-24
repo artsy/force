@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
-  SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchEntity } from "../../types"
 import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
@@ -31,20 +30,30 @@ const mockedFilters: ArtworkFiltersState = {
 }
 
 describe("SavedSearchAlertArtworkGridFilterPills", () => {
-  const renderPills = (props: SharedArtworkFilterContextProps = {}) => {
+  it("renders only 'Create Alert' button", () => {
     render(
-      <ArtworkFilterContextProvider {...props}>
+      <ArtworkFilterContextProvider filters={mockedFilters}>
         <SavedSearchAlertArtworkGridFilterPills
           savedSearchEntity={savedSearchEntity}
         />
       </ArtworkFilterContextProvider>
     )
-  }
 
-  it("renders correctly", () => {
-    renderPills({
-      filters: mockedFilters,
-    })
+    expect(screen.getByText("Create Alert")).toBeInTheDocument()
+    expect(screen.queryByText("Red")).not.toBeInTheDocument()
+    expect(screen.queryByText("Open Edition")).not.toBeInTheDocument()
+  })
+
+  it("renders pills when displayFilterPills props is passed", () => {
+    render(
+      <ArtworkFilterContextProvider filters={mockedFilters}>
+        <SavedSearchAlertArtworkGridFilterPills
+          displayFilterPills
+          savedSearchEntity={savedSearchEntity}
+        />
+      </ArtworkFilterContextProvider>
+    )
+
     expect(screen.getByText("Red")).toBeInTheDocument()
     expect(screen.getByText("Open Edition")).toBeInTheDocument()
     expect(screen.getAllByTitle("Close")).toHaveLength(2)
@@ -52,17 +61,27 @@ describe("SavedSearchAlertArtworkGridFilterPills", () => {
   })
 
   it("renders default pills without CloseIcon", () => {
-    renderPills({
-      filters: mockedFilters,
-    })
+    render(
+      <ArtworkFilterContextProvider filters={mockedFilters}>
+        <SavedSearchAlertArtworkGridFilterPills
+          displayFilterPills
+          savedSearchEntity={savedSearchEntity}
+        />
+      </ArtworkFilterContextProvider>
+    )
 
     expect(screen.getAllByTitle("Close")).toHaveLength(2)
   })
 
   it("updates filters on pill click", () => {
-    renderPills({
-      filters: mockedFilters,
-    })
+    render(
+      <ArtworkFilterContextProvider filters={mockedFilters}>
+        <SavedSearchAlertArtworkGridFilterPills
+          displayFilterPills
+          savedSearchEntity={savedSearchEntity}
+        />
+      </ArtworkFilterContextProvider>
+    )
 
     fireEvent.click(screen.getByText("Red"))
 
@@ -70,9 +89,14 @@ describe("SavedSearchAlertArtworkGridFilterPills", () => {
   })
 
   it("does not update filters on default pill click", () => {
-    renderPills({
-      filters: mockedFilters,
-    })
+    render(
+      <ArtworkFilterContextProvider filters={mockedFilters}>
+        <SavedSearchAlertArtworkGridFilterPills
+          displayFilterPills
+          savedSearchEntity={savedSearchEntity}
+        />
+      </ArtworkFilterContextProvider>
+    )
 
     fireEvent.click(screen.getByText("Banksy"))
 

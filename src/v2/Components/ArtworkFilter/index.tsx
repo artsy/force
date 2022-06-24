@@ -49,7 +49,6 @@ import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Comp
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
-  enableCreateAlert?: boolean
   Filters?: JSX.Element
   offset?: number
   // Input variables passed to FilterArtworkConnection `input` argument
@@ -57,6 +56,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   // Root-level variables passed to Relay query
   relayVariables?: object
   savedSearchEntity?: SavedSearchEntity
+  displayFilterPills?: boolean
   viewer
 }
 
@@ -99,7 +99,6 @@ export const BaseArtworkFilter: React.FC<
   }
 > = ({
   children,
-  enableCreateAlert = false,
   Filters,
   offset,
   relay,
@@ -107,6 +106,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   viewer,
   savedSearchEntity,
+  displayFilterPills,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -275,10 +275,11 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {enableCreateAlert && savedSearchEntity && (
+          {(displayFilterPills || !!savedSearchEntity) && (
             <>
               <SavedSearchAlertArtworkGridFilterPills
                 savedSearchEntity={savedSearchEntity}
+                displayFilterPills={displayFilterPills}
               />
               <Spacer mt={4} />
             </>
@@ -335,10 +336,11 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {enableCreateAlert && savedSearchEntity && (
+            {(displayFilterPills || !!savedSearchEntity) && (
               <>
                 <SavedSearchAlertArtworkGridFilterPills
                   savedSearchEntity={savedSearchEntity}
+                  displayFilterPills={displayFilterPills}
                 />
                 <Spacer mt={4} />
               </>

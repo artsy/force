@@ -21,7 +21,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const savedSearchEntity: SavedSearchEntity = {
+const defaultSavedSearchEntity: SavedSearchEntity = {
   placeholder: "Test Artist",
   defaultArtists: [
     {
@@ -51,14 +51,15 @@ describe("ArtworkFilter", () => {
   let sortOptionsMock
   let filters
   let breakpoint
-  let enableCreateAlert
+  let savedSearchEntity
+  let displayFilterPills
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
         <ArtworkFilter
           {...(props as any)}
-          enableCreateAlert={enableCreateAlert}
+          displayFilterPills={displayFilterPills}
           savedSearchEntity={savedSearchEntity}
           onFilterClick={onFilterClick}
           onChange={onChange}
@@ -83,15 +84,17 @@ describe("ArtworkFilter", () => {
     filters = {
       colors: ["yellow", "pink"],
     }
-    enableCreateAlert = false
+    savedSearchEntity = undefined
+    displayFilterPills = false
     sortOptionsMock = [
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
   })
 
-  it("renders filters pills when enableCreateAlert is true, savedSearchEntity are passed and there are selected filters", async () => {
-    enableCreateAlert = true
+  it("renders filters pills when savedSearchEntity are passed and there are selected filters", async () => {
+    savedSearchEntity = defaultSavedSearchEntity
+    displayFilterPills = true
     renderWithRelay()
 
     expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
@@ -99,7 +102,8 @@ describe("ArtworkFilter", () => {
   })
 
   it("removes pill after click on it", async () => {
-    enableCreateAlert = true
+    savedSearchEntity = defaultSavedSearchEntity
+    displayFilterPills = true
     renderWithRelay()
 
     fireEvent.click(screen.getAllByText("Yellow")[1])

@@ -17,16 +17,17 @@ import { AuthModalOptions } from "v2/Utils/openAuthModal"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
-interface SavedSearchAlertArtworkGridFilterPillsProps {
-  savedSearchEntity: SavedSearchEntity
+export interface SavedSearchAlertArtworkGridFilterPillsProps {
+  savedSearchEntity?: SavedSearchEntity
+  displayFilterPills?: boolean
 }
 
 export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertArtworkGridFilterPillsProps> = props => {
-  const { savedSearchEntity } = props
+  const { savedSearchEntity, displayFilterPills } = props
   const { filters, aggregations, setFilter } = useArtworkFilterContext()
   const criteria = getSearchCriteriaFromFilters(
-    savedSearchEntity,
-    filters ?? {}
+    filters ?? {},
+    savedSearchEntity
   )
   const metric = filters?.metric ?? DEFAULT_METRIC
   const pills = extractPills({
@@ -55,13 +56,13 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
   const getAuthModalOptions = (): AuthModalOptions => {
     return {
       entity: {
-        name: savedSearchEntity.owner.name,
-        slug: savedSearchEntity.owner.slug,
+        name: savedSearchEntity!.owner.name,
+        slug: savedSearchEntity!.owner.slug,
       },
       afterSignUpAction: {
         action: "createAlert",
         kind: "artist",
-        objectId: savedSearchEntity.owner.slug,
+        objectId: savedSearchEntity!.owner.slug,
       },
       contextModule: ContextModule.artworkGrid,
       intent: Intent.createAlert,
@@ -70,18 +71,26 @@ export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertAr
   }
 
   return (
-    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-      <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
-      <SavedSearchCreateAlertButton
-        entity={savedSearchEntity}
-        criteria={criteria}
-        metric={metric}
-        aggregations={aggregations}
-        getAuthModalOptions={getAuthModalOptions}
-        buttonProps={{
-          ml: PILL_HORIZONTAL_MARGIN_SIZE,
-        }}
-      />
+    <Flex
+      flexWrap="wrap"
+      data-testid="artworkGridFilterPills"
+      mx={-PILL_HORIZONTAL_MARGIN_SIZE}
+    >
+      {displayFilterPills && (
+        <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
+      )}
+      {!!savedSearchEntity && (
+        <SavedSearchCreateAlertButton
+          entity={savedSearchEntity}
+          criteria={criteria}
+          metric={metric}
+          aggregations={aggregations}
+          getAuthModalOptions={getAuthModalOptions}
+          buttonProps={{
+            ml: PILL_HORIZONTAL_MARGIN_SIZE,
+          }}
+        />
+      )}
     </Flex>
   )
 }

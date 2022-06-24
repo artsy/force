@@ -45,8 +45,8 @@ const mockedFilters: ArtworkFilters = {
 describe("getSearchCriteriaFromFilters", () => {
   it("returns correct criteria", () => {
     const result = getSearchCriteriaFromFilters(
-      mockedSavedSearchEntity,
-      mockedFilters
+      mockedFilters,
+      mockedSavedSearchEntity
     )
 
     expect(result).toEqual(
@@ -77,7 +77,7 @@ describe("getSearchCriteriaFromFilters", () => {
         name: "Owner Name",
       },
     }
-    const result = getSearchCriteriaFromFilters(entity, mockedFilters)
+    const result = getSearchCriteriaFromFilters(mockedFilters, entity)
 
     expect(result).toEqual(
       expect.objectContaining({

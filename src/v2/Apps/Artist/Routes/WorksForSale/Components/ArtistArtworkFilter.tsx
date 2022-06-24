@@ -97,7 +97,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
-        enableCreateAlert
+        displayFilterPills
         savedSearchEntity={savedSearchEntity}
       />
     </ArtworkFilterContextProvider>

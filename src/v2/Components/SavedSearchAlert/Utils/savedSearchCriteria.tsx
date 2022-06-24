@@ -34,11 +34,12 @@ export const getAllowedSearchCriteria = (
 }
 
 export const getSearchCriteriaFromFilters = (
-  entity: SavedSearchEntity,
-  filters: ArtworkFiltersState
+  filters: ArtworkFiltersState,
+  entity?: SavedSearchEntity
 ): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
-  const artistIDs = entity.defaultArtists.map(artist => artist.id)
+  const defaultArtists = entity?.defaultArtists ?? []
+  const artistIDs = defaultArtists.map(artist => artist.id)
 
   return {
     artistIDs,
