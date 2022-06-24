@@ -58,12 +58,13 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
 
       {artist.insights.map(insight => {
         return (
-          <ArtistBadge
-            // TODO: Mark kind as non-nullable
-            key={insight.kind!}
-            label={insight.label}
-            description={insight.description!}
-          />
+          <Column span={6} key={insight.kind!}>
+            <ArtistBadge
+              // TODO: Mark kind as non-nullable
+              label={insight.label}
+              description={insight.description!}
+            />
+          </Column>
         )
       })}
     </GridColumns>
