@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Box } from "@artsy/palette"
+import { Box, ResponsiveBox } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -17,6 +17,8 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   contextModule?: AuthContextModule
   lazyLoad?: boolean
   onClick?: () => void
+  hideSaleInfo?: boolean
+  showSaveButton?: boolean
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -24,6 +26,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   lazyLoad = true,
   contextModule,
   onClick,
+  hideSaleInfo,
+  showSaveButton = true,
   ...rest
 }) => {
   const { user } = useSystemContext()
@@ -75,14 +79,24 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           to={artwork.href}
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
+          position={imageURL ? "absolute" : "relative"}
         >
-          <MagnifyImage
-            alt={artwork.image_title ?? ""}
-            src={src}
-            srcSet={srcSet}
-            lazyLoad={lazyLoad}
-            preventRightClick={!isTeam}
-          />
+          {imageURL ? (
+            <MagnifyImage
+              alt={artwork.image_title ?? ""}
+              src={src}
+              srcSet={srcSet}
+              lazyLoad={lazyLoad}
+              preventRightClick={!isTeam}
+            />
+          ) : (
+            <ResponsiveBox
+              aspectWidth={4}
+              aspectHeight={3}
+              width={width}
+              maxWidth="100%"
+            />
+          )}
         </Link>
 
         <Badge artwork={artwork} />
@@ -92,7 +106,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         artwork={artwork}
         isHovered={isHovered}
         contextModule={contextModule ?? ContextModule.artworkGrid}
-        showSaveButton
+        showSaveButton={showSaveButton}
+        hideSaleInfo={hideSaleInfo}
       />
     </div>
   )
@@ -104,7 +119,6 @@ const Link = styled(RouterLink)`
   display: block;
   width: 100%;
   height: 100%;
-  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;

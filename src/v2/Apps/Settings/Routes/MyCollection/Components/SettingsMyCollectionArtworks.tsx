@@ -16,7 +16,7 @@ import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
-import { MyCollectionArtworkGridItemFragmentContainer } from "./MyCollectionArtworkGridItem"
+import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 
 interface SettingsMyCollectionArtworksProps {
   me: SettingsMyCollectionArtworks_me
@@ -78,8 +78,10 @@ const SettingsMyCollectionArtworks: FC<SettingsMyCollectionArtworksProps> = ({
             {artworks.map(artwork => {
               return (
                 <Fragment key={artwork.internalID}>
-                  <MyCollectionArtworkGridItemFragmentContainer
+                  <ArtworkGridItemFragmentContainer
                     artwork={artwork}
+                    hideSaleInfo
+                    showSaveButton={false}
                   />
 
                   <Spacer mt={4} />
@@ -135,7 +137,7 @@ export const SettingsMyCollectionArtworksRefetchContainer = createRefetchContain
           edges {
             node {
               internalID
-              ...MyCollectionArtworkGridItem_artwork
+              ...GridItem_artwork
             }
           }
         }

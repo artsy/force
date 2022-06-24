@@ -18,7 +18,7 @@ export type SettingsMyCollectionArtworks_me = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkGridItem_artwork">;
+                readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -151,7 +151,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "MyCollectionArtworkGridItem_artwork"
+                  "name": "GridItem_artwork"
                 }
               ],
               "storageKey": null
@@ -173,5 +173,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '02b15254117221a4b867e83a284934d7';
+(node as any).hash = 'e769bfda1198bc13fba19d08bfb6f689';
 export default node;
