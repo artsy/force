@@ -13,12 +13,12 @@ import { Media } from "v2/Utils/Responsive"
 import { DownloadAppBadges } from "../DownloadAppBadges/DownloadAppBadges"
 
 const DESKTOP_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/artsy_app-download-footer_2x_max.jpg",
+  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
   { width: 1220, quality: 50 }
 )
 
 const MOBILE_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/artsy_app-download-footer_2x_max.jpg",
+  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
   { width: 725, quality: 50 }
 )
 

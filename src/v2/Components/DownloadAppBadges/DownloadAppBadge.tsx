@@ -13,10 +13,10 @@ import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 // - Can be lazyloaded
 
 const DOWNLOAD_IOS_APP_BADGE =
-  "https://files.artsy.net/images/download-ios-app.svg"
+  "https://files.artsy.net/images/App Download_iOS-1656079682156.png"
 
 const DOWNLOAD_ANDROID_APP_BADGE =
-  "https://files.artsy.net/images/download-android-app.svg"
+  "https://files.artsy.net/images/App Download_Google Play-1656079682114.png"
 
 interface DownloadAppBadgeProps extends LinkProps {
   contextModule: ContextModule
