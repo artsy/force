@@ -56,9 +56,19 @@ fragment SettingsPurchasesRow_order on CommerceOrder {
   requestedFulfillment {
     __typename
   }
-  creditCard {
-    lastDigits
-    id
+  paymentMethodDetails {
+    __typename
+    ... on CreditCard {
+      lastDigits
+      id
+    }
+    ... on BankAccount {
+      last4
+      id
+    }
+    ... on WireTransfer {
+      isManualPayment
+    }
   }
   buyerTotal(precision: 2)
   createdAt
@@ -492,19 +502,56 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "CreditCard",
+                        "concreteType": null,
                         "kind": "LinkedField",
-                        "name": "creditCard",
+                        "name": "paymentMethodDetails",
                         "plural": false,
                         "selections": [
+                          (v4/*: any*/),
                           {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "lastDigits",
-                            "storageKey": null
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "lastDigits",
+                                "storageKey": null
+                              },
+                              (v5/*: any*/)
+                            ],
+                            "type": "CreditCard",
+                            "abstractKey": null
                           },
-                          (v5/*: any*/)
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "last4",
+                                "storageKey": null
+                              },
+                              (v5/*: any*/)
+                            ],
+                            "type": "BankAccount",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "isManualPayment",
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "WireTransfer",
+                            "abstractKey": null
+                          }
                         ],
                         "storageKey": null
                       },
@@ -733,7 +780,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a3190b4852723f3abef6524f5527e944",
+    "cacheID": "f4b34aa309f6193f99f38e41ff9ad572",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -768,14 +815,6 @@ return {
         "me.orders.edges.node.buyerTotal": (v9/*: any*/),
         "me.orders.edges.node.code": (v10/*: any*/),
         "me.orders.edges.node.createdAt": (v10/*: any*/),
-        "me.orders.edges.node.creditCard": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CreditCard"
-        },
-        "me.orders.edges.node.creditCard.id": (v8/*: any*/),
-        "me.orders.edges.node.creditCard.lastDigits": (v10/*: any*/),
         "me.orders.edges.node.currencyCode": (v10/*: any*/),
         "me.orders.edges.node.displayState": {
           "enumValues": [
@@ -879,6 +918,17 @@ return {
         "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node.id": (v8/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.fulfillments.edges.node.trackingId": (v9/*: any*/),
         "me.orders.edges.node.lineItems.edges.node.id": (v8/*: any*/),
+        "me.orders.edges.node.paymentMethodDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "PaymentMethodUnion"
+        },
+        "me.orders.edges.node.paymentMethodDetails.__typename": (v10/*: any*/),
+        "me.orders.edges.node.paymentMethodDetails.id": (v8/*: any*/),
+        "me.orders.edges.node.paymentMethodDetails.isManualPayment": (v13/*: any*/),
+        "me.orders.edges.node.paymentMethodDetails.last4": (v10/*: any*/),
+        "me.orders.edges.node.paymentMethodDetails.lastDigits": (v10/*: any*/),
         "me.orders.edges.node.requestedFulfillment": {
           "enumValues": null,
           "nullable": true,
@@ -945,7 +995,7 @@ return {
     },
     "name": "SettingsPurchases_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsPurchases_Test_Query {\n  me {\n    ...SettingsPurchases_me\n    id\n  }\n}\n\nfragment CommercePagination_pageCursors on CommercePageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SettingsPurchasesRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  code\n  displayState\n  state\n  requestedFulfillment {\n    __typename\n  }\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      lastDigits\n      id\n    }\n    ... on BankAccount {\n      last4\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n  buyerTotal(precision: 2)\n  createdAt\n  currencyCode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          href\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                cropped(width: 45, height: 45) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          title\n          artistNames\n          artists {\n            href\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPurchases_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...CommercePagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        code\n        ...SettingsPurchasesRow_order\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

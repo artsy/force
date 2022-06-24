@@ -14,9 +14,20 @@ export type SettingsPurchasesRow_order = {
     readonly requestedFulfillment: {
         readonly __typename: string;
     } | null;
-    readonly creditCard: {
+    readonly paymentMethodDetails: ({
+        readonly __typename: "CreditCard";
         readonly lastDigits: string;
-    } | null;
+    } | {
+        readonly __typename: "BankAccount";
+        readonly last4: string;
+    } | {
+        readonly __typename: "WireTransfer";
+        readonly isManualPayment: boolean;
+    } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    }) | null;
     readonly buyerTotal: string | null;
     readonly createdAt: string;
     readonly currencyCode: string;
@@ -76,10 +87,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": [
@@ -159,30 +177,60 @@ return {
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "concreteType": "CreditCard",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "creditCard",
+      "name": "paymentMethodDetails",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lastDigits",
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "lastDigits",
+              "storageKey": null
+            }
+          ],
+          "type": "CreditCard",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "last4",
+              "storageKey": null
+            }
+          ],
+          "type": "BankAccount",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "isManualPayment",
+              "storageKey": null
+            }
+          ],
+          "type": "WireTransfer",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -246,7 +294,7 @@ return {
                   "name": "artwork",
                   "plural": false,
                   "selections": [
-                    (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -254,7 +302,7 @@ return {
                       "kind": "LinkedField",
                       "name": "image",
                       "plural": false,
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "storageKey": null
                     },
                     {
@@ -265,7 +313,7 @@ return {
                       "name": "partner",
                       "plural": false,
                       "selections": [
-                        (v0/*: any*/),
+                        (v1/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -295,7 +343,7 @@ return {
                               "kind": "LinkedField",
                               "name": "icon",
                               "plural": false,
-                              "selections": (v1/*: any*/),
+                              "selections": (v2/*: any*/),
                               "storageKey": null
                             }
                           ],
@@ -333,7 +381,7 @@ return {
                       "name": "artists",
                       "plural": true,
                       "selections": [
-                        (v0/*: any*/)
+                        (v1/*: any*/)
                       ],
                       "storageKey": null
                     }
@@ -400,5 +448,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'fb1cf0d90eacc276e85491cf86906f26';
+(node as any).hash = '358468f62a7ebc385fbba3df2a4390fb';
 export default node;
