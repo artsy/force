@@ -6,14 +6,21 @@ import {
   OPTION_NO_IM_JUST_STARTING_OUT,
   OPTION_YES_I_LOVE_COLLECTING_ART,
 } from "../config"
+import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingQuestionOne: FC = () => {
   const { next, dispatch, state } = useOnboardingContext()
+  const { register, loading, handleNext } = useOnboardingFadeTransition({
+    next,
+  })
 
   return (
     <OnboardingSplitLayout
-      left={<div>TODO: Image</div>}
+      left={
+        // TODO: Replace with image
+        <Box ref={register(0)} width="100%" height="100%" bg="black60" />
+      }
       right={
         <Flex
           flexDirection="column"
@@ -24,11 +31,13 @@ export const OnboardingQuestionOne: FC = () => {
           <OnboardingProgress />
 
           <Box width="100%">
-            <Text variant="lg-display">Have you bought art before?</Text>
+            <Text variant="lg-display" ref={register(1)}>
+              Have you bought art before?
+            </Text>
 
             <Spacer mt={4} />
 
-            <Box>
+            <Box ref={register(2)}>
               <Join separator={<Spacer mt={2} />}>
                 {QUESTION_1.map(option => {
                   return (
@@ -48,7 +57,12 @@ export const OnboardingQuestionOne: FC = () => {
             </Box>
           </Box>
 
-          <Button disabled={!state.questionOne} onClick={next} width="100%">
+          <Button
+            disabled={!state.questionOne || loading}
+            loading={loading}
+            onClick={handleNext}
+            width="100%"
+          >
             Next
           </Button>
         </Flex>
