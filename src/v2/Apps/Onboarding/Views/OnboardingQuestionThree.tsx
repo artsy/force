@@ -12,10 +12,14 @@ import {
   OPTION_KEEP_TRACK_OF_ART,
   OPTION_TOP_AUCTION_LOTS,
 } from "../config"
+import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingQuestionThree: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()
+  const { register, loading, handleNext } = useOnboardingFadeTransition({
+    next,
+  })
 
   const options = useMemo(() => {
     switch (true) {
@@ -54,7 +58,10 @@ export const OnboardingQuestionThree: FC = () => {
 
   return (
     <OnboardingSplitLayout
-      left={<div>TODO: Image</div>}
+      left={
+        // TODO: Replace with image
+        <Box ref={register(0)} width="100%" height="100%" bg="black60" />
+      }
       right={
         <Flex
           flexDirection="column"
@@ -65,16 +72,18 @@ export const OnboardingQuestionThree: FC = () => {
           <OnboardingProgress />
 
           <Box width="100%">
-            <Text variant="lg-display">
+            <Text variant="lg-display" ref={register(1)}>
               Where would you like to dive in first?
             </Text>
 
             <Spacer mt={1} />
 
-            <Text variant="sm-display">Choose one to start exploring.</Text>
+            <Text variant="sm-display" ref={register(2)}>
+              Choose one to start exploring.
+            </Text>
           </Box>
 
-          <Box>
+          <Box ref={register(3)}>
             <Join separator={<Spacer mt={2} />}>
               {options.map(option => {
                 return (
@@ -93,8 +102,9 @@ export const OnboardingQuestionThree: FC = () => {
           </Box>
 
           <Button
-            disabled={state.questionThree === null}
-            onClick={next}
+            disabled={state.questionThree === null || loading}
+            loading={loading}
+            onClick={handleNext}
             width="100%"
           >
             Next
