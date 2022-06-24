@@ -39,7 +39,7 @@ export interface SavedSearchEntityOwner {
 
 export interface SavedSearchEntityCriteria {
   displayValue: string
-  value: string
+  value: string | boolean
 }
 
 export type SavedSearchDefaultCriteria = Record<

@@ -212,7 +212,7 @@ export const extractPillsFromDefaultCriteria = (
     if (Array.isArray(criteria)) {
       const defaultPills = criteria.map(v => ({
         isDefault: true,
-        value: v.value,
+        value: v.value.toString(),
         displayValue: v.displayValue,
         field,
       }))
@@ -224,7 +224,7 @@ export const extractPillsFromDefaultCriteria = (
       ...acc,
       {
         isDefault: true,
-        value: criteria.value,
+        value: criteria.value.toString(),
         displayValue: criteria.displayValue,
         field,
       },

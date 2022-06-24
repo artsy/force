@@ -37,18 +37,18 @@ export const getAllowedSearchCriteria = (
   return allowedCriteria
 }
 
-export const getDefaultCriteriaFromEntity = (
+export const parseDefaultCriteria = (
   defaultCriteria: SavedSearchDefaultCriteria
 ) => {
   const criteria = {}
 
   Object.entries(defaultCriteria).forEach(entry => {
-    const [field, value] = entry
+    const [field, criteriaValue] = entry
 
-    if (Array.isArray(value)) {
-      criteria[field] = value.map(v => v.value)
+    if (Array.isArray(criteriaValue)) {
+      criteria[field] = criteriaValue.map(v => v.value)
     } else {
-      criteria[field] = value
+      criteria[field] = criteriaValue.value
     }
   })
 
@@ -60,7 +60,7 @@ export const getSearchCriteriaFromFilters = (
   filters: ArtworkFiltersState
 ): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
-  const defaultCriteria = getDefaultCriteriaFromEntity(entity.defaultCriteria)
+  const defaultCriteria = parseDefaultCriteria(entity.defaultCriteria)
 
   return {
     ...allowedFilters,
