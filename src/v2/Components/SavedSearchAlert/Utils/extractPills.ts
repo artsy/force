@@ -92,7 +92,7 @@ export const extractPillsFromCriteria = ({
   metric,
 }: {
   criteria: SearchCriteriaAttributes
-  aggregations: Aggregations
+  aggregations?: Aggregations
   metric: Metric
 }) => {
   const pills: FilterPill[] = Object.entries(criteria).map(filter => {
