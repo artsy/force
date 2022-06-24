@@ -21,26 +21,6 @@ interface Props {
 }
 
 export const BankAccountPicker: FC<Props> = props => {
-  const getInitialBankAccountSelection = () => {
-    if (props.order.bankAccountId) {
-      return {
-        type: "existing",
-        id: props.order.bankAccountId,
-      }
-    } else {
-      return props.me.bankAccounts?.edges?.length
-        ? {
-            type: "existing",
-            id: props.me.bankAccounts.edges[0]?.node?.internalID!,
-          }
-        : { type: "new" }
-    }
-  }
-
-  const [bankAccountSelection, setBankAccountSelection] = useState(
-    getInitialBankAccountSelection()
-  )
-
   const {
     me: { bankAccounts },
     order,
@@ -51,6 +31,29 @@ export const BankAccountPicker: FC<Props> = props => {
   const bankAccountsArray = bankAccounts?.edges?.map(e => e?.node)!
 
   const userHasExistingBankAccounts = bankAccountsArray.length > 0
+
+  const getInitialBankAccountSelection = () => {
+    // user has added bank account to the order
+    if (props.order.bankAccountId) {
+      return {
+        type: "existing",
+        id: props.order.bankAccountId,
+      }
+    } else {
+      // user has existing bank accounts on account but not on order
+      return userHasExistingBankAccounts
+        ? {
+            type: "existing",
+            id: bankAccountsArray[0]?.internalID!,
+          }
+        : // user has no bank accounts on account or order
+          { type: "new" }
+    }
+  }
+
+  const [bankAccountSelection, setBankAccountSelection] = useState(
+    getInitialBankAccountSelection()
+  )
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -118,14 +121,10 @@ export const BankAccountPicker: FC<Props> = props => {
         </RadioGroup>
       )}
       <Spacer mb={4} />
-      <Collapse
-        open={
-          bankAccountSelection.type === "new" || !userHasExistingBankAccounts
-        }
-      >
+      <Collapse open={bankAccountSelection.type === "new"}>
         <BankDebitProvider order={order} />
       </Collapse>
-      {bankAccountSelection.type !== "new" && userHasExistingBankAccounts && (
+      {bankAccountSelection.type === "existing" && (
         <>
           <Button
             onClick={handleContinue}

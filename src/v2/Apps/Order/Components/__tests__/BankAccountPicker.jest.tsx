@@ -116,7 +116,6 @@ describe("BankAccountFragmentContainer", () => {
           }),
         })
         const page = new BankAccountPickerTestPage(wrapper)
-
         expect(page.radios).toHaveLength(3)
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
           `"InstitutionBank transfer •••• 1234"`
@@ -167,7 +166,6 @@ describe("BankAccountFragmentContainer", () => {
           }),
         })
         const page = new BankAccountPickerTestPage(wrapper)
-
         expect(page.radios.at(1).props().selected).toBeTruthy()
         expect(page.radios.at(2).props().selected).toBeFalsy()
         expect(page.radios.at(0).props().selected).toBeFalsy()
