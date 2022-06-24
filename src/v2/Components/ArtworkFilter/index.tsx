@@ -48,7 +48,6 @@ import { ArtworkGridFilterPills } from "../SavedSearchAlert/Components/ArtworkGr
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
-  enableCreateAlert?: boolean
   Filters?: JSX.Element
   offset?: number
   // Input variables passed to FilterArtworkConnection `input` argument
@@ -99,7 +98,6 @@ export const BaseArtworkFilter: React.FC<
   }
 > = ({
   children,
-  enableCreateAlert = false,
   Filters,
   offset,
   relay,

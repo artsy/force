@@ -14,6 +14,8 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
 import { omit } from "lodash"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { DefaultCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/DefaultCreateAlertButton"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -22,22 +24,6 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const savedSearchEntity: SavedSearchEntity = {
-  placeholder: "Test Artist",
-  defaultArtists: [
-    {
-      id: "test-artist-id",
-      name: "Test Artist",
-      slug: "test-artist-slug",
-    },
-  ],
-  owner: {
-    type: OwnerType.artist,
-    id: "owner-id",
-    slug: "owner-slug",
-    name: "Owner Name",
-  },
-}
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
@@ -52,15 +38,16 @@ describe("ArtworkFilter", () => {
   let sortOptionsMock
   let filters
   let breakpoint
-  let enableCreateAlert
+  let renderFilterPills
+  let renderCreateAlertButton
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
         <ArtworkFilter
           {...(props as any)}
-          enableCreateAlert={enableCreateAlert}
-          savedSearchEntity={savedSearchEntity}
+          renderFilterPills={renderFilterPills}
+          renderCreateAlertButton={renderCreateAlertButton}
           onFilterClick={onFilterClick}
           onChange={onChange}
           sortOptions={sortOptionsMock}
@@ -84,15 +71,16 @@ describe("ArtworkFilter", () => {
     filters = {
       colors: ["yellow", "pink"],
     }
-    enableCreateAlert = false
+    renderFilterPills = undefined
+    renderCreateAlertButton = undefined
     sortOptionsMock = [
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
   })
 
-  it("renders filters pills when enableCreateAlert is true, savedSearchEntity are passed and there are selected filters", async () => {
-    enableCreateAlert = true
+  it("renders filters pills when renderFilterPills is passed and there are selected filters", async () => {
+    renderFilterPills = () => <ActiveFilterPills />
     renderWithRelay()
 
     expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
@@ -100,13 +88,23 @@ describe("ArtworkFilter", () => {
   })
 
   it("removes pill after click on it", async () => {
-    enableCreateAlert = true
+    renderFilterPills = () => <ActiveFilterPills />
     renderWithRelay()
 
     fireEvent.click(screen.getAllByText("Yellow")[1])
 
     expect(screen.getAllByText("Yellow")).not.toHaveLength(2)
     expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
+  })
+
+  it("renders 'Create Alert' button when renderCreateAlertButton is passed", async () => {
+    renderFilterPills = () => <ActiveFilterPills />
+    renderCreateAlertButton = () => (
+      <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
+    )
+    renderWithRelay()
+
+    expect(screen.getByText("Create Alert")).toBeInTheDocument()
   })
 
   describe("without any filtered artworks", () => {
@@ -356,3 +354,14 @@ describe("ArtworkFilter", () => {
     })
   })
 })
+
+const savedSearchEntity: SavedSearchEntity = {
+  placeholder: "Test Artist",
+  defaultCriteria: {},
+  owner: {
+    type: OwnerType.artist,
+    id: "owner-id",
+    slug: "owner-slug",
+    name: "Owner Name",
+  },
+}

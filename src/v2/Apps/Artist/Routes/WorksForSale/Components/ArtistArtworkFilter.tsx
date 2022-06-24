@@ -116,7 +116,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
-        enableCreateAlert
         renderFilterPills={() => (
           <ActiveFilterPills defaultPills={defaultPills} />
         )}

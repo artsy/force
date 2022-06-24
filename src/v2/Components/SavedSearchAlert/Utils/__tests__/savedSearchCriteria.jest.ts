@@ -8,18 +8,18 @@ import {
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
   placeholder: "alertName",
-  defaultArtists: [
-    {
-      id: "artistOneId",
-      name: "artistOneName",
-      slug: "artistOneSlug",
-    },
-    {
-      id: "artistTwoId",
-      name: "artistTwoName",
-      slug: "artistTwoSlug",
-    },
-  ],
+  defaultCriteria: {
+    artistIDs: [
+      {
+        displayValue: "artistOneName",
+        value: "artistOneId",
+      },
+      {
+        displayValue: "artistTwoName",
+        value: "artistTwoId",
+      },
+    ],
+  },
   owner: {
     type: OwnerType.artist,
     id: "owner-id",
@@ -60,16 +60,17 @@ describe("getSearchCriteriaFromFilters", () => {
     )
   })
 
-  it("returns correct criteria when a single artist is passed to entity", () => {
+  it("returns correct criteria when a single artist is passed to defaultCriteria", () => {
     const entity: SavedSearchEntity = {
       placeholder: "",
-      defaultArtists: [
-        {
-          id: "artistOneId",
-          name: "artistOneName",
-          slug: "artistOneSlug",
-        },
-      ],
+      defaultCriteria: {
+        artistIDs: [
+          {
+            value: "artistOneId",
+            displayValue: "artistOneName",
+          },
+        ],
+      },
       owner: {
         type: OwnerType.artist,
         id: "owner-id",
