@@ -90,6 +90,8 @@ describe("BankAccountFragmentContainer", () => {
 
       expect(page.radios).toHaveLength(0)
     })
+    it.todo("does not render radio selection")
+    it.todo("renders bank element form")
 
     describe("user has existing bank accounts", () => {
       const bankAccounts: Array<
@@ -128,7 +130,7 @@ describe("BankAccountFragmentContainer", () => {
         )
       })
 
-      it("shows the 'use new card' section when you select that option", async () => {
+      it("shows the bank element when user selects 'add another bank account'", async () => {
         const wrapper = getWrapper({
           CommerceOrder: () => BuyOrderPickup,
           Me: () => ({
@@ -142,7 +144,7 @@ describe("BankAccountFragmentContainer", () => {
         expect(page.find(Collapse).at(0).props().open).toBeTruthy()
       })
 
-      it("hides the 'use new card' section if you select the card again", async () => {
+      it("hides the bank element section if user selects a saved bank account", async () => {
         const wrapper = getWrapper({
           CommerceOrder: () => BuyOrderPickup,
           Me: () => ({
@@ -170,6 +172,8 @@ describe("BankAccountFragmentContainer", () => {
         expect(page.radios.at(2).props().selected).toBeFalsy()
         expect(page.radios.at(0).props().selected).toBeFalsy()
       })
+      it.todo("the first bank account is selected by default")
+      it.todo("calls setPayment mutation when user clicks 'save and continue'")
     })
   })
 })
