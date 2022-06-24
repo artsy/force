@@ -27,7 +27,7 @@ export interface SavedSearchEntityArtist {
   slug: string
 }
 
-interface SavedSearchEntityOwner {
+export interface SavedSearchEntityOwner {
   type: PageOwnerType
   slug: string
   id: string

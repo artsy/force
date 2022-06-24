@@ -16,14 +16,16 @@ interface ActiveFilterPillsProps {
 }
 
 export const ActiveFilterPills: React.FC<ActiveFilterPillsProps> = props => {
+  const { defaultPills = [] } = props
   const { filters, aggregations, setFilter } = useArtworkFilterContext()
   const criteria = getAllowedSearchCriteria(filters ?? {})
   const metric = filters?.metric ?? DEFAULT_METRIC
-  const pills = extractPillsFromCriteria({
+  const filterPills = extractPillsFromCriteria({
     criteria,
     aggregations,
     metric,
   })
+  const pills = [...defaultPills, ...filterPills]
 
   const removePill = (pill: FilterPill) => {
     if (pill.isDefault) {

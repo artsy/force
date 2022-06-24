@@ -12,7 +12,10 @@ import { Match } from "found"
 import { useEffect } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
-import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
+import {
+  FilterPill,
+  SavedSearchEntity,
+} from "v2/Components/SavedSearchAlert/types"
 import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
@@ -21,6 +24,8 @@ import {
   useTrackFeatureVariant,
 } from "v2/System/useFeatureFlag"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { DefaultCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/DefaultCreateAlertButton"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -51,19 +56,24 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     return null
   }
 
-  const artistEntity = {
-    id: artist.internalID,
-    name: artist.name ?? "",
-    slug: artist.slug,
-  }
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: artistEntity.name,
-    defaultArtists: [artistEntity],
+    placeholder: artist.name ?? "",
+    defaultArtists: [],
     owner: {
       type: OwnerType.artist,
-      ...artistEntity,
+      id: artist.internalID,
+      name: artist.name ?? "",
+      slug: artist.slug,
     },
   }
+  const defaultPills: FilterPill[] = [
+    {
+      isDefault: true,
+      value: artist.internalID,
+      displayValue: artist.name ?? "",
+      field: "artistIDs",
+    },
+  ]
 
   const metric = getSupportedMetric(me?.lengthUnitPreference)
   const filters: ArtworkFiltersState = {
@@ -100,7 +110,15 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
           aggregations: ["TOTAL"],
         }}
         enableCreateAlert
-        savedSearchEntity={savedSearchEntity}
+        renderFilterPills={() => (
+          <ActiveFilterPills defaultPills={defaultPills} />
+        )}
+        renderCreateAlertButton={() => (
+          <DefaultCreateAlertButton
+            savedSearchEntity={savedSearchEntity}
+            extraCriteria={{ artistIDs: [artist.internalID] }}
+          />
+        )}
       />
     </ArtworkFilterContextProvider>
   )
