@@ -25,17 +25,25 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
   }
 
   return (
-    <Flex flexDirection="row" flexWrap="wrap">
+    <Flex flexDirection="row" flexWrap="wrap" mb={-1}>
       {blueChipRepresentation.length > 0 && (
-        <ArtistPill label="Blue Chip Representation" />
+        <Pill variant="badge" disabled mr={1} mb={1}>
+          Blue Chip Representation
+        </Pill>
       )}
 
       {highAuctionResult?.priceRealized?.display && (
-        <ArtistPill label="High Auction Record" />
+        <Pill variant="badge" disabled mr={1} mb={1}>
+          High Auction Record
+        </Pill>
       )}
 
       {artist.insightsList.map(insight => {
-        return <ArtistPill key={insight.kind!} label={insight.label} />
+        return (
+          <Pill variant="badge" disabled mr={1} mb={1} key={insight.kind!}>
+            {insight.label}
+          </Pill>
+        )
       })}
     </Flex>
   )
@@ -81,15 +89,3 @@ export const ArtistInsightPillsFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-interface ArtistPillProps {
-  label: string
-}
-
-export const ArtistPill: FC<ArtistPillProps> = ({ label }) => {
-  return (
-    <Pill variant="badge" disabled mr={1}>
-      {label}
-    </Pill>
-  )
-}
