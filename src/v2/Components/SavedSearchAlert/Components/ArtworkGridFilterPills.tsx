@@ -17,11 +17,11 @@ import { AuthModalOptions } from "v2/Utils/openAuthModal"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
-interface SavedSearchAlertArtworkGridFilterPillsProps {
+interface ArtworkGridFilterPillsProps {
   savedSearchEntity: SavedSearchEntity
 }
 
-export const SavedSearchAlertArtworkGridFilterPills: React.FC<SavedSearchAlertArtworkGridFilterPillsProps> = props => {
+export const ArtworkGridFilterPills: React.FC<ArtworkGridFilterPillsProps> = props => {
   const { savedSearchEntity } = props
   const { filters, aggregations, setFilter } = useArtworkFilterContext()
   const criteria = getSearchCriteriaFromFilters(

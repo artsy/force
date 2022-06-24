@@ -6,7 +6,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchEntity } from "../../types"
-import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
+import { ArtworkGridFilterPills } from "../ArtworkGridFilterPills"
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "Banksy",
@@ -30,13 +30,11 @@ const mockedFilters: ArtworkFiltersState = {
   colors: ["red"],
 }
 
-describe("SavedSearchAlertArtworkGridFilterPills", () => {
+describe("ArtworkGridFilterPills", () => {
   const renderPills = (props: SharedArtworkFilterContextProps = {}) => {
     render(
       <ArtworkFilterContextProvider {...props}>
-        <SavedSearchAlertArtworkGridFilterPills
-          savedSearchEntity={savedSearchEntity}
-        />
+        <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
       </ArtworkFilterContextProvider>
     )
   }

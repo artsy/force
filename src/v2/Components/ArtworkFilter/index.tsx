@@ -45,7 +45,7 @@ import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { SavedSearchEntity } from "../SavedSearchAlert/types"
-import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Components/SavedSearchAlertArtworkGridFilterPills"
+import { ArtworkGridFilterPills } from "../SavedSearchAlert/Components/ArtworkGridFilterPills"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
@@ -277,9 +277,7 @@ export const BaseArtworkFilter: React.FC<
 
           {enableCreateAlert && savedSearchEntity && (
             <>
-              <SavedSearchAlertArtworkGridFilterPills
-                savedSearchEntity={savedSearchEntity}
-              />
+              <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
               <Spacer mt={4} />
             </>
           )}
@@ -337,9 +335,7 @@ export const BaseArtworkFilter: React.FC<
           >
             {enableCreateAlert && savedSearchEntity && (
               <>
-                <SavedSearchAlertArtworkGridFilterPills
-                  savedSearchEntity={savedSearchEntity}
-                />
+                <ArtworkGridFilterPills savedSearchEntity={savedSearchEntity} />
                 <Spacer mt={4} />
               </>
             )}
