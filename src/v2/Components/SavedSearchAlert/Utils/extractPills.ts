@@ -16,6 +16,7 @@ import {
 import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
   FilterPill,
+  SavedSearchDefaultCriteria,
   SavedSearchEntity,
   SavedSearchEntityArtist,
   SearchCriteriaAttributes,
@@ -202,6 +203,35 @@ export const extractArtistPills = (
   })
 }
 
+export const extractPillsFromDefaultCriteria = (
+  defaultCriteria: SavedSearchDefaultCriteria
+) => {
+  return Object.entries(defaultCriteria).reduce((acc, entry) => {
+    const [field, criteria] = entry
+
+    if (Array.isArray(criteria)) {
+      const defaultPills = criteria.map(v => ({
+        isDefault: true,
+        value: v.value,
+        displayValue: v.displayValue,
+        field,
+      }))
+
+      return [...acc, ...defaultPills]
+    }
+
+    return [
+      ...acc,
+      {
+        isDefault: true,
+        value: criteria.value,
+        displayValue: criteria.displayValue,
+        field,
+      },
+    ]
+  }, [])
+}
+
 export const extractPills = ({
   criteria,
   aggregations = [],
@@ -213,12 +243,14 @@ export const extractPills = ({
   entity?: SavedSearchEntity
   metric?: Metric
 }) => {
-  const defaultArtistPills = extractArtistPills(entity?.defaultArtists)
+  const defaultPills = extractPillsFromDefaultCriteria(
+    entity?.defaultCriteria ?? {}
+  )
   const pillsFromCriteria = extractPillsFromCriteria({
     criteria,
     aggregations,
     metric,
   })
 
-  return compact([...defaultArtistPills, ...pillsFromCriteria])
+  return compact([...defaultPills, ...pillsFromCriteria])
 }

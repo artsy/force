@@ -58,12 +58,19 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
 
   const savedSearchEntity: SavedSearchEntity = {
     placeholder: artist.name ?? "",
-    defaultArtists: [],
     owner: {
       type: OwnerType.artist,
       id: artist.internalID,
       name: artist.name ?? "",
       slug: artist.slug,
+    },
+    defaultCriteria: {
+      artistIDs: [
+        {
+          displayValue: artist.name ?? "",
+          value: artist.internalID,
+        },
+      ],
     },
   }
   const defaultPills: FilterPill[] = [
@@ -114,10 +121,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
           <ActiveFilterPills defaultPills={defaultPills} />
         )}
         renderCreateAlertButton={() => (
-          <DefaultCreateAlertButton
-            savedSearchEntity={savedSearchEntity}
-            extraCriteria={{ artistIDs: [artist.internalID] }}
-          />
+          <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
         )}
       />
     </ArtworkFilterContextProvider>

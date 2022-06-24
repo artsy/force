@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { CreateArtworkAlertSection_artwork } from "v2/__generated__/CreateArtworkAlertSection_artwork.graphql"
 import {
   SavedSearchEntity,
+  SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
 } from "v2/Components/SavedSearchAlert/types"
 import { compact } from "lodash"
@@ -27,13 +28,17 @@ export const CreateArtworkAlertSection: React.FC<CreateArtworkAlertSectionProps>
   const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
+  const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
+    artist => ({
+      value: artist.internalID,
+      displayValue: artist.name ?? "",
+    })
+  )
   const entity: SavedSearchEntity = {
     placeholder,
-    defaultArtists: artists.map(artist => ({
-      id: artist.internalID,
-      name: artist.name ?? "",
-      slug: artist.slug,
-    })),
+    defaultCriteria: {
+      artistIDs: defaultArtistsCriteria,
+    },
     owner: {
       type: OwnerType.artwork,
       slug: artwork.slug,

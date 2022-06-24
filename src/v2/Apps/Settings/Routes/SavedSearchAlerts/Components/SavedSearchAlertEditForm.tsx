@@ -30,6 +30,7 @@ import {
   FilterPill,
   SavedSearchAleftFormValues,
   SavedSearchEntity,
+  SavedSearchEntityCriteria,
   SearchCriteriaAttributeKeys,
 } from "v2/Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "v2/Components/SavedSearchAlert/Utils/savedSearchCriteria"
@@ -257,17 +258,20 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   const aggregations = artworksConnection?.aggregations as Aggregations
   const criteria = getAllowedSearchCriteria(savedSearch as any)
   const artists = extractNodes(artistsConnection)
-  const formattedArtists = artists.map(artist => {
-    return {
-      id: artist.internalID,
-      name: artist.name ?? "",
-      slug: artist.slug,
+  const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
+    artist => {
+      return {
+        displayValue: artist.name ?? "",
+        value: artist.internalID,
+      }
     }
-  })
+  )
 
   const entity: SavedSearchEntity = {
-    placeholder: formattedArtists[0].name,
-    defaultArtists: formattedArtists,
+    placeholder: defaultArtistsCriteria[0].displayValue,
+    defaultCriteria: {
+      artistIDs: defaultArtistsCriteria,
+    },
     owner: {
       type: OwnerType.savedSearch,
       id: savedSearch?.internalID!,

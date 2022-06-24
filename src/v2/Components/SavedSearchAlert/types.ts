@@ -21,6 +21,9 @@ export interface SearchCriteriaAttributes {
   sizes?: string[] | null
 }
 
+export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
+
+// TODO: Remove it
 export interface SavedSearchEntityArtist {
   id: string
   name: string
@@ -34,13 +37,21 @@ export interface SavedSearchEntityOwner {
   name: string
 }
 
-export interface SavedSearchEntity {
-  placeholder: string
-  defaultArtists: SavedSearchEntityArtist[]
-  owner: SavedSearchEntityOwner
+export interface SavedSearchEntityCriteria {
+  displayValue: string
+  value: string
 }
 
-export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
+export type SavedSearchDefaultCriteria = Record<
+  string, // TODO: Specify allowed keys
+  SavedSearchEntityCriteria | SavedSearchEntityCriteria[]
+>
+
+export interface SavedSearchEntity {
+  placeholder: string
+  owner: SavedSearchEntityOwner
+  defaultCriteria: SavedSearchDefaultCriteria
+}
 
 export type FilterPill = {
   isDefault?: boolean

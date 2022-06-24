@@ -1,28 +1,25 @@
 import React from "react"
 import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getAllowedSearchCriteria } from "../Utils/savedSearchCriteria"
+import { getSearchCriteriaFromFilters } from "../Utils/savedSearchCriteria"
 import { SavedSearchEntity } from "../types"
 import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
 import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
-import { SearchCriteriaAttributes } from "../types"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
 interface ArtworkGridFilterPillsProps {
   savedSearchEntity: SavedSearchEntity
-  extraCriteria: SearchCriteriaAttributes
 }
 
 export const DefaultCreateAlertButton: React.FC<ArtworkGridFilterPillsProps> = props => {
-  const { savedSearchEntity, extraCriteria } = props
+  const { savedSearchEntity } = props
   const { filters, aggregations } = useArtworkFilterContext()
-  const criteriaFromFilters = getAllowedSearchCriteria(filters ?? {})
-  const criteria = {
-    ...criteriaFromFilters,
-    ...extraCriteria,
-  }
+  const criteria = getSearchCriteriaFromFilters(
+    savedSearchEntity,
+    filters ?? {}
+  )
   const metric = filters?.metric ?? DEFAULT_METRIC
 
   const getAuthModalOptions = (): AuthModalOptions => {
