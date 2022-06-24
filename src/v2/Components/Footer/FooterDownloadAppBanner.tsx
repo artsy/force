@@ -18,7 +18,7 @@ const DESKTOP_COVER_IMAGE = resized(
 )
 
 const MOBILE_COVER_IMAGE = resized(
-  "https://files.artsy.net/images/App%20Download%20Banner_1200x2440_1x-1656078790066.png",
+  "https://files.artsy.net/images/App Download Banner_1200x2440_2x-1656078840527.png",
   { width: 725, quality: 50 }
 )
 
