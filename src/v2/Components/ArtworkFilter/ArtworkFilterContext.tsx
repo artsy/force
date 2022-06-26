@@ -23,7 +23,6 @@ export const initialArtworkFilterState: ArtworkFilters = {
   partnerIDs: [],
   additionalGeneIDs: [],
   colors: [],
-  keyword: undefined,
   locationCities: [],
   artistNationalities: [],
   materialsTerms: [],
