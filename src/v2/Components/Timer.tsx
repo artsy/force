@@ -1,12 +1,5 @@
 import * as React from "react"
-import {
-  Flex,
-  FlexProps,
-  Text,
-  TextProps,
-  TextVariant,
-  useThemeConfig,
-} from "@artsy/palette"
+import { Flex, FlexProps, Text, TextProps } from "@artsy/palette"
 import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
@@ -32,24 +25,11 @@ export const Timer: React.FC<
   const { hasEnded, time } = useTimer(endDate, startDate)
   const { days, hours, minutes, seconds } = time
 
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "mediumText" as TextVariant,
-      firstLineColor: "black100",
-      secondLineColor: "black100",
-    },
-    v3: {
-      variant,
-      firstLineColor: "blue100",
-      secondLineColor: "black60",
-    },
-  })
-
   return (
     <Flex flexDirection="column" {...rest}>
-      <Text variant={tokens.variant} color={tokens.firstLineColor}>
+      <Text variant={variant} color="blue100">
         {label && (
-          <Text variant={tokens.variant} color="black100">
+          <Text variant={variant} color="black100">
             {label}
           </Text>
         )}
@@ -60,7 +40,7 @@ export const Timer: React.FC<
       </Text>
 
       {(labelWithTimeRemaining || labelWithoutTimeRemaining) && (
-        <Text variant={tokens.variant} color={tokens.secondLineColor}>
+        <Text variant={variant} color="black60">
           {hasEnded ? labelWithoutTimeRemaining : labelWithTimeRemaining}
         </Text>
       )}

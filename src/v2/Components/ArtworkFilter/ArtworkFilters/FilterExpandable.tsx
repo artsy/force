@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
-import {
-  Box,
-  Expandable,
-  ExpandableProps,
-  useThemeConfig,
-} from "@artsy/palette"
+import { Box, Expandable, ExpandableProps } from "@artsy/palette"
 import { useScrollRefContext } from "./useScrollContext"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { getElementParams } from "../Utils/getElementParams"
 
@@ -13,11 +9,6 @@ export const FilterExpandable: React.FC<ExpandableProps> = ({
   expanded,
   ...rest
 }) => {
-  const tokens = useThemeConfig({
-    v2: { mb: 1 },
-    v3: { mb: 6 },
-  })
-
   const ctx = useScrollRefContext()
   const scrollRef = ctx?.scrollRef
 
@@ -52,11 +43,13 @@ export const FilterExpandable: React.FC<ExpandableProps> = ({
   return (
     <Box ref={filterRef as any}>
       <Expandable
-        mb={tokens.mb}
+        // TODO: Should not have external margin
+        mb={1}
         expanded={isExpanded}
         onClick={onClick}
         {...rest}
       />
+
       <div ref={anchorRef}></div>
     </Box>
   )

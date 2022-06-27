@@ -1,12 +1,4 @@
-import {
-  Checkbox,
-  space,
-  color,
-  Box,
-  Text,
-  Flex,
-  useThemeConfig,
-} from "@artsy/palette"
+import { Checkbox, Box, Text, Flex } from "@artsy/palette"
 import { intersection } from "lodash"
 import * as React from "react"
 import styled from "styled-components"
@@ -19,6 +11,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
+import { themeGet } from "@styled-system/theme-get"
 
 export const COLOR_OPTIONS = [
   { hex: "#BB392D", value: "red", name: "Red" },
@@ -36,16 +29,16 @@ export const COLOR_OPTIONS = [
 type ColorOption = typeof COLOR_OPTIONS[number]
 
 const ColorSwatch = styled.div`
-  width: ${space(2)}px;
-  height: ${space(2)}px;
-  border-radius: ${space(2)}px;
+  width: ${themeGet("space.2")};
+  height: ${themeGet("space.2")};
+  border-radius: ${themeGet("space.2")};
   flex-shrink: 0;
 `
 
 const BlackAndWhiteSwatch = styled(ColorSwatch)`
   position: relative;
   overflow: hidden;
-  border: 1px solid ${color("black10")};
+  border: 1px solid ${themeGet("colors.black10")};
   transform: rotate(-135deg);
 
   &::after {
@@ -56,7 +49,7 @@ const BlackAndWhiteSwatch = styled(ColorSwatch)`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: ${color("black100")};
+    background-color: ${themeGet("colors.black100")};
   }
 `
 
@@ -82,17 +75,13 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     setFilter("colors", updatedValues)
   }
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
-
   return (
     <Checkbox
       key={name}
       onSelect={selected => toggleColor(selected, value)}
       selected={colors.includes(value)}
-      my={tokens.my}
+      // TODO: Should not have external margin
+      my={1}
     >
       <Box
         display="flex"

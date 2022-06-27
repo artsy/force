@@ -8,8 +8,6 @@ import {
   Flex,
   Spacer,
   Message,
-  TextVariant,
-  useThemeConfig,
   RadioGroup,
   Radio,
 } from "@artsy/palette"
@@ -226,11 +224,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     setFilters!(updatedFilters, { force: false })
   }
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5, secondaryVariant: "small" as TextVariant },
-    v3: { my: 1, secondaryVariant: "xs" as TextVariant },
-  })
-
   useEffect(() => {
     if (width == "*-*" || height === "*-*") {
       setCustomSize({
@@ -262,7 +255,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
         </Media>
       )}
       <Flex flexDirection="column" alignItems="left">
-        <Text variant={tokens.secondaryVariant} color="black60" mb={1}>
+        <Text variant="xs" color="black60" mb={1}>
           This is based on the artwork’s average dimension.
         </Text>
 
@@ -283,7 +276,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
                 key={index}
                 onSelect={selected => toggleSizeSelection(selected, name)}
                 selected={sizes.includes(name)}
-                my={tokens.my}
+                my={1}
               >
                 {displayName}
               </Checkbox>

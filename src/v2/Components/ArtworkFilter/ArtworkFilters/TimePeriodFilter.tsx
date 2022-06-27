@@ -1,4 +1,4 @@
-import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex } from "@artsy/palette"
 import { FC } from "react"
 import { intersection } from "lodash"
 import {
@@ -41,11 +41,6 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
     periods = allowedPeriods.map(name => ({ name, value: name }))
   }
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
-
   if (!periods.length) return null
 
   const togglePeriodSelection = (selected, period) => {
@@ -78,7 +73,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
                 selected={majorPeriods.includes(name)}
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}
-                my={tokens.my}
+                my={1}
               >
                 {getTimePeriodToDisplay(name)}
               </Checkbox>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -54,11 +54,6 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
     setFilter("attributionClass", updatedValues)
   }
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
-
   return (
     <FilterExpandable label={label} expanded={expanded}>
       <Flex flexDirection="column">
@@ -66,7 +61,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
           return (
             <Checkbox
               key={index}
-              my={tokens.my}
+              my={1}
               onSelect={selected => toggleSelection(selected, value)}
               selected={attributionClass.includes(value)}
             >

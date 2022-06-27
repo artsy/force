@@ -119,7 +119,6 @@ const SavedSearchAlertsApp = loadable(
 export const settingsRoutes: AppRouteConfig[] = [
   {
     path: "/settings",
-    theme: "v3",
     getComponent: () => SettingsApp,
     onClientSideRender: () => {
       SettingsApp.preload()
@@ -287,7 +286,6 @@ export const settingsRoutes: AppRouteConfig[] = [
 
   {
     path: "/settings/alerts",
-    theme: "v3",
     getComponent: () => SavedSearchAlertsApp,
     onClientSideRender: () => {
       SavedSearchAlertsApp.preload()

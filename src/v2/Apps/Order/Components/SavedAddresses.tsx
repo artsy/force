@@ -10,8 +10,6 @@ import {
   BorderBox,
   Join,
   Clickable,
-  useThemeConfig,
-  TextVariant,
 } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import * as React from "react"
@@ -172,15 +170,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     })
   }
 
-  const styles = useThemeConfig({
-    v2: {
-      variant: "text" as TextVariant,
-    },
-    v3: {
-      variant: "sm" as TextVariant,
-    },
-  })
-
   const collectorProfileAddressItems = addressList.map((address, index) => {
     if (!address) {
       return null
@@ -205,7 +194,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           <ModifyAddressWrapper width="100%">
             {isDefaultAddress && (
               <Box mr={[2, 1]}>
-                <Text textAlign="left" variant={styles.variant}>
+                <Text textAlign="left" variant="sm">
                   Default Address
                 </Text>
               </Box>
@@ -218,7 +207,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
                 onClick={() => handleEditAddress(address, index)}
               >
                 <Text
-                  variant={styles.variant}
+                  variant="sm"
                   style={{
                     cursor: "pointer",
                   }}
@@ -234,7 +223,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
                 onClick={() => handleDeleteAddress(address.internalID)}
               >
                 <Text
-                  variant={styles.variant}
+                  variant="sm"
                   color="red100"
                   style={{
                     cursor: "pointer",

@@ -1,31 +1,10 @@
-import * as React from "react";
-import {
-  Box,
-  Column,
-  Flex,
-  GridColumns,
-  Input,
-  Text,
-  TextVariant,
-  TextTransform,
-  useThemeConfig,
-} from "@artsy/palette"
+import * as React from "react"
+import { Box, Column, Flex, GridColumns, Input, Text } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"
 import { CountrySelect } from "../CountrySelect"
 
 export const AddressModalFields: React.FC = () => {
-  const styles = useThemeConfig({
-    v2: {
-      variant: "caption" as TextVariant,
-      textTransform: "none" as TextTransform,
-    },
-    v3: {
-      variant: "xs" as TextVariant,
-      textTransform: "uppercase" as TextTransform,
-    },
-  })
-
   const {
     values,
     touched,
@@ -53,11 +32,7 @@ export const AddressModalFields: React.FC = () => {
       <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Box>
-            <Text
-              textTransform={styles.textTransform}
-              variant={styles.variant}
-              mb={0.5}
-            >
+            <Text textTransform="uppercase" variant="xs" mb={0.5}>
               Country
             </Text>
             <CountrySelect

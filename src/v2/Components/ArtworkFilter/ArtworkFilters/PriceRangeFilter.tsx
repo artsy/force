@@ -7,7 +7,6 @@ import {
   Radio,
   RadioGroup,
   Spacer,
-  useThemeConfig,
 } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
@@ -143,11 +142,6 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
     setShowCustom(false)
   }
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
-
   const hasSelection = priceRange && isCustomValue(priceRange)
 
   useEffect(() => {
@@ -177,18 +171,13 @@ export const PriceRangeFilterOld: FC<PriceRangeFilterProps> = ({
             ...PRICE_RANGES.map((range, index) => (
               <Radio
                 key={`${index}`}
-                my={tokens.my}
+                my={1}
                 label={range.name}
                 value={range.value}
               />
             )),
 
-            <Radio
-              key="custom"
-              my={tokens.my}
-              label="Custom Price"
-              value="custom"
-            />,
+            <Radio key="custom" my={1} label="Custom Price" value="custom" />,
           ]}
         </RadioGroup>
       </Flex>
