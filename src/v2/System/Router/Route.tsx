@@ -6,8 +6,6 @@ import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress";
 import { NextFunction } from "express";
 
-
-
 interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
   children?: AppRouteConfig[]
@@ -24,7 +22,6 @@ interface RouteConfigProps extends RouteConfig {
   query?: GraphQLTaggedNode
   scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean
-  theme?: 'v2' | 'v3'
 }
 
 // Strip the index prop from `found`'s RouteConfig so that we can lock the

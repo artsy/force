@@ -51,7 +51,6 @@ const AuctionFAQRoute = loadable(
 export const auctionRoutes: AppRouteConfig[] = [
   {
     path: "/auction/:slug?",
-    theme: "v3",
     getComponent: () => AuctionApp,
     onClientSideRender: () => {
       AuctionApp.preload()

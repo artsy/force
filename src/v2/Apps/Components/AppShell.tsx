@@ -5,13 +5,12 @@ import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import * as React from "react"
 import createLogger from "v2/Utils/logger"
 import { useSystemContext } from "v2/System"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
-import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
@@ -64,17 +63,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
     document.body.setAttribute("data-test", "AppReady")
   }, [])
 
-  /**
-   * Wait for route to finish rendering before (possibly) switching out the theme.
-   *
-   * When the route changes, the configured theme will change immediately; this
-   * will cause the styles to update out of sync with the page change. Here we
-   * wait for the route to finish rendering before setting the next theme.
-   */
-  const nextTheme = routeConfig?.theme ?? "v3"
-  const [theme, setTheme] = useState<"v2" | "v3">(nextTheme)
-  useRouteComplete({ onComplete: () => setTheme(nextTheme) })
-
   const { height: navBarHeight } = useNavBarHeight()
 
   useNetworkOfflineMonitor()
@@ -99,7 +87,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
         </Box>
       )}
 
-      <Theme theme={theme}>
+      <Theme theme="v3">
         <AppToasts accomodateNav={showNav} />
 
         <Flex

@@ -10,7 +10,6 @@ We've recently starting migrating our Artsy.net routes over to the [latest versi
 
 There are a few different ways one can start to work with Palette v3:
 
-1. **Preferred**: Add a `theme: "v3"` setting to your route config
 1. Wrap the root of your React tree in a `<ThemeProviderV3>` context provider
 1. Use the `useThemeConfig` hook
 
@@ -23,7 +22,6 @@ There are a few different ways one can start to work with Palette v3:
 ```jsx
 export const appRoutes = [
   {
-    theme: "v3",
     path: "/foo",
     Component: () => {
       return (
