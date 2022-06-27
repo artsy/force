@@ -1,20 +1,27 @@
 import { LabeledInput, MagnifyingGlassIcon } from "@artsy/palette"
 import { FilterExpandable } from "./FilterExpandable"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useRef, useEffect, useMemo, useState } from "react"
 import { debounce } from "lodash"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  useCurrentlySelectedFilters,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 
 const DEBOUNCE_DELAY = 300
 
 export const KeywordFilter: React.FC = () => {
-  const { filters, setFilter } = useArtworkFilterContext()
-  const { keyword } = filters ?? {}
+  const { setFilter } = useArtworkFilterContext()
+
+  const setFilterRef = useRef(setFilter)
+  setFilterRef.current = setFilter
+
+  const { keyword } = useCurrentlySelectedFilters()
 
   const [value, setValue] = useState(keyword)
 
   const updateKeywordFilter = (text: string) => {
     const textOrUndefined = text.length === 0 ? undefined : text
-    setFilter("keyword", textOrUndefined)
+    setFilterRef.current("keyword", textOrUndefined)
   }
 
   const handleDebounce = useMemo(

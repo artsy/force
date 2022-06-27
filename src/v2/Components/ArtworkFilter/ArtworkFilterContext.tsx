@@ -20,6 +20,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   sort: "-decayed_merch",
   artistIDs: [],
   attributionClass: [],
+  keyword: undefined,
   partnerIDs: [],
   additionalGeneIDs: [],
   colors: [],
