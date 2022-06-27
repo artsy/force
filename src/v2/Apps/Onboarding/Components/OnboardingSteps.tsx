@@ -1,4 +1,3 @@
-import { Button, Text, Flex, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import {
   VIEW_CURATED_ARTWORKS,
@@ -16,11 +15,16 @@ import { OnboardingWelcome } from "../Views/OnboardingWelcome"
 import { OnboardingQuestionOne } from "../Views/OnboardingQuestionOne"
 import { OnboardingQuestionThree } from "../Views/OnboardingQuestionThree"
 import { OnboardingQuestionTwo } from "../Views/OnboardingQuestionTwo"
+import { OnboardingFollowArtists } from "../Views/OnboardingFollowArtists"
+import { OnboardingTopAuctionLots } from "../Views/OnboardingTopAuctionLots"
+import { OnboardingCuratedArtworks } from "../Views/OnboardingCuratedArtworks"
+import { OnboardingArtistsOnTheRise } from "../Views/OnboardingArtistsOnTheRise"
+import { OnboardingFollowGalleries } from "../Views/OnboardingFollowGalleries"
 
 interface OnboardingStepsProps {}
 
 export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
-  const { current, next } = useOnboardingContext()
+  const { current } = useOnboardingContext()
 
   switch (current) {
     case VIEW_WELCOME:
@@ -36,19 +40,19 @@ export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
       return <OnboardingQuestionThree />
 
     case VIEW_FOLLOW_ARTISTS:
+      return <OnboardingFollowArtists />
+
     case VIEW_TOP_AUCTION_LOTS:
+      return <OnboardingTopAuctionLots />
+
     case VIEW_CURATED_ARTWORKS:
+      return <OnboardingCuratedArtworks />
+
     case VIEW_ARTISTS_ON_THE_RISE:
+      return <OnboardingArtistsOnTheRise />
+
     case VIEW_FOLLOW_GALLERIES:
-      return (
-        <Flex flexDirection="column">
-          <Text variant="lg-display">TODO: {current}</Text>
-
-          <Spacer mt={4} />
-
-          <Button onClick={next}>Done</Button>
-        </Flex>
-      )
+      return <OnboardingFollowGalleries />
 
     default:
       return null
