@@ -182,12 +182,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   isArtsyShipping = () => {
     const addresses = this.getAddressList()
-    const processWithArtsyShippingDomestic = !!this.getOrderArtwork()
-      ?.processWithArtsyShippingDomestic
-    const artsyShippingInternational = !!this.getOrderArtwork()
-      ?.artsyShippingInternational
-
     const artwork = this.getOrderArtwork()
+    const processWithArtsyShippingDomestic = !!artwork?.processWithArtsyShippingDomestic
+    const artsyShippingInternational = !!artwork?.artsyShippingInternational
+
     const shippingCountry = this.isCreateNewAddress()
       ? this.state.address.country
       : addresses &&
