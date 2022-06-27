@@ -7,40 +7,43 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 const DEBOUNCE_DELAY = 300
 
 export const KeywordFilter: React.FC = () => {
-  const filterContext = useArtworkFilterContext()
+  const { filters, setFilter } = useArtworkFilterContext()
+  const { keyword } = filters ?? {}
 
-  const [keyword, setKeyword] = useState(filterContext.filters!.keyword)
+  const [value, setValue] = useState(keyword)
 
   const updateKeywordFilter = (text: string) => {
-    let textOrUndefined = text.length === 0 ? undefined : text
-    filterContext.setFilter("keyword", textOrUndefined)
+    const textOrUndefined = text.length === 0 ? undefined : text
+    setFilter("keyword", textOrUndefined)
   }
 
   const handleDebounce = useMemo(
     () => debounce(updateKeywordFilter, DEBOUNCE_DELAY),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
   const handleChangeText = text => {
-    setKeyword(text)
+    setValue(text)
     handleDebounce(text)
   }
 
   // Stop the invocation of the debounced function after unmounting
   useEffect(() => {
     return () => handleDebounce.cancel()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    if (filterContext.filters!.keyword === undefined) {
-      setKeyword("")
+    if (keyword === undefined) {
+      setValue("")
     }
-  }, [filterContext.filters!.keyword])
+  }, [keyword, setValue])
 
   return (
     <FilterExpandable label="Keyword Search" expanded={true}>
       <LabeledInput
-        value={keyword}
+        value={value}
         placeholder="Enter a search term"
         onChange={event => handleChangeText(event.currentTarget.value)}
         type="text"
