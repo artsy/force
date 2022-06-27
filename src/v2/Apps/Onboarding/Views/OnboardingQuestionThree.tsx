@@ -69,7 +69,7 @@ export const OnboardingQuestionThree: FC = () => {
           justifyContent="space-between"
           width="100%"
         >
-          <OnboardingProgress />
+          <OnboardingProgress preview={loading} />
 
           <Box width="100%">
             <Text variant="lg-display" ref={register(1)}>
