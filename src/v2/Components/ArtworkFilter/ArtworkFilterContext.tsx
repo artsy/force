@@ -187,6 +187,9 @@ export enum SelectedFiltersCountsLabels {
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
+  /** Default filter state */
+  defaultFilters?: ArtworkFiltersState
+
   /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFiltersState
 
@@ -289,9 +292,12 @@ export const ArtworkFilterContextProvider: React.FC<
   ZeroState,
 }) => {
   const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort!
-  const initialFilterState = {
+  const defaultFilters = {
     ...initialArtworkFilterState,
     sort: defaultSort,
+  }
+  const initialFilterState = {
+    ...defaultFilters,
     ...paramsToCamelCase(filters),
   }
 
@@ -330,12 +336,13 @@ export const ArtworkFilterContextProvider: React.FC<
     shouldStageFilterChanges ? stage(action) : dispatch(action)
   }
 
-  const currentlySelectedFiltersCounts = getSelectedFiltersCounts({
-    filters: currentlySelectedFilters(),
-    defaultSort,
-  })
+  const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
+    currentlySelectedFilters(),
+    defaultFilters
+  )
 
   const artworkFilterContext = {
+    defaultFilters,
     mountedContext: true,
 
     filters: artworkFilterState,
@@ -395,10 +402,7 @@ export const ArtworkFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
-        payload: {
-          metric: initialFilterState.metric,
-          sort: defaultSort,
-        },
+        payload: defaultFilters,
       }
       dispatchOrStage(action)
     },
@@ -581,7 +585,6 @@ const artworkFilterReducer = (
      */
     case "RESET": {
       return {
-        ...initialArtworkFilterState,
         ...action.payload,
         reset: true,
       }
@@ -606,19 +609,14 @@ const artworkFilterReducer = (
   }
 }
 
-interface SelectedFiltersCountsOptions {
-  filters: ArtworkFilters
-  defaultSort: string
-}
-
 export const getSelectedFiltersCounts = (
-  options: SelectedFiltersCountsOptions
+  selectedFilters: ArtworkFilters,
+  defaultFilters: ArtworkFilters
 ) => {
-  const { filters, defaultSort } = options
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
 
-  Object.entries(filters).forEach(([paramName, paramValue]) => {
+  Object.entries(selectedFilters).forEach(([paramName, paramValue]) => {
     if (!filtersParams.includes(paramName as FilterParamName)) {
       return
     }
@@ -631,14 +629,14 @@ export const getSelectedFiltersCounts = (
         break
       }
       case customSizeFilterNames.includes(paramName as FilterParamName): {
-        if (paramValue !== initialArtworkFilterState[paramName]) {
+        if (paramValue !== defaultFilters[paramName]) {
           const prevCountValue = counts[FilterParamName.sizes] ?? 0
           counts[FilterParamName.sizes] = prevCountValue + 1
         }
         break
       }
       case paramName === FilterParamName.priceRange: {
-        if (paramValue !== initialArtworkFilterState.priceRange) {
+        if (paramValue !== defaultFilters.priceRange) {
           counts[paramName] = 1
         }
         break
@@ -650,7 +648,7 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.sort: {
-        if (paramValue !== defaultSort) {
+        if (paramValue !== defaultFilters.sort) {
           counts[paramName] = 1
         }
         break

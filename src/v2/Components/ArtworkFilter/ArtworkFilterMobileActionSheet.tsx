@@ -2,10 +2,7 @@ import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
 import { useEffect, useRef } from "react"
 import * as React from "react"
 import styled from "styled-components"
-import {
-  initialArtworkFilterState,
-  useArtworkFilterContext,
-} from "./ArtworkFilterContext"
+import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { isEqual, omit } from "lodash"
 import { countChangedFilters } from "./Utils/countChangedFilters"
 import { themeGet } from "@styled-system/theme-get"
@@ -21,7 +18,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
   // This reflects our zero state for this UI which doesn't include the keyword
   const isReset = isEqual(
     omit(filterContext.stagedFilters, "reset", "keyword"),
-    initialArtworkFilterState
+    filterContext.defaultFilters
   )
 
   const handleScrollToTop = () => {

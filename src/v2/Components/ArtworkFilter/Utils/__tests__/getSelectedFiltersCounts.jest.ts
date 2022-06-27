@@ -51,42 +51,42 @@ describe("getSelectedFiltersCounts helper", () => {
   }
 
   it("returns empty object if it is initial filters", () => {
-    const result = getSelectedFiltersCounts({
-      filters: initialArtworkFilterState,
-      defaultSort,
-    })
+    const result = getSelectedFiltersCounts(
+      initialArtworkFilterState,
+      initialArtworkFilterState
+    )
     expect(result).toEqual({})
   })
 
   it("counts multiselect filters correctly", () => {
-    const result = getSelectedFiltersCounts({
-      filters: multiSelectFilters,
-      defaultSort,
-    })
+    const result = getSelectedFiltersCounts(
+      multiSelectFilters,
+      initialArtworkFilterState
+    )
     expect(result).toEqual(multiSelectFiltersExpectedResult)
   })
 
   it("counts single option filters correctly", () => {
-    const result = getSelectedFiltersCounts({
-      filters: singleOptionFilters,
-      defaultSort,
-    })
+    const result = getSelectedFiltersCounts(
+      singleOptionFilters,
+      initialArtworkFilterState
+    )
     expect(result).toEqual(singleOptionFiltersExpectedResult)
   })
 
   it("counts ways to buy options correctly", () => {
-    const result = getSelectedFiltersCounts({
-      filters: waysToBuyFilters,
-      defaultSort,
-    })
+    const result = getSelectedFiltersCounts(
+      waysToBuyFilters,
+      initialArtworkFilterState
+    )
     expect(result).toEqual(waysToBuyFiltersExpectedResult)
   })
 
   it("counts artists options correctly", () => {
-    const result = getSelectedFiltersCounts({
-      filters: artistsFilters,
-      defaultSort,
-    })
+    const result = getSelectedFiltersCounts(
+      artistsFilters,
+      initialArtworkFilterState
+    )
     expect(result).toEqual(artistsFiltersExpectedResult)
   })
 
@@ -97,10 +97,7 @@ describe("getSelectedFiltersCounts helper", () => {
       ...waysToBuyFilters,
       ...artistsFilters,
     }
-    const result = getSelectedFiltersCounts({
-      filters,
-      defaultSort,
-    })
+    const result = getSelectedFiltersCounts(filters, initialArtworkFilterState)
     expect(result).toEqual({
       ...multiSelectFiltersExpectedResult,
       ...singleOptionFiltersExpectedResult,
@@ -114,10 +111,10 @@ describe("getSelectedFiltersCounts helper", () => {
       const filters = {
         sort: "-decayed_merch",
       }
-      const result = getSelectedFiltersCounts({
+      const result = getSelectedFiltersCounts(
         filters,
-        defaultSort,
-      })
+        initialArtworkFilterState
+      )
 
       expect(result).toEqual({})
     })
@@ -126,10 +123,10 @@ describe("getSelectedFiltersCounts helper", () => {
       const filters = {
         sort: "year",
       }
-      const result = getSelectedFiltersCounts({
+      const result = getSelectedFiltersCounts(
         filters,
-        defaultSort,
-      })
+        initialArtworkFilterState
+      )
 
       expect(result).toEqual({
         sort: 1,
@@ -140,10 +137,10 @@ describe("getSelectedFiltersCounts helper", () => {
       const filters = {
         sort: "year",
       }
-      const result = getSelectedFiltersCounts({
+      const result = getSelectedFiltersCounts(
         filters,
-        defaultSort,
-      })
+        initialArtworkFilterState
+      )
 
       expect(result).toEqual({
         sort: 1,
@@ -151,10 +148,13 @@ describe("getSelectedFiltersCounts helper", () => {
     })
 
     it("should be correctly counted when filters and custom default sort value are passed", () => {
-      const result = getSelectedFiltersCounts({
-        defaultSort: "year",
-        filters: singleOptionFilters,
-      })
+      const defaultFilters = {
+        sort: "year",
+      }
+      const result = getSelectedFiltersCounts(
+        singleOptionFilters,
+        defaultFilters
+      )
 
       expect(result).toEqual({
         priceRange: 1,
@@ -162,5 +162,3 @@ describe("getSelectedFiltersCounts helper", () => {
     })
   })
 })
-
-const defaultSort = "-decayed_merch"
