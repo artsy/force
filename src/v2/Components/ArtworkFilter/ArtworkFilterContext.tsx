@@ -288,9 +288,10 @@ export const ArtworkFilterContextProvider: React.FC<
   sortOptions,
   ZeroState,
 }) => {
+  const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort!
   const initialFilterState = {
     ...initialArtworkFilterState,
-    sort: sortOptions?.[0].value ?? initialArtworkFilterState.sort,
+    sort: defaultSort,
     ...paramsToCamelCase(filters),
   }
 
@@ -329,9 +330,10 @@ export const ArtworkFilterContextProvider: React.FC<
     shouldStageFilterChanges ? stage(action) : dispatch(action)
   }
 
-  const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
-    currentlySelectedFilters()
-  )
+  const currentlySelectedFiltersCounts = getSelectedFiltersCounts({
+    filters: currentlySelectedFilters(),
+    defaultSort,
+  })
 
   const artworkFilterContext = {
     mountedContext: true,
@@ -395,6 +397,7 @@ export const ArtworkFilterContextProvider: React.FC<
         type: "RESET",
         payload: {
           metric: initialFilterState.metric,
+          sort: defaultSort,
         },
       }
       dispatchOrStage(action)
@@ -603,13 +606,19 @@ const artworkFilterReducer = (
   }
 }
 
+interface SelectedFiltersCountsOptions {
+  filters: ArtworkFilters
+  defaultSort: string
+}
+
 export const getSelectedFiltersCounts = (
-  selectedFilters: ArtworkFilters = {}
+  options: SelectedFiltersCountsOptions
 ) => {
+  const { filters, defaultSort } = options
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
 
-  Object.entries(selectedFilters).forEach(([paramName, paramValue]) => {
+  Object.entries(filters).forEach(([paramName, paramValue]) => {
     if (!filtersParams.includes(paramName as FilterParamName)) {
       return
     }
@@ -641,7 +650,7 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.sort: {
-        if (paramValue !== initialArtworkFilterState.sort) {
+        if (paramValue !== defaultSort) {
           counts[paramName] = 1
         }
         break
