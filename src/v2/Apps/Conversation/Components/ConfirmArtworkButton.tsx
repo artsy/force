@@ -33,7 +33,6 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = ({
   onClick,
 }) => {
   const [isCommittingMutation, setIsCommittingMutation] = useState(false)
-
   const commitMutation = createsOfferOrder ? MakeInquiryOffer : MakeInquiryOrder
   const onMutationError = (error: Error) => {
     logger.error(error)

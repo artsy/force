@@ -51,7 +51,6 @@ const Loading: React.FC = () => (
 
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
-
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
   const isCBNEnabled = useFeatureFlag("conversational-buy-now")
@@ -63,6 +62,8 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
   >(false)
+
+  const [createsOfferOrder, setCreatesOfferOrder] = useState<boolean>(true)
 
   const inquiryItemBox = compact(conversation.items).map((i, idx) => {
     const isValidType =
@@ -259,7 +260,10 @@ const Conversation: React.FC<ConversationProps> = props => {
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}
-          openInquiryModal={() => setShowConfirmArtworkModal(true)}
+          openInquiryModal={({ createsOfferOrder }) => {
+            setShowConfirmArtworkModal(true)
+            setCreatesOfferOrder(createsOfferOrder)
+          }}
           openOrderModal={() => setShowOrderModal(true)}
         />
       </NoScrollFlex>
@@ -269,6 +273,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           conversationID={conversation.internalID!}
           show={showConfirmArtworkModal}
           closeModal={() => setShowConfirmArtworkModal(false)}
+          createsOfferOrder={createsOfferOrder}
         />
       )}
       {isActionable && (

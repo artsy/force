@@ -22,6 +22,7 @@ export interface ConfirmArtworkModalProps {
   conversationID: string
   show: boolean
   closeModal: () => void
+  createsOfferOrder: boolean
 }
 
 export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
@@ -29,6 +30,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
   conversationID,
   show,
   closeModal,
+  createsOfferOrder,
 }) => {
   const { editionSets, isEdition } = { ...artwork }
 
@@ -67,6 +69,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
                 context_owner_type: OwnerType.conversation,
               })
             }
+            createsOfferOrder={createsOfferOrder}
           >
             Confirm
           </ConfirmArtworkButtonFragmentContainer>
@@ -114,6 +117,7 @@ export const ConfirmArtworkModalQueryRenderer: React.FC<{
   conversationID: string
   show: boolean
   closeModal: () => void
+  createsOfferOrder: boolean
 }> = ({ artworkID, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
   if (!artworkID) return null
