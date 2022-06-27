@@ -5,17 +5,19 @@ import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ArtistRelatedCategories_artist } from "v2/__generated__/ArtistRelatedCategories_artist.graphql"
-import { ArtistRelatedCategoriesQuery } from "v2/__generated__/ArtistRelatedCategoriesQuery.graphql"
+import { ArtistRelatedGeneCategories_artist } from "v2/__generated__/ArtistRelatedGeneCategories_artist.graphql"
+import { ArtistRelatedGeneCategoriesQuery } from "v2/__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
 
-interface ArtistRelatedCategoriesProps {
-  artist: ArtistRelatedCategories_artist
+interface ArtistRelatedGeneCategoriesProps {
+  artist: ArtistRelatedGeneCategories_artist
 }
 
-const ArtistRelatedCategories: FC<ArtistRelatedCategoriesProps> = ({
+const ArtistRelatedGeneCategories: FC<ArtistRelatedGeneCategoriesProps> = ({
   artist,
 }) => {
   const categories = extractNodes(artist.related?.genes)
+
+  if (categories.length === 0) return null
 
   return (
     <>
@@ -24,9 +26,6 @@ const ArtistRelatedCategories: FC<ArtistRelatedCategoriesProps> = ({
       <Spacer mt={4} />
 
       {categories.map(category => {
-        console.log(category.name)
-        console.log(category.href)
-
         return (
           <Pill mr={1} mb={1}>
             <RouterLink to={category.href} textDecoration="none">
@@ -39,11 +38,11 @@ const ArtistRelatedCategories: FC<ArtistRelatedCategoriesProps> = ({
   )
 }
 
-const ArtistRelatedCategoriesFragmentContainer = createFragmentContainer(
-  ArtistRelatedCategories,
+export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContainer(
+  ArtistRelatedGeneCategories,
   {
     artist: graphql`
-      fragment ArtistRelatedCategories_artist on Artist {
+      fragment ArtistRelatedGeneCategories_artist on Artist {
         related {
           genes {
             edges {
@@ -59,37 +58,38 @@ const ArtistRelatedCategoriesFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ArtistRelatedCategoriesQueryRenderer: FC<{ slug: string }> = ({
+export const ArtistRelatedGeneCategoriesQueryRenderer: FC<{ slug: string }> = ({
   slug,
 }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtistRelatedCategoriesQuery>
+    <SystemQueryRenderer<ArtistRelatedGeneCategoriesQuery>
       lazyLoad
       environment={relayEnvironment}
       variables={{ slug }}
       query={graphql`
-        query ArtistRelatedCategoriesQuery($slug: String!) {
+        query ArtistRelatedGeneCategoriesQuery($slug: String!) {
           artist(id: $slug) {
-            ...ArtistRelatedCategories_artist
+            ...ArtistRelatedGeneCategories_artist
           }
         }
       `}
       render={({ error, props }) => {
         if (error) {
+          console.error(error)
           return null
         }
 
-        if (!props) {
-          return null
-        }
-
-        if (props.artist) {
+        if (props?.artist) {
           return (
-            <ArtistRelatedCategoriesFragmentContainer artist={props.artist} />
+            <ArtistRelatedGeneCategoriesFragmentContainer
+              artist={props.artist}
+            />
           )
         }
+
+        return null
       }}
     />
   )

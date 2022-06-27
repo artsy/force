@@ -4,28 +4,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistGenes_Test_QueryVariables = {};
-export type ArtistGenes_Test_QueryResponse = {
+export type ArtistRelatedGeneCategories_Test_QueryVariables = {};
+export type ArtistRelatedGeneCategories_Test_QueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistGenes_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
     } | null;
 };
-export type ArtistGenes_Test_Query = {
-    readonly response: ArtistGenes_Test_QueryResponse;
-    readonly variables: ArtistGenes_Test_QueryVariables;
+export type ArtistRelatedGeneCategories_Test_Query = {
+    readonly response: ArtistRelatedGeneCategories_Test_QueryResponse;
+    readonly variables: ArtistRelatedGeneCategories_Test_QueryVariables;
 };
 
 
 
 /*
-query ArtistGenes_Test_Query {
+query ArtistRelatedGeneCategories_Test_Query {
   artist(id: "example") {
-    ...ArtistGenes_artist
+    ...ArtistRelatedGeneCategories_artist
     id
   }
 }
 
-fragment ArtistGenes_artist on Artist {
+fragment ArtistRelatedGeneCategories_artist on Artist {
   related {
     genes {
       edges {
@@ -72,7 +72,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistGenes_Test_Query",
+    "name": "ArtistRelatedGeneCategories_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -85,7 +85,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistGenes_artist"
+            "name": "ArtistRelatedGeneCategories_artist"
           }
         ],
         "storageKey": "artist(id:\"example\")"
@@ -98,7 +98,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtistGenes_Test_Query",
+    "name": "ArtistRelatedGeneCategories_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -174,7 +174,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2cc26d2483a51f256942ec328ca967ce",
+    "cacheID": "d80c45cc6e675eaab38dd89dfe9c7f65",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -214,11 +214,11 @@ return {
         "artist.related.genes.edges.node.name": (v3/*: any*/)
       }
     },
-    "name": "ArtistGenes_Test_Query",
+    "name": "ArtistRelatedGeneCategories_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistGenes_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistGenes_artist\n    id\n  }\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedGeneCategories_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedGeneCategories_artist\n    id\n  }\n}\n\nfragment ArtistRelatedGeneCategories_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'efd1d0624e66e48949097221e0d1f5e5';
+(node as any).hash = '3552ed2ae3d5d546b93914a6dac23665';
 export default node;

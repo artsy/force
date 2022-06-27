@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedCategories_artist = {
+export type ArtistRelatedGeneCategories_artist = {
     readonly related: {
         readonly genes: {
             readonly edges: ReadonlyArray<{
@@ -15,12 +15,12 @@ export type ArtistRelatedCategories_artist = {
             } | null> | null;
         } | null;
     } | null;
-    readonly " $refType": "ArtistRelatedCategories_artist";
+    readonly " $refType": "ArtistRelatedGeneCategories_artist";
 };
-export type ArtistRelatedCategories_artist$data = ArtistRelatedCategories_artist;
-export type ArtistRelatedCategories_artist$key = {
-    readonly " $data"?: ArtistRelatedCategories_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedCategories_artist">;
+export type ArtistRelatedGeneCategories_artist$data = ArtistRelatedGeneCategories_artist;
+export type ArtistRelatedGeneCategories_artist$key = {
+    readonly " $data"?: ArtistRelatedGeneCategories_artist$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
 };
 
 
@@ -29,7 +29,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistRelatedCategories_artist",
+  "name": "ArtistRelatedGeneCategories_artist",
   "selections": [
     {
       "alias": null,
@@ -93,5 +93,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = 'c0241915a364d08052e42fc825e2fccc';
+(node as any).hash = '9bceff0b831e055c43a3aa8fc66d1754';
 export default node;
