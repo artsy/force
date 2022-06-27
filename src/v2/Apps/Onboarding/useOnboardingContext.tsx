@@ -1,7 +1,6 @@
 import {
   FC,
   createContext,
-  createRef,
   useRef,
   useContext,
   useReducer,
@@ -10,7 +9,7 @@ import {
 import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
 import { useConfig } from "./config"
 
-type State = {
+export type State = {
   questionOne: string | null
   questionTwo: string[]
   questionThree: string | null
@@ -59,14 +58,7 @@ const reducer = (onReset: () => void) => (state: State, action: Action) => {
   }
 }
 
-/**
- * Basis is just State stored in a ref.
- * It is used to make decisions in the workflow.
- */
-export type Basis = State
-
 const OnboardingContext = createContext<{
-  basis: React.RefObject<Basis>
   current: string
   dispatch: React.Dispatch<Action>
   next(): void
@@ -75,7 +67,6 @@ const OnboardingContext = createContext<{
   state: State
   workflowEngine: WorkflowEngine
 }>({
-  basis: createRef<Basis>(),
   current: "",
   dispatch: () => {},
   next: () => {},
@@ -93,15 +84,12 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   children,
   onDone,
 }) => {
-  const basis = useRef<Basis>(DEFAULT_STATE)
+  const basis = useRef<State>(DEFAULT_STATE)
 
   const { workflowEngine, current, next, reset: __reset__ } = useConfig({
     basis,
     onDone,
   })
-
-  const progress =
-    ((workflowEngine.position() - 1) / workflowEngine.total()) * 100
 
   const [state, dispatch] = useReducer(reducer(__reset__), DEFAULT_STATE)
 
@@ -109,10 +97,12 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
     basis.current = state
   }, [state])
 
+  const progress =
+    ((workflowEngine.position() - 1) / workflowEngine.total()) * 100
+
   return (
     <OnboardingContext.Provider
       value={{
-        basis,
         current,
         dispatch,
         next,
