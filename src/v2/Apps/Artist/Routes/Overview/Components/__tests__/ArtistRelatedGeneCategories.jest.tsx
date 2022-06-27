@@ -30,11 +30,13 @@ describe("ArtistGenes", () => {
   it("renders correctly", () => {
     renderWithRelay({
       Artist: () => ({
-        related: { genes: { edges: [{ node: { href: "/gene/href" } }] } },
+        related: {
+          genes: { edges: [{ node: { name: "example", href: "/gene/href" } }] },
+        },
       }),
     })
 
     expect(screen.getByText("Related Categories")).toBeInTheDocument()
-    expect(screen.getByText(/name/g)).toBeInTheDocument()
+    expect(screen.getByText("example")).toBeInTheDocument()
   })
 })
