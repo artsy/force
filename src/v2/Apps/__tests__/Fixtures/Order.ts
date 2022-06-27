@@ -91,6 +91,12 @@ const OrderArtworkNodeWithoutShipping = {
   editionSets: null,
 }
 
+const artworkFromGermany = {
+  ...OrderArtworkNodeWithoutShipping,
+  priceCurrency: "EUR",
+  shippingCountry: "DE",
+}
+
 const OrderArtworkVersionNode = {
   artworkVersion: {
     id: "02393",
@@ -125,41 +131,38 @@ const OrderArtworkNode = {
   },
 }
 
-const ArtsyShippingDomesticOrderArtworkNode = {
+const ArtsyShippingDomesticFromUSArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
     processWithArtsyShippingDomestic: true,
     artsyShippingInternational: false,
-    domesticShippingFee: {
-      minor: 10000,
-      major: 100,
-      display: "$100",
-    },
-    internationalShippingFee: {
-      minor: 10000,
-      major: 100,
-      display: "$100",
-    },
+  },
+}
+const ArtsyShippingDomesticFromGermanyArtworkNode = {
+  artwork: {
+    ...artworkFromGermany,
+    shippingOrigin: "Berlin, DE",
+    processWithArtsyShippingDomestic: true,
+    artsyShippingInternational: false,
   },
 }
 
-const ArtstyShippingInternationalOrderArtworkNode = {
+const ArtstyShippingInternationalFromUSArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
     processWithArtsyShippingDomestic: false,
     artsyShippingInternational: true,
-    domesticShippingFee: {
-      minor: 10000,
-      major: 100,
-      display: "$100",
-    },
-    internationalShippingFee: {
-      minor: 10000,
-      major: 100,
-      display: "$100",
-    },
+  },
+}
+
+const ArtsyShippingInternationalFromGermanyArtworkNode = {
+  artwork: {
+    ...artworkFromGermany,
+    shippingOrigin: "Berlin, DE",
+    processWithArtsyShippingDomestic: false,
+    artsyShippingInternational: true,
   },
 }
 
@@ -341,7 +344,7 @@ export const UntouchedBuyOrder = {
   source: "artwork_page",
 } as const
 
-export const UntouchedBuyOrderWithArtaEnabled = {
+export const UntouchedBuyOrderWithArtsyShippingDomesticFromUS = {
   ...UntouchedBuyOrder,
   __typename: "CommerceBuyOrder",
   lineItems: {
@@ -352,7 +355,7 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
-          ...ArtsyShippingDomesticOrderArtworkNode,
+          ...ArtsyShippingDomesticFromUSArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -363,7 +366,7 @@ export const UntouchedBuyOrderWithArtaEnabled = {
   },
 } as const
 
-export const UntouchedBuyOrderWithArtsyShippingInternational = {
+export const UntouchedBuyOrderWithArtsyShippingInternationalFromUS = {
   ...UntouchedBuyOrder,
   __typename: "CommerceBuyOrder",
   lineItems: {
@@ -374,7 +377,51 @@ export const UntouchedBuyOrderWithArtsyShippingInternational = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
-          ...ArtstyShippingInternationalOrderArtworkNode,
+          ...ArtstyShippingInternationalFromUSArtworkNode,
+          ...OrderArtworkVersionNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNode,
+        },
+      },
+    ],
+  },
+} as const
+
+export const UntouchedBuyOrderWithArtsyShippingDomesticFromGermany = {
+  ...UntouchedBuyOrder,
+  __typename: "CommerceBuyOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          ...ArtsyShippingDomesticFromGermanyArtworkNode,
+          ...OrderArtworkVersionNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNode,
+        },
+      },
+    ],
+  },
+} as const
+
+export const UntouchedBuyOrderWithArtsyShippingInternationalFromGermany = {
+  ...UntouchedBuyOrder,
+  __typename: "CommerceBuyOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          ...ArtsyShippingInternationalFromGermanyArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -458,7 +505,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
               },
             ],
           },
-          ...ArtsyShippingDomesticOrderArtworkNode,
+          ...ArtsyShippingDomesticFromUSArtworkNode,
           ...OrderArtworkVersionNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...EmptyFulfillmentsNode,
@@ -552,7 +599,7 @@ export const UntouchedBuyOrderWithSelectedShippingQuote = {
               },
             ],
           },
-          ...ArtsyShippingDomesticOrderArtworkNode,
+          ...ArtsyShippingDomesticFromUSArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,

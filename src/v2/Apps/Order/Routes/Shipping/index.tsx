@@ -47,6 +47,7 @@ import {
 } from "v2/Components/AddressForm"
 import { Router } from "found"
 import { Component } from "react"
+import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -181,10 +182,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   isArtsyShipping = () => {
     const addresses = this.getAddressList()
-    const processWithArtsyShippingDomestic = !!this.getOrderArtwork()
-      ?.processWithArtsyShippingDomestic
-    const artsyShippingInternational = !!this.getOrderArtwork()
-      ?.artsyShippingInternational
+    const artwork = this.getOrderArtwork()
+    const processWithArtsyShippingDomestic = !!artwork?.processWithArtsyShippingDomestic
+    const artsyShippingInternational = !!artwork?.artsyShippingInternational
 
     const shippingCountry = this.isCreateNewAddress()
       ? this.state.address.country
@@ -193,11 +193,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           address => address?.node?.internalID == this.state.selectedAddressID
         )?.node?.country
 
+    const isDomesticOrder =
+      (COUNTRIES_IN_EUROPEAN_UNION.includes(shippingCountry) &&
+        COUNTRIES_IN_EUROPEAN_UNION.includes(artwork?.shippingCountry)) ||
+      artwork?.shippingCountry == shippingCountry
+    const isInternationalOrder = !isDomesticOrder
+
     return (
       this.state.shippingOption === "SHIP" &&
-      ((processWithArtsyShippingDomestic && shippingCountry === "US") ||
-        (artsyShippingInternational && shippingCountry !== "US"))
-      // we are only allowing US based Artsy Shipping for now
+      ((processWithArtsyShippingDomestic && isDomesticOrder) ||
+        (artsyShippingInternational && isInternationalOrder))
     )
   }
 

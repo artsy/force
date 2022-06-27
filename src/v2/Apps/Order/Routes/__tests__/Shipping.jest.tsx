@@ -3,9 +3,11 @@ import { cloneDeep } from "lodash"
 
 import {
   UntouchedBuyOrder,
-  UntouchedBuyOrderWithArtaEnabled,
-  UntouchedBuyOrderWithArtsyShippingInternational,
   UntouchedOfferOrder,
+  UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
+  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+  UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
+  UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import {
   fillAddressForm,
@@ -63,16 +65,32 @@ const testOrder: ShippingTestQueryRawResponse["order"] = {
   id: "1234",
 }
 
-const ArtaEnabledTestOrder: ShippingTestQueryRawResponse["order"] = {
-  ...UntouchedBuyOrderWithArtaEnabled,
+const ArtsyShippingDomesticFromUSOrder: ShippingTestQueryRawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
   internalID: "1234",
   id: "1234",
 }
 
-const ArtsyShippingInternationalTestOrder: ShippingTestQueryRawResponse["order"] = {
-  ...UntouchedBuyOrderWithArtsyShippingInternational,
+const ArtsyShippingInternationalFromUSTestOrder: ShippingTestQueryRawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
+  __typename: "CommerceBuyOrder",
+  mode: "BUY",
+  internalID: "1234",
+  id: "1234",
+}
+
+const ArtsyShippingDomesticFromGermanyOrder: ShippingTestQueryRawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
+  __typename: "CommerceBuyOrder",
+  mode: "BUY",
+  internalID: "1234",
+  id: "1234",
+}
+
+const ArtsyShippingInternationalFromGermanyOrder: ShippingTestQueryRawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
   internalID: "1234",
@@ -375,14 +393,14 @@ describe("Shipping", () => {
       })
     })
 
-    describe("ARTA shipping", () => {
+    describe("Artsy domestic shipping", () => {
       let page
 
       beforeEach(async () => {
         page = await buildPage({
           mockData: {
             order: {
-              ...ArtaEnabledTestOrder,
+              ...ArtsyShippingDomesticFromUSOrder,
             },
           },
         })
@@ -894,7 +912,7 @@ describe("Shipping", () => {
         mockData: {
           me: collectorWithDefaultAddressInEurope,
           order: {
-            ...ArtaEnabledTestOrder,
+            ...ArtsyShippingDomesticFromUSOrder,
           },
         },
       })
@@ -904,284 +922,395 @@ describe("Shipping", () => {
     })
 
     describe("Artsy shipping international", () => {
-      it("commits set shipping mutation if address in Europe", async () => {
-        const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
-        collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
-        collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+      describe("when artwork is located in the US", () => {
+        describe("when collector is located in EU", () => {
+          const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
+          beforeEach(async () => {
+            // sets collector's default address to a Spain address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+            // US address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+          })
 
-        page = await buildPage({
-          mockData: {
-            me: collectorWithDefaultAddressInEurope,
-            order: {
-              ...ArtsyShippingInternationalTestOrder,
-            },
-          },
+          it("commits the set shipping mutation", async () => {
+            page = await buildPage({
+              mockData: {
+                me: collectorWithDefaultAddressInEurope,
+                order: {
+                  ...ArtsyShippingInternationalFromUSTestOrder,
+                },
+              },
+            })
+            await page.update()
+
+            expect(mutations.mockFetch).toHaveBeenCalled()
+          })
         })
-        await page.update()
 
-        expect(mutations.mockFetch).toHaveBeenCalled()
+        describe("when collector is located in US", () => {
+          it("does not commit set shipping mutation", async () => {
+            page = await buildPage({
+              mockData: {
+                me: testMe,
+                order: {
+                  ...ArtsyShippingInternationalFromUSTestOrder,
+                },
+              },
+            })
+            await page.update()
+
+            expect(mutations.mockFetch).not.toHaveBeenCalled()
+          })
+        })
       })
 
-      it("does not commit set shipping mutation if address in US", async () => {
-        page = await buildPage({
-          mockData: {
-            me: testMe,
-            order: {
-              ...ArtsyShippingInternationalTestOrder,
-            },
-          },
-        })
-        await page.update()
+      describe("when artwork is located in the Germany", () => {
+        describe("when collector is located in EU", () => {
+          const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
 
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
+          beforeEach(async () => {
+            // sets collector's default address to a Spain address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+            // US address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+          })
+
+          it("does not commit set shipping mutation", async () => {
+            page = await buildPage({
+              mockData: {
+                me: collectorWithDefaultAddressInEurope,
+                order: {
+                  ...ArtsyShippingInternationalFromGermanyOrder,
+                },
+              },
+            })
+            await page.update()
+            expect(mutations.mockFetch).not.toHaveBeenCalled()
+          })
+        })
+
+        describe("when collector is located in US", () => {
+          it("does commit set shipping mutation", async () => {
+            page = await buildPage({
+              mockData: {
+                me: testMe,
+                order: {
+                  ...ArtsyShippingInternationalFromGermanyOrder,
+                },
+              },
+            })
+            await page.update()
+            expect(mutations.mockFetch).toHaveBeenCalled()
+          })
+        })
       })
     })
 
-    describe("ARTA shipping", () => {
-      beforeEach(async () => {
-        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+    describe("Artsy shipping domestic", () => {
+      describe("when artwork is located in Germany", () => {
+        describe("when collector is located in EU", () => {
+          const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
 
-        page = await buildPage({
-          mockData: {
-            me: testMe,
-            order: {
-              ...ArtaEnabledTestOrder,
-            },
-          },
-        })
-      })
+          beforeEach(async () => {
+            // sets collector's default address to a Spain address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+            // US address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+          })
 
-      it("commits set shipping mutation if default collector address in USA", async () => {
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
-        )
-
-        expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "fulfillmentType": "SHIP_ARTA",
-              "id": "1234",
-              "phoneNumber": "422-424-4242",
-              "shipping": Object {
-                "addressLine1": "401 Broadway",
-                "addressLine2": "Floor 25",
-                "city": "New York",
-                "country": "US",
-                "name": "Test Name",
-                "phoneNumber": "422-424-4242",
-                "postalCode": "10013",
-                "region": "NY",
+          it("does commit set shipping mutation", async () => {
+            page = await buildPage({
+              mockData: {
+                me: collectorWithDefaultAddressInEurope,
+                order: {
+                  ...ArtsyShippingDomesticFromGermanyOrder,
+                },
               },
-            },
-          }
-        `)
-      })
-
-      it("shows shipping quotes after set shipping mutation commited", async () => {
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
-        )
-
-        expect(page.find(ShippingRoute).state().shippingQuotes).toHaveLength(5)
-      })
-
-      it("default selects the first quote and submit button is enabled", async () => {
-        expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
-          "4a8f8080-23d3-4c0e-9811-7a41a9df6933"
-        )
-
-        expect(page.submitButton.props().disabled).toBeFalsy()
-      })
-
-      it("submit button enabled if shipping quote is selected", async () => {
-        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
-
-        expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
-          "1eb3ba19-643b-4101-b113-2eb4ef7e30b6"
-        )
-
-        expect(page.submitButton.props().disabled).toBeFalsy()
-      })
-
-      it("does not show shipping quotes if address in Europe", async () => {
-        const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
-        collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
-        collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
-
-        page = await buildPage({
-          mockData: {
-            me: collectorWithDefaultAddressInEurope,
-            order: {
-              ...ArtaEnabledTestOrder,
-            },
-          },
-        })
-        await page.update()
-
-        expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
-      })
-
-      it("commites selectShippingOption mutation with correct input", async () => {
-        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
-
-        await page.clickSubmit()
-
-        expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "id": "1234",
-              "selectedShippingQuoteId": "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
-            },
-          }
-        `)
-      })
-
-      it("routes to payment screen after selectShippingOption mutation completes", async () => {
-        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
-
-        await page.clickSubmit()
-
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
-        )
-
-        expect(routes.mockPushRoute).toHaveBeenCalledWith(
-          "/orders/1234/payment"
-        )
-      })
-
-      it("reload shipping quotes after selected address edited", async () => {
-        page
-          .find(`[data-test="editAddressInShipping"]`)
-          .last()
-          .simulate("click")
-        const inputs = page.find("AddressModal").find("input")
-        inputs.forEach(input => {
-          input.instance().value = `Test input '${input.props().name}'`
-          input.simulate("change")
-        })
-        const countrySelect = page.find("AddressModal").find("select").first()
-        countrySelect.instance().value = `US`
-        countrySelect.simulate("change")
-
-        mutations.useResultsOnce({
-          updateUserAddress: {
-            userAddressOrErrors: {
-              internalID: "2",
-              id: "addressID2",
-              isDefault: true,
-              addressLine1: "Test input 'addressLine1'",
-              addressLine2: "Test input 'addressLine2'",
-              city: "Test input 'city'",
-              country: "US",
-              name: "Test input 'name'",
-              phoneNumber: "Test input 'phoneNumber'",
-              postalCode: "Test input 'postalCode'",
-              region: "Test input 'region'",
-            },
-          },
+            })
+            await page.update()
+            expect(mutations.mockFetch).toHaveBeenCalled()
+          })
         })
 
-        const form = page.find("form").first()
-        form.props().onSubmit()
-
-        await page.update()
-
-        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-          "UpdateUserAddressMutation"
-        )
-        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
-          "SetShippingMutation"
-        )
-
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
-        expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
-                "addressLine3": "",
-                "city": "Test input 'city'",
-                "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "422-424-4242",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
+        describe("when collector is located in US", () => {
+          it("does not commit set shipping mutation", async () => {
+            page = await buildPage({
+              mockData: {
+                me: testMe,
+                order: {
+                  ...ArtsyShippingDomesticFromGermanyOrder,
+                },
               },
-              "userAddressID": "2",
-            },
-          }
-        `)
+            })
+            await page.update()
+            expect(mutations.mockFetch).not.toHaveBeenCalled()
+          })
+        })
       })
 
-      it("does not reload shipping quotes after edit not selected address", async () => {
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
-        )
+      describe("when artwork is located in US", () => {
+        describe("when collector is located in EU", () => {
+          let collectorWithDefaultAddressInEurope
+          beforeEach(async () => {
+            const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
+            // sets collector's default address to a Spain address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+            // US collector address
+            collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+          })
 
-        page
-          .find(`[data-test="editAddressInShipping"]`)
-          .first()
-          .simulate("click")
-        const inputs = page.find("AddressModal").find("input")
-        inputs.forEach(input => {
-          input.instance().value = `Test input '${input.props().name}'`
-          input.simulate("change")
-        })
-        const countrySelect = page.find("AddressModal").find("select").first()
-        countrySelect.instance().value = `US`
-        countrySelect.simulate("change")
-
-        mutations.useResultsOnce({
-          updateUserAddress: {
-            userAddressOrErrors: {
-              internalID: "1",
-              id: "addressID1",
-              isDefault: false,
-              addressLine1: "Test input 'addressLine1'",
-              addressLine2: "Test input 'addressLine2'",
-              city: "Test input 'city'",
-              country: "US",
-              name: "Test input 'name'",
-              phoneNumber: "Test input 'phoneNumber'",
-              postalCode: "Test input 'postalCode'",
-              region: "Test input 'region'",
-            },
-          },
-        })
-
-        const form = page.find("form").first()
-        form.props().onSubmit()
-
-        await page.update()
-
-        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-          "UpdateUserAddressMutation"
-        )
-
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-        expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
-                "addressLine3": "",
-                "city": "Test input 'city'",
-                "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "555-555-5555",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
+          it("does not show shipping quotes", async () => {
+            page = await buildPage({
+              mockData: {
+                me: collectorWithDefaultAddressInEurope,
+                order: {
+                  ...ArtsyShippingDomesticFromUSOrder,
+                },
               },
-              "userAddressID": "1",
-            },
-          }
-        `)
+            })
+            await page.update()
+
+            expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
+          })
+        })
+
+        describe("when collector is located in US", () => {
+          beforeEach(async () => {
+            mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+
+            page = await buildPage({
+              mockData: {
+                me: testMe,
+                order: {
+                  ...ArtsyShippingDomesticFromUSOrder,
+                },
+              },
+            })
+          })
+
+          it("commits set shipping mutation", async () => {
+            expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+              "SetShippingMutation"
+            )
+
+            expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "fulfillmentType": "SHIP_ARTA",
+                  "id": "1234",
+                  "phoneNumber": "422-424-4242",
+                  "shipping": Object {
+                    "addressLine1": "401 Broadway",
+                    "addressLine2": "Floor 25",
+                    "city": "New York",
+                    "country": "US",
+                    "name": "Test Name",
+                    "phoneNumber": "422-424-4242",
+                    "postalCode": "10013",
+                    "region": "NY",
+                  },
+                },
+              }
+            `)
+          })
+
+          it("shows shipping quotes after set shipping mutation commited", async () => {
+            expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+              "SetShippingMutation"
+            )
+
+            expect(
+              page.find(ShippingRoute).state().shippingQuotes
+            ).toHaveLength(5)
+          })
+
+          it("default selects the first quote and submit button is enabled", async () => {
+            expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
+              "4a8f8080-23d3-4c0e-9811-7a41a9df6933"
+            )
+
+            expect(page.submitButton.props().disabled).toBeFalsy()
+          })
+
+          it("submit button enabled if shipping quote is selected", async () => {
+            page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+            expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
+              "1eb3ba19-643b-4101-b113-2eb4ef7e30b6"
+            )
+
+            expect(page.submitButton.props().disabled).toBeFalsy()
+          })
+
+          it("commites selectShippingOption mutation with correct input", async () => {
+            page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+            await page.clickSubmit()
+
+            expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "id": "1234",
+                  "selectedShippingQuoteId": "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                },
+              }
+            `)
+          })
+
+          it("routes to payment screen after selectShippingOption mutation completes", async () => {
+            page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+            await page.clickSubmit()
+
+            expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+              "SetShippingMutation"
+            )
+
+            expect(routes.mockPushRoute).toHaveBeenCalledWith(
+              "/orders/1234/payment"
+            )
+          })
+
+          it("reload shipping quotes after selected address edited", async () => {
+            page
+              .find(`[data-test="editAddressInShipping"]`)
+              .last()
+              .simulate("click")
+            const inputs = page.find("AddressModal").find("input")
+            inputs.forEach(input => {
+              input.instance().value = `Test input '${input.props().name}'`
+              input.simulate("change")
+            })
+            const countrySelect = page
+              .find("AddressModal")
+              .find("select")
+              .first()
+            countrySelect.instance().value = `US`
+            countrySelect.simulate("change")
+
+            mutations.useResultsOnce({
+              updateUserAddress: {
+                userAddressOrErrors: {
+                  internalID: "2",
+                  id: "addressID2",
+                  isDefault: true,
+                  addressLine1: "Test input 'addressLine1'",
+                  addressLine2: "Test input 'addressLine2'",
+                  city: "Test input 'city'",
+                  country: "US",
+                  name: "Test input 'name'",
+                  phoneNumber: "Test input 'phoneNumber'",
+                  postalCode: "Test input 'postalCode'",
+                  region: "Test input 'region'",
+                },
+              },
+            })
+
+            const form = page.find("form").first()
+            form.props().onSubmit()
+
+            await page.update()
+
+            expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+              "UpdateUserAddressMutation"
+            )
+            expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
+              "SetShippingMutation"
+            )
+
+            expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
+            expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "attributes": Object {
+                    "addressLine1": "Test input 'addressLine1'",
+                    "addressLine2": "Test input 'addressLine2'",
+                    "addressLine3": "",
+                    "city": "Test input 'city'",
+                    "country": "US",
+                    "name": "Test input 'name'",
+                    "phoneNumber": "422-424-4242",
+                    "postalCode": "Test input 'postalCode'",
+                    "region": "Test input 'region'",
+                  },
+                  "userAddressID": "2",
+                },
+              }
+            `)
+          })
+
+          it("does not reload shipping quotes after edit not selected address", async () => {
+            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+              "SetShippingMutation"
+            )
+
+            page
+              .find(`[data-test="editAddressInShipping"]`)
+              .first()
+              .simulate("click")
+            const inputs = page.find("AddressModal").find("input")
+            inputs.forEach(input => {
+              input.instance().value = `Test input '${input.props().name}'`
+              input.simulate("change")
+            })
+            const countrySelect = page
+              .find("AddressModal")
+              .find("select")
+              .first()
+            countrySelect.instance().value = `US`
+            countrySelect.simulate("change")
+
+            mutations.useResultsOnce({
+              updateUserAddress: {
+                userAddressOrErrors: {
+                  internalID: "1",
+                  id: "addressID1",
+                  isDefault: false,
+                  addressLine1: "Test input 'addressLine1'",
+                  addressLine2: "Test input 'addressLine2'",
+                  city: "Test input 'city'",
+                  country: "US",
+                  name: "Test input 'name'",
+                  phoneNumber: "Test input 'phoneNumber'",
+                  postalCode: "Test input 'postalCode'",
+                  region: "Test input 'region'",
+                },
+              },
+            })
+
+            const form = page.find("form").first()
+            form.props().onSubmit()
+
+            await page.update()
+
+            expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+              "UpdateUserAddressMutation"
+            )
+
+            expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+            expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "attributes": Object {
+                    "addressLine1": "Test input 'addressLine1'",
+                    "addressLine2": "Test input 'addressLine2'",
+                    "addressLine3": "",
+                    "city": "Test input 'city'",
+                    "country": "US",
+                    "name": "Test input 'name'",
+                    "phoneNumber": "555-555-5555",
+                    "postalCode": "Test input 'postalCode'",
+                    "region": "Test input 'region'",
+                  },
+                  "userAddressID": "1",
+                },
+              }
+            `)
+          })
+        })
       })
     })
 

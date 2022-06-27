@@ -39,6 +39,10 @@
   dependencies:
     core-js "3"
 
+"@artsy/commerce_helpers@artsy/commerce_helpers":
+  version "0.1.0"
+  resolved "https://codeload.github.com/artsy/commerce_helpers/tar.gz/65c8cd03480bf9030d853e2d114f8bcf6de969a7"
+
 "@artsy/detect-responsive-traits@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.1.0.tgz#f7ae5041893b859ff9f6bc305fd318d2f5132745"
