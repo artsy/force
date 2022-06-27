@@ -6,7 +6,7 @@ import {
   OPTION_YES_I_LOVE_COLLECTING_ART,
   useConfig,
 } from "../config"
-import { Basis } from "../useOnboardingContext"
+import { State } from "../useOnboardingContext"
 
 describe("config", () => {
   it("should move through workflow", () => {
@@ -40,7 +40,7 @@ describe("config", () => {
         questionOne: OPTION_YES_I_LOVE_COLLECTING_ART,
         questionTwo: [OPTION_DEVELOPING_MY_ART_TASTES],
         questionThree: null,
-      } as Basis,
+      } as State,
     }
     const {
       result: {
