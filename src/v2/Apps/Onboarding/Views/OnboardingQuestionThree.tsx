@@ -5,6 +5,7 @@ import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
   OPTION_ARTISTS_ON_THE_RISE,
   OPTION_A_CURATED_SELECTION_OF_ARTWORKS,
+  OPTION_COLLECTING_ART_THAT_MOVES_ME,
   OPTION_DEVELOPING_MY_ART_TASTES,
   OPTION_FINDING_GREAT_INVESTMENTS,
   OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN,
@@ -45,6 +46,7 @@ export const OnboardingQuestionThree: FC = () => {
         ]
 
       case state.questionTwo[0] === OPTION_FINDING_GREAT_INVESTMENTS:
+      case state.questionTwo[0] === OPTION_COLLECTING_ART_THAT_MOVES_ME:
         return [
           OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN,
           OPTION_TOP_AUCTION_LOTS,
