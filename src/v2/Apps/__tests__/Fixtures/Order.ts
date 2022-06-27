@@ -88,7 +88,7 @@ const OrderArtworkNodeWithoutShipping = {
   slug: "artworkId",
   title: "Gramercy Park South",
   isPriceRange: false,
-  isEdition: false,
+  editionSets: null,
 }
 
 const OrderArtworkVersionNode = {
@@ -640,7 +640,7 @@ export const UntouchedOfferOrder = {
   totalListPriceCents: 1600000,
 } as const
 
-export const UntouchedOfferOrderEditionSet = {
+export const UntouchedOfferOrderSingleEditionSet = {
   ...UntouchedOfferOrder,
   lineItems: {
     edges: [
@@ -653,12 +653,44 @@ export const UntouchedOfferOrderEditionSet = {
           __isCommerceOrder: "CommerceOfferOrder",
           artwork: {
             ...OrderArtworkNode.artwork,
-            isEdition: true,
+            editionSets: [{ internalID: "1" }],
           },
           ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_EditionSet,
           ...OrderArtworkFulfillmentsNode,
           ...ArtaShipmentNode,
+        },
+      },
+    ],
+  },
+}
+
+export const UntouchedOfferOrderSingleEditionSetNoPrice = {
+  ...UntouchedOfferOrderSingleEditionSet,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          artwork: {
+            ...OrderArtworkNode.artwork,
+            listPrice: null,
+          },
+        },
+      },
+    ],
+  },
+}
+
+export const UntouchedOfferOrderMultipleEditionSets = {
+  ...UntouchedOfferOrderSingleEditionSet,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          artwork: {
+            ...OrderArtworkNode.artwork,
+            editionSets: [{ internalID: "1" }, { internalID: "2" }],
+          },
         },
       },
     ],
@@ -729,7 +761,7 @@ export const UntouchedOfferOrderWithRange = {
           shippingQuoteOptions: null,
           artwork: {
             ...OrderArtworkNode.artwork,
-            isEdition: true,
+            editionSets: [{ internalID: "1" }, { internalID: "2" }],
           },
           ...OrderArtworkVersionNode,
           ...OfferArtworkOrEditionSetNode_Range,

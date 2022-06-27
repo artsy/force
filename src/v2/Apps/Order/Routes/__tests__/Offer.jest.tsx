@@ -4,7 +4,9 @@ import {
   UntouchedOfferOrder,
   UntouchedOfferOrderInPounds,
   UntouchedOfferOrderWithRange,
-  UntouchedOfferOrderEditionSet,
+  UntouchedOfferOrderMultipleEditionSets,
+  UntouchedOfferOrderSingleEditionSet,
+  UntouchedOfferOrderSingleEditionSetNoPrice,
   UntouchedOfferOrderPriceHidden,
 } from "../../../__tests__/Fixtures/Order"
 import {
@@ -103,7 +105,7 @@ describe("Offer InitialMutation", () => {
   })
 
   describe("the page layout", () => {
-    it("has 4 price options", () => {
+    it("has 4 price options - unique artwork", () => {
       let wrapper = getWrapper({
         CommerceOrder: () => testOffer,
       })
@@ -114,6 +116,38 @@ describe("Offer InitialMutation", () => {
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: US$16,000")
       expect(page.text()).toContain("All offers are binding")
+    })
+    it("has price options - single edition with price", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...UntouchedOfferOrderSingleEditionSet,
+          internalID: "1234",
+        }),
+      })
+      let page = new OrderAppTestPage(wrapper)
+
+      expect(page.priceOptions).toHaveLength(1)
+      expect(page.priceOptions.find("BorderedRadio")).toHaveLength(4)
+    })
+    it("doesn't have price options - single edition without price", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...UntouchedOfferOrderSingleEditionSetNoPrice,
+          internalID: "1234",
+        }),
+      })
+      let page = new OrderAppTestPage(wrapper)
+      expect(page.find("PriceOptions").exists()).toBeFalsy()
+    })
+    it("doesn't have price options - multiple editions", () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...UntouchedOfferOrderMultipleEditionSets,
+          internalID: "1234",
+        }),
+      })
+      let page = new OrderAppTestPage(wrapper)
+      expect(page.find("PriceOptions").exists()).toBeFalsy()
     })
 
     it("can receive input, which updates the transaction summary", async () => {
@@ -372,7 +406,7 @@ describe("Offer InitialMutation", () => {
       it("shows if the offer amount is too small", async () => {
         let wrapper = getWrapper({
           CommerceOrder: () => ({
-            ...UntouchedOfferOrderEditionSet,
+            ...UntouchedOfferOrderMultipleEditionSets,
             internalID: "1234",
           }),
         })

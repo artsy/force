@@ -19,7 +19,25 @@ export type Offer_order = {
                     readonly slug: string;
                     readonly price: string | null;
                     readonly isPriceRange: boolean | null;
-                    readonly isEdition: boolean | null;
+                    readonly listPrice: ({
+                        readonly __typename: "Money";
+                        readonly major: number;
+                    } | {
+                        readonly __typename: "PriceRange";
+                        readonly maxPrice: {
+                            readonly major: number;
+                        } | null;
+                        readonly minPrice: {
+                            readonly major: number;
+                        } | null;
+                    } | {
+                        /*This will never be '%other', but we need some
+                        value in case none of the concrete values match.*/
+                        readonly __typename: "%other";
+                    }) | null;
+                    readonly editionSets: ReadonlyArray<{
+                        readonly internalID: string;
+                    } | null> | null;
                     readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
                 } | null;
                 readonly artworkOrEditionSet: ({
@@ -55,11 +73,34 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "price",
   "storageKey": null
 },
-v1 = [
-  (v0/*: any*/),
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
+],
+v4 = [
+  (v1/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -74,13 +115,7 @@ return {
   "metadata": null,
   "name": "Offer_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -148,7 +183,7 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -159,8 +194,58 @@ return {
                     {
                       "alias": null,
                       "args": null,
-                      "kind": "ScalarField",
-                      "name": "isEdition",
+                      "concreteType": null,
+                      "kind": "LinkedField",
+                      "name": "listPrice",
+                      "plural": false,
+                      "selections": [
+                        (v2/*: any*/),
+                        {
+                          "kind": "InlineFragment",
+                          "selections": (v3/*: any*/),
+                          "type": "Money",
+                          "abstractKey": null
+                        },
+                        {
+                          "kind": "InlineFragment",
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Money",
+                              "kind": "LinkedField",
+                              "name": "maxPrice",
+                              "plural": false,
+                              "selections": (v3/*: any*/),
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Money",
+                              "kind": "LinkedField",
+                              "name": "minPrice",
+                              "plural": false,
+                              "selections": (v3/*: any*/),
+                              "storageKey": null
+                            }
+                          ],
+                          "type": "PriceRange",
+                          "abstractKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "EditionSet",
+                      "kind": "LinkedField",
+                      "name": "editionSets",
+                      "plural": true,
+                      "selections": [
+                        (v0/*: any*/)
+                      ],
                       "storageKey": null
                     },
                     {
@@ -179,22 +264,16 @@ return {
                   "name": "artworkOrEditionSet",
                   "plural": false,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "__typename",
-                      "storageKey": null
-                    },
+                    (v2/*: any*/),
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v4/*: any*/),
                       "type": "Artwork",
                       "abstractKey": null
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v4/*: any*/),
                       "type": "EditionSet",
                       "abstractKey": null
                     }
@@ -244,5 +323,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'ea62ca9d92afba9e622a857060399ea7';
+(node as any).hash = 'a1867bbac372e425b11e65589e96fc5a';
 export default node;

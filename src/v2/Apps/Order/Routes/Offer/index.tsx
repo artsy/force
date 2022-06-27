@@ -155,7 +155,14 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const listPriceCents = this.props.order.totalListPriceCents
     const artworkPrice = artwork?.price
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
-    const isEdition = artwork?.isEdition
+    const hasPrice =
+      (artwork?.listPrice?.__typename === "Money" &&
+        artwork?.listPrice?.major) ||
+      (artwork?.listPrice?.__typename === "PriceRange" &&
+        artwork?.listPrice?.maxPrice?.major &&
+        artwork?.listPrice?.minPrice?.major)
+    const showPriceOptions =
+      (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
       ?.displayPriceRange
@@ -163,7 +170,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     if (
       !isPriceHidden &&
       !isRangeOffer &&
-      (isInquiryCheckout || isEdition) &&
+      (isInquiryCheckout || !showPriceOptions) &&
       !lowSpeedBumpEncountered &&
       offerValue * 100 < listPriceCents * 0.8
     ) {
@@ -223,7 +230,14 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
 
     const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
-    const isEdition = artwork?.isEdition
+    const hasPrice =
+      (artwork?.listPrice?.__typename === "Money" &&
+        artwork?.listPrice?.major) ||
+      (artwork?.listPrice?.__typename === "PriceRange" &&
+        artwork?.listPrice?.maxPrice?.major &&
+        artwork?.listPrice?.minPrice?.major)
+    const showPriceOptions =
+      (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
 
     return (
       <>
@@ -235,7 +249,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
               id="offer-page-left-column"
             >
-              {(isInquiryCheckout || isEdition) && (
+              {(isInquiryCheckout || !showPriceOptions) && (
                 <>
                   <Flex flexDirection="column">
                     <OfferInput
@@ -250,7 +264,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   {priceNote}
                 </>
               )}
-              {!isInquiryCheckout && !isEdition && (
+              {!isInquiryCheckout && showPriceOptions && (
                 <>
                   <Text variant="lg-display" color="black80" mt={2}>
                     Select an Option
@@ -366,7 +380,23 @@ export const OfferFragmentContainer = createFragmentContainer(
                 slug
                 price
                 isPriceRange
-                isEdition
+                listPrice {
+                  __typename
+                  ... on Money {
+                    major
+                  }
+                  ... on PriceRange {
+                    maxPrice {
+                      major
+                    }
+                    minPrice {
+                      major
+                    }
+                  }
+                }
+                editionSets {
+                  internalID
+                }
                 ...PriceOptions_artwork
               }
               artworkOrEditionSet {
