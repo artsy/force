@@ -58,7 +58,7 @@ interface ReplyProps {
   environment: Environment
   onScroll: () => void
   refetch: RelayRefetchProp["refetch"]
-  openInquiryModal: () => void
+  openInquiryModal: ({ createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
 
@@ -137,7 +137,9 @@ export const Reply: React.FC<ReplyProps> = props => {
       <Flex zIndex={[null, 2]} flexDirection="column" background="white">
         <ConversationCTAFragmentContainer
           conversation={conversation}
-          openInquiryModal={() => openInquiryModal()}
+          openInquiryModal={({ createsOfferOrder }) =>
+            openInquiryModal({ createsOfferOrder })
+          }
           openOrderModal={() => openOrderModal()}
         />
         <StyledFlex p={1}>

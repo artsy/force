@@ -19,7 +19,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation
-  openInquiryModal: () => void
+  openInquiryModal: ({ createsOfferOrder: boolean }) => void
   openOrderModal: () => void
 }
 
@@ -78,13 +78,17 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
           <Flex flexDirection="row">
             {isCBNEnabled && isAcquireable && (
               <PurchaseOnInquiryButtonFragmentContainer
-                openInquiryModal={() => openInquiryModal()}
+                openInquiryModal={() =>
+                  openInquiryModal({ createsOfferOrder: false })
+                }
                 conversation={conversation}
               />
             )}
             {(isOfferableFromInquiry || (isCBNEnabled && isOfferable)) && (
               <MakeOfferOnInquiryButtonFragmentContainer
-                openInquiryModal={() => openInquiryModal()}
+                openInquiryModal={() =>
+                  openInquiryModal({ createsOfferOrder: true })
+                }
                 conversation={conversation}
               />
             )}
