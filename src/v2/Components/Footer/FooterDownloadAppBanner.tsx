@@ -1,13 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import {
-  Column,
-  GridColumns,
-  Image,
-  Spacer,
-  Text,
-  TextVariant,
-  useThemeConfig,
-} from "@artsy/palette"
+import { Column, GridColumns, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "v2/Utils/resized"
 import { Media } from "v2/Utils/Responsive"
 import { DownloadAppBadges } from "../DownloadAppBadges/DownloadAppBadges"
@@ -23,11 +15,6 @@ const MOBILE_COVER_IMAGE = resized(
 )
 
 export const FooterDownloadAppBanner = () => {
-  const tokens = useThemeConfig({
-    v2: { title: "largeTitle" as TextVariant },
-    v3: { title: "xl" as TextVariant },
-  })
-
   return (
     <GridColumns borderBottom="1px solid" borderColor="black10">
       <Column
@@ -40,10 +27,12 @@ export const FooterDownloadAppBanner = () => {
         px={2}
         py={[6, 2]}
       >
-        <Text variant={tokens.title} textAlign="center" mb={1}>
+        <Text variant="xl" textAlign="center" mb={1}>
           Get the Artsy app
         </Text>
+
         <Spacer mt={2} />
+
         <DownloadAppBadges contextModule={ContextModule.footer} />
       </Column>
 

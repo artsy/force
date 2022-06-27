@@ -1,14 +1,10 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Media } from "v2/Utils/Responsive"
 import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
 import { CommercePagination_pageCursors } from "v2/__generated__/CommercePagination_pageCursors.graphql"
 import {
   Pagination as PaginationBase,
-  Separator,
-  SmallPagination,
   PaginationProps as BasePaginationProps,
-  useThemeConfig,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "v2/System/Router/Utils/catchLinks"
@@ -36,11 +32,6 @@ export const Pagination: React.FC<PaginationProps> = props => {
     offset,
   } = props
   const getHref = __getHref__ ?? useComputeHref()
-
-  const tokens = useThemeConfig({
-    v2: { version: "v2" },
-    v3: { version: "v3" },
-  })
 
   if (pageCursors.around.length === 1) {
     return null
@@ -77,24 +68,8 @@ export const Pagination: React.FC<PaginationProps> = props => {
   }
 
   return (
-    <>
-      {tokens.version === "v2" && (
-        <>
-          <Media at="xs">
-            <SmallPagination {...paginationProps} />
-          </Media>
-
-          <Media greaterThan="xs">
-            <Separator mb={3} />
-            <PaginationBase {...paginationProps} />
-          </Media>
-        </>
-      )}
-
-      {tokens.version === "v3" && (
-        <PaginationBase mt={6} {...paginationProps} />
-      )}
-    </>
+    // TODO: Should not have external margin
+    <PaginationBase mt={6} {...paginationProps} />
   )
 }
 

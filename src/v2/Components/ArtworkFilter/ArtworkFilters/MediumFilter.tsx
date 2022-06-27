@@ -1,4 +1,4 @@
-import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex } from "@artsy/palette"
 import { FC } from "react"
 import {
   SelectedFiltersCountsLabels,
@@ -49,11 +49,6 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
   )
   const hasBelowTheFoldMediumFilter = intersected.length > 0
-
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
   const resultsSorted = sortResults(additionalGeneIDs, allowedMediums)
 
   return (
@@ -69,7 +64,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
                 selected={additionalGeneIDs.includes(slug) || medium === slug}
                 key={index}
                 onSelect={selected => toggleMediumSelection(selected, slug)}
-                my={tokens.my}
+                my={1}
               >
                 {name}
               </Checkbox>

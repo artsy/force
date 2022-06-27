@@ -1,4 +1,4 @@
-import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex } from "@artsy/palette"
 import { entries, isEmpty } from "lodash"
 import { FC } from "react"
 import {
@@ -73,11 +73,6 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     [] as WayToBuy[]
   )
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
-
   const hasSelection = checkboxes.some(checkbox => checkbox.selected)
 
   return (
@@ -90,7 +85,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
               disabled={checkbox.disabled}
               onSelect={value => filterContext.setFilter(checkbox.key, value)}
               selected={checkbox.selected}
-              my={tokens.my}
+              my={1}
             >
               {checkbox.name}
             </Checkbox>

@@ -14,9 +14,7 @@ import {
   InstagramIcon,
   Separator,
   Text,
-  TextVariant,
   TwitterIcon,
-  useThemeConfig,
   WeChatIcon,
 } from "@artsy/palette"
 import { useCCPARequest } from "../CCPARequest"
@@ -26,21 +24,6 @@ import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
-  const tokens = useThemeConfig({
-    v2: {
-      header: "mediumText" as TextVariant,
-      body: "text" as TextVariant,
-      pt: 2,
-      pb: 4,
-    },
-    v3: {
-      header: "sm-display" as TextVariant,
-      body: "sm" as TextVariant,
-      pt: 4,
-      pb: 6,
-    },
-  })
-
   return (
     <Box
       id="download-app-banner"
@@ -52,13 +35,13 @@ export const Footer: React.FC<FooterProps> = props => {
       <FooterDownloadAppBanner />
 
       <footer>
-        <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
+        <GridColumns pt={4} pb={6} gridRowGap={[4, 0]}>
           <Column span={3}>
-            <Text variant={tokens.header} fontWeight="bold" mb={2}>
+            <Text variant="sm-display" fontWeight="bold" mb={2}>
               About us
             </Text>
 
-            <Text variant={tokens.body}>
+            <Text variant="sm">
               <FooterLink my={2} to="/about">
                 About
               </FooterLink>
@@ -78,11 +61,11 @@ export const Footer: React.FC<FooterProps> = props => {
           </Column>
 
           <Column span={3}>
-            <Text variant={tokens.header} fontWeight="bold" mb={2}>
+            <Text variant="sm-display" fontWeight="bold" mb={2}>
               Resources
             </Text>
 
-            <Text variant={tokens.body}>
+            <Text variant="sm">
               <FooterLink my={2} to="https://artsy.github.io/open-source">
                 Open Source
               </FooterLink>
@@ -98,11 +81,11 @@ export const Footer: React.FC<FooterProps> = props => {
           </Column>
 
           <Column span={3}>
-            <Text variant={tokens.header} fontWeight="bold" mb={2}>
+            <Text variant="sm-display" fontWeight="bold" mb={2}>
               Partnerships
             </Text>
 
-            <Text variant={tokens.body}>
+            <Text variant="sm">
               <FooterLink my={2} to="https://partners.artsy.net">
                 Artsy for Galleries
               </FooterLink>
@@ -125,11 +108,11 @@ export const Footer: React.FC<FooterProps> = props => {
           </Column>
 
           <Column span={3} wrap>
-            <Text variant={tokens.header} fontWeight="bold" mb={2}>
+            <Text variant="sm-display" fontWeight="bold" mb={2}>
               Support
             </Text>
 
-            <Text variant={tokens.body}>
+            <Text variant="sm">
               <FooterLink my={2} to="/meet-the-specialists">
                 Talk to a Specialist
               </FooterLink>
@@ -151,11 +134,11 @@ export const Footer: React.FC<FooterProps> = props => {
             </Text>
 
             <Media greaterThan="xs">
-              <Text variant={tokens.header} fontWeight="bold" mt={4} mb={1}>
+              <Text variant="sm-display" fontWeight="bold" mt={4} mb={1}>
                 Get the App
               </Text>
 
-              <Text variant={tokens.body}>
+              <Text variant="sm">
                 <FooterLink
                   mt={2}
                   to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
@@ -235,15 +218,6 @@ const WeChat = styled(Flex)`
 `
 
 const PolicyLinks = () => {
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "caption" as TextVariant,
-    },
-    v3: {
-      variant: "xs" as TextVariant,
-    },
-  })
-
   const { CCPARequestComponent, showCCPARequest } = useCCPARequest()
 
   return (
@@ -251,7 +225,7 @@ const PolicyLinks = () => {
       {CCPARequestComponent}
 
       <Text
-        variant={tokens.variant}
+        variant="xs"
         color="black60"
         display="flex"
         alignItems="center"

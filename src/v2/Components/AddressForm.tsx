@@ -1,13 +1,4 @@
-import {
-  Flex,
-  Join,
-  Text,
-  Spacer,
-  Input,
-  TextVariant,
-  useThemeConfig,
-  TextTransform,
-} from "@artsy/palette"
+import { Flex, Join, Text, Spacer, Input } from "@artsy/palette"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import * as React from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
@@ -80,19 +71,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
   const [key, setKey] = React.useState<keyof Address>()
 
-  const styles = useThemeConfig({
-    v2: {
-      smallVariant: "text" as TextVariant,
-      xsVariant: "caption" as TextVariant,
-      textTransform: "none" as TextTransform,
-    },
-    v3: {
-      smallVariant: "xs" as TextVariant,
-      xsVariant: "xs" as TextVariant,
-      textTransform: "uppercase" as TextTransform,
-    },
-  })
-
   const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
@@ -153,9 +131,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Flex flexDirection="column" pb={1}>
           <Text
             mb={0.5}
-            variant={styles.smallVariant}
+            variant="xs"
             color="black100"
-            textTransform={styles.textTransform}
+            textTransform="uppercase"
           >
             Country
           </Text>
@@ -172,7 +150,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           {(lockCountryToOrigin || lockCountriesToEU) && (
             <>
               <Spacer m={0.5} />
-              <Text variant={styles.xsVariant} color="black60">
+              <Text variant="xs" color="black60">
                 {lockCountriesToEU
                   ? "Continental Europe shipping only."
                   : "Domestic shipping only."}

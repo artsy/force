@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react"
 import * as React from "react"
 import { sortBy } from "lodash"
-import { Checkbox, CheckboxProps, Flex, useThemeConfig } from "@artsy/palette"
+import { Checkbox, CheckboxProps, Flex } from "@artsy/palette"
 import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
@@ -55,11 +55,6 @@ const ArtistItem: React.FC<
     setFilter("artistIDs", updatedValues)
   }
 
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
-
   const isFollowedArtist = followedArtistSlugs.includes(slug)
 
   return (
@@ -72,7 +67,8 @@ const ArtistItem: React.FC<
       onSelect={selected => {
         return toggleArtistSelection(selected, slug)
       }}
-      my={tokens.my}
+      // TODO: Should not have external margin
+      my={1}
     >
       {name}
     </Checkbox>
@@ -99,11 +95,6 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
     SelectedFiltersCountsLabels.artistIDs
   )
   const label = `Artists${filtersCount}`
-
-  const tokens = useThemeConfig({
-    v2: { my: 0.5 },
-    v3: { my: 1 },
-  })
 
   useEffect(() => {
     if (artists?.counts && relayEnvironment && user) {
@@ -136,7 +127,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
             filterContext.setFilter("includeArtworksByFollowedArtists", value)
             filterContext.setFilter("artistIDs", [])
           }}
-          my={tokens.my}
+          my={1}
         >
           Artists I follow ({followedArtistArtworkCount})
         </Checkbox>
@@ -152,7 +143,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
                 isFollowedArtistCheckboxSelected={
                   isFollowedArtistCheckboxSelected ?? false
                 }
-                my={tokens.my}
+                my={1}
               />
             )
           })}

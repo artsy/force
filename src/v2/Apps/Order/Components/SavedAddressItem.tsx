@@ -1,11 +1,5 @@
-import {
-  Flex,
-  Text,
-  RadioProps,
-  useThemeConfig,
-  TextVariant,
-} from "@artsy/palette"
-import * as React from "react";
+import { Flex, Text, RadioProps } from "@artsy/palette"
+import * as React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 
@@ -43,17 +37,6 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
     .join(", ")
   const nameAndAddressLine = [name, addressLine1, addressLine2, addressLine3]
 
-  const styles = useThemeConfig({
-    v2: {
-      smVariant: "text" as TextVariant,
-      xsVariant: "caption" as TextVariant,
-    },
-    v3: {
-      smVariant: "sm" as TextVariant,
-      xsVariant: "xs" as TextVariant,
-    },
-  })
-
   return (
     <Flex maxWidth="100%">
       <Flex flexDirection="column">
@@ -71,21 +54,17 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                   <Text
                     textTransform="capitalize"
                     textColor={index === 0 ? "black100" : "black60"}
-                    variant={styles.smVariant}
+                    variant="sm"
                   >
                     {line}
                   </Text>
                 </Flex>
               )
           )}
-        <Text
-          textColor="black60"
-          textTransform="capitalize"
-          variant={styles.smVariant}
-        >
+        <Text textColor="black60" textTransform="capitalize" variant="sm">
           {formattedAddressLine}
         </Text>
-        <Text textColor="black60" variant={styles.smVariant}>
+        <Text textColor="black60" variant="sm">
           {phoneNumber}
         </Text>
       </Flex>
@@ -100,7 +79,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           handleClickEdit(index)
         }}
         textColor="blue100"
-        variant={styles.smVariant}
+        variant="sm"
         data-test="editAddressInShipping"
       >
         Edit

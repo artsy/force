@@ -1,13 +1,4 @@
-import {
-  Link,
-  Text,
-  LinkProps,
-  useThemeConfig,
-  TextVariant,
-  Flex,
-  Spacer,
-  Box,
-} from "@artsy/palette"
+import { Link, Text, LinkProps, Flex, Spacer, Box } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -45,18 +36,9 @@ const ArtistLine: React.FC<DetailsProps> = ({
   includeLinks,
   showSaveButton,
 }) => {
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "mediumText" as TextVariant,
-    },
-    v3: {
-      variant: "sm-display" as TextVariant,
-    },
-  })
-
   if (cultural_maker) {
     return (
-      <Text variant={tokens.variant} overflowEllipsis>
+      <Text variant="sm-display" overflowEllipsis>
         {cultural_maker}
       </Text>
     )
@@ -65,7 +47,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   if (!artists?.length) {
     if (showSaveButton) {
       return (
-        <Text variant={tokens.variant} overflowEllipsis>
+        <Text variant="sm-display" overflowEllipsis>
           Artist Unavailable
         </Text>
       )
@@ -75,7 +57,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
   }
 
   return (
-    <Text variant={tokens.variant} overflowEllipsis>
+    <Text variant="sm-display" overflowEllipsis>
       {artists.map((artist, i) => {
         if (!artist || !artist.href || !artist.name) return null
 
@@ -98,18 +80,9 @@ const TitleLine: React.FC<DetailsProps> = ({
   includeLinks,
   artwork: { title, date, href },
 }) => {
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "text" as TextVariant,
-    },
-    v3: {
-      variant: "sm-display" as TextVariant,
-    },
-  })
-
   return (
     <ConditionalLink includeLinks={includeLinks} href={href!}>
-      <Text variant={tokens.variant} color="black60" overflowEllipsis>
+      <Text variant="sm-display" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
       </Text>
@@ -121,18 +94,9 @@ const PartnerLine: React.FC<DetailsProps> = ({
   includeLinks,
   artwork: { collecting_institution, partner },
 }) => {
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "text" as TextVariant,
-    },
-    v3: {
-      variant: "xs" as TextVariant,
-    },
-  })
-
   if (collecting_institution) {
     return (
-      <Text variant={tokens.variant} color="black60" overflowEllipsis>
+      <Text variant="xs" color="black60" overflowEllipsis>
         {collecting_institution}
       </Text>
     )
@@ -141,7 +105,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
   if (partner) {
     return (
       <ConditionalLink includeLinks={includeLinks} href={partner?.href!}>
-        <Text variant={tokens.variant} color="black60" overflowEllipsis>
+        <Text variant="xs" color="black60" overflowEllipsis>
           {partner.name}
         </Text>
       </ConditionalLink>
@@ -152,26 +116,8 @@ const PartnerLine: React.FC<DetailsProps> = ({
 }
 
 const SaleInfoLine: React.FC<DetailsProps> = props => {
-  const tokens = useThemeConfig({
-    v2: {
-      variant: "text" as TextVariant,
-      color: "black60",
-      fontWeight: "normal",
-    },
-    v3: {
-      variant: "xs" as TextVariant,
-      color: "black100",
-      fontWeight: "bold",
-    },
-  })
-
   return (
-    <Text
-      variant={tokens.variant}
-      color={tokens.color}
-      fontWeight={tokens.fontWeight}
-      overflowEllipsis
-    >
+    <Text variant="xs" color="black100" fontWeight="bold" overflowEllipsis>
       <SaleMessage {...props} /> <BidInfo {...props} />
     </Text>
   )

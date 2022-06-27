@@ -1,4 +1,4 @@
-import { Box, Spacer, Spinner, useThemeConfig } from "@artsy/palette"
+import { Box, Spinner } from "@artsy/palette"
 import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
@@ -28,11 +28,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     contextPageOwnerId,
   } = useAnalyticsContext()
   const context = useArtworkFilterContext()
-
-  const tokens = useThemeConfig({
-    v2: { separator: <Spacer my={3} /> },
-    v3: { separator: null },
-  })
 
   const {
     columnCount,
@@ -86,8 +81,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
             )
           }}
         />
-
-        {tokens.separator}
 
         <Pagination
           hasNextPage={hasNextPage}
