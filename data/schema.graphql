@@ -10857,6 +10857,7 @@ type MyCollectionConnection {
     last: Int
     page: Int
     size: Int
+    sort: ArtistSorts
   ): ArtistConnection
   default: Boolean!
   description: String!
@@ -10939,6 +10940,7 @@ type MyCollectionInfo {
     last: Int
     page: Int
     size: Int
+    sort: ArtistSorts
   ): ArtistConnection
   default: Boolean!
   description: String!
