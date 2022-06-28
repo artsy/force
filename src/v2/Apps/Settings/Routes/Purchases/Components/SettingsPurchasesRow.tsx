@@ -55,6 +55,21 @@ const ORDER_COLORS = {
   SUBMITTED: "black60",
 } as const
 
+const getPaymentMethodText = (
+  paymentMethodDetails: SettingsPurchasesRow_order["paymentMethodDetails"]
+) => {
+  switch (paymentMethodDetails?.__typename) {
+    case "BankAccount":
+      return `Bank transfer •••• ${paymentMethodDetails.last4}`
+    case "WireTransfer":
+      return "Wire transfer"
+    case "CreditCard":
+      return `Credit card •••• ${paymentMethodDetails.lastDigits}`
+    default:
+      return "N/A"
+  }
+}
+
 interface SettingsPurchasesRowProps {
   order: SettingsPurchasesRow_order
 }
@@ -62,7 +77,7 @@ interface SettingsPurchasesRowProps {
 const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
   const [lineItem] = extractNodes(order?.lineItems)
   const { artwork, fulfillments } = lineItem
-  const { creditCard, requestedFulfillment } = order
+  const { requestedFulfillment } = order
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   const isOrderActive = order.state !== "CANCELED" && order.state !== "REFUNDED"
@@ -194,7 +209,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
           <Text variant="sm-display">Payment Method</Text>
 
           <Text variant="sm-display" color="black60">
-            {creditCard?.lastDigits ? `•••• ${creditCard.lastDigits}` : "N/A"}
+            {getPaymentMethodText(order.paymentMethodDetails)}
           </Text>
         </Column>
 
@@ -233,8 +248,17 @@ export const SettingsPurchasesRowFragmentContainer = createFragmentContainer(
         requestedFulfillment {
           __typename
         }
-        creditCard {
-          lastDigits
+        paymentMethodDetails {
+          __typename
+          ... on CreditCard {
+            lastDigits
+          }
+          ... on BankAccount {
+            last4
+          }
+          ... on WireTransfer {
+            isManualPayment
+          }
         }
         buyerTotal(precision: 2)
         createdAt
