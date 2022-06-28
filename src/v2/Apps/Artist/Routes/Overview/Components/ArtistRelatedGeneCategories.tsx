@@ -1,4 +1,4 @@
-import { Pill, Spacer, Text } from "@artsy/palette"
+import { Box, Pill, PillProps, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -25,15 +25,21 @@ const ArtistRelatedGeneCategories: FC<ArtistRelatedGeneCategoriesProps> = ({
 
       <Spacer mt={4} />
 
-      {categories.map(category => {
-        return (
-          <Pill mr={1} mb={1}>
-            <RouterLink to={category.href} textDecoration="none">
+      <Box mb={-1}>
+        {categories.map(category => {
+          const props = {
+            as: RouterLink,
+            to: category.href,
+            key: category.name,
+          } as PillProps
+
+          return (
+            <Pill mr={1} mb={1} {...props}>
               {category.name}
-            </RouterLink>
-          </Pill>
-        )
-      })}
+            </Pill>
+          )
+        })}
+      </Box>
     </>
   )
 }
