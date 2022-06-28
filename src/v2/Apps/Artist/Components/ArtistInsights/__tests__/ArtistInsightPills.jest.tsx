@@ -3,6 +3,9 @@ import { ArtistInsightPillsFragmentContainer } from "../ArtistInsightPills"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
+jest.mock("v2/Utils/Hooks/useScrollTo", () => ({
+  useScrollTo: () => ({ scrollTo: jest.fn() }),
+}))
 jest.unmock("react-relay")
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -41,22 +44,12 @@ describe("ArtistInsightPills", () => {
             },
           ],
         },
-        artistHighlights: {
-          partnersConnection: {
-            edges: {
-              node: {
-                categories: [{ slug: "blue-chip" }],
-              },
-            },
-          },
-        },
       }),
     })
 
     expect(screen.getByText("FooBar Secondary Market")).toBeInTheDocument()
     expect(screen.getByText("The FooBar Vanguard")).toBeInTheDocument()
     expect(screen.getByText("High Auction Record")).toBeInTheDocument()
-    expect(screen.getByText("Blue Chip Representation")).toBeInTheDocument()
   })
 
   it("does not render high auction record if not present on artist", () => {
@@ -67,19 +60,5 @@ describe("ArtistInsightPills", () => {
     })
 
     expect(screen.queryByText("High Auction Record")).not.toBeInTheDocument()
-  })
-
-  it("does not render blue chip representation if not present on artist", () => {
-    renderWithRelay({
-      Artist: () => ({
-        artistHighlights: {
-          partnersConnection: null,
-        },
-      }),
-    })
-
-    expect(
-      screen.queryByText("Blue Chip Representation")
-    ).not.toBeInTheDocument()
   })
 })

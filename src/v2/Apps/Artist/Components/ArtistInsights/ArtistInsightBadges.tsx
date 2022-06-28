@@ -18,21 +18,13 @@ interface ArtistInsightBadgesProps {
 export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
   artist,
 }) => {
-  const blueChipRepresentation = extractNodes(
-    artist.artistHighlights?.partnersConnection
-  )
-
   // The first result is the highest auction result
   const highAuctionResult = extractNodes(artist.auctionResultsConnection)[0]
   const highAuctionRecord = highAuctionResult
     ? `${highAuctionResult.priceRealized?.display}, ${highAuctionResult.organization}, ${highAuctionResult.saleDate}`
     : null
 
-  if (
-    artist.insights.length === 0 &&
-    blueChipRepresentation.length === 0 &&
-    !highAuctionResult
-  ) {
+  if (artist.insights.length === 0 && !highAuctionResult) {
     return null
   }
 
@@ -93,17 +85,6 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
               }
               organization
               saleDate(format: "YYYY")
-            }
-          }
-        }
-        artistHighlights: highlights {
-          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
-            edges {
-              node {
-                categories {
-                  slug
-                }
-              }
             }
           }
         }
