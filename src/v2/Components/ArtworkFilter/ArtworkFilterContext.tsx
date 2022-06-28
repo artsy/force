@@ -291,14 +291,18 @@ export const ArtworkFilterContextProvider: React.FC<
   sortOptions,
   ZeroState,
 }) => {
+  const camelCasedFilters: ArtworkFiltersState = paramsToCamelCase(filters)
   const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort!
+  const defaultMetric =
+    camelCasedFilters?.metric ?? initialArtworkFilterState.metric!
   const defaultFilters = {
     ...initialArtworkFilterState,
     sort: defaultSort,
+    metric: defaultMetric,
   }
   const initialFilterState = {
     ...defaultFilters,
-    ...paramsToCamelCase(filters),
+    ...camelCasedFilters,
   }
 
   const [artworkFilterState, dispatch] = useReducer(
