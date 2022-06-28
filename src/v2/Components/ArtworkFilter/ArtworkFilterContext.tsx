@@ -643,6 +643,12 @@ export const getSelectedFiltersCounts = (
         }
         break
       }
+      case paramName === FilterParamName.keyword: {
+        if (paramValue?.length) {
+          counts[paramName] = 1
+        }
+        break
+      }
 
       default: {
         counts[paramName] = 1
