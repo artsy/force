@@ -128,6 +128,14 @@ describe("ArtworkSidebarPartnerInfo", () => {
       expect(screen.queryByText("Contact Gallery")).toBeInTheDocument()
     })
 
+    it("auction lot doesn't display button", () => {
+      renderWithRelay({
+        Artwork: () => ArtworkInNonAuctionSale,
+      })
+
+      expect(screen.queryByText("Contact Gallery")).not.toBeInTheDocument()
+    })
+
     it("offerable artwork (MO only) displays button", () => {
       renderWithRelay({
         Artwork: () => ({
