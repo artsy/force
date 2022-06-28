@@ -201,6 +201,7 @@
     "react-relay-network-modern": "4.7.3",
     "react-relay-network-modern-ssr": "1.4.0",
     "react-stickynode": "^4.0.0",
+    "react-transition-group": "^2.3.0",
     "react-waypoint": "8.0.0",
     "redis": "3.1.2",
     "relay-mock-network-layer": "2.0.0",
