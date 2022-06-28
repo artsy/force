@@ -6,12 +6,8 @@ require("@babel/register")({
 
 require("coffeescript/register")
 
-// FIXME: Do we need this?
-// NOTE: Once we do AOT compilation we probably want to re-enable this on the server in development mode only.
-// require('source-map-support/register')
-
 const path = require("path")
-const Adapter = require('@wojtekmaj/enzyme-adapter-react-17')
+const Adapter = require("@wojtekmaj/enzyme-adapter-react-17")
 const Enzyme = require("enzyme")
 
 // TODO: Look into why this bumps user off of other node command-line tab
@@ -26,20 +22,22 @@ Enzyme.configure({
 try {
   window.matchMedia =
     window.matchMedia ||
-    function() {
+    function () {
       return {
         matches: false,
-        addListener: function() {},
-        removeListener: function() {},
+        addListener: function () {},
+        removeListener: function () {},
       }
     }
   window.alert =
     window.alert ||
-    function(msg) {
+    function (msg) {
       console.log(msg)
     }
-  window.scrollTo = window.scrollTo || function() {}
-} catch (error) {}
+  window.scrollTo = window.scrollTo || function () {}
+} catch (error) {
+  // Do nothing
+}
 
 // Used for Acceptance tests
 require("raf/polyfill")

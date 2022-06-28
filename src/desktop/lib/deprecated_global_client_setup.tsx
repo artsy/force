@@ -82,7 +82,6 @@ function setupReferrerTracking() {
 }
 
 function setupJquery() {
-  require("typeahead.js/dist/typeahead.bundle.min.js")
   require("jquery.transition")
   require("jquery.fillwidth")
   require("jquery-waypoints/waypoints.js")
