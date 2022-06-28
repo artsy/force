@@ -29,7 +29,7 @@ fragment ArtworkSidebarPartnerInfo_artwork on Artwork {
   internalID
   slug
   isInquireable
-  isInAuction
+  is_in_auction: isInAuction
   partner {
     name
     href
@@ -154,7 +154,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "is_in_auction",
             "args": null,
             "kind": "ScalarField",
             "name": "isInAuction",
@@ -202,7 +202,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "202201ab4405375737fca7b1c6b5604b",
+    "cacheID": "bb977c6761ae059ef4a42721894f7334",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -214,8 +214,8 @@ return {
         },
         "artwork.id": (v4/*: any*/),
         "artwork.internalID": (v4/*: any*/),
-        "artwork.isInAuction": (v5/*: any*/),
         "artwork.isInquireable": (v5/*: any*/),
+        "artwork.is_in_auction": (v5/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -245,7 +245,7 @@ return {
     },
     "name": "ArtworkSidebarPartnerInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarPartnerInfo_Test_Query {\n  artwork(id: \"artwork_from_partner_with_locations\") {\n    ...ArtworkSidebarPartnerInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  internalID\n  slug\n  isInquireable\n  is_in_auction: isInAuction\n  partner {\n    name\n    href\n    cities\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n"
   }
 };
 })();

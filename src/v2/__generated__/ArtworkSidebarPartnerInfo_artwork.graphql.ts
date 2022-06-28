@@ -8,7 +8,7 @@ export type ArtworkSidebarPartnerInfo_artwork = {
     readonly internalID: string;
     readonly slug: string;
     readonly isInquireable: boolean | null;
-    readonly isInAuction: boolean | null;
+    readonly is_in_auction: boolean | null;
     readonly partner: {
         readonly name: string | null;
         readonly href: string | null;
@@ -71,7 +71,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "is_in_auction",
       "args": null,
       "kind": "ScalarField",
       "name": "isInAuction",
@@ -115,5 +115,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '0922245b320fff3b6ddc0ace7f5b2f75';
+(node as any).hash = '89e75b59fa3207f21b480085f4ec725f';
 export default node;

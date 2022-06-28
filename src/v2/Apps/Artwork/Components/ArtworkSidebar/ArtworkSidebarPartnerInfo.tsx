@@ -26,7 +26,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
     internalID,
     slug,
     isInquireable,
-    isInAuction,
+    is_in_auction,
   } = artwork
 
   const { showInquiry, inquiryComponent } = useInquiry({
@@ -81,7 +81,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {isCBNEnabled && !isInquireable && !isInAuction && (
+        {isCBNEnabled && !isInquireable && !is_in_auction && (
           <Button
             variant="secondaryBlack"
             size="small"
@@ -106,7 +106,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         internalID
         slug
         isInquireable
-        isInAuction
+        is_in_auction: isInAuction
         partner {
           name
           href
