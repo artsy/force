@@ -41,19 +41,9 @@ describe("ArtistInsightBadges", () => {
             },
           ],
         },
-        artistHighlights: {
-          partnersConnection: {
-            edges: {
-              node: {
-                categories: [{ slug: "blue-chip" }],
-              },
-            },
-          },
-        },
       }),
     })
 
-    expect(screen.getByText("Blue Chip Representation")).toBeInTheDocument()
     expect(screen.getByText("High Auction Record")).toBeInTheDocument()
     expect(screen.getByText("FooBar Secondary Market")).toBeInTheDocument()
     expect(screen.getByText("The FooBar Vanguard")).toBeInTheDocument()
@@ -89,19 +79,5 @@ describe("ArtistInsightBadges", () => {
     })
 
     expect(screen.queryByText("High Auction Record")).not.toBeInTheDocument()
-  })
-
-  it("does not render blue chip representation if not present on artist", () => {
-    renderWithRelay({
-      Artist: () => ({
-        artistHighlights: {
-          partnersConnection: null,
-        },
-      }),
-    })
-
-    expect(
-      screen.queryByText("Blue Chip Representation")
-    ).not.toBeInTheDocument()
   })
 })

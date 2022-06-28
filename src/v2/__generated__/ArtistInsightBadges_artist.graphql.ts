@@ -22,17 +22,6 @@ export type ArtistInsightBadges_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly artistHighlights: {
-        readonly partnersConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly categories: ReadonlyArray<{
-                        readonly slug: string;
-                    } | null> | null;
-                } | null;
-            } | null> | null;
-        } | null;
-    } | null;
     readonly " $refType": "ArtistInsightBadges_artist";
 };
 export type ArtistInsightBadges_artist$data = ArtistInsightBadges_artist;
@@ -43,13 +32,7 @@ export type ArtistInsightBadges_artist$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 1
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -98,7 +81,11 @@ return {
     {
       "alias": null,
       "args": [
-        (v0/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
         {
           "kind": "Literal",
           "name": "recordsTrusted",
@@ -183,82 +170,10 @@ return {
         }
       ],
       "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
-    },
-    {
-      "alias": "artistHighlights",
-      "args": null,
-      "concreteType": "ArtistHighlights",
-      "kind": "LinkedField",
-      "name": "highlights",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "partnerCategory",
-              "value": [
-                "blue-chip"
-              ]
-            }
-          ],
-          "concreteType": "PartnerArtistConnection",
-          "kind": "LinkedField",
-          "name": "partnersConnection",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PartnerArtistEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Partner",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "PartnerCategory",
-                      "kind": "LinkedField",
-                      "name": "categories",
-                      "plural": true,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "slug",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": "partnersConnection(first:1,partnerCategory:[\"blue-chip\"])"
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-})();
-(node as any).hash = '387b9cf3756b57cb0633fff5240f001f';
+(node as any).hash = '258fbc5cb3d2d2d4fa524b446338ea9b';
 export default node;

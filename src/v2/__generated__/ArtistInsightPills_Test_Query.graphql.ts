@@ -43,20 +43,6 @@ fragment ArtistInsightPills_artist on Artist {
       }
     }
   }
-  artistHighlights: highlights {
-    partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
-      edges {
-        node {
-          categories {
-            slug
-            id
-          }
-          id
-        }
-        id
-      }
-    }
-  }
 }
 */
 
@@ -69,24 +55,19 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 1
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v4 = {
+v3 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -176,7 +157,11 @@ return {
           {
             "alias": null,
             "args": [
-              (v1/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              },
               {
                 "kind": "Literal",
                 "name": "recordsTrusted",
@@ -253,7 +238,7 @@ return {
                         "name": "saleDate",
                         "storageKey": "saleDate(format:\"YYYY\")"
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -263,88 +248,14 @@ return {
             ],
             "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
           },
-          {
-            "alias": "artistHighlights",
-            "args": null,
-            "concreteType": "ArtistHighlights",
-            "kind": "LinkedField",
-            "name": "highlights",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  (v1/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "partnerCategory",
-                    "value": [
-                      "blue-chip"
-                    ]
-                  }
-                ],
-                "concreteType": "PartnerArtistConnection",
-                "kind": "LinkedField",
-                "name": "partnersConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PartnerArtistEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Partner",
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "PartnerCategory",
-                            "kind": "LinkedField",
-                            "name": "categories",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "slug",
-                                "storageKey": null
-                              },
-                              (v2/*: any*/)
-                            ],
-                            "storageKey": null
-                          },
-                          (v2/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "partnersConnection(first:1,partnerCategory:[\"blue-chip\"])"
-              }
-            ],
-            "storageKey": null
-          },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "4a51aee44a08836976d21e868b217ef5",
+    "cacheID": "59482af31de7fde173a117dac085b5c0",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -354,40 +265,6 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.artistHighlights": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistHighlights"
-        },
-        "artist.artistHighlights.partnersConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "PartnerArtistConnection"
-        },
-        "artist.artistHighlights.partnersConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerArtistEdge"
-        },
-        "artist.artistHighlights.partnersConnection.edges.id": (v3/*: any*/),
-        "artist.artistHighlights.partnersConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Partner"
-        },
-        "artist.artistHighlights.partnersConnection.edges.node.categories": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "PartnerCategory"
-        },
-        "artist.artistHighlights.partnersConnection.edges.node.categories.id": (v3/*: any*/),
-        "artist.artistHighlights.partnersConnection.edges.node.categories.slug": (v3/*: any*/),
-        "artist.artistHighlights.partnersConnection.edges.node.id": (v3/*: any*/),
         "artist.auctionResultsConnection": {
           "enumValues": null,
           "nullable": true,
@@ -406,17 +283,17 @@ return {
           "plural": false,
           "type": "AuctionResult"
         },
-        "artist.auctionResultsConnection.edges.node.id": (v3/*: any*/),
-        "artist.auctionResultsConnection.edges.node.organization": (v4/*: any*/),
+        "artist.auctionResultsConnection.edges.node.id": (v2/*: any*/),
+        "artist.auctionResultsConnection.edges.node.organization": (v3/*: any*/),
         "artist.auctionResultsConnection.edges.node.priceRealized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AuctionResultPriceRealized"
         },
-        "artist.auctionResultsConnection.edges.node.priceRealized.display": (v4/*: any*/),
-        "artist.auctionResultsConnection.edges.node.sale_date": (v4/*: any*/),
-        "artist.id": (v3/*: any*/),
+        "artist.auctionResultsConnection.edges.node.priceRealized.display": (v3/*: any*/),
+        "artist.auctionResultsConnection.edges.node.sale_date": (v3/*: any*/),
+        "artist.id": (v2/*: any*/),
         "artist.insightsList": {
           "enumValues": null,
           "nullable": false,
@@ -452,7 +329,7 @@ return {
     },
     "name": "ArtistInsightPills_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightPills_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightPills_artist\n    id\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  artistHighlights: highlights {\n    partnersConnection(first: 1, partnerCategory: [\"blue-chip\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistInsightPills_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightPills_artist\n    id\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

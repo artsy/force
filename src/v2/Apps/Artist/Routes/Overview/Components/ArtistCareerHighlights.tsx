@@ -1,4 +1,4 @@
-import { Column, GridColumns, Text } from "@artsy/palette"
+import { Column, GridColumns } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
@@ -8,6 +8,7 @@ import { useSystemContext } from "v2/System"
 import { ArtistInsightBadgesFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsFragmentContainer } from "v2/Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsPlaceholder } from "v2/Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
+import { ArtistInsightBadgesPlaceholder } from "v2/Apps/Artist/Components/ArtistInsights/ArtistInsightBadges"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ArtistCareerHighlightsProps {
@@ -29,11 +30,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   }
 
   return (
-    <GridColumns gridRowGap={4}>
-      <Column span={12}>
-        <Text variant="lg-display">Career Highlights</Text>
-      </Column>
-
+    <GridColumns gridRowGap={4} id="jump--artistCareerHighlights">
       {displayInsightAchievements && (
         <Column span={6}>
           <ArtistInsightAchievementsFragmentContainer artist={artist} />
@@ -87,12 +84,11 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <GridColumns gridRowGap={4}>
-    <Column span={12}>
-      <Text variant="lg-display">Career Highlights</Text>
-    </Column>
-
     <Column span={6}>
       <ArtistInsightAchievementsPlaceholder />
+    </Column>
+    <Column span={6}>
+      <ArtistInsightBadgesPlaceholder />
     </Column>
   </GridColumns>
 )
