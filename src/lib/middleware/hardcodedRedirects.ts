@@ -118,6 +118,7 @@ const REDIRECTS = {
   "/the-future-of-art":
     "https://www.wsj.com/articles/carter-cleveland-says-art-in-the-future-will-be-for-everyone-1404762157",
   "/christies-spring-auctions-2015": "/auctions",
+  "/clear-cache": "/admin/clear-cache",
 }
 
 const router = express.Router()
