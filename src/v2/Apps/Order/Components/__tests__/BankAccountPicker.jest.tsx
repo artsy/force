@@ -1,19 +1,32 @@
-import { BorderedRadio, Collapse } from "@artsy/palette"
+import { BorderedRadio, Button, Collapse } from "@artsy/palette"
 import { BankAccountPickerTestQueryRawResponse } from "v2/__generated__/BankAccountPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   UntouchedBuyOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
-import { RootTestPage } from "v2/DevTools/RootTestPage"
+import { expectOne, RootTestPage } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import { BankAccountPickerFragmentContainer } from "../BankAccountPicker"
 import { MockBoot } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { BankAccountPicker_me } from "v2/__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
+import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
+
+jest.mock("../../Components/Mutations/useSetPayment", () => {
+  const originalUseSetPayment = jest.requireActual(
+    "../../Components/Mutations/useSetPayment"
+  )
+
+  return {
+    useSetPayment: jest
+      .fn()
+      .mockImplementation(originalUseSetPayment.useSetPayment),
+  }
+})
 
 class BankAccountPickerTestPage extends RootTestPage {
   get radios() {
@@ -23,6 +36,10 @@ class BankAccountPickerTestPage extends RootTestPage {
   async clickRadio(atIndex: number) {
     this.find(BorderedRadio).at(atIndex).simulate("click")
     await this.update()
+  }
+
+  get submitButton() {
+    return expectOne(this.find(Button).last())
   }
 }
 
@@ -198,7 +215,41 @@ describe("BankAccountFragmentContainer", () => {
         expect(page.radios.at(2).props().selected).toBeFalsy()
       })
 
-      it.todo("calls setPayment mutation when user clicks 'save and continue'")
+      it("sets the bank account on the order when user clicks 'Save and Continue'", async () => {
+        const submitMutationMock = jest.fn().mockResolvedValue({
+          commerceSetPayment: {
+            orderOrError: {
+              id: 1234,
+            },
+          },
+        })
+        ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+          submitMutation: submitMutationMock,
+        }))
+
+        const wrapper = getWrapper({
+          CommerceOrder: () => BuyOrderPickup,
+          Me: () => ({
+            bankAccounts: {
+              edges: [{ node: bankAccounts[0] }, { node: bankAccounts[1] }],
+            },
+          }),
+        })
+        const page = new BankAccountPickerTestPage(wrapper)
+        page.clickRadio(1)
+        page.submitButton.simulate("click")
+        page.update()
+
+        expect(submitMutationMock).toHaveBeenCalledWith({
+          variables: {
+            input: {
+              id: "2939023",
+              paymentMethod: "US_BANK_ACCOUNT",
+              paymentMethodId: "bank-id-2",
+            },
+          },
+        })
+      })
     })
   })
 })
