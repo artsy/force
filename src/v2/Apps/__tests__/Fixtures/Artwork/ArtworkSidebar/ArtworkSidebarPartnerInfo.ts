@@ -48,4 +48,5 @@ export const ArtworkInNonAuctionSale = {
     name: "MASS MoCA Benefit Auction 2019: Buy Now",
     href: "/auction/mass-moca-benefit-auction-2019-buy-now",
   },
+  isInAuction: true,
 }

@@ -20,7 +20,14 @@ const PartnerContainer = styled(Box)`
 export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
   artwork,
 }) => {
-  const { sale, partner, internalID, slug, isInquireable } = artwork
+  const {
+    sale,
+    partner,
+    internalID,
+    slug,
+    isInquireable,
+    isInAuction,
+  } = artwork
 
   const { showInquiry, inquiryComponent } = useInquiry({
     artworkID: internalID,
@@ -74,7 +81,7 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
           )}
         </PartnerContainer>
 
-        {isCBNEnabled && !isInquireable && (
+        {isCBNEnabled && !isInquireable && !isInAuction && (
           <Button
             variant="secondaryBlack"
             size="small"
@@ -99,6 +106,7 @@ export const ArtworkSidebarPartnerInfoFragmentContainer = createFragmentContaine
         internalID
         slug
         isInquireable
+        isInAuction
         partner {
           name
           href
