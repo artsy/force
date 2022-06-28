@@ -270,7 +270,6 @@
     "@types/qs": "6.5.3",
     "@types/react": "16.9.34",
     "@types/react-dom": "16.8.4",
-    "@types/react-overlays": "0.8.4",
     "@types/react-relay": "7.0.9",
     "@types/react-stickynode": "^4.0.0",
     "@types/react-test-renderer": "16.0.1",
