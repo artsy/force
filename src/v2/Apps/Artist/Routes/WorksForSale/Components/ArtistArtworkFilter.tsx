@@ -20,21 +20,7 @@ import {
   useFeatureVariant,
   useTrackFeatureVariant,
 } from "v2/System/useFeatureFlag"
-import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
-import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
-import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
-import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
-import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
-import { KeywordFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
+import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -42,13 +28,11 @@ interface ArtistArtworkFilterProps {
   me: ArtistArtworkFilter_me | null
   relay: RelayRefetchProp
   match?: Match
-  user?: User
-  relayEnvironment?: RelayModernEnvironment
 }
 
 const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { match } = useRouter()
-  const { relay, aggregations, artist, me, user, relayEnvironment } = props
+  const { relay, aggregations, artist, me } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
   const trendingSortVariant = useFeatureVariant(
@@ -58,8 +42,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     experimentName: "trending-sort-for-artist-artwork-grids",
     variantName: trendingSortVariant?.name!,
   })
-
-  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   useEffect(() => {
     trackFeatureVariant()
@@ -94,24 +76,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     trendingSortVariant
   )
 
-  const Filters = (
-    <>
-      {showKeywordFilter && <KeywordFilter />}
-      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
-      <AttributionClassFilter expanded />
-      <MediumFilter expanded />
-      <PriceRangeFilter expanded />
-      <SizeFilter expanded />
-      <WaysToBuyFilter expanded />
-      <MaterialsFilter />
-      <ArtistNationalityFilter />
-      <ArtworkLocationFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-      <PartnersFilter />
-    </>
-  )
-
   return (
     <ArtworkFilterContextProvider
       aggregations={aggregations}
@@ -131,7 +95,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       <BaseArtworkFilter
         relay={relay}
         viewer={artist}
-        Filters={Filters}
+        Filters={<ArtistArtworkFilters relayEnvironment={relay.environment} />}
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
