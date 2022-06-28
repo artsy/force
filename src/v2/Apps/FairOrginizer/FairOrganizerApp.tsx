@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import truncate from "trunc-html"
+import { truncate } from "lodash"
 import { Spacer } from "@artsy/palette"
 import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
 import { FairOrganizerHeaderImageFragmentContainer as FairOrganizerHeaderImage } from "./Components/FairOrganizerHeaderImage"
@@ -16,12 +16,14 @@ interface FairOrganizerAppProps {
 const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
   fairOrganizer,
 }) => {
-  const { name, profile, slug, about } = fairOrganizer
+  const { name, profile, slug, description } = fairOrganizer
 
   return (
     <>
       <MetaTags
-        description={truncate(about, 200).text}
+        description={
+          description ? truncate(description, { length: 200 }) : undefined
+        }
         imageURL={profile?.image?.url}
         pathname={`fair-organizer/${slug}`}
         title={`${name} | Artsy`}
@@ -51,7 +53,7 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
       fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
         name
         slug
-        about(format: HTML)
+        description: about(format: PLAIN)
         profile {
           image {
             url(version: "wide")

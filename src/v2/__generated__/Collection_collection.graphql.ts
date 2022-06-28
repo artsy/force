@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 export type Collection_collection = {
     readonly description: string | null;
+    readonly descriptionMarkdown: string | null;
     readonly headerImage: string | null;
     readonly slug: string;
     readonly id: string;
@@ -21,9 +22,7 @@ export type Collection_collection = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly image: {
-                    readonly resized: {
-                        readonly url: string;
-                    } | null;
+                    readonly url: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -102,6 +101,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "descriptionMarkdown",
       "storageKey": null
     },
     {
@@ -208,27 +214,10 @@ return {
                   "selections": [
                     {
                       "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 600
-                        }
-                      ],
-                      "concreteType": "ResizedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "resized",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "url",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "resized(width:600)"
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "url",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -420,5 +409,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '581d35b4a2f7ba29676b154039a4595f';
+(node as any).hash = '9a6b810e31b1f41ec4bf84749ec2d082';
 export default node;

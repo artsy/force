@@ -6,17 +6,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Header_artworks = {
     readonly merchandisableArtists: ReadonlyArray<{
-        readonly slug: string;
         readonly internalID: string;
         readonly name: string | null;
-        readonly image: {
-            readonly resized: {
-                readonly url: string;
-            } | null;
-        } | null;
-        readonly birthday: string | null;
-        readonly nationality: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "EntityHeaderArtist_artist">;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"DefaultHeader_headerArtworks">;
     readonly " $refType": "Header_artworks";
@@ -47,13 +39,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "internalID",
           "storageKey": null
         },
@@ -65,68 +50,14 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 45
-                },
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "square"
-                },
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 45
-                }
-              ],
-              "concreteType": "ResizedImageUrl",
-              "kind": "LinkedField",
-              "name": "resized",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "url",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "resized(height:45,version:\"square\",width:45)"
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "birthday",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "nationality",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "FollowArtistButton_artist"
         },
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist"
+          "name": "EntityHeaderArtist_artist"
         }
       ],
       "storageKey": null
@@ -140,5 +71,5 @@ const node: ReaderFragment = {
   "type": "FilterArtworksConnection",
   "abstractKey": null
 };
-(node as any).hash = 'ee9a91cd2dac53afe39f913787441bc3';
+(node as any).hash = '03eb4bc477f0bae742f6707547b2b471';
 export default node;

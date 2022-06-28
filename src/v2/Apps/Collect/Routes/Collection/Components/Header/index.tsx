@@ -1,6 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
 import {
-  EntityHeader,
   Text,
   GridColumns,
   Breadcrumbs,
@@ -12,13 +11,13 @@ import {
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
-import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
 import { compact, filter, take } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { slugify } from "underscore.string"
+import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 
 export interface CollectionHeaderProps {
   collection: Header_collection
@@ -54,7 +53,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
           </Text>
 
           <Breadcrumbs>
-            <Link to="/collect">All works</Link> /{" "}
+            <Link to="/collect">All works</Link>
             <Link
               // TODO: Metaphysics should expose a slug
               to={`/collections#${slugify(collection.category)}`}
@@ -75,7 +74,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
       {!collection.headerImage && (
         <>
-          <Spacer mt={60} />
+          <Spacer mt={6} />
 
           <CollectionDefaultHeaderFragmentContainer
             headerArtworks={artworks}
@@ -86,52 +85,36 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
         </>
       )}
 
-      <Spacer mt={60} />
+      <Spacer mt={6} />
 
       {featuredArtists && hasMultipleArtists && (
-        <GridColumns>
-          <Column span={12}>
-            <Text variant="lg-display" mb={2}>
-              Featured Artists
-            </Text>
-          </Column>
+        <>
+          <Text variant="lg-display" mb={4}>
+            Featured Artists
+          </Text>
 
-          {featuredArtists.map(artist => {
-            if (!artist.name) return
+          <GridColumns>
+            {featuredArtists.map(artist => {
+              if (!artist.name) return
 
-            return (
-              <Column
-                span={[12, 6, 3, 3]}
-                key={artist.internalID}
-                data-test={ContextModule.featuredArtistsRail}
-                display="flex"
-                alignItems="center"
-              >
-                <EntityHeader
-                  width="100%"
-                  name={artist.name}
-                  imageUrl={artist?.image?.resized?.url}
-                  href={`/artist/${artist.slug}`}
-                  meta={
-                    artist.nationality && artist.birthday
-                      ? `${artist.nationality}, b. ${artist.birthday}`
-                      : undefined
-                  }
-                  FollowButton={
-                    <FollowArtistButtonFragmentContainer
-                      artist={artist}
-                      contextModule={ContextModule.featuredArtistsRail}
-                      buttonProps={{
-                        size: "small",
-                        variant: "secondaryBlack",
-                      }}
-                    />
-                  }
-                />
-              </Column>
-            )
-          })}
-        </GridColumns>
+              return (
+                <Column
+                  span={[12, 6, 3, 3]}
+                  key={artist.internalID}
+                  data-test={ContextModule.featuredArtistsRail}
+                  display="flex"
+                  alignItems="center"
+                >
+                  <EntityHeaderArtistFragmentContainer
+                    artist={artist}
+                    width="100%"
+                    alignItems="flex-start"
+                  />
+                </Column>
+              )
+            })}
+          </GridColumns>
+        </>
       )}
     </>
   )
@@ -159,17 +142,10 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
       fragment Header_artworks on FilterArtworksConnection {
         ...DefaultHeader_headerArtworks
         merchandisableArtists {
-          slug
+          ...FollowArtistButton_artist
+          ...EntityHeaderArtist_artist
           internalID
           name
-          image {
-            resized(width: 45, height: 45, version: "square") {
-              url
-            }
-          }
-          birthday
-          nationality
-          ...FollowArtistButton_artist
         }
       }
     `,
