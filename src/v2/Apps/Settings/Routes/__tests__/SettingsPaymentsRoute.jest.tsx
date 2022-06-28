@@ -65,9 +65,7 @@ describe("SettingsPaymentsRoute", () => {
     })
 
     expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
-    expect(
-      screen.getByText("Bank transfer (US bank account)")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Bank accounts")).toBeInTheDocument()
     expect(screen.getByText("•••• 1234")).toBeInTheDocument()
   })
 })

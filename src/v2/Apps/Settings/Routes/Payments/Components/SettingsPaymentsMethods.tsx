@@ -70,7 +70,7 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
       {bankAccounts.length > 0 && (
         <>
           <Text variant="sm-display" mt={6} mb={1}>
-            Bank transfer (US bank account)
+            Bank accounts
           </Text>
 
           <GridColumns gridRowGap={0}>
