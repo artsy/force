@@ -48,7 +48,7 @@ export const KeywordFilter: React.FC = () => {
   }, [keyword, setValue])
 
   return (
-    <FilterExpandable label="Keyword Search" expanded={true}>
+    <FilterExpandable label="Keyword Search" expanded>
       <LabeledInput
         value={value}
         placeholder="Enter a search term"

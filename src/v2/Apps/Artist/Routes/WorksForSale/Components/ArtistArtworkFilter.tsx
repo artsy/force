@@ -34,6 +34,7 @@ import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Mate
 import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { KeywordFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -57,6 +58,8 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     experimentName: "trending-sort-for-artist-artwork-grids",
     variantName: trendingSortVariant?.name!,
   })
+
+  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   useEffect(() => {
     trackFeatureVariant()
@@ -93,7 +96,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
 
   const Filters = (
     <>
-      <KeywordFilter />
+      {showKeywordFilter && <KeywordFilter />}
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <AttributionClassFilter expanded />
       <MediumFilter expanded />

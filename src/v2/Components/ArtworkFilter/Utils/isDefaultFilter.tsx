@@ -6,6 +6,10 @@ export const isDefaultFilter: (
   value: any,
   defaultValues?: Partial<ArtworkFilters>
 ) => boolean = (name, value, defaultValues = {}) => {
+  if (name === "keyword" && !value) {
+    return true
+  }
+
   if (!value) {
     return false
   }
