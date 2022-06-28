@@ -1,4 +1,3 @@
-import { OfferTestQueryRawResponse } from "v2/__generated__/OfferTestQuery.graphql"
 import { graphql } from "react-relay"
 import {
   UntouchedOfferOrder,
@@ -71,7 +70,7 @@ jest.mock("v2/Apps/Order/Utils/commitMutation", () => ({
   ),
 }))
 
-const testOffer: OfferTestQueryRawResponse["order"] = {
+const testOffer = {
   ...UntouchedOfferOrder,
   internalID: "1234",
 }
@@ -328,9 +327,8 @@ describe("Offer InitialMutation", () => {
       expect(pushMock).toHaveBeenCalledWith("/orders/1234/shipping")
     })
 
-    it("adds a custom note given no note present", async () => {
-      // TOFIX add the test when the feature flag is retired
-    })
+    // TODO: add the test when the feature flag is retired:
+    // "adds a custom note given no note present"
 
     it("routes to shipping screen after mutation completes - custom amount", async () => {
       mockCommitMutation.mockResolvedValue(initialOfferSuccess)
