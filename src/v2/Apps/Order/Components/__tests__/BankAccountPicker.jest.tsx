@@ -2,7 +2,7 @@ import { BorderedRadio, Collapse } from "@artsy/palette"
 import { BankAccountPickerTestQueryRawResponse } from "v2/__generated__/BankAccountPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
-  BuyOrderWithBankDebitDetails,
+  UntouchedBuyOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
@@ -10,6 +10,7 @@ import { BankAccountPickerFragmentContainer } from "../BankAccountPicker"
 import { MockBoot } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { BankAccountPicker_me } from "v2/__generated__/BankAccountPicker_me.graphql"
+import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -50,7 +51,7 @@ const defaultData: BankAccountPickerTestQueryRawResponse = {
     },
   },
   order: {
-    ...BuyOrderWithBankDebitDetails,
+    ...UntouchedBuyOrder,
   },
 }
 
@@ -81,7 +82,7 @@ describe("BankAccountFragmentContainer", () => {
   })
 
   describe("user has no existing bank accounts", () => {
-    it("renders", () => {
+    it("does not render bank account selection", () => {
       const wrapper = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
@@ -90,8 +91,17 @@ describe("BankAccountFragmentContainer", () => {
 
       expect(page.radios).toHaveLength(0)
     })
-    it.todo("does not render radio selection")
-    it.todo("renders bank element form")
+
+    it("renders bank element form", () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => defaultData.order,
+        Me: () => defaultData.me,
+      })
+      const page = new BankAccountPickerTestPage(wrapper)
+
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(true)
+    })
 
     describe("user has existing bank accounts", () => {
       const bankAccounts: Array<
@@ -172,7 +182,22 @@ describe("BankAccountFragmentContainer", () => {
         expect(page.radios.at(2).props().selected).toBeFalsy()
         expect(page.radios.at(0).props().selected).toBeFalsy()
       })
-      it.todo("the first bank account is selected by default")
+
+      it("the users first bank account is selected by default", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => BuyOrderPickup,
+          Me: () => ({
+            bankAccounts: {
+              edges: [{ node: bankAccounts[0] }, { node: bankAccounts[1] }],
+            },
+          }),
+        })
+        const page = new BankAccountPickerTestPage(wrapper)
+        expect(page.radios.at(0).props().selected).toBeTruthy()
+        expect(page.radios.at(1).props().selected).toBeFalsy()
+        expect(page.radios.at(2).props().selected).toBeFalsy()
+      })
+
       it.todo("calls setPayment mutation when user clicks 'save and continue'")
     })
   })
