@@ -1,11 +1,14 @@
 import { Text, Button, Message, GridColumns, Column } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 import { CreditCardInputProvider } from "v2/Components/CreditCardInput"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { SettingsPaymentsMethods_me } from "v2/__generated__/SettingsPaymentsMethods_me.graphql"
-import { SettingsPaymentsMethodFragmentContainer } from "./SettingsPaymentsMethod"
+import { SettingsBankAccountFragmentContainer } from "./SettingsBankAccount"
+import { SettingsCreditCardFragmentContainer } from "./SettingsCreditCard"
 import { SettingsPaymentsMethodForm } from "./SettingsPaymentsMethodForm"
 
 interface SettingsPaymentsMethodsProps {
@@ -15,7 +18,8 @@ interface SettingsPaymentsMethodsProps {
 type Mode = "Pending" | "Adding"
 
 const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
-  const methods = extractNodes(me.creditCards)
+  const creditCards = extractNodes(me.creditCards)
+  const bankAccounts = extractNodes(me.bankAccounts)
 
   const [mode, setMode] = useMode<Mode>("Pending")
 
@@ -35,21 +39,25 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
         </CreditCardInputProvider>
       )}
 
-      <Text variant="lg-display" mb={4}>
-        Saved Cards
+      <Text variant="lg-display" mb={2}>
+        Saved Payment Details
       </Text>
 
-      {methods.length === 0 ? (
+      <Text variant="sm-display" mb={1}>
+        Credit cards
+      </Text>
+
+      {creditCards.length === 0 ? (
         <Message variant="info">
           Please add a payment card for a faster checkout experience in future.
         </Message>
       ) : (
-        <GridColumns>
-          {methods.map(method => {
+        <GridColumns gridRowGap={0}>
+          {creditCards.map(creditCard => {
             return (
-              <Column key={method.internalID} span={8} wrap>
-                <SettingsPaymentsMethodFragmentContainer method={method} />
-              </Column>
+              <BorderedCell key={creditCard.internalID} span={8} wrap>
+                <SettingsCreditCardFragmentContainer creditCard={creditCard} />
+              </BorderedCell>
             )
           })}
         </GridColumns>
@@ -58,9 +66,37 @@ const SettingsPaymentsMethods: FC<SettingsPaymentsMethodsProps> = ({ me }) => {
       <Button mt={4} onClick={handleClick}>
         Add New Card
       </Button>
+
+      {bankAccounts.length > 0 && (
+        <>
+          <Text variant="sm-display" mt={6} mb={1}>
+            Bank transfer (US bank account)
+          </Text>
+
+          <GridColumns gridRowGap={0}>
+            {bankAccounts.map(bankAccount => {
+              return (
+                <BorderedCell key={bankAccount.internalID} span={8} wrap>
+                  <SettingsBankAccountFragmentContainer
+                    bankAccount={bankAccount}
+                  />
+                </BorderedCell>
+              )
+            })}
+          </GridColumns>
+        </>
+      )}
     </>
   )
 }
+
+const BorderedCell = styled(Column)`
+  border: 1px solid ${themeGet("colors.black15")};
+
+  &:not(:first-of-type) {
+    border-top: 0;
+  }
+`
 
 export const SettingsPaymentsMethodsFragmentContainer = createFragmentContainer(
   SettingsPaymentsMethods,
@@ -71,7 +107,15 @@ export const SettingsPaymentsMethodsFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
-              ...SettingsPaymentsMethod_method
+              ...SettingsCreditCard_creditCard
+            }
+          }
+        }
+        bankAccounts(first: 50) {
+          edges {
+            node {
+              internalID
+              ...SettingsBankAccount_bankAccount
             }
           }
         }

@@ -4,19 +4,19 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SettingsPaymentsMethod_method = {
+export type SettingsCreditCard_creditCard = {
     readonly internalID: string;
     readonly name: string | null;
     readonly brand: string;
     readonly lastDigits: string;
     readonly expirationYear: number;
     readonly expirationMonth: number;
-    readonly " $refType": "SettingsPaymentsMethod_method";
+    readonly " $refType": "SettingsCreditCard_creditCard";
 };
-export type SettingsPaymentsMethod_method$data = SettingsPaymentsMethod_method;
-export type SettingsPaymentsMethod_method$key = {
-    readonly " $data"?: SettingsPaymentsMethod_method$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethod_method">;
+export type SettingsCreditCard_creditCard$data = SettingsCreditCard_creditCard;
+export type SettingsCreditCard_creditCard$key = {
+    readonly " $data"?: SettingsCreditCard_creditCard$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"SettingsCreditCard_creditCard">;
 };
 
 
@@ -25,7 +25,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SettingsPaymentsMethod_method",
+  "name": "SettingsCreditCard_creditCard",
   "selections": [
     {
       "alias": null,
@@ -73,5 +73,5 @@ const node: ReaderFragment = {
   "type": "CreditCard",
   "abstractKey": null
 };
-(node as any).hash = 'cdb4785bc8d9f4da24b66625c06c3fbd';
+(node as any).hash = '901989cbe42f4fb17b0fd6e9af202e93';
 export default node;

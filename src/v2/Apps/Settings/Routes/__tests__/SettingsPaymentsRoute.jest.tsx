@@ -28,10 +28,14 @@ describe("SettingsPaymentsRoute", () => {
         creditCards: {
           edges: [],
         },
+        bankAccounts: () => ({
+          edges: [],
+        }),
       }),
     })
 
-    expect(screen.getByText("Saved Cards")).toBeInTheDocument()
+    expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
+    expect(screen.getByText("Credit cards")).toBeInTheDocument()
     expect(
       screen.getByText(
         "Please add a payment card for a faster checkout experience in future."
@@ -47,8 +51,23 @@ describe("SettingsPaymentsRoute", () => {
       }),
     })
 
-    expect(screen.getByText("Saved Cards")).toBeInTheDocument()
+    expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
+    expect(screen.getByText("Credit cards")).toBeInTheDocument()
     expect(screen.getByText("Example Name")).toBeInTheDocument()
-    expect(screen.getByText("••••1234")).toBeInTheDocument()
+    expect(screen.getByText("•••• 1234")).toBeInTheDocument()
+  })
+
+  it("renders the bank accounts", () => {
+    renderWithRelay({
+      BankAccount: () => ({
+        last4: "1234",
+      }),
+    })
+
+    expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
+    expect(
+      screen.getByText("Bank transfer (US bank account)")
+    ).toBeInTheDocument()
+    expect(screen.getByText("•••• 1234")).toBeInTheDocument()
   })
 })

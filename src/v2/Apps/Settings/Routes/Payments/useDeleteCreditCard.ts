@@ -13,7 +13,7 @@ export const useDeleteCreditCard = () => {
           creditCardOrError {
             ... on CreditCardMutationSuccess {
               creditCard {
-                ...SettingsPaymentsMethod_method
+                ...SettingsCreditCard_creditCard
               }
             }
             ... on CreditCardMutationFailure {
