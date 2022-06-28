@@ -1,9 +1,8 @@
 import {
-  BlueChipIcon,
-  Box,
   Column,
-  CSSGrid,
   GridColumns,
+  Skeleton,
+  SkeletonText,
   Text,
 } from "@artsy/palette"
 import { FC } from "react"
@@ -29,37 +28,37 @@ export const ArtistInsightBadges: FC<ArtistInsightBadgesProps> = ({
   }
 
   return (
-    <GridColumns>
-      {blueChipRepresentation.length > 0 && (
-        <Column span={6}>
-          <ArtistBadge
-            label="Blue Chip Representation"
-            description="Represented by internationally reputable galleries."
-          />
-        </Column>
-      )}
+    <>
+      <Text variant="lg-display" mb={2}>
+        Achievements
+      </Text>
+      <GridColumns>
+        {artist.insights.map(insight => {
+          return (
+            <Column span={6} key={insight.kind!}>
+              <Text variant="sm" color="blue100">
+                {insight.label}
+              </Text>
+              <Text variant="sm" color="black60">
+                {insight.description}
+              </Text>
+            </Column>
+          )
+        })}
 
-      {highAuctionRecord && (
-        <Column span={6}>
-          <ArtistBadge
-            label="High Auction Record"
-            description={highAuctionRecord}
-          />
-        </Column>
-      )}
+        {highAuctionRecord && (
+          <Column span={6}>
+            <Text variant="sm" color="blue100">
+              High Auction Record
+            </Text>
 
-      {artist.insights.map(insight => {
-        return (
-          <Column span={6} key={insight.kind!}>
-            <ArtistBadge
-              // TODO: Mark kind as non-nullable
-              label={insight.label}
-              description={insight.description!}
-            />
+            <Text variant="sm" color="black60">
+              {highAuctionRecord}
+            </Text>
           </Column>
-        )
-      })}
-    </GridColumns>
+        )}
+      </GridColumns>
+    </>
   )
 }
 
@@ -93,36 +92,28 @@ export const ArtistInsightBadgesFragmentContainer = createFragmentContainer(
   }
 )
 
-interface ArtistBadgeProps {
-  label: string
-  description?: string
-}
-
-export const ArtistBadge: FC<ArtistBadgeProps> = ({ label, description }) => {
+export const ArtistInsightBadgesPlaceholder: FC = () => {
   return (
-    <CSSGrid gridTemplateColumns="auto 1fr" gridTemplateRows="auto 1fr">
-      <Box
-        style={{ gridArea: "1 / 1 / 2 / 2" }}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <BlueChipIcon mr={0.5} fill="blue100" />
-      </Box>
-
-      <Text
-        variant="sm"
-        color="blue100"
-        style={{ gridArea: "1 / 2 / 2 / 3" }}
-        display="flex"
-        alignItems="center"
-      >
-        {label}
+    <Skeleton>
+      <Text variant="lg-display" mb={2}>
+        Achievements
       </Text>
 
-      <Text variant="sm" color="black60" style={{ gridArea: "2 / 2 / 3 / 3" }}>
-        {description}
-      </Text>
-    </CSSGrid>
+      <GridColumns>
+        <Column span={6}>
+          <SkeletonText variant="sm">Active Secondary Market</SkeletonText>
+
+          <SkeletonText variant="sm">
+            Recent auction results in the Artsy Price Database
+          </SkeletonText>
+        </Column>
+
+        <Column span={6}>
+          <SkeletonText variant="sm">High Auction Record</SkeletonText>
+
+          <SkeletonText variant="sm">US$85.0m, Phillips, 2022</SkeletonText>
+        </Column>
+      </GridColumns>
+    </Skeleton>
   )
 }

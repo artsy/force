@@ -22,18 +22,23 @@ export const ArtistInsightAchievements: FC<ArtistInsightAchievementsProps> = ({
   }
 
   return (
-    <GridColumns>
-      {artist.insightAchievements.map(insight => {
-        return (
-          <Column key={insight.label} span={6}>
-            <ArtistAchievement
-              label={insight.label}
-              entities={insight.entities}
-            />
-          </Column>
-        )
-      })}
-    </GridColumns>
+    <>
+      <Text variant="lg-display" mb={2}>
+        Career Highlights
+      </Text>
+      <GridColumns>
+        {artist.insightAchievements.map(insight => {
+          return (
+            <Column key={insight.label} span={6}>
+              <ArtistAchievement
+                label={insight.label}
+                entities={insight.entities}
+              />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </>
   )
 }
 
@@ -57,6 +62,10 @@ export const ArtistInsightAchievementsFragmentContainer = createFragmentContaine
 export const ArtistInsightAchievementsPlaceholder: FC = () => {
   return (
     <Skeleton>
+      <Text variant="lg-display" mb={2}>
+        Career Highlights
+      </Text>
+
       <GridColumns>
         <Column span={6}>
           <SkeletonText variant="sm">
