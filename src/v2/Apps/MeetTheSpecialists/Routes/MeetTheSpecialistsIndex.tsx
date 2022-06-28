@@ -127,14 +127,14 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "alexander.forbes@artsy.net",
     image:
-      "http://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
+      "https://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
   },
   {
     name: "Akanksha Ballaney",
     title: "Associate Director",
     location: "New York",
     email: "akanksha@artsy.net",
-    image: "http://files.artsy.net/images/akanksha.jpeg",
+    image: "https://files.artsy.net/images/akanksha.jpeg",
   },
   {
     name: "Natasha Prince",
@@ -142,7 +142,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "London",
     email: "natasha.prince@artsy.net",
     phone: "+44 7889 403808",
-    image: "http://files.artsy.net/images/natasha.jpeg",
+    image: "https://files.artsy.net/images/natasha.jpeg",
   },
   {
     name: "Robin Roche",
@@ -150,7 +150,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "robin.roche@artsy.net",
     phone: "+1 646 707 9450",
-    image: "http://files.artsy.net/images/robin.jpeg",
+    image: "https://files.artsy.net/images/robin.jpeg",
   },
   {
     name: "Daniela Bianco-Duppen",
@@ -158,7 +158,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "London",
     email: "daniela.bianco-duppen@artsy.net",
     phone: "+44 7503 236844",
-    image: "http://files.artsy.net/images/daniela-bianco-duppen.jpeg",
+    image: "https://files.artsy.net/images/daniela-bianco-duppen.jpeg",
   },
   {
     name: "Alexandra Freedman",
@@ -166,14 +166,14 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "alexandra.freedman@artsy.net",
     phone: "+1 610 405 7151",
-    image: "http://files.artsy.net/images/alexandra.jpeg",
+    image: "https://files.artsy.net/images/alexandra.jpeg",
   },
   {
     name: "Meave Hamill",
     title: "Advisor",
     location: "London",
     email: "meave@artsy.net",
-    image: "http://files.artsy.net/images/meave.jpeg",
+    image: "https://files.artsy.net/images/meave.jpeg",
   },
   {
     name: "George King",
@@ -181,7 +181,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "London",
     email: "george.king@artsy.net",
     phone: "+44 7850 739913",
-    image: "http://files.artsy.net/images/george.jpeg",
+    image: "https://files.artsy.net/images/george.jpeg",
   },
   {
     name: "Caroline Perkins",
@@ -189,7 +189,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "caroline.perkins@artsy.net",
     phone: "+1 540 588 1371",
-    image: "http://files.artsy.net/images/cperkins_headshot-copy.jpg",
+    image: "https://files.artsy.net/images/cperkins_headshot-copy.jpg",
   },
   {
     name: "Itziar Ramos Ricoy",
@@ -197,7 +197,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     location: "London",
     email: "itziar.ramos@artsy.net",
     phone: "+44 7429 093319",
-    image: "http://files.artsy.net/images/itziar.jpeg",
+    image: "https://files.artsy.net/images/itziar.jpeg",
   },
 ]
 
@@ -207,35 +207,35 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     title: "VP and Head of Auctions",
     location: "New York",
     email: "shlomi.rabi@artsy.net",
-    image: "http://files.artsy.net/images/shlomi2.jpg",
+    image: "https://files.artsy.net/images/shlomi2.jpg",
   },
   {
     name: "Lauren Carpinelli",
     title: "Specialist, Prints and Contemporary",
     location: "New York",
     email: "lauren.carpinelli@artsy.net",
-    image: "http://files.artsy.net/images/lauren.jpg",
+    image: "https://files.artsy.net/images/lauren.jpg",
   },
   {
     name: "Erica Lyon",
     title: "Associate Director of Partner Auctions",
     location: "New York",
     email: "erica@artsy.net",
-    image: "http://files.artsy.net/images/ericalyonheadshot.jpeg",
+    image: "https://files.artsy.net/images/ericalyonheadshot.jpeg",
   },
   {
     name: "Laura Martin",
     title: "Specialist, Post-War & Contemporary",
     location: "Los Angeles",
     email: "laura.martin@artsy.net",
-    image: "http://files.artsy.net/images/laura.jpg",
+    image: "https://files.artsy.net/images/laura.jpg",
   },
   {
     name: "Adam McCoy",
     title: "Senior Specialist and Head of Prints",
     location: "New York",
     email: "adam.mccoy@artsy.net",
-    image: "http://files.artsy.net/images/adam2.jpg",
+    image: "https://files.artsy.net/images/adam2.jpg",
   },
 
   {
@@ -243,21 +243,21 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     title: "Senior Specialist, Street Art",
     location: "New York",
     email: "alan@artsy.net",
-    image: "http://files.artsy.net/images/alan.png",
+    image: "https://files.artsy.net/images/alan.png",
   },
   {
     name: "Celine Cunha",
     title: "Specialist in Post-War & Contemporary Art",
     location: "New York",
     email: "celine.cunha@artsymail.com",
-    image: "http://files.artsy.net/images/Celine_Cunha_Krieger.png",
+    image: "https://files.artsy.net/images/Celine_Cunha_Krieger.png",
   },
   {
     name: "Simon Wills",
     title: "Trusts & Estates Senior Manager",
     location: "New York",
     email: "simon.wills@artsymail.com",
-    image: "http://files.artsy.net/images/simon_wills.png",
+    image: "https://files.artsy.net/images/simon_wills.png",
   },
 ]
 
@@ -267,35 +267,35 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
     title: "Collector Services Lead",
 
     email: "wendy.wiberg@artsy.net",
-    image: "http://files.artsy.net/images/wendy_wiberg.png",
+    image: "https://files.artsy.net/images/wendy_wiberg.png",
   },
   {
     name: "Eleonora Leo",
     title: "Senior Manager, Collector Services",
 
     email: "eleonora.leo@artsy.net",
-    image: "http://files.artsy.net/images/eleonora_leo.png",
+    image: "https://files.artsy.net/images/eleonora_leo.png",
   },
   {
     name: "Vanessa Zingale",
     title: "Senior Manager, Collector Services",
 
     email: "vanessa.zingale@artsy.net",
-    image: "http://files.artsy.net/images/vanessa_zingale.png",
+    image: "https://files.artsy.net/images/vanessa_zingale.png",
   },
   {
     name: "Isabel Telonis",
     title: "Manager, Collector Services",
 
     email: "isabel.telonis@artsy.net",
-    image: "http://files.artsy.net/images/isabel_telonis.png",
+    image: "https://files.artsy.net/images/isabel_telonis.png",
   },
   {
     name: "Dana Rodriguez",
     title: "Associate, Collector Services",
 
     email: "dana.rodriguez@artsy.net",
-    image: "http://files.artsy.net/images/dana_rodriguez.png",
+    image: "https://files.artsy.net/images/dana_rodriguez.png",
   },
 ]
 

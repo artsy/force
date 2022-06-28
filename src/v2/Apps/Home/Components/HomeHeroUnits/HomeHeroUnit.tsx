@@ -304,5 +304,5 @@ export const LOGGED_OUT_HERO_UNIT: StaticHeroUnit = {
   subtitle: "Register for updates on available works, market news, and more.",
   href: "/signup",
   linkText: "Sign Up",
-  backgroundImageURL: "http://files.artsy.net/homepage/signup-banner.png",
+  backgroundImageURL: "https://files.artsy.net/homepage/signup-banner.png",
 }

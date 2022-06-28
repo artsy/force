@@ -9,30 +9,30 @@ export const CollectionsFixture = [
     title: "Big Artists, Small Sculptures",
     slug: "collectible-sculptures",
     headerImage:
-      "http://files.artsy.net/images/pumpkinsbigartistsmallsculpture.png",
+      "https://files.artsy.net/images/pumpkinsbigartistsmallsculpture.png",
     price_guidance: 1000,
   },
   {
     title: "Minimalist Prints",
     slug: "minimalist-prints",
-    headerImage: "http://files.artsy.net/images/minimalistprints.png",
+    headerImage: "https://files.artsy.net/images/minimalistprints.png",
   },
   {
     title: "Contemporary Limited Editions",
     slug: "contemporary-limited-editions",
     headerImage:
-      "http://files.artsy.net/images/contemporarylimitededition2.png",
+      "https://files.artsy.net/images/contemporarylimitededition2.png",
   },
   {
     title: "Street Art Now",
     slug: "street-art-now",
-    headerImage: "http://files.artsy.net/images/streetartnow.png",
+    headerImage: "https://files.artsy.net/images/streetartnow.png",
     price_guidance: 200,
   },
   {
     title: "Timeless Modern Prints",
     slug: "timeless-modern-prints",
-    headerImage: "http://files.artsy.net/images/timelessmodernprints.png",
+    headerImage: "https://files.artsy.net/images/timelessmodernprints.png",
   },
 ]
 
@@ -40,7 +40,7 @@ export const CollectionsRailFixture = [
   {
     id: "54321",
     slug: "jasper-johns-flags",
-    headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
+    headerImage: "https://files.artsy.net/images/jasperjohnsflag.png",
     title: "Jasper Johns: Flags",
     price_guidance: 1000,
     artworksConnection: {
@@ -92,7 +92,7 @@ export const CollectionsRailFixture = [
   },
   {
     slug: "street-art-now",
-    headerImage: "http://files.artsy.net/images/banksygirlwithballoon.png",
+    headerImage: "https://files.artsy.net/images/banksygirlwithballoon.png",
     title: "Street Art Now",
     price_guidance: 200,
     artworksConnection: {
@@ -146,7 +146,7 @@ export const CollectionsRailFixture = [
     id: "65432",
     slug: "contemporary-limited-editions",
     headerImage:
-      "http://files.artsy.net/images/contemporarylimitededition2.png",
+      "https://files.artsy.net/images/contemporarylimitededition2.png",
     title: "Contemporary Limited Editions",
     price_guidance: 1000,
     artworksConnection: {
@@ -198,7 +198,7 @@ export const CollectionsRailFixture = [
   },
   {
     slug: "timeless-modern-prints",
-    headerImage: "http://files.artsy.net/images/timelessmodernprints.png",
+    headerImage: "https://files.artsy.net/images/timelessmodernprints.png",
     title: "Timeless Modern Prints",
     price_guidance: 2500,
     artworksConnection: {
@@ -322,7 +322,7 @@ export const CollectionHubFixture = {
         {
           id: "123456",
           slug: "artist-posters",
-          thumbnail: "http://files.artsy.net/images/posters_thumbnail.png",
+          thumbnail: "https://files.artsy.net/images/posters_thumbnail.png",
           title: "Artist Posters",
         },
         {
@@ -334,7 +334,7 @@ export const CollectionHubFixture = {
           id: "123457",
           slug: "kaws-bearbrick",
           thumbnail:
-            "http://files.artsy.net/images/kaws-bearbrick_thumbnail.png",
+            "https://files.artsy.net/images/kaws-bearbrick_thumbnail.png",
           title: "KAWS: Bearbricks",
         },
       ],
@@ -349,7 +349,7 @@ export const CollectionHubFixture = {
             '<p>From SpongeBob SquarePants to Snoopy, many beloved childhood cartoons have made an impact on the history of art. <a href="https://www.artsy.net/artist/roy-lichtenstein">Roy Lichtenstein</a> was the first to transform the aesthetic of comic strips into fine art when he painted fighter jets, <a href="https://www.artsy.net/collection/roy-lichtenstein-crying-girl">crying girls</a>, and kissing couples in brightly-colored dots and stripes. His Pop contemporary <a href="https://www.artsy.net/artist/andy-warhol">Andy Warhol</a> grew up obsessed with comic books and portrayed <a href="https://www.artsy.net/collection/andy-warhol-superman">Superman</a> flying through the air as an homage to his childhood hero. For contemporary artists, Walt Disney’s Mickey Mouse has been especially influential, appearing in prints by <a href="https://www.artsy.net/artist/keith-haring">Keith Haring</a>, <a href="https://www.artsy.net/artist/damien-hirst">Damien Hirst</a>, <a href="https://www.artsy.net/artist/banksy">Banksy</a>, and more. <a href="https://www.artsy.net/artist/kaws">KAWS</a> and <a href="https://www.artsy.net/artist/takashi-murakami">Takashi Murakami</a> have even invented their own versions of the classic cartoon, naming their creations <i><a href="https://www.artsy.net/collection/kaws-companions">Companion</a></i> and <i><a href="https://www.artsy.net/collection/takashi-murakami-mr-dob">Mr. DOB</a></i> respectively. Below, discover a curated selection of works inspired by cartoons, providing a new spin on some of the world’s most recognizable characters.</p>',
           price_guidance: 60,
           slug: "art-inspired-by-cartoons",
-          thumbnail: "http://files.artsy.net/images/cartoons_thumbnail.png",
+          thumbnail: "https://files.artsy.net/images/cartoons_thumbnail.png",
           title: "Art Inspired by Cartoons",
         },
         {
@@ -359,7 +359,7 @@ export const CollectionHubFixture = {
           price_guidance: 400,
           slug: "street-art-celebrities",
           thumbnail:
-            "http://files.artsy.net/images/street-art-celebrities_thumbnail.png",
+            "https://files.artsy.net/images/street-art-celebrities_thumbnail.png",
           title: "Street Art: Celebrity Portraits",
         },
         {
@@ -369,7 +369,7 @@ export const CollectionHubFixture = {
           price_guidance: 1200,
           slug: "street-art-superheroes-and-villains",
           thumbnail:
-            "http://files.artsy.net/images/street-art-superheroes_thumbnail.png",
+            "https://files.artsy.net/images/street-art-superheroes_thumbnail.png",
           title: "Street Art: Superheroes and Villains",
         },
       ],
