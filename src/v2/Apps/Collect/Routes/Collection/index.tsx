@@ -8,9 +8,8 @@ import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "v2/Components/Seo"
 import * as React from "react"
-import { Title } from "react-head"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
-import truncate from "trunc-html"
+import { truncate } from "lodash"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import {
@@ -44,17 +43,19 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     slug,
     headerImage,
     description,
+    descriptionMarkdown,
     fallbackHeaderImage,
     artworksConnection,
     descending_artworks,
     ascending_artworks,
   } = collection
   const collectionHref = `${getENV("APP_URL")}/collection/${slug}`
-  const collectionSlug = `collection/${slug}`
 
-  const metadataDescription = description
-    ? `Buy, bid, and inquire on ${title} on Artsy. ` +
-      truncate(description, 158).text
+  const metadataDescription = descriptionMarkdown
+    ? `Buy, bid, and inquire on ${title} on Artsy. ${truncate(
+        descriptionMarkdown,
+        { length: 158 }
+      )}`
     : `Buy, bid, and inquire on ${title} on Artsy.`
 
   const showCollectionHubs = collection.linkedCollections.length > 0
@@ -62,18 +63,17 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
   const socialImage =
     headerImage ||
     (fallbackHeaderImage?.edges &&
-      fallbackHeaderImage?.edges[0]?.node?.image?.resized?.url)
+      fallbackHeaderImage?.edges[0]?.node?.image?.url)
 
   return (
     <>
       <MetaTags
         description={metadataDescription}
         imageURL={socialImage}
-        pathname={collectionSlug}
-        title={title}
+        pathname={`collection/${slug}`}
+        title={`${title} - For Sale on Artsy`}
       />
-      {/* Overrides the title tag in MetaTags; necessary to add "for sale" */}
-      <Title>{`${title} - For Sale on Artsy`}</Title>
+
       <BreadCrumbList
         items={[
           { name: "Collections", path: "/collections" },
@@ -175,6 +175,8 @@ export const CollectionFragmentContainer = createFragmentContainer(
         ) {
         ...Header_collection
         description
+        # TODO: Description should implement markdown which accepts a format argument
+        descriptionMarkdown
         headerImage
         slug
         id
@@ -193,9 +195,7 @@ export const CollectionFragmentContainer = createFragmentContainer(
           edges {
             node {
               image {
-                resized(width: 600) {
-                  url
-                }
+                url
               }
             }
           }

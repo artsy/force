@@ -45,7 +45,7 @@ fragment CellArticle_article on Article {
 fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
   name
   slug
-  about(format: HTML)
+  description: about(format: PLAIN)
   profile {
     image {
       url(version: "wide")
@@ -351,17 +351,17 @@ return {
           (v1/*: any*/),
           (v2/*: any*/),
           {
-            "alias": null,
+            "alias": "description",
             "args": [
               {
                 "kind": "Literal",
                 "name": "format",
-                "value": "HTML"
+                "value": "PLAIN"
               }
             ],
             "kind": "ScalarField",
             "name": "about",
-            "storageKey": "about(format:\"HTML\")"
+            "storageKey": "about(format:\"PLAIN\")"
           },
           {
             "alias": null,
@@ -608,6 +608,19 @@ return {
             "args": [
               {
                 "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "about",
+            "storageKey": "about(format:\"HTML\")"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
                 "name": "first",
                 "value": 7
               },
@@ -737,7 +750,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6c4c20d4b0d7e5b9d91095d670be231",
+    "cacheID": "eaabf4a3e0681ee8c33df0fc0efb9d03",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -786,6 +799,7 @@ return {
           "plural": false,
           "type": "Int"
         },
+        "fairOrganizer.description": (v12/*: any*/),
         "fairOrganizer.fairsConnection": (v18/*: any*/),
         "fairOrganizer.fairsConnection.edges": (v19/*: any*/),
         "fairOrganizer.fairsConnection.edges.node": (v20/*: any*/),
@@ -837,7 +851,7 @@ return {
     },
     "name": "FairOrganizerApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  slug\n  about(format: HTML)\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n  ...FairOrganizerPastEventsRail_fairOrganizer\n  ...FairOrganizerHeaderImage_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n  ...FairOrganizerLatestArticles_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
+    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  slug\n  description: about(format: PLAIN)\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n  ...FairOrganizerPastEventsRail_fairOrganizer\n  ...FairOrganizerHeaderImage_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n  ...FairOrganizerLatestArticles_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n        size: width\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
   }
 };
 })();

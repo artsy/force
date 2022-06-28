@@ -8,6 +8,7 @@ import Backbone from "backbone"
 import _ from "lodash"
 import Cookies from "cookies-js"
 import { configureScope } from "@sentry/browser"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
@@ -85,7 +86,6 @@ function setupJquery() {
   require("jquery.transition")
   require("jquery.fillwidth")
   require("jquery.dotdotdot")
-  require("jquery-on-infinite-scroll")
   require("jquery-waypoints/waypoints.js")
   require("jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js")
   const loadTouchEvents = require("jquery-touch-events")

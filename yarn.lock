@@ -5064,11 +5064,6 @@ accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
-accounting@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/accounting/-/accounting-0.4.1.tgz#87dd4103eff7f4460f1e186f5c677ed6cf566883"
-  integrity sha1-h91BA+/39EYPHhhvXGd+1s9WaIM=
-
 acorn-globals@^1.0.3:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/acorn-globals/-/acorn-globals-1.0.9.tgz#55bb5e98691507b74579d0513413217c380c54cf"
@@ -6370,18 +6365,6 @@ before-after-hook@^2.0.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.2.1.tgz#73540563558687586b52ed217dad6a802ab1549c"
   integrity sha512-/6FKxSTWoJdbsLDF8tdIjaRiFXiE6UHsEHE3OPI/cwPURCVi1ukP0gmLn7XWEiFk5TcwQjjY5PWsU+j+tgXgmw==
-
-bem-cn-lite@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/bem-cn-lite/-/bem-cn-lite-3.0.0.tgz#77f0ab6f69a70da1058d8cdf97cee8b99f3f399b"
-  integrity sha1-d/Crb2mnDaEFjYzfl87ouZ8/OZs=
-  dependencies:
-    bem-cn "2.1.x"
-
-bem-cn@2.1.3, bem-cn@2.1.x:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/bem-cn/-/bem-cn-2.1.3.tgz#1e2145bc0f1106085de5563b6611c79644e71c2c"
-  integrity sha1-HiFFvA8RBghd5VY7ZhHHlkTnHCw=
 
 benv@3.3.0:
   version "3.3.0"
@@ -8814,7 +8797,7 @@ detect-port@^1.3.0:
 diacritic@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/diacritic/-/diacritic-0.0.2.tgz#fc2a887b5a5bc0a0a854fb614c7c2f209061ee04"
-  integrity sha1-/CqIe1pbwKCoVPthTHwvIJBh7gQ=
+  integrity sha512-iQCeDkSPwkfwWPr+HZZ49WRrM2FSI9097Q9w7agyRCdLcF9Eh2Ek0sHKcmMWx2oZVBjRBE/sziGFjZu0uf1Jbg==
 
 dicer@0.2.5:
   version "0.2.5"
@@ -10737,7 +10720,12 @@ focus-visible@5.1.0:
   resolved "https://registry.yarnpkg.com/focus-visible/-/focus-visible-5.1.0.tgz#4b9d40143b865f53eafbd93ca66672b3bf9e7b6a"
   integrity sha512-nPer0rjtzdZ7csVIu233P2cUm/ks/4aVSI+5KUkYrYpgA7ujgC3p6J7FtFU+AIMWwnwYQOB/yeiOITxFeYIXiw==
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.0:
+follow-redirects@^1.0.0:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
+  integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
+
+follow-redirects@^1.14.0:
   version "1.14.8"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
   integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==
@@ -11879,7 +11867,7 @@ highlight.js@^10.1.1, highlight.js@~10.6.0:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.6.0.tgz#0073aa71d566906965ba6e1b7be7b2682f5e18b6"
   integrity sha512-8mlRcn5vk/r4+QcqerapwBYTe+iPL5ih6xrNylxrnBdHQiijDETfXX7VIxC3UiCRiINBJfANBAsPzAvRQj8RpQ==
 
-history@4.7.2, history@^4.6.1:
+history@^4.6.1:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/history/-/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
   integrity sha512-1zkBRWW6XweO0NBcjiphtVJVsIQ+SXF29z9DVkceeaSLVMFXHool+fdCZD4spDCfZJCILPILc3bm7Bc+HRi0nA==
@@ -12449,7 +12437,7 @@ interpret@^2.2.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.2.0.tgz#1a78a0b5965c40a5416d007ad6f50ad27c417df9"
   integrity sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw==
 
-invariant@2.2.4, invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.3, invariant@^2.2.4:
+invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.3, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -14164,16 +14152,6 @@ join-component@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/join-component/-/join-component-1.1.0.tgz#b8417b750661a392bee2c2537c68b2a9d4977cd5"
   integrity sha1-uEF7dQZho5K+4sJTfGiyqdSXfNU=
-
-jquery-fillwidth-lite@1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/jquery-fillwidth-lite/-/jquery-fillwidth-lite-1.0.8.tgz#60a628e3e67e64df9482ef5525f1953df084f0fd"
-  integrity sha1-YKYo4+Z+ZN+Ugu9VJfGVPfCE8P0=
-
-"jquery-on-infinite-scroll@>=1.0.1 && 1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/jquery-on-infinite-scroll/-/jquery-on-infinite-scroll-1.0.1.tgz#2546745e604da5fa3929f5f8437e1f112c3d4abf"
-  integrity sha1-JUZ0XmBNpfo5KfX4Q34fESw9Sr8=
 
 jquery-touch-events@1.0.7:
   version "1.0.7"
@@ -19374,7 +19352,7 @@ requireindex@^1.2.0:
 requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
-  integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+  integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
 reselect@^3.0.1:
   version "3.0.1"
