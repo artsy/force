@@ -39,7 +39,7 @@ export const AboutApp: React.FC = () => {
         </Column>
 
         <Column span={6}>
-          <Text variant="sm-display">
+          <Text variant="sm">
             Artsy envisions a future where everyone is moved by art every day.
             To get there, we’re expanding the art market to support more artists
             and art around the world. As the leading marketplace to discover,
@@ -52,7 +52,9 @@ export const AboutApp: React.FC = () => {
       </GridColumns>
 
       <Spacer mt={6} />
+
       <AboutArtworksRailQueryRenderer />
+
       <Spacer my={12} />
 
       <Join separator={<Spacer mt={6} />}>
@@ -124,6 +126,7 @@ const SellWithArtsy: React.FC = () => {
               >
                 Apply to Become a Partner
               </Button>
+
               <Button
                 bg="transparent"
                 width="100%"
@@ -135,6 +138,7 @@ const SellWithArtsy: React.FC = () => {
               >
                 Partnership Overview
               </Button>
+
               <Button
                 bg="transparent"
                 width="100%"
@@ -168,31 +172,54 @@ const AppDownload: React.FC = () => {
         <Text variant="xs" textTransform="uppercase">
           Artsy App
         </Text>
+
         <Text variant="xl" mt={1}>
           The Art Market at Your Fingertips
         </Text>
+
         <Text variant="sm" mt={1} mb={4}>
           Discover artworks just for you, get market insights, and buy and sell
           with confidence—all on the Artsy app.
         </Text>
+
         <Flex>
-          <a
+          <Box
+            width={120}
+            height={40}
+            as="a"
+            // @ts-ignore
             href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
               src="https://files.artsy.net/images/download-ios-app.svg"
-              mr={4}
+              width="100%"
+              height="100%"
+              alt=""
+              loading="lazy"
             />
-          </a>
-          <a
+          </Box>
+
+          <Spacer ml={2} />
+
+          <Box
+            width={120}
+            height={40}
+            as="a"
+            // @ts-ignore
             href="https://play.google.com/store/apps/details?id=net.artsy.app"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="https://files.artsy.net/images/download-android-app.svg" />
-          </a>
+            <Image
+              src="https://files.artsy.net/images/download-android-app.svg"
+              width="100%"
+              height="100%"
+              alt=""
+              loading="lazy"
+            />
+          </Box>
         </Flex>
       </Column>
 
@@ -238,6 +265,7 @@ const CollectorInfo: React.FC = () => {
             alt=""
           />
         </ResponsiveBox>
+
         <Text variant="xs" textColor="black60" mt={0.5}>
           The Collection for Carole Server by Emily Johnston for Artsy 2015.
           Courtesy of Carole Server.
@@ -248,9 +276,11 @@ const CollectorInfo: React.FC = () => {
         <Text variant="xs" textTransform="uppercase">
           On Artsy
         </Text>
+
         <Text variant="xl" mt={1}>
           Where Collectors Belong
         </Text>
+
         <Text variant="sm" mt={1}>
           Artsy lets collectors find their favorite artists—and discover some
           new ones—all in one place. We bring together over 1 million artworks
@@ -272,9 +302,11 @@ const ArtsySpecialists: React.FC = () => {
         <Text variant="xs" textTransform="uppercase">
           Artsy Specialists
         </Text>
+
         <Text variant="xl" mt={1}>
           Here to Help You Find the Art You Love
         </Text>
+
         <Text variant="sm" mt={1}>
           Artsy specialists are available to all Artsy members, wherever you are
           in your collector’s journey. Our specialists join Artsy from leading
@@ -282,6 +314,7 @@ const ArtsySpecialists: React.FC = () => {
           works that you love—with your price range, taste, and current
           collection in mind.
         </Text>
+
         <Text variant="sm" mt={4}>
           More questions about collecting?
         </Text>
