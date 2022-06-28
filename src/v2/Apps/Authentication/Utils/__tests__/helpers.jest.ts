@@ -414,7 +414,7 @@ describe("Authentication Helpers", () => {
 
           return apiAuthWithRedirectUrl(response, redirectPath).then(actual => {
             expect(actual.toString()).toMatch(
-              "https://api.artsy.net/users/sign_in?redirect_uri=https%3A%2F%2Fartsy.net%2Fany-path&trust_token=a-trust-token"
+              "https://api.artsy.net/users/sign_in?trust_token=a-trust-token&redirect_uri=https%3A%2F%2Fartsy.net%2Fany-path"
             )
           })
         })
