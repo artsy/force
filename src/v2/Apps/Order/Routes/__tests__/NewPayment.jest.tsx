@@ -5,7 +5,7 @@ import {
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
-import * as paymentPickerMock from "../../Components/__mocks__/PaymentPicker"
+import * as CreditCardPickerMock from "../../Components/__mocks__/CreditCardPicker"
 import {
   fixFailedPaymentFailure,
   fixFailedPaymentInsufficientInventoryFailure,
@@ -45,11 +45,11 @@ jest.mock("@stripe/stripe-js", () => {
 const { _mockStripe } = require("@stripe/stripe-js")
 
 jest.mock(
-  "v2/Apps/Order/Components/PaymentPicker",
+  "v2/Apps/Order/Components/CreditCardPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../../Components/__mocks__/PaymentPicker")
+    return require("../../Components/__mocks__/CreditCardPicker")
   }
 )
 
@@ -181,14 +181,14 @@ describe("Payment", () => {
   it("does not do anything when there are form errors", async () => {
     let wrapper = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
-    paymentPickerMock.useInvalidFormResult()
+    CreditCardPickerMock.useInvalidFormResult()
     await page.clickSubmit()
 
     expect(mockShowErrorDialog).not.toHaveBeenCalled()
   })
 
   it("shows the default error modal when the payment picker throws an error", async () => {
-    paymentPickerMock.useThrownError()
+    CreditCardPickerMock.useThrownError()
     let wrapper = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
 
@@ -214,7 +214,7 @@ describe("Payment", () => {
   })
 
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
-    paymentPickerMock.useErrorResult()
+    CreditCardPickerMock.useErrorResult()
     let wrapper = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
@@ -227,7 +227,7 @@ describe("Payment", () => {
   })
 
   it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
-    paymentPickerMock.useInternalErrorResult()
+    CreditCardPickerMock.useInternalErrorResult()
     let wrapper = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()

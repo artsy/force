@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_me = {
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me" | "BankAccountPicker_me">;
+    readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_me" | "BankAccountPicker_me">;
     readonly " $refType": "Payment_me";
 };
 export type Payment_me$data = Payment_me;
@@ -25,7 +25,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PaymentPicker_me"
+      "name": "CreditCardPicker_me"
     },
     {
       "args": null,
@@ -36,5 +36,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '09bd466e2814e345b4bcd89bea197068';
+(node as any).hash = '1dbcb71aa69b82bc716a858129c43710';
 export default node;

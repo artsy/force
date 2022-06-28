@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PaymentPicker_me = {
+export type CreditCardPicker_me = {
     readonly creditCards: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -16,12 +16,12 @@ export type PaymentPicker_me = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "PaymentPicker_me";
+    readonly " $refType": "CreditCardPicker_me";
 };
-export type PaymentPicker_me$data = PaymentPicker_me;
-export type PaymentPicker_me$key = {
-    readonly " $data"?: PaymentPicker_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me">;
+export type CreditCardPicker_me$data = CreditCardPicker_me;
+export type CreditCardPicker_me$key = {
+    readonly " $data"?: CreditCardPicker_me$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_me">;
 };
 
 
@@ -30,7 +30,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PaymentPicker_me",
+  "name": "CreditCardPicker_me",
   "selections": [
     {
       "alias": null,
@@ -110,5 +110,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '7c560989a1629a7d702ebca42324ab84';
+(node as any).hash = '8eeccee9b7b0eb1c81409e58eca74f21';
 export default node;

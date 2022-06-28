@@ -26,7 +26,7 @@ export type NewPayment_order = {
         readonly internalID: string;
         readonly note: string | null;
     } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_order" | "ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
     readonly " $refType": "NewPayment_order";
 };
 export type NewPayment_order$data = NewPayment_order;
@@ -166,7 +166,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PaymentPicker_order"
+      "name": "CreditCardPicker_order"
     },
     {
       "args": null,
@@ -183,5 +183,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '59e7ce7ac02e84e7e5a0b1ea3d6de495';
+(node as any).hash = 'c5fc85efa7df4310ef663017e1ec2ec7';
 export default node;

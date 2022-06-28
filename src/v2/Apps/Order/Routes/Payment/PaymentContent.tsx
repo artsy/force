@@ -13,9 +13,9 @@ import {
   RadioProps,
 } from "@artsy/palette"
 import {
-  PaymentPicker,
-  PaymentPickerFragmentContainer,
-} from "../../Components/PaymentPicker"
+  CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "../../Components/CreditCardPicker"
 import { Media } from "v2/Utils/Responsive"
 import { ContinueButton } from "./index"
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
@@ -34,7 +34,7 @@ export interface Props {
   paymentMethod: CommercePaymentMethodEnum
   setPayment: () => void
   onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
-  paymentPicker: RefObject<PaymentPicker>
+  CreditCardPicker: RefObject<CreditCardPicker>
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
 }
@@ -46,7 +46,7 @@ export const PaymentContent: FC<Props> = props => {
     setPayment,
     me,
     order,
-    paymentPicker,
+    CreditCardPicker,
     paymentMethod,
     onPaymentMethodChange,
     onSetPaymentSuccess,
@@ -72,11 +72,11 @@ export const PaymentContent: FC<Props> = props => {
   if (order.availablePaymentMethods.length === 1) {
     return (
       <PaymentContentWrapper isLoading={isLoading}>
-        <PaymentPickerFragmentContainer
+        <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
           me={me}
           order={order}
-          innerRef={paymentPicker}
+          innerRef={CreditCardPicker}
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
@@ -109,11 +109,11 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={paymentMethod === "CREDIT_CARD"}>
-        <PaymentPickerFragmentContainer
+        <CreditCardPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
           order={order}
-          innerRef={paymentPicker}
+          innerRef={CreditCardPicker}
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">

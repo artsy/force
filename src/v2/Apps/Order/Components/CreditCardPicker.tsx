@@ -1,6 +1,6 @@
-import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
-import { PaymentPicker_order } from "v2/__generated__/PaymentPicker_order.graphql"
-import { PaymentPickerCreateCreditCardMutation } from "v2/__generated__/PaymentPickerCreateCreditCardMutation.graphql"
+import { CreditCardPicker_me } from "v2/__generated__/CreditCardPicker_me.graphql"
+import { CreditCardPicker_order } from "v2/__generated__/CreditCardPicker_order.graphql"
+import { CreditCardPickerCreateCreditCardMutation } from "v2/__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
   Address,
   AddressChangeHandler,
@@ -48,14 +48,14 @@ export interface StripeProps {
   elements: StripeElements
 }
 
-export interface PaymentPickerProps {
-  order: PaymentPicker_order
-  me: PaymentPicker_me
+export interface CreditCardPickerProps {
+  order: CreditCardPicker_order
+  me: CreditCardPicker_me
   commitMutation: CommitMutation
-  innerRef: React.RefObject<PaymentPicker>
+  innerRef: React.RefObject<CreditCardPicker>
 }
 
-interface PaymentPickerState {
+interface CreditCardPickerState {
   hideBillingAddress: boolean
   address: Address
   addressErrors: AddressErrors
@@ -66,9 +66,9 @@ interface PaymentPickerState {
   saveNewCreditCard: boolean
 }
 
-export class PaymentPicker extends React.Component<
-  PaymentPickerProps & SystemContextProps & StripeProps,
-  PaymentPickerState
+export class CreditCardPicker extends React.Component<
+  CreditCardPickerProps & SystemContextProps & StripeProps,
+  CreditCardPickerState
 > {
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   state = {
@@ -82,7 +82,7 @@ export class PaymentPicker extends React.Component<
     saveNewCreditCard: true,
   }
 
-  private getInitialCreditCardSelection(): PaymentPickerState["creditCardSelection"] {
+  private getInitialCreditCardSelection(): CreditCardPickerState["creditCardSelection"] {
     if (this.props.order.creditCard) {
       return {
         type: "existing",
@@ -193,7 +193,7 @@ export class PaymentPicker extends React.Component<
   }
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  @track((props: PaymentPickerProps, state, args) => {
+  @track((props: CreditCardPickerProps, state, args) => {
     const showBillingAddress = !args[0]
     if (showBillingAddress && props.order.state === "PENDING") {
       return {
@@ -403,12 +403,12 @@ export class PaymentPicker extends React.Component<
   }
 
   private createCreditCard(
-    variables: PaymentPickerCreateCreditCardMutation["variables"]
+    variables: CreditCardPickerCreateCreditCardMutation["variables"]
   ) {
-    return this.props.commitMutation<PaymentPickerCreateCreditCardMutation>({
+    return this.props.commitMutation<CreditCardPickerCreateCreditCardMutation>({
       variables,
       mutation: graphql`
-        mutation PaymentPickerCreateCreditCardMutation(
+        mutation CreditCardPickerCreateCreditCardMutation(
           $input: CreditCardInput!
         ) {
           createCreditCard(input: $input) {
@@ -455,29 +455,33 @@ export class PaymentPicker extends React.Component<
 }
 
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
-// ref to the PaymentPicker instance (for getCreditCardId) we'll add an
+// ref to the CreditCardPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const PaymentPickerWithInnerRef: React.FC<
-  PaymentPickerProps & {
-    innerRef: React.RefObject<PaymentPicker>
+const CreditCardPickerWithInnerRef: React.FC<
+  CreditCardPickerProps & {
+    innerRef: React.RefObject<CreditCardPicker>
   }
 > = ({ innerRef, ...props }) => (
   <SystemContextConsumer>
     {({ isEigen }) => {
       return (
-        <PaymentPicker ref={innerRef} isEigen={isEigen} {...(props as any)} />
+        <CreditCardPicker
+          ref={innerRef}
+          isEigen={isEigen}
+          {...(props as any)}
+        />
       )
     }}
   </SystemContextConsumer>
 )
 
-export const PaymentPickerFragmentContainer = createFragmentContainer(
+export const CreditCardPickerFragmentContainer = createFragmentContainer(
   track()(
-    createStripeWrapper(PaymentPickerWithInnerRef)
-  ) as typeof PaymentPickerWithInnerRef,
+    createStripeWrapper(CreditCardPickerWithInnerRef)
+  ) as typeof CreditCardPickerWithInnerRef,
   {
     me: graphql`
-      fragment PaymentPicker_me on Me {
+      fragment CreditCardPicker_me on Me {
         creditCards(first: 100) {
           edges {
             node {
@@ -492,7 +496,7 @@ export const PaymentPickerFragmentContainer = createFragmentContainer(
       }
     `,
     order: graphql`
-      fragment PaymentPicker_order on CommerceOrder {
+      fragment CreditCardPicker_order on CommerceOrder {
         internalID
         mode
         state
