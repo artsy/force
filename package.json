@@ -252,7 +252,6 @@
     "@testing-library/user-event": "^13.1.9",
     "@types/autosuggest-highlight": "3.1.0",
     "@types/dd-trace": "0.6.0",
-    "@types/dedent": "0.7.0",
     "@types/enzyme": "3.1.11",
     "@types/express": "4.16.1",
     "@types/flickity": "2.2.2",
