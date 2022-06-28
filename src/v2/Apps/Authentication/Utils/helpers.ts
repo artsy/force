@@ -2,7 +2,7 @@ import Cookies from "cookies-js"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import * as qs from "query-string"
+import qs from "qs"
 import type { Response } from "express"
 import {
   AuthService,

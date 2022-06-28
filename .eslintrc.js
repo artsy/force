@@ -117,6 +117,10 @@ module.exports = {
         name: "unstated",
         message: "Please just use React state.",
       },
+      {
+        name: "react-waypoint",
+        message: "Please use `useIntersectionObserver`",
+      },
     ],
   },
   overrides: [

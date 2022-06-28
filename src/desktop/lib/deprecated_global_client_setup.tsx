@@ -85,7 +85,6 @@ function setupJquery() {
   require("typeahead.js/dist/typeahead.bundle.min.js")
   require("jquery.transition")
   require("jquery.fillwidth")
-  require("jquery.dotdotdot")
   require("jquery-waypoints/waypoints.js")
   require("jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js")
   const loadTouchEvents = require("jquery-touch-events")
