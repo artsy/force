@@ -1,10 +1,6 @@
-import { Text, Flex } from "@artsy/palette"
 import { FC } from "react"
+import { OnboardingGeneQueryRenderer } from "v2/Apps/Onboarding/Components/OnboardingGene"
 
 export const OnboardingTopAuctionLots: FC = () => {
-  return (
-    <Flex flexDirection="column">
-      <Text variant="lg-display">TODO: OnboardingTopAuctionLots</Text>
-    </Flex>
-  )
+  return <OnboardingGeneQueryRenderer id="our-top-auction-lots" />
 }

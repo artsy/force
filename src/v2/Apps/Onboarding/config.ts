@@ -11,6 +11,8 @@ export const useConfig = ({ basis, onDone }: UseConfig) => {
   const workflowEngine = useRef(
     new WorkflowEngine({
       workflow: [
+        // TODO: remove top auction lots from workflow
+        VIEW_TOP_AUCTION_LOTS,
         VIEW_WELCOME,
         VIEW_QUESTION_ONE,
         VIEW_QUESTION_TWO,
