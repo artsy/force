@@ -213,7 +213,6 @@
     "stylus": "0.54.5",
     "superagent": "3.8.3",
     "tti-polyfill": "0.2.2",
-    "typeahead.js": "0.10.5",
     "underscore": "1.12.1",
     "underscore.string": "3.3.5",
     "unleash-client": "^3.12.0",
