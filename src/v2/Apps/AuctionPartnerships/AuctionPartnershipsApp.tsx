@@ -49,7 +49,7 @@ export const AuctionPartnershipsApp: React.FC = () => {
 }
 
 const ArtsyForAuctions: React.FC = () => {
-  const headerImage = "http://files.artsy.net/images/lamodern-auctioneer.png"
+  const headerImage = "https://files.artsy.net/images/lamodern-auctioneer.png"
 
   return (
     <Box>
@@ -75,7 +75,7 @@ const ArtsyForAuctions: React.FC = () => {
 
 const MarketplaceExperience: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/images/gallery-names/temp.jpeg",
+    "https://files.artsy.net/images/gallery-names/temp.jpeg",
     {
       width: 910,
       height: 345,
@@ -317,7 +317,7 @@ const PartnerWithArtsyForm: React.FC = () => {
 
 const GlobalAudienceReach: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/images/audience_map/temp.jpeg",
+    "https://files.artsy.net/images/audience_map/temp.jpeg",
     {
       width: 910,
       height: 387,
@@ -358,7 +358,7 @@ const GlobalAudienceReach: React.FC = () => {
 }
 
 const BiddingTools: React.FC = () => {
-  const image = resized("http://files.artsy.net/images/auction-devices.png", {
+  const image = resized("https://files.artsy.net/images/auction-devices.png", {
     width: 910,
   })
 
@@ -452,7 +452,7 @@ const ConsignmentsInfo: React.FC = () => {
 
 const VisibilityInfoTop: React.FC = () => {
   const image1 = resized(
-    "http://files.artsy.net/images/authenticated-desktop.png",
+    "https://files.artsy.net/images/authenticated-desktop.png",
     {
       width: 910,
       height: 539,
@@ -460,7 +460,7 @@ const VisibilityInfoTop: React.FC = () => {
     }
   )
 
-  const image2 = resized("http://files.artsy.net/images/x-2.png", {
+  const image2 = resized("https://files.artsy.net/images/x-2.png", {
     width: 240,
     height: 400,
     quality: 100,
@@ -533,13 +533,13 @@ const VisibilityInfoTop: React.FC = () => {
 }
 
 const EventServicesInfo: React.FC = () => {
-  const image1 = resized("http://files.artsy.net/images/auction-kiosk2.png", {
+  const image1 = resized("https://files.artsy.net/images/auction-kiosk2.png", {
     width: 910,
     height: 585,
   })
 
   const image2 = resized(
-    "http://files.artsy.net/images/auction-projection2.png",
+    "https://files.artsy.net/images/auction-projection2.png",
     {
       width: 910,
       height: 586,
@@ -652,7 +652,7 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     location: "",
     email: "",
     phone: "",
-    photo: "http://files.artsy.net/specialist-headshot4.png",
+    photo: "https://files.artsy.net/specialist-headshot4.png",
   },
   {
     name: "Sophie Salamon",
@@ -660,6 +660,6 @@ const AUCTIONS_PARTNERSHIPS_SPECIALISTS = [
     location: "",
     email: "",
     phone: "",
-    photo: "http://files.artsy.net/specialist-headshot1.png",
+    photo: "https://files.artsy.net/specialist-headshot1.png",
   },
 ]

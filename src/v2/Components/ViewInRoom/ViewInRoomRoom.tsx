@@ -18,7 +18,7 @@ const Room = styled(Box)`
   left: 50%;
   margin-top: -${roomHeight / 2}px;
   margin-left: -${roomWidth / 2}px;
-  background: ${ROOM_WALL_HEX} url("http://files.artsy.net/images/room.jpeg")
+  background: ${ROOM_WALL_HEX} url("https://files.artsy.net/images/room.jpeg")
     bottom center no-repeat;
 `
 

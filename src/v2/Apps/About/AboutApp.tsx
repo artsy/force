@@ -68,7 +68,7 @@ export const AboutApp: React.FC = () => {
 
 const SellWithArtsy: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/images/molly_green_original.jpeg",
+    "https://files.artsy.net/images/molly_green_original.jpeg",
     { width: 640 }
   )
 
@@ -155,7 +155,7 @@ const SellWithArtsy: React.FC = () => {
 
 const AppDownload: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/images/about2/appstore_image_highres.png",
+    "https://files.artsy.net/images/about2/appstore_image_highres.png",
     {
       width: 910,
       height: 652,
@@ -182,7 +182,7 @@ const AppDownload: React.FC = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src="http://files.artsy.net/images/download-ios-app.svg"
+              src="https://files.artsy.net/images/download-ios-app.svg"
               mr={4}
             />
           </a>
@@ -191,7 +191,7 @@ const AppDownload: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="http://files.artsy.net/images/download-android-app.svg" />
+            <Image src="https://files.artsy.net/images/download-android-app.svg" />
           </a>
         </Flex>
       </Column>
@@ -214,7 +214,7 @@ const AppDownload: React.FC = () => {
 
 const CollectorInfo: React.FC = () => {
   const image = resized(
-    "http://files.artsy.net/about2_page_collector_img.jpg",
+    "https://files.artsy.net/about2_page_collector_img.jpg",
     {
       width: 910,
       height: 652,
