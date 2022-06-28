@@ -19687,11 +19687,6 @@ scroll-behavior@^0.11.0:
     invariant "^2.2.4"
     page-lifecycle "^0.1.2"
 
-scroll-frame@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/scroll-frame/-/scroll-frame-1.0.0.tgz#f562eb69d7ece50a06466f0e3cb2ef7bc3713b27"
-  integrity sha1-9WLradfs5QoGRm8OPLLve8NxOyc=
-
 section-iterator@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/section-iterator/-/section-iterator-2.0.0.tgz#bf444d7afeeb94ad43c39ad2fb26151627ccba2a"
