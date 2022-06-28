@@ -219,7 +219,6 @@
     "use-cursor": "^1.2.3",
     "uuid": "3.3.2",
     "waypoints": "4.0.0",
-    "xss-filters": "1.2.7",
     "yargs": "11.0.0",
     "yup": "0.32.6"
   },
