@@ -15503,7 +15503,7 @@ meros@1.1.4:
   resolved "https://registry.yarnpkg.com/meros/-/meros-1.1.4.tgz#c17994d3133db8b23807f62bec7f0cb276cfd948"
   integrity sha512-E9ZXfK9iQfG9s73ars9qvvvbSIkJZF5yOo9j4tcwM5tN8mUKfj/EKN5PzOr3ZH0y5wL7dLAHw3RVEfpQV9Q7VQ==
 
-methods@1.x, methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:
+methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
@@ -20767,7 +20767,7 @@ superagent-retry@^0.6.0:
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
   integrity sha1-5Js1ypbA47HQ4/SWBRNt8OCgKLc=
 
-superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^2.0.0, superagent@^3.5.0, superagent@^3.6.3:
+superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^3.5.0, superagent@^3.6.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
   integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==
@@ -20782,14 +20782,6 @@ superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^2.0.0, superagent
     mime "^1.4.1"
     qs "^6.5.1"
     readable-stream "^2.3.5"
-
-supertest@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/supertest/-/supertest-2.0.1.tgz#a058081d788f1515d4700d7502881e6b759e44cd"
-  integrity sha1-oFgIHXiPFRXUcA11Aogea3WeRM0=
-  dependencies:
-    methods "1.x"
-    superagent "^2.0.0"
 
 supports-color@6.0.0:
   version "6.0.0"
