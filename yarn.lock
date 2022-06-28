@@ -11097,14 +11097,6 @@ geoformatter@artsy/geoformatter:
   version "0.0.0"
   resolved "https://codeload.github.com/artsy/geoformatter/tar.gz/56f0f25a91a210a6a4a7db7de7bb2cb7085ed1fa"
 
-gestures@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/gestures/-/gestures-0.0.2.tgz#671203947b8cdb3dc49a6247b1682fa81770e3ba"
-  integrity sha1-ZxIDlHuM2z3EmmJHsWgvqBdw47o=
-  dependencies:
-    interact-js "^0.4.6"
-    math-js "^0.0.4"
-
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
@@ -12392,11 +12384,6 @@ insane@2.6.1:
   dependencies:
     assignment "2.0.0"
     he "0.5.0"
-
-interact-js@^0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/interact-js/-/interact-js-0.4.6.tgz#afa098e7b83eeec5ede0b92a825645abc25c946d"
-  integrity sha1-r6CY57g+7sXt4LkqglZFq8JclG0=
 
 internal-slot@^1.0.3:
   version "1.0.3"
@@ -14511,11 +14498,6 @@ jwt-decode@2.2.0:
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
   integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
 
-keyboard-code@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/keyboard-code/-/keyboard-code-0.0.2.tgz#5562cd1b36798a1698a547a85ee6ff0aeb938488"
-  integrity sha1-VWLNGzZ5ihaYpUeoXub/CuuThIg=
-
 keygrip@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
@@ -14591,29 +14573,6 @@ koalas@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/koalas/-/koalas-1.0.2.tgz#318433f074235db78fae5661a02a8ca53ee295cd"
   integrity sha1-MYQz8HQjXbePrlZhoCqMpT7ilc0=
-
-konami-js@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/konami-js/-/konami-js-0.0.2.tgz#35ab27483f27e23e91e470da851954e4468fc6d9"
-  integrity sha1-NasnSD8n4j6R5HDahRlU5EaPxtk=
-  dependencies:
-    konami-keyboard "^0.0.1"
-    konami-touch "^0.0.3"
-
-konami-keyboard@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/konami-keyboard/-/konami-keyboard-0.0.1.tgz#df4459717ca67ce6de5ee141508d1357e255d4bc"
-  integrity sha1-30RZcXymfObeXuFBUI0TV+JV1Lw=
-  dependencies:
-    keyboard-code "0.0.2"
-
-konami-touch@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/konami-touch/-/konami-touch-0.0.3.tgz#151b299898840eaca26670e9e4942146a0afdb00"
-  integrity sha1-FRspmJiEDqyiZnDp5JQhRqCv2wA=
-  dependencies:
-    gestures "^0.0.2"
-    math-js "^0.0.4"
 
 ky-universal@^0.3.0:
   version "0.3.0"
@@ -15386,11 +15345,6 @@ marked@^1.2.8:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.9.tgz#53786f8b05d4c01a2a5a76b7d1ec9943d29d72dc"
   integrity sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw==
-
-math-js@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/math-js/-/math-js-0.0.4.tgz#e0ce5059a2a110b5ddad9ec6d4322aa52e894fb9"
-  integrity sha1-4M5QWaKhELXdrZ7G1DIqpS6JT7k=
 
 md5.js@^1.3.4:
   version "1.3.5"
