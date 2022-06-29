@@ -1,6 +1,7 @@
 import express from "express"
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
+import { shortcutsServerRoutes } from "v2/Apps/Shortcuts/shortcutsServerRoutes"
 
 const app = express()
 
@@ -42,8 +43,8 @@ app.use(require("./apps/eoy_2016"))
 app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
 
-// Non-profile dynamic vanity url apps
-app.use(require("./apps/shortcuts"))
+// FIXME: Move to v2/server.ts once remaining legacy apps are retired (the order of this app matters)
+app.use(shortcutsServerRoutes)
 
 // Apps that need to fetch a profile.
 // Because profile routes are usually top-level and use wild-card matchers in their routers,

@@ -7,7 +7,7 @@ export class NetworkError extends Error {
 export class ErrorWithMetadata extends Error {
   metadata: object
 
-  constructor(message, metadata = {}) {
+  constructor(message: string, metadata = {}) {
     super(message)
     this.metadata = metadata
     if (Error.captureStackTrace) {
@@ -33,4 +33,16 @@ export const reportErrorWithScope = (
 
 export const sendErrorToService = (error: Error | ErrorWithMetadata) => {
   withScope(reportErrorWithScope(error))
+}
+
+export class ErrorWithStatus extends Error {
+  status: number
+
+  constructor(message: string, status = 500) {
+    super(message)
+    this.status = status
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor)
+    }
+  }
 }
