@@ -291,7 +291,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
         textAlign="left"
         onClick={() => setShowCustom(prevShowCustom => !prevShowCustom)}
       >
-        <Text variant="small">{showCustom ? "Hide" : "Show"} custom size</Text>
+        <Text variant="xs">{showCustom ? "Hide" : "Show"} custom size</Text>
       </Clickable>
 
       {showCustom && (

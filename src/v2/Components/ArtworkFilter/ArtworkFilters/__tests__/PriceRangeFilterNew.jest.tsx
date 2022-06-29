@@ -51,67 +51,67 @@ describe("PriceRangeFilterNew", () => {
   it("updates the filter and min slider when the min custom input is changed", () => {
     renderPriceRangeFilter()
 
-    const minSliderHandle = screen.queryByLabelText("Min price slider handle")
+    const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
 
-    fireEvent.change(screen.getByLabelText("Min price"), {
-      target: { value: "10000" },
+    fireEvent.input(minSliderHandle, {
+      target: { valueAsNumber: 10000 },
     })
 
     expect(context.filters?.priceRange).toEqual("10000-*")
-    expect(minSliderHandle).toHaveAttribute("aria-valuenow", "10000")
+    expect(minSliderHandle).toHaveValue("10000")
   })
 
   it("updates the filter and max slider when the max custom input is changed", () => {
     renderPriceRangeFilter()
 
-    const maxSliderHandle = screen.queryByLabelText("Max price slider handle")
+    const maxSliderHandle = screen.queryAllByLabelText("Max price")[1]
 
-    fireEvent.change(screen.getByLabelText("Max price"), {
-      target: { value: "35000" },
+    fireEvent.input(maxSliderHandle, {
+      target: { valueAsNumber: 35000 },
     })
 
     expect(context.filters?.priceRange).toEqual("*-35000")
-    expect(maxSliderHandle).toHaveAttribute("aria-valuenow", "35000")
+    expect(maxSliderHandle).toHaveValue("35000")
   })
 
   it("updates the filter and sliders when the custom inputs are changed", () => {
     renderPriceRangeFilter()
 
-    const minSliderHandle = screen.queryByLabelText("Min price slider handle")
-    const maxSliderHandle = screen.queryByLabelText("Max price slider handle")
+    const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
+    const maxSliderHandle = screen.queryAllByLabelText("Max price")[1]
 
-    fireEvent.change(screen.getByLabelText("Min price"), {
-      target: { value: "10000" },
+    fireEvent.input(minSliderHandle, {
+      target: { valueAsNumber: 10000 },
     })
-    fireEvent.change(screen.getByLabelText("Max price"), {
-      target: { value: "35000" },
+    fireEvent.input(maxSliderHandle, {
+      target: { valueAsNumber: 35000 },
     })
 
     expect(context.filters?.priceRange).toEqual("10000-35000")
-    expect(minSliderHandle).toHaveAttribute("aria-valuenow", "10000")
-    expect(maxSliderHandle).toHaveAttribute("aria-valuenow", "35000")
+    expect(minSliderHandle).toHaveValue("10000")
+    expect(maxSliderHandle).toHaveValue("35000")
   })
 
   it("do not apply price restrictions when the custom inputs are empty", () => {
     renderPriceRangeFilter()
 
-    fireEvent.change(screen.getByLabelText("Min price"), {
-      target: { value: "10000" },
+    fireEvent.input(screen.queryAllByLabelText("Min price")[1], {
+      target: { valueAsNumber: 10000 },
     })
-    fireEvent.change(screen.getByLabelText("Max price"), {
-      target: { value: "35000" },
+    fireEvent.input(screen.queryAllByLabelText("Max price")[1], {
+      target: { valueAsNumber: 35000 },
     })
 
     expect(context.filters?.priceRange).toEqual("10000-35000")
 
-    fireEvent.change(screen.getByLabelText("Min price"), {
-      target: { value: "" },
+    fireEvent.input(screen.queryAllByLabelText("Min price")[1], {
+      target: { valueAsNumber: null },
     })
-    fireEvent.change(screen.getByLabelText("Max price"), {
-      target: { value: "" },
+    fireEvent.input(screen.queryAllByLabelText("Max price")[1], {
+      target: { valueAsNumber: null },
     })
 
-    expect(context.filters?.priceRange).toEqual("*-*")
+    expect(context.filters?.priceRange).toEqual("*-0")
   })
 
   it("should display histogram when some bars are filled", () => {
@@ -152,8 +152,8 @@ describe("PriceRangeFilterNew", () => {
     it("hides the filter controls when not set", () => {
       renderPriceRangeFilter({})
 
-      const minSliderHandle = screen.queryByLabelText("Min price slider handle")
-      const maxSliderHandle = screen.queryByLabelText("Min price slider handle")
+      const minSliderHandle = screen.queryByLabelText("Min price")
+      const maxSliderHandle = screen.queryByLabelText("Min price")
 
       expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
       expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
@@ -167,8 +167,8 @@ describe("PriceRangeFilterNew", () => {
         expanded: false,
       })
 
-      const minSliderHandle = screen.queryByLabelText("Min price slider handle")
-      const maxSliderHandle = screen.queryByLabelText("Min price slider handle")
+      const minSliderHandle = screen.queryByLabelText("Min price")
+      const maxSliderHandle = screen.queryByLabelText("Min price")
 
       expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
       expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
@@ -182,11 +182,11 @@ describe("PriceRangeFilterNew", () => {
         expanded: true,
       })
 
-      const minSliderHandle = screen.queryByLabelText("Min price slider handle")
-      const maxSliderHandle = screen.queryByLabelText("Min price slider handle")
+      const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
+      const maxSliderHandle = screen.queryAllByLabelText("Min price")[1]
 
-      expect(screen.queryByLabelText("Min price")).toBeInTheDocument()
-      expect(screen.queryByLabelText("Max price")).toBeInTheDocument()
+      expect(screen.queryAllByLabelText("Min price")[0]).toBeInTheDocument()
+      expect(screen.queryAllByLabelText("Max price")[0]).toBeInTheDocument()
 
       expect(minSliderHandle).toBeInTheDocument()
       expect(maxSliderHandle).toBeInTheDocument()
