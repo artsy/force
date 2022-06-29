@@ -1,10 +1,17 @@
-import { Text, Flex } from "@artsy/palette"
 import { FC } from "react"
+import { OnboardingGeneQueryRenderer } from "../Components/OnboardingGene"
 
 export const OnboardingArtistsOnTheRise: FC = () => {
   return (
-    <Flex flexDirection="column">
-      <Text variant="lg-display">TODO: OnboardingArtistsOnTheRise</Text>
-    </Flex>
+    <OnboardingGeneQueryRenderer
+      id="artists-on-the-rise"
+      description={
+        <>
+          Click the heart to save artworks you love.
+          <br />
+          Follow the collection to stay up-to-date with artists on the rise.
+        </>
+      }
+    />
   )
 }
