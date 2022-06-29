@@ -13,11 +13,10 @@ import {
   RadioProps,
 } from "@artsy/palette"
 import {
-  PaymentPicker,
-  PaymentPickerFragmentContainer,
-} from "../../Components/PaymentPicker"
+  CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "../../Components/CreditCardPicker"
 import { Media } from "v2/Utils/Responsive"
-import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { ContinueButton } from "./index"
 import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
@@ -25,6 +24,7 @@ import { CommitMutation } from "../../Utils/commitMutation"
 import { useTracking } from "v2/System"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import { CommercePaymentMethodEnum } from "v2/__generated__/useSetPaymentMutation.graphql"
+import { BankAccountPickerFragmentContainer } from "../../Components/BankAccountPicker"
 
 export interface Props {
   order: Payment_order
@@ -34,7 +34,9 @@ export interface Props {
   paymentMethod: CommercePaymentMethodEnum
   setPayment: () => void
   onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
-  paymentPicker: RefObject<PaymentPicker>
+  CreditCardPicker: RefObject<CreditCardPicker>
+  onSetPaymentSuccess: () => void
+  onSetPaymentError: (error: Error) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -44,9 +46,11 @@ export const PaymentContent: FC<Props> = props => {
     setPayment,
     me,
     order,
-    paymentPicker,
+    CreditCardPicker,
     paymentMethod,
     onPaymentMethodChange,
+    onSetPaymentSuccess,
+    onSetPaymentError,
   } = props
   const tracking = useTracking()
 
@@ -68,11 +72,11 @@ export const PaymentContent: FC<Props> = props => {
   if (order.availablePaymentMethods.length === 1) {
     return (
       <PaymentContentWrapper isLoading={isLoading}>
-        <PaymentPickerFragmentContainer
+        <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
-          me={props.me}
+          me={me}
           order={order}
-          innerRef={paymentPicker}
+          innerRef={CreditCardPicker}
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
@@ -105,11 +109,11 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={paymentMethod === "CREDIT_CARD"}>
-        <PaymentPickerFragmentContainer
+        <CreditCardPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
           order={order}
-          innerRef={paymentPicker}
+          innerRef={CreditCardPicker}
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
@@ -130,7 +134,12 @@ export const PaymentContent: FC<Props> = props => {
           • Bank transfer is powered by Stripe.
         </Text>
         <Spacer mb={2} />
-        <BankDebitProvider order={order} />
+        <BankAccountPickerFragmentContainer
+          me={me}
+          order={order}
+          onSetPaymentSuccess={onSetPaymentSuccess}
+          onSetPaymentError={onSetPaymentError}
+        />
       </Collapse>
 
       {/* Wire transfer */}

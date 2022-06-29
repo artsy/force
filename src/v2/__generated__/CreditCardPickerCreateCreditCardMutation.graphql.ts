@@ -8,10 +8,10 @@ export type CreditCardInput = {
     oneTimeUse?: boolean | null | undefined;
     token: string;
 };
-export type PaymentPickerCreateCreditCardMutationVariables = {
+export type CreditCardPickerCreateCreditCardMutationVariables = {
     input: CreditCardInput;
 };
-export type PaymentPickerCreateCreditCardMutationResponse = {
+export type CreditCardPickerCreateCreditCardMutationResponse = {
     readonly createCreditCard: {
         readonly creditCardOrError: {
             readonly creditCard?: {
@@ -36,15 +36,15 @@ export type PaymentPickerCreateCreditCardMutationResponse = {
         } | null;
     } | null;
 };
-export type PaymentPickerCreateCreditCardMutation = {
-    readonly response: PaymentPickerCreateCreditCardMutationResponse;
-    readonly variables: PaymentPickerCreateCreditCardMutationVariables;
+export type CreditCardPickerCreateCreditCardMutation = {
+    readonly response: CreditCardPickerCreateCreditCardMutationResponse;
+    readonly variables: CreditCardPickerCreateCreditCardMutationVariables;
 };
 
 
 
 /*
-mutation PaymentPickerCreateCreditCardMutation(
+mutation CreditCardPickerCreateCreditCardMutation(
   $input: CreditCardInput!
 ) {
   createCreditCard(input: $input) {
@@ -222,7 +222,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PaymentPickerCreateCreditCardMutation",
+    "name": "CreditCardPickerCreateCreditCardMutation",
     "selections": [
       {
         "alias": null,
@@ -285,7 +285,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PaymentPickerCreateCreditCardMutation",
+    "name": "CreditCardPickerCreateCreditCardMutation",
     "selections": [
       {
         "alias": null,
@@ -357,14 +357,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "abe0fa994bab89118c291bdca1ae4174",
+    "cacheID": "dc4c21986b7369a27d25aeaf64797553",
     "id": null,
     "metadata": {},
-    "name": "PaymentPickerCreateCreditCardMutation",
+    "name": "CreditCardPickerCreateCreditCardMutation",
     "operationKind": "mutation",
-    "text": "mutation PaymentPickerCreateCreditCardMutation(\n  $input: CreditCardInput!\n) {\n  createCreditCard(input: $input) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCard {\n          internalID\n          name\n          street1\n          street2\n          city\n          state\n          country\n          postalCode\n          expirationMonth\n          expirationYear\n          lastDigits\n          brand\n          id\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreditCardPickerCreateCreditCardMutation(\n  $input: CreditCardInput!\n) {\n  createCreditCard(input: $input) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCard {\n          internalID\n          name\n          street1\n          street2\n          city\n          state\n          country\n          postalCode\n          expirationMonth\n          expirationYear\n          lastDigits\n          brand\n          id\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '16bc002340458f5f2b9f89d7fc1220fd';
+(node as any).hash = '93d2f38e59fc6191787907ef69756ed8';
 export default node;

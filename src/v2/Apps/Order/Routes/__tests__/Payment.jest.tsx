@@ -11,7 +11,7 @@ import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useSystemContext, useTracking } from "v2/System"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
-import { PaymentPickerFragmentContainer } from "../../Components/PaymentPicker"
+import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "v2/__generated__/Payment_order.graphql"
@@ -36,16 +36,16 @@ jest.mock("../../Components/Mutations/useSetPayment", () => {
   }
 })
 
-const paymentPickerMock = jest.requireActual(
-  "../../Components/__mocks__/PaymentPicker"
+const CreditCardPickerMock = jest.requireActual(
+  "../../Components/__mocks__/CreditCardPicker"
 )
 
 jest.mock(
-  "v2/Apps/Order/Components/PaymentPicker",
+  "v2/Apps/Order/Components/CreditCardPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return jest.requireActual("../../Components/__mocks__/PaymentPicker")
+    return jest.requireActual("../../Components/__mocks__/CreditCardPicker")
   }
 )
 jest.mock(
@@ -115,6 +115,7 @@ describe("Payment", () => {
         <PaymentFragmentContainer
           router={{ push: pushMock } as any}
           order={props.order}
+          me={props.me}
           // @ts-ignore
           isCommittingMutation={isCommittingMutation}
         />
@@ -170,7 +171,7 @@ describe("Payment", () => {
   })
 
   it("shows the default error modal when the payment picker throws an error", async () => {
-    paymentPickerMock.useThrownError()
+    CreditCardPickerMock.useThrownError()
     let wrapper = getWrapper({
       CommerceOrder: () => testOrder,
     })
@@ -181,7 +182,7 @@ describe("Payment", () => {
   })
 
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
-    paymentPickerMock.useErrorResult()
+    CreditCardPickerMock.useErrorResult()
     let wrapper = getWrapper({
       CommerceOrder: () => testOrder,
     })
@@ -196,7 +197,7 @@ describe("Payment", () => {
   })
 
   it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
-    paymentPickerMock.useInternalErrorResult()
+    CreditCardPickerMock.useInternalErrorResult()
     let wrapper = getWrapper({
       CommerceOrder: () => testOrder,
     })
@@ -360,7 +361,7 @@ describe("Payment", () => {
       page.selectPaymentMethod(1)
 
       const creditCardCollapse = page
-        .find(PaymentPickerFragmentContainer)
+        .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(true)
       const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
@@ -373,9 +374,9 @@ describe("Payment", () => {
       })
       let page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(0)
-
+      page.selectPaymentMethod(3)
       const creditCardCollapse = page
-        .find(PaymentPickerFragmentContainer)
+        .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)

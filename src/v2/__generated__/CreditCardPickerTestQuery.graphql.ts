@@ -6,16 +6,16 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type PaymentPickerTestQueryVariables = {};
-export type PaymentPickerTestQueryResponse = {
+export type CreditCardPickerTestQueryVariables = {};
+export type CreditCardPickerTestQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me">;
+        readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_me">;
     } | null;
     readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order">;
+        readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_order">;
     } | null;
 };
-export type PaymentPickerTestQueryRawResponse = {
+export type CreditCardPickerTestQueryRawResponse = {
     readonly me: ({
         readonly creditCards: ({
             readonly edges: ReadonlyArray<({
@@ -90,28 +90,28 @@ export type PaymentPickerTestQueryRawResponse = {
         readonly id: string;
     }) | null;
 };
-export type PaymentPickerTestQuery = {
-    readonly response: PaymentPickerTestQueryResponse;
-    readonly variables: PaymentPickerTestQueryVariables;
-    readonly rawResponse: PaymentPickerTestQueryRawResponse;
+export type CreditCardPickerTestQuery = {
+    readonly response: CreditCardPickerTestQueryResponse;
+    readonly variables: CreditCardPickerTestQueryVariables;
+    readonly rawResponse: CreditCardPickerTestQueryRawResponse;
 };
 
 
 
 /*
-query PaymentPickerTestQuery {
+query CreditCardPickerTestQuery {
   me {
-    ...PaymentPicker_me
+    ...CreditCardPicker_me
     id
   }
   order: commerceOrder(id: "unused") {
     __typename
-    ...PaymentPicker_order
+    ...CreditCardPicker_order
     id
   }
 }
 
-fragment PaymentPicker_me on Me {
+fragment CreditCardPicker_me on Me {
   creditCards(first: 100) {
     edges {
       node {
@@ -126,7 +126,7 @@ fragment PaymentPicker_me on Me {
   }
 }
 
-fragment PaymentPicker_order on CommerceOrder {
+fragment CreditCardPicker_order on CommerceOrder {
   __isCommerceOrder: __typename
   internalID
   mode
@@ -338,7 +338,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "PaymentPickerTestQuery",
+    "name": "CreditCardPickerTestQuery",
     "selections": [
       {
         "alias": null,
@@ -351,7 +351,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PaymentPicker_me"
+            "name": "CreditCardPicker_me"
           }
         ],
         "storageKey": null
@@ -367,7 +367,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PaymentPicker_order"
+            "name": "CreditCardPicker_order"
           }
         ],
         "storageKey": "commerceOrder(id:\"unused\")"
@@ -380,7 +380,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "PaymentPickerTestQuery",
+    "name": "CreditCardPickerTestQuery",
     "selections": [
       {
         "alias": null,
@@ -595,7 +595,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "782650b0f4696352342eae45f534fe3c",
+    "cacheID": "68f5203d6806213973dd3e6f13f60270",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -717,11 +717,11 @@ return {
         }
       }
     },
-    "name": "PaymentPickerTestQuery",
+    "name": "CreditCardPickerTestQuery",
     "operationKind": "query",
-    "text": "query PaymentPickerTestQuery {\n  me {\n    ...PaymentPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...PaymentPicker_order\n    id\n  }\n}\n\nfragment PaymentPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment PaymentPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query CreditCardPickerTestQuery {\n  me {\n    ...CreditCardPicker_me\n    id\n  }\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...CreditCardPicker_order\n    id\n  }\n}\n\nfragment CreditCardPicker_me on Me {\n  creditCards(first: 100) {\n    edges {\n      node {\n        internalID\n        brand\n        lastDigits\n        expirationMonth\n        expirationYear\n        id\n      }\n    }\n  }\n}\n\nfragment CreditCardPicker_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  mode\n  state\n  creditCard {\n    internalID\n    name\n    street1\n    street2\n    city\n    state\n    country\n    postalCode\n    expirationMonth\n    expirationYear\n    lastDigits\n    brand\n    id\n  }\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommerceShipArta {\n      name\n      addressLine1\n      addressLine2\n      city\n      region\n      country\n      postalCode\n    }\n    ... on CommercePickup {\n      fulfillmentType\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'eeb08b3e6c2a669c906866374011426d';
+(node as any).hash = 'b6cca45a8da20f5cfb1f6cc07127e23a';
 export default node;

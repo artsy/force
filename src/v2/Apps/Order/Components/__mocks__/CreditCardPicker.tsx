@@ -1,9 +1,9 @@
 import { createElement } from "react"
-import { PaymentPicker } from "../PaymentPicker"
+import { CreditCardPicker } from "../CreditCardPicker"
 
 type UnpackPromise<T> = T extends Promise<infer R> ? R : T
 type CreditCardIdResult = UnpackPromise<
-  ReturnType<PaymentPicker["getCreditCardId"]>
+  ReturnType<CreditCardPicker["getCreditCardId"]>
 >
 
 const goodResult: CreditCardIdResult = {
@@ -12,7 +12,7 @@ const goodResult: CreditCardIdResult = {
 }
 
 export const useGoodResult = () => {
-  PaymentPickerMock.getCreditCardId.mockResolvedValue(goodResult)
+  CreditCardPickerMock.getCreditCardId.mockResolvedValue(goodResult)
 }
 
 const invalidFormResult: CreditCardIdResult = {
@@ -20,7 +20,7 @@ const invalidFormResult: CreditCardIdResult = {
 }
 
 export const useInvalidFormResult = () => {
-  PaymentPickerMock.getCreditCardId.mockResolvedValue(invalidFormResult)
+  CreditCardPickerMock.getCreditCardId.mockResolvedValue(invalidFormResult)
 }
 
 const errorResult: CreditCardIdResult = {
@@ -28,7 +28,7 @@ const errorResult: CreditCardIdResult = {
   error: "This is the description of an error.",
 }
 export const useErrorResult = () => {
-  PaymentPickerMock.getCreditCardId.mockResolvedValue(errorResult)
+  CreditCardPickerMock.getCreditCardId.mockResolvedValue(errorResult)
 }
 
 const internalErrorResult: CreditCardIdResult = {
@@ -36,25 +36,27 @@ const internalErrorResult: CreditCardIdResult = {
   error: "This is the description of an internal error.",
 }
 export const useInternalErrorResult = () => {
-  PaymentPickerMock.getCreditCardId.mockResolvedValue(internalErrorResult)
+  CreditCardPickerMock.getCreditCardId.mockResolvedValue(internalErrorResult)
 }
 
 export const useThrownError = () => {
-  PaymentPickerMock.getCreditCardId.mockRejectedValue(new Error("Actual error"))
+  CreditCardPickerMock.getCreditCardId.mockRejectedValue(
+    new Error("Actual error")
+  )
 }
 
-const PaymentPickerMock = {
+const CreditCardPickerMock = {
   getCreditCardId: jest.fn(
     () => Promise.resolve(goodResult) as Promise<CreditCardIdResult>
   ),
 }
 
 beforeEach(() => {
-  PaymentPickerMock.getCreditCardId.mockReset()
+  CreditCardPickerMock.getCreditCardId.mockReset()
   useGoodResult()
 })
 
-export const PaymentPickerFragmentContainer = ({ innerRef }) => {
-  innerRef.current = PaymentPickerMock
+export const CreditCardPickerFragmentContainer = ({ innerRef }) => {
+  innerRef.current = CreditCardPickerMock
   return createElement("div")
 }

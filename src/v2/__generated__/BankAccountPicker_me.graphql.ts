@@ -4,24 +4,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PaymentPicker_me = {
-    readonly creditCards: {
+export type BankAccountPicker_me = {
+    readonly bankAccounts: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly brand: string;
-                readonly lastDigits: string;
-                readonly expirationMonth: number;
-                readonly expirationYear: number;
+                readonly last4: string;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "PaymentPicker_me";
+    readonly " $refType": "BankAccountPicker_me";
 };
-export type PaymentPicker_me$data = PaymentPicker_me;
-export type PaymentPicker_me$key = {
-    readonly " $data"?: PaymentPicker_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_me">;
+export type BankAccountPicker_me$data = BankAccountPicker_me;
+export type BankAccountPicker_me$key = {
+    readonly " $data"?: BankAccountPicker_me$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"BankAccountPicker_me">;
 };
 
 
@@ -30,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PaymentPicker_me",
+  "name": "BankAccountPicker_me",
   "selections": [
     {
       "alias": null,
@@ -41,15 +38,15 @@ const node: ReaderFragment = {
           "value": 100
         }
       ],
-      "concreteType": "CreditCardConnection",
+      "concreteType": "BankAccountConnection",
       "kind": "LinkedField",
-      "name": "creditCards",
+      "name": "bankAccounts",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "CreditCardEdge",
+          "concreteType": "BankAccountEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -57,7 +54,7 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "CreditCard",
+              "concreteType": "BankAccount",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -73,28 +70,7 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "brand",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "lastDigits",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "expirationMonth",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "expirationYear",
+                  "name": "last4",
                   "storageKey": null
                 }
               ],
@@ -104,11 +80,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "creditCards(first:100)"
+      "storageKey": "bankAccounts(first:100)"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '7c560989a1629a7d702ebca42324ab84';
+(node as any).hash = '903c46229440013b8ff64bfcb566b4fe';
 export default node;

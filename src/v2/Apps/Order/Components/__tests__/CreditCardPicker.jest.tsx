@@ -1,6 +1,6 @@
 import { BorderedRadio, Checkbox, Collapse, Link, Input } from "@artsy/palette"
-import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
-import { PaymentPickerTestQueryRawResponse } from "v2/__generated__/PaymentPickerTestQuery.graphql"
+import { CreditCardPicker_me } from "v2/__generated__/CreditCardPicker_me.graphql"
+import { CreditCardPickerTestQueryRawResponse } from "v2/__generated__/CreditCardPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -16,7 +16,10 @@ import {
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
-import { PaymentPicker, PaymentPickerFragmentContainer } from "../PaymentPicker"
+import {
+  CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "../CreditCardPicker"
 import type { Token, StripeError } from "@stripe/stripe-js"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { MockBoot } from "v2/DevTools"
@@ -75,10 +78,10 @@ const fillAddressForm = (component: any, address: Address) => {
   fillCountrySelect(component, address.country)
 }
 
-class PaymentPickerTestPage extends RootTestPage {
-  getCreditCardId: PaymentPicker["getCreditCardId"] = async () => {
+class CreditCardPickerTestPage extends RootTestPage {
+  getCreditCardId: CreditCardPicker["getCreditCardId"] = async () => {
     const result = (this.find(
-      PaymentPicker
+      CreditCardPicker
     ).instance() as any).getCreditCardId()
     await this.update()
     return result
@@ -134,7 +137,7 @@ class PaymentPickerTestPage extends RootTestPage {
   }
 }
 
-const defaultData: PaymentPickerTestQueryRawResponse = {
+const defaultData: CreditCardPickerTestQueryRawResponse = {
   me: {
     id: "my-id",
     creditCards: {
@@ -147,7 +150,7 @@ const defaultData: PaymentPickerTestQueryRawResponse = {
   },
 }
 
-describe("PaymentPickerFragmentContainer", () => {
+describe("CreditCardPickerFragmentContainer", () => {
   const mockCommitMutation = jest.fn()
   let isEigen
 
@@ -155,7 +158,7 @@ describe("PaymentPickerFragmentContainer", () => {
     Component: (props: any) => (
       <MockBoot context={{ isEigen }}>
         {/* @ts-ignore */}
-        <PaymentPickerFragmentContainer
+        <CreditCardPickerFragmentContainer
           order={props.order}
           commitMutation={mockCommitMutation}
           me={props.me}
@@ -163,12 +166,12 @@ describe("PaymentPickerFragmentContainer", () => {
       </MockBoot>
     ),
     query: graphql`
-      query PaymentPickerTestQuery @raw_response_type @relay_test_operation {
+      query CreditCardPickerTestQuery @raw_response_type @relay_test_operation {
         me {
-          ...PaymentPicker_me
+          ...CreditCardPicker_me
         }
         order: commerceOrder(id: "unused") {
-          ...PaymentPicker_order
+          ...CreditCardPicker_order
         }
       }
     `,
@@ -190,7 +193,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
 
       expect(page.useNewCardSectionIsVisible).toBeTruthy()
       expect(page.radios).toHaveLength(0)
@@ -203,7 +206,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
 
       expect(page.find(Link)).toHaveLength(0)
     })
@@ -213,7 +216,7 @@ describe("PaymentPickerFragmentContainer", () => {
     const wrapper = getWrapper({
       CommerceOrder: () => BuyOrderPickup,
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
 
     expect(page.sameAddressCheckbox).toHaveLength(0)
     expect(page.text()).not.toMatch(
@@ -243,7 +246,7 @@ describe("PaymentPickerFragmentContainer", () => {
         },
       }),
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
 
     expect(page.addressForm.props().value).toEqual({
       name: "",
@@ -266,7 +269,7 @@ describe("PaymentPickerFragmentContainer", () => {
       }),
       Me: () => defaultData.me,
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
 
     fillAddressForm(page.root, validAddress)
 
@@ -288,7 +291,7 @@ describe("PaymentPickerFragmentContainer", () => {
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
 
     await page.getCreditCardId()
 
@@ -308,7 +311,7 @@ describe("PaymentPickerFragmentContainer", () => {
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
     await page.toggleSameAddressCheckbox()
     fillAddressForm(page.root, validAddress)
     await page.getCreditCardId()
@@ -336,7 +339,7 @@ describe("PaymentPickerFragmentContainer", () => {
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
     await page.getCreditCardId()
 
     expect(mockCommitMutation).toHaveBeenCalledWith(
@@ -363,7 +366,7 @@ describe("PaymentPickerFragmentContainer", () => {
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
-    const page = new PaymentPickerTestPage(wrapper)
+    const page = new CreditCardPickerTestPage(wrapper)
 
     expect(page.root.text()).not.toContain("Your card number is invalid.")
 
@@ -373,8 +376,10 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   describe("when the user has existing credit cards", () => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const cards: Array<PaymentPicker_me["creditCards"]["edges"][0]["node"]> = [
+    const cards: Array<
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      CreditCardPicker_me["creditCards"]["edges"][0]["node"]
+    > = [
       {
         internalID: "card-id-1",
         brand: "MasterCard",
@@ -448,7 +453,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
 
         expect(page.radios).toHaveLength(2)
         expect(page.find(Link)).toHaveLength(1)
@@ -480,7 +485,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
         expect(page.find(Link)).toHaveLength(0)
       })
 
@@ -493,7 +498,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
         await page.clickRadio(1)
 
         expect(page.useNewCardSectionIsVisible).toBeTruthy()
@@ -508,7 +513,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
         await page.clickRadio(0)
 
         expect(page.useNewCardSectionIsVisible).toBeFalsy()
@@ -525,7 +530,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
 
         expect(page.radios).toHaveLength(3)
         expect(page.find(Link)).toHaveLength(1)
@@ -561,7 +566,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
 
         expect(page.find(Link)).toHaveLength(0)
       })
@@ -575,7 +580,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
         await page.clickRadio(1)
 
         expect(await page.getCreditCardId()).toMatchObject({
@@ -593,7 +598,7 @@ describe("PaymentPickerFragmentContainer", () => {
             },
           }),
         })
-        const page = new PaymentPickerTestPage(wrapper)
+        const page = new CreditCardPickerTestPage(wrapper)
         await page.clickRadio(2)
 
         expect(page.useNewCardSectionIsVisible).toBeTruthy()
@@ -611,7 +616,7 @@ describe("PaymentPickerFragmentContainer", () => {
               },
             }),
           })
-          const page = new PaymentPickerTestPage(wrapper)
+          const page = new CreditCardPickerTestPage(wrapper)
 
           expect(page.radios.at(1).props().selected).toBeTruthy()
           expect(page.radios.at(0).props().selected).toBeFalsy()
@@ -631,7 +636,7 @@ describe("PaymentPickerFragmentContainer", () => {
               },
             }),
           })
-          const page = new PaymentPickerTestPage(wrapper)
+          const page = new CreditCardPickerTestPage(wrapper)
 
           expect(page.radios).toHaveLength(4)
           expect(page.radios.at(0).text()).toMatchInlineSnapshot(
@@ -656,7 +661,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
 
       expect(page.saveCardCheckbox.props().selected).toBe(true)
       await page.getCreditCardId()
@@ -680,7 +685,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
 
       expect(page.saveCardCheckbox.props().selected).toBe(true)
       page.saveCardCheckbox.simulate("click")
@@ -708,7 +713,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
 
       // Initial state is checked
       await page.toggleSameAddressCheckbox()
@@ -736,7 +741,7 @@ describe("PaymentPickerFragmentContainer", () => {
         }),
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       expect(mockPostEvent).not.toHaveBeenCalled()
@@ -749,7 +754,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
       await page.getCreditCardId()
 
@@ -764,7 +769,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       fillIn(page.root, { title: "Name on card", value: "Erik David" })
@@ -784,7 +789,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       fillIn(page.root, { title: "Name on card", value: "Erik David" })
@@ -804,7 +809,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
 
       await page.toggleSameAddressCheckbox()
       await page.getCreditCardId()
@@ -817,7 +822,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
       await page.getCreditCardId()
 
@@ -833,7 +838,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       const address = {
@@ -863,7 +868,7 @@ describe("PaymentPickerFragmentContainer", () => {
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.toggleSameAddressCheckbox()
 
       const address = {
@@ -898,7 +903,7 @@ describe("PaymentPickerFragmentContainer", () => {
         }),
         Me: () => defaultData.me,
       })
-      const page = new PaymentPickerTestPage(wrapper)
+      const page = new CreditCardPickerTestPage(wrapper)
       await page.getCreditCardId()
 
       expect(_mockStripe().createToken).toHaveBeenCalledWith(

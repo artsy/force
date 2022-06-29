@@ -6,7 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type PaymentPicker_order = {
+export type CreditCardPicker_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly state: CommerceOrderStateEnum;
@@ -59,12 +59,12 @@ export type PaymentPicker_order = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "PaymentPicker_order";
+    readonly " $refType": "CreditCardPicker_order";
 };
-export type PaymentPicker_order$data = PaymentPicker_order;
-export type PaymentPicker_order$key = {
-    readonly " $data"?: PaymentPicker_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentPicker_order">;
+export type CreditCardPicker_order$data = CreditCardPicker_order;
+export type CreditCardPicker_order$key = {
+    readonly " $data"?: CreditCardPicker_order$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_order">;
 };
 
 
@@ -143,7 +143,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PaymentPicker_order",
+  "name": "CreditCardPicker_order",
   "selections": [
     (v0/*: any*/),
     {
@@ -313,5 +313,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'ba6ffa2c3231c99cc01b79ce824ef58b';
+(node as any).hash = '458cdcd3fcb5c7f8aa87d89b0a7913df';
 export default node;

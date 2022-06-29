@@ -16,9 +16,9 @@ import { Media } from "v2/Utils/Responsive"
 
 import { Button, Flex, Join, Spacer } from "@artsy/palette"
 import {
-  PaymentPicker,
-  PaymentPickerFragmentContainer,
-} from "v2/Apps/Order/Components/PaymentPicker"
+  CreditCardPicker,
+  CreditCardPickerFragmentContainer,
+} from "v2/Apps/Order/Components/CreditCardPicker"
 import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -61,7 +61,7 @@ export class NewPaymentRoute extends Component<
   NewPaymentProps & StripeProps,
   NewPaymentState
 > {
-  paymentPicker = createRef<PaymentPicker>()
+  CreditCardPicker = createRef<CreditCardPicker>()
   state = {
     isGettingCreditCardId: false,
   }
@@ -69,7 +69,7 @@ export class NewPaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
-      const result = await this.paymentPicker?.current?.getCreditCardId()!
+      const result = await this.CreditCardPicker?.current?.getCreditCardId()!
       this.setState({ isGettingCreditCardId: false })
 
       if (result.type === "invalid_form") {
@@ -162,11 +162,11 @@ export class NewPaymentRoute extends Component<
                 </>
               )}
               <Join separator={<Spacer mb={4} />}>
-                <PaymentPickerFragmentContainer
+                <CreditCardPickerFragmentContainer
                   order={order}
                   me={this.props.me}
                   commitMutation={this.props.commitMutation}
-                  innerRef={this.paymentPicker}
+                  innerRef={this.CreditCardPicker}
                 />
                 <Media greaterThan="xs">
                   <ContinueButton
@@ -300,7 +300,7 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment NewPayment_me on Me {
-        ...PaymentPicker_me
+        ...CreditCardPicker_me
       }
     `,
     order: graphql`
@@ -327,7 +327,7 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
             note
           }
         }
-        ...PaymentPicker_order
+        ...CreditCardPicker_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
       }

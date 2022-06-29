@@ -21,7 +21,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
 import { Box, Button, Flex, Spacer } from "@artsy/palette"
-import { PaymentPicker } from "v2/Apps/Order/Components/PaymentPicker"
+import { CreditCardPicker } from "v2/Apps/Order/Components/CreditCardPicker"
 import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -64,7 +64,7 @@ export const PaymentRoute: FC<Props> = props => {
   const { order, isCommittingMutation } = props
   const isLoading =
     isGettingCreditCardId || isCommittingMutation || isSetPaymentCommitting
-  const paymentPicker = createRef<PaymentPicker>()
+  const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
@@ -86,7 +86,7 @@ export const PaymentRoute: FC<Props> = props => {
   const onCreditCardContinue = async () => {
     try {
       setIsGettingCreditCardId(true)
-      const result = await paymentPicker?.current?.getCreditCardId()
+      const result = await CreditCardPicker?.current?.getCreditCardId()
       setIsGettingCreditCardId(false)
 
       if (result?.type === "invalid_form") {
@@ -239,9 +239,11 @@ export const PaymentRoute: FC<Props> = props => {
                 paymentMethod={selectedPaymentMethod}
                 me={props.me}
                 order={props.order}
-                paymentPicker={paymentPicker}
+                CreditCardPicker={CreditCardPicker}
                 setPayment={setPayment}
                 onPaymentMethodChange={setSelectedPaymentMethod}
+                onSetPaymentSuccess={onSetPaymentSuccess}
+                onSetPaymentError={onSetPaymentError}
               />
             )}
           </>
@@ -295,7 +297,8 @@ export const PaymentFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment Payment_me on Me {
-        ...PaymentPicker_me
+        ...CreditCardPicker_me
+        ...BankAccountPicker_me
       }
     `,
     order: graphql`
@@ -315,7 +318,8 @@ export const PaymentFragmentContainer = createFragmentContainer(
           }
         }
         ...Payment_validation @relay(mask: false)
-        ...PaymentPicker_order
+        ...CreditCardPicker_order
+        ...BankAccountPicker_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
       }
