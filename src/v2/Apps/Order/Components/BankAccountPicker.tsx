@@ -12,6 +12,7 @@ import {
 import { BankDebitDetails } from "./BankDebitDetails"
 import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_order.graphql"
 import { useSetPayment } from "v2/Apps/Order/Components/Mutations/useSetPayment"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface Props {
   order: BankAccountPicker_order
@@ -28,32 +29,36 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetPaymentError,
   } = props
 
-  const bankAccountsArray = bankAccounts?.edges?.map(e => e?.node)!
+  const bankAccountsArray = extractNodes(bankAccounts)
 
   const userHasExistingBankAccounts = bankAccountsArray.length > 0
 
-  const getInitialBankAccountSelection = () => {
-    // user has added bank account to the order
+  type BankAccountSelectionType = "existing" | "new"
+
+  interface BankAccountSelection {
+    type: BankAccountSelectionType
+    id?: string
+  }
+
+  const getInitialBankAccountSelection = (): BankAccountSelection => {
     if (props.order.bankAccountId) {
       return {
         type: "existing",
         id: props.order.bankAccountId,
       }
     } else {
-      // user has existing bank accounts on account but not on order
       return userHasExistingBankAccounts
         ? {
             type: "existing",
-            id: bankAccountsArray[0]?.internalID!,
+            id: order.bankAccountId || bankAccountsArray[0]?.internalID!,
           }
-        : // user has no bank accounts on account or order
-          { type: "new" }
+        : { type: "new" }
     }
   }
 
-  const [bankAccountSelection, setBankAccountSelection] = useState(
-    getInitialBankAccountSelection()
-  )
+  const [bankAccountSelection, setBankAccountSelection] = useState<
+    BankAccountSelection
+  >(getInitialBankAccountSelection())
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
