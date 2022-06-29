@@ -1,10 +1,14 @@
 import { graphql } from "react-relay"
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SettingsPaymentsRouteFragmentContainer } from "../Payments/SettingsPaymentsRoute"
 import { SettingsPaymentsRoute_Test_Query } from "v2/__generated__/SettingsPaymentsRoute_Test_Query.graphql"
+import { useDeleteCreditCard } from "../Payments/useDeleteCreditCard"
+import { useDeleteBankAccount } from "../Payments/useDeleteBankAccount"
 
 jest.unmock("react-relay")
+jest.mock("v2/Apps/Settings/Routes/Payments/useDeleteBankAccount")
+jest.mock("v2/Apps/Settings/Routes/Payments/useDeleteCreditCard")
 
 const { renderWithRelay } = setupTestWrapperTL<
   SettingsPaymentsRoute_Test_Query
@@ -21,7 +25,20 @@ const { renderWithRelay } = setupTestWrapperTL<
   `,
 })
 
+const mockUseDeleteBankAccount = useDeleteBankAccount as jest.Mock
+const mockUseDeleteCreditCard = useDeleteCreditCard as jest.Mock
+
 describe("SettingsPaymentsRoute", () => {
+  beforeEach(() => {
+    mockUseDeleteBankAccount.mockImplementation(() => ({
+      submitMutation: jest.fn(),
+    }))
+
+    mockUseDeleteCreditCard.mockImplementation(() => ({
+      submitMutation: jest.fn(),
+    }))
+  })
+
   it("renders an empty state", () => {
     renderWithRelay({
       Me: () => ({
@@ -43,29 +60,99 @@ describe("SettingsPaymentsRoute", () => {
     ).toBeInTheDocument()
   })
 
-  it("renders the credit cards", () => {
-    renderWithRelay({
-      CreditCard: () => ({
-        name: "Example Name",
-        lastDigits: "1234",
-      }),
+  describe("credit cards", () => {
+    it("renders correctly", () => {
+      renderWithRelay({
+        CreditCard: () => ({
+          name: "Example Name",
+          lastDigits: "1234",
+        }),
+      })
+
+      expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
+      expect(screen.getByText("Credit cards")).toBeInTheDocument()
+      expect(screen.getByText("Example Name")).toBeInTheDocument()
+      expect(screen.getByText("•••• 1234")).toBeInTheDocument()
     })
 
-    expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
-    expect(screen.getByText("Credit cards")).toBeInTheDocument()
-    expect(screen.getByText("Example Name")).toBeInTheDocument()
-    expect(screen.getByText("•••• 1234")).toBeInTheDocument()
+    it("removes an card", async () => {
+      const mockFn = jest.fn()
+      mockUseDeleteCreditCard.mockImplementation(() => ({
+        submitMutation: mockFn,
+      }))
+
+      renderWithRelay({
+        Me: () => ({
+          creditCards: {
+            edges: [
+              {
+                node: {
+                  internalID: "1",
+                },
+              },
+            ],
+          },
+          bankAccounts: {
+            edges: [],
+          },
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Remove"))
+
+      expect(screen.getByText("Removing")).toBeInTheDocument()
+      expect(mockFn).toHaveBeenCalled()
+      expect(mockFn).toHaveBeenCalledWith({
+        variables: { input: { id: "1" } },
+        rejectIf: expect.anything(),
+      })
+    })
   })
 
-  it("renders the bank accounts", () => {
-    renderWithRelay({
-      BankAccount: () => ({
-        last4: "1234",
-      }),
+  describe("bank accounts", () => {
+    it("renders correctly", () => {
+      renderWithRelay({
+        BankAccount: () => ({
+          last4: "1234",
+        }),
+      })
+
+      expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
+      expect(screen.getByText("Bank accounts")).toBeInTheDocument()
+      expect(screen.getByText("•••• 1234")).toBeInTheDocument()
     })
 
-    expect(screen.getByText("Saved Payment Details")).toBeInTheDocument()
-    expect(screen.getByText("Bank accounts")).toBeInTheDocument()
-    expect(screen.getByText("•••• 1234")).toBeInTheDocument()
+    it("removes an account", async () => {
+      const mockFn = jest.fn()
+      mockUseDeleteBankAccount.mockImplementation(() => ({
+        submitMutation: mockFn,
+      }))
+
+      renderWithRelay({
+        Me: () => ({
+          creditCards: {
+            edges: [],
+          },
+          bankAccounts: {
+            edges: [
+              {
+                node: {
+                  internalID: "1",
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Remove"))
+
+      expect(screen.getByText("Removing")).toBeInTheDocument()
+      expect(mockFn).toHaveBeenCalled()
+      expect(mockFn).toHaveBeenCalledWith({
+        variables: { input: { id: "1" } },
+        rejectIf: expect.anything(),
+      })
+    })
   })
 })
