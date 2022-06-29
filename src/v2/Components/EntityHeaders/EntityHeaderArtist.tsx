@@ -72,7 +72,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
         <FollowArtistButtonQueryRenderer
           id={artist.internalID}
           contextModule={ContextModule.artistHeader}
-          buttonProps={{ size: "small", variant: "secondaryBlack" }}
+          buttonProps={{ size: "small" }}
         />
       )}
     </Flex>

@@ -6,12 +6,16 @@ import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/Fo
 import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "../Components/GeneMeta"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface GeneShowProps {
   gene: GeneShow_gene
 }
 
 export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
+  const similar = extractNodes(gene.similar)
+  const artists = extractNodes(gene.artistsConnection)
+
   return (
     <>
       <GeneMetaFragmentContainer gene={gene} />
@@ -22,54 +26,49 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
             {gene.displayName || gene.name}
           </Text>
 
-          <FollowGeneButtonFragmentContainer
-            gene={gene}
-            variant="secondaryBlack"
-          />
+          <FollowGeneButtonFragmentContainer gene={gene} />
         </Column>
 
         <Column span={6}>
           <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
             About
           </Text>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <HTML variant="sm" mb={2} html={gene.formattedDescription} />
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          {gene.similar?.edges.length > 0 && (
+
+          {gene.formattedDescription && (
+            <HTML variant="sm" mb={2} html={gene.formattedDescription} />
+          )}
+
+          {similar.length > 0 && (
             <>
               <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
                 Related Categories
               </Text>
 
               <Text variant="sm" mb={2}>
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                {gene.similar.edges.map(({ node }, i) => {
+                {similar.map((node, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
                       <RouterLink to={node.href}>{node.name}</RouterLink>
-                      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                      {i !== gene.similar.edges.length - 1 && ", "}
+                      {i !== similar.length - 1 && ", "}
                     </React.Fragment>
                   )
                 })}
               </Text>
             </>
           )}
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          {gene.artistsConnection?.edges.length > 0 && (
+
+          {artists.length > 0 && (
             <>
               <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
                 Related Artists
               </Text>
 
               <Text variant="sm">
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                {gene.artistsConnection.edges.map(({ node }, i) => {
+                {artists.map((node, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
                       <RouterLink to={node.href}>{node.name}</RouterLink>
-                      {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                      {i !== gene.artistsConnection.edges.length - 1 && ", "}
+                      {i !== artists.length - 1 && ", "}
                     </React.Fragment>
                   )
                 })}

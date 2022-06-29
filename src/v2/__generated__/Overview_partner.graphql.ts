@@ -13,7 +13,6 @@ export type Overview_partner = {
     readonly locationsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly city: string | null;
                 readonly coordinates: {
                     readonly lat: number | null;
                     readonly lng: number | null;
@@ -106,13 +105,6 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
                   "concreteType": "LatLng",
                   "kind": "LinkedField",
                   "name": "coordinates",
@@ -173,5 +165,5 @@ const node: ReaderFragment = {
   "type": "Partner",
   "abstractKey": null
 };
-(node as any).hash = '4e1d8553d209e9165110e72fba323106';
+(node as any).hash = '863392a7d608cb535b05e18ed354289b';
 export default node;

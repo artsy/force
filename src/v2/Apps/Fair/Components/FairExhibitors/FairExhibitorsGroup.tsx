@@ -17,9 +17,7 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
   return (
     <GridColumns position="relative" gridRowGap={4} gridColumnGap={[0, 6]}>
       {exhibitors?.map(exhibitor => {
-        if (!exhibitor?.partner) {
-          return null
-        }
+        if (!exhibitor?.partner) return null
 
         return (
           <Column key={exhibitor.partner.internalID} span={[12, 6, 3]}>
@@ -37,10 +35,10 @@ export const FairExhibitorsGroupFragmentContainer = createFragmentContainer(
     exhibitorsGroup: graphql`
       fragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {
         exhibitors {
+          ...FairExhibitorCard_exhibitor
           partner {
             internalID
           }
-          ...FairExhibitorCard_exhibitor
         }
       }
     `,

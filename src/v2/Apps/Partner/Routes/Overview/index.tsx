@@ -61,7 +61,6 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
         <NearbyGalleriesRailRenderer
           mt={[4, 6]}
           near={`${location.coordinates.lat},${location.coordinates.lng}`}
-          city={location.city}
         />
       )}
     </>
@@ -84,7 +83,6 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
       locationsConnection(first: 1) {
         edges {
           node {
-            city
             coordinates {
               lat
               lng

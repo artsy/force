@@ -15,6 +15,7 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import { Subscribe } from "unstated"
 import { FollowArtistPopoverState } from "./state"
 import { FollowButton } from "../FollowButton/Button"
@@ -127,7 +128,7 @@ class FollowArtistPopoverRow extends Component<Props, State> {
           <FollowButton
             isFollowed={this.state.followed}
             handleFollow={() => this.handleClick(artistID)}
-            buttonProps={{ size: "small", variant: "secondaryBlack" }}
+            buttonProps={{ size: "small" }}
           />
         }
       />

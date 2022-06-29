@@ -6,9 +6,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type NearbyGalleriesRail_partners = ReadonlyArray<{
     readonly node: {
-        readonly id: string;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"NearbyGalleryCard_partner">;
+        readonly internalID: string;
+        readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
     } | null;
     readonly " $refType": "NearbyGalleriesRail_partners";
 }>;
@@ -40,20 +39,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
+          "name": "internalID",
           "storageKey": null
         },
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "NearbyGalleryCard_partner"
+          "name": "CellPartner_partner"
         }
       ],
       "storageKey": null
@@ -62,5 +54,5 @@ const node: ReaderFragment = {
   "type": "PartnerEdge",
   "abstractKey": null
 };
-(node as any).hash = '87a1494ba7fbe4c211b25a5dc81c47c4';
+(node as any).hash = 'd85ce52e89855b22727e93cde15509cf';
 export default node;

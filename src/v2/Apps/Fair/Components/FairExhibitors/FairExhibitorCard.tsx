@@ -1,7 +1,6 @@
 import React from "react"
-import { Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext, useSystemContext, useTracking } from "v2/System"
+import { useAnalyticsContext, useTracking } from "v2/System"
 import {
   ActionType,
   ClickedPartnerCard,
@@ -11,30 +10,28 @@ import {
 } from "@artsy/cohesion"
 import { FairExhibitorCard_exhibitor } from "v2/__generated__/FairExhibitorCard_exhibitor.graphql"
 import { FairExhibitorCard_fair } from "v2/__generated__/FairExhibitorCard_fair.graphql"
-import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { useRouter } from "v2/System/Router/useRouter"
+import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
 
 interface FairExhibitorCardProps {
   exhibitor: FairExhibitorCard_exhibitor
   fair: FairExhibitorCard_fair
 }
 
-const VISIBLE_CITIES_NUM = 2
-
 export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
   exhibitor,
   fair,
 }) => {
-  const { name, profile, cities, slug, internalID } = exhibitor.partner!
-  const { user } = useSystemContext()
   const tracking = useTracking()
+
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
-  const { match } = useRouter()
+
+  if (!exhibitor.partner) return null
+
+  const { slug, internalID } = exhibitor.partner
 
   const tappedPartnerTrackingData: ClickedPartnerCard = {
     context_module: ContextModule.galleryBoothRail,
@@ -48,57 +45,19 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
     action: ActionType.clickedPartnerCard,
   }
 
-  const { focused_exhibitor: focusedExhibitorID } = match.location.query
-  const focused = focusedExhibitorID === exhibitor?.partner?.internalID
   const backToFairHref = `${fair.href}/exhibitors?focused_exhibitor=${internalID}`
   const encodedBackToFairHref = encodeURIComponent(backToFairHref)
 
-  const partnerAddress = (cities: readonly (string | null)[]) => {
-    const visibleCities = cities.slice(0, VISIBLE_CITIES_NUM).join(", ")
-
-    if (cities.length > VISIBLE_CITIES_NUM) {
-      return `${visibleCities}, +${cities.length - VISIBLE_CITIES_NUM} more`
-    }
-
-    return visibleCities
-  }
-
   return (
-    <RouterLink
-      to={`/show/${exhibitor.profileID}?back_to_fair_href=${encodedBackToFairHref}`}
-      textDecoration="none"
-      display="block"
-      onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
-    >
-      <Flex id={`jump--${exhibitor.partner?.internalID}`}>
-        <Box>
-          <Text variant="sm-display" overflow="clip">
-            {name}
-          </Text>
-          {cities?.length ? (
-            <Text variant="sm-display" color="black60" overflow="clip">
-              {partnerAddress(cities)}
-            </Text>
-          ) : null}
-        </Box>
-        {profile && (
-          <Box order={2} ml="auto">
-            <FollowProfileButton
-              profile={profile}
-              user={user}
-              contextModule={ContextModule.partnerHeader}
-              buttonProps={{
-                size: "small",
-                variant: "secondaryBlack",
-                width: 70,
-                height: 30,
-                focus: focused,
-              }}
-            />
-          </Box>
-        )}
-      </Flex>
-    </RouterLink>
+    <EntityHeaderPartnerFragmentContainer
+      partner={exhibitor.partner}
+      displayAvatar={false}
+      alignItems="flex-start"
+      href={`/show/${exhibitor.profileID}?back_to_fair_href=${encodedBackToFairHref}`}
+      onClick={() => {
+        tracking.trackEvent(tappedPartnerTrackingData)
+      }}
+    />
   )
 }
 
@@ -109,13 +68,9 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
       fragment FairExhibitorCard_exhibitor on FairExhibitor {
         profileID
         partner {
-          name
+          ...EntityHeaderPartner_partner
           internalID
           slug
-          cities
-          profile {
-            ...FollowProfileButton_profile
-          }
         }
       }
     `,

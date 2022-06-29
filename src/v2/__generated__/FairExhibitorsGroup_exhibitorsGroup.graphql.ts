@@ -65,5 +65,5 @@ const node: ReaderFragment = {
   "type": "FairExhibitorsGroup",
   "abstractKey": null
 };
-(node as any).hash = '364e3f278ff335323a71c21126d351da';
+(node as any).hash = '07e7e704b42a9c050453491d459d1d14';
 export default node;

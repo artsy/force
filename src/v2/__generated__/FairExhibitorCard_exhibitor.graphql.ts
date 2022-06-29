@@ -7,13 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type FairExhibitorCard_exhibitor = {
     readonly profileID: string | null;
     readonly partner: {
-        readonly name: string | null;
         readonly internalID: string;
         readonly slug: string;
-        readonly cities: ReadonlyArray<string | null> | null;
-        readonly profile: {
-            readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
     } | null;
     readonly " $refType": "FairExhibitorCard_exhibitor";
 };
@@ -50,13 +46,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "internalID",
           "storageKey": null
         },
@@ -68,27 +57,9 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "cities",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Profile",
-          "kind": "LinkedField",
-          "name": "profile",
-          "plural": false,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "FollowProfileButton_profile"
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "EntityHeaderPartner_partner"
         }
       ],
       "storageKey": null
@@ -97,5 +68,5 @@ const node: ReaderFragment = {
   "type": "FairExhibitor",
   "abstractKey": null
 };
-(node as any).hash = '05a4102e1727dc4949254af298a9e7ce';
+(node as any).hash = '117da6dd1e9b1be9e5b6ba89e8baf624';
 export default node;

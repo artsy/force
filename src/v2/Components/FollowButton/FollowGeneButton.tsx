@@ -8,7 +8,7 @@ import { ButtonProps } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
 import { Intent, ContextModule } from "@artsy/cohesion"
 
-interface FollowGeneButtonProps extends ButtonProps {
+interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   gene: FollowGeneButton_gene
 }
 
@@ -20,8 +20,9 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
   const handleClick = () => {
     if (!user) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      openAuthToSatisfyIntent(mediator, {
+      openAuthToSatisfyIntent(mediator!, {
+        // FIXME:
+        // @ts-ignore
         entity: gene,
         contextModule: ContextModule.geneHeader,
         intent: Intent.followGene,
@@ -30,8 +31,8 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
       return
     }
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    commitMutation<FollowGeneButtonMutation>(relayEnvironment, {
+    // TODO: Replace with hook
+    commitMutation<FollowGeneButtonMutation>(relayEnvironment!, {
       mutation: graphql`
         mutation FollowGeneButtonMutation($input: FollowGeneInput!) {
           followGene(input: $input) {
@@ -61,8 +62,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
   return (
     <FollowButton
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      isFollowed={gene.isFollowed}
+      isFollowed={!!gene.isFollowed}
       handleFollow={handleClick}
       buttonProps={rest}
     />

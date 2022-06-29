@@ -42,7 +42,7 @@ describe("FollowGeneButton", () => {
 
     it("renders correctly", () => {
       // The first following is for handling the width of the element and can be ignored
-      expect(wrapper.text()).toEqual("FollowingFollow")
+      expect(wrapper.text()).toContain("FollowingFollow")
     })
 
     it("follows on button click", async () => {
@@ -60,7 +60,7 @@ describe("FollowGeneButton", () => {
 
     it("renders correctly", () => {
       // The first following is for handling the width of the element and can be ignored
-      expect(wrapper.text()).toEqual("FollowingFollowing")
+      expect(wrapper.text()).toContain("FollowingFollowing")
     })
 
     it("unfollows on button click", () => {

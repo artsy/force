@@ -41,7 +41,7 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
           <FollowArtistButtonFragmentContainer
             contextModule={{} as any} // TODO:
             artist={artist}
-            buttonProps={{ size: "small", variant: "secondaryBlack" }}
+            buttonProps={{ size: "small" }}
           >
             Follow
           </FollowArtistButtonFragmentContainer>

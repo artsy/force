@@ -1,22 +1,19 @@
-import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import { Box, BoxProps, Shelf, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NearbyGalleriesRail_partners } from "v2/__generated__/NearbyGalleriesRail_partners.graphql"
 import { NearbyGalleriesRailRendererQuery } from "v2/__generated__/NearbyGalleriesRailRendererQuery.graphql"
-import { Carousel } from "../Carousel"
 import { useSystemContext } from "v2/System"
-import { NearbyGalleryCardFragmentContainer } from "./NearbyGalleryCard"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { compact } from "lodash"
+import { CellPartnerFragmentContainer } from "v2/Components/Cells/CellPartner"
 
 interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners
-  city: string | null
 }
 
 const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
   partners,
-  city,
   ...rest
 }) => {
   if (!partners || partners.length === 0) {
@@ -27,22 +24,20 @@ const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
 
   return (
     <Box {...rest}>
-      <Flex mb={4} justifyContent="space-between" alignItems="center">
-        <Text variant="lg-display">Nearby Galleries</Text>
-      </Flex>
+      <Text variant="lg-display" mb={4}>
+        Nearby Galleries
+      </Text>
 
-      <Carousel itemsPerViewport={[2, 2, 3]}>
+      <Shelf>
         {partnerList.map(node => {
           return (
-            <NearbyGalleryCardFragmentContainer
-              key={node.id}
-              width={[300, "100%"]}
+            <CellPartnerFragmentContainer
+              key={node.internalID}
               partner={node}
-              city={city}
             />
           )
         })}
-      </Carousel>
+      </Shelf>
     </Box>
   )
 }
@@ -54,9 +49,8 @@ const NearbyGalleriesRailFragmentContainer = createFragmentContainer(
       fragment NearbyGalleriesRail_partners on PartnerEdge
         @relay(plural: true) {
         node {
-          id
-          slug
-          ...NearbyGalleryCard_partner
+          ...CellPartner_partner
+          internalID
         }
       }
     `,

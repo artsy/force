@@ -77,9 +77,6 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
               profile={profile}
               user={user}
               contextModule={ContextModule.featuredGalleriesRail}
-              buttonProps={{
-                variant: "secondaryBlack",
-              }}
             />
           </RouterLink>
         )}

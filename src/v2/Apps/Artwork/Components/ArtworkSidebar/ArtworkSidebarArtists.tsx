@@ -29,7 +29,7 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
                 artist={artist}
                 contextModule={ContextModule.artworkSidebar}
                 triggerSuggestions
-                buttonProps={{ size: "small", variant: "secondaryBlack" }}
+                buttonProps={{ size: "small" }}
               >
                 Follow
               </FollowArtistButtonFragmentContainer>
