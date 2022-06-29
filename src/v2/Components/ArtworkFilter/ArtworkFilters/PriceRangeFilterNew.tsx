@@ -7,7 +7,6 @@ import {
   useCurrentlySelectedFilters,
 } from "../ArtworkFilterContext"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
@@ -174,14 +173,6 @@ export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
   /* Firefox */
   input[type="number"] {
     -moz-appearance: textfield;
-  }
-
-  /* HACK: Setting the font-size to a minimum 16px prevents iOS from zooming on focus */
-  /* This won't be necessary when upgraded to Palette v3 */
-  @media ${themeGet("mediaQueries.xs")} {
-    input {
-      font-size: 16px;
-    }
   }
 `
 
