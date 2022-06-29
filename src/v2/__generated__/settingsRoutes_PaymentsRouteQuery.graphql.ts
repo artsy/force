@@ -25,7 +25,12 @@ query settingsRoutes_PaymentsRouteQuery {
   }
 }
 
-fragment SettingsPaymentsMethod_method on CreditCard {
+fragment SettingsBankAccount_bankAccount on BankAccount {
+  internalID
+  last4
+}
+
+fragment SettingsCreditCard_creditCard on CreditCard {
   internalID
   name
   brand
@@ -39,7 +44,16 @@ fragment SettingsPaymentsMethods_me on Me {
     edges {
       node {
         internalID
-        ...SettingsPaymentsMethod_method
+        ...SettingsCreditCard_creditCard
+        id
+      }
+    }
+  }
+  bankAccounts(first: 50) {
+    edges {
+      node {
+        internalID
+        ...SettingsBankAccount_bankAccount
         id
       }
     }
@@ -52,7 +66,21 @@ fragment SettingsPaymentsRoute_me on Me {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 50
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -102,13 +130,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 50
-              }
-            ],
+            "args": (v0/*: any*/),
             "concreteType": "CreditCardConnection",
             "kind": "LinkedField",
             "name": "creditCards",
@@ -130,13 +152,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -172,7 +188,7 @@ return {
                         "name": "expirationMonth",
                         "storageKey": null
                       },
-                      (v0/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -182,19 +198,61 @@ return {
             ],
             "storageKey": "creditCards(first:50)"
           },
-          (v0/*: any*/)
+          {
+            "alias": null,
+            "args": (v0/*: any*/),
+            "concreteType": "BankAccountConnection",
+            "kind": "LinkedField",
+            "name": "bankAccounts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "BankAccountEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "BankAccount",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "last4",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "bankAccounts(first:50)"
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "2e4ab6d70f71d7de2c9184a735990191",
+    "cacheID": "6262bf39a1cc6fb404fb4bea01f85a2c",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_PaymentsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_PaymentsRouteQuery {\n  me {\n    ...SettingsPaymentsRoute_me\n    id\n  }\n}\n\nfragment SettingsPaymentsMethod_method on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsPaymentsMethod_method\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPaymentsRoute_me on Me {\n  ...SettingsPaymentsMethods_me\n}\n"
+    "text": "query settingsRoutes_PaymentsRouteQuery {\n  me {\n    ...SettingsPaymentsRoute_me\n    id\n  }\n}\n\nfragment SettingsBankAccount_bankAccount on BankAccount {\n  internalID\n  last4\n}\n\nfragment SettingsCreditCard_creditCard on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsCreditCard_creditCard\n        id\n      }\n    }\n  }\n  bankAccounts(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsBankAccount_bankAccount\n        id\n      }\n    }\n  }\n}\n\nfragment SettingsPaymentsRoute_me on Me {\n  ...SettingsPaymentsMethods_me\n}\n"
   }
 };
 })();

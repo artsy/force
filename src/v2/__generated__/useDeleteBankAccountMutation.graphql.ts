@@ -4,22 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type CreditCardInput = {
+export type DeleteBankAccountInput = {
     clientMutationId?: string | null | undefined;
-    oneTimeUse?: boolean | null | undefined;
-    token: string;
+    id: string;
 };
-export type useAddCreditCardMutationVariables = {
-    input: CreditCardInput;
+export type useDeleteBankAccountMutationVariables = {
+    input: DeleteBankAccountInput;
 };
-export type useAddCreditCardMutationResponse = {
-    readonly createCreditCard: {
+export type useDeleteBankAccountMutationResponse = {
+    readonly deleteBankAccount: {
         readonly me: {
             readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethods_me">;
         } | null;
-        readonly creditCardOrError: {
-            readonly creditCard?: {
-                readonly " $fragmentRefs": FragmentRefs<"SettingsCreditCard_creditCard">;
+        readonly bankAccountOrError: {
+            readonly bankAccount?: {
+                readonly " $fragmentRefs": FragmentRefs<"SettingsBankAccount_bankAccount">;
             } | null | undefined;
             readonly mutationError?: {
                 readonly message: string;
@@ -27,31 +26,31 @@ export type useAddCreditCardMutationResponse = {
         } | null;
     } | null;
 };
-export type useAddCreditCardMutation = {
-    readonly response: useAddCreditCardMutationResponse;
-    readonly variables: useAddCreditCardMutationVariables;
+export type useDeleteBankAccountMutation = {
+    readonly response: useDeleteBankAccountMutationResponse;
+    readonly variables: useDeleteBankAccountMutationVariables;
 };
 
 
 
 /*
-mutation useAddCreditCardMutation(
-  $input: CreditCardInput!
+mutation useDeleteBankAccountMutation(
+  $input: DeleteBankAccountInput!
 ) {
-  createCreditCard(input: $input) {
+  deleteBankAccount(input: $input) {
     me {
       ...SettingsPaymentsMethods_me
       id
     }
-    creditCardOrError {
+    bankAccountOrError {
       __typename
-      ... on CreditCardMutationSuccess {
-        creditCard {
-          ...SettingsCreditCard_creditCard
+      ... on BankAccountMutationSuccess {
+        bankAccount {
+          ...SettingsBankAccount_bankAccount
           id
         }
       }
-      ... on CreditCardMutationFailure {
+      ... on BankAccountMutationFailure {
         mutationError {
           message
         }
@@ -133,7 +132,7 @@ v2 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationFailure",
+  "type": "BankAccountMutationFailure",
   "abstractKey": null
 },
 v3 = [
@@ -163,35 +162,7 @@ v6 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "brand",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "lastDigits",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "expirationYear",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "expirationMonth",
+    "name": "last4",
     "storageKey": null
   },
   (v5/*: any*/)
@@ -201,14 +172,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useAddCreditCardMutation",
+    "name": "useDeleteBankAccountMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreditCardPayload",
+        "concreteType": "DeleteBankAccountPayload",
         "kind": "LinkedField",
-        "name": "createCreditCard",
+        "name": "deleteBankAccount",
         "plural": false,
         "selections": [
           {
@@ -232,7 +203,7 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "creditCardOrError",
+            "name": "bankAccountOrError",
             "plural": false,
             "selections": [
               {
@@ -241,21 +212,21 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CreditCard",
+                    "concreteType": "BankAccount",
                     "kind": "LinkedField",
-                    "name": "creditCard",
+                    "name": "bankAccount",
                     "plural": false,
                     "selections": [
                       {
                         "args": null,
                         "kind": "FragmentSpread",
-                        "name": "SettingsCreditCard_creditCard"
+                        "name": "SettingsBankAccount_bankAccount"
                       }
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess",
+                "type": "BankAccountMutationSuccess",
                 "abstractKey": null
               },
               (v2/*: any*/)
@@ -273,14 +244,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useAddCreditCardMutation",
+    "name": "useDeleteBankAccountMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreditCardPayload",
+        "concreteType": "DeleteBankAccountPayload",
         "kind": "LinkedField",
-        "name": "createCreditCard",
+        "name": "deleteBankAccount",
         "plural": false,
         "selections": [
           {
@@ -314,7 +285,45 @@ return {
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
-                        "selections": (v6/*: any*/),
+                        "selections": [
+                          (v4/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "brand",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lastDigits",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "expirationYear",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "expirationMonth",
+                            "storageKey": null
+                          },
+                          (v5/*: any*/)
+                        ],
                         "storageKey": null
                       }
                     ],
@@ -346,17 +355,7 @@ return {
                         "kind": "LinkedField",
                         "name": "node",
                         "plural": false,
-                        "selections": [
-                          (v4/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "last4",
-                            "storageKey": null
-                          },
-                          (v5/*: any*/)
-                        ],
+                        "selections": (v6/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -374,7 +373,7 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "creditCardOrError",
+            "name": "bankAccountOrError",
             "plural": false,
             "selections": [
               {
@@ -390,15 +389,15 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CreditCard",
+                    "concreteType": "BankAccount",
                     "kind": "LinkedField",
-                    "name": "creditCard",
+                    "name": "bankAccount",
                     "plural": false,
                     "selections": (v6/*: any*/),
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess",
+                "type": "BankAccountMutationSuccess",
                 "abstractKey": null
               },
               (v2/*: any*/)
@@ -411,14 +410,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5947d5b0603bb6b30e372014b40a53b7",
+    "cacheID": "e0b7565bc33bb7801c84d05d78f098e3",
     "id": null,
     "metadata": {},
-    "name": "useAddCreditCardMutation",
+    "name": "useDeleteBankAccountMutation",
     "operationKind": "mutation",
-    "text": "mutation useAddCreditCardMutation(\n  $input: CreditCardInput!\n) {\n  createCreditCard(input: $input) {\n    me {\n      ...SettingsPaymentsMethods_me\n      id\n    }\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCard {\n          ...SettingsCreditCard_creditCard\n          id\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsBankAccount_bankAccount on BankAccount {\n  internalID\n  last4\n}\n\nfragment SettingsCreditCard_creditCard on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsCreditCard_creditCard\n        id\n      }\n    }\n  }\n  bankAccounts(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsBankAccount_bankAccount\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteBankAccountMutation(\n  $input: DeleteBankAccountInput!\n) {\n  deleteBankAccount(input: $input) {\n    me {\n      ...SettingsPaymentsMethods_me\n      id\n    }\n    bankAccountOrError {\n      __typename\n      ... on BankAccountMutationSuccess {\n        bankAccount {\n          ...SettingsBankAccount_bankAccount\n          id\n        }\n      }\n      ... on BankAccountMutationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsBankAccount_bankAccount on BankAccount {\n  internalID\n  last4\n}\n\nfragment SettingsCreditCard_creditCard on CreditCard {\n  internalID\n  name\n  brand\n  lastDigits\n  expirationYear\n  expirationMonth\n}\n\nfragment SettingsPaymentsMethods_me on Me {\n  creditCards(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsCreditCard_creditCard\n        id\n      }\n    }\n  }\n  bankAccounts(first: 50) {\n    edges {\n      node {\n        internalID\n        ...SettingsBankAccount_bankAccount\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1e064482f600ae2ee3f6de660c742a52';
+(node as any).hash = '3f412db286ec13bf72154f61855e2542';
 export default node;
