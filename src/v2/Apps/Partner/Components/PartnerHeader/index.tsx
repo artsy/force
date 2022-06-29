@@ -84,10 +84,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
             profile={partner.profile}
             user={user}
             contextModule={ContextModule.partnerHeader}
-            buttonProps={{
-              variant: "secondaryBlack",
-              width: "100%",
-            }}
+            buttonProps={{ width: "100%" }}
           />
         )}
       </Column>

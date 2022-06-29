@@ -16,6 +16,8 @@ export interface EntityHeaderPartnerProps extends BoxProps {
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
+  href?: string
+  onClick?(): void
 }
 
 const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
@@ -23,6 +25,8 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
   displayAvatar = true,
   displayLink = true,
   FollowButton,
+  href,
+  onClick,
   ...rest
 }) => {
   const { user } = useSystemContext()
@@ -49,12 +53,13 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
     >
       <Flex
         {...(displayLink
-          ? { as: RouterLink, to: partner.href, textDecoration: "none" }
+          ? { as: RouterLink, to: href ?? partner.href, textDecoration: "none" }
           : {})}
         display="flex"
         alignItems="center"
         minWidth={0}
         flex={1}
+        onClick={onClick}
       >
         {displayAvatar && (image || initials) && (
           <Avatar size="xs" mr={1} initials={initials} lazyLoad {...image} />
@@ -87,7 +92,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
             user={user}
             profile={partner.profile!}
             contextModule={ContextModule.partnerHeader}
-            buttonProps={{ size: "small", variant: "secondaryBlack" }}
+            buttonProps={{ size: "small" }}
           />
         ))}
     </Flex>

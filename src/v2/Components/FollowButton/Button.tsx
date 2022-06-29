@@ -4,7 +4,7 @@ import * as React from "react"
 
 interface FollowButtonProps {
   isFollowed?: boolean
-  buttonProps?: Partial<ButtonProps>
+  buttonProps?: Omit<Partial<ButtonProps>, "variant">
   handleFollow?: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -23,8 +23,9 @@ export const FollowButton: React.ForwardRefExoticComponent<
     return (
       <Button
         ref={forwardedRef}
-        variant={isFollowed ? "secondaryBlack" : "primaryBlack"}
         onClick={handleFollow}
+        variant="secondaryNeutral"
+        success={isFollowed}
         onMouseEnter={() => setShowUnfollow(true)}
         onMouseLeave={() => setShowUnfollow(false)}
         data-follow={isFollowed}
@@ -36,17 +37,24 @@ export const FollowButton: React.ForwardRefExoticComponent<
           contains is "Following": position that, hide it,
           then overlay the normal labels.
         */}
-        <Box opacity={0} style={{ pointerEvents: "none" }} aria-hidden="true">
-          Following
-        </Box>
+        <Box position="relative">
+          <Box
+            as="span"
+            opacity={0}
+            style={{ pointerEvents: "none" }}
+            aria-hidden="true"
+          >
+            Following
+          </Box>
 
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          {text}
+          <Box
+            position="absolute"
+            top="50%"
+            left="50%"
+            style={{ transform: "translate(-50%, -50%)" }}
+          >
+            {text}
+          </Box>
         </Box>
       </Button>
     )

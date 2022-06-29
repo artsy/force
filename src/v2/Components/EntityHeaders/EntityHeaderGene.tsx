@@ -58,11 +58,7 @@ const EntityHeaderGene: FC<EntityHeaderGeneProps> = ({
       </Flex>
 
       {FollowButton || (
-        <FollowGeneButtonFragmentContainer
-          gene={gene}
-          size="small"
-          variant="secondaryBlack"
-        />
+        <FollowGeneButtonFragmentContainer gene={gene} size="small" />
       )}
     </Flex>
   )

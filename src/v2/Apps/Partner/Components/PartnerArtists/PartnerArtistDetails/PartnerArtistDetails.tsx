@@ -51,10 +51,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
               <FollowArtistButton
                 artist={partnerArtist.node}
                 contextModule={ContextModule.artistHeader}
-                buttonProps={{
-                  variant: "secondaryBlack",
-                  width: "100%",
-                }}
+                buttonProps={{ width: "100%" }}
               />
             </Column>
           </GridColumns>

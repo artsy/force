@@ -123,10 +123,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
                       profile={partner.profile}
                       user={user}
                       contextModule={ContextModule.aboutTheWork}
-                      buttonProps={{
-                        size: "small",
-                        variant: "secondaryBlack",
-                      }}
+                      buttonProps={{ size: "small" }}
                     />
                   ) : undefined
                 }

@@ -42,10 +42,7 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
         <FollowArtistButtonFragmentContainer
           artist={artist.node!}
           contextModule={ContextModule.recommendedArtistsRail}
-          buttonProps={{
-            variant: "secondaryBlack",
-            size: "small",
-          }}
+          buttonProps={{ size: "small" }}
         />
       </Flex>
     </>

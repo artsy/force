@@ -57,7 +57,6 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         <FollowArtistButtonQueryRenderer
           id={entity.internalID!}
           contextModule={ContextModule.featuredArtistsRail}
-          buttonProps={{ variant: "secondaryBlack" }}
         />
       </Box>
     </>

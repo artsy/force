@@ -37,11 +37,7 @@ const CategoryRail: FC<CategoryRailProps> = ({ category }) => {
           srcSet: category.avatar?.cropped?.srcSet,
         }}
         FollowButton={
-          <FollowGeneButtonFragmentContainer
-            gene={category}
-            size="small"
-            variant="secondaryBlack"
-          >
+          <FollowGeneButtonFragmentContainer gene={category} size="small">
             Follow
           </FollowGeneButtonFragmentContainer>
         }

@@ -65,7 +65,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
               <FollowArtistButton
                 artist={artist}
                 contextModule={ContextModule.aboutTheWork}
-                buttonProps={{ size: "small", variant: "secondaryBlack" }}
+                buttonProps={{ size: "small" }}
               />
             }
           />
