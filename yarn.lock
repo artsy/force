@@ -3878,11 +3878,6 @@
   dependencies:
     opentracing ">=0.14.1"
 
-"@types/dedent@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@types/dedent/-/dedent-0.7.0.tgz#155f339ca404e6dd90b9ce46a3f78fd69ca9b050"
-  integrity sha512-EGlKlgMhnLt/cM4DbUSafFdrkeJoC9Mvnj0PUCU7tFmTjMjNRT957kXCx0wYm3JuEq4o4ZsS5vG+NlkM2DMd2A==
-
 "@types/enzyme@3.1.11":
   version "3.1.11"
   resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.1.11.tgz#0a059d2fe2c686f024ada911d24473cdb2e13903"
@@ -4238,14 +4233,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-overlays@0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@types/react-overlays/-/react-overlays-0.8.4.tgz#45a189df6fb1882f7a9db93b03efe4b976a51916"
-  integrity sha512-UUDhF8D6tm9R56fc+loJ6OAxGSotvq4uvloxPoiyNX/4b9f/Ikp3V4hCG5xrflyskqH14jDVJZo8PyoTThQx/Q==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-transition-group" "*"
-
 "@types/react-relay@*":
   version "7.0.17"
   resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.17.tgz#83f6b85c41b5fd3bb27d04d759fa4c0e4dd6a8d4"
@@ -4294,13 +4281,6 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-tracking/-/react-tracking-7.0.0.tgz#2c5def990bb19516f2b4d5d343189b0a71c88d8b"
   integrity sha512-W4NzuoBptl6jnyngOuuDQr1Z4XMMqtKmEQjYBv6xNEnnMVxQB2mRT8ULh/GIWFbng7yROHhLswmw2BcHn/MGRg==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-transition-group@*":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.0.tgz#882839db465df1320e4753e6e9f70ca7e9b4d46d"
-  integrity sha512-/QfLHGpu+2fQOqQaXh8MG9q03bFENooTb/it4jr5kKaZlDQfWvjqWZg48AwzPVMBHlRuTRAY7hRHCEOXz5kV6w==
   dependencies:
     "@types/react" "*"
 
@@ -5567,7 +5547,7 @@ array.prototype.flatmap@^1.2.1, array.prototype.flatmap@^1.2.3:
     es-abstract "^1.18.0-next.1"
     function-bind "^1.1.1"
 
-array.prototype.map@^1.0.1, array.prototype.map@^1.0.3:
+array.prototype.map@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/array.prototype.map/-/array.prototype.map-1.0.3.tgz#1609623618d3d84134a37d4a220030c2bd18420b"
   integrity sha512-nNcb30v0wfDyIe26Yif3PcV1JXQp4zEeEfupG7L4SRjnD6HLbO5b2a7eVSba53bOx4YCHYMBHt+Fp4vYstneRA==
@@ -11117,14 +11097,6 @@ geoformatter@artsy/geoformatter:
   version "0.0.0"
   resolved "https://codeload.github.com/artsy/geoformatter/tar.gz/56f0f25a91a210a6a4a7db7de7bb2cb7085ed1fa"
 
-gestures@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/gestures/-/gestures-0.0.2.tgz#671203947b8cdb3dc49a6247b1682fa81770e3ba"
-  integrity sha1-ZxIDlHuM2z3EmmJHsWgvqBdw47o=
-  dependencies:
-    interact-js "^0.4.6"
-    math-js "^0.0.4"
-
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
@@ -12413,11 +12385,6 @@ insane@2.6.1:
     assignment "2.0.0"
     he "0.5.0"
 
-interact-js@^0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/interact-js/-/interact-js-0.4.6.tgz#afa098e7b83eeec5ede0b92a825645abc25c946d"
-  integrity sha1-r6CY57g+7sXt4LkqglZFq8JclG0=
-
 internal-slot@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/internal-slot/-/internal-slot-1.0.3.tgz#7347e307deeea2faac2ac6205d4bc7d34967f59c"
@@ -13215,7 +13182,7 @@ iterate-iterator@^1.0.1:
   resolved "https://registry.yarnpkg.com/iterate-iterator/-/iterate-iterator-1.0.1.tgz#1693a768c1ddd79c969051459453f082fe82e9f6"
   integrity sha512-3Q6tudGN05kbkDQDI4CqjaBf4qf85w6W6GnuZDtUVYwKgtC1q8yxYX7CZed7N+tLzQqS6roujWvszf13T+n9aw==
 
-iterate-value@^1.0.0, iterate-value@^1.0.2:
+iterate-value@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/iterate-value/-/iterate-value-1.0.2.tgz#935115bd37d006a52046535ebc8d07e9c9337f57"
   integrity sha512-A6fMAio4D2ot2r/TYzr4yUWrmwNdsN5xL7+HUiyACE4DXm+q8HtPcnFTp+NnW3k4N05tZ7FVYFFb2CR13NxyHQ==
@@ -14531,11 +14498,6 @@ jwt-decode@2.2.0:
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
   integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
 
-keyboard-code@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/keyboard-code/-/keyboard-code-0.0.2.tgz#5562cd1b36798a1698a547a85ee6ff0aeb938488"
-  integrity sha1-VWLNGzZ5ihaYpUeoXub/CuuThIg=
-
 keygrip@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
@@ -14611,29 +14573,6 @@ koalas@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/koalas/-/koalas-1.0.2.tgz#318433f074235db78fae5661a02a8ca53ee295cd"
   integrity sha1-MYQz8HQjXbePrlZhoCqMpT7ilc0=
-
-konami-js@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/konami-js/-/konami-js-0.0.2.tgz#35ab27483f27e23e91e470da851954e4468fc6d9"
-  integrity sha1-NasnSD8n4j6R5HDahRlU5EaPxtk=
-  dependencies:
-    konami-keyboard "^0.0.1"
-    konami-touch "^0.0.3"
-
-konami-keyboard@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/konami-keyboard/-/konami-keyboard-0.0.1.tgz#df4459717ca67ce6de5ee141508d1357e255d4bc"
-  integrity sha1-30RZcXymfObeXuFBUI0TV+JV1Lw=
-  dependencies:
-    keyboard-code "0.0.2"
-
-konami-touch@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/konami-touch/-/konami-touch-0.0.3.tgz#151b299898840eaca26670e9e4942146a0afdb00"
-  integrity sha1-FRspmJiEDqyiZnDp5JQhRqCv2wA=
-  dependencies:
-    gestures "^0.0.2"
-    math-js "^0.0.4"
 
 ky-universal@^0.3.0:
   version "0.3.0"
@@ -14718,13 +14657,6 @@ leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
   integrity sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==
-
-levenary@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/levenary/-/levenary-1.1.1.tgz#842a9ee98d2075aa7faeedbe32679e9205f46f77"
-  integrity sha512-mkAdOIt79FD6irqjYSs4rdbnlT5vRonMEvBVPVb3XmevfS8kgRXwfes0dhPdEtzTWD/1eNE/Bm/G1iRt6DcnQQ==
-  dependencies:
-    leven "^3.1.0"
 
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
@@ -15407,11 +15339,6 @@ marked@^1.2.8:
   resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.9.tgz#53786f8b05d4c01a2a5a76b7d1ec9943d29d72dc"
   integrity sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw==
 
-math-js@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/math-js/-/math-js-0.0.4.tgz#e0ce5059a2a110b5ddad9ec6d4322aa52e894fb9"
-  integrity sha1-4M5QWaKhELXdrZ7G1DIqpS6JT7k=
-
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -15576,7 +15503,7 @@ meros@1.1.4:
   resolved "https://registry.yarnpkg.com/meros/-/meros-1.1.4.tgz#c17994d3133db8b23807f62bec7f0cb276cfd948"
   integrity sha512-E9ZXfK9iQfG9s73ars9qvvvbSIkJZF5yOo9j4tcwM5tN8mUKfj/EKN5PzOr3ZH0y5wL7dLAHw3RVEfpQV9Q7VQ==
 
-methods@1.x, methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:
+methods@^1.1.1, methods@^1.1.2, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
@@ -17653,17 +17580,6 @@ promise-retry@^2.0.1:
     err-code "^2.0.2"
     retry "^0.12.0"
 
-promise.allsettled@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/promise.allsettled/-/promise.allsettled-1.0.2.tgz#d66f78fbb600e83e863d893e98b3d4376a9c47c9"
-  integrity sha512-UpcYW5S1RaNKT6pd+s9jp9K9rlQge1UXKskec0j6Mmuq7UJCvlS2J2/s/yuPN8ehftf9HXMxWlKiPbGGUzpoRg==
-  dependencies:
-    array.prototype.map "^1.0.1"
-    define-properties "^1.1.3"
-    es-abstract "^1.17.0-next.1"
-    function-bind "^1.1.1"
-    iterate-value "^1.0.0"
-
 promise.allsettled@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/promise.allsettled/-/promise.allsettled-1.0.4.tgz#65e71f2a604082ed69c548b68603294090ee6803"
@@ -18156,11 +18072,6 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
-
-raw-loader@0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
-  integrity sha1-DD0L6u2KAclm2Xh793goElKpeao=
 
 raw-loader@^4.0.2:
   version "4.0.2"
@@ -18684,11 +18595,6 @@ react-transition-group@^2.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
-
-react-use-dimensions@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-use-dimensions/-/react-use-dimensions-1.2.1.tgz#eb1561db7b06c393209d2bffa449931dd93f7870"
-  integrity sha512-XL+Rup9Hosxx3Ap9xpyQMbVwuUa4BSqiOjfBb2zDuGs4uv2FesFV+m8Z/huRx2BNptMd9ARPqFuSNA62zhCozg==
 
 react-waypoint@8.0.0:
   version "8.0.0"
@@ -20377,7 +20283,7 @@ state-toggle@^1.0.0:
   resolved "https://registry.yarnpkg.com/state-toggle/-/state-toggle-1.0.3.tgz#e123b16a88e143139b09c6852221bc9815917dfe"
   integrity sha512-d/5Z4/2iiCnHw6Xzghyhb+GcmF89bxwgXG60wjIiZaxnymbyOmI8Hk4VqHXiVVp6u2ysaskFfXg3ekCj4WNftQ==
 
-static-extend@0.1.2, static-extend@^0.1.1:
+static-extend@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
   integrity sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=
@@ -20861,7 +20767,7 @@ superagent-retry@^0.6.0:
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
   integrity sha1-5Js1ypbA47HQ4/SWBRNt8OCgKLc=
 
-superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^2.0.0, superagent@^3.5.0, superagent@^3.6.3:
+superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^3.5.0, superagent@^3.6.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
   integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==
@@ -20876,14 +20782,6 @@ superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^2.0.0, superagent
     mime "^1.4.1"
     qs "^6.5.1"
     readable-stream "^2.3.5"
-
-supertest@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/supertest/-/supertest-2.0.1.tgz#a058081d788f1515d4700d7502881e6b759e44cd"
-  integrity sha1-oFgIHXiPFRXUcA11Aogea3WeRM0=
-  dependencies:
-    methods "1.x"
-    superagent "^2.0.0"
 
 supports-color@6.0.0:
   version "6.0.0"
