@@ -3,13 +3,10 @@ import loadable from "@loadable/component"
 import { HttpError } from "found"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { DebugInquiryApp } from "./DebugInquiryApp"
 
 const DebugApp = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),
-  {
-    resolveComponent: component => component.DebugApp,
-  }
+  { resolveComponent: component => component.DebugApp }
 )
 
 /**
@@ -47,12 +44,6 @@ export const debugRoutes: AppRouteConfig[] = [
         onServerSideRender: () => {
           throw new Error("500")
         },
-      },
-
-      // TODO: Remove once inquiry is complete
-      {
-        path: "inquiry",
-        Component: DebugInquiryApp,
       },
     ],
   },

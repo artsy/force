@@ -41,7 +41,6 @@ app.use(require("./apps/eoy_2016"))
 
 app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
-app.use(require("./apps/dev"))
 
 // Non-profile dynamic vanity url apps
 app.use(require("./apps/shortcuts"))
