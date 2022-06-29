@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useMemo, FormEvent } from "react"
-import { Box, Flex, LabeledInput, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, LabeledInput, Spacer, Text, Range } from "@artsy/palette"
 import {
   Aggregations,
   SelectedFiltersCountsLabels,
@@ -11,7 +11,6 @@ import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
-import { Range, RANGE_DOT_SIZE } from "v2/Components/Range"
 import { debounce, sortBy } from "lodash"
 import { Histogram, HistogramBarEntity } from "./Histogram"
 
@@ -94,11 +93,12 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      <Flex alignItems="flex-end" mt={2}>
+      <Flex>
         <Box flex={1}>
           <Text variant="xs" mb={0.5}>
             Min
           </Text>
+
           <NumericInput
             label="$USD"
             name="price_min"
@@ -116,6 +116,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
           <Text variant="xs" mb={0.5}>
             Max
           </Text>
+
           <NumericInput
             label="$USD"
             name="price_max"
@@ -128,39 +129,35 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         </Box>
       </Flex>
 
-      <Box mt={2} mx={`${RANGE_DOT_SIZE / 2}px`}>
-        {bars.length > 0 && !isAllBarsEmpty ? (
-          <Histogram
-            bars={bars}
-            selectedRange={[sliderRange[0], sliderRange[1]]}
-            data-testid="PriceFilterHistogram"
-          />
-        ) : null}
+      <Spacer mt={2} />
 
-        <Spacer pb={2} />
-
-        <Range
-          min={defaultMinValue}
-          max={defaultMaxValue}
-          value={sliderRange}
-          allowCross={false}
-          onChange={handleSliderValueChange}
-          step={100}
-          ariaLabelGroupForHandles={[
-            "Min price slider handle",
-            "Max price slider handle",
-          ]}
+      {bars.length > 0 && !isAllBarsEmpty ? (
+        <Histogram
+          bars={bars}
+          selectedRange={[sliderRange[0], sliderRange[1]]}
+          data-testid="PriceFilterHistogram"
         />
+      ) : null}
 
-        <Flex justifyContent="space-between" mt={1}>
-          <Text variant="xs" color="black60">
-            ${defaultMinValue}
-          </Text>
-          <Text variant="xs" color="black60">
-            ${defaultMaxValue}+
-          </Text>
-        </Flex>
-      </Box>
+      <Spacer mt={2} />
+
+      <Range
+        min={defaultMinValue}
+        max={defaultMaxValue}
+        value={sliderRange}
+        onChange={handleSliderValueChange}
+        step={100}
+      />
+
+      <Flex justifyContent="space-between" mt={1}>
+        <Text variant="xs" color="black60">
+          ${defaultMinValue}
+        </Text>
+
+        <Text variant="xs" color="black60">
+          ${defaultMaxValue}+
+        </Text>
+      </Flex>
     </FilterExpandable>
   )
 }
