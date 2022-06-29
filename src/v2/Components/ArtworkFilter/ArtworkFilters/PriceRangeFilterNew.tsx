@@ -146,6 +146,7 @@ export const PriceRangeFilterNew: FC<PriceRangeFilterNewProps> = ({
         value={sliderRange}
         onChange={handleSliderValueChange}
         step={100}
+        ariaLabels={["Min price", "Max price"]}
       />
 
       <Flex justifyContent="space-between" mt={1}>
