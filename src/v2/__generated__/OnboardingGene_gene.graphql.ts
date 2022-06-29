@@ -44,7 +44,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 40
+          "value": 100
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -87,7 +87,7 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:40)"
+      "storageKey": "filterArtworksConnection(first:100)"
     },
     {
       "args": null,
@@ -98,5 +98,5 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '364d09440a0aba97c794209a5b135468';
+(node as any).hash = 'c347d9a61ca6c0d74296d14e3b296dda';
 export default node;

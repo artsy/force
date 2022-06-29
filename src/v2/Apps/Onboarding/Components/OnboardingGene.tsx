@@ -59,7 +59,7 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
     gene: graphql`
       fragment OnboardingGene_gene on Gene {
         name
-        artworks: filterArtworksConnection(first: 40) {
+        artworks: filterArtworksConnection(first: 100) {
           edges {
             node {
               internalID
