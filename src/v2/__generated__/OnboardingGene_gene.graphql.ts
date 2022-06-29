@@ -7,15 +7,14 @@ import { FragmentRefs } from "relay-runtime";
 export type OnboardingGene_gene = {
     readonly name: string | null;
     readonly artworks: {
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly internalID: string;
                 readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
             } | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"FollowGeneButton_gene">;
     readonly " $refType": "OnboardingGene_gene";
 };
 export type OnboardingGene_gene$data = OnboardingGene_gene;
@@ -45,7 +44,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 10
+          "value": 40
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -53,24 +52,6 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "FilterArtworksCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "total",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -88,6 +69,13 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "GridItem_artwork"
@@ -99,11 +87,16 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:10)"
+      "storageKey": "filterArtworksConnection(first:40)"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'd71d47d1332404b48921af5d8835ae91';
+(node as any).hash = '364d09440a0aba97c794209a5b135468';
 export default node;
