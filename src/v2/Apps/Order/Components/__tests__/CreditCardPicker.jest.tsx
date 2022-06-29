@@ -376,8 +376,8 @@ describe("CreditCardPickerFragmentContainer", () => {
   })
 
   describe("when the user has existing credit cards", () => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const cards: Array<
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       CreditCardPicker_me["creditCards"]["edges"][0]["node"]
     > = [
       {
