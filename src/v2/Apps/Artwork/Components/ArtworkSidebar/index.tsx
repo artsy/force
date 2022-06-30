@@ -62,6 +62,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
   const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
   const shouldHideDetailsCreateAlertCTA =
+    artwork.artists?.length === 0 ||
     (is_in_auction && hasEnded) ||
     (is_in_auction && lotIsClosed(sale, saleArtwork)) ||
     is_sold
@@ -162,6 +163,9 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           endedAt
           extendedBiddingEndAt
           lotID
+        }
+        artists {
+          internalID
         }
       }
     `,

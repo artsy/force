@@ -110,4 +110,40 @@ describe("ArtworkSidebar", () => {
       screen.queryByText(/Be notified when a similar work is available/i)
     ).toBeInTheDocument()
   })
+
+  it("hide the create alert section if there are no associated artists", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        artists: [],
+      }),
+    })
+
+    const button = screen.queryByText(/Create Alert/i)
+    const description = screen.queryByText(
+      /Be notified when a similar work is available/i
+    )
+
+    expect(button).not.toBeInTheDocument()
+    expect(description).not.toBeInTheDocument()
+  })
+
+  it("hide the create alert section for bidding closed artworks if there are no associated artists", () => {
+    renderWithRelay({
+      Artwork: () => ({
+        is_in_auction: true,
+        artists: [],
+      }),
+      Sale: () => ({
+        isClosed: true,
+      }),
+    })
+
+    const button = screen.queryByText(/Create Alert/i)
+    const description = screen.queryByText(
+      /Be notified when a similar work is available/i
+    )
+
+    expect(button).not.toBeInTheDocument()
+    expect(description).not.toBeInTheDocument()
+  })
 })

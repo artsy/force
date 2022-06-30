@@ -26,6 +26,9 @@ export type ArtworkSidebar_artwork = {
         readonly extendedBiddingEndAt: string | null;
         readonly lotID: string | null;
     } | null;
+    readonly artists: ReadonlyArray<{
+        readonly internalID: string;
+    } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarMetadata_artwork" | "ArtworkSidebarAuctionPartnerInfo_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarCommercial_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarExtraLinks_artwork" | "SecurePayment_artwork" | "VerifiedSeller_artwork" | "AuthenticityCertificate_artwork" | "BuyerGuarantee_artwork" | "CreateArtworkAlertSection_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork">;
     readonly " $refType": "ArtworkSidebar_artwork";
 };
@@ -37,7 +40,15 @@ export type ArtworkSidebar_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -125,13 +136,7 @@ const node: ReaderFragment = {
           "name": "startAt",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -178,6 +183,18 @@ const node: ReaderFragment = {
           "name": "lotID",
           "storageKey": null
         }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -255,5 +272,6 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'cc3c1830e02b49987d1b21d5b7daa4e8';
+})();
+(node as any).hash = 'deb21e272fba95a0426227d8acbc04c7';
 export default node;

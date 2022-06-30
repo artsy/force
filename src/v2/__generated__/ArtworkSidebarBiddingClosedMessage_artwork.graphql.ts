@@ -5,6 +5,9 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBiddingClosedMessage_artwork = {
+    readonly artists: ReadonlyArray<{
+        readonly internalID: string;
+    } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
     readonly " $refType": "ArtworkSidebarBiddingClosedMessage_artwork";
 };
@@ -23,6 +26,24 @@ const node: ReaderFragment = {
   "name": "ArtworkSidebarBiddingClosedMessage_artwork",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarCreateAlertButton_artwork"
@@ -31,5 +52,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'b51ff4ad0e36a21d29c0be4261bab9af';
+(node as any).hash = '41d2b728262cda860e0937a3a9efb9aa';
 export default node;

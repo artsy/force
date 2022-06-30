@@ -233,4 +233,14 @@ describe("ArtworkSidebarCommercial", () => {
 
     expect(wrapper.text()).toContain("Create Alert")
   })
+
+  it("hide 'Create Alert' button if there are no associated artists", () => {
+    const wrapper = getWrapper({
+      ...ArtworkBuyNow,
+      is_sold: true,
+      artists: [],
+    })
+
+    expect(wrapper.text()).not.toContain("Create Alert")
+  })
 })
