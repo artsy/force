@@ -46,81 +46,83 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
       } = config
       const clientContext = buildClientAppContext(context)
 
-      const user = getUser(clientContext.user)
-      const relayEnvironment = createRelaySSREnvironment({
-        cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
-        user,
-      })
+      if (clientContext) {
+        const user = getUser(clientContext.user)
+        const relayEnvironment = createRelaySSREnvironment({
+          cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
+          user,
+        })
 
-      const getHistoryProtocol = () => {
-        switch (history.protocol) {
-          case "browser":
-            return new BrowserProtocol()
-          case "hash":
-            return new HashProtocol()
-          case "memory":
-            return new MemoryProtocol(initialRoute)
-          default:
-            return new BrowserProtocol()
+        const getHistoryProtocol = () => {
+          switch (history.protocol) {
+            case "browser":
+              return new BrowserProtocol()
+            case "hash":
+              return new HashProtocol()
+            case "memory":
+              return new MemoryProtocol(initialRoute)
+            default:
+              return new BrowserProtocol()
+          }
         }
-      }
 
-      const historyMiddlewares = [
-        createQueryMiddleware({
-          parse: queryStringParsing,
-          stringify: qs.stringify,
-        }),
-        trackingMiddleware({
-          excludePaths: [
-            // Due to special needs, this page has its own page-view tracking implementation.
-            // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/v2/Apps/Artwork/ArtworkApp.tsx#L117-L121
-            "/artwork(.*)",
-          ],
-        }),
-      ]
-      const resolver = new Resolver(relayEnvironment)
+        const historyMiddlewares = [
+          createQueryMiddleware({
+            parse: queryStringParsing,
+            stringify: qs.stringify,
+          }),
+          trackingMiddleware({
+            excludePaths: [
+              // Due to special needs, this page has its own page-view tracking implementation.
+              // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/v2/Apps/Artwork/ArtworkApp.tsx#L117-L121
+              "/artwork(.*)",
+            ],
+          }),
+        ]
+        const resolver = new Resolver(relayEnvironment)
 
-      const Renderer = createRender({
-        renderError: RenderError,
-        renderPending: RenderPending,
-        renderReady: RenderReady,
-      })
+        const Renderer = createRender({
+          renderError: RenderError,
+          renderPending: RenderPending,
+          renderReady: RenderReady,
+        })
 
-      const Router = await createInitialFarceRouter({
-        historyMiddlewares,
-        historyOptions: history.options,
-        historyProtocol: getHistoryProtocol(),
-        matchContext: clientContext,
-        render: renderArgs => {
+        const Router = await createInitialFarceRouter({
+          historyMiddlewares,
+          historyOptions: history.options,
+          historyProtocol: getHistoryProtocol(),
+          matchContext: clientContext,
+          render: renderArgs => {
+            return (
+              <ScrollManager
+                renderArgs={renderArgs}
+                shouldUpdateScroll={shouldUpdateScroll}
+              >
+                <Renderer {...renderArgs} />
+              </ScrollManager>
+            )
+          },
+          resolver,
+          routeConfig: createRouteConfig(routes),
+        })
+
+        const ClientApp = () => {
           return (
-            <ScrollManager
-              renderArgs={renderArgs}
-              shouldUpdateScroll={shouldUpdateScroll}
+            <Boot
+              context={clientContext}
+              user={user}
+              relayEnvironment={relayEnvironment}
+              routes={routes}
             >
-              <Renderer {...renderArgs} />
-            </ScrollManager>
+              <Router resolver={resolver} />
+            </Boot>
           )
-        },
-        resolver,
-        routeConfig: createRouteConfig(routes),
-      })
+        }
 
-      const ClientApp = () => {
-        return (
-          <Boot
-            context={clientContext}
-            user={user}
-            relayEnvironment={relayEnvironment}
-            routes={routes}
-          >
-            <Router resolver={resolver} />
-          </Boot>
-        )
+        resolve({
+          ClientApp,
+        })
       }
-
-      resolve({
-        ClientApp,
-      })
     } catch (error) {
       logger.error(error)
       reject(error)

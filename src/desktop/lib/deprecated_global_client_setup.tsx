@@ -150,8 +150,7 @@ export function trackAuthenticationEvents() {
       if (user) {
         const { action } = data
         const analyticsOptions = omit(data, "action")
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        window.analytics.track(action, {
+        window?.analytics?.track(action, {
           ...analyticsOptions,
           user_id: user && user.id,
         })
@@ -162,9 +161,7 @@ export function trackAuthenticationEvents() {
 }
 
 function analyticsIdentify(user) {
-  // FIXME: add typings for user
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  window.analytics.identify(user.id, user.email, {
+  window?.analytics?.identify(user.id, user.email, {
     integrations: {
       All: false,
       Marketo: true,

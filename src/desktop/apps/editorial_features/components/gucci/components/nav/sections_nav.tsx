@@ -4,7 +4,7 @@ import { Flex, Sans, color } from "@artsy/palette"
 
 interface SectionsNavProps {
   animated?: boolean
-  activeSection: number
+  activeSection: number | null
   sections: any[]
   onClick: (index: number) => void
 }
@@ -14,8 +14,7 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
 
   return (
     <SectionsNavContainer
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      isAnimated={animated}
+      isAnimated={!!animated}
       mx="auto"
       mt={[4, 6]}
       mb={[2, 5]}

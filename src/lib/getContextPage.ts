@@ -26,29 +26,32 @@ export function getContextPageFromReq({
   }
 }
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-export function getContextPageFromClient(): {
+interface ClientContextPage {
   canonicalUrl: string
   pageParts: string[]
   pageSlug: string
   pageType: PageOwnerType
   path: string
-} {
-  if (window) {
-    const PAGE_TYPE = window.sd && window.sd.PAGE_TYPE
-    const { pathname } = window.location
-    const pageParts = pathname.split("/")
-    const pageSlug = pageParts[2]
-    const pageType = PAGE_TYPE || formatOwnerTypes(pathname)
-    const canonicalUrl = `${sd.APP_URL}${pathname}`
+}
 
-    return {
-      canonicalUrl,
-      pageParts,
-      pageSlug,
-      pageType,
-      path: pathname,
-    }
+export function getContextPageFromClient(): ClientContextPage | undefined {
+  if (!window) {
+    return
+  }
+
+  const PAGE_TYPE = window.sd && window.sd.PAGE_TYPE
+  const { pathname } = window.location
+  const pageParts = pathname.split("/")
+  const pageSlug = pageParts[2]
+  const pageType = PAGE_TYPE || formatOwnerTypes(pathname)
+  const canonicalUrl = `${sd.APP_URL}${pathname}`
+
+  return {
+    canonicalUrl,
+    pageParts,
+    pageSlug,
+    pageType,
+    path: pathname,
   }
 }
 

@@ -12,17 +12,21 @@ export const timeOnPageListener = (delay: number = 15000) => {
   }
 
   interval = setTimeout(() => {
-    const { pageType, pageSlug, path } = getContextPageFromClient()
-    const contextPageOwnerSlug = pageType === "partner" ? path : pageSlug
-    const trackingOptions = setAnalyticsClientReferrerOptions()
+    const contextPage = getContextPageFromClient()
 
-    trackEvent(
-      timeOnPage({
-        contextPageOwnerSlug,
-        contextPageOwnerType: pageType,
-      }),
-      trackingOptions
-    )
+    if (contextPage) {
+      const { pageType, pageSlug, path } = contextPage
+      const contextPageOwnerSlug = pageType === "partner" ? path : pageSlug
+      const trackingOptions = setAnalyticsClientReferrerOptions()
+
+      trackEvent(
+        timeOnPage({
+          contextPageOwnerSlug,
+          contextPageOwnerType: pageType,
+        }),
+        trackingOptions
+      )
+    }
   }, delay)
 }
 
