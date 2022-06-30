@@ -8,9 +8,11 @@ import {
   BoxProps,
   Clickable,
   Column,
+  Dropdown,
   FacebookIcon,
   Flex,
   GridColumns,
+  Image,
   InstagramIcon,
   Separator,
   Text,
@@ -189,16 +191,36 @@ export const Footer: React.FC<FooterProps> = props => {
           </Media>
 
           <Flex alignItems="center">
-            <WeChat>
-              <WeChatIcon width={20} height={20} mr={2} />
-            </WeChat>
+            <Dropdown
+              dropdown={
+                <Image
+                  src="https://files.artsy.net/images/wechat_qr_logo.png"
+                  width={100}
+                  height={100}
+                  alt="Artsy WeChat QR code"
+                  style={{ display: "block" }}
+                  m={1}
+                />
+              }
+              placement="top"
+            >
+              {({ anchorRef, anchorProps }) => {
+                return (
+                  <Box ref={anchorRef as any} {...anchorProps} mr={2}>
+                    <FooterLink to="http://weixin.qq.com/r/2CotNbbES_s0rfJW93-K">
+                      <WeChatIcon width={20} height={20} />
+                    </FooterLink>
+                  </Box>
+                )
+              }}
+            </Dropdown>
 
-            <FooterLink to="https://twitter.com/artsy">
-              <TwitterIcon width={20} height={20} mr={2} />
+            <FooterLink to="https://twitter.com/artsy" mr={2}>
+              <TwitterIcon width={20} height={20} />
             </FooterLink>
 
-            <FooterLink to="https://www.facebook.com/artsy">
-              <FacebookIcon width={20} height={20} mr={2} />
+            <FooterLink to="https://www.facebook.com/artsy" mr={2}>
+              <FacebookIcon width={20} height={20} />
             </FooterLink>
 
             <FooterLink to="https://www.instagram.com/artsy/">
@@ -210,12 +232,6 @@ export const Footer: React.FC<FooterProps> = props => {
     </Box>
   )
 }
-
-const WeChat = styled(Flex)`
-  > a {
-    display: flex;
-  }
-`
 
 const PolicyLinks = () => {
   const { CCPARequestComponent, showCCPARequest } = useCCPARequest()
