@@ -151,19 +151,19 @@ const InquiryBasicInfoPlaceholder: React.FC = () => {
         Tell Example Partner a little bit about yourself.
       </SkeletonText>
 
-      <SkeletonText variant="xs" textTransform="uppercase" mb={0.5}>
+      <SkeletonText variant="xs" mb={0.5}>
         Profession
       </SkeletonText>
 
       <SkeletonBox height={50} mb={1} />
 
-      <SkeletonText variant="xs" textTransform="uppercase" mb={0.5}>
+      <SkeletonText variant="xs" mb={0.5}>
         Location
       </SkeletonText>
 
       <SkeletonBox height={50} mb={1} />
 
-      <SkeletonText variant="xs" textTransform="uppercase" mb={0.5}>
+      <SkeletonText variant="xs" mb={0.5}>
         Phone Number
       </SkeletonText>
 

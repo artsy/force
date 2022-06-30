@@ -58,11 +58,7 @@ const CellShow: FC<CellShowProps> = ({
       </ResponsiveBox>
 
       <Box mt={1} mr={1}>
-        {displayKind && (
-          <Text variant="xs" textTransform="uppercase">
-            {kind}
-          </Text>
-        )}
+        {displayKind && <Text variant="xs">{kind}</Text>}
 
         <Text variant="lg-display" lineClamp={2}>
           {show.name}
@@ -101,11 +97,7 @@ export const CellShowPlaceholder: FC<CellShowPlaceholderProps> = ({
       </ResponsiveBox>
 
       <Box mt={1} mr={1}>
-        {displayKind && (
-          <SkeletonText variant="xs" textTransform="uppercase">
-            Show
-          </SkeletonText>
-        )}
+        {displayKind && <SkeletonText variant="xs">Show</SkeletonText>}
 
         <SkeletonText variant="lg-display" lineClamp={2}>
           Example Exhibition Title

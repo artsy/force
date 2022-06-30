@@ -169,9 +169,7 @@ const AppDownload: React.FC = () => {
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6}>
-        <Text variant="xs" textTransform="uppercase">
-          Artsy App
-        </Text>
+        <Text variant="xs">Artsy App</Text>
 
         <Text variant="xl" mt={1}>
           The Art Market at Your Fingertips
@@ -273,9 +271,7 @@ const CollectorInfo: React.FC = () => {
       </Column>
 
       <Column span={6}>
-        <Text variant="xs" textTransform="uppercase">
-          On Artsy
-        </Text>
+        <Text variant="xs">On Artsy</Text>
 
         <Text variant="xl" mt={1}>
           Where Collectors Belong
@@ -299,9 +295,7 @@ const ArtsySpecialists: React.FC = () => {
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6}>
-        <Text variant="xs" textTransform="uppercase">
-          Artsy Specialists
-        </Text>
+        <Text variant="xs">Artsy Specialists</Text>
 
         <Text variant="xl" mt={1}>
           Here to Help You Find the Art You Love

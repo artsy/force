@@ -215,7 +215,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5} textTransform="uppercase">
+            <Text variant="xs" mb={0.5}>
               Rarity
             </Text>
             <Clickable
@@ -268,7 +268,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6}>
           <Flex height="100%">
             <Box width="50%" mr={2} height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+              <Text variant="xs" mb={0.5} mr={0.5}>
                 Height
               </Text>
               <LabeledInput
@@ -281,7 +281,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               />
             </Box>
             <Box width="50%" height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+              <Text variant="xs" mb={0.5} mr={0.5}>
                 Width
               </Text>
               <LabeledInput
@@ -299,7 +299,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           <Flex height="100%">
             <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
-                <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
+                <Text variant="xs" mb={0.5} mr={0.5}>
                   Depth
                 </Text>
                 <Text variant="xs" color="black60">
@@ -332,7 +332,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5} textTransform="uppercase">
+            <Text variant="xs" mb={0.5}>
               Provenance
             </Text>
 

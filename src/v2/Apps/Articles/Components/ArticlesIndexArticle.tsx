@@ -23,7 +23,7 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
     <GridColumns gridRowGap={2}>
       <Column span={6}>
         <RouterLink to={article.href} display="block" textDecoration="none">
-          <Text variant="xs" textTransform="uppercase" mb={1}>
+          <Text variant="xs" mb={1}>
             {article.publishedAt}
           </Text>
 

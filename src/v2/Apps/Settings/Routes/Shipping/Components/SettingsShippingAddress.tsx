@@ -110,9 +110,7 @@ const SettingsShippingAddress: FC<SettingsShippingAddressProps> = ({
 
         <Flex justifyContent="space-between">
           {address.isDefault ? (
-            <Text variant="xs" textTransform="uppercase">
-              Default Address
-            </Text>
+            <Text variant="xs">Default Address</Text>
           ) : (
             // Pushes actions to the right
             <div />

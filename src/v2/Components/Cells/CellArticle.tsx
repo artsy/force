@@ -112,7 +112,7 @@ export const CellArticlePlaceholder: FC<CellArticlePlaceholderProps> = ({
         <SkeletonBox width="100%" height="100%" />
       </ResponsiveBox>
 
-      <SkeletonText variant="xs" textTransform="uppercase" mt={1}>
+      <SkeletonText variant="xs" mt={1}>
         Vertical
       </SkeletonText>
 

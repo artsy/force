@@ -21,7 +21,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             General
           </Text>
 
@@ -32,7 +32,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Advisory Team
           </Text>
 
@@ -46,7 +46,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4} start={5}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Communications Team
           </Text>
 
@@ -58,7 +58,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Images
           </Text>
 
@@ -69,7 +69,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4} start={5}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Job Openings
           </Text>
 
@@ -80,7 +80,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Editorial
           </Text>
 
@@ -95,7 +95,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={4} start={5}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Privacy
           </Text>
 
@@ -116,7 +116,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={2}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Associate Director of Content
           </Text>
 
@@ -124,7 +124,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={2}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Production Editor
           </Text>
 
@@ -132,7 +132,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={2}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Staff Writer
           </Text>
 
@@ -140,7 +140,7 @@ export const ContactApp: React.FC = () => {
         </Column>
 
         <Column span={2}>
-          <Text as="h3" variant="xs" textTransform="uppercase">
+          <Text as="h3" variant="xs">
             Art Market Editor
           </Text>
 

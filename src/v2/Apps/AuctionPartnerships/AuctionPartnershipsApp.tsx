@@ -97,7 +97,7 @@ const MarketplaceExperience: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text variant="xs" textTransform="uppercase" mb={1}>
+        <Text variant="xs" mb={1}>
           Experience
         </Text>
         <Text variant="xl" mb={1}>
@@ -339,7 +339,7 @@ const GlobalAudienceReach: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="xs">
+        <Text mb={1} variant="xs">
           Audience
         </Text>
         <Text variant="xl" mb={1}>
@@ -366,7 +366,7 @@ const BiddingTools: React.FC = () => {
     <Box>
       <GridColumns>
         <Column span={6}>
-          <Text textTransform="uppercase" mb={1} variant="xs">
+          <Text mb={1} variant="xs">
             Access
           </Text>
           <Text variant="xl" mb={1}>
@@ -424,7 +424,7 @@ const ConsignmentsInfo: React.FC = () => {
         ></ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="xs">
+        <Text mb={1} variant="xs">
           Consignments
         </Text>
         <Text variant="xl" mb={1}>
@@ -469,7 +469,7 @@ const VisibilityInfoTop: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="xs">
+        <Text mb={1} variant="xs">
           Visibility
         </Text>
         <Text variant="xl" mb={1}>
@@ -572,7 +572,7 @@ const EventServicesInfo: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="xs">
+        <Text mb={1} variant="xs">
           Event Services
         </Text>
         <Text variant="lg-display" mb={1}>
@@ -595,7 +595,7 @@ const AuctionsSupportTeam: React.FC = () => {
   return (
     <GridColumns>
       <Column span={6}>
-        <Text textTransform="uppercase" mb={1} variant="xs">
+        <Text mb={1} variant="xs">
           Support
         </Text>
         <Text variant="xl" mb={1}>

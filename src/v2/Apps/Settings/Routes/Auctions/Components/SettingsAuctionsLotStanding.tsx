@@ -60,7 +60,7 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
             minWidth={0}
           >
             {saleArtwork.lotLabel && (
-              <Text color="black60" variant="xs" textTransform="uppercase">
+              <Text color="black60" variant="xs">
                 Lot {saleArtwork.lotLabel}
               </Text>
             )}

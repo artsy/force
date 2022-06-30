@@ -143,7 +143,7 @@ export const ContentScrollLeftFixedRight = () => {
             <Box mb={6}>
               <Box bg="black30" height={420} mb={1} />
 
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" mb={1}>
                 Category
               </Text>
 
@@ -156,7 +156,7 @@ export const ContentScrollLeftFixedRight = () => {
             </Box>
 
             <Box mb={6}>
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" mb={1}>
                 Category
               </Text>
 
@@ -170,7 +170,7 @@ export const ContentScrollLeftFixedRight = () => {
             <Box mb={6}>
               <Box bg="black30" height={320} mb={1} />
 
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" mb={1}>
                 Category
               </Text>
 
@@ -184,7 +184,7 @@ export const ContentScrollLeftFixedRight = () => {
             <Box mb={6}>
               <Box bg="black30" height={260} mb={1} />
 
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" mb={1}>
                 Category
               </Text>
 
@@ -197,7 +197,7 @@ export const ContentScrollLeftFixedRight = () => {
             </Box>
 
             <Box mb={6}>
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" mb={1}>
                 Category
               </Text>
 
@@ -212,7 +212,7 @@ export const ContentScrollLeftFixedRight = () => {
             <Box mb={6}>
               <Box bg="black30" height={200} mb={1} />
 
-              <Text variant="xs" textTransform="uppercase" mb={1}>
+              <Text variant="xs" mb={1}>
                 Category
               </Text>
 

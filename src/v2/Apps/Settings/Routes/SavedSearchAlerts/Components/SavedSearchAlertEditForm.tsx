@@ -167,9 +167,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               />
 
               <Box>
-                <Text variant="xs" textTransform="uppercase">
-                  Filters
-                </Text>
+                <Text variant="xs">Filters</Text>
                 <Spacer mt={2} />
                 <Flex flexWrap="wrap" mx={-0.5}>
                   <SavedSearchAlertPills

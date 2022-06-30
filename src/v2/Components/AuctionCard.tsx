@@ -93,7 +93,7 @@ export const AuctionCard: React.FC<AuctionCardProps> = ({ sale }) => {
 
       {!sale.isGalleryAuction && !sale.isBenefit && (
         <>
-          <Text variant="xs" textTransform="uppercase" overflowEllipsis>
+          <Text variant="xs" overflowEllipsis>
             {sale.name}
           </Text>
 

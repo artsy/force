@@ -241,9 +241,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       <Media greaterThan="xs">
         <GridColumns>
           <Column span={3} pr={[0, 2]}>
-            <Text variant="xs" textTransform="uppercase">
-              Filter by
-            </Text>
+            <Text variant="xs">Filter by</Text>
           </Column>
 
           <Column span={9}>

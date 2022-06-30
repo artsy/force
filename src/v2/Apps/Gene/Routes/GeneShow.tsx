@@ -30,7 +30,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
         </Column>
 
         <Column span={6}>
-          <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
+          <Text as="h2" variant="xs" mb={1}>
             About
           </Text>
 
@@ -40,7 +40,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
           {similar.length > 0 && (
             <>
-              <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
+              <Text as="h2" variant="xs" mb={1}>
                 Related Categories
               </Text>
 
@@ -59,7 +59,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
           {artists.length > 0 && (
             <>
-              <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
+              <Text as="h2" variant="xs" mb={1}>
                 Related Artists
               </Text>
 

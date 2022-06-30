@@ -164,11 +164,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
               <Media greaterThan="xs">
                 {heroUnit.heading && (
                   <>
-                    <Text
-                      variant="xs"
-                      textTransform="uppercase"
-                      color="black100"
-                    >
+                    <Text variant="xs" color="black100">
                       {heroUnit.heading}
                     </Text>
 

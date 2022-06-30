@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowAbout_show } from "v2/__generated__/ShowAbout_show.graphql"
@@ -18,7 +18,7 @@ export const ShowAbout: React.FC<ShowAboutProps> = ({
     <Box {...rest}>
       {about && (
         <>
-          <Text variant="xs" as="h3" mb={1} textTransform="uppercase">
+          <Text variant="xs" as="h3" mb={1}>
             About
           </Text>
 

@@ -84,7 +84,7 @@ const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
           <HorizontalPadding>
             <GridColumns gridRowGap={[2, 4]}>
               <Column span={6} start={7}>
-                <Text variant="xs" textTransform="uppercase" mb={2}>
+                <Text variant="xs" mb={2}>
                   Artsy Consignments
                 </Text>
 

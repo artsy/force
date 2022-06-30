@@ -99,12 +99,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         <Flex alignItems="center">
           {ORDER_ICONS[order.displayState]}
 
-          <Text
-            ml={0.5}
-            variant="xs"
-            color={ORDER_COLORS[order.displayState]}
-            textTransform="uppercase"
-          >
+          <Text ml={0.5} variant="xs" color={ORDER_COLORS[order.displayState]}>
             {ORDER_LABELS[order.displayState]}
           </Text>
 
@@ -322,9 +317,7 @@ export const SettingsPurchasesRowPlaceholder: FC = () => {
         >
           <SkeletonText variant="sm-display">Jan 00, 0000</SkeletonText>
 
-          <SkeletonText variant="xs" textTransform="uppercase">
-            Pending
-          </SkeletonText>
+          <SkeletonText variant="xs">Pending</SkeletonText>
         </Box>
 
         <GridColumns m={2}>

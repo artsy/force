@@ -10,7 +10,8 @@ import {
 } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { Component } from "react";
+import { Component } from "react"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
 
@@ -26,6 +27,8 @@ interface State {
     dispatch: data => Events.postEvent(data),
   }
 )
+
+// TODO: Replace this modal
 export class PricingContextModal extends Component<State> {
   state = {
     isModalOpen: false,
@@ -69,7 +72,7 @@ export class PricingContextModal extends Component<State> {
         >
           <Spacer mt={2} />
 
-          <Text variant="sm" color="black80">
+          <Text variant="sm">
             This feature aims to provide insight into the range of prices for an
             artist's works and allow buyers to discover other available works by
             the artist at different price points.
@@ -77,7 +80,7 @@ export class PricingContextModal extends Component<State> {
 
           <Spacer mt={2} />
 
-          <Text variant="sm" color="black80">
+          <Text variant="sm">
             The graph displays current and past list prices for works that are
             similar in size and category to the work you're viewing. The prices
             included in the graph are only from galleries and dealers on Artsy.
@@ -85,7 +88,7 @@ export class PricingContextModal extends Component<State> {
 
           <Spacer mt={2} />
 
-          <Text variant="sm" color="black80">
+          <Text variant="sm">
             Artwork prices are affected by{" "}
             <Link
               href={sd.APP_URL + "/article/artsy-editorial-artworks-prices"}

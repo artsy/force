@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { HTML, Join, Spacer, Text } from "@artsy/palette"
 
@@ -34,11 +34,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({
 
   return (
     <Join separator={<Spacer mt={1} />}>
-      {label && (
-        <Text variant="xs" textTransform="uppercase">
-          {label}
-        </Text>
-      )}
+      {label && <Text variant="xs">{label}</Text>}
       <Info />
     </Join>
   )
