@@ -117,7 +117,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
-                <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
+                <Text variant="xs" mt={[2, 0]} mb={1}>
                   Bio
                 </Text>
                 <Text variant="sm" mb={2}>

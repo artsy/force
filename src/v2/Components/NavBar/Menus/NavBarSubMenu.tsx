@@ -1,7 +1,7 @@
 import { Box, Text, GridColumns, Column, Flex } from "@artsy/palette"
 import { AnalyticsSchema, ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import * as React from "react";
+import * as React from "react"
 import { MenuData, SimpleLinkData } from "../menuData"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -96,13 +96,7 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
                   if ("menu" in subMenu) {
                     return (
                       <Box key={subMenu.text} flex={1}>
-                        <Text
-                          variant="xs"
-                          mb={1}
-                          px={2}
-                          color="black60"
-                          textTransform="uppercase"
-                        >
+                        <Text variant="xs" mb={1} px={2} color="black60">
                           {subMenu.text}
                         </Text>
 
@@ -128,13 +122,7 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
 
               {isArtistsDropdown && (
                 <Box>
-                  <Text
-                    variant="xs"
-                    py={1}
-                    px={2}
-                    textTransform="uppercase"
-                    color="black60"
-                  >
+                  <Text variant="xs" py={1} px={2} color="black60">
                     Browse by name
                   </Text>
 

@@ -50,11 +50,7 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
       <Spacer mt={1} />
 
       <Box px={2}>
-        {sale.partner && (
-          <Text variant="xs" textTransform="uppercase">
-            {sale.partner.name}
-          </Text>
-        )}
+        {sale.partner && <Text variant="xs">{sale.partner.name}</Text>}
 
         <Spacer mt={1} />
 

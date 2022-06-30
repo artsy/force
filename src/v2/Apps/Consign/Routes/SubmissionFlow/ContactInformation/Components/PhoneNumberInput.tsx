@@ -75,7 +75,7 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   return (
     <Flex flexDirection="column" {...props}>
       <Flex justifyContent="space-between">
-        <Text variant="xs" mb={0.5} textTransform="uppercase">
+        <Text variant="xs" mb={0.5}>
           Phone number
         </Text>
       </Flex>

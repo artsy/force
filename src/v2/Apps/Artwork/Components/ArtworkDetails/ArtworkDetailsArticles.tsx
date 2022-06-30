@@ -43,7 +43,7 @@ export const ArtworkDetailsArticles: React.FC<ArtworkDetailsArticlesProps> = ({
                 )}
 
                 <Box ml={2}>
-                  <Text variant="xs" textTransform="uppercase">
+                  <Text variant="xs">
                     {article.author?.name ?? "Artsy Editorial"}
                   </Text>
 

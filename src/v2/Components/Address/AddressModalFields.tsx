@@ -32,7 +32,7 @@ export const AddressModalFields: React.FC = () => {
       <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Box>
-            <Text textTransform="uppercase" variant="xs" mb={0.5}>
+            <Text variant="xs" mb={0.5}>
               Country
             </Text>
             <CountrySelect

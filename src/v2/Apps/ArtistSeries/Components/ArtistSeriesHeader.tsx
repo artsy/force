@@ -46,7 +46,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
 
       <GridColumns gridRowGap={[2, 0]}>
         <Column span={6}>
-          <Text variant="xs" textTransform="uppercase" mb={1}>
+          <Text variant="xs" mb={1}>
             Series
           </Text>
 

@@ -30,7 +30,7 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
         <>
           <div>
             {title && (
-              <Text variant="xs" textTransform="uppercase">
+              <Text variant="xs">
                 {title}
                 {required && (
                   <Box as="span" color="brand">

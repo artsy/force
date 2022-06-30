@@ -189,7 +189,7 @@ const PLACEHOLDER = (
           <Media greaterThan="xs">
             <SkeletonBox bg="black30" width="670" height={720} mb={2} />
 
-            <SkeletonText variant="xs" textTransform="uppercase" my={1}>
+            <SkeletonText variant="xs" my={1}>
               Art Fairs
             </SkeletonText>
 

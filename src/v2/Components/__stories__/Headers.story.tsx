@@ -141,7 +141,7 @@ export const HeaderImageRight = () => {
 const HeadersMetadataExample = () => {
   return (
     <>
-      <Text variant="xs" textTransform="uppercase" mb={1}>
+      <Text variant="xs" mb={1}>
         Category Title
       </Text>
 
@@ -173,7 +173,7 @@ const HeadersMetadataExample = () => {
 const BioExample = () => {
   return (
     <>
-      <Text variant="xs" textTransform="uppercase" mb={1}>
+      <Text variant="xs" mb={1}>
         Bio
       </Text>
 
@@ -189,7 +189,7 @@ const BioExample = () => {
         XXIV (2006).
       </Text>
 
-      <Text variant="xs" textTransform="uppercase" mb={1}>
+      <Text variant="xs" mb={1}>
         Stats
       </Text>
 

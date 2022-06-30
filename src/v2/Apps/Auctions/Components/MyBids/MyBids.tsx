@@ -156,9 +156,7 @@ const MyBidsPlaceholder: React.FC = () => {
                   <Spacer mt={1} />
 
                   <Box px={2}>
-                    <SkeletonText variant="xs" textTransform="uppercase">
-                      Partner Name
-                    </SkeletonText>
+                    <SkeletonText variant="xs">Partner Name</SkeletonText>
 
                     <Spacer mt={1} />
 

@@ -54,12 +54,7 @@ const ChannelApp: FC<ChannelAppProps> = ({ channel }) => {
               </Box>
 
               {channel.links.length > 0 && (
-                <Text
-                  variant="xs"
-                  textTransform="uppercase"
-                  display="flex"
-                  mt={[4, 0]}
-                >
+                <Text variant="xs" display="flex" mt={[4, 0]}>
                   <Join separator={<Spacer ml={1} />}>
                     {channel.links.map(link => (
                       <RouterLink

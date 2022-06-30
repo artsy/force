@@ -17,7 +17,7 @@ const SettingsEditProfileYourGalleryIntro: FC<SettingsEditProfileYourGalleryIntr
         Your Gallery Intro
       </Text>
 
-      <Text variant="xs" textTransform="uppercase" mb={1}>
+      <Text variant="xs" mb={1}>
         Preview
       </Text>
 

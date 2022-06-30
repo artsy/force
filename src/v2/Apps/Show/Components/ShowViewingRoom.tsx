@@ -56,7 +56,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
 
   return (
     <Box {...rest}>
-      <Text variant="xs" textTransform="uppercase" mb={2}>
+      <Text variant="xs" mb={2}>
         Viewing Room
       </Text>
 

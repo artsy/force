@@ -53,7 +53,7 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
 
         {show && (
           <RouterLink to={show.href} display="block" textDecoration="none">
-            <Text variant="xs" textTransform="uppercase" mb={2}>
+            <Text variant="xs" mb={2}>
               {status} Show
             </Text>
 

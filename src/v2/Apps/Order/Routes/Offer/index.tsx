@@ -266,19 +266,16 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               )}
               {!isInquiryCheckout && showPriceOptions && (
                 <>
-                  <Text variant="lg-display" color="black80" mt={2}>
+                  <Text variant="lg-display" mt={2}>
                     Select an Option
                   </Text>
+
                   {priceNote}
-                  <Text
-                    variant="sm-display"
-                    color="black80"
-                    textTransform="uppercase"
-                    mt={4}
-                    mb={2}
-                  >
-                    your offer
+
+                  <Text variant="xs" mt={4} mb={1}>
+                    Your Offer
                   </Text>
+
                   <PriceOptionsFragmentContainer
                     artwork={artwork}
                     order={order}

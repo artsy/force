@@ -30,11 +30,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
           <React.Fragment key={i}>
             <Column span={10}>
               <RouterLink to={sale.href} display="block" textDecoration="none">
-                {sale.name && (
-                  <Text color="black80" variant="sm">
-                    {sale.name}
-                  </Text>
-                )}
+                {sale.name && <Text variant="sm">{sale.name}</Text>}
 
                 {sale.startAt && (
                   <Text color="black60" variant="sm">

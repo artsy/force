@@ -129,14 +129,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
       <TwoColumnSplit>
         <Flex flexDirection="column" pb={1}>
-          <Text
-            mb={0.5}
-            variant="xs"
-            color="black100"
-            textTransform="uppercase"
-          >
+          <Text mb={0.5} variant="xs" color="black100">
             Country
           </Text>
+
           <CountrySelect
             selected={
               lockCountryToOrigin || (lockCountriesToEU && !address.country)
@@ -147,6 +143,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             disabled={lockCountryToOrigin}
             euShippingOnly={lockCountriesToEU}
           />
+
           {(lockCountryToOrigin || lockCountriesToEU) && (
             <>
               <Spacer m={0.5} />

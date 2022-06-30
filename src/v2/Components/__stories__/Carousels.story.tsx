@@ -98,7 +98,7 @@ export const CarouselEditorial = () => {
         <Box width={220}>
           <Box bg="black30" height={122} mb={1} />
 
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+          <Text variant="xs" mb={0.5}>
             Category
           </Text>
 
@@ -117,7 +117,7 @@ export const CarouselEditorial = () => {
         </Box>
 
         <Box width={340}>
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+          <Text variant="xs" mb={0.5}>
             Category
           </Text>
 
@@ -138,7 +138,7 @@ export const CarouselEditorial = () => {
         <Box width={220}>
           <Box bg="black30" height={223} mb={1} />
 
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+          <Text variant="xs" mb={0.5}>
             Category
           </Text>
 
@@ -159,7 +159,7 @@ export const CarouselEditorial = () => {
         <Box width={220}>
           <Box bg="black30" height={268} mb={1} />
 
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+          <Text variant="xs" mb={0.5}>
             Category
           </Text>
 
@@ -177,7 +177,7 @@ export const CarouselEditorial = () => {
         </Box>
 
         <Box width={340}>
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+          <Text variant="xs" mb={0.5}>
             Category
           </Text>
 
@@ -197,7 +197,7 @@ export const CarouselEditorial = () => {
         <Box width={220}>
           <Box bg="black30" height={169} mb={1} />
 
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+          <Text variant="xs" mb={0.5}>
             Category
           </Text>
 

@@ -1,4 +1,4 @@
-import { FLAT_SHADOW, Flex, Text } from "@artsy/palette"
+import { Flex, Label } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -40,18 +40,7 @@ const Badge: React.FC<BadgeProps> = ({ artwork, width }) => {
   return (
     <Badges flexDirection={isStackedLayout ? "column" : "row"}>
       {includeBidBadge && (
-        <Label
-          bg="white100"
-          borderRadius={2}
-          fontSize={8}
-          letterSpacing={0.3}
-          lineHeight={1}
-          mb={1}
-          ml={1}
-          px={0.5}
-          py="2px"
-          textTransform="uppercase"
-        >
+        <Label mb={1} ml={1}>
           Bid{saleTimingHint}
         </Label>
       )}
@@ -71,10 +60,6 @@ export default createFragmentContainer(Badge, {
     }
   `,
 })
-
-const Label = styled(Text)`
-  box-shadow: ${FLAT_SHADOW};
-`
 
 const Badges = styled(Flex)`
   position: absolute;

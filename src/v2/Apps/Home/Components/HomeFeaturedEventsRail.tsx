@@ -81,9 +81,7 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                     )}
 
                     <Box ml={2}>
-                      <Text variant="xs" textTransform="uppercase">
-                        {event.title}
-                      </Text>
+                      <Text variant="xs">{event.title}</Text>
 
                       <Text variant="lg-display">{event.subtitle}</Text>
                     </Box>
@@ -110,7 +108,7 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                     )}
                   </ResponsiveBox>
 
-                  <Text variant="xs" textTransform="uppercase" mt={1}>
+                  <Text variant="xs" mt={1}>
                     {event.title}
                   </Text>
 

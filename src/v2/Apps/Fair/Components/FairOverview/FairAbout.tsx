@@ -1,12 +1,5 @@
 import * as React from "react"
-import {
-  Column,
-  GridColumns,
-  HTML,
-  ReadMore,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Column, GridColumns, HTML, ReadMore, Text } from "@artsy/palette"
 import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairAbout_fair } from "v2/__generated__/FairAbout_fair.graphql"
@@ -27,10 +20,9 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
 
         {about && (
           <Column span={6}>
-            <Text variant="sm-display" textTransform="uppercase">
+            <Text variant="xs" mb={1}>
               About
             </Text>
-            <Spacer mt={2} />
 
             <HTML variant="sm">
               <ReadMore maxChars={480} content={about} />

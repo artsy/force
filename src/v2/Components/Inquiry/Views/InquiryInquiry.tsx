@@ -277,7 +277,7 @@ export const InquiryInquiryPlaceholder: React.FC = () => {
 
       <Separator my={2} />
 
-      <SkeletonText variant="xs" textTransform="uppercase" mb={0.5}>
+      <SkeletonText variant="xs" mb={0.5}>
         Your message
       </SkeletonText>
 

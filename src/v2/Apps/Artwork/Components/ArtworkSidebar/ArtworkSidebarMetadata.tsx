@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { Component } from "react";
+import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
@@ -23,12 +23,7 @@ export class ArtworkSidebarMetadata extends Component<
     return (
       <>
         {lotLabel && (
-          <Text
-            variant="xs"
-            textTransform="uppercase"
-            color="black100"
-            mb={0.5}
-          >
+          <Text variant="xs" color="black100" mb={0.5}>
             Lot {lotLabel}
           </Text>
         )}

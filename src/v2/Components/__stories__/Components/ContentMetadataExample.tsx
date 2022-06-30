@@ -3,7 +3,7 @@ import { Text } from "@artsy/palette"
 export const ContentMetadataExample = () => {
   return (
     <>
-      <Text variant="xs" textTransform="uppercase" mb={1}>
+      <Text variant="xs" mb={1}>
         Category Title
       </Text>
 

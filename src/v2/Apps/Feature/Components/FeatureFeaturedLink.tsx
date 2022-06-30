@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import {
   Col,
@@ -79,7 +79,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (
-          <Text my={1} variant="xs" textTransform="uppercase">
+          <Text my={1} variant="xs">
             {subtitle}
           </Text>
         )}
