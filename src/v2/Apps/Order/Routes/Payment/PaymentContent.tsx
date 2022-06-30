@@ -58,7 +58,7 @@ export const PaymentContent: FC<Props> = props => {
     const event = {
       subject: "click_payment_method",
       payment_method: val,
-      action: ActionType.clickedChangePaymentMethod,
+      action: ActionType.clickedPaymentMethod,
       flow: order.mode!,
       context_page_owner_type: OwnerType.ordersPayment,
       order_id: order.internalID,

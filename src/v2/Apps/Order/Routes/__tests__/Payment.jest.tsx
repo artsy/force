@@ -323,7 +323,7 @@ describe("Payment", () => {
       page.selectPaymentMethod(1)
 
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedChangePaymentMethod",
+        action: "clickedPaymentMethod",
         amount: "$12,000",
         context_page_owner_type: "orders-payment",
         currency: "USD",
@@ -342,7 +342,7 @@ describe("Payment", () => {
       page.selectPaymentMethod(0)
 
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedChangePaymentMethod",
+        action: "clickedPaymentMethod",
         amount: "$12,000",
         context_page_owner_type: "orders-payment",
         currency: "USD",
@@ -468,7 +468,7 @@ describe("Payment", () => {
       page.selectPaymentMethod(1)
 
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedChangePaymentMethod",
+        action: "clickedPaymentMethod",
         amount: "$12,000",
         context_page_owner_type: "orders-payment",
         currency: "USD",
