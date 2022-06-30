@@ -29,7 +29,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 
 fragment PartnersFeaturedCarouselCell_profile on Profile {
@@ -268,7 +268,7 @@ return {
                               },
                               (v4/*: any*/),
                               {
-                                "alias": "is_followed",
+                                "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
                                 "name": "isFollowed",
@@ -452,7 +452,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d2c4e661d5d5c5fee30e2eeecac34085",
+    "cacheID": "a3f74ff49fd8d881f59b81b37331840e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -491,7 +491,7 @@ return {
         "viewer.orderedSet.orderedItemsConnection.edges.node.__typename": (v10/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.id": (v9/*: any*/),
         "viewer.orderedSet.orderedItemsConnection.edges.node.internalID": (v9/*: any*/),
-        "viewer.orderedSet.orderedItemsConnection.edges.node.is_followed": {
+        "viewer.orderedSet.orderedItemsConnection.edges.node.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -556,7 +556,7 @@ return {
     },
     "name": "PartnersFeaturedCarousel_Test_Query",
     "operationKind": "query",
-    "text": "query PartnersFeaturedCarousel_Test_Query {\n  viewer {\n    ...PartnersFeaturedCarousel_viewer_3GNcE2\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3GNcE2 on Viewer {\n  orderedSet(id: \"example\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query PartnersFeaturedCarousel_Test_Query {\n  viewer {\n    ...PartnersFeaturedCarousel_viewer_3GNcE2\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3GNcE2 on Viewer {\n  orderedSet(id: \"example\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

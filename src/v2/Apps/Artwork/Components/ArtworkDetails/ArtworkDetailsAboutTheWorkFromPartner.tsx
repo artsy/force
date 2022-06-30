@@ -121,9 +121,8 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
                   showPartnerFollow && partner?.profile ? (
                     <FollowProfileButton
                       profile={partner.profile}
-                      user={user}
                       contextModule={ContextModule.aboutTheWork}
-                      buttonProps={{ size: "small" }}
+                      size="small"
                     />
                   ) : undefined
                 }

@@ -3,7 +3,6 @@ import { Avatar, BoxProps, Text, Flex, Label } from "@artsy/palette"
 import { compact, uniq } from "lodash"
 import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { EntityHeaderPartner_partner } from "v2/__generated__/EntityHeaderPartner_partner.graphql"
@@ -29,8 +28,6 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
   onClick,
   ...rest
 }) => {
-  const { user } = useSystemContext()
-
   const locations = extractNodes(partner.locationsConnection)
   const meta = uniq(locations.map(location => location.city?.trim())).join(", ")
   const image =
@@ -89,10 +86,9 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
       {isFollowable &&
         (FollowButton || (
           <FollowProfileButtonFragmentContainer
-            user={user}
             profile={partner.profile!}
             contextModule={ContextModule.partnerHeader}
-            buttonProps={{ size: "small" }}
+            size="small"
           />
         ))}
     </Flex>

@@ -9,7 +9,7 @@ export type FollowProfileButton_profile = {
     readonly slug: string;
     readonly name: string | null;
     readonly internalID: string;
-    readonly is_followed: boolean | null;
+    readonly isFollowed: boolean | null;
     readonly " $refType": "FollowProfileButton_profile";
 };
 export type FollowProfileButton_profile$data = FollowProfileButton_profile;
@@ -55,7 +55,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "is_followed",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isFollowed",
@@ -65,5 +65,5 @@ const node: ReaderFragment = {
   "type": "Profile",
   "abstractKey": null
 };
-(node as any).hash = '85041d28bca019f2610df442f360079f';
+(node as any).hash = '5e106dc0f6d28037e1b1cb894aa58dca';
 export default node;

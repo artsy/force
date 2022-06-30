@@ -26,7 +26,7 @@ export type PartnerHeader_Test_QueryRawResponse = {
             readonly slug: string;
             readonly name: string | null;
             readonly internalID: string;
-            readonly is_followed: boolean | null;
+            readonly isFollowed: boolean | null;
         }) | null;
         readonly locations: ({
             readonly totalCount: number | null;
@@ -61,7 +61,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 
 fragment PartnerHeader_partner on Partner {
@@ -258,7 +258,7 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "is_followed",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isFollowed",
@@ -328,7 +328,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "787df13f06f3422cee9fe1286bd9e366",
+    "cacheID": "3a44ba6e8ebb3ad8bbd00dadda34cc8a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -388,7 +388,7 @@ return {
         "partner.profile.icon.resized.srcSet": (v6/*: any*/),
         "partner.profile.id": (v4/*: any*/),
         "partner.profile.internalID": (v4/*: any*/),
-        "partner.profile.is_followed": {
+        "partner.profile.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -402,7 +402,7 @@ return {
     },
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

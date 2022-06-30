@@ -3,7 +3,6 @@ import { Box, Flex, Image, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
-import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnersFeaturedCarouselCell_profile } from "v2/__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
@@ -14,8 +13,6 @@ interface PartnersFeaturedCarouselCellProps {
 const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
   profile,
 }) => {
-  const { user } = useSystemContext()
-
   const partner = profile.owner
 
   if (!partner) return null
@@ -75,7 +72,6 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
 
             <FollowProfileButtonFragmentContainer
               profile={profile}
-              user={user}
               contextModule={ContextModule.featuredGalleriesRail}
             />
           </RouterLink>

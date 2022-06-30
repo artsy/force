@@ -1,24 +1,32 @@
 import { Box, Button, ButtonProps } from "@artsy/palette"
-import { useState } from "react"
-import * as React from "react"
+import {
+  forwardRef,
+  ForwardRefExoticComponent,
+  MouseEventHandler,
+  Ref,
+  useMemo,
+  useState,
+} from "react"
 
 interface FollowButtonProps {
   isFollowed?: boolean
   buttonProps?: Omit<Partial<ButtonProps>, "variant">
-  handleFollow?: React.MouseEventHandler<HTMLButtonElement>
+  handleFollow?: MouseEventHandler<HTMLButtonElement>
 }
 
-export const FollowButton: React.ForwardRefExoticComponent<
-  FollowButtonProps & { ref?: React.Ref<HTMLElement> }
-> = React.forwardRef(
+export const FollowButton: ForwardRefExoticComponent<
+  FollowButtonProps & { ref?: Ref<HTMLElement> }
+> = forwardRef(
   ({ isFollowed = false, buttonProps = {}, handleFollow }, forwardedRef) => {
     const [showUnfollow, setShowUnfollow] = useState(false)
 
-    const text = isFollowed
-      ? showUnfollow
-        ? "Unfollow"
-        : "Following"
-      : "Follow"
+    const label = useMemo(() => {
+      if (isFollowed && showUnfollow) return "Unfollow"
+
+      if (isFollowed) return "Following"
+
+      return "Follow"
+    }, [isFollowed, showUnfollow])
 
     return (
       <Button
@@ -53,7 +61,7 @@ export const FollowButton: React.ForwardRefExoticComponent<
             left="50%"
             style={{ transform: "translate(-50%, -50%)" }}
           >
-            {text}
+            {label}
           </Box>
         </Box>
       </Button>

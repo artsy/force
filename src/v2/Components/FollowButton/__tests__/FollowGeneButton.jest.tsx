@@ -1,29 +1,23 @@
-import { graphql } from "react-relay"
+import { useSystemContext } from "v2/System/useSystemContext"
+import "jest-styled-components"
+import { graphql } from "relay-runtime"
 import { FollowGeneButtonFragmentContainer } from "../FollowGeneButton"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
 import { FollowGeneButton_Test_Query } from "v2/__generated__/FollowGeneButton_Test_Query.graphql"
-import { mediator } from "lib/mediator"
-import { FollowButton } from "../Button"
+import { useMutation } from "v2/Utils/Hooks/useMutation"
+import { useFollowButtonTracking } from "../useFollowButtonTracking"
 
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  commitMutation: jest.fn(),
-}))
+jest.unmock("react-relay")
 
-import { commitMutation } from "react-relay"
-import { SystemContextProvider } from "v2/System"
+jest.mock("v2/Utils/Hooks/useMutation")
+jest.mock("v2/System/useSystemContext")
+jest.mock("../useFollowButtonTracking")
 
-let user = {}
-
-const { getWrapper } = setupTestWrapper<FollowGeneButton_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<FollowGeneButton_Test_Query>({
   Component: props => {
-    return (
-      <SystemContextProvider user={user}>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        <FollowGeneButtonFragmentContainer {...props} />
-      </SystemContextProvider>
-    )
+    return <FollowGeneButtonFragmentContainer gene={props.gene!} />
   },
   query: graphql`
     query FollowGeneButton_Test_Query @relay_test_operation {
@@ -35,75 +29,109 @@ const { getWrapper } = setupTestWrapper<FollowGeneButton_Test_Query>({
 })
 
 describe("FollowGeneButton", () => {
-  describe("when you are not following", () => {
-    const wrapper = getWrapper({
-      Gene: () => ({ isFollowed: false }),
+  const submitMutation = jest.fn()
+  const trackFollow = jest.fn()
+
+  beforeEach(() => {
+    ;(useMutation as jest.Mock).mockImplementation(() => {
+      return { submitMutation }
     })
-
-    it("renders correctly", () => {
-      // The first following is for handling the width of the element and can be ignored
-      expect(wrapper.text()).toContain("FollowingFollow")
-    })
-
-    it("follows on button click", async () => {
-      wrapper.find(FollowButton).simulate("click")
-      const mutation = (commitMutation as any).mock.calls[0][1].variables.input
-
-      expect(mutation.unfollow).toBe(false)
+    ;(useFollowButtonTracking as jest.Mock).mockImplementation(() => {
+      return { trackFollow }
     })
   })
 
-  describe("when you are following", () => {
-    const wrapper = getWrapper({
-      Gene: () => ({ isFollowed: true }),
-    })
-
-    it("renders correctly", () => {
-      // The first following is for handling the width of the element and can be ignored
-      expect(wrapper.text()).toContain("FollowingFollowing")
-    })
-
-    it("unfollows on button click", () => {
-      wrapper.find(FollowButton).simulate("click")
-      const mutation = (commitMutation as any).mock.calls[1][1].variables.input
-
-      expect(mutation.unfollow).toBe(true)
-    })
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   describe("logged out", () => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    user = null
-
-    it("pops up the auth model when clicked", () => {
-      const wrapper = getWrapper({
-        Gene: () => ({
-          id: "example",
-          internalID: "example",
-          name: "Example Gene",
-          slug: "example-gene",
-          isFollowed: false,
-        }),
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return { isLoggedIn: false }
       })
+    })
 
+    it("renders correctly", () => {
+      renderWithRelay()
+      expect(screen.getByText("Follow")).toBeInTheDocument()
+    })
+
+    it("opens the auth modal", () => {
       const openAuthToSatisfyIntent = jest.spyOn(
         openAuthModal,
         "openAuthToSatisfyIntent"
       )
 
-      wrapper.find(FollowButton).simulate("click")
+      renderWithRelay({
+        Gene: () => ({
+          name: "Example",
+          slug: "example",
+        }),
+      })
 
-      expect(openAuthToSatisfyIntent).toBeCalledWith(mediator, {
-        intent: "followGene",
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(openAuthToSatisfyIntent).toBeCalledWith(undefined, {
         contextModule: "geneHeader",
-        entity: {
-          id: "example",
+        entity: { name: "Example", slug: "example" },
+        intent: "followGene",
+      })
+    })
+  })
+
+  describe("logged in", () => {
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return { isLoggedIn: true }
+      })
+    })
+
+    it("calls the follow mutation", () => {
+      renderWithRelay({
+        Gene: () => ({
           internalID: "example",
-          name: "Example Gene",
-          slug: "example-gene",
-          isFollowed: false,
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(submitMutation).toBeCalledWith({
+        variables: {
+          input: {
+            geneID: "example",
+            unfollow: false,
+          },
         },
       })
+    })
+
+    it("tracks the follow click when following", () => {
+      renderWithRelay({
+        Gene: () => ({
+          isFollowed: false,
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(trackFollow).toBeCalledWith(false)
+    })
+
+    it("tracks the unfollow click when unfollowing", () => {
+      renderWithRelay({
+        Gene: () => ({
+          isFollowed: true,
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(trackFollow).toBeCalledWith(true)
     })
   })
 })
