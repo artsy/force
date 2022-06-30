@@ -303,15 +303,15 @@ export const BaseArtworkFilter: React.FC<
       <Media greaterThan="xs">
         <GridColumns mb={4} alignItems="center">
           <Column span={3}>
-            <Text variant="xs" textTransform="uppercase">
-              Filter by
-            </Text>
+            <Text variant="xs">Filter by</Text>
           </Column>
+
           <Column span={6}>
             <Text variant="sm" fontWeight="bold">
               {totalCountLabel}
             </Text>
           </Column>
+
           <Column span={3}>
             <ArtworkSortFilter />
           </Column>
