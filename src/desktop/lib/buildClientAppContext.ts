@@ -14,16 +14,20 @@ export interface ClientContext {
 export const buildClientAppContext = (
   context: { injectedData?: object } = {}
 ) => {
-  const { pageSlug, pageType } = getContextPageFromClient()
+  const contextPage = getContextPageFromClient()
 
-  return {
-    analytics: {
-      contextPageOwnerSlug: pageSlug,
-      contextPageOwnerType: pageType,
-    },
-    mediator,
-    user: sd.CURRENT_USER,
-    featureFlags: sd.FEATURE_FLAGS,
-    ...context,
+  if (contextPage) {
+    const { pageSlug, pageType } = contextPage
+
+    return {
+      analytics: {
+        contextPageOwnerSlug: pageSlug,
+        contextPageOwnerType: pageType,
+      },
+      mediator,
+      user: sd.CURRENT_USER,
+      featureFlags: sd.FEATURE_FLAGS,
+      ...context,
+    }
   }
 }

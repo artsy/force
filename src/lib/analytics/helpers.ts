@@ -23,8 +23,7 @@ export const trackEvent = (data: any, options: object = {}) => {
     const trackingOptions = setAnalyticsClientReferrerOptions(options)
 
     // Send event to segment
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    window.analytics.track(actionName, trackingData, trackingOptions)
+    window?.analytics?.track(actionName, trackingData, trackingOptions)
   } else {
     console.error(
       `Unknown analytics schema being used: ${JSON.stringify(data)}`
@@ -61,8 +60,7 @@ export const onAnalyticsReady = () => {
  */
 const onClickedReadMore = data => {
   const pathname = data.pathname || location.pathname
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  window.analytics.page(
+  window?.analytics?.page(
     { path: pathname },
     { integrations: { Marketo: false } }
   )
@@ -77,8 +75,7 @@ const logAnalyticsCalls = () => {
   const mobileText = sd.IS_MOBILE ? "MOBILE " : ""
 
   // Log all pageviews
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  window.analytics.on("page", function () {
+  window?.analytics?.on("page", function () {
     console.info(
       `${mobileText}ANALYTICS PAGEVIEW: `,
       arguments[2],
@@ -86,13 +83,11 @@ const logAnalyticsCalls = () => {
     )
   })
   // Log all track calls
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  window.analytics.on("track", (actionName: string, data?: any) => {
+  window?.analytics?.on("track", (actionName: string, data?: any) => {
     console.info(`${mobileText}ANALYTICS TRACK:`, actionName, data)
   })
   // Log all identify calls
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  window.analytics.on(
+  window?.analytics?.on(
     "identify",
     (userId: string, data: object, context: any) => {
       console.info(`${mobileText}ANALYTICS IDENTIFY:`, userId, data, context)
@@ -117,8 +112,7 @@ const identify = () => {
     const traits = extend(pick(sd.CURRENT_USER, allowedlist), {
       session_id: sd.SESSION_ID,
     })
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    window.analytics.identify(sd.CURRENT_USER.id, traits, {
+    window?.analytics?.identify(sd?.CURRENT_USER?.id || "", traits, {
       integrations: { Marketo: false },
     })
   }
@@ -128,20 +122,24 @@ const identify = () => {
  * Send page load time stats to volley
  */
 const trackPageLoadSpeed = () => {
-  const { pageType } = getContextPageFromClient()
+  const contextPage = getContextPageFromClient()
 
-  if (
-    window.performance &&
-    window.performance.timing &&
-    sd.TRACK_PAGELOAD_PATHS
-  ) {
-    window.addEventListener("load", function () {
-      if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
-        window.setTimeout(function () {
-          let deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
-          reportLoadTimeToVolley(pageType, deviceType)
-        }, 0)
-      }
-    })
+  if (contextPage) {
+    const { pageType } = contextPage
+
+    if (
+      window.performance &&
+      window.performance.timing &&
+      sd.TRACK_PAGELOAD_PATHS
+    ) {
+      window.addEventListener("load", function () {
+        if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
+          window.setTimeout(function () {
+            let deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
+            reportLoadTimeToVolley(pageType, deviceType)
+          }, 0)
+        }
+      })
+    }
   }
 }

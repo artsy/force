@@ -20,8 +20,8 @@ describe("#trackEvent", () => {
       context_page_owner_slug: "andy-warhol",
       context_page_owner_type: OwnerType.artist,
     })
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(window.analytics.track).toBeCalledWith(
+
+    expect(window.analytics?.track).toBeCalledWith(
       "Time on page",
       {
         category: "15 seconds",
@@ -41,8 +41,8 @@ describe("#trackEvent", () => {
         contextPageOwnerType: OwnerType.artist,
       })
     )
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(window.analytics.track).toBeCalledWith(
+
+    expect(window.analytics?.track).toBeCalledWith(
       "timeOnPage",
       {
         category: "15 seconds",
@@ -61,10 +61,8 @@ describe("#trackEvent", () => {
       context_page_owner_slug: "andy-warhol",
       context_page_owner_type: OwnerType.artist,
     })
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(window.analytics.track).not.toBeCalled()
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(window.analytics.page).toBeCalledWith(
+    expect(window.analytics?.track).not.toBeCalled()
+    expect(window.analytics?.page).toBeCalledWith(
       { path: "/" },
       { integrations: { Marketo: false } }
     )

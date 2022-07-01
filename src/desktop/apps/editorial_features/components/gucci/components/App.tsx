@@ -56,8 +56,12 @@ export class App extends Component<GucciProps, GucciState> {
   onChangeSection = index => {
     const section = this.props.curation.sections[index]
     this.setState({ activeSection: index })
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    document.getElementById(section.slug).scrollIntoView()
+
+    const sectionToScroll = document.getElementById(section.slug)
+
+    if (sectionToScroll !== null) {
+      sectionToScroll.scrollIntoView()
+    }
   }
 
   onEnterSection = (index, { previousPosition, currentPosition }) => {

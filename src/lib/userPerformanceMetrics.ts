@@ -60,16 +60,16 @@ export function measure(
  */
 export function getUserTiming() {
   if (typeof PerformanceMark === "undefined") return null
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const marks = perf.getEntriesByType("mark").map(mark => {
+
+  const marks = perf?.getEntriesByType("mark").map(mark => {
     return {
       type: "mark",
       name: mark.name,
       startTime: Math.round(mark.startTime),
     }
   })
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const measures = perf.getEntriesByType("measure").map(measure => {
+
+  const measures = perf?.getEntriesByType("measure").map(measure => {
     return {
       type: "measure",
       name: measure.name,
@@ -77,7 +77,8 @@ export function getUserTiming() {
       duration: Math.round(measure.duration),
     }
   })
-  return marks.concat(measures)
+
+  return marks?.concat(measures || [])
 }
 
 /**
@@ -86,9 +87,9 @@ export function getUserTiming() {
  */
 export function getFirstPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
   const firstPaint = perf
-    .getEntriesByType("paint")
+    ?.getEntriesByType("paint")
     .find(({ name }) => name === "first-paint")
   return firstPaint ? Math.round(firstPaint.startTime) : null
 }
@@ -98,9 +99,9 @@ export function getFirstPaint() {
  */
 export function getFirstContentfulPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
   const firstContentfulPaint = perf
-    .getEntriesByType("paint")
+    ?.getEntriesByType("paint")
     .find(({ name }) => name === "first-contentful-paint")
   return firstContentfulPaint
     ? Math.round(firstContentfulPaint.startTime)
