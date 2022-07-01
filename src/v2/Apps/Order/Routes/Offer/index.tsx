@@ -314,7 +314,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
-                  width="100%"
+                  width="50%"
                 >
                   Continue
                 </Button>

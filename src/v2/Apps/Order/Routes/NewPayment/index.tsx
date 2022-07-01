@@ -30,7 +30,7 @@ import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const ContinueButton = props => (
-  <Button variant="primaryBlack" width="100%" {...props}>
+  <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
     Continue
   </Button>
 )

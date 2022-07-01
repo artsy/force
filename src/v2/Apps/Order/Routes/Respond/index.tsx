@@ -314,7 +314,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
-                  width="100%"
+                  width="50%"
                 >
                   Continue
                 </Button>

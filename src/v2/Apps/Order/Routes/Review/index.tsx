@@ -411,7 +411,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               <Spacer mb={2} />
               <Button
                 variant="primaryBlack"
-                width="100%"
+                width="50%"
                 loading={isCommittingMutation}
                 onClick={() => onSubmit()}
               >

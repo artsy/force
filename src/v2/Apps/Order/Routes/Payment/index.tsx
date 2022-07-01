@@ -35,7 +35,7 @@ import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
 
 export const ContinueButton = props => (
-  <Button variant="primaryBlack" width="100%" {...props}>
+  <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
     Continue
   </Button>
 )

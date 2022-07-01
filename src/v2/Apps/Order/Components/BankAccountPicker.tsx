@@ -135,7 +135,7 @@ export const BankAccountPicker: FC<Props> = props => {
             onClick={handleContinue}
             disabled={!bankAccountSelection.type}
             variant="primaryBlack"
-            width="50%"
+            width={["100%", "50%"]}
           >
             Save and Continue
           </Button>

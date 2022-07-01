@@ -160,7 +160,7 @@ export class CounterRoute extends Component<CounterProps> {
                   onClick={this.onSubmitButtonPressed}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
-                  width="100%"
+                  width="50%"
                 >
                   Submit
                 </Button>

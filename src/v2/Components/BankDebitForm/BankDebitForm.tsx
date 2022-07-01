@@ -92,7 +92,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
           onClick={trackClickedContinue}
           disabled={!stripe}
           variant="primaryBlack"
-          width="50%"
+          width={["100%", "50%"]}
         >
           Save and Continue
         </Button>
