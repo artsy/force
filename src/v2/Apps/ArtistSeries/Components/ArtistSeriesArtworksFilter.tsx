@@ -16,7 +16,9 @@ interface ArtistSeriesArtworksFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
 }
 
-const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = props => {
+const ArtistSeriesArtworksFilter: React.FC<
+  ArtistSeriesArtworksFilterProps & RouterState
+> = props => {
   const { match, relay, artistSeries, aggregations } = props
   const { filtered_artworks } = artistSeries
 
@@ -55,7 +57,6 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
 
 export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer(
   withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     ArtistSeriesArtworksFilter
   ),
   {

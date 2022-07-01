@@ -39,7 +39,7 @@ const Name = styled(RouterLink)`
 `
 
 interface ArtistsByLetterProps {
-  viewer: ArtistsByLetter_viewer
+  viewer: ArtistsByLetter_viewer | null
   relay: RelayRefetchProp
 }
 
@@ -53,7 +53,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
   } = useRouter()
   const [isLoading, setLoading] = useState(false)
 
-  if (!viewer.artistsConnection?.artists) {
+  if (!viewer?.artistsConnection?.artists) {
     return null
   }
 
@@ -66,11 +66,10 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
   } = viewer
 
   const handleNext = (page: number) => {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     handleClick(endCursor, page)
   }
 
-  const handleClick = (_cursor: string, page: number) => {
+  const handleClick = (_cursor: string | null, page: number) => {
     setLoading(true)
 
     relay.refetch({ page }, null, error => {
@@ -115,13 +114,18 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
       <Spacer mt={6} />
 
       <Columns isLoading={isLoading}>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        {artists.map(({ artist }) => {
-          return (
-            <Text key={artist.internalID}>
-              <Name to={artist.href}>{artist.name}</Name>
-            </Text>
-          )
+        {artists.map(singleArtist => {
+          if (!singleArtist) return
+
+          const { artist } = singleArtist
+
+          if (artist?.name && artist?.href) {
+            return (
+              <Text key={artist?.internalID}>
+                <Name to={artist?.href}>{artist.name}</Name>
+              </Text>
+            )
+          }
         })}
       </Columns>
 
