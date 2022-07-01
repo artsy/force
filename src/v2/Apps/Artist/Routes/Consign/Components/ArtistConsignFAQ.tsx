@@ -52,8 +52,7 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                       })
                     }}
                     href={getConsignSubmissionUrl({
-                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                      contextPath: props.artist.href,
+                      contextPath: props.artist.href || "",
                       subject: AnalyticsSchema.Subject.Here,
                     })}
                   >
