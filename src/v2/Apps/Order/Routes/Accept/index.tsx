@@ -283,7 +283,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
                   onClick={this.onSubmit}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
-                  width="100%"
+                  width="50%"
                 >
                   Submit
                 </Button>
