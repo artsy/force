@@ -25,6 +25,8 @@ import { useTracking } from "v2/System"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import { CommercePaymentMethodEnum } from "v2/__generated__/useSetPaymentMutation.graphql"
 import { BankAccountPickerFragmentContainer } from "../../Components/BankAccountPicker"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 export interface Props {
   order: Payment_order
@@ -163,7 +165,7 @@ export const PaymentContent: FC<Props> = props => {
             onClick={setPayment}
             variant="primaryBlack"
             loading={isLoading}
-            width="100%"
+            width="50%"
           >
             Save and Continue
           </Button>
@@ -184,6 +186,13 @@ const PaymentContentWrapper: FC<{ isLoading: boolean }> = ({
     {children}
   </Flex>
 )
+
+const USBankOnlyLabel = styled(Text)`
+  background-color: ${themeGet("colors.orange10")};
+  color: ${themeGet("colors.orange150")};
+  padding: 1px 5px;
+  border-radius: 2px;
+`
 
 /*
 returns all available payment methods, by checking relevant feature flags
@@ -228,7 +237,8 @@ const getAvailablePaymentMethods = (
         label={
           <>
             <InstitutionIcon fill="green100" />
-            <Text ml={1}>Bank transfer (US bank account)</Text>
+            <Text ml={1}>Bank transfer</Text>
+            <USBankOnlyLabel ml={1}>US bank account only</USBankOnlyLabel>
           </>
         }
       />
