@@ -187,6 +187,13 @@ const PaymentContentWrapper: FC<{ isLoading: boolean }> = ({
   </Flex>
 )
 
+const USBankOnlyLabel = styled(Text)`
+  background-color: ${themeGet("colors.orange10")};
+  color: ${themeGet("colors.orange150")};
+  padding: 1px 5px;
+  border-radius: 2px;
+`
+
 /*
 returns all available payment methods, by checking relevant feature flags
 TODO: when ACH and wire_transfer FFs is removed, this function can be removed and radios can be moved to PaymentContent
@@ -224,12 +231,6 @@ const getAvailablePaymentMethods = (
 
   // when available, unshift ACH since it's the first option we want to offer
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
-    const USBankOnlyLabel = styled(Text)`
-      background-color: ${themeGet("colors.orange10")};
-      color: ${themeGet("colors.orange150")};
-      padding: 1px 5px;
-      border-radius: 2px;
-    `
     paymentMethods.unshift(
       <BorderedRadio
         value={(paymentMethod = "US_BANK_ACCOUNT")}
