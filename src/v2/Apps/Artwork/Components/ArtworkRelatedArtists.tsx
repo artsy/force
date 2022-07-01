@@ -48,8 +48,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
       relay,
     } = props
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    if (hideGrid(artist.related.artistsConnection)) {
+    if (hideGrid(artist?.related?.artistsConnection)) {
       return null
     }
 

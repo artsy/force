@@ -15,16 +15,13 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
   const tracking = useTracking()
 
   const {
-    artist: {
-      href,
-      targetSupply: {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        microfunnel: {
-          metadata: { highestRealized, str, realized },
-        },
-      },
-    },
+    artist: { href, targetSupply },
   } = props
+
+  const highestRealized =
+    targetSupply?.microfunnel?.metadata?.highestRealized || ""
+  const str = targetSupply?.microfunnel?.metadata?.str || ""
+  const realized = targetSupply?.microfunnel?.metadata?.realized || ""
 
   return (
     <SectionContainer bg="black100">

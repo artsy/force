@@ -145,10 +145,8 @@ export class ArtworkApp extends React.Component<Props> {
         action_type: Schema.ActionType.ViewedLot,
         artwork_id: internalID,
         artwork_slug: slug,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        auction_slug: sale.slug,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        sale_id: sale.internalID,
+        auction_slug: sale?.slug,
+        sale_id: sale?.internalID,
       }
       tracking.trackEvent(trackingData)
     }

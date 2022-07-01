@@ -16,6 +16,7 @@ import * as Schema from "v2/System/Analytics/Schema"
 import { once } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
 import Events from "v2/Utils/Events"
 import { createCollectUrl } from "./../Utils/createCollectUrl"
@@ -134,8 +135,10 @@ export class PricingContext extends React.Component<PricingContextProps> {
           bars={artwork.pricingContext.bins.map(
             (bin, index): BarDescriptor => {
               const isFirstBin = index === 0
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              const isLastBin = index === artwork.pricingContext.bins.length - 1
+              const isLastBin = artwork?.pricingContext?.bins?.length
+                ? index === artwork?.pricingContext?.bins?.length - 1
+                : true
+
               const title = isLastBin
                 ? `${bin.minPrice}+`
                 : // TODO: use artwork's currency

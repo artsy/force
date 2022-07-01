@@ -17,8 +17,7 @@ export const ArtistConsignMeta: React.FC<ArtistConsignMetaProps> = props => {
 
   const imageURL = get(
     targetSupply,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    p => p.microfunnel.artworksConnection.edges[0].node.image.imageURL
+    p => p?.microfunnel?.artworksConnection?.edges?.[0]?.node?.image?.imageURL
   )
 
   const title = `Sell Works by ${name}`

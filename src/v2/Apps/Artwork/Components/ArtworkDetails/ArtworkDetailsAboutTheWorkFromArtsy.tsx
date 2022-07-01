@@ -40,8 +40,7 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
       <HTML variant="sm">
         <ReadMore
           maxChars={maxChars}
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          content={description}
+          content={description!}
           onReadMoreClicked={this.trackReadMoreClick.bind(this)}
         />
       </HTML>

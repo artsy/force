@@ -147,8 +147,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         fetchResults()
 
         // If user is not logged-in, show auth modal, but only if it was never shown before.
-        if (!user && !authShownForFiltering) {
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        if (!user && !authShownForFiltering && mediator) {
           openAuthModal(mediator, {
             contextModule: ContextModule.auctionResults,
             copy: `Sign up to see auction results for ${artistName}`,
@@ -296,8 +295,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <Pagination
             getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            pageCursors={artist.auctionResultsConnection.pageCursors}
+            pageCursors={artist.auctionResultsConnection?.pageCursors}
             onClick={(_cursor, page) => loadPage(_cursor, page)}
             onNext={() => loadNext()}
             scrollTo="#jumpto-ArtistHeader"

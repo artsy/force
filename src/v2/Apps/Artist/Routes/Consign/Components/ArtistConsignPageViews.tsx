@@ -11,16 +11,12 @@ interface ArtistConsignPageViewsProps {
 
 export const ArtistConsignPageViews: React.FC<ArtistConsignPageViewsProps> = props => {
   const {
-    artist: {
-      name,
-      targetSupply: {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        microfunnel: {
-          metadata: { roundedViews, roundedUniqueVisitors },
-        },
-      },
-    },
+    artist: { name, targetSupply },
   } = props
+
+  const roundedViews = targetSupply?.microfunnel?.metadata?.roundedViews || "0"
+  const roundedUniqueVisitors =
+    targetSupply?.microfunnel?.metadata?.roundedUniqueVisitors || "0"
 
   return (
     <SectionContainer bg="black10" textAlign="center">

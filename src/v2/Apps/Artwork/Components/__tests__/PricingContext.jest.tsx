@@ -8,6 +8,7 @@ import { mockTracking } from "v2/System/Analytics"
 import { renderRelayTree } from "v2/DevTools"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
+// eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
 import {
   PricingContext,

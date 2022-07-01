@@ -96,11 +96,9 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     trackEvent({
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.Login,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      sale_artwork_id: artwork.saleArtwork.internalID,
+      sale_artwork_id: artwork?.saleArtwork?.internalID,
     })
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    openAuthModal(mediator, {
+    openAuthModal(mediator!, {
       mode: ModalType.login,
       redirectTo: location.href,
       contextModule: ContextModule.aboutTheWork,
@@ -198,8 +196,7 @@ const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProp
     context_page_owner_id: props.artwork.internalID,
     context_page_owner_slug: props.artwork.slug,
     context_page_owner_type: "Artwork",
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    sale_artwork_id: props.artwork.saleArtwork.internalID,
+    sale_artwork_id: props.artwork.saleArtwork?.internalID,
   }
 })(RequestConditionReport)
 

@@ -55,30 +55,35 @@ export const imageObjectAttributes = (item: ItemWithImage) => {
 }
 
 export const offersAttributes = (artist: ArtistMeta_artist) => {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const { edges } = artist.artworks_connection
+  if (artist.artworks_connection) {
+    const { edges } = artist.artworks_connection
 
-  const offers =
-    edges &&
-    edges
-      .map(({ node }) => {
-        const seller = sellerFromPartner(node.partner)
-        const itemOffered = productAttributes(artist, node)
-        const availability =
-          node.availability === "for sale" ? "InStock" : "OutOfStock"
+    const offers =
+      edges &&
+      edges
+        .map(edge => {
+          if (edge) {
+            const { node } = edge
+            const seller = sellerFromPartner(node?.partner)
+            const itemOffered = productAttributes(artist, node)
+            const availability =
+              node?.availability === "for sale" ? "InStock" : "OutOfStock"
 
-        if (!itemOffered) return null
+            if (!itemOffered) return null
 
-        return {
-          "@type": "Offer",
-          availability,
-          itemOffered,
-          priceCurrency: node.price_currency,
-          seller,
-        }
-      })
-      .filter(offer => !!offer)
-  return offers
+            return {
+              "@type": "Offer",
+              availability,
+              itemOffered,
+              priceCurrency: node?.price_currency,
+              seller,
+            }
+          }
+        })
+        .filter(offer => !!offer)
+
+    return offers
+  }
 }
 
 export const productAttributes = (
@@ -159,9 +164,9 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist) => {
 export class ArtistMeta extends Component<Props> {
   renderImageMetaTags() {
     const { artist } = this.props
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const hasImage = artist.image && artist.image.versions.length
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+
+    const hasImage = artist?.image?.versions?.length
+
     if (hasImage && artist.image.versions.indexOf("large") !== -1) {
       return (
         <>
@@ -181,8 +186,7 @@ export class ArtistMeta extends Component<Props> {
 
   maybeRenderNoIndex() {
     const { artist } = this.props
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    if (artist.counts.artworks === 0 && !artist.blurb) {
+    if (artist?.counts?.artworks === 0 && !artist.blurb) {
       return (
         <>
           <Meta name="robots" content="noindex, follow" />
@@ -199,19 +203,14 @@ export class ArtistMeta extends Component<Props> {
 
   render() {
     const { artist } = this.props
+    const metaContent = artist?.meta?.description
+
     return (
       <>
         <ArtistMetaCanonicalLink artist={artist} />
-
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        <Meta name="description" content={artist.meta.description} />
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        <Meta property="og:description" content={artist.meta.description} />
-        <Meta
-          property="twitter:description"
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          content={artist.meta.description}
-        />
+        <Meta name="description" content={metaContent} />
+        <Meta property="og:description" content={metaContent} />
+        <Meta property="twitter:description" content={metaContent} />
         <Meta
           property="og:url"
           href={`${getENV("APP_URL")}/artist/${artist.slug}`}

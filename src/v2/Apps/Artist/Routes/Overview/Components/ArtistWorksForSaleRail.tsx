@@ -70,8 +70,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
                       contextModule: ContextModule.worksForSaleRail,
                       contextPageOwnerId,
                       contextPageOwnerSlug,
-                      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                      contextPageOwnerType,
+                      contextPageOwnerType: contextPageOwnerType!,
                       destinationPageOwnerType: OwnerType.artwork,
                       destinationPageOwnerId: node.internalID,
                       destinationPageOwnerSlug: node.slug,

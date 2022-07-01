@@ -13,7 +13,10 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 export interface PaginationProps {
   hasNextPage: boolean
   // TODO: Hacks around stitching. See if we can transform the schema to make this unnecessary.
-  pageCursors: Pagination_pageCursors | CommercePagination_pageCursors
+  pageCursors:
+    | Pagination_pageCursors
+    | CommercePagination_pageCursors
+    | undefined
   scrollTo?: string
   offset?: number
   getHref?: BasePaginationProps["getHref"]
@@ -33,7 +36,7 @@ export const Pagination: React.FC<PaginationProps> = props => {
   } = props
   const getHref = __getHref__ ?? useComputeHref()
 
-  if (pageCursors.around.length === 1) {
+  if (pageCursors?.around.length === 1) {
     return null
   }
 

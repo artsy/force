@@ -5,6 +5,7 @@ import {
   HelpIcon,
   Link,
   Select,
+  Option,
   Separator,
   Spacer,
   Text,
@@ -33,7 +34,7 @@ export interface ArtworkSidebarBidActionProps {
 }
 
 export interface ArtworkSidebarBidActionState {
-  selectedMaxBidCents?: number
+  selectedMaxBidCents: number
 }
 
 const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
@@ -69,8 +70,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   ArtworkSidebarBidActionState
 > {
   state: ArtworkSidebarBidActionState = {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    selectedMaxBidCents: null,
+    selectedMaxBidCents: 0,
   }
 
   setMaxBid = (newVal: string) => {
@@ -181,8 +181,9 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         } else if (shouldPromptIdVerification) {
           PreviewAction = () => (
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            <VerifyIdentityButton id={pendingIdentityVerification.internalID} />
+            <VerifyIdentityButton
+              id={pendingIdentityVerification?.internalID || ""}
+            />
           )
         } else {
           PreviewAction = () => (
@@ -254,8 +255,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           <>
             {shouldPromptIdVerification ? (
               <VerifyIdentityButton
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                id={pendingIdentityVerification.internalID}
+                id={pendingIdentityVerification?.internalID || ""}
               />
             ) : (
               <Button width="100%" size="large" disabled>
@@ -335,8 +335,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
             <Select
               variant="default"
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              options={selectOptions}
+              options={selectOptions as Option[]}
               onSelect={this.setMaxBid}
             />
 
@@ -346,8 +345,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               width="100%"
               size="large"
               data-test="bid"
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              onClick={() => this.redirectToBid(firstIncrement.cents)}
+              onClick={() => this.redirectToBid(firstIncrement?.cents || 0)}
             >
               {hasMyBids ? "Increase max bid" : "Bid"}
             </Button>

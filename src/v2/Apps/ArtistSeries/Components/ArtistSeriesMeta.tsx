@@ -10,8 +10,7 @@ interface ArtistSeriesMetaProps {
 
 export const ArtistSeriesMeta: React.FC<ArtistSeriesMetaProps> = props => {
   const { artistSeries } = props
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  const artist = artistSeries.artists[0]
+  const artist = artistSeries?.artists?.[0]
   const artistName = artist?.name ? `${artist.name}’s ` : ""
   const title = `${artistName}${artistSeries.title} - For Sale on Artsy`
   const descriptionFirstSentence = `Discover and collect art from ${artistName}iconic ${artistSeries.title} series and more. `
