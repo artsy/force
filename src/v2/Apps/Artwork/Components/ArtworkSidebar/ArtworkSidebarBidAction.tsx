@@ -9,6 +9,7 @@ import {
   Spacer,
   Text,
   Tooltip,
+  Option,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,7 +34,7 @@ export interface ArtworkSidebarBidActionProps {
 }
 
 export interface ArtworkSidebarBidActionState {
-  selectedMaxBidCents?: number
+  selectedMaxBidCents: number
 }
 
 const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
@@ -69,8 +70,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   ArtworkSidebarBidActionState
 > {
   state: ArtworkSidebarBidActionState = {
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    selectedMaxBidCents: null,
+    selectedMaxBidCents: 0,
   }
 
   setMaxBid = (newVal: string) => {
@@ -155,24 +155,20 @@ export class ArtworkSidebarBidAction extends React.Component<
     const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
 
     const {
-      registrationAttempted,
       qualifiedForBidding,
       userLacksIdentityVerification,
-      pendingIdentityVerification,
       shouldPromptIdVerification,
     } = bidderQualifications(
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      sale,
-      me,
-      sale.registrationStatus && {
-        qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
-      }
+      !!sale.requireIdentityVerification,
+      !!me.identityVerified,
+      !!me.pendingIdentityVerification?.internalID,
+      !!sale.registrationStatus?.qualified_for_bidding
     )
 
     if (sale.is_preview) {
       let PreviewAction: React.FC
 
-      if (registrationAttempted) {
+      if (sale.registrationStatus?.qualified_for_bidding) {
         if (qualifiedForBidding) {
           PreviewAction = () => (
             <Button width="100%" size="large" mt={1} disabled>
@@ -181,8 +177,9 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         } else if (shouldPromptIdVerification) {
           PreviewAction = () => (
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            <VerifyIdentityButton id={pendingIdentityVerification.internalID} />
+            <VerifyIdentityButton
+              id={me.pendingIdentityVerification?.internalID || ""}
+            />
           )
         } else {
           PreviewAction = () => (
@@ -249,13 +246,15 @@ export class ArtworkSidebarBidAction extends React.Component<
     }
 
     if (sale.is_open) {
-      if (registrationAttempted && !qualifiedForBidding) {
+      if (
+        sale.registrationStatus?.qualified_for_bidding &&
+        !qualifiedForBidding
+      ) {
         return (
           <>
             {shouldPromptIdVerification ? (
               <VerifyIdentityButton
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                id={pendingIdentityVerification.internalID}
+                id={me.pendingIdentityVerification?.internalID || ""}
               />
             ) : (
               <Button width="100%" size="large" disabled>
@@ -335,8 +334,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
             <Select
               variant="default"
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              options={selectOptions}
+              options={selectOptions as Option[]}
               onSelect={this.setMaxBid}
             />
 
@@ -346,8 +344,9 @@ export class ArtworkSidebarBidAction extends React.Component<
               width="100%"
               size="large"
               data-test="bid"
-              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              onClick={() => this.redirectToBid(firstIncrement.cents)}
+              onClick={() =>
+                this.redirectToBid(firstIncrement?.cents as number)
+              }
             >
               {hasMyBids ? "Increase max bid" : "Bid"}
             </Button>
