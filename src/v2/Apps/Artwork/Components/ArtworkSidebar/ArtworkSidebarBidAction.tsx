@@ -5,11 +5,11 @@ import {
   HelpIcon,
   Link,
   Select,
+  Option,
   Separator,
   Spacer,
   Text,
   Tooltip,
-  Option,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -155,20 +155,24 @@ export class ArtworkSidebarBidAction extends React.Component<
     const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
 
     const {
+      registrationAttempted,
       qualifiedForBidding,
       userLacksIdentityVerification,
+      pendingIdentityVerification,
       shouldPromptIdVerification,
     } = bidderQualifications(
-      !!sale.requireIdentityVerification,
-      !!me.identityVerified,
-      !!me.pendingIdentityVerification?.internalID,
-      !!sale.registrationStatus?.qualified_for_bidding
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      sale,
+      me,
+      sale.registrationStatus && {
+        qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
+      }
     )
 
     if (sale.is_preview) {
       let PreviewAction: React.FC
 
-      if (sale.registrationStatus?.qualified_for_bidding) {
+      if (registrationAttempted) {
         if (qualifiedForBidding) {
           PreviewAction = () => (
             <Button width="100%" size="large" mt={1} disabled>
@@ -178,7 +182,7 @@ export class ArtworkSidebarBidAction extends React.Component<
         } else if (shouldPromptIdVerification) {
           PreviewAction = () => (
             <VerifyIdentityButton
-              id={me.pendingIdentityVerification?.internalID || ""}
+              id={pendingIdentityVerification?.internalID || ""}
             />
           )
         } else {
@@ -246,15 +250,12 @@ export class ArtworkSidebarBidAction extends React.Component<
     }
 
     if (sale.is_open) {
-      if (
-        sale.registrationStatus?.qualified_for_bidding &&
-        !qualifiedForBidding
-      ) {
+      if (registrationAttempted && !qualifiedForBidding) {
         return (
           <>
             {shouldPromptIdVerification ? (
               <VerifyIdentityButton
-                id={me.pendingIdentityVerification?.internalID || ""}
+                id={pendingIdentityVerification?.internalID || ""}
               />
             ) : (
               <Button width="100%" size="large" disabled>
@@ -344,9 +345,7 @@ export class ArtworkSidebarBidAction extends React.Component<
               width="100%"
               size="large"
               data-test="bid"
-              onClick={() =>
-                this.redirectToBid(firstIncrement?.cents as number)
-              }
+              onClick={() => this.redirectToBid(firstIncrement?.cents || 0)}
             >
               {hasMyBids ? "Increase max bid" : "Bid"}
             </Button>

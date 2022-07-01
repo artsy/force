@@ -42,22 +42,32 @@ export const bidderNeedsIdentityVerification = ({
  * @param registration
  */
 export const bidderQualifications = (
-  saleRequireIdentityVerification: boolean,
-  userIdentityVerified: boolean,
-  pendingIdentityVerification: boolean,
-  qualifiedForBidding: boolean
+  sale: { requireIdentityVerification: boolean },
+  user?: {
+    identityVerified: boolean
+    pendingIdentityVerification?: { internalID: string }
+  },
+  registration?: { qualifiedForBidding: boolean }
 ) => {
+  const registrationAttempted = Boolean(registration)
+  const qualifiedForBidding =
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    registrationAttempted && registration.qualifiedForBidding
+
   const userLacksIdentityVerification =
-    saleRequireIdentityVerification && !userIdentityVerified
+    sale.requireIdentityVerification && !user?.identityVerified
+  const pendingIdentityVerification = user?.pendingIdentityVerification
 
   const shouldPromptIdVerification =
     !qualifiedForBidding &&
     userLacksIdentityVerification &&
-    pendingIdentityVerification
+    Boolean(pendingIdentityVerification)
 
   return {
+    registrationAttempted,
     qualifiedForBidding,
     userLacksIdentityVerification,
+    pendingIdentityVerification,
     shouldPromptIdVerification,
   }
 }
