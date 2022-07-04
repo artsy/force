@@ -13,6 +13,7 @@ import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
+import { omit } from "lodash"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -138,11 +139,16 @@ describe("ArtworkFilter", () => {
 
       const { current, changed } = trackEvent.mock.calls[0][0]
 
-      expect(JSON.parse(current)).toMatchObject({
-        ...initialArtworkFilterState,
-        ...filters,
-        acquireable: true,
-      })
+      expect(JSON.parse(current)).toMatchObject(
+        omit(
+          {
+            ...initialArtworkFilterState,
+            ...filters,
+            acquireable: true,
+          },
+          "keyword"
+        )
+      )
 
       expect(JSON.parse(changed)).toMatchObject({
         acquireable: true,

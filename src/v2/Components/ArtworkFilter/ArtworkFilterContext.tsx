@@ -20,6 +20,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   sort: "-decayed_merch",
   artistIDs: [],
   attributionClass: [],
+  keyword: undefined,
   partnerIDs: [],
   additionalGeneIDs: [],
   colors: [],
@@ -487,6 +488,7 @@ const artworkFilterReducer = (
       const stringFilterTypes: Array<keyof ArtworkFilters> = [
         "color",
         "height",
+        "keyword",
         "medium",
         "partnerID",
         "priceRange",
@@ -653,6 +655,12 @@ export const getSelectedFiltersCounts = (
       case isArray(paramValue): {
         if (paramValue.length) {
           counts[paramName] = paramValue.length
+        }
+        break
+      }
+      case paramName === FilterParamName.keyword: {
+        if (paramValue?.length) {
+          counts[paramName] = 1
         }
         break
       }

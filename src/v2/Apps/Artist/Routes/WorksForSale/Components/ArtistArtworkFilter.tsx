@@ -20,6 +20,7 @@ import {
   useFeatureVariant,
   useTrackFeatureVariant,
 } from "v2/System/useFeatureFlag"
+import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -94,6 +95,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       <BaseArtworkFilter
         relay={relay}
         viewer={artist}
+        Filters={<ArtistArtworkFilters relayEnvironment={relay.environment} />}
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
