@@ -1,4 +1,11 @@
-import { extractPillsFromDefaultCriteria } from "../extractPills"
+import {
+  SavedSearchDefaultCriteria,
+  SearchCriteriaAttributes,
+} from "../../types"
+import {
+  extractPillsFromDefaultCriteria,
+  excludeDefaultCriteria,
+} from "../extractPills"
 
 describe("extractPillsFromDefaultCriteria", () => {
   it("should return nothing", () => {
@@ -95,3 +102,94 @@ describe("extractPillsFromDefaultCriteria", () => {
     ])
   })
 })
+
+describe("excludeDefaultCriteria", () => {
+  it("exclude single value", () => {
+    const defaultCriteria: SavedSearchDefaultCriteria = {
+      offerable: {
+        displayValue: "Offerable",
+        value: true,
+      },
+    }
+    const result = excludeDefaultCriteria(criteria, defaultCriteria)
+
+    expect(result).toEqual({
+      artistIDs: ["artistOne", "artistTwo"],
+      atAuction: true,
+      sizes: ["SMALL"],
+    })
+  })
+
+  it("exclude one value from criteria values", () => {
+    const defaultCriteria: SavedSearchDefaultCriteria = {
+      artistIDs: [
+        {
+          displayValue: "Artist One",
+          value: "artistOne",
+        },
+      ],
+    }
+    const result = excludeDefaultCriteria(criteria, defaultCriteria)
+
+    expect(result).toEqual({
+      artistIDs: ["artistTwo"],
+      offerable: true,
+      atAuction: true,
+      sizes: ["SMALL"],
+    })
+  })
+
+  it("exclude all criteria values", () => {
+    const defaultCriteria: SavedSearchDefaultCriteria = {
+      artistIDs: [
+        {
+          displayValue: "Artist One",
+          value: "artistOne",
+        },
+        {
+          displayValue: "Artist Two",
+          value: "artistTwo",
+        },
+      ],
+    }
+    const result = excludeDefaultCriteria(criteria, defaultCriteria)
+
+    expect(result).toEqual({
+      atAuction: true,
+      offerable: true,
+      sizes: ["SMALL"],
+    })
+  })
+
+  it("exclude single and multiple values", () => {
+    const defaultCriteria: SavedSearchDefaultCriteria = {
+      artistIDs: [
+        {
+          displayValue: "Artist One",
+          value: "artistOne",
+        },
+        {
+          displayValue: "Artist Two",
+          value: "artistTwo",
+        },
+      ],
+      offerable: {
+        displayValue: "Offerable",
+        value: true,
+      },
+    }
+    const result = excludeDefaultCriteria(criteria, defaultCriteria)
+
+    expect(result).toEqual({
+      atAuction: true,
+      sizes: ["SMALL"],
+    })
+  })
+})
+
+const criteria: SearchCriteriaAttributes = {
+  artistIDs: ["artistOne", "artistTwo"],
+  atAuction: true,
+  offerable: true,
+  sizes: ["SMALL"],
+}

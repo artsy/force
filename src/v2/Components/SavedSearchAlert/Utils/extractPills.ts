@@ -1,4 +1,4 @@
-import { compact, find, flatten, keyBy } from "lodash"
+import { compact, difference, find, flatten, keyBy } from "lodash"
 import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
@@ -218,6 +218,36 @@ export const extractPillsFromDefaultCriteria = (
   }, [])
 }
 
+export const excludeDefaultCriteria = (
+  criteria: SearchCriteriaAttributes,
+  defaultCriteria: SavedSearchDefaultCriteria
+) => {
+  const excluded = {}
+
+  Object.entries(criteria).forEach(entry => {
+    const [field, value] = entry
+
+    if (field in defaultCriteria) {
+      const defaultCriteriaEntity = defaultCriteria[field]
+
+      if (Array.isArray(defaultCriteriaEntity)) {
+        const defaultCriteriaValues = defaultCriteriaEntity.map(v => v.value)
+        const values = difference(value, defaultCriteriaValues)
+
+        if (values.length > 0) {
+          excluded[field] = values
+        }
+      }
+
+      return
+    }
+
+    excluded[field] = value
+  })
+
+  return excluded
+}
+
 export const extractPills = ({
   criteria,
   aggregations = [],
@@ -229,11 +259,11 @@ export const extractPills = ({
   entity?: SavedSearchEntity
   metric?: Metric
 }) => {
-  const defaultPills = extractPillsFromDefaultCriteria(
-    entity?.defaultCriteria ?? {}
-  )
+  const defaultCriteria = entity?.defaultCriteria ?? {}
+  const defaultPills = extractPillsFromDefaultCriteria(defaultCriteria)
+  const excludedCriteria = excludeDefaultCriteria(criteria, defaultCriteria)
   const pillsFromCriteria = extractPillsFromCriteria({
-    criteria,
+    criteria: excludedCriteria,
     aggregations,
     metric,
   })
