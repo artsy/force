@@ -10,7 +10,9 @@ describe("WireTransferDetails", () => {
   it("renders 2 description texts when no props passed", () => {
     render(<WireTransferDetails />)
     expect(
-      screen.queryByText("• Your bank may charge a fee for the transaction.")
+      screen.queryByText(
+        "• Please inform your bank that you will be responsible for all wire transfer fees."
+      )
     ).toBeInTheDocument()
     expect(
       screen.queryByText(
@@ -22,7 +24,9 @@ describe("WireTransferDetails", () => {
   it("does not render description texts when withDescription dictates so", () => {
     render(<WireTransferDetails withDescription={false} />)
     expect(
-      screen.queryByText("• Your bank may charge a fee for the transaction.")
+      screen.queryByText(
+        "• Please inform your bank that you will be responsible for all wire transfer fees."
+      )
     ).not.toBeInTheDocument()
     expect(
       screen.queryByText(
