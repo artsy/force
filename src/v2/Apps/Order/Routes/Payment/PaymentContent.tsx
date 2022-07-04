@@ -151,7 +151,8 @@ export const PaymentContent: FC<Props> = props => {
           team will contact you with next steps by email.
         </Text>
         <Text color="black60" variant="sm">
-          • Your bank may charge a fee for the transaction.
+          • Please inform your bank that you will be responsible for all wire
+          transfer fees.
         </Text>
         <Text color="black60" variant="sm">
           • Questions? Email{" "}

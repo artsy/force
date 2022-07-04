@@ -27,7 +27,8 @@ export const WireTransferDetails = ({
           team will contact you with next steps by email.
         </Text>
         <Text color="black60" fontSize={13}>
-          • Your bank may charge a fee for the transaction.
+          • Please inform your bank that you will be responsible for all wire
+          transfer fees.
         </Text>
       </Flex>
     )}
