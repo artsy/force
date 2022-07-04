@@ -50,12 +50,10 @@ describe("ArtworkGridFilterPills", () => {
     render(
       <ArtworkFilterContextProvider {...props}>
         <ArtworkGridFilterPills
-          renderFilterPills={() => (
-            <ActiveFilterPills defaultPills={defaultPills} />
-          )}
-          renderCreateAlertButton={() => (
+          FilterPills={<ActiveFilterPills defaultPills={defaultPills} />}
+          CreateAlertButton={
             <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
-          )}
+          }
         />
       </ArtworkFilterContextProvider>
     )

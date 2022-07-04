@@ -54,8 +54,8 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  renderFilterPills?: () => JSX.Element
-  renderCreateAlertButton?: () => JSX.Element
+  FilterPills?: JSX.Element
+  CreateAlertButton?: JSX.Element
   viewer
 }
 
@@ -104,8 +104,8 @@ export const BaseArtworkFilter: React.FC<
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
-  renderFilterPills,
-  renderCreateAlertButton,
+  FilterPills,
+  CreateAlertButton,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -274,11 +274,11 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {(renderFilterPills || renderCreateAlertButton) && (
+          {(FilterPills || CreateAlertButton) && (
             <>
               <ArtworkGridFilterPills
-                renderFilterPills={renderFilterPills}
-                renderCreateAlertButton={renderCreateAlertButton}
+                FilterPills={FilterPills}
+                CreateAlertButton={CreateAlertButton}
               />
               <Spacer mt={4} />
             </>
@@ -335,11 +335,11 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {(renderFilterPills || renderCreateAlertButton) && (
+            {(FilterPills || CreateAlertButton) && (
               <>
                 <ArtworkGridFilterPills
-                  renderFilterPills={renderFilterPills}
-                  renderCreateAlertButton={renderCreateAlertButton}
+                  FilterPills={FilterPills}
+                  CreateAlertButton={CreateAlertButton}
                 />
                 <Spacer mt={4} />
               </>

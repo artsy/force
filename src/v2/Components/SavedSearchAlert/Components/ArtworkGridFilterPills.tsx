@@ -4,17 +4,17 @@ import { Flex } from "@artsy/palette"
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
 interface ArtworkGridFilterPillsProps {
-  renderFilterPills?: () => JSX.Element
-  renderCreateAlertButton?: () => JSX.Element
+  FilterPills?: JSX.Element
+  CreateAlertButton?: JSX.Element
 }
 
 export const ArtworkGridFilterPills: React.FC<ArtworkGridFilterPillsProps> = props => {
-  const { renderFilterPills, renderCreateAlertButton } = props
+  const { FilterPills, CreateAlertButton } = props
 
   return (
     <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
-      {renderFilterPills?.()}
-      {renderCreateAlertButton?.()}
+      {FilterPills}
+      {CreateAlertButton}
     </Flex>
   )
 }

@@ -38,16 +38,16 @@ describe("ArtworkFilter", () => {
   let sortOptionsMock
   let filters
   let breakpoint
-  let renderFilterPills
-  let renderCreateAlertButton
+  let FilterPills
+  let CreateAlertButton
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
         <ArtworkFilter
           {...(props as any)}
-          renderFilterPills={renderFilterPills}
-          renderCreateAlertButton={renderCreateAlertButton}
+          FilterPills={FilterPills}
+          CreateAlertButton={CreateAlertButton}
           onFilterClick={onFilterClick}
           onChange={onChange}
           sortOptions={sortOptionsMock}
@@ -71,16 +71,16 @@ describe("ArtworkFilter", () => {
     filters = {
       colors: ["yellow", "pink"],
     }
-    renderFilterPills = undefined
-    renderCreateAlertButton = undefined
+    FilterPills = undefined
+    CreateAlertButton = undefined
     sortOptionsMock = [
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
   })
 
-  it("renders filters pills when renderFilterPills is passed and there are selected filters", async () => {
-    renderFilterPills = () => <ActiveFilterPills />
+  it("renders filters pills when FilterPills is passed and there are selected filters", async () => {
+    FilterPills = <ActiveFilterPills />
     renderWithRelay()
 
     expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
@@ -88,7 +88,7 @@ describe("ArtworkFilter", () => {
   })
 
   it("removes pill after click on it", async () => {
-    renderFilterPills = () => <ActiveFilterPills />
+    FilterPills = <ActiveFilterPills />
     renderWithRelay()
 
     fireEvent.click(screen.getAllByText("Yellow")[1])
@@ -97,9 +97,9 @@ describe("ArtworkFilter", () => {
     expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
   })
 
-  it("renders 'Create Alert' button when renderCreateAlertButton is passed", async () => {
-    renderFilterPills = () => <ActiveFilterPills />
-    renderCreateAlertButton = () => (
+  it("renders 'Create Alert' button when CreateAlertButton is passed", async () => {
+    FilterPills = <ActiveFilterPills />
+    CreateAlertButton = (
       <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
     )
     renderWithRelay()
