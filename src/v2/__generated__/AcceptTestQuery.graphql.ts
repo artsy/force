@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "OTHER" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
+export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type AcceptTestQueryVariables = {};
 export type AcceptTestQueryResponse = {
     readonly order: {
@@ -1393,7 +1393,6 @@ return {
           "enumValues": [
             "ACH_TRANSFER",
             "CREDIT_CARD",
-            "OTHER",
             "US_BANK_ACCOUNT",
             "WIRE_TRANSFER"
           ],
