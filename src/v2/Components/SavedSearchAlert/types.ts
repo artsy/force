@@ -35,10 +35,11 @@ export interface SavedSearchEntityCriteria {
   value: string | boolean
 }
 
-export type SavedSearchDefaultCriteria = Record<
-  string, // TODO: Specify allowed keys
-  SavedSearchEntityCriteria | SavedSearchEntityCriteria[]
->
+export type SavedSearchDefaultCriteria = {
+  [key in keyof SearchCriteriaAttributes]:
+    | SavedSearchEntityCriteria
+    | SavedSearchEntityCriteria[]
+}
 
 export interface SavedSearchEntity {
   placeholder: string
