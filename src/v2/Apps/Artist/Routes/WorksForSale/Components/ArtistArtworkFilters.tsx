@@ -14,6 +14,7 @@ import { KeywordFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Keywor
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "v2/System"
+import { Join, Spacer } from "@artsy/palette"
 
 interface ArtistArtworkFiltersProps {
   relayEnvironment?: RelayModernEnvironment
@@ -26,7 +27,7 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   return (
-    <>
+    <Join separator={<Spacer mt={4} />}>
       {showKeywordFilter && <KeywordFilter />}
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <AttributionClassFilter expanded />
@@ -40,6 +41,6 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
       <TimePeriodFilter />
       <ColorFilter />
       <PartnersFilter />
-    </>
+    </Join>
   )
 }
