@@ -23,13 +23,6 @@ export interface SearchCriteriaAttributes {
 
 export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
 
-// TODO: Remove it
-export interface SavedSearchEntityArtist {
-  id: string
-  name: string
-  slug: string
-}
-
 export interface SavedSearchEntityOwner {
   type: PageOwnerType
   slug: string

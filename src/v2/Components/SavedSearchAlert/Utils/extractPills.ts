@@ -18,7 +18,6 @@ import {
   FilterPill,
   SavedSearchDefaultCriteria,
   SavedSearchEntity,
-  SavedSearchEntityArtist,
   SearchCriteriaAttributes,
 } from "../types"
 import { aggregationForFilter } from "./aggregationForFilter"
@@ -188,19 +187,6 @@ export const extractPillsFromCriteria = ({
   })
 
   return compact(flatten(pills))
-}
-
-export const extractArtistPills = (
-  defaultArtists: SavedSearchEntityArtist[] = []
-): FilterPill[] => {
-  return defaultArtists.map(artist => {
-    return {
-      isDefault: true,
-      value: artist.id,
-      displayValue: artist.name,
-      field: "artistIDs",
-    }
-  })
 }
 
 export const extractPillsFromDefaultCriteria = (
