@@ -21,26 +21,31 @@ export interface SearchCriteriaAttributes {
   sizes?: string[] | null
 }
 
-export interface SavedSearchEntityArtist {
-  id: string
-  name: string
-  slug: string
-}
+export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
 
-interface SavedSearchEntityOwner {
+export interface SavedSearchEntityOwner {
   type: PageOwnerType
   slug: string
   id: string
   name: string
 }
 
-export interface SavedSearchEntity {
-  placeholder: string
-  defaultArtists: SavedSearchEntityArtist[]
-  owner: SavedSearchEntityOwner
+export interface SavedSearchEntityCriteria {
+  displayValue: string
+  value: string | boolean
 }
 
-export type SearchCriteriaAttributeKeys = keyof SearchCriteriaAttributes
+export type SavedSearchDefaultCriteria = {
+  [key in keyof SearchCriteriaAttributes]:
+    | SavedSearchEntityCriteria
+    | SavedSearchEntityCriteria[]
+}
+
+export interface SavedSearchEntity {
+  placeholder: string
+  owner: SavedSearchEntityOwner
+  defaultCriteria: SavedSearchDefaultCriteria
+}
 
 export type FilterPill = {
   isDefault?: boolean

@@ -15,13 +15,14 @@ const formInitialValues = {
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "Test Artist",
-  defaultArtists: [
-    {
-      id: "test-artist-id",
-      name: "Test Artist",
-      slug: "test-artist-slug",
-    },
-  ],
+  defaultCriteria: {
+    artistIDs: [
+      {
+        displayValue: "Test Artist",
+        value: "test-artist-id",
+      },
+    ],
+  },
   owner: {
     type: OwnerType.artist,
     id: "owner-id",

@@ -2,24 +2,25 @@ import { OwnerType } from "@artsy/cohesion"
 import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchEntity } from "../../types"
 import {
+  parseDefaultCriteria,
   getSearchCriteriaFromFilters,
   isDefaultValue,
 } from "../savedSearchCriteria"
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
   placeholder: "alertName",
-  defaultArtists: [
-    {
-      id: "artistOneId",
-      name: "artistOneName",
-      slug: "artistOneSlug",
-    },
-    {
-      id: "artistTwoId",
-      name: "artistTwoName",
-      slug: "artistTwoSlug",
-    },
-  ],
+  defaultCriteria: {
+    artistIDs: [
+      {
+        displayValue: "artistOneName",
+        value: "artistOneId",
+      },
+      {
+        displayValue: "artistTwoName",
+        value: "artistTwoId",
+      },
+    ],
+  },
   owner: {
     type: OwnerType.artist,
     id: "owner-id",
@@ -60,16 +61,17 @@ describe("getSearchCriteriaFromFilters", () => {
     )
   })
 
-  it("returns correct criteria when a single artist is passed to entity", () => {
+  it("returns correct criteria when a single artist is passed to defaultCriteria", () => {
     const entity: SavedSearchEntity = {
       placeholder: "",
-      defaultArtists: [
-        {
-          id: "artistOneId",
-          name: "artistOneName",
-          slug: "artistOneSlug",
-        },
-      ],
+      defaultCriteria: {
+        artistIDs: [
+          {
+            value: "artistOneId",
+            displayValue: "artistOneName",
+          },
+        ],
+      },
       owner: {
         type: OwnerType.artist,
         id: "owner-id",
@@ -110,5 +112,69 @@ describe("isDefaultValue", () => {
 
   it("should return true if it is default value", () => {
     expect(isDefaultValue("width", "*-*")).toBeTruthy()
+  })
+})
+
+describe("parseDefaultCriteria", () => {
+  it("should return nothing", () => {
+    const result = parseDefaultCriteria({})
+
+    expect(result).toEqual({})
+  })
+
+  it("should support single criteria", () => {
+    const result = parseDefaultCriteria({
+      offerable: {
+        displayValue: "Make Offer",
+        value: true,
+      },
+    })
+
+    expect(result).toEqual({
+      offerable: true,
+    })
+  })
+
+  it("should support multiple criteria", () => {
+    const result = parseDefaultCriteria({
+      attributionClass: [
+        {
+          value: "unique",
+          displayValue: "Unique",
+        },
+        {
+          value: "limited edition",
+          displayValue: "Limited Edition",
+        },
+      ],
+    })
+
+    expect(result).toEqual({
+      attributionClass: ["unique", "limited edition"],
+    })
+  })
+
+  it("should support mixed criteria", () => {
+    const result = parseDefaultCriteria({
+      offerable: {
+        displayValue: "Make Offer",
+        value: true,
+      },
+      attributionClass: [
+        {
+          value: "unique",
+          displayValue: "Unique",
+        },
+        {
+          value: "limited edition",
+          displayValue: "Limited Edition",
+        },
+      ],
+    })
+
+    expect(result).toEqual({
+      offerable: true,
+      attributionClass: ["unique", "limited edition"],
+    })
   })
 })

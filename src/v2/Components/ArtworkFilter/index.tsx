@@ -44,19 +44,18 @@ import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { SavedSearchEntity } from "../SavedSearchAlert/types"
-import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlert/Components/SavedSearchAlertArtworkGridFilterPills"
+import { ArtworkGridFilterPills } from "../SavedSearchAlert/Components/ArtworkGridFilterPills"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
-  enableCreateAlert?: boolean
   Filters?: JSX.Element
   offset?: number
   // Input variables passed to FilterArtworkConnection `input` argument
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  savedSearchEntity?: SavedSearchEntity
+  FilterPills?: JSX.Element
+  CreateAlertButton?: JSX.Element
   viewer
 }
 
@@ -99,14 +98,14 @@ export const BaseArtworkFilter: React.FC<
   }
 > = ({
   children,
-  enableCreateAlert = false,
   Filters,
   offset,
   relay,
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
-  savedSearchEntity,
+  FilterPills,
+  CreateAlertButton,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -275,10 +274,11 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {enableCreateAlert && savedSearchEntity && (
+          {(FilterPills || CreateAlertButton) && (
             <>
-              <SavedSearchAlertArtworkGridFilterPills
-                savedSearchEntity={savedSearchEntity}
+              <ArtworkGridFilterPills
+                FilterPills={FilterPills}
+                CreateAlertButton={CreateAlertButton}
               />
               <Spacer mt={4} />
             </>
@@ -335,10 +335,11 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {enableCreateAlert && savedSearchEntity && (
+            {(FilterPills || CreateAlertButton) && (
               <>
-                <SavedSearchAlertArtworkGridFilterPills
-                  savedSearchEntity={savedSearchEntity}
+                <ArtworkGridFilterPills
+                  FilterPills={FilterPills}
+                  CreateAlertButton={CreateAlertButton}
                 />
                 <Spacer mt={4} />
               </>

@@ -5,18 +5,24 @@ import {
   ArtworkFiltersState,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SavedSearchEntity } from "../../types"
-import { SavedSearchAlertArtworkGridFilterPills } from "../SavedSearchAlertArtworkGridFilterPills"
+import {
+  FilterPill,
+  SavedSearchEntity,
+} from "v2/Components/SavedSearchAlert/types"
+import { ActiveFilterPills } from "../ActiveFilterPills"
+import { ArtworkGridFilterPills } from "../ArtworkGridFilterPills"
+import { DefaultCreateAlertButton } from "../DefaultCreateAlertButton"
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "Banksy",
-  defaultArtists: [
-    {
-      id: "test-artist-id",
-      name: "Banksy",
-      slug: "example-slug",
-    },
-  ],
+  defaultCriteria: {
+    artistIDs: [
+      {
+        value: "test-artist-id",
+        displayValue: "Banksy",
+      },
+    ],
+  },
   owner: {
     type: OwnerType.artist,
     id: "owner-id",
@@ -25,17 +31,29 @@ const savedSearchEntity: SavedSearchEntity = {
   },
 }
 
+const defaultPills: FilterPill[] = [
+  {
+    isDefault: true,
+    value: "test-artist-id",
+    displayValue: "Banksy",
+    field: "artistIDs",
+  },
+]
+
 const mockedFilters: ArtworkFiltersState = {
   attributionClass: ["open edition"],
   colors: ["red"],
 }
 
-describe("SavedSearchAlertArtworkGridFilterPills", () => {
+describe("ArtworkGridFilterPills", () => {
   const renderPills = (props: SharedArtworkFilterContextProps = {}) => {
     render(
       <ArtworkFilterContextProvider {...props}>
-        <SavedSearchAlertArtworkGridFilterPills
-          savedSearchEntity={savedSearchEntity}
+        <ArtworkGridFilterPills
+          FilterPills={<ActiveFilterPills defaultPills={defaultPills} />}
+          CreateAlertButton={
+            <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
+          }
         />
       </ArtworkFilterContextProvider>
     )

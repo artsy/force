@@ -17,13 +17,14 @@ jest.mock("v2/Utils/openAuthModal")
 
 const savedSearchEntity: SavedSearchEntity = {
   placeholder: "placeholder-label",
-  defaultArtists: [
-    {
-      id: "test-artist-id",
-      name: "test-artist-name",
-      slug: "example-slug",
-    },
-  ],
+  defaultCriteria: {
+    artistIDs: [
+      {
+        value: "test-artist-id",
+        displayValue: "test-artist-name",
+      },
+    ],
+  },
   owner: {
     type: OwnerType.artist,
     id: "owner-id",
