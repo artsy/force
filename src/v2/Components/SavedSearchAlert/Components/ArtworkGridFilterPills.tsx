@@ -12,7 +12,11 @@ export const ArtworkGridFilterPills: React.FC<ArtworkGridFilterPillsProps> = pro
   const { FilterPills, CreateAlertButton } = props
 
   return (
-    <Flex flexWrap="wrap" mx={-PILL_HORIZONTAL_MARGIN_SIZE}>
+    <Flex
+      flexWrap="wrap"
+      mx={-PILL_HORIZONTAL_MARGIN_SIZE}
+      data-testid="artworkGridFilterPills"
+    >
       {FilterPills}
       {CreateAlertButton}
     </Flex>

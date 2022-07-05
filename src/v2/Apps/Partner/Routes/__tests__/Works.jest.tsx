@@ -3,13 +3,17 @@ import { ArtworksRefetchContainer } from "../Works"
 import { graphql } from "react-relay"
 import { Works_Query } from "v2/__generated__/Works_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import {
+  setupTestWrapper,
+  setupTestWrapperTL,
+} from "v2/DevTools/setupTestWrapper"
 import {
   artistAggregation,
   artistNationalityAggregation,
   materialsTermsAggregation,
   mediumAggregation,
 } from "test/fixtures/aggregations"
+import { fireEvent, screen, within } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -32,6 +36,22 @@ const { getWrapper } = setupTestWrapper<Works_Query>({
   ),
   query: graphql`
     query Works_Query($partnerId: String!) @relay_test_operation {
+      partner(id: $partnerId) {
+        ...Works_partner
+      }
+    }
+  `,
+  variables: { partnerId: "pontone-gallery" },
+})
+
+const { renderWithRelay } = setupTestWrapperTL<Works_Query>({
+  Component: ({ partner }) => (
+    <MockBoot user={{ id: "percy-z" }}>
+      <ArtworksRefetchContainer partner={partner!} />
+    </MockBoot>
+  ),
+  query: graphql`
+    query WorksTL_Query($partnerId: String!) @relay_test_operation {
       partner(id: $partnerId) {
         ...Works_partner
       }
@@ -121,5 +141,64 @@ describe("PartnerArtworks", () => {
       expect(filterWrappers.at(filterIndex).prop("label")).toEqual(label)
       expect(filterWrappers.at(filterIndex).prop("expanded")).toEqual(expanded)
     })
+  })
+
+  it("should render selected filters as pills", () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: {
+          followedArtists: 10,
+        },
+        aggregations: [
+          artistAggregation,
+          mediumAggregation,
+          materialsTermsAggregation,
+          artistNationalityAggregation,
+        ],
+      }),
+    })
+
+    // Specify filters
+    fireEvent.click(screen.getByText("Massimo Listri"))
+    fireEvent.click(screen.getByText("Unique"))
+    fireEvent.click(screen.getByText("Painting"))
+
+    const container = screen.getByTestId("artworkGridFilterPills")
+
+    expect(within(container).getByText("Massimo Listri")).toBeInTheDocument()
+    expect(within(container).getByText("Unique")).toBeInTheDocument()
+    expect(within(container).getByText("Painting")).toBeInTheDocument()
+  })
+
+  it("should unselect filter option when the corresponding pill is removed", () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: {
+          followedArtists: 10,
+        },
+        aggregations: [
+          artistAggregation,
+          mediumAggregation,
+          materialsTermsAggregation,
+          artistNationalityAggregation,
+        ],
+      }),
+    })
+
+    // Select artist
+    const artistFilterOption = screen.getAllByRole("checkbox")[1]
+    fireEvent.click(artistFilterOption)
+
+    expect(artistFilterOption).toHaveTextContent("Massimo Listri")
+    expect(artistFilterOption).toBeChecked()
+
+    const container = screen.getByTestId("artworkGridFilterPills")
+    const pill = within(container).getByText("Massimo Listri")
+
+    // Remove displayed artist pill
+    fireEvent.click(pill)
+
+    expect(pill).not.toBeInTheDocument()
+    expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
   })
 })
