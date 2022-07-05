@@ -7,10 +7,9 @@ export const OnboardingCuratedArtworks: FC = () => {
       id="trove"
       description={
         <>
-          Save artworks to your profile by clicking the heart.
+          Follow to see the best works on Artsy each week, all available now.
           <br />
-          Follow the collection to stay up-to-date with emerging and
-          sought-after artists.
+          Click the heart to save artworks you love.
         </>
       }
     />

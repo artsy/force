@@ -1,5 +1,6 @@
 import { Flex, Spacer, Text, Join, Box, Pill, Button } from "@artsy/palette"
 import { FC, useMemo } from "react"
+import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { OnboardingProgress } from "../Components/OnboardingProgress"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
@@ -61,8 +62,13 @@ export const OnboardingQuestionThree: FC = () => {
   return (
     <OnboardingSplitLayout
       left={
-        // TODO: Replace with image
-        <Box ref={register(0)} width="100%" height="100%" bg="black60" />
+        <OnboardingFigure
+          ref={register(0)}
+          src="https://files.artsy.net/images/question-three-img.jpg"
+          aspectWidth={1600}
+          aspectHeight={2764}
+          caption="Super Future Kid, Hazy Daisy, 2021"
+        />
       }
       right={
         <Flex
@@ -75,7 +81,7 @@ export const OnboardingQuestionThree: FC = () => {
 
           <Box width="100%">
             <Text variant="lg-display" ref={register(1)}>
-              Where would you like to dive in first?
+              Almost done! What would you like to see first?
             </Text>
 
             <Spacer mt={1} />

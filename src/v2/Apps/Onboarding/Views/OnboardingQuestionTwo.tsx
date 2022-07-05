@@ -1,5 +1,6 @@
 import { Flex, Spacer, Text, Join, Box, Pill, Button } from "@artsy/palette"
 import { FC } from "react"
+import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { OnboardingProgress } from "../Components/OnboardingProgress"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
@@ -20,8 +21,13 @@ export const OnboardingQuestionTwo: FC = () => {
   return (
     <OnboardingSplitLayout
       left={
-        // TODO: Replace with image
-        <Box ref={register(0)} width="100%" height="100%" bg="black60" />
+        <OnboardingFigure
+          ref={register(0)}
+          src="https://files.artsy.net/images/question-two-img.jpg"
+          aspectWidth={1600}
+          aspectHeight={2764}
+          caption="Alex Katz, Yellow Flags 3, 2020"
+        />
       }
       right={
         <Flex
@@ -34,7 +40,7 @@ export const OnboardingQuestionTwo: FC = () => {
 
           <Box width="100%">
             <Text variant="lg-display" ref={register(1)}>
-              What do you love most about exploring art?
+              What do you love most about art?
             </Text>
 
             <Spacer mt={1} />

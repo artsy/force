@@ -1,6 +1,8 @@
 import { Box, Flex, Image, ResponsiveBox } from "@artsy/palette"
-import { forwardRef } from "react"
+import { chunk } from "lodash"
+import { FC, forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
+import { cropped } from "v2/Utils/resized"
 
 export const OnboardingWelcomeAnimatedPanel = forwardRef(
   (_props, forwardedRef) => {
@@ -23,55 +25,32 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
             transformOrigin: "top left",
           }}
         >
-          {[...new Array(3)].map((_, col) => {
-            const Component = col % 2 === 0 ? Down : Up
+          {COLUMNS.map((column, col) => {
+            const Direction = col % 2 === 0 ? Down : Up
 
             return (
-              <Component
-                key={col}
-                color="white"
-                width={250}
-                ml={col === 0 ? 0 : 2}
-              >
-                {[...new Array(6)].map((_, row) => (
-                  <ResponsiveBox
-                    key={row}
-                    aspectWidth={3}
-                    aspectHeight={4}
-                    maxWidth="100%"
-                    bg="black60"
-                    mt={2}
-                  >
-                    <Image
-                      src={`https://picsum.photos/seed/${col}:${row}/300/400`}
-                      srcSet={`https://picsum.photos/seed/${col}:${row}/300/400 1x, https://picsum.photos/seed/${col}:${row}/600/800 2x`}
-                      width="100%"
-                      height="100%"
-                      alt=""
-                    />
-                  </ResponsiveBox>
-                ))}
-
-                {/* Should be a copy of the previous images. We transform these 50% for a seamless loop */}
-                {[...new Array(6)].map((_, row) => (
-                  <ResponsiveBox
-                    key={`${row}--copy`}
-                    aspectWidth={3}
-                    aspectHeight={4}
-                    maxWidth="100%"
-                    bg="black60"
-                    mt={2}
-                  >
-                    <Image
-                      src={`https://picsum.photos/seed/${col}:${row}/300/400`}
-                      srcSet={`https://picsum.photos/seed/${col}:${row}/300/400 1x, https://picsum.photos/seed/${col}:${row}/600/800 2x`}
-                      width="100%"
-                      height="100%"
-                      alt=""
-                    />
-                  </ResponsiveBox>
-                ))}
-              </Component>
+              <Direction key={col} width={250} ml={col === 0 ? 0 : 2}>
+                <Duplicate>
+                  {column.map((img, row) => (
+                    <ResponsiveBox
+                      key={[col, row].join("-")}
+                      aspectWidth={300}
+                      aspectHeight={400}
+                      maxWidth="100%"
+                      bg="black60"
+                      mt={2}
+                    >
+                      <Image
+                        src={img.src}
+                        srcSet={img.srcSet}
+                        width="100%"
+                        height="100%"
+                        alt=""
+                      />
+                    </ResponsiveBox>
+                  ))}
+                </Duplicate>
+              </Direction>
             )
           })}
         </Flex>
@@ -99,3 +78,94 @@ const down = keyframes`
 const Down = styled(Box)`
   animation: ${down} ${DURATION} linear infinite;
 `
+
+const Duplicate: FC = ({ children }) => {
+  return (
+    <>
+      {children}
+      {children}
+    </>
+  )
+}
+
+// TODO: Will be replaced with alternate crops
+const IMAGES = [
+  {
+    width: 2821,
+    height: 2859,
+    src:
+      "https://files.artsy.net/images/adegboyega-adesina-painting-of-rechel.jpg",
+  },
+  {
+    width: 750,
+    height: 1119,
+    src: "https://files.artsy.net/images/alex-katz-yellow-flags-3-62.jpeg",
+  },
+  {
+    width: 1840,
+    height: 2058,
+    src: "https://files.artsy.net/images/amoako-boafo-tasia-cobbinah.png",
+  },
+  {
+    width: 1289,
+    height: 2016,
+    src:
+      "https://files.artsy.net/images/andy-warhol-cow-f-and-s-ii-dot-12a-1.jpeg",
+  },
+  {
+    width: 1590,
+    height: 1002,
+    src: "https://files.artsy.net/images/andy-warhol-dollars-4.jpeg",
+  },
+  {
+    width: 3600,
+    height: 2880,
+    src:
+      "https://files.artsy.net/images/caroline-larsen-deco-bouquet-with-pink-background.jpeg",
+  },
+  {
+    width: 622,
+    height: 772,
+    src: "https://files.artsy.net/images/damien-hirst-h9-1-justice-2024.jpeg",
+  },
+  {
+    width: 2121,
+    height: 2906,
+    src:
+      "https://files.artsy.net/images/damien-hirst-the-wonder-of-you-your-heart-1.jpeg",
+  },
+  {
+    width: 1200,
+    height: 1522,
+    src:
+      "https://files.artsy.net/images/frida-kahlo-autorretrato-con-chango-y-loro.jpeg",
+  },
+  {
+    width: 4500,
+    height: 3713,
+    src:
+      "https://files.artsy.net/images/genevieve-cohn-ill-make-a-mountain-out-of-you-yet.jpeg",
+  },
+  {
+    width: 1500,
+    height: 1703,
+    src: "https://files.artsy.net/images/super-future-kid-hazy-daisy.jpeg",
+  },
+  {
+    width: 2765,
+    height: 3667,
+    src:
+      "https://files.artsy.net/images/ziping-wang-the-snowflake-that-comes-alive.jpeg",
+  },
+]
+
+const CROPS = IMAGES.map(({ src }) => {
+  return cropped(src, { width: 300, height: 400 })
+})
+
+const columns = <T,>(xs: T[], n: number): T[][] => {
+  const take = Math.ceil(xs.length / n)
+  return chunk(xs, take)
+}
+
+const COLUMNS = columns(CROPS, 3)
