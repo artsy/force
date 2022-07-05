@@ -36,4 +36,5 @@ export const allowedSearchCriteriaKeys = [
   "sizes",
   "height",
   "width",
+  "artistNationalities",
 ]
