@@ -1,5 +1,6 @@
 import { Flex, Spacer, Text, Box, Join, Button, Pill } from "@artsy/palette"
 import { FC } from "react"
+import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { OnboardingProgress } from "../Components/OnboardingProgress"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
@@ -18,8 +19,13 @@ export const OnboardingQuestionOne: FC = () => {
   return (
     <OnboardingSplitLayout
       left={
-        // TODO: Replace with image
-        <Box ref={register(0)} width="100%" height="100%" bg="black60" />
+        <OnboardingFigure
+          ref={register(0)}
+          src="https://files.artsy.net/images/question-one-img.jpg"
+          aspectWidth={1600}
+          aspectHeight={2764}
+          caption="Adegboyega Adesina, Painting of Rechel, 2021"
+        />
       }
       right={
         <Flex

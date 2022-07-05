@@ -38,7 +38,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
 
       <Spacer mb={4} />
 
-      <Masonry columnCount={[2, 3, 4]}>
+      <Masonry columnCount={[2, 3]}>
         {artworks.map(artwork => {
           return (
             <Fragment key={artwork.internalID}>

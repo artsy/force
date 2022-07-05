@@ -1,9 +1,13 @@
 import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
 import { FC } from "react"
+import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 
 export const OnboardingLoadingCollection: FC = () => {
+  const { register } = useOnboardingFadeTransition({ next: () => {} })
+
   return (
     <Flex
+      ref={register(0)}
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
