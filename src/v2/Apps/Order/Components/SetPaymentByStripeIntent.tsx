@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
-import { useSetPayment } from "v2/Apps/Order/Components/Mutations/useSetPayment"
+import { useSetPaymentByStripeIntent } from "v2/Apps/Order/Components/Mutations/useSetPaymentByStripeIntent"
 import { Spinner } from "@artsy/palette"
 import styled from "styled-components"
 
@@ -11,24 +11,25 @@ interface Props {
   onError: (object) => void
 }
 
-export const SetPayment: FC<Props> = props => {
+export const SetPaymentByStripeIntent: FC<Props> = props => {
   const { setupIntentId } = props
-  const { submitMutation: setPaymentMutation } = useSetPayment()
+  const {
+    submitMutation: setPaymentByStripeIntentMutation,
+  } = useSetPaymentByStripeIntent()
 
   useEffect(() => {
-    const setPayment = async () => {
+    const setPaymentByStripeIntent = async () => {
       try {
         const orderOrError = (
-          await setPaymentMutation({
+          await setPaymentByStripeIntentMutation({
             variables: {
               input: {
                 id: props.order.internalID,
-                paymentMethod: "ACH_TRANSFER",
-                paymentMethodId: setupIntentId,
+                setupIntentId: setupIntentId,
               },
             },
           })
-        ).commerceSetPayment?.orderOrError
+        ).commerceSetPaymentByStripeIntent?.orderOrError
 
         if (orderOrError?.error) {
           throw orderOrError.error
@@ -40,7 +41,7 @@ export const SetPayment: FC<Props> = props => {
       }
     }
 
-    setPayment()
+    setPaymentByStripeIntent()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

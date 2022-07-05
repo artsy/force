@@ -28,7 +28,7 @@ import {
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
-import { SetPayment } from "../../Components/SetPayment"
+import { SetPaymentByStripeIntent } from "../../Components/SetPaymentByStripeIntent"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
@@ -226,7 +226,7 @@ export const PaymentRoute: FC<Props> = props => {
         Content={
           <>
             {isSettingPayment ? (
-              <SetPayment
+              <SetPaymentByStripeIntent
                 order={order}
                 setupIntentId={setupIntentId!}
                 onSuccess={onSetPaymentSuccess}
