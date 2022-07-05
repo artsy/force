@@ -41,7 +41,7 @@ export const OnboardingWelcome = () => {
               onClick={handleNext}
               width="100%"
             >
-              Get started
+              Get Started
             </Button>
 
             <Button

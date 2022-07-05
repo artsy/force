@@ -40,7 +40,7 @@ export const OnboardingQuestionTwo: FC = () => {
 
           <Box width="100%">
             <Text variant="lg-display" ref={register(1)}>
-              What do you love most about exploring art?
+              What do you love most about art?
             </Text>
 
             <Spacer mt={1} />

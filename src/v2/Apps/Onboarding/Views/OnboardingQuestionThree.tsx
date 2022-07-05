@@ -81,7 +81,7 @@ export const OnboardingQuestionThree: FC = () => {
 
           <Box width="100%">
             <Text variant="lg-display" ref={register(1)}>
-              Where would you like to dive in first?
+              Almost done! What would you like to see first?
             </Text>
 
             <Spacer mt={1} />

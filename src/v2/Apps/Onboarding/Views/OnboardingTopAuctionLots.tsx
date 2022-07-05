@@ -7,9 +7,10 @@ export const OnboardingTopAuctionLots: FC = () => {
       id="our-top-auction-lots"
       description={
         <>
-          Click the heart to save artworks you love.
+          Follow for works by emerging and established market stars—now open for
+          bidding.
           <br />
-          Follow the collection to stay up-to-date with the latest auction lots.
+          Click the heart to save artworks you love.
         </>
       }
     />
