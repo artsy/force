@@ -10,6 +10,7 @@ import { SavedSearchAlertPills } from "./SavedSearchAlertPills"
 import { FilterPill } from "../types"
 import { getAllowedSearchCriteria } from "../Utils/savedSearchCriteria"
 import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
+import { usePrepareFiltersForPills } from "v2/Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 
 interface ActiveFilterPillsProps {
   defaultPills?: FilterPill[]
@@ -17,7 +18,8 @@ interface ActiveFilterPillsProps {
 
 export const ActiveFilterPills: React.FC<ActiveFilterPillsProps> = props => {
   const { defaultPills = [] } = props
-  const { filters, aggregations, setFilter } = useArtworkFilterContext()
+  const { aggregations, setFilter } = useArtworkFilterContext()
+  const filters = usePrepareFiltersForPills()
   const criteria = getAllowedSearchCriteria(filters ?? {})
   const metric = filters?.metric ?? DEFAULT_METRIC
   const filterPills = extractPillsFromCriteria({
@@ -41,6 +43,10 @@ export const ActiveFilterPills: React.FC<ActiveFilterPillsProps> = props => {
     }
 
     setFilter(pill.field as keyof ArtworkFilters, filterValue)
+
+    if (pill.field === "artistIDs") {
+      setFilter("includeArtworksByFollowedArtists", false)
+    }
   }
 
   return <SavedSearchAlertPills items={pills} onDeletePress={removePill} />
