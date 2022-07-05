@@ -5,6 +5,7 @@ import {
   Flex,
   Input,
   Join,
+  Message,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -43,6 +44,7 @@ import {
 } from "v2/Components/SavedSearchAlert/Utils/convertLabelsToPills"
 import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 const logger = createLogger(
   "v2/Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -185,7 +187,22 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 >
                   Email Alerts
                 </Checkbox>
+                {shouldShowEmailWarning && (
+                  <Message
+                    variant="alert"
+                    title="Change your email preferences"
+                    mt={2}
+                  >
+                    To receive Email Alerts, please update{" "}
+                    <RouterLink to="/unsubscribe">
+                      your email preferences
+                    </RouterLink>
+                    .
+                  </Message>
+                )}
+
                 <Spacer mt={4} />
+
                 <Checkbox
                   onSelect={selected => setFieldValue("push", selected)}
                   selected={values.push}
