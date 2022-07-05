@@ -67,7 +67,7 @@ const Header: React.FC = () => {
               <Button
                 // @ts-ignore
                 as="a"
-                href="mailto:simon.wills@artsymail.com"
+                href="mailto:appraisals@artsymail.com"
               >
                 Request an Appraisal
               </Button>
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
               <Button
                 // @ts-ignore
                 as="a"
-                href="mailto:simon.wills@artsymail.com"
+                href="mailto:appraisals@artsymail.com"
                 size="small"
               >
                 Request an Appraisal
@@ -188,8 +188,8 @@ const MeetOurSpecialists: React.FC = () => {
             <Text variant="lg-display">Simon Wills</Text>
             <Text variant="sm-display">Senior Manager, Trusts & Estates</Text>
             <Text variant="sm-display" color="black60" mb={2}>
-              <a href="mailto:simon.wills@artsymail.com">
-                simon.wills@artsymail.com
+              <a href="mailto:appraisals@artsymail.com">
+                appraisals@artsymail.com
               </a>
             </Text>
           </Flex>
