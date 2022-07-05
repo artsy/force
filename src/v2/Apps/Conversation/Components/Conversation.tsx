@@ -291,7 +291,6 @@ const Conversation: React.FC<ConversationProps> = props => {
           closeModal={() => {
             refreshData()
             setShowOrderModal(false)
-            console.log(refreshData, "show modal")
           }}
         />
       )}
