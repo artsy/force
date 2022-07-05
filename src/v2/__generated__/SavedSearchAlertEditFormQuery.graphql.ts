@@ -40,7 +40,7 @@ query SavedSearchAlertEditFormQuery(
   artistsConnection(slugs: $artistIds) {
     ...SavedSearchAlertEditForm_artistsConnection
   }
-  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) @include(if: $withAggregations) {
+  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) @include(if: $withAggregations) {
     ...SavedSearchAlertEditForm_artworksConnection
     id
   }
@@ -130,7 +130,6 @@ v4 = [
     "kind": "Literal",
     "name": "aggregations",
     "value": [
-      "ARTIST",
       "LOCATION_CITY",
       "MATERIALS_TERMS",
       "MEDIUM",
@@ -579,14 +578,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "62deff25ab77540c67c4d3918df5d36f",
+    "cacheID": "62f8f533172e6774fbd07194173642d8",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistIds: [String!]\n  $withAggregations: Boolean!\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_2FI717\n    id\n  }\n  artistsConnection(slugs: $artistIds) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) @include(if: $withAggregations) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_2FI717 on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels @skip(if: $withAggregations) {\n      field\n      value\n      displayValue\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistIds: [String!]\n  $withAggregations: Boolean!\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_2FI717\n    id\n  }\n  artistsConnection(slugs: $artistIds) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) @include(if: $withAggregations) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_2FI717 on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n    labels @skip(if: $withAggregations) {\n      field\n      value\n      displayValue\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ad038818d6de8f277408f9e4bc297c39';
+(node as any).hash = '33fa0442ca99a7c1ec2cb82d2a49c399';
 export default node;

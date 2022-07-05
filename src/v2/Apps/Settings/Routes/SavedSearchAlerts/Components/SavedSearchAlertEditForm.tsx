@@ -387,14 +387,7 @@ const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
     artworksConnection(
       first: 0
       artistIDs: $artistIds
-      aggregations: [
-        ARTIST
-        LOCATION_CITY
-        MATERIALS_TERMS
-        MEDIUM
-        PARTNER
-        COLOR
-      ]
+      aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]
     ) @include(if: $withAggregations) {
       ...SavedSearchAlertEditForm_artworksConnection
     }

@@ -70,14 +70,7 @@ describe("SavedSearchAlertEditForm", () => {
         artworksConnection(
           first: 0
           artistIDs: $artistIDs
-          aggregations: [
-            ARTIST
-            LOCATION_CITY
-            MATERIALS_TERMS
-            MEDIUM
-            PARTNER
-            COLOR
-          ]
+          aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]
         ) {
           ...SavedSearchAlertEditForm_artworksConnection
         }

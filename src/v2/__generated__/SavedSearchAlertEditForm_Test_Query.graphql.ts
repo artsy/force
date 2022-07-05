@@ -89,7 +89,7 @@ query SavedSearchAlertEditForm_Test_Query(
   artistsConnection(slugs: $artistIDs) {
     ...SavedSearchAlertEditForm_artistsConnection
   }
-  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {
+  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {
     ...SavedSearchAlertEditForm_artworksConnection
     id
   }
@@ -166,7 +166,6 @@ v2 = [
     "kind": "Literal",
     "name": "aggregations",
     "value": [
-      "ARTIST",
       "LOCATION_CITY",
       "MATERIALS_TERMS",
       "MEDIUM",
@@ -559,14 +558,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c148335a3392c74d927732267a17fcc8",
+    "cacheID": "5578f7f925ecb1446a2442f5e5f47aba",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_1EL2c3\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [ARTIST, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1EL2c3 on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_1EL2c3\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1EL2c3 on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5e317efb2e2f42279c0e942a11663dc5';
+(node as any).hash = '6f1e02de8740e8d00d1ce5c1d94783ac';
 export default node;
