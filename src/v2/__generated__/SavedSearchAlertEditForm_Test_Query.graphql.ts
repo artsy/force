@@ -5,10 +5,14 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
+export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 export type SavedSearchAlertEditForm_Test_QueryVariables = {
     artistIDs?: Array<string> | null | undefined;
 };
 export type SavedSearchAlertEditForm_Test_QueryResponse = {
+    readonly viewer: {
+        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
+    } | null;
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertEditForm_me">;
     } | null;
@@ -20,6 +24,13 @@ export type SavedSearchAlertEditForm_Test_QueryResponse = {
     } | null;
 };
 export type SavedSearchAlertEditForm_Test_QueryRawResponse = {
+    readonly viewer: ({
+        readonly notificationPreferences: ReadonlyArray<{
+            readonly status: SubGroupStatus;
+            readonly name: string;
+            readonly channel: string;
+        }>;
+    }) | null;
     readonly me: ({
         readonly savedSearch: ({
             readonly internalID: string;
@@ -82,6 +93,9 @@ export type SavedSearchAlertEditForm_Test_Query = {
 query SavedSearchAlertEditForm_Test_Query(
   $artistIDs: [String!]
 ) {
+  viewer {
+    ...SavedSearchAlertEditForm_viewer
+  }
   me {
     ...SavedSearchAlertEditForm_me_1EL2c3
     id
@@ -144,6 +158,14 @@ fragment SavedSearchAlertEditForm_me_1EL2c3 on Me {
     }
   }
 }
+
+fragment SavedSearchAlertEditForm_viewer on Viewer {
+  notificationPreferences {
+    status
+    name
+    channel
+  }
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -188,14 +210,14 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "name",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "internalID",
   "storageKey": null
 },
 v5 = {
@@ -212,6 +234,22 @@ return {
     "metadata": null,
     "name": "SavedSearchAlertEditForm_Test_Query",
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "SavedSearchAlertEditForm_viewer"
+          }
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -284,6 +322,43 @@ return {
       {
         "alias": null,
         "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "NotificationPreference",
+            "kind": "LinkedField",
+            "name": "notificationPreferences",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "status",
+                "storageKey": null
+              },
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "channel",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
         "concreteType": "Me",
         "kind": "LinkedField",
         "name": "me",
@@ -303,7 +378,7 @@ return {
             "name": "savedSearch",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -431,7 +506,7 @@ return {
                 "name": "userAlertSettings",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -480,8 +555,8 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
                   (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -537,7 +612,7 @@ return {
                     "name": "count",
                     "storageKey": null
                   },
-                  (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -558,14 +633,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5578f7f925ecb1446a2442f5e5f47aba",
+    "cacheID": "a44a1d76f5f1752b083a741072a0fbb8",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  me {\n    ...SavedSearchAlertEditForm_me_1EL2c3\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1EL2c3 on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_1EL2c3\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1EL2c3 on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6f1e02de8740e8d00d1ce5c1d94783ac';
+(node as any).hash = 'c00b8209f78cc7989a5c7e22b2e8895a';
 export default node;

@@ -16,6 +16,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { SavedSearchAlertEditFormQuery } from "v2/__generated__/SavedSearchAlertEditFormQuery.graphql"
 import { SavedSearchAlertEditForm_me } from "v2/__generated__/SavedSearchAlertEditForm_me.graphql"
 import { SavedSearchAlertEditForm_artistsConnection } from "v2/__generated__/SavedSearchAlertEditForm_artistsConnection.graphql"
+import { SavedSearchAlertEditForm_viewer } from "v2/__generated__/SavedSearchAlertEditForm_viewer.graphql"
 import { EditAlertEntity } from "../types"
 import { SavedSearchAlertEditForm_artworksConnection } from "v2/__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
 import { useEditSavedSearchAlert } from "../useEditSavedSearchAlert"
@@ -58,6 +59,7 @@ interface SavedSearchAlertEditFormQueryRendererProps {
 
 interface SavedSearchAlertEditFormProps {
   me: SavedSearchAlertEditForm_me
+  viewer: SavedSearchAlertEditForm_viewer
   artistsConnection: SavedSearchAlertEditForm_artistsConnection
   artworksConnection?: SavedSearchAlertEditForm_artworksConnection | null
   editAlertEntity: EditAlertEntity
@@ -68,6 +70,7 @@ interface SavedSearchAlertEditFormProps {
 
 const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   me,
+  viewer,
   editAlertEntity,
   shouldFetchLabelsFromMetaphysics,
   onDeleteClick,
@@ -91,6 +94,17 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     push: userAlertSettings.push,
     email: userAlertSettings.email,
   }
+  const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
+    preference => {
+      return (
+        preference.channel === "email" &&
+        preference.name === "custom_alerts" &&
+        preference.status === "SUBSCRIBED"
+      )
+    }
+  )
+  const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
+  const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
 
   const handleRemovePill = (pill: FilterPill) => {
     if (shouldFetchLabelsFromMetaphysics) {
@@ -321,6 +335,15 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
 export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
   SavedSearchAlertEditFormContainer,
   {
+    viewer: graphql`
+      fragment SavedSearchAlertEditForm_viewer on Viewer {
+        notificationPreferences {
+          status
+          name
+          channel
+        }
+      }
+    `,
     me: graphql`
       fragment SavedSearchAlertEditForm_me on Me
         @argumentDefinitions(
@@ -392,6 +415,9 @@ const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
     $artistIds: [String!]
     $withAggregations: Boolean!
   ) {
+    viewer {
+      ...SavedSearchAlertEditForm_viewer
+    }
     me {
       ...SavedSearchAlertEditForm_me
         @arguments(savedSearchId: $id, withAggregations: $withAggregations)
@@ -439,11 +465,13 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
         if (
           shouldFetchLabelsFromMetaphysics &&
           props?.artistsConnection &&
-          props.me
+          props.me &&
+          props.viewer
         ) {
           return (
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
+              viewer={props.viewer}
               artistsConnection={props.artistsConnection}
               editAlertEntity={editAlertEntity}
               artworksConnection={null}
@@ -454,10 +482,16 @@ export const SavedSearchAlertEditFormQueryRenderer: React.FC<SavedSearchAlertEdi
           )
         }
 
-        if (props?.artistsConnection && props.artworksConnection && props.me) {
+        if (
+          props?.artistsConnection &&
+          props.artworksConnection &&
+          props.me &&
+          props.viewer
+        ) {
           return (
             <SavedSearchAlertEditFormFragmentContainer
               me={props.me}
+              viewer={props.viewer}
               artistsConnection={props.artistsConnection}
               artworksConnection={props.artworksConnection!}
               editAlertEntity={editAlertEntity}
