@@ -11,12 +11,30 @@ import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
 import { ArticleAdProvider } from "./Components/ArticleAd"
 import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
 import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
+import { useScrollToOpenAuthModal } from "v2/Utils/Hooks/useScrollToOpenAuthModal"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArticleAppProps {
   article: ArticleApp_article
 }
 
 const ArticleApp: FC<ArticleAppProps> = ({ article }) => {
+  const {
+    match: { location },
+  } = useRouter()
+
+  useScrollToOpenAuthModal({
+    key: "editorial-signup-dismissed",
+    modalOptions: {
+      intent: Intent.viewEditorial,
+      contextModule: ContextModule.popUpModal,
+      copy: "Sign up for the latest in art market news",
+      destination: location.pathname,
+      afterSignUpAction: { action: "editorialSignup" },
+    },
+  })
+
   return (
     <ArticleAdProvider>
       <ArticleMetaTagsFragmentContainer article={article} />

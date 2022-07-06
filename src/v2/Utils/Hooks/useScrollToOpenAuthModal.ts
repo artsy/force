@@ -21,12 +21,10 @@ export const useScrollToOpenAuthModal = ({
     }
 
     const setCookie = () => {
-      console.log("set cookie")
       Cookies.set(key, 1, { expires: 31536000 })
     }
 
     const handleScroll = () => {
-      console.log("handle scroll")
       setTimeout(() => {
         openAuthModal(mediator, {
           mode: ModalType.signup,
