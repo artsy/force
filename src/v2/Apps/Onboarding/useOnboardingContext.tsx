@@ -13,12 +13,14 @@ export type State = {
   questionOne: string | null
   questionTwo: string[]
   questionThree: string | null
+  followedIds: string[]
 }
 
 export const DEFAULT_STATE: State = {
   questionOne: null,
   questionTwo: [],
   questionThree: null,
+  followedIds: [],
 }
 
 type Action =
@@ -26,6 +28,7 @@ type Action =
   | { type: "SET_ANSWER_ONE"; payload: string }
   | { type: "SET_ANSWER_TWO"; payload: string }
   | { type: "SET_ANSWER_THREE"; payload: string }
+  | { type: "FOLLOW"; payload: string }
 
 const reducer = (onReset: () => void) => (state: State, action: Action) => {
   switch (action.type) {
@@ -51,6 +54,14 @@ const reducer = (onReset: () => void) => (state: State, action: Action) => {
       return {
         ...state,
         questionThree: action.payload,
+      }
+
+    case "FOLLOW":
+      return {
+        ...state,
+        followedIds: state.followedIds.includes(action.payload)
+          ? state.followedIds.filter(id => id !== action.payload)
+          : [...state.followedIds, action.payload],
       }
 
     default:

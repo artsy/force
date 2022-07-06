@@ -4,8 +4,8 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type OnboardingOrderedSet_orderedSet = {
-    readonly orderedItemsConnection: {
+export type OnboardingSearchResults_viewer = {
+    readonly searchConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly name?: string | null | undefined;
@@ -13,41 +13,59 @@ export type OnboardingOrderedSet_orderedSet = {
                 readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
             } | null;
         } | null> | null;
-    };
-    readonly " $refType": "OnboardingOrderedSet_orderedSet";
+    } | null;
+    readonly " $refType": "OnboardingSearchResults_viewer";
 };
-export type OnboardingOrderedSet_orderedSet$data = OnboardingOrderedSet_orderedSet;
-export type OnboardingOrderedSet_orderedSet$key = {
-    readonly " $data"?: OnboardingOrderedSet_orderedSet$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"OnboardingOrderedSet_orderedSet">;
+export type OnboardingSearchResults_viewer$data = OnboardingSearchResults_viewer;
+export type OnboardingSearchResults_viewer$key = {
+    readonly " $data"?: OnboardingSearchResults_viewer$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"OnboardingSearchResults_viewer">;
 };
 
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": "",
+      "kind": "LocalArgument",
+      "name": "query"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "OnboardingOrderedSet_orderedSet",
+  "name": "OnboardingSearchResults_viewer",
   "selections": [
     {
       "alias": null,
       "args": [
         {
           "kind": "Literal",
+          "name": "entities",
+          "value": [
+            "ARTIST"
+          ]
+        },
+        {
+          "kind": "Literal",
           "name": "first",
-          "value": 50
+          "value": 10
+        },
+        {
+          "kind": "Variable",
+          "name": "query",
+          "variableName": "query"
         }
       ],
-      "concreteType": "OrderedSetItemConnection",
+      "concreteType": "SearchableConnection",
       "kind": "LinkedField",
-      "name": "orderedItemsConnection",
+      "name": "searchConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "OrderedSetItemEdge",
+          "concreteType": "SearchableEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -93,11 +111,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "orderedItemsConnection(first:50)"
+      "storageKey": null
     }
   ],
-  "type": "OrderedSet",
+  "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '744ce891870f559e1680069f33b7bd76';
+(node as any).hash = '57e6e3d2b0b863c1dc8cb78f5b5193be';
 export default node;

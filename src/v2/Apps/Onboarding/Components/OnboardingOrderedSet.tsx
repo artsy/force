@@ -1,12 +1,12 @@
-import { Column, GridColumns, Box } from "@artsy/palette"
+import { Join, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { OnboardingLoadingCollection } from "./OnboardingLoadingCollection"
 import { OnboardingOrderedSet_orderedSet } from "v2/__generated__/OnboardingOrderedSet_orderedSet.graphql"
 import { OnboardingOrderedSetQuery } from "v2/__generated__/OnboardingOrderedSetQuery.graphql"
 import { FC } from "react"
-// import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
-// import { extractNodes } from "v2/Utils/extractNodes"
+import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { useOnboardingContext } from "../useOnboardingContext"
 
 interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet
@@ -15,33 +15,27 @@ interface OnboardingOrderedSetProps {
 export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
   orderedSet,
 }) => {
-  // const artists = extractNodes(orderedSet)
-  // TODO: artists is currently an empty array will fix
+  const { dispatch } = useOnboardingContext()
+  const nodes = extractNodes(orderedSet.orderedItemsConnection)
 
   return (
     <>
-      <GridColumns>
-        <Column span={6}>
-          <Box
-            color="black100"
-            border="1px solid"
-            width="100%"
-            height="100%"
-          ></Box>
-        </Column>
-        <Column span={6}>
-          {/* {artists.map(artist => {
-            if (!artist || artist.name) return null
+      <Join separator={<Separator my={2} />}>
+        {nodes.map(node => {
+          if (!node || !node.name) return null
 
-            return (
-              <EntityHeaderArtistFragmentContainer
-                artist={artist}
-                key={artist.internalID}
-              />
-            )
-          })} */}
-        </Column>
-      </GridColumns>
+          return (
+            <EntityHeaderArtistFragmentContainer
+              artist={node}
+              key={node.internalID}
+              // TODO: Switch this to `onFollow`
+              onClick={() => {
+                dispatch({ type: "FOLLOW", payload: node.internalID! })
+              }}
+            />
+          )
+        })}
+      </Join>
     </>
   )
 }
@@ -55,14 +49,9 @@ const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
           edges {
             node {
               ... on Artist {
+                ...EntityHeaderArtist_artist
                 name
-                slug
                 internalID
-                image {
-                  imageURL
-                  internalID
-                }
-                formattedNationalityAndBirthday
               }
             }
           }
@@ -81,7 +70,6 @@ export const OnboardingOrderedSetQueryRenderer: FC<OnboardingOrderedSetQueryRend
 }) => {
   return (
     <SystemQueryRenderer<OnboardingOrderedSetQuery>
-      placeholder={<OnboardingLoadingCollection />}
       query={graphql`
         query OnboardingOrderedSetQuery($key: String!) {
           orderedSets(key: $key) {
@@ -97,7 +85,7 @@ export const OnboardingOrderedSetQueryRenderer: FC<OnboardingOrderedSetQueryRend
         }
 
         if (!props?.orderedSets) {
-          return <OnboardingLoadingCollection />
+          return null
         }
 
         const [orderedSet] = props.orderedSets
