@@ -147,5 +147,5 @@ export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
       },
     ],
   },
-  is_followed: false,
+  isFollowed: false,
 }

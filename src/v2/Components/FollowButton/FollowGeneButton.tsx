@@ -12,11 +12,13 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   gene: FollowGeneButton_gene
   contextModule?: AuthContextModule
+  onFollow?: (followed: boolean) => void
 }
 
 const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
   gene,
   contextModule = ContextModule.geneHeader,
+  onFollow,
   ...rest
 }) => {
   const { isLoggedIn, mediator } = useSystemContext()
@@ -72,6 +74,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
       },
     })
 
+    onFollow?.(!gene.isFollowed)
     trackFollow(!!gene.isFollowed)
   }
 

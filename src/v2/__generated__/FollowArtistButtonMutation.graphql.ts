@@ -15,8 +15,7 @@ export type FollowArtistButtonMutationResponse = {
     readonly followArtist: {
         readonly artist: {
             readonly id: string;
-            readonly slug: string;
-            readonly is_followed: boolean | null;
+            readonly isFollowed: boolean | null;
             readonly counts: {
                 readonly follows: number | null;
             } | null;
@@ -37,8 +36,7 @@ mutation FollowArtistButtonMutation(
   followArtist(input: $input) {
     artist {
       id
-      slug
-      is_followed: isFollowed
+      isFollowed
       counts {
         follows
       }
@@ -89,13 +87,6 @@ v1 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": "is_followed",
-            "args": null,
-            "kind": "ScalarField",
             "name": "isFollowed",
             "storageKey": null
           },
@@ -142,14 +133,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "11f15ef7b2c9a5bc9feae01fe5b9e56e",
+    "cacheID": "8a079d849d99e95b9c139637e91fc53a",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowArtistButtonMutation(\n  $input: FollowArtistInput!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      slug\n      is_followed: isFollowed\n      counts {\n        follows\n      }\n    }\n  }\n}\n"
+    "text": "mutation FollowArtistButtonMutation(\n  $input: FollowArtistInput!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      isFollowed\n      counts {\n        follows\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '63005133474b3c70e897441c947a1bab';
+(node as any).hash = '72cf91568c776907df7dea0194809515';
 export default node;

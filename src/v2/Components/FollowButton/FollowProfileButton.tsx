@@ -12,11 +12,13 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
   profile: FollowProfileButton_profile
   contextModule?: AuthContextModule
+  onFollow?: (followed: boolean) => void
 }
 
 const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
   profile,
   contextModule = ContextModule.partnerHeader,
+  onFollow,
   ...rest
 }) => {
   const { isLoggedIn, mediator } = useSystemContext()
@@ -72,6 +74,7 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
       },
     })
 
+    onFollow?.(!profile.isFollowed)
     trackFollow(!!profile.isFollowed)
   }
 

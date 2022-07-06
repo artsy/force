@@ -4,26 +4,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FollowArtistButtonQueryVariables = {
-    id: string;
-};
-export type FollowArtistButtonQueryResponse = {
+export type FollowArtistButton_Test_QueryVariables = {};
+export type FollowArtistButton_Test_QueryResponse = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null;
 };
-export type FollowArtistButtonQuery = {
-    readonly response: FollowArtistButtonQueryResponse;
-    readonly variables: FollowArtistButtonQueryVariables;
+export type FollowArtistButton_Test_Query = {
+    readonly response: FollowArtistButton_Test_QueryResponse;
+    readonly variables: FollowArtistButton_Test_QueryVariables;
 };
 
 
 
 /*
-query FollowArtistButtonQuery(
-  $id: String!
-) {
-  artist(id: $id) {
+query FollowArtistButton_Test_Query {
+  artist(id: "example") {
     ...FollowArtistButton_artist
     id
   }
@@ -44,28 +40,27 @@ fragment FollowArtistButton_artist on Artist {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
+    "kind": "Literal",
+    "name": "id",
+    "value": "example"
   }
 ],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "id"
-  }
-];
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+};
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "FollowArtistButtonQuery",
+    "name": "FollowArtistButton_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -77,7 +72,7 @@ return {
             "name": "FollowArtistButton_artist"
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"example\")"
       }
     ],
     "type": "Query",
@@ -85,13 +80,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "FollowArtistButtonQuery",
+    "name": "FollowArtistButton_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -151,19 +146,55 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "05ee5c7910d4e7b26ea0eac0ca80c334",
+    "cacheID": "500b1b1e6b428f56e4cef27ef68634ed",
     "id": null,
-    "metadata": {},
-    "name": "FollowArtistButtonQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artist.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistCounts"
+        },
+        "artist.counts.follows": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
+        "artist.id": (v1/*: any*/),
+        "artist.internalID": (v1/*: any*/),
+        "artist.isFollowed": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artist.name": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        },
+        "artist.slug": (v1/*: any*/)
+      }
+    },
+    "name": "FollowArtistButton_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistButtonQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query FollowArtistButton_Test_Query {\n  artist(id: \"example\") {\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ee43e11ac6bdf463ccdb4945e8bb663f';
+(node as any).hash = '510862b85367ba5fc4dff0ac73e7cbd9';
 export default node;

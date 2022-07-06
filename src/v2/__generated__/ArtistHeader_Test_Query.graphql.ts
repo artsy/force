@@ -83,10 +83,10 @@ fragment ArtistInsightPills_artist on Artist {
 
 fragment FollowArtistButton_artist on Artist {
   id
-  internalID
-  name
   slug
-  is_followed: isFollowed
+  name
+  internalID
+  isFollowed
   counts {
     follows
   }
@@ -199,7 +199,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -213,11 +213,11 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "internalID",
             "storageKey": null
           },
           {
-            "alias": "is_followed",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isFollowed",
@@ -481,7 +481,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3c6ebf43b666e41d7e087cac2e8c788b",
+    "cacheID": "757fb11e63d06411ef85c957cad68448",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -576,7 +576,7 @@ return {
         },
         "artist.insightsList.label": (v7/*: any*/),
         "artist.internalID": (v3/*: any*/),
-        "artist.is_followed": {
+        "artist.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -588,7 +588,7 @@ return {
     },
     "name": "ArtistHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  ...FollowArtistButton_artist\n  ...ArtistInsightPills_artist\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  ...FollowArtistButton_artist\n  ...ArtistInsightPills_artist\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  image {\n    cropped(width: 100, height: 100) {\n      src\n      srcSet\n    }\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightsList: insights(kind: [ACTIVE_SECONDARY_MARKET]) {\n    kind\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

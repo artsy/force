@@ -40,10 +40,10 @@ fragment ExampleArtistRoute_artist on Artist {
 
 fragment FollowArtistButton_artist on Artist {
   id
-  internalID
-  name
   slug
-  is_followed: isFollowed
+  name
+  internalID
+  isFollowed
   counts {
     follows
   }
@@ -119,7 +119,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
+            "name": "slug",
             "storageKey": null
           },
           {
@@ -133,11 +133,11 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "internalID",
             "storageKey": null
           },
           {
-            "alias": "is_followed",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isFollowed",
@@ -174,12 +174,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a31a791b95ddb0601d1bf4417b158aef",
+    "cacheID": "fe99d9b7a2465ed74a349bf0f644d8d6",
     "id": null,
     "metadata": {},
     "name": "exampleRoutes_ArtistQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  bio\n  internalID\n  slug\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  bio\n  internalID\n  slug\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

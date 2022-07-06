@@ -31,8 +31,6 @@ export type ArtworkSidebarArtists_Test_QueryRawResponse = {
                     readonly srcSet: string;
                 }) | null;
             }) | null;
-            readonly id: string;
-            readonly is_followed: boolean | null;
             readonly related: ({
                 readonly suggestedConnection: ({
                     readonly edges: ReadonlyArray<({
@@ -50,6 +48,8 @@ export type ArtworkSidebarArtists_Test_QueryRawResponse = {
                     }) | null> | null;
                 }) | null;
             }) | null;
+            readonly id: string;
+            readonly isFollowed: boolean | null;
         }) | null> | null;
         readonly id: string;
     }) | null;
@@ -102,15 +102,15 @@ fragment EntityHeaderArtist_artist on Artist {
 }
 
 fragment FollowArtistButton_artist_2eN9lh on Artist {
+  ...FollowArtistPopover_artist
   id
-  internalID
-  name
   slug
-  is_followed: isFollowed
+  name
+  internalID
+  isFollowed
   counts {
     follows
   }
-  ...FollowArtistPopover_artist
 }
 
 fragment FollowArtistPopoverRow_artist on Artist {
@@ -335,14 +335,6 @@ return {
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/),
-              {
-                "alias": "is_followed",
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isFollowed",
-                "storageKey": null
-              },
               {
                 "alias": null,
                 "args": null,
@@ -435,6 +427,14 @@ return {
                   }
                 ],
                 "storageKey": null
+              },
+              (v5/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -446,12 +446,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e58b8530f5a43528845ec62e242a7cbe",
+    "cacheID": "25a0afb4e519166784e168dbb862081b",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarArtists_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    ...FollowArtistButton_artist_2eN9lh\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true, includeFallbackArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    ...EntityHeaderArtist_artist\n    internalID\n    slug\n    name\n    ...FollowArtistButton_artist_2eN9lh\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  ...FollowArtistPopover_artist\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true, includeFallbackArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
