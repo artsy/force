@@ -63,7 +63,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           position="absolute"
           top={0}
           right={0}
-          display={["none", "block"]}
+          zIndex={1}
         >
           <CloseIcon fill="black100" display="block" />
         </Clickable>
