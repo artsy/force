@@ -16,8 +16,6 @@ import { HomeFeaturedShowsRailQuery } from "v2/__generated__/HomeFeaturedShowsRa
 import { HomeFeaturedShowsRail_orderedSet } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
-const SHOWS_LIMIT = 6
-
 interface HomeFeaturedShowsRailProps {
   orderedSet: HomeFeaturedShowsRail_orderedSet
 }
@@ -30,8 +28,7 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
   const shows = take(
     compact(orderedSet.items).flatMap(item =>
       item.__typename === "Show" ? [item] : []
-    ),
-    SHOWS_LIMIT
+    )
   )
 
   if (shows.length === 0) {
