@@ -118,7 +118,7 @@ describe("getSaleOrLotTimerInfo", () => {
         const time = { days: "01", hours: "23", minutes: "33", seconds: "00" }
         it("formats the timer to show 'xd xh' in blue", () => {
           const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-          expect(lotTimerInfo.copy).toEqual("1d 23h")
+          expect(lotTimerInfo.copy).toEqual("in 1d 23h")
           expect(lotTimerInfo.color).toEqual("blue100")
         })
       })
@@ -128,7 +128,7 @@ describe("getSaleOrLotTimerInfo", () => {
 
         it("formats the timer to show 'xh xm' in blue", () => {
           const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-          expect(lotTimerInfo.copy).toEqual("23h 33m")
+          expect(lotTimerInfo.copy).toEqual("in 23h 33m")
           expect(lotTimerInfo.color).toEqual("blue100")
         })
       })
@@ -144,7 +144,7 @@ describe("getSaleOrLotTimerInfo", () => {
 
           it("formats the timer to show 'xm xs' in red", () => {
             const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("10m 59s")
+            expect(lotTimerInfo.copy).toEqual("in 10m 59s")
             expect(lotTimerInfo.color).toEqual("red100")
           })
         })
@@ -159,7 +159,7 @@ describe("getSaleOrLotTimerInfo", () => {
 
           it("formats the timer to show 'xm xs' in red", () => {
             const lotTimerInfo = getSaleOrLotTimerInfo(time, { hasStarted })
-            expect(lotTimerInfo.copy).toEqual("0m 59s")
+            expect(lotTimerInfo.copy).toEqual("in 0m 59s")
             expect(lotTimerInfo.color).toEqual("red100")
           })
         })
@@ -180,7 +180,7 @@ describe("getSaleOrLotTimerInfo", () => {
               hasStarted,
               urgencyIntervalMinutes,
             })
-            expect(lotTimerInfo.copy).toEqual("10m 59s")
+            expect(lotTimerInfo.copy).toEqual("in 10m 59s")
             expect(lotTimerInfo.color).toEqual("black100")
           })
         })
@@ -198,7 +198,7 @@ describe("getSaleOrLotTimerInfo", () => {
               hasStarted,
               urgencyIntervalMinutes,
             })
-            expect(lotTimerInfo.copy).toEqual("0m 59s")
+            expect(lotTimerInfo.copy).toEqual("in 0m 59s")
             expect(lotTimerInfo.color).toEqual("red100")
           })
         })
