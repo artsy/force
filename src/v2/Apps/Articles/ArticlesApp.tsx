@@ -6,14 +6,31 @@ import { MetaTags } from "v2/Components/MetaTags"
 import { ArticlesIndexArticlesPaginationContainer } from "./Components/ArticlesIndexArticles"
 import { getENV } from "v2/Utils/getENV"
 import { ArticlesApp_viewer } from "v2/__generated__/ArticlesApp_viewer.graphql"
-import { useScrollingAuthModal } from "./Utils/useScrollingAuthModal"
+import { useScrollToOpenAuthModal } from "v2/Utils/Hooks/useScrollToOpenAuthModal"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArticlesAppProps {
   viewer: ArticlesApp_viewer
 }
 
 const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
-  useScrollingAuthModal()
+  const {
+    match: { location },
+  } = useRouter()
+
+  useScrollToOpenAuthModal({
+    key: "editorial-signup-dismissed",
+    modalOptions: {
+      intent: Intent.viewEditorial,
+      contextModule: ContextModule.popUpModal,
+      copy: "Sign up for the latest in art market news",
+      destination: location.pathname,
+      afterSignUpAction: {
+        action: "editorialSignup",
+      },
+    },
+  })
 
   return (
     <>
