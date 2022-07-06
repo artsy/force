@@ -1,4 +1,3 @@
-import { getDefaultSort } from "v2/Apps/Artist/Routes/WorksForSale/Utils/getDefaultSort"
 import { getInitialFilterState } from "v2/Components/ArtworkFilter/Utils/getInitialFilterState"
 
 export function getWorksForSaleRouteVariables(
@@ -19,10 +18,11 @@ export function getWorksForSaleRouteVariables(
 
   const trendingScoreSortFlag =
     featureFlags["trending-sort-for-artist-artwork-grids"]
-  filterParams.sort = getDefaultSort(
-    filterParams.sort,
-    trendingScoreSortFlag?.variant
-  )
+  const variantName = trendingScoreSortFlag?.variant?.name
+
+  if (filterParams.sort === "-decayed_merch" && variantName === "experiment") {
+    filterParams.sort = "-default_trending_score"
+  }
 
   const aggregations = [
     "MEDIUM",
