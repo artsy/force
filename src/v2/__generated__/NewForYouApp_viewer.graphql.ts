@@ -17,13 +17,25 @@ export type NewForYouApp_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "first"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "NewForYouApp_viewer",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "NewForYouArtworksGrid_viewer"
     }
@@ -31,5 +43,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'c0853067c5df9e2c4f11fa5787d41abb';
+(node as any).hash = '931ff1fd40cb3ac476d2a6b6da34e326';
 export default node;
