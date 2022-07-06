@@ -53,7 +53,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 */
 
@@ -235,7 +235,7 @@ return {
               (v3/*: any*/),
               (v2/*: any*/),
               {
-                "alias": "is_followed",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isFollowed",
@@ -258,12 +258,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b5b28b0983133a0893bdaa686dc609d3",
+    "cacheID": "4898a8a1ade8074ed2a737b0fdc8a9af",
     "id": null,
     "metadata": {},
     "name": "EntityHeaderFairStoryQuery",
     "operationKind": "query",
-    "text": "query EntityHeaderFairStoryQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query EntityHeaderFairStoryQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();

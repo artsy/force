@@ -15,7 +15,7 @@ export type FollowProfileButtonMutationResponse = {
     readonly followProfile: {
         readonly profile: {
             readonly id: string;
-            readonly is_followed: boolean | null;
+            readonly isFollowed: boolean | null;
         } | null;
     } | null;
 };
@@ -33,7 +33,7 @@ mutation FollowProfileButtonMutation(
   followProfile(input: $input) {
     profile {
       id
-      is_followed: isFollowed
+      isFollowed
     }
   }
 }
@@ -78,7 +78,7 @@ v1 = [
             "storageKey": null
           },
           {
-            "alias": "is_followed",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isFollowed",
@@ -109,14 +109,14 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "1c1b6c4931b2dbe3029e2bce65d6a025",
+    "cacheID": "9114abb5a82e2df610c2ccdae0a8bf44",
     "id": null,
     "metadata": {},
     "name": "FollowProfileButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowProfileButtonMutation(\n  $input: FollowProfileInput!\n) {\n  followProfile(input: $input) {\n    profile {\n      id\n      is_followed: isFollowed\n    }\n  }\n}\n"
+    "text": "mutation FollowProfileButtonMutation(\n  $input: FollowProfileInput!\n) {\n  followProfile(input: $input) {\n    profile {\n      id\n      isFollowed\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'fa116a6824af830210198ab020a8d472';
+(node as any).hash = 'f3ac77cf6f3bdc0d0ce912fa06939749';
 export default node;

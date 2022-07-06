@@ -1,56 +1,69 @@
 import * as React from "react"
-import { commitMutation, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { FollowButton } from "./Button"
 import { FollowGeneButton_gene } from "v2/__generated__/FollowGeneButton_gene.graphql"
-import { FollowGeneButtonMutation } from "v2/__generated__/FollowGeneButtonMutation.graphql"
 import { ButtonProps } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
-import { Intent, ContextModule } from "@artsy/cohesion"
+import { Intent, ContextModule, AuthContextModule } from "@artsy/cohesion"
+import { useMutation } from "v2/Utils/Hooks/useMutation"
+import { useFollowButtonTracking } from "./useFollowButtonTracking"
 
 interface FollowGeneButtonProps extends Omit<ButtonProps, "variant"> {
   gene: FollowGeneButton_gene
+  contextModule?: AuthContextModule
 }
 
 const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
   gene,
+  contextModule = ContextModule.geneHeader,
   ...rest
 }) => {
-  const { relayEnvironment, user, mediator } = useSystemContext()
+  const { isLoggedIn, mediator } = useSystemContext()
 
-  const handleClick = () => {
-    if (!user) {
+  const { trackFollow } = useFollowButtonTracking({
+    ownerId: gene.internalID,
+    ownerSlug: gene.slug,
+    contextModule,
+  })
+
+  const { submitMutation } = useMutation({
+    mutation: graphql`
+      mutation FollowGeneButtonMutation($input: FollowGeneInput!) {
+        followGene(input: $input) {
+          gene {
+            id
+            isFollowed
+          }
+        }
+      }
+    `,
+    optimisticResponse: {
+      followGene: {
+        gene: {
+          id: gene.id,
+          isFollowed: !gene.isFollowed,
+        },
+      },
+    },
+  })
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault()
+
+    if (!isLoggedIn) {
       openAuthToSatisfyIntent(mediator!, {
-        // FIXME:
-        // @ts-ignore
-        entity: gene,
-        contextModule: ContextModule.geneHeader,
+        entity: { name: gene.name!, slug: gene.slug },
+        contextModule,
         intent: Intent.followGene,
       })
 
       return
     }
 
-    // TODO: Replace with hook
-    commitMutation<FollowGeneButtonMutation>(relayEnvironment!, {
-      mutation: graphql`
-        mutation FollowGeneButtonMutation($input: FollowGeneInput!) {
-          followGene(input: $input) {
-            gene {
-              id
-              isFollowed
-            }
-          }
-        }
-      `,
-      optimisticResponse: {
-        followGene: {
-          gene: {
-            id: gene.id,
-            isFollowed: !gene.isFollowed,
-          },
-        },
-      },
+    submitMutation({
       variables: {
         input: {
           geneID: gene.internalID,
@@ -58,6 +71,8 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
         },
       },
     })
+
+    trackFollow(!!gene.isFollowed)
   }
 
   return (
@@ -83,3 +98,5 @@ export const FollowGeneButtonFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+// TODO: QueryRenderer

@@ -2,7 +2,6 @@ import { ContextModule } from "@artsy/cohesion"
 import { BoxProps, Flex, Text, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { EntityHeaderFair_fair } from "v2/__generated__/EntityHeaderFair_fair.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
@@ -21,8 +20,6 @@ const EntityHeaderFair: FC<EntityHeaderFairProps> = ({
   FollowButton,
   ...rest
 }) => {
-  const { user } = useSystemContext()
-
   const image = fair?.avatar?.cropped
   const meta = [fair.startAt, fair.endAt].filter(Boolean).join(" – ")
   const initials = fair.profile?.initials ?? fair.name?.[0]
@@ -62,10 +59,9 @@ const EntityHeaderFair: FC<EntityHeaderFairProps> = ({
 
       {FollowButton || (
         <FollowProfileButtonFragmentContainer
-          user={user}
           profile={fair.profile!}
           contextModule={ContextModule.fairsHeader}
-          buttonProps={{ size: "small" }}
+          size="small"
         />
       )}
     </Flex>

@@ -6,9 +6,11 @@ import { format } from "util"
 import "@testing-library/jest-dom"
 
 jest.mock("react-tracking")
-import _track from "react-tracking"
+import _track, { useTracking as _useTracking } from "react-tracking"
 const track = _track as jest.Mock<typeof _track>
+const useTracking = _useTracking as jest.Mock
 track.mockImplementation(() => x => x as any)
+useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
 jest.mock("react-sizeme", () => jest.fn(() => d => d))
 jest.mock("v2/Utils/logger")

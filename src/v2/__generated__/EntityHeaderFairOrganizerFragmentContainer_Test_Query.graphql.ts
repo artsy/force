@@ -51,7 +51,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 */
 
@@ -184,7 +184,7 @@ return {
               (v3/*: any*/),
               (v1/*: any*/),
               {
-                "alias": "is_followed",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isFollowed",
@@ -261,7 +261,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9dfc607a7f23f51710c9d89d497a9a61",
+    "cacheID": "45e3ed08c81663a6362f98fdb7b9a51d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -310,7 +310,7 @@ return {
         "fairOrganizer.profile.id": (v5/*: any*/),
         "fairOrganizer.profile.initials": (v6/*: any*/),
         "fairOrganizer.profile.internalID": (v5/*: any*/),
-        "fairOrganizer.profile.is_followed": {
+        "fairOrganizer.profile.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -323,7 +323,7 @@ return {
     },
     "name": "EntityHeaderFairOrganizerFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderFairOrganizerFragmentContainer_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...EntityHeaderFairOrganizer_fairOrganizer\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query EntityHeaderFairOrganizerFragmentContainer_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...EntityHeaderFairOrganizer_fairOrganizer\n    id\n  }\n}\n\nfragment EntityHeaderFairOrganizer_fairOrganizer on FairOrganizer {\n  internalID\n  slug\n  name\n  fairsConnection {\n    totalCount\n  }\n  profile {\n    ...FollowProfileButton_profile\n    href\n    initials\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();

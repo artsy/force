@@ -110,7 +110,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 
 fragment PartnersFilteredCells_viewer_iDCAR on Viewer {
@@ -442,7 +442,7 @@ return {
                           (v10/*: any*/),
                           (v8/*: any*/),
                           {
-                            "alias": "is_followed",
+                            "alias": null,
                             "args": null,
                             "kind": "ScalarField",
                             "name": "isFollowed",
@@ -621,12 +621,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7ad656439937ba1a607dfba482a78a3f",
+    "cacheID": "ba3ca473b66fb072d3be548aff0368a3",
     "id": null,
     "metadata": {},
     "name": "PartnersFilteredCellsQuery",
     "operationKind": "query",
-    "text": "query PartnersFilteredCellsQuery(\n  $after: String\n  $near: String\n  $category: [String]\n  $type: [PartnerClassification]\n) {\n  viewer {\n    ...PartnersFilteredCells_viewer_iDCAR\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnersFilteredCells_viewer_iDCAR on Viewer {\n  partnersConnection(after: $after, defaultProfilePublic: true, eligibleForListing: true, first: 12, near: $near, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...CellPartner_partner\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PartnersFilteredCellsQuery(\n  $after: String\n  $near: String\n  $category: [String]\n  $type: [PartnerClassification]\n) {\n  viewer {\n    ...PartnersFilteredCells_viewer_iDCAR\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment PartnersFilteredCells_viewer_iDCAR on Viewer {\n  partnersConnection(after: $after, defaultProfilePublic: true, eligibleForListing: true, first: 12, near: $near, partnerCategories: $category, sort: RANDOM_SCORE_DESC, type: $type) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...CellPartner_partner\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

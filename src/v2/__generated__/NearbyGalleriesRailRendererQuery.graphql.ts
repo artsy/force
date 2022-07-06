@@ -107,7 +107,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 
 fragment NearbyGalleriesRail_partners on PartnerEdge {
@@ -374,7 +374,7 @@ return {
                       (v4/*: any*/),
                       (v2/*: any*/),
                       {
-                        "alias": "is_followed",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "isFollowed",
@@ -495,12 +495,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6d1c99e0bc277d01ca787c2aa4a019b6",
+    "cacheID": "2134752a5f668cbc3d8f8791aebef67d",
     "id": null,
     "metadata": {},
     "name": "NearbyGalleriesRailRendererQuery",
     "operationKind": "query",
-    "text": "query NearbyGalleriesRailRendererQuery(\n  $near: String!\n) {\n  partnersConnection(first: 12, near: $near, eligibleForListing: true, defaultProfilePublic: true, sort: RANDOM_SCORE_DESC) {\n    edges {\n      ...NearbyGalleriesRail_partners\n    }\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NearbyGalleriesRail_partners on PartnerEdge {\n  node {\n    ...CellPartner_partner\n    internalID\n    id\n  }\n}\n"
+    "text": "query NearbyGalleriesRailRendererQuery(\n  $near: String!\n) {\n  partnersConnection(first: 12, near: $near, eligibleForListing: true, defaultProfilePublic: true, sort: RANDOM_SCORE_DESC) {\n    edges {\n      ...NearbyGalleriesRail_partners\n    }\n  }\n}\n\nfragment CellPartner_partner on Partner {\n  ...EntityHeaderPartner_partner\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    image {\n      cropped(width: 445, height: 334, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    ...FollowProfileButton_profile\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n\nfragment NearbyGalleriesRail_partners on PartnerEdge {\n  node {\n    ...CellPartner_partner\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();

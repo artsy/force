@@ -12,7 +12,6 @@ import {
 import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import { useSystemContext } from "v2/System"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
@@ -27,7 +26,6 @@ export const HeaderImage = styled(Image)`
 `
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
-  const { user } = useSystemContext()
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   const hasLocations = partner.locations?.totalCount > 0
   // TODO: Remove after page migration.
@@ -82,9 +80,8 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
         {canFollow && (
           <FollowProfileButton
             profile={partner.profile}
-            user={user}
             contextModule={ContextModule.partnerHeader}
-            buttonProps={{ width: "100%" }}
+            width="100%"
           />
         )}
       </Column>

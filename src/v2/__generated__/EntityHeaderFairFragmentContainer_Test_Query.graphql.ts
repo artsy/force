@@ -49,7 +49,7 @@ fragment FollowProfileButton_profile on Profile {
   slug
   name
   internalID
-  is_followed: isFollowed
+  isFollowed
 }
 */
 
@@ -242,7 +242,7 @@ return {
               (v2/*: any*/),
               (v1/*: any*/),
               {
-                "alias": "is_followed",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isFollowed",
@@ -265,7 +265,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "76a04d66141d48e6678b04364e7d21d4",
+    "cacheID": "b708dfc33f3dec97f614e394f6d76d9b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -303,7 +303,7 @@ return {
         "fair.profile.id": (v6/*: any*/),
         "fair.profile.initials": (v5/*: any*/),
         "fair.profile.internalID": (v6/*: any*/),
-        "fair.profile.is_followed": {
+        "fair.profile.isFollowed": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -316,7 +316,7 @@ return {
     },
     "name": "EntityHeaderFairFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderFairFragmentContainer_Test_Query {\n  fair(id: \"example\") {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query EntityHeaderFairFragmentContainer_Test_Query {\n  fair(id: \"example\") {\n    ...EntityHeaderFair_fair\n    id\n  }\n}\n\nfragment EntityHeaderFair_fair on Fair {\n  internalID\n  href\n  name\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    initials\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n}\n"
   }
 };
 })();
