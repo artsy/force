@@ -17,12 +17,14 @@ interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
   artist: FollowArtistButton_artist
   contextModule?: AuthContextModule
   triggerSuggestions?: boolean
+  onFollow?: (followed: boolean) => void
 }
 
 const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   artist,
   contextModule = ContextModule.artistHeader,
   triggerSuggestions = false,
+  onFollow,
   ...rest
 }) => {
   const { isLoggedIn, mediator } = useSystemContext()
@@ -64,6 +66,7 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
     },
     updater: (store, data) => {
       if (!data.followArtist?.artist) return
+
       const { artist } = data.followArtist
 
       const proxy = store.get(artist.id)
@@ -106,6 +109,7 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
       },
     })
 
+    onFollow?.(!artist.isFollowed)
     trackFollow(!!artist.isFollowed)
   }
 

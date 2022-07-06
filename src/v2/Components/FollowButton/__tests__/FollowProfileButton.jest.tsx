@@ -15,10 +15,15 @@ jest.mock("v2/Utils/Hooks/useMutation")
 jest.mock("v2/System/useSystemContext")
 jest.mock("../useFollowButtonTracking")
 
+const onFollow = jest.fn()
+
 const { renderWithRelay } = setupTestWrapperTL<FollowProfileButton_Test_Query>({
   Component: props => {
     return (
-      <FollowProfileButtonFragmentContainer profile={props.partner!.profile!} />
+      <FollowProfileButtonFragmentContainer
+        profile={props.partner!.profile!}
+        onFollow={onFollow}
+      />
     )
   },
   query: graphql`
@@ -136,6 +141,20 @@ describe("FollowProfileButton", () => {
       fireEvent.click(button)
 
       expect(trackFollow).toBeCalledWith(true)
+    })
+
+    it("calls the onFollow callback", () => {
+      renderWithRelay({
+        Profile: () => ({
+          isFollowed: true,
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(onFollow).toBeCalledTimes(1)
+      expect(onFollow).toBeCalledWith(false)
     })
   })
 })
