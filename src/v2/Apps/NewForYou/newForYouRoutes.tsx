@@ -15,17 +15,23 @@ export const newForYouRoutes: AppRouteConfig[] = [
     },
     prepareVariables: (params, props) => {
       const first = parseInt(props.location.query.first, 10) || 20
+      const includeBackfill = props.location.query.includeBackfill ?? true
 
       return {
         ...params,
         ...props,
         first,
+        includeBackfill,
       }
     },
     query: graphql`
-      query newForYouRoutes_TopLevelQuery($first: Int) {
+      query newForYouRoutes_TopLevelQuery(
+        $first: Int
+        $includeBackfill: Boolean!
+      ) {
         viewer {
-          ...NewForYouApp_viewer @arguments(first: $first)
+          ...NewForYouApp_viewer
+            @arguments(first: $first, includeBackfill: $includeBackfill)
         }
       }
     `,

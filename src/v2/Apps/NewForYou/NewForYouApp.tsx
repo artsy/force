@@ -46,8 +46,12 @@ export const NewForYouAppFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment NewForYouApp_viewer on Viewer
-        @argumentDefinitions(first: { type: "Int" }) {
-        ...NewForYouArtworksGrid_viewer @arguments(first: $first)
+        @argumentDefinitions(
+          first: { type: "Int" }
+          includeBackfill: { type: "Boolean!" }
+        ) {
+        ...NewForYouArtworksGrid_viewer
+          @arguments(first: $first, includeBackfill: $includeBackfill)
       }
     `,
   }
