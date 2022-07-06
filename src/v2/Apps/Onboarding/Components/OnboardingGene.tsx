@@ -19,7 +19,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
 
   return (
-    <Box padding={6}>
+    <Box px={[2, 4]} py={6}>
       <GridColumns>
         <Column span={10}>
           <Text variant="xl" color="black100">

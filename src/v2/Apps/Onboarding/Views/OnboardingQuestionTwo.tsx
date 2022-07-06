@@ -1,7 +1,7 @@
-import { Flex, Spacer, Text, Join, Box, Pill, Button } from "@artsy/palette"
+import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
 import { FC } from "react"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingProgress } from "../Components/OnboardingProgress"
+import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
   OPTION_COLLECTING_ART_THAT_MOVES_ME,
@@ -30,27 +30,22 @@ export const OnboardingQuestionTwo: FC = () => {
         />
       }
       right={
-        <Flex
-          flexDirection="column"
-          p={4}
-          justifyContent="space-between"
-          width="100%"
+        <OnboardingQuestionPanel
+          disabled={state.questionTwo.length === 0 || loading}
+          loading={loading}
+          onNext={handleNext}
         >
-          <OnboardingProgress preview={loading} />
+          <Text variant="lg-display" ref={register(1)}>
+            What do you love most about art?
+          </Text>
 
-          <Box width="100%">
-            <Text variant="lg-display" ref={register(1)}>
-              What do you love most about art?
-            </Text>
+          <Spacer mt={1} />
 
-            <Spacer mt={1} />
+          <Text variant="sm-display" ref={register(2)}>
+            Choose as many as you like.
+          </Text>
 
-            <Text variant="sm-display" ref={register(2)}>
-              Choose as many as you like.
-            </Text>
-          </Box>
-
-          <Box ref={register(3)}>
+          <Box ref={register(3)} mt={4}>
             <Join separator={<Spacer mt={2} />}>
               {QUESTION_2.map(option => {
                 return (
@@ -67,16 +62,7 @@ export const OnboardingQuestionTwo: FC = () => {
               })}
             </Join>
           </Box>
-
-          <Button
-            disabled={state.questionTwo.length === 0 || loading}
-            loading={loading}
-            onClick={handleNext}
-            width="100%"
-          >
-            Next
-          </Button>
-        </Flex>
+        </OnboardingQuestionPanel>
       }
     />
   )

@@ -14,6 +14,7 @@ export const OnboardingLoadingCollection: FC = () => {
       textAlign="center"
       width="100%"
       height="100%"
+      p={4}
     >
       <Spinner position="static" color="blue100" />
 
