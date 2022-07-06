@@ -15,6 +15,7 @@ export const openAuthModal = (mode: ModalType, options: ModalOptions) => {
 /**
  * Set up scroll event to open authentication modal via 'timed' trigger
  * Opens 2 seconds after first scroll by default
+ * @deprecated: Use `useScrollToOpenAuthModal` instead
  */
 export const handleScrollingAuthModal = (options: ModalOptions) => {
   if (getENV("CURRENT_USER") || getENV("IS_MOBILE")) {
