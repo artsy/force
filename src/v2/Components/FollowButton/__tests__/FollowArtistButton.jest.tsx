@@ -1,140 +1,137 @@
-import { SystemContextProvider } from "v2/System"
-import { mount } from "enzyme"
+import { useSystemContext } from "v2/System/useSystemContext"
 import "jest-styled-components"
-import { commitMutation } from "react-relay"
-import { FollowButton } from "../Button"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../FollowArtistButton"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { graphql } from "relay-runtime"
+import { FollowArtistButtonFragmentContainer } from "../FollowArtistButton"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
-import { mockLocation } from "v2/DevTools/mockLocation"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { fireEvent, screen } from "@testing-library/react"
+import { FollowArtistButton_Test_Query } from "v2/__generated__/FollowArtistButton_Test_Query.graphql"
+import { useMutation } from "v2/Utils/Hooks/useMutation"
+import { useFollowButtonTracking } from "../useFollowButtonTracking"
 
-const openAuthToSatisfyIntent = jest.spyOn(
-  openAuthModal,
-  "openAuthToSatisfyIntent"
-)
-jest.mock("react-relay", () => ({
-  commitMutation: jest.fn(),
-  createFragmentContainer: component => component,
-}))
+jest.unmock("react-relay")
+
+jest.mock("v2/Utils/Hooks/useMutation")
+jest.mock("v2/System/useSystemContext")
+jest.mock("../useFollowButtonTracking")
+
+const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
+  Component: props => {
+    return <FollowArtistButtonFragmentContainer artist={props.artist!} />
+  },
+  query: graphql`
+    query FollowArtistButton_Test_Query @relay_test_operation {
+      artist(id: "example") {
+        ...FollowArtistButton_artist
+      }
+    }
+  `,
+})
 
 describe("FollowArtistButton", () => {
-  let props
-  let mediator
-  const getWrapper = (passedProps = props, user = {}) => {
-    return mount(
-      <SystemContextProvider user={user} mediator={mediator}>
-        <AnalyticsContext.Provider
-          value={{
-            contextPageOwnerId: "54321",
-            contextPageOwnerType: OwnerType.artwork,
-            contextPageOwnerSlug: "andy-warhol-skull",
-          }}
-        >
-          <FollowArtistButton {...passedProps} />
-        </AnalyticsContext.Provider>
-      </SystemContextProvider>
-    )
-  }
+  const submitMutation = jest.fn()
+  const trackFollow = jest.fn()
 
-  beforeAll(() => {
-    mockLocation()
-    mediator = { ready: () => true, trigger: jest.fn() }
-    props = {
-      artist: {
-        internalID: "12345",
-        slug: "damon-zucconi",
-        name: "Damon Zucconi",
-        is_followed: false,
-        counts: { follows: 99 },
-      },
-      relay: { environment: "" },
-      tracking: { trackEvent: jest.fn() },
-      contextModule: ContextModule.artistsToFollowRail,
-    }
+  beforeEach(() => {
+    ;(useMutation as jest.Mock).mockImplementation(() => {
+      return { submitMutation }
+    })
+    ;(useFollowButtonTracking as jest.Mock).mockImplementation(() => {
+      return { trackFollow }
+    })
   })
 
-  describe("unit", () => {
-    it("Calls #onOpenAuthModal if no current user", () => {
-      const component = getWrapper()
-      component.find(FollowButton).simulate("click")
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
-      expect(openAuthToSatisfyIntent).toBeCalledWith(mediator, {
-        contextModule: "artistsToFollowRail",
-        entity: {
-          counts: {
-            follows: 99,
+  describe("logged out", () => {
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return { isLoggedIn: false }
+      })
+    })
+
+    it("renders correctly", () => {
+      renderWithRelay()
+      expect(screen.getByText("Follow")).toBeInTheDocument()
+    })
+
+    it("opens the auth modal", () => {
+      const openAuthToSatisfyIntent = jest.spyOn(
+        openAuthModal,
+        "openAuthToSatisfyIntent"
+      )
+
+      renderWithRelay({
+        Artist: () => ({
+          name: "Example",
+          slug: "example",
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(openAuthToSatisfyIntent).toBeCalledWith(undefined, {
+        contextModule: "artistHeader",
+        entity: { name: "Example", slug: "example" },
+        intent: "followArtist",
+      })
+    })
+  })
+
+  describe("logged in", () => {
+    beforeEach(() => {
+      ;(useSystemContext as jest.Mock).mockImplementation(() => {
+        return { isLoggedIn: true }
+      })
+    })
+
+    it("calls the follow mutation", () => {
+      renderWithRelay({
+        Artist: () => ({
+          internalID: "example",
+        }),
+      })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(submitMutation).toBeCalledWith({
+        variables: {
+          input: {
+            artistID: "example",
+            unfollow: false,
           },
-          internalID: "12345",
-          is_followed: false,
-          name: "Damon Zucconi",
-          slug: "damon-zucconi",
         },
-        intent: "followArtist",
-      })
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        afterSignUpAction: {
-          action: "follow",
-          kind: "artist",
-          objectId: "damon-zucconi",
-        },
-        contextModule: "artistsToFollowRail",
-        copy: "Sign up to follow Damon Zucconi",
-        intent: "followArtist",
-        mode: "signup",
       })
     })
 
-    it("Follows an artist if current user", () => {
-      const component = getWrapper(props, { id: "uid" })
-      component.find(FollowButton).simulate("click")
-      const mutation = (commitMutation as any).mock.calls[0][1].variables.input
-
-      expect(mutation.artistID).toBe("12345")
-      expect(mutation.unfollow).toBe(false)
-    })
-
-    it("Unfollows an artist if current user", () => {
-      props.artist.is_followed = true
-      const component = getWrapper(props, { id: "uid" })
-      component.find(FollowButton).simulate("click")
-      const mutation = (commitMutation as any).mock.calls[1][1].variables.input
-
-      expect(mutation.artistID).toBe("12345")
-      expect(mutation.unfollow).toBe(true)
-    })
-
-    it("Tracks follow click when following", () => {
-      const component = getWrapper(props, { id: "uid" })
-      component.find(FollowButton).simulate("click")
-
-      expect(props.tracking.trackEvent).toBeCalledWith({
-        action: "followedArtist",
-        context_module: "artistsToFollowRail",
-        context_owner_id: "54321",
-        context_owner_slug: "andy-warhol-skull",
-        context_owner_type: "artwork",
-        owner_id: "12345",
-        owner_slug: "damon-zucconi",
-        owner_type: "artist",
+    it("tracks the follow click when following", () => {
+      renderWithRelay({
+        Artist: () => ({
+          isFollowed: false,
+        }),
       })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(trackFollow).toBeCalledWith(false)
     })
 
-    it("Tracks unfollow click when unfollowing", () => {
-      props.artist.is_followed = true
-      const component = getWrapper(props, { id: "1234" })
-      component.find(FollowButton).simulate("click")
-
-      expect(props.tracking.trackEvent).toBeCalledWith({
-        action: "unfollowedArtist",
-        context_module: "artistsToFollowRail",
-        context_owner_id: "54321",
-        context_owner_slug: "andy-warhol-skull",
-        context_owner_type: "artwork",
-        owner_id: "12345",
-        owner_slug: "damon-zucconi",
-        owner_type: "artist",
+    it("tracks the unfollow click when unfollowing", () => {
+      renderWithRelay({
+        Artist: () => ({
+          isFollowed: true,
+        }),
       })
+
+      const button = screen.getByRole("button")
+      fireEvent.click(button)
+
+      expect(trackFollow).toBeCalledWith(true)
     })
   })
 })

@@ -31,10 +31,10 @@ query PartnerArtistsCarouselRendererQuery(
 
 fragment FollowArtistButton_artist on Artist {
   id
-  internalID
-  name
   slug
-  is_followed: isFollowed
+  name
+  internalID
+  isFollowed
   counts {
     follows
   }
@@ -240,7 +240,7 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "is_followed",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "isFollowed",
@@ -422,12 +422,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "25d2015a5d01a3a932bf0547f27517d8",
+    "cacheID": "af34f5d6b9402f6928ff3a1aae2b60b3",
     "id": null,
     "metadata": {},
     "name": "PartnerArtistsCarouselRendererQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 320, height: 240) {\n            src\n            srcSet\n            height\n            width\n          }\n        }\n        id\n      }\n    }\n  }\n  node {\n    id\n    name\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    image {\n      cropped(width: 100, height: 100) {\n        url\n      }\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n      }\n      ...PartnerArtistsCarouselItem_artist\n      id\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {\n  artworksConnection(first: 1) {\n    edges {\n      node {\n        image {\n          cropped(width: 320, height: 240) {\n            src\n            srcSet\n            height\n            width\n          }\n        }\n        id\n      }\n    }\n  }\n  node {\n    id\n    name\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    image {\n      cropped(width: 100, height: 100) {\n        url\n      }\n    }\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artistsConnection(first: 20, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n      }\n      ...PartnerArtistsCarouselItem_artist\n      id\n    }\n  }\n}\n"
   }
 };
 })();

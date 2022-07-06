@@ -2,15 +2,18 @@ import {
   commitMutation,
   GraphQLTaggedNode,
   MutationParameters,
+  MutationConfig,
 } from "relay-runtime"
 import { useSystemContext } from "v2/System/useSystemContext"
 
 export const useMutation = <T extends MutationParameters>({
   mutation,
   optimisticResponse,
+  updater,
 }: {
   mutation: GraphQLTaggedNode
   optimisticResponse?: T["response"]
+  updater?: MutationConfig<T>["updater"]
 }) => {
   const { relayEnvironment } = useSystemContext()
 
@@ -24,6 +27,7 @@ export const useMutation = <T extends MutationParameters>({
       commitMutation<T>(relayEnvironment!, {
         mutation,
         variables,
+        updater,
         optimisticResponse,
         onError: reject,
         onCompleted: (res, errors) => {

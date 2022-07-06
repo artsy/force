@@ -87,8 +87,9 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               <Column start={avatar ? 3 : undefined} span={4}>
                 <FollowArtistButtonFragmentContainer
                   artist={artist}
-                  buttonProps={{ size: "large", width: "100%" }}
                   contextModule={ContextModule.artistHeader}
+                  size="large"
+                  width="100%"
                 />
               </Column>
 

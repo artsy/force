@@ -1,264 +1,183 @@
-import {
-  AuthContextModule,
-  FollowedArgs,
-  Intent,
-  followedArtist,
-  unfollowedArtist,
-} from "@artsy/cohesion"
+import { AuthContextModule, Intent, ContextModule } from "@artsy/cohesion"
 import { Box, ButtonProps, Popover } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
-import * as Artsy from "v2/System"
 import { FollowArtistPopoverQueryRenderer } from "v2/Components/FollowArtistPopover"
 import * as React from "react"
-import track, { TrackingProp } from "react-tracking"
-import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowArtistButtonQuery } from "../../__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton } from "./Button"
-import {
-  RelayProp,
-  commitMutation,
-  createFragmentContainer,
-  graphql,
-} from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { openAuthToSatisfyIntent } from "v2/Utils/openAuthModal"
-import {
-  AnalyticsContextProps,
-  withAnalyticsContext,
-} from "v2/System/Analytics/AnalyticsContext"
-import { Mediator } from "lib/mediator"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { useFollowButtonTracking } from "./useFollowButtonTracking"
+import { useMutation } from "v2/Utils/Hooks/useMutation"
 
-interface Props
-  extends React.HTMLProps<FollowArtistButton>,
-    Artsy.SystemContextProps,
-    AnalyticsContextProps {
-  relay?: RelayProp
-  mediator?: Mediator
-  artist?: FollowArtistButton_artist
-  tracking?: TrackingProp
-  contextModule: AuthContextModule
-  /**
-   * Pass palette props to button
-   */
-  buttonProps?: Partial<ButtonProps>
-  /**
-   * Custom renderer if palette button is not desired
-   */
-  render?: (artist: FollowArtistButton_artist) => JSX.Element
+interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
+  artist: FollowArtistButton_artist
+  contextModule?: AuthContextModule
   triggerSuggestions?: boolean
 }
 
-const Container = styled.span`
-  display: inline-block;
-`
+const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
+  artist,
+  contextModule = ContextModule.artistHeader,
+  triggerSuggestions = false,
+  ...rest
+}) => {
+  const { isLoggedIn, mediator } = useSystemContext()
 
-@track()
-export class FollowArtistButton extends React.Component<Props> {
-  static defaultProps = {
-    buttonProps: {},
-    triggerSuggestions: false,
-  }
+  const { trackFollow } = useFollowButtonTracking({
+    ownerId: artist.internalID,
+    ownerSlug: artist.slug,
+    contextModule,
+  })
 
-  trackFollow = () => {
-    const {
-      tracking,
-      artist,
-      contextModule,
-      contextPageOwnerId,
-      contextPageOwnerSlug,
-      contextPageOwnerType,
-    } = this.props
+  const count = artist.counts?.follows ?? 0
 
-    if (!artist) return
-
-    const args: FollowedArgs = {
-      contextModule,
-      contextOwnerId: contextPageOwnerId,
-      contextOwnerSlug: contextPageOwnerSlug,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      contextOwnerType: contextPageOwnerType,
-      ownerId: artist.internalID,
-      ownerSlug: artist.slug,
-    }
-
-    const analyticsData = artist.is_followed
-      ? unfollowedArtist(args)
-      : followedArtist(args)
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    tracking.trackEvent(analyticsData)
-  }
-
-  handleFollow = (
-    e:
-      | React.MouseEvent<HTMLSpanElement, MouseEvent>
-      | React.KeyboardEvent<HTMLSpanElement>
-  ) => {
-    e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
-    const { artist, user, mediator, contextModule } = this.props
-
-    if (user && user.id) {
-      this.followArtistForUser()
-    } else {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      openAuthToSatisfyIntent(mediator, {
-        contextModule,
-        entity: artist,
-        intent: Intent.followArtist,
-      })
-    }
-  }
-
-  followArtistForUser = () => {
-    const { artist, relay } = this.props
-
-    if (!artist) return
-
-    const newFollowCount = artist.is_followed
-      ? (artist.counts?.follows ?? 0) - 1
-      : (artist.counts?.follows ?? 0) + 1
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    commitMutation<FollowArtistButtonMutation>(relay.environment, {
-      mutation: graphql`
-        mutation FollowArtistButtonMutation($input: FollowArtistInput!) {
-          followArtist(input: $input) {
-            artist {
-              id
-              slug
-              is_followed: isFollowed
-              counts {
-                follows
-              }
+  const { submitMutation } = useMutation<FollowArtistButtonMutation>({
+    mutation: graphql`
+      mutation FollowArtistButtonMutation($input: FollowArtistInput!) {
+        followArtist(input: $input) {
+          artist {
+            id
+            isFollowed
+            counts {
+              follows
             }
           }
         }
-      `,
-      optimisticResponse: {
-        followArtist: {
-          artist: {
-            counts: { follows: newFollowCount },
-            id: artist.id,
-            is_followed: !artist.is_followed,
-            slug: artist.slug,
+      }
+    `,
+    optimisticResponse: {
+      followArtist: {
+        artist: {
+          id: artist.id,
+          isFollowed: !artist.isFollowed,
+          counts: {
+            follows: artist.isFollowed // Not yet followed
+              ? count - 1
+              : count + 1,
           },
         },
       },
-      updater: (store, data) => {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const artistProxy = store.get(data.followArtist.artist.id)
+    },
+    updater: (store, data) => {
+      if (!data.followArtist?.artist) return
+      const { artist } = data.followArtist
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        artistProxy
-          .getLinkedRecord("counts")
-          .setValue(newFollowCount, "follows")
-      },
+      const proxy = store.get(artist.id)
+
+      if (!proxy) return
+
+      const record = proxy.getLinkedRecord("counts")
+
+      if (!record) return
+
+      const nextCount = artist.isFollowed // Is followed now
+        ? count + 1
+        : count - 1
+
+      record.setValue(nextCount, "follows")
+    },
+  })
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault()
+
+    if (!isLoggedIn) {
+      openAuthToSatisfyIntent(mediator!, {
+        contextModule,
+        entity: { name: artist.name!, slug: artist.slug },
+        intent: Intent.followArtist,
+      })
+
+      return
+    }
+
+    submitMutation({
       variables: {
         input: {
           artistID: artist.internalID,
-          unfollow: artist.is_followed,
+          unfollow: artist.isFollowed,
         },
       },
     })
-    this.trackFollow()
+
+    trackFollow(!!artist.isFollowed)
   }
 
-  render() {
-    const { artist, buttonProps, render, user, triggerSuggestions } = this.props
-
-    return (
-      <Box data-test="followArtistButton">
-        <Popover
-          title="Other artists you might like"
-          placement="bottom"
-          popover={
-            artist ? (
-              <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
-            ) : null
-          }
-        >
-          {({ anchorRef, onVisible }) => {
-            const openSuggestions = () => {
-              if (!!user && triggerSuggestions && !artist?.is_followed) {
-                onVisible()
-              }
+  return (
+    <Box data-test="followArtistButton">
+      <Popover
+        title="Other artists you might like"
+        placement="bottom"
+        popover={
+          artist ? (
+            <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
+          ) : null
+        }
+      >
+        {({ anchorRef, onVisible }) => {
+          const openSuggestions = () => {
+            if (isLoggedIn && triggerSuggestions && !artist.isFollowed) {
+              onVisible()
             }
+          }
 
-            return render ? (
-              <Container
-                ref={anchorRef as any}
-                tabIndex={0}
-                role="button"
-                onKeyPress={event => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    this.handleFollow(event)
-                    openSuggestions()
-                  }
-                }}
-                onClick={e => {
-                  this.handleFollow(e)
-                  openSuggestions()
-                }}
-              >
-                {" "}
-                {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-                {render(artist)}
-              </Container>
-            ) : (
-              <FollowButton
-                ref={anchorRef}
-                isFollowed={!!artist?.is_followed}
-                handleFollow={e => {
-                  this.handleFollow(e)
-                  openSuggestions()
-                }}
-                buttonProps={buttonProps}
-              />
-            )
-          }}
-        </Popover>
-      </Box>
-    )
-  }
+          return (
+            <FollowButton
+              ref={anchorRef}
+              isFollowed={!!artist.isFollowed}
+              handleFollow={event => {
+                handleClick(event)
+                openSuggestions()
+              }}
+              buttonProps={rest}
+            />
+          )
+        }}
+      </Popover>
+    </Box>
+  )
 }
 
 export const FollowArtistButtonFragmentContainer = createFragmentContainer(
-  Artsy.withSystemContext(
-    withAnalyticsContext(FollowArtistButton)
-  ) as React.ComponentType<Props>,
+  FollowArtistButton,
   {
     artist: graphql`
       fragment FollowArtistButton_artist on Artist
         @argumentDefinitions(
           showFollowSuggestions: { type: "Boolean", defaultValue: false }
         ) {
+        ...FollowArtistPopover_artist @include(if: $showFollowSuggestions)
         id
-        internalID
-        name
         slug
-        is_followed: isFollowed
+        name
+        internalID
+        isFollowed
         counts {
           follows
         }
-        ...FollowArtistPopover_artist @include(if: $showFollowSuggestions)
       }
     `,
   }
 )
 
-export const FollowArtistButtonQueryRenderer: React.FC<
-  {
-    id: string
-  } & Props
-> = ({ id, ...rest }) => {
-  const { relayEnvironment } = useSystemContext()
+interface FollowArtistButtonQueryRendererProps
+  extends Omit<FollowArtistButtonProps, "artist"> {
+  id: string
+}
 
+export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRendererProps> = ({
+  id,
+  ...rest
+}) => {
   return (
     <SystemQueryRenderer<FollowArtistButtonQuery>
       lazyLoad
-      environment={relayEnvironment}
       query={graphql`
         query FollowArtistButtonQuery($id: String!) {
           artist(id: $id) {
@@ -266,21 +185,17 @@ export const FollowArtistButtonQueryRenderer: React.FC<
           }
         }
       `}
-      placeholder={
-        // @ts-ignore
-        <FollowArtistButtonFragmentContainer {...rest} artist={null} />
-      }
+      placeholder={<FollowButton buttonProps={rest} />}
       variables={{ id }}
       render={({ error, props }) => {
-        if (error || !props) {
-          // @ts-ignore
-          return <FollowArtistButtonFragmentContainer {...rest} artist={null} />
+        if (error || !props?.artist) {
+          return <FollowButton buttonProps={rest} />
         }
 
         return (
           <FollowArtistButtonFragmentContainer
             {...rest}
-            artist={props.artist!}
+            artist={props.artist}
           />
         )
       }}

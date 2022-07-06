@@ -38,11 +38,7 @@ const ArtistRail: FC<ArtistRailProps> = ({ artist }) => {
           srcSet: artist.avatar?.cropped?.srcSet,
         }}
         FollowButton={
-          <FollowArtistButtonFragmentContainer
-            contextModule={{} as any} // TODO:
-            artist={artist}
-            buttonProps={{ size: "small" }}
-          >
+          <FollowArtistButtonFragmentContainer artist={artist} size="small">
             Follow
           </FollowArtistButtonFragmentContainer>
         }
