@@ -7,7 +7,7 @@ import { OnboardingLoadingCollection } from "v2/Apps/Onboarding/Components/Onboa
 import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
 
 interface OnboardingGeneProps {
@@ -20,21 +20,27 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
 
   return (
     <Box px={[2, 4]} py={6}>
-      <GridColumns>
-        <Column span={10}>
-          <Text variant="xl" color="black100">
-            {gene.name}
+      <Flex justifyContent="space-between">
+        <Box>
+          <Text variant="xl">{gene.name}</Text>
+
+          <Text variant={["sm", "md"]} color="black60" mt={2}>
+            {description}
           </Text>
-        </Column>
+        </Box>
 
-        <Column span={2}>
-          <FollowGeneButtonFragmentContainer gene={gene} />
-        </Column>
-      </GridColumns>
+        <FollowGeneButtonFragmentContainer
+          gene={gene}
+          display={["none", "block"]}
+        />
+      </Flex>
 
-      <Text variant="sm-display" color="black60" mt={2}>
-        {description}
-      </Text>
+      <FollowGeneButtonFragmentContainer
+        gene={gene}
+        mt={2}
+        display={["block", "none"]}
+        size="small"
+      />
 
       <Spacer mb={4} />
 

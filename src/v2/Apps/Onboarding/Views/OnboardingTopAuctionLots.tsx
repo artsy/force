@@ -8,9 +8,7 @@ export const OnboardingTopAuctionLots: FC = () => {
       description={
         <>
           Follow for works by emerging and established market stars—now open for
-          bidding.
-          <br />
-          Click the heart to save artworks you love.
+          bidding. Click the heart to save artworks you love.
         </>
       }
     />
