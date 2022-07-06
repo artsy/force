@@ -1,7 +1,7 @@
-import { Flex, Spacer, Text, Box, Join, Button, Pill } from "@artsy/palette"
+import { Spacer, Text, Box, Join, Pill } from "@artsy/palette"
 import { FC } from "react"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingProgress } from "../Components/OnboardingProgress"
+import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
   OPTION_NO_IM_JUST_STARTING_OUT,
@@ -28,50 +28,36 @@ export const OnboardingQuestionOne: FC = () => {
         />
       }
       right={
-        <Flex
-          flexDirection="column"
-          p={4}
-          justifyContent="space-between"
-          width="100%"
+        <OnboardingQuestionPanel
+          loading={loading}
+          disabled={!state.questionOne || loading}
+          onNext={handleNext}
         >
-          <OnboardingProgress preview={loading} />
+          <Text variant="lg-display" ref={register(1)}>
+            Have you bought art before?
+          </Text>
 
-          <Box width="100%">
-            <Text variant="lg-display" ref={register(1)}>
-              Have you bought art before?
-            </Text>
+          <Spacer mt={4} />
 
-            <Spacer mt={4} />
-
-            <Box ref={register(2)}>
-              <Join separator={<Spacer mt={2} />}>
-                {QUESTION_1.map(option => {
-                  return (
-                    <Pill
-                      key={option}
-                      size="small"
-                      selected={state.questionOne === option}
-                      onClick={() => {
-                        dispatch({ type: "SET_ANSWER_ONE", payload: option })
-                      }}
-                    >
-                      {option}
-                    </Pill>
-                  )
-                })}
-              </Join>
-            </Box>
+          <Box ref={register(2)}>
+            <Join separator={<Spacer mt={2} />}>
+              {QUESTION_1.map(option => {
+                return (
+                  <Pill
+                    key={option}
+                    size="small"
+                    selected={state.questionOne === option}
+                    onClick={() => {
+                      dispatch({ type: "SET_ANSWER_ONE", payload: option })
+                    }}
+                  >
+                    {option}
+                  </Pill>
+                )
+              })}
+            </Join>
           </Box>
-
-          <Button
-            disabled={!state.questionOne || loading}
-            loading={loading}
-            onClick={handleNext}
-            width="100%"
-          >
-            Next
-          </Button>
-        </Flex>
+        </OnboardingQuestionPanel>
       }
     />
   )

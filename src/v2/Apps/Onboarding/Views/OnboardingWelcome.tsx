@@ -1,5 +1,4 @@
 import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
-import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { OnboardingWelcomeAnimatedPanel } from "../Components/OnboardingWelcomeAnimatedPanel"
@@ -7,7 +6,6 @@ import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransitio
 import { useOnboardingContext } from "../useOnboardingContext"
 
 export const OnboardingWelcome = () => {
-  const { user } = useSystemContext()
   const { next } = useOnboardingContext()
   const { register, handleNext, loading } = useOnboardingFadeTransition({
     next,
@@ -16,6 +14,7 @@ export const OnboardingWelcome = () => {
   return (
     <OnboardingSplitLayout
       left={<OnboardingWelcomeAnimatedPanel ref={register(0)} />}
+      leftProps={{ display: "block" }}
       right={
         <Flex flexDirection="column" justifyContent="space-between" p={4}>
           {/* Vertically centers next Box */}
@@ -23,7 +22,7 @@ export const OnboardingWelcome = () => {
 
           <Box width="100%">
             <Text ref={register(1)} variant={["xl", "xxl"]}>
-              Welcome to Artsy, {user?.name}.
+              Welcome to Artsy.
             </Text>
 
             <Spacer mt={4} />

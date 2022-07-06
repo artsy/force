@@ -1,7 +1,7 @@
-import { Flex, Spacer, Text, Join, Box, Pill, Button } from "@artsy/palette"
+import { Spacer, Text, Join, Box, Pill } from "@artsy/palette"
 import { FC, useMemo } from "react"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingProgress } from "../Components/OnboardingProgress"
+import { OnboardingQuestionPanel } from "../Components/OnboardingQuestionPanel"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import {
   OPTION_ARTISTS_ON_THE_RISE,
@@ -71,27 +71,22 @@ export const OnboardingQuestionThree: FC = () => {
         />
       }
       right={
-        <Flex
-          flexDirection="column"
-          p={4}
-          justifyContent="space-between"
-          width="100%"
+        <OnboardingQuestionPanel
+          disabled={state.questionThree === null || loading}
+          loading={loading}
+          onNext={handleNext}
         >
-          <OnboardingProgress preview={loading} />
+          <Text variant="lg-display" ref={register(1)}>
+            Almost done! What would you like to see first?
+          </Text>
 
-          <Box width="100%">
-            <Text variant="lg-display" ref={register(1)}>
-              Almost done! What would you like to see first?
-            </Text>
+          <Spacer mt={1} />
 
-            <Spacer mt={1} />
+          <Text variant="sm-display" ref={register(2)}>
+            Choose one to start exploring.
+          </Text>
 
-            <Text variant="sm-display" ref={register(2)}>
-              Choose one to start exploring.
-            </Text>
-          </Box>
-
-          <Box ref={register(3)}>
+          <Box ref={register(3)} mt={4}>
             <Join separator={<Spacer mt={2} />}>
               {options.map(option => {
                 return (
@@ -108,16 +103,7 @@ export const OnboardingQuestionThree: FC = () => {
               })}
             </Join>
           </Box>
-
-          <Button
-            disabled={state.questionThree === null || loading}
-            loading={loading}
-            onClick={handleNext}
-            width="100%"
-          >
-            Next
-          </Button>
-        </Flex>
+        </OnboardingQuestionPanel>
       }
     />
   )

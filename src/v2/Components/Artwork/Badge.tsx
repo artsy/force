@@ -20,6 +20,7 @@ const Badge: React.FC<BadgeProps> = ({ artwork, width }) => {
 
   const { is_biddable, sale } = artwork
   const includeBidBadge = is_biddable || (sale && sale.is_preview)
+
   // E.g.(ENDS IN 59M)
   const saleTimingHint =
     sale && sale.display_timely_at ? ` (${sale.display_timely_at})` : ""
@@ -37,13 +38,20 @@ const Badge: React.FC<BadgeProps> = ({ artwork, width }) => {
     }
   })()
 
+  if (!includeBidBadge) {
+    return null
+  }
+
   return (
-    <Badges flexDirection={isStackedLayout ? "column" : "row"}>
-      {includeBidBadge && (
-        <Label mb={1} ml={1}>
-          Bid{saleTimingHint}
-        </Label>
-      )}
+    <Badges
+      flexDirection={isStackedLayout ? "column" : "row"}
+      position="absolute"
+      overflow="hidden"
+      left={1}
+      right={1}
+      bottom={1}
+    >
+      <Label>Bid{saleTimingHint}</Label>
     </Badges>
   )
 }
@@ -62,8 +70,5 @@ export default createFragmentContainer(Badge, {
 })
 
 const Badges = styled(Flex)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
   pointer-events: none;
 `
