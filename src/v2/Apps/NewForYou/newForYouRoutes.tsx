@@ -13,10 +13,19 @@ export const newForYouRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       NewForYouApp.preload()
     },
+    prepareVariables: (params, props) => {
+      const first = parseInt(props.location.query.first, 10) || 20
+
+      return {
+        ...params,
+        ...props,
+        first,
+      }
+    },
     query: graphql`
-      query newForYouRoutes_TopLevelQuery {
+      query newForYouRoutes_TopLevelQuery($first: Int) {
         viewer {
-          ...NewForYouApp_viewer
+          ...NewForYouApp_viewer @arguments(first: $first)
         }
       }
     `,

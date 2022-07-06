@@ -26,7 +26,7 @@ export type NewForYouArtworksGrid_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 20,
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "first"
     }
@@ -98,5 +98,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '717ce1fe6dd0cd381c1992f726c3c190';
+(node as any).hash = 'ba522927b47e2ad3a5de17351af64541';
 export default node;

@@ -39,8 +39,9 @@ export const NewForYouAppFragmentContainer = createFragmentContainer(
   NewForYouApp,
   {
     viewer: graphql`
-      fragment NewForYouApp_viewer on Viewer {
-        ...NewForYouArtworksGrid_viewer
+      fragment NewForYouApp_viewer on Viewer
+        @argumentDefinitions(first: { type: "Int" }) {
+        ...NewForYouArtworksGrid_viewer @arguments(first: $first)
       }
     `,
   }
