@@ -8,10 +8,10 @@ export type LogoutEventOptions = { redirectPath?: string }
 export interface Mediator {
   emitter: EventEmitter
   ready: (eventName: string) => boolean
-  trigger: (eventName: string, options?: unknown) => void
-  on: (eventName: string, cb?: (options?: unknown) => void) => void
-  off: (eventName: string) => void
-  once: (eventName: string, cb?: (options?: unknown) => void) => void
+  trigger: (eventName: string, ...args: unknown[]) => void
+  on: (eventName: string, cb?: (...args: unknown[]) => void) => void
+  off: (eventName: string, cb?: (...args: unknown[]) => void) => void
+  once: (eventName: string, cb?: (...args: unknown[]) => void) => void
 }
 
 declare global {
@@ -29,10 +29,9 @@ const emitter: EventEmitter =
 
 const trigger: Mediator["trigger"] = (
   eventName: string,
-  options?: unknown,
-  optionalData?: unknown
+  ...args: unknown[]
 ) => {
-  emitter.emit(eventName, options, optionalData)
+  emitter.emit(eventName, ...args)
 }
 
 const ready = (eventName: string): boolean => {
@@ -41,20 +40,23 @@ const ready = (eventName: string): boolean => {
 
 const on: Mediator["on"] = (
   eventName: string,
-  callback: (options?: unknown, optionalData?: unknown) => void
+  callback: (...args: unknown[]) => void
 ) => {
   REGISTERED_LISTENERS.add(eventName)
   emitter.on(eventName, callback)
 }
 
-const off: Mediator["off"] = (eventName: string) => {
+const off: Mediator["off"] = (
+  eventName: string,
+  callback?: (...args: unknown[]) => void
+) => {
   REGISTERED_LISTENERS.delete(eventName)
-  emitter.off(eventName)
+  emitter.off(eventName, callback)
 }
 
 const once: Mediator["once"] = (
   eventName: string,
-  callback: (options?: unknown) => void
+  callback: (...args: unknown[]) => void
 ) => {
   REGISTERED_LISTENERS.add(eventName)
   emitter.once(eventName, () => {
