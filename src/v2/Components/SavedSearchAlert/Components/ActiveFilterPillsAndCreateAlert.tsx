@@ -19,15 +19,11 @@ export interface ActiveFilterPillsAndCreateAlertProps {
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
 export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreateAlertProps> = props => {
-  const { defaultPills = [] } = props
+  const { defaultPills = [], savedSearchEntity } = props
   const { pills, removePill } = useActiveFilterPills(defaultPills)
-  const { savedSearchEntity } = props
   const { aggregations } = useArtworkFilterContext()
   const filters = usePrepareFiltersForPills()
-  const criteria = getSearchCriteriaFromFilters(
-    savedSearchEntity,
-    filters ?? {}
-  )
+  const criteria = getSearchCriteriaFromFilters(savedSearchEntity, filters)
   const metric = filters?.metric ?? DEFAULT_METRIC
 
   const getAuthModalOptions = (): AuthModalOptions => {
