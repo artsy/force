@@ -60,17 +60,6 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
       !commerceBankAccountBalance?.currencyCode) &&
     shouldStopPolling
 
-  console.log({
-    setupIntentId,
-    commerceBankAccountBalance,
-    buyerTotalCents,
-    currencyCode,
-    shouldStopPolling,
-    userHasEnoughBalance,
-    userHasInsufficientBalance,
-    balanceIsNotAvailable,
-  })
-
   // if the user has enough balance or balance is not available, we don't need to display the error
   if (userHasEnoughBalance || balanceIsNotAvailable) {
     setShouldStopPolling(true)

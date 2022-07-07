@@ -234,12 +234,10 @@ export const PaymentRoute: FC<Props> = props => {
 
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setShouldPollAccountBalance(false)
-
     if (displayInsufficientFundsError) {
       setShowInsuffiencyFundsError(true)
       return
     }
-
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
