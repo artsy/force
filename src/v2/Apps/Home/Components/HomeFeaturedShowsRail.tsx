@@ -5,7 +5,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Skeleton } from "@artsy/palette"
-import { compact, take } from "lodash"
+import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CellShowPlaceholder } from "v2/Components/Cells/CellShow"
@@ -25,15 +25,9 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const shows = take(
-    compact(orderedSet.items).flatMap(item =>
-      item.__typename === "Show" ? [item] : []
-    )
+  const shows = compact(orderedSet.items).flatMap(item =>
+    item.__typename === "Show" ? [item] : []
   )
-
-  if (shows.length === 0) {
-    return null
-  }
 
   return (
     <Rail
