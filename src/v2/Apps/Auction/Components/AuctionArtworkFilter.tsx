@@ -11,6 +11,7 @@ import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Pri
 import { ArtworkGridContextProvider } from "v2/Components/ArtworkGrid/ArtworkGridContext"
 import { useSystemContext } from "v2/System"
 import { AuctionArtworkFilter_viewer } from "v2/__generated__/AuctionArtworkFilter_viewer.graphql"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
@@ -53,6 +54,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
             <MediumFilter expanded />
           </>
         }
+        FilterPillsSection={<ActiveFilterPills />}
       />
     </ArtworkGridContextProvider>
   )
