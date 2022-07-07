@@ -34,11 +34,6 @@ app.use(
  * NOTE: App order matters as some apps establish logic that is shared inside
  * of subapps. Apps with hardcoded routes or "RESTful" routes.
  */
-
-app.use(require("./apps/editorial_features"))
-// FIXME: Remove once JSONPage + new app shell is worked out
-app.use(require("./apps/eoy_2016"))
-
 app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
 
