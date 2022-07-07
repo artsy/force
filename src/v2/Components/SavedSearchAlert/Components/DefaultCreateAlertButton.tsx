@@ -6,6 +6,7 @@ import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
 import { DEFAULT_METRIC } from "v2/Components/ArtworkFilter/Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AuthModalOptions } from "v2/Utils/openAuthModal"
+import { usePrepareFiltersForPills } from "v2/Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 
 const PILL_HORIZONTAL_MARGIN_SIZE = 0.5
 
@@ -15,7 +16,8 @@ interface ArtworkGridFilterPillsProps {
 
 export const DefaultCreateAlertButton: React.FC<ArtworkGridFilterPillsProps> = props => {
   const { savedSearchEntity } = props
-  const { filters, aggregations } = useArtworkFilterContext()
+  const { aggregations } = useArtworkFilterContext()
+  const filters = usePrepareFiltersForPills()
   const criteria = getSearchCriteriaFromFilters(
     savedSearchEntity,
     filters ?? {}

@@ -5,6 +5,8 @@ export const shouldExtractValueNamesFromAggregation = [
   "materialsTerms",
   "additionalGeneIDs",
   "partnerIDs",
+  "artistIDs",
+  "artistNationalities",
 ]
 
 export const aggregationNameFromFilter: Record<string, Slice> = {
@@ -12,6 +14,8 @@ export const aggregationNameFromFilter: Record<string, Slice> = {
   materialsTerms: "MATERIALS_TERMS",
   additionalGeneIDs: "MEDIUM",
   partnerIDs: "PARTNER",
+  artistIDs: "ARTIST",
+  artistNationalities: "ARTIST_NATIONALITY",
 }
 
 export const allowedSearchCriteriaKeys = [
@@ -32,4 +36,5 @@ export const allowedSearchCriteriaKeys = [
   "sizes",
   "height",
   "width",
+  "artistNationalities",
 ]

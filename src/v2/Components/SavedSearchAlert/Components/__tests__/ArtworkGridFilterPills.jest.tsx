@@ -1,8 +1,10 @@
 import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent } from "@testing-library/react"
 import {
+  Aggregations,
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
+  FollowedArtists,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import {
@@ -95,5 +97,71 @@ describe("ArtworkGridFilterPills", () => {
     fireEvent.click(screen.getByText("Banksy"))
 
     expect(screen.getByText("Banksy")).toBeInTheDocument()
+  })
+
+  it("display followed artist pills when 'Artists I Follow' is selected", () => {
+    const aggregations: Aggregations = [
+      {
+        slice: "ARTIST",
+        counts: [
+          {
+            name: "Damien Hirst",
+            value: "damien-hirst",
+            count: 20,
+          },
+          {
+            name: "KAWS",
+            value: "kaws",
+            count: 10,
+          },
+        ],
+      },
+    ]
+    const followedArtists: FollowedArtists = [
+      {
+        slug: "kaws",
+        internalID: "kaws-internal-id",
+      },
+      {
+        slug: "damien-hirst",
+        internalID: "damien-hirst-internal-id",
+      },
+    ]
+
+    renderPills({
+      filters: {
+        includeArtworksByFollowedArtists: true,
+      },
+      followedArtists,
+      aggregations,
+    })
+
+    expect(screen.getByText("Damien Hirst")).toBeInTheDocument()
+    expect(screen.getByText("KAWS")).toBeInTheDocument()
+  })
+
+  it("should display only those artists who are present in ARTIST aggregation", () => {
+    const aggregations: Aggregations = [
+      {
+        slice: "ARTIST",
+        counts: [
+          {
+            name: "KAWS",
+            value: "kaws",
+            count: 10,
+          },
+        ],
+      },
+    ]
+
+    renderPills({
+      filters: {
+        artistIDs: ["kaws", "banksy"],
+      },
+      aggregations,
+    })
+
+    expect(screen.queryByText("KAWS")).toBeInTheDocument()
+    expect(screen.queryByText("banksy")).not.toBeInTheDocument()
   })
 })
