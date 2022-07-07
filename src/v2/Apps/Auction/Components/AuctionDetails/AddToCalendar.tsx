@@ -1,12 +1,6 @@
 import { Button, Join, Popover, Spacer, Text } from "@artsy/palette"
-import {
-  AddToCalendar as AddToCalendarEvent,
-  ContextModule,
-} from "@artsy/cohesion"
-import {
-  generateGoogleCalendarUrl,
-  generateIcsCalendarUrl,
-} from "v2/Components/AddToCalendar/helpers"
+import { AddToCalendar as AddToCalendarEvent } from "@artsy/cohesion"
+import { generateGoogleCalendarUrl, generateIcsCalendarUrl } from "./helpers"
 import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
 export interface AddToCalendarProps {
@@ -17,7 +11,6 @@ export interface AddToCalendarProps {
   address?: string
   href: string
   liveAuctionUrl?: string
-  contextModule: ContextModule
 }
 
 export const AddToCalendar: React.FC<AddToCalendarProps> = props => {

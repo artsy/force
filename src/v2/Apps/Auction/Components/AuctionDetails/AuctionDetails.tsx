@@ -9,8 +9,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
-import { formatIsoDateNoZoneOffset } from "v2/Components/AddToCalendar/helpers"
-import { ContextModule } from "@artsy/cohesion"
+import { formatIsoDateNoZoneOffset } from "./helpers"
 import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphql"
 import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
 import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
@@ -67,7 +66,6 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
               description={sale.description!}
               href={`${getENV("APP_URL")}${sale.href!}`}
               liveAuctionUrl={liveAuctionUrl}
-              contextModule={ContextModule.auctionHome}
             />
           </Box>
         )}

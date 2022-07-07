@@ -9,7 +9,6 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { openAuthModal } from "desktop/lib/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { useAuctionTracking } from "../Hooks/useAuctionTracking"
-// import { useAuctionTracking } from "../../Hooks/useAuctionTracking"
 
 const logger = createLogger("RegisterButton")
 
