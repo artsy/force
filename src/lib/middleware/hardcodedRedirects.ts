@@ -120,6 +120,32 @@ const REDIRECTS = {
   "/christies-spring-auctions-2015": "/auctions",
   "/clear-cache": "/admin/clear-cache",
   "/dev/blank": "/debug/baseline",
+  "/2016-year-in-art": "/article/artsy-editorial-10-moments-2016-art",
+  "/gender-equality": "/article/artists-gender-equality",
+  "/gender-equality/past": "/article/artsy-editorial-artists-gender-equality",
+  "/gender-equality/present":
+    "/article/artsy-editorial-artists-gender-equality-ii",
+  "/gender-equality/future":
+    "/article/artsy-editorial-artists-gender-equality-iii-future",
+  "/venice-biennale": "/article/inside-biennale",
+  "/venice-biennale/toward-venice":
+    "/article/artsy-editorial-inside-biennale-ep-1-venice",
+  "/venice-biennale/studio-venezia":
+    "/article/artsy-editorial-inside-biennale-ep-2-studio-venezia",
+  "/venice-biennale/erwin-wurm":
+    "/article/artsy-editorial-inside-biennale-ep-3-erwin-wurm",
+  "/venice-biennale/anne-imhof-faust":
+    "/article/artsy-editorial-inside-biennale-ep-4-faust",
+  "/venice-biennale/italian-pavilion":
+    "/article/artsy-editorial-inside-biennale-ep-5-magic",
+  "/venice-biennale/nigerian-pavilion":
+    "/article/artsy-editorial-inside-biennale-ep-6",
+  "/venice-biennale/carol-bove":
+    "/article/artsy-editorial-inside-biennale-ep-7-carol-bove",
+  "/venice-biennale/dawn-kasper":
+    "/article/artsy-editorial-inside-biennale-ep-8-dawn-kasper",
+  "/venice-biennale/peoples-choice":
+    "/article/artsy-editorial-inside-biennale-ep-9-peoples-choice",
 }
 
 const router = express.Router()

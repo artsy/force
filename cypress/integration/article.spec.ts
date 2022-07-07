@@ -118,26 +118,6 @@ describe("Article", () => {
     })
 
     describe("Editorial features", () => {
-      describe("Gender Equality", () => {
-        it("/gender-equality", () => {
-          visitWithStatusRetries("gender-equality")
-          cy.get(".SeriesHeader").should(
-            "contain",
-            "Artists For Gender Equality"
-          )
-          cy.title().should("eq", "Artists For Gender Equality")
-        })
-
-        it("/gender-equality/:slug", () => {
-          visitWithStatusRetries("gender-equality/future")
-          cy.get(".SeriesHeader").should(
-            "contain",
-            "Artists For Gender Equality"
-          )
-          cy.title().should("eq", "Artists For Gender Equality: III. Future")
-        })
-      })
-
       describe("Artsy Vanguard 2019", () => {
         it("/series/artsy-vanguard-2019", () => {
           visitWithStatusRetries("series/artsy-vanguard-2019")
@@ -156,40 +136,6 @@ describe("Article", () => {
             "The Artsy Vanguard 2019: 15 Artists Getting Their Due | Artsy"
           )
         })
-      })
-
-      // TODO: No clue
-      describe.skip("Venice Biennale 360", () => {
-        it("/venice-biennale", () => {
-          visitWithStatusRetries("venice-biennale")
-          cy.get(".venice-overlay__title").should(
-            "contain",
-            "Inside the Biennale"
-          )
-          cy.title().should("eq", "Venice Biennale 2017 | Artsy")
-        })
-
-        it("/venice-biennale/:slug", () => {
-          visitWithStatusRetries("venice-biennale/toward-venice")
-          cy.get(".venice-overlay__title").should(
-            "contain",
-            "Inside the Biennale"
-          )
-          cy.title().should("eq", "Venice Biennale 2017 | Artsy")
-        })
-      })
-
-      it("/2016-year-in-art", () => {
-        visitWithStatusRetries("2016-year-in-art")
-        cy.get("h1").should("contain", "The Year In Art")
-        cy.title().should("eq", "The Year in Art 2016")
-      })
-
-      // TODO: This is set up using a shortcut (!), so it redirects to production...
-      it.skip("/2015-year-in-art", () => {
-        visitWithStatusRetries("2015-year-in-art")
-        // cy.get("h1").should("contain", "2015: The Year in Art")
-        cy.title().should("eq", "2015: The Year in Art | Artsy")
       })
     })
   })
