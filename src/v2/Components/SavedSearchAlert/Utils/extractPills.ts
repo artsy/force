@@ -1,7 +1,11 @@
 import { compact, difference, find, flatten, keyBy } from "lodash"
-import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  Aggregation,
+  Aggregations,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import {
   getPredefinedSizesByMetric,
   parseRange,
@@ -31,18 +35,25 @@ export const extractPillFromAggregation = (
 ) => {
   const { paramName, paramValue } = filter
   const aggregation = aggregationForFilter(paramName, aggregations)
+  let aggregationValues = aggregation?.counts
 
-  if (aggregation) {
-    const aggregationByValue = keyBy(aggregation.counts, "value")
-
-    return (paramValue as string[]).map(value => ({
-      value,
-      displayValue: aggregationByValue[value]?.name ?? "",
-      field: paramName,
-    }))
+  // TODO: Add test case
+  // Use hardcoded medium values
+  if (paramName === "additionalGeneIDs" && !aggregation) {
+    aggregationValues = hardcodedMediums as Aggregation["counts"]
   }
 
-  return []
+  if (!aggregationValues) {
+    return []
+  }
+
+  const aggregationByValue = keyBy(aggregationValues, "value")
+
+  return (paramValue as string[]).map(value => ({
+    value,
+    displayValue: aggregationByValue[value]?.name ?? "",
+    field: paramName,
+  }))
 }
 
 export const extractSizeLabel = ({
