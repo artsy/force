@@ -88,7 +88,7 @@ const FauxInput = styled(Box)<{ error: boolean }>`
     justify-content: center;
     height: 50px;
     padding: 0 ${themeGet("space.1")};
-    border: 1px solid;
+    border-bottom: 1px solid;
     border-color: ${themeGet("colors.black30")};
     transition: border-color 0.25s;
 

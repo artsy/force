@@ -10,7 +10,7 @@ import {
   emptyAddress,
 } from "v2/Components/AddressForm"
 
-import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
+import { CreditCardInput } from "v2/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -319,14 +319,13 @@ export class CreditCardPicker extends React.Component<
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer mb={2} />}
           <Flex flexDirection="column">
-            <Text mb={1} size="md" color="black100" lineHeight="1.1em">
-              Credit card
-            </Text>
             <CreditCardInput
+              title="Credit card"
               error={stripeError!}
               onChange={response => {
                 this.setState({ stripeError: response.error! })
               }}
+              required
             />
 
             {!this.isPickup() && (
