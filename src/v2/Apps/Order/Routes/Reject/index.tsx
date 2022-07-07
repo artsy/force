@@ -137,7 +137,7 @@ export class Reject extends Component<RejectProps> {
                   Submit
                 </Button>
                 <Spacer mb={2} />
-                <ConditionsOfSaleDisclaimer textAlign="center" />
+                <ConditionsOfSaleDisclaimer />
               </Media>
             </Flex>
           }

@@ -418,7 +418,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 Submit
               </Button>
               <Spacer mb={2} />
-              <ConditionsOfSaleDisclaimer textAlign="center" />
+              <ConditionsOfSaleDisclaimer />
             </Media>
           </Join>
         }

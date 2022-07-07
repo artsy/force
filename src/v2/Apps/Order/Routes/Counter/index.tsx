@@ -165,7 +165,7 @@ export class CounterRoute extends Component<CounterProps> {
                   Submit
                 </Button>
                 <Spacer mb={2} />
-                <ConditionsOfSaleDisclaimer textAlign="center" />
+                <ConditionsOfSaleDisclaimer />
               </Media>
             </Flex>
           }
