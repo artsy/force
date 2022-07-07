@@ -29,6 +29,10 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
     item.__typename === "Show" ? [item] : []
   )
 
+  if (shows.length === 0) {
+    return null
+  }
+
   return (
     <Rail
       alignItems="flex-start"
