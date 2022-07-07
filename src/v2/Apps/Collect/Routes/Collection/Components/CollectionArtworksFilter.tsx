@@ -23,6 +23,7 @@ import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Mate
 import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
@@ -91,6 +92,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
         relayVariables={{
           slug,
         }}
+        FilterPillsSection={<ActiveFilterPills />}
       />
     </ArtworkFilterContextProvider>
   )
