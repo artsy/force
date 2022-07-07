@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type newForYouRoutes_TopLevelQueryVariables = {
     first?: number | null | undefined;
     includeBackfill: boolean;
+    version?: string | null | undefined;
 };
 export type newForYouRoutes_TopLevelQueryResponse = {
     readonly viewer: {
@@ -24,9 +25,10 @@ export type newForYouRoutes_TopLevelQuery = {
 query newForYouRoutes_TopLevelQuery(
   $first: Int
   $includeBackfill: Boolean!
+  $version: String
 ) {
   viewer {
-    ...NewForYouApp_viewer_2GVV1c
+    ...NewForYouApp_viewer_1hZglA
   }
 }
 
@@ -175,12 +177,12 @@ fragment Metadata_artwork on Artwork {
   href
 }
 
-fragment NewForYouApp_viewer_2GVV1c on Viewer {
-  ...NewForYouArtworksGrid_viewer_2GVV1c
+fragment NewForYouApp_viewer_1hZglA on Viewer {
+  ...NewForYouArtworksGrid_viewer_1hZglA
 }
 
-fragment NewForYouArtworksGrid_viewer_2GVV1c on Viewer {
-  artworksForUser(first: $first, includeBackfill: $includeBackfill) {
+fragment NewForYouArtworksGrid_viewer_1hZglA on Viewer {
+  artworksForUser(first: $first, includeBackfill: $includeBackfill, version: $version) {
     totalCount
     ...ArtworkGrid_artworks
     pageInfo {
@@ -218,6 +220,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "includeBackfill"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "version"
   }
 ],
 v1 = [
@@ -230,6 +237,11 @@ v1 = [
     "kind": "Variable",
     "name": "includeBackfill",
     "variableName": "includeBackfill"
+  },
+  {
+    "kind": "Variable",
+    "name": "version",
+    "variableName": "version"
   }
 ],
 v2 = {
@@ -809,14 +821,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "733d1afc3d6d8aa642bf371c04975c91",
+    "cacheID": "ef6912eabf27e88ae2af83a041cc9db0",
     "id": null,
     "metadata": {},
     "name": "newForYouRoutes_TopLevelQuery",
     "operationKind": "query",
-    "text": "query newForYouRoutes_TopLevelQuery(\n  $first: Int\n  $includeBackfill: Boolean!\n) {\n  viewer {\n    ...NewForYouApp_viewer_2GVV1c\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n      ...FlatGridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment FlatGridItem_artwork on Artwork {\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    resized(width: 445, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  artistNames\n  href\n  is_saved: isSaved\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  href\n}\n\nfragment NewForYouApp_viewer_2GVV1c on Viewer {\n  ...NewForYouArtworksGrid_viewer_2GVV1c\n}\n\nfragment NewForYouArtworksGrid_viewer_2GVV1c on Viewer {\n  artworksForUser(first: $first, includeBackfill: $includeBackfill) {\n    totalCount\n    ...ArtworkGrid_artworks\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query newForYouRoutes_TopLevelQuery(\n  $first: Int\n  $includeBackfill: Boolean!\n  $version: String\n) {\n  viewer {\n    ...NewForYouApp_viewer_1hZglA\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  __isArtworkConnectionInterface: __typename\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n      ...FlatGridItem_artwork\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment FlatGridItem_artwork on Artwork {\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  sale {\n    extendedBiddingPeriodMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    id\n  }\n  saleArtwork {\n    endAt\n    extendedBiddingEndAt\n    lotID\n    id\n  }\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    resized(width: 445, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n  artistNames\n  href\n  is_saved: isSaved\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  href\n}\n\nfragment NewForYouApp_viewer_1hZglA on Viewer {\n  ...NewForYouArtworksGrid_viewer_1hZglA\n}\n\nfragment NewForYouArtworksGrid_viewer_1hZglA on Viewer {\n  artworksForUser(first: $first, includeBackfill: $includeBackfill, version: $version) {\n    totalCount\n    ...ArtworkGrid_artworks\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = 'ab37fbc2fb44ac27671af785bca6f801';
+(node as any).hash = 'fcc4b1ded97a7a3d992b0aa9688017ac';
 export default node;

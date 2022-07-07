@@ -27,6 +27,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "includeBackfill"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "version"
     }
   ],
   "kind": "Fragment",
@@ -44,6 +49,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "includeBackfill",
           "variableName": "includeBackfill"
+        },
+        {
+          "kind": "Variable",
+          "name": "version",
+          "variableName": "version"
         }
       ],
       "kind": "FragmentSpread",
@@ -53,5 +63,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '5406907df36bec5eeebc08c1a686d205';
+(node as any).hash = 'c8f71ef5675999e803e6ea924c24685e';
 export default node;

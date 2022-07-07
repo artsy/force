@@ -34,6 +34,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "includeBackfill"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "version"
     }
   ],
   "kind": "Fragment",
@@ -52,6 +57,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "includeBackfill",
           "variableName": "includeBackfill"
+        },
+        {
+          "kind": "Variable",
+          "name": "version",
+          "variableName": "version"
         }
       ],
       "concreteType": "ArtworkConnection",
@@ -103,5 +113,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'ff2199368da1a055fcce05cacc32d79b';
+(node as any).hash = 'f5bf554270769e034860baf604d273e6';
 export default node;
