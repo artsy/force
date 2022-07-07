@@ -8,6 +8,7 @@ import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
@@ -50,6 +51,7 @@ const ArtistSeriesArtworksFilter: React.FC<
           aggregations: ["TOTAL"],
           first: 20,
         }}
+        FilterPillsSection={<ActiveFilterPills />}
       />
     </ArtworkFilterContextProvider>
   )
