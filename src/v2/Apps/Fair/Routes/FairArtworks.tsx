@@ -21,6 +21,7 @@ import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilt
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -80,7 +81,13 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
     >
-      <BaseArtworkFilter mt={6} relay={relay} viewer={fair} Filters={Filters} />
+      <BaseArtworkFilter
+        mt={6}
+        relay={relay}
+        viewer={fair}
+        Filters={Filters}
+        FilterPillsSection={<ActiveFilterPills />}
+      />
     </ArtworkFilterContextProvider>
   )
 }
