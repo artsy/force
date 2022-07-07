@@ -53,7 +53,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  ContentAboveArtworks?: JSX.Element
+  FilterPillsSection?: JSX.Element
   viewer
 }
 
@@ -102,7 +102,7 @@ export const BaseArtworkFilter: React.FC<
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
-  ContentAboveArtworks,
+  FilterPillsSection,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -271,7 +271,7 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {ContentAboveArtworks}
+          {FilterPillsSection}
 
           <Text variant="sm" fontWeight="bold">
             {totalCountLabel}
@@ -324,7 +324,7 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {ContentAboveArtworks}
+            {FilterPillsSection}
 
             {children || (
               <ArtworkFilterArtworkGrid
