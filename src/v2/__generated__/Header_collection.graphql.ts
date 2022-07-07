@@ -16,6 +16,8 @@ export type Header_collection = {
     };
     readonly slug: string;
     readonly title: string;
+    readonly showHeaderArtworksRail: boolean;
+    readonly showFeaturedArtists: boolean;
     readonly " $refType": "Header_collection";
 };
 export type Header_collection$data = Header_collection;
@@ -105,10 +107,24 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "title",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "showHeaderArtworksRail",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "showFeaturedArtists",
+      "storageKey": null
     }
   ],
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = '0cf4acb77713799d73ee4bbb29a03fb0';
+(node as any).hash = '6aaa6eaf8c8d7070bf81c8b6e113fa1f';
 export default node;

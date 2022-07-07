@@ -72,7 +72,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
         )}
       </GridColumns>
 
-      {!collection.headerImage && (
+      {collection.showHeaderArtworksRail && !collection.headerImage && (
         <>
           <Spacer mt={6} />
 
@@ -87,7 +87,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
       <Spacer mt={6} />
 
-      {featuredArtists && hasMultipleArtists && (
+      {collection.showFeaturedArtists && featuredArtists && hasMultipleArtists && (
         <>
           <Text variant="lg-display" mb={4}>
             Featured Artists
@@ -136,6 +136,8 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
         }
         slug
         title
+        showHeaderArtworksRail
+        showFeaturedArtists
       }
     `,
     artworks: graphql`
