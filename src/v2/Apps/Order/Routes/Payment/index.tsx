@@ -33,6 +33,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
+import { PollAccountBalanceQueryRenderer } from "../../Components/PollAccountBalance"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -69,6 +70,13 @@ export const PaymentRoute: FC<Props> = props => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
+  const [isPaymentSetupComplete, setIsPaymentSetupComplete] = useState(false)
+  const [shouldPollAccountBalance, setShouldPollAccountBalance] = useState(
+    false
+  )
+  const [showInsuffiencyFundsError, setShowInsuffiencyFundsError] = useState(
+    false
+  )
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -210,12 +218,29 @@ export const PaymentRoute: FC<Props> = props => {
     getClientParam("redirect_status") === "succeeded"
 
   const onSetPaymentSuccess = () => {
+    if (selectedPaymentMethod === "US_BANK_ACCOUNT") {
+      setShouldPollAccountBalance(true)
+      setIsPaymentSetupComplete(true)
+      return
+    }
+
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   const onSetPaymentError = error => {
     logger.error(error)
     props.dialog.showErrorDialog()
+  }
+
+  const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
+    setShouldPollAccountBalance(false)
+
+    if (displayInsufficientFundsError) {
+      setShowInsuffiencyFundsError(true)
+      return
+    }
+
+    props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   return (
@@ -227,13 +252,22 @@ export const PaymentRoute: FC<Props> = props => {
       <TwoColumnLayout
         Content={
           <>
-            {isSettingPayment ? (
+            {isSettingPayment &&
+            !isPaymentSetupComplete &&
+            !shouldPollAccountBalance ? (
               <SetPaymentByStripeIntent
                 order={order}
                 setupIntentId={setupIntentId!}
                 saveAccount={saveAccount!}
                 onSuccess={onSetPaymentSuccess}
                 onError={onSetPaymentError}
+              />
+            ) : shouldPollAccountBalance && setupIntentId ? (
+              <PollAccountBalanceQueryRenderer
+                setupIntentId={setupIntentId}
+                onBalanceCheckComplete={onBalanceCheckComplete}
+                buyerTotalCents={order.buyerTotalCents!}
+                currencyCode={order.currencyCode}
               />
             ) : (
               <PaymentContent
@@ -247,6 +281,7 @@ export const PaymentRoute: FC<Props> = props => {
                 onPaymentMethodChange={setSelectedPaymentMethod}
                 onSetPaymentSuccess={onSetPaymentSuccess}
                 onSetPaymentError={onSetPaymentError}
+                showInsuffiencyFundsError={showInsuffiencyFundsError}
               />
             )}
           </>
@@ -307,6 +342,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment Payment_order on CommerceOrder {
         availablePaymentMethods
+        buyerTotalCents
         internalID
         mode
         currencyCode

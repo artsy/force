@@ -8,6 +8,7 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type Payment_order = {
     readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
+    readonly buyerTotalCents: number | null;
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly currencyCode: string;
@@ -68,6 +69,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "availablePaymentMethods",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "buyerTotalCents",
       "storageKey": null
     },
     {
@@ -231,5 +239,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'ad4cd9559f59b24e7b5b9bd49ad29e69';
+(node as any).hash = '776eb4cdec34eaf39297dd3860c8d6f3';
 export default node;

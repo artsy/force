@@ -39,6 +39,7 @@ export interface Props {
   CreditCardPicker: RefObject<CreditCardPicker>
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
+  showInsuffiencyFundsError: boolean
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -53,6 +54,7 @@ export const PaymentContent: FC<Props> = props => {
     onPaymentMethodChange,
     onSetPaymentSuccess,
     onSetPaymentError,
+    showInsuffiencyFundsError,
   } = props
   const tracking = useTracking()
 
@@ -141,6 +143,7 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           onSetPaymentSuccess={onSetPaymentSuccess}
           onSetPaymentError={onSetPaymentError}
+          showInsuffiencyFundsError={showInsuffiencyFundsError}
         />
       </Collapse>
 
@@ -205,6 +208,7 @@ const getAvailablePaymentMethods = (
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
     <BorderedRadio
+      key={1}
       value={paymentMethod}
       label={
         <>
@@ -219,6 +223,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
+        key={2}
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
           <>
@@ -234,6 +239,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <BorderedRadio
+        key={3}
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
           <>
