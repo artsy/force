@@ -47,6 +47,11 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
       fontFamily: "Ideal Sans, system-ui, sans-serif",
       borderRadius: "0px",
     },
+    rules: {
+      ".Label": {
+        textTransform: "uppercase",
+      },
+    },
   }
 
   const options = {

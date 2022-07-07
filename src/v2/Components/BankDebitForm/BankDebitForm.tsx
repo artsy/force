@@ -69,7 +69,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
