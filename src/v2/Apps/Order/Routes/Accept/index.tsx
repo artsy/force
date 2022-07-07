@@ -288,7 +288,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
                   Submit
                 </Button>
                 <Spacer mb={2} />
-                <ConditionsOfSaleDisclaimer textAlign="center" />
+                <ConditionsOfSaleDisclaimer />
               </Media>
             </Flex>
           }
