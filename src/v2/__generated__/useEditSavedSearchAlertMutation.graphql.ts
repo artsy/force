@@ -20,6 +20,7 @@ export type SearchCriteriaAttributes = {
     dimensionRange?: string | null | undefined;
     height?: string | null | undefined;
     inquireableOnly?: boolean | null | undefined;
+    keyword?: string | null | undefined;
     locationCities?: Array<string> | null | undefined;
     majorPeriods?: Array<string> | null | undefined;
     materialsTerms?: Array<string> | null | undefined;
