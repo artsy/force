@@ -1,8 +1,6 @@
 import { DateTime } from "luxon"
 import { stripTags } from "underscore.string"
-import { CalendarEventProps as CalendarEventComponentProps } from "v2/Components/AddToCalendar/AddToCalendar"
-
-type CalendarEventProps = Omit<CalendarEventComponentProps, "contextModule">
+import { AddToCalendarProps } from "./AddToCalendar"
 
 /** @returns URL to create a new Google Calendar event */
 export const generateGoogleCalendarUrl = ({
@@ -13,7 +11,7 @@ export const generateGoogleCalendarUrl = ({
   address = "",
   href,
   liveAuctionUrl,
-}: CalendarEventProps): string => {
+}: AddToCalendarProps): string => {
   const start = formatCalendarDate(startDate)
   // If there is no endDate, set to 1 hour after start
   const end = endDate
@@ -44,7 +42,7 @@ export const generateIcsCalendarUrl = ({
   address = "",
   href,
   liveAuctionUrl = "",
-}: CalendarEventProps): string => {
+}: AddToCalendarProps): string => {
   const start = formatCalendarDate(startDate)
   const end = endDate
     ? formatCalendarDate(endDate)

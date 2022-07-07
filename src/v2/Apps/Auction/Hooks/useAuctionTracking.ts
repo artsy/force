@@ -3,7 +3,6 @@ import { useAnalyticsContext } from "v2/System"
 import {
   ActionType,
   AddToCalendar,
-  addToCalendar,
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
@@ -23,15 +22,15 @@ export const useAuctionTracking = () => {
 
   const tracking = {
     addToCalendar: ({ subject }: { subject: AddToCalendar["subject"] }) => {
-      trackEvent(
-        addToCalendar({
-          context_module: ContextModule.auctionHome,
-          context_owner_id: contextPageOwnerId,
-          context_owner_slug: contextPageOwnerSlug,
-          context_owner_type: contextPageOwnerType!,
-          subject,
-        })
-      )
+      const trackingProperties: AddToCalendar = {
+        action: ActionType.addToCalendar,
+        context_module: ContextModule.auctionHome,
+        context_owner_id: contextPageOwnerId,
+        context_owner_slug: contextPageOwnerSlug,
+        context_owner_type: contextPageOwnerType!,
+        subject,
+      }
+      trackEvent(trackingProperties)
     },
     auctionPageView: ({ me, sale }) => {
       trackEvent({
