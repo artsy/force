@@ -81,6 +81,7 @@ describe("BankAccountFragmentContainer", () => {
           me={props.me}
           onSetPaymentSuccess={jest.fn()}
           onSetPaymentError={jest.fn()}
+          showInsuffiencyFundsError={false}
         />
       </MockBoot>
     ),

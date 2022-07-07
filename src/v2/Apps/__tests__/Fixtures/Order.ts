@@ -282,6 +282,7 @@ const ArtaShipmentNodeNoUrl = {
 
 export const UntouchedOrder = {
   bankAccountId: null,
+  buyerTotalCents: 12000000,
   buyerTotal: "$12,000",
   itemsTotalCents: 1200000,
   code: "abcdefg",
