@@ -3,10 +3,10 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-// import { extractNodes } from "v2/Utils/extractNodes"
+import { extractNodes } from "v2/Utils/extractNodes"
 import { useOnboardingContext } from "../useOnboardingContext"
 import { OnboardingSearchResults_viewer } from "v2/__generated__/OnboardingSearchResults_viewer.graphql"
-import { OnboardingSearchResultsQuery } from ""
+import { OnboardingSearchResultsQuery } from "v2/__generated__/OnboardingSearchResultsQuery.graphql"
 
 interface OnboardingSearchResultsProps {
   viewer: OnboardingSearchResults_viewer
@@ -16,7 +16,7 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
   viewer,
 }) => {
   const { dispatch } = useOnboardingContext()
-  // const nodes = extractNodes(searchResults)
+  const nodes = extractNodes(viewer.searchConnection)
 
   return (
     <>
@@ -69,16 +69,12 @@ interface OnboardingOrderedSetQueryRendererProps {
 export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryRendererProps> = ({
   query,
 }) => {
-  // TODO: figure out why OnboardingSearchResults_viewer cant be spread into the query
-
   return (
     <SystemQueryRenderer<OnboardingSearchResultsQuery>
       query={graphql`
         query OnboardingSearchResultsQuery($query: String!) {
           viewer {
-            searchConnection(query: $query) {
-              ...OnboardingSearchResults_viewer
-            }
+            ...OnboardingSearchResults_viewer @arguments(query: $query)
           }
         }
       `}
@@ -88,11 +84,9 @@ export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryR
           console.error(error)
           return null
         }
-
         if (!props?.viewer) {
           return null
         }
-
         return (
           <OnboardingSearchResultsFragmentContainer viewer={props.viewer} />
         )
