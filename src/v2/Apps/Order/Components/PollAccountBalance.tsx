@@ -62,7 +62,6 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
 
   // if the user has enough balance or balance is not available, we don't need to display the error
   if (userHasEnoughBalance || balanceIsNotAvailable) {
-    setShouldStopPolling(true)
     clearTimeout(timeoutID)
     onBalanceCheckComplete(false)
   } else if (userHasInsufficientBalance) {

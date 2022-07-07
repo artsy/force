@@ -40,6 +40,7 @@ export interface Props {
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
   showInsuffiencyFundsError: boolean
+  setShowInsuffiencyFundsError: (arg: boolean) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -55,6 +56,7 @@ export const PaymentContent: FC<Props> = props => {
     onSetPaymentSuccess,
     onSetPaymentError,
     showInsuffiencyFundsError,
+    setShowInsuffiencyFundsError,
   } = props
   const tracking = useTracking()
 
@@ -144,6 +146,7 @@ export const PaymentContent: FC<Props> = props => {
           onSetPaymentSuccess={onSetPaymentSuccess}
           onSetPaymentError={onSetPaymentError}
           showInsuffiencyFundsError={showInsuffiencyFundsError}
+          setShowInsuffiencyFundsError={setShowInsuffiencyFundsError}
         />
       </Collapse>
 

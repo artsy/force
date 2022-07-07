@@ -280,6 +280,7 @@ export const PaymentRoute: FC<Props> = props => {
                 onSetPaymentSuccess={onSetPaymentSuccess}
                 onSetPaymentError={onSetPaymentError}
                 showInsuffiencyFundsError={showInsuffiencyFundsError}
+                setShowInsuffiencyFundsError={setShowInsuffiencyFundsError}
               />
             )}
           </>

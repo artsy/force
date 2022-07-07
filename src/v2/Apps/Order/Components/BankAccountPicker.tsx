@@ -22,6 +22,7 @@ interface Props {
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
   showInsuffiencyFundsError: boolean
+  setShowInsuffiencyFundsError: (arg: boolean) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -31,6 +32,7 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetPaymentSuccess,
     onSetPaymentError,
     showInsuffiencyFundsError,
+    setShowInsuffiencyFundsError,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -95,6 +97,7 @@ export const BankAccountPicker: FC<Props> = props => {
       {userHasExistingBankAccounts && (
         <RadioGroup
           onSelect={val => {
+            setShowInsuffiencyFundsError(false)
             if (val === "new") {
               setBankAccountSelection({ type: "new", id: "" })
             } else {
