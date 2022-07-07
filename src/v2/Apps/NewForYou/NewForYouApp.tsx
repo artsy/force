@@ -43,9 +43,14 @@ export const NewForYouAppFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           first: { type: "Int" }
           includeBackfill: { type: "Boolean!" }
+          version: { type: "String" }
         ) {
         ...NewForYouArtworksGrid_viewer
-          @arguments(first: $first, includeBackfill: $includeBackfill)
+          @arguments(
+            first: $first
+            includeBackfill: $includeBackfill
+            version: $version
+          )
       }
     `,
   }
