@@ -7,7 +7,6 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { getDefaultSort } from "v2/Apps/Artist/Routes/WorksForSale/Utils/getDefaultSort"
 import { Match } from "found"
 import { useEffect } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -87,10 +86,11 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     ...match.location.query,
   }
 
-  const defaultSortValue = getDefaultSort(
-    filters.sort ?? "-decayed_merch",
-    trendingSortVariant
-  )
+  let defaultSortValue = "-decayed_merch"
+
+  if (trendingSortVariant?.name === "experiment") {
+    defaultSortValue = "-default_trending_score"
+  }
 
   return (
     <ArtworkFilterContextProvider
