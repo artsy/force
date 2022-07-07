@@ -37,8 +37,7 @@ export const extractPillFromAggregation = (
   const aggregation = aggregationForFilter(paramName, aggregations)
   let aggregationValues = aggregation?.counts
 
-  // TODO: Add test case
-  // Use hardcoded medium values
+  // Use hardcoded medium values for some grids (e.g. fair, collect grids)
   if (paramName === "additionalGeneIDs" && !aggregation) {
     aggregationValues = hardcodedMediums as Aggregation["counts"]
   }
