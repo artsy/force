@@ -44,7 +44,6 @@ import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { ArtworkGridFilterPills } from "../SavedSearchAlert/Components/ArtworkGridFilterPills"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
@@ -54,8 +53,7 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  FilterPills?: JSX.Element
-  CreateAlertButton?: JSX.Element
+  ContentAboveArtworks?: JSX.Element
   viewer
 }
 
@@ -104,8 +102,7 @@ export const BaseArtworkFilter: React.FC<
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
-  FilterPills,
-  CreateAlertButton,
+  ContentAboveArtworks,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -274,15 +271,7 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          {(FilterPills || CreateAlertButton) && (
-            <>
-              <ArtworkGridFilterPills
-                FilterPills={FilterPills}
-                CreateAlertButton={CreateAlertButton}
-              />
-              <Spacer mt={4} />
-            </>
-          )}
+          {ContentAboveArtworks}
 
           <Text variant="sm" fontWeight="bold">
             {totalCountLabel}
@@ -335,15 +324,7 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {(FilterPills || CreateAlertButton) && (
-              <>
-                <ArtworkGridFilterPills
-                  FilterPills={FilterPills}
-                  CreateAlertButton={CreateAlertButton}
-                />
-                <Spacer mt={4} />
-              </>
-            )}
+            {ContentAboveArtworks}
 
             {children || (
               <ArtworkFilterArtworkGrid

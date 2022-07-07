@@ -47,7 +47,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
         relay={relay}
         offset={200}
         viewer={partner}
-        FilterPills={<ActiveFilterPills />}
+        ContentAboveArtworks={<ActiveFilterPills />}
       />
     </ArtworkFilterContextProvider>
   )
