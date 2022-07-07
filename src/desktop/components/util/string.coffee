@@ -1,5 +1,4 @@
 module.exports =
-
   smartTruncate: (text, limit=200) ->
     return unless text
     size = 0

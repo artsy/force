@@ -1,7 +1,0 @@
-typeSizes = json('../../stylus_lib/type_sizes.json', { hash: true })
-
-for fontName, sizes in typeSizes
-  for size, styles in sizes
-    .{fontName}-{size}
-      {fontName}()
-      {styles}

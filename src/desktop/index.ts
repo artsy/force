@@ -1,6 +1,4 @@
 import express from "express"
-import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
-import * as globalReactModules from "desktop/components/react/stitch_components"
 
 const app = express()
 
@@ -15,20 +13,6 @@ const app = express()
  *
  * ----------------------------------------------------------------------------
  */
-
-/**
- * Configure stitch SSR functionality. Mounted here (rather than in setup) so
- * changes to stitched code can be hot reloaded.
- *
- * @see https://github.com/artsy/stitch/tree/master/src/internal for more info.
- */
-app.use(
-  stitchMiddleware({
-    // @ts-ignore
-    modules: globalReactModules,
-    wrapper: globalReactModules.StitchWrapper,
-  })
-)
 
 /**
  * NOTE: App order matters as some apps establish logic that is shared inside
