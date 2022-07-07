@@ -24,8 +24,7 @@ import {
   useTrackFeatureVariant,
 } from "v2/System/useFeatureFlag"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
-import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { DefaultCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/DefaultCreateAlertButton"
+import { ActiveFilterPillsAndCreateAlert } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPillsAndCreateAlert"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -116,9 +115,11 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
-        FilterPills={<ActiveFilterPills defaultPills={defaultPills} />}
-        CreateAlertButton={
-          <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
+        FilterPillsSection={
+          <ActiveFilterPillsAndCreateAlert
+            defaultPills={defaultPills}
+            savedSearchEntity={savedSearchEntity}
+          />
         }
       />
     </ArtworkFilterContextProvider>

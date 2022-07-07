@@ -11,11 +11,8 @@ import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "../ArtworkFilterContext"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
-import { SavedSearchEntity } from "v2/Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
 import { omit } from "lodash"
-import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { DefaultCreateAlertButton } from "v2/Components/SavedSearchAlert/Components/DefaultCreateAlertButton"
+import { Text } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -38,20 +35,18 @@ describe("ArtworkFilter", () => {
   let sortOptionsMock
   let filters
   let breakpoint
-  let FilterPills
-  let CreateAlertButton
+  let FilterPillsSection
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
       <MockBoot breakpoint={breakpoint}>
         <ArtworkFilter
           {...(props as any)}
-          FilterPills={FilterPills}
-          CreateAlertButton={CreateAlertButton}
           onFilterClick={onFilterClick}
           onChange={onChange}
           sortOptions={sortOptionsMock}
           filters={{ ...initialArtworkFilterState, ...filters }}
+          FilterPillsSection={FilterPillsSection}
         />
       </MockBoot>
     ),
@@ -71,40 +66,18 @@ describe("ArtworkFilter", () => {
     filters = {
       colors: ["yellow", "pink"],
     }
-    FilterPills = undefined
-    CreateAlertButton = undefined
+    FilterPillsSection = undefined
     sortOptionsMock = [
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
   })
 
-  it("renders filters pills when FilterPills is passed and there are selected filters", async () => {
-    FilterPills = <ActiveFilterPills />
+  it("renders content above artworks when FilterPillsSection prop is passed", () => {
+    FilterPillsSection = <Text>FilterPillsSection</Text>
     renderWithRelay()
 
-    expect(screen.getAllByText("Yellow")[1]).toBeInTheDocument()
-    expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
-  })
-
-  it("removes pill after click on it", async () => {
-    FilterPills = <ActiveFilterPills />
-    renderWithRelay()
-
-    fireEvent.click(screen.getAllByText("Yellow")[1])
-
-    expect(screen.getAllByText("Yellow")).not.toHaveLength(2)
-    expect(screen.getAllByText("Pink")[1]).toBeInTheDocument()
-  })
-
-  it("renders 'Create Alert' button when CreateAlertButton is passed", async () => {
-    FilterPills = <ActiveFilterPills />
-    CreateAlertButton = (
-      <DefaultCreateAlertButton savedSearchEntity={savedSearchEntity} />
-    )
-    renderWithRelay()
-
-    expect(screen.getByText("Create Alert")).toBeInTheDocument()
+    expect(screen.getByText("FilterPillsSection")).toBeInTheDocument()
   })
 
   describe("without any filtered artworks", () => {
@@ -354,14 +327,3 @@ describe("ArtworkFilter", () => {
     })
   })
 })
-
-const savedSearchEntity: SavedSearchEntity = {
-  placeholder: "Test Artist",
-  defaultCriteria: {},
-  owner: {
-    type: OwnerType.artist,
-    id: "owner-id",
-    slug: "owner-slug",
-    name: "Owner Name",
-  },
-}
