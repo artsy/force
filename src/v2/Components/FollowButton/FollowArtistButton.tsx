@@ -1,5 +1,5 @@
 import { AuthContextModule, Intent, ContextModule } from "@artsy/cohesion"
-import { Box, ButtonProps, Popover } from "@artsy/palette"
+import { ButtonProps, Popover } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import { FollowArtistPopoverQueryRenderer } from "v2/Components/FollowArtistPopover"
 import * as React from "react"
@@ -114,37 +114,36 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   }
 
   return (
-    <Box data-test="followArtistButton">
-      <Popover
-        title="Other artists you might like"
-        placement="bottom"
-        popover={
-          artist ? (
-            <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
-          ) : null
-        }
-      >
-        {({ anchorRef, onVisible }) => {
-          const openSuggestions = () => {
-            if (isLoggedIn && triggerSuggestions && !artist.isFollowed) {
-              onVisible()
-            }
+    <Popover
+      title="Other artists you might like"
+      placement="bottom"
+      popover={
+        artist ? (
+          <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
+        ) : null
+      }
+    >
+      {({ anchorRef, onVisible }) => {
+        const openSuggestions = () => {
+          if (isLoggedIn && triggerSuggestions && !artist.isFollowed) {
+            onVisible()
           }
+        }
 
-          return (
-            <FollowButton
-              ref={anchorRef}
-              isFollowed={!!artist.isFollowed}
-              handleFollow={event => {
-                handleClick(event)
-                openSuggestions()
-              }}
-              buttonProps={rest}
-            />
-          )
-        }}
-      </Popover>
-    </Box>
+        return (
+          <FollowButton
+            data-test="followArtistButton"
+            ref={anchorRef}
+            isFollowed={!!artist.isFollowed}
+            handleFollow={event => {
+              handleClick(event)
+              openSuggestions()
+            }}
+            {...rest}
+          />
+        )
+      }}
+    </Popover>
   )
 }
 
@@ -189,11 +188,11 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
           }
         }
       `}
-      placeholder={<FollowButton buttonProps={rest} />}
+      placeholder={<FollowButton {...rest} />}
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props?.artist) {
-          return <FollowButton buttonProps={rest} />
+          return <FollowButton {...rest} />
         }
 
         return (

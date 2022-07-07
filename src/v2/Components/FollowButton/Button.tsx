@@ -8,16 +8,15 @@ import {
   useState,
 } from "react"
 
-interface FollowButtonProps {
+interface FollowButtonProps extends Omit<Partial<ButtonProps>, "variant"> {
   isFollowed?: boolean
-  buttonProps?: Omit<Partial<ButtonProps>, "variant">
   handleFollow?: MouseEventHandler<HTMLButtonElement>
 }
 
 export const FollowButton: ForwardRefExoticComponent<
   FollowButtonProps & { ref?: Ref<HTMLElement> }
 > = forwardRef(
-  ({ isFollowed = false, buttonProps = {}, handleFollow }, forwardedRef) => {
+  ({ isFollowed = false, handleFollow, ...rest }, forwardedRef) => {
     const [showUnfollow, setShowUnfollow] = useState(false)
 
     const label = useMemo(() => {
@@ -38,7 +37,7 @@ export const FollowButton: ForwardRefExoticComponent<
         onMouseLeave={() => setShowUnfollow(false)}
         data-follow={isFollowed}
         data-test="followButton"
-        {...buttonProps}
+        {...rest}
       >
         {/*
           To prevent layout shift: the longest string this

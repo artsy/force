@@ -82,7 +82,7 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
     <FollowButton
       isFollowed={!!profile.isFollowed}
       handleFollow={handleClick}
-      buttonProps={rest}
+      {...rest}
     />
   )
 }

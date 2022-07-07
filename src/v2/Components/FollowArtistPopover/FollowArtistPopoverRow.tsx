@@ -128,7 +128,7 @@ class FollowArtistPopoverRow extends Component<Props, State> {
           <FollowButton
             isFollowed={this.state.followed}
             handleFollow={() => this.handleClick(artistID)}
-            buttonProps={{ size: "small" }}
+            size="small"
           />
         }
       />

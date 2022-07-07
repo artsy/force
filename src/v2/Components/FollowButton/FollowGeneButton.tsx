@@ -82,7 +82,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
     <FollowButton
       isFollowed={!!gene.isFollowed}
       handleFollow={handleClick}
-      buttonProps={rest}
+      {...rest}
     />
   )
 }
