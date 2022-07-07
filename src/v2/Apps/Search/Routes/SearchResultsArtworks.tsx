@@ -9,6 +9,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer
@@ -39,6 +40,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
+      FilterPillsSection={<ActiveFilterPills />}
     />
   )
 }
