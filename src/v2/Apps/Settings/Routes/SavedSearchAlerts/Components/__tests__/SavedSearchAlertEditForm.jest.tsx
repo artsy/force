@@ -48,6 +48,7 @@ describe("SavedSearchAlertEditForm", () => {
         <MockBoot breakpoint="lg">
           <SavedSearchAlertEditFormFragmentContainer
             me={props.me!}
+            viewer={props.viewer!}
             artistsConnection={props.artistsConnection!}
             artworksConnection={props.artworksConnection!}
             editAlertEntity={defaultEditAlertEntity}
@@ -60,6 +61,9 @@ describe("SavedSearchAlertEditForm", () => {
     query: graphql`
       query SavedSearchAlertEditForm_Test_Query($artistIDs: [String!])
         @raw_response_type {
+        viewer {
+          ...SavedSearchAlertEditForm_viewer
+        }
         me {
           ...SavedSearchAlertEditForm_me
             @arguments(savedSearchId: "id", withAggregations: true)
@@ -105,6 +109,29 @@ describe("SavedSearchAlertEditForm", () => {
     expect(screen.getByText("Banksy")).toBeInTheDocument()
     expect(screen.getByText("KAWS")).toBeInTheDocument()
     expect(screen.getByText("David Shrigley")).toBeInTheDocument()
+  })
+
+  it("should show warning message when `Email Alerts` is enabled and `Custom Alerts` email setting is disabled", () => {
+    const viewerMocked = {
+      notificationPreferences: [
+        {
+          status: "UNSUBSCRIBED",
+          name: "custom_alerts",
+          channel: "email",
+        },
+      ],
+    }
+
+    renderWithRelay({
+      ArtistConnection: () => artistsConnectionMocked,
+      FilterArtworksConnection: () => filterArtworksConnectionMocked,
+      Me: () => meMocked,
+      Viewer: () => viewerMocked,
+    })
+
+    const title = "Change your email preferences"
+
+    expect(screen.getByText(title)).toBeInTheDocument()
   })
 
   it('should call delete alert handler when "Delete Alert" button is pressed', () => {
