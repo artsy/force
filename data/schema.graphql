@@ -13026,6 +13026,12 @@ type Query {
     sort: PriceInsightSort
   ): PriceInsightConnection
 
+  # A Profile
+  profile(
+    # The slug or ID of the Profile
+    id: String!
+  ): Profile
+
   # Static set of recently sold artworks for the SWA landing page
   recentlySoldArtworks(
     after: String
@@ -16311,6 +16317,12 @@ type Viewer {
   previewSavedSearch(
     attributes: PreviewSavedSearchAttributes
   ): PreviewSavedSearch
+
+  # A Profile
+  profile(
+    # The slug or ID of the Profile
+    id: String!
+  ): Profile
 
   # Static set of recently sold artworks for the SWA landing page
   recentlySoldArtworks(
