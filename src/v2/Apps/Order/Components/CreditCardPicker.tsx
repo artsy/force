@@ -10,7 +10,7 @@ import {
   emptyAddress,
 } from "v2/Components/AddressForm"
 
-import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
+import { CreditCardInput } from "v2/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -60,7 +60,7 @@ interface CreditCardPickerState {
   address: Address
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  stripeError: StripeError
+  stripeError: StripeError | null
   isCreatingStripeToken: boolean
   creditCardSelection: { type: "existing"; id: string } | { type: "new" }
   saveNewCreditCard: boolean
@@ -70,8 +70,7 @@ export class CreditCardPicker extends React.Component<
   CreditCardPickerProps & SystemContextProps & StripeProps,
   CreditCardPickerState
 > {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  state = {
+  state: CreditCardPickerState = {
     hideBillingAddress: true,
     stripeError: null,
     isCreatingStripeToken: false,
@@ -122,8 +121,11 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      const element = this.props.elements.getElement(CardElement)!
-      return await this.props.stripe.createToken(element, stripeBillingAddress)
+      const cardElement = this.props.elements.getElement(CardElement)!
+      return await this.props.stripe.createToken(
+        cardElement,
+        stripeBillingAddress
+      )
     } finally {
       this.setState({ isCreatingStripeToken: false })
     }
@@ -319,14 +321,13 @@ export class CreditCardPicker extends React.Component<
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer mb={2} />}
           <Flex flexDirection="column">
-            <Text mb={1} size="md" color="black100" lineHeight="1.1em">
-              Credit card
-            </Text>
             <CreditCardInput
-              error={stripeError!}
+              title="Credit card"
+              error={stripeError?.message}
               onChange={response => {
                 this.setState({ stripeError: response.error! })
               }}
+              required
             />
 
             {!this.isPickup() && (
