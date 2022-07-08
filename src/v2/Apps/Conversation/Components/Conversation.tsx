@@ -49,6 +49,27 @@ const Loading: React.FC = () => (
   </SpinnerContainer>
 )
 
+// Show banner
+
+const GuaranteeBanner: React.FC<{ conversationID: string }> = ({
+  conversationID,
+}) => {
+  const [showBanner, setShowBanner] = useState(false)
+  useEffect(() => {
+    setShowBanner(true)
+    const timer = setTimeout(() => setShowBanner(false), 5000)
+    return () => clearTimeout(timer)
+  }, [conversationID])
+
+  return showBanner ? (
+    <Banner variant="brand">
+      <GuaranteeIcon mr={1} fill="white100" />
+      To protect your payment, always communicate and pay through the Artsy
+      platform.
+    </Banner>
+  ) : null
+}
+
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
@@ -173,15 +194,6 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const [toastBottom, setToastBottom] = useState(0)
 
-  // Show banner
-  const [showBanner, setShowBanner] = useState(false)
-
-  useEffect(() => {
-    setShowBanner(true)
-    const timer = setTimeout(() => setShowBanner(false), 5000)
-    return () => clearTimeout(timer)
-  }, [conversationID])
-
   // Behaviours
   // -Navigation
   useEffect(() => {
@@ -222,13 +234,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         showDetails={showDetails}
         setShowDetails={setShowDetails}
       />
-      {showBanner && (
-        <Banner variant="brand">
-          <GuaranteeIcon mr={1} fill="white100" />
-          To protect your payment, always communicate and pay through the Artsy
-          platform.
-        </Banner>
-      )}
+      <GuaranteeBanner conversationID={conversation?.internalID!} />
       <NoScrollFlex flexDirection="column" width="100%">
         <MessageContainer ref={scrollContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
