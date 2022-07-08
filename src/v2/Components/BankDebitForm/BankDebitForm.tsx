@@ -1,6 +1,16 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Box, Button, Spacer } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Checkbox,
+  Clickable,
+  Flex,
+  InfoCircleIcon,
+  Tooltip,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
@@ -15,6 +25,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   const elements = useElements()
   const { user } = useSystemContext()
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
+  const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
   const tracking = useTracking()
 
   const trackPaymentElementEvent = event => {
@@ -26,6 +37,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
         subject: "bank_account_selected",
       })
     }
+
     if (!event.empty) {
       trackedEvents.push({
         flow: order.mode,
@@ -87,7 +99,43 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
             },
           }}
         />
-        <Spacer mt={2} />
+
+        <Spacer mt={4} />
+        <Flex>
+          <Checkbox
+            selected={isSaveAccountChecked}
+            onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
+            data-test="SaveBankAccountCheckbox"
+          >
+            Save bank account for later use.
+          </Checkbox>
+          <Flex>
+            <Tooltip
+              placement="top-start"
+              size="lg"
+              width={400}
+              content={
+                <Text fontSize={13} lineHeight={"18px"}>
+                  Thank you for signing up for direct debits from Artsy. You
+                  have authorized Artsy and, if applicable, its affiliated
+                  entities to debit the bank account specified above, on behalf
+                  of sellers that use the Artsy website, for any amount owed for
+                  your purchase of artworks from such sellers, according to
+                  Artsy’s website and terms. You can change or cancel this
+                  authorization at any time by providing Artsy with 30 (thirty)
+                  days’ notice. By clicking “Save bank account for later use”,
+                  you authorize Artsy to save the bank account specified above.
+                </Text>
+              }
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoCircleIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
+        </Flex>
+        <Spacer mt={4} />
+
         <Button
           onClick={trackClickedContinue}
           disabled={!stripe}
