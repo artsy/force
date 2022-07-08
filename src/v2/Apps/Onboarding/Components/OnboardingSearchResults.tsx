@@ -2,6 +2,7 @@ import { Join, Separator } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
+// import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useOnboardingContext } from "../useOnboardingContext"
@@ -16,7 +17,8 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
   viewer,
 }) => {
   const { dispatch } = useOnboardingContext()
-  const nodes = extractNodes(viewer.searchConnection)
+  // case statement goes here
+  const nodes = extractNodes(viewer.matchConnection)
 
   return (
     <>
@@ -45,14 +47,20 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment OnboardingSearchResults_viewer on Viewer
-        @argumentDefinitions(query: { type: "String!", defaultValue: "" }) {
-        searchConnection(query: $query, entities: [ARTIST], first: 10) {
+        @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
+        matchConnection(
+          term: $term
+          entities: [ARTIST]
+          first: 10
+          mode: AUTOSUGGEST
+        ) {
           edges {
             node {
               ... on Artist {
                 name
                 internalID
                 ...EntityHeaderArtist_artist
+                ...EntityHeaderPartner_partner
               }
             }
           }
@@ -63,22 +71,22 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
 )
 
 interface OnboardingOrderedSetQueryRendererProps {
-  query: string
+  term: string
 }
 
 export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryRendererProps> = ({
-  query,
+  term,
 }) => {
   return (
     <SystemQueryRenderer<OnboardingSearchResultsQuery>
       query={graphql`
-        query OnboardingSearchResultsQuery($query: String!) {
+        query OnboardingSearchResultsQuery($term: String!) {
           viewer {
-            ...OnboardingSearchResults_viewer @arguments(query: $query)
+            ...OnboardingSearchResults_viewer @arguments(term: $term)
           }
         }
       `}
-      variables={{ query: query }}
+      variables={{ term: term }}
       render={({ error, props }) => {
         if (error) {
           console.error(error)

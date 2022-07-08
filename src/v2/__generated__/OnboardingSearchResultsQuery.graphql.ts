@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingSearchResultsQueryVariables = {
-    query: string;
+    term: string;
 };
 export type OnboardingSearchResultsQueryResponse = {
     readonly viewer: {
@@ -21,10 +21,10 @@ export type OnboardingSearchResultsQuery = {
 
 /*
 query OnboardingSearchResultsQuery(
-  $query: String!
+  $term: String!
 ) {
   viewer {
-    ...OnboardingSearchResults_viewer_1Qr5xf
+    ...OnboardingSearchResults_viewer_4hh6ED
   }
 }
 
@@ -47,8 +47,8 @@ fragment EntityHeaderArtist_artist on Artist {
   }
 }
 
-fragment OnboardingSearchResults_viewer_1Qr5xf on Viewer {
-  searchConnection(query: $query, entities: [ARTIST], first: 10) {
+fragment OnboardingSearchResults_viewer_4hh6ED on Viewer {
+  matchConnection(term: $term, entities: [ARTIST], first: 10, mode: AUTOSUGGEST) {
     edges {
       node {
         __typename
@@ -59,6 +59,15 @@ fragment OnboardingSearchResults_viewer_1Qr5xf on Viewer {
         }
         ... on Node {
           __isNode: __typename
+          id
+        }
+        ... on Feature {
+          id
+        }
+        ... on Page {
+          id
+        }
+        ... on Profile {
           id
         }
       }
@@ -72,14 +81,23 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "query"
+    "name": "term"
   }
 ],
 v1 = {
   "kind": "Variable",
-  "name": "query",
-  "variableName": "query"
-};
+  "name": "term",
+  "variableName": "term"
+},
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "id",
+    "storageKey": null
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -138,17 +156,22 @@ return {
                 "name": "first",
                 "value": 10
               },
+              {
+                "kind": "Literal",
+                "name": "mode",
+                "value": "AUTOSUGGEST"
+              },
               (v1/*: any*/)
             ],
-            "concreteType": "SearchableConnection",
+            "concreteType": "MatchConnection",
             "kind": "LinkedField",
-            "name": "searchConnection",
+            "name": "matchConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SearchableEdge",
+                "concreteType": "MatchEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -291,17 +314,27 @@ return {
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "id",
-                            "storageKey": null
-                          }
-                        ],
+                        "selections": (v2/*: any*/),
                         "type": "Node",
                         "abstractKey": "__isNode"
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v2/*: any*/),
+                        "type": "Feature",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v2/*: any*/),
+                        "type": "Page",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v2/*: any*/),
+                        "type": "Profile",
+                        "abstractKey": null
                       }
                     ],
                     "storageKey": null
@@ -318,14 +351,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "70fb2e6f2e15417f50621b8586a0d7fb",
+    "cacheID": "218ed76080c46860b1447c4c2b234528",
     "id": null,
     "metadata": {},
     "name": "OnboardingSearchResultsQuery",
     "operationKind": "query",
-    "text": "query OnboardingSearchResultsQuery(\n  $query: String!\n) {\n  viewer {\n    ...OnboardingSearchResults_viewer_1Qr5xf\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment OnboardingSearchResults_viewer_1Qr5xf on Viewer {\n  searchConnection(query: $query, entities: [ARTIST], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query OnboardingSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...OnboardingSearchResults_viewer_4hh6ED\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment OnboardingSearchResults_viewer_4hh6ED on Viewer {\n  matchConnection(term: $term, entities: [ARTIST], first: 10, mode: AUTOSUGGEST) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n        ... on Profile {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5b3583189d22ae921a74d758c4320cdb';
+(node as any).hash = '36f77eb82d49c4aa1aaba20b02298c16';
 export default node;

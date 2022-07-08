@@ -5,7 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingSearchResults_viewer = {
-    readonly searchConnection: {
+    readonly matchConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly name?: string | null | undefined;
@@ -29,7 +29,7 @@ const node: ReaderFragment = {
     {
       "defaultValue": "",
       "kind": "LocalArgument",
-      "name": "query"
+      "name": "term"
     }
   ],
   "kind": "Fragment",
@@ -52,20 +52,25 @@ const node: ReaderFragment = {
           "value": 10
         },
         {
+          "kind": "Literal",
+          "name": "mode",
+          "value": "AUTOSUGGEST"
+        },
+        {
           "kind": "Variable",
-          "name": "query",
-          "variableName": "query"
+          "name": "term",
+          "variableName": "term"
         }
       ],
-      "concreteType": "SearchableConnection",
+      "concreteType": "MatchConnection",
       "kind": "LinkedField",
-      "name": "searchConnection",
+      "name": "matchConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "SearchableEdge",
+          "concreteType": "MatchEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -117,5 +122,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '57e6e3d2b0b863c1dc8cb78f5b5193be';
+(node as any).hash = '0bac4a9d48935ebac0ce2af757db64e3';
 export default node;
