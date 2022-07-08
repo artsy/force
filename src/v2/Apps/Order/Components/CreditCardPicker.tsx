@@ -10,10 +10,7 @@ import {
   emptyAddress,
 } from "v2/Components/AddressForm"
 
-import {
-  CreditCardInput,
-  CreditCardInputProvider,
-} from "v2/Components/CreditCardInput"
+import { CreditCardInput } from "v2/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -124,8 +121,11 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      const element = this.props.elements.getElement(CardElement)!
-      return await this.props.stripe.createToken(element, stripeBillingAddress)
+      const cardElement = this.props.elements.getElement(CardElement)!
+      return await this.props.stripe.createToken(
+        cardElement,
+        stripeBillingAddress
+      )
     } finally {
       this.setState({ isCreatingStripeToken: false })
     }
@@ -321,16 +321,14 @@ export class CreditCardPicker extends React.Component<
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer mb={2} />}
           <Flex flexDirection="column">
-            <CreditCardInputProvider>
-              <CreditCardInput
-                title="Credit card"
-                error={stripeError?.message}
-                onChange={response => {
-                  this.setState({ stripeError: response.error! })
-                }}
-                required
-              />
-            </CreditCardInputProvider>
+            <CreditCardInput
+              title="Credit card"
+              error={stripeError?.message}
+              onChange={response => {
+                this.setState({ stripeError: response.error! })
+              }}
+              required
+            />
 
             {!this.isPickup() && (
               <>
