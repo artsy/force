@@ -5017,6 +5017,7 @@ input CommerceSetPaymentByStripeIntentInput {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
   id: ID!
+  oneTimeUse: Boolean = false
   setupIntentId: String!
 }
 

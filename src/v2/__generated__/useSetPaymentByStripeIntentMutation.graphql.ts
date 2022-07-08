@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceSetPaymentByStripeIntentInput = {
     clientMutationId?: string | null | undefined;
     id: string;
+    oneTimeUse?: boolean | null | undefined;
     setupIntentId: string;
 };
 export type useSetPaymentByStripeIntentMutationVariables = {
