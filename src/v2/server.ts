@@ -4,7 +4,8 @@ import { renderServerApp } from "./System/Router/renderServerApp"
 import express from "express"
 import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import type { NextFunction } from "express"
-import { adminServerRoutes } from "./Apps/Admin/adminServerRoutes"
+import { adminServerRoutes } from "v2/Apps/Admin/adminServerRoutes"
+import { sitemapsServerApp } from "v2/Apps/Sitemaps/sitemapsServerApp"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
@@ -72,6 +73,7 @@ app
     res.send("[Force] Consent cookie set.")
   })
   .use(adminServerRoutes)
+  .use(sitemapsServerApp)
 
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading

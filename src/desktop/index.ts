@@ -18,7 +18,6 @@ const app = express()
  * NOTE: App order matters as some apps establish logic that is shared inside
  * of subapps. Apps with hardcoded routes or "RESTful" routes.
  */
-app.use(require("./apps/sitemaps"))
 app.use(require("./apps/rss"))
 
 // Non-profile dynamic vanity url apps
