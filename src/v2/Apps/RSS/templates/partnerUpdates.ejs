@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gallery Partner Updates</title>
+    <link><%= appUrl %></link>
+    <atom:link href="<%= appUrl %>/rss/partner-updates" rel="self" type="application/rss+xml"></atom:link>
+    <description>Artsy articles featured for Gallery Partner Updates.</description>
+    <language>en-US</language>
+
+    <% if (articles.length) { %>
+      <lastBuildDate>
+        <%= new Date(articles[0].publishedAt).toUTCString() %>
+      </lastBuildDate>
+    <% } %>
+
+    <% articles.forEach((article) => { %>
+      <%- include('article.ejs', { article: article }) %>
+    <% }); %>
+  </channel>
+</rss>
