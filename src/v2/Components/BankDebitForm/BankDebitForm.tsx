@@ -71,7 +71,7 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: returnURL,
+        return_url: `${returnURL}?saveAccount=${isSaveAccountChecked}`,
       },
     })
 
