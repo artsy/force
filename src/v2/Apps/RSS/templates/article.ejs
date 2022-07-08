@@ -1,0 +1,60 @@
+<item>
+  <guid isPermaLink="false"><%= appUrl %><%= article.href %></guid>
+  <title><%= article.thumbnailTitle %></title>
+  <link><%= appUrl %><%= article.href %></link>
+  <author><%= article.byline %></author>
+  <pubDate><%= new Date(article.publishedAt).toUTCString() %></pubDate>
+  <description>
+    <![CDATA[
+      <% if (article.hero && (article.hero.image || article.hero.embed)) { %>
+        <% if (article.hero.image) { %>
+          <img src="<%= article.hero.image.resized.src %>" alt="" />
+        <% } else { %>
+          <%= article.hero.embed %>
+        <% } %>
+      <% } %>
+
+      <% if (article.leadParagraph) { %>
+        <%- article.leadParagraph %>
+      <% } %>
+      
+      <% article.sections.forEach((section) => { %>
+        <% if (section.__typename === 'ArticleSectionText') { %>
+          <%- section.body %>
+        <% } else if (section.__typename === 'ArticleSectionEmbed') { %>
+          <iframe src="<%= section.url %>" width="100%" height="600" />
+        <% } else if (section.__typename === 'ArticleSectionVideo') { %>
+          <%- section.embed %>
+        <% } else if (section.__typename === 'ArticleSectionImageCollection' || section.__typename === 'ArticleSectionImageSet') { %>
+          <% section.figures.forEach((figure) => { %>
+            <% if (figure.__typename === 'Artwork') { %>
+              <img
+                src="<%= figure.image.resized.src %>"
+                srcSet="<%= figure.image.resized.srcSet %>"
+                width="<%= figure.image.resized.width %>"
+                height="<%= figure.image.resized.height %>"
+                alt=""
+              />
+              <p>
+                <%= figure.title %>, <%= figure.date %><br />
+                <%= figure.artists.map((artist) => artist.name).join(', ') %>
+                <% if (figure.partner) { %>
+                  <br />
+                  <%= figure.partner.name %>
+                <% } %>
+              </p>
+            <% } else { %>
+              <img
+                src="<%= figure.image.resized.src %>"
+                srcSet="<%= figure.image.resized.srcSet %>"
+                width="<%= figure.image.resized.width %>"
+                height="<%= figure.image.resized.height %>"
+                alt=""
+              />
+            <% } %>
+          <% }); %>
+        <% } %>
+      <% }); %>
+    ]]>
+  </description>
+</item>
