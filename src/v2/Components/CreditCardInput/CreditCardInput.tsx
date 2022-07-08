@@ -88,9 +88,15 @@ const FauxInput = styled(Box)<{ error: boolean }>`
     justify-content: center;
     height: 50px;
     padding: 0 ${themeGet("space.1")};
+    border-top: none;
+    border-left: none;
+    border-right: none;
     border-bottom: 1px solid;
     border-color: ${themeGet("colors.black30")};
     transition: border-color 0.25s;
+    ::placeholder {
+      color: ${themeGet("colors.black60")};
+    }
 
     ${({ error }) =>
       error &&
@@ -99,11 +105,19 @@ const FauxInput = styled(Box)<{ error: boolean }>`
       `}
 
     &:hover {
+      color: ${themeGet("colors.black100")};
       border-color: ${themeGet("colors.black60")};
+      ::placeholder {
+        color: ${themeGet("colors.black100")};
+      }
     }
 
     &--focus {
+      color: ${themeGet("colors.black100")};
       border-color: ${themeGet("colors.black60")};
+      ::placeholder {
+        color: ${themeGet("colors.black100")};
+      }
     }
 
     &--invalid {
