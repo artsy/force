@@ -11,8 +11,6 @@ export const useConfig = ({ basis, onDone }: UseConfig) => {
   const workflowEngine = useRef(
     new WorkflowEngine({
       workflow: [
-        //TODO: remove follow_artists from workflow
-        VIEW_FOLLOW_ARTISTS,
         VIEW_WELCOME,
         VIEW_QUESTION_ONE,
         VIEW_QUESTION_TWO,
