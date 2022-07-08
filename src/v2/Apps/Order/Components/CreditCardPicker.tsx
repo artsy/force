@@ -10,7 +10,10 @@ import {
   emptyAddress,
 } from "v2/Components/AddressForm"
 
-import { CreditCardInput } from "v2/Components/CreditCardInput"
+import {
+  CreditCardInput,
+  CreditCardInputProvider,
+} from "v2/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -60,7 +63,7 @@ interface CreditCardPickerState {
   address: Address
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  stripeError: StripeError
+  stripeError: StripeError | null
   isCreatingStripeToken: boolean
   creditCardSelection: { type: "existing"; id: string } | { type: "new" }
   saveNewCreditCard: boolean
@@ -70,8 +73,7 @@ export class CreditCardPicker extends React.Component<
   CreditCardPickerProps & SystemContextProps & StripeProps,
   CreditCardPickerState
 > {
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  state = {
+  state: CreditCardPickerState = {
     hideBillingAddress: true,
     stripeError: null,
     isCreatingStripeToken: false,
@@ -319,14 +321,16 @@ export class CreditCardPicker extends React.Component<
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer mb={2} />}
           <Flex flexDirection="column">
-            <CreditCardInput
-              title="Credit card"
-              error={stripeError!}
-              onChange={response => {
-                this.setState({ stripeError: response.error! })
-              }}
-              required
-            />
+            <CreditCardInputProvider>
+              <CreditCardInput
+                title="Credit card"
+                error={stripeError?.message}
+                onChange={response => {
+                  this.setState({ stripeError: response.error! })
+                }}
+                required
+              />
+            </CreditCardInputProvider>
 
             {!this.isPickup() && (
               <>
