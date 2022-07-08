@@ -22,6 +22,7 @@ describe("config", () => {
             questionOne: OPTION_YES_I_LOVE_COLLECTING_ART,
             questionTwo: [OPTION_DEVELOPING_MY_ART_TASTES],
             questionThree: OPTION_TOP_AUCTION_LOTS,
+            followedIds: [],
           },
         },
       })
@@ -40,6 +41,7 @@ describe("config", () => {
         questionOne: OPTION_YES_I_LOVE_COLLECTING_ART,
         questionTwo: [OPTION_DEVELOPING_MY_ART_TASTES],
         questionThree: null,
+        followedIds: [],
       } as State,
     }
     const {
