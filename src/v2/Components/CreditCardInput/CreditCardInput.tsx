@@ -106,7 +106,7 @@ const FauxInput = styled(Box)<{ error: boolean }>`
 
     &:hover {
       color: ${themeGet("colors.black100")};
-      border-color: ${themeGet("colors.black60")};
+      !&--invalid && border-color: ${themeGet("colors.black60")};
       ::placeholder {
         color: ${themeGet("colors.black100")};
       }
