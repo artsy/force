@@ -2,7 +2,6 @@ import { Join, Separator } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
-// import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useOnboardingContext } from "../useOnboardingContext"
@@ -17,7 +16,6 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
   viewer,
 }) => {
   const { dispatch } = useOnboardingContext()
-  // case statement goes here
   const nodes = extractNodes(viewer.matchConnection)
 
   return (
@@ -60,7 +58,6 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
                 name
                 internalID
                 ...EntityHeaderArtist_artist
-                ...EntityHeaderPartner_partner
               }
             }
           }
