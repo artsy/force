@@ -1,8 +1,5 @@
 import { compact, difference, find, flatten, keyBy } from "lodash"
-import {
-  Aggregation,
-  Aggregations,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { Aggregations } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -35,27 +32,33 @@ export const extractPillFromAggregation = (
 ) => {
   const { paramName, paramValue } = filter
   const aggregation = aggregationForFilter(paramName, aggregations)
-  let aggregationValues = aggregation?.counts
+  const aggregationByValue = keyBy(aggregation?.counts, "value")
+  const pills = (paramValue as string[]).map(value => {
+    if (aggregationByValue[value]) {
+      return {
+        value,
+        displayValue: aggregationByValue[value].name,
+        field: paramName,
+      }
+    }
 
-  // Use hardcoded medium values for some grids (e.g. fair, collect grids)
-  if (
-    paramName === "additionalGeneIDs" &&
-    (aggregation?.counts ?? []).length === 0
-  ) {
-    aggregationValues = hardcodedMediums as Aggregation["counts"]
-  }
+    // Use hardcoded medium values for some grids (e.g. fair, collect grids)
+    if (paramName === "additionalGeneIDs") {
+      const hardcodedValue = hardcodedMediums.find(v => v.value === value)
 
-  if (!aggregationValues) {
-    return []
-  }
+      if (hardcodedValue) {
+        return {
+          value,
+          displayValue: hardcodedValue.name,
+          field: paramName,
+        }
+      }
+    }
 
-  const aggregationByValue = keyBy(aggregationValues, "value")
+    return null
+  })
 
-  return (paramValue as string[]).map(value => ({
-    value,
-    displayValue: aggregationByValue[value]?.name ?? "",
-    field: paramName,
-  }))
+  return compact(pills)
 }
 
 export const extractSizeLabel = ({
