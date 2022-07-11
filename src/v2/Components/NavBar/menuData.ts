@@ -40,8 +40,8 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         href: "/gene/black-painters-on-our-radar",
       },
       {
-        text: "Our Top Auction Lots",
-        href: "/gene/our-top-auction-lots",
+        text: "Top Auction Lots",
+        href: "/gene/top-auction-lots",
         dividerBelow: true,
       },
       {
