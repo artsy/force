@@ -108,6 +108,9 @@ export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
         }
         filtered_artworks: artworksConnection(input: $input) {
           id
+          counts {
+            total(format: "0,0")
+          }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
