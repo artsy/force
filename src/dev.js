@@ -78,23 +78,6 @@ app.use(
   })
 )
 
-// Mount css middleware for legacy pages. Mostly applies to server-side jade
-// code. Client-side runs through webpack
-if (env.compileLegacyClientInDev) {
-  app.use(
-    require("stylus").middleware({
-      dest: path.resolve(__dirname, "./desktop/public"),
-      src: path.resolve(__dirname, "./desktop"),
-    })
-  )
-  app.use(
-    require("stylus").middleware({
-      dest: path.resolve(__dirname, "./mobile/public"),
-      src: path.resolve(__dirname, "./mobile"),
-    })
-  )
-}
-
 // Mount middleware
 initializeMiddleware(app)
 
@@ -103,11 +86,6 @@ const mountAndReload = createReloadable(app, require)
 // Mount express-reloadable on app
 mountAndReload(path.resolve("src/v2/server.ts"), {
   watchModules: [path.resolve(process.cwd(), "src/v2")],
-})
-
-// Mount express-reloadable on legacy routes
-mountAndReload(path.resolve("src/desktop"), {
-  watchModules: ["@artsy/palette"],
 })
 
 // Start server

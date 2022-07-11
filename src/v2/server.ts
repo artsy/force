@@ -7,6 +7,7 @@ import type { NextFunction } from "express"
 import { adminServerRoutes } from "v2/Apps/Admin/adminServerRoutes"
 import { sitemapsServerApp } from "v2/Apps/Sitemaps/sitemapsServerApp"
 import { rssServerApp } from "v2/Apps/RSS/rssServerApp"
+import { redirectsServerRoutes } from "v2/Apps/Redirects/redirectsServerRoutes"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
@@ -76,6 +77,8 @@ app
   .use(adminServerRoutes)
   .use(sitemapsServerApp)
   .use(rssServerApp)
+  // Should be last
+  .use(redirectsServerRoutes)
 
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading
