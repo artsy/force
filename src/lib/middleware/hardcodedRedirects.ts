@@ -146,6 +146,7 @@ const REDIRECTS = {
     "/article/artsy-editorial-inside-biennale-ep-8-dawn-kasper",
   "/venice-biennale/peoples-choice":
     "/article/artsy-editorial-inside-biennale-ep-9-peoples-choice",
+  "/editorial": "/articles",
 }
 
 const router = express.Router()
