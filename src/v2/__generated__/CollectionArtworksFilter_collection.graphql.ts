@@ -11,6 +11,9 @@ export type CollectionArtworksFilter_collection = {
     };
     readonly filtered_artworks: {
         readonly id: string;
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "CollectionArtworksFilter_collection";
@@ -82,6 +85,30 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "format",
+                  "value": "0,0"
+                }
+              ],
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": "total(format:\"0,0\")"
+            }
+          ],
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
@@ -93,5 +120,5 @@ const node: ReaderFragment = {
   "type": "MarketingCollection",
   "abstractKey": null
 };
-(node as any).hash = 'd089d59056680759f4abede4b14e6e06';
+(node as any).hash = '901c750ea2861fa615ef4840b88ca783';
 export default node;
