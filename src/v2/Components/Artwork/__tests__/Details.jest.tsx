@@ -258,7 +258,7 @@ describe("Details", () => {
 
         const wrapper = await getWrapper(data)
 
-        expect(wrapper.html()).toContain("Closes, 1454d 7h")
+        expect(wrapper.html()).toContain("Closes in 1454d 7h")
       })
 
       it("shows the lot is closing with the hours countdown if lots are hours from closing and the sale has cascading end times enabled", async () => {
@@ -277,7 +277,7 @@ describe("Details", () => {
 
         const wrapper = await getWrapper(data)
 
-        expect(wrapper.html()).toContain("Closes, 11h 11m")
+        expect(wrapper.html()).toContain("Closes in 11h 11m")
       })
 
       it("shows the lot is closing with the formatted end time of the sale if the lots have not started closing and the sale has cascading end times enabled", async () => {
@@ -369,7 +369,7 @@ describe("Details", () => {
 
             const wrapper = await getWrapper(data)
 
-            expect(wrapper.html()).toContain("Closes, 1m 5s")
+            expect(wrapper.html()).toContain("Closes in 1m 5s")
           })
         })
       })

@@ -272,7 +272,7 @@ export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({
       lotCloseCopy = isExtended
         ? // show Extended: timer if bidding has been extended
           timerCopy.copy
-        : `Closes, ${timerCopy.copy}`
+        : `Closes ${timerCopy.copy}`
       if (timerCopy.color === "red100") {
         labelColor = "red100"
       } else {
