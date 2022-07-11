@@ -20,7 +20,7 @@ export const useScrollToOpenAuthModal = ({
       return
     }
 
-    const setCookie = () => {
+    const dismiss = () => {
       Cookies.set(key, 1, { expires: 31536000 })
     }
 
@@ -35,13 +35,13 @@ export const useScrollToOpenAuthModal = ({
     }
 
     window.addEventListener("scroll", handleScroll, { once: true })
-    mediator.once("modal:closed", setCookie)
-    mediator.once("auth:sign_up:success", setCookie)
+    mediator.once("modal:closed", dismiss)
+    mediator.once("auth:sign_up:success", dismiss)
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
-      mediator.off("modal:closed", setCookie)
-      mediator.off("auth:sign_up:success", setCookie)
+      mediator.off("modal:closed", dismiss)
+      mediator.off("auth:sign_up:success", dismiss)
     }
   }, [key, modalOptions])
 }
