@@ -7,11 +7,26 @@ import { FragmentRefs } from "relay-runtime";
 export type OnboardingSearchResults_viewer = {
     readonly matchConnection: {
         readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly name?: string | null | undefined;
-                readonly internalID?: string | undefined;
+            readonly node: ({
+                readonly __typename: "Artist";
+                readonly internalID: string;
                 readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-            } | null;
+            } | {
+                readonly __typename: "Profile";
+                readonly internalID: string;
+                readonly owner: {
+                    readonly __typename: "Partner";
+                    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                };
+            } | {
+                /*This will never be '%other', but we need some
+                value in case none of the concrete values match.*/
+                readonly __typename: "%other";
+            }) | null;
         } | null> | null;
     } | null;
     readonly " $refType": "OnboardingSearchResults_viewer";
@@ -24,8 +39,28 @@ export type OnboardingSearchResults_viewer$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
+    {
+      "defaultValue": [],
+      "kind": "LocalArgument",
+      "name": "entities"
+    },
     {
       "defaultValue": "",
       "kind": "LocalArgument",
@@ -40,11 +75,9 @@ const node: ReaderFragment = {
       "alias": null,
       "args": [
         {
-          "kind": "Literal",
+          "kind": "Variable",
           "name": "entities",
-          "value": [
-            "ARTIST"
-          ]
+          "variableName": "entities"
         },
         {
           "kind": "Literal",
@@ -83,23 +116,11 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    },
+                    (v1/*: any*/),
                     {
                       "args": null,
                       "kind": "FragmentSpread",
@@ -107,6 +128,38 @@ const node: ReaderFragment = {
                     }
                   ],
                   "type": "Artist",
+                  "abstractKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    (v1/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": null,
+                      "kind": "LinkedField",
+                      "name": "owner",
+                      "plural": false,
+                      "selections": [
+                        (v0/*: any*/),
+                        {
+                          "kind": "InlineFragment",
+                          "selections": [
+                            {
+                              "args": null,
+                              "kind": "FragmentSpread",
+                              "name": "EntityHeaderPartner_partner"
+                            }
+                          ],
+                          "type": "Partner",
+                          "abstractKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "Profile",
                   "abstractKey": null
                 }
               ],
@@ -122,5 +175,6 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '0bac4a9d48935ebac0ce2af757db64e3';
+})();
+(node as any).hash = '6308eedc3c65cbc97ef33cc1e3d1970e';
 export default node;

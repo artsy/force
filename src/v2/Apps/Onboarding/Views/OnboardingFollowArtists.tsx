@@ -41,7 +41,10 @@ export const OnboardingFollowArtists: FC = () => {
             style={{ WebkitOverflowScrolling: "touch" }}
           >
             {query ? (
-              <OnboardingSearchResultsQueryRenderer term={query} />
+              <OnboardingSearchResultsQueryRenderer
+                term={query}
+                entities="ARTIST"
+              />
             ) : (
               <OnboardingOrderedSetQueryRenderer id="onboarding:suggested-artists" />
             )}
