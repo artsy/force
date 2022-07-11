@@ -1,4 +1,4 @@
-import { Join, Message, Separator, Text } from "@artsy/palette"
+import { Join, Message, Separator } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
