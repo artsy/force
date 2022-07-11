@@ -1,5 +1,5 @@
 import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
-import { Children } from "react";
+import { Children } from "react"
 import { Media } from "v2/Utils/Responsive"
 
 const CONTENT_SPAN = 7
@@ -52,8 +52,8 @@ const DefaultLayout = ({ Content, Sidebar }) => (
   </GridColumns>
 )
 
-const XsLayout = ({ Content, Sidebar }) => (
-  <GridColumns>
+const XsLayout = ({ Content, Sidebar, noRowGap }) => (
+  <GridColumns gridRowGap={noRowGap ? 0 : undefined}>
     <Column span={12}>{Content}</Column>
     <Column span={12}>{Sidebar}</Column>
   </GridColumns>

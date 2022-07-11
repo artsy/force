@@ -91,6 +91,7 @@ export class StatusRoute extends Component<StatusProps> {
                 {flowName} <span data-test="OrderCode">#{order.code}</span>
               </Text>
               <TwoColumnLayout
+                noRowGap
                 Content={
                   <>
                     <Title>{flowName} status | Artsy</Title>
