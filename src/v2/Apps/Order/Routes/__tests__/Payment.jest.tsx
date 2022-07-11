@@ -14,7 +14,7 @@ import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPi
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "v2/__generated__/Payment_order.graphql"
-import { MockBoot } from "v2/DevTools"
+import { flushPromiseQueue, MockBoot } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-tracking")
@@ -276,30 +276,96 @@ describe("Payment", () => {
   })
 
   describe("stripe ACH enabled", () => {
-    let page
+    let page: PaymentTestPage
 
     const achOrder = {
       ...testOrder,
+      paymentMethod: "US_BANK_ACCOUNT",
       availablePaymentMethods: [
         "CREDIT_CARD",
         "US_BANK_ACCOUNT",
       ] as CommercePaymentMethodEnum[],
     }
 
-    beforeAll(() => {
+    it("renders selection of payment methods", async () => {
       const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
-
       page = new PaymentTestPage(wrapper)
-    })
 
-    it("renders selection of payment methods", async () => {
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
+    it("tracks the initially-selected payment method on load like any other selection", async () => {
+      getWrapper({
+        CommerceOrder: () => ({
+          ...achOrder,
+        }),
+      })
+
+      await flushPromiseQueue()
+
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "US_BANK_ACCOUNT",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("tracks when the user selects the credit card payment method", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+      page.selectPaymentMethod(1)
+
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "CREDIT_CARD",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("tracks when the user selects the bank payment method", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => ({
+          ...achOrder,
+          paymentMethod: "CREDIT_CARD",
+        }),
+      })
+      page = new PaymentTestPage(wrapper)
+
+      page.selectPaymentMethod(0)
+
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "US_BANK_ACCOUNT",
+        subject: "click_payment_method",
+      })
+    })
+
     it("renders credit card element when credit card is chosen as payment method", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
+      })
+      page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(1)
 
       const creditCardCollapse = page
@@ -311,6 +377,11 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
+      })
+
+      page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(0)
       page.selectPaymentMethod(3)
       const creditCardCollapse = page
@@ -322,6 +393,11 @@ describe("Payment", () => {
     })
 
     it("renders description body for bank transfer when selected", async () => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
+      })
+
+      page = new PaymentTestPage(wrapper)
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
         "• If you can not find your bank, please check your spelling or choose"

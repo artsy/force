@@ -91,8 +91,17 @@ export const BankDebitForm: FC<Props> = ({
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
-          onReady={() => setIsPaymentElementLoading(false)}
+          onReady={(...args) => {
+            console.log({ onReady: args })
+            tracking.trackEvent({ payment_method_selected: "fillmein" })
+            setIsPaymentElementLoading(false)
+          }}
+          onBlur={(...args) => console.log({ onBlur: args })}
+          onFocus={(...args) => console.log({ onFocus: args })}
+          onEscape={(...args) => console.log({ onEscape: args })}
+          onClick={(...args) => console.log({ onClick: args })}
           onChange={event => {
+            console.log({ onchange: [event] })
             trackPaymentElementEvent(event)
           }}
           options={{
