@@ -7,6 +7,7 @@ import { FC } from "react"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useOnboardingContext } from "../useOnboardingContext"
+import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
 
 interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet
@@ -22,18 +23,36 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
     <>
       <Join separator={<Separator my={2} />}>
         {nodes.map(node => {
-          if (!node || !node.name) return null
+          switch (node.__typename) {
+            case "Artist":
+              return (
+                <EntityHeaderArtistFragmentContainer
+                  artist={node}
+                  key={node.internalID}
+                  // TODO: Switch this to `onFollow`
+                  onClick={() => {
+                    dispatch({ type: "FOLLOW", payload: node.internalID! })
+                  }}
+                />
+              )
 
-          return (
-            <EntityHeaderArtistFragmentContainer
-              artist={node}
-              key={node.internalID}
-              // TODO: Switch this to `onFollow`
-              onClick={() => {
-                dispatch({ type: "FOLLOW", payload: node.internalID! })
-              }}
-            />
-          )
+            case "Profile": {
+              const partner = node.owner
+
+              if (!partner || partner.__typename !== "Partner") return null
+
+              return (
+                <EntityHeaderPartnerFragmentContainer
+                  partner={partner}
+                  key={node.internalID}
+                  // TODO: Switch this to `onFollow`
+                  onClick={() => {
+                    dispatch({ type: "FOLLOW", payload: node.internalID! })
+                  }}
+                />
+              )
+            }
+          }
         })}
       </Join>
     </>
@@ -48,10 +67,19 @@ const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
         orderedItemsConnection(first: 50) {
           edges {
             node {
+              __typename
               ... on Artist {
-                ...EntityHeaderArtist_artist
-                name
                 internalID
+                ...EntityHeaderArtist_artist
+              }
+              ... on Profile {
+                internalID
+                owner {
+                  __typename
+                  ... on Partner {
+                    ...EntityHeaderPartner_partner
+                  }
+                }
               }
             }
           }

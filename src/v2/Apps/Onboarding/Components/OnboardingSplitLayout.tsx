@@ -21,6 +21,7 @@ export const OnboardingSplitLayout: FC<OnboardingSplitLayoutProps> = ({
         bg="black100"
         flexBasis="50%"
         position="relative"
+        flexShrink={0}
         {...leftProps}
       >
         {left}
@@ -28,7 +29,12 @@ export const OnboardingSplitLayout: FC<OnboardingSplitLayoutProps> = ({
         <ArtsyLogoIcon fill="white100" position="absolute" top={2} left={2} />
       </Box>
 
-      <Flex flexBasis={["100%", "50%"]} {...rightProps}>
+      <Flex
+        flexBasis={["100%", "50%"]}
+        flexGrow={0}
+        minWidth={0}
+        {...rightProps}
+      >
         {right}
       </Flex>
     </Flex>

@@ -7,11 +7,26 @@ import { FragmentRefs } from "relay-runtime";
 export type OnboardingOrderedSet_orderedSet = {
     readonly orderedItemsConnection: {
         readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly name?: string | null | undefined;
-                readonly internalID?: string | undefined;
+            readonly node: ({
+                readonly __typename: "Artist";
+                readonly internalID: string;
                 readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-            } | null;
+            } | {
+                readonly __typename: "Profile";
+                readonly internalID: string;
+                readonly owner: {
+                    readonly __typename: "Partner";
+                    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                };
+            } | {
+                /*This will never be '%other', but we need some
+                value in case none of the concrete values match.*/
+                readonly __typename: "%other";
+            }) | null;
         } | null> | null;
     };
     readonly " $refType": "OnboardingOrderedSet_orderedSet";
@@ -24,7 +39,22 @@ export type OnboardingOrderedSet_orderedSet$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -60,23 +90,11 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "kind": "InlineFragment",
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    },
+                    (v1/*: any*/),
                     {
                       "args": null,
                       "kind": "FragmentSpread",
@@ -84,6 +102,38 @@ const node: ReaderFragment = {
                     }
                   ],
                   "type": "Artist",
+                  "abstractKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    (v1/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": null,
+                      "kind": "LinkedField",
+                      "name": "owner",
+                      "plural": false,
+                      "selections": [
+                        (v0/*: any*/),
+                        {
+                          "kind": "InlineFragment",
+                          "selections": [
+                            {
+                              "args": null,
+                              "kind": "FragmentSpread",
+                              "name": "EntityHeaderPartner_partner"
+                            }
+                          ],
+                          "type": "Partner",
+                          "abstractKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "Profile",
                   "abstractKey": null
                 }
               ],
@@ -99,5 +149,6 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = '744ce891870f559e1680069f33b7bd76';
+})();
+(node as any).hash = '833d51a13cbdbf0213aaaacea673e85a';
 export default node;

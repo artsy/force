@@ -11,10 +11,13 @@ import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrder
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { useOnboardingContext } from "../useOnboardingContext"
 import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
+import { useDebouncedValue } from "v2/Utils/Hooks/useDebounce"
 
 export const OnboardingFollowArtists: FC = () => {
   const { next, state } = useOnboardingContext()
   const [query, setQuery] = useState("")
+
+  const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
 
   return (
     <OnboardingSplitLayout
@@ -40,8 +43,11 @@ export const OnboardingFollowArtists: FC = () => {
             overflowY="auto"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            {query ? (
-              <OnboardingSearchResultsQueryRenderer term={query} />
+            {debouncedValue ? (
+              <OnboardingSearchResultsQueryRenderer
+                term={debouncedValue}
+                entities="ARTIST"
+              />
             ) : (
               <OnboardingOrderedSetQueryRenderer id="onboarding:suggested-artists" />
             )}
