@@ -1,4 +1,4 @@
-import { Join, Separator } from "@artsy/palette"
+import { Join, Message, Separator, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
@@ -8,6 +8,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { useOnboardingContext } from "../useOnboardingContext"
 import { OnboardingSearchResults_viewer } from "v2/__generated__/OnboardingSearchResults_viewer.graphql"
 import { OnboardingSearchResultsQuery } from "v2/__generated__/OnboardingSearchResultsQuery.graphql"
+import { EntityHeaderPlaceholder } from "v2/Components/EntityHeaders/EntityHeaderPlaceholder"
 
 interface OnboardingSearchResultsProps {
   viewer: OnboardingSearchResults_viewer
@@ -19,43 +20,45 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
   const { dispatch } = useOnboardingContext()
   const nodes = extractNodes(viewer.matchConnection)
 
+  if (nodes.length === 0) {
+    return <Message title="No results found" />
+  }
+
   return (
-    <>
-      <Join separator={<Separator my={2} />}>
-        {nodes.map(node => {
-          switch (node.__typename) {
-            case "Artist":
-              return (
-                <EntityHeaderArtistFragmentContainer
-                  artist={node}
-                  key={node.internalID}
-                  // TODO: Switch this to `onFollow`
-                  onClick={() => {
-                    dispatch({ type: "FOLLOW", payload: node.internalID! })
-                  }}
-                />
-              )
+    <Join separator={<Separator my={2} />}>
+      {nodes.map(node => {
+        switch (node.__typename) {
+          case "Artist":
+            return (
+              <EntityHeaderArtistFragmentContainer
+                artist={node}
+                key={node.internalID}
+                // TODO: Switch this to `onFollow`
+                onClick={() => {
+                  dispatch({ type: "FOLLOW", payload: node.internalID! })
+                }}
+              />
+            )
 
-            case "Profile": {
-              const partner = node.owner
+          case "Profile": {
+            const partner = node.owner
 
-              if (!partner || partner.__typename !== "Partner") return null
+            if (!partner || partner.__typename !== "Partner") return null
 
-              return (
-                <EntityHeaderPartnerFragmentContainer
-                  partner={partner}
-                  key={node.internalID}
-                  // TODO: Switch this to `onFollow`
-                  onClick={() => {
-                    dispatch({ type: "FOLLOW", payload: node.internalID! })
-                  }}
-                />
-              )
-            }
+            return (
+              <EntityHeaderPartnerFragmentContainer
+                partner={partner}
+                key={node.internalID}
+                // TODO: Switch this to `onFollow`
+                onClick={() => {
+                  dispatch({ type: "FOLLOW", payload: node.internalID! })
+                }}
+              />
+            )
           }
-        })}
-      </Join>
-    </>
+        }
+      })}
+    </Join>
   )
 }
 
@@ -100,8 +103,17 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
 
 interface OnboardingOrderedSetQueryRendererProps {
   term: string
-  entities: "ARTIST" | "GALLERY"
+  entities: "ARTIST" | "PROFILE"
 }
+
+const PLACEHOLDER = (
+  <Join separator={<Separator my={2} />}>
+    <EntityHeaderPlaceholder />
+    <EntityHeaderPlaceholder />
+    <EntityHeaderPlaceholder />
+    <EntityHeaderPlaceholder />
+  </Join>
+)
 
 export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryRendererProps> = ({
   term,
@@ -121,13 +133,14 @@ export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryR
         }
       `}
       variables={{ term: term, entities: [entities] }}
+      placeholder={PLACEHOLDER}
       render={({ error, props }) => {
         if (error) {
           console.error(error)
           return null
         }
         if (!props?.viewer) {
-          return null
+          return PLACEHOLDER
         }
         return (
           <OnboardingSearchResultsFragmentContainer viewer={props.viewer} />

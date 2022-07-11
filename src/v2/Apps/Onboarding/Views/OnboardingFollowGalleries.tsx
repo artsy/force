@@ -11,16 +11,19 @@ import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrder
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { useOnboardingContext } from "../useOnboardingContext"
 import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
+import { useDebouncedValue } from "v2/Utils/Hooks/useDebounce"
 
 export const OnboardingFollowGalleries: FC = () => {
   const { next, state } = useOnboardingContext()
   const [query, setQuery] = useState("")
 
+  const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
+
   return (
     <OnboardingSplitLayout
       left={<Box width="100%" height="100%" bg="black10" />}
       right={
-        <Flex flexDirection="column">
+        <Flex flexDirection="column" minWidth={0}>
           <Box pt={4} px={4}>
             <Text variant="lg-display" mb={2}>
               Follow galleries you love to see events and news
@@ -40,10 +43,10 @@ export const OnboardingFollowGalleries: FC = () => {
             overflowY="auto"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            {query ? (
+            {debouncedValue ? (
               <OnboardingSearchResultsQueryRenderer
-                term={query}
-                entities="GALLERY"
+                term={debouncedValue}
+                entities="PROFILE"
               />
             ) : (
               <OnboardingOrderedSetQueryRenderer id="onboarding:suggested-galleries" />
