@@ -19,15 +19,8 @@ async function setupClient() {
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
       "./Utils/initAuthModalContainer"
     ),
-    import(
-      /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
-      "desktop/components/artistSignupModal/artistSignupModal"
-    ),
   ]).then(clientImports => {
-    const [
-      { initAuthModalContainer },
-      { setupArtistSignUpModal },
-    ] = clientImports
+    const [{ initAuthModalContainer }] = clientImports
 
     // Attach analytics
     if (getClientParam("disableAnalytics") !== "true") {
@@ -38,9 +31,7 @@ async function setupClient() {
     }
 
     loadSegment()
-
     initAuthModalContainer()
-    setupArtistSignUpModal()
 
     // Logout handler
     mediator.on("auth:logout", logoutEventHandler)

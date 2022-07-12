@@ -13,6 +13,7 @@ import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistH
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta"
 import { hasOverviewContent } from "./Routes/Overview/Utils/hasOverviewContent"
+import { useScrollToOpenArtistAuthModal } from "v2/Utils/Hooks/useScrollToOpenArtistAuthModal"
 
 /**
  * For logged-out users, the sign-up modal is triggered via a global listener.
@@ -28,6 +29,8 @@ interface ArtistAppProps {
 const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   const route = findCurrentRoute(match)!
   const { isEigen } = useSystemContext()
+
+  useScrollToOpenArtistAuthModal()
 
   // A stand-alone page under the /artist route path
   if (route.displayFullPage) {
