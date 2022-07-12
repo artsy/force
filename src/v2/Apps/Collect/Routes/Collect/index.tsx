@@ -22,6 +22,9 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { FilterPill } from "v2/Components/SavedSearchAlert/types"
+import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 
 export interface CollectAppProps {
   match: Match
@@ -45,8 +48,24 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   })
 
   let canonicalHref
+  let defaultPills: FilterPill[] = []
+
   if (medium) {
     canonicalHref = `${getENV("APP_URL")}/collect/${medium}`
+    const hardcodedMedium = hardcodedMediums.find(
+      entity => entity.value === medium
+    )
+
+    if (hardcodedMedium) {
+      defaultPills = [
+        {
+          isDefault: true,
+          value: hardcodedMedium.value,
+          displayValue: hardcodedMedium.name,
+          field: "additionalGeneIDs",
+        },
+      ]
+    }
   } else if (color) {
     canonicalHref = `${getENV("APP_URL")}/collect/color/${color}`
   } else {
@@ -141,6 +160,9 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             *
             */
             }}
+            FilterPillsSection={
+              <ActiveFilterPills defaultPills={defaultPills} />
+            }
           />
         </Box>
       </FrameWithRecentlyViewed>

@@ -9,6 +9,7 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
+import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag
@@ -37,7 +38,11 @@ const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
     >
-      <BaseArtworkFilter relay={relay} viewer={tag} />
+      <BaseArtworkFilter
+        relay={relay}
+        viewer={tag}
+        FilterPillsSection={<ActiveFilterPills />}
+      />
     </ArtworkFilterContextProvider>
   )
 }
