@@ -280,22 +280,6 @@ describe("Payment", () => {
     let achOrder
 
     beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => {
-        return {
-          featureFlags: {
-            stripe_ACH: {
-              flagEnabled: true,
-            },
-          },
-          mediator: {
-            on: jest.fn(),
-            off: jest.fn(),
-            ready: jest.fn(),
-            trigger: jest.fn(),
-          },
-        }
-      })
-
       achOrder = {
         ...testOrder,
         availablePaymentMethods: [
@@ -306,20 +290,20 @@ describe("Payment", () => {
     })
 
     it("renders selection of payment methods", async () => {
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
 
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
     it("tracks when the user selects the credit card payment method", async () => {
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(1)
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -335,10 +319,10 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the bank payment method", async () => {
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(0)
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -369,10 +353,10 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(0)
       page.selectPaymentMethod(3)
       const creditCardCollapse = page
@@ -407,16 +391,11 @@ describe("Payment", () => {
       })
     })
 
-    it("returns true when wire_transfer is enabled", () => {
-      const result = useFeatureFlag("wire_transfer")
-      expect(result).toBe(true)
-    })
-
     it("does not render wire tranfer as option for uneligible partners", async () => {
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => testOrder,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
       expect(page.text()).not.toContain("Wire transfer")
     })
 
@@ -429,10 +408,10 @@ describe("Payment", () => {
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => order,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
 
       expect(page.find(BorderedRadio).at(1).prop("selected")).toBeTruthy()
     })
@@ -445,10 +424,10 @@ describe("Payment", () => {
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => order,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
 
       expect(page.text()).toContain("Wire transfer")
     })
@@ -461,10 +440,10 @@ describe("Payment", () => {
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => order,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(1)
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -499,10 +478,10 @@ describe("Payment", () => {
         ] as CommercePaymentMethodEnum[],
       }
 
-      let wrapper = getWrapper({
+      const wrapper = getWrapper({
         CommerceOrder: () => order,
       })
-      let page = new PaymentTestPage(wrapper)
+      const page = new PaymentTestPage(wrapper)
       await page.selectPaymentMethod(1)
       await page.clickSubmit()
 
