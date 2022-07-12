@@ -74,8 +74,6 @@ import { registerFeatureFlagService } from "lib/featureFlags/featureFlagService"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
-const { CurrentUser } = require("./lib/current_user")
-
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
 
@@ -196,7 +194,6 @@ function applySecurityMiddleware(app) {
       ARTSY_ID: CLIENT_ID,
       ARTSY_SECRET: CLIENT_SECRET,
       ARTSY_URL: API_URL,
-      CurrentUser: CurrentUser,
       FACEBOOK_ID,
       FACEBOOK_SECRET,
       GOOGLE_CLIENT_ID,

@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
   if (req.user) {
     res.locals.user = req.user
     if (res.locals.sd != null) {
-      res.locals.sd.CURRENT_USER = req.user.toJSON()
+      res.locals.sd.CURRENT_USER = req.user
     }
   }
   if (res.locals.sd != null) {

@@ -198,7 +198,7 @@ module.exports.ssoAndRedirectBack = function (req, res, next) {
   if (req.xhr) {
     return res.send({
       success: true,
-      user: req.user.toJSON(),
+      user: req.user,
     })
   }
 
@@ -217,9 +217,8 @@ module.exports.ssoAndRedirectBack = function (req, res, next) {
   request
     .post(`${opts.ARTSY_URL}/api/v1/me/trust_token`)
     .set({
-      "X-Access-Token": req.user.get("accessToken", {
-        "X-Forwarded-For": forwardedFor(req),
-      }),
+      "X-Access-Token": req.user.accessToken,
+      "X-Forwarded-For": forwardedFor(req),
     })
     .end(function (err, sres) {
       if (err) {

@@ -65,7 +65,7 @@ module.exports.facebook = function (req, token, refreshToken, profile, done) {
       .set({ "User-Agent": req.get("user-agent") })
       .send({
         oauth_token: token,
-        access_token: req.user.get("accessToken"),
+        access_token: req.user.accessToken,
       })
       .end(err => done(err, req.user))
     // Login or signup with Facebook
@@ -109,7 +109,7 @@ module.exports.google = function (
       .set({ "User-Agent": req.get("user-agent") })
       .send({
         oauth_token: accessToken,
-        access_token: req.user.get("accessToken"),
+        access_token: req.user.accessToken,
       })
       .end(err => done(err, req.user))
     // Login or signup with Google
@@ -165,7 +165,7 @@ module.exports.apple = function (
         apple_uid: decodedIdToken.sub,
         id_token: idToken,
         oauth_token: accessToken,
-        access_token: req.user.get("accessToken"),
+        access_token: req.user.accessToken,
       })
       .end(err => done(err, req.user))
   } else {
@@ -229,10 +229,7 @@ const onAccessToken = (req, done, params) =>
     }
     // No errors—create the user from the access token.
     if (!err) {
-      return done(
-        null,
-        new opts.CurrentUser({ accessToken: res.body.access_token })
-      )
+      return done(null, { accessToken: res.body.access_token })
       // If there's no user linked to this account, create the user via the POST
       // /user API. Then attempt to fetch the access token again from Gravity and
       // recur back into this onAcccessToken callback.
