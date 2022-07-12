@@ -299,44 +299,6 @@ describe("Payment", () => {
       expect(page.text()).toContain("Bank transfer")
     })
 
-    it("tracks when the user selects the credit card payment method", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
-      page.selectPaymentMethod(1)
-
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "CREDIT_CARD",
-        subject: "click_payment_method",
-      })
-    })
-
-    it("tracks when the user selects the bank payment method", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
-      page.selectPaymentMethod(0)
-
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "US_BANK_ACCOUNT",
-        subject: "click_payment_method",
-      })
-    })
-
     it("renders credit card element when credit card is chosen as payment method", async () => {
       let wrapper = getWrapper({
         CommerceOrder: () => achOrder,
@@ -411,25 +373,6 @@ describe("Payment", () => {
       expect(page.text()).toContain("Wire transfer")
     })
 
-    it("tracks when the user selects the wire transfer method", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => wireOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
-      page.selectPaymentMethod(1)
-
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "WIRE_TRANSFER",
-        subject: "click_payment_method",
-      })
-    })
-
     it("transitions to review step when wire transfer is chosen", async () => {
       const submitMutationMock = jest.fn().mockResolvedValue({
         commerceSetPayment: {
@@ -458,6 +401,72 @@ describe("Payment", () => {
         },
       })
       expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
+    })
+  })
+
+  describe("tracking", () => {
+    let page
+
+    beforeAll(() => {
+      const order = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "US_BANK_ACCOUNT",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
+      }
+
+      const wrapper = getWrapper({
+        CommerceOrder: () => order,
+      })
+
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("works correctly with ACH", () => {
+      page.selectPaymentMethod(0)
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "US_BANK_ACCOUNT",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("works correctly with Credit Card", () => {
+      page.selectPaymentMethod(1)
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "CREDIT_CARD",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("works correctly with Wire Transfer", () => {
+      page.selectPaymentMethod(2)
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "WIRE_TRANSFER",
+        subject: "click_payment_method",
+      })
     })
   })
 })
