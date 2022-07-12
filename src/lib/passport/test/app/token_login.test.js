@@ -1,4 +1,3 @@
-const Backbone = require("backbone")
 const sinon = require("sinon")
 const rewire = require("rewire")
 const tokenLogin = rewire("../../lib/app/token_login")
@@ -12,7 +11,6 @@ describe("token login middleware", function () {
 
   beforeEach(function () {
     tokenLogin.__set__("opts", {
-      CurrentUser: Backbone.Model,
       logoutPath: "/users/sign_out",
     })
   })

@@ -1,4 +1,3 @@
-const Backbone = require("backbone")
 const rewire = require("rewire")
 const sinon = require("sinon")
 const serializers = rewire("../../lib/passport/serializers")
@@ -23,7 +22,7 @@ describe("#serialize", function () {
   })
 
   it("only stores select data in the session", function (done) {
-    const user = new Backbone.Model({ id: "craig", foo: "baz", bam: "bop" })
+    const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize(user, function (err, data) {
       ;(data.foo != null).should.not.be.ok
       data.id.should.equal("craig")
@@ -33,7 +32,7 @@ describe("#serialize", function () {
   })
 
   it("add authentications", function (done) {
-    const user = new Backbone.Model({ id: "craig", foo: "baz", bam: "bop" })
+    const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize(user, function (err, data) {
       data.authentications[0].provider.should.equal("facebook")
       done()
@@ -42,7 +41,7 @@ describe("#serialize", function () {
   })
 
   it("works when theres an error from Gravity", function (done) {
-    const user = new Backbone.Model({ id: "craig", foo: "baz", bam: "bop" })
+    const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize(user, function (err) {
       err.message.should.equal("fail")
       done()

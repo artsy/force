@@ -1,5 +1,4 @@
 const sinon = require("sinon")
-const Backbone = require("backbone")
 const { adminOnly } = require("../../lib/admin_only")
 
 describe("adminOnly middleware", () => {
@@ -12,7 +11,7 @@ describe("adminOnly middleware", () => {
 
   describe("is an admin", () => {
     beforeEach(() => {
-      req = { user: new Backbone.Model({ type: "Admin" }) }
+      req = { user: { type: "Admin" } }
     })
 
     it("passes through without error", () => {

@@ -1,4 +1,3 @@
-const Backbone = require("backbone")
 const rewire = require("rewire")
 const sinon = require("sinon")
 const cbs = rewire("../../lib/passport/callbacks")
@@ -25,7 +24,6 @@ describe("passport callbacks", function () {
       ARTSY_ID: "artsy-id",
       ARTSY_SECRET: "artsy-secret",
       ARTSY_URL: "http://apiz.artsy.net",
-      CurrentUser: Backbone.Model,
     })
   })
 
