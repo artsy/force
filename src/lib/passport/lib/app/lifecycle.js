@@ -16,6 +16,7 @@ const artsyXapp = require("@artsy/xapp")
 const { parse, resolve } = require("url")
 
 module.exports.onLocalLogin = function (req, res, next) {
+  console.log("is this working....")
   if (req.user && !req.xhr) {
     return next()
   }

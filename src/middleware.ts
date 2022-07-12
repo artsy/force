@@ -6,7 +6,7 @@ import "./lib/DOMParser"
 // TODO: Export a function instead of loading on import.
 import "./lib/setup_sharify"
 
-import artsyPassport from "lib/passport"
+// import artsyPassport from "lib/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
 import cookieParser from "cookie-parser"
@@ -22,19 +22,19 @@ import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import {
   APP_TIMEOUT,
-  API_URL,
-  APP_URL,
-  APPLE_CLIENT_ID,
-  APPLE_KEY_ID,
-  APPLE_PRIVATE_KEY,
-  APPLE_TEAM_ID,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  FACEBOOK_ID,
-  FACEBOOK_SECRET,
-  GOOGLE_CLIENT_ID,
-  GOOGLE_SECRET,
-  SEGMENT_WRITE_KEY_SERVER,
+  // API_URL,
+  // APP_URL,
+  // APPLE_CLIENT_ID,
+  // APPLE_KEY_ID,
+  // APPLE_PRIVATE_KEY,
+  // APPLE_TEAM_ID,
+  // CLIENT_ID,
+  // CLIENT_SECRET,
+  // FACEBOOK_ID,
+  // FACEBOOK_SECRET,
+  // GOOGLE_CLIENT_ID,
+  // GOOGLE_SECRET,
+  // SEGMENT_WRITE_KEY_SERVER,
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
@@ -51,10 +51,10 @@ import { hstsMiddleware } from "./lib/middleware/hsts"
 import { ipFilter } from "./lib/middleware/ipFilter"
 import { sessionMiddleware } from "./lib/middleware/session"
 import { assetMiddleware } from "./lib/middleware/asset"
-import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
+// import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { asyncLocalsMiddleware } from "./lib/middleware/asyncLocalMiddleware"
 import { bootstrapSharifyAndContextLocalsMiddleware } from "./lib/middleware/bootstrapSharifyAndContextLocalsMiddleware"
-import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
+// import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 import { backboneErrorHandlerMiddleware } from "./lib/middleware/backboneErrorHandler"
 import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
@@ -74,7 +74,7 @@ import { registerFeatureFlagService } from "lib/featureFlags/featureFlagService"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
-const { CurrentUser } = require("./lib/current_user")
+// const { CurrentUser } = require("./lib/current_user")
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
@@ -186,44 +186,44 @@ function applySecurityMiddleware(app) {
   app.use(assetMiddleware())
 
   // // Passport middleware for authentication.
-  app.use(
-    artsyPassport({
-      APP_URL,
-      APPLE_CLIENT_ID,
-      APPLE_KEY_ID,
-      APPLE_PRIVATE_KEY,
-      APPLE_TEAM_ID,
-      ARTSY_ID: CLIENT_ID,
-      ARTSY_SECRET: CLIENT_SECRET,
-      ARTSY_URL: API_URL,
-      CurrentUser: CurrentUser,
-      FACEBOOK_ID,
-      FACEBOOK_SECRET,
-      GOOGLE_CLIENT_ID,
-      GOOGLE_SECRET,
-      SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
-      userKeys: [
-        "collector_level",
-        "default_profile_id",
-        "email",
-        "has_partner_access",
-        "id",
-        "lab_features",
-        "name",
-        "paddle_number",
-        "phone",
-        "roles",
-        "type",
-      ],
-    })
-  )
+  // app.use(
+  //   artsyPassport({
+  //     APP_URL,
+  //     APPLE_CLIENT_ID,
+  //     APPLE_KEY_ID,
+  //     APPLE_PRIVATE_KEY,
+  //     APPLE_TEAM_ID,
+  //     ARTSY_ID: CLIENT_ID,
+  //     ARTSY_SECRET: CLIENT_SECRET,
+  //     ARTSY_URL: API_URL,
+  //     CurrentUser: CurrentUser,
+  //     FACEBOOK_ID,
+  //     FACEBOOK_SECRET,
+  //     GOOGLE_CLIENT_ID,
+  //     GOOGLE_SECRET,
+  //     SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
+  //     userKeys: [
+  //       "collector_level",
+  //       "default_profile_id",
+  //       "email",
+  //       "has_partner_access",
+  //       "id",
+  //       "lab_features",
+  //       "name",
+  //       "paddle_number",
+  //       "phone",
+  //       "roles",
+  //       "type",
+  //     ],
+  //   })
+  // )
 
-  // Add CSRF to the cookie and remove it from the page. This will allows the
-  // caching on the html and is used by the Login Modal to make secure requests.
-  app.use(csrfTokenMiddleware)
+  // // Add CSRF to the cookie and remove it from the page. This will allows the
+  // // caching on the html and is used by the Login Modal to make secure requests.
+  // app.use(csrfTokenMiddleware)
 
-  // Require a user for these routes
-  app.use(userRequiredMiddleware)
+  // // Require a user for these routes
+  // app.use(userRequiredMiddleware)
 }
 
 function applyStaticAssetMiddlewares(app) {

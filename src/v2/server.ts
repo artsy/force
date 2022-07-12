@@ -8,9 +8,68 @@ import { adminServerRoutes } from "v2/Apps/Admin/adminServerRoutes"
 import { sitemapsServerApp } from "v2/Apps/Sitemaps/sitemapsServerApp"
 import { rssServerApp } from "v2/Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "v2/Apps/Redirects/redirectsServerRoutes"
+import {
+  APP_URL,
+  APPLE_CLIENT_ID,
+  APPLE_KEY_ID,
+  APPLE_PRIVATE_KEY,
+  APPLE_TEAM_ID,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  API_URL,
+  FACEBOOK_ID,
+  FACEBOOK_SECRET,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_SECRET,
+  SEGMENT_WRITE_KEY_SERVER,
+} from "config"
+import { CurrentUser } from "lib/current_user"
+import { csrfTokenMiddleware } from "lib/middleware/csrfToken"
+import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
+import artsyPassport from "lib/passport"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
+
+// Passport middleware for authentication.
+app.use(
+  artsyPassport({
+    APP_URL,
+    APPLE_CLIENT_ID,
+    APPLE_KEY_ID,
+    APPLE_PRIVATE_KEY,
+    APPLE_TEAM_ID,
+    ARTSY_ID: CLIENT_ID,
+    ARTSY_SECRET: CLIENT_SECRET,
+    ARTSY_URL: API_URL,
+    CurrentUser: CurrentUser,
+    FACEBOOK_ID,
+    FACEBOOK_SECRET,
+    GOOGLE_CLIENT_ID,
+    GOOGLE_SECRET,
+    SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
+    userKeys: [
+      "collector_level",
+      "default_profile_id",
+      "email",
+      "has_partner_access",
+      "id",
+      "lab_features",
+      "name",
+      "paddle_number",
+      "phone",
+      "roles",
+      "type",
+    ],
+  })
+)
+
+// Add CSRF to the cookie and remove it from the page. This will allows the
+// caching on the html and is used by the Login Modal to make secure requests.
+app.use(csrfTokenMiddleware)
+
+// Require a user for these routes
+app.use(userRequiredMiddleware)
 
 /**
  * Mount routes that will connect to global SSR router

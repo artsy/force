@@ -85,7 +85,10 @@ const mountAndReload = createReloadable(app, require)
 
 // Mount express-reloadable on app
 mountAndReload(path.resolve("src/v2/server.ts"), {
-  watchModules: [path.resolve(process.cwd(), "src/v2")],
+  watchModules: [
+    path.resolve(process.cwd(), "src/v2"),
+    path.resolve(process.cwd(), "src/lib"),
+  ],
 })
 
 // Start server
