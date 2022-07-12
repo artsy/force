@@ -373,22 +373,16 @@ describe("Payment", () => {
   })
 
   describe("wire transfer enabled", () => {
+    let wireOrder
+
     beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => {
-        return {
-          featureFlags: {
-            wire_transfer: {
-              flagEnabled: true,
-            },
-          },
-          mediator: {
-            on: jest.fn(),
-            off: jest.fn(),
-            ready: jest.fn(),
-            trigger: jest.fn(),
-          },
-        }
-      })
+      wireOrder = {
+        ...testOrder,
+        availablePaymentMethods: [
+          "CREDIT_CARD",
+          "WIRE_TRANSFER",
+        ] as CommercePaymentMethodEnum[],
+      }
     })
 
     it("does not render wire tranfer as option for uneligible partners", async () => {
@@ -400,32 +394,17 @@ describe("Payment", () => {
     })
 
     it("preselects payment method from the order", async () => {
-      const order = {
-        ...testOrder,
-        paymentMethod: "WIRE_TRANSFER" as CommercePaymentMethodEnum,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
       const wrapper = getWrapper({
-        CommerceOrder: () => order,
+        CommerceOrder: () => wireOrder,
       })
       const page = new PaymentTestPage(wrapper)
 
-      expect(page.find(BorderedRadio).at(1).prop("selected")).toBeTruthy()
+      expect(page.find(BorderedRadio).at(0).prop("selected")).toBeTruthy()
     })
 
     it("renders wire transfer as option for eligible partners", async () => {
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
       const wrapper = getWrapper({
-        CommerceOrder: () => order,
+        CommerceOrder: () => wireOrder,
       })
       const page = new PaymentTestPage(wrapper)
 
@@ -433,15 +412,8 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the wire transfer method", async () => {
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
       const wrapper = getWrapper({
-        CommerceOrder: () => order,
+        CommerceOrder: () => wireOrder,
       })
       const page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(1)
@@ -470,16 +442,8 @@ describe("Payment", () => {
         submitMutation: submitMutationMock,
       }))
 
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
-
       const wrapper = getWrapper({
-        CommerceOrder: () => order,
+        CommerceOrder: () => wireOrder,
       })
       const page = new PaymentTestPage(wrapper)
       await page.selectPaymentMethod(1)
