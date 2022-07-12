@@ -59,7 +59,7 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
   )
 }
 
-const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
+export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
   OnboardingOrderedSet,
   {
     orderedSet: graphql`
