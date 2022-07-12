@@ -1,5 +1,4 @@
 import { Box, Flex, Image, ResponsiveBox } from "@artsy/palette"
-import { chunk } from "lodash"
 import { FC, forwardRef } from "react"
 import styled, { keyframes } from "styled-components"
 import { cropped } from "v2/Utils/resized"
@@ -59,7 +58,7 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
   }
 )
 
-const DURATION = "60s"
+const DURATION = "120s"
 
 const up = keyframes`
   0% { transform: translateY(0%) }
@@ -84,88 +83,66 @@ const Duplicate: FC = ({ children }) => {
     <>
       {children}
       {children}
+      {children}
+      {children}
     </>
   )
 }
 
-// TODO: Will be replaced with alternate crops
 const IMAGES = [
   {
-    width: 2821,
-    height: 2859,
-    src:
-      "https://files.artsy.net/images/adegboyega-adesina-painting-of-rechel.jpg",
+    width: 1199,
+    height: 1570,
+    src: "https://files.artsy.net/images/warhol-grid.jpg",
   },
   {
-    width: 750,
-    height: 1119,
-    src: "https://files.artsy.net/images/alex-katz-yellow-flags-3-62.jpeg",
-  },
-  {
-    width: 1840,
-    height: 2058,
-    src: "https://files.artsy.net/images/amoako-boafo-tasia-cobbinah.png",
-  },
-  {
-    width: 1289,
-    height: 2016,
-    src:
-      "https://files.artsy.net/images/andy-warhol-cow-f-and-s-ii-dot-12a-1.jpeg",
-  },
-  {
-    width: 1590,
-    height: 1002,
-    src: "https://files.artsy.net/images/andy-warhol-dollars-4.jpeg",
-  },
-  {
-    width: 3600,
-    height: 2880,
-    src:
-      "https://files.artsy.net/images/caroline-larsen-deco-bouquet-with-pink-background.jpeg",
-  },
-  {
-    width: 622,
-    height: 772,
-    src: "https://files.artsy.net/images/damien-hirst-h9-1-justice-2024.jpeg",
-  },
-  {
-    width: 2121,
-    height: 2906,
-    src:
-      "https://files.artsy.net/images/damien-hirst-the-wonder-of-you-your-heart-1.jpeg",
-  },
-  {
-    width: 1200,
-    height: 1522,
-    src:
-      "https://files.artsy.net/images/frida-kahlo-autorretrato-con-chango-y-loro.jpeg",
-  },
-  {
-    width: 4500,
-    height: 3713,
-    src:
-      "https://files.artsy.net/images/genevieve-cohn-ill-make-a-mountain-out-of-you-yet.jpeg",
-  },
-  {
-    width: 1500,
-    height: 1703,
-    src: "https://files.artsy.net/images/super-future-kid-hazy-daisy.jpeg",
-  },
-  {
-    width: 2765,
+    width: 2801,
     height: 3667,
-    src:
-      "https://files.artsy.net/images/ziping-wang-the-snowflake-that-comes-alive.jpeg",
+    src: "https://files.artsy.net/images/wang-grid.jpg",
+  },
+  {
+    width: 855,
+    height: 1119,
+    src: "https://files.artsy.net/images/katz-grid.jpg",
+  },
+  {
+    width: 1162,
+    height: 1522,
+    src: "https://files.artsy.net/images/kahlo-grid.jpg",
+  },
+  {
+    width: 882,
+    height: 1155,
+    src: "https://files.artsy.net/images/hirst-grid.jpg",
+  },
+  {
+    width: 1876,
+    height: 2457,
+    src: "https://files.artsy.net/images/future-kid-grid.jpg",
+  },
+  {
+    width: 2830,
+    height: 3706,
+    src: "https://files.artsy.net/images/cohn-grid.jpg",
+  },
+  {
+    width: 2183,
+    height: 2859,
+    src: "https://files.artsy.net/images/adesina-grid.jpg",
+  },
+  {
+    width: 1544,
+    height: 2058,
+    src: "https://files.artsy.net/images/boafo-grid.jpg",
   },
 ]
 
 const CROPS = IMAGES.map(({ src }) => {
-  return cropped(src, { width: 300, height: 400 })
+  return cropped(src, { width: 250, height: 333 })
 })
 
-const columns = <T,>(xs: T[], n: number): T[][] => {
-  const take = Math.ceil(xs.length / n)
-  return chunk(xs, take)
-}
-
-const COLUMNS = columns(CROPS, 3)
+const COLUMNS = [
+  [CROPS[0], CROPS[1], CROPS[2]],
+  [CROPS[3], CROPS[4], CROPS[5]],
+  [CROPS[6], CROPS[7], CROPS[8]],
+]
