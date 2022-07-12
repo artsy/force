@@ -20,6 +20,7 @@ export type FollowArtistPopover_Test_QueryRawResponse = {
                     readonly node: ({
                         readonly id: string;
                         readonly internalID: string;
+                        readonly slug: string;
                         readonly name: string | null;
                         readonly formattedNationalityAndBirthday: string | null;
                         readonly image: ({
@@ -53,6 +54,7 @@ query FollowArtistPopover_Test_Query(
 }
 
 fragment FollowArtistPopoverRow_artist on Artist {
+  slug
   internalID
   name
   formattedNationalityAndBirthday
@@ -219,6 +221,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "slug",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "name",
                             "storageKey": null
                           },
@@ -288,7 +297,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7646568737872cc08ef9b3d260657540",
+    "cacheID": "0a7405a269541027e6bfccc4a2f14a8f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -334,12 +343,13 @@ return {
           "type": "String"
         },
         "artist.related.suggestedConnection.edges.node.internalID": (v4/*: any*/),
-        "artist.related.suggestedConnection.edges.node.name": (v5/*: any*/)
+        "artist.related.suggestedConnection.edges.node.name": (v5/*: any*/),
+        "artist.related.suggestedConnection.edges.node.slug": (v4/*: any*/)
       }
     },
     "name": "FollowArtistPopover_Test_Query",
     "operationKind": "query",
-    "text": "query FollowArtistPopover_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...FollowArtistPopover_artist\n    id\n  }\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true, includeFallbackArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query FollowArtistPopover_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...FollowArtistPopover_artist\n    id\n  }\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  slug\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true, includeFallbackArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

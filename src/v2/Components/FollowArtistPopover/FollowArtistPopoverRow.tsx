@@ -124,6 +124,7 @@ class FollowArtistPopoverRow extends Component<Props, State> {
         name={artist.name!}
         meta={artist.formattedNationalityAndBirthday!}
         imageUrl={imageUrl}
+        href={`/artist/${artist.slug!}`}
         FollowButton={
           <FollowButton
             isFollowed={this.state.followed}
@@ -154,6 +155,7 @@ export const FollowArtistPopoverRowFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment FollowArtistPopoverRow_artist on Artist {
+        slug
         internalID
         name
         formattedNationalityAndBirthday

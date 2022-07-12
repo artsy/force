@@ -18,7 +18,8 @@ describe("Follow Artist Popover", () => {
           edges: [
             {
               node: {
-                id: "francesca-dimattio",
+                id: "opaque-artist-id",
+                slug: "francesca-dimattio",
                 name: "Francesca DiMattio",
                 internalID: "mongo-id",
                 formattedNationalityAndBirthday: "example",
