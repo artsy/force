@@ -6,6 +6,7 @@ import { NewForYouApp_viewer } from "v2/__generated__/NewForYouApp_viewer.graphq
 import { NewForYouArtworksGridFragmentContainer } from "v2/Apps/NewForYou/Components/NewForYouArtworksGrid"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useSystemContext } from "v2/System"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface NewForYouAppProps {
   viewer: NewForYouApp_viewer
@@ -13,6 +14,8 @@ interface NewForYouAppProps {
 
 export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
   const { isLoggedIn } = useSystemContext()
+  const { route } = useRouter()
+
   return (
     <>
       <Spacer mt={2} />
@@ -24,7 +27,10 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
       {!isLoggedIn && (
         <>
           <Message variant="warning">
-            Already have an account? <RouterLink to="/login">Log in</RouterLink>{" "}
+            Already have an account?{" "}
+            <RouterLink to={`/login?redirectTo=${route.path}`}>
+              Log in
+            </RouterLink>{" "}
             to see your personalized recommendations.
           </Message>
           <Spacer mt={4} />
