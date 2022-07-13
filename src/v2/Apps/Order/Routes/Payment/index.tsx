@@ -202,6 +202,7 @@ export const PaymentRoute: FC<Props> = props => {
     })
   }
 
+  const saveAccount = getClientParam("save_account")
   const setupIntentId = getClientParam("setup_intent")
   const isSettingPayment =
     setupIntentId &&
@@ -211,6 +212,7 @@ export const PaymentRoute: FC<Props> = props => {
   const onSetPaymentSuccess = () => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
+
   const onSetPaymentError = error => {
     logger.error(error)
     props.dialog.showErrorDialog()
@@ -229,6 +231,7 @@ export const PaymentRoute: FC<Props> = props => {
               <SetPaymentByStripeIntent
                 order={order}
                 setupIntentId={setupIntentId!}
+                saveAccount={saveAccount!}
                 onSuccess={onSetPaymentSuccess}
                 onError={onSetPaymentError}
               />
