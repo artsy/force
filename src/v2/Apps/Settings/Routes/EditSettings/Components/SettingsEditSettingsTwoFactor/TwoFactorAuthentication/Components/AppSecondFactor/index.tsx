@@ -41,6 +41,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
     false
   )
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
+  const [confirmedPassword, setConfirmedPassword] = useState("")
   const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
 
@@ -139,6 +140,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
       })
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setStagedSecondFactor(response.createAppSecondFactor.secondFactorOrErrors)
+      setConfirmedPassword(password)
       setShowConfirmPassword(false)
       setShowSetupModal(true)
     } catch (error) {
@@ -246,6 +248,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
       <AppSecondFactorModal
         show={showSetupModal}
         secondFactor={stagedSecondFactor}
+        confirmedPassword={confirmedPassword}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
       />

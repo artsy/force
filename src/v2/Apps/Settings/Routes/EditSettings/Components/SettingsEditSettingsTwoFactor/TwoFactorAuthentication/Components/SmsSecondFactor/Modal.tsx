@@ -29,10 +29,11 @@ interface SmsSecondFactorModalProps {
   onComplete: () => void
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   secondFactor: CreateSmsSecondFactorMutationResponse["createSmsSecondFactor"]["secondFactorOrErrors"]
+  confirmedPassword: string
 }
 
 export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props => {
-  const { secondFactor, onComplete } = props
+  const { secondFactor, confirmedPassword, onComplete } = props
   const { relayEnvironment } = useSystemContext()
   const [isSubmitting, setSubmitting] = useState(false)
   const [isDelivering, setDelivering] = useState(false)
@@ -56,6 +57,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         secondFactorID: secondFactor.internalID,
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         code: values.code,
+        password: confirmedPassword,
       })
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION

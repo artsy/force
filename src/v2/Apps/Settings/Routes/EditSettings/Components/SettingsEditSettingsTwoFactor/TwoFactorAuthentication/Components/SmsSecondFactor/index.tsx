@@ -59,6 +59,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   const { sendToast } = useToasts()
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
+  const [confirmedPassword, setConfirmedPassword] = useState("")
 
   const redirectTo = afterUpdateRedirect()
 
@@ -142,6 +143,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
       const factor = response.createSmsSecondFactor.secondFactorOrErrors
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setStagedSecondFactor(factor)
+      setConfirmedPassword(password)
       setShowConfirmPassword(false)
       setShowSetupModal(true)
     } catch (error) {
@@ -246,6 +248,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
       <SmsSecondFactorModal
         show={showSetupModal}
         secondFactor={stagedSecondFactor}
+        confirmedPassword={confirmedPassword}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
       />
