@@ -14,13 +14,7 @@ import { basePath, env } from "../utils/env"
 import { splitChunks } from "./splitChunks"
 import { sharedPlugins } from "./sharedPlugins"
 
-import {
-  babelLoader,
-  coffeeLoader,
-  ejsLoader,
-  jadeLoader,
-  mjsLoader,
-} from "./sharedLoaders"
+import { babelLoader, ejsLoader, mjsLoader } from "./sharedLoaders"
 
 import {
   cache,
@@ -45,7 +39,7 @@ export const clientDevelopmentConfig = () => ({
   externals,
   mode,
   module: {
-    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
+    rules: [babelLoader, ejsLoader, mjsLoader],
   },
   name: "novo",
   optimization: {

@@ -240,8 +240,6 @@ export function buildServerApp(
                   script.includes("/assets/runtime.") ||
                   script.includes("/assets/artsy.") ||
                   script.includes("/assets/common-artsy.") ||
-                  script.includes("/assets/common-backbone.") ||
-                  script.includes("/assets/common-jquery.") ||
                   script.includes("/assets/common-react.") ||
                   script.includes("/assets/common-utility.") ||
                   script.includes("/assets/common.")

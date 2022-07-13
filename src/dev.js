@@ -1,6 +1,5 @@
 // @ts-check
 
-require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx", ".ejs"],
   plugins: ["babel-plugin-dynamic-import-node"],

@@ -19,8 +19,7 @@ export const legacyDevelopmentConfig = () => ({
   cache,
   entry: getEntrypoints(),
   module: {
-    // CSS is compiled in dev for in-memory refreshing; in prod its compiled
-    // by separate stylus binary
+    // CSS is compiled in dev for in-memory refreshing
     rules: [
       {
         include: path.resolve(basePath, "src"),
@@ -33,14 +32,6 @@ export const legacyDevelopmentConfig = () => ({
             },
           },
           "css-loader",
-          {
-            loader: "stylus-loader",
-            options: {
-              import: ["~nib/lib/nib/index.styl"],
-              paths: ["node_modules/nib/lib/nib"],
-              use: [require("nib")()],
-            },
-          },
         ],
       },
     ],

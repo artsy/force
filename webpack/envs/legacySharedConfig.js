@@ -8,19 +8,14 @@ import { sharedPlugins } from "./sharedPlugins"
 
 import { externals, devtool, mode, resolve, stats } from "./sharedConfig"
 
-import {
-  babelLoader,
-  coffeeLoader,
-  jadeLoader,
-  mjsLoader,
-} from "./sharedLoaders"
+import { babelLoader, mjsLoader } from "./sharedLoaders"
 
 export const legacySharedConfig = () => ({
   devtool,
   externals,
   mode,
   module: {
-    rules: [coffeeLoader, jadeLoader, babelLoader, mjsLoader],
+    rules: [babelLoader, mjsLoader],
   },
   optimization: {
     concatenateModules: env.webpackConcatenate,
@@ -48,24 +43,6 @@ export const legacySharedConfig = () => ({
           reuseExistingChunk: true,
           test: /.*src[\\/]/,
         },
-        "common-backbone": {
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
-          name: "legacy-common-backbone",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        "common-jquery": {
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
-          name: "legacy-common-jquery",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
         "common-react": {
           chunks: "all",
           enforce: true,
@@ -91,7 +68,7 @@ export const legacySharedConfig = () => ({
           minSize: 0,
           name: "legacy-common",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
+          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|lodash.*[\\/]))/,
         },
       },
     },

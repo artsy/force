@@ -6,9 +6,7 @@ require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
 })
 
-require("coffeescript/register")
 require("should")
-require("./src/lib/jade_hook")
 
 const chai = require("chai")
 chai.use(require("chai-passport-strategy"))

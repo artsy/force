@@ -9,13 +9,7 @@ import { basePath, env } from "../utils/env"
 import { sharedPlugins } from "./sharedPlugins"
 import { splitChunks } from "./splitChunks"
 
-import {
-  babelLoader,
-  coffeeLoader,
-  ejsLoader,
-  jadeLoader,
-  mjsLoader,
-} from "./sharedLoaders"
+import { babelLoader, ejsLoader, mjsLoader } from "./sharedLoaders"
 
 import {
   externals,
@@ -34,7 +28,7 @@ export const clientProductionConfig = () => ({
   externals,
   mode,
   module: {
-    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
+    rules: [babelLoader, ejsLoader, mjsLoader],
   },
   optimization: {
     concatenateModules: env.webpackConcatenate,
