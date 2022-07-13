@@ -15,7 +15,7 @@ function findAssets(folder) {
 
   // Filter out .styl files
   const validAssets = file => {
-    const isValid = /\.(js|ts|coffee)x?/.test(path.extname(file))
+    const isValid = /\.(js|ts)x?/.test(path.extname(file))
     return isValid
   }
 
@@ -33,9 +33,7 @@ function findAssets(folder) {
     }
 
     // Load old global module dependencies
-    asset[`legacy-${fileName}`].unshift(
-      path.join(basePath, "./src/lib/global_modules")
-    )
+    asset[`legacy-${fileName}`]
     if (env.isDevelopment) {
       asset[`legacy-${fileName}`].unshift(
         "webpack-hot-middleware/client?name=force&reload=true"

@@ -4,7 +4,6 @@ import nodeExternals from "webpack-node-externals"
 import path from "path"
 import { basePath, env } from "../utils/env"
 import { minimizer } from "./sharedConfig"
-import { jadeLoader } from "./sharedLoaders"
 import LimitChunkCountPlugin from "webpack/lib/optimize/LimitChunkCountPlugin"
 
 export const serverConfig = () => ({
@@ -14,14 +13,6 @@ export const serverConfig = () => ({
   mode: env.webpackDebug ? "development" : env.nodeEnv,
   module: {
     rules: [
-      {
-        include: [
-          path.resolve(basePath, "src"),
-          path.resolve(basePath, "node_modules/artsy-ezel-components"),
-        ],
-        test: /\.coffee$/,
-        use: ["coffee-loader"],
-      },
       {
         include: path.resolve(basePath, "src"),
         test: /(\.(js|ts)x?$)/,
@@ -34,7 +25,6 @@ export const serverConfig = () => ({
           },
         ],
       },
-      jadeLoader,
     ],
   },
   node: {
@@ -55,7 +45,7 @@ export const serverConfig = () => ({
     }),
   ],
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".coffee"],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
     modules: [path.resolve(basePath, "src"), "node_modules"],
   },
   target: "node",

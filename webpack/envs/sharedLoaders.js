@@ -23,21 +23,6 @@ export const babelLoader = {
   ],
 }
 
-export const coffeeLoader = {
-  exclude: /(node_modules)/,
-  include: path.resolve(basePath, "src"),
-  test: /\.coffee$/,
-  use: [
-    {
-      loader: "cache-loader",
-      options: {
-        cacheDirectory: ".cache",
-      },
-    },
-    "coffee-loader",
-  ],
-}
-
 export const ejsLoader = {
   test: /\.ejs$/,
   use: {
@@ -50,20 +35,6 @@ export const ejsLoader = {
       },
     },
   },
-}
-
-export const jadeLoader = {
-  include: path.resolve(basePath, "src"),
-  test: /\.(jade|pug)$/,
-  use: [
-    {
-      loader: "pug-loader",
-      options: {
-        doctype: "html",
-        root: __dirname,
-      },
-    },
-  ],
 }
 
 // Required for webpack 5 to allow interop with with non-ESM modules is handled.

@@ -5,7 +5,6 @@ import glob from "glob"
 import fs from "fs"
 import path from "path"
 import crypto from "crypto"
-import { execSync } from "child_process"
 import { legacySharedConfig } from "../envs/legacySharedConfig"
 import { env } from "./env"
 import { log } from "./log"
@@ -25,10 +24,6 @@ function compile() {
   } catch {
     // Create the output directory, ignore if already exists.
   }
-  const files = glob.sync("src/{desktop,mobile}/assets/*.styl", {
-    nodir: true,
-  })
-  execSync(`yarn stylus ${files.join(" ")} --compress -o ${DEST}`)
 }
 
 function fingerprint(file) {

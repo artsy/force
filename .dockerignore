@@ -33,7 +33,6 @@
 !.prettierignore
 !apollo.config.js
 !babel.config.js
-!coffeelint.json
 !dangerfile.ts
 !package.json
 !relay.config.js

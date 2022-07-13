@@ -1,11 +1,7 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-import { string } from "underscore"
-import moment from "moment"
-import * as helpers from "../template_helpers"
 import { NODE_ENV } from "../../config"
-import * as templateModules from "../../desktop/lib/template_modules"
 
 /**
  * Inject common project-wide [view locals](http://expressjs.com/api.html#app.locals).
@@ -17,27 +13,9 @@ export function localsMiddleware(
 ) {
   const ua = req.get("user-agent") || ""
 
-  // Attach libraries to locals, many of these are used in jade templates
-  res.locals._s = string //
-  res.locals.moment = moment
-  res.locals.helpers = helpers
-  for (let key in templateModules) {
-    const helper = templateModules[key]
-    res.locals[key] = helper
-  }
-
   // Cache views if production or staging
   if (NODE_ENV === "production" || NODE_ENV === "staging") {
     res.locals.cache = true
-  }
-
-  // HTML class middleware used by mobile
-  res.locals.htmlClass = ""
-  if (ua.match(/Artsy-Mobile/)) {
-    res.locals.htmlClass += " layout-artsy-mobile-app"
-  }
-  if (req.user != null) {
-    res.locals.htmlClass += " layout-logged-in"
   }
 
   // TOOD: Determine where/if this is used.

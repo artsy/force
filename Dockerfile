@@ -115,7 +115,6 @@ COPY .env.oss \
   .prettierignore \
   apollo.config.js \
   babel.config.js \
-  coffeelint.json \
   cypress.json \
   dangerfile.ts \
   jest.config.legacy.js \

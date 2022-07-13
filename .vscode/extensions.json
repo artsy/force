@@ -1,8 +1,6 @@
 {
   "recommendations": [
     "artsy.artsy-studio-extension-pack",
-    "sysoev.language-stylus",
-    "lkytal.coffeelinter",
     "dbaeumer.vscode-eslint"
   ]
 }

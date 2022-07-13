@@ -11,7 +11,7 @@ Wires up the common auth handlers, and related security concerns, for Artsy's [E
 
 #### Make sure you first mount session, body parser, and start [@artsy/xapp](https://github.com/artsy/artsy-xapp).
 
-```coffee
+```
 app.use express.bodyParser()
 app.use express.cookieParser('foobar')
 app.use express.cookieSession()
@@ -22,7 +22,7 @@ artsyXapp.init -> app.listen()
 
 _Values indicate defaults._
 
-```coffee
+```
 app.use artsyPassport
   # Pass in env vars
   # ----------------
@@ -63,13 +63,13 @@ app.use artsyPassport
 
 The keys are cased so it's convenient to pass in a configuration hash. A minimal setup could look like this:
 
-```coffee
+```
 app.use artsyPassport config
 ```
 
 #### Create a login form pointing to your paths.
 
-```jade
+```
 h1 Login
 pre!= error
 a( href=ap.facebookPath ) Login via Facebook
@@ -84,7 +84,7 @@ form( action=ap.loginPagePath, method='POST' )
 
 #### And maybe a signup form...
 
-```jade
+```
 h1 Signup
 pre!= error
 a( href=ap.facebookPath ) Signup via Facebook
@@ -99,7 +99,7 @@ form( action=ap.signupPagePath, method='POST' )
 
 #### And maybe a settings page for linking accounts...
 
-```jade
+```
 h2 Linked Accounts
 pre!= error
 - providers = user.authentications.map(function(a) { return a.provider })
@@ -111,7 +111,7 @@ else
 
 #### Render the pages
 
-```coffee
+```
 { loginPagePath, signupPagePath, settingsPagePath, afterSignupPagePath } = artsyPassport.options
 
 app.get loginPagePath, (req, res) -> res.render 'login'
@@ -124,13 +124,13 @@ app.get afterSignupPagePath, (req, res) -> res.render 'personalize'
 
 In your server-side templates
 
-```jade
+```
 h1 Hello #{user.name}
 ```
 
 In your client-side code
 
-```coffee
+```
 sd = require('sharify').data
 
 user = sd.CURRENT_USER
@@ -138,7 +138,7 @@ user = sd.CURRENT_USER
 
 In your routers
 
-```coffee
+```
 app.get '/', (req, res) ->
   res.send 'Hello ' + req.user.name
 ```
@@ -149,7 +149,7 @@ _These forms of user will be null if they're not logged in._
 
 If you implement a fancier auth flow that involves client-side redirecting back, you may find this helper useful in avoiding ["open redirect"](https://github.com/artsy/artsy-passport/issues/68) attacks.
 
-```coffee
+```
 sanitizeRedirect = require 'artsy-passport/sanitize-redirect'
 
 location.href = sanitizeRedirect "http://artsy.net%0D%0Aattacker.com/"

@@ -10,9 +10,6 @@
   "camel_case_classes": {
     "level": "error"
   },
-  "coffeescript_error": {
-    "level": "error"
-  },
   "colon_assignment_spacing": {
     "level": "ignore",
     "spacing": {

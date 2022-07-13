@@ -31,8 +31,6 @@ export const minimizer = [
 
 export const resolve = {
   alias: {
-    "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
-
     // The following packages need to be resolved to the host app (force) to get
     // around issues involving `yarn link` and multiple instances. A  similar
     // configuration has been setup for SSR in `src/dev`, via `require-control`.
@@ -40,16 +38,7 @@ export const resolve = {
     "react/jsx-runtime": require.resolve("react/jsx-runtime"),
     "lodash-es": "lodash",
   },
-  extensions: [
-    ".mjs",
-    ".js",
-    ".jsx",
-    ".ts",
-    ".tsx",
-    ".json",
-    ".jade",
-    ".coffee",
-  ],
+  extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
   // Symlink issues should be fixed via `yarn --pnp`
   modules: [path.resolve(basePath, "src"), "node_modules"],
   symlinks: false,

@@ -94,14 +94,6 @@ module.exports = {
     "no-restricted-imports": [
       "error",
       {
-        name: "moment",
-        message: "Please use luxon instead.",
-      },
-      {
-        name: "underscore",
-        message: "Please use lodash instead.",
-      },
-      {
         name: "superagent",
         message: "Please use native fetch instead.",
       },

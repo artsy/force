@@ -4,8 +4,6 @@ require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
 })
 
-require("coffeescript/register")
-
 const path = require("path")
 const Adapter = require("@wojtekmaj/enzyme-adapter-react-17")
 const Enzyme = require("enzyme")
@@ -42,11 +40,9 @@ try {
 // Used for Acceptance tests
 require("raf/polyfill")
 require("should")
-require("./src/lib/jade_hook")
 
 // Used by relay
 sd.METAPHYSICS_ENDPOINT = "http://localhost:5003"
-global.$ = require("jquery")
 
 // https://jestjs.io/docs/en/troubleshooting#unresolved-promises
 global.Promise = require("promise")

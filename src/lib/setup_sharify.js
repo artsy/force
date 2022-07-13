@@ -5,7 +5,7 @@
 // be exposed on the client-side so it can not include things like sensitive
 // API keys or other credentials that should only be used server-side.
 //
-// If it is sensitive configuration you should only add it to config.coffee and
+// If it is sensitive configuration you should only add it to the config and
 // require that file directly *only* server-side.
 //
 // See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
