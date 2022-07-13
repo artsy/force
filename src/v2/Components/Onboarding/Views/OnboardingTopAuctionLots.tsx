@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { OnboardingGeneQueryRenderer } from "v2/Apps/Onboarding/Components/OnboardingGene"
+import { OnboardingGeneQueryRenderer } from "v2/Components/Onboarding/Components/OnboardingGene"
 
 export const OnboardingTopAuctionLots: FC = () => {
   return (

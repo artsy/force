@@ -12,7 +12,11 @@ export const OnboardingWelcomeAnimatedPanel = forwardRef(
         height="100%"
         position="relative"
         overflow="hidden"
-        style={{ pointerEvents: "none", userSelect: "none" }}
+        style={{
+          pointerEvents: "none",
+          userSelect: "none",
+          transform: "translateZ(0)",
+        }}
       >
         <Flex
           bg="black100"

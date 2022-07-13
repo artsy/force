@@ -8,6 +8,7 @@ import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders
 import { extractNodes } from "v2/Utils/extractNodes"
 import { useOnboardingContext } from "../useOnboardingContext"
 import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
+import { EntityHeaderPlaceholder } from "v2/Components/EntityHeaders/EntityHeaderPlaceholder"
 
 interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet
@@ -87,6 +88,15 @@ export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
   }
 )
 
+const PLACEHOLDER = (
+  <Join separator={<Separator my={2} />}>
+    <EntityHeaderPlaceholder />
+    <EntityHeaderPlaceholder />
+    <EntityHeaderPlaceholder />
+    <EntityHeaderPlaceholder />
+  </Join>
+)
+
 interface OnboardingOrderedSetQueryRendererProps {
   id: string
 }
@@ -103,6 +113,7 @@ export const OnboardingOrderedSetQueryRenderer: FC<OnboardingOrderedSetQueryRend
           }
         }
       `}
+      placeholder={PLACEHOLDER}
       variables={{ key: id }}
       render={({ error, props }) => {
         if (error) {
@@ -111,7 +122,7 @@ export const OnboardingOrderedSetQueryRenderer: FC<OnboardingOrderedSetQueryRend
         }
 
         if (!props?.orderedSets) {
-          return null
+          return PLACEHOLDER
         }
 
         const [orderedSet] = props.orderedSets

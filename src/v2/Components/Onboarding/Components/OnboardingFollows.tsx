@@ -61,14 +61,15 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
               {title}
             </Text>
 
-            <LabeledInput
-              ref={register(2)}
-              label={<MagnifyingGlassIcon />}
-              placeholder={placeholder}
-              mb={4}
-              onChange={event => setQuery(event.currentTarget.value)}
-              data-testid="search-input"
-            />
+            <Box ref={register(2)}>
+              <LabeledInput
+                label={<MagnifyingGlassIcon />}
+                placeholder={placeholder}
+                mb={4}
+                onChange={event => setQuery(event.currentTarget.value)}
+                data-testid="search-input"
+              />
+            </Box>
           </Box>
 
           <Box

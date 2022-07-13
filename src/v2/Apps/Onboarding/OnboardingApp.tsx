@@ -1,9 +1,9 @@
 import { FC } from "react"
 import { Spacer, Box } from "@artsy/palette"
-import { OnboardingProvider } from "./useOnboardingContext"
 import { useRouter } from "v2/System/Router/useRouter"
-import { OnboardingDebug } from "./Components/OnboardingDebug"
-import { OnboardingSteps } from "./Components/OnboardingSteps"
+import { OnboardingProvider } from "v2/Components/Onboarding/useOnboardingContext"
+import { OnboardingDebug } from "v2/Components/Onboarding/Components/OnboardingDebug"
+import { OnboardingSteps } from "v2/Components/Onboarding/Components/OnboardingSteps"
 
 export const OnboardingApp: FC = () => {
   const { router } = useRouter()
