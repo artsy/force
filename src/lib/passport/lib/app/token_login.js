@@ -12,7 +12,7 @@ let request = require("superagent")
 const omit = require("lodash/omit")
 const isEmpty = require("lodash/isEmpty")
 
-module.exports.headerLogin = function (req, res, next) {
+module.exports.headerLogin = function (req, _res, next) {
   if (req.path === opts.logoutPath) {
     return next()
   }

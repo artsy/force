@@ -30,7 +30,7 @@ describe("token login middleware", function () {
 
     it("logs in a user if they pass their access token as a header", function () {
       headerLogin(req, res, next)
-      req.login.args[0][0].get("accessToken").should.equal("access-foo-token")
+      req.login.args[0][0].accessToken.should.equal("access-foo-token")
     })
 
     it("does not log in a user on sign out", function () {
