@@ -29,8 +29,16 @@ export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment NewForYouArtworksGrid_viewer on Viewer
-        @argumentDefinitions(first: { type: "Int", defaultValue: 20 }) {
-        artworksForUser(first: $first, includeBackfill: true) {
+        @argumentDefinitions(
+          first: { type: "Int" }
+          includeBackfill: { type: "Boolean!" }
+          version: { type: "String" }
+        ) {
+        artworksForUser(
+          first: $first
+          includeBackfill: $includeBackfill
+          version: $version
+        ) {
           totalCount
           ...ArtworkGrid_artworks
           pageInfo {

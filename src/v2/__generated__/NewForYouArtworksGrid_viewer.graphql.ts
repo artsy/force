@@ -26,9 +26,19 @@ export type NewForYouArtworksGrid_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 20,
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "first"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "includeBackfill"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "version"
     }
   ],
   "kind": "Fragment",
@@ -44,9 +54,14 @@ const node: ReaderFragment = {
           "variableName": "first"
         },
         {
-          "kind": "Literal",
+          "kind": "Variable",
           "name": "includeBackfill",
-          "value": true
+          "variableName": "includeBackfill"
+        },
+        {
+          "kind": "Variable",
+          "name": "version",
+          "variableName": "version"
         }
       ],
       "concreteType": "ArtworkConnection",
@@ -98,5 +113,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '717ce1fe6dd0cd381c1992f726c3c190';
+(node as any).hash = 'f5bf554270769e034860baf604d273e6';
 export default node;

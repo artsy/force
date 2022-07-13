@@ -23,9 +23,11 @@ beforeEach(() => {
 const { renderWithRelay } = setupTestWrapperTL({
   Component: NewForYouAppFragmentContainer,
   query: graphql`
-    query NewForYouApp_test_Query @relay_test_operation {
+    query NewForYouApp_test_Query($first: Int, $includeBackfill: Boolean!)
+      @relay_test_operation {
       viewer: viewer {
         ...NewForYouArtworksGrid_viewer
+          @arguments(first: $first, includeBackfill: $includeBackfill)
       }
     }
   `,
