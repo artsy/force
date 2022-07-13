@@ -34,6 +34,7 @@ export const OnboardingFollowArtists: FC = () => {
               placeholder="Search Artists"
               mb={4}
               onChange={event => setQuery(event.currentTarget.value)}
+              data-testid="search-input"
             />
           </Box>
 
