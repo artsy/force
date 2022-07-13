@@ -10,7 +10,6 @@ export interface ArtsyRequest extends Request {
 
 export interface ArtsyResponse extends Response {
   _headers: any[]
-  backboneError?: any
   cookie: any
   locals: any
   perfStart: any

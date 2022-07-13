@@ -1,4 +1,3 @@
-const Backbone = require("backbone")
 const rewire = require("rewire")
 const sinon = require("sinon")
 const serializers = rewire("../../lib/passport/serializers")
@@ -23,8 +22,8 @@ describe("#serialize", function () {
   })
 
   it("only stores select data in the session", function (done) {
-    const user = new Backbone.Model({ id: "craig", foo: "baz", bam: "bop" })
-    serialize(user, function (err, data) {
+    const user = { id: "craig", foo: "baz", bam: "bop" }
+    serialize({}, user, function (_err, data) {
       ;(data.foo != null).should.not.be.ok
       data.id.should.equal("craig")
       done()
@@ -33,8 +32,8 @@ describe("#serialize", function () {
   })
 
   it("add authentications", function (done) {
-    const user = new Backbone.Model({ id: "craig", foo: "baz", bam: "bop" })
-    serialize(user, function (err, data) {
+    const user = { id: "craig", foo: "baz", bam: "bop" }
+    serialize({}, user, function (_err, data) {
       data.authentications[0].provider.should.equal("facebook")
       done()
     })
@@ -42,28 +41,30 @@ describe("#serialize", function () {
   })
 
   it("works when theres an error from Gravity", function (done) {
-    const user = new Backbone.Model({ id: "craig", foo: "baz", bam: "bop" })
-    serialize(user, function (err) {
+    const user = { id: "craig", foo: "baz", bam: "bop" }
+    serialize({}, user, function (err) {
       err.message.should.equal("fail")
       done()
     })
     request.end.args[0][0](null, { body: { id: "craig", foo: "baz" } })
     request.end.args[1][0](new Error("fail"), null)
   })
+
+  it("glues the user onto the request", function (done) {
+    const user = { id: "craig", foo: "baz", bam: "bop" }
+    const req = { user: null }
+    serialize(req, user, (_err, _data) => {
+      req.user.id.should.equal(user.id)
+      done()
+    })
+    this.resolveSerialize()
+  })
 })
 
 describe("#deserialize", function () {
-  it("wraps the user data in a model", function (done) {
-    let User
-    serializers.__set__("opts", {
-      CurrentUser: (User = class User {
-        constructor(attrs) {
-          this.attrs = attrs
-        }
-      }),
-    })
-    deserialize({ id: "craig", name: "Craig" }, function (err, user) {
-      user.attrs.name.should.equal("Craig")
+  it("passes the user data through", function (done) {
+    deserialize({ id: "craig", name: "Craig" }, function (_err, user) {
+      user.name.should.equal("Craig")
       done()
     })
   })

@@ -6,7 +6,7 @@ export function enableArtistPageCTA({ req, res }) {
   }
 
   const { artistID } = req.params
-  const user = req.user && req.user.toJSON()
+  const user = req.user
 
   // Display the signup modal on all artist pages that have the "Referrer"
   // header or direct page views, e.g. there is no Referrer.

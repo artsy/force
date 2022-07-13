@@ -7,9 +7,7 @@ describe("enableArtistPageCTA", () => {
       params: {
         artistID: "test-artist",
       },
-      user: {
-        toJSON: () => null,
-      },
+      user: null,
       get: jest.fn(),
     }
 
@@ -36,9 +34,7 @@ describe("enableArtistPageCTA", () => {
         artistID: "test-artist",
       },
       user: {
-        toJSON: () => ({
-          name: "foo",
-        }),
+        name: "foo",
       },
       get: jest.fn(),
     }

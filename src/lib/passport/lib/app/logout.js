@@ -15,7 +15,7 @@ module.exports.denyBadLogoutLinks = function (req, res, next) {
 }
 
 module.exports.logout = function (req, res, next) {
-  const accessToken = req.user != null ? req.user.get("accessToken") : undefined
+  const accessToken = req.user != null ? req.user.accessToken : undefined
   req.logout()
   req.session = null
   request

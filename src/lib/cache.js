@@ -1,9 +1,4 @@
 /**
- * A library of common cache helpers. If you need to do something more complex
- * than the naive query caching in Backbone Super Sync
- * (https://github.com/artsy/backbone-super-sync#built-in-request-caching)
- * provides then it's recommended to wrap it up in a function in this lib.
- *
  * This also providers a safe wrapper around redis calls so the app can function
  * without redis when necessary.
  */

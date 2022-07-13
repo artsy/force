@@ -55,13 +55,11 @@ import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { asyncLocalsMiddleware } from "./lib/middleware/asyncLocalMiddleware"
 import { bootstrapSharifyAndContextLocalsMiddleware } from "./lib/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
-import { backboneErrorHandlerMiddleware } from "./lib/middleware/backboneErrorHandler"
 import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
 import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
-import { backboneSync } from "./lib/backboneSync"
 import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
 import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
 import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
@@ -73,8 +71,6 @@ import {
 import { registerFeatureFlagService } from "lib/featureFlags/featureFlagService"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
-
-const { CurrentUser } = require("./lib/current_user")
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)
@@ -110,13 +106,10 @@ export function initializeMiddleware(app) {
     })
   )
 
-  backboneSync()
-
   // Redirect requests before they even have to deal with Force routing
   app.use(downcaseMiddleware)
   app.use(hardcodedRedirectsMiddleware)
   app.use(localsMiddleware)
-  app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
 
   // Need sharify for unleash
@@ -196,7 +189,6 @@ function applySecurityMiddleware(app) {
       ARTSY_ID: CLIENT_ID,
       ARTSY_SECRET: CLIENT_SECRET,
       ARTSY_URL: API_URL,
-      CurrentUser: CurrentUser,
       FACEBOOK_ID,
       FACEBOOK_SECRET,
       GOOGLE_CLIENT_ID,

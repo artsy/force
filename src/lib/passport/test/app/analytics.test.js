@@ -33,11 +33,7 @@ describe("analytics", function () {
     this.req = {
       session: {},
       body: {},
-      user: {
-        get() {
-          return "foo"
-        },
-      },
+      user: { id: "foo" },
       query: {},
     }
     this.res = { locals: { sd: {} } }

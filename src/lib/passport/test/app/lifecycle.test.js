@@ -192,11 +192,7 @@ describe("lifecycle", function () {
 
   describe("#ssoAndRedirectBack", function () {
     it("redirects signups to /", function () {
-      req.user = {
-        get() {
-          return "token"
-        },
-      }
+      req.user = { accessToken: "token" }
       req.artsyPassportSignedUp = true
       lifecycle.ssoAndRedirectBack(req, res, this.next)
       request.end.args[0][0](null, { body: { trust_token: "foo-trust-token" } })
@@ -211,11 +207,7 @@ describe("lifecycle", function () {
     })
 
     it("single signs on to gravity", function () {
-      req.user = {
-        get() {
-          return "token"
-        },
-      }
+      req.user = { accessToken: "token" }
       req.query["redirect-to"] = "/artwork/andy-warhol-skull"
       lifecycle.ssoAndRedirectBack(req, res, this.next)
       request.post.args[0][0].should.containEql("me/trust_token")

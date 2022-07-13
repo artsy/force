@@ -1,10 +1,10 @@
-const Backbone = require("backbone")
 const rewire = require("rewire")
 const sinon = require("sinon")
 const cbs = rewire("../../lib/passport/callbacks")
 
 // TODO: Take care of this warning!
 /* eslint-disable jest/no-done-callback */
+//
 
 describe("passport callbacks", function () {
   let req
@@ -24,14 +24,13 @@ describe("passport callbacks", function () {
       ARTSY_ID: "artsy-id",
       ARTSY_SECRET: "artsy-secret",
       ARTSY_URL: "http://apiz.artsy.net",
-      CurrentUser: Backbone.Model,
     })
   })
 
   it("gets a user with an access token email/password/otp", function (done) {
     req.body = { otpRequired: true }
     cbs.local(req, "craig", "foo", "123456", function (err, user) {
-      user.get("accessToken").should.equal("access-token")
+      user.accessToken.should.equal("access-token")
       done()
     })
     request.post.args[0][0].should.equal(
@@ -45,7 +44,7 @@ describe("passport callbacks", function () {
   it("gets a user with an access token email/password without otp", function (done) {
     req.body = { otpRequired: false }
     cbs.local(req, "craig", "foo", null, function (err, user) {
-      user.get("accessToken").should.equal("access-token")
+      user.accessToken.should.equal("access-token")
       done()
     })
     request.post.args[0][0].should.equal(
@@ -58,7 +57,7 @@ describe("passport callbacks", function () {
 
   it("gets a user with an access token facebook", function (done) {
     cbs.facebook(req, "foo-token", "refresh-token", {}, function (err, user) {
-      user.get("accessToken").should.equal("access-token")
+      user.accessToken.should.equal("access-token")
       done()
     })
     request.post.args[0][0].should.equal(
@@ -73,7 +72,7 @@ describe("passport callbacks", function () {
 
   it("gets a user with an access token google", function (done) {
     cbs.google(req, "foo-token", "refresh-token", {}, function (err, user) {
-      user.get("accessToken").should.equal("access-token")
+      user.accessToken.should.equal("access-token")
       done()
     })
     request.post.args[0][0].should.equal(
@@ -98,7 +97,7 @@ describe("passport callbacks", function () {
       "access_token",
       "refresh-token",
       function (err, user) {
-        user.get("accessToken").should.equal("access-token")
+        user.accessToken.should.equal("access-token")
         done()
       }
     )

@@ -24,9 +24,6 @@ _Values indicate defaults._
 
 ```coffee
 app.use artsyPassport
-
-  CurrentUser: # The CurrentUser Backbone model
-
   # Pass in env vars
   # ----------------
   FACEBOOK_ID: # Facebook app ID
@@ -67,11 +64,8 @@ app.use artsyPassport
 The keys are cased so it's convenient to pass in a configuration hash. A minimal setup could look like this:
 
 ```coffee
-app.use artsyPassport _.extend config,
-  CurrentUser: CurrentUser
+app.use artsyPassport config
 ```
-
-**Note:** CurrentUser must be a Backbone model with typical `get` and `toJSON` methods.
 
 #### Create a login form pointing to your paths.
 
@@ -108,7 +102,7 @@ form( action=ap.signupPagePath, method='POST' )
 ```jade
 h2 Linked Accounts
 pre!= error
-- providers = user.get('authentications').map(function(a) { return a.provider })
+- providers = user.authentications.map(function(a) { return a.provider })
 if providers.indexOf('facebook') > -1
   | Connected Facebook
 else
@@ -131,23 +125,22 @@ app.get afterSignupPagePath, (req, res) -> res.render 'personalize'
 In your server-side templates
 
 ```jade
-h1 Hello #{user.get('name')}
+h1 Hello #{user.name}
 ```
 
 In your client-side code
 
 ```coffee
-CurrentUser = require '../models/current_user.coffee'
 sd = require('sharify').data
 
-user = new CurrentUser(sd.CURRENT_USER)
+user = sd.CURRENT_USER
 ```
 
 In your routers
 
 ```coffee
 app.get '/', (req, res) ->
-  res.send 'Hello ' + req.user.get('name')
+  res.send 'Hello ' + req.user.name
 ```
 
 _These forms of user will be null if they're not logged in._
