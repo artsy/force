@@ -13,6 +13,7 @@ export interface EntityHeaderArtistProps extends BoxProps {
   displayLink?: boolean
   FollowButton?: JSX.Element
   onClick?(): void
+  onFollow?(): void
 }
 
 const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
@@ -22,6 +23,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
   displayLink = true,
   FollowButton,
   onClick,
+  onFollow,
   ...rest
 }) => {
   const initials = artist.initials ?? artist.name?.[0]
@@ -73,6 +75,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
           id={artist.internalID}
           contextModule={ContextModule.artistHeader}
           size="small"
+          onFollow={onFollow}
         />
       )}
     </Flex>

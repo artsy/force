@@ -17,6 +17,7 @@ export interface EntityHeaderPartnerProps extends BoxProps {
   FollowButton?: JSX.Element
   href?: string
   onClick?(): void
+  onFollow?(): void
 }
 
 const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
@@ -26,6 +27,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
   FollowButton,
   href,
   onClick,
+  onFollow,
   ...rest
 }) => {
   const locations = extractNodes(partner.locationsConnection)
@@ -89,6 +91,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
             profile={partner.profile!}
             contextModule={ContextModule.partnerHeader}
             size="small"
+            onFollow={onFollow}
           />
         ))}
     </Flex>
