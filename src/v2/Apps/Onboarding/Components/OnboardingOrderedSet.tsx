@@ -27,10 +27,9 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
             case "Artist":
               return (
                 <EntityHeaderArtistFragmentContainer
-                  artist={node}
                   key={node.internalID}
-                  // TODO: Switch this to `onFollow`
-                  onClick={() => {
+                  artist={node}
+                  onFollow={() => {
                     dispatch({ type: "FOLLOW", payload: node.internalID! })
                   }}
                 />
@@ -43,10 +42,9 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
 
               return (
                 <EntityHeaderPartnerFragmentContainer
-                  partner={partner}
                   key={node.internalID}
-                  // TODO: Switch this to `onFollow`
-                  onClick={() => {
+                  partner={partner}
+                  onFollow={() => {
                     dispatch({ type: "FOLLOW", payload: node.internalID! })
                   }}
                 />
