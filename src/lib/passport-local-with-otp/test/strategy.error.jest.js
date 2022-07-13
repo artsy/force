@@ -1,25 +1,23 @@
-/* jshint expr: true */
-
 const chai = require("chai")
-const expect = require("chai").expect
 const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
-  describe("failing authentication", function () {
+  describe("encountering an error during verification", function () {
     const strategy = new Strategy(function (username, password, otp, done) {
-      return done(null, false)
+      done(new Error("something went wrong"))
     })
 
-    let info
+    let err
 
-    before(function (done) {
+    // eslint-disable-next-line jest/no-done-callback
+    beforeAll(function (done) {
       chai.passport
         .use(strategy)
-        .fail(function (i) {
-          info = i
+        .error(function (e) {
+          err = e
           done()
         })
-        .req(function (req) {
+        .request(function (req) {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -28,26 +26,27 @@ describe("Strategy", function () {
         .authenticate()
     })
 
-    it("should fail", function () {
-      expect(info).to.be.undefined
+    it("should error", function () {
+      expect(err.message).toContain("something went wrong")
     })
   })
 
-  describe("failing authentication with info", function () {
+  describe("encountering an exception during verification", function () {
     const strategy = new Strategy(function (username, password, otp, done) {
-      return done(null, false, { message: "authentication failed" })
+      throw new Error("something went horribly wrong")
     })
 
-    let info
+    let err
 
-    before(function (done) {
+    // eslint-disable-next-line jest/no-done-callback
+    beforeAll(function (done) {
       chai.passport
         .use(strategy)
-        .fail(function (i) {
-          info = i
+        .error(function (e) {
+          err = e
           done()
         })
-        .req(function (req) {
+        .request(function (req) {
           req.body = {}
           req.body.username = "johndoe"
           req.body.password = "secret"
@@ -56,9 +55,8 @@ describe("Strategy", function () {
         .authenticate()
     })
 
-    it("should fail", function () {
-      expect(info).to.be.an("object")
-      expect(info.message).to.equal("authentication failed")
+    it("should error", function () {
+      expect(err.message).toContain("something went horribly wrong")
     })
   })
 })

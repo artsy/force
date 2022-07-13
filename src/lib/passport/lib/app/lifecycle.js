@@ -5,13 +5,10 @@
 
 const { capitalize } = require("underscore.string")
 const forwardedFor = require("./forwarded_for")
-// TODO: Remove let added for 'rewire'
-let opts = require("../options")
-// TODO: Remove let added for 'rewire'
-let passport = require("passport")
+const opts = require("../options")
+const passport = require("passport")
 const redirectBack = require("./redirectback")
-// TODO: Remove let added for 'rewire'
-let request = require("superagent")
+const request = require("superagent")
 const artsyXapp = require("@artsy/xapp")
 const { parse, resolve } = require("url")
 

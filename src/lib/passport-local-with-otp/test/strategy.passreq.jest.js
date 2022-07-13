@@ -1,7 +1,6 @@
 /* jshint expr: true */
 
 const chai = require("chai")
-const expect = require("chai").expect
 const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
@@ -25,7 +24,8 @@ describe("Strategy", function () {
 
     let user, info
 
-    before(function (done) {
+    // eslint-disable-next-line jest/no-done-callback
+    beforeAll(function (done) {
       chai.passport
         .use(strategy)
         .success(function (u, i) {
@@ -33,7 +33,7 @@ describe("Strategy", function () {
           info = i
           done()
         })
-        .req(function (req) {
+        .request(function (req) {
           req.headers["x-foo"] = "hello"
 
           req.body = {}
@@ -44,17 +44,15 @@ describe("Strategy", function () {
     })
 
     it("should supply user", function () {
-      expect(user).to.be.an("object")
-      expect(user.id).to.equal("1234")
+      expect(user.id).toEqual("1234")
     })
 
     it("should supply info", function () {
-      expect(info).to.be.an("object")
-      expect(info.scope).to.equal("read")
+      expect(info.scope).toEqual("read")
     })
 
     it("should supply request header in info", function () {
-      expect(info.foo).to.equal("hello")
+      expect(info.foo).toEqual("hello")
     })
   })
 })

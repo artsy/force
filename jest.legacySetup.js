@@ -4,6 +4,9 @@ require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
 })
 
+import chai from "chai"
+chai.use(require("chai-passport-strategy"))
+
 const path = require("path")
 const Adapter = require("@wojtekmaj/enzyme-adapter-react-17")
 const Enzyme = require("enzyme")
@@ -43,6 +46,7 @@ require("should")
 
 // Used by relay
 sd.METAPHYSICS_ENDPOINT = "http://localhost:5003"
+sd.SEGMENT_WRITE_KEY = "test"
 
 // https://jestjs.io/docs/en/troubleshooting#unresolved-promises
 global.Promise = require("promise")

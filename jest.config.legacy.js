@@ -9,7 +9,7 @@ module.exports = {
       moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx"],
       reporters: ["default", "jest-junit"],
       roots: ["<rootDir>/src"],
-      setupFiles: ["<rootDir>/test.config.js"],
+      setupFiles: ["<rootDir>/jest.legacySetup.js"],
       testPathIgnorePatterns: ["<rootDir>/src/v2"],
       testRegex: ".*\\.jest\\.(ts|tsx|js|jsx)$",
       testEnvironment: "jest-environment-jsdom",

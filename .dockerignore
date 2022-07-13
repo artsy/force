@@ -1,23 +1,29 @@
 # Prefer excluding all assets by default. It prevents large artifacts from
+
 # accidentally becomming part of the Docker context.
-*
+
+\*
 
 # CI
+
 !scripts/
 
 # Source
+
 !data/
 !patches/
 !src/
 !webpack/
 
 # Source Publish
+
 !packages/publish/package.json
 !packages/publish/uploadToS3.js
 !packages/publish/yarn.lock
 
 # Testing
-!__mocks__/
+
+!**mocks**/
 !cypress/
 !.env.oss
 !.env.test
@@ -25,9 +31,9 @@
 !jest.config.legacy.js
 !jest.config.v2.js
 !test.config.js
-!test.mocha.js
 
 # Build Configuration
+
 !.eslintrc.js
 !.nvmrc
 !.prettierignore

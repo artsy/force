@@ -1,10 +1,11 @@
-// TODO: Remove let added for 'rewire'
-let opts = require("../options")
-// TODO: Remove let added for 'rewire'
-let Analytics = require("analytics-node")
+const opts = require("../options")
+const Analytics = require("analytics-node")
+const { data: sd } = require("sharify")
+
+export const analytics = new Analytics(sd.SEGMENT_WRITE_KEY)
 
 module.exports.setCampaign = function (req, _res, next) {
-  if (!opts.SEGMENT_WRITE_KEY) {
+  if (!sd.SEGMENT_WRITE_KEY) {
     return next()
   }
 
@@ -22,11 +23,9 @@ module.exports.trackSignup = service =>
     delete req.session.acquisitionInitiative
     delete req.session.modalId
 
-    if (!opts.SEGMENT_WRITE_KEY) {
+    if (!sd.SEGMENT_WRITE_KEY) {
       return next()
     }
-
-    const analytics = new Analytics(opts.SEGMENT_WRITE_KEY)
 
     analytics.track({
       event: "Created account",
@@ -43,11 +42,9 @@ module.exports.trackSignup = service =>
   }
 
 module.exports.trackLogin = function (req, _res, next) {
-  if (!opts.SEGMENT_WRITE_KEY) {
+  if (!sd.SEGMENT_WRITE_KEY) {
     return next()
   }
-
-  const analytics = new Analytics(opts.SEGMENT_WRITE_KEY)
 
   analytics.track({
     event: "Successfully logged in",
