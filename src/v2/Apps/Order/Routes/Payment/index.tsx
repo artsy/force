@@ -202,7 +202,7 @@ export const PaymentRoute: FC<Props> = props => {
     })
   }
 
-  const saveAccount = getClientParam("saveAccount")
+  const saveAccount = getClientParam("save_account")
   const setupIntentId = getClientParam("setup_intent")
   const isSettingPayment =
     setupIntentId &&

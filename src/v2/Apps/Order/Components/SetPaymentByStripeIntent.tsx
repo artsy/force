@@ -27,7 +27,7 @@ export const SetPaymentByStripeIntent: FC<Props> = props => {
               input: {
                 id: props.order.internalID,
                 setupIntentId: setupIntentId,
-                oneTimeUse: saveAccount === "true" ? false : true,
+                oneTimeUse: saveAccount !== "true",
               },
             },
           })
