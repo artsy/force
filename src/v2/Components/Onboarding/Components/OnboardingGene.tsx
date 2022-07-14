@@ -7,7 +7,7 @@ import { OnboardingLoadingCollection } from "v2/Components/Onboarding/Components
 import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { Box, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
 
 interface OnboardingGeneProps {
@@ -44,17 +44,21 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
 
       <Spacer mb={4} />
 
-      <Masonry columnCount={[2, 3]}>
-        {artworks.map(artwork => {
-          return (
-            <Fragment key={artwork.internalID}>
-              <ArtworkGridItemFragmentContainer artwork={artwork} />
+      {artworks.length === 0 ? (
+        <Message title="No results found" />
+      ) : (
+        <Masonry columnCount={[2, 3]}>
+          {artworks.map(artwork => {
+            return (
+              <Fragment key={artwork.internalID}>
+                <ArtworkGridItemFragmentContainer artwork={artwork} />
 
-              <Spacer mb={2} />
-            </Fragment>
-          )
-        })}
-      </Masonry>
+                <Spacer mb={2} />
+              </Fragment>
+            )
+          })}
+        </Masonry>
+      )}
     </Box>
   )
 }

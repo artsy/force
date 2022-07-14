@@ -35,4 +35,14 @@ describe("OnboardingGene", () => {
     expect(screen.getByText("Example Gene")).toBeInTheDocument()
     expect(screen.getByText("Example description")).toBeInTheDocument()
   })
+
+  it("shows no results if none found", () => {
+    renderWithRelay({
+      Gene: () => ({
+        artworks: { edges: [] },
+      }),
+    })
+
+    expect(screen.getByText("No results found")).toBeInTheDocument()
+  })
 })
