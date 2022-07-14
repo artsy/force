@@ -23,11 +23,13 @@ export const HomeValueProps: React.FC = () => {
       </Flex>
       <Flex flexDirection={["column", "row"]} justifyContent="space-around">
         <Flex flex={1} flexDirection={"column"} alignItems={"center"} mx={4}>
-          <Text variant={"lg"}>The Artsy Guarantee</Text>
+          <Text variant={"lg"} textAlign={"center"}>
+            The Artsy Guarantee
+          </Text>
           <Spacer my={[0.5, 1]} />
           <GuaranteeIcon height={"35px"} width={"35px"} fill="blue100" />
           <Spacer my={[0.5, 1]} />
-          <Text variant={"sm"} textAlign="center">
+          <Text variant={"sm"} textAlign="center" maxWidth={["100%", "60%"]}>
             We cover all transactions up $100,000 USD. If your work is
             inauthentic, does not arrive, or arrives damaged, we'll make things
             right.{" "}
@@ -37,11 +39,13 @@ export const HomeValueProps: React.FC = () => {
           </Text>
         </Flex>
         <Flex flex={1} flexDirection={"column"} alignItems={"center"} mx={4}>
-          <Text variant={"lg"}>Secure Payments</Text>
+          <Text variant={"lg"} textAlign={"center"}>
+            Secure payments
+          </Text>
           <Spacer my={[0.5, 1]} />
           <LockIcon height={"40px"} width={"40px"} fill="blue100" />
           <Spacer my={[0.5, 1]} />
-          <Text variant={"sm"} textAlign="center">
+          <Text variant={"sm"} textAlign="center" maxWidth={["100%", "60%"]}>
             Artsy partners with Stripe for secure credit card transactions.{" "}
             <a href="https://support.artsy.net/hc/en-us/articles/360047294333-What-is-secure-checkout-">
               Learn more
@@ -49,11 +53,13 @@ export const HomeValueProps: React.FC = () => {
           </Text>
         </Flex>
         <Flex flex={1} flexDirection={"column"} alignItems={"center"} mx={4}>
-          <Text variant={"lg"}>Trusted Sellers</Text>
+          <Text variant={"lg"} textAlign={"center"}>
+            Trusted sellers
+          </Text>
           <Spacer my={[0.5, 1]} />
           <CheckCircleIcon height={"35px"} width={"35px"} fill="blue100" />
           <Spacer my={[0.5, 1]} />
-          <Text variant={"sm"} textAlign="center">
+          <Text variant={"sm"} textAlign="center" maxWidth={["100%", "60%"]}>
             Every artwork on Artsy comes from a trusted gallery or auction
             house. Artsy takes pride in the quality of our partners, and we
             thoroughly vet sellers when they join our platform.{" "}

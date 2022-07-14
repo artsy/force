@@ -2,7 +2,6 @@ import {
   LabeledInput,
   MagnifyingGlassIcon,
   Flex,
-  Box,
   Text,
   Spacer,
   Clickable,
@@ -41,13 +40,13 @@ export const HomeFilters: React.FC = ({}) => {
   }
 
   return (
-    <Box style={{ width: "100%" }}>
+    <Flex justifyContent={"center"} style={{ width: "100%" }}>
       <Flex
         flexDirection={"column"}
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Text variant="xl">
+        <Text variant="xxl">
           Find art you <span style={{ textDecoration: "underline" }}>love</span>
         </Text>
         <Spacer mt={[1, 2]} />
@@ -139,6 +138,6 @@ export const HomeFilters: React.FC = ({}) => {
           </Pill>
         </Spacer>
       </Flex>
-    </Box>
+    </Flex>
   )
 }
