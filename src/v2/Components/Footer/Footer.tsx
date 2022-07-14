@@ -20,7 +20,6 @@ import {
   WeChatIcon,
 } from "@artsy/palette"
 import { useCCPARequest } from "../CCPARequest"
-import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 
 interface FooterProps extends BoxProps {}
@@ -34,8 +33,6 @@ export const Footer: React.FC<FooterProps> = props => {
       borderColor="black10"
       {...props}
     >
-      <FooterDownloadAppBanner />
-
       <footer>
         <GridColumns pt={4} pb={6} gridRowGap={[4, 0]}>
           <Column span={3}>
