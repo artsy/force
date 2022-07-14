@@ -8,10 +8,12 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { useMode } from "v2/Utils/Hooks/useMode"
 import { SettingsEditSettingsTwoFactorBackupCodes_me } from "v2/__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
+import { CreateBackupSecondFactorsInput } from "v2/__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer } from "./SettingsEditSettingsTwoFactorBackupCodesDialog"
 import { useCreateSettingsBackupSecondFactors } from "./useCreateSettingsBackupSecondFactorsMutation"
 
@@ -25,6 +27,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
   me,
 }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const { sendToast } = useToasts()
 
@@ -32,19 +35,23 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
     submitCreateSettingsBackupSecondFactors,
   } = useCreateSettingsBackupSecondFactors()
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (
+    password: CreateBackupSecondFactorsInput["password"]
+  ) => {
     setMode("Creating")
 
     try {
-      await submitCreateSettingsBackupSecondFactors()
+      await submitCreateSettingsBackupSecondFactors({ password })
 
       setMode("Show")
+      setShowConfirmPassword(false)
     } catch (err) {
       console.error(err)
 
       sendToast({ variant: "error", message: err.message })
 
       setMode("Pending")
+      setShowConfirmPassword(false)
     }
   }
 
@@ -97,7 +104,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
               <Spacer ml={1} />
 
               <Button
-                onClick={handleGenerate}
+                onClick={() => setShowConfirmPassword(true)}
                 loading={mode === "Creating"}
                 width={["100%", "auto"]}
               >
@@ -105,12 +112,23 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
               </Button>
             </>
           ) : (
-            <Button onClick={handleGenerate} loading={mode === "Creating"}>
+            <Button
+              onClick={() => setShowConfirmPassword(true)}
+              loading={mode === "Creating"}
+            >
               Set up
             </Button>
           )}
         </Flex>
       </Flex>
+
+      <ConfirmPasswordModal
+        show={showConfirmPassword}
+        onConfirm={handleGenerate}
+        onCancel={() => setShowConfirmPassword(false)}
+        title="Regenerate Backup Codes"
+        subTitle="Confirm your password to continue."
+      />
 
       {mode === "Show" && (
         <ModalDialog
