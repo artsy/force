@@ -10,13 +10,19 @@ import {
 
 export const HomeValueProps: React.FC = () => {
   return (
-    <Flex justifyContent={"center"} flexDirection={"column"}>
+    <Flex
+      justifyContent={"center"}
+      flexDirection={"column"}
+      backgroundColor={"blue10"}
+    >
+      <Spacer my={[2, 4]} />
+
       <Flex justifyContent={"center"}>
         <Text variant={"xl"}>Why buy art on Artsy?</Text>
-        <Spacer my={[2, 4]} />
+        <Spacer my={[4, 6]} />
       </Flex>
       <Flex flexDirection={["column", "row"]} justifyContent="space-around">
-        <Flex flex={1} flexDirection={"column"} alignItems={"center"}>
+        <Flex flex={1} flexDirection={"column"} alignItems={"center"} mx={4}>
           <Text variant={"lg"}>The Artsy Guarantee</Text>
           <Spacer my={[0.5, 1]} />
           <GuaranteeIcon height={"35px"} width={"35px"} fill="blue100" />
@@ -30,7 +36,7 @@ export const HomeValueProps: React.FC = () => {
             </a>
           </Text>
         </Flex>
-        <Flex flex={1} flexDirection={"column"} alignItems={"center"}>
+        <Flex flex={1} flexDirection={"column"} alignItems={"center"} mx={4}>
           <Text variant={"lg"}>Secure Payments</Text>
           <Spacer my={[0.5, 1]} />
           <LockIcon height={"40px"} width={"40px"} fill="blue100" />
@@ -42,7 +48,7 @@ export const HomeValueProps: React.FC = () => {
             </a>
           </Text>
         </Flex>
-        <Flex flex={1} flexDirection={"column"} alignItems={"center"}>
+        <Flex flex={1} flexDirection={"column"} alignItems={"center"} mx={4}>
           <Text variant={"lg"}>Trusted Sellers</Text>
           <Spacer my={[0.5, 1]} />
           <CheckCircleIcon height={"35px"} width={"35px"} fill="blue100" />
@@ -57,6 +63,7 @@ export const HomeValueProps: React.FC = () => {
           </Text>
         </Flex>
       </Flex>
+      <Spacer my={[2, 4]} />
     </Flex>
   )
 }

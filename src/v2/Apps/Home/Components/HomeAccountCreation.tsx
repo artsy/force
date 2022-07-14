@@ -11,7 +11,7 @@ export const HomeAccountCreation: React.FC = () => {
 
   return (
     <Flex flexDirection={["column", "row"]} justifyContent={"space-between"}>
-      <Flex flex={1} flexDirection={"column"}>
+      <Flex flex={1} flexDirection={"column"} alignItems={"center"}>
         <Text variant={"xl"}>Create an account</Text>
         <Spacer my={[1, 2]} />
         <Button
@@ -30,17 +30,22 @@ export const HomeAccountCreation: React.FC = () => {
           Sign Up
         </Button>
       </Flex>
-      <Flex
-        flex={1}
-        flexDirection={"column"}
-        justifyContent={"center"}
-        ml={[0, 2]}
-      >
-        <Text variant={"md"}>Get personalized recommendations</Text>
-        <Text variant={"md"}>Access over 1 million auction results</Text>
-        <Text variant={"md"}>
-          Sign up for Artsy's emails and get fresh art every week
-        </Text>
+      <Flex flex={1} justifyContent={"center"} alignItems={"center"}>
+        <Flex flexDirection={"column"}>
+          <ul style={{ listStyle: "circle" }}>
+            <li>
+              <Text variant={"md"}>Get personalized recommendations</Text>
+            </li>
+            <li>
+              <Text variant={"md"}>Access over 1 million auction results</Text>
+            </li>
+            <li>
+              <Text variant={"md"}>
+                Sign up for Artsy's emails and get fresh art every week
+              </Text>
+            </li>
+          </ul>
+        </Flex>
       </Flex>
     </Flex>
   )

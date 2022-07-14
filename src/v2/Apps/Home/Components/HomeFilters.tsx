@@ -42,13 +42,20 @@ export const HomeFilters: React.FC = ({}) => {
 
   return (
     <Box style={{ width: "100%" }}>
-      <Flex flexDirection={"column"} justifyContent={"center"}>
-        <Text variant="xl">Find art you love</Text>
+      <Flex
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Text variant="xl">
+          Find art you <span style={{ textDecoration: "underline" }}>love</span>
+        </Text>
         <Spacer mt={[1, 2]} />
         <LabeledInput
           placeholder="Enter a search term"
           type="text"
           onChange={handleSetKeyword}
+          width={"500px"}
           label={
             <SearchButton
               type="submit"

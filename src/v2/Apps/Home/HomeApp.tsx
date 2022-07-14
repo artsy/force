@@ -1,20 +1,17 @@
-import { Spacer, Join, FullBleed } from "@artsy/palette"
+import { Spacer, Join } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
 import { HomeApp_featuredEventsOrderedSet } from "v2/__generated__/HomeApp_featuredEventsOrderedSet.graphql"
-import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeMeta } from "./Components/HomeMeta"
-import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
-import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
-import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
-import { MyBidsQueryRenderer } from "../Auctions/Components/MyBids/MyBids"
-import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
 import { HomeFilters } from "./Components/HomeFilters"
 import { StartExploring } from "./Components/StartExploring"
 import { HomeValueProps } from "./Components/HomeValueProps"
+
 import { HomeAccountCreation } from "./Components/HomeAccountCreation"
+import { useSystemContext } from "v2/System"
+import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -25,46 +22,28 @@ export const HomeApp: React.FC<HomeAppProps> = ({
   homePage,
   featuredEventsOrderedSet,
 }) => {
+  const { user } = useSystemContext()
+
   return (
     <>
       <HomeMeta />
 
-      <FullBleed>
-        <FlashBannerQueryRenderer />
-      </FullBleed>
-
-      <Spacer mt={[2, 0]} />
-
-      <Spacer mt={[4, 6]} />
-
+      <Spacer mt={[6, 12]} height={"1px"} />
+      <Spacer mt={[6, 12]} height={"1px"} />
       <HomeFilters />
-
-      <Spacer mt={[4, 6]} />
-
-      <StartExploring />
-
-      <Spacer mt={[4, 6]} />
-
-      <HomeValueProps />
-
-      <Spacer mt={[4, 6]} />
-
-      <HomeAccountCreation />
-
-      <Spacer mt={[4, 6]} />
+      <Spacer mt={[6, 12]} height={"1px"} />
+      <Spacer mt={[6, 12]} height={"1px"} />
 
       <Join separator={<Spacer mt={[6, 12]} />}>
-        <MyBidsQueryRenderer />
-
         <HomeWorksForYouTabBar />
 
-        <HomeTroveArtworksRailQueryRenderer />
+        {!user && <HomeTroveArtworksRailQueryRenderer />}
 
-        <HomeFeaturedMarketNewsQueryRenderer />
+        <HomeValueProps />
 
-        <HomeAuctionLotsRailQueryRenderer />
+        <StartExploring />
 
-        <HomeTrendingArtistsRailQueryRenderer />
+        <HomeAccountCreation />
       </Join>
     </>
   )
