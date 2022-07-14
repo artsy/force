@@ -57,15 +57,6 @@ function getProductionWebpackConfig() {
     return {}
   }
 
-  // Verify that only a single build is selected.
-  if (!env.buildServer && !env.buildClient) {
-    log("Must build either the CLIENT or SERVER.")
-    process.exit(1)
-  } else if (env.buildServer || (env.buildClient && env.buildServer)) {
-    log("Must only build CLIENT or SERVER.")
-    process.exit(1)
-  }
-
   // Select the correct base config.
   let config
   let name = ""

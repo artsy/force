@@ -45,12 +45,12 @@ export const clientProductionConfig = () => ({
   plugins: [
     ...sharedPlugins(),
     new LoadablePlugin({
-      filename: "loadable-novo-stats.json",
+      filename: "loadable-stats.json",
       path: path.resolve(basePath, "public", "assets"),
     }),
     new WebpackManifestPlugin({
       basePath: "/assets/",
-      fileName: path.resolve(basePath, "manifest-novo.json"),
+      fileName: path.resolve(basePath, "manifest.json"),
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),

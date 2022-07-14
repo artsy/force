@@ -31,11 +31,11 @@
 #                  ^           ^                                  |                 |
 #                  |           |                                  |                 |
 #                  |           |                                  |                 |
-#  +---------------+--+    +---+--------------+    +-------------------------+      |
-#  |                  |    |                  |    |                         |      |
-#  |  builder-assets  |    |  builder-server  |    |  builder-assets-legacy  |      |
-#  |                  |    |                  |    |                         |      |
-#  +---------------+--+    +---+--------------+    +------------------------ +      |
+#  +---------------+--+    +---+--------------+                                     |
+#  |                  |    |                  |                                     |
+#  |  builder-assets  |    |  builder-server  |                                     |
+#  |                  |    |                  |                                     |
+#  +---------------+--+    +---+--------------+                                     |
 #                  ^           ^                                  ^                 |
 #                  |           |                                  |                 |
 #                  |           |                                  |                 |
@@ -127,14 +127,6 @@ COPY .env.oss \
   ./
 
 # ---------------------------------------------------------
-# Compile legacy assets
-# ---------------------------------------------------------
-FROM builder-src as builder-assets-legacy
-
-# Build legacy application
-RUN yarn build:assets:legacy
-
-# ---------------------------------------------------------
 # Compile assets
 # ---------------------------------------------------------
 FROM builder-src as builder-assets
@@ -158,13 +150,9 @@ FROM builder-src as builder
 COPY ./scripts ./scripts
 
 # Client assets
-COPY --from=builder-assets-legacy /app/manifest.json .
-COPY --from=builder-assets-legacy /app/public ./public
-COPY --from=builder-assets-legacy /app/src ./src
-
-# Client (Novo) assets
-COPY --from=builder-assets /app/manifest-novo.json .
+COPY --from=builder-assets /app/manifest.json .
 COPY --from=builder-assets /app/public ./public
+COPY --from=builder-assets /app/src ./src
 
 # Server assets
 COPY --from=builder-server /app/server.dist.js .
@@ -227,7 +215,6 @@ COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
 
 # Client assets
 COPY --chown=deploy:deploy --from=builder /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder /app/manifest-novo.json .
 COPY --chown=deploy:deploy --from=builder /app/public ./public
 COPY --chown=deploy:deploy --from=builder /app/src ./src
 

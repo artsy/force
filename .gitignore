@@ -19,7 +19,6 @@ dump.rdb
 lib-cov
 logs
 manifest.json
-manifest-novo.json
 npm-debug.log
 pids
 results
@@ -27,7 +26,9 @@ yalc.lock
 
 /dist
 /node_modules
-public/assets
+/public
+/src/public/assets
+/src/public/assets
 /storybook-static
 node_modules
 

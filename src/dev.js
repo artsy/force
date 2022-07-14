@@ -50,7 +50,6 @@ const wdm = webpackDevMiddleware(compiler, {
      */
     return (
       /loadable-stats/.test(filePath) ||
-      /loadable-novo-stats/.test(filePath) ||
       /manifest/.test(filePath) ||
       /\.ejs/.test(filePath)
     )

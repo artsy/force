@@ -26,7 +26,7 @@ app.get(
     try {
       const { status, redirect, ...rest } = await buildServerApp({
         assetsPath: "/assets",
-        loadableFile: "loadable-novo-stats.json",
+        loadableFile: "loadable-stats.json",
         loadablePath: "public/assets",
         next,
         req,
