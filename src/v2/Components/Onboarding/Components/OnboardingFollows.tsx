@@ -9,7 +9,7 @@ import {
 import { FC, useState } from "react"
 import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrderedSet"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
 import { useDebouncedValue } from "v2/Utils/Hooks/useDebounce"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
@@ -36,7 +36,9 @@ const CONFIGURATION = {
 
 export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
   const { next, state } = useOnboardingContext()
-  const { register, handleNext } = useOnboardingFadeTransition({ next })
+  const { register, handleNext, loading } = useOnboardingFadeTransition({
+    next,
+  })
   const [query, setQuery] = useState("")
 
   const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
@@ -93,6 +95,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
             <Button
               width="100%"
               onClick={handleNext}
+              loading={loading}
               disabled={state.followedIds.length === 0}
             >
               Done

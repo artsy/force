@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
-import { State } from "./useOnboardingContext"
+import { State } from "./Hooks/useOnboardingContext"
 
 interface UseConfig {
   basis: React.RefObject<State>

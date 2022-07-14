@@ -2,7 +2,7 @@ import { render } from "@testing-library/react"
 import { OnboardingFollowArtists } from "../../Views/OnboardingFollowArtists"
 import { fireEvent, screen } from "@testing-library/react"
 
-jest.mock("v2/Components/Onboarding/useOnboardingContext", () => {
+jest.mock("v2/Components/Onboarding/Hooks/useOnboardingContext", () => {
   return {
     useOnboardingContext: () => ({
       state: {

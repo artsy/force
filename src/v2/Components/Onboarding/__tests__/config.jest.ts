@@ -6,7 +6,7 @@ import {
   OPTION_YES_I_LOVE_COLLECTING_ART,
   useConfig,
 } from "../config"
-import { State } from "../useOnboardingContext"
+import { State } from "../Hooks/useOnboardingContext"
 
 describe("config", () => {
   it("should move through workflow", () => {

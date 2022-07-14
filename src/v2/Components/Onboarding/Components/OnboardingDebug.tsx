@@ -1,7 +1,7 @@
 import { Box, Flex, Button } from "@artsy/palette"
 import { FC } from "react"
 import { useMode } from "v2/Utils/Hooks/useMode"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingModal } from "./OnboardingModal"
 import { OnboardingSteps } from "./OnboardingSteps"
 

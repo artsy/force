@@ -4,7 +4,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { OnboardingWelcomeAnimatedPanel } from "../Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
