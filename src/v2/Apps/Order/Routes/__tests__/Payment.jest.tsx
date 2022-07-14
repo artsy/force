@@ -322,9 +322,6 @@ describe("Payment", () => {
     })
 
     it("renders description body for bank transfer when selected", async () => {
-      page.selectPaymentMethod(0)
-      page.selectPaymentMethod(3)
-
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
         "• If you can not find your bank, please check your spelling or choose"
@@ -333,10 +330,6 @@ describe("Payment", () => {
         "• Search for your bank institution or select from the options below."
       )
     })
-
-    // Ran in to the error when following `createTestEnv`
-    // Invariant Violation: commitMutation: expected "environment" to be an instance of "RelayModernEnvironment"
-    it.todo("creates a bank debit setup")
   })
 
   describe("wire transfer enabled", () => {
