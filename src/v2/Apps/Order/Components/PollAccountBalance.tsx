@@ -19,7 +19,7 @@ interface PollAccountBalanceProps {
   commerceBankAccountBalance: PollAccountBalance_commerceBankAccountBalance | null
   onBalanceCheckComplete: (displayInsufficientFundsError: boolean) => void
   buyerTotalCents: number
-  currencyCode: string
+  orderCurrencyCode: string
 }
 
 const PollAccountBalance: FC<PollAccountBalanceProps> = ({
@@ -28,7 +28,7 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
   commerceBankAccountBalance,
   onBalanceCheckComplete,
   buyerTotalCents,
-  currencyCode,
+  orderCurrencyCode,
 }) => {
   const [shouldStopPolling, setShouldStopPolling] = useState(false)
   const timeoutID = setTimeout(() => setShouldStopPolling(true), 5000)
@@ -42,23 +42,19 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     clearWhen: shouldStopPolling,
   })
 
+  const { balanceCents, currencyCode } = commerceBankAccountBalance!
+
   // we receive the balance from Stripe and it's enough to buy the artwork
   const userHasEnoughBalance =
-    commerceBankAccountBalance?.balanceCents &&
-    commerceBankAccountBalance?.balanceCents >= buyerTotalCents &&
-    currencyCode === commerceBankAccountBalance?.currencyCode
+    balanceCents! >= buyerTotalCents && orderCurrencyCode === currencyCode
 
   // we receive the balance from Stripe and it's insufficient to buy the artwork
   const userHasInsufficientBalance =
-    commerceBankAccountBalance?.balanceCents &&
-    commerceBankAccountBalance?.balanceCents < buyerTotalCents &&
-    currencyCode === commerceBankAccountBalance?.currencyCode
+    balanceCents! < buyerTotalCents && orderCurrencyCode === currencyCode
 
   // we didn't receive the balance from Stripe and polling time expired
   const balanceIsNotAvailable =
-    (!commerceBankAccountBalance?.balanceCents ||
-      !commerceBankAccountBalance?.currencyCode) &&
-    shouldStopPolling
+    (!balanceCents || !currencyCode) && shouldStopPolling
 
   // if the user has enough balance or balance is not available, we don't need to display the error
   if (userHasEnoughBalance || balanceIsNotAvailable) {
@@ -97,7 +93,7 @@ interface PollAccountBalanceQueryRendererProps {
   setupIntentId: string
   onBalanceCheckComplete: (displayInsufficientFundsError: boolean) => void
   buyerTotalCents: number
-  currencyCode: string
+  orderCurrencyCode: string
 }
 
 export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRendererProps> = ({

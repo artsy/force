@@ -265,7 +265,7 @@ export const PaymentRoute: FC<Props> = props => {
                 setupIntentId={setupIntentId}
                 onBalanceCheckComplete={onBalanceCheckComplete}
                 buyerTotalCents={order.buyerTotalCents!}
-                currencyCode={order.currencyCode}
+                orderCurrencyCode={order.currencyCode}
               />
             ) : (
               <PaymentContent
