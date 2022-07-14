@@ -133,7 +133,13 @@ export const UnreadMessagesToastRefetchContainer = createRefetchContainer(
         isLastMessageToUser
         activeOrders: orderConnection(
           last: 1
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+          states: [
+            APPROVED
+            FULFILLED
+            SUBMITTED
+            REFUNDED
+            PROCESSING_APPROVAL
+          ]
         ) {
           edges {
             node {

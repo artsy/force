@@ -339,7 +339,14 @@ export const ConversationPaginationContainer = createPaginationContainer(
         unread
         orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED]
+          states: [
+            APPROVED
+            FULFILLED
+            SUBMITTED
+            REFUNDED
+            CANCELED
+            PROCESSING_APPROVAL
+          ]
           participantType: BUYER
         ) {
           edges {
