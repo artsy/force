@@ -14,6 +14,7 @@ import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtwor
 import { HomeFilters } from "./Components/HomeFilters"
 import { StartExploring } from "./Components/StartExploring"
 import { HomeValueProps } from "./Components/HomeValueProps"
+import { HomeAccountCreation } from "./Components/HomeAccountCreation"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -42,7 +43,15 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <StartExploring />
 
+      <Spacer mt={[4, 6]} />
+
       <HomeValueProps />
+
+      <Spacer mt={[4, 6]} />
+
+      <HomeAccountCreation />
+
+      <Spacer mt={[4, 6]} />
 
       <Join separator={<Spacer mt={[6, 12]} />}>
         <MyBidsQueryRenderer />
