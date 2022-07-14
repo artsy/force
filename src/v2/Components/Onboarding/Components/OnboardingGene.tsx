@@ -18,26 +18,6 @@ interface OnboardingGeneProps {
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
 
-  if (artworks.length === 0) {
-    return (
-      <Box px={[2, 4]} py={6}>
-        <Flex justifyContent="space-between">
-          <Box>
-            <Text variant="xl">{gene.name}</Text>
-
-            <Text variant={["sm", "md"]} color="black60" mt={2}>
-              {description}
-            </Text>
-          </Box>
-        </Flex>
-
-        <Spacer mb={4} />
-
-        <Message title="No results found" />
-      </Box>
-    )
-  }
-
   return (
     <Box px={[2, 4]} py={6}>
       <Flex justifyContent="space-between">
@@ -64,17 +44,21 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
 
       <Spacer mb={4} />
 
-      <Masonry columnCount={[2, 3]}>
-        {artworks.map(artwork => {
-          return (
-            <Fragment key={artwork.internalID}>
-              <ArtworkGridItemFragmentContainer artwork={artwork} />
+      {artworks.length === 0 ? (
+        <Message title="No results found" />
+      ) : (
+        <Masonry columnCount={[2, 3]}>
+          {artworks.map(artwork => {
+            return (
+              <Fragment key={artwork.internalID}>
+                <ArtworkGridItemFragmentContainer artwork={artwork} />
 
-              <Spacer mb={2} />
-            </Fragment>
-          )
-        })}
-      </Masonry>
+                <Spacer mb={2} />
+              </Fragment>
+            )
+          })}
+        </Masonry>
+      )}
     </Box>
   )
 }
