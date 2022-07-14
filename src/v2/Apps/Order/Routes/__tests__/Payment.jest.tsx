@@ -334,45 +334,45 @@ describe("Payment", () => {
   })
 
   describe("wire transfer enabled", () => {
-    let wireOrder
+    let page
 
     beforeAll(() => {
-      wireOrder = {
+      const wireOrder = {
         ...testOrder,
         availablePaymentMethods: [
           "CREDIT_CARD",
           "WIRE_TRANSFER",
         ] as CommercePaymentMethodEnum[],
       }
-    })
 
-    it("does not render wire tranfer as option for uneligible partners", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
-      expect(page.text()).not.toContain("Wire transfer")
-    })
-
-    it("preselects payment method from the order", async () => {
       const wrapper = getWrapper({
         CommerceOrder: () => wireOrder,
       })
-      const page = new PaymentTestPage(wrapper)
 
-      expect(page.find(BorderedRadio).at(0).prop("selected")).toBeTruthy()
+      page = new PaymentTestPage(wrapper)
     })
 
-    it("renders wire transfer as option for eligible partners", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => wireOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
-
+    it("renders wire tranfer as option for eligible partners", async () => {
       expect(page.text()).toContain("Wire transfer")
     })
 
+    it("does not preselect wire transfer as the payment method", async () => {
+      expect(page.find(BorderedRadio).at(1).prop("selected")).toBeFalsy()
+    })
+
+    it("renders description body for wire transfer when selected", async () => {
+      await page.selectPaymentMethod(1)
+
+      expect(page.text()).toContain(
+        "• To pay by wire transfer, complete checkout"
+      )
+      expect(page.text()).toContain(
+        "• Please inform your bank that you will be responsible"
+      )
+    })
+
     it("transitions to review step when wire transfer is chosen", async () => {
+      await page.selectPaymentMethod(0)
       const submitMutationMock = jest.fn().mockResolvedValue({
         commerceSetPayment: {
           orderOrError: {
@@ -384,10 +384,6 @@ describe("Payment", () => {
         submitMutation: submitMutationMock,
       }))
 
-      const wrapper = getWrapper({
-        CommerceOrder: () => wireOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
       await page.selectPaymentMethod(1)
       await page.clickSubmit()
 
