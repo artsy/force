@@ -6,7 +6,7 @@ import { OnboardingOrderedSetQuery } from "v2/__generated__/OnboardingOrderedSet
 import { FC } from "react"
 import { EntityHeaderArtistFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderArtist"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { EntityHeaderPartnerFragmentContainer } from "v2/Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "v2/Components/EntityHeaders/EntityHeaderPlaceholder"
 

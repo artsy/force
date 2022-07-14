@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Spacer, Box } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
-import { OnboardingProvider } from "v2/Components/Onboarding/useOnboardingContext"
+import { OnboardingProvider } from "v2/Components/Onboarding/Hooks/useOnboardingContext"
 import { OnboardingDebug } from "v2/Components/Onboarding/Components/OnboardingDebug"
 import { OnboardingSteps } from "v2/Components/Onboarding/Components/OnboardingSteps"
 

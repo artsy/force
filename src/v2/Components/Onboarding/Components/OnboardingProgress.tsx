@@ -1,7 +1,7 @@
 import { ProgressBar } from "@artsy/palette"
 import { FC } from "react"
 import { useDebouncedValue } from "v2/Utils/Hooks/useDebounce"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 interface OnboardingProgressProps {
   preview?: boolean

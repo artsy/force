@@ -15,7 +15,7 @@ import {
   OPTION_TOP_AUCTION_LOTS,
 } from "../config"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingQuestionThree: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()

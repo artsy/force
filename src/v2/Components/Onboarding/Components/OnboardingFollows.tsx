@@ -9,7 +9,7 @@ import {
 import { FC, useState } from "react"
 import { OnboardingOrderedSetQueryRenderer } from "../Components/OnboardingOrderedSet"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSearchResults"
 import { useDebouncedValue } from "v2/Utils/Hooks/useDebounce"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"

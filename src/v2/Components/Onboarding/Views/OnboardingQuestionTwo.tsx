@@ -10,7 +10,7 @@ import {
   OPTION_KEEP_TRACK_OF_ART,
 } from "../config"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingQuestionTwo: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()

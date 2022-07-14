@@ -7,7 +7,7 @@ import {
   useEffect,
 } from "react"
 import { WorkflowEngine } from "v2/Utils/WorkflowEngine"
-import { useConfig } from "./config"
+import { useConfig } from "../config"
 
 export type State = {
   questionOne: string | null

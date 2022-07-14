@@ -10,7 +10,7 @@ import {
   VIEW_FOLLOW_ARTISTS,
   VIEW_ARTISTS_ON_THE_RISE,
 } from "../config"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingWelcome } from "../Views/OnboardingWelcome"
 import { OnboardingQuestionOne } from "../Views/OnboardingQuestionOne"
 import { OnboardingQuestionThree } from "../Views/OnboardingQuestionThree"

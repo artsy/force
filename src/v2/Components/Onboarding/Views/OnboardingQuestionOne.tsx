@@ -10,7 +10,7 @@ import {
   OPTION_YES_I_LOVE_COLLECTING_ART,
 } from "../config"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
-import { useOnboardingContext } from "../useOnboardingContext"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingQuestionOneMutation } from "v2/__generated__/OnboardingQuestionOneMutation.graphql"
 
 export const OnboardingQuestionOne: FC = () => {
