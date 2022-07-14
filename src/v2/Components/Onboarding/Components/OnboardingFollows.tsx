@@ -36,7 +36,9 @@ const CONFIGURATION = {
 
 export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
   const { next, state } = useOnboardingContext()
-  const { register, handleNext } = useOnboardingFadeTransition({ next })
+  const { register, handleNext, loading } = useOnboardingFadeTransition({
+    next,
+  })
   const [query, setQuery] = useState("")
 
   const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
@@ -93,6 +95,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
             <Button
               width="100%"
               onClick={handleNext}
+              loading={loading}
               disabled={state.followedIds.length === 0}
             >
               Done
