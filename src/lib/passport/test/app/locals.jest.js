@@ -15,7 +15,7 @@ describe("locals", function () {
   it("escapes the error message html", function () {
     req.query.error = "<img src=alert(hello) />"
     locals(req, res, next)
-    res.locals.error.should.equal("&lt;img src=alert(hello) /&gt;")
+    expect(res.locals.error).toEqual("&lt;img src=alert(hello) /&gt;")
   })
 
   // TODO: Reimplement removed tests

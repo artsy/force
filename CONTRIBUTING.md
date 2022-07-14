@@ -84,9 +84,7 @@ git checkout -b my-feature-branch
 
 ## Write Tests
 
-Write tests for all new features and fixes using Mocha or Jest. Run all tests with `yarn test`.
-
-Mocha looks for files prefixed with `.test` or `.spec`, while Jest looks for the prefix `.jest`.
+Write tests for all new features and fixes using Jest. Run all tests with `yarn test` and be sure to include `.jest` in the filename so that the test-runner knows what to look for.
 
 To speed up your workflow try watching an individual file or directory for changes, e.g. `yarn jest --watch src/v2/Components/Authentication`
 

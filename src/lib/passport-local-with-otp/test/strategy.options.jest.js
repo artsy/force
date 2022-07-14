@@ -1,7 +1,6 @@
 /* jshint expr: true */
 
 const chai = require("chai")
-const expect = require("chai").expect
 const Strategy = require("../lib/strategy")
 
 describe("Strategy", function () {
@@ -12,7 +11,8 @@ describe("Strategy", function () {
 
     let info, status
 
-    before(function (done) {
+    // eslint-disable-next-line jest/no-done-callback
+    beforeAll(function (done) {
       chai.passport
         .use(strategy)
         .fail(function (i, s) {
@@ -20,7 +20,7 @@ describe("Strategy", function () {
           status = s
           done()
         })
-        .req(function (req) {
+        .request(function (req) {
           req.body = {}
         })
         .authenticate({
@@ -29,9 +29,8 @@ describe("Strategy", function () {
     })
 
     it("should fail with info and status", function () {
-      expect(info).to.be.an("object")
-      expect(info.message).to.equal("Something is wrong with this request")
-      expect(status).to.equal(400)
+      expect(info.message).toEqual("Something is wrong with this request")
+      expect(status).toEqual(400)
     })
   })
 })

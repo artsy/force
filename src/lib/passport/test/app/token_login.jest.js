@@ -1,18 +1,33 @@
+/* eslint-disable no-restricted-imports */
 const sinon = require("sinon")
-const rewire = require("rewire")
-const tokenLogin = rewire("../../lib/app/token_login")
+const tokenLogin = require("../../lib/app/token_login")
 const { headerLogin, trustTokenLogin } = tokenLogin
+
+import request from "superagent"
+import options from "lib/passport/lib/options"
+
+jest.mock("superagent")
+jest.mock("lib/passport/lib/options", () => ({
+  logoutPath: "/users/sign_out",
+}))
 
 describe("token login middleware", function () {
   let req
   let res
   let next
-  let request
 
   beforeEach(function () {
-    tokenLogin.__set__("opts", {
-      logoutPath: "/users/sign_out",
-    })
+    for (let method of [
+      "get",
+      "end",
+      "set",
+      "post",
+      "send",
+      "status",
+      "query",
+    ]) {
+      request[method] = sinon.stub().returns(request)
+    }
   })
 
   describe("#headerLogin", function () {
@@ -30,39 +45,25 @@ describe("token login middleware", function () {
 
     it("logs in a user if they pass their access token as a header", function () {
       headerLogin(req, res, next)
-      req.login.args[0][0].accessToken.should.equal("access-foo-token")
+      expect(req.login.args[0][0].accessToken).toEqual("access-foo-token")
     })
 
     it("does not log in a user on sign out", function () {
       req.path = "/users/sign_out"
       headerLogin(req, res, next)
-      next.called.should.equal(true)
+      expect(next.called).toEqual(true)
     })
   })
 
   describe("trustTokenLogin", function () {
-    beforeEach(function () {
-      this.__request__ = tokenLogin.__get__("request")
-      request = {}
-      request.post = sinon.stub().returns(request)
-      request.send = sinon.stub().returns(request)
-      request.set = sinon.stub().returns(request)
-      request.end = sinon.stub().returns(request)
-      tokenLogin.__set__("request", request)
-    })
-
-    afterEach(function () {
-      tokenLogin.__set__("request", this.__request__)
-    })
-
     it("immediately nexts if there is no trust_token query param", function () {
       const req = { query: {}, url: "/target-path" }
       const res = { redirect: sinon.stub() }
       const next = sinon.stub()
       trustTokenLogin(req, res, next)
-      request.post.called.should.be.false()
-      next.called.should.be.true()
-      res.redirect.called.should.be.false()
+      expect(request.post.called).toBeFalsy()
+      expect(next.called).toBeTruthy()
+      expect(res.redirect.called).toBeFalsy()
     })
 
     it(`logs the user in when there is a trust_token present, redirecting to \
@@ -77,10 +78,10 @@ a url sans trust_token param`, function () {
       const next = sinon.stub()
       request.end.yields(null, { ok: true, body: { access_token: "yyy" } })
       trustTokenLogin(req, res, next)
-      request.post.called.should.be.true()
-      request.send.args[0][0].code.should.equal("xxxx")
-      res.redirect.called.should.be.true()
-      res.redirect.args[0][0].should.equal("/target-path")
+      expect(request.post.called).toBeTruthy()
+      expect(request.send.args[0][0].code).toEqual("xxxx")
+      expect(res.redirect.called).toBeTruthy()
+      expect(res.redirect.args[0][0]).toEqual("/target-path")
     })
 
     it("preserves any other query string params", function () {
@@ -94,7 +95,7 @@ a url sans trust_token param`, function () {
       const next = sinon.stub()
       request.end.yields(null, { ok: true, body: { access_token: "yyy" } })
       trustTokenLogin(req, res, next)
-      res.redirect.args[0][0].should.equal("/target-path?foo=bar&bar=baz")
+      expect(res.redirect.args[0][0]).toEqual("/target-path?foo=bar&bar=baz")
     })
 
     it("nexts on failed code response", function () {
@@ -107,8 +108,8 @@ a url sans trust_token param`, function () {
       const next = sinon.stub()
       request.end.yields("err", null)
       trustTokenLogin(req, res, next)
-      next.called.should.be.true()
-      res.redirect.called.should.be.false()
+      expect(next.called).toBeTruthy()
+      expect(res.redirect.called).toBeFalsy()
     })
   })
 })

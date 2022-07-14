@@ -1,21 +1,24 @@
-const rewire = require("rewire")
+/* eslint-disable no-restricted-imports */
 const sinon = require("sinon")
-const serializers = rewire("../../lib/passport/serializers")
+const serializers = require("../../lib/passport/serializers")
 const { serialize, deserialize } = serializers
 
-// TODO: Refactor tests with done callbacks to async/await
+import options from "lib/passport/lib/options"
+import request from "superagent"
+import passport from "passport"
+
+jest.mock("superagent")
+
 /* eslint-disable jest/no-done-callback */
 
 describe("#serialize", function () {
-  let request
+  let resolveSerialize
 
   beforeEach(function () {
-    request = {}
-    request.get = sinon.stub().returns(request)
-    request.set = sinon.stub().returns(request)
-    request.end = sinon.stub().returns(request)
-    serializers.__set__("request", request)
-    this.resolveSerialize = () => {
+    for (let method of ["get", "end", "set", "post", "send", "status"]) {
+      request[method] = sinon.stub().returns(request)
+    }
+    resolveSerialize = () => {
       request.end.args[0][0](null, { body: { id: "craig", foo: "baz" } })
       request.end.args[1][0](null, { body: [{ provider: "facebook" }] })
     }
@@ -24,26 +27,26 @@ describe("#serialize", function () {
   it("only stores select data in the session", function (done) {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, function (_err, data) {
-      ;(data.foo != null).should.not.be.ok
-      data.id.should.equal("craig")
+      expect(data.foo != null).not.toBeTruthy()
+      expect(data.id).toEqual("craig")
       done()
     })
-    this.resolveSerialize()
+    resolveSerialize()
   })
 
   it("add authentications", function (done) {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, function (_err, data) {
-      data.authentications[0].provider.should.equal("facebook")
+      expect(data.authentications[0].provider).toEqual("facebook")
       done()
     })
-    this.resolveSerialize()
+    resolveSerialize()
   })
 
   it("works when theres an error from Gravity", function (done) {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     serialize({}, user, function (err) {
-      err.message.should.equal("fail")
+      expect(err.message).toEqual("fail")
       done()
     })
     request.end.args[0][0](null, { body: { id: "craig", foo: "baz" } })
@@ -54,17 +57,17 @@ describe("#serialize", function () {
     const user = { id: "craig", foo: "baz", bam: "bop" }
     const req = { user: null }
     serialize(req, user, (_err, _data) => {
-      req.user.id.should.equal(user.id)
+      expect(req.user.id).toEqual(user.id)
       done()
     })
-    this.resolveSerialize()
+    resolveSerialize()
   })
 })
 
 describe("#deserialize", function () {
   it("passes the user data through", function (done) {
     deserialize({ id: "craig", name: "Craig" }, function (_err, user) {
-      user.name.should.equal("Craig")
+      expect(user.name).toEqual("Craig")
       done()
     })
   })

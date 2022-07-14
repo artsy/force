@@ -33,7 +33,6 @@
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
-    "mocha": "scripts/mocha.sh",
     "open-consent-modal": "open http://localhost:5000?otreset=false&otpreview=true&otgeo=gb",
     "prepare": "patch-package",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
@@ -51,12 +50,11 @@
     "start:prod:debug": "SESSION_LOCAL_INSECURE=true NODE_ENV=production node --inspect --max_old_space_size=3072 ./server.dist.js",
     "sync-schema": "scripts/sync-schema-pull.sh",
     "sync-schema-local": "scripts/sync-schema-local.sh",
-    "test": "concurrently 'yarn test:ci:jest:legacy' 'yarn test:ci:jest:v2' 'yarn test:ci:mocha'",
+    "test": "concurrently 'yarn test:ci:jest:legacy' 'yarn test:ci:jest:v2'",
     "test:smoke": "scripts/smoke_test.sh",
     "test:smoke:spec": "./node_modules/.bin/cypress run -s",
     "test:ci:jest:legacy": "scripts/jest.sh legacy",
     "test:ci:jest:v2": "scripts/jest.sh v2",
-    "test:ci:mocha": "NODE_ENV=test yarn mocha src/**/*.test.js src/**/*.test.ts",
     "type-check": "tsc",
     "unlink-all": "yalc remove --all && yarn --check-files",
     "stats:server": "WEBPACK_LOG_CONFIG=false WEBPACK_LOG=false WEBPACK_CONCATENATE=false WEBPACK_STATS=normal NODE_ENV=production BUILD_SERVER=true node --max_old_space_size=4096 -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats-server.json",
@@ -277,7 +275,7 @@
     "cache-loader": "1.2.2",
     "case-sensitive-paths-webpack-plugin": "2.4.0",
     "chai": "4.0.0",
-    "chai-passport-strategy": "1.0.0",
+    "chai-passport-strategy": "^3.0.0",
     "concurrently": "^6.2.0",
     "csstype": "3.0.7",
     "cypress": "5.1.0",
@@ -313,9 +311,6 @@
     "json-loader": "0.5.7",
     "lint-staged": "10.2.6",
     "lodash-webpack-plugin": "0.11.6",
-    "mocha": "6.2.3",
-    "mocha-junit-reporter": "1.22.0",
-    "mocha-multi-reporters": "1.1.7",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "nyc": "13.3.0",
     "patch-package": "6.2.0",
@@ -373,10 +368,6 @@
       "yarn lint --fix",
       "yarn prettier-write"
     ]
-  },
-  "reporterEnabled": "mocha-junit-reporter, spec",
-  "mochaJunitReporterReporterOptions": {
-    "mochaFile": "reports/mocha/test-results.xml"
   },
   "nyc": {
     "check-coverage": true,

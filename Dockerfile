@@ -121,8 +121,7 @@ COPY .env.oss \
   jest.config.v2.js \
   package.json \
   relay.config.js \
-  test.config.js \
-  test.mocha.js \
+  jest.legacySetup.js \
   tsconfig.json \
   yarn.lock \
   ./

@@ -17,14 +17,16 @@ describe("adminOnly middleware", () => {
     it("passes through without error", () => {
       adminOnly(req, {}, next)
       const res = typeof next.args[0][0] === "undefined"
-      res.should.be.true()
+      expect(res).toBeTruthy()
     })
   })
 
   describe("is not an admin", () =>
     it("passes through with the appropriate error", () => {
       adminOnly({}, {}, next)
-      next.args[0][0].message.should.equal("You must be logged in as an admin")
-      next.args[0][0].status.should.equal(403)
+      expect(next.args[0][0].message).toEqual(
+        "You must be logged in as an admin"
+      )
+      expect(next.args[0][0].status).toEqual(403)
     }))
 })

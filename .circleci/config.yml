@@ -130,18 +130,6 @@ jobs:
               ./scripts/build_review_app.sh $review_app_name
             fi
 
-  mocha:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    environment:
-      - NODE_ENV: test
-    steps:
-      - run: yarn test:ci:mocha
-
   jest-legacy:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
@@ -351,12 +339,6 @@ workflows:
                 command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
 
       # Test steps
-      - mocha:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
       - jest-legacy:
           <<: *not_staging_or_release
           context: hokusai
@@ -408,7 +390,6 @@ workflows:
           executor: hokusai/beta
           name: production-image-push
           requires:
-            - mocha
             - jest-legacy
             - jest-v2
             - type-check

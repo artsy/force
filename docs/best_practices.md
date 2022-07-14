@@ -174,7 +174,7 @@ The reasoning -- and this should be some kind of "Programmers Law" -- is that co
 
 ### Write unit tests for new components
 
-We use [Jest](https://jestjs.io/) for our unit tests, and [Mocha](https://mochajs.org/) for testing legacy code.
+We use [Jest](https://jestjs.io/) for our unit tests.
 
 Some top-level notes:
 

@@ -1,6 +1,18 @@
+/* eslint-disable no-restricted-imports */
 const rewire = require("rewire")
 const sinon = require("sinon")
-const cbs = rewire("../../lib/passport/callbacks")
+const cbs = require("../../lib/passport/callbacks")
+
+import options from "lib/passport/lib/options"
+import request from "superagent"
+import passport from "passport"
+
+jest.mock("superagent")
+jest.mock("lib/passport/lib/options", () => ({
+  ARTSY_ID: "artsy-id",
+  ARTSY_SECRET: "artsy-secret",
+  ARTSY_URL: "http://apiz.artsy.net",
+}))
 
 // TODO: Take care of this warning!
 /* eslint-disable jest/no-done-callback */
@@ -8,35 +20,33 @@ const cbs = rewire("../../lib/passport/callbacks")
 
 describe("passport callbacks", function () {
   let req
-  let request
+  // let request
 
   beforeEach(function () {
     req = { get: sinon.stub() }
-    request = {}
-    request.get = sinon.stub().returns(request)
-    request.query = sinon.stub().returns(request)
-    request.set = sinon.stub().returns(request)
-    request.end = sinon.stub().returns(request)
-    request.post = sinon.stub().returns(request)
-    request.send = sinon.stub().returns(request)
-    cbs.__set__("request", request)
-    cbs.__set__("opts", {
-      ARTSY_ID: "artsy-id",
-      ARTSY_SECRET: "artsy-secret",
-      ARTSY_URL: "http://apiz.artsy.net",
-    })
+    for (let method of [
+      "get",
+      "end",
+      "set",
+      "post",
+      "send",
+      "status",
+      "query",
+    ]) {
+      request[method] = sinon.stub().returns(request)
+    }
   })
 
   it("gets a user with an access token email/password/otp", function (done) {
     req.body = { otpRequired: true }
     cbs.local(req, "craig", "foo", "123456", function (err, user) {
-      user.accessToken.should.equal("access-token")
+      expect(user.accessToken).toEqual("access-token")
       done()
     })
-    request.post.args[0][0].should.equal(
+    expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
-    request.send.args[0][0].should.have.property("otp_attempt")
+    expect(request.send.args[0][0]).toHaveProperty("otp_attempt")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
@@ -44,43 +54,43 @@ describe("passport callbacks", function () {
   it("gets a user with an access token email/password without otp", function (done) {
     req.body = { otpRequired: false }
     cbs.local(req, "craig", "foo", null, function (err, user) {
-      user.accessToken.should.equal("access-token")
+      expect(user.accessToken).toEqual("access-token")
       done()
     })
-    request.post.args[0][0].should.equal(
+    expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
-    request.send.args[0][0].should.not.have.property("otp_attempt")
+    expect(request.send.args[0][0]).not.toHaveProperty("otp_attempt")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
 
   it("gets a user with an access token facebook", function (done) {
     cbs.facebook(req, "foo-token", "refresh-token", {}, function (err, user) {
-      user.accessToken.should.equal("access-token")
+      expect(user.accessToken).toEqual("access-token")
       done()
     })
-    request.post.args[0][0].should.equal(
+    expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
     const queryParams = request.query.args[0][0]
-    queryParams.oauth_provider.should.equal("facebook")
-    queryParams.oauth_token.should.equal("foo-token")
+    expect(queryParams.oauth_provider).toEqual("facebook")
+    expect(queryParams.oauth_token).toEqual("foo-token")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
 
   it("gets a user with an access token google", function (done) {
     cbs.google(req, "foo-token", "refresh-token", {}, function (err, user) {
-      user.accessToken.should.equal("access-token")
+      expect(user.accessToken).toEqual("access-token")
       done()
     })
-    request.post.args[0][0].should.equal(
+    expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
     const queryParams = request.query.args[0][0]
-    queryParams.oauth_provider.should.equal("google")
-    queryParams.oauth_token.should.equal("foo-token")
+    expect(queryParams.oauth_provider).toEqual("google")
+    expect(queryParams.oauth_token).toEqual("foo-token")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
@@ -97,17 +107,17 @@ describe("passport callbacks", function () {
       "access_token",
       "refresh-token",
       function (err, user) {
-        user.accessToken.should.equal("access-token")
+        expect(user.accessToken).toEqual("access-token")
         done()
       }
     )
-    request.post.args[0][0].should.equal(
+    expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
     const queryParams = request.query.args[0][0]
-    queryParams.grant_type.should.equal("apple_uid")
-    queryParams.apple_uid.should.equal("some-apple-uid")
-    queryParams.id_token.should.equal("id-token")
+    expect(queryParams.grant_type).toEqual("apple_uid")
+    expect(queryParams.apple_uid).toEqual("some-apple-uid")
+    expect(queryParams.id_token).toEqual("id-token")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
@@ -116,7 +126,9 @@ describe("passport callbacks", function () {
     req.body = { otpRequired: false }
     req.get.returns("chrome-foo")
     cbs.local(req, "craig", "foo")
-    request.set.args[0][0].should.containEql({ "User-Agent": "chrome-foo" })
+    expect(request.set.args[0][0]).toEqual({
+      "User-Agent": "chrome-foo",
+    })
   })
 
   it("passes the user agent through facebook signup", function () {
@@ -127,7 +139,7 @@ describe("passport callbacks", function () {
       status: 403,
     }
     request.end.args[0][0](null, res)
-    request.set.args[1][0]["User-Agent"].should.equal("foo-bar-baz-ua")
+    expect(request.set.args[1][0]["User-Agent"]).toEqual("foo-bar-baz-ua")
   })
 
   it("passes the user agent through apple signup", function () {
@@ -138,7 +150,7 @@ describe("passport callbacks", function () {
       status: 403,
     }
     request.end.args[0][0](null, res)
-    request.set.args[1][0]["User-Agent"].should.equal("foo-bar-baz-ua")
+    expect(request.set.args[1][0]["User-Agent"]).toBe("foo-bar-baz-ua")
   })
 })
 
