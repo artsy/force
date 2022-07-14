@@ -16,8 +16,6 @@ interface HomeHeroUnitsProps {
 }
 
 const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
-  // TODO: Remove after SSS sale ends
-  const skipHomeHero = true
   const { isLoggedIn } = useSystemContext()
 
   const heroUnits = [
@@ -31,8 +29,6 @@ const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
         // If logged out, the first hero unit is static and
         // needs to be rendered without the fragment container
         if (!isLoggedIn && i === 0) {
-          if (skipHomeHero) return
-
           return (
             <HomeHeroUnit
               key={i}
