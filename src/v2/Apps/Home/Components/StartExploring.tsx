@@ -59,7 +59,7 @@ export const StartExploring: React.FC = ({}) => {
             const image = cropped(entity.thumbnail, { width: 387, height: 218 })
 
             return (
-              <Column span={[6, 4, 2]} key="key">
+              <Column span={[6, 4, 4]} key="key">
                 <RouterLink
                   display="block"
                   textDecoration="none"

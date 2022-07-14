@@ -56,6 +56,18 @@ export const HomeFilters: React.FC = ({}) => {
           type="text"
           onChange={handleSetKeyword}
           width={"500px"}
+          onKeyDown={event => {
+            if (event.key === "Enter") {
+              //// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+              // ;(event.target as HTMLElement).parentElement.blur()
+
+              if (isEmpty(keyword)) {
+                event.preventDefault()
+              }
+
+              window.location.href = `/search?term=${keyword}`
+            }
+          }}
           label={
             <SearchButton
               type="submit"
