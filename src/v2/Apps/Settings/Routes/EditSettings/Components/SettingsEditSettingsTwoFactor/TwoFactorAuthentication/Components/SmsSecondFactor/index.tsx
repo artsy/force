@@ -44,6 +44,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
   )
   const [isDisabling] = useState(false) // ???
   const [isCreating, setCreating] = useState(false)
+  const [passwordConfirmation, setPasswordConfirmation] = useState("")
 
   // Reset's _all_ of these state flags.
   // NOTE: Don't do this. Just hacking around the architecture here.
@@ -54,12 +55,12 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     setShowCompleteModal(false)
     setShowCompleteRedirectModal(false)
     setCreating(false)
+    setPasswordConfirmation("")
   }
 
   const { sendToast } = useToasts()
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
-  const [confirmedPassword, setConfirmedPassword] = useState("")
 
   const redirectTo = afterUpdateRedirect()
 
@@ -143,7 +144,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
       const factor = response.createSmsSecondFactor.secondFactorOrErrors
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       setStagedSecondFactor(factor)
-      setConfirmedPassword(password)
+      setPasswordConfirmation(password)
       setShowConfirmPassword(false)
       setShowSetupModal(true)
     } catch (error) {
@@ -248,7 +249,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
       <SmsSecondFactorModal
         show={showSetupModal}
         secondFactor={stagedSecondFactor}
-        confirmedPassword={confirmedPassword}
+        password={passwordConfirmation}
         onComplete={onComplete}
         onClose={() => setShowSetupModal(false)}
       />
