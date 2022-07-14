@@ -12,7 +12,7 @@ import {
   artistNationalityAggregation,
   materialsTermsAggregation,
   mediumAggregation,
-} from "test/fixtures/aggregations"
+} from "v2/Apps/__tests__/Fixtures/aggregations"
 import { fireEvent, screen, within } from "@testing-library/react"
 
 jest.unmock("react-relay")

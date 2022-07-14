@@ -27,9 +27,7 @@ yalc.lock
 
 /dist
 /node_modules
-/public
-/src/desktop/public/assets
-/src/mobile/public/assets
+public/assets
 /storybook-static
 node_modules
 

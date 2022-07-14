@@ -24,7 +24,7 @@ import {
   ResponsiveProvider,
 } from "v2/Utils/Responsive"
 import { AnalyticsContext } from "../Analytics/AnalyticsContext"
-import { ClientContext } from "desktop/lib/buildClientAppContext"
+import { ClientContext } from "v2/System/Router/buildClientAppContext"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
 

@@ -1,5 +1,3 @@
-// @ts-check
-
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx", ".ejs"],
   plugins: ["babel-plugin-dynamic-import-node"],
@@ -16,7 +14,6 @@ const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
 const { getDevelopmentWebpackConfig } = require("../webpack")
 const { initializeMiddleware } = require("./middleware")
-const { env } = require("../webpack/utils/env")
 
 /**
  * Force resolution of potentially `yarn link`'d modules to the local i
@@ -37,14 +34,7 @@ setAliases({
 
 const webpackConfig = getDevelopmentWebpackConfig("client.dev")
 
-const webpackConfigsToCompile = [webpackConfig]
-
-if (env.compileLegacyClientInDev) {
-  const legacyWebpackConfig = getDevelopmentWebpackConfig("legacy.dev")
-  webpackConfigsToCompile.push(legacyWebpackConfig)
-}
-
-const compiler = webpack(webpackConfigsToCompile)
+const compiler = webpack(webpackConfig)
 const app = express()
 
 const wdm = webpackDevMiddleware(compiler, {

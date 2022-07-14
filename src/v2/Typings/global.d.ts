@@ -13,25 +13,37 @@ declare global {
   }
 
   interface Window {
+    analytics?: {
+      __artsyClientSideRoutingReferrer?: string
+      identify: (userId: string, traits: object, object) => void
+      initialized: boolean
+      load: (writeKey: string, options: any) => void
+      on: (
+        action: string,
+        cb: (nameOrData: any, data?: object, context?: object) => void
+      ) => void
+      page: (data: object, context: object) => void
+      ready: (cb: () => void) => void
+      reset: () => void
+      track: (
+        action: string,
+        properties: object,
+        getTrackingOptions?: object
+      ) => void
+    }
+    __BOOTSTRAP__?: any
+    __googleMapsCallback?: () => void
     __RELAY_BOOTSTRAP__: string
-    grecaptcha: any
-    // FIXME: Add real type
+    _sift: any
     analytics: any
-    desktopPageTimeTrackers: [
-      {
-        path: string
-        reset: (path) => void
-      }
-    ]
+    desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
+    grecaptcha: any
     OnetrustActiveGroups: string
     Optanon: any
     OptanonWrapper: () => void
-    // Zendesk integration for artwork app
-    zEmbed: {
-      show: () => void
-      hide: () => void
-    }
-    __googleMapsCallback?: () => void
+    ReactNativeWebView?: { postMessage: (message: string) => void }
+    sd: any
+    zEmbed: { show: () => void; hide: () => void }
   }
 }
 

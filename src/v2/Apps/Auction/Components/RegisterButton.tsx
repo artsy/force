@@ -6,7 +6,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import createLogger from "v2/Utils/logger"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
-import { openAuthModal } from "desktop/lib/openAuthModal"
+import { openAuthModal } from "lib/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { useAuctionTracking } from "../Hooks/useAuctionTracking"
 
