@@ -12,6 +12,7 @@ import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "../Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
 import { HomeFilters } from "./Components/HomeFilters"
+import { StartExploring } from "./Components/StartExploring"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -35,6 +36,9 @@ export const HomeApp: React.FC<HomeAppProps> = ({
       <Spacer mt={[4, 6]} />
 
       <HomeFilters />
+
+      <Spacer mt={[4, 6]} />
+      <StartExploring />
 
       <Join separator={<Spacer mt={[6, 12]} />}>
         <MyBidsQueryRenderer />
