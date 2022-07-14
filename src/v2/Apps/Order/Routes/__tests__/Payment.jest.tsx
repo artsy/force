@@ -276,33 +276,30 @@ describe("Payment", () => {
   })
 
   describe("stripe ACH enabled", () => {
-    let achOrder
+    let page
 
     beforeAll(() => {
-      achOrder = {
+      const achOrder = {
         ...testOrder,
         availablePaymentMethods: [
           "CREDIT_CARD",
           "US_BANK_ACCOUNT",
         ] as CommercePaymentMethodEnum[],
       }
-    })
 
-    it("renders selection of payment methods", async () => {
       const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
-      const page = new PaymentTestPage(wrapper)
 
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders selection of payment methods", async () => {
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(1)
 
       const creditCardCollapse = page
@@ -314,10 +311,6 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      const page = new PaymentTestPage(wrapper)
       page.selectPaymentMethod(0)
       page.selectPaymentMethod(3)
       const creditCardCollapse = page
@@ -326,6 +319,19 @@ describe("Payment", () => {
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
+    })
+
+    it("renders description body for bank transfer when selected", async () => {
+      page.selectPaymentMethod(0)
+      page.selectPaymentMethod(3)
+
+      expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
+      expect(page.text()).toContain(
+        "• If you can not find your bank, please check your spelling or choose"
+      )
+      expect(page.text()).toContain(
+        "• Search for your bank institution or select from the options below."
+      )
     })
 
     // Ran in to the error when following `createTestEnv`
