@@ -2,7 +2,7 @@ import { render } from "@testing-library/react"
 import { OnboardingFollowArtists } from "../../Views/OnboardingFollowArtists"
 import { fireEvent, screen } from "@testing-library/react"
 
-jest.mock("v2/Apps/Onboarding/useOnboardingContext", () => {
+jest.mock("v2/Components/Onboarding/useOnboardingContext", () => {
   return {
     useOnboardingContext: () => ({
       state: {
@@ -12,12 +12,12 @@ jest.mock("v2/Apps/Onboarding/useOnboardingContext", () => {
     }),
   }
 })
-jest.mock("v2/Apps/Onboarding/Components/OnboardingOrderedSet", () => {
+jest.mock("v2/Components/Onboarding/Components/OnboardingOrderedSet", () => {
   return {
     OnboardingOrderedSetQueryRenderer: () => <div>Test Artist 1</div>,
   }
 })
-jest.mock("v2/Apps/Onboarding/Components/OnboardingSearchResults", () => {
+jest.mock("v2/Components/Onboarding/Components/OnboardingSearchResults", () => {
   return {
     OnboardingSearchResultsQueryRenderer: () => <div>Test Artist 2</div>,
   }

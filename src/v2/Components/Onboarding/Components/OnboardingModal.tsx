@@ -46,7 +46,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
           ...(isMounted
             ? {
                 opacity: 1,
-                transition: "opacity 250ms, transform 250ms",
+                transform: "translateY(0)",
+                transition: "opacity 100ms, transform 250ms",
               }
             : {
                 opacity: 0,

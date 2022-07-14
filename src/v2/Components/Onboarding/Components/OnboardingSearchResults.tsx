@@ -31,10 +31,9 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
           case "Artist":
             return (
               <EntityHeaderArtistFragmentContainer
-                artist={node}
                 key={node.internalID}
-                // TODO: Switch this to `onFollow`
-                onClick={() => {
+                artist={node}
+                onFollow={() => {
                   dispatch({ type: "FOLLOW", payload: node.internalID! })
                 }}
               />
@@ -47,10 +46,9 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
 
             return (
               <EntityHeaderPartnerFragmentContainer
-                partner={partner}
                 key={node.internalID}
-                // TODO: Switch this to `onFollow`
-                onClick={() => {
+                partner={partner}
+                onFollow={() => {
                   dispatch({ type: "FOLLOW", payload: node.internalID! })
                 }}
               />
