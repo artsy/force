@@ -10,7 +10,7 @@ import {
 import { cropped } from "v2/Utils/resized"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-export const StartExploring: React.FC = ({}) => {
+export const HomeStartExploring: React.FC = ({}) => {
   const entities = [
     {
       title: "Trending This Week",
@@ -52,7 +52,7 @@ export const StartExploring: React.FC = ({}) => {
   return (
     <>
       <Flex flexDirection={"column"} justifyContent={"center"}>
-        <Text variant="lg">Start Exploring</Text>
+        <Text variant="lg">Start exploring</Text>
         <Spacer mt={[1, 2]} />
         <GridColumns as="aside">
           {entities.map(entity => {
@@ -82,7 +82,7 @@ export const StartExploring: React.FC = ({}) => {
                     )}
                   </ResponsiveBox>
 
-                  <Text variant="xs" mt={0.5}>
+                  <Text variant="md" my={1}>
                     {entity.title}
                   </Text>
                 </RouterLink>

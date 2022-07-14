@@ -6,12 +6,13 @@ import { HomeApp_featuredEventsOrderedSet } from "v2/__generated__/HomeApp_featu
 import { HomeMeta } from "./Components/HomeMeta"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { HomeFilters } from "./Components/HomeFilters"
-import { StartExploring } from "./Components/StartExploring"
+import { HomeStartExploring } from "./Components/HomeStartExploring"
 import { HomeValueProps } from "./Components/HomeValueProps"
 
 import { HomeAccountCreation } from "./Components/HomeAccountCreation"
 import { useSystemContext } from "v2/System"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
+import { HomeTrustedBy } from "./Components/HomeTrustedBy"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -28,22 +29,19 @@ export const HomeApp: React.FC<HomeAppProps> = ({
     <>
       <HomeMeta />
 
-      <Spacer mt={[6, 12]} height={"1px"} />
-      <Spacer mt={[6, 12]} height={"1px"} />
       <HomeFilters />
-      <Spacer mt={[6, 12]} height={"1px"} />
-      <Spacer mt={[6, 12]} height={"1px"} />
 
       <Join separator={<Spacer mt={[6, 12]} />}>
+        <HomeStartExploring />
+        <HomeValueProps />
+
         <HomeWorksForYouTabBar />
 
         {!user && <HomeTroveArtworksRailQueryRenderer />}
 
-        <HomeValueProps />
+        <HomeTrustedBy />
 
-        <StartExploring />
-
-        <HomeAccountCreation />
+        {!user && <HomeAccountCreation />}
       </Join>
     </>
   )

@@ -35,108 +35,110 @@ export const HomeFilters: React.FC = ({}) => {
   const [keyword, setKeyword] = useState()
 
   const handleSetKeyword = e => {
-    // console.log("Debug", e)
     setKeyword(e.target.value)
   }
 
   return (
-    <Flex justifyContent={"center"} style={{ width: "100%" }}>
-      <Flex
-        flexDirection={"column"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Text variant="xxl">
-          Find art you <span style={{ textDecoration: "underline" }}>love</span>
-        </Text>
-        <Spacer mt={[1, 2]} />
-        <LabeledInput
-          placeholder="Enter a search term"
-          type="text"
-          onChange={handleSetKeyword}
-          width={"500px"}
-          onKeyDown={event => {
-            if (event.key === "Enter") {
-              //// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-              // ;(event.target as HTMLElement).parentElement.blur()
-
-              if (isEmpty(keyword)) {
-                event.preventDefault()
-              }
-
-              window.location.href = `/search?term=${keyword}`
-            }
-          }}
-          label={
-            <SearchButton
-              type="submit"
-              onClick={event => {
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-                ;(event.target as HTMLElement).parentElement.blur()
-
+    <Flex height={"60vh"}>
+      <Flex justifyContent={"center"} style={{ width: "100%" }}>
+        <Flex
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Text variant="xxl">
+            Find art you{" "}
+            <span style={{ textDecoration: "underline" }}>love</span>
+          </Text>
+          <Spacer mt={[1, 2]} />
+          <LabeledInput
+            placeholder="Enter a search term"
+            type="text"
+            onChange={handleSetKeyword}
+            width={"500px"}
+            onKeyDown={event => {
+              if (event.key === "Enter") {
                 if (isEmpty(keyword)) {
                   event.preventDefault()
                 }
 
                 window.location.href = `/search?term=${keyword}`
-              }}
+              }
+            }}
+            label={
+              <SearchButton
+                type="submit"
+                onClick={event => {
+                  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+                  ;(event.target as HTMLElement).parentElement.blur()
+
+                  if (isEmpty(keyword)) {
+                    event.preventDefault()
+                  }
+
+                  window.location.href = `/search?term=${keyword}`
+                }}
+              >
+                <MagnifyingGlassIcon />
+              </SearchButton>
+            }
+          />
+          <Spacer mt={[1, 2]} />
+          <Flex flexDirection={"row"} alignItems={"center"}>
+            <Text variant={"md"}>Trending artists:</Text>
+            <Spacer mx={1} />
+            <Pill
+              variant="search"
+              as={RouterLink}
+              // @ts-ignore
+              to={"/search?term=Andy%20Warhol"}
+              my={0.5}
+              mr={1}
             >
-              <MagnifyingGlassIcon />
-            </SearchButton>
-          }
-        />
-        <Spacer mt={[1, 2]}>
-          <Pill
-            variant="search"
-            as={RouterLink}
-            // @ts-ignore
-            to={"/search?term=Andy%20Warhol"}
-            my={0.5}
-            mr={1}
-          >
-            Andy Warhol
-          </Pill>
-          <Pill
-            variant="search"
-            as={RouterLink}
-            // @ts-ignore
-            to={"/search?term=Blue%20rug"}
-            my={0.5}
-            mr={1}
-          >
-            Blue rug
-          </Pill>
-          <Pill
-            variant="search"
-            as={RouterLink}
-            // @ts-ignore
-            to={"search?term=Berlin"}
-            my={0.5}
-            mr={1}
-          >
-            Berlin
-          </Pill>
-          <Pill
-            variant="search"
-            as={RouterLink}
-            // @ts-ignore
-            to={"/search?term=Contemporary"}
-            my={0.5}
-            mr={1}
-          >
-            Contemporary
-          </Pill>
-          <Pill
-            variant="search"
-            as={RouterLink}
-            // @ts-ignore
-            to={"/gene/finds-under-1000"}
-            my={0.5}
-            mr={1}
-          >
-            Works under $1000
-          </Pill>
-        </Spacer>
+              Andy Warhol
+            </Pill>
+            <Pill
+              variant="search"
+              as={RouterLink}
+              // @ts-ignore
+              to={"/search?term=Blue%20rug"}
+              my={0.5}
+              mr={1}
+            >
+              Blue rug
+            </Pill>
+            <Pill
+              variant="search"
+              as={RouterLink}
+              // @ts-ignore
+              to={"search?term=Berlin"}
+              my={0.5}
+              mr={1}
+            >
+              Berlin
+            </Pill>
+            <Pill
+              variant="search"
+              as={RouterLink}
+              // @ts-ignore
+              to={"/search?term=Contemporary"}
+              my={0.5}
+              mr={1}
+            >
+              Contemporary
+            </Pill>
+            <Pill
+              variant="search"
+              as={RouterLink}
+              // @ts-ignore
+              to={"/gene/finds-under-1000"}
+              my={0.5}
+              mr={1}
+            >
+              Works under $1000
+            </Pill>
+          </Flex>
+        </Flex>
       </Flex>
     </Flex>
   )
