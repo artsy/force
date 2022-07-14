@@ -40,7 +40,7 @@ fragment UnreadMessagesToast_conversation on Conversation {
   lastMessageID
   fromLastViewedMessageID
   isLastMessageToUser
-  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {
+  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, PROCESSING_APPROVAL]) {
     edges {
       node {
         __typename
@@ -180,7 +180,8 @@ return {
                       "APPROVED",
                       "FULFILLED",
                       "SUBMITTED",
-                      "REFUNDED"
+                      "REFUNDED",
+                      "PROCESSING_APPROVAL"
                     ]
                   }
                 ],
@@ -228,7 +229,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+                "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"PROCESSING_APPROVAL\"])"
               }
             ],
             "storageKey": null
@@ -240,12 +241,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "41b417433cc812db2b4ac0acd13372ef",
+    "cacheID": "1efb039b84c731c80192cfdef6a723cd",
     "id": null,
     "metadata": {},
     "name": "UnreadMessagesToastQuery",
     "operationKind": "query",
-    "text": "query UnreadMessagesToastQuery(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      ...UnreadMessagesToast_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment UnreadMessagesToast_conversation on Conversation {\n  id\n  internalID\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query UnreadMessagesToastQuery(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      ...UnreadMessagesToast_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment UnreadMessagesToast_conversation on Conversation {\n  id\n  internalID\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, PROCESSING_APPROVAL]) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

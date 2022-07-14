@@ -86,7 +86,8 @@ return {
             "APPROVED",
             "FULFILLED",
             "SUBMITTED",
-            "REFUNDED"
+            "REFUNDED",
+            "PROCESSING_APPROVAL"
           ]
         }
       ],
@@ -126,12 +127,12 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"PROCESSING_APPROVAL\"])"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
 })();
-(node as any).hash = '4d34587b33e35fafafec625b2e57f5b2';
+(node as any).hash = 'ef9bb7db3acf2ba877700d2442eaf43b';
 export default node;
