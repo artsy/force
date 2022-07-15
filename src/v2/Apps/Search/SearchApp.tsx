@@ -1,5 +1,12 @@
 import React, { useMemo } from "react"
-import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  DROP_SHADOW,
+  FullBleed,
+  Separator,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
@@ -61,11 +68,15 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
   return (
     <StickyProvider>
       <SearchMeta term={term} />
-      <Spacer mb={4} />
+
+      <Spacer mt={4} />
+
       {hasResults ? (
         <>
           <TotalResults count={totalCount} term={term} />
-          <Spacer mb={4} />
+
+          <Spacer mt={4} />
+
           <Sticky>
             {({ stuck }) => {
               return (
@@ -84,13 +95,21 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
               )
             }}
           </Sticky>
-          <Spacer mb={4} />
+
+          <Spacer mt={4} />
+
           <Box minHeight="30vh">{children}</Box>
         </>
       ) : (
-        <ZeroState term={term} />
+        <>
+          <ZeroState term={term} />
+
+          <Separator mt={4} />
+        </>
       )}
-      <Spacer mb={4} />
+
+      <Spacer mt={4} />
+
       <RecentlyViewed />
     </StickyProvider>
   )
