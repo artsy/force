@@ -51,7 +51,10 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
-                <ArtworkGridItemFragmentContainer artwork={artwork} />
+                <ArtworkGridItemFragmentContainer
+                  artwork={artwork}
+                  href={`${artwork.href}?returnToHref=${gene.href}&returnToTitle=${gene.name}&returnToLabel=Back+to+Collection`}
+                />
 
                 <Spacer mb={2} />
               </Fragment>
@@ -69,11 +72,13 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
     gene: graphql`
       fragment OnboardingGene_gene on Gene {
         name
+        href
         artworks: filterArtworksConnection(first: 100) {
           edges {
             node {
-              internalID
               ...GridItem_artwork
+              internalID
+              href
             }
           }
         }

@@ -17,6 +17,7 @@ export interface MetadataProps
   isHovered?: boolean
   showSaveButton?: boolean
   contextModule?: AuthContextModule
+  href?: string
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -29,11 +30,12 @@ export const Metadata: React.FC<MetadataProps> = ({
   isHovered,
   showSaveButton,
   contextModule,
+  href,
   ...rest
 }) => {
   return (
     <RouterLink
-      to={artwork.href}
+      to={href ?? artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"

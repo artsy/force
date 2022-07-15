@@ -6,10 +6,12 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OnboardingGene_gene = {
     readonly name: string | null;
+    readonly href: string | null;
     readonly artworks: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly href: string | null;
                 readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
             } | null;
         } | null> | null;
@@ -25,7 +27,15 @@ export type OnboardingGene_gene$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -38,6 +48,7 @@ const node: ReaderFragment = {
       "name": "name",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": "artworks",
       "args": [
@@ -75,6 +86,7 @@ const node: ReaderFragment = {
                   "name": "internalID",
                   "storageKey": null
                 },
+                (v0/*: any*/),
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -98,5 +110,6 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'c347d9a61ca6c0d74296d14e3b296dda';
+})();
+(node as any).hash = '42c4431ead297bd461df65ed27f4ad2f';
 export default node;

@@ -18,7 +18,6 @@ export type ArtworkApp_artwork = {
         readonly internalID: string;
         readonly slug: string;
         readonly extendedBiddingIntervalMinutes: number | null;
-        readonly " $fragmentRefs": FragmentRefs<"CascadingEndTimesBanner_sale">;
     } | null;
     readonly artists: ReadonlyArray<{
         readonly id: string;
@@ -28,7 +27,7 @@ export type ArtworkApp_artwork = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkTopContextBar_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkTopContextBar_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkBanner_artwork">;
     readonly " $refType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$data = ArtworkApp_artwork;
@@ -143,11 +142,6 @@ return {
           "kind": "ScalarField",
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "CascadingEndTimesBanner_sale"
         }
       ],
       "storageKey": null
@@ -208,11 +202,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkImageBrowser_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkBanner_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '87b64f7c9142afa57c5dae6dfdcc8cf8';
+(node as any).hash = '836d62f0510e274b509329daf6522868';
 export default node;

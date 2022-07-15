@@ -19,6 +19,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   onClick?: () => void
   hideSaleInfo?: boolean
   showSaveButton?: boolean
+  href?: string
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -28,6 +29,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   onClick,
   hideSaleInfo,
   showSaveButton = true,
+  href,
   ...rest
 }) => {
   const { user } = useSystemContext()
@@ -76,7 +78,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
       >
         <Link
-          to={artwork.href}
+          to={href ?? artwork.href}
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
           position={imageURL ? "absolute" : "relative"}
@@ -103,6 +105,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
       </Box>
 
       <Metadata
+        href={href}
         artwork={artwork}
         isHovered={isHovered}
         contextModule={contextModule ?? ContextModule.artworkGrid}

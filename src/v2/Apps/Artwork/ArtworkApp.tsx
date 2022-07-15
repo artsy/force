@@ -29,7 +29,7 @@ import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
 import { WebsocketContextProvider } from "v2/System/WebsocketContext"
-import { CascadingEndTimesBannerFragmentContainer } from "v2/Components/CascadingEndTimesBanner"
+import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -179,9 +179,7 @@ export class ArtworkApp extends React.Component<Props> {
       <>
         <UseRecordArtworkView />
 
-        {artwork.sale && (
-          <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
-        )}
+        <ArtworkBannerFragmentContainer artwork={artwork} />
 
         <ArtworkMetaFragmentContainer artwork={artwork} />
 
@@ -296,7 +294,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         is_in_auction: isInAuction
         sale {
-          ...CascadingEndTimesBanner_sale
           internalID
           slug
           extendedBiddingIntervalMinutes
@@ -314,6 +311,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkTopContextBar_artwork
         ...ArtworkSidebar_artwork
         ...ArtworkImageBrowser_artwork
+        ...ArtworkBanner_artwork
       }
     `,
     me: graphql`
