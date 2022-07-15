@@ -11,7 +11,7 @@ const { last } = require("lodash")
 
 const options = {
   root: "public",
-  files: path.join(__dirname, "../../**/public/**"),
+  files: path.join(__dirname, "../**/public/**"),
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
   bucket: process.env.S3_BUCKET,
