@@ -42,20 +42,6 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     clearWhen: shouldStopPolling,
   })
 
-  // const { balanceCents, currencyCode } = commerceBankAccountBalance!
-
-  // // we receive the balance from Stripe and it's enough to buy the artwork
-  // const userHasEnoughBalance =
-  //   balanceCents! >= buyerTotalCents && orderCurrencyCode === currencyCode
-
-  // // we receive the balance from Stripe and it's insufficient to buy the artwork
-  // const userHasInsufficientBalance =
-  //   balanceCents! < buyerTotalCents && orderCurrencyCode === currencyCode
-
-  // // we didn't receive the balance from Stripe and polling time expired
-  // const balanceIsNotAvailable =
-  //   (!balanceCents || !currencyCode) && shouldStopPolling
-
   const userHasEnoughBalance =
     commerceBankAccountBalance?.balanceCents &&
     commerceBankAccountBalance?.balanceCents >= buyerTotalCents &&
@@ -146,7 +132,7 @@ const PollAccountBalancePlaceholder: FC = () => {
     position: relative;
   `
   return (
-    <SpinnerContainer>
+    <SpinnerContainer data-testid="account-balance-placeholder">
       <Spinner position="relative" color="brand" />
     </SpinnerContainer>
   )
