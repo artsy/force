@@ -278,15 +278,15 @@ describe("Payment", () => {
   describe("stripe ACH enabled", () => {
     let page
 
-    beforeAll(() => {
-      const achOrder = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "US_BANK_ACCOUNT",
-        ] as CommercePaymentMethodEnum[],
-      }
+    const achOrder = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "US_BANK_ACCOUNT",
+      ] as CommercePaymentMethodEnum[],
+    }
 
+    beforeAll(() => {
       const wrapper = getWrapper({
         CommerceOrder: () => achOrder,
       })
@@ -335,15 +335,15 @@ describe("Payment", () => {
   describe("wire transfer enabled", () => {
     let page
 
-    beforeAll(() => {
-      const wireOrder = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
+    const wireOrder = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "WIRE_TRANSFER",
+      ] as CommercePaymentMethodEnum[],
+    }
 
+    beforeAll(() => {
       const wrapper = getWrapper({
         CommerceOrder: () => wireOrder,
       })
@@ -401,16 +401,16 @@ describe("Payment", () => {
   describe("tracking", () => {
     let page
 
-    beforeAll(() => {
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "US_BANK_ACCOUNT",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
+    const order = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "US_BANK_ACCOUNT",
+        "WIRE_TRANSFER",
+      ] as CommercePaymentMethodEnum[],
+    }
 
+    beforeAll(() => {
       const wrapper = getWrapper({
         CommerceOrder: () => order,
       })
