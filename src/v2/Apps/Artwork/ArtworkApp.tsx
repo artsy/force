@@ -28,8 +28,8 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
-import { CascadingEndTimesBanner } from "../Auction/Components/AuctionDetails/CascadingEndTimesBanner"
 import { WebsocketContextProvider } from "v2/System/WebsocketContext"
+import { CascadingEndTimesBannerFragmentContainer } from "v2/Components/CascadingEndTimesBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -179,15 +179,8 @@ export class ArtworkApp extends React.Component<Props> {
       <>
         <UseRecordArtworkView />
 
-        {artwork.sale?.cascadingEndTimeIntervalMinutes && (
-          <CascadingEndTimesBanner
-            cascadingEndTimeIntervalMinutes={
-              artwork.sale.cascadingEndTimeIntervalMinutes
-            }
-            extendedBiddingIntervalMinutes={
-              artwork.sale.extendedBiddingIntervalMinutes
-            }
-          />
+        {artwork.sale && (
+          <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
         )}
 
         <ArtworkMetaFragmentContainer artwork={artwork} />
@@ -240,6 +233,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const {
     artwork: { internalID, sale },
   } = props
+
   const {
     match: {
       location: { pathname, state },
@@ -302,10 +296,10 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         is_in_auction: isInAuction
         sale {
+          ...CascadingEndTimesBanner_sale
           internalID
-          cascadingEndTimeIntervalMinutes
-          extendedBiddingIntervalMinutes
           slug
+          extendedBiddingIntervalMinutes
         }
         artists {
           id

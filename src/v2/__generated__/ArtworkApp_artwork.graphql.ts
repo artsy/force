@@ -16,9 +16,9 @@ export type ArtworkApp_artwork = {
     readonly is_in_auction: boolean | null;
     readonly sale: {
         readonly internalID: string;
-        readonly cascadingEndTimeIntervalMinutes: number | null;
-        readonly extendedBiddingIntervalMinutes: number | null;
         readonly slug: string;
+        readonly extendedBiddingIntervalMinutes: number | null;
+        readonly " $fragmentRefs": FragmentRefs<"CascadingEndTimesBanner_sale">;
     } | null;
     readonly artists: ReadonlyArray<{
         readonly id: string;
@@ -136,13 +136,7 @@ return {
       "plural": false,
       "selections": [
         (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cascadingEndTimeIntervalMinutes",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -150,7 +144,11 @@ return {
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
         },
-        (v0/*: any*/)
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "CascadingEndTimesBanner_sale"
+        }
       ],
       "storageKey": null
     },
@@ -216,5 +214,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2d4d1005fa652958cfcb4c97385ff4be';
+(node as any).hash = '87b64f7c9142afa57c5dae6dfdcc8cf8';
 export default node;

@@ -13,11 +13,11 @@ import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRa
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
-import { CascadingEndTimesBanner } from "./Components/AuctionDetails/CascadingEndTimesBanner"
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
 import { WebsocketContextProvider } from "v2/System/WebsocketContext"
+import { CascadingEndTimesBannerFragmentContainer } from "v2/Components/CascadingEndTimesBanner"
 
 export interface AuctionAppProps {
   me: AuctionApp_me
@@ -80,12 +80,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           }}
           enabled={websocketEnabled}
         >
-          {cascadingEndTimeIntervalMinutes && (
-            <CascadingEndTimesBanner
-              cascadingEndTimeIntervalMinutes={cascadingEndTimeIntervalMinutes}
-              extendedBiddingIntervalMinutes={extendedBiddingIntervalMinutes}
-            />
-          )}
+          <CascadingEndTimesBannerFragmentContainer sale={sale} />
 
           <AuctionMetaFragmentContainer sale={sale} />
 
@@ -183,7 +178,7 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       ...AuctionAssociatedSale_sale
       ...AuctionBuyNowRail_sale
       ...AuctionDetails_sale
-
+      ...CascadingEndTimesBanner_sale
       internalID
       slug
       isClosed
@@ -197,7 +192,6 @@ export const AuctionAppFragmentContainer = createFragmentContainer(AuctionApp, {
       showBuyNowTab: promotedSale {
         internalID
       }
-
       cascadingEndTimeIntervalMinutes
       extendedBiddingIntervalMinutes
       status

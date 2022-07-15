@@ -135,7 +135,10 @@ describe("AuctionApp", () => {
           cascadingEndTimeIntervalMinutes: 1,
         }),
       })
-      expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeTruthy()
+
+      expect(wrapper.text()).toContain(
+        "Closing times may be extended due to last minute competitive bidding"
+      )
     })
 
     it("hides banner when cascading is disabled", () => {
@@ -144,7 +147,10 @@ describe("AuctionApp", () => {
           cascadingEndTimeIntervalMinutes: null,
         }),
       })
-      expect(wrapper.find("CascadingEndTimesBanner").exists()).toBeFalsy()
+
+      expect(wrapper.text()).not.toContain(
+        "Closing times may be extended due to last minute competitive bidding"
+      )
     })
   })
 
