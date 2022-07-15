@@ -1,16 +1,14 @@
 import * as React from "react"
 import styled from "styled-components"
 import {
-  Col,
   Flex,
   FlexProps,
   Image,
-  Grid,
   HTML,
   HTMLProps,
   ResponsiveBox,
-  Row,
   Text,
+  Spacer,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
@@ -78,25 +76,26 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
       )}
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
+        <Spacer mt={1} />
+
         {subtitle && (
-          <Text my={1} variant="xs">
-            {subtitle}
-          </Text>
+          <>
+            <Text variant="xs">{subtitle}</Text>
+          </>
         )}
 
-        <Text variant="xl">{title}</Text>
+        <Text variant="lg-display">{title}</Text>
 
         {description &&
           (size === "full" ? (
-            <Grid>
-              <Row>
-                <Col sm={8} mx="auto">
-                  <FullHTML variant="xl" html={description} mt={1} />
-                </Col>
-              </Row>
-            </Grid>
+            <FullHTML
+              variant="lg-display"
+              html={description}
+              mt={1}
+              color="black60"
+            />
           ) : (
-            <HTML variant="sm" html={description} mt={1} flexBasis="50%" />
+            <HTML variant="sm" html={description} mt={1} color="black60" />
           ))}
       </Flex>
     </Flex>

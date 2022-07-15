@@ -50,8 +50,4 @@ describe("Boot", () => {
   it("injects Theme", () => {
     expect(getWrapper().find("Theme").length).toEqual(1)
   })
-
-  it("injects Grid", () => {
-    expect(mount(<Boot {...bootProps} />).find("Grid").length).toEqual(1)
-  })
 })

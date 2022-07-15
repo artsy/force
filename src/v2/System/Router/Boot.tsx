@@ -1,5 +1,4 @@
 import {
-  Grid,
   Theme,
   injectGlobalStyles,
   themeProps,
@@ -13,6 +12,7 @@ import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
+// eslint-disable-next-line no-restricted-imports
 import { Provider as StateProvider } from "unstated"
 import Events from "v2/Utils/Events"
 import { getENV } from "v2/Utils/getENV"
@@ -83,11 +83,9 @@ export const Boot = track(undefined, {
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
                     <ToastsProvider>
-                      <Grid fluid maxWidth="100%">
-                        <FocusVisible />
-                        <SiftContainer />
-                        {children}
-                      </Grid>
+                      <FocusVisible />
+                      <SiftContainer />
+                      {children}
                     </ToastsProvider>
                   </ResponsiveProvider>
                 </MediaContextProvider>
