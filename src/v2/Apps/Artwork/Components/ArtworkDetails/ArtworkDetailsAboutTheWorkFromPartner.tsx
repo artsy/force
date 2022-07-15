@@ -132,7 +132,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
                 <>
                   <Spacer mt={2} />
 
-                  <Text variant="text">
+                  <Text variant="sm">
                     <Media at="xs">{this.renderReadMore("xs")}</Media>
                     <Media greaterThan="xs">{this.renderReadMore()}</Media>
                   </Text>
