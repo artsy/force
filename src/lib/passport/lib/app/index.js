@@ -1,4 +1,3 @@
-// @ts-check
 //
 // Sets up the express application to be mounted. Includes mounting
 // Artsy flow related callbacks like sending people to / after signup,
@@ -18,6 +17,7 @@ const {
   onError,
   ssoAndRedirectBack,
 } = require("./lifecycle")
+const { setCampaign, trackSignup, trackLogin } = require("./analytics")
 const { denyBadLogoutLinks, logout } = require("./logout")
 const { headerLogin, trustTokenLogin } = require("./token_login")
 const addLocals = require("./locals")
@@ -32,27 +32,42 @@ module.exports = function () {
     opts.loginPagePath,
     csrf({ cookie: true }),
     onLocalLogin,
+    trackLogin,
     ssoAndRedirectBack
   )
-  app.post(opts.signupPagePath, onLocalSignup, onLocalLogin, ssoAndRedirectBack)
+  app.post(
+    opts.signupPagePath,
+    setCampaign,
+    onLocalSignup,
+    onLocalLogin,
+    trackSignup("email"),
+    ssoAndRedirectBack
+  )
 
   // Apple OAuth
-  app.get(opts.applePath, beforeSocialAuth("apple"))
-  app.post(opts.appleCallbackPath, afterSocialAuth("apple"), ssoAndRedirectBack)
+  app.get(opts.applePath, setCampaign, beforeSocialAuth("apple"))
+  app.post(
+    opts.appleCallbackPath,
+    afterSocialAuth("apple"),
+    trackSignup("apple"),
+    ssoAndRedirectBack
+  )
 
   // Facebook OAuth
-  app.get(opts.facebookPath, beforeSocialAuth("facebook"))
+  app.get(opts.facebookPath, setCampaign, beforeSocialAuth("facebook"))
   app.get(
     opts.facebookCallbackPath,
     afterSocialAuth("facebook"),
+    trackSignup("facebook"),
     ssoAndRedirectBack
   )
 
   // Google OAuth
-  app.get(opts.googlePath, beforeSocialAuth("google"))
+  app.get(opts.googlePath, setCampaign, beforeSocialAuth("google"))
   app.get(
     opts.googleCallbackPath,
     afterSocialAuth("google"),
+    trackSignup("google"),
     ssoAndRedirectBack
   )
 
