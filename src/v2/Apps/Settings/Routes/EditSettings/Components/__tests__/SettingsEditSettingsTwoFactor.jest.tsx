@@ -1,14 +1,16 @@
 import { graphql } from "react-relay"
-import { screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { SettingsEditSettingsTwoFactorFragmentContainer } from "../SettingsEditSettingsTwoFactor"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { useCreateSettingsBackupSecondFactors } from "../SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation"
 import { flushPromiseQueue } from "v2/DevTools"
+import { ConfirmPassword } from "v2/Components/ConfirmPasswordModal/Mutations/ConfirmPassword"
 
 jest.unmock("react-relay")
 jest.mock(
   "../SettingsEditSettingsTwoFactor/useCreateSettingsBackupSecondFactorsMutation"
 )
+jest.mock("v2/Components/ConfirmPasswordModal/Mutations/ConfirmPassword")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditSettingsTwoFactorFragmentContainer,
@@ -20,6 +22,8 @@ const { renderWithRelay } = setupTestWrapperTL({
     }
   `,
 })
+
+const mockConfirmPasswordMutation = ConfirmPassword as jest.Mock
 
 describe("TwoFactorAuthentication", () => {
   const mockUseCreateSettingsBackupSecondFactors = useCreateSettingsBackupSecondFactors as jest.Mock
@@ -115,6 +119,18 @@ describe("TwoFactorAuthentication", () => {
       expect(screen.getByText("Set up")).toBeInTheDocument()
     })
 
+    it("prompts to confirm password when regenerating codes", async () => {
+      renderWithRelay({
+        Me: () => ({ backupSecondFactors: true, hasSecondFactorEnabled: true }),
+      })
+
+      fireEvent.click(screen.getByText("Regenerate"))
+      expect(mockSubmitCreateSettingsBackupSecondFactors).not.toBeCalled()
+      expect(
+        screen.getByPlaceholderText("Enter your password")
+      ).toBeInTheDocument()
+    })
+
     it("creates backup codes and displays codes in a modal", async () => {
       renderWithRelay({
         Me: () => ({ backupSecondFactors: null, hasSecondFactorEnabled: true }),
@@ -126,6 +142,16 @@ describe("TwoFactorAuthentication", () => {
       expect(mockSubmitCreateSettingsBackupSecondFactors).not.toBeCalled()
 
       fireEvent.click(setupButton)
+
+      const passwordInput = screen.getByPlaceholderText("Enter your password")
+
+      expect(passwordInput).toBeInTheDocument()
+
+      fireEvent.change(passwordInput, { target: { value: "password" } })
+
+      fireEvent.click(screen.getByText("Confirm"))
+
+      await waitFor(() => expect(mockConfirmPasswordMutation).toBeCalled())
 
       expect(mockSubmitCreateSettingsBackupSecondFactors).toBeCalled()
 
