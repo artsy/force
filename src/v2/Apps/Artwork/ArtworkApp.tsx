@@ -5,7 +5,7 @@ import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
-import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
+import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
@@ -178,6 +178,7 @@ export class ArtworkApp extends React.Component<Props> {
     return (
       <>
         <UseRecordArtworkView />
+
         {artwork.sale?.cascadingEndTimeIntervalMinutes && (
           <CascadingEndTimesBanner
             cascadingEndTimeIntervalMinutes={
@@ -188,9 +189,10 @@ export class ArtworkApp extends React.Component<Props> {
             }
           />
         )}
+
         <ArtworkMetaFragmentContainer artwork={artwork} />
 
-        <ArtworkBannerFragmentContainer artwork={artwork} />
+        <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
         <GridColumns>
           <Column span={8}>
@@ -315,7 +317,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         ...ArtworkRelatedArtists_artwork
         ...ArtworkMeta_artwork
-        ...ArtworkBanner_artwork
+        ...ArtworkTopContextBar_artwork
         ...ArtworkSidebar_artwork
         ...ArtworkImageBrowser_artwork
       }

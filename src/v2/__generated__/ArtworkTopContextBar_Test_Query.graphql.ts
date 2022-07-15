@@ -4,28 +4,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkBanner_Test_QueryVariables = {};
-export type ArtworkBanner_Test_QueryResponse = {
+export type ArtworkTopContextBar_Test_QueryVariables = {};
+export type ArtworkTopContextBar_Test_QueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkBanner_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkTopContextBar_artwork">;
     } | null;
 };
-export type ArtworkBanner_Test_Query = {
-    readonly response: ArtworkBanner_Test_QueryResponse;
-    readonly variables: ArtworkBanner_Test_QueryVariables;
+export type ArtworkTopContextBar_Test_Query = {
+    readonly response: ArtworkTopContextBar_Test_QueryResponse;
+    readonly variables: ArtworkTopContextBar_Test_QueryVariables;
 };
 
 
 
 /*
-query ArtworkBanner_Test_Query {
+query ArtworkTopContextBar_Test_Query {
   artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
-    ...ArtworkBanner_artwork
+    ...ArtworkTopContextBar_artwork
     id
   }
 }
 
-fragment ArtworkBanner_artwork on Artwork {
+fragment ArtworkTopContextBar_artwork on Artwork {
   partner {
     name
     id
@@ -144,7 +144,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkBanner_Test_Query",
+    "name": "ArtworkTopContextBar_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -157,7 +157,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkBanner_artwork"
+            "name": "ArtworkTopContextBar_artwork"
           }
         ],
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
@@ -170,7 +170,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkBanner_Test_Query",
+    "name": "ArtworkTopContextBar_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -335,7 +335,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "58001e65a0b8b85a7c7500e6d5fe5e1e",
+    "cacheID": "ccdc315bcf2d084f1f74719f400c097b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -391,11 +391,11 @@ return {
         "artwork.sale.isGalleryAuction": (v9/*: any*/)
       }
     },
-    "name": "ArtworkBanner_Test_Query",
+    "name": "ArtworkTopContextBar_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          url\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkTopContextBar_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkTopContextBar_artwork\n    id\n  }\n}\n\nfragment ArtworkTopContextBar_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          url\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        url\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '775cfca3f13c570a75bcf0ffe92c6ba7';
+(node as any).hash = '7da0b728030eab40a23c0d60a44c5bd1';
 export default node;

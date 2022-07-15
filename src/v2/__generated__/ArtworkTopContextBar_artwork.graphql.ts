@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkBanner_artwork = {
+export type ArtworkTopContextBar_artwork = {
     readonly partner: {
         readonly name: string | null;
     } | null;
@@ -42,12 +42,12 @@ export type ArtworkBanner_artwork = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $refType": "ArtworkBanner_artwork";
+    readonly " $refType": "ArtworkTopContextBar_artwork";
 };
-export type ArtworkBanner_artwork$data = ArtworkBanner_artwork;
-export type ArtworkBanner_artwork$key = {
-    readonly " $data"?: ArtworkBanner_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkBanner_artwork">;
+export type ArtworkTopContextBar_artwork$data = ArtworkTopContextBar_artwork;
+export type ArtworkTopContextBar_artwork$key = {
+    readonly " $data"?: ArtworkTopContextBar_artwork$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkTopContextBar_artwork">;
 };
 
 
@@ -80,7 +80,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkBanner_artwork",
+  "name": "ArtworkTopContextBar_artwork",
   "selections": [
     {
       "alias": null,
@@ -224,5 +224,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '803f3968d437647578fb01fd5e699273';
+(node as any).hash = '4d4d3a7f46336ef25e1b852a0ca5d892';
 export default node;
