@@ -91,51 +91,51 @@ export const HomeFilters: React.FC = ({}) => {
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=Andy%20Warhol"}
+              to={"/search?term=Charline%20Tyberghein"}
               my={0.5}
               mr={1}
             >
-              Andy Warhol
+              Charline Tyberghein
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=Blue%20rug"}
+              to={"/search?term=Anthony%20Olubunmi%20Akinbola"}
               my={0.5}
               mr={1}
             >
-              Blue rug
+              Anthony Olubunmi Akinbola
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"search?term=Berlin"}
+              to={"search?term=Liz%20Collins"}
               my={0.5}
               mr={1}
             >
-              Berlin
+              Liz Collins
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=Contemporary"}
+              to={"/search?term=June%20Edmonds"}
               my={0.5}
               mr={1}
             >
-              Contemporary
+              June Edmonds
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/gene/finds-under-1000"}
+              to={"/search?term=Sophie%20Vallance%20Cantor"}
               my={0.5}
               mr={1}
             >
-              Works under $1000
+              Sophie Vallance Cantor
             </Pill>
           </Flex>
         </Flex>
