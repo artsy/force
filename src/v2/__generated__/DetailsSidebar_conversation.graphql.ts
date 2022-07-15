@@ -204,7 +204,8 @@ return {
           "value": [
             "APPROVED",
             "FULFILLED",
-            "SUBMITTED"
+            "SUBMITTED",
+            "PROCESSING_APPROVAL"
           ]
         }
       ],
@@ -540,7 +541,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\"])"
+      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\"])"
     },
     {
       "alias": "attachmentsConnection",
@@ -716,5 +717,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '03a20151de349b9033ff8aff288c3ba7';
+(node as any).hash = '5a4a706de0f0d02601ddf5f8ccf1ce3c';
 export default node;

@@ -139,7 +139,13 @@ export const ConversationCTAFragmentContainer = createFragmentContainer(
         }
         activeOrders: orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+          states: [
+            APPROVED
+            PROCESSING_APPROVAL
+            FULFILLED
+            SUBMITTED
+            REFUNDED
+          ]
         ) {
           edges {
             node {
