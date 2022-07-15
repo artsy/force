@@ -10,7 +10,6 @@ import { settingOrderPaymentFailed } from "../__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useSystemContext, useTracking } from "v2/System"
-import { useFeatureFlag } from "v2/System/useFeatureFlag"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
 import { BankDebitProvider } from "v2/Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
@@ -277,68 +276,149 @@ describe("Payment", () => {
   })
 
   describe("stripe ACH enabled", () => {
-    let achOrder
+    let page
+
+    const achOrder = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "US_BANK_ACCOUNT",
+      ] as CommercePaymentMethodEnum[],
+    }
 
     beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => {
-        return {
-          featureFlags: {
-            stripe_ACH: {
-              flagEnabled: true,
-            },
-          },
-          mediator: {
-            on: jest.fn(),
-            off: jest.fn(),
-            ready: jest.fn(),
-            trigger: jest.fn(),
-          },
-        }
+      const wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
       })
 
-      achOrder = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "US_BANK_ACCOUNT",
-        ] as CommercePaymentMethodEnum[],
-      }
+      page = new PaymentTestPage(wrapper)
     })
 
     it("renders selection of payment methods", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
-
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
     })
 
-    it("tracks when the user selects the credit card payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+    it("renders credit card element when credit card is chosen as payment method", async () => {
       page.selectPaymentMethod(1)
 
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "CREDIT_CARD",
-        subject: "click_payment_method",
-      })
+      const creditCardCollapse = page
+        .find(CreditCardPickerFragmentContainer)
+        .closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(true)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(false)
     })
 
-    it("tracks when the user selects the bank payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
+    it("renders bank element when bank transfer is chosen as payment method", async () => {
+      page.selectPaymentMethod(0)
+      page.selectPaymentMethod(3)
+      const creditCardCollapse = page
+        .find(CreditCardPickerFragmentContainer)
+        .closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(false)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(true)
+    })
+
+    it("renders description body for bank transfer when selected", async () => {
+      expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
+      expect(page.text()).toContain(
+        "• If you can not find your bank, please check your spelling or choose"
+      )
+      expect(page.text()).toContain(
+        "• Search for your bank institution or select from the options below."
+      )
+    })
+  })
+
+  describe("wire transfer enabled", () => {
+    let page
+
+    const wireOrder = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "WIRE_TRANSFER",
+      ] as CommercePaymentMethodEnum[],
+    }
+
+    beforeAll(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => wireOrder,
       })
-      let page = new PaymentTestPage(wrapper)
+
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders wire tranfer as option for eligible partners", async () => {
+      expect(page.text()).toContain("Wire transfer")
+    })
+
+    it("does not preselect wire transfer as the payment method", async () => {
+      expect(page.find(BorderedRadio).at(1).prop("selected")).toBeFalsy()
+    })
+
+    it("renders description body for wire transfer when selected", async () => {
+      await page.selectPaymentMethod(1)
+
+      expect(page.text()).toContain(
+        "• To pay by wire transfer, complete checkout"
+      )
+      expect(page.text()).toContain(
+        "• Please inform your bank that you will be responsible"
+      )
+    })
+
+    it("transitions to review step when wire transfer is chosen", async () => {
+      await page.selectPaymentMethod(0)
+      const submitMutationMock = jest.fn().mockResolvedValue({
+        commerceSetPayment: {
+          orderOrError: {
+            id: 1234,
+          },
+        },
+      })
+      ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+        submitMutation: submitMutationMock,
+      }))
+
+      await page.selectPaymentMethod(1)
+      await page.clickSubmit()
+
+      expect(submitMutationMock).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            id: "1234",
+            paymentMethod: "WIRE_TRANSFER",
+          },
+        },
+      })
+      expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
+    })
+  })
+
+  describe("tracking", () => {
+    let page
+
+    const order = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "US_BANK_ACCOUNT",
+        "WIRE_TRANSFER",
+      ] as CommercePaymentMethodEnum[],
+    }
+
+    beforeAll(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => order,
+      })
+
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("works correctly with ACH", () => {
       page.selectPaymentMethod(0)
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -353,119 +433,23 @@ describe("Payment", () => {
       })
     })
 
-    it("renders credit card element when credit card is chosen as payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
+    it("works correctly with Credit Card", () => {
       page.selectPaymentMethod(1)
 
-      const creditCardCollapse = page
-        .find(CreditCardPickerFragmentContainer)
-        .closest(Collapse)
-      expect(creditCardCollapse.first().props().open).toBe(true)
-      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
-      expect(bankDebitCollapse.first().props().open).toBe(false)
-    })
-
-    it("renders bank element when bank transfer is chosen as payment method", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => achOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
-      page.selectPaymentMethod(0)
-      page.selectPaymentMethod(3)
-      const creditCardCollapse = page
-        .find(CreditCardPickerFragmentContainer)
-        .closest(Collapse)
-      expect(creditCardCollapse.first().props().open).toBe(false)
-      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
-      expect(bankDebitCollapse.first().props().open).toBe(true)
-    })
-
-    // Ran in to the error when following `createTestEnv`
-    // Invariant Violation: commitMutation: expected "environment" to be an instance of "RelayModernEnvironment"
-    it.todo("creates a bank debit setup")
-  })
-
-  describe("wire transfer enabled", () => {
-    beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => {
-        return {
-          featureFlags: {
-            wire_transfer: {
-              flagEnabled: true,
-            },
-          },
-          mediator: {
-            on: jest.fn(),
-            off: jest.fn(),
-            ready: jest.fn(),
-            trigger: jest.fn(),
-          },
-        }
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "CREDIT_CARD",
+        subject: "click_payment_method",
       })
     })
 
-    it("returns true when wire_transfer is enabled", () => {
-      const result = useFeatureFlag("wire_transfer")
-      expect(result).toBe(true)
-    })
-
-    it("does not render wire tranfer as option for uneligible partners", async () => {
-      let wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-      })
-      let page = new PaymentTestPage(wrapper)
-      expect(page.text()).not.toContain("Wire transfer")
-    })
-
-    it("preselects payment method from the order", async () => {
-      const order = {
-        ...testOrder,
-        paymentMethod: "WIRE_TRANSFER" as CommercePaymentMethodEnum,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
-
-      expect(page.find(BorderedRadio).at(1).prop("selected")).toBeTruthy()
-    })
-
-    it("renders wire transfer as option for eligible partners", async () => {
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
-
-      expect(page.text()).toContain("Wire transfer")
-    })
-
-    it("tracks when the user selects the wire transfer method", async () => {
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
-      page.selectPaymentMethod(1)
+    it("works correctly with Wire Transfer", () => {
+      page.selectPaymentMethod(2)
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedPaymentMethod",
@@ -477,44 +461,6 @@ describe("Payment", () => {
         payment_method: "WIRE_TRANSFER",
         subject: "click_payment_method",
       })
-    })
-
-    it("transitions to review step when wire transfer is chosen", async () => {
-      const submitMutationMock = jest.fn().mockResolvedValue({
-        commerceSetPayment: {
-          orderOrError: {
-            id: 1234,
-          },
-        },
-      })
-      ;(useSetPayment as jest.Mock).mockImplementation(() => ({
-        submitMutation: submitMutationMock,
-      }))
-
-      const order = {
-        ...testOrder,
-        availablePaymentMethods: [
-          "CREDIT_CARD",
-          "WIRE_TRANSFER",
-        ] as CommercePaymentMethodEnum[],
-      }
-
-      let wrapper = getWrapper({
-        CommerceOrder: () => order,
-      })
-      let page = new PaymentTestPage(wrapper)
-      await page.selectPaymentMethod(1)
-      await page.clickSubmit()
-
-      expect(submitMutationMock).toHaveBeenCalledWith({
-        variables: {
-          input: {
-            id: "1234",
-            paymentMethod: "WIRE_TRANSFER",
-          },
-        },
-      })
-      expect(pushMock).toHaveBeenCalledWith("/orders/1234/review")
     })
   })
 })
