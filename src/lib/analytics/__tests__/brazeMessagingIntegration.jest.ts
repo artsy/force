@@ -1,4 +1,4 @@
-import { isMatchingRoute } from "../useBrazeInAppMessage"
+import { isMatchingRoute } from "../brazeMessagingIntegration"
 
 describe("isMatchingRoute", () => {
   const validRoutes = [

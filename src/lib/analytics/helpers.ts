@@ -5,6 +5,7 @@ import { extend, omit, pick } from "lodash"
 import { data as sd } from "sharify"
 import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
+import { subscribeToInAppMessagesByPath } from "lib/analytics/brazeMessagingIntegration"
 const Events = require("../../v2/Utils/Events").default
 
 /**
@@ -52,6 +53,7 @@ export const beforeAnalyticsReady = () => {
  */
 export const onAnalyticsReady = () => {
   identify()
+  subscribeToInAppMessagesByPath()
 }
 
 /**
