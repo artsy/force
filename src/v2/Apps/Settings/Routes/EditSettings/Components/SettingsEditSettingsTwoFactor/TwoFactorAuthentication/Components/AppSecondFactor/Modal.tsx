@@ -42,10 +42,11 @@ interface AppSecondFactorModalProps {
   onComplete: () => void
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
+  password: string
 }
 
 export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props => {
-  const { secondFactor, onComplete } = props
+  const { secondFactor, password, onComplete } = props
   const { relayEnvironment } = useSystemContext()
 
   const [showForm, setShowForm] = useState(true)
@@ -96,6 +97,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
       const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         code: values.code,
+        password: password,
       })
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
