@@ -103,9 +103,11 @@ const PLACEHOLDER = (
                 height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
                 mb={1}
               />
-              <SkeletonText variant="mediumText">Artist Name</SkeletonText>
-              <SkeletonText variant="text">Artwork Title</SkeletonText>
-              <SkeletonText variant="text">Price</SkeletonText>
+              <SkeletonText variant="sm" fontWeight="bold">
+                Artist Name
+              </SkeletonText>
+              <SkeletonText variant="sm">Artwork Title</SkeletonText>
+              <SkeletonText variant="sm">Price</SkeletonText>
             </React.Fragment>
           )
         })

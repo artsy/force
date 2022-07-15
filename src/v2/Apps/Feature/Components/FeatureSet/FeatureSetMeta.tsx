@@ -20,7 +20,7 @@ export const FeatureSetMeta: React.FC<FeatureSetMetaProps> = ({
       )}
 
       {set.description && (
-        <HTML variant="text" color="black60" html={set.description} mt={1} />
+        <HTML variant="sm" color="black60" html={set.description} mt={1} />
       )}
     </Box>
   )

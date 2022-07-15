@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { BorderBox, BorderBoxProps, Box, Separator, Text } from "@artsy/palette"
 
@@ -24,7 +24,7 @@ export const Menu: React.FC<MenuProps> = ({ children, title, ...rest }) => {
     >
       {title && (
         <>
-          <Text px={2} pt={1} pb={1} variant="text">
+          <Text px={2} pt={1} pb={1} variant="sm">
             {title}
           </Text>
 

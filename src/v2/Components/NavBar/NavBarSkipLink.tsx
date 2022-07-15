@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import styled from "styled-components"
 import { Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
@@ -6,7 +6,7 @@ import { themeGet } from "@styled-system/theme-get"
 export const NavBarSkipLink: React.FC = () => {
   return (
     <Container href="#main">
-      <Text variant="text">Skip to Main Content</Text>
+      <Text variant="sm">Skip to Main Content</Text>
     </Container>
   )
 }

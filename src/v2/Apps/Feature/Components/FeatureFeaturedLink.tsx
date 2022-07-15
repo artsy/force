@@ -72,7 +72,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
       )}
 
       {!img && title && (
-        <Text variant="title" color="black100" my={2}>
+        <Text variant="lg-display" color="black100" my={2}>
           <RouterLink to={href}>{title || "—"}</RouterLink>
         </Text>
       )}
@@ -91,12 +91,12 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             <Grid>
               <Row>
                 <Col sm={8} mx="auto">
-                  <FullHTML variant="largeTitle" html={description} mt={1} />
+                  <FullHTML variant="xl" html={description} mt={1} />
                 </Col>
               </Row>
             </Grid>
           ) : (
-            <HTML variant="text" html={description} mt={1} flexBasis="50%" />
+            <HTML variant="sm" html={description} mt={1} flexBasis="50%" />
           ))}
       </Flex>
     </Flex>

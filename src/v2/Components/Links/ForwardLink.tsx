@@ -34,7 +34,7 @@ export const ForwardLink: React.FC<ForwardLinkProps> = ({
       alignItems="center"
       {...rest}
     >
-      <Text variant="mediumText" mr={0.3}>
+      <Text variant="sm" fontWeight="bold" mr={0.3}>
         {children}
       </Text>
 

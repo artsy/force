@@ -89,7 +89,7 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text textAlign="left" variant="text" lineHeight={1}>
+        <Text textAlign="left" variant="sm" lineHeight={1}>
           {name}
         </Text>
 

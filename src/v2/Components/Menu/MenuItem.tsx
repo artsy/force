@@ -7,9 +7,9 @@ import {
   TextProps,
   TextVariant,
   boxMixin,
-  color,
 } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { themeGet } from "@styled-system/theme-get"
 
 const MENU_ITEM_DEFAULT_PROPS = {
   display: "flex",
@@ -33,7 +33,9 @@ const Container = styled(RouterLink)<
   &:focus {
     outline: none;
     background-color: ${({ hasLighterTextColor }) =>
-      hasLighterTextColor ? color("black10") : color("black5")};
+      hasLighterTextColor
+        ? themeGet("colors.black10")
+        : themeGet("colors.black5")};
   }
 `
 
@@ -54,7 +56,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   children,
   href,
   hasLighterTextColor,
-  variant = "text",
+  variant = "sm",
   color,
   ...rest
 }) => {
