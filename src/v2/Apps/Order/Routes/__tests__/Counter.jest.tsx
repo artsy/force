@@ -119,7 +119,7 @@ describe("Submit Pending Counter Offer", () => {
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"CheckRespondNavigate rightReview"`
+        `"RespondCheckNavigate rightReviewNavigate right"`
       )
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(

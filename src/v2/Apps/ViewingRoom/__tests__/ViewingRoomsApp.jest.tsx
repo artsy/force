@@ -61,7 +61,7 @@ describe("ViewingRoomsApp", () => {
       it("renders correct viewing rooms", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
-        expect(wrapper.find("Card").length).toBe(6)
+        expect(wrapper.find("Card").length).toBe(3)
         expect(html).not.toContain("Draft VR")
         expect(html).toContain("Scheduled VR")
         expect(html).toContain("Live VR")
@@ -71,7 +71,6 @@ describe("ViewingRoomsApp", () => {
       it("renders proper tags", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
-        expect(wrapper.find("CardTag").length).toBe(3)
         expect(html).toContain("Opens in 1 week")
         expect(html).toContain("3 days left")
         expect(html).not.toContain("Closed")
@@ -99,7 +98,6 @@ describe("ViewingRoomsApp", () => {
         const wrapper = await getWrapper()
         const featuredRail = wrapper.find("ViewingRoomsFeaturedRail")
         const html = featuredRail.html()
-        expect(featuredRail.find("CardTag").length).toBe(1)
         expect(html).toContain("4 days left")
       })
 
