@@ -9,7 +9,7 @@ import {
   materialsTermsAggregation,
   mediumAggregation,
   partnerAggregation,
-} from "test/fixtures/aggregations"
+} from "v2/Apps/__tests__/Fixtures/aggregations"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({

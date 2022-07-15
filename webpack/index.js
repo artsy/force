@@ -1,17 +1,12 @@
 // @ts-check
 
 import chalk from "chalk"
-import merge from "webpack-merge"
 import fs from "fs"
-import path from "path"
 import { bundleAnalyzer } from "./plugins/bundleAnalyzer"
 import { bundleSize } from "./plugins/bundleSize"
 import { metrics } from "./plugins/datadog"
-import { env, basePath } from "./utils/env"
+import { env } from "./utils/env"
 import { log } from "./utils/log"
-import { legacySharedConfig } from "./envs/legacySharedConfig"
-import { legacyDevelopmentConfig } from "./envs/legacyDevelopmentConfig"
-import { legacyProductionConfig } from "./envs/legacyProductionConfig"
 import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
 import { clientProductionConfig } from "./envs/clientProductionConfig"
 import { serverConfig } from "./envs/serverConfig"
@@ -42,32 +37,6 @@ function getServerConfig() {
   throw new Error(`[Force Server] Unsupported environment ${env.nodeEnv}`)
 }
 
-function getLegacyConfig() {
-  logEnv()
-
-  if (env.isDevelopment) {
-    const cacheDirectory = path.resolve(basePath, ".cache")
-
-    if (!env.onCi && !fs.existsSync(cacheDirectory)) {
-      log(
-        chalk.yellow(
-          "\n[!] No existing `.cache` directory detected, initial " +
-            "launch will take a while.\n"
-        )
-      )
-    }
-
-    return merge.smart(legacySharedConfig(), legacyDevelopmentConfig())
-  }
-
-  if (env.isProduction) {
-    log("[Force Client] Building legacy client-side production code...")
-    return merge.smart(legacySharedConfig(), legacyProductionConfig())
-  }
-
-  throw new Error(`[Force Client] Unsupported environment ${env.nodeEnv}`)
-}
-
 // TODO: This should eventually replace `getProductionConfig` below
 // Currently used only in dev.ts
 export function getDevelopmentWebpackConfig(configName) {
@@ -76,10 +45,6 @@ export function getDevelopmentWebpackConfig(configName) {
       return clientDevelopmentConfig()
     case "client.prod":
       return clientProductionConfig()
-    case "legacy.dev":
-      return merge.smart(legacySharedConfig(), legacyDevelopmentConfig())
-    case "legacy.prod":
-      return merge.smart(legacySharedConfig(), legacyProductionConfig())
     case "server.dev":
       return serverConfig()
     case "server.prod":
@@ -92,25 +57,10 @@ function getProductionWebpackConfig() {
     return {}
   }
 
-  // Verify that only a single build is selected.
-  if (!env.buildLegacyClient && !env.buildServer && !env.buildClient) {
-    log("Must build either the CLIENT or SERVER.")
-    process.exit(1)
-  } else if (
-    (env.buildLegacyClient && env.buildServer) ||
-    (env.buildClient && env.buildServer)
-  ) {
-    log("Must only build CLIENT or SERVER.")
-    process.exit(1)
-  }
-
   // Select the correct base config.
   let config
   let name = ""
-  if (env.buildLegacyClient) {
-    config = getLegacyConfig()
-    name = "legacy-assets"
-  } else if (env.buildServer) {
+  if (env.buildServer) {
     config = getServerConfig()
     name = "server"
   } else if (env.buildClient) {

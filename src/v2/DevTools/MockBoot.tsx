@@ -1,8 +1,8 @@
 import { Boot } from "v2/System/Router"
 import * as React from "react"
 import { Breakpoint } from "v2/Utils/Responsive"
-import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
-import { ClientContext } from "desktop/lib/buildClientAppContext"
+import { buildClientAppContext } from "v2/System/Router/buildClientAppContext"
+import { ClientContext } from "v2/System/Router/buildClientAppContext"
 
 export const MockBoot: React.SFC<{
   breakpoint?: Breakpoint

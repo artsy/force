@@ -223,14 +223,12 @@ function applyStaticAssetMiddlewares(app) {
   app.use(express.static("public"))
 
   // Mount static assets from sub-app /app `public` folders
-  glob
-    .sync(`${__dirname}/{public,{desktop,mobile}/**/public}`)
-    .forEach(folder => {
-      app.use(express.static(folder))
-    })
+  glob.sync(`${__dirname}/{public`).forEach(folder => {
+    app.use(express.static(folder))
+  })
 
   // TODO: Move to ./public/images
-  app.use(favicon(path.resolve(__dirname, "desktop/public/images/favicon.ico")))
+  app.use(favicon(path.resolve(__dirname, "public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 }
 

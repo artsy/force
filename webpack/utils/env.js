@@ -13,12 +13,8 @@ const hostnameHash = createHash("sha256")
 hostnameHash.update(os.hostname())
 
 const env = {
-  buildLegacyClient: yn(process.env.BUILD_LEGACY_CLIENT, { default: false }),
   buildClient: yn(process.env.BUILD_CLIENT, { default: false }),
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
-  compileLegacyClientInDev: yn(process.env.COMPILE_LEGACY_CLIENT_IN_DEV, {
-    default: false,
-  }),
   datadogKey: process.env.WEBPACK_DATADOG_KEY,
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackDatadog: yn(process.env.WEBPACK_DATADOG, { default: false }),
@@ -60,11 +56,9 @@ if (env.onCi || env.logConfig) {
   console.log("  machineHeapSize".padEnd(35), chalk.yellow(env.machineHeapSize))
   console.log("  machineName".padEnd(35), chalk.yellow(env.machineName))
   console.log("  machineNameHash".padEnd(35), chalk.yellow(env.machineNameHash))
-  console.log("  BUILD_LEGACY_CLIENT".padEnd(35), chalk.yellow(env.buildLegacyClient))
   console.log("  BUILD_SERVER".padEnd(35), chalk.yellow(env.buildServer))
   console.log("  BUILD_CLIENT".padEnd(35), chalk.yellow(env.buildClient))
   console.log("  CI".padEnd(35), chalk.yellow(env.onCi))
-  console.log("  COMPILE_LEGACY_CLIENT_IN_DEV".padEnd(35), chalk.yellow(env.compileLegacyClientInDev))
   console.log("  NODE_ENV == 'isDevelopment'".padEnd(35), chalk.yellow(env.isDevelopment))
   console.log("  NODE_ENV == 'isProduction'".padEnd(35), chalk.yellow(env.isProduction))
   console.log("  NODE_ENV == 'isStaging'".padEnd(35), chalk.yellow(env.isStaging))

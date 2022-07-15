@@ -444,7 +444,7 @@ export class SearchBar extends Component<Props, State> {
             const encodedTerm = encodeURIComponent(this.state.term)
 
             // TODO: Reenable in-router push once all routes have been moved over
-            // to new novo app
+            // to new app shell
             // router.push(`/search?term=${this.state.term}`)
             window.location.assign(`/search?term=${encodedTerm}`)
             this.onBlur(event)

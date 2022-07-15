@@ -10,12 +10,12 @@ import path from "path"
 // have a default CDN_URL while this does not.
 const { CDN_URL, NODE_ENV } = process.env
 
-const PUBLIC_DIR = path.resolve(__dirname, "../../../../public")
+const PUBLIC_DIR = path.resolve(process.cwd(), "public")
 
-const NOVO_MANIFEST = loadAssetManifest("../../manifest-novo.json")
+const MANIFEST = loadAssetManifest("manifest.json")
 
-if (!NOVO_MANIFEST) {
-  throw new Error("manifest-novo.json not found")
+if (!MANIFEST) {
+  throw new Error("manifest.json not found")
 }
 
 interface RenderServerAppProps extends ServerAppResolve {
@@ -68,9 +68,9 @@ export const renderServerApp = ({
       appleTouchIcon: res.locals.asset("/images/apple-touch-icon.png"),
     },
     manifest: {
-      browserConfig: NOVO_MANIFEST.lookup("/images/browserconfig.xml"),
-      openSearch: NOVO_MANIFEST.lookup("/images/opensearch.xml"),
-      webmanifest: NOVO_MANIFEST.lookup("/images/manifest.webmanifest"),
+      browserConfig: MANIFEST.lookup("/images/browserconfig.xml"),
+      openSearch: MANIFEST.lookup("/images/opensearch.xml"),
+      webmanifest: MANIFEST.lookup("/images/manifest.webmanifest"),
     },
     meta: {
       appleItunesApp: `${APP_URL}${CURRENT_PATH}`,
