@@ -14,6 +14,8 @@ import {
 import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
+import { OwnerType } from "@artsy/cohesion"
+import * as Schema from "v2/System/Analytics/Schema"
 
 interface Props {
   order: { mode: string | null; internalID: string }
@@ -29,32 +31,19 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
   const tracking = useTracking()
 
   const trackPaymentElementEvent = event => {
-    const trackedEvents: any[] = []
-    if (event.complete) {
-      trackedEvents.push({
-        flow: order.mode,
+    if (event.complete && event?.value?.type === "us_bank_account") {
+      tracking.trackEvent({
+        destination_page_owner_type: OwnerType.ordersReview,
+        destination_page_owner_id: order.internalID,
+        action_type:
+          order.mode === "BUY"
+            ? Schema.ActionType.SubmittedOrder
+            : Schema.ActionType.SubmittedOffer,
+        flow: order.mode!,
         order_id: order.internalID,
-        subject: "bank_account_selected",
+        subject: "successful linked account",
       })
     }
-
-    if (!event.empty) {
-      trackedEvents.push({
-        flow: order.mode,
-        order_id: order.internalID,
-        subject: "TODO:_not_empty_thing",
-      })
-    }
-
-    trackedEvents.forEach(event => tracking.trackEvent(event))
-  }
-
-  const trackClickedContinue = () => {
-    tracking.trackEvent({
-      flow: order.mode!,
-      order_id: order.internalID,
-      subject: "TODO:_clicked_save_and_continue",
-    })
   }
 
   const handleSubmit = async event => {
@@ -137,7 +126,6 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
         <Spacer mt={4} />
 
         <Button
-          onClick={trackClickedContinue}
           disabled={!stripe}
           variant="primaryBlack"
           width={["100%", "50%"]}
