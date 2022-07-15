@@ -1,4 +1,3 @@
-const opts = require("../options")
 const Analytics = require("analytics-node")
 const { data: sd } = require("sharify")
 
