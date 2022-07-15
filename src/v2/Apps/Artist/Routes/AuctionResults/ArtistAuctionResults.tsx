@@ -2,7 +2,6 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   Column,
-  Flex,
   GridColumns,
   Join,
   Message,
@@ -239,26 +238,24 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Media greaterThan="xs">
         <GridColumns>
-          <Column span={3} pr={[0, 2]}>
+          <Column span={3}>
             <Text variant="xs">Filter by</Text>
           </Column>
 
-          <Column span={9}>
-            <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
-              <Flex flex={1} pr={1} style={{ flexFlow: "column" }}>
-                <KeywordFilter />
-              </Flex>
+          <Column span={6}>
+            <KeywordFilter />
+          </Column>
 
-              <Flex>
-                <SortSelect />
-              </Flex>
-            </Flex>
+          <Column span={3}>
+            <SortSelect />
           </Column>
         </GridColumns>
+
+        <Spacer mt={4} />
       </Media>
 
       <GridColumns>
-        <Column span={3} pr={[0, 2]}>
+        <Column span={3}>
           <Media greaterThan="xs">
             <TableSidebar />
           </Media>

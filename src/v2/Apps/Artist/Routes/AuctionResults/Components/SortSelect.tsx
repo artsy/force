@@ -22,7 +22,6 @@ export const SortSelect = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const props: SelectProps = {
-    width: "auto",
     variant: "inline",
     options: SORTS,
     selected: filterContext?.filters?.sort,
@@ -35,6 +34,7 @@ export const SortSelect = () => {
       <Media at="xs">
         <Select {...props} />
       </Media>
+
       <Media greaterThan="xs">
         <Select {...props} title="Sort:" />
       </Media>
