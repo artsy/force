@@ -85,57 +85,57 @@ export const HomeFilters: React.FC = ({}) => {
           />
           <Spacer mt={[1, 2]} />
           <Flex flexDirection={"row"} alignItems={"center"}>
-            <Text variant={"md"}>Trending artists:</Text>
+            <Text variant={"md"}>Trending searches:</Text>
             <Spacer mx={1} />
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=Charline%20Tyberghein"}
+              to={"/search?term=Andy%20Warhol"}
               my={0.5}
               mr={1}
             >
-              Charline Tyberghein
+              Andy Warhol
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=Anthony%20Olubunmi%20Akinbola"}
+              to={"/search?term=Blue%20rug"}
               my={0.5}
               mr={1}
             >
-              Anthony Olubunmi Akinbola
+              Blue rug
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"search?term=Liz%20Collins"}
+              to={"search?term=Berlin%20galleries"}
               my={0.5}
               mr={1}
             >
-              Liz Collins
+              Berlin galleries
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=June%20Edmonds"}
+              to={"/search?term=Contemporary%20photos"}
               my={0.5}
               mr={1}
             >
-              June Edmonds
+              Contemporary photos
             </Pill>
             <Pill
               variant="search"
               as={RouterLink}
               // @ts-ignore
-              to={"/search?term=Sophie%20Vallance%20Cantor"}
+              to={"/search?price_range=*-1000&term=paintings"}
               my={0.5}
               mr={1}
             >
-              Sophie Vallance Cantor
+              Paintings under $1000
             </Pill>
           </Flex>
         </Flex>
