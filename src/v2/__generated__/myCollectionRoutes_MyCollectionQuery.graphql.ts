@@ -4,28 +4,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_MyCollectionRouteQueryVariables = {};
-export type settingsRoutes_MyCollectionRouteQueryResponse = {
+export type myCollectionRoutes_MyCollectionQueryVariables = {};
+export type myCollectionRoutes_MyCollectionQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsMyCollectionRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionApp_me">;
     } | null;
 };
-export type settingsRoutes_MyCollectionRouteQuery = {
-    readonly response: settingsRoutes_MyCollectionRouteQueryResponse;
-    readonly variables: settingsRoutes_MyCollectionRouteQueryVariables;
+export type myCollectionRoutes_MyCollectionQuery = {
+    readonly response: myCollectionRoutes_MyCollectionQueryResponse;
+    readonly variables: myCollectionRoutes_MyCollectionQueryVariables;
 };
 
 
 
 /*
-query settingsRoutes_MyCollectionRouteQuery {
+query myCollectionRoutes_MyCollectionQuery {
   me {
-    ...SettingsMyCollectionRoute_me
+    ...MyCollectionApp_me
     id
   }
 }
 
-fragment SettingsMyCollectionRoute_me on Me {
+fragment MyCollectionApp_me on Me {
   name
 }
 */
@@ -35,7 +35,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_MyCollectionRouteQuery",
+    "name": "myCollectionRoutes_MyCollectionQuery",
     "selections": [
       {
         "alias": null,
@@ -48,7 +48,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SettingsMyCollectionRoute_me"
+            "name": "MyCollectionApp_me"
           }
         ],
         "storageKey": null
@@ -61,7 +61,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_MyCollectionRouteQuery",
+    "name": "myCollectionRoutes_MyCollectionQuery",
     "selections": [
       {
         "alias": null,
@@ -91,13 +91,13 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "7996ac5e74adc12f59b3ba654baa4903",
+    "cacheID": "f14c0995bc2e6697d0a11f0c6f937a32",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_MyCollectionRouteQuery",
+    "name": "myCollectionRoutes_MyCollectionQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_MyCollectionRouteQuery {\n  me {\n    ...SettingsMyCollectionRoute_me\n    id\n  }\n}\n\nfragment SettingsMyCollectionRoute_me on Me {\n  name\n}\n"
+    "text": "query myCollectionRoutes_MyCollectionQuery {\n  me {\n    ...MyCollectionApp_me\n    id\n  }\n}\n\nfragment MyCollectionApp_me on Me {\n  name\n}\n"
   }
 };
-(node as any).hash = '39382bffcb9e3c3c39e6b8575d3d1114';
+(node as any).hash = '2730b9d9907f62c25e4b7fedee76909a';
 export default node;

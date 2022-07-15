@@ -1,8 +1,6 @@
 import { FC, Fragment, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { SettingsMyCollectionArtworks_me } from "v2/__generated__/SettingsMyCollectionArtworks_me.graphql"
-import { SettingsMyCollectionArtworksQuery } from "v2/__generated__/SettingsMyCollectionArtworksQuery.graphql"
 import {
   ResponsiveBox,
   Skeleton,
@@ -14,19 +12,18 @@ import {
 } from "@artsy/palette"
 import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { MyCollectionArtworks_me } from "v2/__generated__/MyCollectionArtworks_me.graphql"
+import { MyCollectionArtworksQuery } from "v2/__generated__/MyCollectionArtworksQuery.graphql"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 
-interface SettingsMyCollectionArtworksProps {
-  me: SettingsMyCollectionArtworks_me
+interface MyCollectionArtworksProps {
+  me: MyCollectionArtworks_me
   relay: RelayRefetchProp
 }
 
-const SettingsMyCollectionArtworks: FC<SettingsMyCollectionArtworksProps> = ({
-  me,
-  relay,
-}) => {
+const MyCollectionArtworks: FC<MyCollectionArtworksProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const { scrollTo } = useScrollToElement({
@@ -106,23 +103,23 @@ const SettingsMyCollectionArtworks: FC<SettingsMyCollectionArtworksProps> = ({
   )
 }
 
-export const SETTINGS_MY_COLLECTION_ARTWORKS_QUERY = graphql`
-  query SettingsMyCollectionArtworksQuery($page: Int) {
+export const MY_COLLECTION_ARTWORKS_QUERY = graphql`
+  query MyCollectionArtworksQuery($page: Int) {
     me {
-      ...SettingsMyCollectionArtworks_me @arguments(page: $page)
+      ...MyCollectionArtworks_me @arguments(page: $page)
     }
   }
 `
 
-export const SettingsMyCollectionArtworksRefetchContainer = createRefetchContainer(
-  SettingsMyCollectionArtworks,
+export const MyCollectionArtworksRefetchContainer = createRefetchContainer(
+  MyCollectionArtworks,
   {
     me: graphql`
-      fragment SettingsMyCollectionArtworks_me on Me
+      fragment MyCollectionArtworks_me on Me
         @argumentDefinitions(page: { type: "Int" }) {
         myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC)
           @connection(
-            key: "SettingsMyCollectionArtworks_myCollectionConnection"
+            key: "MyCollectionArtworks_myCollectionConnection"
             filters: []
           ) {
           totalCount
@@ -144,10 +141,10 @@ export const SettingsMyCollectionArtworksRefetchContainer = createRefetchContain
       }
     `,
   },
-  SETTINGS_MY_COLLECTION_ARTWORKS_QUERY
+  MY_COLLECTION_ARTWORKS_QUERY
 )
 
-const SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER = (
+const MY_COLLECTION_ARTWORKS_PLACEHOLDER = (
   <Skeleton>
     <SkeletonText variant="lg-display" mb={4}>
       My Collection
@@ -180,12 +177,12 @@ const SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER = (
   </Skeleton>
 )
 
-export const SettingsMyCollectionArtworksQueryRenderer = () => {
+export const MyCollectionArtworksQueryRenderer = () => {
   return (
-    <SystemQueryRenderer<SettingsMyCollectionArtworksQuery>
+    <SystemQueryRenderer<MyCollectionArtworksQuery>
       lazyLoad
-      placeholder={SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER}
-      query={SETTINGS_MY_COLLECTION_ARTWORKS_QUERY}
+      placeholder={MY_COLLECTION_ARTWORKS_PLACEHOLDER}
+      query={MY_COLLECTION_ARTWORKS_QUERY}
       variables={{ count: 30 }}
       render={({ props, error }) => {
         if (error) {
@@ -194,10 +191,10 @@ export const SettingsMyCollectionArtworksQueryRenderer = () => {
         }
 
         if (!props?.me) {
-          return SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER
+          return MY_COLLECTION_ARTWORKS_PLACEHOLDER
         }
 
-        return <SettingsMyCollectionArtworksRefetchContainer me={props.me} />
+        return <MyCollectionArtworksRefetchContainer me={props.me} />
       }}
     />
   )

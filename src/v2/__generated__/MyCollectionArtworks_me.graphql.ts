@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SettingsMyCollectionArtworks_me = {
+export type MyCollectionArtworks_me = {
     readonly myCollectionConnection: {
         readonly totalCount: number | null;
         readonly pageInfo: {
@@ -22,12 +22,12 @@ export type SettingsMyCollectionArtworks_me = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "SettingsMyCollectionArtworks_me";
+    readonly " $refType": "MyCollectionArtworks_me";
 };
-export type SettingsMyCollectionArtworks_me$data = SettingsMyCollectionArtworks_me;
-export type SettingsMyCollectionArtworks_me$key = {
-    readonly " $data"?: SettingsMyCollectionArtworks_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsMyCollectionArtworks_me">;
+export type MyCollectionArtworks_me$data = MyCollectionArtworks_me;
+export type MyCollectionArtworks_me$key = {
+    readonly " $data"?: MyCollectionArtworks_me$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworks_me">;
 };
 
 
@@ -53,14 +53,14 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "SettingsMyCollectionArtworks_me",
+  "name": "MyCollectionArtworks_me",
   "selections": [
     {
       "alias": "myCollectionConnection",
       "args": null,
       "concreteType": "MyCollectionConnection",
       "kind": "LinkedField",
-      "name": "__SettingsMyCollectionArtworks_myCollectionConnection_connection",
+      "name": "__MyCollectionArtworks_myCollectionConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -173,5 +173,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'e769bfda1198bc13fba19d08bfb6f689';
+(node as any).hash = '518a71c4f5d491da92a98058fee4d1c1';
 export default node;

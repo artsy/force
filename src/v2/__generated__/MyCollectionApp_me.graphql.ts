@@ -4,14 +4,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SettingsMyCollectionRoute_me = {
+export type MyCollectionApp_me = {
     readonly name: string | null;
-    readonly " $refType": "SettingsMyCollectionRoute_me";
+    readonly " $refType": "MyCollectionApp_me";
 };
-export type SettingsMyCollectionRoute_me$data = SettingsMyCollectionRoute_me;
-export type SettingsMyCollectionRoute_me$key = {
-    readonly " $data"?: SettingsMyCollectionRoute_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsMyCollectionRoute_me">;
+export type MyCollectionApp_me$data = MyCollectionApp_me;
+export type MyCollectionApp_me$key = {
+    readonly " $data"?: MyCollectionApp_me$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionApp_me">;
 };
 
 
@@ -20,7 +20,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SettingsMyCollectionRoute_me",
+  "name": "MyCollectionApp_me",
   "selections": [
     {
       "alias": null,
@@ -33,5 +33,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'cf1541dbadb60b8a751d66a1692442b5';
+(node as any).hash = 'c23b5017938e5dfe4976dc838cfded1d';
 export default node;
