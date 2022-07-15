@@ -302,7 +302,7 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"CheckOfferNavigate rightCheckShippingNavigate rightCheckPaymentNavigate rightReview"`
+        `"OfferCheckNavigate rightShippingCheckNavigate rightPaymentCheckNavigate rightReviewNavigate right"`
       )
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(page.offerSummary.text()).not.toMatch("Your note")

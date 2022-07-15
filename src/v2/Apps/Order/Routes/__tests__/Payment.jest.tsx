@@ -269,7 +269,7 @@ describe("Payment", () => {
       let page = new PaymentTestPage(wrapper)
 
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"CheckOfferNavigate rightCheckShippingNavigate rightPaymentNavigate rightReview"`
+        `"OfferCheckNavigate rightShippingCheckNavigate rightPaymentNavigate rightReviewNavigate right"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })

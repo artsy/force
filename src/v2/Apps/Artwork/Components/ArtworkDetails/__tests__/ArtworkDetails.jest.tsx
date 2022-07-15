@@ -145,7 +145,7 @@ describe("ArtworkDetails", () => {
     it("displays partner Initials when profile is present but icon is not", () => {
       const wrapper = getWrapper({
         Sale: () => ({ isBenefit: false, isGalleryAuction: false }),
-        Profile: () => ({ icon: { url: null } }),
+        Profile: () => ({ icon: null }),
         Partner: () => ({ initials: "S9" }),
       })
 

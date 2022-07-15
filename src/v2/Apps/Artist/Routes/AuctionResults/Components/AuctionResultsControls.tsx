@@ -1,35 +1,27 @@
-import { Button, FilterIcon, Flex, Row, Spacer } from "@artsy/palette"
-import * as React from "react";
+import { Button, FilterIcon, Flex, Spacer } from "@artsy/palette"
+import * as React from "react"
 import { Media } from "v2/Utils/Responsive"
 import { KeywordFilter } from "./KeywordFilter"
 import { SortSelect } from "./SortSelect"
 
-const RowContainer: React.FC = ({ children }) => (
-  <Flex justifyContent="space-between" alignItems="center" width="100%">
-    {children}
-  </Flex>
-)
-
 export const AuctionResultsControls = ({ toggleMobileActionSheet }) => {
   return (
-    <>
-      <Media at="xs">
-        <Row pb={2}>
-          <RowContainer>
-            <Button size="small" onClick={() => toggleMobileActionSheet(true)}>
-              <Flex justifyContent="space-between" alignItems="center">
-                <FilterIcon fill="white100" />
-                <Spacer mr={0.5} />
-                Filter
-              </Flex>
-            </Button>
-            <Flex ml={1}>
-              <SortSelect />
-            </Flex>
-          </RowContainer>
-        </Row>
-        <KeywordFilter />
-      </Media>
-    </>
+    <Media at="xs">
+      <Flex justifyContent="space-between" alignItems="center" width="100%">
+        <Button
+          size="small"
+          onClick={() => toggleMobileActionSheet(true)}
+          Icon={FilterIcon}
+        >
+          Filter
+        </Button>
+
+        <SortSelect />
+      </Flex>
+
+      <Spacer mt={2} />
+
+      <KeywordFilter />
+    </Media>
   )
 }
