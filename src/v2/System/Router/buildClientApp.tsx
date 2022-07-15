@@ -27,7 +27,7 @@ import { RouterConfig } from "./"
 import { trackingMiddleware } from "v2/System/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
-import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
+import { buildClientAppContext } from "v2/System/Router/buildClientAppContext"
 
 interface Resolve {
   ClientApp: ComponentType<any>

@@ -31,11 +31,11 @@
 #                  ^           ^                                  |                 |
 #                  |           |                                  |                 |
 #                  |           |                                  |                 |
-#  +---------------+--+    +---+--------------+    +-------------------------+      |
-#  |                  |    |                  |    |                         |      |
-#  |  builder-assets  |    |  builder-server  |    |  builder-assets-legacy  |      |
-#  |                  |    |                  |    |                         |      |
-#  +---------------+--+    +---+--------------+    +------------------------ +      |
+#  +---------------+--+    +---+--------------+                                     |
+#  |                  |    |                  |                                     |
+#  |  builder-assets  |    |  builder-server  |                                     |
+#  |                  |    |                  |                                     |
+#  +---------------+--+    +---+--------------+                                     |
 #                  ^           ^                                  ^                 |
 #                  |           |                                  |                 |
 #                  |           |                                  |                 |
@@ -104,7 +104,6 @@ FROM yarn-deps as builder-src
 COPY __mocks__ ./__mocks__
 COPY cypress ./cypress
 COPY data ./data
-COPY packages ./packages
 COPY patches ./patches
 COPY src ./src
 COPY webpack ./webpack
@@ -125,14 +124,6 @@ COPY .env.oss \
   tsconfig.json \
   yarn.lock \
   ./
-
-# ---------------------------------------------------------
-# Compile legacy assets
-# ---------------------------------------------------------
-FROM builder-src as builder-assets-legacy
-
-# Build legacy application
-RUN yarn build:assets:legacy
 
 # ---------------------------------------------------------
 # Compile assets
@@ -158,13 +149,9 @@ FROM builder-src as builder
 COPY ./scripts ./scripts
 
 # Client assets
-COPY --from=builder-assets-legacy /app/manifest.json .
-COPY --from=builder-assets-legacy /app/public ./public
-COPY --from=builder-assets-legacy /app/src ./src
-
-# Client (Novo) assets
-COPY --from=builder-assets /app/manifest-novo.json .
+COPY --from=builder-assets /app/manifest.json .
 COPY --from=builder-assets /app/public ./public
+COPY --from=builder-assets /app/src ./src
 
 # Server assets
 COPY --from=builder-server /app/server.dist.js .
@@ -220,14 +207,12 @@ COPY --chown=deploy:deploy --from=yarn-deps-prod /app/node_modules ./node_module
 # Base code
 COPY --chown=deploy:deploy --from=builder /app/data ./data
 COPY --chown=deploy:deploy --from=builder /app/package.json .
-COPY --chown=deploy:deploy --from=builder /app/packages ./packages
 COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
 COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
 COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
 
 # Client assets
 COPY --chown=deploy:deploy --from=builder /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder /app/manifest-novo.json .
 COPY --chown=deploy:deploy --from=builder /app/public ./public
 COPY --chown=deploy:deploy --from=builder /app/src ./src
 

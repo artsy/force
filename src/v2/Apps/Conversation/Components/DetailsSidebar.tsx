@@ -229,7 +229,7 @@ export const DetailsSidebarFragmentContainer = createFragmentContainer(
         }
         sidebarOrderConnection: orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED]
+          states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL]
         ) {
           edges {
             node {

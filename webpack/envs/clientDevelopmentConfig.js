@@ -1,5 +1,6 @@
 // @ts-check
 
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
@@ -31,7 +32,7 @@ export const clientDevelopmentConfig = () => ({
   devtool,
   entry: {
     "artsy-entry": [
-      "webpack-hot-middleware/client?name=novo&reload=true",
+      "webpack-hot-middleware/client?reload=true",
       path.resolve(process.cwd(), "src/v2/client.tsx"),
     ],
   },
@@ -41,7 +42,6 @@ export const clientDevelopmentConfig = () => ({
   module: {
     rules: [babelLoader, ejsLoader, mjsLoader],
   },
-  name: "novo",
   optimization: {
     concatenateModules: env.webpackConcatenate,
     runtimeChunk: "single", // Extract webpack runtime code into it's own file
@@ -62,6 +62,7 @@ export const clientDevelopmentConfig = () => ({
   plugins: [
     ...sharedPlugins(),
     new webpack.HotModuleReplacementPlugin(),
+    new CaseSensitivePathsPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
         diagnosticOptions: {
@@ -72,7 +73,7 @@ export const clientDevelopmentConfig = () => ({
       formatter: { type: "codeframe", options: { highlightCode: true } },
     }),
     new LoadablePlugin({
-      filename: "loadable-novo-stats.json",
+      filename: "loadable-stats.json",
       path: path.resolve(basePath, "public", "assets"),
     }),
     new HtmlWebpackPlugin({
@@ -89,7 +90,7 @@ export const clientDevelopmentConfig = () => ({
     new TimeFixPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets/",
-      fileName: path.resolve(basePath, "manifest-novo.json"),
+      fileName: path.resolve(basePath, "manifest.json"),
     }),
   ],
   resolve,
