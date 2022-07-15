@@ -19,6 +19,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { getClientParam } from "v2/Utils/getClientParam"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 import { Box, Button, Flex, Spacer } from "@artsy/palette"
 import { CreditCardPicker } from "v2/Apps/Order/Components/CreditCardPicker"
@@ -60,6 +61,8 @@ type Props = PaymentProps & StripeProps
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export const PaymentRoute: FC<Props> = props => {
+  const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
+
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
   const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
   const { order, isCommittingMutation } = props
@@ -218,7 +221,7 @@ export const PaymentRoute: FC<Props> = props => {
     getClientParam("redirect_status") === "succeeded"
 
   const onSetPaymentSuccess = () => {
-    if (selectedPaymentMethod === "US_BANK_ACCOUNT") {
+    if (balanceCheckEnabled && selectedPaymentMethod === "US_BANK_ACCOUNT") {
       setShouldPollAccountBalance(true)
       setIsPaymentSetupComplete(true)
       return
