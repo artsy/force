@@ -18367,7 +18367,7 @@ rxjs@^6.5.3, rxjs@^6.5.5:
   dependencies:
     tslib "^1.9.0"
 
-s3@^4.4.0:
+s3@4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/s3/-/s3-4.4.0.tgz#56a4f775515a7b6b9c8e5c6b1ab51f9037669f1f"
   integrity sha512-6dF5TENLScyHkqu6O5AH5wuZX1kzcEUoQXFfmzb/gyV+rh+aPkNwl4uGoy+GvD984q0DumfE+TX93airqyUfWw==
