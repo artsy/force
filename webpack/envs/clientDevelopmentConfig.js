@@ -1,5 +1,6 @@
 // @ts-check
 
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
@@ -61,6 +62,7 @@ export const clientDevelopmentConfig = () => ({
   plugins: [
     ...sharedPlugins(),
     new webpack.HotModuleReplacementPlugin(),
+    new CaseSensitivePathsPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
         diagnosticOptions: {
