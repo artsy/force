@@ -1,14 +1,14 @@
-import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
+import { ArtworkTopContextBar_artwork } from "v2/__generated__/ArtworkTopContextBar_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns } from "@artsy/palette"
 import { TopContextBar } from "v2/Components/TopContextBar"
 
-export interface ArtworkBannerProps {
-  artwork: ArtworkBanner_artwork
+export interface ArtworkTopContextBarProps {
+  artwork: ArtworkTopContextBar_artwork
 }
 
-export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
+export const ArtworkTopContextBar: React.FC<ArtworkTopContextBarProps> = props => {
   const bannerProps = computeBannerProps(props)
 
   if (!bannerProps) {
@@ -36,7 +36,7 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
   )
 }
 
-const computeBannerProps = (props: ArtworkBannerProps) => {
+const computeBannerProps = (props: ArtworkTopContextBarProps) => {
   const { context, partner, sale } = props.artwork
 
   if (!context) {
@@ -89,11 +89,11 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
   }
 }
 
-export const ArtworkBannerFragmentContainer = createFragmentContainer(
-  ArtworkBanner,
+export const ArtworkTopContextBarFragmentContainer = createFragmentContainer(
+  ArtworkTopContextBar,
   {
     artwork: graphql`
-      fragment ArtworkBanner_artwork on Artwork {
+      fragment ArtworkTopContextBar_artwork on Artwork {
         partner {
           name
         }

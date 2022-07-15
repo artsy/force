@@ -1,17 +1,17 @@
-import { ArtworkBanner_Test_Query } from "v2/__generated__/ArtworkBanner_Test_Query.graphql"
-import { ArtworkBannerFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkBanner/ArtworkBanner"
+import { ArtworkTopContextBar_Test_Query } from "v2/__generated__/ArtworkTopContextBar_Test_Query.graphql"
+import { ArtworkTopContextBarFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
-describe("ArtworkBanner", () => {
-  const { getWrapper } = setupTestWrapper<ArtworkBanner_Test_Query>({
-    Component: ArtworkBannerFragmentContainer,
+describe("ArtworkTopContextBar", () => {
+  const { getWrapper } = setupTestWrapper<ArtworkTopContextBar_Test_Query>({
+    Component: ArtworkTopContextBarFragmentContainer,
     query: graphql`
-      query ArtworkBanner_Test_Query @relay_test_operation {
+      query ArtworkTopContextBar_Test_Query @relay_test_operation {
         artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
-          ...ArtworkBanner_artwork
+          ...ArtworkTopContextBar_artwork
         }
       }
     `,

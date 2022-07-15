@@ -5,7 +5,7 @@ import { getENV } from "v2/Utils/getENV"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
-import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
+import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
@@ -28,8 +28,8 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
-import { CascadingEndTimesBanner } from "../Auction/Components/AuctionDetails/CascadingEndTimesBanner"
 import { WebsocketContextProvider } from "v2/System/WebsocketContext"
+import { CascadingEndTimesBannerFragmentContainer } from "v2/Components/CascadingEndTimesBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -178,19 +178,14 @@ export class ArtworkApp extends React.Component<Props> {
     return (
       <>
         <UseRecordArtworkView />
-        {artwork.sale?.cascadingEndTimeIntervalMinutes && (
-          <CascadingEndTimesBanner
-            cascadingEndTimeIntervalMinutes={
-              artwork.sale.cascadingEndTimeIntervalMinutes
-            }
-            extendedBiddingIntervalMinutes={
-              artwork.sale.extendedBiddingIntervalMinutes
-            }
-          />
+
+        {artwork.sale && (
+          <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
         )}
+
         <ArtworkMetaFragmentContainer artwork={artwork} />
 
-        <ArtworkBannerFragmentContainer artwork={artwork} />
+        <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
         <GridColumns>
           <Column span={8}>
@@ -238,6 +233,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const {
     artwork: { internalID, sale },
   } = props
+
   const {
     match: {
       location: { pathname, state },
@@ -300,10 +296,10 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         is_in_auction: isInAuction
         sale {
+          ...CascadingEndTimesBanner_sale
           internalID
-          cascadingEndTimeIntervalMinutes
-          extendedBiddingIntervalMinutes
           slug
+          extendedBiddingIntervalMinutes
         }
         artists {
           id
@@ -315,7 +311,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         ...ArtworkRelatedArtists_artwork
         ...ArtworkMeta_artwork
-        ...ArtworkBanner_artwork
+        ...ArtworkTopContextBar_artwork
         ...ArtworkSidebar_artwork
         ...ArtworkImageBrowser_artwork
       }

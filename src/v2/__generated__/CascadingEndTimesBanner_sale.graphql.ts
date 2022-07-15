@@ -1,0 +1,45 @@
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type CascadingEndTimesBanner_sale = {
+    readonly cascadingEndTimeIntervalMinutes: number | null;
+    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly " $refType": "CascadingEndTimesBanner_sale";
+};
+export type CascadingEndTimesBanner_sale$data = CascadingEndTimesBanner_sale;
+export type CascadingEndTimesBanner_sale$key = {
+    readonly " $data"?: CascadingEndTimesBanner_sale$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"CascadingEndTimesBanner_sale">;
+};
+
+
+
+const node: ReaderFragment = {
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "CascadingEndTimesBanner_sale",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cascadingEndTimeIntervalMinutes",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "extendedBiddingIntervalMinutes",
+      "storageKey": null
+    }
+  ],
+  "type": "Sale",
+  "abstractKey": null
+};
+(node as any).hash = '1821c972be80a5587319bdcf90723bba';
+export default node;

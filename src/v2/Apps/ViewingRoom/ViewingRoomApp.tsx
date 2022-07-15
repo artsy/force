@@ -1,13 +1,6 @@
 import { useContext } from "react"
 import * as React from "react"
-import {
-  Banner,
-  ClosedEyeIcon,
-  Flex,
-  FullBleed,
-  Join,
-  Spacer,
-} from "@artsy/palette"
+import { ClosedEyeIcon, Join, Spacer } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
@@ -16,6 +9,7 @@ import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_view
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
 import { SystemContext } from "v2/System"
 import { userHasAccessToPartner } from "v2/Utils/user"
+import { FullBleedBanner } from "v2/Components/FullBleedBanner"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -38,18 +32,10 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       <ViewingRoomMeta viewingRoom={viewingRoom} />
 
       {isPreviewable && (
-        <FullBleed>
-          <Banner variant="defaultLight">
-            <Flex
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
-            >
-              <ClosedEyeIcon mr={1} />
-              This is a preview of your viewing room.
-            </Flex>
-          </Banner>
-        </FullBleed>
+        <FullBleedBanner variant="defaultLight">
+          <ClosedEyeIcon mr={1} />
+          This is a preview of your viewing room.
+        </FullBleedBanner>
       )}
 
       <Join separator={<Spacer mt={4} />}>

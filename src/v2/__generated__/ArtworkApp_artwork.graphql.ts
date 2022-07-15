@@ -16,9 +16,9 @@ export type ArtworkApp_artwork = {
     readonly is_in_auction: boolean | null;
     readonly sale: {
         readonly internalID: string;
-        readonly cascadingEndTimeIntervalMinutes: number | null;
-        readonly extendedBiddingIntervalMinutes: number | null;
         readonly slug: string;
+        readonly extendedBiddingIntervalMinutes: number | null;
+        readonly " $fragmentRefs": FragmentRefs<"CascadingEndTimesBanner_sale">;
     } | null;
     readonly artists: ReadonlyArray<{
         readonly id: string;
@@ -28,7 +28,7 @@ export type ArtworkApp_artwork = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkBanner_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkTopContextBar_artwork" | "ArtworkSidebar_artwork" | "ArtworkImageBrowser_artwork">;
     readonly " $refType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$data = ArtworkApp_artwork;
@@ -136,13 +136,7 @@ return {
       "plural": false,
       "selections": [
         (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "cascadingEndTimeIntervalMinutes",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -150,7 +144,11 @@ return {
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
         },
-        (v0/*: any*/)
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "CascadingEndTimesBanner_sale"
+        }
       ],
       "storageKey": null
     },
@@ -199,7 +197,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkBanner_artwork"
+      "name": "ArtworkTopContextBar_artwork"
     },
     {
       "args": null,
@@ -216,5 +214,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '0d4456679fe9373bee2d6efc2cf8e395';
+(node as any).hash = '87b64f7c9142afa57c5dae6dfdcc8cf8';
 export default node;

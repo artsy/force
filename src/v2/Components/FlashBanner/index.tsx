@@ -2,7 +2,6 @@ import { useMemo } from "react"
 import * as React from "react"
 import qs from "qs"
 import { graphql } from "react-relay"
-import { Banner } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { EmailConfirmationCTA } from "v2/Components/FlashBanner/EmailConfirmationCTA"
 import { AnalyticsSchema as Schema, track } from "v2/System/Analytics"
@@ -10,6 +9,7 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { isServer } from "lib/isServer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 import { FlashBannerQuery } from "v2/__generated__/FlashBannerQuery.graphql"
+import { FullBleedBanner } from "../FullBleedBanner"
 
 interface FlashBannerProps {
   contentCode?: string
@@ -72,9 +72,9 @@ export const FlashBanner: React.FC<FlashBannerProps> = ({
   }
 
   return (
-    <Banner dismissable variant="defaultDark" data-test="flashMessage">
+    <FullBleedBanner dismissable variant="defaultDark" data-test="flashMessage">
       {content}
-    </Banner>
+    </FullBleedBanner>
   )
 }
 
