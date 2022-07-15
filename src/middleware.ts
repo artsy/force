@@ -223,7 +223,7 @@ function applyStaticAssetMiddlewares(app) {
   app.use(express.static("public"))
 
   // Mount static assets from sub-app /app `public` folders
-  glob.sync(`${__dirname}/{public`).forEach(folder => {
+  glob.sync(`${__dirname}/{public,**/public}`).forEach(folder => {
     app.use(express.static(folder))
   })
 
