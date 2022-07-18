@@ -5,6 +5,7 @@ import { mount } from "enzyme"
 import { NavBar } from "../NavBar"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { mediator } from "lib/mediator"
+import "v2/System/i18n/i18n"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
   return {
@@ -63,7 +64,7 @@ describe("NavBar", () => {
     it("renders logged out items", () => {
       const wrapper = getWrapper()
       expect(wrapper.html()).toContain("Log In")
-      expect(wrapper.html()).toContain("Sign Up")
+      expect(wrapper.html()).toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(0)
       expect(wrapper.find(SoloIcon).length).toEqual(0)
     })
@@ -72,7 +73,7 @@ describe("NavBar", () => {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const wrapper = getWrapper({ user: true })
       expect(wrapper.html()).not.toContain("Log In")
-      expect(wrapper.html()).not.toContain("Sign Up")
+      expect(wrapper.html()).not.toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(1)
       expect(wrapper.find(SoloIcon).length).toEqual(1)
     })

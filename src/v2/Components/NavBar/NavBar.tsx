@@ -43,6 +43,7 @@ import { useNavBarHeight } from "./useNavBarHeight"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { Z } from "v2/Apps/Components/constants"
+import { useTranslation } from "react-i18next"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -72,6 +73,7 @@ export const NavBar: React.FC = track(
     return null
   }
   const { trackEvent } = useTracking()
+  const { t } = useTranslation()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
@@ -108,7 +110,7 @@ export const NavBar: React.FC = track(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     const link = event.currentTarget
-    const text = (link.textContent || link.getAttribute("data-label")) ?? ""
+    const text = (link.getAttribute("data-label") || link.textContent) ?? ""
     const href = link.getAttribute("href")!
 
     trackEvent({
@@ -149,7 +151,7 @@ export const NavBar: React.FC = track(
                   flex={1}
                   size="small"
                 >
-                  Sign Up
+                  {t`navbar.signup`}
                 </Button>
 
                 <Button
@@ -160,7 +162,7 @@ export const NavBar: React.FC = track(
                   ml={1}
                   size="small"
                 >
-                  Log In
+                  {t`navbar.login`}
                 </Button>
               </Flex>
             )}
@@ -181,8 +183,9 @@ export const NavBar: React.FC = track(
                       href="/collect"
                       textDecoration="none"
                       onClick={handleClick}
+                      data-label="Buy"
                     >
-                      Buy
+                      {t("navbar.buy")}
                     </NavBarItemLink>
                   </Flex>
 
@@ -190,16 +193,18 @@ export const NavBar: React.FC = track(
                     href="/sell"
                     textDecoration="none"
                     onClick={handleClick}
+                    data-label="Consign"
                   >
-                    Sell
+                    {t("navbar.sell")}
                   </NavBarItemLink>
 
                   <NavBarItemLink
                     href="/price-database"
                     textDecoration="none"
                     onClick={handleClick}
+                    data-label="Price Database"
                   >
-                    Price Database
+                    {t`navbar.priceDatabase`}
                   </NavBarItemLink>
 
                   <Flex alignItems="center" display={["none", "none", "flex"]}>
@@ -207,8 +212,9 @@ export const NavBar: React.FC = track(
                       href="/articles"
                       textDecoration="none"
                       onClick={handleClick}
+                      data-label="Articles"
                     >
-                      Editorial
+                      {t`navbar.editorial`}
                     </NavBarItemLink>
                   </Flex>
                 </Text>
@@ -230,7 +236,7 @@ export const NavBar: React.FC = track(
                         })
                       }}
                     >
-                      Log In
+                      {t`navbar.login`}
                     </Button>
 
                     <Button
@@ -245,7 +251,7 @@ export const NavBar: React.FC = track(
                         })
                       }}
                     >
-                      Sign Up
+                      {t`navbar.signup`}
                     </Button>
                   </Flex>
                 )}
@@ -325,7 +331,7 @@ export const NavBar: React.FC = track(
                         onClick={handleClick}
                         data-label="Artists"
                       />
-                      Artists
+                      {t`navbar.artists`}
                     </NavBarItemButton>
                   )}
                 </Dropdown>
@@ -356,37 +362,65 @@ export const NavBar: React.FC = track(
                         onClick={handleClick}
                         data-label="Artworks"
                       />
-                      Artworks
+                      {t`navbar.artworks`}
                     </NavBarItemButton>
                   )}
                 </Dropdown>
 
-                <NavBarItemLink href="/auctions" onClick={handleClick}>
-                  Auctions
+                <NavBarItemLink
+                  href="/auctions"
+                  onClick={handleClick}
+                  data-label="Auctions"
+                >
+                  {t`navbar.auctions`}
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/viewing-rooms" onClick={handleClick}>
-                  Viewing&nbsp;Rooms
+                <NavBarItemLink
+                  href="/viewing-rooms"
+                  onClick={handleClick}
+                  data-label="Viewing Rooms"
+                >
+                  {t`navbar.viewingRooms`}
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/galleries" onClick={handleClick}>
-                  Galleries
+                <NavBarItemLink
+                  href="/galleries"
+                  onClick={handleClick}
+                  data-label="Galleries"
+                >
+                  {t`navbar.galleries`}
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/art-fairs" onClick={handleClick}>
-                  Fairs
+                <NavBarItemLink
+                  href="/art-fairs"
+                  onClick={handleClick}
+                  data-label="Fairs"
+                >
+                  {t`navbar.fairs`}
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/shows" onClick={handleClick}>
-                  Shows
+                <NavBarItemLink
+                  href="/shows"
+                  onClick={handleClick}
+                  data-label="Shows"
+                >
+                  {t`navbar.shows`}
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/institutions" onClick={handleClick}>
-                  Museums
+                <NavBarItemLink
+                  href="/institutions"
+                  onClick={handleClick}
+                  data-label="Institutions"
+                >
+                  {t`navbar.museums`}
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/nft" onClick={handleClick}>
-                  NFTs
+                <NavBarItemLink
+                  href="/nft"
+                  onClick={handleClick}
+                  data-label="NFTs"
+                >
+                  {t`navbar.nfts`}
                 </NavBarItemLink>
               </Flex>
 
@@ -402,7 +436,7 @@ export const NavBar: React.FC = track(
                     })
                   }}
                 >
-                  Download App
+                  {t`navbar.downloadApp`}
                 </NavBarItemButton>
               </Flex>
             </Text>

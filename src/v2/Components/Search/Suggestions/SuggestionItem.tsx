@@ -84,9 +84,6 @@ const SuggestionItemLink = styled(RouterLink).attrs({
   min-height: 60px;
 `
 
-export const PLACEHOLDER = "Search by artist, gallery, style, theme, tag, etc."
-export const PLACEHOLDER_XS = "Search Artsy"
-
 const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   display,
   label,

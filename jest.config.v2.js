@@ -19,7 +19,7 @@ module.exports = {
       testURL: "http://localhost",
       transform: {
         "\\.(gql|graphql)$": "jest-transform-graphql",
-        ".(ts|tsx|js|jsx)": "babel-jest",
+        "(ts|tsx|js|jsx)$": "babel-jest",
       },
     },
   ],

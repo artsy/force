@@ -9,8 +9,6 @@ import * as Schema from "v2/System/Analytics/Schema"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   FirstSuggestionItem,
-  PLACEHOLDER,
-  PLACEHOLDER_XS,
   SuggestionItem,
 } from "v2/Components/Search/Suggestions/SuggestionItem"
 import { Router } from "found"
@@ -28,6 +26,8 @@ import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { SearchInputContainer } from "./SearchInputContainer"
+import { useTranslation } from "react-i18next"
+import { ClassI18n } from "v2/System/i18n/ClassI18n"
 
 const logger = createLogger("Components/Search/SearchBar")
 
@@ -371,7 +371,7 @@ export class SearchBar extends Component<Props, State> {
 
   renderInputComponent = props => <SearchInputContainer {...props} />
 
-  renderAutosuggestComponent({ xs }) {
+  renderAutosuggestComponent(t, { xs }) {
     const { term } = this.state
     const { viewer } = this.props
 
@@ -390,7 +390,7 @@ export class SearchBar extends Component<Props, State> {
           event.preventDefault()
         }
       },
-      placeholder: xs ? PLACEHOLDER_XS : PLACEHOLDER,
+      placeholder: xs ? t`navbar.searchArtsy` : t`navbar.searchBy`,
       value: term,
     }
 
@@ -435,31 +435,37 @@ export class SearchBar extends Component<Props, State> {
     const { router } = this.props
 
     return (
-      <Form
-        action="/search"
-        method="GET"
-        onSubmit={event => {
-          if (router) {
-            event.preventDefault()
-            const encodedTerm = encodeURIComponent(this.state.term)
+      <ClassI18n>
+        {({ t }) => (
+          <Form
+            action="/search"
+            method="GET"
+            onSubmit={event => {
+              if (router) {
+                event.preventDefault()
+                const encodedTerm = encodeURIComponent(this.state.term)
 
-            // TODO: Reenable in-router push once all routes have been moved over
-            // to new app shell
-            // router.push(`/search?term=${this.state.term}`)
-            window.location.assign(`/search?term=${encodedTerm}`)
-            this.onBlur(event)
-          } else {
-            console.error(
-              "[Components/Search/SearchBar] `router` instance not found."
-            )
-          }
-        }}
-      >
-        <Media at="xs">{this.renderAutosuggestComponent({ xs: true })}</Media>
-        <Media greaterThan="xs">
-          {this.renderAutosuggestComponent({ xs: false })}
-        </Media>
-      </Form>
+                // TODO: Reenable in-router push once all routes have been moved over
+                // to new app shell
+                // router.push(`/search?term=${this.state.term}`)
+                window.location.assign(`/search?term=${encodedTerm}`)
+                this.onBlur(event)
+              } else {
+                console.error(
+                  "[Components/Search/SearchBar] `router` instance not found."
+                )
+              }
+            }}
+          >
+            <Media at="xs">
+              {this.renderAutosuggestComponent(t, { xs: true })}
+            </Media>
+            <Media greaterThan="xs">
+              {this.renderAutosuggestComponent(t, { xs: false })}
+            </Media>
+          </Form>
+        )}
+      </ClassI18n>
     )
   }
 }
@@ -513,18 +519,19 @@ const StaticSearchContainer: React.FC<{ searchQuery: string } & BoxProps> = ({
   searchQuery,
   ...rest
 }) => {
+  const { t } = useTranslation()
   return (
     <>
       <Box display={["block", "none"]} {...rest}>
         <SearchInputContainer
-          placeholder={searchQuery || PLACEHOLDER_XS}
+          placeholder={searchQuery || t`navbar.searchArtsy`}
           defaultValue={searchQuery}
         />
       </Box>
 
       <Box display={["none", "block"]} {...rest}>
         <SearchInputContainer
-          placeholder={searchQuery || PLACEHOLDER}
+          placeholder={searchQuery || t`navbar.searchBy`}
           defaultValue={searchQuery}
         />
       </Box>
