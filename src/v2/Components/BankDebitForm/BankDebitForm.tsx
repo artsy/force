@@ -44,23 +44,7 @@ export const BankDebitForm: FC<Props> = ({
       })
     }
 
-    if (!event.empty) {
-      trackedEvents.push({
-        flow: order.mode,
-        order_id: order.internalID,
-        subject: "TODO:_not_empty_thing",
-      })
-    }
-
     trackedEvents.forEach(event => tracking.trackEvent(event))
-  }
-
-  const trackClickedContinue = () => {
-    tracking.trackEvent({
-      flow: order.mode!,
-      order_id: order.internalID,
-      subject: "TODO:_clicked_save_and_continue",
-    })
   }
 
   const handleSubmit = async event => {
@@ -91,17 +75,10 @@ export const BankDebitForm: FC<Props> = ({
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
-          onReady={(...args) => {
-            console.log({ onReady: args })
-            tracking.trackEvent({ payment_method_selected: "fillmein" })
+          onReady={() => {
             setIsPaymentElementLoading(false)
           }}
-          onBlur={(...args) => console.log({ onBlur: args })}
-          onFocus={(...args) => console.log({ onFocus: args })}
-          onEscape={(...args) => console.log({ onEscape: args })}
-          onClick={(...args) => console.log({ onClick: args })}
           onChange={event => {
-            console.log({ onchange: [event] })
             trackPaymentElementEvent(event)
           }}
           options={{
@@ -154,7 +131,6 @@ export const BankDebitForm: FC<Props> = ({
         {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
 
         <Button
-          onClick={trackClickedContinue}
           disabled={!stripe || bankAccountHasInsufficientFunds}
           variant="primaryBlack"
           width={["100%", "50%"]}
