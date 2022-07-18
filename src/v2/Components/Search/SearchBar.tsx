@@ -26,11 +26,12 @@ import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { SearchInputContainer } from "./SearchInputContainer"
-import { withTranslation, WithTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
+import { ClassI18n } from "v2/System/i18n/ClassI18n"
 
 const logger = createLogger("Components/Search/SearchBar")
 
-export interface Props extends SystemContextProps, WithTranslation {
+export interface Props extends SystemContextProps {
   relay: RelayRefetchProp
   router?: Router
   viewer: SearchBar_viewer
@@ -370,9 +371,9 @@ export class SearchBar extends Component<Props, State> {
 
   renderInputComponent = props => <SearchInputContainer {...props} />
 
-  renderAutosuggestComponent({ xs }) {
+  renderAutosuggestComponent(t, { xs }) {
     const { term } = this.state
-    const { viewer, t } = this.props
+    const { viewer } = this.props
 
     const inputProps = {
       "aria-label": "Search Artsy",
@@ -434,37 +435,43 @@ export class SearchBar extends Component<Props, State> {
     const { router } = this.props
 
     return (
-      <Form
-        action="/search"
-        method="GET"
-        onSubmit={event => {
-          if (router) {
-            event.preventDefault()
-            const encodedTerm = encodeURIComponent(this.state.term)
+      <ClassI18n>
+        {({ t }) => (
+          <Form
+            action="/search"
+            method="GET"
+            onSubmit={event => {
+              if (router) {
+                event.preventDefault()
+                const encodedTerm = encodeURIComponent(this.state.term)
 
-            // TODO: Reenable in-router push once all routes have been moved over
-            // to new app shell
-            // router.push(`/search?term=${this.state.term}`)
-            window.location.assign(`/search?term=${encodedTerm}`)
-            this.onBlur(event)
-          } else {
-            console.error(
-              "[Components/Search/SearchBar] `router` instance not found."
-            )
-          }
-        }}
-      >
-        <Media at="xs">{this.renderAutosuggestComponent({ xs: true })}</Media>
-        <Media greaterThan="xs">
-          {this.renderAutosuggestComponent({ xs: false })}
-        </Media>
-      </Form>
+                // TODO: Reenable in-router push once all routes have been moved over
+                // to new app shell
+                // router.push(`/search?term=${this.state.term}`)
+                window.location.assign(`/search?term=${encodedTerm}`)
+                this.onBlur(event)
+              } else {
+                console.error(
+                  "[Components/Search/SearchBar] `router` instance not found."
+                )
+              }
+            }}
+          >
+            <Media at="xs">
+              {this.renderAutosuggestComponent(t, { xs: true })}
+            </Media>
+            <Media greaterThan="xs">
+              {this.renderAutosuggestComponent(t, { xs: false })}
+            </Media>
+          </Form>
+        )}
+      </ClassI18n>
     )
   }
 }
 
 export const SearchBarRefetchContainer = createRefetchContainer(
-  withSystemContext(withTranslation()(SearchBar)),
+  withSystemContext(SearchBar),
   {
     viewer: graphql`
       fragment SearchBar_viewer on Viewer
@@ -508,9 +515,11 @@ export const SearchBarRefetchContainer = createRefetchContainer(
  * Displays during SSR render, but once mounted is swapped out with
  * QueryRenderer below.
  */
-const StaticSearchContainer: React.FC<
-  { searchQuery: string } & BoxProps & WithTranslation
-> = ({ searchQuery, t, ...rest }) => {
+const StaticSearchContainer: React.FC<{ searchQuery: string } & BoxProps> = ({
+  searchQuery,
+  ...rest
+}) => {
+  const { t } = useTranslation()
   return (
     <>
       <Box display={["block", "none"]} {...rest}>
@@ -530,21 +539,12 @@ const StaticSearchContainer: React.FC<
   )
 }
 
-const WithTranslationStaticSearchContainer = withTranslation()(
-  StaticSearchContainer
-)
-
 export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
   const { relayEnvironment, searchQuery = "" } = useContext(SystemContext)
   const isMounted = useDidMount(typeof window !== "undefined")
 
   if (!isMounted) {
-    return (
-      <WithTranslationStaticSearchContainer
-        searchQuery={searchQuery}
-        {...props}
-      />
-    )
+    return <StaticSearchContainer searchQuery={searchQuery} {...props} />
   }
 
   return (
@@ -568,9 +568,7 @@ export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.
         } else {
-          return (
-            <WithTranslationStaticSearchContainer searchQuery={searchQuery} />
-          )
+          return <StaticSearchContainer searchQuery={searchQuery} />
         }
       }}
     />
