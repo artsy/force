@@ -32,7 +32,7 @@ Start the server:
 yarn start
 ```
 
-Force should now be running at [http://localhost:5000/](http://localhost:5000/).
+Force should now be running at [http://localhost:4000/](http://localhost:4000/).
 
 ## Run the tests
 
