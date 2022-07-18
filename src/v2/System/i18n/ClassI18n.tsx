@@ -1,14 +1,10 @@
 import * as React from "react"
-import { useTranslation } from "react-i18next"
+import { TFunction, useTranslation } from "react-i18next"
 
 interface ClassI18nProps {
   children:
     | React.ReactNode
-    | (({
-        t,
-      }: {
-        t: ReturnType<typeof useTranslation>["t"]
-      }) => React.ReactNode)
+    | (({ t }: { t: TFunction<"translation", undefined> }) => React.ReactNode)
 }
 
 export const ClassI18n = ({ children }: ClassI18nProps) => {
