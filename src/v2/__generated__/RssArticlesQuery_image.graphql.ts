@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type RssPartnerUpdatesQuery_image = {
+export type RssArticlesQuery_image = {
     readonly image: {
         readonly caption: string | null;
         readonly resized: {
@@ -14,12 +14,12 @@ export type RssPartnerUpdatesQuery_image = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "RssPartnerUpdatesQuery_image";
+    readonly " $refType": "RssArticlesQuery_image";
 };
-export type RssPartnerUpdatesQuery_image$data = RssPartnerUpdatesQuery_image;
-export type RssPartnerUpdatesQuery_image$key = {
-    readonly " $data"?: RssPartnerUpdatesQuery_image$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"RssPartnerUpdatesQuery_image">;
+export type RssArticlesQuery_image$data = RssArticlesQuery_image;
+export type RssArticlesQuery_image$key = {
+    readonly " $data"?: RssArticlesQuery_image$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"RssArticlesQuery_image">;
 };
 
 
@@ -28,7 +28,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RssPartnerUpdatesQuery_image",
+  "name": "RssArticlesQuery_image",
   "selections": [
     {
       "alias": null,
@@ -97,5 +97,5 @@ const node: ReaderFragment = {
   "type": "ArticleImageSection",
   "abstractKey": null
 };
-(node as any).hash = 'd4e6b588cf375aef269108de80a4e0ad';
+(node as any).hash = '7cb5893d8865f5400a25e45f85de1556';
 export default node;

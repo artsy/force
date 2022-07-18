@@ -1,7 +1,7 @@
 import { graphql } from "relay-runtime"
 
-export const RSS_PARTNER_UPDATES_QUERY = graphql`
-  query RssPartnerUpdatesQuery($channelId: String!) {
+export const RSS_ARTICLES_QUERY = graphql`
+  query RssArticlesQuery($channelId: String!) {
     articlesConnection(
       channelId: $channelId
       sort: PUBLISHED_AT_DESC
@@ -39,10 +39,10 @@ export const RSS_PARTNER_UPDATES_QUERY = graphql`
               figures {
                 __typename
                 ... on Artwork {
-                  ...RssPartnerUpdatesQuery_artwork @relay(mask: false)
+                  ...RssArticlesQuery_artwork @relay(mask: false)
                 }
                 ... on ArticleImageSection {
-                  ...RssPartnerUpdatesQuery_image @relay(mask: false)
+                  ...RssArticlesQuery_image @relay(mask: false)
                 }
               }
             }
@@ -50,10 +50,10 @@ export const RSS_PARTNER_UPDATES_QUERY = graphql`
               figures {
                 __typename
                 ... on Artwork {
-                  ...RssPartnerUpdatesQuery_artwork @relay(mask: false)
+                  ...RssArticlesQuery_artwork @relay(mask: false)
                 }
                 ... on ArticleImageSection {
-                  ...RssPartnerUpdatesQuery_image @relay(mask: false)
+                  ...RssArticlesQuery_image @relay(mask: false)
                 }
               }
             }
@@ -65,7 +65,7 @@ export const RSS_PARTNER_UPDATES_QUERY = graphql`
 `
 
 graphql`
-  fragment RssPartnerUpdatesQuery_artwork on Artwork {
+  fragment RssArticlesQuery_artwork on Artwork {
     title
     date
     artists {
@@ -86,7 +86,7 @@ graphql`
 `
 
 graphql`
-  fragment RssPartnerUpdatesQuery_image on ArticleImageSection {
+  fragment RssArticlesQuery_image on ArticleImageSection {
     image {
       caption
       resized(width: 500) {
