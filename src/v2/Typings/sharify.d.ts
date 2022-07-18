@@ -26,6 +26,7 @@ declare module "sharify" {
       CURRENT_PATH: string
       CURRENT_USER: User
       EIGEN: boolean
+      readonly ENABLE_I18N_DEBUG: boolean
       readonly ENABLE_SAVED_SEARCH: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
       readonly ENABLE_QUERY_BATCHING: boolean
