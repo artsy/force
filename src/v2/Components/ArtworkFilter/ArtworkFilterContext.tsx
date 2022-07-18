@@ -187,6 +187,9 @@ export enum SelectedFiltersCountsLabels {
 // Possibly just extend `BaseFilterContext` and make the former ones into `BaseFilterContext<ArtworkFilters>`
 // and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
+  /** Default filter state */
+  defaultFilters?: ArtworkFiltersState
+
   /** The current artwork filter state (which determines the network request and the url querystring) */
   filters?: ArtworkFiltersState
 
@@ -288,10 +291,18 @@ export const ArtworkFilterContextProvider: React.FC<
   sortOptions,
   ZeroState,
 }) => {
-  const initialFilterState = {
+  const camelCasedFilters: ArtworkFiltersState = paramsToCamelCase(filters)
+  const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort!
+  const defaultMetric =
+    camelCasedFilters?.metric ?? initialArtworkFilterState.metric!
+  const defaultFilters = {
     ...initialArtworkFilterState,
-    sort: sortOptions?.[0].value ?? initialArtworkFilterState.sort,
-    ...paramsToCamelCase(filters),
+    sort: defaultSort,
+    metric: defaultMetric,
+  }
+  const initialFilterState = {
+    ...defaultFilters,
+    ...camelCasedFilters,
   }
 
   const [artworkFilterState, dispatch] = useReducer(
@@ -330,10 +341,12 @@ export const ArtworkFilterContextProvider: React.FC<
   }
 
   const currentlySelectedFiltersCounts = getSelectedFiltersCounts(
-    currentlySelectedFilters()
+    currentlySelectedFilters(),
+    defaultFilters
   )
 
   const artworkFilterContext = {
+    defaultFilters,
     mountedContext: true,
 
     filters: artworkFilterState,
@@ -393,9 +406,7 @@ export const ArtworkFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
-        payload: {
-          metric: initialFilterState.metric,
-        },
+        payload: defaultFilters,
       }
       dispatchOrStage(action)
     },
@@ -578,7 +589,6 @@ const artworkFilterReducer = (
      */
     case "RESET": {
       return {
-        ...initialArtworkFilterState,
         ...action.payload,
         reset: true,
       }
@@ -604,7 +614,8 @@ const artworkFilterReducer = (
 }
 
 export const getSelectedFiltersCounts = (
-  selectedFilters: ArtworkFilters = {}
+  selectedFilters: ArtworkFilters,
+  defaultFilters: ArtworkFilters
 ) => {
   const counts: Partial<SelectedFiltersCounts> = {}
   const filtersParams = Object.values(FilterParamName)
@@ -622,14 +633,14 @@ export const getSelectedFiltersCounts = (
         break
       }
       case customSizeFilterNames.includes(paramName as FilterParamName): {
-        if (paramValue !== initialArtworkFilterState[paramName]) {
+        if (paramValue !== defaultFilters[paramName]) {
           const prevCountValue = counts[FilterParamName.sizes] ?? 0
           counts[FilterParamName.sizes] = prevCountValue + 1
         }
         break
       }
       case paramName === FilterParamName.priceRange: {
-        if (paramValue !== initialArtworkFilterState.priceRange) {
+        if (paramValue !== defaultFilters.priceRange) {
           counts[paramName] = 1
         }
         break
@@ -641,7 +652,7 @@ export const getSelectedFiltersCounts = (
         break
       }
       case paramName === FilterParamName.sort: {
-        if (paramValue !== initialArtworkFilterState.sort) {
+        if (paramValue !== defaultFilters.sort) {
           counts[paramName] = 1
         }
         break
