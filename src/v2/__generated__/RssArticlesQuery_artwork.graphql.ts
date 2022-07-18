@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type RssPartnerUpdatesQuery_artwork = {
+export type RssArticlesQuery_artwork = {
     readonly title: string | null;
     readonly date: string | null;
     readonly artists: ReadonlyArray<{
@@ -21,12 +21,12 @@ export type RssPartnerUpdatesQuery_artwork = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "RssPartnerUpdatesQuery_artwork";
+    readonly " $refType": "RssArticlesQuery_artwork";
 };
-export type RssPartnerUpdatesQuery_artwork$data = RssPartnerUpdatesQuery_artwork;
-export type RssPartnerUpdatesQuery_artwork$key = {
-    readonly " $data"?: RssPartnerUpdatesQuery_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"RssPartnerUpdatesQuery_artwork">;
+export type RssArticlesQuery_artwork$data = RssArticlesQuery_artwork;
+export type RssArticlesQuery_artwork$key = {
+    readonly " $data"?: RssArticlesQuery_artwork$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"RssArticlesQuery_artwork">;
 };
 
 
@@ -45,7 +45,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RssPartnerUpdatesQuery_artwork",
+  "name": "RssArticlesQuery_artwork",
   "selections": [
     {
       "alias": null,
@@ -151,5 +151,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'eb88e455b01f5a05b663ae669a6efe5f';
+(node as any).hash = '6b22b706b0b17abac5a31e1733c588cd';
 export default node;
