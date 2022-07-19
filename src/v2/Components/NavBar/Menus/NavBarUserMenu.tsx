@@ -16,6 +16,7 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { userIsAdmin } from "v2/Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { getENV } from "v2/Utils/getENV"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -40,6 +41,8 @@ export const NavBarUserMenu: React.FC = () => {
 
   const isAdmin = userIsAdmin(user)
   const hasPartnerAccess = Boolean(user?.has_partner_access)
+
+  const isMyCollectionEnabled = useFeatureFlag("my-collection-web")
 
   return (
     <Text variant="sm" py={1} width={230}>
@@ -91,13 +94,15 @@ export const NavBarUserMenu: React.FC = () => {
         <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
       </NavBarMenuItemLink>
 
-      <NavBarMenuItemLink
-        aria-label="View your Collection"
-        to="/settings/my-collection"
-        onClick={trackClick}
-      >
-        <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
-      </NavBarMenuItemLink>
+      {isMyCollectionEnabled && (
+        <NavBarMenuItemLink
+          aria-label="View your Collection"
+          to="/settings/my-collection"
+          onClick={trackClick}
+        >
+          <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
+        </NavBarMenuItemLink>
+      )}
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"
