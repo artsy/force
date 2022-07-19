@@ -38,6 +38,7 @@ export const BankDebitProvider: FC<Props> = ({
   bankAccountHasInsufficientFunds,
 }) => {
   const [clientSecret, setClientSecret] = useState("")
+  const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export const BankDebitProvider: FC<Props> = ({
             .error
         }
       } catch (error) {
+        setBankDebitSetupError(true)
         logger.error(error)
       }
     }
@@ -99,7 +101,7 @@ export const BankDebitProvider: FC<Props> = ({
 
   return (
     <div>
-      {clientSecret ? (
+      {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm
             order={order}
@@ -107,9 +109,8 @@ export const BankDebitProvider: FC<Props> = ({
             bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
           />
         </Elements>
-      ) : (
-        <BankSetupErrorMessage />
       )}
+      {bankDebitSetupError && <BankSetupErrorMessage />}
     </div>
   )
 }
