@@ -54,9 +54,9 @@ describe("BankDebitForm", () => {
 
     render(
       <BankDebitForm
-        bankAccountHasInsufficientFunds={false}
         order={testOrder}
         returnURL={""}
+        bankAccountHasInsufficientFunds={false}
       />
     )
 
@@ -72,9 +72,9 @@ describe("BankDebitForm", () => {
 
     render(
       <BankDebitForm
-        bankAccountHasInsufficientFunds={false}
         order={testOrder}
         returnURL={""}
+        bankAccountHasInsufficientFunds={false}
       />
     )
 
@@ -89,9 +89,9 @@ describe("BankDebitForm", () => {
 
     render(
       <BankDebitForm
-        bankAccountHasInsufficientFunds={false}
         order={testOrder}
         returnURL={""}
+        bankAccountHasInsufficientFunds={false}
       />
     )
 
@@ -122,6 +122,22 @@ describe("BankDebitForm", () => {
       flow: "BUY",
       order_id: "1234",
       subject: "TODO:_clicked_save_and_continue",
+    })
+  })
+
+  describe("with not enough balance", () => {
+    it("renders correct not enough funds message", () => {
+      const screen = render(
+        <BankDebitForm
+          order={testOrder}
+          returnURL={""}
+          bankAccountHasInsufficientFunds={true}
+        />
+      )
+
+      expect(
+        screen.queryByText("This bank account doesn’t have enough funds.")
+      ).toBeInTheDocument()
     })
   })
 })
