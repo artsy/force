@@ -8,7 +8,8 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 export type CommerceFixFailedPaymentInput = {
     clientMutationId?: string | null | undefined;
     creditCardId: string;
-    offerId: string;
+    offerId?: string | null | undefined;
+    orderId?: string | null | undefined;
 };
 export type NewPaymentRouteSetOrderPaymentMutationVariables = {
     input: CommerceFixFailedPaymentInput;
