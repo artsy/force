@@ -22,17 +22,15 @@ describe("BankDebitProvider", () => {
     )
 
   it("renders bank debit form", () => {
-    reactMock.useState = setHookState({
-      clientSecret: "client-secret",
-    })
     const wrapper = getWrapper()
     expect(wrapper.find(BankDebitForm).length).toBe(1)
   })
 
   it("renders error when we fail to retrieve client secret and no bank debit form is rendered", () => {
-    React.useState = jest.fn().mockReturnValue(["", {}])
+    reactMock.useState = setHookState({
+      bankDebitSetupError: true,
+    })
     const wrapper = getWrapper()
-    expect(wrapper.find(BankDebitForm).length).toBe(0)
     expect(wrapper.html()).toMatch(
       "Bank transfer is not available at the moment"
     )

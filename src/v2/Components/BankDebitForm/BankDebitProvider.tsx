@@ -34,6 +34,7 @@ const BankSetupErrorMessage = () => {
 
 export const BankDebitProvider: FC<Props> = ({ order }) => {
   const [clientSecret, setClientSecret] = useState("")
+  const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -61,6 +62,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
             .error
         }
       } catch (error) {
+        setBankDebitSetupError(true)
         logger.error(error)
       }
     }
@@ -95,13 +97,12 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
 
   return (
     <div>
-      {clientSecret ? (
+      {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm order={order} returnURL={returnURL} />
         </Elements>
-      ) : (
-        <BankSetupErrorMessage />
       )}
+      {bankDebitSetupError && <BankSetupErrorMessage />}
     </div>
   )
 }
