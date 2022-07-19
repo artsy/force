@@ -77,9 +77,10 @@ export const PaymentRoute: FC<Props> = props => {
   const [shouldPollAccountBalance, setShouldPollAccountBalance] = useState(
     false
   )
-  const [showInsuffiencyFundsError, setShowInsuffiencyFundsError] = useState(
-    false
-  )
+  const [
+    bankAccountHasInsufficientFunds,
+    setBankAccountHasInsufficientFunds,
+  ] = useState(false)
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -238,7 +239,7 @@ export const PaymentRoute: FC<Props> = props => {
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setShouldPollAccountBalance(false)
     if (displayInsufficientFundsError) {
-      setShowInsuffiencyFundsError(true)
+      setBankAccountHasInsufficientFunds(true)
       return
     }
     props.router.push(`/orders/${props.order.internalID}/review`)
@@ -282,8 +283,12 @@ export const PaymentRoute: FC<Props> = props => {
                 onPaymentMethodChange={setSelectedPaymentMethod}
                 onSetPaymentSuccess={onSetPaymentSuccess}
                 onSetPaymentError={onSetPaymentError}
-                showInsuffiencyFundsError={showInsuffiencyFundsError}
-                setShowInsuffiencyFundsError={setShowInsuffiencyFundsError}
+                bankAccountHasInsufficientFunds={
+                  bankAccountHasInsufficientFunds
+                }
+                setBankAccountHasInsufficientFunds={
+                  setBankAccountHasInsufficientFunds
+                }
               />
             )}
           </>

@@ -39,8 +39,8 @@ export interface Props {
   CreditCardPicker: RefObject<CreditCardPicker>
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
-  showInsuffiencyFundsError: boolean
-  setShowInsuffiencyFundsError: (arg: boolean) => void
+  bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -55,8 +55,8 @@ export const PaymentContent: FC<Props> = props => {
     onPaymentMethodChange,
     onSetPaymentSuccess,
     onSetPaymentError,
-    showInsuffiencyFundsError,
-    setShowInsuffiencyFundsError,
+    bankAccountHasInsufficientFunds,
+    setBankAccountHasInsufficientFunds,
   } = props
   const tracking = useTracking()
 
@@ -145,8 +145,10 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           onSetPaymentSuccess={onSetPaymentSuccess}
           onSetPaymentError={onSetPaymentError}
-          showInsuffiencyFundsError={showInsuffiencyFundsError}
-          setShowInsuffiencyFundsError={setShowInsuffiencyFundsError}
+          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+          setBankAccountHasInsufficientFunds={
+            setBankAccountHasInsufficientFunds
+          }
         />
       </Collapse>
 
@@ -211,7 +213,7 @@ const getAvailablePaymentMethods = (
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
     <BorderedRadio
-      key={1}
+      key="CREDIT_CARD"
       value={paymentMethod}
       label={
         <>
@@ -226,7 +228,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
-        key={2}
+        key="WIRE_TRANSFER"
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
           <>
@@ -242,7 +244,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <BorderedRadio
-        key={3}
+        key="US_BANK_ACCOUNT"
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
           <>

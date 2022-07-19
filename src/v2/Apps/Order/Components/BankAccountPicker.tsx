@@ -21,8 +21,8 @@ interface Props {
   me: BankAccountPicker_me
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
-  showInsuffiencyFundsError: boolean
-  setShowInsuffiencyFundsError: (arg: boolean) => void
+  bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -31,8 +31,8 @@ export const BankAccountPicker: FC<Props> = props => {
     order,
     onSetPaymentSuccess,
     onSetPaymentError,
-    showInsuffiencyFundsError,
-    setShowInsuffiencyFundsError,
+    bankAccountHasInsufficientFunds,
+    setBankAccountHasInsufficientFunds,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -97,7 +97,7 @@ export const BankAccountPicker: FC<Props> = props => {
       {userHasExistingBankAccounts && (
         <RadioGroup
           onSelect={val => {
-            setShowInsuffiencyFundsError(false)
+            setBankAccountHasInsufficientFunds(false)
             if (val === "new") {
               setBankAccountSelection({ type: "new", id: "" })
             } else {
@@ -136,7 +136,7 @@ export const BankAccountPicker: FC<Props> = props => {
       <Collapse open={bankAccountSelection.type === "new"}>
         <BankDebitProvider order={order} />
       </Collapse>
-      {showInsuffiencyFundsError && (
+      {bankAccountHasInsufficientFunds && (
         <>
           <Message
             title="This bank account doesn’t have enough funds."
@@ -154,7 +154,9 @@ export const BankAccountPicker: FC<Props> = props => {
         <>
           <Button
             onClick={handleContinue}
-            disabled={!bankAccountSelection.type || showInsuffiencyFundsError}
+            disabled={
+              !bankAccountSelection.type || bankAccountHasInsufficientFunds
+            }
             variant="primaryBlack"
             width={["100%", "50%"]}
           >
