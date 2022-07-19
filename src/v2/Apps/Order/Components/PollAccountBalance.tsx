@@ -42,40 +42,33 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     clearWhen: shouldStopPolling,
   })
 
-  let userHasEnoughBalance = false
-  let userHasInsufficientBalance = false
-  let balanceIsNotAvailable = false
-
-  if (
-    !commerceBankAccountBalance ||
-    !commerceBankAccountBalance.balanceCents ||
-    !commerceBankAccountBalance.currencyCode
-  ) {
-    if (shouldStopPolling) {
-      // we didn't receive the balance from Stripe and polling time expired
-      balanceIsNotAvailable = true
-    }
-    return null
-  }
-
-  const { balanceCents, currencyCode } = commerceBankAccountBalance
-
-  userHasEnoughBalance = !!(
-    balanceCents >= buyerTotalCents && orderCurrencyCode === currencyCode
-  )
-
-  // we receive the balance from Stripe and it's insufficient to buy the artwork
-  userHasInsufficientBalance = !!(
-    balanceCents < buyerTotalCents && orderCurrencyCode === currencyCode
-  )
-
-  // if the user has enough balance or balance is not available, we don't need to display the error
-  if (userHasEnoughBalance || balanceIsNotAvailable) {
+  /*
+    poll is complete; that means the balance is not available to check so far.
+    therefore fire onBalanceCheckComplete with false not to display error
+  */
+  if (shouldStopPolling) {
     clearTimeout(timeoutID)
     onBalanceCheckComplete(false)
-  } else if (userHasInsufficientBalance) {
+  }
+
+  /*
+    check to see if balance and currency available from Stripe
+    stringfy balanceCents since we want to treat it as available balance when 0 
+  */
+  if (
+    commerceBankAccountBalance &&
+    commerceBankAccountBalance?.balanceCents?.toString() &&
+    commerceBankAccountBalance?.currencyCode
+  ) {
+    // make the check and fire onBalanceCheckComplete with the check result
+    const { balanceCents, currencyCode } = commerceBankAccountBalance
+
+    const enoughBalance = !!(
+      balanceCents >= buyerTotalCents && currencyCode === orderCurrencyCode
+    )
+
+    onBalanceCheckComplete(!enoughBalance)
     clearTimeout(timeoutID)
-    onBalanceCheckComplete(true)
   }
 
   return <PollAccountBalancePlaceholder />

@@ -222,7 +222,7 @@ export const PaymentRoute: FC<Props> = props => {
     getClientParam("redirect_status") === "succeeded"
 
   const onSetPaymentSuccess = () => {
-    if (balanceCheckEnabled && selectedPaymentMethod === "US_BANK_ACCOUNT") {
+    if (balanceCheckEnabled && setupIntentId) {
       setShouldPollAccountBalance(true)
       setIsPaymentSetupComplete(true)
       return
