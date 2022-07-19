@@ -22,6 +22,9 @@ describe("BankDebitProvider", () => {
     )
 
   it("renders bank debit form", () => {
+    reactMock.useState = setHookState({
+      clientSecret: "client-secret",
+    })
     const wrapper = getWrapper()
     expect(wrapper.find(BankDebitForm).length).toBe(1)
   })
