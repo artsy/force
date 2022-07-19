@@ -1,4 +1,4 @@
-import { FC, RefObject, ReactElement } from "react"
+import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
 import {
   Button,
   Clickable,
@@ -60,19 +60,26 @@ export const PaymentContent: FC<Props> = props => {
   } = props
   const tracking = useTracking()
 
-  const trackClickedPaymentMethod = (val: string): void => {
-    const event = {
-      subject: "click_payment_method",
-      payment_method: val,
-      action: ActionType.clickedPaymentMethod,
-      flow: order.mode!,
-      context_page_owner_type: OwnerType.ordersPayment,
-      order_id: order.internalID,
-      amount: order.buyerTotal,
-      currency: order.currencyCode,
+  const previousPaymentMethod = useRef<string | null>(null)
+
+  useEffect(() => {
+    if (paymentMethod !== previousPaymentMethod.current) {
+      const { mode, internalID, buyerTotal, currencyCode } = order
+      previousPaymentMethod.current = paymentMethod
+
+      const event = {
+        subject: "click_payment_method",
+        payment_method: paymentMethod,
+        action: ActionType.clickedPaymentMethod,
+        flow: mode!,
+        context_page_owner_type: OwnerType.ordersPayment,
+        order_id: internalID,
+        amount: buyerTotal,
+        currency: currencyCode,
+      }
+      tracking.trackEvent(event)
     }
-    tracking.trackEvent(event)
-  }
+  }, [order, paymentMethod, tracking])
 
   // we can be sure that when 1 method is available, it'll always be credit card
   if (order.availablePaymentMethods.length === 1) {
@@ -100,7 +107,6 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         data-test="payment-methods"
         onSelect={val => {
-          trackClickedPaymentMethod(val)
           onPaymentMethodChange(val as CommercePaymentMethodEnum)
         }}
         defaultValue={paymentMethod}

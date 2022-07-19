@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { BuyOrderWithShippingDetails } from "v2/Apps/__tests__/Fixtures/Order"
 import { useSystemContext, useTracking } from "v2/System"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
@@ -64,64 +64,6 @@ describe("BankDebitForm", () => {
       flow: "BUY",
       order_id: "1234",
       subject: "bank_account_selected",
-    })
-  })
-
-  it("tracks a non-`empty` event from the onChange handler", () => {
-    mockEvent = { empty: false }
-
-    render(
-      <BankDebitForm
-        order={testOrder}
-        returnURL={""}
-        bankAccountHasInsufficientFunds={false}
-      />
-    )
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      flow: "BUY",
-      order_id: "1234",
-      subject: "TODO:_not_empty_thing",
-    })
-  })
-  it("tracks a both complete and non-empty events if both apply", () => {
-    mockEvent = { complete: true, empty: false }
-
-    render(
-      <BankDebitForm
-        order={testOrder}
-        returnURL={""}
-        bankAccountHasInsufficientFunds={false}
-      />
-    )
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      flow: "BUY",
-      order_id: "1234",
-      subject: "bank_account_selected",
-    })
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      flow: "BUY",
-      order_id: "1234",
-      subject: "TODO:_not_empty_thing",
-    })
-  })
-
-  it("tracks a click on the continue button", () => {
-    const screen = render(
-      <BankDebitForm
-        order={testOrder}
-        returnURL={""}
-        bankAccountHasInsufficientFunds={false}
-      />
-    )
-
-    fireEvent.click(screen.getByText("Save and Continue"))
-    expect(trackEvent).toHaveBeenCalledWith({
-      flow: "BUY",
-      order_id: "1234",
-      subject: "TODO:_clicked_save_and_continue",
     })
   })
 
