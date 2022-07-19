@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import {
+  ArtworkIcon,
   BellIcon,
   HeartIcon,
   PowerIcon,
@@ -88,6 +89,14 @@ export const NavBarUserMenu: React.FC = () => {
         onClick={trackClick}
       >
         <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
+      </NavBarMenuItemLink>
+
+      <NavBarMenuItemLink
+        aria-label="View your Collection"
+        to="/settings/my-collection"
+        onClick={trackClick}
+      >
+        <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
       </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
