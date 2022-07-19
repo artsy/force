@@ -100,7 +100,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
         </Flex>
 
         {showFooter && (
-          <Flex bg="white100">
+          <Flex bg="white100" zIndex={Z.footer}>
             <AppContainer>
               <HorizontalPadding>
                 <Footer />
