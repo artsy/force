@@ -6,7 +6,7 @@ const MyCollectionApp = loadable(
   () =>
     import(/* webpackChunkName: "myCollectionBundle" */ "./MyCollectionApp"),
   {
-    resolveComponent: component => component.MyCollectionArtworksQueryRenderer,
+    resolveComponent: component => component.MyCollectionAppRefetchContainer,
   }
 )
 
