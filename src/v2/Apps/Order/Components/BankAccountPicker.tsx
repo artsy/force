@@ -8,10 +8,9 @@ import {
   Spacer,
   Collapse,
   Button,
-  Message,
-  Text,
 } from "@artsy/palette"
 import { BankDebitDetails } from "./BankDebitDetails"
+import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_order.graphql"
 import { useSetPayment } from "v2/Apps/Order/Components/Mutations/useSetPayment"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -133,25 +132,17 @@ export const BankAccountPicker: FC<Props> = props => {
         </RadioGroup>
       )}
       <Spacer mb={4} />
+
       <Collapse open={bankAccountSelection.type === "new"}>
-        <BankDebitProvider order={order} />
+        <BankDebitProvider
+          order={order}
+          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+        />
       </Collapse>
-      {bankAccountHasInsufficientFunds && (
-        <>
-          <Message
-            title="This bank account doesn’t have enough funds."
-            variant="error"
-          >
-            <Text variant="sm">
-              Please choose or link to another bank account or select another
-              payment method.
-            </Text>
-          </Message>
-          <Spacer mt={2} />
-        </>
-      )}
+
       {bankAccountSelection.type === "existing" && (
         <>
+          {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Button
             onClick={handleContinue}
             disabled={

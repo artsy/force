@@ -13,14 +13,20 @@ import {
 } from "@artsy/palette"
 import { useSystemContext, useTracking } from "v2/System"
 import { LoadingArea } from "../LoadingArea"
+import { InsufficientFundsError } from "v2/Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "v2/Apps/Order/OrderApp"
 
 interface Props {
   order: { mode: string | null; internalID: string }
   returnURL: string
+  bankAccountHasInsufficientFunds: boolean
 }
 
-export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
+export const BankDebitForm: FC<Props> = ({
+  order,
+  returnURL,
+  bankAccountHasInsufficientFunds,
+}) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
@@ -136,9 +142,11 @@ export const BankDebitForm: FC<Props> = ({ order, returnURL }) => {
         </Flex>
         <Spacer mt={4} />
 
+        {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+
         <Button
           onClick={trackClickedContinue}
-          disabled={!stripe}
+          disabled={!stripe || bankAccountHasInsufficientFunds}
           variant="primaryBlack"
           width={["100%", "50%"]}
         >
