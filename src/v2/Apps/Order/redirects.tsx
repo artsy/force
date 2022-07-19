@@ -91,6 +91,11 @@ const goToStatusIfNotOfferOrder = goToStatusIf(
   "Not an offer order"
 )
 
+const goToStatusIfNotCreditCardOffer = goToStatusIf(
+  order => order.paymentMethod === "CREDIT_CARD" && order.mode !== "OFFER",
+  "Not an offer order"
+)
+
 const goToStatusIfNotAwaitingBuyerResponse = goToStatusIf(
   order => order.awaitingResponseFrom !== "BUYER",
   "Not currently awaiting buyer response"
@@ -174,7 +179,7 @@ export const redirects: RedirectRecord<OrderQuery> = {
     {
       path: "payment/new",
       rules: [
-        goToStatusIfNotOfferOrder,
+        goToStatusIfNotCreditCardOffer,
         goToStatusIfOrderIsNotSubmitted,
         goToStatusIfNotLastTransactionFailed,
       ],

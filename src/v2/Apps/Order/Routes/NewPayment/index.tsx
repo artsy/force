@@ -97,7 +97,8 @@ export class NewPaymentRoute extends Component<
         await this.fixFailedPayment({
           input: {
             creditCardId: result.creditCardId,
-            offerId: this.props.order.lastOffer?.internalID!,
+            offerId: this.props.order.lastOffer?.internalID! || null,
+            orderId: this.props.order.internalID!,
           },
         })
       ).commerceFixFailedPayment?.orderOrError!
