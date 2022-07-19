@@ -52,7 +52,13 @@ describe("BankDebitForm", () => {
   it("tracks a `complete` event from the onChange handler", () => {
     mockEvent = { complete: true, empty: true }
 
-    render(<BankDebitForm order={testOrder} returnURL={""} />)
+    render(
+      <BankDebitForm
+        order={testOrder}
+        returnURL={""}
+        bankAccountHasInsufficientFunds={false}
+      />
+    )
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
@@ -64,7 +70,13 @@ describe("BankDebitForm", () => {
   it("tracks a non-`empty` event from the onChange handler", () => {
     mockEvent = { empty: false }
 
-    render(<BankDebitForm order={testOrder} returnURL={""} />)
+    render(
+      <BankDebitForm
+        order={testOrder}
+        returnURL={""}
+        bankAccountHasInsufficientFunds={false}
+      />
+    )
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
@@ -75,7 +87,13 @@ describe("BankDebitForm", () => {
   it("tracks a both complete and non-empty events if both apply", () => {
     mockEvent = { complete: true, empty: false }
 
-    render(<BankDebitForm order={testOrder} returnURL={""} />)
+    render(
+      <BankDebitForm
+        order={testOrder}
+        returnURL={""}
+        bankAccountHasInsufficientFunds={false}
+      />
+    )
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
@@ -91,13 +109,35 @@ describe("BankDebitForm", () => {
   })
 
   it("tracks a click on the continue button", () => {
-    const screen = render(<BankDebitForm order={testOrder} returnURL={""} />)
+    const screen = render(
+      <BankDebitForm
+        order={testOrder}
+        returnURL={""}
+        bankAccountHasInsufficientFunds={false}
+      />
+    )
 
     fireEvent.click(screen.getByText("Save and Continue"))
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
       order_id: "1234",
       subject: "TODO:_clicked_save_and_continue",
+    })
+  })
+
+  describe("with not enough balance", () => {
+    it("renders correct not enough funds message", () => {
+      const screen = render(
+        <BankDebitForm
+          order={testOrder}
+          returnURL={""}
+          bankAccountHasInsufficientFunds={true}
+        />
+      )
+
+      expect(
+        screen.queryByText("This bank account doesn’t have enough funds.")
+      ).toBeInTheDocument()
     })
   })
 })

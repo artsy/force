@@ -19,6 +19,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { getClientParam } from "v2/Utils/getClientParam"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
+import { useFeatureFlag } from "v2/System/useFeatureFlag"
 
 import { Box, Button, Flex, Spacer } from "@artsy/palette"
 import { CreditCardPicker } from "v2/Apps/Order/Components/CreditCardPicker"
@@ -33,6 +34,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { PaymentContent } from "./PaymentContent"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
+import { PollAccountBalanceQueryRenderer } from "../../Components/PollAccountBalance"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -59,6 +61,8 @@ type Props = PaymentProps & StripeProps
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export const PaymentRoute: FC<Props> = props => {
+  const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
+
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
   const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
   const { order, isCommittingMutation } = props
@@ -69,6 +73,14 @@ export const PaymentRoute: FC<Props> = props => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
+  const [isPaymentSetupComplete, setIsPaymentSetupComplete] = useState(false)
+  const [shouldPollAccountBalance, setShouldPollAccountBalance] = useState(
+    false
+  )
+  const [
+    bankAccountHasInsufficientFunds,
+    setBankAccountHasInsufficientFunds,
+  ] = useState(false)
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -210,12 +222,27 @@ export const PaymentRoute: FC<Props> = props => {
     getClientParam("redirect_status") === "succeeded"
 
   const onSetPaymentSuccess = () => {
+    if (balanceCheckEnabled && setupIntentId) {
+      setShouldPollAccountBalance(true)
+      setIsPaymentSetupComplete(true)
+      return
+    }
+
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   const onSetPaymentError = error => {
     logger.error(error)
     props.dialog.showErrorDialog()
+  }
+
+  const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
+    setShouldPollAccountBalance(false)
+    if (displayInsufficientFundsError) {
+      setBankAccountHasInsufficientFunds(true)
+      return
+    }
+    props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   return (
@@ -227,13 +254,22 @@ export const PaymentRoute: FC<Props> = props => {
       <TwoColumnLayout
         Content={
           <>
-            {isSettingPayment ? (
+            {isSettingPayment &&
+            !isPaymentSetupComplete &&
+            !shouldPollAccountBalance ? (
               <SetPaymentByStripeIntent
                 order={order}
                 setupIntentId={setupIntentId!}
                 saveAccount={saveAccount!}
                 onSuccess={onSetPaymentSuccess}
                 onError={onSetPaymentError}
+              />
+            ) : shouldPollAccountBalance && setupIntentId ? (
+              <PollAccountBalanceQueryRenderer
+                setupIntentId={setupIntentId}
+                onBalanceCheckComplete={onBalanceCheckComplete}
+                buyerTotalCents={order.buyerTotalCents!}
+                orderCurrencyCode={order.currencyCode}
               />
             ) : (
               <PaymentContent
@@ -247,6 +283,12 @@ export const PaymentRoute: FC<Props> = props => {
                 onPaymentMethodChange={setSelectedPaymentMethod}
                 onSetPaymentSuccess={onSetPaymentSuccess}
                 onSetPaymentError={onSetPaymentError}
+                bankAccountHasInsufficientFunds={
+                  bankAccountHasInsufficientFunds
+                }
+                setBankAccountHasInsufficientFunds={
+                  setBankAccountHasInsufficientFunds
+                }
               />
             )}
           </>
@@ -307,6 +349,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment Payment_order on CommerceOrder {
         availablePaymentMethods
+        buyerTotalCents
         internalID
         mode
         currencyCode

@@ -18,6 +18,7 @@ describe("BankDebitProvider", () => {
           bankAccountId: "bank-id-1",
           " $refType": "BankAccountPicker_order",
         }}
+        bankAccountHasInsufficientFunds={false}
       />
     )
 

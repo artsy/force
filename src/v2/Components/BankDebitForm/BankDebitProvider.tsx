@@ -8,10 +8,6 @@ import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_orde
 import createLogger from "v2/Utils/logger"
 import { Message, Spacer, Text } from "@artsy/palette"
 
-interface Props {
-  order: BankAccountPicker_order
-}
-
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
@@ -32,7 +28,15 @@ const BankSetupErrorMessage = () => {
   )
 }
 
-export const BankDebitProvider: FC<Props> = ({ order }) => {
+interface Props {
+  order: BankAccountPicker_order
+  bankAccountHasInsufficientFunds: boolean
+}
+
+export const BankDebitProvider: FC<Props> = ({
+  order,
+  bankAccountHasInsufficientFunds,
+}) => {
   const [clientSecret, setClientSecret] = useState("")
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
@@ -97,7 +101,11 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
     <div>
       {clientSecret ? (
         <Elements options={options} stripe={stripePromise}>
-          <BankDebitForm order={order} returnURL={returnURL} />
+          <BankDebitForm
+            order={order}
+            returnURL={returnURL}
+            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+          />
         </Elements>
       ) : (
         <BankSetupErrorMessage />

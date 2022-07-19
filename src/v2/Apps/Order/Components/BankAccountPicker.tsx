@@ -10,6 +10,7 @@ import {
   Button,
 } from "@artsy/palette"
 import { BankDebitDetails } from "./BankDebitDetails"
+import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_order.graphql"
 import { useSetPayment } from "v2/Apps/Order/Components/Mutations/useSetPayment"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -19,6 +20,8 @@ interface Props {
   me: BankAccountPicker_me
   onSetPaymentSuccess: () => void
   onSetPaymentError: (error: Error) => void
+  bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -27,6 +30,8 @@ export const BankAccountPicker: FC<Props> = props => {
     order,
     onSetPaymentSuccess,
     onSetPaymentError,
+    bankAccountHasInsufficientFunds,
+    setBankAccountHasInsufficientFunds,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -91,6 +96,7 @@ export const BankAccountPicker: FC<Props> = props => {
       {userHasExistingBankAccounts && (
         <RadioGroup
           onSelect={val => {
+            setBankAccountHasInsufficientFunds(false)
             if (val === "new") {
               setBankAccountSelection({ type: "new", id: "" })
             } else {
@@ -126,14 +132,22 @@ export const BankAccountPicker: FC<Props> = props => {
         </RadioGroup>
       )}
       <Spacer mb={4} />
+
       <Collapse open={bankAccountSelection.type === "new"}>
-        <BankDebitProvider order={order} />
+        <BankDebitProvider
+          order={order}
+          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+        />
       </Collapse>
+
       {bankAccountSelection.type === "existing" && (
         <>
+          {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Button
             onClick={handleContinue}
-            disabled={!bankAccountSelection.type}
+            disabled={
+              !bankAccountSelection.type || bankAccountHasInsufficientFunds
+            }
             variant="primaryBlack"
             width={["100%", "50%"]}
           >
