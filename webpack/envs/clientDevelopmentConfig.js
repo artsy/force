@@ -10,12 +10,10 @@ import { WebpackManifestPlugin } from "webpack-manifest-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
 import webpack from "webpack"
-
-import { basePath, env } from "../utils/env"
-import { splitChunks } from "./splitChunks"
-import { sharedPlugins } from "./sharedPlugins"
-
-import { babelLoader, ejsLoader, mjsLoader } from "./sharedLoaders"
+import { basePath, webpackEnv } from "../webpackEnv"
+import { splitChunks } from "../bundleSplitting"
+import { sharedPlugins } from "../sharedPlugins"
+import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
 
 import {
   cache,
@@ -25,74 +23,79 @@ import {
   mode,
   resolve,
   stats,
-} from "./sharedConfig"
+} from "../sharedConfig"
 
-export const clientDevelopmentConfig = () => ({
-  cache,
-  devtool,
-  entry: {
-    "artsy-entry": [
-      "webpack-hot-middleware/client?reload=true",
-      path.resolve(process.cwd(), "src/v2/client.tsx"),
-    ],
-  },
-  experiments,
-  externals,
-  mode,
-  module: {
-    rules: [babelLoader, ejsLoader, mjsLoader],
-  },
-  optimization: {
-    concatenateModules: env.webpackConcatenate,
-    runtimeChunk: "single", // Extract webpack runtime code into it's own file
-    splitChunks,
+console.log("\n[Force] Building client-side development code...\n")
 
-    // Webpack does extra algorithmic work to optimize the output for size and
-    // load performance. These optimizations are performant for smaller codebases,
-    // but can be costly in larger ones.
-    removeAvailableModules: env.isDevelopment,
-    removeEmptyChunks: env.isDevelopment,
-  },
-  output: {
-    filename: "[name].js",
-    path: path.resolve(basePath, "public/assets"),
-    publicPath: "/assets/",
-    pathinfo: false,
-  },
-  plugins: [
-    ...sharedPlugins(),
-    new webpack.HotModuleReplacementPlugin(),
-    new CaseSensitivePathsPlugin(),
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        diagnosticOptions: {
-          semantic: true,
-          syntactic: true,
+export const clientDevelopmentConfig = () => {
+  return {
+    cache,
+    devtool,
+    entry: {
+      "artsy-entry": [
+        "webpack-hot-middleware/client?reload=true",
+        path.resolve(process.cwd(), "src/v2/client.tsx"),
+      ],
+    },
+    experiments,
+    externals,
+    mode,
+    module: {
+      rules: [babelLoader, ejsLoader, mjsLoader],
+    },
+    optimization: {
+      runtimeChunk: "single", // Extract webpack runtime code into it's own file
+      splitChunks,
+
+      // Webpack does extra algorithmic work to optimize the output for size and
+      // load performance. These optimizations are performant for smaller codebases,
+      // but can be costly in larger ones.
+      removeAvailableModules: webpackEnv.isDevelopment,
+      removeEmptyChunks: webpackEnv.isDevelopment,
+    },
+    output: {
+      filename: "[name].js",
+      path: path.resolve(basePath, "public/assets"),
+      publicPath: "/assets/",
+      pathinfo: false,
+    },
+    plugins: [
+      ...sharedPlugins(),
+      new webpack.HotModuleReplacementPlugin(),
+      new CaseSensitivePathsPlugin(),
+      new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          diagnosticOptions: {
+            semantic: true,
+            syntactic: true,
+          },
         },
-      },
-      formatter: { type: "codeframe", options: { highlightCode: true } },
-    }),
-    new LoadablePlugin({
-      filename: "loadable-stats.json",
-      path: path.resolve(basePath, "public", "assets"),
-    }),
-    new HtmlWebpackPlugin({
-      filename: path.resolve(basePath, "public", "index.ejs"),
-      inject: false,
-      template: path.resolve(basePath, "src", "v2", "index.ejs"),
-    }),
-    new ReactRefreshWebpackPlugin({
-      overlay: false,
-    }),
-    new SimpleProgressWebpackPlugin({
-      format: "minimal",
-    }),
-    new TimeFixPlugin(),
-    new WebpackManifestPlugin({
-      basePath: "/assets/",
-      fileName: path.resolve(basePath, "manifest.json"),
-    }),
-  ],
-  resolve,
-  stats,
-})
+        formatter: { type: "codeframe", options: { highlightCode: true } },
+      }),
+      new LoadablePlugin({
+        filename: "loadable-stats.json",
+        path: path.resolve(basePath, "public", "assets"),
+      }),
+      new HtmlWebpackPlugin({
+        filename: path.resolve(basePath, "public", "index.ejs"),
+        inject: false,
+        template: path.resolve(basePath, "src", "v2", "index.ejs"),
+      }),
+      new ReactRefreshWebpackPlugin({
+        overlay: false,
+      }),
+      new SimpleProgressWebpackPlugin({
+        format: "minimal",
+      }),
+      new TimeFixPlugin(),
+      new WebpackManifestPlugin({
+        basePath: "/assets/",
+        fileName: path.resolve(basePath, "manifest.json"),
+      }),
+    ],
+    resolve,
+    stats,
+  }
+}
+
+export default clientDevelopmentConfig()

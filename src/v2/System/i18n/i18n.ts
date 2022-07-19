@@ -5,7 +5,7 @@ import { getENV } from "v2/Utils/getENV"
 const translations = require("v2/System/locales/en-US/translation.json")
 
 i18n.use(initReactI18next).init({
-  debug: getENV("ENABLE_I18N_DEBUG"),
+  debug: getENV("ENABLE_I18N_DEBUG") === "true",
   resources: {
     ["en-US"]: {
       translation: translations,

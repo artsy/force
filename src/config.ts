@@ -14,13 +14,15 @@ if (process.env.NODE_ENV !== "test") {
   }
 }
 
+export const PORT: any = 4000
+
 export const ACTIVE_BIDS_POLL_INTERVAL: any = 5000
 export const ADMIN_URL: any = "https://admin.artsy.net"
 export const ALLOWED_VANITY_ASSETS: any = "videos/*|vrview/*|hls-videos/*"
 export const API_REQUEST_TIMEOUT: any = 5000
 export const API_URL: any = "http://localhost:3000"
 export const APP_TIMEOUT: any = null
-export const APP_URL: any = "http://localhost:5000"
+export const APP_URL: any = `http://localhost:${process.env.PORT}`
 export const APPLE_CLIENT_ID: any = null
 export const APPLE_KEY_ID: any = null
 export const APPLE_PRIVATE_KEY: any = null
@@ -91,7 +93,6 @@ export const PAGE_CACHE_TYPES: any = "artist"
 export const PAGE_CACHE_VERSION: any = "1"
 export const PC_ARTSY_CHANNEL: any = "5759e508b5989e6f98f77999"
 export const PC_AUCTION_CHANNEL: any = "5759e4d7b5989e6f98f77997"
-export const PORT: any = 4000
 export const POSITRON_URL: any = "http://writer.artsy.net"
 export const PREDICTION_URL: any = "https://live.artsy.net"
 export const PUBLIC_GOOGLE_MAPS_API_KEY: any = null

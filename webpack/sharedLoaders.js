@@ -1,7 +1,7 @@
 // @ts-check
 
 import path from "path"
-import { basePath, env } from "../utils/env"
+import { basePath, webpackEnv } from "./webpackEnv"
 
 export const babelLoader = {
   exclude: /(node_modules)/,
@@ -12,10 +12,9 @@ export const babelLoader = {
       loader: "babel-loader",
       options: {
         cacheDirectory:
-          !env.onCi && path.join(basePath, ".cache", "babel/force"),
+          !process.env.CI && path.join(basePath, ".cache", "babel/force"),
         plugins: [
-          "lodash",
-          env.isDevelopment && require.resolve("react-refresh/babel"),
+          webpackEnv.isDevelopment && require.resolve("react-refresh/babel"),
         ].filter(Boolean),
         presets: [["@babel/preset-env", { modules: false }]],
       },

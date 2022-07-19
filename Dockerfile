@@ -33,7 +33,7 @@
 #                  |           |                                  |                 |
 #  +---------------+--+    +---+--------------+                                     |
 #  |                  |    |                  |                                     |
-#  |  builder-assets  |    |  builder-server  |                                     |
+#  |  builder-client  |    |  builder-server  |                                     |
 #  |                  |    |                  |                                     |
 #  +---------------+--+    +---+--------------+                                     |
 #                  ^           ^                                  ^                 |
@@ -126,11 +126,11 @@ COPY .env.oss \
   ./
 
 # ---------------------------------------------------------
-# Compile assets
+# Compile client
 # ---------------------------------------------------------
-FROM builder-src as builder-assets
+FROM builder-src as builder-client
 
-RUN yarn build:assets
+RUN yarn build:client:prod
 
 # ---------------------------------------------------------
 # Compile server
@@ -138,7 +138,7 @@ RUN yarn build:assets
 FROM builder-src as builder-server
 
 # Build application
-RUN yarn build:server
+RUN yarn build:server:prod
 
 # ---------------------------------------------------------
 # All development assets
@@ -149,9 +149,9 @@ FROM builder-src as builder
 COPY ./scripts ./scripts
 
 # Client assets
-COPY --from=builder-assets /app/manifest.json .
-COPY --from=builder-assets /app/public ./public
-COPY --from=builder-assets /app/src ./src
+COPY --from=builder-client /app/manifest.json .
+COPY --from=builder-client /app/public ./public
+COPY --from=builder-client /app/src ./src
 
 # Server assets
 COPY --from=builder-server /app/server.dist.js .

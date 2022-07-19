@@ -1,28 +1,17 @@
 // @ts-check
 
-import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin"
 import webpack from "webpack"
-import { env } from "../utils/env"
 
 export const sharedPlugins = () => [
-  new LodashModuleReplacementPlugin({
-    collections: true,
-    currying: true,
-    flattening: true,
-    guards: true,
-    shorthands: true,
-  }),
-
   new NodePolyfillPlugin(),
 
   new webpack.DefinePlugin({
     "process.env": {
-      NODE_ENV: JSON.stringify(env.nodeEnv),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     },
   }),
-  // Remove moment.js localization files
   new webpack.IgnorePlugin({
     resourceRegExp: /^\.\/locale$/,
     contextRegExp: /moment$/,
