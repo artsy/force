@@ -1,11 +1,4 @@
-import {
-  FC,
-  RefObject,
-  ReactElement,
-  useEffect,
-  useCallback,
-  useState,
-} from "react"
+import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
 import {
   Button,
   Clickable,
@@ -67,17 +60,16 @@ export const PaymentContent: FC<Props> = props => {
   } = props
   const tracking = useTracking()
 
-  const [
-    trackedInitialPaymentMethod,
-    setTrackedInitialPaymentMethod,
-  ] = useState(false)
+  const previousPaymentMethod = useRef<string | null>(null)
 
-  const trackClickedPaymentMethod = useCallback(
-    (val: string): void => {
+  useEffect(() => {
+    if (paymentMethod !== previousPaymentMethod.current) {
       const { mode, internalID, buyerTotal, currencyCode } = order
+      previousPaymentMethod.current = paymentMethod
+
       const event = {
         subject: "click_payment_method",
-        payment_method: val,
+        payment_method: paymentMethod,
         action: ActionType.clickedPaymentMethod,
         flow: mode!,
         context_page_owner_type: OwnerType.ordersPayment,
@@ -86,17 +78,8 @@ export const PaymentContent: FC<Props> = props => {
         currency: currencyCode,
       }
       tracking.trackEvent(event)
-    },
-    [tracking, order]
-  )
-
-  // TODO: Either fire it here (maybe need to memoize the function? or later)
-  useEffect(() => {
-    if (!trackedInitialPaymentMethod) {
-      trackClickedPaymentMethod(paymentMethod)
-      setTrackedInitialPaymentMethod(true)
     }
-  }, [trackedInitialPaymentMethod, trackClickedPaymentMethod, paymentMethod])
+  }, [order, paymentMethod, tracking])
 
   // we can be sure that when 1 method is available, it'll always be credit card
   if (order.availablePaymentMethods.length === 1) {
@@ -124,7 +107,6 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         data-test="payment-methods"
         onSelect={val => {
-          trackClickedPaymentMethod(val)
           onPaymentMethodChange(val as CommercePaymentMethodEnum)
         }}
         defaultValue={paymentMethod}
