@@ -5,6 +5,8 @@ import { getENV } from "v2/Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order } from "v2/__generated__/BankAccountPicker_order.graphql"
+import createLogger from "v2/Utils/logger"
+import { Message, Spacer, Text } from "@artsy/palette"
 
 interface Props {
   order: BankAccountPicker_order
@@ -12,24 +14,54 @@ interface Props {
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
+const logger = createLogger("Order/Routes/Payment/index.tsx")
+
+const BankSetupErrorMessage = () => {
+  return (
+    <>
+      <Message
+        title="Bank transfer is not available at the moment"
+        variant="error"
+      >
+        <Text variant="sm">
+          Refresh the page or select another payment method.
+        </Text>
+      </Message>
+      <Spacer mt={2} />
+    </>
+  )
+}
+
 export const BankDebitProvider: FC<Props> = ({ order }) => {
   const [clientSecret, setClientSecret] = useState("")
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await submitMutation({
-        variables: { input: { id: order.internalID } },
-      })
+      try {
+        const orderOrError = await submitMutation({
+          variables: { input: { id: order.internalID } },
+        })
 
-      if (
-        data.commerceCreateBankDebitSetupForOrder?.actionOrError.__typename ===
-        "CommerceOrderRequiresAction"
-      ) {
-        setClientSecret(
-          data.commerceCreateBankDebitSetupForOrder?.actionOrError?.actionData
-            .clientSecret
-        )
+        if (
+          orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
+            .__typename === "CommerceOrderRequiresAction"
+        ) {
+          setClientSecret(
+            orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
+              .actionData.clientSecret
+          )
+        }
+
+        if (
+          orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
+            .__typename === "CommerceOrderWithMutationFailure"
+        ) {
+          throw orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
+            .error
+        }
+      } catch (error) {
+        logger.error(error)
       }
     }
 
@@ -63,10 +95,12 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
 
   return (
     <div>
-      {clientSecret && (
+      {clientSecret ? (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm order={order} returnURL={returnURL} />
         </Elements>
+      ) : (
+        <BankSetupErrorMessage />
       )}
     </div>
   )
