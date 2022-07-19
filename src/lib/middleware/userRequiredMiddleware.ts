@@ -7,6 +7,7 @@ const USER_REQUIRED_ROUTES = [
   "/settings/payments",
   "/settings/shipping",
   "/settings/alerts",
+  "/my-collection",
 ]
 
 const isRequestRequiringUser = req => {
