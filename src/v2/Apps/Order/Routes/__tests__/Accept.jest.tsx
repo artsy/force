@@ -238,7 +238,7 @@ describe("Accept seller offer", () => {
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
         "Charge failed",
-        "Payment authorization has been declined. Please contact your card provider, then press “Submit” again. Alternatively, use a new card."
+        "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method."
       )
       expect(pushMock).toHaveBeenCalledWith(
         `/orders/${testOrder.internalID}/payment/new`

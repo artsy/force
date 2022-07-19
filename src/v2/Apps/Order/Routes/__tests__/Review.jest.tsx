@@ -240,7 +240,7 @@ describe("Review", () => {
       expect(mockShowErrorDialog).toHaveBeenCalledWith({
         title: "Charge failed",
         message:
-          "Payment authorization has been declined. Please contact your card provider and try again.",
+          "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method.",
       })
     })
 

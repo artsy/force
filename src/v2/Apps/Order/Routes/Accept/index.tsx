@@ -194,7 +194,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
           this.showCardFailureDialog({
             title: "Charge failed",
             message:
-              "Payment authorization has been declined. Please contact your card provider, then press “Submit” again. Alternatively, use a new card.",
+              "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method.",
           })
         }
         break
