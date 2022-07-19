@@ -10,13 +10,6 @@ const MyCollectionApp = loadable(
   }
 )
 
-// Redirect home if the user is not logged in
-const handleServerSideRender = ({ req, res }) => {
-  if (!req.user) {
-    res.redirect("/")
-  }
-}
-
 export const myCollectionRoutes: AppRouteConfig[] = [
   {
     path: "/my-collection",
@@ -24,7 +17,6 @@ export const myCollectionRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       MyCollectionApp.preload()
     },
-    onServerSideRender: handleServerSideRender,
     query: graphql`
       query myCollectionRoutes_MyCollectionQuery {
         me {
