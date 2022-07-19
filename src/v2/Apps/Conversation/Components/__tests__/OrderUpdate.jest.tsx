@@ -208,6 +208,29 @@ describe("testing different statuses", () => {
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
+  it("render Offer Processing approval", () => {
+    renderWithRelay({
+      Conversation: () => ({
+        orderConnection: {
+          edges: [
+            {
+              node: {
+                orderHistory: [
+                  {
+                    __typename: "CommerceOrderStateChangedEvent",
+                    state: "PROCESSING_APPROVAL",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }),
+    })
+    expect(
+      screen.getByText("Offer accepted. Payment pending")
+    ).toBeInTheDocument()
+  })
   it("render Offer Declined", () => {
     renderWithRelay({
       Conversation: () => ({
