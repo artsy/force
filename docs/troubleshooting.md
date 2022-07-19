@@ -4,7 +4,6 @@
 
 - [Force environment configuration](https://github.com/artsy/force/blob/main/docs/env_configuration.md)
 - [Document hacks in Force](https://github.com/artsy/force/blob/main/HACKS.md)
--
 
 Force is a large and complex project; in all likelihood, you'll encounter bugs
 or configuration issues during regular local development.
