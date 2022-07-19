@@ -1,15 +1,6 @@
 import { FC, Fragment, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import {
-  ResponsiveBox,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Sup,
-  Text,
-} from "@artsy/palette"
+import { Spacer, Sup, Text } from "@artsy/palette"
 import { Masonry } from "v2/Components/Masonry"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
@@ -17,7 +8,6 @@ import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 import { MetaTags } from "v2/Components/MetaTags"
 import { MyCollectionApp_me } from "v2/__generated__/MyCollectionApp_me.graphql"
-import { MyCollectionAppQuery } from "v2/__generated__/MyCollectionAppQuery.graphql"
 
 interface MyCollectionAppProps {
   me: MyCollectionApp_me
@@ -146,58 +136,3 @@ export const MyCollectionAppRefetchContainer = createRefetchContainer(
   },
   MY_COLLECTION_APP_QUERY
 )
-
-const MY_COLLECTION_APP_PLACEHOLDER = (
-  <Skeleton>
-    <SkeletonText variant="lg-display" mb={4}>
-      My Collection
-    </SkeletonText>
-
-    <Masonry columnCount={[2, 3, 4]}>
-      {[...new Array(10)].map((_, i) => {
-        return (
-          <div key={i}>
-            <ResponsiveBox
-              aspectWidth={[4, 3, 5, 6][i % 4]}
-              aspectHeight={[3, 4, 5][i % 3]}
-              maxWidth="100%"
-            >
-              <SkeletonBox width="100%" height="100%" />
-            </ResponsiveBox>
-
-            <SkeletonText variant="sm-display" mt={1}>
-              Artist Name
-            </SkeletonText>
-            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-            <SkeletonText variant="xs">Partner Name</SkeletonText>
-            <SkeletonText variant="xs">US$0,000</SkeletonText>
-
-            <Spacer mt={4} />
-          </div>
-        )
-      })}
-    </Masonry>
-  </Skeleton>
-)
-
-export const MyCollectionArtworksQueryRenderer = () => {
-  return (
-    <SystemQueryRenderer<MyCollectionAppQuery>
-      lazyLoad
-      placeholder={MY_COLLECTION_APP_PLACEHOLDER}
-      query={MY_COLLECTION_APP_QUERY}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (!props?.me) {
-          return MY_COLLECTION_APP_PLACEHOLDER
-        }
-
-        return <MyCollectionAppRefetchContainer me={props.me} />
-      }}
-    />
-  )
-}
