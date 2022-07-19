@@ -42,22 +42,32 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     clearWhen: shouldStopPolling,
   })
 
-  const userHasEnoughBalance =
-    commerceBankAccountBalance?.balanceCents &&
-    commerceBankAccountBalance?.balanceCents >= buyerTotalCents &&
-    orderCurrencyCode === commerceBankAccountBalance?.currencyCode
+  let userHasEnoughBalance = false
+  let userHasInsufficientBalance = false
+  let balanceIsNotAvailable = false
+
+  if (
+    !commerceBankAccountBalance ||
+    !commerceBankAccountBalance.balanceCents ||
+    !commerceBankAccountBalance.currencyCode
+  ) {
+    if (shouldStopPolling) {
+      // we didn't receive the balance from Stripe and polling time expired
+      balanceIsNotAvailable = true
+    }
+    return null
+  }
+
+  const { balanceCents, currencyCode } = commerceBankAccountBalance
+
+  userHasEnoughBalance = !!(
+    balanceCents >= buyerTotalCents && orderCurrencyCode === currencyCode
+  )
 
   // we receive the balance from Stripe and it's insufficient to buy the artwork
-  const userHasInsufficientBalance =
-    commerceBankAccountBalance?.balanceCents &&
-    commerceBankAccountBalance?.balanceCents < buyerTotalCents &&
-    orderCurrencyCode === commerceBankAccountBalance?.currencyCode
-
-  // we didn't receive the balance from Stripe and polling time expired
-  const balanceIsNotAvailable =
-    (!commerceBankAccountBalance?.balanceCents ||
-      !commerceBankAccountBalance?.currencyCode) &&
-    shouldStopPolling
+  userHasInsufficientBalance = !!(
+    balanceCents < buyerTotalCents && orderCurrencyCode === currencyCode
+  )
 
   // if the user has enough balance or balance is not available, we don't need to display the error
   if (userHasEnoughBalance || balanceIsNotAvailable) {
