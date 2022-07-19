@@ -258,7 +258,7 @@ export class NewPaymentRoute extends Component<
         this.props.dialog.showErrorDialog({
           title: "Charge failed",
           message:
-            "Payment authorization has been declined. Please contact your card provider and try again.",
+            "Payment has been declined. Please contact your card provider or bank institution, then press “Continue” again. Alternatively, use another payment method.",
         })
         break
       }
