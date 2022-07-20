@@ -1,13 +1,13 @@
 import { match } from "path-to-regexp"
 
 const USER_REQUIRED_ROUTES = [
+  "/my-collection",
   "/orders(.*)",
-  "/user/conversations(.*)",
   "/settings/purchases(.*)",
   "/settings/payments",
   "/settings/shipping",
   "/settings/alerts",
-  "/my-collection",
+  "/user/conversations(.*)",
 ]
 
 const isRequestRequiringUser = req => {
