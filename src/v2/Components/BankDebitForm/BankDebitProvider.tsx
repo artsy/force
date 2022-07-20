@@ -80,14 +80,43 @@ export const BankDebitProvider: FC<Props> = ({
     variables: {
       colorPrimary: "#000",
       colorBackground: "#ffffff",
-      colorText: "#30313d",
+      colorText: "#707070",
       colorDanger: "#df1b41",
       fontFamily: "Ideal Sans, system-ui, sans-serif",
       borderRadius: "0px",
     },
     rules: {
       ".Label": {
-        textTransform: "uppercase",
+        fontSize: "13.5px",
+        lineHeight: "20px",
+        fontFamily: "Helvetica, sans-serif",
+        color: "#000",
+      },
+      ".Input": {
+        borderTop: "none",
+        borderLeft: "none",
+        borderRight: "none",
+        borderBottom: "1px solid #C2C2C2",
+        transition: "border-color 0.25s",
+        boxShadow: "none",
+        paddingTop: "12px",
+        lineHeight: "26px",
+      },
+      ".Input:focus": {
+        boxShadow: "none",
+        color: "#000",
+      },
+      ".Input:hover": {
+        color: "#000",
+        borderColor: "#707070",
+      },
+      ".Input--invalid": {
+        borderTop: "none",
+        borderLeft: "none",
+        borderRight: "none",
+        borderBottom: "1px solid #C82400",
+        color: "#000",
+        boxShadow: "none",
       },
     },
   }
