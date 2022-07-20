@@ -1,8 +1,8 @@
 describe("myCollection", () => {
   describe("unauthenticated", () => {
-    it("redirects to the homepage", () => {
+    it("redirects to the login page", () => {
       cy.visit("my-collection")
-      cy.location("pathname", { timeout: 10000 }).should("eq", "/")
+      cy.contains("Log in to Artsy")
     })
   })
 })
