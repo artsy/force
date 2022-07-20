@@ -137,6 +137,7 @@ export const BankDebitForm: FC<Props> = ({
         >
           Save and Continue
         </Button>
+        <Spacer mb={4} />
       </LoadingArea>
     </form>
   )
