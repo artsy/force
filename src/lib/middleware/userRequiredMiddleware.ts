@@ -3,10 +3,10 @@ import { match } from "path-to-regexp"
 const USER_REQUIRED_ROUTES = [
   "/my-collection",
   "/orders(.*)",
-  "/settings/purchases(.*)",
-  "/settings/payments",
-  "/settings/shipping",
   "/settings/alerts",
+  "/settings/payments",
+  "/settings/purchases(.*)",
+  "/settings/shipping",
   "/user/conversations(.*)",
 ]
 
