@@ -5,7 +5,6 @@ import {
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { DateTime } from "luxon"
 import { graphql } from "react-relay"
-import * as CreditCardPickerMock from "../../Components/__mocks__/CreditCardPicker"
 import {
   fixFailedPaymentFailure,
   fixFailedPaymentInsufficientInventoryFailure,
@@ -14,7 +13,6 @@ import {
 } from "../__fixtures__/MutationResults"
 import { NewPaymentFragmentContainer } from "../NewPayment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
@@ -44,12 +42,16 @@ jest.mock("@stripe/stripe-js", () => {
 
 const { _mockStripe } = require("@stripe/stripe-js")
 
+const CreditCardPickerMock = jest.requireActual(
+  "../../Components/__mocks__/CreditCardPicker"
+)
+
 jest.mock(
   "v2/Apps/Order/Components/CreditCardPicker",
   // not sure why this is neccessary :(
   // should just work without this extra argument
   () => {
-    return require("../../Components/__mocks__/CreditCardPicker")
+    return jest.requireActual("../../Components/__mocks__/CreditCardPicker")
   }
 )
 
@@ -91,7 +93,7 @@ describe("Payment", () => {
   let isCommittingMutation
 
   beforeAll(() => {
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
   })
 
   const { getWrapper } = setupTestWrapper({
@@ -163,6 +165,7 @@ describe("Payment", () => {
           input: {
             creditCardId: "credit-card-id",
             offerId: "myoffer-id",
+            orderId: "1234",
           },
         },
       })
