@@ -224,7 +224,7 @@ const getAvailablePaymentMethods = (
       label={
         <>
           <CreditCardIcon type="Unknown" fill="black100" />
-          <Text ml={1}>Credit card</Text>
+          <Text ml={0.5}>Credit card</Text>
         </>
       }
     />,
@@ -239,7 +239,7 @@ const getAvailablePaymentMethods = (
         label={
           <>
             <InstitutionIcon fill="green100" />
-            <Text ml={1}>Wire transfer</Text>
+            <Text ml={0.5}>Wire transfer</Text>
           </>
         }
       />
@@ -255,8 +255,10 @@ const getAvailablePaymentMethods = (
         label={
           <>
             <InstitutionIcon fill="green100" />
-            <Text ml={1}>Bank transfer</Text>
-            <USBankOnlyLabel ml={1}>US bank account only</USBankOnlyLabel>
+            <Text ml={0.5}>Bank transfer</Text>
+            <USBankOnlyLabel ml={0.5} variant="xs">
+              US bank account only
+            </USBankOnlyLabel>
           </>
         }
       />
