@@ -1,6 +1,5 @@
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { getServerParam } from "v2/Utils/getServerParam"
-import { getV2SharifyScript } from "../Server/sharifyHelpers"
 import { renderToString } from "react-dom/server"
 import { ServerAppResolve } from "./buildServerApp"
 import loadAssetManifest from "lib/manifest"
@@ -47,7 +46,7 @@ export const renderServerApp = ({
     cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
     content: {
       body: bodyHTML,
-      data: getV2SharifyScript(sharify.data),
+      data: sharify.script(),
       head: headTagsString,
       scripts,
       style: styleTags,

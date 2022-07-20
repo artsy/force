@@ -15,38 +15,36 @@ import * as config from "../config"
 // eslint-disable-next-line
 import sharify from "sharify"
 
-/**
- * Attention! When adding new values be sure to update the allowlist in
- * v2/System/Server/sharifyHelpers
- *
- * TODO: Reset sharify when navigating between v2 apps and legacy so we don't
- * need to add ENV var keys to multiple places and instead can refer to canonical
- * files for each version of force.
- */
-
 sharify.data = _.extend(
   _.pick(
     config,
     "ACTIVE_BIDS_POLL_INTERVAL",
     "ADMIN_URL",
+    "AP",
     "API_REQUEST_TIMEOUT",
     "API_URL",
     "APP_URL",
     "APPLICATION_NAME",
+    "ARTIST_PAGE_CTA_ARTIST_ID",
+    "ARTIST_PAGE_CTA_ENABLED",
     "ARTSY_EDITORIAL_CHANNEL",
     "AUCTION_ZENDESK_KEY",
+    "AUTHENTICATION_REDIRECT_TO",
+    "AUTHENTICATION_REFERER",
     "AUTO_GRAVITY_LOGIN",
     "CASCADING_AUCTION_HELP_ARTICLE_LINK",
     "CDN_URL",
-    "CMS_URL",
     "CONVECTION_APP_ID",
     "CONVECTION_APP_URL",
     "CONVECTION_GEMINI_APP",
+    "CURRENT_PATH",
+    "CURRENT_USER",
     "DISABLE_IMAGE_PROXY",
     "EDITORIAL_PATHS",
     "EF_GUCCI",
     "EF_VENICE",
     "EF_VIDEO_GUIDE",
+    "ENABLE_I18N_DEBUG",
     "ENABLE_NEW_AUCTIONS_FILTER",
     "ENABLE_QUERY_BATCHING",
     "ENABLE_SAVED_SEARCH",
@@ -54,6 +52,7 @@ sharify.data = _.extend(
     "ENABLE_WEB_CRAWLING",
     "EOY_2016_ARTICLE",
     "EOY_2016",
+    "ERROR",
     "FACEBOOK_APP_NAMESPACE",
     "FACEBOOK_ID",
     "FEATURE_FLAGS",
@@ -80,6 +79,7 @@ sharify.data = _.extend(
     "PREDICTION_URL",
     "PUBLIC_GOOGLE_MAPS_API_KEY",
     "RECAPTCHA_KEY",
+    "RESET_PASSWORD_TOKEN",
     "S3_BUCKET",
     "SECURE_IMAGES_URL",
     "SEGMENT_AMP_WRITE_KEY",
@@ -91,7 +91,7 @@ sharify.data = _.extend(
     "STRIPE_PUBLISHABLE_KEY",
     "TARGET_CAMPAIGN_URL",
     "TEAM_BLOGS",
-    "THIRD_PARTIES_DISABLED",
+    "THIRD_PARTIES_DISABLED,",
     "TRACK_PAGELOAD_PATHS",
     "VOLLEY_ENDPOINT",
     "WEBFONT_URL",

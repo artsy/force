@@ -14,52 +14,93 @@ declare module "sharify" {
 
     /**
      * These properties are set by Force and configured through environment variables.
+     *
+     * TODO: Go through and cleanup all unused properties.
+     * TODO: Grab types from setup_sharify
      */
     export interface GlobalData {
-      readonly ADMIN_URL: string
-      readonly ALLOWED_REDIRECT_HOSTS: string
-      readonly APP_URL: string
-      readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
-      readonly CASCADING_AUCTION_HELP_ARTICLE_LINK: string
-      readonly CDN_URL: string
-      readonly CMS_URL: string
+      ADMIN_URL: string
+      ALLOWED_REDIRECT_HOSTS: string
+      API_REQUEST_TIMEOUT?: number
+      API_URL: string
+      APP_URL: string
+      APPLICATION_NAME: string
+      ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
+      ARTIST_PAGE_CTA_ARTIST_ID: string
+      ARTIST_PAGE_CTA_ENABLED: string
+      ARTSY_EDITORIAL_CHANNEL: string
+      ARTSY_XAPP_TOKEN: string
+      ARTWORK?: any // mobile artist app data
+      AUCTION_ZENDESK_KEY: string
+      AUCTION?: any
+      AUTHENTICATION_REDIRECT_TO?: string
+      AUTHENTICATION_REFERER?: string
+      CASCADING_AUCTION_HELP_ARTICLE_LINK: string
+      CDN_URL: string
+      CHANNEL?: { slug?: string } // Articles
+      CMS_URL: string
+      CSRF_TOKEN: string
       CURRENT_PATH: string
       CURRENT_USER: User
       EIGEN: boolean
-      readonly ENABLE_I18N_DEBUG: boolean
-      readonly ENABLE_SAVED_SEARCH: boolean
-      readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
-      readonly ENABLE_QUERY_BATCHING: boolean
-      readonly ENABLE_SERVER_SIDE_CACHE: string
-      readonly FACEBOOK_APP_NAMESPACE: string
-      readonly FACEBOOK_ID: string
-      readonly FEATURE_FLAGS: any
-      readonly GEMINI_CLOUDFRONT_URL: string
-      readonly GENOME_URL: string
-      readonly GOOGLE_ADWORDS_ID: string
+      ENABLE_I18N_DEBUG: boolean
+      ENABLE_NEW_AUCTIONS_FILTER: boolean
+      ENABLE_QUERY_BATCHING: boolean
+      ENABLE_SAVED_SEARCH: boolean
+      ENABLE_SERVER_SIDE_CACHE: string
+      ENABLE_WEB_CRAWLING: string
+      FACEBOOK_APP_NAMESPACE: string
+      FACEBOOK_ID: string
+      FAIR_ORGANIZER?: any
+      FAIR?: any // mobile fair app data
+      FEATURE_FLAGS: any
+      GALLERY_INSIGHTS_CHANNEL: string
+      GEMINI_CLOUDFRONT_URL: string
+      GENOME_URL: string
+      GOOGLE_ADWORDS_ID: string
+      GRAVITY_WEBSOCKET_URL: string
+      IP_ADDRESS: string
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
-      IP_ADDRESS: string
-      readonly METAPHYSICS_ENDPOINT: string
-      readonly NETWORK_CACHE_SIZE: string
-      readonly NETWORK_CACHE_TTL: string
-      readonly NODE_ENV: string
-      readonly NOTIFICATION_COUNT: string
-      readonly ONETRUST_SCRIPT_ID: string
-      readonly PREDICTION_URL: string
-      readonly RECAPTCHA_KEY: string
-      readonly SEGMENT_WRITE_KEY: string
-      readonly SENTRY_PUBLIC_DSN: string
-      readonly SHOW_ANALYTICS_CALLS: boolean
-      readonly SIFT_BEACON_KEY: string
-      readonly STRIPE_PUBLISHABLE_KEY: string
-      readonly THIRD_PARTIES_DISABLED: boolean
-      readonly VOLLEY_ENDPOINT: string
-      readonly WEBFONT_URL: string
-      readonly XAPP_TOKEN: string
-      readonly PUBLIC_GOOGLE_MAPS_API_KEY: string
-      readonly ZENDESK_KEY: string
-      readonly AUCTION_ZENDESK_KEY: string
+      JSON_PAGE_DATA: any
+      METAPHYSICS_ENDPOINT: string
+      NETWORK_CACHE_SIZE: string
+      NETWORK_CACHE_TTL: string
+      NODE_ENV: string
+      NOTIFICATION_COUNT: string
+      ONETRUST_SCRIPT_ID: string
+      PAGE_TYPE?: string
+      PARTNER_NEW_LAYOUT?: boolean
+      PARTNER_PROFILE?: any // mobile partner app data
+      PATHS?: any // JSONPage
+      PC_ARTSY_CHANNEL: string
+      PC_AUCTION_CHANNEL: string
+      POSITRON_URL: string
+      PREDICTION_URL: string
+      PROFILE?: any // mobile partner app data
+      PUBLIC_GOOGLE_MAPS_API_KEY: string
+      RECAPTCHA_KEY: string
+      REQUEST_ID?: string
+      RESET_PASSWORD_REDIRECT_TO: string
+      RESET_PASSWORD_TOKEN: string
+      SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
+      SEGMENT_WRITE_KEY: string
+      SENTRY_PUBLIC_DSN: string
+      SESSION_ID?: string
+      SET_PASSWORD: string
+      SHOW_ANALYTICS_CALLS: boolean
+      SIFT_BEACON_KEY: string
+      STRIPE_PUBLISHABLE_KEY: string
+      SUBMISSION_ARTIST_NAME: string
+      SUBMISSION_ID: string
+      SUBMISSION: string
+      TARGET_CAMPAIGN_URL: string
+      THIRD_PARTIES_DISABLED: boolean
+      TRACK_PAGELOAD_PATHS: string
+      VOLLEY_ENDPOINT: string
+      WEBFONT_URL: string
+      XAPP_TOKEN: string
+      ZENDESK_KEY: string
 
       // FORCE Tokens
       AP: {
@@ -70,44 +111,7 @@ declare module "sharify" {
         loginPagePath?: string
         logoutPath?: string
       }
-      API_REQUEST_TIMEOUT?: number
-      API_URL: string
-      APPLICATION_NAME: string
-      ARTIST_PAGE_CTA_ARTIST_ID: string
-      ARTIST_PAGE_CTA_ENABLED: string
-      ARTSY_EDITORIAL_CHANNEL: string
-      ARTSY_XAPP_TOKEN: string
-      ARTWORK?: any // mobile artist app data
-      AUCTION?: any
-      AUTHENTICATION_REDIRECT_TO?: string
-      AUTHENTICATION_REFERER?: string
-      CSRF_TOKEN: string
-      CHANNEL?: { slug?: string } // Articles
-      FAIR?: any // mobile fair app data
-      FAIR_ORGANIZER?: any
-      GALLERY_INSIGHTS_CHANNEL: string
-      JSON_PAGE_DATA: any
-      PAGE_TYPE?: string
-      PARTNER_NEW_LAYOUT?: boolean
-      PARTNER_PROFILE?: any // mobile partner app data
-      PATHS?: any // JSONPage
-      PC_ARTSY_CHANNEL: string
-      PC_AUCTION_CHANNEL: string
-      POSITRON_URL: string
-      PROFILE?: any // mobile partner app data
-      REQUEST_ID?: string
-      RESET_PASSWORD_REDIRECT_TO: string
-      SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
-      SESSION_ID?: string
-      SET_PASSWORD: string
-      SHOW_ANALYTICS_CALLS: boolean
-      SUBMISSION: string
-      SUBMISSION_ID: string
-      SUBMISSION_ARTIST_NAME: string
-      TARGET_CAMPAIGN_URL: string
-      TRACK_PAGELOAD_PATHS: string
-      // FIXME: reaction migration
-      stitch: any
+
       unleash: any
     }
 

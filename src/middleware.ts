@@ -58,11 +58,9 @@ import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
-import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
 import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
-import { sharifyToCookie } from "./lib/middleware/sharifyToCookie"
 import { featureFlagMiddleware } from "lib/middleware/featureFlagMiddleware"
 import {
   UnleashFeatureFlagService,
@@ -115,9 +113,6 @@ export function initializeMiddleware(app) {
   // Need sharify for unleash
   registerFeatureFlagService(UnleashService, UnleashFeatureFlagService)
   app.use(featureFlagMiddleware(UnleashService))
-
-  // Initialize caches
-  applyCacheMiddleware(app)
 
   /**
    * Routes for pinging system time and up
@@ -230,16 +225,4 @@ function applyStaticAssetMiddlewares(app) {
   // TODO: Move to ./public/images
   app.use(favicon(path.resolve(__dirname, "public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
-}
-
-function applyCacheMiddleware(app) {
-  app.use(
-    sharifyToCookie([
-      "ARTSY_XAPP_TOKEN",
-      "IP_ADDRESS",
-      "REQUEST_ID",
-      "SESSION_ID",
-    ])
-  )
-  app.use(redisPageCacheMiddleware)
 }
