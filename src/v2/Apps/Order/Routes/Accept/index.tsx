@@ -102,7 +102,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
         await this.fixFailedPayment({
           input: {
             creditCardId: this.props.order.creditCardId!,
-            offerId: this.props.order.lastOffer?.internalID || null,
+            offerId: this.props.order.lastOffer?.internalID,
             orderId: this.props.order.internalID,
           },
         })
