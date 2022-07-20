@@ -135,7 +135,7 @@
     "insane": "2.6.1",
     "ip": "^1.1.5",
     "isomorphic-fetch": "^2.2.1",
-    "jsdom": "11.6.2",
+    "jsdom": "20.0.0",
     "jwt-decode": "2.2.0",
     "lodash": "4.17.21",
     "map-cursor-to-max": "^1.0.0",
