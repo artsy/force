@@ -4,10 +4,10 @@ export const DEFAULT_METRIC: Metric = "cm"
 export const SUPPORTED_METRICS: Metric[] = ["cm", "in"]
 
 export const getSupportedMetric = (metric: string = ""): Metric => {
-  const formattedMetric = metric.toLowerCase() as Metric
+  const metricFromParam = metric.toLowerCase() as Metric
 
-  if (SUPPORTED_METRICS.includes(formattedMetric)) {
-    return formattedMetric
+  if (SUPPORTED_METRICS.includes(metricFromParam)) {
+    return metricFromParam
   }
 
   return DEFAULT_METRIC
