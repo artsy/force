@@ -24,6 +24,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
   setShowDetails,
 }) => {
   let color: Color
+  let textColor: Color | null = null
   let message: string
   let Icon: React.FC<IconProps> = MoneyFillIcon
   let action: { label?: string; onClick?: () => void } = {}
@@ -58,7 +59,11 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
     const { orderUpdateState, state, stateReason } = event
     const reasonLapsed = stateReason?.includes("_lapsed")
     const reasonRejected = stateReason?.includes("_rejected")
-    if (state === "APPROVED") {
+    if (state === "PROCESSING_APPROVAL") {
+      color = "yellow100"
+      textColor = "black100"
+      message = "Offer accepted. Payment pending"
+    } else if (state === "APPROVED") {
       color = "green100"
       message = `${
         orderUpdateState === "offer_approved" ? "Offer" : "Purchase"
@@ -93,7 +98,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
         <Flex flexDirection="row">
           <Icon fill={color} />
           <Flex flexDirection="column" pl={1}>
-            <Text color={color} variant="xs">
+            <Text color={textColor || color} variant="xs">
               {message}
               {action.label && action.onClick && (
                 <>
