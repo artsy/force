@@ -27,6 +27,7 @@ export const buildClientAppContext = (
       mediator,
       user: sd.CURRENT_USER,
       featureFlags: sd.FEATURE_FLAGS,
+      userPreferences: sd.USER_PREFERENCES,
       ...context,
     }
   }

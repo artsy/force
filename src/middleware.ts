@@ -67,6 +67,7 @@ import {
   UnleashService,
 } from "lib/featureFlags/unleashService"
 import { registerFeatureFlagService } from "lib/featureFlags/featureFlagService"
+import { userPreferencesMiddleware } from "lib/middleware/userPreferencesMiddleware"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -211,6 +212,9 @@ function applySecurityMiddleware(app) {
 
   // Require a user for these routes
   app.use(userRequiredMiddleware)
+
+  // Get user preferences (metric, currency)
+  app.use(userPreferencesMiddleware)
 }
 
 function applyStaticAssetMiddlewares(app) {

@@ -87,6 +87,7 @@ sharify.data = _.extend(
     "TEAM_BLOGS",
     "THIRD_PARTIES_DISABLED,",
     "TRACK_PAGELOAD_PATHS",
+    "USER_PREFERENCES",
     "VOLLEY_ENDPOINT",
     "WEBFONT_URL",
     "ZENDESK_KEY"

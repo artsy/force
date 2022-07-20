@@ -94,6 +94,7 @@ declare module "sharify" {
       TARGET_CAMPAIGN_URL: string
       THIRD_PARTIES_DISABLED: boolean
       TRACK_PAGELOAD_PATHS: string
+      USER_PREFERENCES: any
       VOLLEY_ENDPOINT: string
       WEBFONT_URL: string
       XAPP_TOKEN: string
