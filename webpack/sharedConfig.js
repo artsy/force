@@ -2,12 +2,12 @@
 
 import path from "path"
 import TerserPlugin from "terser-webpack-plugin"
-import { basePath, env } from "../utils/env"
+import { basePath } from "./webpackEnv"
 
-export const devtool = env.webpackDevtool || "eval"
-export const productionDevtool = env.webpackDevtool || "source-map"
-export const mode = env.webpackDebug ? "development" : env.nodeEnv
-export const stats = env.webpackStats || "errors-only"
+export const devtool = process.env.WEBPACK_DEVTOOL || "eval"
+export const productionDevtool = "source-map"
+export const mode = process.env.NODE_ENV
+export const stats = process.env.WEBPACK_STATS || "errors-only"
 
 export const experiments = {
   lazyCompilation: {
@@ -25,7 +25,7 @@ export const cache = {
 export const minimizer = [
   new TerserPlugin({
     // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-    parallel: env.onCi ? env.webpackCiCpuLimit : true,
+    parallel: process.env.CI ? 4 : true,
   }),
 ]
 
@@ -39,7 +39,6 @@ export const resolve = {
     "lodash-es": "lodash",
   },
   extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
-  // Symlink issues should be fixed via `yarn --pnp`
   modules: [path.resolve(basePath, "src"), "node_modules"],
   symlinks: false,
 }

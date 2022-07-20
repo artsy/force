@@ -12,8 +12,10 @@ const webpackHotMiddleware = require("webpack-hot-middleware")
 const { startServer } = require("./lib/startServer")
 const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
-const { getDevelopmentWebpackConfig } = require("../webpack")
 const { initializeMiddleware } = require("./middleware")
+const {
+  clientDevelopmentConfig,
+} = require("../webpack/envs/clientDevelopmentConfig")
 
 /**
  * Force resolution of potentially `yarn link`'d modules to the local i
@@ -32,8 +34,7 @@ setAliases({
   ),
 })
 
-const webpackConfig = getDevelopmentWebpackConfig("client.dev")
-
+const webpackConfig = clientDevelopmentConfig()
 const compiler = webpack(webpackConfig)
 const app = express()
 
