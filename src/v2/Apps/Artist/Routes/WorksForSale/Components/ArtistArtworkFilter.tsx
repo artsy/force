@@ -3,7 +3,6 @@ import { ArtistArtworkFilter_me } from "v2/__generated__/ArtistArtworkFilter_me.
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
-  ArtworkFiltersState,
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
@@ -80,12 +79,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     },
   ]
 
-  const metric = getSupportedMetric(me?.lengthUnitPreference)
-  const filters: ArtworkFiltersState = {
-    metric,
-    ...match.location.query,
-  }
-
+  const userPreferedMetric = getSupportedMetric(me?.lengthUnitPreference)
   let defaultSortValue = "-decayed_merch"
 
   if (trendingSortVariant?.name === "experiment") {
@@ -96,7 +90,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     <ArtworkFilterContextProvider
       aggregations={aggregations}
       counts={artist.counts as Counts}
-      filters={filters}
+      filters={match.location.query}
       sortOptions={[
         { value: defaultSortValue, text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
@@ -107,6 +101,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       ZeroState={() => <ZeroState my={1} />}
+      userPreferedMetric={userPreferedMetric}
     >
       <BaseArtworkFilter
         relay={relay}
