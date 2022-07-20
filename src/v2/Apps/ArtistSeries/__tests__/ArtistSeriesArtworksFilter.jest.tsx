@@ -25,7 +25,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
-  Component: ({ artistSeries }) => (
+  Component: ({ artistSeries, me }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <ArtistSeriesArtworksFilterRefetchContainer
         aggregations={[
@@ -35,6 +35,7 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
           materialsTermsAggregation,
         ]}
         artistSeries={artistSeries!}
+        me={me!}
       />
     </MockBoot>
   ),
@@ -42,6 +43,9 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
     query ArtistSeriesArtworksFilter_Query($slug: ID!) @relay_test_operation {
       artistSeries(id: $slug) {
         ...ArtistSeriesArtworksFilter_artistSeries
+      }
+      me {
+        ...ArtistSeriesArtworksFilter_me
       }
     }
   `,

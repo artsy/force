@@ -1,4 +1,5 @@
 import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import { ArtistSeriesArtworksFilter_me } from "v2/__generated__/ArtistSeriesArtworksFilter_me.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -9,9 +10,11 @@ import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ActiveFilterPills } from "v2/Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { getSupportedMetric } from "v2/Components/ArtworkFilter/Utils/metrics"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
+  me: ArtistSeriesArtworksFilter_me | null
   relay: RelayRefetchProp
   match?: Match
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -20,7 +23,7 @@ interface ArtistSeriesArtworksFilterProps {
 const ArtistSeriesArtworksFilter: React.FC<
   ArtistSeriesArtworksFilterProps & RouterState
 > = props => {
-  const { match, relay, artistSeries, aggregations } = props
+  const { match, relay, artistSeries, aggregations, me } = props
   const { filtered_artworks } = artistSeries
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -43,6 +46,7 @@ const ArtistSeriesArtworksFilter: React.FC<
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       onChange={updateUrl}
+      userPreferedMetric={getSupportedMetric(me?.lengthUnitPreference)}
     >
       <BaseArtworkFilter
         relay={relay}
@@ -72,6 +76,11 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
+      }
+    `,
+    me: graphql`
+      fragment ArtistSeriesArtworksFilter_me on Me {
+        lengthUnitPreference
       }
     `,
   },

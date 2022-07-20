@@ -1,6 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesApp_artistSeries } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
+import { ArtistSeriesApp_me } from "v2/__generated__/ArtistSeriesApp_me.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
 import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilter } from "./Components/ArtistSeriesArtworksFilter"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
@@ -15,9 +16,13 @@ import { Spacer } from "@artsy/palette"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
+  me: ArtistSeriesApp_me
 }
 
-const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
+const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({
+  artistSeries,
+  me,
+}) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   const { railArtist, internalID, sidebarAggregations } = artistSeries
@@ -39,6 +44,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
 
         <ArtistSeriesArtworksFilter
           artistSeries={artistSeries}
+          me={me}
           aggregations={
             sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
           }
@@ -91,6 +97,11 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
             }
           }
         }
+      }
+    `,
+    me: graphql`
+      fragment ArtistSeriesApp_me on Me {
+        ...ArtistSeriesArtworksFilter_me
       }
     `,
   }

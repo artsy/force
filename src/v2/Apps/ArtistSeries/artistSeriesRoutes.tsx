@@ -28,6 +28,9 @@ export const artistSeriesRoutes: AppRouteConfig[] = [
           ...ArtistSeriesApp_artistSeries
             @arguments(input: $input, aggregations: $aggregations)
         }
+        me {
+          ...ArtistSeriesApp_me
+        }
       }
     `,
   },
