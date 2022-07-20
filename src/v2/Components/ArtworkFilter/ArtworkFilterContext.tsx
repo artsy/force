@@ -30,7 +30,6 @@ export const initialArtworkFilterState: ArtworkFilters = {
   height: "*-*",
   width: "*-*",
   priceRange: "*-*",
-  // TODO: Maybe remove it?
   metric: DEFAULT_METRIC,
 }
 
