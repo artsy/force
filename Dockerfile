@@ -116,8 +116,7 @@ COPY .env.oss \
   babel.config.js \
   cypress.json \
   dangerfile.ts \
-  jest.config.legacy.js \
-  jest.config.v2.js \
+  jest.config.js \
   package.json \
   relay.config.js \
   jest.legacySetup.js \
