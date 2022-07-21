@@ -61,10 +61,10 @@ const SavesRoute = loadable(
 const MyCollectionRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/MyCollection/MyCollectionApp"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/MyCollection/MyCollectionRoute"
     ),
   {
-    resolveComponent: component => component.MyCollectionAppRefetchContainer,
+    resolveComponent: component => component.MyCollectionRouteRefetchContainer,
   }
 )
 const EditSettingsRoute = loadable(
@@ -215,7 +215,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         query: graphql`
           query settingsRoutes_MyCollectionRouteQuery {
             me {
-              ...MyCollectionApp_me
+              ...MyCollectionRoute_me
             }
           }
         `,

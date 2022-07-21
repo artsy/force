@@ -7,14 +7,14 @@ import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { useScrollToElement } from "v2/Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "v2/Components/Artwork/GridItem"
 import { MetaTags } from "v2/Components/MetaTags"
-import { MyCollectionApp_me } from "v2/__generated__/MyCollectionApp_me.graphql"
+import { MyCollectionRoute_me } from "v2/__generated__/MyCollectionRoute_me.graphql"
 
-interface MyCollectionAppProps {
-  me: MyCollectionApp_me
+interface MyCollectionRouteProps {
+  me: MyCollectionRoute_me
   relay: RelayRefetchProp
 }
 
-const MyCollectionApp: FC<MyCollectionAppProps> = ({ me, relay }) => {
+const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const { scrollTo } = useScrollToElement({
@@ -96,23 +96,23 @@ const MyCollectionApp: FC<MyCollectionAppProps> = ({ me, relay }) => {
   )
 }
 
-export const MY_COLLECTION_APP_QUERY = graphql`
-  query MyCollectionAppQuery($page: Int) {
+export const MY_COLLECTION_ROUTE_QUERY = graphql`
+  query MyCollectionRouteQuery($page: Int) {
     me {
-      ...MyCollectionApp_me @arguments(page: $page)
+      ...MyCollectionRoute_me @arguments(page: $page)
     }
   }
 `
 
-export const MyCollectionAppRefetchContainer = createRefetchContainer(
-  MyCollectionApp,
+export const MyCollectionRouteRefetchContainer = createRefetchContainer(
+  MyCollectionRoute,
   {
     me: graphql`
-      fragment MyCollectionApp_me on Me
+      fragment MyCollectionRoute_me on Me
         @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
         myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC)
           @connection(
-            key: "MyCollectionApp_myCollectionConnection"
+            key: "MyCollectionRoute_myCollectionConnection"
             filters: []
           ) {
           totalCount
@@ -134,5 +134,5 @@ export const MyCollectionAppRefetchContainer = createRefetchContainer(
       }
     `,
   },
-  MY_COLLECTION_APP_QUERY
+  MY_COLLECTION_ROUTE_QUERY
 )

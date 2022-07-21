@@ -4,27 +4,27 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionAppQueryVariables = {
+export type MyCollectionRouteQueryVariables = {
     page?: number | null | undefined;
 };
-export type MyCollectionAppQueryResponse = {
+export type MyCollectionRouteQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionApp_me">;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionRoute_me">;
     } | null;
 };
-export type MyCollectionAppQuery = {
-    readonly response: MyCollectionAppQueryResponse;
-    readonly variables: MyCollectionAppQueryVariables;
+export type MyCollectionRouteQuery = {
+    readonly response: MyCollectionRouteQueryResponse;
+    readonly variables: MyCollectionRouteQueryVariables;
 };
 
 
 
 /*
-query MyCollectionAppQuery(
+query MyCollectionRouteQuery(
   $page: Int
 ) {
   me {
-    ...MyCollectionApp_me_2Pg8Wv
+    ...MyCollectionRoute_me_2Pg8Wv
     id
   }
 }
@@ -121,7 +121,7 @@ fragment Metadata_artwork on Artwork {
   href
 }
 
-fragment MyCollectionApp_me_2Pg8Wv on Me {
+fragment MyCollectionRoute_me_2Pg8Wv on Me {
   myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {
     totalCount
     pageInfo {
@@ -287,7 +287,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "MyCollectionAppQuery",
+    "name": "MyCollectionRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -302,7 +302,7 @@ return {
               (v1/*: any*/)
             ],
             "kind": "FragmentSpread",
-            "name": "MyCollectionApp_me"
+            "name": "MyCollectionRoute_me"
           }
         ],
         "storageKey": null
@@ -315,7 +315,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "MyCollectionAppQuery",
+    "name": "MyCollectionRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -781,7 +781,7 @@ return {
             "args": (v2/*: any*/),
             "filters": [],
             "handle": "connection",
-            "key": "MyCollectionApp_myCollectionConnection",
+            "key": "MyCollectionRoute_myCollectionConnection",
             "kind": "LinkedHandle",
             "name": "myCollectionConnection"
           },
@@ -792,14 +792,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2116e2c61d0895882e48f214daecd31c",
+    "cacheID": "6326fe4dbf7096712b9f46dffe571893",
     "id": null,
     "metadata": {},
-    "name": "MyCollectionAppQuery",
+    "name": "MyCollectionRouteQuery",
     "operationKind": "query",
-    "text": "query MyCollectionAppQuery(\n  $page: Int\n) {\n  me {\n    ...MyCollectionApp_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  href\n}\n\nfragment MyCollectionApp_me_2Pg8Wv on Me {\n  myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query MyCollectionRouteQuery(\n  $page: Int\n) {\n  me {\n    ...MyCollectionRoute_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  href\n}\n\nfragment MyCollectionRoute_me_2Pg8Wv on Me {\n  myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = 'ea01e302f8313a6d139fe952ddcff4e4';
+(node as any).hash = 'b22922ce1d4411709a1979cd5f94b565';
 export default node;
