@@ -3,8 +3,7 @@ import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { getUser } from "v2/Utils/user"
 import { fetchUserPreferences } from "v2/Utils/fetchUserPreferences"
-
-const DEFAULT_METRIC = "cm"
+import { getSupportedMetric } from "v2/Utils/metrics"
 
 export const userPreferencesMiddleware = async (
   req: ArtsyRequest,
@@ -19,8 +18,6 @@ export const userPreferencesMiddleware = async (
     try {
       const { me } = await fetchUserPreferences(relayEnvironment)
 
-      console.log("[debug] me", me)
-
       metric = me?.lengthUnitPreference
     } catch (error) {
       console.error("[Force] Error getting user preferences:", error)
@@ -28,7 +25,7 @@ export const userPreferencesMiddleware = async (
 
     if (res.locals.sd != null) {
       res.locals.sd.USER_PREFERENCES = {
-        metric: metric || DEFAULT_METRIC,
+        metric: getSupportedMetric(metric),
       }
     }
   }
