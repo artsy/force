@@ -17,7 +17,7 @@ describe("locals middleware", () => {
 
   it("adds a session id", () => {
     bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
-    req.session.id.length.should.be.above(0)
+    expect(req.session.id.length).toBeGreaterThan(0)
     expect(res.locals.sd.SESSION_ID).toEqual(req.session.id)
   })
 

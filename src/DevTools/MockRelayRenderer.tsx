@@ -191,7 +191,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     if (
       typeof __webpack_require__ === "undefined" &&
       // eslint-disable-next-line jest/no-mocks-import
-      QueryRenderer === require("../../../__mocks__/react-relay").QueryRenderer
+      QueryRenderer === require("../../__mocks__/react-relay").QueryRenderer
     ) {
       throw new Error(
         "The `react-relay` module has been mocked, be sure to unmock it with: " +

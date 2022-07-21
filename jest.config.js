@@ -8,7 +8,7 @@ module.exports = {
     "^react$": "<rootDir>/node_modules/react",
   },
   reporters: ["default", "jest-junit"],
-  setupFilesAfterEnv: ["<rootDir>/src/jest.envSetup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/jest.envSetup.ts"],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["**/src/**/*.jest.(ts|tsx)"],
   testURL: "http://localhost",
