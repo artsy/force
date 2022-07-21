@@ -3,12 +3,14 @@ import { data as sd } from "sharify"
 import { AnalyticsContextProps } from "System/Analytics/AnalyticsContext"
 import { Mediator, mediator } from "lib/mediator"
 import { FeatureFlags } from "System/useFeatureFlag"
+import { UserPreferences } from "lib/middleware/userPreferencesMiddleware"
 
 export interface ClientContext {
   user: User
   mediator: Mediator
   analytics: AnalyticsContextProps
   featureFlags: FeatureFlags
+  userPreferences: UserPreferences
 }
 
 export const buildClientAppContext = (

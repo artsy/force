@@ -7,6 +7,7 @@ import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironmen
 import { getUser } from "Utils/user"
 import { Mediator, mediator } from "lib/mediator"
 import { FeatureFlags } from "./useFeatureFlag"
+import { UserPreferences } from "lib/middleware/userPreferencesMiddleware"
 
 export * from "./useSystemContext"
 
@@ -81,6 +82,9 @@ export interface SystemContextProps extends SystemContextState {
 
   /** FeatureFlags */
   featureFlags?: FeatureFlags
+
+  /** User Preferences */
+  userPreferences?: UserPreferences
 }
 
 export const SystemContext = createContext<SystemContextProps>({})

@@ -3,7 +3,11 @@ import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { getUser } from "v2/Utils/user"
 import { fetchUserPreferences } from "v2/Utils/fetchUserPreferences"
-import { getSupportedMetric } from "v2/Utils/metrics"
+import { getSupportedMetric, Metric } from "v2/Utils/metrics"
+
+export type UserPreferences = {
+  metric: Metric
+}
 
 export const userPreferencesMiddleware = async (
   req: ArtsyRequest,
