@@ -1,7 +1,7 @@
 import { injectGlobalStyles, ThemeProviderV3 } from "@artsy/palette"
-import { MediaContextProvider } from "v2/Utils/Responsive"
-import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
-import { SystemContextProvider } from "v2/System"
+import { MediaContextProvider } from "Utils/Responsive"
+import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { SystemContextProvider } from "System"
 
 const { GlobalStyles } = injectGlobalStyles()
 

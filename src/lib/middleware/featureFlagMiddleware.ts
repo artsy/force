@@ -4,7 +4,7 @@ import {
   createFeatureFlagService,
   FeatureFlagService,
 } from "lib/featureFlags/featureFlagService"
-import { FeatureFlags } from "v2/System/useFeatureFlag"
+import { FeatureFlags } from "System/useFeatureFlag"
 
 export function featureFlagMiddleware(serviceType: symbol) {
   let service

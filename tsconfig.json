@@ -14,9 +14,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // Need output directory for incremental type-checking
-    "outDir": ".cache/tsc",
+    "outDir": ".cache/tsc", // Need output directory for incremental type-checking
     "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -25,7 +23,7 @@
     "types": ["node", "jest", "express", "webpack-env", "google-maps"],
     "paths": {
       "package.json": ["./package.json"],
-      "v2/*": ["./v2/*"]
+      "*": ["./*"]
     },
     "plugins": [
       {
@@ -35,7 +33,7 @@
     "strict": false,
     "strictNullChecks": true
   },
-  "include": ["./src"],
+  "include": ["./jest.envSetup.ts", "./src"],
   "exclude": [
     "src/**/__generated__/*.ts",
     "src/lib/passport-local-with-otp",

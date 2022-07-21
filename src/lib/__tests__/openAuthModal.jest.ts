@@ -1,5 +1,5 @@
 import { handleScrollingAuthModal, openAuthModal } from "../openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
+import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 

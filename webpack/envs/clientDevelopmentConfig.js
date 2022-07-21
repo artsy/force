@@ -34,7 +34,7 @@ export const clientDevelopmentConfig = () => {
     entry: {
       "artsy-entry": [
         "webpack-hot-middleware/client?reload=true",
-        path.resolve(process.cwd(), "src/v2/client.tsx"),
+        path.resolve(process.cwd(), "src/client.tsx"),
       ],
     },
     experiments,
@@ -77,9 +77,9 @@ export const clientDevelopmentConfig = () => {
         path: path.resolve(basePath, "public", "assets"),
       }),
       new HtmlWebpackPlugin({
-        filename: path.resolve(basePath, "public", "index.ejs"),
+        filename: path.resolve(basePath, "public", "html.ejs"),
         inject: false,
-        template: path.resolve(basePath, "src", "v2", "index.ejs"),
+        template: path.resolve(basePath, "src/html.ejs"),
       }),
       new ReactRefreshWebpackPlugin({
         overlay: false,

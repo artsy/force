@@ -34,7 +34,7 @@ module.exports = {
     [
       "relay",
       {
-        artifactDirectory: "./src/v2/__generated__",
+        artifactDirectory: "./src/__generated__",
       },
     ],
     [
@@ -51,9 +51,6 @@ module.exports = {
       {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
         root: ["./src"],
-        alias: {
-          v2: "./src/v2",
-        },
       },
     ],
   ],

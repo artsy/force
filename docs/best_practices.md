@@ -39,7 +39,7 @@ Our design system [Palette](https://github.com/artsy/palette) is used for most U
 
 ### For routing, use our framework
 
-Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/main/src/v2/routes.tsx).
+Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/main/src/routes.tsx).
 
 To learn how to create a new sub-app, see [the docs](https://github.com/artsy/force/blob/1842553ad34475bc3b804f00c6410d7f23d64f65/docs/adding_new_app.md).
 
@@ -58,8 +58,8 @@ Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), 
 - [Why Artsy uses Relay](http://artsy.github.io/blog/2017/02/05/Front-end-JavaScript-at-Artsy-2017/#Relay)
 - [Artsy JavaScriptures seminar on Relay](https://github.com/artsy/javascriptures/tree/main/4_intro-to-relay)
 - Examples
-  - [A top-level route-based Relay request](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/consignRoutes.tsx#L28-L34)
-  - [A fragment container](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/Routes/Offer/OfferDetailApp.tsx#L47-L57)
+  - [A top-level route-based Relay request](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/Apps/Consign/consignRoutes.tsx#L28-L34)
+  - [A fragment container](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/Apps/Consign/Routes/Offer/OfferDetailApp.tsx#L47-L57)
 
 ### Prefer Relay containers (higher order components) over relay-hooks
 
@@ -67,9 +67,9 @@ We have a preference for Relay containers due to [`relay-hooks`](https://github.
 
 ### Keep file structure organized
 
-Generally speaking, all new product-centric code is written [inside the `src/v2`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/v2) folder.
+Generally speaking, all new product-centric code is written [inside the `src`](https://github.com/artsy/force/tree/main/src) folder.
 
-Sub-apps are written [inside of `src/v2/Apps` folder](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/v2/Apps).
+Sub-apps are written [inside of `src/Apps` folder](https://github.com/artsy/force/tree/main/src/Apps).
 
 Within a sub-app, things are typically structured like so:
 
@@ -96,9 +96,9 @@ Within a sub-app, things are typically structured like so:
 │       │   ├── Bar.tsx
 ```
 
-If there's a component that might be shared across multiple sub-apps, it should go in the top-level [`/v2/Components`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/v2/Components) folder.
+If there's a component that might be shared across multiple sub-apps, it should go in the top-level [`/Components`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/Components) folder.
 
-Framework code is located in [`v2/Artsy`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/v2/Artsy).
+Framework code is located in [`v2/Artsy`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/Artsy).
 
 ### Naming, imports and exports
 
@@ -183,17 +183,17 @@ Some top-level notes:
 - Enzyme is a unit testing library that matches React's internals 1:1. `@testing-library/react` is fundamentally a light weight html-based integration testing library. Depending on what you want to test one might be better suited than the other. Use what you think works best!
 - When testing React Hooks, [`@testing-library/react-hooks`](https://www.npmjs.com/package/@testing-library/react-hooks) is the best way to test that level of the stack.
 - We avoid snapshot tests; they produce too much churn for too little value.
-- We use the [`relay-test-utils`](https://github.com/facebook/relay/tree/main/packages/relay-test-utils) package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/main/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. There are two versions, one for Enzyme, and one for RTL. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that (see the [`RegisterButton` component](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx) for an example).
+- We use the [`relay-test-utils`](https://github.com/facebook/relay/tree/main/packages/relay-test-utils) package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/main/src/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. There are two versions, one for Enzyme, and one for RTL. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that (see the [`RegisterButton` component](https://github.com/artsy/force/blob/main/src/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx) for an example).
 
 Here are some great examples of what tests and test coverage should look like.
 
-- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
-- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
-- [SettingsPaymentsRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/v2/Apps/Settings/Routes/__tests__/SettingsPaymentsRoute.jest.tsx)
+- [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
+- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
+- [SettingsPaymentsRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Settings/Routes/__tests__/SettingsPaymentsRoute.jest.tsx)
 
 #### Manipulating time in unit tests
 
-If you're attempting to write a test that relies on time-related code, it can be handy to manipulate [Luxon's Settings module](https://moment.github.io/luxon/api-docs/index.html#settings) rather than relying on the test environment to behave as you expect ([see example](https://github.com/artsy/force/blob/0c275707c4dc9c467593d8d08bcc88662c925389/src/v2/Components/__tests__/LotTimer.jest.tsx#L103-L105)).
+If you're attempting to write a test that relies on time-related code, it can be handy to manipulate [Luxon's Settings module](https://moment.github.io/luxon/api-docs/index.html#settings) rather than relying on the test environment to behave as you expect ([see example](https://github.com/artsy/force/blob/0c275707c4dc9c467593d8d08bcc88662c925389/src/Components/__tests__/LotTimer.jest.tsx#L103-L105)).
 
 ### Add smoke tests for new routes
 

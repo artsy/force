@@ -1,8 +1,8 @@
 module.exports = {
-  src: "./src/v2",
+  src: "./src",
   schema: "./data/schema.graphql",
   language: "typescript",
-  artifactDirectory: "./src/v2/__generated__",
+  artifactDirectory: "./src/__generated__",
   // persistOutput: "./data/complete.queryMap.json",
   exclude: ["**/node_modules/**", "**/__mocks__/**", "**/__generated__/**"],
   customScalars: {

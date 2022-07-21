@@ -1,6 +1,6 @@
-import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
+import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { mediator } from "lib/mediator"
-import { getENV } from "v2/Utils/getENV"
+import { getENV } from "Utils/getENV"
 
 /**
  * Open authentication modal via 'click' trigger

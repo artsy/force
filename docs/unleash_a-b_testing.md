@@ -47,7 +47,7 @@ NOTE: `stickiness` needs to be set to `sessionID` on both the strategy and the v
 Use the `useFeatureVariant` hook in the component that you want to run the experiment.
 
 ```tsx
-import { useFeatureVariant } from "v2/System/useFeatureFlag"
+import { useFeatureVariant } from "System/useFeatureFlag"
 
 const variant = useFeatureVariant("my-awesome-experiment")
 ```
@@ -88,7 +88,7 @@ function MyComponent() {
 In the component that you added the experiment you just need to add the following:
 
 ```tsx
-import { useFeatureVariant } from "v2/System/useFeatureFlag"
+import { useFeatureVariant } from "System/useFeatureFlag"
 
 function MyComponent() {
   const { trackFeatureVariant } = useTrackFeatureVariant({
@@ -110,7 +110,7 @@ function MyComponent() {
 }
 ```
 
-The number of segment events sent for an experiment is [throttled](https://github.com/artsy/force/blob/main/src/v2/System/useFeatureFlag.tsx#L65) to one event per user, per variant view.
+The number of segment events sent for an experiment is [throttled](https://github.com/artsy/force/blob/main/src/System/useFeatureFlag.tsx#L65) to one event per user, per variant view.
 
 ### Accessing flags on the server
 

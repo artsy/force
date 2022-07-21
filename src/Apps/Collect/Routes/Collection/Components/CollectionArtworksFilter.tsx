@@ -1,0 +1,131 @@
+import * as React from "react"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { BaseArtworkFilter } from "Components/ArtworkFilter"
+import {
+  ArtworkFilterContextProvider,
+  Counts,
+  SharedArtworkFilterContextProps,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
+import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
+import { useRouter } from "System/Router/useRouter"
+import { CollectionArtworksFilter_collection } from "__generated__/CollectionArtworksFilter_collection.graphql"
+import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { TimePeriodFilter } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { WaysToBuyFilter } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { AttributionClassFilter } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
+import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+
+interface CollectionArtworksFilterProps {
+  relay: RelayRefetchProp
+  collection: CollectionArtworksFilter_collection
+  aggregations?: SharedArtworkFilterContextProps["aggregations"]
+  counts?: Counts
+}
+
+export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> = props => {
+  const { relay, collection, aggregations, counts } = props
+  const { slug, query } = collection
+  const isArtistCollection = query?.artistIDs?.length === 1
+
+  const { match } = useRouter()
+  const { pathname } = usePathnameComplete()
+
+  const Filters = (
+    <>
+      {!isArtistCollection && <ArtistsFilter expanded />}
+      <AttributionClassFilter expanded />
+      <MediumFilter expanded />
+      <PriceRangeFilter expanded />
+      <SizeFilter expanded />
+      <WaysToBuyFilter expanded />
+      <MaterialsFilter expanded />
+      {!isArtistCollection && <ArtistNationalityFilter expanded />}
+      <ArtworkLocationFilter expanded />
+      <TimePeriodFilter expanded />
+      <ColorFilter expanded />
+      <PartnersFilter expanded />
+    </>
+  )
+
+  return (
+    <ArtworkFilterContextProvider
+      // Reset state of filter context without calling reset; which would
+      // affect analytics.
+      key={pathname}
+      filters={match.location.query}
+      sortOptions={[
+        { text: "Default", value: "-decayed_merch" },
+        {
+          text: "Price (desc.)",
+          value: "sold,-has_price,-prices",
+        },
+        {
+          text: "Price (asc.)",
+          value: "sold,-has_price,prices",
+        },
+        {
+          text: "Recently updated",
+          value: "-partner_updated_at",
+        },
+        { text: "Recently added", value: "-published_at" },
+        { text: "Artwork year (desc.)", value: "-year" },
+        { text: "Artwork year (asc.)", value: "year" },
+      ]}
+      counts={counts}
+      aggregations={aggregations}
+      onChange={updateUrl}
+    >
+      <BaseArtworkFilter
+        relay={relay}
+        viewer={collection}
+        Filters={Filters}
+        relayVariables={{
+          slug,
+        }}
+        FilterPillsSection={<ActiveFilterPills />}
+      />
+    </ArtworkFilterContextProvider>
+  )
+}
+
+export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
+  CollectionArtworksFilter,
+  {
+    collection: graphql`
+      fragment CollectionArtworksFilter_collection on MarketingCollection
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        slug
+        query {
+          artistIDs
+        }
+        filtered_artworks: artworksConnection(input: $input) {
+          id
+          counts {
+            total(format: "0,0")
+          }
+          ...ArtworkFilterArtworkGrid_filtered_artworks
+        }
+      }
+    `,
+  },
+  graphql`
+    query CollectionArtworksFilterQuery(
+      $input: FilterArtworksInput
+      $slug: String!
+    ) {
+      collection: marketingCollection(slug: $slug) {
+        ...CollectionArtworksFilter_collection @arguments(input: $input)
+      }
+    }
+  `
+)

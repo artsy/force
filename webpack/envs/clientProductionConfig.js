@@ -25,7 +25,7 @@ const clientProductionConfig = () => {
   return {
     devtool: productionDevtool,
     entry: {
-      "artsy-entry": [path.resolve(process.cwd(), "src/v2/client.tsx")],
+      "artsy-entry": [path.resolve(process.cwd(), "src/client.tsx")],
     },
     externals,
     mode,
@@ -54,14 +54,14 @@ const clientProductionConfig = () => {
         fileName: path.resolve(basePath, "manifest.json"),
       }),
       new HtmlWebpackPlugin({
-        filename: path.resolve(basePath, "public", "index.ejs"),
+        filename: path.resolve(basePath, "public", "html.ejs"),
         inject: false,
         minify: {
           collapseWhitespace: true,
           conservativeCollapse: true,
           removeComments: true,
         },
-        template: path.resolve(basePath, "src", "v2", "index.ejs"),
+        template: path.resolve(basePath, "src/html.ejs"),
       }),
 
       process.env.WEBPACK_BUNDLE_REPORT &&

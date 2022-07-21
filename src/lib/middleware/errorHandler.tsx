@@ -25,10 +25,10 @@ import type { NextFunction } from "express"
 import { argv } from "yargs"
 import { IpDeniedError } from "express-ipfilter"
 import { NODE_ENV, VERBOSE_LOGGING } from "../../config"
-import { renderServerApp } from "v2/System/Router/renderServerApp"
-import { ErrorPage } from "v2/Components/ErrorPage"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { renderServerApp } from "System/Router/renderServerApp"
+import { ErrorPage } from "Components/ErrorPage"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { renderToString } from "react-dom/server"
 import { ServerStyleSheet } from "styled-components"
 import {
@@ -36,7 +36,7 @@ import {
   injectGlobalStyles,
   ThemeProviderV3,
 } from "@artsy/palette"
-import createLogger from "v2/Utils/logger"
+import createLogger from "Utils/logger"
 
 const { GlobalStyles } = injectGlobalStyles()
 const logger = createLogger("lib/middleware/errorHandlerMiddleware")

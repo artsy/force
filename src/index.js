@@ -11,7 +11,7 @@ import { initializeMiddleware } from "./middleware"
 import express from "express"
 import chalk from "chalk"
 import { startServer } from "./lib/startServer"
-import forceV2 from "./v2/server"
+import server from "./server"
 
 console.log(chalk.green(`\n[Force] NODE_ENV=${process.env.NODE_ENV}\n`))
 
@@ -20,7 +20,7 @@ export const app = express()
 initializeMiddleware(app)
 
 // Mount latest force
-app.use("/", forceV2)
+app.use("/", server)
 
 // Boot
 startServer(app)

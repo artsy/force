@@ -4,7 +4,7 @@
 
 To add a new app to force we can leverage our React-based SSR router.
 
-- Create a new folder in [the apps directory](https://github.com/artsy/force/tree/main/src/v2/Apps) `v2/Apps/MyAppName`
+- Create a new folder in [the apps directory](https://github.com/artsy/force/tree/main/src/Apps) `v2/Apps/MyAppName`
 - Create a new `routes.tsx` file
 - Add some routes:
 
@@ -39,10 +39,10 @@ export const routes: AppRouteConfig[] = [
 ]
 ```
 
-- Then add your routes to the [main route list](https://github.com/artsy/force/blob/main/src/v2/routes.tsx):
+- Then add your routes to the [main route list](https://github.com/artsy/force/blob/main/src/routes.tsx):
 
 ```tsx
-import { routes as myNewAppRoutes } from "v2/Apps/MyNewApp/routes"
+import { routes as myNewAppRoutes } from "Apps/MyNewApp/routes"
 
 export function getAppRoutes() {
   return buildAppRoutes([
@@ -54,7 +54,7 @@ export function getAppRoutes() {
 ```
 
 - Done! Now, when you visit `http://localhost:5000/new-app` you should see your newly created content above.
-- An example app is available to view and use as a starting point in [Example App](https://github.com/artsy/force/tree/main/src/v2/Apps/Example)
+- An example app is available to view and use as a starting point in [Example App](https://github.com/artsy/force/tree/main/src/Apps/Example)
 
 ### Advanced Setup
 
