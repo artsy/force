@@ -6,15 +6,15 @@ import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
-import { getClientParam } from "./Utils/getClientParam"
-import { buildClientApp } from "System/Router/client"
+import { getClientParam } from "Utils/getClientParam"
+import { buildClientApp } from "System/Router/buildClientApp"
 import { loadSegment } from "lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
 
 async function setupClient() {
   Promise.all([
     import(
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
-      "./Utils/initAuthModalContainer"
+      "Utils/initAuthModalContainer"
     ),
   ]).then(clientImports => {
     const [{ initAuthModalContainer }] = clientImports

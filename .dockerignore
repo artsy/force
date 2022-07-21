@@ -22,9 +22,7 @@
 !.env.oss
 !.env.test
 !cypress.json
-!jest.config.legacy.js
-!jest.config.v2.js
-!test.config.js
+!jest.config.js
 
 # Build Configuration
 

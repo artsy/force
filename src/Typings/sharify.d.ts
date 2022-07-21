@@ -54,7 +54,6 @@ declare module "sharify" {
       FAIR_ORGANIZER?: any
       FAIR?: any // mobile fair app data
       FEATURE_FLAGS: any
-      GALLERY_INSIGHTS_CHANNEL: string
       GEMINI_CLOUDFRONT_URL: string
       GENOME_URL: string
       GOOGLE_ADWORDS_ID: string
@@ -73,8 +72,6 @@ declare module "sharify" {
       PARTNER_NEW_LAYOUT?: boolean
       PARTNER_PROFILE?: any // mobile partner app data
       PATHS?: any // JSONPage
-      PC_ARTSY_CHANNEL: string
-      PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
       PREDICTION_URL: string
       PROFILE?: any // mobile partner app data

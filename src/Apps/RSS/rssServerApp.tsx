@@ -8,7 +8,7 @@ import { getENV } from "Utils/getENV"
 import {
   ARTSY_EDITORIAL_CHANNEL,
   GALLERY_PARTNER_UPDATES_CHANNEL,
-} from "config"
+} from "lib/config"
 
 const rssServerApp = express()
 

@@ -1,6 +1,5 @@
 module.exports = {
   cacheDirectory: ".cache/jest",
-  displayName: "jest",
   moduleDirectories: ["node_modules", "<rootDir>/src"],
   moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx"],
   moduleNameMapper: {
@@ -8,7 +7,7 @@ module.exports = {
     "^react$": "<rootDir>/node_modules/react",
   },
   reporters: ["default", "jest-junit"],
-  setupFilesAfterEnv: ["<rootDir>/jest.envSetup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["**/src/**/*.jest.(ts|tsx)"],
   testURL: "http://localhost",

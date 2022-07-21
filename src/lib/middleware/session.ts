@@ -8,7 +8,7 @@ import {
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
   SESSION_LOCAL_INSECURE,
-} from "../../config"
+} from "lib/config"
 
 export function sessionMiddleware(): RequestHandler {
   return session({

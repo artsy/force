@@ -4,7 +4,7 @@ import {
   UNLEASH_APP_NAME,
   UNLEASH_SERVER_KEY,
   NODE_ENV,
-} from "../../config"
+} from "lib/config"
 import { FeatureFlagService } from "./featureFlagService"
 
 // Pass in as argument to registerFeatureFlagProvideder() when using unleash as feature flag service

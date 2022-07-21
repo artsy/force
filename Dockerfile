@@ -119,7 +119,6 @@ COPY .env.oss \
   jest.config.js \
   package.json \
   relay.config.js \
-  jest.legacySetup.js \
   tsconfig.json \
   yarn.lock \
   ./

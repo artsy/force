@@ -1,7 +1,7 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-import { APP_URL } from "../../config"
+import { APP_URL } from "lib/config"
 import { parse } from "url"
 
 /**

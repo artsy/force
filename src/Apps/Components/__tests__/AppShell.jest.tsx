@@ -1,6 +1,6 @@
 import { SystemContextProvider } from "System"
 import { buildAppRoutes } from "System/Router/buildAppRoutes"
-import { buildClientApp } from "System/Router/client"
+import { buildClientApp } from "System/Router/buildClientApp"
 import { render, screen } from "@testing-library/react"
 
 jest.mock("Components/NavBar/NavBar", () => ({

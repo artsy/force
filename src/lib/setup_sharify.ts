@@ -11,10 +11,11 @@
 // See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
 import _ from "lodash"
-import * as config from "../config"
+import * as config from "./config"
 // eslint-disable-next-line
 import sharify from "sharify"
 
+// @ts-ignore
 sharify.data = _.extend(
   _.pick(
     config,
@@ -42,22 +43,16 @@ sharify.data = _.extend(
     "CURRENT_USER",
     "DISABLE_IMAGE_PROXY",
     "EDITORIAL_PATHS",
-    "EF_GUCCI",
-    "EF_VENICE",
-    "EF_VIDEO_GUIDE",
     "ENABLE_I18N_DEBUG",
     "ENABLE_NEW_AUCTIONS_FILTER",
     "ENABLE_QUERY_BATCHING",
     "ENABLE_SAVED_SEARCH",
     "ENABLE_SERVER_SIDE_CACHE",
     "ENABLE_WEB_CRAWLING",
-    "EOY_2016_ARTICLE",
-    "EOY_2016",
     "ERROR",
     "FACEBOOK_APP_NAMESPACE",
     "FACEBOOK_ID",
     "FEATURE_FLAGS",
-    "GALLERY_INSIGHTS_CHANNEL",
     "GALLERY_PARTNER_UPDATES_CHANNEL",
     "GEMINI_ACCOUNT_KEY",
     "GEMINI_APP",
@@ -74,8 +69,6 @@ sharify.data = _.extend(
     "NODE_ENV",
     "NOTIFICATION_COUNT",
     "ONETRUST_SCRIPT_ID",
-    "PC_ARTSY_CHANNEL",
-    "PC_AUCTION_CHANNEL",
     "POSITRON_URL",
     "PREDICTION_URL",
     "PUBLIC_GOOGLE_MAPS_API_KEY",
