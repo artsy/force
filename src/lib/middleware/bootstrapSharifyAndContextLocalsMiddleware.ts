@@ -43,7 +43,6 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
         ua.match(/BlackBerry/i)
     )
   )
-
   updateSharifyAndContext(
     res,
     "IS_TABLET",
@@ -55,14 +54,9 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
         (ua.match(/Android/i) && ua.match(/Mobile/i))
     )
   )
-
   updateSharifyAndContext(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
-
-  const reqIp = req.ip || ""
-  updateSharifyAndContext(res, "IP_ADDRESS", reqIp)
-
+  updateSharifyAndContext(res, "IP_ADDRESS", req.ip || "")
   updateSharifyAndContext(res, "AP", res.locals.sd.AP)
-
   updateSharifyAndContext(res, "REQUEST_ID", req.id)
 
   next()

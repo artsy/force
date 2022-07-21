@@ -7,9 +7,7 @@ import { getENV } from "../getENV"
  */
 export const useStableShuffle = <T>({ items }: { items: T[] }) => {
   const seed = getENV("REQUEST_ID")
-
   const { shuffle } = useMemo(() => seeded(seed), [seed])
-
   const shuffled = useMemo(() => shuffle(items), [items, shuffle])
 
   return { shuffled, seed }
