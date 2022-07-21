@@ -58,11 +58,13 @@ export const useScrollToOpenArtistAuthModal = () => {
     if (!id) return
 
     const init = async () => {
-      const { artist } = await fetchQuery<useScrollToOpenArtistAuthModalQuery>(
+      const response = await fetchQuery<useScrollToOpenArtistAuthModalQuery>(
         relayEnvironment,
         USE_SCROLL_TO_OPEN_ARTIST_AUTH_MODAL_QUERY,
         { id: id }
       )
+
+      const artist = response?.artist
 
       if (!artist) return
 

@@ -1,15 +1,15 @@
 import { IpDeniedError } from "express-ipfilter"
 import { renderServerApp } from "System/Router/renderServerApp"
-import { errorHandlerMiddleware } from "../../../lib/middleware/errorHandler"
+import { errorHandlerMiddleware } from "lib/middleware/errorHandler"
 
 jest.mock("System/Router/renderServerApp")
-jest.mock("../../../config", () => {
+jest.mock("lib/config", () => {
   return {
     NODE_ENV: "unknown",
   }
 })
 
-const config = require("../../../config")
+const config = require("lib/config")
 
 describe("errorHandler", () => {
   let testContext

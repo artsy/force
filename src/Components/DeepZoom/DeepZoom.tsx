@@ -70,9 +70,9 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
 
         osdViewerRef.current = viewer
 
-        viewer.addHandler("zoom", handleZoomChanged)
+        viewer.addHandler?.("zoom", handleZoomChanged)
 
-        viewer.addHandler(
+        viewer.addHandler?.(
           "tile-drawn",
           once(() => {
             setSliderState(prevSliderState => ({
