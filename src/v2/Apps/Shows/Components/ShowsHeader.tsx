@@ -9,10 +9,9 @@ import {
   HorizontalOverflow,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { graphql } from "lib/graphql"
 import { uniqBy } from "lodash"
 import * as React from "react"
-import { createFragmentContainer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"

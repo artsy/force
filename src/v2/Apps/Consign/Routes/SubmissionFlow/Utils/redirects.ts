@@ -1,6 +1,6 @@
 import { Match, Router } from "found"
-import { graphql } from "lib/graphql"
 import { isFunction } from "lodash"
+import { graphql } from "react-relay"
 import { redirects_submission } from "v2/__generated__/redirects_submission.graphql"
 import { getArtworkDetailsFormInitialValues } from "../ArtworkDetails/Components/ArtworkDetailsForm"
 import { getUploadPhotosFormInitialValues } from "../UploadPhotos/UploadPhotos"

@@ -1,4 +1,5 @@
 import Autosuggest from "react-autosuggest"
+import { graphql } from "react-relay"
 import { Ref, useEffect, useState } from "react"
 import * as React from "react"
 import {
@@ -10,7 +11,6 @@ import {
   DROP_SHADOW,
   Box,
 } from "@artsy/palette"
-import { graphql } from "lib/graphql"
 import { fetchQuery } from "relay-runtime"
 import {
   PriceDatabaseArtistAutosuggest_SearchConnection_Query,

@@ -1,7 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { graphql } from "lib/graphql"
 import * as React from "react"
-import { createFragmentContainer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { Rail } from "v2/Components/Rail"
