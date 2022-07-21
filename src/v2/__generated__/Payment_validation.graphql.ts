@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type CommercePaymentMethodEnum = "ACH_TRANSFER" | "CREDIT_CARD" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
+export type CommercePaymentMethodEnum = "CREDIT_CARD" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type Payment_validation = {
     readonly paymentMethod: CommercePaymentMethodEnum | null;
     readonly paymentMethodDetails: ({
