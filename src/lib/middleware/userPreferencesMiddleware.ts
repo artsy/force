@@ -1,7 +1,8 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-import request from "superagent"
-import { API_URL } from "config"
+import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
+import { getUser } from "v2/Utils/user"
+import { fetchUserPreferences } from "v2/Utils/fetchUserPreferences"
 
 const DEFAULT_METRIC = "cm"
 
@@ -11,15 +12,16 @@ export const userPreferencesMiddleware = async (
   next: NextFunction
 ) => {
   if (!!req.user) {
+    const user = getUser(req.user)
+    const relayEnvironment = createRelaySSREnvironment({ user })
     let metric
 
     try {
-      const endpoint = `${API_URL}/api/v1/me`
-      const headers = { "X-Access-Token": req.user.accessToken }
-      const { body } = await request.get(endpoint).set(headers)
-      const { length_unit_preference } = body
+      const { me } = await fetchUserPreferences(relayEnvironment)
 
-      metric = length_unit_preference
+      console.log("[debug] me", me)
+
+      metric = me?.lengthUnitPreference
     } catch (error) {
       console.error("[Force] Error getting user preferences:", error)
     }
