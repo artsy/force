@@ -28,7 +28,7 @@ import {
   SearchCriteriaAttributes,
 } from "./types"
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
-import { Metric } from "v2/Utils/metrics"
+import { Metric } from "Utils/metrics"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
