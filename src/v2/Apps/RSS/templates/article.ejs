@@ -4,6 +4,9 @@
   <link><%= appUrl %><%= article.href %></link>
   <author><%= article.byline %></author>
   <pubDate><%= new Date(article.publishedAt).toUTCString() %></pubDate>
+  <% if (article.thumbnailImage && article.thumbnailImage.resized) { %>
+    <enclosure url="<%= article.thumbnailImage.resized.src %>" length=0 type="image/jpeg" />
+  <% } %>
   <description>
     <![CDATA[
       <% if (article.hero && (article.hero.image || article.hero.embed)) { %>
