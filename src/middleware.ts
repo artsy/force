@@ -213,7 +213,7 @@ function applySecurityMiddleware(app) {
   // Require a user for these routes
   app.use(userRequiredMiddleware)
 
-  // Get user preferences (metric, currency)
+  // Get user preferences (e.g. metric, currency)
   app.use(userPreferencesMiddleware)
 }
 
