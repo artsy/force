@@ -12,6 +12,11 @@ export const RSS_ARTICLES_QUERY = graphql`
           id
           publishedAt
           thumbnailTitle
+          thumbnailImage {
+            resized(width: 1100) {
+              src
+            }
+          }
           href
           byline
           hero {
