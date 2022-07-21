@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { createContext } from "react"
 import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
-import { Metric } from "../ArtworkFilter/Utils/metrics"
+import { Metric } from "v2/Utils/metrics"
 import {
   FilterPill,
   SavedSearchEntity,

@@ -10,7 +10,7 @@ import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "../types"
-import { Metric } from "Components/ArtworkFilter/Utils/metrics"
+import { Metric } from "Utils/metrics"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 interface RenderButtonProps {

@@ -23,7 +23,7 @@ import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
 import { useMode } from "Utils/Hooks/useMode"
-import { DEFAULT_METRIC, Metric } from "../Utils/metrics"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]

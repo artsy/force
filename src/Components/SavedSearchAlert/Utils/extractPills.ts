@@ -10,7 +10,7 @@ import {
 import { getTimePeriodToDisplay } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { DEFAULT_METRIC, Metric } from "Components/ArtworkFilter/Utils/metrics"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 import { shouldExtractValueNamesFromAggregation } from "../constants"
 import {
   FilterPill,

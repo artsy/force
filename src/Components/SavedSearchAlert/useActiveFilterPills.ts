@@ -4,7 +4,7 @@ import {
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { DEFAULT_METRIC } from "Components/ArtworkFilter/Utils/metrics"
+import { DEFAULT_METRIC } from "Utils/metrics"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { FilterPill } from "./types"
 import { extractPillsFromCriteria } from "./Utils/extractPills"
