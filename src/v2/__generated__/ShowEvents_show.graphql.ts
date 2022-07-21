@@ -23,7 +23,15 @@ export type ShowEvents_show$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMM Do YYYY"
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -60,17 +68,17 @@ const node: ReaderFragment = {
         },
         {
           "alias": null,
-          "args": null,
+          "args": (v0/*: any*/),
           "kind": "ScalarField",
           "name": "startAt",
-          "storageKey": null
+          "storageKey": "startAt(format:\"MMM Do YYYY\")"
         },
         {
           "alias": null,
-          "args": null,
+          "args": (v0/*: any*/),
           "kind": "ScalarField",
           "name": "endAt",
-          "storageKey": null
+          "storageKey": "endAt(format:\"MMM Do YYYY\")"
         }
       ],
       "storageKey": null
@@ -86,5 +94,6 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = 'b87b5b521854b56b0926cceb65192e4b';
+})();
+(node as any).hash = 'bccf702355400e402fecef86d3e385ac';
 export default node;

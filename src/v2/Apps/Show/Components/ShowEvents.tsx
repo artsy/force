@@ -21,13 +21,15 @@ export const ShowEvents: React.FC<ShowEventsProps> = ({ show }) => {
       {events && (
         <>
           <Text variant="xs" as="h3" mb={1}>
-            Show Events
+            Events
           </Text>
 
           {events.map(event => {
             return (
               <Box key={show.internalID}>
-                <Text>{event?.eventType}</Text>
+                <Text>
+                  {event?.eventType} on {event?.startAt}
+                </Text>
               </Box>
             )
           })}
@@ -44,8 +46,8 @@ export const ShowEventsFragmentContainer = createFragmentContainer(ShowEvents, {
         title
         eventType
         description
-        startAt
-        endAt
+        startAt(format: "MMM Do YYYY")
+        endAt(format: "MMM Do YYYY")
       }
       internalID
     }

@@ -27,7 +27,7 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { BackToFairBannerFragmentContainer as BackToFairBanner } from "./Components/BackToFairBanner"
-import { ShowEventsFragmentContainer as ShowEvents } from "./Components/ShowEvents"
+import { ShowEventsFragmentContainer } from "./Components/ShowEvents"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -93,7 +93,9 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
                 </Column>
               )}
 
-              <ShowEvents show={show} />
+              <Column span={6}>
+                <ShowEventsFragmentContainer show={show} />
+              </Column>
 
               {hasViewingRoom && (
                 <Column span={5} start={8}>
