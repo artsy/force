@@ -47,7 +47,6 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { newForYouRoutes } from "v2/Apps/NewForYou/newForYouRoutes"
-import { myCollectionRoutes } from "./Apps/MyCollection/myCollectionRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -81,7 +80,6 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: institutionPartnershipsRoutes },
     { routes: jobsRoutes },
     { routes: meetTheSpecialistsRoutes },
-    { routes: myCollectionRoutes },
     { routes: newForYouRoutes },
     { routes: onboardingRoutes },
     { routes: orderRoutes },

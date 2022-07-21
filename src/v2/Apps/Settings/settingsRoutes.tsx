@@ -58,6 +58,15 @@ const SavesRoute = loadable(
       component.SettingsSavesRouteFragmentContainer,
   }
 )
+const MyCollectionApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/MyCollection/MyCollectionApp"
+    ),
+  {
+    resolveComponent: component => component.MyCollectionAppRefetchContainer,
+  }
+)
 const EditSettingsRoute = loadable(
   () =>
     import(
@@ -192,6 +201,21 @@ export const settingsRoutes: AppRouteConfig[] = [
           query settingsRoutes_SavesRouteQuery {
             me {
               ...SettingsSavesRoute_me
+            }
+          }
+        `,
+      },
+      {
+        path: "my-collection",
+        getComponent: () => MyCollectionApp,
+        onClientSideRender: () => {
+          MyCollectionApp.preload()
+        },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query settingsRoutes_MyCollectionQuery {
+            me {
+              ...MyCollectionApp_me
             }
           }
         `,
