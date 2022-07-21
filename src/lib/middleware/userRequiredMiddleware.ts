@@ -1,7 +1,6 @@
 import { match } from "path-to-regexp"
 
 const USER_REQUIRED_ROUTES = [
-  "/my-collection",
   "/orders(.*)",
   "/settings/alerts",
   "/settings/my-collection",
