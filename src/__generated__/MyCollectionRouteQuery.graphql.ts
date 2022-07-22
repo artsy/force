@@ -4,6 +4,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+export type MyCollectionArtworksQueryVariables = {
+    page?: number | null | undefined;
+};
+export type MyCollectionArtworksQueryResponse = {
+    readonly me: {
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworks_me">;
+    } | null;
+};
+export type MyCollectionArtworksQuery = {
+    readonly response: MyCollectionArtworksQueryResponse;
+    readonly variables: MyCollectionArtworksQueryVariables;
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
 export type MyCollectionRouteQueryVariables = {
     page?: number | null | undefined;
 };
@@ -15,16 +31,34 @@ export type MyCollectionRouteQueryResponse = {
 export type MyCollectionRouteQuery = {
     readonly response: MyCollectionRouteQueryResponse;
     readonly variables: MyCollectionRouteQueryVariables;
+<<<<<<< HEAD
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
 };
 
 
 
 /*
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+query MyCollectionArtworksQuery(
+  $page: Int
+) {
+  me {
+    ...MyCollectionArtworks_me_2Pg8Wv
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
 query MyCollectionRouteQuery(
   $page: Int
 ) {
   me {
     ...MyCollectionRoute_me_2Pg8Wv
+<<<<<<< HEAD
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
     id
   }
 }
@@ -121,7 +155,15 @@ fragment Metadata_artwork on Artwork {
   href
 }
 
+<<<<<<< HEAD
 fragment MyCollectionRoute_me_2Pg8Wv on Me {
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+fragment MyCollectionArtworks_me_2Pg8Wv on Me {
+=======
+fragment MyCollectionRoute_me_2Pg8Wv on Me {
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
   myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {
     totalCount
     pageInfo {
@@ -287,7 +329,15 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
+<<<<<<< HEAD
     "name": "MyCollectionRouteQuery",
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+    "name": "MyCollectionArtworksQuery",
+=======
+    "name": "MyCollectionRouteQuery",
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
     "selections": [
       {
         "alias": null,
@@ -302,7 +352,15 @@ return {
               (v1/*: any*/)
             ],
             "kind": "FragmentSpread",
+<<<<<<< HEAD
             "name": "MyCollectionRoute_me"
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+            "name": "MyCollectionArtworks_me"
+=======
+            "name": "MyCollectionRoute_me"
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
           }
         ],
         "storageKey": null
@@ -315,7 +373,15 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
+<<<<<<< HEAD
     "name": "MyCollectionRouteQuery",
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+    "name": "MyCollectionArtworksQuery",
+=======
+    "name": "MyCollectionRouteQuery",
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
     "selections": [
       {
         "alias": null,
@@ -781,7 +847,15 @@ return {
             "args": (v2/*: any*/),
             "filters": [],
             "handle": "connection",
+<<<<<<< HEAD
             "key": "MyCollectionRoute_myCollectionConnection",
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+            "key": "MyCollectionArtworks_myCollectionConnection",
+=======
+            "key": "MyCollectionRoute_myCollectionConnection",
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
             "kind": "LinkedHandle",
             "name": "myCollectionConnection"
           },
@@ -792,6 +866,21 @@ return {
     ]
   },
   "params": {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworksQuery.graphql.ts
+    "cacheID": "fae944724298f37cf3c43d537a017153",
+    "id": null,
+    "metadata": {},
+    "name": "MyCollectionArtworksQuery",
+    "operationKind": "query",
+    "text": "query MyCollectionArtworksQuery(\n  $page: Int\n) {\n  me {\n    ...MyCollectionArtworks_me_2Pg8Wv\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  href\n}\n\nfragment MyCollectionArtworks_me_2Pg8Wv on Me {\n  myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...GridItem_artwork\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+  }
+};
+})();
+(node as any).hash = 'b0cb232a51a89b9e84bc77665fac7685';
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
     "cacheID": "6326fe4dbf7096712b9f46dffe571893",
     "id": null,
     "metadata": {},
@@ -802,4 +891,8 @@ return {
 };
 })();
 (node as any).hash = 'b22922ce1d4411709a1979cd5f94b565';
+<<<<<<< HEAD
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRouteQuery.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
 export default node;

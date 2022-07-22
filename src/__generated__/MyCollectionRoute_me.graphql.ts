@@ -4,7 +4,15 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+<<<<<<< HEAD
 export type MyCollectionRoute_me = {
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworks_me.graphql.ts
+export type MyCollectionArtworks_me = {
+=======
+export type MyCollectionRoute_me = {
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRoute_me.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
     readonly myCollectionConnection: {
         readonly totalCount: number | null;
         readonly pageInfo: {
@@ -22,12 +30,27 @@ export type MyCollectionRoute_me = {
             } | null;
         } | null> | null;
     } | null;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworks_me.graphql.ts
+    readonly " $refType": "MyCollectionArtworks_me";
+};
+export type MyCollectionArtworks_me$data = MyCollectionArtworks_me;
+export type MyCollectionArtworks_me$key = {
+    readonly " $data"?: MyCollectionArtworks_me$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworks_me">;
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
     readonly " $refType": "MyCollectionRoute_me";
 };
 export type MyCollectionRoute_me$data = MyCollectionRoute_me;
 export type MyCollectionRoute_me$key = {
     readonly " $data"?: MyCollectionRoute_me$data | undefined;
     readonly " $fragmentRefs": FragmentRefs<"MyCollectionRoute_me">;
+<<<<<<< HEAD
+=======
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRoute_me.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
 };
 
 
@@ -53,14 +76,30 @@ const node: ReaderFragment = {
       }
     ]
   },
+<<<<<<< HEAD
   "name": "MyCollectionRoute_me",
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworks_me.graphql.ts
+  "name": "MyCollectionArtworks_me",
+=======
+  "name": "MyCollectionRoute_me",
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRoute_me.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
   "selections": [
     {
       "alias": "myCollectionConnection",
       "args": null,
       "concreteType": "MyCollectionConnection",
       "kind": "LinkedField",
+<<<<<<< HEAD
       "name": "__MyCollectionRoute_myCollectionConnection_connection",
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworks_me.graphql.ts
+      "name": "__MyCollectionArtworks_myCollectionConnection_connection",
+=======
+      "name": "__MyCollectionRoute_myCollectionConnection_connection",
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRoute_me.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
       "plural": false,
       "selections": [
         {
@@ -173,5 +212,13 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
+<<<<<<< HEAD
 (node as any).hash = '89bb03afb09fa419ee5f61b9bed90449';
+=======
+<<<<<<< HEAD:src/__generated__/SettingsMyCollectionArtworks_me.graphql.ts
+(node as any).hash = '518a71c4f5d491da92a98058fee4d1c1';
+=======
+(node as any).hash = '89bb03afb09fa419ee5f61b9bed90449';
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026:src/__generated__/MyCollectionRoute_me.graphql.ts
+>>>>>>> 1a0d371d2fde7828235f7b380e7796063c5b8026
 export default node;
