@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { createContext } from "react"
 import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
-import { Metric } from "../ArtworkFilter/Utils/metrics"
+import { DEFAULT_METRIC, Metric } from "../ArtworkFilter/Utils/metrics"
 import {
   FilterPill,
   SavedSearchEntity,
@@ -99,7 +99,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
         criteria,
         aggregations,
         entity,
-        metric,
+        metric: DEFAULT_METRIC,
       }),
     entity,
     criteria,
