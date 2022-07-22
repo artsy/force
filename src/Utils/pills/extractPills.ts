@@ -72,7 +72,7 @@ export const extractWaysToBuy = (entity: Entity) => {
     option => option.value === entity.field
   )
 
-  if (option) {
+  if (entity.value && option) {
     return {
       field: entity.field,
       value: entity.field,
