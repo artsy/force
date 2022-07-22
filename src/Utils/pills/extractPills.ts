@@ -55,7 +55,7 @@ const extractFromOptions = (entity: Entity, options: OptionItem[]) => {
 }
 
 export const extractSizes = (entity: Entity) => {
-  const SIZE_OPTIONS = getPredefinedSizesByMetric(entity.payload!.metric)
+  const SIZE_OPTIONS = getPredefinedSizesByMetric(entity.payload!.metric!)
   return extractFromOptions(entity, SIZE_OPTIONS)
 }
 
@@ -112,7 +112,7 @@ export const extractCustomSize = (entity: Entity) => {
     const displayValue = extractCustomSizeLabel({
       prefix: entity.field[0],
       value: entity.value,
-      metric: payload!.metric,
+      metric: payload!.metric!,
     })
 
     return {

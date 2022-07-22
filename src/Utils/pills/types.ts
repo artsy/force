@@ -13,16 +13,23 @@ export type OptionItem = {
   value: string
 }
 
+export type Aggregation = {
+  slice: string
+  counts: Array<{
+    count: number
+    value: string
+    name: string
+  }>
+}
+
 export type Entity = {
-  // TODO: Add Enum
+  // TODO: Add Enum?
   field: string
   value: any
   payload?: {
     [key: string]: any
-    // TODO: Add TS type
-    aggregation?: any
-    // TODO: Add TS type
-    metric?: any
+    aggregation?: Aggregation
+    metric?: Metric
     options?: OptionItem[]
   }
 }
