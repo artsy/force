@@ -44,7 +44,52 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 100
+          "value": 50
+        },
+        {
+          "kind": "Literal",
+          "name": "forSale",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "height",
+          "value": "*-*"
+        },
+        {
+          "kind": "Literal",
+          "name": "inquireableOnly",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "marketable",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "offerable",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "page",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "priceRange",
+          "value": "*-*"
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "-decayed_merch"
+        },
+        {
+          "kind": "Literal",
+          "name": "width",
+          "value": "*-*"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -87,7 +132,7 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:100)"
+      "storageKey": "filterArtworksConnection(first:50,forSale:true,height:\"*-*\",inquireableOnly:true,marketable:true,offerable:true,page:1,priceRange:\"*-*\",sort:\"-decayed_merch\",width:\"*-*\")"
     },
     {
       "args": null,
@@ -98,5 +143,5 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = 'c347d9a61ca6c0d74296d14e3b296dda';
+(node as any).hash = 'b3e1ab6675c1dadf0befc91eb69b357b';
 export default node;
