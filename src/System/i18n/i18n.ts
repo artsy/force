@@ -2,6 +2,7 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import { getENV } from "Utils/getENV"
 
+// TODO: Serve static assets on the server-side
 const translations = require("System/i18n/locales/en-US/translation.json")
 
 i18n.use(initReactI18next).init({
