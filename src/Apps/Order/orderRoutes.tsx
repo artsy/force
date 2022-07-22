@@ -79,7 +79,7 @@ const StatusRoute = loadable(
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
   {
-    resolveComponent: component => component.OrderApp,
+    resolveComponent: component => component.OrderAppFragmentContainer,
   }
 )
 
@@ -104,7 +104,7 @@ export const orderRoutes: AppRouteConfig[] = [
         }
         order: commerceOrder(id: $orderID) @principalField {
           ...redirects_order @relay(mask: false)
-          ...OrderApp_order @relay(mask: false)
+          ...OrderApp_order
         }
       }
     `,
