@@ -5,7 +5,7 @@ import { initializeArtsyXapp } from "./artsyXapp"
 import { initializeCache } from "./cacheClient"
 import { errorHandlerMiddleware } from "./middleware/errorHandler"
 import * as Sentry from "@sentry/node"
-import { APP_URL, NODE_ENV, PORT } from "../config"
+import { APP_URL, NODE_ENV, PORT } from "lib/config"
 
 const { HEADERS_TIMEOUT_SECONDS, KEEPALIVE_TIMEOUT_SECONDS } = process.env
 

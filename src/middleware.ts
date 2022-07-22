@@ -38,7 +38,7 @@ import {
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
-} from "./config"
+} from "lib/config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
 // see errors like "`CURRENT_USER` is undefined". We need more investigation

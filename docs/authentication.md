@@ -24,8 +24,8 @@ There was a package called `@artsy/passport-local-with-otp`, which was also
 
 You'll find the code that mounts our authentication routes in
 `/src/lib/passport/app/index.js`. The harness and components for the
-authentication UI live in `/src/v2/Apps/Authentication/` and
-`src/v2/Components/Authentication/`, respectively.
+authentication UI live in `/src/Apps/Authentication/` and
+`src/Components/Authentication/`, respectively.
 
 ## Key Dependencies
 

@@ -6,7 +6,7 @@ import { data as sd } from "sharify"
 import { trackTimeOnPage } from "./timeOnPageListener"
 import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
 import { subscribeToInAppMessagesByPath } from "lib/analytics/brazeMessagingIntegration"
-const Events = require("../../v2/Utils/Events").default
+const Events = require("../../Utils/Events").default
 
 /**
  * Format and fire events triggered via react-tracking and cohesion

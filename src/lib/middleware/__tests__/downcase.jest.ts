@@ -1,4 +1,4 @@
-import { downcaseMiddleware } from "../../../lib/middleware/downcase"
+import { downcaseMiddleware } from "lib/middleware/downcase"
 
 describe("downcase middleware", () => {
   let testContext

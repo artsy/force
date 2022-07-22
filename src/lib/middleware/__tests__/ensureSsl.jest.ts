@@ -1,6 +1,6 @@
-const { ensureSslMiddleware } = require("../../../lib/middleware/ensureSsl")
+const { ensureSslMiddleware } = require("lib/middleware/ensureSsl")
 
-jest.mock("../../../config", () => {
+jest.mock("lib/config", () => {
   return {
     APP_URL: "https://foobart.sy",
   }

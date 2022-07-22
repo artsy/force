@@ -1,6 +1,6 @@
-import { hstsMiddleware } from "../../../lib/middleware/hsts"
+import { hstsMiddleware } from "lib/middleware/hsts"
 
-jest.mock("../../../config", () => {
+jest.mock("lib/config", () => {
   return {
     APP_URL: "https://foobart.sy",
   }

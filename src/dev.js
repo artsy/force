@@ -73,8 +73,8 @@ initializeMiddleware(app)
 const mountAndReload = createReloadable(app, require)
 
 // Mount express-reloadable on app
-mountAndReload(path.resolve("src/v2/server.ts"), {
-  watchModules: [path.resolve(process.cwd(), "src/v2")],
+mountAndReload(path.resolve("src/server.ts"), {
+  watchModules: [path.resolve(process.cwd(), "src")],
 })
 
 // Start server

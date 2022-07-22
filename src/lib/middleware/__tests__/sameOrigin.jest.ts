@@ -22,6 +22,6 @@ describe("Same origin middleware", () => {
 
   it("adds x-frame-options header", () => {
     sameOriginMiddleware(req, res, next)
-    res.headers["X-Frame-Options"].should.equal("SAMEORIGIN")
+    expect(res.headers["X-Frame-Options"]).toEqual("SAMEORIGIN")
   })
 })

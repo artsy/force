@@ -130,7 +130,7 @@ jobs:
               ./scripts/build_review_app.sh $review_app_name
             fi
 
-  jest-legacy:
+  test:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
         aws_auth:
@@ -140,19 +140,7 @@ jobs:
     environment:
       - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
     steps:
-      - run: yarn test:ci:jest:legacy
-
-  jest-v2:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    environment:
-      - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
-    steps:
-      - run: yarn test:ci:jest:v2
+      - run: yarn test
 
   type-check:
     docker:
@@ -339,13 +327,7 @@ workflows:
                 command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
 
       # Test steps
-      - jest-legacy:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
-      - jest-v2:
+      - test:
           <<: *not_staging_or_release
           context: hokusai
           requires:
@@ -390,8 +372,7 @@ workflows:
           executor: hokusai/beta
           name: production-image-push
           requires:
-            - jest-legacy
-            - jest-v2
+            - test
             - type-check
             - relay-check
             - acceptance
