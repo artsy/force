@@ -19,6 +19,7 @@ import {
   SearchCriteriaAttributes,
 } from "../types"
 import { aggregationForFilter } from "./aggregationForFilter"
+import { Entity, OptionItem } from "Utils/pills/types"
 
 export const extractPillFromAggregation = (
   filter: {
@@ -282,4 +283,63 @@ export const extractPills = ({
   })
 
   return compact([...defaultPills, ...pillsFromCriteria])
+}
+
+export const prepareForPillsExtract = ({
+  criteria,
+  aggregations = [],
+  metric,
+}: {
+  criteria: SearchCriteriaAttributes
+  aggregations?: Aggregations
+  metric: Metric
+}) => {
+  const entities: Entity[] = []
+
+  Object.entries(criteria).forEach(entry => {
+    const [key, value] = entry
+
+    if (shouldExtractValueNamesFromAggregation.includes(key)) {
+      const aggregation = aggregationForFilter(key, aggregations)
+      let options: OptionItem[] | undefined
+
+      // Pass also hardcoded medium values for some grids (e.g. fair, collect grids)
+      if (key === "additionalGeneIDs") {
+        options = hardcodedMediums.map(option => ({
+          value: option.value,
+          displayName: option.name,
+        }))
+      }
+
+      entities.push({
+        field: key,
+        value,
+        payload: {
+          options,
+          aggregation,
+        },
+      })
+
+      return
+    }
+
+    if (key === "sizes" || key === "width" || key === "height") {
+      entities.push({
+        field: key,
+        value,
+        payload: {
+          metric,
+        },
+      })
+
+      return
+    }
+
+    entities.push({
+      field: key,
+      value,
+    })
+  })
+
+  return entities
 }

@@ -10,6 +10,7 @@ import { DEFAULT_METRIC } from "Components/ArtworkFilter/Utils/metrics"
 import { AuthModalOptions } from "Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
+import { prepareForPillsExtract } from "../Utils/extractPills"
 
 export interface ActiveFilterPillsAndCreateAlertProps {
   savedSearchEntity: SavedSearchEntity
@@ -25,6 +26,13 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
   const filters = usePrepareFiltersForPills()
   const criteria = getSearchCriteriaFromFilters(savedSearchEntity, filters)
   const metric = filters?.metric ?? DEFAULT_METRIC
+  const entities = prepareForPillsExtract({
+    criteria,
+    aggregations,
+    metric,
+  })
+
+  console.log("[debug] entities", entities)
 
   const getAuthModalOptions = (): AuthModalOptions => {
     return {
