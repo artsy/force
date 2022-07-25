@@ -10,7 +10,7 @@ export const useCreateSettingsBackupSecondFactors = () => {
   const { relayEnvironment } = useSystemContext()
 
   const submitCreateSettingsBackupSecondFactors = (
-    input: CreateBackupSecondFactorsInput = {}
+    input: CreateBackupSecondFactorsInput
   ): Promise<useCreateSettingsBackupSecondFactorsMutationResponse> => {
     return new Promise((resolve, reject) => {
       commitMutation<useCreateSettingsBackupSecondFactorsMutation>(
