@@ -9,6 +9,7 @@ import {
   MoneyFillIcon,
   Spacer,
   Text,
+  THEME_V3,
 } from "@artsy/palette"
 
 import { TimeSince } from "./TimeSince"
@@ -60,7 +61,8 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
     const reasonLapsed = stateReason?.includes("_lapsed")
     const reasonRejected = stateReason?.includes("_rejected")
     if (state === "PROCESSING_APPROVAL") {
-      color = "yellow100"
+      Icon = AlertCircleFillIcon
+      color = THEME_V3.colors.yellow100 as Color
       textColor = "black100"
       message = "Offer accepted. Payment pending"
     } else if (state === "APPROVED") {
