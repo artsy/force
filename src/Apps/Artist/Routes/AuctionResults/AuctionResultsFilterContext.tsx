@@ -87,7 +87,7 @@ export interface AuctionResultsFilterContextProps {
   earliestCreatedYear?: number | null
   /** Used to get the overall latest created year for all lots of given artist */
   latestCreatedYear?: number | null
-  userPreferedMetric?: Metric
+  userPreferredMetric?: Metric
 }
 
 /**
@@ -113,7 +113,7 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   | "ZeroState"
   | "earliestCreatedYear"
   | "latestCreatedYear"
-  | "userPreferedMetric"
+  | "userPreferredMetric"
 > & {
   onChange?: (filterState) => void
 }
@@ -130,13 +130,13 @@ export const AuctionResultsFilterContextProvider: React.FC<
   ZeroState,
   earliestCreatedYear = null,
   latestCreatedYear = null,
-  userPreferedMetric,
+  userPreferredMetric,
 }) => {
   const initialFilterState = {
     ...initialAuctionResultsFilterState({
       startDate: earliestCreatedYear,
       endDate: latestCreatedYear,
-      metric: userPreferedMetric,
+      metric: userPreferredMetric,
     }),
     ...filters,
   }
@@ -221,7 +221,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
         payload: {
           earliestCreatedYear,
           latestCreatedYear,
-          metric: userPreferedMetric,
+          metric: userPreferredMetric,
         } as any,
       }
       dispatchOrStage(action)

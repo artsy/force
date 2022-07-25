@@ -318,7 +318,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       <AuctionResultsFilterContextProvider
         earliestCreatedYear={startAt}
         latestCreatedYear={endAt}
-        userPreferedMetric={userPreferences?.metric}
+        userPreferredMetric={userPreferences?.metric}
         filters={filters}
         onChange={filterState =>
           updateUrl(allowedAuctionResultFilters(filterState))
