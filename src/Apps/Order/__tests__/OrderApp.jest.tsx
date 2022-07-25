@@ -5,7 +5,7 @@ import { mount } from "enzyme"
 import { Resolver } from "found-relay"
 import { getFarceResult } from "found/server"
 import { HeadProvider, Meta } from "react-head"
-import { OrderApp } from "../OrderApp"
+import { OrderAppFragmentContainer } from "../OrderApp"
 
 import { orderRoutes_OrderQueryRawResponse } from "__generated__/orderRoutes_OrderQuery.graphql"
 import {
@@ -505,7 +505,7 @@ describe("OrderApp", () => {
       <MockBoot>
         <HeadProvider>
           <SystemContextProvider {...context}>
-            <OrderApp {...props} />
+            <OrderAppFragmentContainer {...props} />
           </SystemContextProvider>
         </HeadProvider>
       </MockBoot>
