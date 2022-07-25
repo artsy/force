@@ -9,7 +9,6 @@ import { artistSeriesRoutes } from "Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "Apps/Artwork/artworkRoutes"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
-import { auctionPartnershipsRoutes } from "./Apps/AuctionPartnerships/auctionPartnershipsRoutes"
 import { auctionsRoutes } from "Apps/Auctions/auctionsRoutes"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
 import { buildAppRoutes } from "System/Router/buildAppRoutes"
@@ -61,7 +60,6 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: artworkRoutes },
     { routes: auctionRoutes },
     { routes: auctionsRoutes },
-    { routes: auctionPartnershipsRoutes },
     { routes: authenticationRoutes },
     { routes: buyerGuaranteeRoutes },
     { routes: categoriesRoutes },
