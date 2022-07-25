@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SettingsMyCollectionArtworks_me = {
+export type MyCollectionRoute_me = {
     readonly myCollectionConnection: {
         readonly totalCount: number | null;
         readonly pageInfo: {
@@ -22,12 +22,12 @@ export type SettingsMyCollectionArtworks_me = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "SettingsMyCollectionArtworks_me";
+    readonly " $refType": "MyCollectionRoute_me";
 };
-export type SettingsMyCollectionArtworks_me$data = SettingsMyCollectionArtworks_me;
-export type SettingsMyCollectionArtworks_me$key = {
-    readonly " $data"?: SettingsMyCollectionArtworks_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsMyCollectionArtworks_me">;
+export type MyCollectionRoute_me$data = MyCollectionRoute_me;
+export type MyCollectionRoute_me$key = {
+    readonly " $data"?: MyCollectionRoute_me$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionRoute_me">;
 };
 
 
@@ -35,7 +35,7 @@ export type SettingsMyCollectionArtworks_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
+      "defaultValue": 1,
       "kind": "LocalArgument",
       "name": "page"
     }
@@ -53,14 +53,14 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "SettingsMyCollectionArtworks_me",
+  "name": "MyCollectionRoute_me",
   "selections": [
     {
       "alias": "myCollectionConnection",
       "args": null,
       "concreteType": "MyCollectionConnection",
       "kind": "LinkedField",
-      "name": "__SettingsMyCollectionArtworks_myCollectionConnection_connection",
+      "name": "__MyCollectionRoute_myCollectionConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -173,5 +173,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'e769bfda1198bc13fba19d08bfb6f689';
+(node as any).hash = '89bb03afb09fa419ee5f61b9bed90449';
 export default node;

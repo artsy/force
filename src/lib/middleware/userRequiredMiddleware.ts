@@ -2,11 +2,12 @@ import { match } from "path-to-regexp"
 
 const USER_REQUIRED_ROUTES = [
   "/orders(.*)",
-  "/user/conversations(.*)",
-  "/settings/purchases(.*)",
-  "/settings/payments",
-  "/settings/shipping",
   "/settings/alerts",
+  "/settings/my-collection",
+  "/settings/payments",
+  "/settings/purchases(.*)",
+  "/settings/shipping",
+  "/user/conversations(.*)",
 ]
 
 const isRequestRequiringUser = req => {

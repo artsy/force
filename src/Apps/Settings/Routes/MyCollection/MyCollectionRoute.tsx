@@ -1,36 +1,24 @@
 import { FC, Fragment, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SettingsMyCollectionArtworks_me } from "__generated__/SettingsMyCollectionArtworks_me.graphql"
-import { SettingsMyCollectionArtworksQuery } from "__generated__/SettingsMyCollectionArtworksQuery.graphql"
-import {
-  ResponsiveBox,
-  Skeleton,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Sup,
-  Text,
-} from "@artsy/palette"
+import { Spacer, Sup, Text } from "@artsy/palette"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
+import { MetaTags } from "Components/MetaTags"
+import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 
-interface SettingsMyCollectionArtworksProps {
-  me: SettingsMyCollectionArtworks_me
+interface MyCollectionRouteProps {
+  me: MyCollectionRoute_me
   relay: RelayRefetchProp
 }
 
-const SettingsMyCollectionArtworks: FC<SettingsMyCollectionArtworksProps> = ({
-  me,
-  relay,
-}) => {
+const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
 
   const { scrollTo } = useScrollToElement({
-    selectorOrRef: "#jump--SettingsSavedArtworks",
+    selectorOrRef: "#jump--MyCollectionArtworks",
     behavior: "smooth",
     offset: 20,
   })
@@ -64,14 +52,16 @@ const SettingsMyCollectionArtworks: FC<SettingsMyCollectionArtworksProps> = ({
 
   return (
     <>
+      <MetaTags title="My Collection | Artsy" pathname="/my-collection" />
+
       <Text variant="lg-display" mb={4}>
         My Collection {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
-      {artworks.length > 0 ? (
+      {total > 0 ? (
         <>
           <Masonry
-            id="jump--SettingsSavedArtworks"
+            id="jump--MyCollectionArtworks"
             columnCount={[2, 3, 4]}
             style={{ opacity: loading ? 0.5 : 1 }}
           >
@@ -106,23 +96,23 @@ const SettingsMyCollectionArtworks: FC<SettingsMyCollectionArtworksProps> = ({
   )
 }
 
-export const SETTINGS_MY_COLLECTION_ARTWORKS_QUERY = graphql`
-  query SettingsMyCollectionArtworksQuery($page: Int) {
+export const MY_COLLECTION_ROUTE_QUERY = graphql`
+  query MyCollectionRouteQuery($page: Int) {
     me {
-      ...SettingsMyCollectionArtworks_me @arguments(page: $page)
+      ...MyCollectionRoute_me @arguments(page: $page)
     }
   }
 `
 
-export const SettingsMyCollectionArtworksRefetchContainer = createRefetchContainer(
-  SettingsMyCollectionArtworks,
+export const MyCollectionRouteRefetchContainer = createRefetchContainer(
+  MyCollectionRoute,
   {
     me: graphql`
-      fragment SettingsMyCollectionArtworks_me on Me
-        @argumentDefinitions(page: { type: "Int" }) {
+      fragment MyCollectionRoute_me on Me
+        @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
         myCollectionConnection(first: 10, page: $page, sort: CREATED_AT_DESC)
           @connection(
-            key: "SettingsMyCollectionArtworks_myCollectionConnection"
+            key: "MyCollectionRoute_myCollectionConnection"
             filters: []
           ) {
           totalCount
@@ -144,61 +134,5 @@ export const SettingsMyCollectionArtworksRefetchContainer = createRefetchContain
       }
     `,
   },
-  SETTINGS_MY_COLLECTION_ARTWORKS_QUERY
+  MY_COLLECTION_ROUTE_QUERY
 )
-
-const SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER = (
-  <Skeleton>
-    <SkeletonText variant="lg-display" mb={4}>
-      My Collection
-    </SkeletonText>
-
-    <Masonry columnCount={[2, 3, 4]}>
-      {[...new Array(10)].map((_, i) => {
-        return (
-          <div key={i}>
-            <ResponsiveBox
-              aspectWidth={[4, 3, 5, 6][i % 4]}
-              aspectHeight={[3, 4, 5][i % 3]}
-              maxWidth="100%"
-            >
-              <SkeletonBox width="100%" height="100%" />
-            </ResponsiveBox>
-
-            <SkeletonText variant="sm-display" mt={1}>
-              Artist Name
-            </SkeletonText>
-            <SkeletonText variant="sm-display">Artwork Title</SkeletonText>
-            <SkeletonText variant="xs">Partner Name</SkeletonText>
-            <SkeletonText variant="xs">US$0,000</SkeletonText>
-
-            <Spacer mt={4} />
-          </div>
-        )
-      })}
-    </Masonry>
-  </Skeleton>
-)
-
-export const SettingsMyCollectionArtworksQueryRenderer = () => {
-  return (
-    <SystemQueryRenderer<SettingsMyCollectionArtworksQuery>
-      lazyLoad
-      placeholder={SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER}
-      query={SETTINGS_MY_COLLECTION_ARTWORKS_QUERY}
-      variables={{ count: 30 }}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (!props?.me) {
-          return SETTINGS_MY_COLLECTION_ARTWORKS_PLACEHOLDER
-        }
-
-        return <SettingsMyCollectionArtworksRefetchContainer me={props.me} />
-      }}
-    />
-  )
-}
