@@ -15,7 +15,7 @@ import {
   FilterPill,
   SavedSearchEntity,
 } from "Components/SavedSearchAlert/types"
-import { getSupportedMetric } from "Components/ArtworkFilter/Utils/metrics"
+import { getSupportedMetric } from "Utils/metrics"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
 import {

@@ -26,6 +26,7 @@ export const buildServerAppContext = (
       contextPageOwnerSlug: pageSlug,
     },
     featureFlags: res.locals.sd.FEATURE_FLAGS,
+    userPreferences: res.locals.sd.USER_PREFERENCES,
     ...context,
   }
 }

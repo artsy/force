@@ -113,6 +113,7 @@ describe("buildClientApp", () => {
               "setRouter",
               "setUser",
               "user",
+              "userPreferences",
             ])
 
             return <div>SystemContextConsumer</div>

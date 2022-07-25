@@ -181,6 +181,7 @@ describe("buildServerApp", () => {
               "setRouter",
               "setUser",
               "user",
+              "userPreferences",
             ])
             return <div>HomeApp</div>
           }}

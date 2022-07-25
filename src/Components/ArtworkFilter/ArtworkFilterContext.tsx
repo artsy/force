@@ -8,7 +8,7 @@ import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
 import { paramsToCamelCase } from "./Utils/urlBuilder"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { DEFAULT_METRIC, Metric } from "./Utils/metrics"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
 /**
  * Initial filter state
