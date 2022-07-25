@@ -2,6 +2,7 @@ import { useContext, useReducer, useState } from "react"
 import * as React from "react"
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
+import { DEFAULT_METRIC, getSupportedMetric, Metric } from "Utils/metrics"
 
 const MIN_START_DATE = 0
 const MAX_END_DATE = 10000
@@ -16,6 +17,7 @@ export interface AuctionResultsFilters {
   createdAfterYear?: number | null
   createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
+  metric?: Metric
 }
 
 interface AuctionResultsFiltersState extends AuctionResultsFilters {
@@ -27,9 +29,11 @@ interface AuctionResultsFiltersState extends AuctionResultsFilters {
 export const initialAuctionResultsFilterState = ({
   startDate = MIN_START_DATE,
   endDate = MAX_END_DATE,
+  metric = DEFAULT_METRIC,
 }: {
   startDate?: number | null
   endDate?: number | null
+  metric?: Metric
 }): AuctionResultsFilters => ({
   organizations: [],
   categories: [],
@@ -40,6 +44,7 @@ export const initialAuctionResultsFilterState = ({
   createdAfterYear: typeof startDate === "number" ? startDate : MIN_START_DATE,
   createdBeforeYear: typeof endDate === "number" ? endDate : MAX_END_DATE,
   allowEmptyCreatedDates: true,
+  metric,
 })
 
 /**
@@ -82,6 +87,7 @@ export interface AuctionResultsFilterContextProps {
   earliestCreatedYear?: number | null
   /** Used to get the overall latest created year for all lots of given artist */
   latestCreatedYear?: number | null
+  userPreferedMetric?: Metric
 }
 
 /**
@@ -107,6 +113,7 @@ export type SharedAuctionResultsFilterContextProps = Pick<
   | "ZeroState"
   | "earliestCreatedYear"
   | "latestCreatedYear"
+  | "userPreferedMetric"
 > & {
   onChange?: (filterState) => void
 }
@@ -123,13 +130,20 @@ export const AuctionResultsFilterContextProvider: React.FC<
   ZeroState,
   earliestCreatedYear = null,
   latestCreatedYear = null,
+  userPreferedMetric,
 }) => {
   const initialFilterState = {
     ...initialAuctionResultsFilterState({
       startDate: earliestCreatedYear,
       endDate: latestCreatedYear,
+      metric: userPreferedMetric,
     }),
     ...filters,
+  }
+
+  // Use only allowed metric
+  if (filters.metric) {
+    initialFilterState.metric = getSupportedMetric(filters.metric)
   }
 
   const [auctionResultsFilterState, dispatch] = useReducer(
@@ -204,7 +218,11 @@ export const AuctionResultsFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: AuctionResultsFiltersAction = {
         type: "RESET",
-        payload: { earliestCreatedYear, latestCreatedYear } as any,
+        payload: {
+          earliestCreatedYear,
+          latestCreatedYear,
+          metric: userPreferedMetric,
+        } as any,
       }
       dispatchOrStage(action)
     },
@@ -272,6 +290,7 @@ const AuctionResultsFilterReducer = (
         "createdAfterYear",
         "createdBeforeYear",
         "allowEmptyCreatedDates",
+        "metric",
       ]
 
       primitiveFilterTypes.forEach(filter => {
@@ -343,11 +362,16 @@ const AuctionResultsFilterReducer = (
      * Resetting filters back to their initial state
      */
     case "RESET": {
-      const { earliestCreatedYear, latestCreatedYear } = action.payload as any
+      const {
+        earliestCreatedYear,
+        latestCreatedYear,
+        metric,
+      } = action.payload as any
       return {
         ...initialAuctionResultsFilterState({
           startDate: earliestCreatedYear,
           endDate: latestCreatedYear,
+          metric,
         }),
         reset: true,
       }

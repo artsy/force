@@ -23,7 +23,7 @@ import {
 import { ModalType } from "Components/Authentication/Types"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { SystemContext } from "System"
+import { SystemContext, useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { usePrevious } from "Utils/Hooks/usePrevious"
@@ -311,12 +311,14 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       props.artist.auctionResultsConnection?.createdYearRange ?? {}
 
     const { match } = useRouter()
+    const { userPreferences } = useSystemContext()
     const filters = paramsToCamelCase(match?.location.query)
 
     return (
       <AuctionResultsFilterContextProvider
         earliestCreatedYear={startAt}
         latestCreatedYear={endAt}
+        userPreferedMetric={userPreferences?.metric}
         filters={filters}
         onChange={filterState =>
           updateUrl(allowedAuctionResultFilters(filterState))
