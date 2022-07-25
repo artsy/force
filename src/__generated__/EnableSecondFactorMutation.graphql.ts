@@ -6,7 +6,7 @@ import { ConcreteRequest } from "relay-runtime";
 export type EnableSecondFactorInput = {
     clientMutationId?: string | null | undefined;
     code: string;
-    password?: string | null | undefined;
+    password: string;
     secondFactorID: string;
 };
 export type EnableSecondFactorMutationVariables = {
