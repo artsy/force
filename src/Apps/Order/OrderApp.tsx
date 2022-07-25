@@ -2,7 +2,6 @@ import { FC, useEffect, useRef } from "react"
 import { Box } from "@artsy/palette"
 import { OrderApp_order } from "__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
-import { SystemContextConsumer } from "System"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "Components/ErrorPage"
 import { MinimalNavBar } from "Components/NavBar/MinimalNavBar"
@@ -12,13 +11,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
-import { get } from "Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { AppContainer } from "../Components/AppContainer"
 import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
 import { getENV } from "Utils/getENV"
+import { extractNodes } from "Utils/extractNodes"
+import { useSystemContext } from "System"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -39,6 +39,8 @@ export const preventHardReload = event => {
 
 const OrderApp: FC<OrderAppProps> = props => {
   const { order, children, match, router } = props
+  const { isEigen } = useSystemContext()
+
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 
   useEffect(() => {
@@ -92,55 +94,39 @@ const OrderApp: FC<OrderAppProps> = props => {
     return <ZendeskWrapper />
   }
 
-  const artworkId = get(
-    props,
-    () => order.lineItems?.edges?.[0]?.node?.artwork?.slug
-  )
-
-  const artworkHref = get(
-    props,
-    () => order.lineItems?.edges?.[0]?.node?.artwork?.href
-  )
-
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
   const isModal = !!props.match?.location.query.isModal
+  const artwork = extractNodes(order.lineItems!)[0].artwork
 
   return (
-    <SystemContextConsumer>
-      {({ isEigen }) => (
-        <Box>
-          <MinimalNavBar to={artworkHref!} isBlank={isModal}>
-            <Title>Checkout | Artsy</Title>
-            {isEigen ? (
-              <Meta
-                name="viewport"
-                content="width=device-width, user-scalable=no"
-              />
-            ) : (
-              <Meta
-                name="viewport"
-                content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-              />
-            )}
-            {!isEigen && !isModal && renderZendeskScript()}
-            <SafeAreaContainer>
-              <Elements stripe={stripePromise}>
-                <AppContainer>
-                  <HorizontalPadding>{children}</HorizontalPadding>
-                </AppContainer>
-              </Elements>
-            </SafeAreaContainer>
-            {!isModal && (
-              <StickyFooterWithInquiry
-                orderType={order.mode}
-                artworkID={artworkId!}
-              />
-            )}
-            <ConnectedModalDialog />
-          </MinimalNavBar>
-        </Box>
-      )}
-    </SystemContextConsumer>
+    <Box>
+      <MinimalNavBar to={artwork?.href!} isBlank={isModal}>
+        <Title>Checkout | Artsy</Title>
+        <Meta
+          name="viewport"
+          content={
+            isEigen
+              ? "width=device-width, user-scalable=no"
+              : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+          }
+        />
+        {!isEigen && !isModal && renderZendeskScript()}
+        <SafeAreaContainer>
+          <Elements stripe={stripePromise}>
+            <AppContainer>
+              <HorizontalPadding>{children}</HorizontalPadding>
+            </AppContainer>
+          </Elements>
+        </SafeAreaContainer>
+        {!isModal && (
+          <StickyFooterWithInquiry
+            orderType={order.mode}
+            artworkID={artwork?.slug!}
+          />
+        )}
+        <ConnectedModalDialog />
+      </MinimalNavBar>
+    </Box>
   )
 }
 
