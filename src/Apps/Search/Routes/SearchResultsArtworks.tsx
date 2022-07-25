@@ -43,7 +43,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       FilterPillsSection={<ActiveFilterPills />}
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     />
   )
 }

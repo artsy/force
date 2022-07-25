@@ -42,7 +42,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
       counts={sidebar?.counts as Counts}
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         relay={relay}

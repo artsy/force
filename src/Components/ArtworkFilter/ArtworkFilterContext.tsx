@@ -238,7 +238,7 @@ export interface ArtworkFilterContextProps {
   // Has the ArtworkFilterContext been mounted in the tree
   mountedContext?: boolean
 
-  userPreferedMetric?: Metric
+  userPreferredMetric?: Metric
 }
 
 /**
@@ -272,7 +272,7 @@ export type SharedArtworkFilterContextProps = Pick<
   | "filters"
   | "sortOptions"
   | "onFilterClick"
-  | "userPreferedMetric"
+  | "userPreferredMetric"
   | "ZeroState"
   | "followedArtists"
 > & {
@@ -292,12 +292,12 @@ export const ArtworkFilterContextProvider: React.FC<
   onChange = updateUrl,
   onFilterClick,
   sortOptions,
-  userPreferedMetric,
+  userPreferredMetric,
   ZeroState,
 }) => {
   const camelCasedFilters: ArtworkFiltersState = paramsToCamelCase(filters)
   const defaultSort = sortOptions?.[0].value ?? initialArtworkFilterState.sort!
-  const defaultMetric = userPreferedMetric ?? initialArtworkFilterState.metric
+  const defaultMetric = userPreferredMetric ?? initialArtworkFilterState.metric
   const defaultFilters = {
     ...initialArtworkFilterState,
     sort: defaultSort,

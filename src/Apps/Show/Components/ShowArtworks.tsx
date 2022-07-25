@@ -56,7 +56,7 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
       onChange={updateUrl}
       aggregations={aggregations}
       counts={counts}
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         mt={0}

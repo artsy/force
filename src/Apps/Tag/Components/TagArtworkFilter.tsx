@@ -39,7 +39,7 @@ const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         relay={relay}

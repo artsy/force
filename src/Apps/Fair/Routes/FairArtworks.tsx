@@ -82,7 +82,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         mt={6}

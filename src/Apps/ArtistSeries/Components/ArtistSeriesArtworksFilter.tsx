@@ -45,7 +45,7 @@ const ArtistSeriesArtworksFilter: React.FC<
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       onChange={updateUrl}
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         relay={relay}

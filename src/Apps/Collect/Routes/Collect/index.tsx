@@ -165,7 +165,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             FilterPillsSection={
               <ActiveFilterPills defaultPills={defaultPills} />
             }
-            userPreferedMetric={userPreferences?.metric}
+            userPreferredMetric={userPreferences?.metric}
           />
         </Box>
       </FrameWithRecentlyViewed>

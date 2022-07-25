@@ -86,7 +86,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       counts={counts}
       aggregations={aggregations}
       onChange={updateUrl}
-      userPreferedMetric={userPreferences?.metric}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         relay={relay}
