@@ -9,6 +9,7 @@ import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 interface OnboardingGeneProps {
   gene: OnboardingGene_gene
@@ -17,6 +18,7 @@ interface OnboardingGeneProps {
 
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
+  const { onDone } = useOnboardingContext()
 
   return (
     <Box px={[2, 4]} py={6}>
@@ -51,7 +53,14 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
-                <ArtworkGridItemFragmentContainer artwork={artwork} />
+                <ArtworkGridItemFragmentContainer
+                  artwork={artwork}
+                  onMouseUp={() => {
+                    setTimeout(() => {
+                      onDone()
+                    }, 10)
+                  }}
+                />
 
                 <Spacer mb={2} />
               </Fragment>

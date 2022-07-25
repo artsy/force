@@ -52,9 +52,7 @@ export const OnboardingWelcome = () => {
               // @ts-ignore
               as={RouterLink}
               to="/"
-              onClick={() => {
-                onDone()
-              }}
+              onClick={onDone}
             >
               Skip
             </Button>
