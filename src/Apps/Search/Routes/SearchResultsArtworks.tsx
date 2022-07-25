@@ -10,6 +10,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useSystemContext } from "System"
 
 interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer
@@ -17,6 +18,7 @@ interface SearchResultsRouteProps {
 
 export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = props => {
   const { match } = useRouter()
+  const { userPreferences } = useSystemContext()
   const { viewer } = props
   const { sidebar } = viewer
 
@@ -41,6 +43,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       FilterPillsSection={<ActiveFilterPills />}
+      userPreferedMetric={userPreferences?.metric}
     />
   )
 }

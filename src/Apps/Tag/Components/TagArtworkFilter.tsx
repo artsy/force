@@ -10,6 +10,7 @@ import {
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag } from "__generated__/TagArtworkFilter_tag.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useSystemContext } from "System"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag
@@ -18,6 +19,7 @@ interface TagArtworkFilterProps {
 
 const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
   const { match } = useRouter()
+  const { userPreferences } = useSystemContext()
   const { sidebar } = tag
 
   return (
@@ -37,6 +39,7 @@ const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
       aggregations={
         sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
+      userPreferedMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         relay={relay}

@@ -12,6 +12,7 @@ import { BoxProps } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 import { omit } from "lodash"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useSystemContext } from "System"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -22,6 +23,7 @@ interface ShowArtworksFilterProps extends BoxProps {
 
 const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
   const { match } = useRouter()
+  const { userPreferences } = useSystemContext()
   const { relay, show, aggregations, counts, ...rest } = props
   const { filtered_artworks } = show
 
@@ -54,6 +56,7 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
       onChange={updateUrl}
       aggregations={aggregations}
       counts={counts}
+      userPreferedMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         mt={0}

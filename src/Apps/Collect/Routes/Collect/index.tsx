@@ -25,6 +25,7 @@ import {
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { FilterPill } from "Components/SavedSearchAlert/types"
 import { hardcodedMediums } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { useSystemContext } from "System"
 
 export interface CollectAppProps {
   match: Match
@@ -40,6 +41,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   match: { location, params },
   viewer,
 }) => {
+  const { userPreferences } = useSystemContext()
   const medium = params?.medium as Medium
   const color = params?.color as Color
   const { description, breadcrumbTitle, title } = getMetadata({
@@ -163,6 +165,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             FilterPillsSection={
               <ActiveFilterPills defaultPills={defaultPills} />
             }
+            userPreferedMetric={userPreferences?.metric}
           />
         </Box>
       </FrameWithRecentlyViewed>

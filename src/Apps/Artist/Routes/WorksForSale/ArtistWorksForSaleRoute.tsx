@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 import { ArtistWorksForSaleRoute_artist } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
-import { ArtistWorksForSaleRoute_me } from "__generated__/ArtistWorksForSaleRoute_me.graphql"
 import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtistSeriesRailFragmentContainer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ContextModule } from "@artsy/cohesion"
@@ -13,12 +12,10 @@ import { useRouter } from "System/Router/useRouter"
 
 interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist
-  me: ArtistWorksForSaleRoute_me
 }
 
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
   artist,
-  me,
 }) => {
   const title = computeTitle(
     artist.name!,
@@ -59,7 +56,6 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
       />
       <ArtistArtworkFilterRefetchContainer
         artist={artist}
-        me={me}
         aggregations={
           artist.sidebarAggregations
             ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
@@ -100,11 +96,6 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         internalID
         slug
         id
-      }
-    `,
-    me: graphql`
-      fragment ArtistWorksForSaleRoute_me on Me {
-        ...ArtistArtworkFilter_me
       }
     `,
   }

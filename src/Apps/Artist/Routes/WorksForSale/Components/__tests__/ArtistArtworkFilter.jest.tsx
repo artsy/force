@@ -32,12 +32,11 @@ const getWrapper = (props: Props = {}) => {
 
   return setupTestWrapperTL<ArtistArtworkFilterTestQuery>({
     Component: props => {
-      if (props.artist && props.me) {
+      if (props.artist) {
         return (
           <MockBoot context={context}>
             <ArtistArtworkFilterRefetchContainer
               artist={props.artist}
-              me={props.me}
               aggregations={[]}
             />
           </MockBoot>
@@ -50,9 +49,6 @@ const getWrapper = (props: Props = {}) => {
       query ArtistArtworkFilterTestQuery @relay_test_operation {
         artist(id: "example") {
           ...ArtistArtworkFilter_artist
-        }
-        me {
-          ...ArtistArtworkFilter_me
         }
       }
     `,
