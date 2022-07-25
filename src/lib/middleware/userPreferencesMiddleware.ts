@@ -2,7 +2,7 @@ import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getUser } from "Utils/user"
-import { fetchUserPreferences } from "Utils/fetchUserPreferences"
+import { fetchUserPreferences } from "System/fetchUserPreferences"
 import { getSupportedMetric, Metric } from "Utils/metrics"
 
 export type UserPreferences = {
