@@ -252,6 +252,7 @@ export class Accept extends Component<AcceptProps & StripeProps> {
     return (
       <>
         <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
+        <Spacer mb={4} />
         <TwoColumnLayout
           Content={
             <Flex

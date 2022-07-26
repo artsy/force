@@ -132,6 +132,7 @@ export class CounterRoute extends Component<CounterProps> {
     return (
       <>
         <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
+        <Spacer mb={4} />
         <TwoColumnLayout
           Content={
             <Flex

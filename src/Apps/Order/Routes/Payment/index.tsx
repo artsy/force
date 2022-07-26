@@ -251,6 +251,7 @@ export const PaymentRoute: FC<Props> = props => {
         currentStep="Payment"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
       />
+      <Spacer mb={4} />
       <TwoColumnLayout
         Content={
           <>

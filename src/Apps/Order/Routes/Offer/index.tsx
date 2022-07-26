@@ -242,6 +242,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     return (
       <>
         <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
+        <Spacer mb={4} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -266,9 +267,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               )}
               {!isInquiryCheckout && showPriceOptions && (
                 <>
-                  <Text variant="lg-display" mt={2}>
-                    Select an Option
-                  </Text>
+                  <Text variant="lg-display">Select an Option</Text>
 
                   {priceNote}
 

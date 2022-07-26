@@ -223,6 +223,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     return (
       <>
         <OrderStepper currentStep="Respond" steps={counterofferFlowSteps} />
+        <Spacer mb={4} />
         <TwoColumnLayout
           Content={
             <Flex

@@ -367,6 +367,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         currentStep="Review"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
       />
+      <Spacer mb={4} />
       <TwoColumnLayout
         Content={
           <Join separator={<Spacer mb={4} />}>
@@ -408,7 +409,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
-              <Spacer mb={2} />
+              <Spacer mb={4} />
               <Button
                 variant="primaryBlack"
                 width="50%"

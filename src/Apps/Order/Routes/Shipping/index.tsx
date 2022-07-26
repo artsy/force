@@ -636,6 +636,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           currentStep="Shipping"
           steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         />
+        <Spacer mb={4} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -743,6 +744,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   onChange={this.onPhoneNumberChange}
                   label="Number to contact you for pickup logistics"
                 />
+                <Spacer mt={4} />
               </Collapse>
 
               <Collapse
@@ -780,7 +782,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             </Flex>
           }
           Sidebar={
-            <Flex flexDirection="column" mt={[0, 4]}>
+            <Flex flexDirection="column">
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem

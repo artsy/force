@@ -142,7 +142,7 @@ export class NewPaymentRoute extends Component<
     return (
       <>
         <OrderStepper currentStep="Payment" steps={["Payment"]} />
-
+        <Spacer mb={4} />
         <TwoColumnLayout
           Content={
             <Flex
