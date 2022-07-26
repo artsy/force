@@ -22,6 +22,7 @@ import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/Materia
 import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useSystemContext } from "System"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -31,6 +32,7 @@ interface FairArtworksFilterProps {
 const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { relay, fair } = props
   const { match } = useRouter()
+  const { userPreferences } = useSystemContext()
   const { filtered_artworks, sidebarAggregations } = fair
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -80,6 +82,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         mt={6}

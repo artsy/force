@@ -73,6 +73,7 @@ export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
   sortOptions,
   viewer,
   ZeroState,
+  userPreferredMetric,
   ...rest
 }) => {
   return (
@@ -84,6 +85,7 @@ export const ArtworkFilter: React.FC<ArtworkFilterProps> = ({
       onFilterClick={onFilterClick}
       onChange={onChange}
       ZeroState={ZeroState}
+      userPreferredMetric={userPreferredMetric}
     >
       <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
     </ArtworkFilterContextProvider>

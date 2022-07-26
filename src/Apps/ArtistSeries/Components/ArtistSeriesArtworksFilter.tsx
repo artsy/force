@@ -9,6 +9,7 @@ import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useSystemContext } from "System"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
@@ -20,6 +21,7 @@ interface ArtistSeriesArtworksFilterProps {
 const ArtistSeriesArtworksFilter: React.FC<
   ArtistSeriesArtworksFilterProps & RouterState
 > = props => {
+  const { userPreferences } = useSystemContext()
   const { match, relay, artistSeries, aggregations } = props
   const { filtered_artworks } = artistSeries
 
@@ -43,6 +45,7 @@ const ArtistSeriesArtworksFilter: React.FC<
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       onChange={updateUrl}
+      userPreferredMetric={userPreferences?.metric}
     >
       <BaseArtworkFilter
         relay={relay}
