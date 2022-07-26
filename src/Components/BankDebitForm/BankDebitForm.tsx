@@ -132,6 +132,7 @@ export const BankDebitForm: FC<Props> = ({
         {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
 
         <Button
+          data-test="bank-transfer-save"
           disabled={!stripe || bankAccountHasInsufficientFunds}
           variant="primaryBlack"
           width={["100%", "50%"]}
