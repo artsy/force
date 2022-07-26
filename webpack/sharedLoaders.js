@@ -3,7 +3,6 @@
 import path from "path"
 import { basePath, webpackEnv } from "./webpackEnv"
 import swcConfig from "../.swcrc.js"
-// const swcConfig = require("./.swcrc.js")
 
 export const swcLoader = {
   include: path.resolve(basePath, "src"),

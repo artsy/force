@@ -43,7 +43,6 @@ export const clientDevelopmentConfig = () => {
     module: {
       rules: [
         webpackEnv.experimentalSWCCompiler ? swcLoader : babelLoader,
-        // babelLoader,
         ejsLoader,
         mjsLoader,
       ],

@@ -141,6 +141,19 @@ jobs:
     steps:
       - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
 
+  # TODO: Experiment. Remove when done testing SWC compiler
+  test-swc:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    environment:
+      - EXPERIMENTAL_SWC_COMPILER: true
+    steps:
+      - run: yarn test
+
   type-check:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
@@ -327,6 +340,13 @@ workflows:
 
       # Test steps
       - test:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - builder-image-push
+
+      # FIXME: Remove this test job
+      - test-swc:
           <<: *not_staging_or_release
           context: hokusai
           requires:
