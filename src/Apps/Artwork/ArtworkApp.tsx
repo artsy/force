@@ -16,7 +16,7 @@ import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeri
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
 import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrderModal"
 import { withSystemContext } from "System"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { useRouter } from "System/Router/useRouter"
 import { TrackingProp } from "react-tracking"
@@ -125,7 +125,7 @@ export class ArtworkApp extends React.Component<Props> {
 
     if (is_acquireable || is_in_auction) {
       const trackingData = {
-        action_type: Schema.ActionType.ViewedProduct,
+        action_type: DeprecatedSchema.ActionType.ViewedProduct,
         product_id: internalID,
       }
       if (tracking) {
@@ -142,7 +142,7 @@ export class ArtworkApp extends React.Component<Props> {
 
     if (tracking && is_in_auction) {
       const trackingData = {
-        action_type: Schema.ActionType.ViewedLot,
+        action_type: DeprecatedSchema.ActionType.ViewedLot,
         artwork_id: internalID,
         artwork_slug: slug,
         auction_slug: sale?.slug,

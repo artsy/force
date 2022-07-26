@@ -1,9 +1,9 @@
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { graphql } from "relay-runtime"
-import { AnalyticsSchema } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RouterLink } from "System/Router/RouterLink"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { ViewingRoomWorksArtwork_artwork } from "__generated__/ViewingRoomWorksArtwork_artwork.graphql"
@@ -37,9 +37,10 @@ const ViewingRoomWorksArtwork: React.FC<ViewingRoomWorksArtworkProps> = ({
         scrollTo()
 
         tracking.trackEvent({
-          action_type: AnalyticsSchema.ActionType.ClickedArtworkGroup,
-          context_module: AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-          subject: AnalyticsSchema.Subject.ArtworkThumbnail,
+          action_type: DeprecatedAnalyticsSchema.ActionType.ClickedArtworkGroup,
+          context_module:
+            DeprecatedAnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
+          subject: DeprecatedAnalyticsSchema.Subject.ArtworkThumbnail,
           destination_path: to,
         })
       }}

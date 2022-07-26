@@ -3,7 +3,8 @@ import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork } from "__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 
 interface ViewingRoomArtworkDetailsProps {
   artwork: ViewingRoomArtworkDetails_artwork
@@ -45,10 +46,12 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
             my={2}
             onClick={() => {
               trackEvent({
-                action_type: AnalyticsSchema.ActionType.ClickedBuyViewingGroup,
+                action_type:
+                  DeprecatedAnalyticsSchema.ActionType.ClickedBuyViewingGroup,
                 context_module:
-                  AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-                subject: AnalyticsSchema.Subject.Rail,
+                  DeprecatedAnalyticsSchema.ContextModule
+                    .ViewingRoomArtworkRail,
+                subject: DeprecatedAnalyticsSchema.Subject.Rail,
                 destination_path: href!,
               })
             }}

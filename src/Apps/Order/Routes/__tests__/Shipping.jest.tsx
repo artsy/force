@@ -34,11 +34,11 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { flushPromiseQueue } from "DevTools"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

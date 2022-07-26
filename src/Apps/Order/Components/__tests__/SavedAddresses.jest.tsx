@@ -7,10 +7,10 @@ import { createTestEnv } from "DevTools/createTestEnv"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResults"
 import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

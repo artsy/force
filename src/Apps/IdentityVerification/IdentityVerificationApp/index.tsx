@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import { IdentityVerificationApp_identityVerification } from "__generated__/IdentityVerificationApp_identityVerification.graphql"
 import { IdentityVerificationAppStartMutation } from "__generated__/IdentityVerificationAppStartMutation.graphql"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useMemo, useState } from "react"
 import * as React from "react"
 import {
@@ -64,8 +64,8 @@ const IdentityVerificationApp: React.FC<Props> = ({
 
   const trackClickedContinueToVerification = () => {
     trackEvent({
-      action_type: Schema.ActionType.ClickedContinueToIdVerification,
-      context_page: Schema.PageName.IdentityVerificationPage,
+      action_type: DeprecatedSchema.ActionType.ClickedContinueToIdVerification,
+      context_page: DeprecatedSchema.PageName.IdentityVerificationPage,
       context_page_owner_id: identityVerification?.internalID,
     })
   }

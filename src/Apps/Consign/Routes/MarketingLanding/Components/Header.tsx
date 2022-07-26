@@ -2,7 +2,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { FullBleedHeader } from "Components/FullBleedHeader"
 import { Box, Button, Flex, Text } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { useAnalyticsContext, useSystemContext, useTracking } from "System"
+import { useAnalyticsContext, useSystemContext } from "System"
+import { useTracking } from "react-tracking"
 
 export const Header: React.FC = () => {
   const { trackEvent } = useTracking()

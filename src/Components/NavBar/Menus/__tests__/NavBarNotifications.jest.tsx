@@ -1,8 +1,8 @@
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBarNotifications } from "../NavBarNotifications"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("NavBarNotifications", () => {
   const trackEvent = jest.fn()

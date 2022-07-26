@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Flex, Image, Text, BorderBox } from "@artsy/palette"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Router/RouterLink"
@@ -40,7 +40,7 @@ export const GenericSearchResultItem: React.FC<GenericSearchResultItemProps> = (
 
   const trackEvent = () => {
     const trackingData = {
-      action_type: Schema.ActionType.SelectedItemFromSearchPage,
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearchPage,
       query: term,
       item_number: index,
       item_type: entityType,

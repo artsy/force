@@ -2,7 +2,7 @@ import { Column, GridColumns, Text } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AboutPartner_partner } from "__generated__/AboutPartner_partner.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { ActionType, ClickedPartnerLink, OwnerType } from "@artsy/cohesion"
 
 export interface AboutPartnerProps {

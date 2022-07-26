@@ -15,7 +15,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarBidAction_artwork } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import { ArtworkSidebarBidAction_me } from "__generated__/ArtworkSidebarBidAction_me.graphql"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { bidderQualifications } from "Utils/identityVerificationRequirements"
@@ -97,8 +97,8 @@ export class ArtworkSidebarBidAction extends React.Component<
       },
     ],
     auction_slug: props.artwork.sale?.slug,
-    context_page: Schema.PageName.ArtworkPage,
-    action_type: Schema.ActionType.ClickedBid,
+    context_page: DeprecatedSchema.PageName.ArtworkPage,
+    action_type: DeprecatedSchema.ActionType.ClickedBid,
   }))
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
@@ -121,11 +121,11 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   @track({
-    type: Schema.Type.Button,
-    flow: Schema.Flow.Auctions,
-    subject: Schema.Subject.EnterLiveAuction,
-    context_module: Schema.ContextModule.Sidebar,
-    action_type: Schema.ActionType.Click,
+    type: DeprecatedSchema.Type.Button,
+    flow: DeprecatedSchema.Flow.Auctions,
+    subject: DeprecatedSchema.Subject.EnterLiveAuction,
+    context_module: DeprecatedSchema.ContextModule.Sidebar,
+    action_type: DeprecatedSchema.ActionType.Click,
   })
   redirectToLiveBidding(me: ArtworkSidebarBidAction_me | null) {
     const slug = this.props.artwork.sale?.slug

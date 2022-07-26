@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "DevTools"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   artistAggregation,
   artistNationalityAggregation,
@@ -17,7 +17,7 @@ jest.mock("System/Router/useRouter", () => ({
     match: { location: { query: {}, pathname: "" } },
   }),
 }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

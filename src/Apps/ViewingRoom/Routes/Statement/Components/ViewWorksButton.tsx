@@ -1,6 +1,7 @@
 import * as React from "react"
 import { RouterLink } from "System/Router/RouterLink"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { Button } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
@@ -43,9 +44,10 @@ export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
         scrollTo()
 
         tracking.trackEvent({
-          action_type: AnalyticsSchema.ActionType.ClickedArtworkGroup,
-          context_module: AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-          subject: AnalyticsSchema.Subject.ViewWorks,
+          action_type: DeprecatedAnalyticsSchema.ActionType.ClickedArtworkGroup,
+          context_module:
+            DeprecatedAnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
+          subject: DeprecatedAnalyticsSchema.Subject.ViewWorks,
           destination_path: to,
         })
       }}

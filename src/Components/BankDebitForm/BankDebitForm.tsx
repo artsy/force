@@ -11,7 +11,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useSystemContext, useTracking } from "System"
+import { useSystemContext } from "System"
+import { useTracking } from "react-tracking"
 import { LoadingArea } from "../LoadingArea"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"

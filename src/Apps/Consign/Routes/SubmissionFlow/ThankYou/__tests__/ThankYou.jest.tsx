@@ -1,10 +1,12 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
 import { ThankYou } from "../ThankYou"
-import { AnalyticsSchema, useTracking, useSystemContext } from "System"
+import { useSystemContext } from "System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
+import { useTracking } from "react-tracking"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("System/Router/useRouter")
 
@@ -128,7 +130,7 @@ describe("ThankYou page", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: AnalyticsSchema.ActionType.SubmitAnotherArtwork,
+        action_type: DeprecatedAnalyticsSchema.ActionType.SubmitAnotherArtwork,
         context_module: ContextModule.consignSubmissionFlow,
         context_owner_type: OwnerType.consignmentSubmission,
         submission_id: "12345",
@@ -161,7 +163,7 @@ describe("ThankYou page", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: AnalyticsSchema.ActionType.SubmitAnotherArtwork,
+        action_type: DeprecatedAnalyticsSchema.ActionType.SubmitAnotherArtwork,
         context_module: ContextModule.consignSubmissionFlow,
         context_owner_type: OwnerType.consignmentSubmission,
         submission_id: "12345",

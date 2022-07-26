@@ -4,7 +4,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { useState } from "react"
 import { isTouch } from "Utils/device"
 

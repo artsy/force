@@ -17,8 +17,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { useTracking } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RouteConfig, Router } from "found"
 import { FC } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
@@ -35,6 +34,7 @@ import { SystemContextProps, withSystemContext } from "System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
+import { useTracking } from "react-tracking"
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
@@ -60,8 +60,8 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     const submitEvent = {
       action_type:
         props.order.mode === "BUY"
-          ? Schema.ActionType.SubmittedOrder
-          : Schema.ActionType.SubmittedOffer,
+          ? DeprecatedSchema.ActionType.SubmittedOrder
+          : DeprecatedSchema.ActionType.SubmittedOffer,
       order_id: props.order.internalID,
       products: [
         {

@@ -2,7 +2,7 @@ import { MockBoot } from "DevTools"
 import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "../CollectionArtworksFilter"
 import { graphql } from "react-relay"
 import { CollectionArtworksFilter_Query } from "__generated__/CollectionArtworksFilter_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import {
   artistAggregation,
@@ -21,7 +21,7 @@ jest.mock("System/Router/useRouter", () => ({
     },
   }),
 }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

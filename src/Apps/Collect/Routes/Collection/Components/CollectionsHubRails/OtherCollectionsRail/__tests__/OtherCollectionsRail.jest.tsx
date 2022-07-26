@@ -1,5 +1,5 @@
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { OtherCollectionsRail } from "../index"
@@ -17,7 +17,7 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("found", () => ({
   Link: props => <div>{props.children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,

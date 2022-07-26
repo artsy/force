@@ -1,11 +1,11 @@
 import { Column, Image, GridColumns, Text, ResponsiveBox } from "@artsy/palette"
 import { CollectionsHubsNav_marketingCollections } from "__generated__/CollectionsHubsNav_marketingCollections.graphql"
-import { useTracking } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
+import { useTracking } from "react-tracking"
 
 interface CollectionsHubsNavProps {
   marketingCollections: CollectionsHubsNav_marketingCollections
@@ -30,10 +30,11 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
               to={`/collection/${hub.slug}`}
               onClick={() => {
                 trackEvent({
-                  action_type: Schema.ActionType.Click,
-                  context_page: Schema.PageName.CollectPage,
-                  context_module: Schema.ContextModule.CollectionHubEntryPoint,
-                  type: Schema.Type.Thumbnail,
+                  action_type: DeprecatedSchema.ActionType.Click,
+                  context_page: DeprecatedSchema.PageName.CollectPage,
+                  context_module:
+                    DeprecatedSchema.ContextModule.CollectionHubEntryPoint,
+                  type: DeprecatedSchema.Type.Thumbnail,
                   destination_path: `/collection/${hub.slug}`,
                 })
               }}

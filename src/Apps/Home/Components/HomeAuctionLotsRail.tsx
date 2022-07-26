@@ -19,7 +19,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { Rail } from "Components/Rail"
 
 interface HomeAuctionLotsRailProps {

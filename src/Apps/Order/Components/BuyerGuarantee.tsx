@@ -1,7 +1,7 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
 import { CircleBlackCheckIcon, Flex, Link, Text } from "@artsy/palette"
 import * as React from "react"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 
 export const BUYER_GUARANTEE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"

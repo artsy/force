@@ -1,9 +1,9 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { graphql } from "react-relay"
 
 import { createTestEnv } from "DevTools/createTestEnv"
 
 import { RequestConditionReportQueryResponse } from "__generated__/RequestConditionReportQuery.graphql"
-import { AnalyticsSchema as Schema } from "System"
 import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
 import { mediator } from "lib/mediator"
@@ -89,10 +89,12 @@ describe("RequestConditionReport", () => {
     await page.clickRequestConditionReportButton()
 
     expect(mockPostEvent).toHaveBeenCalledWith({
-      action_type: Schema.ActionType.ClickedRequestConditionReport,
-      subject: Schema.Subject.RequestConditionReport,
-      context_page: Schema.PageName.ArtworkPage,
-      context_module: Schema.ContextModule.AboutTheWorkCondition,
+      action_type:
+        DeprecatedAnalyticsSchema.ActionType.ClickedRequestConditionReport,
+      subject: DeprecatedAnalyticsSchema.Subject.RequestConditionReport,
+      context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
+      context_module:
+        DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
       context_page_owner_id: "artwork-id",
       context_page_owner_slug: "artwork-slug",
       context_page_owner_type: "Artwork",
@@ -135,14 +137,15 @@ describe("RequestConditionReport", () => {
       })
 
       expect(mockPostEvent).toHaveBeenCalledWith({
-        action_type: Schema.ActionType.Click,
-        context_module: Schema.ContextModule.AboutTheWorkCondition,
-        context_page: Schema.PageName.ArtworkPage,
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+        context_module:
+          DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
+        context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
         context_page_owner_id: "artwork-id",
         context_page_owner_slug: "artwork-slug",
         context_page_owner_type: "Artwork",
         sale_artwork_id: "sale-artwork-id",
-        subject: Schema.Subject.Login,
+        subject: DeprecatedAnalyticsSchema.Subject.Login,
       })
     })
   })

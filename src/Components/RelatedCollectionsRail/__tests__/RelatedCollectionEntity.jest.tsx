@@ -1,12 +1,12 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
 import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { OwnerType } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe.skip("RelatedCollectionEntity", () => {
   let props

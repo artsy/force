@@ -1,7 +1,7 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "../ArtworkDetailsAdditionalInfo"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools"
 import { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
 import { AnalyticsContext } from "System"
@@ -9,7 +9,7 @@ import { OwnerType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<
   ArtworkDetailsAdditionalInfo_Test_Query

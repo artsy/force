@@ -1,7 +1,7 @@
 import { Image } from "@artsy/palette"
 import { DefaultHeaderArtwork_artwork } from "__generated__/DefaultHeaderArtwork_artwork.graphql"
-import { AnalyticsSchema } from "System/Analytics"
-import { useTracking } from "System/Analytics/useTracking"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -23,15 +23,12 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
 
   const handleClick = () => {
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      context_module: AnalyticsSchema.ContextModule.ArtworkBanner,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
-      context_page: AnalyticsSchema.PageName.CollectionPage,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.ArtworkBanner,
+      context_page_owner_type: DeprecatedAnalyticsSchema.OwnerType.Collection,
+      context_page: DeprecatedAnalyticsSchema.PageName.CollectionPage,
       context_page_owner_id: collectionId,
       context_page_owner_slug: collectionSlug,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       destination_path: artwork.href,
     })
   }

@@ -12,8 +12,7 @@ import { OtherAuctionsQueryRenderer } from "Apps/Artwork/Components/OtherAuction
 import { Header } from "Apps/Artwork/Components/OtherWorks/Header"
 import { RelatedWorksArtworkGridRefetchContainer } from "Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
 import { SystemContextProps, withSystemContext } from "System"
-import { track, useTracking } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkGrid from "Components/ArtworkGrid"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -24,6 +23,7 @@ import { OtherWorksQuery } from "__generated__/OtherWorksQuery.graphql"
 import { useSystemContext } from "System"
 import { random } from "lodash"
 import { Rail } from "Components/Rail"
+import track, { useTracking } from "react-tracking"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork
@@ -57,16 +57,16 @@ const populatedGrids = (grids: OtherWorks_artwork["contextGrids"]) => {
 const contextGridTypeToContextModule = contextGridType => {
   switch (contextGridType) {
     case "ArtistArtworkGrid": {
-      return Schema.ContextModule.OtherWorksByArtist
+      return DeprecatedSchema.ContextModule.OtherWorksByArtist
     }
     case "PartnerArtworkGrid": {
-      return Schema.ContextModule.OtherWorksFromGallery
+      return DeprecatedSchema.ContextModule.OtherWorksFromGallery
     }
     case "AuctionArtworkGrid": {
-      return Schema.ContextModule.OtherWorksInAuction
+      return DeprecatedSchema.ContextModule.OtherWorksInAuction
     }
     case "ShowArtworkGrid": {
-      return Schema.ContextModule.OtherWorksFromShow
+      return DeprecatedSchema.ContextModule.OtherWorksFromShow
     }
   }
 }
@@ -119,8 +119,8 @@ export const OtherWorks = track()(
                     contextModule={contextModule}
                     onBrickClick={() =>
                       tracking.trackEvent({
-                        type: Schema.Type.ArtworkBrick,
-                        action_type: Schema.ActionType.Click,
+                        type: DeprecatedSchema.Type.ArtworkBrick,
+                        action_type: DeprecatedSchema.ActionType.Click,
                         context_module: contextGridTypeToContextModule(
                           // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                           grid.__typename

@@ -8,7 +8,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   AnalyticsContextProps,
   useAnalyticsContext,

@@ -18,7 +18,7 @@ import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { login } from "Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 import { logger } from "../util"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   ActionType,
   AuthModalType,

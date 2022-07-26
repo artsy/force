@@ -11,7 +11,7 @@ import {
 } from "@artsy/cohesion"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const IMAGE_HEIGHT = 160

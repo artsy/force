@@ -9,7 +9,7 @@ import {
   SwiperRailProps,
 } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "__generated__/NavigationTabs_searchableConnection.graphql"
-import { useAnalyticsContext, useTracking } from "System/Analytics"
+import { useAnalyticsContext } from "System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { useIsRouteActive } from "System/Router/useRouter"
@@ -22,6 +22,7 @@ import {
 import { useRouter } from "System/Router/useRouter"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useTracking } from "react-tracking"
 
 export interface NavigationTabsProps {
   searchableConnection: NavigationTabs_searchableConnection

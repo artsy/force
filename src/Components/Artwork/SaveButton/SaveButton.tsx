@@ -7,7 +7,7 @@ import { CloseIcon, Flex, HeartIcon, Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useState } from "react"
 import { useSaveArtwork } from "./useSaveArtwork"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 
 export interface SaveTrackingProps {
   context_page?: string

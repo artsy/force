@@ -4,11 +4,11 @@ import { graphql } from "react-relay"
 import { Banner } from "@artsy/palette"
 import { flushPromiseQueue, renderRelayTree } from "DevTools"
 import { mount } from "enzyme"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 const trackEvent = jest.fn()
 

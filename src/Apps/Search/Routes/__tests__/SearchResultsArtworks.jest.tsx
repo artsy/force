@@ -2,7 +2,7 @@ import { MockBoot } from "DevTools"
 import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "../SearchResultsArtworks"
 import { graphql } from "react-relay"
 import { SearchResultsArtworks_Query } from "__generated__/SearchResultsArtworks_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
 import {
@@ -22,7 +22,7 @@ jest.mock("System/Router/useRouter", () => ({
     },
   }),
 }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

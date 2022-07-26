@@ -16,7 +16,7 @@ import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import styled from "styled-components"
 
 interface ArtistSellWithArtsyProps {
@@ -34,14 +34,14 @@ const ArtistSellWithArtsy: FC<ArtistSellWithArtsyProps> = ({ artist }) => {
 
   const handleClick = () => {
     tracking.trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.ArtistConsignment,
-      context_page: AnalyticsSchema.PageName.ArtistPage,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.ArtistConsignment,
+      context_page: DeprecatedAnalyticsSchema.PageName.ArtistPage,
       context_page_owner_id: artist?.internalID,
       context_page_owner_slug: artist?.slug,
-      context_page_owner_type: AnalyticsSchema.OwnerType.Artist,
+      context_page_owner_type: DeprecatedAnalyticsSchema.OwnerType.Artist,
       destination_path: href,
-      subject: AnalyticsSchema.Subject.GetStarted,
+      subject: DeprecatedAnalyticsSchema.Subject.GetStarted,
     })
   }
 

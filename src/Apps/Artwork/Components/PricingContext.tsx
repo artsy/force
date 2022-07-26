@@ -11,8 +11,7 @@ import {
 } from "@artsy/palette"
 import { BarChart, BarDescriptor } from "@artsy/palette-charts"
 import { PricingContext_artwork } from "__generated__/PricingContext_artwork.graphql"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -24,6 +23,7 @@ import { PricingContextModal } from "./PricingContextModal"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
 import { useSystemContext } from "System"
+import track from "react-tracking"
 
 interface PricingContextProps {
   artwork: PricingContext_artwork
@@ -31,7 +31,7 @@ interface PricingContextProps {
 
 @track(
   {
-    context_module: Schema.ContextModule.PriceContext,
+    context_module: DeprecatedSchema.ContextModule.PriceContext,
   },
   {
     dispatch: data => Events.postEvent(data),
@@ -39,30 +39,30 @@ interface PricingContextProps {
 )
 export class PricingContext extends React.Component<PricingContextProps> {
   @track({
-    action_type: Schema.ActionType.Impression,
-    flow: Schema.Flow.ArtworkPriceContext,
-    subject: Schema.Subject.HistogramBar,
-    type: Schema.Type.Chart,
+    action_type: DeprecatedSchema.ActionType.Impression,
+    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+    subject: DeprecatedSchema.Subject.HistogramBar,
+    type: DeprecatedSchema.Type.Chart,
   })
   trackImpression() {
     // Tracking
   }
 
   @track({
-    action_type: Schema.ActionType.Hover,
-    flow: Schema.Flow.ArtworkPriceContext,
-    subject: Schema.Subject.HistogramBar,
-    type: Schema.Type.Chart,
+    action_type: DeprecatedSchema.ActionType.Hover,
+    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+    subject: DeprecatedSchema.Subject.HistogramBar,
+    type: DeprecatedSchema.Type.Chart,
   })
   barchartHover() {
     // Tracking
   }
 
   @track({
-    action_type: Schema.ActionType.Click,
-    flow: Schema.Flow.ArtworkPriceContext,
-    subject: Schema.Subject.BrowseWorks,
-    type: Schema.Type.Chart,
+    action_type: DeprecatedSchema.ActionType.Click,
+    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+    subject: DeprecatedSchema.Subject.BrowseWorks,
+    type: DeprecatedSchema.Type.Chart,
   })
   collectPageLinkClick() {
     // Tracking

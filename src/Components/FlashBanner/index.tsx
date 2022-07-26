@@ -1,15 +1,16 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useMemo } from "react"
 import * as React from "react"
 import qs from "qs"
 import { graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { EmailConfirmationCTA } from "Components/FlashBanner/EmailConfirmationCTA"
-import { AnalyticsSchema as Schema, track } from "System/Analytics"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { isServer } from "lib/isServer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 import { FlashBannerQuery } from "__generated__/FlashBannerQuery.graphql"
 import { FullBleedBanner } from "../FullBleedBanner"
+import track from "react-tracking"
 
 interface FlashBannerProps {
   contentCode?: string
@@ -79,7 +80,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = ({
 }
 
 const TrackedFlashBanner = track({
-  context_module: Schema.ContextModule.FlashBanner,
+  context_module: DeprecatedAnalyticsSchema.ContextModule.FlashBanner,
 })(FlashBanner)
 
 export const FlashBannerQueryRenderer: React.FC = () => {

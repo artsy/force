@@ -3,9 +3,10 @@ import styled, { keyframes } from "styled-components"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { Sticky } from "Components/Sticky"
-import { useAnalyticsContext, useSystemContext, useTracking } from "System"
+import { useAnalyticsContext, useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
+import { useTracking } from "react-tracking"
 
 const moveDownAnimation = keyframes`
   from {

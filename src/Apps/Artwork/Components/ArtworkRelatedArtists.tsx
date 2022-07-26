@@ -12,8 +12,7 @@ import {
 } from "@artsy/palette"
 import { ArtworkRelatedArtists_artwork } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
-import { track, useTracking } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useState } from "react"
 import * as React from "react"
 import {
@@ -27,6 +26,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
 import { useSystemContext } from "System"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import track, { useTracking } from "react-tracking"
 
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
@@ -83,9 +83,10 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                   artist={node}
                   onClick={() => {
                     trackEvent({
-                      context_module: Schema.ContextModule.RelatedArtists,
-                      type: Schema.Type.ArtistCard,
-                      action_type: Schema.ActionType.Click,
+                      context_module:
+                        DeprecatedSchema.ContextModule.RelatedArtists,
+                      type: DeprecatedSchema.Type.ArtistCard,
+                      action_type: DeprecatedSchema.ActionType.Click,
                     })
                   }}
                 />

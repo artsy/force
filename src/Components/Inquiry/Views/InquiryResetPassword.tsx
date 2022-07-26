@@ -4,7 +4,7 @@ import * as React from "react"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { forgotPassword } from "Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   ActionType,
   AuthModalType,

@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   ArrowDownIcon,
@@ -14,7 +15,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { AnalyticsSchema, SystemContextProps, useSystemContext } from "System"
+import { SystemContextProps, useSystemContext } from "System"
 import { SystemContext } from "System"
 import { ModalType } from "Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
@@ -41,8 +42,9 @@ export const ArtistAuctionResultItem: FC<Props> = props => {
     setExpanded(!expanded)
 
     tracking.trackEvent({
-      context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
-      action_type: AnalyticsSchema.ActionType.AuctionResultItemClicked,
+      context_page: DeprecatedAnalyticsSchema.PageName.ArtistAuctionResults,
+      action_type:
+        DeprecatedAnalyticsSchema.ActionType.AuctionResultItemClicked,
       current: {
         expanded: expand,
       },

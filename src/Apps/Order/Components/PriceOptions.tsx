@@ -1,19 +1,17 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { BorderedRadio, Flex, RadioGroup, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { MinPriceWarning } from "./MinPriceWarning"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  AnalyticsSchema,
-  useAnalyticsContext,
-  useTracking,
-} from "System/Analytics"
+import { useAnalyticsContext } from "System/Analytics"
 import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork } from "__generated__/PriceOptions_artwork.graphql"
 import { PriceOptions_order } from "__generated__/PriceOptions_order.graphql"
 import { appendCurrencySymbol } from "../Utils/currencyUtils"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { useTracking } from "react-tracking"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -60,7 +58,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       context_page_owner_type: contextPageOwnerType as PageOwnerType,
       currency: artwork?.priceCurrency!,
       order_id: order.internalID,
-      flow: AnalyticsSchema.Flow.MakeOffer,
+      flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
       offer,
       amount,
     }

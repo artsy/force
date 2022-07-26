@@ -11,7 +11,7 @@ jest.unmock("react-relay")
 jest.mock("../ArtworkSidebarClassification", () => ({
   ArtworkSidebarClassificationFragmentContainer: () => <div />,
 }))
-jest.mock("System/Analytics/useTracking", () => ({
+jest.mock("react-tracking", () => ({
   useTracking: () => ({ trackEvent: jest.fn() }),
 }))
 

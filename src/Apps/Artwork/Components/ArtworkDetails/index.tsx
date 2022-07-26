@@ -18,12 +18,12 @@ import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "./Artwor
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
 import { ArtworkDetails_artwork } from "__generated__/ArtworkDetails_artwork.graphql"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import Events from "Utils/Events"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
 import { useSystemContext } from "System"
+import track from "react-tracking"
 
 export interface ArtworkDetailsProps {
   artwork: ArtworkDetails_artwork
@@ -31,7 +31,7 @@ export interface ArtworkDetailsProps {
 
 @track(
   {
-    context_module: Schema.ContextModule.ArtworkTabs,
+    context_module: DeprecatedSchema.ContextModule.ArtworkTabs,
   },
   {
     dispatch: data => Events.postEvent(data),
@@ -40,10 +40,10 @@ export interface ArtworkDetailsProps {
 export class ArtworkDetails extends Component<ArtworkDetailsProps> {
   @track((_props, _state, [{ data }]) => {
     return {
-      action_type: Schema.ActionType.Click,
-      flow: Schema.Flow.ArtworkAboutTheArtist,
+      action_type: DeprecatedSchema.ActionType.Click,
+      flow: DeprecatedSchema.Flow.ArtworkAboutTheArtist,
       label: data.trackingLabel,
-      type: Schema.Type.Tab,
+      type: DeprecatedSchema.Type.Tab,
     }
   })
   trackTabChange() {
