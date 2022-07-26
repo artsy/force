@@ -14,7 +14,43 @@ module.exports = {
     url: "http://localhost",
   },
   transform: {
+<<<<<<< HEAD
     "\\.(gql|graphql)$": "@graphql-tools/jest-transform",
     "(ts|tsx|js|jsx)$": "babel-jest",
+=======
+    "\\.(gql|graphql)$": "jest-transform-graphql",
+    "(ts|tsx|js|jsx)$": [
+      "@swc/jest",
+      {
+        jsc: {
+          experimental: {
+            plugins: [
+              [
+                "@swc/plugin-relay",
+                {
+                  language: "typescript",
+                  schema: "data/schema.graphql",
+                  rootDir: __dirname,
+                  src: "src",
+                  artifactDirectory: "./src/__generated__",
+                },
+              ],
+            ],
+          },
+          parser: {
+            decorators: true,
+            dynamicImport: true,
+            syntax: "typescript",
+            tsx: true,
+          },
+          transform: {
+            react: {
+              runtime: "automatic",
+            },
+          },
+        },
+      },
+    ],
+>>>>>>> fix graphql invocation
   },
 }
