@@ -6,6 +6,8 @@ import {
   useReducer,
   useEffect,
 } from "react"
+import { useSystemContext } from "System"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useConfig } from "../config"
 
@@ -73,6 +75,10 @@ const OnboardingContext = createContext<{
   current: string
   dispatch: React.Dispatch<Action>
   next(): void
+  // Called when the user has finished the onboarding process
+  onComplete(): void
+  // Called on close and other cancel actions
+  // TODO: Should we rename this to onClose?
   onDone(): void
   progress: number
   state: State
@@ -81,6 +87,7 @@ const OnboardingContext = createContext<{
   current: "",
   dispatch: () => {},
   next: () => {},
+  onComplete: () => {},
   onDone: () => {},
   progress: 0,
   state: DEFAULT_STATE,
@@ -96,6 +103,20 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   onDone,
 }) => {
   const basis = useRef<State>(DEFAULT_STATE)
+  const { relayEnvironment } = useSystemContext()
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    relayEnvironment,
+  })
+
+  const handleComplete = async () => {
+    try {
+      await submitUpdateMyUserProfile({
+        completedOnboarding: true,
+      })
+    } catch (error) {
+      console.error("Onboarding/useOnboardingContext", error)
+    }
+  }
 
   const { workflowEngine, current, next, reset: __reset__ } = useConfig({
     basis,
@@ -117,6 +138,7 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
         current,
         dispatch,
         next,
+        onComplete: handleComplete,
         onDone,
         progress,
         state,
