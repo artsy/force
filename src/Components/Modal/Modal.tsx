@@ -2,7 +2,7 @@ import { CloseIcon, Clickable } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { ModalWidth, ModalWrapper } from "Components/Modal/ModalWrapper"
-import { media } from "../Helpers"
+import { media } from "Utils/deprecatedMedia"
 import { ModalHeader } from "./ModalHeader"
 
 export interface ModalProps extends React.HTMLProps<Modal> {

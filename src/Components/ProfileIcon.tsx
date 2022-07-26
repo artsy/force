@@ -2,7 +2,7 @@ import { Box, BoxProps } from "@artsy/palette"
 import { BorderBoxBase } from "@artsy/palette/dist/elements/BorderBox/BorderBoxBase"
 import * as React from "react"
 import styled from "styled-components"
-import { resizeSquare } from "Assets/Animations"
+import { resizeSquare } from "Utils/animations"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 
