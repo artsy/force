@@ -36,8 +36,7 @@ import {
   validateAddress,
   validatePhoneNumber,
 } from "Apps/Order/Utils/formValidators"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Address,
   AddressChangeHandler,
@@ -85,6 +84,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import track from "react-tracking"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -476,11 +476,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   @track((props, state, args) => ({
-    action_type: Schema.ActionType.Click,
+    action_type: DeprecatedSchema.ActionType.Click,
     subject:
       args[0] === "SHIP"
-        ? Schema.Subject.BNMOProvideShipping
-        : Schema.Subject.BNMOArrangePickup,
+        ? DeprecatedSchema.Subject.BNMOProvideShipping
+        : DeprecatedSchema.Subject.BNMOArrangePickup,
     flow: "buy now",
     type: "button",
   }))

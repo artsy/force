@@ -6,7 +6,7 @@ import { BoothFilterContextProvider } from "../BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
 import { AnalyticsContext } from "System"
 import { OwnerType } from "@artsy/cohesion"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")

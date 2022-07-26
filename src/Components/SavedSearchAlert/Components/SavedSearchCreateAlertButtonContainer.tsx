@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useToasts } from "@artsy/palette"
-import { useSystemContext, useTracking } from "System"
+import { useSystemContext } from "System"
+import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { AuthModalOptions, openAuthToSatisfyIntent } from "Utils/openAuthModal"
 import { mediator } from "lib/mediator"

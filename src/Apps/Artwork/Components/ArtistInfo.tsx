@@ -7,8 +7,7 @@ import {
   StackableBorderBox,
 } from "@artsy/palette"
 import { ArtistInfo_artist } from "__generated__/ArtistInfo_artist.graphql"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Components/FollowButton/FollowArtistButton"
 import { ArtistBioFragmentContainer as ArtistBio } from "Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "Components/ArtistMarketInsights"
@@ -30,15 +29,15 @@ const Container = ({ children }) => (
 )
 
 @track(
-  { context_module: Schema.ContextModule.Biography },
+  { context_module: DeprecatedSchema.ContextModule.Biography },
   { dispatch: data => Events.postEvent(data) }
 )
 export class ArtistInfo extends Component<ArtistInfoProps> {
   @track({
-    action_type: Schema.ActionType.Click,
-    flow: Schema.Flow.ArtworkAboutTheArtist,
-    subject: Schema.Subject.ReadMore,
-    type: Schema.Type.Button,
+    action_type: DeprecatedSchema.ActionType.Click,
+    flow: DeprecatedSchema.Flow.ArtworkAboutTheArtist,
+    subject: DeprecatedSchema.Subject.ReadMore,
+    type: DeprecatedSchema.Type.Button,
   })
   trackArtistBioReadMoreClick() {
     // Tracking
@@ -173,6 +172,7 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
 import { useSystemContext } from "System"
+import track from "react-tracking"
 
 const PLACEHOLDER = (
   <Skeleton>

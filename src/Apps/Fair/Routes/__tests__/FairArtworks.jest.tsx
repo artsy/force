@@ -2,7 +2,7 @@ import { MockBoot, renderRelayTree } from "DevTools"
 import { FairArtworksRefetchContainer } from "../FairArtworks"
 import { graphql } from "react-relay"
 import { FairArtworks_QueryRawResponse } from "__generated__/FairArtworks_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter", () => ({

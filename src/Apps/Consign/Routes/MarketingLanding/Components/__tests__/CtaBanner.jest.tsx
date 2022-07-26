@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
-import { useTracking } from "System/Analytics"
+import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
 import { CtaBannerContent } from "../CtaBanner"
 

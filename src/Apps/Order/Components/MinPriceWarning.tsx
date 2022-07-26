@@ -1,6 +1,7 @@
 import { Message, Text } from "@artsy/palette"
 import { useEffect } from "react"
-import { AnalyticsSchema, useTracking } from "System/Analytics"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 
 interface MinPriceWarningProps {
   isPriceRange: boolean
@@ -16,8 +17,8 @@ export const MinPriceWarning: React.FC<MinPriceWarningProps> = ({
   const tracking = useTracking()
   useEffect(() => {
     tracking.trackEvent({
-      action_type: AnalyticsSchema.ActionType.ViewedOfferTooLow,
-      flow: AnalyticsSchema.Flow.MakeOffer,
+      action_type: DeprecatedAnalyticsSchema.ActionType.ViewedOfferTooLow,
+      flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
       order_id: orderID,
     })
   }, [orderID, tracking])

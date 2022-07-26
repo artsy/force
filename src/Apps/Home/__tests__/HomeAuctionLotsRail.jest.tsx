@@ -2,7 +2,7 @@ import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeAuctionLotsRailFragmentContainer } from "../Components/HomeAuctionLotsRail"
 import { HomeAuctionLotsRail_Test_Query } from "__generated__/HomeAuctionLotsRail_Test_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Analytics/useTracking")

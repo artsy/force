@@ -1,5 +1,5 @@
 import { CollectionsHubLinkedCollections } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { ArtistSeriesEntity } from "../ArtistSeriesEntity"
 import { OwnerType } from "@artsy/cohesion"

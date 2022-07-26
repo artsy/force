@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairBoothRail_show } from "__generated__/FairBoothRail_show.graphql"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
 import { RouterLink } from "System/Router/RouterLink"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   ActionType,
   ClickedArtworkGroup,

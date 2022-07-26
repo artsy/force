@@ -1,5 +1,5 @@
 import { screen, fireEvent } from "@testing-library/react"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   ArtworkFilter,
   BaseArtworkFilter,

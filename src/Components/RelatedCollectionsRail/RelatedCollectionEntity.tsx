@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "__generated__/RelatedCollectionEntity_collection.graphql"
-import { useTracking } from "System/Analytics"
+import { useTracking } from "react-tracking"
 import currency from "currency.js"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

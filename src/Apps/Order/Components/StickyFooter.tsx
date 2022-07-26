@@ -1,10 +1,10 @@
 import { Flex, Spacer, Text, Clickable } from "@artsy/palette"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Component } from "react"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { withInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
+import track from "react-tracking"
 
 interface StickyFooterProps extends WithInquiryProps {
   artworkID: string
@@ -13,9 +13,9 @@ interface StickyFooterProps extends WithInquiryProps {
 
 @track()
 export class StickyFooter extends Component<StickyFooterProps> {
-  @track<StickyFooterProps>(props => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.BNMOReadFAQ,
+  @track(props => ({
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.BNMOReadFAQ,
     type: "button",
     flow: props.orderType === "OFFER" ? "make offer" : "buy now",
   }))
@@ -26,9 +26,9 @@ export class StickyFooter extends Component<StickyFooterProps> {
     )
   }
 
-  @track<StickyFooterProps>(props => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.BNMOAskSpecialist,
+  @track(props => ({
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
     type: "button",
     flow: props.orderType === "OFFER" ? "make offer" : "buy now",
   }))

@@ -1,7 +1,8 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FAQ } from "../FAQ"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { useTracking, AnalyticsSchema } from "System/Analytics"
+import { useTracking } from "react-tracking"
 
 jest.mock("System/Analytics/useTracking")
 
@@ -47,7 +48,7 @@ describe("FAQ", () => {
 
     expect(trackEvent).toHaveBeenCalled()
     expect(trackEvent).toHaveBeenCalledWith({
-      action_type: AnalyticsSchema.ActionType.ClickedFAQ,
+      action_type: DeprecatedAnalyticsSchema.ActionType.ClickedFAQ,
       context_module: ContextModule.consignSubmissionFlow,
       context_owner_type: OwnerType.consignmentSubmission,
       subject: "What does it cost to sell with Artsy?",

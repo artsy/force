@@ -7,7 +7,7 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { HomeFeaturedShow_show } from "__generated__/HomeFeaturedShow_show.graphql"
 
 interface HomeFeaturedShowProps {

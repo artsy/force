@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
 import { ArtistSeriesItem } from "../ArtistSeriesItem"
 import { ArtistSeriesItem_artistSeries } from "__generated__/ArtistSeriesItem_artistSeries.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { RouterLink } from "System/Router/RouterLink"

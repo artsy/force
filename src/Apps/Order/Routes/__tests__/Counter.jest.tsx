@@ -13,7 +13,7 @@ import {
 } from "../__fixtures__/MutationResults/submitPendingOffer"
 import { CounterFragmentContainer } from "../Counter"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
 

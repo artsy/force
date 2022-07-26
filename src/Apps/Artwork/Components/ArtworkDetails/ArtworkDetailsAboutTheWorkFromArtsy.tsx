@@ -3,8 +3,8 @@ import { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { ArtworkDetailsAboutTheWorkFromArtsy_artwork } from "__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import track from "react-tracking"
 
 export const READ_MORE_MAX_CHARS = {
   xs: 100,
@@ -16,16 +16,16 @@ export interface ArtworkDetailsAboutTheWorkFromArtsyProps {
 }
 
 @track({
-  context_module: Schema.ContextModule.AboutTheWork,
+  context_module: DeprecatedSchema.ContextModule.AboutTheWork,
 })
 export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
   ArtworkDetailsAboutTheWorkFromArtsyProps
 > {
   @track({
-    action_type: Schema.ActionType.Click,
-    flow: Schema.Flow.ArtworkAboutTheWork,
-    subject: Schema.Subject.ReadMore,
-    type: Schema.Type.Button,
+    action_type: DeprecatedSchema.ActionType.Click,
+    flow: DeprecatedSchema.Flow.ArtworkAboutTheWork,
+    subject: DeprecatedSchema.Subject.ReadMore,
+    type: DeprecatedSchema.Type.Button,
   })
   trackReadMoreClick() {
     // noop

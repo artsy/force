@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "DevTools"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   artistAggregation,
   artistNationalityAggregation,

@@ -3,8 +3,7 @@ import { RelatedWorksArtworkGrid_artwork } from "__generated__/RelatedWorksArtwo
 import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
 import { Header } from "Apps/Artwork/Components/OtherWorks/Header"
 import { withSystemContext } from "System"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import ArtworkGrid from "Components/ArtworkGrid"
 import { take } from "lodash"
 import { Component } from "react"
@@ -14,6 +13,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
 import { Mediator } from "lib/mediator"
+import track from "react-tracking"
 
 const logger = createLogger("RelatedWorksArtworkGrid.tsx")
 
@@ -30,7 +30,7 @@ interface RelatedWorksArtworkGridState {
 }
 
 @track({
-  context_module: Schema.ContextModule.RelatedWorks,
+  context_module: DeprecatedSchema.ContextModule.RelatedWorks,
 })
 class RelatedWorksArtworkGrid extends Component<
   RelatedWorksArtworkGridProps,
@@ -61,8 +61,8 @@ class RelatedWorksArtworkGrid extends Component<
   }
 
   @track({
-    type: Schema.Type.ArtworkBrick,
-    action_type: Schema.ActionType.Click,
+    type: DeprecatedSchema.Type.ArtworkBrick,
+    action_type: DeprecatedSchema.ActionType.Click,
   })
   trackBrickClick() {
     // noop

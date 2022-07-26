@@ -1,5 +1,5 @@
-import { AnalyticsSchema } from "System/Analytics"
-import { useTracking } from "System/Analytics/useTracking"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { useContext } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -70,8 +70,9 @@ export const NavBarNotifications: React.FC<NavBarNotificationsProps> = ({
 
   const handleClick = (href: string, subject: string) => {
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.HeaderActivityDropdown,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module:
+        DeprecatedAnalyticsSchema.ContextModule.HeaderActivityDropdown,
       destination_path: href,
       subject,
     })
@@ -86,7 +87,7 @@ export const NavBarNotifications: React.FC<NavBarNotificationsProps> = ({
             key={index}
             aria-label={`${summary} by ${artists}`}
             onClick={() => {
-              handleClick(href!, AnalyticsSchema.Subject.Notification)
+              handleClick(href!, DeprecatedAnalyticsSchema.Subject.Notification)
             }}
           >
             <NavBarNotificationsItemContent
@@ -119,7 +120,10 @@ export const NavBarNotifications: React.FC<NavBarNotificationsProps> = ({
         aria-label="View all notifications"
         to="/works-for-you"
         onClick={() => {
-          handleClick("/works-for-you", AnalyticsSchema.Subject.ViewAll)
+          handleClick(
+            "/works-for-you",
+            DeprecatedAnalyticsSchema.Subject.ViewAll
+          )
         }}
       >
         <Text variant="sm" m="auto">

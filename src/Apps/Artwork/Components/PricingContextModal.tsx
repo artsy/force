@@ -8,12 +8,12 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Component } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import Events from "Utils/Events"
+import track from "react-tracking"
 
 interface State {
   isModalOpen?: boolean
@@ -21,7 +21,7 @@ interface State {
 
 @track(
   {
-    context_module: Schema.ContextModule.PriceContext,
+    context_module: DeprecatedSchema.ContextModule.PriceContext,
   },
   {
     dispatch: data => Events.postEvent(data),
@@ -35,9 +35,9 @@ export class PricingContextModal extends Component<State> {
   }
 
   @track({
-    action_type: Schema.ActionType.Click,
-    flow: Schema.Flow.ArtworkPriceContext,
-    subject: Schema.Subject.QuestionMarkIcon,
+    action_type: DeprecatedSchema.ActionType.Click,
+    flow: DeprecatedSchema.Flow.ArtworkPriceContext,
+    subject: DeprecatedSchema.Subject.QuestionMarkIcon,
   })
   openModal() {
     this.setState({ isModalOpen: true })

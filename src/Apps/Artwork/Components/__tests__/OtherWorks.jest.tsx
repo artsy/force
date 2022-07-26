@@ -1,7 +1,7 @@
 import { mount, shallow } from "enzyme"
 import { Header } from "../OtherWorks/Header"
 import { OtherWorksFragmentContainer as OtherWorks } from "../OtherWorks/index"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.mock("System/Analytics/useTracking")
 

@@ -1,6 +1,7 @@
 import { Box, Text, Spacer, GridColumns, Column } from "@artsy/palette"
 import { ArtistConsignFAQ_artist } from "__generated__/ArtistConsignFAQ_artist.graphql"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
@@ -44,16 +45,17 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                     data-test="submitOnFAQ"
                     onClick={() => {
                       tracking.trackEvent({
-                        action_type: AnalyticsSchema.ActionType.Click,
-                        context_module: AnalyticsSchema.ContextModule.FAQ,
+                        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                        context_module:
+                          DeprecatedAnalyticsSchema.ContextModule.FAQ,
                         subject:
-                          AnalyticsSchema.Subject
+                          DeprecatedAnalyticsSchema.Subject
                             .SubmitWorksInterestedInSelling,
                       })
                     }}
                     href={getConsignSubmissionUrl({
                       contextPath: props.artist.href || "",
-                      subject: AnalyticsSchema.Subject.Here,
+                      subject: DeprecatedAnalyticsSchema.Subject.Here,
                     })}
                   >
                     here

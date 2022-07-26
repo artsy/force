@@ -1,6 +1,5 @@
 import { RelatedCollectionsRail_collections } from "__generated__/RelatedCollectionsRail_collections.graphql"
-import { useTracking } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -8,6 +7,7 @@ import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { Rail } from "../Rail"
+import { useTracking } from "react-tracking"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections
@@ -27,11 +27,11 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
   const trackImpression = () => {
     // FIXME: old schema
     trackEvent({
-      action_type: Schema.ActionType.Impression,
-      context_module: Schema.ContextModule.CollectionsRail,
+      action_type: DeprecatedSchema.ActionType.Impression,
+      context_module: DeprecatedSchema.ContextModule.CollectionsRail,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
-      context_page_owner_type: Schema.OwnerType.Collection,
+      context_page_owner_type: DeprecatedSchema.OwnerType.Collection,
     })
   }
 

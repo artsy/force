@@ -11,8 +11,9 @@ import {
   SoloIcon,
   Text,
 } from "@artsy/palette"
-import { AnalyticsSchema, SystemContext } from "System"
-import { useTracking } from "System/Analytics/useTracking"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { SystemContext } from "System"
+import { useTracking } from "react-tracking"
 import { userIsAdmin } from "Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { getENV } from "Utils/getENV"
@@ -31,9 +32,10 @@ export const NavBarUserMenu: React.FC = () => {
     const href = link.getAttribute("href")
 
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       // @ts-ignore
-      context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
+      context_module:
+        DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
       subject: text,
       destination_path: href!,
     })

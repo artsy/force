@@ -1,6 +1,6 @@
 import { CloseIcon, MenuIcon, ModalBase, Separator, Text } from "@artsy/palette"
-import { AnalyticsSchema } from "System"
-import { useTracking } from "System/Analytics"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
@@ -38,8 +38,8 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
     const href = node.getAttribute("href")!
 
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.Header,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.Header,
       flow: "Header",
       subject: text,
       destination_path: href,

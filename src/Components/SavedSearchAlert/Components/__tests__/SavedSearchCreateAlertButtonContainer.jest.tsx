@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import { useSystemContext } from "System/useSystemContext"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { openAuthToSatisfyIntent, AuthModalOptions } from "Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 import { SavedSearchEntity } from "../../types"

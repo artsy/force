@@ -20,8 +20,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { track } from "System"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { RouterState } from "found"
 import { Component } from "react"
@@ -39,6 +38,7 @@ import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
+import track from "react-tracking"
 
 export interface RespondProps extends RouterState {
   order: Respond_order
@@ -70,18 +70,18 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     responseOption: null,
   }
 
-  @track<RespondProps>(props => ({
-    action_type: Schema.ActionType.FocusedOnOfferInput,
-    flow: Schema.Flow.MakeOffer,
+  @track(props => ({
+    action_type: DeprecatedSchema.ActionType.FocusedOnOfferInput,
+    flow: DeprecatedSchema.Flow.MakeOffer,
     order_id: props.order.internalID,
   }))
   onOfferInputFocus() {
     // noop
   }
 
-  @track<RespondProps>(props => ({
-    action_type: Schema.ActionType.ViewedOfferTooLow,
-    flow: Schema.Flow.MakeOffer,
+  @track(props => ({
+    action_type: DeprecatedSchema.ActionType.ViewedOfferTooLow,
+    flow: DeprecatedSchema.Flow.MakeOffer,
     order_id: props.order.internalID,
   }))
   showLowSpeedbump() {
@@ -94,9 +94,9 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     })
   }
 
-  @track<RespondProps>(props => ({
-    action_type: Schema.ActionType.ViewedOfferHigherThanListPrice,
-    flow: Schema.Flow.MakeOffer,
+  @track(props => ({
+    action_type: DeprecatedSchema.ActionType.ViewedOfferHigherThanListPrice,
+    flow: DeprecatedSchema.Flow.MakeOffer,
     order_id: props.order.internalID,
   }))
   showHighSpeedbump() {

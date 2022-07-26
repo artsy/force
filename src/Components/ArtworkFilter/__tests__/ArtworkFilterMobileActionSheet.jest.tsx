@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,

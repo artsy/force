@@ -1,4 +1,4 @@
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBarNotifications } from "../NavBarNotifications"
 

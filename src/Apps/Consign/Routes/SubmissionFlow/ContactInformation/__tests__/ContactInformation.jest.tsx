@@ -1,11 +1,12 @@
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SystemContextProvider, useTracking } from "System"
+import { SystemContextProvider } from "System"
 import { createOrUpdateConsignSubmission } from "../../Utils/createOrUpdateConsignSubmission"
 import { getPhoneNumberInformation } from "../../Utils/phoneNumberUtils"
 import { ContactInformationFragmentContainer } from "../ContactInformation"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { ActionType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Analytics/useTracking")

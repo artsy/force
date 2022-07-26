@@ -1,5 +1,6 @@
 import { Expandable, Join, Spacer, Text } from "@artsy/palette"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface FAQProps {
@@ -12,7 +13,7 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
   const trackClickedFAQ = (label: string) => {
     if (shouldTrackClickEvent) {
       trackEvent({
-        action_type: AnalyticsSchema.ActionType.ClickedFAQ,
+        action_type: DeprecatedAnalyticsSchema.ActionType.ClickedFAQ,
         context_module: ContextModule.consignSubmissionFlow,
         context_owner_type: OwnerType.consignmentSubmission,
         subject: label,

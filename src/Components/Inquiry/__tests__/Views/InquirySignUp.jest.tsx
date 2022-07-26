@@ -5,7 +5,7 @@ import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
 import { signUp } from "Utils/auth"
 import { useInquiryContext } from "../../Hooks/useInquiryContext"
 import { fill } from "../util"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")

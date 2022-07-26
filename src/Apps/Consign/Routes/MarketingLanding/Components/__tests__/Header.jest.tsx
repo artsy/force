@@ -1,6 +1,6 @@
 import { Header } from "../Header"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { useTracking } from "System/Analytics"
+import { useTracking } from "react-tracking"
 
 jest.mock("System/Analytics/useTracking")
 

@@ -1,4 +1,4 @@
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { MockBoot, renderRelayTree } from "DevTools"
 import { graphql } from "react-relay"
 import { ViewingRoomStatementRoute_Test_QueryRawResponse } from "__generated__/ViewingRoomStatementRoute_Test_Query.graphql"

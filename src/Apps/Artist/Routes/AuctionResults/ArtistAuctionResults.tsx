@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
@@ -22,7 +23,7 @@ import {
 import { ModalType } from "Components/Authentication/Types"
 import { LoadingArea } from "Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
-import { AnalyticsSchema, SystemContext } from "System"
+import { SystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { usePrevious } from "Utils/Hooks/usePrevious"
@@ -159,11 +160,12 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
         tracking.trackEvent({
           action_type:
-            AnalyticsSchema.ActionType.AuctionResultFilterParamChanged,
+            DeprecatedAnalyticsSchema.ActionType
+              .AuctionResultFilterParamChanged,
           changed: JSON.stringify({
             [filterKey]: filters?.[filterKey],
           }),
-          context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
+          context_page: DeprecatedAnalyticsSchema.PageName.ArtistAuctionResults,
           current: JSON.stringify(filters),
         })
       }

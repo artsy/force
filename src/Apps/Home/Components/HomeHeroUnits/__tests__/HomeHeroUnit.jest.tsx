@@ -2,7 +2,7 @@ import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeHeroUnit_Test_Query } from "__generated__/HomeHeroUnit_Test_Query.graphql"
 import { HomeHeroUnitFragmentContainer } from "../HomeHeroUnit"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-head", () => ({

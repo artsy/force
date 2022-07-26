@@ -1,10 +1,11 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Rail } from "Components/Rail"
-import { AnalyticsSchema, useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext, useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistCurrentArticlesRail_artist } from "__generated__/ArtistCurrentArticlesRail_artist.graphql"
@@ -59,7 +60,7 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
               article={article}
               onClick={() => {
                 tracking.trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Click,
+                  action_type: DeprecatedAnalyticsSchema.ActionType.Click,
                   contextModule: ContextModule.relatedArticles,
                   contextPageOwnerId,
                   contextPageOwnerSlug,

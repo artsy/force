@@ -2,7 +2,7 @@ import { MockBoot } from "DevTools"
 import { ArtworksRefetchContainer } from "../Works"
 import { graphql } from "react-relay"
 import { Works_Query } from "__generated__/Works_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { setupTestWrapper, setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import {
   artistAggregation,

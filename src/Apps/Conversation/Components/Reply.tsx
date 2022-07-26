@@ -17,7 +17,7 @@ import styled from "styled-components"
 import { RightProps } from "styled-system"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useTracking } from "System/Analytics"
+import { useTracking } from "react-tracking"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 

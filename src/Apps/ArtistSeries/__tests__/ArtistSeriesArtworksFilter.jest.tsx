@@ -2,7 +2,7 @@ import { MockBoot } from "DevTools"
 import { ArtistSeriesArtworksFilterRefetchContainer } from "../Components/ArtistSeriesArtworksFilter"
 import { graphql } from "react-relay"
 import { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import {
   locationCityAggregation,

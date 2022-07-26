@@ -2,7 +2,8 @@ import { Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import {
   Box,
   Flex,
@@ -59,10 +60,10 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
     },
     onShow: () => {
       trackEvent({
-        context_module: AnalyticsSchema.ContextModule.Sidebar,
-        action_type: AnalyticsSchema.ActionType.Click,
-        subject: AnalyticsSchema.Subject.AuctionBuyerPremium,
-        type: AnalyticsSchema.Type.Link,
+        context_module: DeprecatedAnalyticsSchema.ContextModule.Sidebar,
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+        subject: DeprecatedAnalyticsSchema.Subject.AuctionBuyerPremium,
+        type: DeprecatedAnalyticsSchema.Type.Link,
       })
     },
   })

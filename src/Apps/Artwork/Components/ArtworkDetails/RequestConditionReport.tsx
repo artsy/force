@@ -1,13 +1,9 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
-import {
-  AnalyticsSchema as Schema,
-  track,
-  useSystemContext,
-  useTracking,
-} from "System"
+import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import createLogger from "Utils/logger"
 import { openAuthModal } from "Utils/openAuthModal"
@@ -21,6 +17,7 @@ import {
 } from "__generated__/RequestConditionReportMutation.graphql"
 import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
 import { ModalType } from "Components/Authentication/Types"
+import track, { useTracking } from "react-tracking"
 
 const logger = createLogger(
   "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
@@ -86,16 +83,17 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
 
   function trackRequestClick() {
     trackEvent({
-      action_type: Schema.ActionType.ClickedRequestConditionReport,
-      subject: Schema.Subject.RequestConditionReport,
+      action_type:
+        DeprecatedAnalyticsSchema.ActionType.ClickedRequestConditionReport,
+      subject: DeprecatedAnalyticsSchema.Subject.RequestConditionReport,
     })
   }
 
   const handleLoginClick = () => {
     // TODO: do we need this tracking?
     trackEvent({
-      action_type: Schema.ActionType.Click,
-      subject: Schema.Subject.Login,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      subject: DeprecatedAnalyticsSchema.Subject.Login,
       sale_artwork_id: artwork?.saleArtwork?.internalID,
     })
     openAuthModal(mediator!, {
@@ -187,18 +185,19 @@ const RequestedConditionReportModal: React.FC<{
   )
 }
 
-const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProps> = track<
-  RequestConditionReportProps
->(props => {
-  return {
-    context_page: Schema.PageName.ArtworkPage,
-    context_module: Schema.ContextModule.AboutTheWorkCondition,
-    context_page_owner_id: props.artwork.internalID,
-    context_page_owner_slug: props.artwork.slug,
-    context_page_owner_type: "Artwork",
-    sale_artwork_id: props.artwork.saleArtwork?.internalID,
+const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProps> = track(
+  props => {
+    return {
+      context_page: DeprecatedAnalyticsSchema.PageName.ArtworkPage,
+      context_module:
+        DeprecatedAnalyticsSchema.ContextModule.AboutTheWorkCondition,
+      context_page_owner_id: props.artwork.internalID,
+      context_page_owner_slug: props.artwork.slug,
+      context_page_owner_type: "Artwork",
+      sale_artwork_id: props.artwork.saleArtwork?.internalID,
+    }
   }
-})(RequestConditionReport)
+)(RequestConditionReport)
 
 export const RequestConditionReportQueryRenderer: React.FC<{
   artworkID: string

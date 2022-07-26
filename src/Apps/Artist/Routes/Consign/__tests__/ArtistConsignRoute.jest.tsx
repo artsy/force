@@ -1,4 +1,4 @@
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { graphql } from "relay-runtime"
 import { ArtistConsignRouteFragmentContainer } from "../ArtistConsignRoute"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"

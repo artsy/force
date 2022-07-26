@@ -24,8 +24,8 @@ import {
 } from "Components/NavBar/menuData"
 import { openAuthModal } from "Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { AnalyticsSchema } from "System"
-import { track } from "System/Analytics"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { track } from "react-tracking"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
@@ -61,8 +61,8 @@ import { useTranslation } from "react-i18next"
 
 export const NavBar: React.FC = track(
   {
-    flow: AnalyticsSchema.Flow.Header,
-    context_module: AnalyticsSchema.ContextModule.Header,
+    flow: DeprecatedAnalyticsSchema.Flow.Header,
+    context_module: DeprecatedAnalyticsSchema.ContextModule.Header,
   },
   {
     dispatch: data => Events.postEvent(data),
@@ -114,7 +114,7 @@ export const NavBar: React.FC = track(
     const href = link.getAttribute("href")!
 
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       destination_path: href,
       subject: text,
     })
@@ -276,9 +276,10 @@ export const NavBar: React.FC = track(
 
                     if (showMenu) {
                       trackEvent({
-                        action_type: AnalyticsSchema.ActionType.Click,
+                        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
                         subject:
-                          AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
+                          DeprecatedAnalyticsSchema.Subject
+                            .SmallScreenMenuSandwichIcon,
                       })
                     }
                   }}
@@ -312,7 +313,8 @@ export const NavBar: React.FC = track(
                     <NavBarSubMenu
                       menu={ARTISTS_SUBMENU_DATA.menu}
                       contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtistsDropdown
                       }
                       onClick={() => setVisible(false)}
                     />
@@ -345,7 +347,8 @@ export const NavBar: React.FC = track(
                     <NavBarSubMenu
                       menu={ARTWORKS_SUBMENU_DATA.menu}
                       contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+                        DeprecatedAnalyticsSchema.ContextModule
+                          .HeaderArtworksDropdown
                       }
                       onClick={() => setVisible(false)}
                     />

@@ -1,5 +1,5 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Flex, ModalBase } from "@artsy/palette"
-import { AnalyticsSchema, useTracking } from "System/Analytics"
 import { once, throttle } from "lodash"
 import * as React from "react"
 import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
@@ -10,6 +10,7 @@ import { DeepZoom_image } from "__generated__/DeepZoom_image.graphql"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
+import { useTracking } from "react-tracking"
 
 const ZOOM_PER_CLICK = 1.4
 
@@ -230,10 +231,10 @@ export const useDeepZoom = () => {
     setIsDeepZoomVisible(true)
 
     trackEvent({
-      context_module: AnalyticsSchema.ContextModule.Zoom,
-      type: AnalyticsSchema.Type.Button,
-      flow: AnalyticsSchema.Flow.ArtworkZoom,
-      action_type: AnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.Zoom,
+      type: DeprecatedAnalyticsSchema.Type.Button,
+      flow: DeprecatedAnalyticsSchema.Flow.ArtworkZoom,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
     })
   }
 

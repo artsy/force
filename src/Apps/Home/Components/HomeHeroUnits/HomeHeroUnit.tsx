@@ -16,7 +16,7 @@ import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import {
   ActionType,
   ClickedPromoSpace,

@@ -1,5 +1,5 @@
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { OtherCollectionsRail } from "../index"

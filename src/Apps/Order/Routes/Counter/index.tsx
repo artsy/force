@@ -16,8 +16,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { Router } from "found"
 import { Component } from "react"
@@ -26,6 +25,7 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import track from "react-tracking"
 
 export interface CounterProps {
   order: Counter_order
@@ -113,8 +113,8 @@ export class CounterRoute extends Component<CounterProps> {
     }
   }
 
-  @track<CounterProps>(props => ({
-    action_type: Schema.ActionType.SubmittedCounterOffer,
+  @track(props => ({
+    action_type: DeprecatedSchema.ActionType.SubmittedCounterOffer,
     order_id: props.order.internalID,
   }))
   onSuccessfulSubmit() {

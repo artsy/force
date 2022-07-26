@@ -1,5 +1,5 @@
 import { ArtworkRelatedArtistsFixture } from "Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { ArtworkRelatedArtists } from "../ArtworkRelatedArtists"
 

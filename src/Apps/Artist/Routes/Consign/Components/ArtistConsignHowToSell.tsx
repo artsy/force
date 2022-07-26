@@ -10,7 +10,8 @@ import {
   Column,
 } from "@artsy/palette"
 import { ArtistConsignHowToSell_artist } from "__generated__/ArtistConsignHowToSell_artist.graphql"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
@@ -62,15 +63,15 @@ const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
         as={RouterLink}
         to={getConsignSubmissionUrl({
           contextPath: artist.href!,
-          subject: AnalyticsSchema.Subject.RequestPriceEstimate,
+          subject: DeprecatedAnalyticsSchema.Subject.RequestPriceEstimate,
         })}
         onClick={() => {
           tracking.trackEvent({
-            action_type: AnalyticsSchema.ActionType.Click,
+            action_type: DeprecatedAnalyticsSchema.ActionType.Click,
             context_module:
-              AnalyticsSchema.ContextModule.HowToSellYourCollection,
-            flow: AnalyticsSchema.Flow.Consignments,
-            subject: AnalyticsSchema.Subject.RequestPriceEstimate,
+              DeprecatedAnalyticsSchema.ContextModule.HowToSellYourCollection,
+            flow: DeprecatedAnalyticsSchema.Flow.Consignments,
+            subject: DeprecatedAnalyticsSchema.Subject.RequestPriceEstimate,
           })
         }}
       >

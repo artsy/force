@@ -1,7 +1,7 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema } from "System"
 import { BackLink_artist } from "__generated__/BackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 
@@ -18,7 +18,7 @@ const BackLink: React.FC<BackLinkProps> = ({ artist }) => {
       displayBackArrow
       onClick={() =>
         trackEvent({
-          action_type: AnalyticsSchema.ActionType.Click,
+          action_type: DeprecatedAnalyticsSchema.ActionType.Click,
           destination_path: artist.href,
           subject: "Back to artist link",
         })

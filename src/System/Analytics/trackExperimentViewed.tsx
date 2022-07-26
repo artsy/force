@@ -1,4 +1,4 @@
-import * as Schema from "System/Analytics"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { data as sd } from "sharify"
 
 export const trackExperimentViewed = (name: string, trackingData = {}) => {
@@ -9,7 +9,7 @@ export const trackExperimentViewed = (name: string, trackingData = {}) => {
     }
 
     window.analytics.track(
-      Schema.ActionType.ExperimentViewed,
+      DeprecatedSchema.ActionType.ExperimentViewed,
       {
         experiment_id: name,
         experiment_name: name,

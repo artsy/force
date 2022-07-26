@@ -1,8 +1,10 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import * as React from "react"
 import { Button } from "@artsy/palette"
-import { AnalyticsSchema, useSystemContext, useTracking } from "System"
+import { useSystemContext } from "System"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "Utils/logger"
+import { useTracking } from "react-tracking"
 
 const logger = createLogger("Components/FlashBanner/EmailConfirmationCTA")
 
@@ -16,8 +18,8 @@ export const EmailConfirmationCTA: React.FC = () => {
 
   const handleSubmit = () => {
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      subject: AnalyticsSchema.Subject.EmailConfirmationCTA,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      subject: DeprecatedAnalyticsSchema.Subject.EmailConfirmationCTA,
     })
 
     if (!relayEnvironment) return

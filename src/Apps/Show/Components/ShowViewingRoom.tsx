@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShowViewingRoom_show } from "__generated__/ShowViewingRoom_show.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import {
   ActionType,

@@ -34,7 +34,7 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { flushPromiseQueue } from "DevTools"
 
 jest.unmock("react-relay")
