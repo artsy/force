@@ -7,7 +7,7 @@ import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { Image } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("found", () => ({
   Link: ({ children, ...props }) => <div {...props}>{children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,

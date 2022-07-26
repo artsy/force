@@ -5,7 +5,7 @@ import { HomeAuctionLotsRail_Test_Query } from "__generated__/HomeAuctionLotsRai
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeAuctionLotsRail_Test_Query>({
   Component: props => {

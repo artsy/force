@@ -20,7 +20,7 @@ jest.mock("System/Router/useRouter", () => ({
   })),
 }))
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 const trackEventMock = jest.fn()
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

@@ -4,7 +4,7 @@ import { useTracking } from "react-tracking"
 import { Breakpoint } from "Utils/Responsive"
 import { CtaBannerContent } from "../CtaBanner"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   ...jest.requireActual("System/Analytics/AnalyticsContext"),

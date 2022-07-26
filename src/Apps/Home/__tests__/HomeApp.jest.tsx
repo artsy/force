@@ -7,7 +7,7 @@ import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 
 jest.mock("System/useSystemContext")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 const mockuseSystemContext = useSystemContext as jest.Mock

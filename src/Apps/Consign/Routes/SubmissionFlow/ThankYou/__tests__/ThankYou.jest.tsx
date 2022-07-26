@@ -6,7 +6,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("System/Router/useRouter")
 

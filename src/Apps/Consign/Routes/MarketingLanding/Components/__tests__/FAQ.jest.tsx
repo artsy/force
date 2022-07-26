@@ -4,7 +4,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const trackEvent = jest.fn()
 

@@ -5,7 +5,7 @@ import { Reply } from "../Components/Reply"
 import { mount } from "enzyme"
 import { Environment } from "react-relay"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("Reply", () => {
   describe("tracking", () => {

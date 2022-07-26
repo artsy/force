@@ -2,7 +2,7 @@ import { Header } from "../Header"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({

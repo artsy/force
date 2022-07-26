@@ -8,7 +8,7 @@ import { openAuthModal } from "lib/openAuthModal"
 import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
 jest.mock("lib/openAuthModal")
 jest.mock("System/Router/useRouter")

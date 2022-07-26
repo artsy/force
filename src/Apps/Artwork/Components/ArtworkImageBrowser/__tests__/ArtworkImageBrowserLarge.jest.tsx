@@ -5,7 +5,7 @@ import { ArtworkImageBrowserLargeFragmentContainer } from "../ArtworkImageBrowse
 import { ArtworkImageBrowserLarge_Test_Query } from "__generated__/ArtworkImageBrowserLarge_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking", () => ({
+jest.mock("react-tracking", () => ({
   useTracking: () => ({ trackEvent: jest.fn() }),
 }))
 

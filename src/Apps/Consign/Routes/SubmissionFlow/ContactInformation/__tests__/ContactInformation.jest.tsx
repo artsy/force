@@ -9,7 +9,7 @@ import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const mockMe = {
   internalID: "123",

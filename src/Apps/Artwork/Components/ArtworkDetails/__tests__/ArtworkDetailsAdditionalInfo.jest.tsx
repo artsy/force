@@ -9,7 +9,7 @@ import { OwnerType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<
   ArtworkDetailsAdditionalInfo_Test_Query

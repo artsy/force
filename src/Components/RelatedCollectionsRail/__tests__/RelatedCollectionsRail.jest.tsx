@@ -10,7 +10,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.unmock("react-tracking")
 

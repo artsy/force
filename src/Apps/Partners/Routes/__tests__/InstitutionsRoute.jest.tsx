@@ -12,7 +12,7 @@ jest.mock("System/Router/useRouter")
 jest.mock("Components/FollowButton/FollowProfileButton", () => ({
   FollowProfileButtonFragmentContainer: () => null,
 }))
-jest.mock("System/Analytics/useTracking", () => ({
+jest.mock("react-tracking", () => ({
   useTracking: () => ({}),
 }))
 jest.mock("../../Components/PartnersFilters", () => ({

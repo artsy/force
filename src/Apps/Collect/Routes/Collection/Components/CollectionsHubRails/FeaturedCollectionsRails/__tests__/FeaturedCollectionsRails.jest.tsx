@@ -8,7 +8,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("found", () => ({
   Link: ({ children, ...props }) => <div {...props}>{children}</div>,

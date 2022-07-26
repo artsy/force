@@ -58,7 +58,7 @@ jest.mock(
   }
 )
 jest.mock("System/useSystemContext")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({

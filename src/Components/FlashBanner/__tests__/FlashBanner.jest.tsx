@@ -8,7 +8,7 @@ import { useTracking } from "react-tracking"
 import { SystemContextProvider } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 const trackEvent = jest.fn()
 

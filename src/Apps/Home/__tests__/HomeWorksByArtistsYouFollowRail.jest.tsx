@@ -5,7 +5,7 @@ import { HomeWorksByArtistsYouFollowRail_Test_Query } from "__generated__/HomeWo
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<
   HomeWorksByArtistsYouFollowRail_Test_Query

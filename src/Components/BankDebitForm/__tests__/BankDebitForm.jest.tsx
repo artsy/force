@@ -25,7 +25,7 @@ jest.mock("@stripe/react-stripe-js", () => {
   }
 })
 jest.mock("System/useSystemContext")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,

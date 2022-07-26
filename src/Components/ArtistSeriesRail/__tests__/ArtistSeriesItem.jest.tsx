@@ -6,7 +6,7 @@ import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { RouterLink } from "System/Router/RouterLink"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("Artist Series Rail Item", () => {
   let props

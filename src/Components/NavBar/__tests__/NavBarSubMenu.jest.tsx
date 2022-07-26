@@ -4,7 +4,7 @@ import { ARTWORKS_SUBMENU_DATA } from "Components/NavBar/menuData"
 import { mount } from "enzyme"
 import { NavBarSubMenu } from "../Menus/NavBarSubMenu"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()

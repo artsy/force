@@ -9,7 +9,7 @@ jest.mock("../../Hooks/useInquiryContext", () => ({
   }),
 }))
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("Utils/auth", () => ({
   forgotPassword: () => Promise.resolve(),

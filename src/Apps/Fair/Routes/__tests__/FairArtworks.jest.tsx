@@ -12,7 +12,7 @@ jest.mock("System/Router/useRouter", () => ({
     },
   }),
 }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

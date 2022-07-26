@@ -5,7 +5,7 @@ import { HomeTrendingArtistsRail_Test_Query } from "__generated__/HomeTrendingAr
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Components/FollowButton/FollowArtistButton", () => ({
   FollowArtistButtonQueryRenderer: () => <>Following</>,
 }))

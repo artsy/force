@@ -12,7 +12,7 @@ interface Props {
 
 jest.unmock("react-relay")
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {

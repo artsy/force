@@ -6,7 +6,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe.skip("RelatedCollectionEntity", () => {
   let props

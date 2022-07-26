@@ -17,7 +17,7 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("found", () => ({
   Link: props => <div>{props.children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,

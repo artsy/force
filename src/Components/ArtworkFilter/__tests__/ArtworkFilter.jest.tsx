@@ -15,7 +15,7 @@ import { omit } from "lodash"
 import { Text } from "@artsy/palette"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Components/Pagination/useComputeHref")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

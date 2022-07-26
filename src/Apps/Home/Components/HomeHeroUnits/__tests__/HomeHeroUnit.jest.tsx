@@ -8,7 +8,7 @@ jest.unmock("react-relay")
 jest.mock("react-head", () => ({
   Link: () => null,
 }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeHeroUnit_Test_Query>({
   Component: props => {

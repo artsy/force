@@ -10,7 +10,7 @@ import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))

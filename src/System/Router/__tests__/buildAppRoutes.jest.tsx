@@ -11,7 +11,7 @@ jest.mock("System/Router/Boot", () => ({
   Boot: ({ children }) => children,
 }))
 
-jest.mock("System/Analytics/useTracking", () => ({
+jest.mock("react-tracking", () => ({
   useTracking: () => ({
     trackEvent: x => x,
   }),

@@ -27,7 +27,7 @@ import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 jest.unmock("react-relay")
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 

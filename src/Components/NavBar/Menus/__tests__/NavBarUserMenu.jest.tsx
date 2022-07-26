@@ -3,13 +3,11 @@ import { mount } from "enzyme"
 import { NavBarUserMenu } from "../NavBarUserMenu"
 import { mediator } from "lib/mediator"
 
-jest.mock("System/Analytics/useTracking", () => {
-  return {
-    useTracking: () => ({
-      trackEvent: jest.fn(),
-    }),
-  }
-})
+jest.mock("react-tracking", () => ({
+  useTracking: () => ({
+    trackEvent: jest.fn(),
+  }),
+}))
 
 describe("NavBarUserMenu", () => {
   jest.spyOn(mediator, "trigger")

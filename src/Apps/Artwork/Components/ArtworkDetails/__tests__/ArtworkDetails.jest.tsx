@@ -5,7 +5,7 @@ import { MockBoot } from "DevTools"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 ;(useTracking as jest.Mock).mockImplementation(() => {
   return {}

@@ -5,7 +5,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("../Components/ArtistConsignMeta", () => ({
   ArtistConsignMetaFragmentContainer: () => null,
 }))

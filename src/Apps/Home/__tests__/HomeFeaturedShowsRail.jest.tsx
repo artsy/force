@@ -5,7 +5,7 @@ import { HomeFeaturedShowsRail_Test_Query } from "__generated__/HomeFeaturedShow
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeFeaturedShowsRail_Test_Query>({
   Component: HomeFeaturedShowsRailFragmentContainer,

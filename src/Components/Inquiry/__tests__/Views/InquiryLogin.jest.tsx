@@ -11,7 +11,7 @@ jest.mock("Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("InquiryLogin", () => {
   const next = jest.fn()

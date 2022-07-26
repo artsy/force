@@ -9,7 +9,7 @@ import { SavedSearchCreateAlertButtonContainer } from "../SavedSearchCreateAlert
 import { Button } from "@artsy/palette"
 
 jest.mock("System/useSystemContext")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/openAuthModal")
 
 const savedSearchEntity: SavedSearchEntity = {

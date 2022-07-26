@@ -6,7 +6,7 @@ import { mediator } from "lib/mediator"
 import { NavBarMobileMenuTransition } from "../NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "../NavBarMobileSubMenu"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("lib/isServer", () => ({
   isServer: true,
 }))

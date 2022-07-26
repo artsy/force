@@ -3,7 +3,7 @@ import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { ArtworkRelatedArtists } from "../ArtworkRelatedArtists"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("ArtworkRelatedArtists", () => {
   const getWrapper = props => {

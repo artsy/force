@@ -41,7 +41,7 @@ import { MockBoot } from "DevTools"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("@stripe/stripe-js", () => {
   let mock = null
   return {
