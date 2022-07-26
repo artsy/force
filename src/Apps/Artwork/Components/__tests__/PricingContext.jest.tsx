@@ -4,7 +4,7 @@ import {
   PricingContextTestQueryRawResponse,
   PricingContextTestQueryResponse,
 } from "__generated__/PricingContextTestQuery.graphql"
-import { mockTracking } from "System/Analytics"
+import { mockTracking } from "DevTools/mockTracking"
 import { renderRelayTree } from "DevTools"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"

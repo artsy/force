@@ -6,11 +6,11 @@ import { BoothFilterContextProvider } from "../BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
 import { AnalyticsContext } from "System"
 import { OwnerType } from "@artsy/cohesion"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("System/Router/useRouter")
 
 const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({

@@ -1,5 +1,6 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
-import { AnalyticsSchema, SystemContextProvider } from "System"
+import { SystemContextProvider } from "System"
 import { useTracking } from "react-tracking"
 import { NavBarUserMenu } from "../Menus"
 import { NavBar } from "../NavBar"
@@ -43,8 +44,9 @@ describe("NavBarTracking", () => {
       menuItems.first().simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action_type: AnalyticsSchema.ActionType.Click,
-        context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+        context_module:
+          DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
         destination_path: "/settings/purchases",
       })
     })
@@ -61,7 +63,7 @@ describe("NavBarTracking", () => {
       wrapper.find("a").find({ href: "/art-fairs" }).first().simulate("click")
 
       expect(trackEvent).toHaveBeenLastCalledWith({
-        action_type: AnalyticsSchema.ActionType.Click,
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
         subject: "Fairs",
         destination_path: "/art-fairs",
       })
@@ -74,7 +76,7 @@ describe("NavBarTracking", () => {
         .simulate("click")
 
       expect(trackEvent).toHaveBeenLastCalledWith({
-        action_type: AnalyticsSchema.ActionType.Click,
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
         subject: "Artworks",
         destination_path: "/collect",
       })
@@ -97,8 +99,8 @@ describe("NavBarTracking", () => {
         .simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action_type: AnalyticsSchema.ActionType.Click,
-        subject: AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
+        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+        subject: DeprecatedAnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
       })
     })
   })

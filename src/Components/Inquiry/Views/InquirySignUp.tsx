@@ -15,7 +15,7 @@ import {
   CreatedAccount,
   Intent,
 } from "@artsy/cohesion"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { useMode } from "Utils/Hooks/useMode"
 
 type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"

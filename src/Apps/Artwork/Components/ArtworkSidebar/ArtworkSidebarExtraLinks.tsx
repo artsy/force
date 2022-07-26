@@ -1,12 +1,12 @@
 import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarExtraLinks_artwork } from "__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { useInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
 import { useDialog } from "Utils/Hooks/useDialog"
 import { AuctionFAQsDialogQueryRenderer } from "Components/AuctionFAQsDialog"
+import track from "react-tracking"
 
 export interface ArtworkSidebarExtraLinksProps {
   artwork: ArtworkSidebarExtraLinks_artwork
@@ -28,69 +28,69 @@ const Container = ({ children }) => (
 )
 
 @track({
-  context_module: Schema.ContextModule.Sidebar,
+  context_module: DeprecatedSchema.ContextModule.Sidebar,
 })
 class ArtworkSidebarExtraLinksContainer extends React.Component<
   ArtworkSidebarExtraLinksContainerProps
 > {
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.AuctionConditionsOfSale,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.AuctionConditionsOfSale,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickConditionsOfSale() {
     // Tracking
   }
 
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.AuctionFAQ,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.AuctionFAQ,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickAuctionFAQ() {
     this.props.auctionFAQsDialog.showDialog()
   }
 
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.BNMOReadFAQ,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.BNMOReadFAQ,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickBuyNowFAQ() {
     // Tracking
   }
 
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.CollectorFAQ,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.CollectorFAQ,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickCollectorFAQ() {
     // Tracking
   }
 
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.AuctionAskSpecialist,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.AuctionAskSpecialist,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickAuctionAskSpecialist() {
     this.props.showInquiry({ askSpecialist: true })
   }
 
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.BNMOAskSpecialist,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.BNMOAskSpecialist,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickBuyNowAskSpecialist() {
     this.props.showInquiry({ askSpecialist: true })
   }
 
   @track(() => ({
-    action_type: Schema.ActionType.Click,
-    subject: Schema.Subject.ConsignLearnMore,
-    type: Schema.Type.Link,
+    action_type: DeprecatedSchema.ActionType.Click,
+    subject: DeprecatedSchema.Subject.ConsignLearnMore,
+    type: DeprecatedSchema.Type.Link,
   }))
   onClickConsign() {
     // Tracking

@@ -3,7 +3,7 @@ import * as React from "react"
 import styled, { createGlobalStyle, keyframes } from "styled-components"
 import { getViewportDimensions } from "Utils/viewport"
 import FadeTransition from "../Animation/FadeTransition"
-import { media } from "../Helpers"
+import { media } from "Utils/deprecatedMedia"
 
 export enum ModalWidth {
   Narrow = "280px",

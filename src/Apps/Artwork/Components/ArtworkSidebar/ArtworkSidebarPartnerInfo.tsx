@@ -6,7 +6,8 @@ import { ArtworkSidebarPartnerInfo_artwork } from "__generated__/ArtworkSidebarP
 import { RouterLink } from "System/Router/RouterLink"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { AnalyticsSchema, useTracking } from "System/Analytics"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 
 export interface ArtworkSidebarPartnerInfoProps {
@@ -59,9 +60,9 @@ export const ArtworkSidebarPartnerInfo: FC<ArtworkSidebarPartnerInfoProps> = ({
 
   const handleInquiry = () => {
     trackEvent({
-      context_module: AnalyticsSchema.ContextModule.Sidebar,
-      action_type: AnalyticsSchema.ActionType.ClickedContactGallery,
-      subject: AnalyticsSchema.Subject.ContactGallery,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.Sidebar,
+      action_type: DeprecatedAnalyticsSchema.ActionType.ClickedContactGallery,
+      subject: DeprecatedAnalyticsSchema.Subject.ContactGallery,
       artwork_id: internalID,
       artwork_slug: slug,
     })

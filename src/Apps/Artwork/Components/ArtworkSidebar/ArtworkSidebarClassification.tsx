@@ -2,7 +2,8 @@ import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassification_artwork } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
-import { AnalyticsSchema, useTracking } from "System/Analytics"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 export interface ArtworkSidebarClassificationProps {
@@ -17,10 +18,10 @@ export const ArtworkSidebarClassification: FC<ArtworkSidebarClassificationProps>
 
   const openModal = () => {
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.Sidebar,
-      subject: AnalyticsSchema.Subject.Classification,
-      type: AnalyticsSchema.Type.Link,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.Sidebar,
+      subject: DeprecatedAnalyticsSchema.Subject.Classification,
+      type: DeprecatedAnalyticsSchema.Type.Link,
     })
     setIsModalOpen(true)
   }

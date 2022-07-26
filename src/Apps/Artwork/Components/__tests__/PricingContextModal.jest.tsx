@@ -1,5 +1,5 @@
 import { Button, Link, QuestionCircleIcon } from "@artsy/palette"
-import { mockTracking } from "System/Analytics"
+import { mockTracking } from "DevTools/mockTracking"
 import { mount } from "enzyme"
 import { PricingContextModal } from "../PricingContextModal"
 import { flushPromiseQueue } from "DevTools"

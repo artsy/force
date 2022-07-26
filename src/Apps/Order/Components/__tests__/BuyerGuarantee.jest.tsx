@@ -1,10 +1,10 @@
 import { ContextModule } from "@artsy/cohesion"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { BuyerGuarantee } from "../BuyerGuarantee"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("BuyerGuarantee", () => {
   const trackEvent = jest.fn()

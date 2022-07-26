@@ -1,6 +1,6 @@
 import { ReadMore, Text, Image, Box } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import currency from "currency.js"
 import * as React from "react"

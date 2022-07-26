@@ -3,7 +3,7 @@ import { ArtistArtworkFilterRefetchContainer } from "../ArtistArtworkFilter"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools"
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 jest.unmock("react-relay")
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {

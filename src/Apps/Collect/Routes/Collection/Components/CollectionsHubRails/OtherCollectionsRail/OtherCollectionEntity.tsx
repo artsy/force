@@ -1,6 +1,6 @@
 import { Text, Image } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "__generated__/OtherCollectionEntity_member.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

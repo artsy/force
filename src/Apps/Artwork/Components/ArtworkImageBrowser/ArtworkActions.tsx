@@ -1,6 +1,7 @@
 import { ArtworkActions_artwork } from "__generated__/ArtworkActions_artwork.graphql"
 import { useSystemContext } from "System"
-import { AnalyticsSchema, useTracking } from "System/Analytics"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -52,10 +53,10 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
 
   const toggleSharePanel = () => {
     tracking.trackEvent({
-      flow: AnalyticsSchema.Flow.ArtworkShare,
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.ShareButton,
-      type: AnalyticsSchema.Type.Button,
+      flow: DeprecatedAnalyticsSchema.Flow.ArtworkShare,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.ShareButton,
+      type: DeprecatedAnalyticsSchema.Type.Button,
     })
   }
 

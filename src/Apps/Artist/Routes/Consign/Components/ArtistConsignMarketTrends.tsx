@@ -1,5 +1,6 @@
 import { Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { AnalyticsSchema, useTracking } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -58,8 +59,8 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
         to={`${href}/auction-results`}
         onClick={() => {
           tracking.trackEvent({
-            action_type: AnalyticsSchema.ActionType.Click,
-            subject: AnalyticsSchema.Subject.ExploreAuctionResults,
+            action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+            subject: DeprecatedAnalyticsSchema.Subject.ExploreAuctionResults,
           })
         }}
       >

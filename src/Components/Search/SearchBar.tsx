@@ -4,8 +4,7 @@ import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer } from "__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
 import { SystemContext, SystemContextProps, withSystemContext } from "System"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   FirstSuggestionItem,
@@ -28,6 +27,7 @@ import { Media } from "Utils/Responsive"
 import { SearchInputContainer } from "./SearchInputContainer"
 import { useTranslation } from "react-i18next"
 import { ClassI18n } from "System/i18n/ClassI18n"
+import track from "react-tracking"
 
 const logger = createLogger("Components/Search/SearchBar")
 
@@ -118,8 +118,8 @@ export class SearchBar extends Component<Props, State> {
 
   @track((_props, _state, [query, hasResults]) => ({
     action_type: hasResults
-      ? Schema.ActionType.SearchedAutosuggestWithResults
-      : Schema.ActionType.SearchedAutosuggestWithoutResults,
+      ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+      : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
     query,
   }))
   trackSearch(_term, _hasResults) {
@@ -207,7 +207,7 @@ export class SearchBar extends Component<Props, State> {
   }
 
   @track({
-    action_type: Schema.ActionType.FocusedOnAutosuggestInput,
+    action_type: DeprecatedSchema.ActionType.FocusedOnAutosuggestInput,
   })
   onFocus() {
     this.setState({ focused: true })
@@ -256,7 +256,7 @@ export class SearchBar extends Component<Props, State> {
         },
       ]
     ) => ({
-      action_type: Schema.ActionType.SelectedItemFromSearch,
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
       destination_path:
         __typename === "Artist" ? `${href}/works-for-sale` : href,
       item_id: id,

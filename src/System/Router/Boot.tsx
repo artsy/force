@@ -4,7 +4,7 @@ import {
   themeProps,
   ToastsProvider,
 } from "@artsy/palette"
-import { SystemContextProvider, track } from "System"
+import { SystemContextProvider } from "System"
 import { AppRouteConfig } from "System/Router/Route"
 import { useEffect } from "react"
 import * as React from "react"
@@ -28,6 +28,7 @@ import { ClientContext } from "System/Router/buildClientAppContext"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "lib/setupSentryClient"
 import "System/i18n/i18n"
+import track from "react-tracking"
 
 export interface BootProps {
   children: React.ReactNode

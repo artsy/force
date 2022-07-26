@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
@@ -11,7 +11,7 @@ import { ArtworkFilters } from "../ArtworkFilters"
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: true }),
 }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {

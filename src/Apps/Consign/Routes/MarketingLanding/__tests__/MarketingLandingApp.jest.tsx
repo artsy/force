@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import { MarketingLandingApp } from "../MarketingLandingApp"
 import { HeadProvider } from "react-head"
-import { useTracking } from "System/Analytics"
+import { useTracking } from "react-tracking"
 
 let sessionStore = {}
 Object.defineProperty(window, "sessionStorage", {
@@ -20,7 +20,7 @@ jest.mock("System/Router/useRouter", () => ({
   })),
 }))
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 const trackEventMock = jest.fn()
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

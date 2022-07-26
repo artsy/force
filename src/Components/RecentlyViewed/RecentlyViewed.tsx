@@ -2,8 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { RecentlyViewed_me } from "__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "__generated__/RecentlyViewedQuery.graphql"
 import { SystemContext } from "System"
-import { useTracking } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext } from "react"
 import * as React from "react"
@@ -12,6 +11,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "../Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
 import { Rail } from "../Rail"
+import { useTracking } from "react-tracking"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me
@@ -24,9 +24,9 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
 
   const trackClick = () => {
     tracking.trackEvent({
-      type: Schema.Type.Thumbnail,
-      action_type: Schema.ActionType.Click,
-      context_module: Schema.ContextModule.RecentlyViewedArtworks,
+      type: DeprecatedSchema.Type.Thumbnail,
+      action_type: DeprecatedSchema.ActionType.Click,
+      context_module: DeprecatedSchema.ContextModule.RecentlyViewedArtworks,
     })
   }
 

@@ -34,14 +34,14 @@ import { mockStripe } from "DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
 import { PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { cloneDeep } from "lodash"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { waitFor } from "@testing-library/react"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools"
 
 jest.unmock("react-relay")
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("@stripe/stripe-js", () => {
   let mock = null
   return {

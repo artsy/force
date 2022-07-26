@@ -5,13 +5,13 @@ import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
 import { flushPromiseQueue } from "DevTools"
 import { useInquiryContext } from "../../Hooks/useInquiryContext"
 import { fill } from "../util"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.mock("Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("Utils/wait", () => ({ wait: () => Promise.resolve() }))
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("InquiryLogin", () => {
   const next = jest.fn()

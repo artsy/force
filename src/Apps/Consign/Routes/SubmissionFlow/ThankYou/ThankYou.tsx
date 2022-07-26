@@ -1,13 +1,15 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { DownloadApps } from "./Components/DownloadApps"
-import { AnalyticsSchema, useSystemContext, useTracking } from "System"
+import { useSystemContext } from "System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import {
   SoldRecentlyOnArtsyQueryRenderer,
   FAQ,
 } from "../../MarketingLanding/Components"
+import { useTracking } from "react-tracking"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
@@ -16,7 +18,7 @@ export const ThankYou: React.FC = () => {
 
   const trackSubmitAnotherWorkClick = () =>
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.SubmitAnotherArtwork,
+      action_type: DeprecatedAnalyticsSchema.ActionType.SubmitAnotherArtwork,
       context_module: ContextModule.consignSubmissionFlow,
       context_owner_type: OwnerType.consignmentSubmission,
       submission_id: match.params.id,

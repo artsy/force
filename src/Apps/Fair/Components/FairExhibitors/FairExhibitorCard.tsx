@@ -1,6 +1,7 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext, useTracking } from "System"
+import { useAnalyticsContext } from "System"
+import { useTracking } from "react-tracking"
 import {
   ActionType,
   ClickedPartnerCard,

@@ -10,8 +10,7 @@ import { READ_MORE_MAX_CHARS } from "./ArtworkDetailsAboutTheWorkFromArtsy"
 import { ArtworkDetailsAboutTheWorkFromPartner_artwork } from "__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import Events from "Utils/Events"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
@@ -23,23 +22,24 @@ import {
   Text,
 } from "@artsy/palette"
 import { openAuthToSatisfyIntent } from "Utils/openAuthModal"
+import track from "react-tracking"
 
 export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
   artwork: ArtworkDetailsAboutTheWorkFromPartner_artwork
 }
 
 @track(
-  { context_module: Schema.ContextModule.AboutTheWorkPartner },
+  { context_module: DeprecatedSchema.ContextModule.AboutTheWorkPartner },
   { dispatch: data => Events.postEvent(data) }
 )
 export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
   ArtworkDetailsAboutTheWorkFromPartnerProps
 > {
   @track({
-    action_type: Schema.ActionType.Click,
-    flow: Schema.Flow.ArtworkAboutTheWork,
-    subject: Schema.Subject.ReadMore,
-    type: Schema.Type.Button,
+    action_type: DeprecatedSchema.ActionType.Click,
+    flow: DeprecatedSchema.Flow.ArtworkAboutTheWork,
+    subject: DeprecatedSchema.Subject.ReadMore,
+    type: DeprecatedSchema.Type.Button,
   })
   trackReadMoreClick() {
     // noop

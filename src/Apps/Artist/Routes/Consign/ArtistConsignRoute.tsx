@@ -9,8 +9,8 @@ import { ArtistConsignMetaFragmentContainer } from "./Components/ArtistConsignMe
 import { ArtistConsignPageViewsFragmentContainer } from "./Components/ArtistConsignPageViews"
 import { ArtistConsignRecentlySoldFragmentContainer } from "./Components/ArtistConsignRecentlySold"
 import { ArtistConsignSellArtFragmentContainer } from "./Components/ArtistConsignSellArt"
-import { track } from "System"
 import { Spacer } from "@artsy/palette"
+import track from "react-tracking"
 
 export interface ConsignRouteProps {
   artist: ArtistConsignRoute_artist

@@ -9,7 +9,8 @@ import { graphql } from "react-relay"
 import { settingOrderPaymentFailed } from "../__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "../Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useSystemContext, useTracking } from "System"
+import { useSystemContext } from "System"
+import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
@@ -57,7 +58,7 @@ jest.mock(
   }
 )
 jest.mock("System/useSystemContext")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({

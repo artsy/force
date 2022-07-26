@@ -1,6 +1,7 @@
 import { Text, Button, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
-import { useSystemContext, useTracking } from "System"
+import { useSystemContext } from "System"
+import { useTracking } from "react-tracking"
 import { useRouter } from "System/Router/useRouter"
 import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import { Form, Formik } from "formik"

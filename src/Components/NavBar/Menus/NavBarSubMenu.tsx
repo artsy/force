@@ -1,6 +1,6 @@
 import { Box, Text, GridColumns, Column, Flex } from "@artsy/palette"
-import { AnalyticsSchema, ContextModule } from "System"
-import { useTracking } from "System/Analytics/useTracking"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import * as React from "react"
 import { MenuData, SimpleLinkData } from "../menuData"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -10,7 +10,7 @@ import { RouterLink } from "System/Router/RouterLink"
 
 interface NavBarSubMenuProps {
   menu: MenuData
-  contextModule: ContextModule
+  contextModule: DeprecatedAnalyticsSchema.ContextModule
   /** Detect any click to possibly close the menu */
   onClick(): void
 }
@@ -31,7 +31,7 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
     const href = link.getAttribute("href")!
 
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       subject: text,
       destination_path: href,
       // @ts-ignore
@@ -40,7 +40,8 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
   }
 
   const isArtistsDropdown =
-    contextModule === AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+    contextModule ===
+    DeprecatedAnalyticsSchema.ContextModule.HeaderArtistsDropdown
 
   const lastMenuLinkIndex = menu.links.length - 1
   const lastMenuItem = menu.links[lastMenuLinkIndex] as SimpleLinkData

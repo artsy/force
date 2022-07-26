@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
 import { rest } from "lodash"
@@ -6,7 +7,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { AnalyticsSchema, Type } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { formatLargeNumber } from "Utils/formatLargeNumber"
@@ -286,9 +286,9 @@ export const MarketStatsQueryRenderer: React.FC<{
 
 export const tracks = {
   clickMarketStatsInfo: () => ({
-    action_type: AnalyticsSchema.ActionType.Click,
+    action_type: DeprecatedAnalyticsSchema.ActionType.Click,
     context_module: ContextModule.marketInsights,
     context_page_owner_type: OwnerType.artist,
-    type: Type.Button,
+    type: DeprecatedAnalyticsSchema.Type.Button,
   }),
 }

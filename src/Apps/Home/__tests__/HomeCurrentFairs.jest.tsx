@@ -2,10 +2,10 @@ import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { HomeCurrentFairsFragmentContainer } from "../Components/HomeCurrentFairs"
 import { HomeCurrentFairs_Test_Query } from "__generated__/HomeCurrentFairs_Test_Query.graphql"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 const { getWrapper } = setupTestWrapper<HomeCurrentFairs_Test_Query>({
   Component: props => {

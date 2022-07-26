@@ -26,7 +26,7 @@ import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
 import { UpdateUserAddressMutationResponse } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutationResponse } from "__generated__/CreateUserAddressMutation.graphql"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"

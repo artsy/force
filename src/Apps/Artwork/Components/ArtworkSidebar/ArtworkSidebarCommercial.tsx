@@ -15,8 +15,7 @@ import { ArtworkSidebarCommercial_artwork } from "__generated__/ArtworkSidebarCo
 import { ArtworkSidebarCommercialOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
 import { ArtworkSidebarCommercialOrderMutation } from "__generated__/ArtworkSidebarCommercialOrderMutation.graphql"
 import { SystemContext } from "System"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ModalType } from "Components/Authentication/Types"
 import currency from "currency.js"
 import { Router } from "found"
@@ -36,6 +35,7 @@ import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSi
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "Components/Inquiry/useInquiry"
 import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSidebarCreateAlertButton"
+import track from "react-tracking"
 
 type EditionSet = NonNullable<
   ArtworkSidebarCommercial_artwork["edition_sets"]
@@ -160,10 +160,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     this.setState({ isErrorModalOpen: false })
   }
 
-  @track<ArtworkSidebarCommercialContainerProps>(props => ({
-    context_module: Schema.ContextModule.Sidebar,
-    action_type: Schema.ActionType.ClickedContactGallery,
-    subject: Schema.Subject.ContactGallery,
+  @track(props => ({
+    context_module: DeprecatedSchema.ContextModule.Sidebar,
+    action_type: DeprecatedSchema.ActionType.ClickedContactGallery,
+    subject: DeprecatedSchema.Subject.ContactGallery,
     artwork_id: props.artwork.internalID,
     artwork_slug: props.artwork.slug,
   }))
@@ -171,17 +171,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     this.props.showInquiry()
   }
 
-  @track<ArtworkSidebarCommercialContainerProps>((props, state, args) => ({
-    action_type: Schema.ActionType.ClickedBuyNow,
-    flow: Schema.Flow.BuyNow,
-    type: Schema.Type.Button,
+  @track((props, state, args) => ({
+    action_type: DeprecatedSchema.ActionType.ClickedBuyNow,
+    flow: DeprecatedSchema.Flow.BuyNow,
+    type: DeprecatedSchema.Type.Button,
     artwork_id: props.artwork.internalID,
     artwork_slug: props.artwork.slug,
     products: [
       {
         product_id: props.artwork.internalID,
         quantity: 1,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         price: currency(props.artwork.listPrice.display).value,
       },
     ],
@@ -268,10 +267,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
   }
 
-  @track<ArtworkSidebarCommercialContainerProps>((props, state, args) => ({
-    action_type: Schema.ActionType.ClickedMakeOffer,
-    flow: Schema.Flow.MakeOffer,
-    type: Schema.Type.Button,
+  @track((props, state, args) => ({
+    action_type: DeprecatedSchema.ActionType.ClickedMakeOffer,
+    flow: DeprecatedSchema.Flow.MakeOffer,
+    type: DeprecatedSchema.Type.Button,
     artwork_id: props.artwork.internalID,
     artwork_slug: props.artwork.slug,
   }))

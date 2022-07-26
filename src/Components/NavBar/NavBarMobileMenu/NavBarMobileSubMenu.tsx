@@ -1,7 +1,7 @@
 import { Box, ChevronIcon, Flex, Separator, Text } from "@artsy/palette"
 import * as React from "react"
-import { useTracking } from "System/Analytics"
-import { AnalyticsSchema } from "System"
+import { useTracking } from "react-tracking"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { isMenuLinkData, LinkData, MenuData } from "../menuData"
 import {
   NavBarMobileMenuItemButton,
@@ -30,7 +30,7 @@ export const NavBarMobileSubMenu: React.FC<NavBarMobileSubMenuProps> = ({
           push(menu.title)
 
           trackEvent({
-            action_type: AnalyticsSchema.ActionType.Click,
+            action_type: DeprecatedAnalyticsSchema.ActionType.Click,
             context_module: contextModule,
             flow: "Header",
             subject: menu.title,
@@ -144,7 +144,7 @@ export const NavBarMobileSubMenuBack: React.FC = () => {
       aria-label="Back"
       onClick={() => {
         trackEvent({
-          action_type: AnalyticsSchema.ActionType.Click,
+          action_type: DeprecatedAnalyticsSchema.ActionType.Click,
           context_module: contextModule,
           flow: "Header",
           subject: "Back link",
@@ -193,7 +193,7 @@ export const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
       context_module: contextModule,
       flow: "Header",
       subject: link.text,

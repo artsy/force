@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import { useSystemContext } from "System/useSystemContext"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { openAuthToSatisfyIntent, AuthModalOptions } from "Utils/openAuthModal"
 import { mediator } from "lib/mediator"
 import { SavedSearchEntity } from "../../types"
@@ -9,7 +9,7 @@ import { SavedSearchCreateAlertButtonContainer } from "../SavedSearchCreateAlert
 import { Button } from "@artsy/palette"
 
 jest.mock("System/useSystemContext")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 jest.mock("Utils/openAuthModal")
 
 const savedSearchEntity: SavedSearchEntity = {

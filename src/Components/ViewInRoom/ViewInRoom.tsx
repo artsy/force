@@ -1,8 +1,9 @@
 import { ModalBase } from "@artsy/palette"
 import * as React from "react"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsSchema, useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { ViewInRoom_artwork } from "__generated__/ViewInRoom_artwork.graphql"
 import { ViewInRoomArtworkFragmentContainer } from "./ViewInRoomArtwork"
 import { ViewInRoomCloseButton } from "./ViewInRoomCloseButton"
@@ -60,10 +61,10 @@ export const useViewInRoom = () => {
     setIsViewInRoomVisible(true)
 
     trackEvent({
-      flow: AnalyticsSchema.Flow.ArtworkViewInRoom,
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.ViewInRoom,
-      type: AnalyticsSchema.Type.Button,
+      flow: DeprecatedAnalyticsSchema.Flow.ArtworkViewInRoom,
+      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+      context_module: DeprecatedAnalyticsSchema.ContextModule.ViewInRoom,
+      type: DeprecatedAnalyticsSchema.Type.Button,
     })
   }
 

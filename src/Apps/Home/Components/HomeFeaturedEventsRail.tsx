@@ -16,7 +16,7 @@ import {
 import { compact, take } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { HomeFeaturedEventsRail_orderedSet } from "__generated__/HomeFeaturedEventsRail_orderedSet.graphql"

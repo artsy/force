@@ -1,22 +1,12 @@
 import { css } from "styled-components"
-import theme from "../Assets/Theme"
 
-/**
- * Helper function to display an element as a block that inherits its parents width
- * @param margin value in pixels to remove from width 100%
- */
-export const block = (margin: number = 0) => {
-  return (props: any = {}) => {
-    if (props.block) {
-      return css`
-        width: 100%;
-        margin: 10px auto;
-      `
-    }
-  }
+// This is way old, pre palette v1.
+const sizes = {
+  xs: 768,
+  sm: 900,
+  md: 1024,
+  lg: 1192,
 }
-
-const sizes = theme.flexboxgrid.breakpoints
 
 type Media = { [S in keyof typeof sizes]: typeof css }
 

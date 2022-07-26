@@ -1,11 +1,11 @@
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { MockedConversation } from "Apps/__tests__/Fixtures/Conversation"
 import { Conversation_conversation } from "__generated__/Conversation_conversation.graphql"
 import { Reply } from "../Components/Reply"
 import { mount } from "enzyme"
 import { Environment } from "react-relay"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("Reply", () => {
   describe("tracking", () => {

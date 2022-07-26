@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Clickable,
   HTML,
@@ -13,13 +14,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
 import { ArtworkDetailsMediumModalFragmentContainer } from "../ArtworkDetailsMediumModal"
-import {
-  useTracking,
-  useAnalyticsContext,
-  AnalyticsSchema,
-} from "System/Analytics"
+import { useAnalyticsContext } from "System/Analytics"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkDefinitionList } from "../ArtworkDefinitionList"
+import { useTracking } from "react-tracking"
 
 export interface ArtworkDetailsAdditionalInfoProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork
@@ -65,7 +63,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
                   trackEvent({
                     action_type: "Click",
                     context_module: ContextModule.aboutTheWork,
-                    type: AnalyticsSchema.Type.Link,
+                    type: DeprecatedAnalyticsSchema.Type.Link,
                     subject: "Medium type info",
                     context_page_owner_type: contextPageOwnerType,
                     context_page_owner_id: contextPageOwnerId,

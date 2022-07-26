@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { BaseTab, BaseTabs, BaseTabProps, BaseTabsProps } from "@artsy/palette"
 import { useIsRouteActive } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema } from "System"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
   children,
@@ -24,7 +24,7 @@ export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
       active={useIsRouteActive(to, options)}
       onClick={() => {
         tracking.trackEvent({
-          action_type: AnalyticsSchema.ActionType.Click,
+          action_type: DeprecatedAnalyticsSchema.ActionType.Click,
           destination_path: to,
           subject: children as string,
         })

@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "__generated__/FairHeader_fair.graphql"
 import { ProfileIcon } from "Components/ProfileIcon"
 import styled from "styled-components"
-import { growAndFadeIn, shrinkAndFadeOut } from "Assets/Animations"
+import { growAndFadeIn, shrinkAndFadeOut } from "Utils/animations"
 import { Media } from "Utils/Responsive"
 
 const SUBTITLE_HEIGHT = "38px"

@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Button,
   Flex,
@@ -19,8 +20,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics"
+import { track } from "react-tracking"
 import { Router } from "found"
 import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
@@ -63,18 +63,18 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     isToggleRadio: false,
   }
 
-  @track<OfferProps>(props => ({
-    action_type: Schema.ActionType.FocusedOnOfferInput,
-    flow: Schema.Flow.MakeOffer,
+  @track(props => ({
+    action_type: DeprecatedAnalyticsSchema.ActionType.FocusedOnOfferInput,
+    flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
     order_id: props.order.internalID,
   }))
   onOfferInputFocus() {
     // noop
   }
 
-  @track<OfferProps>(props => ({
-    action_type: Schema.ActionType.ViewedOfferTooLow,
-    flow: Schema.Flow.MakeOffer,
+  @track(props => ({
+    action_type: DeprecatedAnalyticsSchema.ActionType.ViewedOfferTooLow,
+    flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
     order_id: props.order.internalID,
   }))
   showLowSpeedbump() {

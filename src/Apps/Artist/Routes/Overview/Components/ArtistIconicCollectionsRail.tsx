@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   Box,
   Image,
@@ -9,7 +10,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsSchema, Type, useSystemContext } from "System"
+import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistIconicCollectionsRail_marketingCollections } from "__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
 import currency from "currency.js"
@@ -61,11 +62,11 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
               noUnderline
               onClick={() => {
                 tracking.trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Click,
+                  action_type: DeprecatedAnalyticsSchema.ActionType.Click,
                   context_module: ContextModule.collectionRail,
                   context_page_owner_type: OwnerType.artist,
                   destination_path: `${sd.APP_URL}/collection/${marketingCollection.slug}`,
-                  type: Type.Thumbnail,
+                  type: DeprecatedAnalyticsSchema.Type.Thumbnail,
                 })
               }}
             >

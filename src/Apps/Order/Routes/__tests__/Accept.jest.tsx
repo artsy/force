@@ -17,7 +17,7 @@ import {
 import { AcceptFragmentContainer } from "../Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
-import { useTracking } from "System"
+import { useTracking } from "react-tracking"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { Router } from "found"
@@ -27,7 +27,7 @@ import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 jest.unmock("react-relay")
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 

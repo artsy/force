@@ -12,8 +12,7 @@ import {
 
 import { CreditCardInput } from "Components/CreditCardInput"
 import { validateAddress } from "Apps/Order/Utils/formValidators"
-import { track } from "System/Analytics"
-import * as Schema from "System/Analytics/Schema"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type {
@@ -39,6 +38,7 @@ import { CreditCardDetails } from "./CreditCardDetails"
 import { SystemContextConsumer, SystemContextProps } from "System/SystemContext"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
+import track from "react-tracking"
 
 export interface StripeProps {
   stripe: Stripe
@@ -196,8 +196,8 @@ export class CreditCardPicker extends React.Component<
     const showBillingAddress = !args[0]
     if (showBillingAddress && props.order.state === "PENDING") {
       return {
-        action_type: Schema.ActionType.Click,
-        subject: Schema.Subject.BNMOUseShippingAddress,
+        action_type: DeprecatedSchema.ActionType.Click,
+        subject: DeprecatedSchema.Subject.BNMOUseShippingAddress,
         flow: "buy now",
         type: "checkbox",
       }

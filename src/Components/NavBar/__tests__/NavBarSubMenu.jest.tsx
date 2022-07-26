@@ -1,10 +1,10 @@
-import { ContextModule } from "System"
-import { useTracking } from "System/Analytics/useTracking"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useTracking } from "react-tracking"
 import { ARTWORKS_SUBMENU_DATA } from "Components/NavBar/menuData"
 import { mount } from "enzyme"
 import { NavBarSubMenu } from "../Menus/NavBarSubMenu"
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
@@ -13,7 +13,9 @@ describe("NavBarSubMenu", () => {
     return mount(
       <NavBarSubMenu
         menu={ARTWORKS_SUBMENU_DATA.menu}
-        contextModule={ContextModule.HeaderArtworksDropdown}
+        contextModule={
+          DeprecatedAnalyticsSchema.ContextModule.HeaderArtworksDropdown
+        }
         onClick={jest.fn()}
         {...passedProps}
       />
@@ -60,7 +62,8 @@ describe("NavBarSubMenu", () => {
 
   it("renders artists letter nav inside artists dropdown", () => {
     const wrapper = getWrapper({
-      contextModule: ContextModule.HeaderArtistsDropdown,
+      contextModule:
+        DeprecatedAnalyticsSchema.ContextModule.HeaderArtistsDropdown,
     })
 
     expect(wrapper.text()).toContain("Browse by name")

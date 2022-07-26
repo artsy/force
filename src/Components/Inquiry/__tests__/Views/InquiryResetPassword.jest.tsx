@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { InquiryResetPassword } from "../../Views/InquiryResetPassword"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { flushPromiseQueue } from "DevTools"
 
 jest.mock("../../Hooks/useInquiryContext", () => ({
@@ -9,7 +9,7 @@ jest.mock("../../Hooks/useInquiryContext", () => ({
   }),
 }))
 
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("Utils/auth", () => ({
   forgotPassword: () => Promise.resolve(),

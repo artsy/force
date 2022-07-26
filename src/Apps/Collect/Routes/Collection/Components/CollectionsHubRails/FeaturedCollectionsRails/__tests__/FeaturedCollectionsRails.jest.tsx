@@ -1,5 +1,5 @@
 import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "System/Analytics/useTracking"
+import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { FeaturedCollectionEntity, FeaturedCollectionsRails } from "../index"
@@ -8,7 +8,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
-jest.mock("System/Analytics/useTracking")
+jest.mock("react-tracking")
 
 jest.mock("found", () => ({
   Link: ({ children, ...props }) => <div {...props}>{children}</div>,
