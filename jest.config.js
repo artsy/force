@@ -1,3 +1,10 @@
+const swcConfig = require("./.swcrc.js")
+const { webpackEnv } = require("./webpack/webpackEnv")
+
+if (webpackEnv.experimentalSWCCompiler) {
+  console.log("[jest.config.js] Experimental SWC Compiler is enabled.\n")
+}
+
 module.exports = {
   cacheDirectory: ".cache/jest",
   moduleDirectories: ["node_modules", "<rootDir>/src"],
@@ -19,6 +26,7 @@ module.exports = {
     "(ts|tsx|js|jsx)$": "babel-jest",
 =======
     "\\.(gql|graphql)$": "jest-transform-graphql",
+<<<<<<< HEAD
     "(ts|tsx|js|jsx)$": [
       "@swc/jest",
       {
@@ -52,5 +60,10 @@ module.exports = {
       },
     ],
 >>>>>>> fix graphql invocation
+=======
+    "(ts|tsx|js|jsx)$": webpackEnv.experimentalSWCCompiler
+      ? ["@swc/jest", swcConfig]
+      : "babel-jest",
+>>>>>>> feat(webpack): Add SWC compilation support
   },
 }

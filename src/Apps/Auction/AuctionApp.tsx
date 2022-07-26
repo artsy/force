@@ -64,6 +64,8 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
   const websocketEnabled = !!extendedBiddingIntervalMinutes
 
+  console.log("ummm")
+
   return (
     <>
       <AnalyticsContext.Provider

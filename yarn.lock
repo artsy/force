@@ -3901,6 +3901,11 @@
   resolved "https://registry.yarnpkg.com/@swc/plugin-relay/-/plugin-relay-0.3.4.tgz#15d97ebb8b0193d09c3eb30930174809e882af23"
   integrity sha512-LpTNORGJxu4kkoshP/Qxpqznfl0FeeghFR9k3f07J0rz4GI3eU0o8HkY96cCjTpl54s/4vs7NDgXuFepaSyQqA==
 
+"@swc/plugin-styled-components@^0.10.4":
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@swc/plugin-styled-components/-/plugin-styled-components-0.10.4.tgz#ec81273595ae79debbea7a39c7bd7cf3705e8428"
+  integrity sha512-WTFyyni8dLUnI6NLArpJWfvY/xpcQoReZ92y1YzVBmvGz4YSTuswCkCm1SgyA3IqsxXSgMZNyHnnekq/wbOSQw==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -20107,6 +20112,11 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
+
+swc-loader@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/swc-loader/-/swc-loader-0.2.3.tgz#6792f1c2e4c9ae9bf9b933b3e010210e270c186d"
+  integrity sha512-D1p6XXURfSPleZZA/Lipb3A8pZ17fP4NObZvFCDjK/OKljroqDpPmsBdTraWhVBqUNpcWBQY1imWdoPScRlQ7A==
 
 symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"

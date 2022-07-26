@@ -13,7 +13,7 @@ import webpack from "webpack"
 import { basePath, webpackEnv } from "../webpackEnv"
 import { splitChunks } from "../bundleSplitting"
 import { sharedPlugins } from "../sharedPlugins"
-import { babelLoader, ejsLoader, mjsLoader } from "../sharedLoaders"
+import { babelLoader, ejsLoader, mjsLoader, swcLoader } from "../sharedLoaders"
 
 import {
   cache,
@@ -41,7 +41,12 @@ export const clientDevelopmentConfig = () => {
     externals,
     mode,
     module: {
-      rules: [babelLoader, ejsLoader, mjsLoader],
+      rules: [
+        webpackEnv.experimentalSWCCompiler ? swcLoader : babelLoader,
+        // babelLoader,
+        ejsLoader,
+        mjsLoader,
+      ],
     },
     optimization: {
       runtimeChunk: "single", // Extract webpack runtime code into it's own file
