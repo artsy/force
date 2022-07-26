@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type CreateBackupSecondFactorsInput = {
     clientMutationId?: string | null | undefined;
-    password: string;
+    password?: string | null | undefined;
 };
 export type useCreateSettingsBackupSecondFactorsMutationVariables = {
     input: CreateBackupSecondFactorsInput;
