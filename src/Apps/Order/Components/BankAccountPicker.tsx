@@ -12,26 +12,23 @@ import {
 import { BankDebitDetails } from "./BankDebitDetails"
 import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
-import { useSetPayment } from "Apps/Order/Components/Mutations/useSetPayment"
 import { extractNodes } from "Utils/extractNodes"
 
 interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
-  onSetPaymentSuccess: () => void
-  onSetPaymentError: (error: Error) => void
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onBankAccountContinue: (arg: string) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
   const {
     me: { bankAccounts },
     order,
-    onSetPaymentSuccess,
-    onSetPaymentError,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
+    onBankAccountContinue,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -64,32 +61,6 @@ export const BankAccountPicker: FC<Props> = props => {
   const [bankAccountSelection, setBankAccountSelection] = useState<
     BankAccountSelection
   >(getInitialBankAccountSelection())
-
-  const { submitMutation: setPaymentMutation } = useSetPayment()
-
-  const handleContinue = async () => {
-    try {
-      const orderOrError = (
-        await setPaymentMutation({
-          variables: {
-            input: {
-              id: order.internalID,
-              paymentMethod: "US_BANK_ACCOUNT",
-              paymentMethodId: bankAccountSelection.id,
-            },
-          },
-        })
-      ).commerceSetPayment?.orderOrError
-
-      if (orderOrError?.error) {
-        throw orderOrError.error
-      }
-
-      onSetPaymentSuccess()
-    } catch (error) {
-      onSetPaymentError(error)
-    }
-  }
 
   return (
     <>
@@ -144,7 +115,7 @@ export const BankAccountPicker: FC<Props> = props => {
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Button
-            onClick={handleContinue}
+            onClick={() => onBankAccountContinue(bankAccountSelection.id!)}
             disabled={
               !bankAccountSelection.type || bankAccountHasInsufficientFunds
             }

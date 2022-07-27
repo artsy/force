@@ -208,6 +208,31 @@ export const PaymentRoute: FC<Props> = props => {
     }
   }
 
+  const onBankAccountContinue = async (bankAccountId: string) => {
+    setIsProcessingPayment(true)
+    try {
+      const orderOrError = (
+        await setPaymentMutation({
+          variables: {
+            input: {
+              id: order.internalID,
+              paymentMethod: "US_BANK_ACCOUNT",
+              paymentMethodId: bankAccountId,
+            },
+          },
+        })
+      ).commerceSetPayment?.orderOrError
+
+      if (orderOrError?.error) {
+        throw orderOrError.error
+      }
+
+      onSetPaymentSuccess()
+    } catch (error) {
+      onSetPaymentError(error)
+    }
+  }
+
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]
   ) => {
@@ -256,6 +281,8 @@ export const PaymentRoute: FC<Props> = props => {
       setIsPaymentSetupComplete(true)
       return
     }
+
+    setIsProcessingPayment(false)
     setShouldSetPaymentByStripeIntent(false)
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
@@ -274,15 +301,27 @@ export const PaymentRoute: FC<Props> = props => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
-  let content: React.ReactNode
+  let content: React.ReactNode = (
+    <PaymentContent
+      commitMutation={props.commitMutation}
+      isLoading={isLoading}
+      paymentMethod={selectedPaymentMethod}
+      me={props.me}
+      order={props.order}
+      CreditCardPicker={CreditCardPicker}
+      setPayment={setPayment}
+      onPaymentMethodChange={setSelectedPaymentMethod}
+      bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+      setBankAccountHasInsufficientFunds={setBankAccountHasInsufficientFunds}
+      onBankAccountContinue={onBankAccountContinue}
+    />
+  )
 
   if (isProcessingPayment) {
     content = <ProcessingPayment />
-  } else if (
-    shouldSetPaymentByStripeIntent &&
-    !isPaymentSetupComplete &&
-    !shouldPollAccountBalance
-  ) {
+  }
+
+  if (shouldSetPaymentByStripeIntent && !isPaymentSetupComplete) {
     content = (
       <SetPaymentByStripeIntent
         order={order}
@@ -292,30 +331,15 @@ export const PaymentRoute: FC<Props> = props => {
         onError={onSetPaymentError}
       />
     )
-  } else if (shouldPollAccountBalance && stripeSetupIntentId) {
+  }
+
+  if (shouldPollAccountBalance) {
     content = (
       <PollAccountBalanceQueryRenderer
-        setupIntentId={stripeSetupIntentId}
+        setupIntentId={stripeSetupIntentId!}
         onBalanceCheckComplete={onBalanceCheckComplete}
         buyerTotalCents={order.buyerTotalCents!}
         orderCurrencyCode={order.currencyCode}
-      />
-    )
-  } else {
-    content = (
-      <PaymentContent
-        commitMutation={props.commitMutation}
-        isLoading={isLoading}
-        paymentMethod={selectedPaymentMethod}
-        me={props.me}
-        order={props.order}
-        CreditCardPicker={CreditCardPicker}
-        setPayment={setPayment}
-        onPaymentMethodChange={setSelectedPaymentMethod}
-        onSetPaymentSuccess={onSetPaymentSuccess}
-        onSetPaymentError={onSetPaymentError}
-        bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-        setBankAccountHasInsufficientFunds={setBankAccountHasInsufficientFunds}
       />
     )
   }
