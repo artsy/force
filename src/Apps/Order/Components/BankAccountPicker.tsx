@@ -69,6 +69,7 @@ export const BankAccountPicker: FC<Props> = props => {
     <>
       {userHasExistingBankAccounts && (
         <RadioGroup
+          data-test="bank-accounts"
           onSelect={val => {
             setBankAccountHasInsufficientFunds(false)
             if (val === "new") {
@@ -95,7 +96,7 @@ export const BankAccountPicker: FC<Props> = props => {
             })
             .concat([
               <BorderedRadio
-                data-test="AddNewCard"
+                data-test="AddNewBankAccount"
                 value="new"
                 key="new"
                 selected={bankAccountSelection.type === "new"}
