@@ -118,7 +118,9 @@ export const BankAccountPicker: FC<Props> = props => {
       {bankAccountSelection.type === "existing" && (
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+
           <SaveAndContinueButton
+            data-test="bank-transfer-save-existing"
             media={{ greaterThan: "xs" }}
             loading={loading}
             onClick={onSaveAndContinue}
