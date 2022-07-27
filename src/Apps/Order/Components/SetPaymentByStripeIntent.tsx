@@ -7,13 +7,13 @@ import styled from "styled-components"
 interface Props {
   order: Payment_order
   setupIntentId: string
-  saveAccount: string
+  shouldSaveBankAccount: boolean
   onSuccess: () => void
   onError: (object) => void
 }
 
 export const SetPaymentByStripeIntent: FC<Props> = props => {
-  const { setupIntentId, saveAccount } = props
+  const { setupIntentId, shouldSaveBankAccount } = props
   const {
     submitMutation: setPaymentByStripeIntentMutation,
   } = useSetPaymentByStripeIntent()
@@ -27,7 +27,7 @@ export const SetPaymentByStripeIntent: FC<Props> = props => {
               input: {
                 id: props.order.internalID,
                 setupIntentId: setupIntentId,
-                oneTimeUse: saveAccount !== "true",
+                oneTimeUse: !shouldSaveBankAccount,
               },
             },
           })
