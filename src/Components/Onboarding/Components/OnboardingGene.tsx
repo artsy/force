@@ -18,7 +18,7 @@ interface OnboardingGeneProps {
 
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
-  const { onDone } = useOnboardingContext()
+  const { onClose } = useOnboardingContext()
 
   return (
     <Box px={[2, 4]} py={6}>
@@ -57,7 +57,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
                   artwork={artwork}
                   onMouseUp={() => {
                     setTimeout(() => {
-                      onDone()
+                      onClose()
                     }, 10)
                   }}
                 />

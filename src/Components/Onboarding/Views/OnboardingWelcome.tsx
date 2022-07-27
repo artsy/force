@@ -8,7 +8,7 @@ import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
-  const { next, onDone } = useOnboardingContext()
+  const { next, onClose } = useOnboardingContext()
   const { register, handleNext, loading } = useOnboardingFadeTransition({
     next,
   })
@@ -52,7 +52,7 @@ export const OnboardingWelcome = () => {
               // @ts-ignore
               as={RouterLink}
               to="/"
-              onClick={onDone}
+              onClick={onClose}
             >
               Skip
             </Button>
