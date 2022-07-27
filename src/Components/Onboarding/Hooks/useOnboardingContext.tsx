@@ -75,11 +75,8 @@ const OnboardingContext = createContext<{
   current: string
   dispatch: React.Dispatch<Action>
   next(): void
-  // Called when the user has finished the onboarding process
   onComplete(): void
-  // Called on close and other cancel actions
-  // TODO: Should we rename this to onClose?
-  onDone(): void
+  onClose(): void
   progress: number
   state: State
   workflowEngine: WorkflowEngine
@@ -88,19 +85,19 @@ const OnboardingContext = createContext<{
   dispatch: () => {},
   next: () => {},
   onComplete: () => {},
-  onDone: () => {},
+  onClose: () => {},
   progress: 0,
   state: DEFAULT_STATE,
   workflowEngine: new WorkflowEngine({ workflow: [] }),
 })
 
 interface OnboardingProviderProps {
-  onDone(): void
+  onClose(): void
 }
 
 export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   children,
-  onDone,
+  onClose,
 }) => {
   const basis = useRef<State>(DEFAULT_STATE)
   const { relayEnvironment } = useSystemContext()
@@ -120,7 +117,7 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
 
   const { workflowEngine, current, next, reset: __reset__ } = useConfig({
     basis,
-    onDone,
+    onClose,
   })
 
   const [state, dispatch] = useReducer(reducer(__reset__), DEFAULT_STATE)
@@ -139,7 +136,7 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
         dispatch,
         next,
         onComplete: handleComplete,
-        onDone,
+        onClose,
         progress,
         state,
         workflowEngine,

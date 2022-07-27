@@ -4,10 +4,10 @@ import { State } from "./Hooks/useOnboardingContext"
 
 interface UseConfig {
   basis: React.RefObject<State>
-  onDone(): void
+  onClose(): void
 }
 
-export const useConfig = ({ basis, onDone }: UseConfig) => {
+export const useConfig = ({ basis, onClose }: UseConfig) => {
   const workflowEngine = useRef(
     new WorkflowEngine({
       workflow: [
@@ -43,7 +43,7 @@ export const useConfig = ({ basis, onDone }: UseConfig) => {
 
   const next = () => {
     if (workflowEngine.current.isEnd()) {
-      onDone()
+      onClose()
       return
     }
 
