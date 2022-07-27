@@ -4,13 +4,9 @@ import { CounterSubmitMutation } from "__generated__/CounterSubmitMutation.graph
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
-import {
-  OrderStepper,
-  counterofferFlowSteps,
-} from "Apps/Order/Components/OrderStepper"
+import { counterofferFlowSteps } from "Apps/Order/Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -26,6 +22,7 @@ import { Media } from "Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import track from "react-tracking"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export interface CounterProps {
   order: Counter_order
@@ -130,79 +127,77 @@ export class CounterRoute extends Component<CounterProps> {
     const { order, isCommittingMutation } = this.props
 
     return (
-      <>
-        <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
-        <Spacer mb={4} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-            >
-              <Flex flexDirection="column">
-                <CountdownTimer
-                  action="Respond"
-                  note="Expired offers end the negotiation process permanently."
-                  countdownStart={order.lastOffer?.createdAt!}
-                  countdownEnd={order.stateExpiresAt!}
-                />
-                <TransactionDetailsSummaryItem
-                  order={order}
-                  title="Your counteroffer"
-                  onChange={this.onChangeResponse}
-                  offerContextPrice="LAST_OFFER"
-                  showOfferNote={true}
-                />
-              </Flex>
-              <Spacer mb={[2, 4]} />
-              <Flex flexDirection="column" />
-              <Media greaterThan="xs">
+      <OrderRouteContainer
+        currentStep="Review"
+        steps={counterofferFlowSteps}
+        content={
+          <Flex
+            flexDirection="column"
+            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+          >
+            <Flex flexDirection="column">
+              <CountdownTimer
+                action="Respond"
+                note="Expired offers end the negotiation process permanently."
+                countdownStart={order.lastOffer?.createdAt!}
+                countdownEnd={order.stateExpiresAt!}
+              />
+              <TransactionDetailsSummaryItem
+                order={order}
+                title="Your counteroffer"
+                onChange={this.onChangeResponse}
+                offerContextPrice="LAST_OFFER"
+                showOfferNote={true}
+              />
+            </Flex>
+            <Spacer mb={[2, 4]} />
+            <Flex flexDirection="column" />
+            <Media greaterThan="xs">
+              <Button
+                onClick={this.onSubmitButtonPressed}
+                loading={isCommittingMutation}
+                variant="primaryBlack"
+                width="50%"
+              >
+                Submit
+              </Button>
+              <Spacer mb={2} />
+              <ConditionsOfSaleDisclaimer />
+            </Media>
+          </Flex>
+        }
+        sidebar={
+          <Flex flexDirection="column">
+            <Flex flexDirection="column">
+              <ArtworkSummaryItem order={order} />
+              <ShippingSummaryItem order={order} locked />
+              <PaymentMethodSummaryItem order={order} locked />
+            </Flex>
+            <BuyerGuarantee
+              contextModule={ContextModule.ordersCounter}
+              contextPageOwnerType={OwnerType.ordersCounter}
+            />
+            <Media greaterThan="xs">
+              <Spacer mb={2} />
+            </Media>
+            <Spacer mb={[2, 4]} />
+            <Media at="xs">
+              <>
                 <Button
                   onClick={this.onSubmitButtonPressed}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
-                  width="50%"
+                  width="100%"
                 >
                   Submit
                 </Button>
                 <Spacer mb={2} />
                 <ConditionsOfSaleDisclaimer />
-              </Media>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-                <ShippingSummaryItem order={order} locked />
-                <PaymentMethodSummaryItem order={order} locked />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersCounter}
-                contextPageOwnerType={OwnerType.ordersCounter}
-              />
-              <Media greaterThan="xs">
-                <Spacer mb={2} />
-              </Media>
-              <Spacer mb={[2, 4]} />
-              <Media at="xs">
-                <>
-                  <Button
-                    onClick={this.onSubmitButtonPressed}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="100%"
-                  >
-                    Submit
-                  </Button>
-                  <Spacer mb={2} />
-                  <ConditionsOfSaleDisclaimer />
-                </>
-              </Media>
-            </Flex>
-          }
-        />
-      </>
+              </>
+            </Media>
+          </Flex>
+        }
+      />
     )
   }
 }

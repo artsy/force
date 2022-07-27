@@ -6,12 +6,10 @@ import {
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
-  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
 import { createRef, FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -35,6 +33,7 @@ import { PaymentContent } from "./PaymentContent"
 import { useSetPayment } from "../../Components/Mutations/useSetPayment"
 import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
 import { PollAccountBalanceQueryRenderer } from "../../Components/PollAccountBalance"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -247,13 +246,10 @@ export const PaymentRoute: FC<Props> = props => {
 
   return (
     <Box data-test="orderPayment">
-      <OrderStepper
+      <OrderRouteContainer
         currentStep="Payment"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-      />
-      <Spacer mb={4} />
-      <TwoColumnLayout
-        Content={
+        content={
           <>
             {isSettingPayment &&
             !isPaymentSetupComplete &&
@@ -294,7 +290,7 @@ export const PaymentRoute: FC<Props> = props => {
             )}
           </>
         }
-        Sidebar={
+        sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
               <ArtworkSummaryItem order={order} />

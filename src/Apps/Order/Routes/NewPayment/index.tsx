@@ -2,9 +2,7 @@ import { NewPayment_me } from "__generated__/NewPayment_me.graphql"
 import { NewPayment_order } from "__generated__/NewPayment_order.graphql"
 import { NewPaymentRouteSetOrderPaymentMutation } from "__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
-import { OrderStepper } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { track } from "react-tracking"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { RouteConfig, Router } from "found"
@@ -28,6 +26,7 @@ import { get } from "Utils/get"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -140,67 +139,59 @@ export class NewPaymentRoute extends Component<
     const isLoading = isCommittingMutation || isGettingCreditCardId
 
     return (
-      <>
-        <OrderStepper currentStep="Payment" steps={["Payment"]} />
-        <Spacer mb={4} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isLoading ? { pointerEvents: "none" } : {}}
-            >
-              {order.mode === "OFFER" && (
-                <>
-                  <Flex>
-                    <CountdownTimer
-                      action="Submit new payment"
-                      note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                      countdownStart={order.lastOffer?.createdAt!}
-                      countdownEnd={order.stateExpiresAt!}
-                    />
-                  </Flex>
-                  <Spacer mb={[2, 4]} />
-                </>
-              )}
-              <Join separator={<Spacer mb={4} />}>
-                <CreditCardPickerFragmentContainer
-                  order={order}
-                  me={this.props.me}
-                  commitMutation={this.props.commitMutation}
-                  innerRef={this.CreditCardPicker}
-                />
-                <Media greaterThan="xs">
-                  <ContinueButton
-                    onClick={this.onContinue}
-                    loading={isLoading}
+      <OrderRouteContainer
+        currentStep="Payment"
+        steps={["Payment"]}
+        content={
+          <Flex
+            flexDirection="column"
+            style={isLoading ? { pointerEvents: "none" } : {}}
+          >
+            {order.mode === "OFFER" && (
+              <>
+                <Flex>
+                  <CountdownTimer
+                    action="Submit new payment"
+                    note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                    countdownStart={order.lastOffer?.createdAt!}
+                    countdownEnd={order.stateExpiresAt!}
                   />
-                </Media>
-              </Join>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-                <TransactionDetailsSummaryItem order={order} />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersNewPayment}
-                contextPageOwnerType={OwnerType.ordersNewPayment}
+                </Flex>
+                <Spacer mb={[2, 4]} />
+              </>
+            )}
+            <Join separator={<Spacer mb={4} />}>
+              <CreditCardPickerFragmentContainer
+                order={order}
+                me={this.props.me}
+                commitMutation={this.props.commitMutation}
+                innerRef={this.CreditCardPicker}
               />
-              <Spacer mb={[2, 4]} />
-              <Media at="xs">
-                <>
-                  <ContinueButton
-                    onClick={this.onContinue}
-                    loading={isLoading}
-                  />
-                </>
+              <Media greaterThan="xs">
+                <ContinueButton onClick={this.onContinue} loading={isLoading} />
               </Media>
+            </Join>
+          </Flex>
+        }
+        sidebar={
+          <Flex flexDirection="column">
+            <Flex flexDirection="column">
+              <ArtworkSummaryItem order={order} />
+              <TransactionDetailsSummaryItem order={order} />
             </Flex>
-          }
-        />
-      </>
+            <BuyerGuarantee
+              contextModule={ContextModule.ordersNewPayment}
+              contextPageOwnerType={OwnerType.ordersNewPayment}
+            />
+            <Spacer mb={[2, 4]} />
+            <Media at="xs">
+              <>
+                <ContinueButton onClick={this.onContinue} loading={isLoading} />
+              </>
+            </Media>
+          </Flex>
+        }
+      />
     )
   }
 

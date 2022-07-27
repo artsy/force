@@ -1,17 +1,11 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
 import { Accept_order } from "__generated__/Accept_order.graphql"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { track } from "react-tracking"
 import { RouteConfig, Router } from "found"
 import { Component } from "react"
 import { Media } from "Utils/Responsive"
-import {
-  OrderStepper,
-  counterofferFlowSteps,
-} from "../../Components/OrderStepper"
-
+import { counterofferFlowSteps } from "../../Components/OrderStepper"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-
 import { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
@@ -31,6 +25,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { AcceptRouteSetOrderPaymentMutation } from "__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 interface AcceptProps {
   order: Accept_order
@@ -250,86 +245,84 @@ export class Accept extends Component<AcceptProps & StripeProps> {
     const { order, isCommittingMutation } = this.props
 
     return (
-      <>
-        <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
-        <Spacer mb={4} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-            >
-              <Media at="xs">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                </Flex>
-                <Spacer mb={2} />
-              </Media>
+      <OrderRouteContainer
+        currentStep="Review"
+        steps={counterofferFlowSteps}
+        content={
+          <Flex
+            flexDirection="column"
+            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+          >
+            <Media at="xs">
               <Flex flexDirection="column">
-                <CountdownTimer
-                  action="Respond"
-                  note="Expired offers end the negotiation process permanently."
-                  countdownStart={order.lastOffer?.createdAt!}
-                  countdownEnd={order.stateExpiresAt!}
-                />
-                <TransactionDetailsSummaryItem
-                  order={order}
-                  title="Accept seller's offer"
-                  useLastSubmittedOffer={true}
-                  onChange={this.onChangeResponse}
-                />
+                <ArtworkSummaryItem order={order} />
               </Flex>
-              <Spacer mb={[2, 4]} />
+              <Spacer mb={2} />
+            </Media>
+            <Flex flexDirection="column">
+              <CountdownTimer
+                action="Respond"
+                note="Expired offers end the negotiation process permanently."
+                countdownStart={order.lastOffer?.createdAt!}
+                countdownEnd={order.stateExpiresAt!}
+              />
+              <TransactionDetailsSummaryItem
+                order={order}
+                title="Accept seller's offer"
+                useLastSubmittedOffer={true}
+                onChange={this.onChangeResponse}
+              />
+            </Flex>
+            <Spacer mb={[2, 4]} />
+            <Media greaterThan="xs">
+              <Button
+                onClick={this.onSubmit}
+                loading={isCommittingMutation}
+                variant="primaryBlack"
+                width="50%"
+              >
+                Submit
+              </Button>
+              <Spacer mb={2} />
+              <ConditionsOfSaleDisclaimer />
+            </Media>
+          </Flex>
+        }
+        sidebar={
+          <Flex flexDirection="column">
+            <Flex flexDirection="column">
               <Media greaterThan="xs">
+                {className => (
+                  <ArtworkSummaryItem className={className} order={order} />
+                )}
+              </Media>
+              <ShippingSummaryItem order={order} locked />
+              <PaymentMethodSummaryItem order={order} locked />
+            </Flex>
+            <BuyerGuarantee
+              contextModule={ContextModule.ordersAccept}
+              contextPageOwnerType={OwnerType.ordersAccept}
+            />
+            <Media greaterThan="xs">
+              <Spacer mb={2} />
+            </Media>
+            <Media at="xs">
+              <>
                 <Button
                   onClick={this.onSubmit}
                   loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="50%"
+                  size="large"
+                  width="100%"
                 >
                   Submit
                 </Button>
                 <Spacer mb={2} />
                 <ConditionsOfSaleDisclaimer />
-              </Media>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <Media greaterThan="xs">
-                  {className => (
-                    <ArtworkSummaryItem className={className} order={order} />
-                  )}
-                </Media>
-                <ShippingSummaryItem order={order} locked />
-                <PaymentMethodSummaryItem order={order} locked />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersAccept}
-                contextPageOwnerType={OwnerType.ordersAccept}
-              />
-              <Media greaterThan="xs">
-                <Spacer mb={2} />
-              </Media>
-              <Media at="xs">
-                <>
-                  <Button
-                    onClick={this.onSubmit}
-                    loading={isCommittingMutation}
-                    size="large"
-                    width="100%"
-                  >
-                    Submit
-                  </Button>
-                  <Spacer mb={2} />
-                  <ConditionsOfSaleDisclaimer />
-                </>
-              </Media>
-            </Flex>
-          }
-        />
-      </>
+              </>
+            </Media>
+          </Flex>
+        }
+      />
     )
   }
 }

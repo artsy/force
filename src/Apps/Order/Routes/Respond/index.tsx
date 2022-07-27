@@ -14,7 +14,6 @@ import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { RevealButton } from "Apps/Order/Components/RevealButton"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -30,15 +29,13 @@ import { Media } from "Utils/Responsive"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "../../Components/OfferHistoryItem"
-import {
-  OrderStepper,
-  counterofferFlowSteps,
-} from "../../Components/OrderStepper"
+import { counterofferFlowSteps } from "../../Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import track from "react-tracking"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export interface RespondProps extends RouterState {
   order: Respond_order
@@ -221,135 +218,133 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
 
     return (
-      <>
-        <OrderStepper currentStep="Respond" steps={counterofferFlowSteps} />
-        <Spacer mb={4} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+      <OrderRouteContainer
+        currentStep="Respond"
+        steps={counterofferFlowSteps}
+        content={
+          <Flex
+            flexDirection="column"
+            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+          >
+            <Flex flexDirection="column">
+              <CountdownTimer
+                action="Respond"
+                note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                countdownStart={order.lastOffer?.createdAt!}
+                countdownEnd={order.stateExpiresAt!}
+              />
+              <OfferHistoryItem order={order} />
+              <TransactionDetailsSummaryItem
+                order={order}
+                useLastSubmittedOffer
+              />
+            </Flex>
+            <Spacer mb={[2, 4]} />
+            <RadioGroup
+              onSelect={(responseOption: any) =>
+                this.setState({ responseOption })
+              }
+              defaultValue={this.state.responseOption!}
             >
-              <Flex flexDirection="column">
-                <CountdownTimer
-                  action="Respond"
-                  note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                  countdownStart={order.lastOffer?.createdAt!}
-                  countdownEnd={order.stateExpiresAt!}
-                />
-                <OfferHistoryItem order={order} />
-                <TransactionDetailsSummaryItem
-                  order={order}
-                  useLastSubmittedOffer
-                />
-              </Flex>
-              <Spacer mb={[2, 4]} />
-              <RadioGroup
-                onSelect={(responseOption: any) =>
-                  this.setState({ responseOption })
-                }
-                defaultValue={this.state.responseOption!}
+              <BorderedRadio
+                value="ACCEPT"
+                label="Accept seller's offer"
+                data-test="AcceptOffer"
+              />
+              <BorderedRadio
+                value="COUNTER"
+                position="relative"
+                label="Send counteroffer"
+                data-test="SendCounteroffer"
               >
-                <BorderedRadio
-                  value="ACCEPT"
-                  label="Accept seller's offer"
-                  data-test="AcceptOffer"
-                />
-                <BorderedRadio
-                  value="COUNTER"
-                  position="relative"
-                  label="Send counteroffer"
-                  data-test="SendCounteroffer"
-                >
-                  <Collapse open={this.state.responseOption === "COUNTER"}>
-                    <Spacer mb={2} />
-                    <OfferInput
-                      id="RespondForm_RespondValue"
-                      showError={
-                        this.state.formIsDirty && this.state.offerValue <= 0
-                      }
-                      onChange={offerValue => this.setState({ offerValue })}
-                      onFocus={this.onOfferInputFocus.bind(this)}
-                    />
-                    {!order.isInquiryOrder && (
-                      <>
-                        <Spacer mb={1} />
-                        <RevealButton
-                          align="left"
-                          buttonLabel="Add note to seller"
-                        >
-                          <Spacer mb={1} />
-                          <OfferNote
-                            onChange={offerNoteValue =>
-                              this.setState({ offerNoteValue })
-                            }
-                            artworkId={artworkId!}
-                            counteroffer
-                          />
-                        </RevealButton>
-                      </>
-                    )}
-                  </Collapse>
-                </BorderedRadio>
-                <BorderedRadio
-                  value="DECLINE"
-                  position="relative"
-                  label="Decline seller's offer"
-                  data-test="DeclineOffer"
-                >
-                  <Flex position="relative">
-                    <Collapse open={this.state.responseOption === "DECLINE"}>
+                <Collapse open={this.state.responseOption === "COUNTER"}>
+                  <Spacer mb={2} />
+                  <OfferInput
+                    id="RespondForm_RespondValue"
+                    showError={
+                      this.state.formIsDirty && this.state.offerValue <= 0
+                    }
+                    onChange={offerValue => this.setState({ offerValue })}
+                    onFocus={this.onOfferInputFocus.bind(this)}
+                  />
+                  {!order.isInquiryOrder && (
+                    <>
                       <Spacer mb={1} />
-                      <Text variant="xs" color="black60">
-                        Declining an offer will end the negotiation process on
-                        this offer.
-                      </Text>
-                    </Collapse>
-                  </Flex>
-                </BorderedRadio>
-              </RadioGroup>
-              <Spacer mb={[2, 4]} />
-              <Flex flexDirection="column" />
-              <Media greaterThan="xs">
+                      <RevealButton
+                        align="left"
+                        buttonLabel="Add note to seller"
+                      >
+                        <Spacer mb={1} />
+                        <OfferNote
+                          onChange={offerNoteValue =>
+                            this.setState({ offerNoteValue })
+                          }
+                          artworkId={artworkId!}
+                          counteroffer
+                        />
+                      </RevealButton>
+                    </>
+                  )}
+                </Collapse>
+              </BorderedRadio>
+              <BorderedRadio
+                value="DECLINE"
+                position="relative"
+                label="Decline seller's offer"
+                data-test="DeclineOffer"
+              >
+                <Flex position="relative">
+                  <Collapse open={this.state.responseOption === "DECLINE"}>
+                    <Spacer mb={1} />
+                    <Text variant="xs" color="black60">
+                      Declining an offer will end the negotiation process on
+                      this offer.
+                    </Text>
+                  </Collapse>
+                </Flex>
+              </BorderedRadio>
+            </RadioGroup>
+            <Spacer mb={[2, 4]} />
+            <Flex flexDirection="column" />
+            <Media greaterThan="xs">
+              <Button
+                onClick={this.onContinueButtonPressed}
+                loading={isCommittingMutation}
+                variant="primaryBlack"
+                width="50%"
+              >
+                Continue
+              </Button>
+            </Media>
+          </Flex>
+        }
+        sidebar={
+          <Flex flexDirection="column">
+            <Flex flexDirection="column">
+              <ArtworkSummaryItem order={order} />
+              <ShippingSummaryItem order={order} locked />
+              <PaymentMethodSummaryItem order={order} locked />
+            </Flex>
+            <BuyerGuarantee
+              contextModule={ContextModule.ordersRespond}
+              contextPageOwnerType={OwnerType.ordersRespond}
+            />
+            <Spacer mb={2} />
+            <Media at="xs">
+              <>
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
-                  width="50%"
+                  width="100%"
                 >
                   Continue
                 </Button>
-              </Media>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-                <ShippingSummaryItem order={order} locked />
-                <PaymentMethodSummaryItem order={order} locked />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersRespond}
-                contextPageOwnerType={OwnerType.ordersRespond}
-              />
-              <Spacer mb={2} />
-              <Media at="xs">
-                <>
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </>
-              </Media>
-            </Flex>
-          }
-        />
-      </>
+              </>
+            </Media>
+          </Flex>
+        }
+      />
     )
   }
 }
