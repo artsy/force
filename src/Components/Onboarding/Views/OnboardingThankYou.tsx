@@ -1,9 +1,16 @@
 import { Box, Flex, Text } from "@artsy/palette"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
 import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingThankYou: FC = () => {
+  const { onComplete } = useOnboardingContext()
+
+  useEffect(() => {
+    onComplete()
+  }, [onComplete])
+
   return (
     <OnboardingSplitLayout
       left={

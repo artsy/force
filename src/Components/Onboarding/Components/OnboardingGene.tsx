@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react"
+import { FC, Fragment, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { OnboardingGene_gene } from "__generated__/OnboardingGene_gene.graphql"
@@ -112,6 +112,14 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
   id,
   description,
 }) => {
+  const { onComplete } = useOnboardingContext()
+
+  // If a user has arrived to the gene artwork grid page, they've completed a
+  // path within the artwork flow.
+  useEffect(() => {
+    onComplete()
+  }, [onComplete])
+
   return (
     <SystemQueryRenderer<OnboardingGeneQuery>
       query={graphql`
