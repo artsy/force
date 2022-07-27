@@ -65,7 +65,54 @@ export const handleProfile = async (
   }
 }
 
-export const handlePartner = (
+export const handlePartnerOverview = (
+  req: Request,
+  res: ResWithProfile,
+  next: NextFunction
+) => {
+  if (res.locals.profile?.owner.__typename !== "Partner") return next()
+
+  const partnerSlug = res.locals.profile.owner.slug
+
+  if (!partnerSlug || !req.path) return next()
+
+  // /:id/overview => /partner/:id
+  // /:id/about => /partner/:id
+  return res.redirect(301, `/partner/${partnerSlug}`)
+}
+
+export const handlePartnerWorks = (
+  req: Request,
+  res: ResWithProfile,
+  next: NextFunction
+) => {
+  if (res.locals.profile?.owner.__typename !== "Partner") return next()
+
+  const partnerSlug = res.locals.profile.owner.slug
+
+  if (!partnerSlug || !req.path) return next()
+
+  return res.redirect(301, `/partner/${partnerSlug}/works`)
+}
+
+export const handlePartnerArtist = (
+  req: Request,
+  res: ResWithProfile,
+  next: NextFunction
+) => {
+  if (res.locals.profile?.owner.__typename !== "Partner") return next()
+
+  const partnerSlug = res.locals.profile.owner.slug
+
+  if (!partnerSlug || !req.path) return next()
+
+  return res.redirect(
+    301,
+    `/partner/${partnerSlug}/artists/${req.params.artistId}`
+  )
+}
+
+export const handlePartnerFallbackRedirect = (
   req: Request,
   res: ResWithProfile,
   next: NextFunction
@@ -77,28 +124,23 @@ export const handlePartner = (
   if (!partnerSlug || !req.path) return next()
 
   const href: string = `/partner${req.path.replace(req.params.id, partnerSlug)}`
-
-  // /:id/overview => /partner/:id
-  // /:id/about => /partner/:id
-  if (req.route.path === "/:id/overview" || req.route.path === "/:id/about") {
-    return res.redirect(301, `/partner/${partnerSlug}`)
-  }
-
-  // /:id/collection => /partner/:id/works
-  // /:id/shop => /partner/:id/works
-  if (req.route.path === "/:id/collection" || req.route.path === "/:id/shop") {
-    return res.redirect(301, `/partner/${partnerSlug}/works`)
-  }
-
-  // /:id/artist/:artistId => /partner/:id/artists/:artistId
-  if (req.route.path === "/:id/artist/:artistId" && req.params?.artistId) {
-    return res.redirect(
-      301,
-      `/partner/${partnerSlug}/artists/${req.params.artistId}`
-    )
-  }
-
   return res.redirect(301, href)
+}
+
+export const handleFairArtworks = (
+  req: Request,
+  res: ResWithProfile,
+  next: NextFunction
+) => {
+  if (res.locals.profile?.owner.__typename !== "Fair") return next()
+
+  const fairSlug = res.locals.profile.owner.slug
+
+  if (!fairSlug) {
+    return res.redirect(302, "/art-fairs")
+  }
+
+  return res.redirect(301, `/fair/${fairSlug}/info`)
 }
 
 export const handleFair = (
@@ -115,17 +157,6 @@ export const handleFair = (
   }
 
   const basePath = `/fair/${fairSlug}`
-
-  // this matches all /:id/info/* requests
-  if (req.route.path === "/:id/:tab*" && res.locals.tab === "info") {
-    return res.redirect(301, `/fair/${fairSlug}/info`)
-  }
-
-  // this matches /:id/browse/artworks, but not /:id/browse/exhibitors
-  if (req.route.path === "/:id/browse/*" && req.params["0"] === "artworks") {
-    return res.redirect(301, `/fair/${fairSlug}/artworks`)
-  }
-
   return res.redirect(301, basePath)
 }
 
@@ -159,24 +190,35 @@ redirectsServerRoutes
   .get(["/:id", "/:id/:tab*"], handleProfile)
 
   // Partners
+
+  // /:id/overview => /partner/:id
+  // /:id/about => /partner/:id
+  .get(["/:id/overview", "/:id/about"], handlePartnerOverview)
+
+  // /:id/collection => /partner/:id/works
+  // /:id/shop => /partner/:id/works
+  .get(["/:id/collection", "/:id/shop"], handlePartnerWorks)
+
+  // /:id/artist/:artistId => /partner/:id/artists/:artistId
+  .get("/:id/artist/:artistId", handlePartnerArtist)
+
   .get(
     [
       "/:id",
-      "/:id/overview",
-      "/:id/about",
       "/:id/shows",
       "/:id/works",
-      "/:id/collection",
-      "/:id/shop",
       "/:id/artists",
-      "/:id/artist/:artistId",
       "/:id/articles",
       "/:id/contact",
     ],
-    handlePartner
+    handlePartnerFallbackRedirect
   )
 
   // Fairs
+
+  // /:id/browse/artworks => /fair/:id/info
+  .get("/:id/browse/artworks", handleFairArtworks)
+
   .get(
     [
       // Legacy desktop routes
@@ -200,7 +242,6 @@ redirectsServerRoutes
       "/:id/article/:slug",
       "/:id/browse/artist/:artistId",
       "/:id/browse/artists",
-      "/:id/browse/artworks",
       "/:id/browse/booths",
       "/:id/browse/booths/section",
       "/:id/browse/booths/section/:section",
