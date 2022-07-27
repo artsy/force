@@ -46,7 +46,7 @@ export const MyCollectionAppDownload: React.FC = () => {
               src="https://files.artsy.net/images/download-ios-app.svg"
               width="100%"
               height="100%"
-              alt=""
+              alt="ios app store button"
               loading="lazy"
             />
           </Box>
@@ -66,7 +66,7 @@ export const MyCollectionAppDownload: React.FC = () => {
               src="https://files.artsy.net/images/download-android-app.svg"
               width="100%"
               height="100%"
-              alt=""
+              alt="android play store button"
               loading="lazy"
             />
           </Box>
