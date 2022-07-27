@@ -9,6 +9,7 @@ import {
   VIEW_FOLLOW_GALLERIES,
   VIEW_FOLLOW_ARTISTS,
   VIEW_ARTISTS_ON_THE_RISE,
+  VIEW_THANK_YOU,
 } from "../config"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingWelcome } from "../Views/OnboardingWelcome"
@@ -20,6 +21,7 @@ import { OnboardingTopAuctionLots } from "../Views/OnboardingTopAuctionLots"
 import { OnboardingCuratedArtworks } from "../Views/OnboardingCuratedArtworks"
 import { OnboardingArtistsOnTheRise } from "../Views/OnboardingArtistsOnTheRise"
 import { OnboardingFollowGalleries } from "../Views/OnboardingFollowGalleries"
+import { OnboardingThankYou } from "../Views/OnboardingThankYou"
 
 interface OnboardingStepsProps {}
 
@@ -53,6 +55,9 @@ export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
 
     case VIEW_FOLLOW_GALLERIES:
       return <OnboardingFollowGalleries />
+
+    case VIEW_THANK_YOU:
+      return <OnboardingThankYou />
 
     default:
       return null
