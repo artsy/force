@@ -22,7 +22,7 @@ export const OnboardingProgress: FC<OnboardingProgressProps> = ({
   return (
     <ProgressBar
       width="100%"
-      my={0}
+      my={2}
       transition="transform 250ms"
       percentComplete={debouncedProgress}
     />

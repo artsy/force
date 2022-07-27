@@ -15568,10 +15568,11 @@ type UpdateUserDefaultAddressPayload {
 
 input UpdateUserMutationInput {
   clientMutationId: String
+  completedOnboardingAt: String
   dataTransferOptOut: Boolean
-  email: String!
+  email: String
   id: String!
-  name: String!
+  name: String
   phone: String
 }
 
@@ -15649,6 +15650,9 @@ scalar Upload
 type User {
   analytics: AnalyticsUserStats
   cached: Int
+
+  # The date and time that the user has completed onboarding.
+  completedOnboardingAt: String
 
   # Has the user opted out of data transfer.
   dataTransferOptOut: Boolean

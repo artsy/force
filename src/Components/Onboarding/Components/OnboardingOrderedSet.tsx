@@ -30,6 +30,7 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
                 <EntityHeaderArtistFragmentContainer
                   key={node.internalID}
                   artist={node}
+                  displayLink={false}
                   onFollow={() => {
                     dispatch({ type: "FOLLOW", payload: node.internalID! })
                   }}
