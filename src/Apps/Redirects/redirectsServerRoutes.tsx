@@ -112,7 +112,7 @@ export const handlePartnerArtist = (
   )
 }
 
-export const handlePartnerFallbackRedirect = (
+export const handlePartnerGenericRedirect = (
   req: Request,
   res: ResWithProfile,
   next: NextFunction
@@ -140,7 +140,7 @@ export const handleFairArtworks = (
     return res.redirect(302, "/art-fairs")
   }
 
-  return res.redirect(301, `/fair/${fairSlug}/info`)
+  return res.redirect(301, `/fair/${fairSlug}/artworks`)
 }
 
 export const handleFair = (
@@ -211,12 +211,12 @@ redirectsServerRoutes
       "/:id/articles",
       "/:id/contact",
     ],
-    handlePartnerFallbackRedirect
+    handlePartnerGenericRedirect
   )
 
   // Fairs
 
-  // /:id/browse/artworks => /fair/:id/info
+  // /:id/browse/artworks => /fair/:id/artworks
   .get("/:id/browse/artworks", handleFairArtworks)
 
   .get(
