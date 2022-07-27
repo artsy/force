@@ -20,8 +20,14 @@ export const useConfig = ({ basis, onDone }: UseConfig) => {
             [OPTION_TOP_AUCTION_LOTS]: [VIEW_TOP_AUCTION_LOTS],
             [OPTION_A_CURATED_SELECTION_OF_ARTWORKS]: [VIEW_CURATED_ARTWORKS],
             [OPTION_ARTISTS_ON_THE_RISE]: [VIEW_ARTISTS_ON_THE_RISE],
-            [OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN]: [VIEW_FOLLOW_ARTISTS],
-            [OPTION_FOLLOW_GALLERIES_I_LOVE]: [VIEW_FOLLOW_GALLERIES],
+            [OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN]: [
+              VIEW_FOLLOW_ARTISTS,
+              VIEW_THANK_YOU,
+            ],
+            [OPTION_FOLLOW_GALLERIES_I_LOVE]: [
+              VIEW_FOLLOW_GALLERIES,
+              VIEW_THANK_YOU,
+            ],
           },
         },
       ],
@@ -80,5 +86,7 @@ export const useConfig = ({ basis, onDone }: UseConfig) => {
 /* prettier-ignore */ export const VIEW_CURATED_ARTWORKS = "VIEW_CURATED_ARTWORKS"
 /* prettier-ignore */ export const VIEW_ARTISTS_ON_THE_RISE = "VIEW_ARTISTS_ON_THE_RISE"
 /* prettier-ignore */ export const VIEW_FOLLOW_GALLERIES = "VIEW_FOLLOW_GALLERIES"
+
+/* prettier-ignore */ export const VIEW_THANK_YOU = "VIEW_THANK_YOU"
 
 /* prettier-ignore */ export const DECISION_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN = "DECISION_WHERE_WOULD_YOU_LIKE_TO_DIVE_IN"
