@@ -16,7 +16,7 @@ describe("config", () => {
       },
     } = renderHook(() =>
       useConfig({
-        onDone: jest.fn(),
+        onClose: jest.fn(),
         basis: {
           current: {
             questionOne: OPTION_YES_I_LOVE_COLLECTING_ART,
@@ -48,7 +48,7 @@ describe("config", () => {
       result: {
         current: { workflowEngine },
       },
-    } = renderHook(() => useConfig({ onDone: jest.fn(), basis }))
+    } = renderHook(() => useConfig({ onClose: jest.fn(), basis }))
 
     expect(workflowEngine.current()).toEqual("VIEW_WELCOME")
     expect(workflowEngine.next()).toEqual("VIEW_QUESTION_ONE")

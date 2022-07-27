@@ -13,7 +13,7 @@ export const useOnboarding = () => {
     showOnboarding,
     hideOnboarding,
   } = _useOnboarding({
-    onDone: () => {
+    onClose: () => {
       hideOnboarding()
     },
   })
