@@ -14174,6 +14174,7 @@ enum SavedSearchesSortEnum {
 # Saved Search User Alert Settings
 type SavedSearchUserAlertSettings {
   email: Boolean!
+  frequency: UserSearchCriteriaFrequency!
   name: String
   push: Boolean!
 }
@@ -15818,6 +15819,7 @@ union UserAddressOrErrorsUnion = Errors | UserAddress
 # Settings for user saved search
 input UserAlertSettingsInput {
   email: Boolean
+  frequency: UserSearchCriteriaFrequency
   name: String
   push: Boolean
 }
@@ -15903,6 +15905,11 @@ type UserSaleProfile {
 
   # The zip for this user.
   zip: String
+}
+
+enum UserSearchCriteriaFrequency {
+  daily
+  instant
 }
 
 union VanityURLEntityType = Fair | Partner
