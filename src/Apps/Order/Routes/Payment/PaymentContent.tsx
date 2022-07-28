@@ -39,6 +39,7 @@ export interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   onBankAccountContinue: (arg: string) => void
+  isProcessingPayment: boolean
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -53,6 +54,7 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     onBankAccountContinue,
+    isProcessingPayment,
   } = props
   const tracking = useTracking()
 
@@ -90,6 +92,7 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
+          loading={isProcessingPayment}
         />
       </PaymentContentWrapper>
     )
@@ -126,6 +129,7 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
+          loading={isProcessingPayment}
         />
       </Collapse>
 
@@ -172,6 +176,7 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
+          loading={isProcessingPayment}
         />
       </Collapse>
     </PaymentContentWrapper>

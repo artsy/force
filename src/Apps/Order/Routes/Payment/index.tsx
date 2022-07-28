@@ -11,6 +11,8 @@ import {
   Payment_order,
 } from "__generated__/Payment_order.graphql"
 
+import createLogger from "Utils/logger"
+import { useSystemContext } from "System"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -32,33 +34,25 @@ import { SetPaymentByStripeIntent } from "Apps/Order/Components/SetPaymentByStri
 import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { SetOrderPayment } from "Apps/Order/Mutations/SetOrderPayment"
-
-import createLogger from "Utils/logger"
-import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
+import { useStripeRedirect } from "Apps/Order/hooks/useStripeRedirect"
+import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
 
 import { PaymentContent } from "./PaymentContent"
-import { useStripeRedirect } from "../../hooks/useStripeRedirect"
-import { useSystemContext } from "System"
 
-export interface StripeProps {
-  stripe: Stripe
-  elements: StripeElements
-}
+const logger = createLogger("Order/Routes/Payment/index.tsx")
 
-export interface PaymentProps {
+export interface PaymentRouteProps {
   order: Payment_order
   me: Payment_me
   router: Router
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  stripe: Stripe
+  elements: StripeElements
 }
 
-type Props = PaymentProps & StripeProps
-
-const logger = createLogger("Order/Routes/Payment/index.tsx")
-
-export const PaymentRoute: FC<Props> = props => {
+export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { order } = props
   const { relayEnvironment } = useSystemContext()
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
@@ -74,6 +68,7 @@ export const PaymentRoute: FC<Props> = props => {
 
   const CreditCardPicker = createRef<CreditCardPicker>()
 
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false)
   const [isPaymentSetupComplete, setIsPaymentSetupComplete] = useState(false)
   const [shouldPollAccountBalance, setShouldPollAccountBalance] = useState(
     false
@@ -84,6 +79,7 @@ export const PaymentRoute: FC<Props> = props => {
   ] = useState(false)
 
   const setPayment = () => {
+    setIsProcessingPayment(true)
     switch (selectedPaymentMethod) {
       case "CREDIT_CARD":
         onCreditCardContinue()
@@ -139,6 +135,8 @@ export const PaymentRoute: FC<Props> = props => {
     } catch (error) {
       logger.error(error)
       props.dialog.showErrorDialog()
+    } finally {
+      setIsProcessingPayment(false)
     }
   }
 
@@ -161,6 +159,8 @@ export const PaymentRoute: FC<Props> = props => {
     } catch (error) {
       logger.error(error)
       onSetPaymentError(error)
+    } finally {
+      setIsProcessingPayment(false)
     }
   }
 
@@ -202,11 +202,12 @@ export const PaymentRoute: FC<Props> = props => {
   }
 
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
-    setShouldPollAccountBalance(false)
     if (displayInsufficientFundsError) {
+      setShouldPollAccountBalance(false)
       setBankAccountHasInsufficientFunds(true)
       return
     }
+
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
@@ -222,10 +223,11 @@ export const PaymentRoute: FC<Props> = props => {
       bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
       setBankAccountHasInsufficientFunds={setBankAccountHasInsufficientFunds}
       onBankAccountContinue={onBankAccountContinue}
+      isProcessingPayment={isProcessingPayment}
     />
   )
 
-  if (isProcessingRedirect) {
+  if (isProcessingRedirect || isProcessingPayment) {
     content = <ProcessingPayment />
   }
 
@@ -258,7 +260,6 @@ export const PaymentRoute: FC<Props> = props => {
         currentStep="Payment"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
       />
-
       <TwoColumnLayout
         Content={content}
         Sidebar={
@@ -274,7 +275,11 @@ export const PaymentRoute: FC<Props> = props => {
               contextModule={ContextModule.ordersPayment}
               contextPageOwnerType={OwnerType.ordersPayment}
             />
-            <SaveAndContinueButton media={{ at: "xs" }} onClick={setPayment} />
+            <SaveAndContinueButton
+              media={{ at: "xs" }}
+              onClick={setPayment}
+              loading={isProcessingPayment}
+            />
           </Flex>
         }
       />
