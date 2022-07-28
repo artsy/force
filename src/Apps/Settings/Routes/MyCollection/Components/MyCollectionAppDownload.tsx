@@ -81,7 +81,7 @@ export const MyCollectionAppDownload: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt=""
+            alt="mycollection app hero image"
           />
         </ResponsiveBox>
       </Column>

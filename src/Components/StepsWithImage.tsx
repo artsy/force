@@ -73,7 +73,7 @@ const StepCard: React.FC<StepsWithImageDataType> = ({
     >
       <Image
         lazyLoad
-        alt=""
+        alt={`step ${step} image`}
         width="100%"
         height="100%"
         src={src}
