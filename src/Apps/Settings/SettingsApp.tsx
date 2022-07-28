@@ -7,6 +7,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SettingsApp_me } from "__generated__/SettingsApp_me.graphql"
 
+export const SETTINGS_ROUTE_TABS_MARGIN = 4
+
 interface SettingsAppProps {
   me: SettingsApp_me
 }
@@ -37,7 +39,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
         Hi {me.name}
       </Text>
 
-      <RouteTabs my={4}>
+      <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
         {tabs.map(tab => {
           return (
             <RouteTab key={tab.url} to={tab.url}>
