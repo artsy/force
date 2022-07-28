@@ -1,4 +1,4 @@
-import { createRef, FC, useState, useEffect } from "react"
+import { createRef, FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
@@ -33,12 +33,12 @@ import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { SetPaymentByStripeIntent } from "Apps/Order/Components/SetPaymentByStripeIntent"
 import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
 
-import { getClientParam } from "Utils/getClientParam"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
 
 import { PaymentContent } from "./PaymentContent"
+import { useStripeRedirect } from "../../hooks/useStripeRedirect"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -70,7 +70,6 @@ export const PaymentRoute: FC<Props> = props => {
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
 
   const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
-
   const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
 
   const isLoading =
@@ -90,33 +89,11 @@ export const PaymentRoute: FC<Props> = props => {
     setBankAccountHasInsufficientFunds,
   ] = useState(false)
 
-  const [isProcessingPayment, setIsProcessingPayment] = useState(true)
-  const [shouldSaveBankAccount, setShouldSaveBankAccount] = useState(false)
-  const [
-    shouldSetPaymentByStripeIntent,
-    setShouldSetPaymentByStripeIntent,
-  ] = useState(false)
-  const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
-    null
-  )
-
-  useEffect(() => {
-    const saveAccount = getClientParam("save_account")
-    if (saveAccount === "true") {
-      setShouldSaveBankAccount(true)
-    }
-
-    const setupIntentId = getClientParam("setup_intent")
-    const setupIntentClientSecret = getClientParam("setup_intent_client_secret")
-    const redirectSuccess = getClientParam("redirect_status") === "succeeded"
-
-    if (setupIntentId && setupIntentClientSecret && redirectSuccess) {
-      setStripeSetupIntentId(setupIntentId)
-      setShouldSetPaymentByStripeIntent(true)
-    }
-
-    setIsProcessingPayment(false)
-  }, [])
+  const {
+    isProcessingRedirect,
+    stripeSetupIntentId,
+    shouldSaveBankAccount,
+  } = useStripeRedirect()
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -209,7 +186,6 @@ export const PaymentRoute: FC<Props> = props => {
   }
 
   const onBankAccountContinue = async (bankAccountId: string) => {
-    setIsProcessingPayment(true)
     try {
       const orderOrError = (
         await setPaymentMutation({
@@ -282,8 +258,6 @@ export const PaymentRoute: FC<Props> = props => {
       return
     }
 
-    setIsProcessingPayment(false)
-    setShouldSetPaymentByStripeIntent(false)
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
@@ -317,11 +291,11 @@ export const PaymentRoute: FC<Props> = props => {
     />
   )
 
-  if (isProcessingPayment) {
+  if (isProcessingRedirect) {
     content = <ProcessingPayment />
   }
 
-  if (shouldSetPaymentByStripeIntent && !isPaymentSetupComplete) {
+  if (stripeSetupIntentId && !isPaymentSetupComplete) {
     content = (
       <SetPaymentByStripeIntent
         order={order}
