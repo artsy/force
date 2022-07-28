@@ -56,7 +56,6 @@ describe("BankDebitForm", () => {
     render(
       <BankDebitForm
         order={testOrder}
-        returnURL={""}
         bankAccountHasInsufficientFunds={false}
       />
     )
@@ -73,7 +72,6 @@ describe("BankDebitForm", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
-          returnURL={""}
           bankAccountHasInsufficientFunds={true}
         />
       )

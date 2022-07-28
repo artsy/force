@@ -13,7 +13,7 @@ import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { SetOrderPayment } from "Apps/Order/Mutations/SetOrderPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
@@ -25,15 +25,15 @@ jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
-jest.mock("../../Components/Mutations/useSetPayment", () => {
-  const originalUseSetPayment = jest.requireActual(
-    "../../Components/Mutations/useSetPayment"
+jest.mock("../../Components/Mutations/SetOrderPayment", () => {
+  const originalSetOrderPayment = jest.requireActual(
+    "../../Components/Mutations/SetOrderPayment"
   )
 
   return {
-    useSetPayment: jest
+    SetOrderPayment: jest
       .fn()
-      .mockImplementation(originalUseSetPayment.useSetPayment),
+      .mockImplementation(originalSetOrderPayment.SetOrderPayment),
   }
 })
 
@@ -423,7 +423,7 @@ describe("Payment", () => {
           },
         },
       })
-      ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+      ;(SetOrderPayment as jest.Mock).mockImplementation(() => ({
         submitMutation: submitMutationMock,
       }))
 

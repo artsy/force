@@ -11,20 +11,20 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { SetOrderPayment } from "Apps/Order/Mutations/SetOrderPayment"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
 
-jest.mock("../../Components/Mutations/useSetPayment", () => {
-  const originalUseSetPayment = jest.requireActual(
-    "../../Components/Mutations/useSetPayment"
+jest.mock("../../Components/Mutations/SetOrderPayment", () => {
+  const originalSetOrderPayment = jest.requireActual(
+    "../../Components/Mutations/SetOrderPayment"
   )
 
   return {
-    useSetPayment: jest
+    SetOrderPayment: jest
       .fn()
-      .mockImplementation(originalUseSetPayment.useSetPayment),
+      .mockImplementation(originalSetOrderPayment.SetOrderPayment),
   }
 })
 
@@ -79,10 +79,9 @@ describe("BankAccountFragmentContainer", () => {
         <BankAccountPickerFragmentContainer
           order={props.order}
           me={props.me}
-          onSetPaymentSuccess={jest.fn()}
-          onSetPaymentError={jest.fn()}
           bankAccountHasInsufficientFunds={false}
           setBankAccountHasInsufficientFunds={jest.fn()}
+          onBankAccountContinue={jest.fn()}
         />
       </MockBoot>
     ),
@@ -225,7 +224,7 @@ describe("BankAccountFragmentContainer", () => {
             },
           },
         })
-        ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+        ;(SetOrderPayment as jest.Mock).mockImplementation(() => ({
           submitMutation: submitMutationMock,
         }))
 
