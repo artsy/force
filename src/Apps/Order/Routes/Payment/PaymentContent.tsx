@@ -3,7 +3,6 @@ import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
   Clickable,
-  Flex,
   Spacer,
   BorderedRadio,
   InstitutionIcon,
@@ -18,7 +17,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 import { Payment_me } from "__generated__/Payment_me.graphql"
 import { Payment_order } from "__generated__/Payment_order.graphql"
-import { CommercePaymentMethodEnum } from "__generated__/useSetPaymentMutation.graphql"
+import { CommercePaymentMethodEnum } from "__generated__/SetOrderPaymentMutation.graphql"
 
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
@@ -39,7 +38,7 @@ export interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   onBankAccountContinue: (arg: string) => void
-  isProcessingPayment: boolean
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -54,7 +53,7 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     onBankAccountContinue,
-    isProcessingPayment,
+    setIsProcessingPayment,
   } = props
   const tracking = useTracking()
 
@@ -82,7 +81,7 @@ export const PaymentContent: FC<Props> = props => {
   // we can be sure that when 1 method is available, it'll always be credit card
   if (order.availablePaymentMethods.length === 1) {
     return (
-      <PaymentContentWrapper>
+      <>
         <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
           me={me}
@@ -92,15 +91,13 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
-          loading={isProcessingPayment}
         />
-      </PaymentContentWrapper>
+      </>
     )
   }
 
   return (
-    <PaymentContentWrapper>
-      <Spacer mb={2} />
+    <>
       <Text variant="lg-display">Payment method</Text>
       <Spacer mb={2} />
       <RadioGroup
@@ -129,7 +126,6 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
-          loading={isProcessingPayment}
         />
       </Collapse>
 
@@ -154,6 +150,7 @@ export const PaymentContent: FC<Props> = props => {
             setBankAccountHasInsufficientFunds
           }
           onBankAccountContinue={onBankAccountContinue}
+          setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>
 
@@ -176,16 +173,11 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
-          loading={isProcessingPayment}
         />
       </Collapse>
-    </PaymentContentWrapper>
+    </>
   )
 }
-
-const PaymentContentWrapper: FC = ({ children }) => (
-  <Flex flexDirection="column">{children}</Flex>
-)
 
 const USBankOnlyLabel = styled(Text)`
   background-color: ${themeGet("colors.orange10")};

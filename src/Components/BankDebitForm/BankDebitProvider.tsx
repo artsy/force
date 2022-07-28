@@ -101,6 +101,7 @@ export const BankDebitProvider: FC<Props> = ({
         boxShadow: "none",
         paddingTop: "12px",
         lineHeight: "26px",
+        marginBottom: "10px",
       },
       ".Input:focus": {
         boxShadow: "none",
