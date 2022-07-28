@@ -32,7 +32,6 @@ export interface Props {
   order: Payment_order
   me: Payment_me
   commitMutation: CommitMutation
-  isLoading: boolean
   paymentMethod: CommercePaymentMethodEnum
   setPayment: () => void
   onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
@@ -45,7 +44,6 @@ export interface Props {
 export const PaymentContent: FC<Props> = props => {
   const {
     commitMutation,
-    isLoading,
     setPayment,
     me,
     order,
@@ -82,7 +80,7 @@ export const PaymentContent: FC<Props> = props => {
   // we can be sure that when 1 method is available, it'll always be credit card
   if (order.availablePaymentMethods.length === 1) {
     return (
-      <PaymentContentWrapper isLoading={isLoading}>
+      <PaymentContentWrapper>
         <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
           me={me}
@@ -91,14 +89,15 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={setPayment} loading={isLoading} />
+          {/* Loading! */}
+          <ContinueButton onClick={setPayment} />
         </Media>
       </PaymentContentWrapper>
     )
   }
 
   return (
-    <PaymentContentWrapper isLoading={isLoading}>
+    <PaymentContentWrapper>
       <Spacer mb={2} />
       <Text variant="lg-display">Payment method</Text>
       <Spacer mb={2} />
@@ -127,7 +126,8 @@ export const PaymentContent: FC<Props> = props => {
         />
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <ContinueButton onClick={setPayment} loading={isLoading} />
+          {/* Loading! */}
+          <ContinueButton onClick={setPayment} />
         </Media>
       </Collapse>
 
@@ -173,12 +173,8 @@ export const PaymentContent: FC<Props> = props => {
         </Text>
         <Spacer mb={4} />
         <Media greaterThan="xs">
-          <Button
-            onClick={setPayment}
-            variant="primaryBlack"
-            loading={isLoading}
-            width="50%"
-          >
+          {/* TODO: LOADING! */}
+          <Button onClick={setPayment} variant="primaryBlack" width="50%">
             Save and Continue
           </Button>
         </Media>
@@ -187,16 +183,8 @@ export const PaymentContent: FC<Props> = props => {
   )
 }
 
-const PaymentContentWrapper: FC<{ isLoading: boolean }> = ({
-  isLoading,
-  children,
-}) => (
-  <Flex
-    flexDirection="column"
-    style={isLoading ? { pointerEvents: "none" } : {}}
-  >
-    {children}
-  </Flex>
+const PaymentContentWrapper: FC = ({ children }) => (
+  <Flex flexDirection="column">{children}</Flex>
 )
 
 const USBankOnlyLabel = styled(Text)`

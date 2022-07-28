@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react"
 import { Payment_order } from "__generated__/Payment_order.graphql"
-import { useSetPaymentByStripeIntent } from "Apps/Order/Components/Mutations/useSetPaymentByStripeIntent"
+import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntent"
 import { ProcessingPayment } from "./ProcessingPayment"
 
 interface Props {

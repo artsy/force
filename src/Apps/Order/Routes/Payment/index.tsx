@@ -10,10 +10,8 @@ import {
   CommercePaymentMethodEnum,
   Payment_order,
 } from "__generated__/Payment_order.graphql"
-import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useSetPayment } from "Apps/Order/Components/Mutations/useSetPayment"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   OrderStepper,
@@ -32,6 +30,7 @@ import { PollAccountBalanceQueryRenderer } from "Apps/Order/Components/PollAccou
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { SetPaymentByStripeIntent } from "Apps/Order/Components/SetPaymentByStripeIntent"
 import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { SetOrderPayment } from "Apps/Order/Mutations/SetOrderPayment"
 
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -39,6 +38,7 @@ import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
 
 import { PaymentContent } from "./PaymentContent"
 import { useStripeRedirect } from "../../hooks/useStripeRedirect"
+import { useSystemContext } from "System"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -65,21 +65,21 @@ type Props = PaymentProps & StripeProps
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export const PaymentRoute: FC<Props> = props => {
-  const { order, isCommittingMutation } = props
-
+  const { order } = props
+  const { relayEnvironment } = useSystemContext()
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
+  const {
+    isProcessingRedirect,
+    stripeSetupIntentId,
+    shouldSaveBankAccount,
+  } = useStripeRedirect()
 
-  const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
-  const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
-
-  const isLoading =
-    isGettingCreditCardId || isCommittingMutation || isSetPaymentCommitting
-
-  const CreditCardPicker = createRef<CreditCardPicker>()
-  const { submitMutation: setPaymentMutation } = useSetPayment()
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
+
+  const CreditCardPicker = createRef<CreditCardPicker>()
+
   const [isPaymentSetupComplete, setIsPaymentSetupComplete] = useState(false)
   const [shouldPollAccountBalance, setShouldPollAccountBalance] = useState(
     false
@@ -88,12 +88,6 @@ export const PaymentRoute: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
   ] = useState(false)
-
-  const {
-    isProcessingRedirect,
-    stripeSetupIntentId,
-    shouldSaveBankAccount,
-  } = useStripeRedirect()
 
   const setPayment = () => {
     switch (selectedPaymentMethod) {
@@ -110,9 +104,7 @@ export const PaymentRoute: FC<Props> = props => {
 
   const onCreditCardContinue = async () => {
     try {
-      setIsGettingCreditCardId(true)
       const result = await CreditCardPicker?.current?.getCreditCardId()
-      setIsGettingCreditCardId(false)
 
       if (result?.type === "invalid_form") {
         return
@@ -135,13 +127,13 @@ export const PaymentRoute: FC<Props> = props => {
         return
       }
 
+      if (!relayEnvironment) return
+
       const orderOrError = (
-        await setOrderPayment({
-          input: {
-            paymentMethod: "CREDIT_CARD",
-            paymentMethodId: result?.creditCardId,
-            id: props.order.internalID!,
-          },
+        await SetOrderPayment(relayEnvironment, {
+          paymentMethod: "CREDIT_CARD",
+          paymentMethodId: result?.creditCardId,
+          id: props.order.internalID!,
         })
       ).commerceSetPayment?.orderOrError
 
@@ -158,20 +150,14 @@ export const PaymentRoute: FC<Props> = props => {
 
   const onWireTransferContinue = async () => {
     try {
-      setIsSetPaymentCommitting(true)
+      if (!relayEnvironment) return
 
       const orderOrError = (
-        await setPaymentMutation({
-          variables: {
-            input: {
-              id: props.order.internalID,
-              paymentMethod: "WIRE_TRANSFER",
-            },
-          },
+        await SetOrderPayment(relayEnvironment, {
+          id: props.order.internalID,
+          paymentMethod: "WIRE_TRANSFER",
         })
       ).commerceSetPayment?.orderOrError
-
-      setIsSetPaymentCommitting(false)
 
       if (orderOrError?.error) {
         throw orderOrError.error
@@ -179,7 +165,6 @@ export const PaymentRoute: FC<Props> = props => {
 
       onSetPaymentSuccess()
     } catch (error) {
-      setIsSetPaymentCommitting(false)
       logger.error(error)
       onSetPaymentError(error)
     }
@@ -187,15 +172,13 @@ export const PaymentRoute: FC<Props> = props => {
 
   const onBankAccountContinue = async (bankAccountId: string) => {
     try {
+      if (!relayEnvironment) return
+
       const orderOrError = (
-        await setPaymentMutation({
-          variables: {
-            input: {
-              id: order.internalID,
-              paymentMethod: "US_BANK_ACCOUNT",
-              paymentMethodId: bankAccountId,
-            },
-          },
+        await SetOrderPayment(relayEnvironment, {
+          id: order.internalID,
+          paymentMethod: "US_BANK_ACCOUNT",
+          paymentMethodId: bankAccountId,
         })
       ).commerceSetPayment?.orderOrError
 
@@ -207,48 +190,6 @@ export const PaymentRoute: FC<Props> = props => {
     } catch (error) {
       onSetPaymentError(error)
     }
-  }
-
-  const setOrderPayment = (
-    variables: PaymentRouteSetOrderPaymentMutation["variables"]
-  ) => {
-    return props.commitMutation<PaymentRouteSetOrderPaymentMutation>({
-      variables,
-      // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
-        mutation PaymentRouteSetOrderPaymentMutation(
-          $input: CommerceSetPaymentInput!
-        ) {
-          commerceSetPayment(input: $input) {
-            orderOrError {
-              ... on CommerceOrderWithMutationSuccess {
-                order {
-                  id
-                  ...Payment_validation
-                  creditCard {
-                    internalID
-                    name
-                    street1
-                    street2
-                    city
-                    state
-                    country
-                    postal_code: postalCode
-                  }
-                }
-              }
-              ... on CommerceOrderWithMutationFailure {
-                error {
-                  type
-                  code
-                  data
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
   }
 
   const onSetPaymentSuccess = () => {
@@ -278,7 +219,6 @@ export const PaymentRoute: FC<Props> = props => {
   let content: React.ReactNode = (
     <PaymentContent
       commitMutation={props.commitMutation}
-      isLoading={isLoading}
       paymentMethod={selectedPaymentMethod}
       me={props.me}
       order={props.order}
@@ -343,7 +283,8 @@ export const PaymentRoute: FC<Props> = props => {
             <Spacer mb={[2, 4]} />
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
               <Media at="xs">
-                <ContinueButton onClick={setPayment} loading={isLoading} />
+                {/* TODO: LOADING! */}
+                <ContinueButton onClick={setPayment} />
               </Media>
             )}
           </Flex>
