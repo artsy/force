@@ -31,6 +31,8 @@ export const BankAccountPicker: FC<Props> = props => {
     onBankAccountContinue,
   } = props
 
+  const [loading, setLoading] = useState(false)
+
   const bankAccountsArray = extractNodes(bankAccounts)
 
   const userHasExistingBankAccounts = bankAccountsArray.length > 0
@@ -61,6 +63,11 @@ export const BankAccountPicker: FC<Props> = props => {
   const [bankAccountSelection, setBankAccountSelection] = useState<
     BankAccountSelection
   >(getInitialBankAccountSelection())
+
+  const onSaveAndContinue = () => {
+    setLoading(true)
+    onBankAccountContinue(bankAccountSelection.id!)
+  }
 
   return (
     <>
@@ -115,7 +122,8 @@ export const BankAccountPicker: FC<Props> = props => {
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Button
-            onClick={() => onBankAccountContinue(bankAccountSelection.id!)}
+            loading={loading}
+            onClick={onSaveAndContinue}
             disabled={
               !bankAccountSelection.type || bankAccountHasInsufficientFunds
             }

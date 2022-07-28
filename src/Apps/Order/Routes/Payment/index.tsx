@@ -333,7 +333,7 @@ export const PaymentRoute: FC<Props> = props => {
     )
   }
 
-  if (shouldPollAccountBalance) {
+  if (shouldPollAccountBalance && stripeSetupIntentId) {
     content = (
       <PollAccountBalanceQueryRenderer
         setupIntentId={stripeSetupIntentId!}

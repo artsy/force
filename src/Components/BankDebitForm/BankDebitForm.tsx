@@ -13,19 +13,18 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
-import { LoadingArea } from "../LoadingArea"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"
+import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { getENV } from "Utils/getENV"
 
 interface Props {
   order: { mode: string | null; internalID: string }
-  returnURL: string
   bankAccountHasInsufficientFunds: boolean
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
-  returnURL,
   bankAccountHasInsufficientFunds,
 }) => {
   const stripe = useStripe()
@@ -49,11 +48,16 @@ export const BankDebitForm: FC<Props> = ({
   }
 
   const handleSubmit = async event => {
+    setIsPaymentElementLoading(true)
     event.preventDefault()
 
     if (!stripe || !elements || !user) {
       return
     }
+
+    const return_url = `${getENV("APP_URL")}/orders/${
+      order.internalID
+    }/payment?save_account=${isSaveAccountChecked}`
 
     // Disable the "leave/reload site?" confirmation dialog as we're about to
     // confirm Stripe payment setup which leaves and redirects back.
@@ -62,7 +66,7 @@ export const BankDebitForm: FC<Props> = ({
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: `${returnURL}?save_account=${isSaveAccountChecked}`,
+        return_url,
       },
     })
 
@@ -73,15 +77,14 @@ export const BankDebitForm: FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
-      <LoadingArea isLoading={isPaymentElementLoading}>
-        {isPaymentElementLoading && <Box height={300}></Box>}
+      {isPaymentElementLoading && <ProcessingPayment />}
+
+      {/* this is a little hack to keep PaymentElement mounted but invisible 
+          before confirming setup, so that we can display ProcessingPayment */}
+      <Box style={isPaymentElementLoading ? { display: "none" } : {}}>
         <PaymentElement
-          onReady={() => {
-            setIsPaymentElementLoading(false)
-          }}
-          onChange={event => {
-            trackPaymentElementEvent(event)
-          }}
+          onReady={() => setIsPaymentElementLoading(false)}
+          onChange={event => trackPaymentElementEvent(event)}
           options={{
             // @ts-ignore TODO: remove when Stripe updates StripePaymentElementOptions
             defaultValues: {
@@ -140,7 +143,7 @@ export const BankDebitForm: FC<Props> = ({
           Save and Continue
         </Button>
         <Spacer mb={4} />
-      </LoadingArea>
+      </Box>
     </form>
   )
 }

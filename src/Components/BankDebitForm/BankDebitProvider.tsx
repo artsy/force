@@ -126,15 +126,12 @@ export const BankDebitProvider: FC<Props> = ({
     appearance: appearance,
   }
 
-  const returnURL = `${getENV("APP_URL")}/orders/${order.internalID}/payment`
-
   return (
     <div data-test="bank-transfer-section">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm
             order={order}
-            returnURL={returnURL}
             bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
           />
         </Elements>

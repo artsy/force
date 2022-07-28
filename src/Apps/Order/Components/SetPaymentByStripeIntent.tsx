@@ -1,8 +1,7 @@
 import { FC, useEffect } from "react"
 import { Payment_order } from "__generated__/Payment_order.graphql"
 import { useSetPaymentByStripeIntent } from "Apps/Order/Components/Mutations/useSetPaymentByStripeIntent"
-import { Spinner } from "@artsy/palette"
-import styled from "styled-components"
+import { ProcessingPayment } from "./ProcessingPayment"
 
 interface Props {
   order: Payment_order
@@ -47,14 +46,5 @@ export const SetPaymentByStripeIntent: FC<Props> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const SpinnerContainer = styled.div`
-    width: 100%;
-    height: 300px;
-    position: relative;
-  `
-  return (
-    <SpinnerContainer>
-      <Spinner position="relative" color="brand" />
-    </SpinnerContainer>
-  )
+  return <ProcessingPayment />
 }
