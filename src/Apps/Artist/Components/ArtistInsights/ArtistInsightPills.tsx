@@ -1,4 +1,4 @@
-import { Flex, Pill } from "@artsy/palette"
+import { Flex, Pill, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
@@ -23,27 +23,30 @@ export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {
   }
 
   return (
-    <Flex flexDirection="row" flexWrap="wrap" mb={-1}>
-      {artist.insightsList.map(insight => {
-        return (
-          <Pill
-            variant="badge"
-            mr={1}
-            mb={1}
-            key={insight.kind!}
-            onClick={handleClick}
-          >
-            {insight.label}
-          </Pill>
-        )
-      })}
+    <>
+      <Flex flexDirection="row" flexWrap="wrap" mb={-1}>
+        {artist.insightsList.map(insight => {
+          return (
+            <Pill
+              variant="badge"
+              mr={1}
+              mb={1}
+              key={insight.kind!}
+              onClick={handleClick}
+            >
+              {insight.label}
+            </Pill>
+          )
+        })}
 
-      {highAuctionResult?.priceRealized?.display && (
-        <Pill variant="badge" mr={1} mb={1} onClick={handleClick}>
-          High Auction Record
-        </Pill>
-      )}
-    </Flex>
+        {highAuctionResult?.priceRealized?.display && (
+          <Pill variant="badge" mr={1} mb={1} onClick={handleClick}>
+            High Auction Record
+          </Pill>
+        )}
+      </Flex>
+      <Spacer mb={4} />
+    </>
   )
 }
 
