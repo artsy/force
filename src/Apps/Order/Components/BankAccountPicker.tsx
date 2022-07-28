@@ -1,14 +1,10 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import { FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
-import {
-  BorderedRadio,
-  RadioGroup,
-  Spacer,
-  Collapse,
-  Button,
-} from "@artsy/palette"
+import { BorderedRadio, RadioGroup, Spacer, Collapse } from "@artsy/palette"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
@@ -121,18 +117,14 @@ export const BankAccountPicker: FC<Props> = props => {
       {bankAccountSelection.type === "existing" && (
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-          <Button
+          <SaveAndContinueButton
+            media={{ greaterThan: "xs" }}
             loading={loading}
             onClick={onSaveAndContinue}
             disabled={
               !bankAccountSelection.type || bankAccountHasInsufficientFunds
             }
-            variant="primaryBlack"
-            width={["100%", "50%"]}
-          >
-            Save and Continue
-          </Button>
-          <Spacer mb={4} />
+          />
         </>
       )}
     </>

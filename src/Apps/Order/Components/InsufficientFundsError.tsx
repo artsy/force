@@ -4,6 +4,7 @@ import { Spacer, Message, Text } from "@artsy/palette"
 export const InsufficientFundsError: FC = () => {
   return (
     <>
+      <Spacer mt={4} />
       <Message
         title="This bank account doesn’t have enough funds."
         variant="error"
@@ -13,7 +14,6 @@ export const InsufficientFundsError: FC = () => {
           payment method.
         </Text>
       </Message>
-      <Spacer mt={2} />
     </>
   )
 }

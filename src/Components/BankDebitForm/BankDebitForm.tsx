@@ -2,7 +2,6 @@ import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import {
   Box,
-  Button,
   Checkbox,
   Clickable,
   Flex,
@@ -16,6 +15,7 @@ import { useTracking } from "react-tracking"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
 
 interface Props {
@@ -130,18 +130,15 @@ export const BankDebitForm: FC<Props> = ({
             </Tooltip>
           </Flex>
         </Flex>
-        <Spacer mt={4} />
 
         {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
 
-        <Button
+        <SaveAndContinueButton
           data-test="bank-transfer-save"
+          media={{ greaterThan: "xs" }}
           disabled={!stripe || bankAccountHasInsufficientFunds}
-          variant="primaryBlack"
-          width={["100%", "50%"]}
-        >
-          Save and Continue
-        </Button>
+        />
+
         <Spacer mb={4} />
       </Box>
     </form>

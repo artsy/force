@@ -1,6 +1,7 @@
 import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
+import { useTracking } from "react-tracking"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
-  Button,
   Clickable,
   Flex,
   Spacer,
@@ -12,21 +13,20 @@ import {
   Collapse,
   RadioProps,
 } from "@artsy/palette"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+
+import { Payment_me } from "__generated__/Payment_me.graphql"
+import { Payment_order } from "__generated__/Payment_order.graphql"
+import { CommercePaymentMethodEnum } from "__generated__/useSetPaymentMutation.graphql"
+
+import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
   CreditCardPicker,
   CreditCardPickerFragmentContainer,
-} from "../../Components/CreditCardPicker"
-import { Media } from "Utils/Responsive"
-import { ContinueButton } from "./index"
-import { Payment_me } from "__generated__/Payment_me.graphql"
-import { Payment_order } from "__generated__/Payment_order.graphql"
-import { CommitMutation } from "../../Utils/commitMutation"
-import { useTracking } from "react-tracking"
-import { ActionType, OwnerType } from "@artsy/cohesion"
-import { CommercePaymentMethodEnum } from "__generated__/useSetPaymentMutation.graphql"
-import { BankAccountPickerFragmentContainer } from "../../Components/BankAccountPicker"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
+} from "Apps/Order/Components/CreditCardPicker"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 
 export interface Props {
   order: Payment_order
@@ -87,11 +87,10 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mb={4} />
-        <Media greaterThan="xs">
-          {/* Loading! */}
-          <ContinueButton onClick={setPayment} />
-        </Media>
+        <SaveAndContinueButton
+          media={{ greaterThan: "xs" }}
+          onClick={setPayment}
+        />
       </PaymentContentWrapper>
     )
   }
@@ -124,11 +123,10 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mb={4} />
-        <Media greaterThan="xs">
-          {/* Loading! */}
-          <ContinueButton onClick={setPayment} />
-        </Media>
+        <SaveAndContinueButton
+          media={{ greaterThan: "xs" }}
+          onClick={setPayment}
+        />
       </Collapse>
 
       {/* Bank debit */}
@@ -171,13 +169,10 @@ export const PaymentContent: FC<Props> = props => {
             orders@artsy.net
           </Clickable>
         </Text>
-        <Spacer mb={4} />
-        <Media greaterThan="xs">
-          {/* TODO: LOADING! */}
-          <Button onClick={setPayment} variant="primaryBlack" width="50%">
-            Save and Continue
-          </Button>
-        </Media>
+        <SaveAndContinueButton
+          media={{ greaterThan: "xs" }}
+          onClick={setPayment}
+        />
       </Collapse>
     </PaymentContentWrapper>
   )

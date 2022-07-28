@@ -2,7 +2,7 @@ import { createRef, FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
-import { Box, Button, Flex, Spacer } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 import { Payment_me } from "__generated__/Payment_me.graphql"
@@ -30,21 +30,15 @@ import { PollAccountBalanceQueryRenderer } from "Apps/Order/Components/PollAccou
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { SetPaymentByStripeIntent } from "Apps/Order/Components/SetPaymentByStripeIntent"
 import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { SetOrderPayment } from "Apps/Order/Mutations/SetOrderPayment"
 
 import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
 import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
 
 import { PaymentContent } from "./PaymentContent"
 import { useStripeRedirect } from "../../hooks/useStripeRedirect"
 import { useSystemContext } from "System"
-
-export const ContinueButton = props => (
-  <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
-    Continue
-  </Button>
-)
 
 export interface StripeProps {
   stripe: Stripe
@@ -280,13 +274,7 @@ export const PaymentRoute: FC<Props> = props => {
               contextModule={ContextModule.ordersPayment}
               contextPageOwnerType={OwnerType.ordersPayment}
             />
-            <Spacer mb={[2, 4]} />
-            {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
-              <Media at="xs">
-                {/* TODO: LOADING! */}
-                <ContinueButton onClick={setPayment} />
-              </Media>
-            )}
+            <SaveAndContinueButton media={{ at: "xs" }} onClick={setPayment} />
           </Flex>
         }
       />
