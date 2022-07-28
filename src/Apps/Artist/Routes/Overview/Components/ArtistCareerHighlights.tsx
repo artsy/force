@@ -12,6 +12,7 @@ import { ArtistInsightBadgesPlaceholder } from "Apps/Artist/Components/ArtistIns
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { getENV } from "Utils/getENV"
+import { CV_LINK_TEXT } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -49,6 +50,10 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
             </Text>
             <HTML html={text!} variant="sm" />
           </Box>
+          <Spacer my={2} />
+          <RouterLink to={`/artist/${artist.slug}/cv`}>
+            {CV_LINK_TEXT}
+          </RouterLink>
           <Spacer my={4} />
         </>
       )}
@@ -110,6 +115,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
           credit
           text
         }
+        slug
       }
     `,
   }

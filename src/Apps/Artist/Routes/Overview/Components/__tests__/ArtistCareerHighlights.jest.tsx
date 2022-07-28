@@ -2,6 +2,7 @@ import { graphql } from "react-relay"
 import { ArtistCareerHighlightsFragmentContainer } from "../ArtistCareerHighlights"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { CV_LINK_TEXT } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 
 jest.unmock("react-relay")
 
@@ -79,5 +80,6 @@ describe("ArtistCareerHighlights", () => {
       expect.stringContaining("partner/number-one-best-gallery")
     )
     expect(screen.getByText("this artist rocks")).toBeInTheDocument()
+    expect(screen.queryByText(CV_LINK_TEXT)).toBeInTheDocument()
   })
 })
