@@ -1,4 +1,4 @@
-import { Column, GridColumns } from "@artsy/palette"
+import { Box, Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist } from "__generated__/ArtistCareerHighlights_artist.graphql"
@@ -10,6 +10,8 @@ import { ArtistInsightAchievementsFragmentContainer } from "Apps/Artist/Componen
 import { ArtistInsightAchievementsPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
 import { ArtistInsightBadgesPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightBadges"
 import { extractNodes } from "Utils/extractNodes"
+import { RouterLink } from "System/Router/RouterLink"
+import { getENV } from "Utils/getENV"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -18,6 +20,11 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
+  const { credit, partner, text } = artist.biographyBlurb!
+  const showPartnerBio =
+    Boolean(credit) && Boolean(text) && partner?.profile?.href
+  const partnerHref = `${getENV("APP_URL")}/partner${partner?.profile?.href}`
+
   const displayInsightAchievements = artist.insightAchievements.length > 0
   // TODO: Replace with just `insightBadges.length` check
   const displayInsightBadges =
@@ -30,19 +37,36 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   }
 
   return (
-    <GridColumns gridRowGap={4} id="jump--artistCareerHighlights">
-      {displayInsightAchievements && (
-        <Column span={6}>
-          <ArtistInsightAchievementsFragmentContainer artist={artist} />
-        </Column>
+    <>
+      {showPartnerBio && (
+        <>
+          <Box>
+            <Text variant="xs" mb={1}>
+              Bio
+            </Text>
+            <Text mb={1} variant="sm">
+              <RouterLink to={partnerHref}>{credit}</RouterLink>
+            </Text>
+            <HTML html={text!} variant="sm" />
+          </Box>
+          <Spacer my={4} />
+        </>
       )}
 
-      {displayInsightBadges && (
-        <Column span={6}>
-          <ArtistInsightBadgesFragmentContainer artist={artist} />
-        </Column>
-      )}
-    </GridColumns>
+      <GridColumns gridRowGap={4} id="jump--artistCareerHighlights">
+        {displayInsightAchievements && (
+          <Column span={6}>
+            <ArtistInsightAchievementsFragmentContainer artist={artist} />
+          </Column>
+        )}
+
+        {displayInsightBadges && (
+          <Column span={6}>
+            <ArtistInsightBadgesFragmentContainer artist={artist} />
+          </Column>
+        )}
+      </GridColumns>
+    </>
   )
 }
 
@@ -76,6 +100,15 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
               }
             }
           }
+        }
+        biographyBlurb(format: HTML, partnerBio: false) {
+          partner {
+            profile {
+              href
+            }
+          }
+          credit
+          text
         }
       }
     `,
