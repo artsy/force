@@ -175,17 +175,19 @@ export const Details: React.FC<DetailsProps> = ({
   contextModule,
   ...rest
 }) => {
-  const { isAuctionArtwork } = useArtworkGridContext()
+  const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
 
   return (
     <Box>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
-          <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+          {!hideLotLabel && (
+            <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
+          )}
           {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
             rest?.artwork?.sale_artwork && (
               <>
-                <Spacer mx={0.5} />
+                {!hideLotLabel && <Spacer mx={0.5} />}
                 <LotCloseInfo
                   saleArtwork={rest.artwork.sale_artwork}
                   sale={rest.artwork.sale}
