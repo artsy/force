@@ -4,18 +4,17 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type CommercePaymentMethodEnum = "CREDIT_CARD" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
-export type CommerceSetPaymentInput = {
+export type CommerceSetPaymentByStripeIntentInput = {
     clientMutationId?: string | null | undefined;
     id: string;
-    paymentMethod: CommercePaymentMethodEnum;
-    paymentMethodId?: string | null | undefined;
+    oneTimeUse?: boolean | null | undefined;
+    setupIntentId: string;
 };
-export type useSetPaymentMutationVariables = {
-    input: CommerceSetPaymentInput;
+export type SetPaymentByStripeIntentMutationVariables = {
+    input: CommerceSetPaymentByStripeIntentInput;
 };
-export type useSetPaymentMutationResponse = {
-    readonly commerceSetPayment: {
+export type SetPaymentByStripeIntentMutationResponse = {
+    readonly commerceSetPaymentByStripeIntent: {
         readonly orderOrError: {
             readonly order?: {
                 readonly id: string;
@@ -29,18 +28,18 @@ export type useSetPaymentMutationResponse = {
         };
     } | null;
 };
-export type useSetPaymentMutation = {
-    readonly response: useSetPaymentMutationResponse;
-    readonly variables: useSetPaymentMutationVariables;
+export type SetPaymentByStripeIntentMutation = {
+    readonly response: SetPaymentByStripeIntentMutationResponse;
+    readonly variables: SetPaymentByStripeIntentMutationVariables;
 };
 
 
 
 /*
-mutation useSetPaymentMutation(
-  $input: CommerceSetPaymentInput!
+mutation SetPaymentByStripeIntentMutation(
+  $input: CommerceSetPaymentByStripeIntentInput!
 ) {
-  commerceSetPayment(input: $input) {
+  commerceSetPaymentByStripeIntent(input: $input) {
     orderOrError {
       __typename
       ... on CommerceOrderWithMutationSuccess {
@@ -155,14 +154,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useSetPaymentMutation",
+    "name": "SetPaymentByStripeIntentMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CommerceSetPaymentPayload",
+        "concreteType": "CommerceSetPaymentByStripeIntentPayload",
         "kind": "LinkedField",
-        "name": "commerceSetPayment",
+        "name": "commerceSetPaymentByStripeIntent",
         "plural": false,
         "selections": [
           {
@@ -212,14 +211,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useSetPaymentMutation",
+    "name": "SetPaymentByStripeIntentMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "CommerceSetPaymentPayload",
+        "concreteType": "CommerceSetPaymentByStripeIntentPayload",
         "kind": "LinkedField",
-        "name": "commerceSetPayment",
+        "name": "commerceSetPaymentByStripeIntent",
         "plural": false,
         "selections": [
           {
@@ -310,14 +309,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d9a0652b5458e2688918b22054cb0fbe",
+    "cacheID": "732929de11c49021a9846ce6bfbc78c0",
     "id": null,
     "metadata": {},
-    "name": "useSetPaymentMutation",
+    "name": "SetPaymentByStripeIntentMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "mutation SetPaymentByStripeIntentMutation(\n  $input: CommerceSetPaymentByStripeIntentInput!\n) {\n  commerceSetPaymentByStripeIntent(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6414437f3efef0a24a8a4e470b7c8226';
+(node as any).hash = '92e6a53b686286d4982e80ef02da3621';
 export default node;

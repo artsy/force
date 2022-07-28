@@ -11,10 +11,10 @@ export type CommerceSetPaymentInput = {
     paymentMethod: CommercePaymentMethodEnum;
     paymentMethodId?: string | null | undefined;
 };
-export type PaymentRouteSetOrderPaymentMutationVariables = {
+export type SetOrderPaymentMutationVariables = {
     input: CommerceSetPaymentInput;
 };
-export type PaymentRouteSetOrderPaymentMutationResponse = {
+export type SetOrderPaymentMutationResponse = {
     readonly commerceSetPayment: {
         readonly orderOrError: {
             readonly order?: {
@@ -39,15 +39,15 @@ export type PaymentRouteSetOrderPaymentMutationResponse = {
         };
     } | null;
 };
-export type PaymentRouteSetOrderPaymentMutation = {
-    readonly response: PaymentRouteSetOrderPaymentMutationResponse;
-    readonly variables: PaymentRouteSetOrderPaymentMutationVariables;
+export type SetOrderPaymentMutation = {
+    readonly response: SetOrderPaymentMutationResponse;
+    readonly variables: SetOrderPaymentMutationVariables;
 };
 
 
 
 /*
-mutation PaymentRouteSetOrderPaymentMutation(
+mutation SetOrderPaymentMutation(
   $input: CommerceSetPaymentInput!
 ) {
   commerceSetPayment(input: $input) {
@@ -232,7 +232,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PaymentRouteSetOrderPaymentMutation",
+    "name": "SetOrderPaymentMutation",
     "selections": [
       {
         "alias": null,
@@ -308,7 +308,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PaymentRouteSetOrderPaymentMutation",
+    "name": "SetOrderPaymentMutation",
     "selections": [
       {
         "alias": null,
@@ -426,14 +426,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a1bfafc7c87111e38fda9a1172b64721",
+    "cacheID": "1a9e96d9eb8a7251fbe4f7fc52a943f4",
     "id": null,
     "metadata": {},
-    "name": "PaymentRouteSetOrderPaymentMutation",
+    "name": "SetOrderPaymentMutation",
     "operationKind": "mutation",
-    "text": "mutation PaymentRouteSetOrderPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "mutation SetOrderPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '015c7f56ebaab419c4febddd8a3505b1';
+(node as any).hash = 'f726ffb6e57e09dd64f374d4930a3576';
 export default node;
