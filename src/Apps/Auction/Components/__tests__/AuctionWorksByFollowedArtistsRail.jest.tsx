@@ -32,7 +32,7 @@ describe("AuctionWorksByFollowedArtistsRail", () => {
     expect(wrapper.text()).toContain("Works By Artists You Follow")
   })
 
-  it("renders the lot number and countdown timer labels", () => {
+  it("renders the countdown timer label", () => {
     const baseDate = DateTime.local()
     const startDate = baseDate.minus({ hours: 1 })
     const endDate = baseDate.plus({ hours: 1 })
@@ -63,7 +63,6 @@ describe("AuctionWorksByFollowedArtistsRail", () => {
       }),
     })
 
-    expect(wrapper.text()).toContain("Lot 123")
     expect(wrapper.text()).toContain("Closes in 59m 59s")
   })
 })

@@ -1,4 +1,4 @@
-import { Link, Text, LinkProps, Flex, Spacer, Box } from "@artsy/palette"
+import { Link, Text, LinkProps, Flex, Spacer, Box, Join } from "@artsy/palette"
 import { Details_artwork } from "__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -181,19 +181,23 @@ export const Details: React.FC<DetailsProps> = ({
     <Box>
       {isAuctionArtwork && (
         <Flex flexDirection="row">
-          {!hideLotLabel && (
-            <Text variant="xs">Lot {rest.artwork?.sale_artwork?.lotLabel}</Text>
-          )}
-          {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
-            rest?.artwork?.sale_artwork && (
-              <>
-                {!hideLotLabel && <Spacer mx={0.5} />}
-                <LotCloseInfo
-                  saleArtwork={rest.artwork.sale_artwork}
-                  sale={rest.artwork.sale}
-                />
-              </>
+          <Join separator={<Spacer mx={0.5} />}>
+            {!hideLotLabel && (
+              <Text variant="xs">
+                Lot {rest.artwork?.sale_artwork?.lotLabel}
+              </Text>
             )}
+
+            {rest?.artwork?.sale?.cascadingEndTimeIntervalMinutes &&
+              rest?.artwork?.sale_artwork && (
+                <>
+                  <LotCloseInfo
+                    saleArtwork={rest.artwork.sale_artwork}
+                    sale={rest.artwork.sale}
+                  />
+                </>
+              )}
+          </Join>
         </Flex>
       )}
       <Flex flexDirection="row" justifyContent="space-between">
