@@ -4,12 +4,15 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCVGroupRefetchContainer } from "./Components/ArtistCVGroup"
 import { ArtistCVRoute_viewer } from "__generated__/ArtistCVRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
+import { useTranslation } from "react-i18next"
 
 interface ArtistCVRouteProps {
   viewer: ArtistCVRoute_viewer
 }
 
 const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
+  const { t } = useTranslation()
+
   return (
     <>
       <MetaTags title={`${viewer?.soloShows?.name} - CV | Artsy`} />
@@ -17,17 +20,17 @@ const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
       <Join separator={<Spacer mb={4} />}>
         <ArtistCVGroupRefetchContainer
           artist={viewer.soloShows!}
-          title="Solo shows"
+          title={t("artistPage.cv.soloTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
           artist={viewer.groupShows!}
-          title="Group shows"
+          title={t("artistPage.cv.groupTitle")}
         />
 
         <ArtistCVGroupRefetchContainer
           artist={viewer.fairBooths!}
-          title="Fair booths"
+          title={t("artistPage.cv.fairTitle")}
         />
       </Join>
     </>
