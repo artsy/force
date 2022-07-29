@@ -2,7 +2,13 @@ import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 
-export const OnboardingLoadingCollection: FC = () => {
+interface OnboardingLoadingCollectionProps {
+  type: string
+}
+
+export const OnboardingLoadingCollection: FC<OnboardingLoadingCollectionProps> = ({
+  type,
+}) => {
   const { register } = useOnboardingFadeTransition({ next: () => {} })
 
   return (
@@ -16,15 +22,28 @@ export const OnboardingLoadingCollection: FC = () => {
       height="100%"
       p={4}
     >
-      <Spinner position="static" color="blue100" />
+      {type === "thank-you-loading" ? (
+        <Spinner position="static" color="white100" />
+      ) : (
+        <Spinner position="static" color="blue100" />
+      )}
 
       <Spacer mt={4} />
 
-      <Text variant="lg-display">
-        Great choice
-        <br />
-        We’re finding a collection for you
-      </Text>
+      {type === "thank-you-loading" ? (
+        <Text variant="lg-display" color="white100">
+          Great start
+          <br />
+          Follow more as you browse and <br />
+          continue tailoring Artsy to your tastes
+        </Text>
+      ) : (
+        <Text variant="lg-display">
+          Great choice
+          <br />
+          We’re finding a collection for you
+        </Text>
+      )}
     </Flex>
   )
 }

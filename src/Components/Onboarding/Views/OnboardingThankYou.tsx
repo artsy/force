@@ -1,7 +1,6 @@
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, Image, ResponsiveBox } from "@artsy/palette"
 import { FC, useEffect } from "react"
-import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
+import { OnboardingLoadingCollection } from "../Components/OnboardingLoadingCollection"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingThankYou: FC = () => {
@@ -12,22 +11,37 @@ export const OnboardingThankYou: FC = () => {
   }, [onComplete])
 
   return (
-    <OnboardingSplitLayout
-      left={
-        <OnboardingFigure
-          src="https://files.artsy.net/images/question-one-img.jpg"
-          aspectWidth={1600}
-          aspectHeight={2764}
-          caption="Adegboyega Adesina, Painting of Rechel, 2021"
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      width="100%"
+      height="100%"
+      z-index={1}
+    >
+      <ResponsiveBox aspectWidth={300} aspectHeight={400} maxWidth="100%">
+        <Image
+          src="https://files.artsy.net/images/hirst-damien-the-wonder-of-you.jpg"
+          lazyLoad
+          width="100%"
+          height="100%"
+          style={{
+            objectFit: "cover",
+          }}
+          alt=""
+          z-index={1}
         />
-      }
-      right={
-        <Flex flexDirection="column" justifyContent="space-between" p={4}>
-          <Box width="100%">
-            <Text variant="lg-display">Thank you! Now, get outta here!</Text>
-          </Box>
-        </Flex>
-      }
-    />
+      </ResponsiveBox>
+      <Box
+        position="fixed"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        z-index={2}
+      >
+        <OnboardingLoadingCollection type="thank-you-loading" />
+      </Box>
+    </Box>
   )
 }

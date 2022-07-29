@@ -137,7 +137,7 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
         }
 
         if (!props?.gene) {
-          return <OnboardingLoadingCollection />
+          return <OnboardingLoadingCollection type="" />
         }
 
         return (
@@ -147,7 +147,7 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
           />
         )
       }}
-      placeholder={<OnboardingLoadingCollection />}
+      placeholder={<OnboardingLoadingCollection type="" />}
     />
   )
 }
