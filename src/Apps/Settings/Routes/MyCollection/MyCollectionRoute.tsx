@@ -17,6 +17,7 @@ import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { MetaTags } from "Components/MetaTags"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
+import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 
 interface MyCollectionRouteProps {
@@ -77,31 +78,31 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     <>
       <MetaTags title="My Collection | Artsy" pathname="/my-collection" />
 
-      {!hasDismissedMessage && (
-        <Message
-          variant="info"
-          mt={-SETTINGS_ROUTE_TABS_MARGIN}
-          mb={SETTINGS_ROUTE_TABS_MARGIN}
-        >
-          <Flex flexDirection="row" justifyContent="space-between">
-            <Box />
-            <Text mx={1}>
-              Access all the My Collection features on the Artsy app. Coming
-              soon also on web.
-            </Text>
-            <Clickable onClick={dismissMyCollectionMessage}>
-              <CloseIcon />
-            </Clickable>
-          </Flex>
-        </Message>
-      )}
-
-      <Text variant="lg-display" mb={4}>
-        My Collection {total > 0 && <Sup color="brand">{total}</Sup>}
-      </Text>
-
       {total > 0 ? (
         <>
+          {!hasDismissedMessage && (
+            <Message
+              variant="info"
+              mt={-SETTINGS_ROUTE_TABS_MARGIN}
+              mb={SETTINGS_ROUTE_TABS_MARGIN}
+            >
+              <Flex flexDirection="row" justifyContent="space-between">
+                <Box />
+                <Text mx={1}>
+                  Access all the My Collection features on the Artsy app. Coming
+                  soon also on web.
+                </Text>
+                <Clickable onClick={dismissMyCollectionMessage}>
+                  <CloseIcon />
+                </Clickable>
+              </Flex>
+            </Message>
+          )}
+
+          <Text variant="lg-display" mb={4}>
+            My Collection <Sup color="brand">{total}</Sup>
+          </Text>
+
           <Masonry
             id="jump--MyCollectionArtworks"
             columnCount={[2, 3, 4]}
@@ -130,9 +131,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           />
         </>
       ) : (
-        <Text variant="lg-display" color="black60">
-          Nothing yet.
-        </Text>
+        <EmptyMyCollectionPage />
       )}
     </>
   )
