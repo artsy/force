@@ -42,7 +42,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
 
     if (setupIntentId && setupIntentClientSecret && redirectSuccess) {
       setStripeSetupIntentId(setupIntentId)
-      setPaymentBySetupIntentId(setupIntentId, saveAccount === "true")
+      setPaymentBySetupIntentId(setupIntentId, saveAccount !== "true")
     }
 
     setIsProcessingRedirect(false)
