@@ -16,7 +16,7 @@ i18n.use(initReactI18next).init({
     order: ["querystring"],
     lookupQuerystring: "locale",
   },
-  supportedLngs: ["en", "en-US"],
+  supportedLngs: ["en-US"],
   fallbackLng: "en-US",
   defaultNS: "translation",
   fallbackNS: "translation",
