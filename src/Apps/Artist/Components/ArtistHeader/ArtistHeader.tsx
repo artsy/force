@@ -18,14 +18,15 @@ import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/Fol
 import { ArtistHeader_artist } from "__generated__/ArtistHeader_artist.graphql"
 import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { RouterLink } from "System/Router/RouterLink"
-
-export const CV_LINK_TEXT = "See all past shows and fair booths"
+import { useTranslation } from "react-i18next"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
 }
 
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
+  const { t } = useTranslation()
+
   const hideBioInHeaderIfPartnerSupplied = Boolean(
     artist.biographyBlurb!.credit
   )
@@ -136,7 +137,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
             {!hideBioInHeaderIfPartnerSupplied && (
               <>
                 <RouterLink to={`/artist/${artist.slug}/cv`}>
-                  {CV_LINK_TEXT}
+                  {t("artistPage.overview.cvLink")}
                 </RouterLink>
               </>
             )}
