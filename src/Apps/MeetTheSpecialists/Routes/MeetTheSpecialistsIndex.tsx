@@ -130,8 +130,15 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
       "https://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
   },
   {
+    name: "Christine Aschwald",
+    title: "Head of Advisory and Senior Private Sales Director",
+    location: "New York",
+    email: "christine.aschwald@artsy.net",
+    image: "https://files.artsy.net/images/Christine_Aschwald.JPG",
+  },
+  {
     name: "Akanksha Ballaney",
-    title: "Associate Director",
+    title: "Associate Director, Private Sales",
     location: "New York",
     email: "akanksha@artsy.net",
     image: "https://files.artsy.net/images/akanksha.jpeg",
@@ -146,11 +153,26 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Robin Roche",
-    title: "Senior Advisor",
+    title: "Senior Private Sales Director",
     location: "New York",
     email: "robin.roche@artsy.net",
     phone: "+1 646 707 9450",
     image: "https://files.artsy.net/images/robin.jpeg",
+  },
+  {
+    name: "Meave Hamill",
+    title: "Senior Advisor, Private Sales",
+    location: "London",
+    email: "meave@artsy.net",
+    image: "https://files.artsy.net/images/meave.jpeg",
+  },
+  {
+    name: "George King",
+    title: "Senior Advisor, Private Sales",
+    location: "London",
+    email: "george.king@artsy.net",
+    phone: "+44 7850 739913",
+    image: "https://files.artsy.net/images/george.jpeg",
   },
   {
     name: "Daniela Bianco-Duppen",
@@ -169,21 +191,6 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/alexandra.jpeg",
   },
   {
-    name: "Meave Hamill",
-    title: "Advisor",
-    location: "London",
-    email: "meave@artsy.net",
-    image: "https://files.artsy.net/images/meave.jpeg",
-  },
-  {
-    name: "George King",
-    title: "Advisor",
-    location: "London",
-    email: "george.king@artsy.net",
-    phone: "+44 7850 739913",
-    image: "https://files.artsy.net/images/george.jpeg",
-  },
-  {
     name: "Caroline Perkins",
     title: "Advisor",
     location: "New York",
@@ -198,6 +205,20 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     email: "itziar.ramos@artsy.net",
     phone: "+44 7429 093319",
     image: "https://files.artsy.net/images/itziar.jpeg",
+  },
+  {
+    name: "Adriana Almeida",
+    title: "Senior Private Sales Director",
+    location: "London",
+    email: "adriana.almeida@artsy.net",
+    image: "https://files.artsy.net/images/Adriana_Almeida.jpg",
+  },
+  {
+    name: "Sarah Punzel",
+    title: "Private Sales Coordinator",
+    location: "New York",
+    email: "sarah.punzel@artsy.net",
+    image: "https://files.artsy.net/images/Sarah_Punzel.png",
   },
 ]
 
@@ -300,7 +321,7 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
 ]
 
 const SPECIALISTS = [
-  { title: "Advisory and Private Sales", specialists: ADVISORY_SPECIALISTS },
+  { title: "Private Sales & Advisory", specialists: ADVISORY_SPECIALISTS },
   { title: "Auctions", specialists: AUCTION_SPECIALISTS },
   { title: "Collector Services", specialists: COLLECTOR_SERVICES_SPECIALISTS },
 ]
