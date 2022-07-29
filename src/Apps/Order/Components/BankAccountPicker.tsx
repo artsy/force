@@ -95,7 +95,7 @@ export const BankAccountPicker: FC<Props> = props => {
     <>
       {userHasExistingBankAccounts && (
         <RadioGroup
-          data-test="bank-accounts"
+          data-test="bankAccounts"
           onSelect={val => {
             setBankAccountHasInsufficientFunds(false)
             if (val === "new") {
@@ -145,7 +145,7 @@ export const BankAccountPicker: FC<Props> = props => {
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Button
-            data-test="bank-transfer-save-existing"
+            data-test="bankTransferSaveExisting"
             onClick={handleContinue}
             disabled={
               !bankAccountSelection.type || bankAccountHasInsufficientFunds
