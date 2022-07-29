@@ -19,13 +19,13 @@ import { getENV } from "Utils/getENV"
 interface Props {
   order: { mode: string | null; internalID: string }
   bankAccountHasInsufficientFunds: boolean
-  setIsPaymentElementLoading: (arg: boolean) => void
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
-  setIsPaymentElementLoading,
+  setIsProcessingPayment,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
@@ -48,7 +48,7 @@ export const BankDebitForm: FC<Props> = ({
   }
 
   const handleSubmit = async event => {
-    setIsPaymentElementLoading(true)
+    setIsProcessingPayment(true)
     event.preventDefault()
 
     if (!stripe || !elements || !user) {
@@ -78,7 +78,7 @@ export const BankDebitForm: FC<Props> = ({
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
       <PaymentElement
-        onReady={() => setIsPaymentElementLoading(false)}
+        onReady={() => setIsProcessingPayment(false)}
         onChange={event => trackPaymentElementEvent(event)}
         options={{
           // @ts-ignore TODO: remove when Stripe updates StripePaymentElementOptions

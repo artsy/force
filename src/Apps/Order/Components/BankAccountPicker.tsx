@@ -16,7 +16,7 @@ interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   onBankAccountContinue: (arg: string) => void
-  setIsPaymentElementLoading: (arg: boolean) => void
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -26,7 +26,7 @@ export const BankAccountPicker: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     onBankAccountContinue,
-    setIsPaymentElementLoading,
+    setIsProcessingPayment,
   } = props
 
   const [loading, setLoading] = useState(false)
@@ -112,7 +112,7 @@ export const BankAccountPicker: FC<Props> = props => {
         <BankDebitProvider
           order={order}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          setIsPaymentElementLoading={setIsPaymentElementLoading}
+          setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>
 
