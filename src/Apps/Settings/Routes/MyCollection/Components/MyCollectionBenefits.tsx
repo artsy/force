@@ -37,7 +37,7 @@ export const MyCollectionBenefits: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="mycollection benefits image"
+            alt="My Collection benefits image"
           />
         </ResponsiveBox>
       </Column>
@@ -78,7 +78,7 @@ export const MyCollectionBenefits: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="mycollection benefits image"
+            alt="My Collection benefits image"
           />
         </ResponsiveBox>
       </Column>
