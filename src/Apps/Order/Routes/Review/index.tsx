@@ -6,7 +6,6 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
 import {
-  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
@@ -26,7 +25,6 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "../../Components/OfferSummaryItem"
-import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
@@ -35,6 +33,7 @@ import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/Shipp
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
@@ -363,12 +362,10 @@ export const ReviewRoute: FC<ReviewProps> = props => {
 
   return (
     <Box data-test="orderReview">
-      <OrderStepper
+      <OrderRouteContainer
         currentStep="Review"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-      />
-      <TwoColumnLayout
-        Content={
+        content={
           <Join separator={<Spacer mb={4} />}>
             <Flex flexDirection="column" mb={[2, 4]}>
               <Message mb={[2, 4]}>
@@ -408,7 +405,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
-              <Spacer mb={2} />
+              <Spacer mb={4} />
               <Button
                 variant="primaryBlack"
                 width="50%"
@@ -422,7 +419,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             </Media>
           </Join>
         }
-        Sidebar={
+        sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
               <ArtworkSummaryItem order={order} />

@@ -65,7 +65,7 @@ export const OnboardingQuestionOne: FC = () => {
           onNext={handleNext}
         >
           <Text variant="lg-display" ref={register(1)}>
-            Have you bought art before?
+            Have you purchased art before?
           </Text>
 
           <Spacer mt={4} />

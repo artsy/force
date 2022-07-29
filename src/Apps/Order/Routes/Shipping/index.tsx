@@ -14,7 +14,6 @@ import { Shipping_order } from "__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
-  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
@@ -26,7 +25,6 @@ import {
   PhoneNumberTouched,
 } from "Apps/Order/Components/PhoneNumberForm"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -85,6 +83,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import track from "react-tracking"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -632,19 +631,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     return (
       <Box data-test="orderShipping">
-        <OrderStepper
+        <OrderRouteContainer
           currentStep="Shipping"
           steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-        />
-        <TwoColumnLayout
-          Content={
+          content={
             <Flex
               flexDirection="column"
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
             >
               {/* TODO: Make RadioGroup generic for the allowed values,
-                  which could also ensure the children only use
-                  allowed values. */}
+                which could also ensure the children only use
+                allowed values. */}
               {artwork?.pickup_available && (
                 <>
                   <RadioGroup
@@ -743,6 +740,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   onChange={this.onPhoneNumberChange}
                   label="Number to contact you for pickup logistics"
                 />
+                <Spacer mt={4} />
               </Collapse>
 
               <Collapse
@@ -779,8 +777,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               </Media>
             </Flex>
           }
-          Sidebar={
-            <Flex flexDirection="column" mt={[0, 4]}>
+          sidebar={
+            <Flex flexDirection="column">
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem

@@ -1,6 +1,15 @@
-import { FC, Fragment, useState } from "react"
+import { FC, Fragment, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { Spacer, Sup, Text } from "@artsy/palette"
+import {
+  Spacer,
+  Sup,
+  Text,
+  Box,
+  Clickable,
+  CloseIcon,
+  Flex,
+  Message,
+} from "@artsy/palette"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { PaginationFragmentContainer } from "Components/Pagination"
@@ -9,6 +18,7 @@ import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { MetaTags } from "Components/MetaTags"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
+import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -17,6 +27,14 @@ interface MyCollectionRouteProps {
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
+  const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
+
+  useEffect(() => {
+    setHasDismissedMessage(
+      window.localStorage.getItem("HAS_SEEN_MY_COLLECTION_MESSAGE_BANNER") ===
+        "true"
+    )
+  }, [])
 
   const { scrollTo } = useScrollToElement({
     selectorOrRef: "#jump--MyCollectionArtworks",
@@ -51,12 +69,36 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     handleClick(endCursor, page)
   }
 
+  const dismissMyCollectionMessage = () => {
+    window.localStorage.setItem("HAS_SEEN_MY_COLLECTION_MESSAGE_BANNER", "true")
+    setHasDismissedMessage(true)
+  }
+
   return (
     <>
       <MetaTags title="My Collection | Artsy" pathname="/my-collection" />
 
       {total > 0 ? (
         <>
+          {!hasDismissedMessage && (
+            <Message
+              variant="info"
+              mt={-SETTINGS_ROUTE_TABS_MARGIN}
+              mb={SETTINGS_ROUTE_TABS_MARGIN}
+            >
+              <Flex flexDirection="row" justifyContent="space-between">
+                <Box />
+                <Text mx={1}>
+                  Access all the My Collection features on the Artsy app. Coming
+                  soon also on web.
+                </Text>
+                <Clickable onClick={dismissMyCollectionMessage}>
+                  <CloseIcon />
+                </Clickable>
+              </Flex>
+            </Message>
+          )}
+
           <Text variant="lg-display" mb={4}>
             My Collection <Sup color="brand">{total}</Sup>
           </Text>
