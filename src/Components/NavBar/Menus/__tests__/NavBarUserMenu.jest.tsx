@@ -37,9 +37,9 @@ describe("NavBarUserMenu", () => {
       // Label also includes SVG image title
       ["/settings/purchases", "Pending Order History"],
       ["/settings/alerts", "Watch lot Alerts"],
-      ["/settings/my-collection", "Artwork My Collection"],
       ["/settings/saves", "Save Saves & Follows"],
       ["/settings/edit-profile", "User Collector Profile"],
+      ["/settings/my-collection", "Artwork My Collection"],
       ["/settings/edit-settings", "Settings Settings"],
     ])
 
