@@ -98,7 +98,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
               loading={loading}
               disabled={state.followedIds.length === 0}
             >
-              Done
+              Next
             </Button>
           </Box>
         </Flex>
