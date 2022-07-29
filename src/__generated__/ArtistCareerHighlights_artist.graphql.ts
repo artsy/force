@@ -32,6 +32,7 @@ export type ArtistCareerHighlights_artist = {
         readonly credit: string | null;
         readonly text: string | null;
     } | null;
+    readonly slug: string;
     readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
     readonly " $refType": "ArtistCareerHighlights_artist";
 };
@@ -252,6 +253,13 @@ return {
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistInsightBadges_artist"
@@ -266,5 +274,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '568e31aa9ef1a86a7cb4f38bde03418d';
+(node as any).hash = 'a5be3acd46d6516fd2ac44432994b4b9';
 export default node;

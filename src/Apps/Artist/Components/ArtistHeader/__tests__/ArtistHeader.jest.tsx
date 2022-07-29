@@ -3,6 +3,7 @@ import { ArtistHeaderFragmentContainer } from "../ArtistHeader"
 import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
+import { CV_LINK_TEXT } from "../ArtistHeader"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -55,9 +56,14 @@ describe("ArtistHeader", () => {
     expect(screen.getByText("USA, Jan 1 1980")).toBeInTheDocument()
     expect(screen.getByText("111 Followers")).toBeInTheDocument()
     expect(screen.getByText("biographyBlurbText")).toBeInTheDocument()
+    const cvLink = screen.getByText(CV_LINK_TEXT)
+    expect(cvLink).toHaveAttribute(
+      "href",
+      expect.stringContaining("/artist/artistSlug/cv")
+    )
   })
 
-  it("hides bio section if partner supplied bio", () => {
+  it("hides bio section and cv link if partner supplied bio", () => {
     renderWithRelay({
       Artist: () => ({
         biographyBlurb: { text: "biographyBlurbText", credit: true },
@@ -65,6 +71,7 @@ describe("ArtistHeader", () => {
     })
 
     expect(screen.queryByText("biographyBlurbText")).not.toBeInTheDocument()
+    expect(screen.queryByText(CV_LINK_TEXT)).not.toBeInTheDocument()
   })
 
   it("hides follows if count is zero", () => {
