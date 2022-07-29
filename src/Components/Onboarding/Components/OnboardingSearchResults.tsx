@@ -12,16 +12,22 @@ import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPl
 
 interface OnboardingSearchResultsProps {
   viewer: OnboardingSearchResults_viewer
+  term: string
 }
 
 const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
+  term,
   viewer,
 }) => {
   const { dispatch } = useOnboardingContext()
   const nodes = extractNodes(viewer.matchConnection)
 
   if (nodes.length === 0) {
-    return <Message title="No results found" />
+    return (
+      <Message
+        title={`Sorry, we couldn’t find anything for "${term}". Please try searching again with a different spelling.`}
+      />
+    )
   }
 
   return (
@@ -141,7 +147,10 @@ export const OnboardingSearchResultsQueryRenderer: FC<OnboardingOrderedSetQueryR
           return PLACEHOLDER
         }
         return (
-          <OnboardingSearchResultsFragmentContainer viewer={props.viewer} />
+          <OnboardingSearchResultsFragmentContainer
+            term={term}
+            viewer={props.viewer}
+          />
         )
       }}
     />

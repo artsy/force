@@ -16,7 +16,16 @@ jest.mock("Components/EntityHeaders/EntityHeaderPartner", () => {
 })
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: OnboardingSearchResultsFragmentContainer,
+  Component: props => {
+    if (!(props as { viewer: any }).viewer) return null
+
+    return (
+      <OnboardingSearchResultsFragmentContainer
+        term="abc"
+        viewer={(props as { viewer: any }).viewer}
+      />
+    )
+  },
   query: graphql`
     query OnboardingSearchResults_Test_Query @relay_test_operation {
       viewer {
@@ -36,7 +45,11 @@ describe("OnboardingSearchResults", () => {
       }),
     })
 
-    expect(screen.getByText("No results found")).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        'Sorry, we couldn’t find anything for "abc". Please try searching again with a different spelling.'
+      )
+    ).toBeInTheDocument()
   })
 
   it("renders search results for artists correctly", () => {

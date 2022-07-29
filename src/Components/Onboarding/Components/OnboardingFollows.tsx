@@ -81,7 +81,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
             overflowY="auto"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
-            {debouncedValue ? (
+            {debouncedValue.length >= 2 ? (
               <OnboardingSearchResultsQueryRenderer
                 term={debouncedValue}
                 entities={entities}
@@ -98,7 +98,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
               loading={loading}
               disabled={state.followedIds.length === 0}
             >
-              Done
+              Next
             </Button>
           </Box>
         </Flex>
