@@ -12,8 +12,11 @@ import {
 import { MetaTags } from "Components/MetaTags"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
+import { useTranslation } from "react-i18next"
 
 export const MeetTheSpecialistsIndex: FC = () => {
+  const { t } = useTranslation()
+
   return (
     <>
       <MetaTags
@@ -25,7 +28,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
       <Spacer mt={4} />
 
       <Text as="h1" variant={["xl", "xxl"]}>
-        Meet the Specialists
+        {t`specialists.meetTheSpecialists`}
       </Text>
 
       <Spacer mt={2} />
@@ -33,9 +36,7 @@ export const MeetTheSpecialistsIndex: FC = () => {
       <GridColumns>
         <Column span={8}>
           <Text color="black60" variant={["lg-display", "xl"]}>
-            Whether you’re seeking a specific work for your growing collection
-            or wish to sell, our globe-spanning team is ready to source, sell,
-            advise, and research on your behalf.
+            {t`specialists.ourTeamIsReady`}
           </Text>
 
           <Spacer mt={2} />
@@ -57,11 +58,11 @@ export const MeetTheSpecialistsIndex: FC = () => {
       <Spacer mt={12} />
 
       <Join separator={<Separator my={12} />}>
-        {SPECIALISTS.map(({ title, specialists }) => {
+        {SPECIALISTS.map(({ i18nKey, specialists }) => {
           return (
             <GridColumns gridRowGap={4}>
               <Column span={4}>
-                <Text variant="xl">{title}</Text>
+                <Text variant="xl">{t(i18nKey)}</Text>
               </Column>
 
               <Column span={8}>
@@ -321,7 +322,10 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
 ]
 
 const SPECIALISTS = [
-  { title: "Private Sales & Advisory", specialists: ADVISORY_SPECIALISTS },
-  { title: "Auctions", specialists: AUCTION_SPECIALISTS },
-  { title: "Collector Services", specialists: COLLECTOR_SERVICES_SPECIALISTS },
+  { i18nKey: "specialists.privateSales", specialists: ADVISORY_SPECIALISTS },
+  { i18nKey: "specialists.auctions", specialists: AUCTION_SPECIALISTS },
+  {
+    i18nKey: "specialists.collectorServices",
+    specialists: COLLECTOR_SERVICES_SPECIALISTS,
+  },
 ]
