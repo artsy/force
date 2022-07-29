@@ -25,7 +25,7 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
   if (nodes.length === 0) {
     return (
       <Message
-        title={`Sorry, we couldn’t find anything for "${term}." Please try searching again with a different spelling.`}
+        title={`Sorry, we couldn’t find anything for "${term}". Please try searching again with a different spelling.`}
       />
     )
   }
