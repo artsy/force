@@ -158,6 +158,21 @@ describe("Status", () => {
       })
     })
 
+    describe("processing approval", () => {
+      it("should say 'Offer accepted. Payment processing.' and have message box", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "PROCESSING_APPROVAL",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain("Offer accepted. Payment processing.")
+        expect(page.getMessage()).toBe(1)
+      })
+    })
+
     describe("in transit", () => {
       it("should say confirmed, have message box and the tracking URL", async () => {
         const wrapper = getWrapper({
@@ -382,6 +397,23 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain("Your order is confirmed")
+      })
+    })
+
+    describe("processing approval", () => {
+      it("should say 'Your order is confirmed. Payment processing.' and have message box", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            displayState: "PROCESSING_APPROVAL",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Your order is confirmed. Payment processing."
+        )
+        expect(page.getMessage()).toBe(1)
       })
     })
 
