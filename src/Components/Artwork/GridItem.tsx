@@ -11,6 +11,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { cropped, resized } from "Utils/resized"
 import { useHoverMetadata } from "./useHoverMetadata"
 import { MagnifyImage } from "../MagnifyImage"
+import { useEffect, useState } from "react"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -47,6 +48,19 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     ? transform(imageURL, { width, height })
     : { src: "", srcSet: "" }
 
+  const [linkTo, setLinkTo] = useState(artwork.href)
+
+  useEffect(() => {
+    if (!!disableRouterLinking) {
+      setLinkTo(window.location.href)
+    } else {
+      if (linkTo !== artwork.href) {
+        setLinkTo(artwork.href)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disableRouterLinking])
+
   const handleClick = () => {
     onClick?.()
   }
@@ -82,7 +96,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
       >
         <LinkContainer
-          to={disableRouterLinking ? window.location.href : artwork.href}
+          to={linkTo}
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
           position={imageURL ? "absolute" : "relative"}

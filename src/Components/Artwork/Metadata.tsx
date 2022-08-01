@@ -33,12 +33,27 @@ export const Metadata: React.FC<MetadataProps> = ({
   showHoverDetails,
   showSaveButton,
   contextModule,
+  disableRouterLinking,
   ...rest
 }) => {
-  const LinkContainer = rest.disableRouterLinking ? DisabledLink : RouterLink
+  const [linkTo, setLinkTo] = React.useState(artwork.href)
+
+  React.useEffect(() => {
+    if (!!disableRouterLinking) {
+      setLinkTo(window.location.href)
+    } else {
+      if (linkTo !== artwork.href) {
+        setLinkTo(artwork.href)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disableRouterLinking])
+
+  const LinkContainer = disableRouterLinking ? DisabledLink : RouterLink
+
   return (
     <LinkContainer
-      to={rest.disableRouterLinking ? window.location.href : artwork.href}
+      to={linkTo}
       display="block"
       textDecoration="none"
       textAlign="left"
