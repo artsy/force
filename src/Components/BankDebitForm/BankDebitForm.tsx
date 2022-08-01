@@ -83,7 +83,6 @@ export const BankDebitForm: FC<Props> = ({
             trackPaymentElementEvent(event)
           }}
           options={{
-            // @ts-ignore TODO: remove when Stripe updates StripePaymentElementOptions
             defaultValues: {
               billingDetails: {
                 name: user?.name,
