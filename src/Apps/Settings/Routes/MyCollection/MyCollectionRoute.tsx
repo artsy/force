@@ -9,6 +9,7 @@ import {
   Flex,
   Message,
   FullBleed,
+  Clickable,
 } from "@artsy/palette"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
@@ -20,7 +21,6 @@ import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 import { RouterLink } from "System/Router/RouterLink"
-import styled from "styled-components"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -91,19 +91,19 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
               >
                 <Flex flexDirection="row" justifyContent="space-between">
                   <Box />
-                  <Link to="/settings/my-collection#download-app-banner">
+                  <RouterLink
+                    to="/settings/my-collection#download-app-banner"
+                    textDecoration="none"
+                  >
                     <Text mx={1}>
                       Access all the My Collection features on the Artsy app.
                       Coming soon also on web.
                     </Text>
-                  </Link>
+                  </RouterLink>
 
-                  {/**TODO: Replace Close with Clickable
-                   * if you can get clickable to not center its children
-                   * */}
-                  <Close onClick={dismissMyCollectionMessage}>
+                  <Clickable onClick={dismissMyCollectionMessage}>
                     <CloseIcon />
-                  </Close>
+                  </Clickable>
                 </Flex>
               </Message>
             </FullBleed>
@@ -189,11 +189,3 @@ export const MyCollectionRouteRefetchContainer = createRefetchContainer(
   },
   MY_COLLECTION_ROUTE_QUERY
 )
-
-const Link = styled(RouterLink)`
-  text-decoration: none;
-`
-
-const Close = styled(Box)`
-  cursor: pointer;
-`

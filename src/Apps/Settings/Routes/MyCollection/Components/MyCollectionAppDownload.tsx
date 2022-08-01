@@ -56,37 +56,25 @@ const AppStoreBadges = () => (
   </Flex>
 )
 
-const Title = () => {
-  const title = "Get More from My Collection on the App"
-  return (
-    <>
-      <Media greaterThanOrEqual="lg">
-        <Text variant="xxl" mt={1}>
-          {title}
-        </Text>
-      </Media>
-      <Media lessThan="lg">
-        <Text variant="lg" mt={1}>
-          {title}
-        </Text>
-      </Media>
-    </>
-  )
-}
+const DescriptionColumn = () => (
+  <>
+    <Text variant={["lg", "lg", "xxl"]} mt={1}>
+      Get More from My Collection on the App
+    </Text>
+
+    <Text variant="sm" mt={1} mb={4}>
+      Discover all the features of My Collection on the Artsy app. Coming soon:
+      The full range of features will also be available on the website.
+    </Text>
+    <AppStoreBadges />
+  </>
+)
 
 const DesktopLayout: React.FC = () => {
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={6}>
-        <Title />
-
-        <Text variant="sm" mt={1} mb={4}>
-          Discover all the features of My Collection on the Artsy app. Coming
-          soon: The full range of features will also be available on the
-          website.
-        </Text>
-
-        <AppStoreBadges />
+        <DescriptionColumn />
       </Column>
 
       <Column span={6}>
@@ -121,14 +109,7 @@ const MobileLayout: React.FC = () => {
         </ResponsiveBox>
       </Column>
       <Column span={6}>
-        <Title />
-
-        <Text variant="sm" mt={1} mb={4}>
-          Discover all the features of My Collection on the Artsy app. Coming
-          soon: The full range of features will also be available on the
-          website.
-        </Text>
-        <AppStoreBadges />
+        <DescriptionColumn />
       </Column>
     </GridColumns>
   )
