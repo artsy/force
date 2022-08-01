@@ -5,7 +5,6 @@ import {
   Sup,
   Text,
   Box,
-  Clickable,
   CloseIcon,
   Flex,
   Message,
@@ -93,17 +92,18 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                 <Flex flexDirection="row" justifyContent="space-between">
                   <Box />
                   <Link to="/settings/my-collection#download-app-banner">
-                    <Box>
-                      <Text mx={1}>
-                        Access all the My Collection features on the Artsy app.
-                        Coming soon also on web.
-                      </Text>
-                    </Box>
+                    <Text mx={1}>
+                      Access all the My Collection features on the Artsy app.
+                      Coming soon also on web.
+                    </Text>
                   </Link>
 
-                  <Clickable onClick={dismissMyCollectionMessage}>
+                  {/**TODO: Replace Close with Clickable
+                   * if you can get clickable to not center its children
+                   * */}
+                  <Close onClick={dismissMyCollectionMessage}>
                     <CloseIcon />
-                  </Clickable>
+                  </Close>
                 </Flex>
               </Message>
             </FullBleed>
@@ -192,4 +192,8 @@ export const MyCollectionRouteRefetchContainer = createRefetchContainer(
 
 const Link = styled(RouterLink)`
   text-decoration: none;
+`
+
+const Close = styled(Box)`
+  cursor: pointer;
 `
