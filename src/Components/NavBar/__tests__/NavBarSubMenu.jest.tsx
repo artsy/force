@@ -36,22 +36,21 @@ describe("NavBarSubMenu", () => {
     expect(linkMenuItems.at(0).text()).toContain("Trove: Editor's Picks")
     expect(linkMenuItems.at(0).prop("href")).toEqual("/gene/trove")
 
-    expect(linkMenuItems.at(1).text()).toContain("Iconic Prints")
-    expect(linkMenuItems.at(1).prop("href")).toEqual("/gene/iconic-prints")
+    expect(linkMenuItems.at(1).text()).toContain("Top Auction Lots")
+    expect(linkMenuItems.at(1).prop("href")).toEqual(
+      "/gene/our-top-auction-lots"
+    )
 
-    expect(linkMenuItems.at(2).text()).toContain("Finds Under $2,500")
-    expect(linkMenuItems.at(2).prop("href")).toEqual("/gene/finds-under-2500")
+    expect(linkMenuItems.at(2).text()).toContain("Iconic Prints")
+    expect(linkMenuItems.at(2).prop("href")).toEqual("/gene/iconic-prints")
 
-    expect(linkMenuItems.at(3).text()).toContain("Finds Under $1,000")
-    expect(linkMenuItems.at(3).prop("href")).toEqual("/gene/finds-under-1000")
-
-    expect(linkMenuItems.at(4).text()).toContain("The Collectibles Shop")
-    expect(linkMenuItems.at(4).prop("href")).toEqual(
+    expect(linkMenuItems.at(3).text()).toContain("The Collectibles Shop")
+    expect(linkMenuItems.at(3).prop("href")).toEqual(
       "/gene/the-collectibles-shop"
     )
 
-    expect(linkMenuItems.at(5).text()).toContain("View All Artworks")
-    expect(linkMenuItems.at(5).prop("href")).toEqual("/collect")
+    expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
+    expect(linkMenuItems.at(4).prop("href")).toEqual("/collect")
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
