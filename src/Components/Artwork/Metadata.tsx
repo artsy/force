@@ -5,6 +5,7 @@ import { DetailsFragmentContainer as Details } from "./Details"
 import { BoxProps } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuthContextModule } from "@artsy/cohesion"
+import styled from "styled-components"
 
 export interface MetadataProps
   extends BoxProps,
@@ -16,6 +17,7 @@ export interface MetadataProps
   hideSaleInfo?: boolean
   isHovered?: boolean
   showHoverDetails?: boolean
+  disableRouterLinking?: boolean
   showSaveButton?: boolean
   contextModule?: AuthContextModule
 }
@@ -33,9 +35,10 @@ export const Metadata: React.FC<MetadataProps> = ({
   contextModule,
   ...rest
 }) => {
+  const LinkContainer = rest.disableRouterLinking ? DisabledLink : RouterLink
   return (
-    <RouterLink
-      to={artwork.href}
+    <LinkContainer
+      to={rest.disableRouterLinking ? window.location.href : artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"
@@ -53,9 +56,13 @@ export const Metadata: React.FC<MetadataProps> = ({
         showSaveButton={showSaveButton}
         contextModule={contextModule}
       />
-    </RouterLink>
+    </LinkContainer>
   )
 }
+
+const DisabledLink = styled(RouterLink)`
+  cursor: not-allowed;
+`
 
 export default createFragmentContainer(Metadata, {
   artwork: graphql`

@@ -116,6 +116,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     hideSaleInfo
                     showSaveButton={false}
                     showHoverDetails={false}
+                    disableRouterLinking
                   />
 
                   <Spacer mt={4} />
