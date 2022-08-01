@@ -40,7 +40,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         href: "/settings/alerts",
       },
       isMyCollectionEnabled && {
-        text: "My Collections",
+        text: "My Collection",
         href: "/settings/my-collection",
       },
       {
