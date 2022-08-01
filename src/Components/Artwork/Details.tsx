@@ -14,6 +14,7 @@ import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 
 interface DetailsProps {
   artwork: Details_artwork
+  contextModule?: AuthContextModule
   includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean
@@ -21,7 +22,6 @@ interface DetailsProps {
   isHovered?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
-  contextModule?: AuthContextModule
 }
 
 const ConditionalLink: React.FC<
@@ -168,13 +168,13 @@ const BidInfo: React.FC<DetailsProps> = ({
 }
 
 export const Details: React.FC<DetailsProps> = ({
+  contextModule,
   hideArtistName,
   hidePartnerName,
   hideSaleInfo,
   isHovered,
   showHoverDetails = true,
   showSaveButton,
-  contextModule,
   ...rest
 }) => {
   const { isAuctionArtwork } = useArtworkGridContext()

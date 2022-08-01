@@ -8,6 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
@@ -21,43 +22,37 @@ const image = resized(
 
 const AppStoreBadges = () => (
   <Flex>
-    <Box
-      width={120}
-      height={40}
-      as="a"
-      // @ts-ignore
-      href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+    <RouterLink
+      to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
       target="_blank"
-      rel="noopener noreferrer"
     >
-      <Image
-        src="https://files.artsy.net/images/download-ios-app.svg"
-        width="100%"
-        height="100%"
-        alt="ios app store button"
-        loading="lazy"
-      />
-    </Box>
+      <Box width={120} height={40}>
+        <Image
+          src="https://files.artsy.net/images/download-ios-app.svg"
+          width="100%"
+          height="100%"
+          alt="ios app store button"
+          loading="lazy"
+        />
+      </Box>
+    </RouterLink>
 
     <Spacer ml={2} />
 
-    <Box
-      width={120}
-      height={40}
-      as="a"
-      // @ts-ignore
-      href="https://play.google.com/store/apps/details?id=net.artsy.app"
+    <RouterLink
+      to={"https://play.google.com/store/apps/details?id=net.artsy.app"}
       target="_blank"
-      rel="noopener noreferrer"
     >
-      <Image
-        src="https://files.artsy.net/images/download-android-app.svg"
-        width="100%"
-        height="100%"
-        alt="android play store button"
-        loading="lazy"
-      />
-    </Box>
+      <Box width={120} height={40}>
+        <Image
+          src="https://files.artsy.net/images/download-android-app.svg"
+          width="100%"
+          height="100%"
+          alt="android play store button"
+          loading="lazy"
+        />
+      </Box>
+    </RouterLink>
   </Flex>
 )
 
