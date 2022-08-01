@@ -19,6 +19,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   onClick?: () => void
   hideSaleInfo?: boolean
   showSaveButton?: boolean
+  showHoverDetails?: boolean
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -28,6 +29,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   onClick,
   hideSaleInfo,
   showSaveButton = true,
+  showHoverDetails,
   ...rest
 }) => {
   const { user } = useSystemContext()
@@ -108,6 +110,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         contextModule={contextModule ?? ContextModule.artworkGrid}
         showSaveButton={showSaveButton}
         hideSaleInfo={hideSaleInfo}
+        showHoverDetails={showHoverDetails}
       />
     </div>
   )

@@ -28,6 +28,7 @@ describe("Details", () => {
       hidePartnerName: boolean
       hideArtistName: boolean
       isHovered: boolean
+      showHoverDetails?: boolean
       contextModule?: AuthContextModule
       showSaveButton?: boolean
     }
@@ -414,6 +415,18 @@ describe("Details", () => {
     it("pills should NOT be displayed if isHovered is false", async () => {
       props = {
         isHovered: false,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("Unique")
+      expect(html).not.toContain("Print")
+    })
+
+    it("pills should NOT be displayed if showHoverDetails is false", async () => {
+      props = {
+        isHovered: true,
+        showHoverDetails: false,
       }
       const wrapper = await getWrapper(artworkInAuction, props)
       const html = wrapper.html()

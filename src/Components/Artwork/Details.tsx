@@ -19,6 +19,7 @@ interface DetailsProps {
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
+  showHoverDetails?: boolean
   showSaveButton?: boolean
   contextModule?: AuthContextModule
 }
@@ -171,6 +172,7 @@ export const Details: React.FC<DetailsProps> = ({
   hidePartnerName,
   hideSaleInfo,
   isHovered,
+  showHoverDetails = true,
   showSaveButton,
   contextModule,
   ...rest
@@ -208,7 +210,9 @@ export const Details: React.FC<DetailsProps> = ({
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
-        {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
+        {isHovered && showHoverDetails && (
+          <HoverDetailsFragmentContainer artwork={rest.artwork} />
+        )}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </Box>

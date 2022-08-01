@@ -15,6 +15,7 @@ export interface MetadataProps
   hideArtistName?: boolean
   hideSaleInfo?: boolean
   isHovered?: boolean
+  showHoverDetails?: boolean
   showSaveButton?: boolean
   contextModule?: AuthContextModule
 }
@@ -27,6 +28,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   hideArtistName,
   hideSaleInfo,
   isHovered,
+  showHoverDetails,
   showSaveButton,
   contextModule,
   ...rest
@@ -47,6 +49,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
+        showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}
       />
