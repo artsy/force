@@ -37,7 +37,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
     >
       <Box
         width="100%"
-        height={["100vh", 800]}
+        height="100vh"
+        minHeight={["100vh", "100%"]}
         overflowY="auto"
         position="relative"
         bg="white100"
