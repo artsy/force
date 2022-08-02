@@ -13,7 +13,7 @@ import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
 const image = resized(
-  "https://files.artsy.net/images/my-collection-get-app-img.jpg",
+  "https://files.artsy.net/images/my-coll-get-app-img.jpg",
   {
     width: 910,
     height: 652,
@@ -85,7 +85,7 @@ const DesktopLayout: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="My Collection app hero image"
+            alt="Screenshot of My Collection sample screen on the App against a painting background"
           />
         </ResponsiveBox>
       </Column>
