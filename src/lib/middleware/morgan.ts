@@ -28,13 +28,14 @@ function skipAssets(req: ArtsyRequest, res: ArtsyResponse): boolean {
 
 const BANNED_PARAMS = ["setup_intent_client_secret"]
 
-function maskParams(url: string): string {
-  const cleaned = BANNED_PARAMS.reduce((prevUrl, keyToMask) => {
-    const re = new RegExp(`${keyToMask}=([^&]+)`)
-    return prevUrl.replace(re, (matchedKeyValue, matchedValue) =>
-      matchedKeyValue.replace(matchedValue, "[FILTERED]")
+function maskParams(initialUrl: string): string {
+  const cleaned = BANNED_PARAMS.reduce((prevUrl, bannedParam) => {
+    const paramToMask = new RegExp(`${bannedParam}=([^&]+)`)
+    const url = prevUrl.replace(paramToMask, (match, matchedValue) =>
+      match.replace(matchedValue, "[FILTERED]")
     )
-  }, url)
+    return url
+  }, initialUrl)
 
   return cleaned
 }
