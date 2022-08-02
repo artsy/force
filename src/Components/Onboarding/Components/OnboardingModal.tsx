@@ -1,4 +1,5 @@
 import React from "react"
+import { omit } from "lodash"
 import {
   ModalBase,
   ModalBaseProps,
@@ -32,8 +33,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             }
           : { backgroundColor: "transparent" }
       }
-      dialogProps={{ width: ["100%", 900] }}
-      {...modalProps}
+      dialogProps={{
+        width: ["100%", 900],
+        ...modalProps.dialogProps,
+      }}
+      {...omit(modalProps, "dialogProps")}
     >
       <Box
         width="100%"
