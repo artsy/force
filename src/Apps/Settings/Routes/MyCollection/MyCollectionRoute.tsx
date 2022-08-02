@@ -5,10 +5,11 @@ import {
   Sup,
   Text,
   Box,
-  Clickable,
   CloseIcon,
   Flex,
   Message,
+  FullBleed,
+  Clickable,
 } from "@artsy/palette"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
@@ -19,6 +20,7 @@ import { MetaTags } from "Components/MetaTags"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -81,22 +83,30 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
       {total > 0 ? (
         <>
           {!hasDismissedMessage && (
-            <Message
-              variant="info"
-              mt={-SETTINGS_ROUTE_TABS_MARGIN}
-              mb={SETTINGS_ROUTE_TABS_MARGIN}
-            >
-              <Flex flexDirection="row" justifyContent="space-between">
-                <Box />
-                <Text mx={1}>
-                  Access all the My Collection features on the Artsy app. Coming
-                  soon also on web.
-                </Text>
-                <Clickable onClick={dismissMyCollectionMessage}>
-                  <CloseIcon />
-                </Clickable>
-              </Flex>
-            </Message>
+            <FullBleed>
+              <Message
+                variant="info"
+                mt={-SETTINGS_ROUTE_TABS_MARGIN}
+                mb={SETTINGS_ROUTE_TABS_MARGIN}
+              >
+                <Flex flexDirection="row" justifyContent="space-between">
+                  <Box />
+                  <RouterLink
+                    to="/settings/my-collection#download-app-banner"
+                    textDecoration="none"
+                  >
+                    <Text mx={1}>
+                      Access all the My Collection features on the Artsy app.
+                      Coming soon also on web.
+                    </Text>
+                  </RouterLink>
+
+                  <Clickable onClick={dismissMyCollectionMessage}>
+                    <CloseIcon />
+                  </Clickable>
+                </Flex>
+              </Message>
+            </FullBleed>
           )}
 
           <Text variant="lg-display" mb={4}>
@@ -115,6 +125,8 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     artwork={artwork}
                     hideSaleInfo
                     showSaveButton={false}
+                    showHoverDetails={false}
+                    disableRouterLinking
                   />
 
                   <Spacer mt={4} />

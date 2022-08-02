@@ -14,13 +14,14 @@ import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 
 interface DetailsProps {
   artwork: Details_artwork
+  contextModule?: AuthContextModule
   includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean
   hidePartnerName?: boolean
   isHovered?: boolean
+  showHoverDetails?: boolean
   showSaveButton?: boolean
-  contextModule?: AuthContextModule
 }
 
 const ConditionalLink: React.FC<
@@ -167,12 +168,13 @@ const BidInfo: React.FC<DetailsProps> = ({
 }
 
 export const Details: React.FC<DetailsProps> = ({
+  contextModule,
   hideArtistName,
   hidePartnerName,
   hideSaleInfo,
   isHovered,
+  showHoverDetails = true,
   showSaveButton,
-  contextModule,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
@@ -214,7 +216,9 @@ export const Details: React.FC<DetailsProps> = ({
       <Box position="relative">
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
-        {isHovered && <HoverDetailsFragmentContainer artwork={rest.artwork} />}
+        {isHovered && showHoverDetails && (
+          <HoverDetailsFragmentContainer artwork={rest.artwork} />
+        )}
       </Box>
       {!hideSaleInfo && <SaleInfoLine {...rest} />}
     </Box>

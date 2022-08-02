@@ -9,17 +9,17 @@ const imageWidth = 450
 const resizeParams = { width: imageWidth, height: imageHeight, quality: 100 }
 
 const howItWorksImage1 = resized(
-  "https://files.artsy.net/images/my-collection-how-it-works-step-1.jpg",
+  "https://files.artsy.net/images/my-coll-how-it-works-step-1.jpg",
   resizeParams
 )
 
 const howItWorksImage2 = resized(
-  "https://files.artsy.net/images/my-collection-how-it-works-step-2.jpg",
+  "https://files.artsy.net/images/my-coll-how-it-works-step-2.jpg",
   resizeParams
 )
 
 const howItWorksImage3 = resized(
-  "https://files.artsy.net/images/my-collection-how-it-works-step-3.jpg",
+  "https://files.artsy.net/images/my-coll-how-it-works-step-3.jpg",
   resizeParams
 )
 

@@ -20,7 +20,7 @@ export const MyCollectionBenefits: React.FC = () => {
     },
   ]
   const image = resized(
-    "https://files.artsy.net/images/my-collection-benefits-img.jpg",
+    "https://files.artsy.net/images/my-coll-benefits-img.jpg",
     {
       width: 910,
       height: 652,
@@ -37,7 +37,7 @@ export const MyCollectionBenefits: React.FC = () => {
             height="100%"
             srcSet={image.srcSet}
             lazyLoad
-            alt="My Collection benefits image"
+            alt="An artwork image"
           />
         </ResponsiveBox>
       </Column>
