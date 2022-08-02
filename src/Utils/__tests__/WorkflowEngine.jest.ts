@@ -28,6 +28,27 @@ describe("WorkflowEngine", () => {
       })
     })
 
+    describe("#back", () => {
+      it("moves through the workflow; stopping at the end", () => {
+        expect(machine.next()).toEqual("second")
+        expect(machine.current()).toEqual("second")
+        expect(machine.next()).toEqual("third")
+        expect(machine.isEnd()).toBe(false)
+        expect(machine.next()).toEqual("fourth")
+        expect(machine.isEnd()).toBe(true)
+        expect(machine.back()).toEqual("third")
+        expect(machine.current()).toEqual("third")
+        expect(machine.isEnd()).toBe(false)
+        expect(machine.back()).toEqual("second")
+        expect(machine.current()).toEqual("second")
+        expect(machine.isEnd()).toBe(false)
+        expect(machine.back()).toEqual("first")
+        expect(machine.current()).toEqual("first")
+        expect(machine.isEnd()).toBe(false)
+        expect(machine.isStart()).toBe(true)
+      })
+    })
+
     describe("#reset", () => {
       it("resets the workflow to the first step", () => {
         expect(machine.current()).toEqual("first")

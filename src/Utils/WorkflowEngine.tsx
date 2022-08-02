@@ -59,6 +59,21 @@ export class WorkflowEngine {
     return current
   }
 
+  back() {
+    let current: string
+
+    if (this.index === 0) {
+      current = this.workflow[0] as string
+    }
+
+    this.index = this.index - 1
+    this.moves = this.moves - 1
+
+    current = this.current()
+
+    return current
+  }
+
   total() {
     const offset = this.moves - this.index
     return this.workflow.length + offset
@@ -66,6 +81,10 @@ export class WorkflowEngine {
 
   position() {
     return this.moves + 1
+  }
+
+  isStart() {
+    return this.index === 0
   }
 
   isEnd() {
