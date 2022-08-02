@@ -3,6 +3,7 @@ import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import { AuctionWorksByFollowedArtistsRail_viewer } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface AuctionWorksByFollowedArtistsRailProps {
   viewer: AuctionWorksByFollowedArtistsRail_viewer
@@ -18,7 +19,7 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
   }
 
   return (
-    <>
+    <ArtworkGridContextProvider isAuctionArtwork hideLotLabel>
       <Rail
         title="Works By Artists You Follow"
         viewAllOnClick={() => {
@@ -37,7 +38,7 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
           })
         }}
       />
-    </>
+    </ArtworkGridContextProvider>
   )
 }
 
