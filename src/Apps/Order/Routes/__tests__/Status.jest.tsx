@@ -40,7 +40,6 @@ const testOrder: StatusQueryRawResponse["order"] = {
 
 describe("Status", () => {
   let isEigen
-  const pushMock = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -50,10 +49,7 @@ describe("Status", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <MockBoot context={{ isEigen }}>
-        <StatusFragmentContainer
-          {...props}
-          router={{ push: pushMock } as any}
-        />
+        <StatusFragmentContainer {...props} />
       </MockBoot>
     ),
     query: graphql`
