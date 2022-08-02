@@ -4,7 +4,7 @@ import { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { Router } from "found"
-import { Component } from "react"
+import { FC } from "react"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { StepSummaryItem } from "Components/StepSummaryItem"
 import { Media } from "Utils/Responsive"
@@ -15,21 +15,26 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 interface RejectProps {
   order: Reject_order
-  relay?: RelayProp
   router: Router
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
 }
 
-export class Reject extends Component<RejectProps> {
-  rejectOffer(variables: RejectOfferMutation["variables"]) {
-    return this.props.commitMutation<RejectOfferMutation>({
+export const Reject: FC<RejectProps> = ({
+  order,
+  router,
+  dialog,
+  commitMutation,
+  isCommittingMutation,
+}) => {
+  const rejectOffer = (variables: RejectOfferMutation["variables"]) => {
+    return commitMutation<RejectOfferMutation>({
       variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
@@ -59,12 +64,12 @@ export class Reject extends Component<RejectProps> {
     })
   }
 
-  onSubmit = async () => {
+  const onSubmit = async () => {
     try {
       const orderOrError = (
-        await this.rejectOffer({
+        await rejectOffer({
           input: {
-            offerId: this.props.order.lastOffer?.internalID!,
+            offerId: order.lastOffer?.internalID!,
           },
         })
       ).commerceBuyerRejectOffer?.orderOrError
@@ -73,95 +78,90 @@ export class Reject extends Component<RejectProps> {
         throw orderOrError.error
       }
 
-      this.props.router.push(`/orders/${this.props.order.internalID}/status`)
+      router.push(`/orders/${order.internalID}/status`)
     } catch (error) {
       logger.error(error)
-      this.props.dialog.showErrorDialog()
+      dialog.showErrorDialog()
     }
   }
 
-  onChangeResponse = () => {
-    const { order } = this.props
-    this.props.router.push(`/orders/${order.internalID}/respond`)
+  const onChangeResponse = () => {
+    router.push(`/orders/${order.internalID}/respond`)
   }
 
-  render() {
-    const { order, isCommittingMutation } = this.props
-
-    return (
-      <OrderRouteContainer
-        currentStep="Review"
-        steps={counterofferFlowSteps}
-        content={
-          <Flex
-            flexDirection="column"
-            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-          >
-            <Media at="xs">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-              </Flex>
-              <Spacer mb={2} />
-            </Media>
+  return (
+    <OrderRouteContainer
+      currentStep="Review"
+      steps={counterofferFlowSteps}
+      content={
+        <Flex
+          flexDirection="column"
+          style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+        >
+          <Media at="xs">
             <Flex flexDirection="column">
-              <CountdownTimer
-                action="Respond"
-                note="Expired offers end the negotiation process permanently."
-                countdownStart={order.lastOffer?.createdAt!}
-                countdownEnd={order.stateExpiresAt!}
-              />
-              <StepSummaryItem
-                title="Decline seller's offer"
-                onChange={this.onChangeResponse}
-              >
-                <Text variant="xs" color="black60">
-                  Declining an offer permanently ends the negotiation process.
-                  The seller will not be able to make a counteroffer.
-                </Text>
-              </StepSummaryItem>
+              <ArtworkSummaryItem order={order} />
             </Flex>
-            <Spacer mb={[2, 4]} />
-            <Media greaterThan="xs">
+            <Spacer mb={2} />
+          </Media>
+          <Flex flexDirection="column">
+            <CountdownTimer
+              action="Respond"
+              note="Expired offers end the negotiation process permanently."
+              countdownStart={order.lastOffer?.createdAt!}
+              countdownEnd={order.stateExpiresAt!}
+            />
+            <StepSummaryItem
+              title="Decline seller's offer"
+              onChange={onChangeResponse}
+            >
+              <Text variant="xs" color="black60">
+                Declining an offer permanently ends the negotiation process. The
+                seller will not be able to make a counteroffer.
+              </Text>
+            </StepSummaryItem>
+          </Flex>
+          <Spacer mb={[2, 4]} />
+          <Media greaterThan="xs">
+            <Button
+              onClick={onSubmit}
+              loading={isCommittingMutation}
+              variant="primaryBlack"
+              width="50%"
+            >
+              Submit
+            </Button>
+            <Spacer mb={2} />
+            <ConditionsOfSaleDisclaimer />
+          </Media>
+        </Flex>
+      }
+      sidebar={
+        <Flex flexDirection="column">
+          <Media greaterThan="xs">
+            <Flex flexDirection="column">
+              <ArtworkSummaryItem order={order} />
+            </Flex>
+            <Spacer mb={2} />
+          </Media>
+          <Media at="xs">
+            <>
               <Button
-                onClick={this.onSubmit}
+                onClick={onSubmit}
                 loading={isCommittingMutation}
                 variant="primaryBlack"
-                width="50%"
+                width="100%"
               >
                 Submit
               </Button>
               <Spacer mb={2} />
               <ConditionsOfSaleDisclaimer />
-            </Media>
-          </Flex>
-        }
-        sidebar={
-          <Flex flexDirection="column">
-            <Media greaterThan="xs">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-              </Flex>
-              <Spacer mb={2} />
-            </Media>
-            <Media at="xs">
-              <>
-                <Button
-                  onClick={this.onSubmit}
-                  loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="100%"
-                >
-                  Submit
-                </Button>
-                <Spacer mb={2} />
-                <ConditionsOfSaleDisclaimer />
-              </>
-            </Media>
-          </Flex>
-        }
-      />
-    )
-  }
+            </>
+          </Media>
+        </Flex>
+      }
+    />
+  )
 }
 
 export const RejectFragmentContainer = createFragmentContainer(
