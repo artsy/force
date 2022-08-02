@@ -1,4 +1,3 @@
-import { StringDecoder } from "string_decoder"
 import { logFormat } from "../morgan"
 
 const mockUrl = jest.fn()
