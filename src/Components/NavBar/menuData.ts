@@ -58,7 +58,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/contemporary-now",
             },
             {
-              text: "Women Artists Now",
+              text: "Women Artists to Watch",
               href: "/collection/women-artists-to-watch",
             },
           ],
