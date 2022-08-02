@@ -1,26 +1,25 @@
-import { FC, Fragment, useEffect, useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import {
+  Clickable,
+  CloseIcon,
+  Flex,
+  FullBleed,
+  Message,
   Spacer,
   Sup,
   Text,
-  Box,
-  CloseIcon,
-  Flex,
-  Message,
-  FullBleed,
-  Clickable,
 } from "@artsy/palette"
-import { Masonry } from "Components/Masonry"
-import { extractNodes } from "Utils/extractNodes"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
+import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { FC, Fragment, useEffect, useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RouterLink } from "System/Router/RouterLink"
+import { extractNodes } from "Utils/extractNodes"
+import { useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
-import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
-import { RouterLink } from "System/Router/RouterLink"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -89,8 +88,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                 mt={-SETTINGS_ROUTE_TABS_MARGIN}
                 mb={SETTINGS_ROUTE_TABS_MARGIN}
               >
-                <Flex flexDirection="row" justifyContent="space-between">
-                  <Box />
+                <Flex flexDirection="row" justifyContent="center">
                   <RouterLink
                     to="/settings/my-collection#download-app-banner"
                     textDecoration="none"
@@ -101,7 +99,13 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     </Text>
                   </RouterLink>
 
-                  <Clickable onClick={dismissMyCollectionMessage}>
+                  <Clickable
+                    onClick={dismissMyCollectionMessage}
+                    position="absolute"
+                    top={0}
+                    right={0}
+                    p={1}
+                  >
                     <CloseIcon />
                   </Clickable>
                 </Flex>
