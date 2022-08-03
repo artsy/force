@@ -137,10 +137,9 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
-    environment:
-      - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+    parallelism: 4
     steps:
-      - run: yarn test
+      - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
 
   type-check:
     docker:
