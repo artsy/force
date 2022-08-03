@@ -1,17 +1,16 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, ResponsiveBox } from "@artsy/palette"
-import { GridItem_artwork } from "__generated__/GridItem_artwork.graphql"
-import { useSystemContext } from "System"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { userIsTeam } from "Utils/user"
-import Badge from "./Badge"
-import Metadata from "./Metadata"
+import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped, resized } from "Utils/resized"
-import { useHoverMetadata } from "./useHoverMetadata"
+import { userIsTeam } from "Utils/user"
+import { GridItem_artwork } from "__generated__/GridItem_artwork.graphql"
 import { MagnifyImage } from "../MagnifyImage"
-import { useRouter } from "System/Router/useRouter"
+import Badge from "./Badge"
+import Metadata from "./Metadata"
+import { useHoverMetadata } from "./useHoverMetadata"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
@@ -48,8 +47,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     ? transform(imageURL, { width, height })
     : { src: "", srcSet: "" }
 
-  const { match } = useRouter()
-
   const handleClick = () => {
     onClick?.()
   }
@@ -85,7 +82,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
       >
         <LinkContainer
-          to={disableRouterLinking ? match.location.pathname : artwork.href}
+          to={disableRouterLinking ? null : artwork.href}
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
           position={imageURL ? "absolute" : "relative"}
@@ -137,7 +134,7 @@ const Link = styled(RouterLink)`
 `
 
 const DisabledLink = styled(Link)`
-  cursor: not-allowed;
+  cursor: default;
 `
 
 export const ArtworkGridItemFragmentContainer = createFragmentContainer(
