@@ -14,7 +14,6 @@ import { ShippingSummaryItemFragmentContainer } from "Apps/Order/Components/Ship
 import { TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "Components/CountdownTimer"
 import { RootTestPage, expectOne } from "DevTools/RootTestPage"
-import { StyledBorderedRadio } from "../../Payment/PaymentContent"
 
 export class OrderAppTestPage extends RootTestPage {
   /** COMPONENT SELECTORS **/
@@ -110,7 +109,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   async selectPaymentMethod(option: number) {
-    this.find(StyledBorderedRadio).at(option).simulate("click")
+    this.find("label#payment-method").at(option).simulate("click")
     await this.update()
   }
 
