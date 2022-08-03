@@ -358,7 +358,20 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/shipping`)
   }
 
-  const { order, isCommittingMutation, isEigen } = props
+  const { order, isCommittingMutation, isEigen, stripe } = props
+  const submittable = !!stripe
+
+  const SubmitButton: FC = () => (
+    <Button
+      variant="primaryBlack"
+      width="100%"
+      loading={isCommittingMutation}
+      disabled={!submittable}
+      onClick={() => onSubmit()}
+    >
+      Submit
+    </Button>
+  )
 
   return (
     <Box data-test="orderReview">
@@ -374,14 +387,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               </Message>
               {isEigen && (
                 <>
-                  <Button
-                    variant="primaryBlack"
-                    width="100%"
-                    loading={isCommittingMutation}
-                    onClick={() => onSubmit()}
-                  >
-                    Submit
-                  </Button>
+                  <SubmitButton />
                   <ConditionsOfSaleDisclaimer paddingY={2} textAlign="start" />
                 </>
               )}
@@ -406,14 +412,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             <Media greaterThan="xs">
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
               <Spacer mb={4} />
-              <Button
-                variant="primaryBlack"
-                width="50%"
-                loading={isCommittingMutation}
-                onClick={() => onSubmit()}
-              >
-                Submit
-              </Button>
+              <SubmitButton />
               <Spacer mb={2} />
               <ConditionsOfSaleDisclaimer />
             </Media>
@@ -434,14 +433,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             />
             <Spacer mb={[2, 4]} />
             <Media at="xs">
-              <Button
-                variant="primaryBlack"
-                width="100%"
-                loading={isCommittingMutation}
-                onClick={() => onSubmit()}
-              >
-                Submit
-              </Button>
+              <SubmitButton />
               <Spacer mb={2} />
               <ConditionsOfSaleDisclaimer />
             </Media>
