@@ -3,10 +3,16 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
   aws-s3: circleci/aws-s3@2.0.0
+  cypress: cypress-io/cypress@2.1.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.10.1
   yarn: artsy/yarn@6.2.0
+
+executors:
+  cypress-executor:
+    docker:
+      - image: cypress/base:16.13.0
 
 jobs:
   run_deepcrawl_automator:
@@ -349,6 +355,14 @@ workflows:
           context: hokusai
           requires:
             - builder-image-push
+
+      - cypress/run:
+          <<: *not_staging_or_release
+          name: smoke-tests
+          executor: cypress-executor
+          yarn: true
+          start: NODE_ENV=development yarn start
+          wait-on: "http://localhost:5000"
 
       - acceptance:
           <<: *not_staging_or_release
