@@ -10,9 +10,11 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],
   testEnvironment: "jest-environment-jsdom",
   testMatch: ["**/src/**/*.jest.(ts|tsx)"],
-  testURL: "http://localhost",
+  testEnvironmentOptions: {
+    url: "http://localhost",
+  },
   transform: {
-    "\\.(gql|graphql)$": "jest-transform-graphql",
+    "\\.(gql|graphql)$": "@graphql-tools/jest-transform",
     "(ts|tsx|js|jsx)$": "babel-jest",
   },
 }
