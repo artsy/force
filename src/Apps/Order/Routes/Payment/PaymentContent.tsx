@@ -209,7 +209,7 @@ const USBankOnlyLabel = styled(Text)`
   align-self: center;
 `
 
-const RadioWithLabel = styled(BorderedRadio)`
+export const StyledBorderedRadio = styled(BorderedRadio)`
   div {
     flex-direction: row;
     .jDlIOQ {
@@ -228,7 +228,7 @@ const getAvailablePaymentMethods = (
 ): ReactElement<RadioProps>[] => {
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
-    <BorderedRadio
+    <StyledBorderedRadio
       key="CREDIT_CARD"
       value={paymentMethod}
       label={
@@ -243,7 +243,7 @@ const getAvailablePaymentMethods = (
   // push wire transfer as the last option
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
-      <BorderedRadio
+      <StyledBorderedRadio
         key="WIRE_TRANSFER"
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
@@ -259,7 +259,7 @@ const getAvailablePaymentMethods = (
   // when available, unshift ACH since it's the first option we want to offer
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
-      <RadioWithLabel
+      <StyledBorderedRadio
         key="US_BANK_ACCOUNT"
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
@@ -272,7 +272,7 @@ const getAvailablePaymentMethods = (
         <USBankOnlyLabel ml={0.5} variant="xs">
           US bank account only
         </USBankOnlyLabel>
-      </RadioWithLabel>
+      </StyledBorderedRadio>
     )
   }
 

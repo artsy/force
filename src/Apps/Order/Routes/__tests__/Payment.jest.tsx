@@ -18,6 +18,7 @@ import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ReactWrapper } from "enzyme"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -354,12 +355,14 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      page.selectPaymentMethod(3)
+      page.selectPaymentMethod(0)
       const creditCardCollapse = page
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
-      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      const bankDebitCollapse = page
+        .find(BankAccountPickerFragmentContainer)
+        .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
 
