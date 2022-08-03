@@ -134,7 +134,7 @@ const Link = styled(RouterLink)`
 `
 
 const DisabledLink = styled(Link)`
-  cursor: not-allowed;
+  cursor: default;
 `
 
 export const ArtworkGridItemFragmentContainer = createFragmentContainer(
