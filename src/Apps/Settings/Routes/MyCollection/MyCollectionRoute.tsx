@@ -96,8 +96,11 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     textDecoration="none"
                   >
                     <Text mx={1}>
-                      Access all the My Collection features on the Artsy app.
-                      Coming soon also on web.
+                      Access all the My Collection features on the{" "}
+                      <Clickable color="blue100" textDecoration="underline">
+                        Artsy app
+                      </Clickable>
+                      . Coming soon also on web.
                     </Text>
                   </RouterLink>
 
