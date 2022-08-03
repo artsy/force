@@ -15,7 +15,7 @@ import { Media } from "Utils/Responsive"
 const image = resized(
   "https://files.artsy.net/images/my-coll-get-app-img.jpg",
   {
-    width: 910,
+    width: 770,
     height: 652,
   }
 )
@@ -78,7 +78,7 @@ const DesktopLayout: React.FC = () => {
       </Column>
 
       <Column span={6}>
-        <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
+        <ResponsiveBox aspectHeight={652} aspectWidth={770} maxWidth="100%">
           <Image
             src={image.src}
             width="100%"
@@ -97,7 +97,7 @@ const MobileLayout: React.FC = () => {
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={6}>
-        <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
+        <ResponsiveBox aspectHeight={652} aspectWidth={770} maxWidth="100%">
           <Image
             src={image.src}
             width="100%"
