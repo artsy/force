@@ -63,8 +63,8 @@ const DescriptionColumn = () => (
     </Text>
 
     <Text variant="sm" mt={1} mb={4}>
-      Discover all the features of My Collection on the Artsy app. Coming soon:
-      The full range of features will also be available on the website.
+      Discover all the features of My Collection on the Artsy app. Coming soon
+      also on web.
     </Text>
     <AppStoreBadges />
   </>
