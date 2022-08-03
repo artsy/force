@@ -1,4 +1,5 @@
 import { aboutRoutes } from "Apps/About/aboutRoutes"
+import { aboutRoutes2 } from "Apps/About2/aboutRoutes2"
 import { adminRoutes } from "Apps/Admin/adminRoutes"
 import { AppRouteConfig } from "System/Router/Route"
 import { artAppraisalsRoutes } from "Apps/ArtAppraisals/artAppraisalsRoutes"
@@ -50,6 +51,7 @@ import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
     { routes: aboutRoutes },
+    { routes: aboutRoutes2 },
     { routes: adminRoutes },
     { routes: artAppraisalsRoutes },
     { routes: articleRoutes },
