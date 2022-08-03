@@ -109,7 +109,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   async selectPaymentMethod(option: number) {
-    this.find("label#payment-method").at(option).simulate("click")
+    this.find("label.payment-method").at(option).simulate("click")
     await this.update()
   }
 

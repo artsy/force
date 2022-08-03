@@ -212,10 +212,8 @@ const USBankOnlyLabel = styled(Text)`
 const RadioWithLabel = styled(BorderedRadio)`
   div {
     flex-direction: row;
-    .jDlIOQ {
-      flex-grow: 0;
-      white-space: nowrap;
-    }
+    flex-grow: 0;
+    white-space: nowrap;
   }
 `
 
@@ -229,7 +227,7 @@ const getAvailablePaymentMethods = (
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
     <BorderedRadio
-      id="payment-method"
+      className="payment-method"
       key="CREDIT_CARD"
       value={paymentMethod}
       label={
@@ -245,7 +243,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
-        id="payment-method"
+        className="payment-method"
         key="WIRE_TRANSFER"
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
@@ -262,7 +260,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <RadioWithLabel
-        id="payment-method"
+        className="payment-method"
         key="US_BANK_ACCOUNT"
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
