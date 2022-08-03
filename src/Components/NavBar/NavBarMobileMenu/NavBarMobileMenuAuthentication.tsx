@@ -39,10 +39,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         text: "Alerts",
         href: "/settings/alerts",
       },
-      isMyCollectionEnabled && {
-        text: "My Collection",
-        href: "/settings/my-collection",
-      },
       {
         text: "Saves & Follows",
         href: "/settings/saves",
@@ -54,6 +50,10 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       {
         text: "Collector Profile",
         href: "/settings/edit-profile",
+      },
+      isMyCollectionEnabled && {
+        text: "My Collection",
+        href: "/settings/my-collection",
       },
       {
         text: "Settings",
