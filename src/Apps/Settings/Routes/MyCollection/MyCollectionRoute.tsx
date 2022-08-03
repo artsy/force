@@ -14,13 +14,12 @@ import {
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { MetaTags } from "Components/MetaTags"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
-import { RouterLink } from "System/Router/RouterLink"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -30,6 +29,7 @@ interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
+  const { scrollTo } = useScrollTo({ behavior: "smooth" })
 
   useEffect(() => {
     setHasDismissedMessage(
@@ -38,7 +38,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     )
   }, [])
 
-  const { scrollTo } = useScrollToElement({
+  const { scrollTo: scrollToMyCollection } = useScrollToElement({
     selectorOrRef: "#jump--MyCollectionArtworks",
     behavior: "smooth",
     offset: 20,
@@ -58,7 +58,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   const handleClick = (cursor: string, page: number) => {
     setLoading(true)
-    scrollTo()
+    scrollToMyCollection()
 
     relay.refetch({ page }, null, error => {
       if (error) console.error(error)
@@ -91,18 +91,20 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
               >
                 <Flex flexDirection="row" justifyContent="space-between">
                   <Box />
-                  <RouterLink
-                    to="/settings/my-collection#download-app-banner"
-                    textDecoration="none"
-                  >
-                    <Text mx={1}>
-                      Access all the My Collection features on the{" "}
-                      <Clickable color="blue100" textDecoration="underline">
-                        Artsy app
-                      </Clickable>
-                      . Coming soon also on web.
-                    </Text>
-                  </RouterLink>
+                  <Text mx={1}>
+                    Access all the My Collection features on the{" "}
+                    <Clickable
+                      onClick={() => {
+                        scrollTo("#download-app-banner")
+                      }}
+                      color="blue100"
+                      cursor="pointer"
+                      textDecoration="underline"
+                    >
+                      Artsy app
+                    </Clickable>
+                    . Coming soon also on web.
+                  </Text>
 
                   <Clickable onClick={dismissMyCollectionMessage}>
                     <CloseIcon />
