@@ -108,8 +108,18 @@ export class OrderAppTestPage extends RootTestPage {
     await this.update()
   }
 
-  async selectPaymentMethod(option: number) {
-    this.find("label.payment-method").at(option).simulate("click")
+  async selectPaymentMethod(paymentMethod: string) {
+    switch (paymentMethod) {
+      case "CreditCard":
+        this.find("label[data-test-id='credit-card']").simulate("click")
+        break
+      case "WireTransfer":
+        this.find("label[data-test-id='wire-transfer']").simulate("click")
+        break
+      case "USBankAccount":
+        this.find("label[data-test-id='us-bank-account']").simulate("click")
+        break
+    }
     await this.update()
   }
 

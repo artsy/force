@@ -227,7 +227,7 @@ const getAvailablePaymentMethods = (
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
     <BorderedRadio
-      className="payment-method"
+      data-test-id="credit-card"
       key="CREDIT_CARD"
       value={paymentMethod}
       label={
@@ -243,7 +243,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
-        className="payment-method"
+        data-test-id="wire-transfer"
         key="WIRE_TRANSFER"
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
@@ -260,7 +260,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <RadioWithLabel
-        className="payment-method"
+        data-test-id="us-bank-account"
         key="US_BANK_ACCOUNT"
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={

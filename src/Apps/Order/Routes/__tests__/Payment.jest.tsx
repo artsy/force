@@ -319,7 +319,7 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the credit card payment method", async () => {
-      page.selectPaymentMethod(1)
+      page.selectPaymentMethod("CreditCard")
 
       expect(trackEvent).toHaveBeenLastCalledWith({
         action: "clickedPaymentMethod",
@@ -334,8 +334,8 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the bank payment method", async () => {
-      page.selectPaymentMethod(1)
-      page.selectPaymentMethod(0)
+      page.selectPaymentMethod("CreditCard")
+      page.selectPaymentMethod("USBankAccount")
 
       // We toggle back and forth to test the selecttion starting from bank account
       expect(
@@ -344,7 +344,7 @@ describe("Payment", () => {
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
-      page.selectPaymentMethod(1)
+      page.selectPaymentMethod("CreditCard")
 
       const creditCardCollapse = page
         .find(CreditCardPickerFragmentContainer)
@@ -355,7 +355,7 @@ describe("Payment", () => {
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
-      page.selectPaymentMethod(0)
+      page.selectPaymentMethod("USBankAccount")
       const creditCardCollapse = page
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
@@ -367,7 +367,7 @@ describe("Payment", () => {
     })
 
     it("renders description body for bank transfer when selected", async () => {
-      page.selectPaymentMethod(0)
+      page.selectPaymentMethod("USBankAccount")
 
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
@@ -407,7 +407,7 @@ describe("Payment", () => {
     })
 
     it("renders description body for wire transfer when selected", async () => {
-      await page.selectPaymentMethod(1)
+      await page.selectPaymentMethod("WireTransfer")
 
       expect(page.text()).toContain(
         "• To pay by wire transfer, complete checkout"
@@ -418,7 +418,7 @@ describe("Payment", () => {
     })
 
     it("transitions to review step when wire transfer is chosen", async () => {
-      await page.selectPaymentMethod(0)
+      await page.selectPaymentMethod("CreditCard")
       const submitMutationMock = jest.fn().mockResolvedValue({
         commerceSetPayment: {
           orderOrError: {
@@ -430,7 +430,7 @@ describe("Payment", () => {
         submitMutation: submitMutationMock,
       }))
 
-      await page.selectPaymentMethod(1)
+      await page.selectPaymentMethod("WireTransfer")
       await page.clickSubmit()
 
       expect(submitMutationMock).toHaveBeenCalledWith({
@@ -466,7 +466,7 @@ describe("Payment", () => {
     })
 
     it("works correctly with ACH", () => {
-      page.selectPaymentMethod(0)
+      page.selectPaymentMethod("USBankAccount")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedPaymentMethod",
@@ -481,7 +481,7 @@ describe("Payment", () => {
     })
 
     it("works correctly with Credit Card", () => {
-      page.selectPaymentMethod(1)
+      page.selectPaymentMethod("CreditCard")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedPaymentMethod",
@@ -496,7 +496,7 @@ describe("Payment", () => {
     })
 
     it("works correctly with Wire Transfer", () => {
-      page.selectPaymentMethod(2)
+      page.selectPaymentMethod("WireTransfer")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedPaymentMethod",
