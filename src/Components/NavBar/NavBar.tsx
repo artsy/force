@@ -436,6 +436,7 @@ export const NavBar: React.FC = track(
                     scrollIntoView({
                       selector: "#download-app-banner",
                       behavior: "smooth",
+                      offset: 100,
                     })
                   }}
                 >
