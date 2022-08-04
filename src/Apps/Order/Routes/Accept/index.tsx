@@ -59,7 +59,6 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
       variables: {
         input: { offerId: order.lastOffer?.internalID },
       },
-      // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation AcceptOfferMutation($input: CommerceBuyerAcceptOfferInput!) {
           commerceBuyerAcceptOffer(input: $input) {
@@ -140,7 +139,6 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
   ) => {
     return commitMutation<AcceptRouteSetOrderPaymentMutation>({
       variables,
-      // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation AcceptRouteSetOrderPaymentMutation(
           $input: CommerceFixFailedPaymentInput!
