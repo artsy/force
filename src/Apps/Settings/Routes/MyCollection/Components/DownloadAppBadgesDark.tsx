@@ -7,13 +7,13 @@ import {
 } from "Utils/Hooks/useDeviceDetection"
 
 export const DownloadAppBadgesDark: React.FC = () => {
-  const { device } = useDeviceDetection()
+  const { device: deviceOS } = useDeviceDetection()
 
-  if (device === Device.Android) {
+  if (deviceOS === Device.Android) {
     return <PlayStoreBadge />
   }
 
-  if (device === Device.iPhone) {
+  if (deviceOS === Device.iPhone) {
     return <AppStoreBadge />
   }
 
