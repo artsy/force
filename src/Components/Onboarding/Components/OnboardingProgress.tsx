@@ -24,10 +24,11 @@ export const OnboardingProgress: FC<OnboardingProgressProps> = ({
     <Box position="relative">
       <BackLink
         to="/"
-        top={-20}
-        left={-5}
+        top={-19}
+        left={-17}
         position="absolute"
         textDecoration="none"
+        fontWeight="regular"
         onClick={event => {
           event.preventDefault()
           back()

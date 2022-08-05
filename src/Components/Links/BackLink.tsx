@@ -1,10 +1,17 @@
 import * as React from "react"
-import { BoxProps, ChevronIcon, Text, boxMixin } from "@artsy/palette"
+import {
+  BoxProps,
+  ChevronIcon,
+  Text,
+  boxMixin,
+  TextProps,
+} from "@artsy/palette"
 import { StyledLink } from "./StyledLink"
 import { RouterLinkProps } from "System/Router/RouterLink"
 import styled from "styled-components"
 
-type BackLinkProps = RouterLinkProps & BoxProps
+type BackLinkProps = RouterLinkProps &
+  BoxProps & { fontWeight?: TextProps["fontWeight"] }
 
 const Container = styled(StyledLink)`
   display: flex;
@@ -32,7 +39,7 @@ export const BackLink: React.FC<BackLinkProps> = ({
 
       <Text
         variant="sm"
-        fontWeight="bold"
+        fontWeight={rest.fontWeight ?? "bold"}
         lineHeight="solid"
         // HACK: Visually align with the chevron because
         // Unica's baseline is abnormally high
