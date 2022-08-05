@@ -11,25 +11,18 @@ const image = resized(
   }
 )
 
-const DescriptionColumn = () => (
-  <>
-    <Text variant={["lg", "lg", "xxl"]} mt={1}>
-      Get More from My Collection on the App
-    </Text>
-
-    <Text variant="sm" mt={1} mb={4}>
-      Discover all the features of My Collection on the Artsy app. Coming soon
-      also on web.
-    </Text>
-    <DownloadAppBadgesDark />
-  </>
-)
-
 const DesktopLayout: React.FC = () => {
   return (
-    <GridColumns gridRowGap={4} alignItems="center">
+    <GridColumns mb={12} gridRowGap={4} alignItems="center">
       <Column span={6}>
-        <DescriptionColumn />
+        <Text variant="xxl">Get More from My Collection on the App</Text>
+
+        <Text variant="sm" mt={2} mb={6}>
+          Discover all the features of My Collection on the Artsy app. Coming
+          soon also on web.
+        </Text>
+
+        <DownloadAppBadgesDark />
       </Column>
 
       <Column span={6}>
@@ -50,7 +43,7 @@ const DesktopLayout: React.FC = () => {
 
 const MobileLayout: React.FC = () => {
   return (
-    <GridColumns gridRowGap={4} alignItems="center">
+    <GridColumns gridRowGap={2} alignItems="center">
       <Column span={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={770} maxWidth="100%">
           <Image
@@ -63,8 +56,18 @@ const MobileLayout: React.FC = () => {
           />
         </ResponsiveBox>
       </Column>
+
       <Column span={6}>
-        <DescriptionColumn />
+        <DownloadAppBadgesDark justifyContent="center" />
+
+        <Text variant="xl" mt={2}>
+          Get More from My Collection on the App
+        </Text>
+
+        <Text variant="sm" mt={0.5}>
+          Discover all the features of My Collection on the Artsy app. Coming
+          soon also on web.
+        </Text>
       </Column>
     </GridColumns>
   )
