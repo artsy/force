@@ -149,10 +149,11 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
+    parallelism: 4
     environment:
       - EXPERIMENTAL_SWC_COMPILER: true
     steps:
-      - run: yarn test
+      - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
 
   type-check:
     docker:
