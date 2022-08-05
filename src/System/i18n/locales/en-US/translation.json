@@ -9,7 +9,7 @@
     "auctions": "Auctions",
     "fairs": "Fairs",
     "museums": "Museums",
-    "viewingRooms": "Viewing Rooms",
+    "viewingRooms": "Viewing Rooms {{example}}  and this one has a parameter",
     "nfts": "NFTs",
     "signup": "Sign Up",
     "login": "Log In",
@@ -18,7 +18,9 @@
     "editorial": "Editorial",
     "downloadApp": "Download Apps",
     "searchBy": "Search by artist, gallery, style, theme, tag, etc.",
-    "searchArtsy": "Search Artsy"
+    "searchArtsy": "Search Artsy",
+    "artworks_one": "Single artwork",
+    "artworks_other": "Several artworks"
   },
   "specialists": {
     "auctions": "Auctions",
