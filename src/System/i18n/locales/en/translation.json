@@ -9,7 +9,7 @@
     "auctions": "Auctions",
     "fairs": "Fairs",
     "museums": "Museums",
-    "viewingRooms": "Viewing Rooms",
+    "viewingRooms": "Viewing Rooms {{example}}",
     "nfts": "NFTs",
     "signup": "Sign Up",
     "login": "Log In",
