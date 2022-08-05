@@ -112,6 +112,7 @@ COPY .env.oss \
   .eslintrc.js \
   .nvmrc \
   .prettierignore \
+  .swcrc.js \
   apollo.config.js \
   babel.config.js \
   cypress.json \

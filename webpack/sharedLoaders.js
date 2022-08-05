@@ -2,6 +2,18 @@
 
 import path from "path"
 import { basePath, webpackEnv } from "./webpackEnv"
+import swcConfig from "../.swcrc.js"
+
+export const swcLoader = {
+  include: path.resolve(basePath, "src"),
+  test: /(\.(js|ts)x?$)/,
+  use: [
+    {
+      loader: "swc-loader",
+      options: swcConfig,
+    },
+  ],
+}
 
 export const babelLoader = {
   exclude: /(node_modules)/,
