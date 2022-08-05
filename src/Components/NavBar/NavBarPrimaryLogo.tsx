@@ -2,7 +2,6 @@ import * as React from "react"
 import { ArtsyMarkIcon } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { themeGet } from "@styled-system/theme-get"
 
 export const NavBarPrimaryLogo: React.FC<Omit<
   RouterLinkProps,
@@ -23,13 +22,5 @@ const HitArea = styled(RouterLink)`
 
   > svg {
     box-sizing: content-box;
-  }
-
-  &:focus {
-    outline: none;
-
-    > svg {
-      fill: ${themeGet("colors.brand")};
-    }
   }
 `
