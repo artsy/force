@@ -14,7 +14,7 @@ export const HomeWorksForYouTabBar: React.FC = () => {
 
   return (
     <Tabs>
-      <Tab name="New Works For You">
+      <Tab name="New Works for You">
         <HomeNewWorksForYouRailQueryRenderer />
       </Tab>
       <Tab name="New Works by Artists You Follow">

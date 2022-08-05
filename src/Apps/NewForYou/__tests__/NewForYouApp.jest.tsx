@@ -38,7 +38,7 @@ describe("NewForYouApp", () => {
     renderWithRelay()
 
     expect(screen.getByText("MetaTags")).toBeInTheDocument()
-    expect(screen.getByText("New Works For You")).toBeInTheDocument()
+    expect(screen.getByText("New Works for You")).toBeInTheDocument()
   })
 
   it("displays expected messaging for logged out users", () => {
