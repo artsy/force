@@ -1,16 +1,7 @@
-import {
-  Box,
-  Column,
-  Flex,
-  GridColumns,
-  Image,
-  ResponsiveBox,
-  Spacer,
-  Text,
-} from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
+import { Column, GridColumns, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
+import { DownloadAppBadgesDark } from "./DownloadAppBadgesDark"
 
 const image = resized(
   "https://files.artsy.net/images/my-coll-get-app-img.jpg",
@@ -18,42 +9,6 @@ const image = resized(
     width: 770,
     height: 652,
   }
-)
-
-const AppStoreBadges = () => (
-  <Flex>
-    <RouterLink
-      to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
-      target="_blank"
-    >
-      <Box width={120} height={40}>
-        <Image
-          src="https://files.artsy.net/images/download-ios-app.svg"
-          width="100%"
-          height="100%"
-          alt="ios app store button"
-          loading="lazy"
-        />
-      </Box>
-    </RouterLink>
-
-    <Spacer ml={2} />
-
-    <RouterLink
-      to={"https://play.google.com/store/apps/details?id=net.artsy.app"}
-      target="_blank"
-    >
-      <Box width={120} height={40}>
-        <Image
-          src="https://files.artsy.net/images/download-android-app.svg"
-          width="100%"
-          height="100%"
-          alt="android play store button"
-          loading="lazy"
-        />
-      </Box>
-    </RouterLink>
-  </Flex>
 )
 
 const DescriptionColumn = () => (
@@ -66,7 +21,7 @@ const DescriptionColumn = () => (
       Discover all the features of My Collection on the Artsy app. Coming soon
       also on web.
     </Text>
-    <AppStoreBadges />
+    <DownloadAppBadgesDark />
   </>
 )
 
