@@ -72,6 +72,7 @@ const reducer = (onReset: () => void) => (state: State, action: Action) => {
 }
 
 const OnboardingContext = createContext<{
+  back(): void
   current: string
   dispatch: React.Dispatch<Action>
   next(): void
@@ -81,6 +82,7 @@ const OnboardingContext = createContext<{
   state: State
   workflowEngine: WorkflowEngine
 }>({
+  back: () => {},
   current: "",
   dispatch: () => {},
   next: () => {},
@@ -115,7 +117,7 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
     }
   }
 
-  const { workflowEngine, current, next, reset: __reset__ } = useConfig({
+  const { workflowEngine, back, current, next, reset: __reset__ } = useConfig({
     basis,
     onClose,
   })
@@ -132,6 +134,7 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   return (
     <OnboardingContext.Provider
       value={{
+        back,
         current,
         dispatch,
         next,
