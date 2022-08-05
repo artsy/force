@@ -27,6 +27,10 @@ import {
 
 console.log("\n[Force] Building client-side development code...\n")
 
+if (webpackEnv.experimentalSWCCompiler) {
+  console.log("[Force] Experimental SWC Compiler is enabled.\n")
+}
+
 export const clientDevelopmentConfig = () => {
   return {
     cache,

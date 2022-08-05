@@ -130,6 +130,7 @@ jobs:
               ./scripts/build_review_app.sh $review_app_name
             fi
 
+  # TODO: Experiment. Remove when done testing SWC compiler
   test:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
@@ -138,20 +139,9 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     parallelism: 4
-    steps:
-      - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
-
-  # TODO: Experiment. Remove when done testing SWC compiler
-  test-swc:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    parallelism: 4
     environment:
-      - EXPERIMENTAL_SWC_COMPILER: true
+      # TODO: Remove this flag once things have stabilized
+      - EXPERIMENTAL_SWC_COMPILER_DISABLED: false
     steps:
       - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
 
@@ -341,13 +331,6 @@ workflows:
 
       # Test steps
       - test:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - builder-image-push
-
-      # FIXME: Remove this test job
-      - test-swc:
           <<: *not_staging_or_release
           context: hokusai
           requires:
