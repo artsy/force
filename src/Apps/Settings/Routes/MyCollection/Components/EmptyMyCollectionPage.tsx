@@ -5,7 +5,7 @@ import { MyCollectionBenefits } from "./MyCollectionBenefits"
 
 export const EmptyMyCollectionPage: React.FC = () => {
   return (
-    <Join separator={<Spacer my={12} />}>
+    <Join separator={<Spacer my={6} />}>
       <MyCollectionAppDownload />
       <MyCollectionBenefits />
       <HowMyCollectionWorks />

@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Spacer } from "@artsy/palette"
+import { Box, Flex, FlexProps, Image, Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import {
   useDeviceDetection,
@@ -6,24 +6,28 @@ import {
   DOWNLOAD_APP_URLS,
 } from "Utils/Hooks/useDeviceDetection"
 
-export const DownloadAppBadgesDark: React.FC = () => {
+export const DownloadAppBadgesDark: React.FC<FlexProps> = ({
+  justifyContent,
+}) => {
   const { device: deviceOS } = useDeviceDetection()
 
-  if (deviceOS === Device.Android) {
-    return <PlayStoreBadge />
-  }
+  if (deviceOS === Device.Unknown) {
+    return (
+      <Flex justifyContent={justifyContent}>
+        <AppStoreBadge />
 
-  if (deviceOS === Device.iPhone) {
-    return <AppStoreBadge />
+        <Spacer ml={2} />
+
+        <PlayStoreBadge />
+      </Flex>
+    )
   }
 
   return (
-    <Flex>
-      <AppStoreBadge />
+    <Flex justifyContent={justifyContent}>
+      {deviceOS === Device.Android && <PlayStoreBadge />}
 
-      <Spacer ml={2} />
-
-      <PlayStoreBadge />
+      {deviceOS === Device.iPhone && <AppStoreBadge />}
     </Flex>
   )
 }

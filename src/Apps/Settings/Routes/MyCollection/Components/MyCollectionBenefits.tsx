@@ -28,7 +28,7 @@ export const MyCollectionBenefits: React.FC = () => {
   )
 
   const DesktopLayout = () => (
-    <GridColumns gridRowGap={[4, 6]}>
+    <GridColumns mb={12} gridRowGap={[4, 6]}>
       <Column span={6}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
@@ -45,9 +45,9 @@ export const MyCollectionBenefits: React.FC = () => {
       <Column span={6}>
         {infos.map(info => (
           <>
-            <Text variant="lg">{info.title}</Text>
+            <Text variant="xl">{info.title}</Text>
 
-            <Text variant="sm" mb={2}>
+            <Text variant="sm" mb={4}>
               {info.subtitle}
             </Text>
           </>
@@ -61,16 +61,16 @@ export const MyCollectionBenefits: React.FC = () => {
       <Column span={6}>
         {infos.map(info => (
           <>
-            <Text variant="lg">{info.title}</Text>
+            <Text variant="xl">{info.title}</Text>
 
-            <Text variant="sm" mb={2}>
+            <Text variant="sm" mt={0.5} mb={4}>
               {info.subtitle}
             </Text>
           </>
         ))}
       </Column>
 
-      <Column span={6}>
+      <Column span={6} mb={2}>
         <ResponsiveBox aspectHeight={652} aspectWidth={910} maxWidth="100%">
           <Image
             src={image.src}
