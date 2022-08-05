@@ -1,4 +1,5 @@
-import { ProgressBar } from "@artsy/palette"
+import { Box, ProgressBar } from "@artsy/palette"
+import { BackLink } from "Components/Links/BackLink"
 import { FC } from "react"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
@@ -10,7 +11,7 @@ interface OnboardingProgressProps {
 export const OnboardingProgress: FC<OnboardingProgressProps> = ({
   preview = false,
 }) => {
-  const { progress, workflowEngine } = useOnboardingContext()
+  const { back, progress, workflowEngine } = useOnboardingContext()
 
   const nextProgress = progress + 100 / workflowEngine.total()
 
@@ -20,11 +21,26 @@ export const OnboardingProgress: FC<OnboardingProgressProps> = ({
   })
 
   return (
-    <ProgressBar
-      width="100%"
-      my={2}
-      transition="transform 250ms"
-      percentComplete={debouncedProgress}
-    />
+    <Box position="relative">
+      <BackLink
+        to="/"
+        top={-20}
+        left={-5}
+        position="absolute"
+        textDecoration="none"
+        onClick={event => {
+          event.preventDefault()
+          back()
+        }}
+      >
+        Back
+      </BackLink>
+      <ProgressBar
+        width="100%"
+        my={2}
+        transition="transform 250ms"
+        percentComplete={debouncedProgress}
+      />
+    </Box>
   )
 }

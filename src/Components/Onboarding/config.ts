@@ -50,11 +50,20 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
     setCurrent(workflowEngine.current.next())
   }
 
+  const back = () => {
+    if (workflowEngine.current.isStart()) {
+      return
+    }
+
+    setCurrent(workflowEngine.current.back())
+  }
+
   const reset = () => {
     setCurrent(workflowEngine.current.reset())
   }
 
   return {
+    back,
     current,
     workflowEngine: workflowEngine.current,
     next,
