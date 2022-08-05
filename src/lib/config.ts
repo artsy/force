@@ -125,7 +125,10 @@ export const ZENDESK_KEY: any = null
 
 for (let key in module.exports) {
   const val = process.env[key] || module.exports[key]
-  module.exports[key] = tryParse(val)
+  module.exports = {
+    ...module.exports,
+    [key]: tryParse(val),
+  }
 }
 
 function tryParse(val) {
