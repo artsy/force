@@ -6,6 +6,8 @@ import {
   useReducer,
   useEffect,
 } from "react"
+import { useSystemContext } from "System"
+import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useConfig } from "../config"
 
@@ -70,36 +72,54 @@ const reducer = (onReset: () => void) => (state: State, action: Action) => {
 }
 
 const OnboardingContext = createContext<{
+  back(): void
   current: string
   dispatch: React.Dispatch<Action>
   next(): void
-  onDone(): void
+  onComplete(): void
+  onClose(): void
   progress: number
   state: State
   workflowEngine: WorkflowEngine
 }>({
+  back: () => {},
   current: "",
   dispatch: () => {},
   next: () => {},
-  onDone: () => {},
+  onComplete: () => {},
+  onClose: () => {},
   progress: 0,
   state: DEFAULT_STATE,
   workflowEngine: new WorkflowEngine({ workflow: [] }),
 })
 
 interface OnboardingProviderProps {
-  onDone(): void
+  onClose(): void
 }
 
 export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   children,
-  onDone,
+  onClose,
 }) => {
   const basis = useRef<State>(DEFAULT_STATE)
+  const { relayEnvironment } = useSystemContext()
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
+    relayEnvironment,
+  })
 
-  const { workflowEngine, current, next, reset: __reset__ } = useConfig({
+  const handleComplete = async () => {
+    try {
+      await submitUpdateMyUserProfile({
+        completedOnboarding: true,
+      })
+    } catch (error) {
+      console.error("Onboarding/useOnboardingContext", error)
+    }
+  }
+
+  const { workflowEngine, back, current, next, reset: __reset__ } = useConfig({
     basis,
-    onDone,
+    onClose,
   })
 
   const [state, dispatch] = useReducer(reducer(__reset__), DEFAULT_STATE)
@@ -114,10 +134,12 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
   return (
     <OnboardingContext.Provider
       value={{
+        back,
         current,
         dispatch,
         next,
-        onDone,
+        onComplete: handleComplete,
+        onClose,
         progress,
         state,
         workflowEngine,

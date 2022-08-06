@@ -1,8 +1,8 @@
-import { Component } from "react"
+import { FC } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
-import { Router, Match } from "found"
+import { Match } from "found"
 import {
   Button,
   Flex,
@@ -20,128 +20,105 @@ import createLogger from "Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
-import { SystemContextConsumer } from "System/SystemContext"
+import { useSystemContext } from "System/SystemContext"
 import { Status_order } from "__generated__/Status_order.graphql"
 import { getStatusCopy, continueToInboxText } from "../../Utils/getStatusCopy"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
+const declinedStatuses = [
+  "buyer_rejected",
+  "seller_rejected_offer_too_low",
+  "seller_rejected_shipping_unavailable",
+  "seller_rejected",
+  "seller_rejected_artwork_unavailable",
+  "seller_rejected_other",
+]
+
 export interface StatusProps {
   order: Status_order
-  router: Router
   match: Match
 }
 
-export class StatusRoute extends Component<StatusProps> {
-  shouldButtonDisplay(): React.ReactNode | null {
-    const {
-      match,
-      order: { stateReason },
-    } = this.props
-    const isModal = !!match?.location.query.isModal
-    const declinedStatuses = [
-      "buyer_rejected",
-      "seller_rejected_offer_too_low",
-      "seller_rejected_shipping_unavailable",
-      "seller_rejected",
-      "seller_rejected_artwork_unavailable",
-      "seller_rejected_other",
-    ]
-    const isDeclined = declinedStatuses.includes(stateReason!)
+export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
+  const { isEigen } = useSystemContext()
 
-    if (isModal || isDeclined) {
-      return null
-    }
+  const flowName = order.mode === "OFFER" ? "Offer" : "Order"
+  const isSubmittedOffer = order.mode === "OFFER" && order.state === "SUBMITTED"
+  const isDeclined = declinedStatuses.includes(order.stateReason!)
+  const isModal = !!match?.location.query.isModal
+  const shouldButtonDisplay = isEigen && !isModal && !isDeclined
+  const shouldContinueToInbox =
+    isEigen && isSubmittedOffer && order.source === "artwork_page"
+  const { title, description, showTransactionSummary = true } = getStatusCopy(
+    order,
+    logger
+  )
 
-    return (
-      // @ts-ignore
-      <Button as={RouterLink} to="/" variant="primaryBlack" width="100%">
-        Back to Artsy
-      </Button>
-    )
-  }
-
-  render() {
-    const { order } = this.props
-    const flowName = order.mode === "OFFER" ? "Offer" : "Order"
-    const { title, description, showTransactionSummary = true } = getStatusCopy(
-      order,
-      logger
-    )
-    const isSubmittedOffer =
-      order.mode === "OFFER" && order.state === "SUBMITTED"
-
-    return (
-      <SystemContextConsumer>
-        {({ isEigen, user }) => {
-          const shouldContinueToInbox =
-            isEigen && isSubmittedOffer && order.source === "artwork_page"
-
-          return (
-            <>
-              <Text variant="lg-display" fontWeight="regular" color="black100">
-                {title}
-              </Text>
-              <Text
-                variant="xs"
-                fontWeight="regular"
-                color="black60"
-                mb={[2, 4]}
-              >
-                {flowName} <span data-test="OrderCode">#{order.code}</span>
-              </Text>
-              <TwoColumnLayout
-                noRowGap
-                Content={
-                  <>
-                    <Title>{flowName} status | Artsy</Title>
-                    <Join separator={<Spacer mb={[2, 4]} />}>
-                      {description && <Message>{description}</Message>}
-                      {shouldContinueToInbox ? (
-                        <>
-                          <Spacer mb={2} />
-                          <Text>{continueToInboxText}</Text>
-                        </>
-                      ) : showTransactionSummary ? (
-                        <Flex flexDirection="column">
-                          <ArtworkSummaryItem order={order} />
-                          <StyledTransactionDetailsSummaryItem
-                            order={order}
-                            useLastSubmittedOffer
-                            showOfferNote={isSubmittedOffer}
-                            showCongratulationMessage={
-                              order.state === "SUBMITTED"
-                            }
-                          />
-                        </Flex>
-                      ) : (
-                        isEigen && this.shouldButtonDisplay()
-                      )}
-                    </Join>
-                  </>
-                }
-                Sidebar={
-                  showTransactionSummary &&
-                  !shouldContinueToInbox && (
-                    <Flex flexDirection="column">
-                      <Flex flexDirection="column">
-                        <StyledShippingSummaryItem order={order} />
-                        <PaymentMethodSummaryItem
-                          order={order}
-                          withDescription={false}
-                          title="Payment method"
-                        />
-                      </Flex>
-                    </Flex>
-                  )
-                }
-              />
-            </>
+  return (
+    <>
+      <Text variant="lg-display" fontWeight="regular" color="black100">
+        {title}
+      </Text>
+      <Text variant="xs" fontWeight="regular" color="black60" mb={[2, 4]}>
+        {flowName} <span data-test="OrderCode">#{order.code}</span>
+      </Text>
+      <TwoColumnLayout
+        noRowGap
+        Content={
+          <>
+            <Title>{flowName} status | Artsy</Title>
+            <Join separator={<Spacer mb={[2, 4]} />}>
+              {description && <Message>{description}</Message>}
+              {shouldContinueToInbox ? (
+                <>
+                  <Spacer mb={2} />
+                  <Text>{continueToInboxText}</Text>
+                </>
+              ) : showTransactionSummary ? (
+                <Flex flexDirection="column">
+                  <ArtworkSummaryItem order={order} />
+                  <StyledTransactionDetailsSummaryItem
+                    order={order}
+                    useLastSubmittedOffer
+                    showOfferNote={isSubmittedOffer}
+                    showCongratulationMessage={order.state === "SUBMITTED"}
+                  />
+                </Flex>
+              ) : (
+                shouldButtonDisplay && (
+                  <Button
+                    // @ts-ignore
+                    as={RouterLink}
+                    to="/"
+                    variant="primaryBlack"
+                    width="100%"
+                  >
+                    Back to Artsy
+                  </Button>
+                )
+              )}
+            </Join>
+          </>
+        }
+        Sidebar={
+          showTransactionSummary &&
+          !shouldContinueToInbox && (
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <StyledShippingSummaryItem order={order} />
+                <PaymentMethodSummaryItem
+                  order={order}
+                  withDescription={false}
+                  title="Payment method"
+                />
+              </Flex>
+            </Flex>
           )
-        }}
-      </SystemContextConsumer>
-    )
-  }
+        }
+      />
+    </>
+  )
 }
 
 const StyledShippingSummaryItem = styled(ShippingSummaryItem)`

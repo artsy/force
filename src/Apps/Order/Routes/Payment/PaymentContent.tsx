@@ -186,6 +186,15 @@ const USBankOnlyLabel = styled(Text)`
   color: ${themeGet("colors.orange150")};
   padding: 1px 5px;
   border-radius: 2px;
+  align-self: center;
+`
+
+const RadioWithLabel = styled(BorderedRadio)`
+  div {
+    flex-direction: row;
+    flex-grow: 0;
+    white-space: nowrap;
+  }
 `
 
 /*
@@ -198,6 +207,7 @@ const getAvailablePaymentMethods = (
   let paymentMethod: CommercePaymentMethodEnum = "CREDIT_CARD"
   const paymentMethods = [
     <BorderedRadio
+      data-test-id="credit-card"
       key="CREDIT_CARD"
       value={paymentMethod}
       label={
@@ -213,6 +223,7 @@ const getAvailablePaymentMethods = (
   if (availablePaymentMethods.includes("WIRE_TRANSFER")) {
     paymentMethods.push(
       <BorderedRadio
+        data-test-id="wire-transfer"
         key="WIRE_TRANSFER"
         value={(paymentMethod = "WIRE_TRANSFER")}
         label={
@@ -228,19 +239,21 @@ const getAvailablePaymentMethods = (
   // when available, unshift ACH since it's the first option we want to offer
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
-      <BorderedRadio
+      <RadioWithLabel
+        data-test-id="us-bank-account"
         key="US_BANK_ACCOUNT"
         value={(paymentMethod = "US_BANK_ACCOUNT")}
         label={
           <>
             <InstitutionIcon fill="green100" />
             <Text ml={0.5}>Bank transfer</Text>
-            <USBankOnlyLabel ml={0.5} variant="xs">
-              US bank account only
-            </USBankOnlyLabel>
           </>
         }
-      />
+      >
+        <USBankOnlyLabel ml={0.5} variant="xs">
+          US bank account only
+        </USBankOnlyLabel>
+      </RadioWithLabel>
     )
   }
 

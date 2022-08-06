@@ -1,17 +1,10 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
 import { Accept_order } from "__generated__/Accept_order.graphql"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
-import { track } from "react-tracking"
 import { RouteConfig, Router } from "found"
-import { Component } from "react"
+import { FC } from "react"
 import { Media } from "Utils/Responsive"
-import {
-  OrderStepper,
-  counterofferFlowSteps,
-} from "../../Components/OrderStepper"
-
+import { counterofferFlowSteps } from "../../Components/OrderStepper"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-
 import { AcceptOfferMutation } from "__generated__/AcceptOfferMutation.graphql"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "Apps/Order/Components/ShippingSummaryItem"
@@ -31,6 +24,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { AcceptRouteSetOrderPaymentMutation } from "__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 interface AcceptProps {
   order: Accept_order
@@ -42,21 +36,29 @@ interface AcceptProps {
   isCommittingMutation: boolean
 }
 
-const logger = createLogger("Order/Routes/Offer/index.tsx")
-
 export interface StripeProps {
   stripe: Stripe
   elements: StripeElements
 }
 
-@track()
-export class Accept extends Component<AcceptProps & StripeProps> {
-  acceptOffer() {
-    return this.props.commitMutation<AcceptOfferMutation>({
+const logger = createLogger("Order/Routes/Offer/index.tsx")
+
+export const Accept: FC<AcceptProps & StripeProps> = props => {
+  const {
+    order,
+    isCommittingMutation,
+    router,
+    stripe,
+    dialog,
+    commitMutation,
+    route,
+  } = props
+
+  const acceptOffer = () => {
+    return commitMutation<AcceptOfferMutation>({
       variables: {
-        input: { offerId: this.props.order.lastOffer?.internalID },
+        input: { offerId: order.lastOffer?.internalID },
       },
-      // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation AcceptOfferMutation($input: CommerceBuyerAcceptOfferInput!) {
           commerceBuyerAcceptOffer(input: $input) {
@@ -84,57 +86,59 @@ export class Accept extends Component<AcceptProps & StripeProps> {
     })
   }
 
-  onSubmit = async () => {
+  const onSubmit = async () => {
     try {
-      const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
+      const orderOrError = (await acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
+
       if (!orderOrError?.error) {
-        this.props.router.push(`/orders/${this.props.order.internalID}/status`)
+        router.push(`/orders/${order.internalID}/status`)
         return
       }
 
       if (orderOrError.error.code !== "payment_requires_action") {
-        this.handleAcceptError(orderOrError?.error)
+        handleAcceptError(orderOrError?.error)
         return
       }
 
       const fixedOrderOrError = (
-        await this.fixFailedPayment({
+        await fixFailedPayment({
           input: {
-            creditCardId: this.props.order.creditCardId!,
-            offerId: this.props.order.lastOffer?.internalID,
-            orderId: this.props.order.internalID,
+            creditCardId: order.creditCardId!,
+            offerId: order.lastOffer?.internalID,
+            orderId: order.internalID,
           },
         })
       ).commerceFixFailedPayment?.orderOrError!
 
       if (fixedOrderOrError.error) {
-        this.handleAcceptError(orderOrError?.error)
+        handleAcceptError(orderOrError?.error)
         return
       }
 
-      const scaResult = await this.props.stripe.handleCardAction(
+      const scaResult = await stripe.handleCardAction(
         fixedOrderOrError.actionData?.clientSecret!
       )
 
       if (scaResult.error) {
-        return this.props.dialog.showErrorDialog({
+        return dialog.showErrorDialog({
           title: "An error occurred",
           message: scaResult.error.message,
         })
       }
 
-      this.onSubmit()
+      onSubmit()
     } catch (error) {
       logger.error(error)
-      this.props.dialog.showErrorDialog()
+      dialog.showErrorDialog()
     }
   }
 
-  fixFailedPayment(variables: AcceptRouteSetOrderPaymentMutation["variables"]) {
-    return this.props.commitMutation<AcceptRouteSetOrderPaymentMutation>({
+  const fixFailedPayment = (
+    variables: AcceptRouteSetOrderPaymentMutation["variables"]
+  ) => {
+    return commitMutation<AcceptRouteSetOrderPaymentMutation>({
       variables,
-      // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation AcceptRouteSetOrderPaymentMutation(
           $input: CommerceFixFailedPaymentInput!
@@ -178,7 +182,10 @@ export class Accept extends Component<AcceptProps & StripeProps> {
     })
   }
 
-  async handleAcceptError(error: { code: string; data: string | null }) {
+  const handleAcceptError = async (error: {
+    code: string
+    data: string | null
+  }) => {
     logger.error(error)
     switch (error.code) {
       case "capture_failed": {
@@ -186,13 +193,13 @@ export class Accept extends Component<AcceptProps & StripeProps> {
 
         // https://stripe.com/docs/declines/codes
         if (parsedData.decline_code === "insufficient_funds") {
-          this.showCardFailureDialog({
+          showCardFailureDialog({
             title: "Insufficient funds",
             message:
               "There aren’t enough funds available on the card you provided. Please use a new card. Alternatively, contact your card provider, then press “Submit” again.",
           })
         } else {
-          this.showCardFailureDialog({
+          showCardFailureDialog({
             title: "Charge failed",
             message:
               "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method.",
@@ -201,136 +208,132 @@ export class Accept extends Component<AcceptProps & StripeProps> {
         break
       }
       case "insufficient_inventory": {
-        await this.props.dialog.showErrorDialog({
+        await dialog.showErrorDialog({
           title: "Not available",
           message: "Sorry, the work is no longer available.",
         })
-        this.routeToArtistPage()
+        routeToArtistPage()
         break
       }
       default:
-        this.props.dialog.showErrorDialog()
+        dialog.showErrorDialog()
     }
   }
 
-  async showCardFailureDialog(props: { title: string; message: string }) {
-    const { confirmed } = await this.props.dialog.showConfirmDialog({
+  const showCardFailureDialog = async (props: {
+    title: string
+    message: string
+  }) => {
+    const { confirmed } = await dialog.showConfirmDialog({
       ...props,
       cancelButtonText: "OK",
       confirmButtonText: "Use new card",
     })
     if (confirmed) {
-      this.props.router.push(
-        `/orders/${this.props.order.internalID}/payment/new`
-      )
+      router.push(`/orders/${order.internalID}/payment/new`)
     }
   }
 
-  onChangeResponse = () => {
-    const { order } = this.props
-    this.props.router.push(`/orders/${order.internalID}/respond`)
+  const onChangeResponse = () => {
+    const { order } = props
+    router.push(`/orders/${order.internalID}/respond`)
   }
 
-  artistId() {
+  const getArtistId = () => {
     return get(
-      this.props.order,
+      order,
       o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
     )
   }
 
-  routeToArtistPage() {
-    const artistId = this.artistId()
+  const routeToArtistPage = () => {
+    const artistId = getArtistId()
 
     // Don't confirm whether or not you want to leave the page
-    this.props.route.onTransition = () => null
+    route.onTransition = () => null
     window.location.assign(`/artist/${artistId}`)
   }
 
-  render() {
-    const { order, isCommittingMutation } = this.props
-
-    return (
-      <>
-        <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-            >
-              <Media at="xs">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                </Flex>
-                <Spacer mb={2} />
-              </Media>
-              <Flex flexDirection="column">
-                <CountdownTimer
-                  action="Respond"
-                  note="Expired offers end the negotiation process permanently."
-                  countdownStart={order.lastOffer?.createdAt!}
-                  countdownEnd={order.stateExpiresAt!}
-                />
-                <TransactionDetailsSummaryItem
-                  order={order}
-                  title="Accept seller's offer"
-                  useLastSubmittedOffer={true}
-                  onChange={this.onChangeResponse}
-                />
-              </Flex>
-              <Spacer mb={[2, 4]} />
-              <Media greaterThan="xs">
-                <Button
-                  onClick={this.onSubmit}
-                  loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="50%"
-                >
-                  Submit
-                </Button>
-                <Spacer mb={2} />
-                <ConditionsOfSaleDisclaimer />
-              </Media>
-            </Flex>
-          }
-          Sidebar={
+  return (
+    <OrderRouteContainer
+      currentStep="Review"
+      steps={counterofferFlowSteps}
+      content={
+        <Flex
+          flexDirection="column"
+          style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+        >
+          <Media at="xs">
             <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <Media greaterThan="xs">
-                  {className => (
-                    <ArtworkSummaryItem className={className} order={order} />
-                  )}
-                </Media>
-                <ShippingSummaryItem order={order} locked />
-                <PaymentMethodSummaryItem order={order} locked />
-              </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersAccept}
-                contextPageOwnerType={OwnerType.ordersAccept}
-              />
-              <Media greaterThan="xs">
-                <Spacer mb={2} />
-              </Media>
-              <Media at="xs">
-                <>
-                  <Button
-                    onClick={this.onSubmit}
-                    loading={isCommittingMutation}
-                    size="large"
-                    width="100%"
-                  >
-                    Submit
-                  </Button>
-                  <Spacer mb={2} />
-                  <ConditionsOfSaleDisclaimer />
-                </>
-              </Media>
+              <ArtworkSummaryItem order={order} />
             </Flex>
-          }
-        />
-      </>
-    )
-  }
+            <Spacer mb={2} />
+          </Media>
+          <Flex flexDirection="column">
+            <CountdownTimer
+              action="Respond"
+              note="Expired offers end the negotiation process permanently."
+              countdownStart={order.lastOffer?.createdAt!}
+              countdownEnd={order.stateExpiresAt!}
+            />
+            <TransactionDetailsSummaryItem
+              order={order}
+              title="Accept seller's offer"
+              useLastSubmittedOffer={true}
+              onChange={onChangeResponse}
+            />
+          </Flex>
+          <Spacer mb={[2, 4]} />
+          <Media greaterThan="xs">
+            <Button
+              onClick={onSubmit}
+              loading={isCommittingMutation}
+              variant="primaryBlack"
+              width="50%"
+            >
+              Submit
+            </Button>
+            <Spacer mb={2} />
+            <ConditionsOfSaleDisclaimer />
+          </Media>
+        </Flex>
+      }
+      sidebar={
+        <Flex flexDirection="column">
+          <Flex flexDirection="column">
+            <Media greaterThan="xs">
+              {className => (
+                <ArtworkSummaryItem className={className} order={order} />
+              )}
+            </Media>
+            <ShippingSummaryItem order={order} locked />
+            <PaymentMethodSummaryItem order={order} locked />
+          </Flex>
+          <BuyerGuarantee
+            contextModule={ContextModule.ordersAccept}
+            contextPageOwnerType={OwnerType.ordersAccept}
+          />
+          <Media greaterThan="xs">
+            <Spacer mb={2} />
+          </Media>
+          <Media at="xs">
+            <>
+              <Button
+                onClick={onSubmit}
+                loading={isCommittingMutation}
+                size="large"
+                width="100%"
+              >
+                Submit
+              </Button>
+              <Spacer mb={2} />
+              <ConditionsOfSaleDisclaimer />
+            </>
+          </Media>
+        </Flex>
+      }
+    />
+  )
 }
 
 export const AcceptFragmentContainer = createFragmentContainer(

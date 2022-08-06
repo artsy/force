@@ -21,7 +21,7 @@ export const NewForYouApp: FC<NewForYouAppProps> = ({ viewer }) => {
       <Spacer mt={2} />
       <MetaTags title="New For You" />
       <Text variant="xl" mt={4}>
-        New Works For You
+        New Works for You
       </Text>
       <Spacer mt={4} />
       {!isLoggedIn && (

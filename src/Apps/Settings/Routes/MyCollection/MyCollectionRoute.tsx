@@ -1,13 +1,25 @@
-import { FC, Fragment, useState } from "react"
+import { FC, Fragment, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { Spacer, Sup, Text } from "@artsy/palette"
+import {
+  Spacer,
+  Sup,
+  Text,
+  Box,
+  CloseIcon,
+  Flex,
+  Message,
+  FullBleed,
+  Clickable,
+} from "@artsy/palette"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { PaginationFragmentContainer } from "Components/Pagination"
-import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { MetaTags } from "Components/MetaTags"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
+import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
+import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -16,8 +28,17 @@ interface MyCollectionRouteProps {
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
+  const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
+  const { scrollTo } = useScrollTo({ behavior: "smooth" })
 
-  const { scrollTo } = useScrollToElement({
+  useEffect(() => {
+    setHasDismissedMessage(
+      window.localStorage.getItem("HAS_SEEN_MY_COLLECTION_MESSAGE_BANNER") ===
+        "true"
+    )
+  }, [])
+
+  const { scrollTo: scrollToMyCollection } = useScrollToElement({
     selectorOrRef: "#jump--MyCollectionArtworks",
     behavior: "smooth",
     offset: 20,
@@ -37,7 +58,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   const handleClick = (cursor: string, page: number) => {
     setLoading(true)
-    scrollTo()
+    scrollToMyCollection()
 
     relay.refetch({ page }, null, error => {
       if (error) console.error(error)
@@ -50,16 +71,53 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     handleClick(endCursor, page)
   }
 
+  const dismissMyCollectionMessage = () => {
+    window.localStorage.setItem("HAS_SEEN_MY_COLLECTION_MESSAGE_BANNER", "true")
+    setHasDismissedMessage(true)
+  }
+
   return (
     <>
       <MetaTags title="My Collection | Artsy" pathname="/my-collection" />
 
-      <Text variant="lg-display" mb={4}>
-        My Collection {total > 0 && <Sup color="brand">{total}</Sup>}
-      </Text>
-
       {total > 0 ? (
         <>
+          {!hasDismissedMessage && (
+            <FullBleed>
+              <Message
+                variant="info"
+                mt={-SETTINGS_ROUTE_TABS_MARGIN}
+                mb={SETTINGS_ROUTE_TABS_MARGIN}
+              >
+                <Flex flexDirection="row" justifyContent="space-between">
+                  <Box />
+                  <Text mx={1}>
+                    Access all the My Collection features on the{" "}
+                    <Clickable
+                      onClick={() => {
+                        scrollTo("#download-app-banner")
+                      }}
+                      color="blue100"
+                      cursor="pointer"
+                      textDecoration="underline"
+                    >
+                      Artsy app
+                    </Clickable>
+                    . Coming soon also on web.
+                  </Text>
+
+                  <Clickable onClick={dismissMyCollectionMessage}>
+                    <CloseIcon />
+                  </Clickable>
+                </Flex>
+              </Message>
+            </FullBleed>
+          )}
+
+          <Text variant="lg-display" mb={4}>
+            My Collection <Sup color="brand">{total}</Sup>
+          </Text>
+
           <Masonry
             id="jump--MyCollectionArtworks"
             columnCount={[2, 3, 4]}
@@ -72,6 +130,8 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     artwork={artwork}
                     hideSaleInfo
                     showSaveButton={false}
+                    showHoverDetails={false}
+                    disableRouterLinking
                   />
 
                   <Spacer mt={4} />
@@ -88,9 +148,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           />
         </>
       ) : (
-        <Text variant="lg-display" color="black60">
-          Nothing yet.
-        </Text>
+        <EmptyMyCollectionPage />
       )}
     </>
   )

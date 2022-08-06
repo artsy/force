@@ -23,6 +23,16 @@ export type ArtistCareerHighlights_artist = {
             } | null> | null;
         } | null;
     } | null;
+    readonly biographyBlurb: {
+        readonly partner: {
+            readonly profile: {
+                readonly href: string | null;
+            } | null;
+        } | null;
+        readonly credit: string | null;
+        readonly text: string | null;
+    } | null;
+    readonly slug: string;
     readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist" | "ArtistInsightAchievements_artist">;
     readonly " $refType": "ArtistCareerHighlights_artist";
 };
@@ -178,6 +188,78 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        },
+        {
+          "kind": "Literal",
+          "name": "partnerBio",
+          "value": false
+        }
+      ],
+      "concreteType": "ArtistBlurb",
+      "kind": "LinkedField",
+      "name": "biographyBlurb",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Partner",
+          "kind": "LinkedField",
+          "name": "partner",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Profile",
+              "kind": "LinkedField",
+              "name": "profile",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "credit",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "text",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistInsightBadges_artist"
@@ -192,5 +274,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1af88c93077783ff46c75ec4312bc463';
+(node as any).hash = 'a5be3acd46d6516fd2ac44432994b4b9';
 export default node;

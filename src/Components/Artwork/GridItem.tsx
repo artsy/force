@@ -1,32 +1,36 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Box, ResponsiveBox } from "@artsy/palette"
-import { GridItem_artwork } from "__generated__/GridItem_artwork.graphql"
-import { useSystemContext } from "System"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { userIsTeam } from "Utils/user"
-import Badge from "./Badge"
-import Metadata from "./Metadata"
+import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped, resized } from "Utils/resized"
-import { useHoverMetadata } from "./useHoverMetadata"
+import { userIsTeam } from "Utils/user"
+import { GridItem_artwork } from "__generated__/GridItem_artwork.graphql"
 import { MagnifyImage } from "../MagnifyImage"
+import Badge from "./Badge"
+import Metadata from "./Metadata"
+import { useHoverMetadata } from "./useHoverMetadata"
 
 interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
   contextModule?: AuthContextModule
+  disableRouterLinking?: boolean
+  hideSaleInfo?: boolean
   lazyLoad?: boolean
   onClick?: () => void
-  hideSaleInfo?: boolean
   showSaveButton?: boolean
+  showHoverDetails?: boolean
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   artwork,
-  lazyLoad = true,
   contextModule,
-  onClick,
+  disableRouterLinking,
   hideSaleInfo,
+  lazyLoad = true,
+  onClick,
+  showHoverDetails,
   showSaveButton = true,
   ...rest
 }) => {
@@ -61,6 +65,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
+  const LinkContainer = disableRouterLinking ? DisabledLink : Link
+
   return (
     <div
       data-id={artwork.internalID}
@@ -75,8 +81,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         bg="black10"
         style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
       >
-        <Link
-          to={artwork.href}
+        <LinkContainer
+          to={disableRouterLinking ? null : artwork.href}
           onClick={handleClick}
           aria-label={`${artwork.title} by ${artwork.artistNames}`}
           position={imageURL ? "absolute" : "relative"}
@@ -97,7 +103,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
               maxWidth="100%"
             />
           )}
-        </Link>
+        </LinkContainer>
 
         <Badge artwork={artwork} />
       </Box>
@@ -108,6 +114,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         contextModule={contextModule ?? ContextModule.artworkGrid}
         showSaveButton={showSaveButton}
         hideSaleInfo={hideSaleInfo}
+        showHoverDetails={showHoverDetails}
+        disableRouterLinking={disableRouterLinking}
       />
     </div>
   )
@@ -123,6 +131,10 @@ const Link = styled(RouterLink)`
   right: 0;
   bottom: 0;
   left: 0;
+`
+
+const DisabledLink = styled(Link)`
+  cursor: default;
 `
 
 export const ArtworkGridItemFragmentContainer = createFragmentContainer(

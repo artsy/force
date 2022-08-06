@@ -228,7 +228,7 @@ describe("testing different statuses", () => {
       }),
     })
     expect(
-      screen.getByText("Offer accepted. Payment pending")
+      screen.getByText("Offer accepted. Payment processing")
     ).toBeInTheDocument()
   })
   it("render Offer Declined", () => {

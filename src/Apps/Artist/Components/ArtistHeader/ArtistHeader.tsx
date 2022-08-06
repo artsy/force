@@ -17,6 +17,9 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist } from "__generated__/ArtistHeader_artist.graphql"
 import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
+import { RouterLink } from "System/Router/RouterLink"
+
+export const CV_LINK_TEXT = "See all past shows and fair booths"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -114,8 +117,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           <Column span={6}>
             <ArtistInsightPillsFragmentContainer artist={artist} />
 
-            <Spacer mb={4} />
-
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
                 <Text variant="xs" mt={[2, 0]} mb={1}>
@@ -129,6 +130,14 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                     />
                   </HTML>
                 </Text>
+                <Spacer mb={2} />
+              </>
+            )}
+            {!hideBioInHeaderIfPartnerSupplied && (
+              <>
+                <RouterLink to={`/artist/${artist.slug}/cv`}>
+                  {CV_LINK_TEXT}
+                </RouterLink>
               </>
             )}
           </Column>

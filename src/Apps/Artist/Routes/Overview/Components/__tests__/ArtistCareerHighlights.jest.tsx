@@ -2,6 +2,7 @@ import { graphql } from "react-relay"
 import { ArtistCareerHighlightsFragmentContainer } from "../ArtistCareerHighlights"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { CV_LINK_TEXT } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 
 jest.unmock("react-relay")
 
@@ -55,5 +56,30 @@ describe("ArtistCareerHighlights", () => {
     expect(
       screen.getByText("Recent auction results in the Artsy Price Database")
     ).toBeInTheDocument()
+  })
+
+  it("renders partner bios", () => {
+    renderWithRelay({
+      Artist: () => ({
+        biographyBlurb: {
+          partner: {
+            profile: {
+              href: "/number-one-best-gallery",
+            },
+          },
+          credit: "Submitted by Number One Best Gallery",
+          text: "this artist rocks",
+        },
+      }),
+    })
+
+    expect(screen.getByText("Bio")).toBeInTheDocument()
+    const galleryLink = screen.getByText("Submitted by Number One Best Gallery")
+    expect(galleryLink).toHaveAttribute(
+      "href",
+      expect.stringContaining("partner/number-one-best-gallery")
+    )
+    expect(screen.getByText("this artist rocks")).toBeInTheDocument()
+    expect(screen.queryByText(CV_LINK_TEXT)).toBeInTheDocument()
   })
 })

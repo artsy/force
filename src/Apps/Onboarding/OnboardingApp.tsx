@@ -13,7 +13,7 @@ export const OnboardingApp: FC = () => {
   }
 
   return (
-    <OnboardingProvider onDone={handleDone}>
+    <OnboardingProvider onClose={handleDone}>
       <OnboardingDebug />
 
       <Spacer mt={2} />

@@ -1,7 +1,16 @@
 import React from "react"
 
-function loadable(load, { resolveComponent }) {
-  const Component = resolveComponent(load.requireSync())
+async function loadable(load, { resolveComponent }) {
+  let Component
+
+  // If running jest using babel, lean on babel-plugin-loadable
+  // TODO: Remove this when we fully switch to SWC
+  if (load.requireSync) {
+    Component = resolveComponent(load.requireSync())
+    // Using SWC compiler, no transform; load like normal
+  } else {
+    Component = resolveComponent(await load())
+  }
 
   const Loadable = props => {
     return <Component {...props} />

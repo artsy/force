@@ -21,7 +21,7 @@ describe("HomeWorksForYouTabBar", () => {
 
   it("renders the new for you tab by default", () => {
     const wrapper = getWrapper()
-    expect(wrapper.text()).toContain("New Works For You")
+    expect(wrapper.text()).toContain("New Works for You")
     expect(wrapper.text()).toContain("New Works by Artists You Follow")
     expect(wrapper.text()).toContain("Recently Viewed")
 

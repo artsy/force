@@ -14,7 +14,6 @@ import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { RevealButton } from "Apps/Order/Components/RevealButton"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { TwoColumnLayout } from "Apps/Order/Components/TwoColumnLayout"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
@@ -22,71 +21,77 @@ import {
 } from "Apps/Order/Utils/commitMutation"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { CountdownTimer } from "Components/CountdownTimer"
-import { RouterState } from "found"
-import { Component } from "react"
-import { RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { Match, Router, RouterState } from "found"
+import { FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { OfferHistoryItemFragmentContainer as OfferHistoryItem } from "../../Components/OfferHistoryItem"
-import {
-  OrderStepper,
-  counterofferFlowSteps,
-} from "../../Components/OrderStepper"
+import { counterofferFlowSteps } from "../../Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
-import track from "react-tracking"
+import { useTracking } from "react-tracking"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { extractNodes } from "Utils/extractNodes"
 
 export interface RespondProps extends RouterState {
   order: Respond_order
-  relay?: RelayProp
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  match: Match
+  router: Router
 }
 
-export interface RespondState {
-  offerValue: number
-  offerNoteValue: TextAreaChange
-  formIsDirty: boolean
-  responseOption: "ACCEPT" | "COUNTER" | "DECLINE" | null
-  lowSpeedBumpEncountered: boolean
-  highSpeedBumpEncountered: boolean
-}
+type ResponseOptions = "ACCEPT" | "COUNTER" | "DECLINE" | null
 
 export const logger = createLogger("Order/Routes/Respond/index.tsx")
 
-@track()
-export class RespondRoute extends Component<RespondProps, RespondState> {
-  state: RespondState = {
-    formIsDirty: false,
-    highSpeedBumpEncountered: false,
-    lowSpeedBumpEncountered: false,
-    offerNoteValue: { exceedsCharacterLimit: false, value: "" },
-    offerValue: 0,
-    responseOption: null,
+export const RespondRoute: FC<RespondProps> = ({
+  order,
+  match,
+  router,
+  dialog,
+  isCommittingMutation,
+  commitMutation,
+}) => {
+  const { trackEvent } = useTracking()
+  const artwork = extractNodes(order.lineItems)[0]?.artwork
+
+  const [isFormDirty, setIsFormDirty] = useState(false)
+  const [offerValue, setOfferValue] = useState(0)
+  const [responseOption, setResponseOption] = useState<ResponseOptions>(null)
+  const [lowSpeedBumpEncountered, setLowSpeedBumpEncountered] = useState(false)
+  const [highSpeedBumpEncountered, setHighSpeedBumpEncountered] = useState(
+    false
+  )
+  const [offerNoteValue, setOfferNoteValue] = useState<TextAreaChange>({
+    exceedsCharacterLimit: false,
+    value: "",
+  })
+
+  const onOfferInputFocus = () => {
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.FocusedOnOfferInput,
+      flow: DeprecatedSchema.Flow.MakeOffer,
+      order_id: order.internalID,
+    })
   }
 
-  @track(props => ({
-    action_type: DeprecatedSchema.ActionType.FocusedOnOfferInput,
-    flow: DeprecatedSchema.Flow.MakeOffer,
-    order_id: props.order.internalID,
-  }))
-  onOfferInputFocus() {
-    // noop
-  }
+  const showLowSpeedbump = () => {
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.ViewedOfferTooLow,
+      flow: DeprecatedSchema.Flow.MakeOffer,
+      order_id: order.internalID,
+    })
 
-  @track(props => ({
-    action_type: DeprecatedSchema.ActionType.ViewedOfferTooLow,
-    flow: DeprecatedSchema.Flow.MakeOffer,
-    order_id: props.order.internalID,
-  }))
-  showLowSpeedbump() {
-    this.setState({ lowSpeedBumpEncountered: true })
-    this.props.dialog.showErrorDialog({
+    setLowSpeedBumpEncountered(true)
+
+    dialog.showErrorDialog({
       continueButtonText: "OK",
       message:
         "Offers within 25% of the seller's offer are most likely to receive a response.",
@@ -94,80 +99,69 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     })
   }
 
-  @track(props => ({
-    action_type: DeprecatedSchema.ActionType.ViewedOfferHigherThanListPrice,
-    flow: DeprecatedSchema.Flow.MakeOffer,
-    order_id: props.order.internalID,
-  }))
-  showHighSpeedbump() {
-    this.setState({ highSpeedBumpEncountered: true })
-    this.props.dialog.showErrorDialog({
+  const showHighSpeedbump = () => {
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.ViewedOfferHigherThanListPrice,
+      flow: DeprecatedSchema.Flow.MakeOffer,
+      order_id: order.internalID,
+    })
+
+    setHighSpeedBumpEncountered(true)
+
+    dialog.showErrorDialog({
       continueButtonText: "OK",
       message: "You’re making an offer higher than the seller's offer.",
       title: "Offer higher than seller's offer",
     })
   }
 
-  onContinueButtonPressed = async () => {
-    const {
-      responseOption,
-      offerValue,
-      offerNoteValue,
-      lowSpeedBumpEncountered,
-      highSpeedBumpEncountered,
-    } = this.state
-
-    const search = this.props.match?.location.search || ""
-    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
-      ?.artwork?.price
+  const onContinueButtonPressed = async () => {
+    const search = match?.location.search || ""
+    const artworkPrice = artwork?.price
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
 
     if (responseOption === "ACCEPT") {
-      this.props.router.push(
-        `/orders/${this.props.order.internalID}/review/accept${search}`
-      )
+      router.push(`/orders/${order.internalID}/review/accept${search}`)
       return
     }
 
     if (responseOption === "DECLINE") {
-      this.props.router.push(
-        `/orders/${this.props.order.internalID}/review/decline${search}`
-      )
+      router.push(`/orders/${order.internalID}/review/decline${search}`)
       return
     }
 
     // responseOption === "COUNTER"
 
     if (offerValue <= 0 || offerNoteValue.exceedsCharacterLimit) {
-      this.setState({ formIsDirty: true })
+      setIsFormDirty(true)
       return
     }
-    const currentOfferPrice = this.props.order.itemsTotalCents
+    const currentOfferPrice = order.itemsTotalCents
 
     if (
       !lowSpeedBumpEncountered &&
       offerValue * 100 < currentOfferPrice! * 0.75
     ) {
-      this.showLowSpeedbump()
+      showLowSpeedbump()
       return
     }
 
     if (
       !highSpeedBumpEncountered &&
-      this.state.offerValue * 100 > currentOfferPrice! &&
+      offerValue * 100 > currentOfferPrice! &&
       !isPriceHidden
     ) {
-      this.showHighSpeedbump()
+      showHighSpeedbump()
       return
     }
 
     try {
       const orderOrError = (
-        await this.createCounterOffer({
+        await createCounterOffer({
           input: {
-            amountCents: this.state.offerValue * 100,
-            note: this.state.offerNoteValue && this.state.offerNoteValue.value,
-            offerId: this.props.order?.lastOffer?.internalID!,
+            amountCents: offerValue * 100,
+            note: offerNoteValue && offerNoteValue.value,
+            offerId: order?.lastOffer?.internalID!,
           },
         })
       ).commerceBuyerCounterOffer?.orderOrError
@@ -176,17 +170,17 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
         throw orderOrError.error
       }
 
-      this.props.router.push(
-        `/orders/${this.props.order.internalID}/review/counter${search}`
-      )
+      router.push(`/orders/${order.internalID}/review/counter${search}`)
     } catch (error) {
       logger.error(error)
-      this.props.dialog.showErrorDialog()
+      dialog.showErrorDialog()
     }
   }
 
-  createCounterOffer(variables: RespondCounterOfferMutation["variables"]) {
-    return this.props.commitMutation<RespondCounterOfferMutation>({
+  const createCounterOffer = (
+    variables: RespondCounterOfferMutation["variables"]
+  ) => {
+    return commitMutation<RespondCounterOfferMutation>({
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation RespondCounterOfferMutation(
@@ -215,142 +209,128 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     })
   }
 
-  render() {
-    const { order, isCommittingMutation } = this.props
-
-    const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
-
-    return (
-      <>
-        <OrderStepper currentStep="Respond" steps={counterofferFlowSteps} />
-        <TwoColumnLayout
-          Content={
-            <Flex
-              flexDirection="column"
-              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+  return (
+    <OrderRouteContainer
+      currentStep="Respond"
+      steps={counterofferFlowSteps}
+      content={
+        <Flex
+          flexDirection="column"
+          style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+        >
+          <Flex flexDirection="column">
+            <CountdownTimer
+              action="Respond"
+              note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+              countdownStart={order.lastOffer?.createdAt!}
+              countdownEnd={order.stateExpiresAt!}
+            />
+            <OfferHistoryItem order={order} />
+            <TransactionDetailsSummaryItem
+              order={order}
+              useLastSubmittedOffer
+            />
+          </Flex>
+          <Spacer mb={[2, 4]} />
+          <RadioGroup
+            onSelect={responseOption =>
+              setResponseOption(responseOption as ResponseOptions)
+            }
+            defaultValue={responseOption!}
+          >
+            <BorderedRadio
+              value="ACCEPT"
+              label="Accept seller's offer"
+              data-test="AcceptOffer"
+            />
+            <BorderedRadio
+              value="COUNTER"
+              position="relative"
+              label="Send counteroffer"
+              data-test="SendCounteroffer"
             >
-              <Flex flexDirection="column">
-                <CountdownTimer
-                  action="Respond"
-                  note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                  countdownStart={order.lastOffer?.createdAt!}
-                  countdownEnd={order.stateExpiresAt!}
+              <Collapse open={responseOption === "COUNTER"}>
+                <Spacer mb={2} />
+                <OfferInput
+                  id="RespondForm_RespondValue"
+                  showError={isFormDirty && offerValue <= 0}
+                  onChange={setOfferValue}
+                  onFocus={onOfferInputFocus}
                 />
-                <OfferHistoryItem order={order} />
-                <TransactionDetailsSummaryItem
-                  order={order}
-                  useLastSubmittedOffer
-                />
-              </Flex>
-              <Spacer mb={[2, 4]} />
-              <RadioGroup
-                onSelect={(responseOption: any) =>
-                  this.setState({ responseOption })
-                }
-                defaultValue={this.state.responseOption!}
-              >
-                <BorderedRadio
-                  value="ACCEPT"
-                  label="Accept seller's offer"
-                  data-test="AcceptOffer"
-                />
-                <BorderedRadio
-                  value="COUNTER"
-                  position="relative"
-                  label="Send counteroffer"
-                  data-test="SendCounteroffer"
-                >
-                  <Collapse open={this.state.responseOption === "COUNTER"}>
-                    <Spacer mb={2} />
-                    <OfferInput
-                      id="RespondForm_RespondValue"
-                      showError={
-                        this.state.formIsDirty && this.state.offerValue <= 0
-                      }
-                      onChange={offerValue => this.setState({ offerValue })}
-                      onFocus={this.onOfferInputFocus.bind(this)}
-                    />
-                    {!order.isInquiryOrder && (
-                      <>
-                        <Spacer mb={1} />
-                        <RevealButton
-                          align="left"
-                          buttonLabel="Add note to seller"
-                        >
-                          <Spacer mb={1} />
-                          <OfferNote
-                            onChange={offerNoteValue =>
-                              this.setState({ offerNoteValue })
-                            }
-                            artworkId={artworkId!}
-                            counteroffer
-                          />
-                        </RevealButton>
-                      </>
-                    )}
-                  </Collapse>
-                </BorderedRadio>
-                <BorderedRadio
-                  value="DECLINE"
-                  position="relative"
-                  label="Decline seller's offer"
-                  data-test="DeclineOffer"
-                >
-                  <Flex position="relative">
-                    <Collapse open={this.state.responseOption === "DECLINE"}>
+                {!order.isInquiryOrder && (
+                  <>
+                    <Spacer mb={1} />
+                    <RevealButton align="left" buttonLabel="Add note to seller">
                       <Spacer mb={1} />
-                      <Text variant="xs" color="black60">
-                        Declining an offer will end the negotiation process on
-                        this offer.
-                      </Text>
-                    </Collapse>
-                  </Flex>
-                </BorderedRadio>
-              </RadioGroup>
-              <Spacer mb={[2, 4]} />
-              <Flex flexDirection="column" />
-              <Media greaterThan="xs">
-                <Button
-                  onClick={this.onContinueButtonPressed}
-                  loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="50%"
-                >
-                  Continue
-                </Button>
-              </Media>
-            </Flex>
-          }
-          Sidebar={
-            <Flex flexDirection="column">
-              <Flex flexDirection="column">
-                <ArtworkSummaryItem order={order} />
-                <ShippingSummaryItem order={order} locked />
-                <PaymentMethodSummaryItem order={order} locked />
+                      <OfferNote
+                        onChange={setOfferNoteValue}
+                        artworkId={artwork?.slug!}
+                        counteroffer
+                      />
+                    </RevealButton>
+                  </>
+                )}
+              </Collapse>
+            </BorderedRadio>
+            <BorderedRadio
+              value="DECLINE"
+              position="relative"
+              label="Decline seller's offer"
+              data-test="DeclineOffer"
+            >
+              <Flex position="relative">
+                <Collapse open={responseOption === "DECLINE"}>
+                  <Spacer mb={1} />
+                  <Text variant="xs" color="black60">
+                    Declining an offer will end the negotiation process on this
+                    offer.
+                  </Text>
+                </Collapse>
               </Flex>
-              <BuyerGuarantee
-                contextModule={ContextModule.ordersRespond}
-                contextPageOwnerType={OwnerType.ordersRespond}
-              />
-              <Spacer mb={2} />
-              <Media at="xs">
-                <>
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </>
-              </Media>
-            </Flex>
-          }
-        />
-      </>
-    )
-  }
+            </BorderedRadio>
+          </RadioGroup>
+          <Spacer mb={[2, 4]} />
+          <Flex flexDirection="column" />
+          <Media greaterThan="xs">
+            <Button
+              onClick={onContinueButtonPressed}
+              loading={isCommittingMutation}
+              variant="primaryBlack"
+              width="50%"
+            >
+              Continue
+            </Button>
+          </Media>
+        </Flex>
+      }
+      sidebar={
+        <Flex flexDirection="column">
+          <Flex flexDirection="column">
+            <ArtworkSummaryItem order={order} />
+            <ShippingSummaryItem order={order} locked />
+            <PaymentMethodSummaryItem order={order} locked />
+          </Flex>
+          <BuyerGuarantee
+            contextModule={ContextModule.ordersRespond}
+            contextPageOwnerType={OwnerType.ordersRespond}
+          />
+          <Spacer mb={2} />
+          <Media at="xs">
+            <>
+              <Button
+                onClick={onContinueButtonPressed}
+                loading={isCommittingMutation}
+                variant="primaryBlack"
+                width="100%"
+              >
+                Continue
+              </Button>
+            </>
+          </Media>
+        </Flex>
+      }
+    />
+  )
 }
 
 export const RespondFragmentContainer = createFragmentContainer(

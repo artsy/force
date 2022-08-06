@@ -1,3 +1,4 @@
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
@@ -9,6 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtistInsightAchievements_artist } from "__generated__/ArtistInsightAchievements_artist.graphql"
+import { useTracking } from "react-tracking"
 
 interface ArtistInsightAchievementsProps {
   artist: ArtistInsightAchievements_artist
@@ -105,6 +107,7 @@ interface ArtistAchievementProps {
 }
 
 const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
+  const { trackEvent } = useTracking()
   const [expanded, setExpanded] = useState(false)
 
   const [first, ...remaining] = entities
@@ -124,7 +127,15 @@ const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
               `${remaining.join(", ")}`
             ) : (
               <Clickable
-                onClick={() => setExpanded(true)}
+                onClick={() => {
+                  setExpanded(true)
+
+                  trackEvent({
+                    action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                    subject: "Read more",
+                    type: "Link",
+                  })
+                }}
                 color="black100"
                 textDecoration="underline"
               >

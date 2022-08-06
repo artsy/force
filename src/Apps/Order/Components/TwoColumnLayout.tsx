@@ -1,5 +1,5 @@
 import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
-import { Children } from "react"
+import { Children, FC, ReactNode } from "react"
 import { Media } from "Utils/Responsive"
 
 const CONTENT_SPAN = 7
@@ -33,28 +33,20 @@ export const TwoColumnSplit = ({ children, ...props }) => {
   )
 }
 
-export const TwoColumnLayout = props => (
-  <>
-    <Media at="xs">
-      <XsLayout {...props} />
-    </Media>
-    <Media greaterThan="xs">
-      <DefaultLayout {...props} />
-    </Media>
-  </>
-)
+export interface TwoColumnLayoutProps {
+  Content: ReactNode
+  Sidebar: ReactNode
+  noRowGap?: boolean
+}
 
-const DefaultLayout = ({ Content, Sidebar }) => (
-  <GridColumns>
-    <Column span={CONTENT_SPAN}>{Content}</Column>
-    <Column span={1} />
-    <Column span={SIDEBAR_SPAN}>{Sidebar}</Column>
-  </GridColumns>
-)
-
-const XsLayout = ({ Content, Sidebar, noRowGap }) => (
+export const TwoColumnLayout: FC<TwoColumnLayoutProps> = ({
+  Content,
+  Sidebar,
+  noRowGap,
+}) => (
   <GridColumns gridRowGap={noRowGap ? 0 : undefined}>
-    <Column span={12}>{Content}</Column>
-    <Column span={12}>{Sidebar}</Column>
+    <Column span={[12, CONTENT_SPAN]}>{Content}</Column>
+    <Column display={["none", "block"]} span={1} />
+    <Column span={[12, SIDEBAR_SPAN]}>{Sidebar}</Column>
   </GridColumns>
 )

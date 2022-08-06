@@ -1,11 +1,165 @@
 import { Request, NextFunction } from "express"
 import {
-  handlePartner,
+  handlePartnerOverview,
+  handlePartnerWorks,
+  handlePartnerArtist,
+  handlePartnerGenericRedirect,
+  handleFairArtworks,
   handleFair,
   ResWithProfile,
 } from "../redirectsServerRoutes"
 
-describe("handlePartner", () => {
+describe("handlePartnerOverview", () => {
+  let req: Request
+  let res: ResWithProfile
+  let next: jest.Mock<NextFunction>
+
+  beforeEach(() => {
+    jest.resetModules()
+
+    res = ({
+      locals: {
+        profile: {
+          owner: {
+            __typename: "Partner",
+            slug: "white-cube",
+          },
+        },
+      },
+      redirect: jest.fn(),
+    } as unknown) as ResWithProfile
+
+    next = jest.fn()
+  })
+
+  it.each([
+    [
+      "/:id/overview,/:id/about",
+      "/partner/white-cube",
+      "/white-cube/overview",
+      { id: "white-cube" },
+    ],
+    [
+      "/:id/overview,/:id/about",
+      "/partner/white-cube",
+      "/white-cube",
+      { id: "white-cube" },
+    ],
+  ])(
+    "redirects %s to %s",
+    (route: string, result: string, path: string, params: any) => {
+      req = ({
+        route: { path: route },
+        path,
+        params,
+      } as unknown) as Request
+
+      handlePartnerOverview(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(301, result)
+    }
+  )
+})
+
+describe("handlePartnerWorks", () => {
+  let req: Request
+  let res: ResWithProfile
+  let next: jest.Mock<NextFunction>
+
+  beforeEach(() => {
+    jest.resetModules()
+
+    res = ({
+      locals: {
+        profile: {
+          owner: {
+            __typename: "Partner",
+            slug: "white-cube",
+          },
+        },
+      },
+      redirect: jest.fn(),
+    } as unknown) as ResWithProfile
+
+    next = jest.fn()
+  })
+
+  it.each([
+    [
+      "/:id/shop,/:id/collection",
+      "/partner/white-cube/works",
+      "/white-cube/collection",
+      { id: "white-cube" },
+    ],
+    [
+      "/:id/shop,/:id/collection",
+      "/partner/white-cube/works",
+      "/white-cube/shop",
+      { id: "white-cube" },
+    ],
+  ])(
+    "redirects %s to %s",
+    (route: string, result: string, path: string, params: any) => {
+      req = ({
+        route: { path: route },
+        path,
+        params,
+      } as unknown) as Request
+
+      handlePartnerWorks(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(301, result)
+    }
+  )
+})
+
+describe("handlePartnerArtist", () => {
+  let req: Request
+  let res: ResWithProfile
+  let next: jest.Mock<NextFunction>
+
+  beforeEach(() => {
+    jest.resetModules()
+
+    res = ({
+      locals: {
+        profile: {
+          owner: {
+            __typename: "Partner",
+            slug: "white-cube",
+          },
+        },
+      },
+      redirect: jest.fn(),
+    } as unknown) as ResWithProfile
+
+    next = jest.fn()
+  })
+
+  it.each([
+    [
+      "/:id/artist/:artistId",
+      "/partner/white-cube/artists/artist_slug",
+      "/white-cube/artist/artist_slug",
+      { artistId: "artist_slug", id: "white-cube" },
+    ],
+  ])(
+    "redirects %s to %s",
+    (route: string, result: string, path: string, params: any) => {
+      req = ({
+        route: { path: route },
+        path,
+        params,
+      } as unknown) as Request
+
+      handlePartnerArtist(req, res, next)
+
+      expect(res.redirect).toHaveBeenCalledWith(301, result)
+    }
+  )
+})
+
+describe("handlePartnerFallbackRedirect", () => {
   let req: Request
   let res: ResWithProfile
   let next: jest.Mock<NextFunction>
@@ -31,12 +185,6 @@ describe("handlePartner", () => {
   it.each([
     ["/:id", "/partner/white-cube", "/white-cube", { id: "white-cube" }],
     [
-      "/:id/overview",
-      "/partner/white-cube",
-      "/white-cube/overview",
-      { id: "white-cube" },
-    ],
-    [
       "/:id/shows",
       "/partner/white-cube/shows",
       "/white-cube/shows",
@@ -55,12 +203,6 @@ describe("handlePartner", () => {
       { id: "white-cube" },
     ],
     [
-      "/:id/artist/:artistId",
-      "/partner/white-cube/artists/artist_slug",
-      "/white-cube/artist/artist_slug",
-      { artistId: "artist_slug", id: "white-cube" },
-    ],
-    [
       "/:id/articles",
       "/partner/white-cube/articles",
       "/white-cube/articles",
@@ -72,30 +214,11 @@ describe("handlePartner", () => {
       "/white-cube/contact",
       { id: "white-cube" },
     ],
-    ["/:id/about", "/partner/white-cube", "/white-cube", { id: "white-cube" }],
-    [
-      "/:id/collection",
-      "/partner/white-cube/works",
-      "/white-cube/collection",
-      { id: "white-cube" },
-    ],
-    [
-      "/:id/shop",
-      "/partner/white-cube/works",
-      "/white-cube/shop",
-      { id: "white-cube" },
-    ],
     [
       "/:id/contact",
       "/partner/white-cube/contact",
       "/white-cube-gallery/contact",
       { id: "white-cube-gallery" },
-    ],
-    [
-      "/:id/artist/:artistId",
-      "/partner/white-cube/artists/artist_slug",
-      "/white-cube-gallery/artist/artist_slug",
-      { artistId: "artist_slug", id: "white-cube-gallery" },
     ],
   ])(
     "redirects %s to %s",
@@ -106,7 +229,7 @@ describe("handlePartner", () => {
         params,
       } as unknown) as Request
 
-      handlePartner(req, res, next)
+      handlePartnerGenericRedirect(req, res, next)
 
       expect(res.redirect).toHaveBeenCalledWith(301, result)
     }
@@ -125,10 +248,52 @@ describe("handlePartner", () => {
       redirect: jest.fn(),
     } as unknown) as ResWithProfile
 
-    handlePartner(req, res, next)
+    handlePartnerGenericRedirect(req, res, next)
 
     expect(res.redirect).not.toHaveBeenCalled()
     expect(next).toHaveBeenCalled()
+  })
+})
+
+describe("handleFairArtworks", () => {
+  let req: Request
+  let res: ResWithProfile
+  let next: jest.Mock<NextFunction>
+
+  beforeEach(() => {
+    jest.resetModules()
+
+    req = ({
+      params: { id: "big-expo" },
+      route: "/:id",
+    } as unknown) as Request
+
+    res = ({
+      locals: {
+        profile: {
+          owner: {
+            __typename: "Fair",
+            slug: "big-expo-2020",
+          },
+        },
+      },
+      redirect: jest.fn(),
+    } as unknown) as ResWithProfile
+
+    next = jest.fn()
+  })
+
+  it("redirects /:profileSlug/browse/artworks to /fair/:fairSlug/artworks", () => {
+    req.params = { id: "big-expo", "0": "artworks" }
+    req.route = { path: "/:id/browse/*" }
+    res.locals.tab = "browse"
+
+    handleFairArtworks(req, res, next)
+
+    expect(res.redirect).toHaveBeenCalledWith(
+      301,
+      "/fair/big-expo-2020/artworks"
+    )
   })
 })
 
@@ -167,29 +332,6 @@ describe("handleFair", () => {
     handleFair(req, res, next)
 
     expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020")
-  })
-
-  it("redirects /:profileSlug/info to /fair/:fairSlug/info", () => {
-    req.params = { id: "big-expo" }
-    req.route = { path: "/:id/:tab*" }
-    res.locals.tab = "info"
-
-    handleFair(req, res, next)
-
-    expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020/info")
-  })
-
-  it("redirects /:profileSlug/browse/artworks to /fair/:fairSlug/artworks", () => {
-    req.params = { id: "big-expo", "0": "artworks" }
-    req.route = { path: "/:id/browse/*" }
-    res.locals.tab = "browse"
-
-    handleFair(req, res, next)
-
-    expect(res.redirect).toHaveBeenCalledWith(
-      301,
-      "/fair/big-expo-2020/artworks"
-    )
   })
 
   it("temporarily redirects to /art-fairs if there is no ID for some reason", () => {

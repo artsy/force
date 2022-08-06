@@ -24,7 +24,7 @@ jobs:
 
   validate_production_schema:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:14.20
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
@@ -130,6 +130,7 @@ jobs:
               ./scripts/build_review_app.sh $review_app_name
             fi
 
+  # TODO: Experiment. Remove when done testing SWC compiler
   test:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
@@ -137,10 +138,12 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
+    parallelism: 4
     environment:
-      - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+      # TODO: Remove this flag once things have stabilized
+      - EXPERIMENTAL_SWC_COMPILER_DISABLED: false
     steps:
-      - run: yarn test
+      - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
 
   type-check:
     docker:

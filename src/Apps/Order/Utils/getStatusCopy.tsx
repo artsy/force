@@ -75,6 +75,17 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
           </>
         ),
       }
+    case "PROCESSING_APPROVAL":
+      return {
+        title: `${approvedTitle(isOfferFlow)}. Payment processing.`,
+        description: (
+          <>
+            Thank you for your purchase. {deliverText(order)}More delivery
+            information will be available once your order ships.
+            {covidNote()}
+          </>
+        ),
+      }
     case "IN_TRANSIT":
       return {
         title: "Your order has shipped",

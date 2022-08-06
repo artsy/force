@@ -8,7 +8,7 @@ import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
-  const { next, onDone } = useOnboardingContext()
+  const { next, onClose } = useOnboardingContext()
   const { register, handleNext, loading } = useOnboardingFadeTransition({
     next,
   })
@@ -18,7 +18,7 @@ export const OnboardingWelcome = () => {
       left={<OnboardingWelcomeAnimatedPanel ref={register(0)} />}
       leftProps={{ display: "block" }}
       right={
-        <Flex flexDirection="column" justifyContent="space-between" p={4}>
+        <Flex flexDirection="column" justifyContent="space-between" p={[2, 4]}>
           {/* Vertically centers next Box */}
           <Box />
 
@@ -27,13 +27,15 @@ export const OnboardingWelcome = () => {
               Welcome to Artsy{user ? `, ${user.name}` : ""}.
             </Text>
 
-            <Spacer mt={4} />
+            <Spacer mt={[2, 4]} />
 
-            <Text variant="lg-display" ref={register(2)}>
+            <Text variant={["md", "lg-display"]} ref={register(2)}>
               Ready to find art you love? Start building your profile and tailor
               Artsy to your tastes.
             </Text>
           </Box>
+
+          <Spacer my={1} />
 
           <Box width="100%">
             <Button
@@ -52,7 +54,7 @@ export const OnboardingWelcome = () => {
               // @ts-ignore
               as={RouterLink}
               to="/"
-              onClick={onDone}
+              onClick={onClose}
             >
               Skip
             </Button>

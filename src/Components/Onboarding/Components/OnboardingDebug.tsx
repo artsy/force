@@ -52,6 +52,8 @@ export const OnboardingDebug: FC = () => {
 
       {mode === "Modal" && (
         <OnboardingModal
+          height={["100%", "90%"]}
+          dialogProps={{ height: ["100%", "90%"] }}
           onClose={() => {
             setMode("Resting")
           }}

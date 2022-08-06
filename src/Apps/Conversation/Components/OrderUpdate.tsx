@@ -64,7 +64,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
       Icon = AlertCircleFillIcon
       color = THEME_V3.colors.yellow100 as Color
       textColor = "black100"
-      message = "Offer accepted. Payment pending"
+      message = "Offer accepted. Payment processing"
     } else if (state === "APPROVED") {
       color = "green100"
       message = `${

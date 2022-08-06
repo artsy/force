@@ -1,13 +1,14 @@
-import { SystemContextProvider } from "System"
 import { mount } from "enzyme"
-import { NavBarUserMenu } from "../NavBarUserMenu"
 import { mediator } from "lib/mediator"
+import { SystemContextProvider, useSystemContext } from "System"
+import { NavBarUserMenu } from "../NavBarUserMenu"
 
 jest.mock("react-tracking", () => ({
   useTracking: () => ({
     trackEvent: jest.fn(),
   }),
 }))
+jest.mock("System/useSystemContext")
 
 describe("NavBarUserMenu", () => {
   jest.spyOn(mediator, "trigger")
@@ -20,6 +21,14 @@ describe("NavBarUserMenu", () => {
     )
   }
 
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "my-collection-web": { flagEnabled: true },
+      },
+    }))
+  })
+
   it("renders correct menu items", () => {
     const wrapper = getWrapper()
     const links = wrapper.find("a")
@@ -30,6 +39,7 @@ describe("NavBarUserMenu", () => {
       ["/settings/alerts", "Watch lot Alerts"],
       ["/settings/saves", "Save Saves & Follows"],
       ["/settings/edit-profile", "User Collector Profile"],
+      ["/settings/my-collection", "Artwork My Collection"],
       ["/settings/edit-settings", "Settings Settings"],
     ])
 

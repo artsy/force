@@ -5,35 +5,42 @@ import { DetailsFragmentContainer as Details } from "./Details"
 import { BoxProps } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuthContextModule } from "@artsy/cohesion"
+import styled from "styled-components"
 
 export interface MetadataProps
   extends BoxProps,
     React.AnchorHTMLAttributes<HTMLAnchorElement> {
   artwork: Metadata_artwork
   extended?: boolean
+  contextModule?: AuthContextModule
+  disableRouterLinking?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean
   hideSaleInfo?: boolean
   isHovered?: boolean
+  showHoverDetails?: boolean
   showSaveButton?: boolean
-  contextModule?: AuthContextModule
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
-  extended = true,
-  mt = 1,
   artwork,
+  contextModule,
+  disableRouterLinking,
+  extended = true,
   hidePartnerName,
   hideArtistName,
   hideSaleInfo,
   isHovered,
+  mt = 1,
+  showHoverDetails,
   showSaveButton,
-  contextModule,
   ...rest
 }) => {
+  const LinkContainer = disableRouterLinking ? DisabledLink : RouterLink
+
   return (
-    <RouterLink
-      to={artwork.href}
+    <LinkContainer
+      to={disableRouterLinking ? null : artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"
@@ -47,12 +54,17 @@ export const Metadata: React.FC<MetadataProps> = ({
         hidePartnerName={hidePartnerName}
         hideArtistName={hideArtistName}
         isHovered={isHovered}
+        showHoverDetails={showHoverDetails}
         showSaveButton={showSaveButton}
         contextModule={contextModule}
       />
-    </RouterLink>
+    </LinkContainer>
   )
 }
+
+const DisabledLink = styled(RouterLink)`
+  cursor: default;
+`
 
 export default createFragmentContainer(Metadata, {
   artwork: graphql`

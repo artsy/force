@@ -40,7 +40,6 @@ const testOrder: StatusQueryRawResponse["order"] = {
 
 describe("Status", () => {
   let isEigen
-  const pushMock = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -50,10 +49,7 @@ describe("Status", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <MockBoot context={{ isEigen }}>
-        <StatusFragmentContainer
-          {...props}
-          router={{ push: pushMock } as any}
-        />
+        <StatusFragmentContainer {...props} />
       </MockBoot>
     ),
     query: graphql`
@@ -154,6 +150,21 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain("Offer accepted")
+        expect(page.getMessage()).toBe(1)
+      })
+    })
+
+    describe("processing approval", () => {
+      it("should say 'Offer accepted. Payment processing.' and have message box", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "PROCESSING_APPROVAL",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain("Offer accepted. Payment processing.")
         expect(page.getMessage()).toBe(1)
       })
     })
@@ -382,6 +393,23 @@ describe("Status", () => {
         const page = new StatusTestPage(wrapper)
 
         expect(page.text()).toContain("Your order is confirmed")
+      })
+    })
+
+    describe("processing approval", () => {
+      it("should say 'Your order is confirmed. Payment processing.' and have message box", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...BuyOrderWithShippingDetails,
+            displayState: "PROCESSING_APPROVAL",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Your order is confirmed. Payment processing."
+        )
+        expect(page.getMessage()).toBe(1)
       })
     })
 

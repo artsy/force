@@ -6,7 +6,6 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
 import {
-  OrderStepper,
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
@@ -26,7 +25,6 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "../../Components/PaymentMethodSummaryItem"
 import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "../../Components/OfferSummaryItem"
-import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
@@ -35,6 +33,7 @@ import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/Shipp
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
+import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
@@ -359,16 +358,27 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/shipping`)
   }
 
-  const { order, isCommittingMutation, isEigen } = props
+  const { order, isCommittingMutation, isEigen, stripe } = props
+  const submittable = !!stripe
+
+  const SubmitButton: FC = () => (
+    <Button
+      variant="primaryBlack"
+      width="100%"
+      loading={isCommittingMutation}
+      disabled={!submittable}
+      onClick={() => onSubmit()}
+    >
+      Submit
+    </Button>
+  )
 
   return (
     <Box data-test="orderReview">
-      <OrderStepper
+      <OrderRouteContainer
         currentStep="Review"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-      />
-      <TwoColumnLayout
-        Content={
+        content={
           <Join separator={<Spacer mb={4} />}>
             <Flex flexDirection="column" mb={[2, 4]}>
               <Message mb={[2, 4]}>
@@ -377,14 +387,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
               </Message>
               {isEigen && (
                 <>
-                  <Button
-                    variant="primaryBlack"
-                    width="100%"
-                    loading={isCommittingMutation}
-                    onClick={() => onSubmit()}
-                  >
-                    Submit
-                  </Button>
+                  <SubmitButton />
                   <ConditionsOfSaleDisclaimer paddingY={2} textAlign="start" />
                 </>
               )}
@@ -408,21 +411,14 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
-              <Spacer mb={2} />
-              <Button
-                variant="primaryBlack"
-                width="50%"
-                loading={isCommittingMutation}
-                onClick={() => onSubmit()}
-              >
-                Submit
-              </Button>
+              <Spacer mb={4} />
+              <SubmitButton />
               <Spacer mb={2} />
               <ConditionsOfSaleDisclaimer />
             </Media>
           </Join>
         }
-        Sidebar={
+        sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
               <ArtworkSummaryItem order={order} />
@@ -437,14 +433,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             />
             <Spacer mb={[2, 4]} />
             <Media at="xs">
-              <Button
-                variant="primaryBlack"
-                width="100%"
-                loading={isCommittingMutation}
-                onClick={() => onSubmit()}
-              >
-                Submit
-              </Button>
+              <SubmitButton />
               <Spacer mb={2} />
               <ConditionsOfSaleDisclaimer />
             </Media>

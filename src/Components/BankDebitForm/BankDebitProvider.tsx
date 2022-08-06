@@ -130,7 +130,7 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   return (
-    <div data-test="bank-transfer-section">
+    <div data-test="bankTransferSection">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm
