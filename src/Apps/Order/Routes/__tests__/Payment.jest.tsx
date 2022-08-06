@@ -446,10 +446,10 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects the ACH payment method", () => {
-      page.selectPaymentMethod(1)
-      page.selectPaymentMethod(0)
+      page.selectPaymentMethod("CreditCard")
+      page.selectPaymentMethod("USBankAccount")
 
-      expect(trackEvent).toHaveBeenCalledWith({
+      expect(trackEvent).toHaveBeenLastCalledWith({
         action: "clickedPaymentMethod",
         amount: "$12,000",
         context_page_owner_type: "orders-payment",
@@ -462,7 +462,7 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects Credit Card payment method", () => {
-      page.selectPaymentMethod(1)
+      page.selectPaymentMethod("CreditCard")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedPaymentMethod",
@@ -477,7 +477,7 @@ describe("Payment", () => {
     })
 
     it("tracks when the user selects Wire payment method", () => {
-      page.selectPaymentMethod(2)
+      page.selectPaymentMethod("WireTransfer")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedPaymentMethod",

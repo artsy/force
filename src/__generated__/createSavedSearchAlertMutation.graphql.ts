@@ -3,7 +3,6 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 export type CreateSavedSearchInput = {
     attributes: SearchCriteriaAttributes;
     clientMutationId?: string | null | undefined;
@@ -32,7 +31,6 @@ export type SearchCriteriaAttributes = {
 };
 export type UserAlertSettingsInput = {
     email?: boolean | null | undefined;
-    frequency?: UserSearchCriteriaFrequency | null | undefined;
     name?: string | null | undefined;
     push?: boolean | null | undefined;
 };
