@@ -10,10 +10,10 @@ export type CommerceSetPaymentByStripeIntentInput = {
     oneTimeUse?: boolean | null | undefined;
     setupIntentId: string;
 };
-export type useSetPaymentByStripeIntentMutationVariables = {
+export type SetPaymentByStripeIntentMutationVariables = {
     input: CommerceSetPaymentByStripeIntentInput;
 };
-export type useSetPaymentByStripeIntentMutationResponse = {
+export type SetPaymentByStripeIntentMutationResponse = {
     readonly commerceSetPaymentByStripeIntent: {
         readonly orderOrError: {
             readonly order?: {
@@ -28,15 +28,15 @@ export type useSetPaymentByStripeIntentMutationResponse = {
         };
     } | null;
 };
-export type useSetPaymentByStripeIntentMutation = {
-    readonly response: useSetPaymentByStripeIntentMutationResponse;
-    readonly variables: useSetPaymentByStripeIntentMutationVariables;
+export type SetPaymentByStripeIntentMutation = {
+    readonly response: SetPaymentByStripeIntentMutationResponse;
+    readonly variables: SetPaymentByStripeIntentMutationVariables;
 };
 
 
 
 /*
-mutation useSetPaymentByStripeIntentMutation(
+mutation SetPaymentByStripeIntentMutation(
   $input: CommerceSetPaymentByStripeIntentInput!
 ) {
   commerceSetPaymentByStripeIntent(input: $input) {
@@ -154,7 +154,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useSetPaymentByStripeIntentMutation",
+    "name": "SetPaymentByStripeIntentMutation",
     "selections": [
       {
         "alias": null,
@@ -211,7 +211,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useSetPaymentByStripeIntentMutation",
+    "name": "SetPaymentByStripeIntentMutation",
     "selections": [
       {
         "alias": null,
@@ -309,14 +309,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2851785b859536bb0fecd27617bdc7f8",
+    "cacheID": "732929de11c49021a9846ce6bfbc78c0",
     "id": null,
     "metadata": {},
-    "name": "useSetPaymentByStripeIntentMutation",
+    "name": "SetPaymentByStripeIntentMutation",
     "operationKind": "mutation",
-    "text": "mutation useSetPaymentByStripeIntentMutation(\n  $input: CommerceSetPaymentByStripeIntentInput!\n) {\n  commerceSetPaymentByStripeIntent(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
+    "text": "mutation SetPaymentByStripeIntentMutation(\n  $input: CommerceSetPaymentByStripeIntentInput!\n) {\n  commerceSetPaymentByStripeIntent(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          ...Payment_validation\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment Payment_validation on CommerceOrder {\n  __isCommerceOrder: __typename\n  paymentMethod\n  paymentMethodDetails {\n    __typename\n    ... on CreditCard {\n      id\n    }\n    ... on BankAccount {\n      id\n    }\n    ... on WireTransfer {\n      isManualPayment\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd2253efc1244e8b8f78ad61e1cc5554c';
+(node as any).hash = '92e6a53b686286d4982e80ef02da3621';
 export default node;

@@ -11,14 +11,14 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { useSetPayment } from "../../Mutations/useSetPayment"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
 
-jest.mock("../../Components/Mutations/useSetPayment", () => {
+jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Components/Mutations/useSetPayment"
+    "../../Mutations/useSetPayment"
   )
 
   return {
@@ -79,10 +79,10 @@ describe("BankAccountFragmentContainer", () => {
         <BankAccountPickerFragmentContainer
           order={props.order}
           me={props.me}
-          onSetPaymentSuccess={jest.fn()}
-          onSetPaymentError={jest.fn()}
           bankAccountHasInsufficientFunds={false}
           setBankAccountHasInsufficientFunds={jest.fn()}
+          onBankAccountContinue={jest.fn()}
+          setIsProcessingPayment={jest.fn()}
         />
       </MockBoot>
     ),
@@ -241,7 +241,6 @@ describe("BankAccountFragmentContainer", () => {
         page.clickRadio(1)
         page.submitButton.simulate("click")
         page.update()
-
         expect(submitMutationMock).toHaveBeenCalledWith({
           variables: {
             input: {

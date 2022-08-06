@@ -2,6 +2,7 @@ import { BorderedRadio, Checkbox, Collapse } from "@artsy/palette"
 import { PaymentTestQueryRawResponse } from "__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
+  BuyOrderWithBankDebitDetails,
   OfferOrderWithShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
 import { AddressForm } from "Components/AddressForm"
@@ -13,9 +14,9 @@ import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { useSetPayment } from "../../Components/Mutations/useSetPayment"
+import { useSetPayment } from "../../Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
-import { flushPromiseQueue, MockBoot } from "DevTools"
+import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ReactWrapper } from "enzyme"
 
@@ -25,9 +26,9 @@ jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
-jest.mock("../../Components/Mutations/useSetPayment", () => {
+jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
-    "../../Components/Mutations/useSetPayment"
+    "../../Mutations/useSetPayment"
   )
 
   return {
@@ -79,6 +80,10 @@ const trackEvent = jest.fn()
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
+  internalID: "1234",
+}
+const testOrderWithACH: PaymentTestQueryRawResponse["order"] = {
+  ...BuyOrderWithBankDebitDetails,
   internalID: "1234",
 }
 
@@ -152,6 +157,8 @@ describe("Payment", () => {
     })
   })
 
+  let wrapper
+
   beforeEach(() => {
     jest.clearAllMocks()
     const mockTracking = useTracking as jest.Mock
@@ -161,14 +168,17 @@ describe("Payment", () => {
       }
     })
     isCommittingMutation = false
+    wrapper = getWrapper({
+      CommerceOrder: () => testOrder,
+    })
   })
 
-  it("shows the button spinner while loading the mutation", async () => {
+  it("shows processing payment interface while setting payment", async () => {
     isCommittingMutation = true
     let wrapper = getWrapper()
     let page = new PaymentTestPage(wrapper)
 
-    expect(page.isLoading()).toBeTruthy()
+    expect(page.find("Processing payment")).toBeTruthy()
   })
 
   it("shows the default error modal when the payment picker throws an error", async () => {
@@ -211,9 +221,6 @@ describe("Payment", () => {
   })
 
   it("commits setOrderPayment mutation with the credit card id", async () => {
-    let wrapper = getWrapper({
-      CommerceOrder: () => testOrder,
-    })
     let page = new PaymentTestPage(wrapper)
     await page.clickSubmit()
 
@@ -300,46 +307,6 @@ describe("Payment", () => {
     it("renders selection of payment methods", async () => {
       expect(page.text()).toContain("Credit card")
       expect(page.text()).toContain("Bank transfer")
-    })
-
-    it("tracks the initially-selected payment method on load like any other selection", async () => {
-      await flushPromiseQueue()
-
-      expect(trackEvent).toHaveBeenLastCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "US_BANK_ACCOUNT",
-        subject: "click_payment_method",
-      })
-    })
-
-    it("tracks when the user selects the credit card payment method", async () => {
-      page.selectPaymentMethod(1)
-
-      expect(trackEvent).toHaveBeenLastCalledWith({
-        action: "clickedPaymentMethod",
-        amount: "$12,000",
-        context_page_owner_type: "orders-payment",
-        currency: "USD",
-        flow: "BUY",
-        order_id: "1234",
-        payment_method: "CREDIT_CARD",
-        subject: "click_payment_method",
-      })
-    })
-
-    it("tracks when the user selects the bank payment method", async () => {
-      page.selectPaymentMethod(1)
-      page.selectPaymentMethod(0)
-
-      // We toggle back and forth to test the selecttion starting from bank account
-      expect(
-        trackEvent.mock.calls.map(args => args[0]?.["payment_method"])
-      ).toEqual(["US_BANK_ACCOUNT", "CREDIT_CARD", "US_BANK_ACCOUNT"])
     })
 
     it("renders credit card element when credit card is chosen as payment method", async () => {
@@ -446,10 +413,10 @@ describe("Payment", () => {
     let page
 
     const order = {
-      ...testOrder,
+      ...testOrderWithACH,
       availablePaymentMethods: [
-        "CREDIT_CARD",
         "US_BANK_ACCOUNT",
+        "CREDIT_CARD",
         "WIRE_TRANSFER",
       ] as CommercePaymentMethodEnum[],
     }
@@ -462,7 +429,21 @@ describe("Payment", () => {
       page = new PaymentTestPage(wrapper)
     })
 
-    it("works correctly with ACH", () => {
+    it("tracks the initially-selected payment method on load like any other selection", async () => {
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "US_BANK_ACCOUNT",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("tracks when the user selects the ACH payment method", () => {
+      page.selectPaymentMethod(1)
       page.selectPaymentMethod(0)
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -477,7 +458,7 @@ describe("Payment", () => {
       })
     })
 
-    it("works correctly with Credit Card", () => {
+    it("tracks when the user selects Credit Card payment method", () => {
       page.selectPaymentMethod(1)
 
       expect(trackEvent).toHaveBeenCalledWith({
@@ -492,7 +473,7 @@ describe("Payment", () => {
       })
     })
 
-    it("works correctly with Wire Transfer", () => {
+    it("tracks when the user selects Wire payment method", () => {
       page.selectPaymentMethod(2)
 
       expect(trackEvent).toHaveBeenCalledWith({

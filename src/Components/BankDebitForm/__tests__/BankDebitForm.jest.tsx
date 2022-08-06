@@ -56,8 +56,8 @@ describe("BankDebitForm", () => {
     render(
       <BankDebitForm
         order={testOrder}
-        returnURL={""}
         bankAccountHasInsufficientFunds={false}
+        setIsProcessingPayment={jest.fn()}
       />
     )
 
@@ -73,8 +73,8 @@ describe("BankDebitForm", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
-          returnURL={""}
           bankAccountHasInsufficientFunds={true}
+          setIsProcessingPayment={jest.fn()}
         />
       )
 
