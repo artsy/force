@@ -5,10 +5,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AboutArtworksRail_viewer = {
-    readonly artworks: {
+    readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly slug: string;
+                readonly href: string | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -34,24 +36,24 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
-          "name": "ids",
-          "value": [
-            "5f3b5f320a69fc000de1b7ea",
-            "59e61ee8a09a6749ab69e49d",
-            "5d9b926cce2ff90011a84978",
-            "5e5572e72dbb7d000e386988"
-          ]
+          "name": "first",
+          "value": 50
+        },
+        {
+          "kind": "Literal",
+          "name": "geneIDs",
+          "value": "trending-this-week"
         }
       ],
-      "concreteType": "ArtworkConnection",
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "artworks",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkEdge",
+          "concreteType": "FilterArtworksEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -72,7 +74,27 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                },
+                {
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 210
+                    }
+                  ],
                   "kind": "FragmentSpread",
                   "name": "ShelfArtwork_artwork"
                 }
@@ -83,11 +105,11 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworks(ids:[\"5f3b5f320a69fc000de1b7ea\",\"59e61ee8a09a6749ab69e49d\",\"5d9b926cce2ff90011a84978\",\"5e5572e72dbb7d000e386988\"])"
+      "storageKey": "artworksConnection(first:50,geneIDs:\"trending-this-week\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '6037a35d73fcfd5a37e0af6dacf88162';
+(node as any).hash = '0e6c0414bf142041bb098e61ae42b1cf';
 export default node;
