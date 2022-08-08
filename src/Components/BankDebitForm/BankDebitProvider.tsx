@@ -131,6 +131,7 @@ export const BankDebitProvider: FC<Props> = ({
 
   return (
     <div data-test="bankTransferSection">
+      <Spacer mt={2} />
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm

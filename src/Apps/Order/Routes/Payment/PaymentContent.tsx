@@ -125,7 +125,6 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mt={2} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}

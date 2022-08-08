@@ -9,6 +9,7 @@ export const SaveAndContinueButton: FC<{
   disabled?: boolean
 }> = ({ onClick, media, loading = false, disabled = false }) => (
   <>
+    <Spacer mb={4} />
     {media ? (
       <Media {...media}>
         <Button
