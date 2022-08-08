@@ -16,6 +16,7 @@ const { renderWithRelay } = setupTestWrapperTL<
     return (
       <PollAccountBalanceRefetchContainer
         setupIntentId={"setupIntentId"}
+        bankAccountId={"bankAccountId"}
         commerceBankAccountBalance={commerceBankAccountBalance}
         onBalanceCheckComplete={mockBalanceCheckComplete}
         buyerTotalCents={100}
@@ -24,9 +25,14 @@ const { renderWithRelay } = setupTestWrapperTL<
     )
   },
   query: graphql`
-    query PollAccountBalanceQuery_Test_Query($setupIntentId: ID!)
-      @relay_test_operation {
-      commerceBankAccountBalance(setupIntentId: $setupIntentId) {
+    query PollAccountBalanceQuery_Test_Query(
+      $setupIntentId: ID
+      $bankAccountId: ID
+    ) @relay_test_operation {
+      commerceBankAccountBalance(
+        setupIntentId: $setupIntentId
+        bankAccountId: $bankAccountId
+      ) {
         ...PollAccountBalance_commerceBankAccountBalance
       }
     }
