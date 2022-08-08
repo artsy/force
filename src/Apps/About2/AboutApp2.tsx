@@ -14,11 +14,9 @@ import { MetaTags } from "Components/MetaTags"
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { AboutArtworksRail2QueryRenderer } from "./AboutArtworksRail2"
-import {
-  FullBleedHeader,
-  FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader"
 import { scrollIntoView } from "Utils/scrollHelpers"
+import styled from "styled-components"
 
 export const AboutApp2: React.FC = () => {
   return (
@@ -50,16 +48,18 @@ export const AboutApp2: React.FC = () => {
 
       <Spacer mt={4} />
 
-      <Box textAlign="center">
-        <Text as="h1" variant="lg-display">
-          Artsy is for art collectors.
-        </Text>
-        <Text variant={["sm-display", "lg-display"]} mt={2}>
-          As the leading marketplace for the world’s in-demand and emerging
-          artists, we’ve made it easy for new and seasoned collectors alike to
-          discover, buy, and sell art. And so much more. Everything you’ll ever
-          need to collect art, you’ll find on Artsy.
-        </Text>
+      <Box textAlign="center" width="100%">
+        <Box maxWidth={950} margin="auto">
+          <Text as="h1" variant={["lg", "xl"]}>
+            Artsy is for art collecting.
+          </Text>
+          <Text variant={["sm-display", "lg-display"]} mt={2}>
+            As the leading marketplace for art by the world’s emerging and
+            established artists, we’ve made it easy for new and experienced
+            collectors to discover, buy, and sell art—and so much more.
+            Everything you’ll ever need to collect art, you’ll find on Artsy.
+          </Text>
+        </Box>
       </Box>
 
       <Spacer mt={6} />
@@ -83,11 +83,21 @@ export const AboutApp2: React.FC = () => {
   )
 }
 
+const FullBleedHeaderOverlay = styled(Flex)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.25);
+`
+
 interface SectionProps {
   imageUrl: string
   title: string
   description: string
   caption: string
+  ctaLabel: string
   href: string
   onClick?: (event: React.MouseEvent) => void
 }
@@ -160,39 +170,44 @@ const Section: React.FC<SectionProps & BoxProps> = ({
 
 const SECTION_DATA: SectionProps[] = [
   {
-    title: "Find the Art you Want",
+    title: "Find the art you want",
     description:
       "Be the first to know when the art you’re looking for is available with custom alerts.",
     caption: "Angela Heisch, Diving for Pearls, 2021",
+    ctaLabel: "",
     href: "/collect",
     imageUrl: "https://files.artsy.net/images/1-aboutFind.png",
   },
   {
-    title: "Buy Art with Ease",
+    title: "Buy art with ease",
     description: "Buy art simply and safely, from purchase to delivery. ",
     caption: "Andy Warhol, Flowers F&S ll.64, 1970.",
+    ctaLabel: "",
     href: "/collect",
     imageUrl: "https://files.artsy.net/images/2-aboutBuy.png",
   },
   {
-    title: "Bid in Global Auctions",
+    title: "Bid in global auctions",
     description: "Bid in leading global auctions, from wherever you are.",
     caption: "Anna Park, Brenda, 2019.",
+    ctaLabel: "",
     href: "/auctions",
-    imageUrl: "https://files.artsy.net/images/3-aboutBid.png",
+    imageUrl: "https://files.artsy.net/images/3-aboutBid-1659986493124.png",
   },
   {
-    title: "Track the Art Market",
+    title: "Track the art market",
     description: "Invest smarter with our free auction results database.",
     caption: "Harold Ancart, Untitled, 2016.",
+    ctaLabel: "",
     href: "/price-database",
     imageUrl: "https://files.artsy.net/images/4-aboutTrack.png",
   },
   {
-    title: "Manage your Collection",
+    title: "Manage your collection",
     description:
       "Get insight into the market value of artworks in your collection.",
     caption: "John Baldessari, Marina Abramovic, 2018.",
+    ctaLabel: "",
     href: "#",
     imageUrl: "https://files.artsy.net/images/5-aboutManage.png",
     onClick: () => {
@@ -204,10 +219,11 @@ const SECTION_DATA: SectionProps[] = [
     },
   },
   {
-    title: "Sell Artwork from Your Collection",
+    title: "Sell from your collection",
     description:
       "Sell art from your collection to the right buyer with the help of our experts. ",
     caption: "John Baldessari, Marina Abramovic, 2018.",
+    ctaLabel: "",
     href: "/sell",
     imageUrl: "https://files.artsy.net/images/6-aboutSell.png",
   },
@@ -216,6 +232,7 @@ const SECTION_DATA: SectionProps[] = [
     description:
       "Get to know today’s up-and-coming artists and trends in the art world.",
     caption: "Evie O'Connor, Delivery Down The Grand Canal, 2021.",
+    ctaLabel: "",
     href: "/articles",
     imageUrl: "https://files.artsy.net/images/7-aboutDiscover.png",
   },
@@ -224,6 +241,7 @@ const SECTION_DATA: SectionProps[] = [
     description:
       "Follow artists for updates on their latest works and career milestones. ",
     caption: "Kerry James Marshall, Vignette 13, 2008.",
+    ctaLabel: "",
     href: "/artists",
     imageUrl: "https://files.artsy.net/images/8-aboutFollow.png",
   },
