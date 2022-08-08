@@ -198,9 +198,9 @@ const RadioWithLabel = styled(BorderedRadio)`
 `
 
 /*
-returns all available payment methods, by checking relevant feature flags
-TODO: when ACH and wire_transfer FFs is removed, this function can be removed and radios can be moved to PaymentContent
-*/
+ * returns all available payment methods in the form of BorderRadio
+ * by checking order's availablePaymentMethods
+ */
 const getAvailablePaymentMethods = (
   availablePaymentMethods: readonly CommercePaymentMethodEnum[]
 ): ReactElement<RadioProps>[] => {

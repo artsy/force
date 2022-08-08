@@ -3,12 +3,8 @@ import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress" // todo
 import { usePoll } from "Utils/Hooks/usePoll"
-import {
-  PollAccountBalanceQuery,
-  PollAccountBalanceQueryResponse,
-} from "__generated__/PollAccountBalanceQuery.graphql"
+import { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
 import { PollAccountBalance_commerceBankAccountBalance } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
 import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
 
@@ -114,15 +110,24 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
       placeholder={<ProcessingPayment />}
       variables={{ setupIntentId }}
       query={BALANCE_QUERY}
-      render={renderWithLoadProgress<PollAccountBalanceQueryResponse>(
-        ({ commerceBankAccountBalance }) => (
+      render={({ error, props }) => {
+        // if (error) {
+        //   console.error(error)
+        //   return null
+        // }
+
+        if (!props?.commerceBankAccountBalance) {
+          return <ProcessingPayment />
+        }
+
+        return (
           <PollAccountBalanceRefetchContainer
-            commerceBankAccountBalance={commerceBankAccountBalance}
+            commerceBankAccountBalance={props?.commerceBankAccountBalance}
             setupIntentId={setupIntentId}
             {...rest}
           />
         )
-      )}
+      }}
     />
   )
 }

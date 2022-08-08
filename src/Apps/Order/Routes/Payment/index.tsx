@@ -81,6 +81,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isPaymentSetupSuccessful,
   } = useStripePaymentBySetupIntentId(order.internalID)
 
+  // ProcessingPayment is rendered and PaymentContent is hidden when true
+  const displayLoading = isProcessingRedirect || isProcessingPayment
+
   // result of account balance check
   const [
     bankAccountHasInsufficientFunds,
@@ -168,14 +171,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     }
   }
 
-  // sets payment with existing bank account
+  // pushes to the review step, when payment is set with an existing bank account
   const onBankAccountContinue = () => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
-    console.log("HERE!")
     if (displayInsufficientFundsError) {
       setBankAccountHasInsufficientFunds(true)
       return
@@ -225,8 +227,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     })
   }
 
-  const displayLoading = isProcessingRedirect || isProcessingPayment
-
   return (
     <Box data-test="orderPayment">
       <OrderRouteContainer
@@ -243,6 +243,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
           ) : (
             <>
               {displayLoading && <ProcessingPayment />}
+              {/* keep PaymentContent mounted but displayed none while 
+                  displayLoading is true; needed to handle Stripe redirect */}
               <Flex
                 flexDirection="column"
                 style={displayLoading ? { display: "none" } : {}}
