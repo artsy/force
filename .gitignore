@@ -5,6 +5,7 @@
 .DS_Store
 .env
 .env.*
+.swc
 .yalc
 *.csv
 *.dat
