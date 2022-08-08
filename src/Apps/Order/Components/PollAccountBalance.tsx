@@ -110,12 +110,7 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
       placeholder={<ProcessingPayment />}
       variables={{ setupIntentId }}
       query={BALANCE_QUERY}
-      render={({ error, props }) => {
-        // if (error) {
-        //   console.error(error)
-        //   return null
-        // }
-
+      render={({ props }) => {
         if (!props?.commerceBankAccountBalance) {
           return <ProcessingPayment />
         }
