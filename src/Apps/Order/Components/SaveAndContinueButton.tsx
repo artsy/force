@@ -4,13 +4,24 @@ import { Media } from "Utils/Responsive"
 
 export const SaveAndContinueButton: FC<{
   onClick?: () => void
-  media: { [key: string]: string }
+  media?: { [key: string]: string }
   loading?: boolean
   disabled?: boolean
 }> = ({ onClick, media, loading = false, disabled = false }) => (
   <>
-    <Spacer mb={4} />
-    <Media {...media}>
+    {media ? (
+      <Media {...media}>
+        <Button
+          onClick={onClick}
+          variant="primaryBlack"
+          width={["100%", "50%"]}
+          loading={loading}
+          disabled={disabled}
+        >
+          Save and Continue
+        </Button>
+      </Media>
+    ) : (
       <Button
         onClick={onClick}
         variant="primaryBlack"
@@ -20,6 +31,7 @@ export const SaveAndContinueButton: FC<{
       >
         Save and Continue
       </Button>
-    </Media>
+    )}
+    <Spacer mb={2} />
   </>
 )
