@@ -81,8 +81,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isPaymentSetupSuccessful,
   } = useStripePaymentBySetupIntentId(order.internalID)
 
+  // an existing bank account's ID, used to query account balance
+  const [selectedBankAccountId, setSelectedBankAccountId] = useState("")
+
   // ProcessingPayment is rendered and PaymentContent is hidden when true
   const displayLoading = isProcessingRedirect || isProcessingPayment
+
+  // whether balance check is performed for the current bank account
+  const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
 
   // result of account balance check
   const [
@@ -171,14 +177,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     }
   }
 
-  // pushes to the review step, when payment is set with an existing bank account
-  const onBankAccountContinue = () => {
-    props.router.push(`/orders/${props.order.internalID}/review`)
-  }
-
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     if (displayInsufficientFundsError) {
+      setSelectedBankAccountId("")
+      setBalanceCheckComplete(true)
       setBankAccountHasInsufficientFunds(true)
       return
     }
@@ -233,9 +236,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         currentStep="Payment"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
-          balanceCheckEnabled && isPaymentSetupSuccessful ? (
+          balanceCheckEnabled &&
+          !balanceCheckComplete &&
+          (isPaymentSetupSuccessful || selectedBankAccountId) ? (
             <PollAccountBalanceQueryRenderer
               setupIntentId={stripeSetupIntentId!}
+              bankAccountId={selectedBankAccountId}
               onBalanceCheckComplete={onBalanceCheckComplete}
               buyerTotalCents={order.buyerTotalCents!}
               orderCurrencyCode={order.currencyCode}
@@ -263,7 +269,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   setBankAccountHasInsufficientFunds={
                     setBankAccountHasInsufficientFunds
                   }
-                  onBankAccountContinue={onBankAccountContinue}
+                  setSelectedBankAccountId={setSelectedBankAccountId}
                   setIsProcessingPayment={setIsProcessingPayment}
                 />
               </Flex>

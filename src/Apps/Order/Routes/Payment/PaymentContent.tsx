@@ -39,7 +39,7 @@ export interface Props {
   CreditCardPicker: RefObject<CreditCardPicker>
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  onBankAccountContinue: () => void
+  setSelectedBankAccountId: (arg: string) => void
   setIsProcessingPayment: (arg: boolean) => void
 }
 
@@ -54,7 +54,7 @@ export const PaymentContent: FC<Props> = props => {
     onPaymentMethodChange,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
-    onBankAccountContinue,
+    setSelectedBankAccountId,
     setIsProcessingPayment,
   } = props
   const tracking = useTracking()
@@ -151,7 +151,7 @@ export const PaymentContent: FC<Props> = props => {
           setBankAccountHasInsufficientFunds={
             setBankAccountHasInsufficientFunds
           }
-          onBankAccountContinue={onBankAccountContinue}
+          setSelectedBankAccountId={setSelectedBankAccountId}
           setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>
