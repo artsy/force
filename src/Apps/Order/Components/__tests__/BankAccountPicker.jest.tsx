@@ -72,6 +72,8 @@ const defaultData: BankAccountPickerTestQueryRawResponse = {
   },
 }
 
+const mockSetSelectedBankAccountId = jest.fn()
+
 describe("BankAccountFragmentContainer", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
@@ -82,7 +84,7 @@ describe("BankAccountFragmentContainer", () => {
           bankAccountHasInsufficientFunds={false}
           setBankAccountHasInsufficientFunds={jest.fn()}
           setIsProcessingPayment={jest.fn()}
-          setSelectedBankAccountId={jest.fn()}
+          setSelectedBankAccountId={mockSetSelectedBankAccountId}
         />
       </MockBoot>
     ),
@@ -250,6 +252,34 @@ describe("BankAccountFragmentContainer", () => {
             },
           },
         })
+      })
+
+      it("sets the bank account ID for the parent to poll account balance", async () => {
+        const submitMutationMock = jest.fn().mockResolvedValue({
+          commerceSetPayment: {
+            orderOrError: {
+              id: 1234,
+            },
+          },
+        })
+        ;(useSetPayment as jest.Mock).mockImplementation(() => ({
+          submitMutation: submitMutationMock,
+        }))
+
+        const wrapper = getWrapper({
+          CommerceOrder: () => BuyOrderPickup,
+          Me: () => ({
+            bankAccounts: {
+              edges: [{ node: bankAccounts[0] }, { node: bankAccounts[1] }],
+            },
+          }),
+        })
+        const page = new BankAccountPickerTestPage(wrapper)
+        page.clickRadio(1)
+        page.submitButton.simulate("click")
+        page.update()
+
+        expect(mockSetSelectedBankAccountId).toHaveBeenCalledWith("bank-id-2")
       })
     })
   })
