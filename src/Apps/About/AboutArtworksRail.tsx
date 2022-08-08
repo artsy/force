@@ -5,7 +5,6 @@ import { AboutArtworksRail_viewer } from "__generated__/AboutArtworksRail_viewer
 import { Rail } from "Components/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
-import { ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Skeleton,
@@ -19,18 +18,17 @@ interface AboutArtworksRailProps {
 }
 
 export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
-  const artworks = extractNodes(props.viewer.artworks)
+  const artworks = extractNodes(props.viewer.artworksConnection)
   return (
     <Rail
-      title="Discover Artworks Just for You"
-      subTitle="On Artsy"
+      title="Trending Now"
+      viewAllLabel="View All"
+      viewAllHref="/gene/trending-this-week"
       getItems={() => {
         return artworks.map(artwork => (
           <ShelfArtworkFragmentContainer
             artwork={artwork}
             key={artwork.internalID}
-            //TODO: make this optional?
-            contextModule={ContextModule.featuredArtists}
           />
         ))
       }}
@@ -43,18 +41,13 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment AboutArtworksRail_viewer on Viewer {
-        artworks(
-          ids: [
-            "5f3b5f320a69fc000de1b7ea" # pragma: allowlist secret
-            "59e61ee8a09a6749ab69e49d" # pragma: allowlist secret
-            "5d9b926cce2ff90011a84978" # pragma: allowlist secret
-            "5e5572e72dbb7d000e386988" # pragma: allowlist secret
-          ]
-        ) {
+        artworksConnection(first: 50, geneIDs: "trending-this-week") {
           edges {
             node {
+              ...ShelfArtwork_artwork @arguments(width: 210)
               internalID
-              ...ShelfArtwork_artwork
+              slug
+              href
             }
           }
         }
@@ -93,8 +86,9 @@ export const AboutArtworksRailQueryRenderer: React.FC = () => {
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Discover Artworks Just for You"
-      subTitle="On Artsy"
+      title="Trending Now"
+      viewAllLabel="View All"
+      viewAllHref="/gene/trending-this-week"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return (
