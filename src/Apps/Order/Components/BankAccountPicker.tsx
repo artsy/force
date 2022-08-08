@@ -42,7 +42,6 @@ export const BankAccountPicker: FC<Props> = props => {
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
-  // TODO: use a single setPaymentMutation for all payment methods
   const handleContinue = async () => {
     setIsProcessingPayment(true)
     try {
@@ -142,7 +141,7 @@ export const BankAccountPicker: FC<Props> = props => {
       {bankAccountSelection.type === "existing" && (
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-          
+
           <SaveAndContinueButton
             data-test="bankTransferSaveExisting"
             media={{ greaterThan: "xs" }}

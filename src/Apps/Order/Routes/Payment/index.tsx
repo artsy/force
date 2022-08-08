@@ -183,9 +183,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
-  const displayLoading = isProcessingRedirect || isProcessingPayment
-
-  // TODO: refactor this to use a single mutation for Wire, CC and Bank Account
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]
   ) => {
@@ -227,6 +224,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       `,
     })
   }
+
+  const displayLoading = isProcessingRedirect || isProcessingPayment
 
   return (
     <Box data-test="orderPayment">

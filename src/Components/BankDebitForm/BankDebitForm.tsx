@@ -30,9 +30,9 @@ export const BankDebitForm: FC<Props> = ({
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
+  const tracking = useTracking()
 
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
-  const tracking = useTracking()
 
   const trackPaymentElementEvent = event => {
     const trackedEvents: any[] = []
