@@ -82,8 +82,8 @@ export const useConfig = ({ basis, onClose }: UseConfig) => {
 /* prettier-ignore */ export const OPTION_TOP_AUCTION_LOTS = "Top auction lots"
 /* prettier-ignore */ export const OPTION_A_CURATED_SELECTION_OF_ARTWORKS = "A curated selection of artworks"
 /* prettier-ignore */ export const OPTION_ARTISTS_ON_THE_RISE = "Artists on the rise"
-/* prettier-ignore */ export const OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN = "Follow artists I’m interested in"
-/* prettier-ignore */ export const OPTION_FOLLOW_GALLERIES_I_LOVE = "Follow galleries I love"
+/* prettier-ignore */ export const OPTION_FOLLOW_ARTISTS_IM_INTERESTED_IN = "Artists I want to collect"
+/* prettier-ignore */ export const OPTION_FOLLOW_GALLERIES_I_LOVE = "Galleries I'm interested in"
 
 /* prettier-ignore */ export const VIEW_WELCOME = "VIEW_WELCOME"
 /* prettier-ignore */ export const VIEW_QUESTION_ONE = "VIEW_QUESTION_ONE"
