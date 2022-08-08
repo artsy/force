@@ -129,7 +129,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         return
       }
 
-      const error = (
+      const orderOrError = (
         await setOrderPayment({
           input: {
             paymentMethod: "CREDIT_CARD",
@@ -137,9 +137,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             id: props.order.internalID!,
           },
         })
-      ).commerceSetPayment?.orderOrError?.error
+      ).commerceSetPayment?.orderOrError
 
-      if (error) throw error
+      if (orderOrError?.error) throw orderOrError.error
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
       setIsProcessingPayment(false)
@@ -151,7 +151,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // sets payment with Wire Transfer
   const onWireTransferContinue = async () => {
     try {
-      const error = (
+      const orderOrError = (
         await setPaymentMutation({
           variables: {
             input: {
@@ -160,9 +160,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             },
           },
         })
-      ).commerceSetPayment?.orderOrError?.error
+      ).commerceSetPayment?.orderOrError
 
-      if (error) throw error
+      if (orderOrError?.error) throw orderOrError.error
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
       setIsProcessingPayment(false)
