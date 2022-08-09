@@ -22,17 +22,22 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
 
   useEffect(() => {
     // pull necessary params from Stripe redirect URL
-    const saveAccount = match.location.query.save_account
-    const setupIntentId = match.location.query.setup_intent
-    const setupIntentClientSecret =
-      match.location.query.setup_intent_client_secret
-    const redirectSuccess = match.location.query.redirect_status === "succeeded"
+    const {
+      save_account,
+      setup_intent,
+      setup_intent_client_secret,
+      redirect_status,
+    } = match.location.query
 
-    if (setupIntentId && setupIntentClientSecret && redirectSuccess) {
+    if (
+      setup_intent &&
+      setup_intent_client_secret &&
+      redirect_status === "succeeded"
+    ) {
       setIsProcessingRedirect(true)
-      setStripeSetupIntentId(setupIntentId)
+      setStripeSetupIntentId(setup_intent)
       // set payment with new bank account by Setup Intent ID
-      setPaymentBySetupIntentId(setupIntentId, saveAccount !== "true")
+      setPaymentBySetupIntentId(setup_intent, save_account !== "true")
     }
 
     setIsProcessingRedirect(false)
