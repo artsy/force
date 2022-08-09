@@ -1,12 +1,10 @@
-import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
+import { AuthContextModule } from "@artsy/cohesion"
+import { Box, BoxProps } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { DetailsFragmentContainer as Details } from "./Details"
-import { BoxProps } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { AuthContextModule } from "@artsy/cohesion"
-import styled from "styled-components"
-import { useRouter } from "System/Router/useRouter"
+import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
+import { DetailsFragmentContainer as Details } from "./Details"
 
 export interface MetadataProps
   extends BoxProps,
@@ -37,17 +35,17 @@ export const Metadata: React.FC<MetadataProps> = ({
   showSaveButton,
   ...rest
 }) => {
-  const { match } = useRouter()
-  const LinkContainer = disableRouterLinking ? DisabledLink : RouterLink
+  const LinkContainer = disableRouterLinking ? Box : RouterLink
 
   return (
+    // @ts-ignore
     <LinkContainer
-      to={disableRouterLinking ? match.location.pathname : artwork.href}
+      to={artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"
       mt={mt}
-      {...rest}
+      {...(!disableRouterLinking && rest)}
     >
       <Details
         includeLinks={false}
@@ -63,10 +61,6 @@ export const Metadata: React.FC<MetadataProps> = ({
     </LinkContainer>
   )
 }
-
-const DisabledLink = styled(RouterLink)`
-  cursor: not-allowed;
-`
 
 export default createFragmentContainer(Metadata, {
   artwork: graphql`
