@@ -108,7 +108,7 @@ export const InquirySignUp: React.FC = () => {
 
       <Box as="form" onSubmit={handleSubmit}>
         <Text variant="lg-display" mr={4}>
-          Create an account to send your message
+          Sign up to send your message
         </Text>
 
         <Separator my={2} />
@@ -156,7 +156,7 @@ export const InquirySignUp: React.FC = () => {
           loading={mode === "Loading"}
           disabled={mode === "Success"}
         >
-          Create Account and Send Message
+          Sign up and send message
         </Button>
 
         <Spacer mt={2} />
