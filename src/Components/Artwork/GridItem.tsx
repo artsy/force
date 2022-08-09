@@ -65,8 +65,6 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
     rest.onMouseLeave?.(event)
   }
 
-  const LinkContainer = disableRouterLinking ? DisabledLink : Link
-
   return (
     <div
       data-id={artwork.internalID}
@@ -82,10 +80,9 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
       >
         <LinkContainer
-          to={disableRouterLinking ? null : artwork.href}
+          artwork={artwork}
+          disableRouterLinking={disableRouterLinking}
           onClick={handleClick}
-          aria-label={`${artwork.title} by ${artwork.artistNames}`}
-          position={imageURL ? "absolute" : "relative"}
         >
           {imageURL ? (
             <MagnifyImage
@@ -99,7 +96,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             <ResponsiveBox
               aspectWidth={4}
               aspectHeight={3}
-              width={width}
+              position="relative"
               maxWidth="100%"
             />
           )}
@@ -133,9 +130,44 @@ const Link = styled(RouterLink)`
   left: 0;
 `
 
-const DisabledLink = styled(Link)`
-  cursor: default;
+const DisabledLink = styled(Box)`
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
+
+const LinkContainer: React.FC<
+  Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking"> & {
+    onClick: () => void
+  }
+> = ({ artwork, children, disableRouterLinking, onClick }) => {
+  const imageURL = artwork.image?.url
+  if (!!disableRouterLinking) {
+    return (
+      <DisabledLink
+        onClick={onClick}
+        aria-label={`${artwork.title} by ${artwork.artistNames}`}
+        position={imageURL ? "absolute" : "relative"}
+      >
+        {children}
+      </DisabledLink>
+    )
+  }
+  return (
+    <Link
+      to={artwork.href}
+      onClick={onClick}
+      aria-label={`${artwork.title} by ${artwork.artistNames}`}
+      position={imageURL ? "absolute" : "relative"}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export const ArtworkGridItemFragmentContainer = createFragmentContainer(
   ArtworkGridItem,

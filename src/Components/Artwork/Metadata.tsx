@@ -2,7 +2,7 @@ import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
-import { BoxProps } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
@@ -36,15 +36,11 @@ export const Metadata: React.FC<MetadataProps> = ({
   showSaveButton,
   ...rest
 }) => {
-  const LinkContainer = disableRouterLinking ? DisabledLink : RouterLink
-
   return (
     <LinkContainer
-      to={disableRouterLinking ? null : artwork.href}
-      display="block"
-      textDecoration="none"
-      textAlign="left"
+      artwork={artwork}
       mt={mt}
+      disableRouterLinking={disableRouterLinking}
       {...rest}
     >
       <Details
@@ -62,7 +58,33 @@ export const Metadata: React.FC<MetadataProps> = ({
   )
 }
 
-const DisabledLink = styled(RouterLink)`
+const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
+  artwork,
+  disableRouterLinking,
+  mt,
+  ...rest
+}) => {
+  if (!!disableRouterLinking) {
+    return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
+  }
+  return (
+    <RouterLink
+      to={artwork.href}
+      display="block"
+      textDecoration="none"
+      textAlign="left"
+      mt={mt}
+      {...rest}
+    >
+      {rest.children}
+    </RouterLink>
+  )
+}
+
+const DisabledLink = styled(Box)`
+  display: block;
+  text-decoration: none;
+  text-align: left;
   cursor: default;
 `
 
