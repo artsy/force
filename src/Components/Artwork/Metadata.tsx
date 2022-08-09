@@ -1,13 +1,15 @@
-import { AuthContextModule } from "@artsy/cohesion"
-import { Box, BoxProps } from "@artsy/palette"
+import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
-import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
 import { DetailsFragmentContainer as Details } from "./Details"
+import { Box, BoxProps } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
+import { AuthContextModule } from "@artsy/cohesion"
+import styled from "styled-components"
 
-export interface MetadataProps extends BoxProps {
+export interface MetadataProps
+  extends BoxProps,
+    React.AnchorHTMLAttributes<HTMLAnchorElement> {
   artwork: Metadata_artwork
   extended?: boolean
   contextModule?: AuthContextModule
