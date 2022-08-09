@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react"
-import { useSystemContext } from "System"
-import { getClientParam } from "Utils/getClientParam"
-import { SetPaymentByStripeIntent } from "Apps/Order/Mutations/SetPaymentByStripeIntent"
+import { useRouter } from "System/Router/useRouter"
+import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
 export function useStripePaymentBySetupIntentId(orderId: string) {
-  const { relayEnvironment } = useSystemContext()
-  const [isProcessingRedirect, setIsProcessingRedirect] = useState(true)
+  const {
+    submitMutation: setPaymentByStripeIntentMutation,
+  } = useSetPaymentByStripeIntent()
+  const { match } = useRouter()
+
+  const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
     null
   )
@@ -18,42 +21,52 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
   )
 
   useEffect(() => {
-    const setPaymentBySetupIntentId = async (
-      setupIntentId: string,
-      oneTimeUse: boolean
-    ) => {
-      try {
-        if (!relayEnvironment) return
-
-        const error = (
-          await SetPaymentByStripeIntent(relayEnvironment, {
-            id: orderId,
-            oneTimeUse,
-            setupIntentId,
-          })
-        ).commerceSetPaymentByStripeIntent?.orderOrError?.error
-
-        if (error) throw error
-        setIsPaymentSetupSuccessful(true)
-      } catch (error) {
-        setIsPaymentSetupSuccessful(false)
-      }
-    }
-
     // pull necessary params from Stripe redirect URL
-    const saveAccount = getClientParam("save_account")
-    const setupIntentId = getClientParam("setup_intent")
-    const setupIntentClientSecret = getClientParam("setup_intent_client_secret")
-    const redirectSuccess = getClientParam("redirect_status") === "succeeded"
+    const {
+      save_account,
+      setup_intent,
+      setup_intent_client_secret,
+      redirect_status,
+    } = match.location.query
 
-    if (setupIntentId && setupIntentClientSecret && redirectSuccess) {
-      setStripeSetupIntentId(setupIntentId)
+    if (
+      setup_intent &&
+      setup_intent_client_secret &&
+      redirect_status === "succeeded"
+    ) {
+      setIsProcessingRedirect(true)
+      setStripeSetupIntentId(setup_intent)
       // set payment with new bank account by Setup Intent ID
-      setPaymentBySetupIntentId(setupIntentId, saveAccount !== "true")
+      setPaymentBySetupIntentId(setup_intent, save_account !== "true")
     }
 
     setIsProcessingRedirect(false)
-  }, [orderId, relayEnvironment])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId, match])
+
+  const setPaymentBySetupIntentId = async (
+    setupIntentId: string,
+    oneTimeUse: boolean
+  ) => {
+    try {
+      const orderOrError = (
+        await setPaymentByStripeIntentMutation({
+          variables: {
+            input: {
+              id: orderId,
+              oneTimeUse,
+              setupIntentId,
+            },
+          },
+        })
+      ).commerceSetPaymentByStripeIntent?.orderOrError
+
+      if (orderOrError?.error) throw orderOrError.error
+      setIsPaymentSetupSuccessful(true)
+    } catch (error) {
+      setIsPaymentSetupSuccessful(false)
+    }
+  }
 
   return {
     isProcessingRedirect,
