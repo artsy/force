@@ -27,6 +27,16 @@ jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 
+jest.mock("Apps/Order/Hooks/useStripePaymentBySetupIntentId", () => ({
+  useStripePaymentBySetupIntentId: jest.fn(() => {
+    return {
+      isProcessingRedirect: false,
+      stripeSetupIntentId: "stripeSetupIntentId",
+      isPaymentSetupSuccessful: true,
+    }
+  }),
+}))
+
 jest.mock("../../Mutations/useSetPayment", () => {
   const originalUseSetPayment = jest.requireActual(
     "../../Mutations/useSetPayment"
@@ -143,11 +153,6 @@ describe("Payment", () => {
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
       return {
-        featureFlags: {
-          stripe_ACH: {
-            flagEnabled: false,
-          },
-        },
         mediator: {
           on: jest.fn(),
           off: jest.fn(),
@@ -290,8 +295,8 @@ describe("Payment", () => {
     let wrapper: ReactWrapper
 
     const achOrder = {
-      ...testOrder,
-      paymentMethod: "US_BANK_ACCOUNT",
+      ...testOrderWithACH,
+      // paymentMethod: "US_BANK_ACCOUNT",
       availablePaymentMethods: [
         "CREDIT_CARD",
         "US_BANK_ACCOUNT",
