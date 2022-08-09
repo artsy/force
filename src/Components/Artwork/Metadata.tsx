@@ -6,6 +6,7 @@ import { BoxProps } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
+import { useRouter } from "System/Router/useRouter"
 
 export interface MetadataProps
   extends BoxProps,
@@ -36,11 +37,12 @@ export const Metadata: React.FC<MetadataProps> = ({
   showSaveButton,
   ...rest
 }) => {
+  const { match } = useRouter()
   const LinkContainer = disableRouterLinking ? DisabledLink : RouterLink
 
   return (
     <LinkContainer
-      to={disableRouterLinking ? null : artwork.href}
+      to={disableRouterLinking ? match.location.pathname : artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"
@@ -63,7 +65,7 @@ export const Metadata: React.FC<MetadataProps> = ({
 }
 
 const DisabledLink = styled(RouterLink)`
-  cursor: default;
+  cursor: not-allowed;
 `
 
 export default createFragmentContainer(Metadata, {
