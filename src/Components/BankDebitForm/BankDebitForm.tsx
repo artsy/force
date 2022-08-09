@@ -15,6 +15,7 @@ import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsE
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
+import { LoadingArea } from "../LoadingArea"
 
 interface Props {
   order: { mode: string | null; internalID: string }
@@ -32,6 +33,7 @@ export const BankDebitForm: FC<Props> = ({
   const { user } = useSystemContext()
   const tracking = useTracking()
 
+  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
 
   const trackPaymentElementEvent = event => {
@@ -77,59 +79,61 @@ export const BankDebitForm: FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
-      <PaymentElement
-        onReady={() => setIsProcessingPayment(false)}
-        onChange={event => trackPaymentElementEvent(event)}
-        options={{
-          defaultValues: {
-            billingDetails: {
-              name: user?.name,
-              email: user?.email,
+      <LoadingArea isLoading={isPaymentElementLoading}>
+        <PaymentElement
+          onReady={() => setIsPaymentElementLoading(false)}
+          onChange={event => trackPaymentElementEvent(event)}
+          options={{
+            defaultValues: {
+              billingDetails: {
+                name: user?.name,
+                email: user?.email,
+              },
             },
-          },
-        }}
-      />
-      <Spacer mt={4} />
-      <Flex>
-        <Checkbox
-          selected={isSaveAccountChecked}
-          onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
-          data-test="SaveBankAccountCheckbox"
-        >
-          Save bank account for later use.
-        </Checkbox>
+          }}
+        />
+        <Spacer mt={4} />
         <Flex>
-          <Tooltip
-            placement="top-start"
-            size="lg"
-            width={400}
-            content={
-              <Text fontSize={13} lineHeight={"18px"}>
-                Thank you for signing up for direct debits from Artsy. You have
-                authorized Artsy and, if applicable, its affiliated entities to
-                debit the bank account specified above, on behalf of sellers
-                that use the Artsy website, for any amount owed for your
-                purchase of artworks from such sellers, according to Artsy’s
-                website and terms. You can change or cancel this authorization
-                at any time by providing Artsy with 30 (thirty) days’ notice. By
-                clicking “Save bank account for later use”, you authorize Artsy
-                to save the bank account specified above.
-              </Text>
-            }
+          <Checkbox
+            selected={isSaveAccountChecked}
+            onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
+            data-test="SaveBankAccountCheckbox"
           >
-            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-              <InfoCircleIcon />
-            </Clickable>
-          </Tooltip>
+            Save bank account for later use.
+          </Checkbox>
+          <Flex>
+            <Tooltip
+              placement="top-start"
+              size="lg"
+              width={400}
+              content={
+                <Text fontSize={13} lineHeight={"18px"}>
+                  Thank you for signing up for direct debits from Artsy. You
+                  have authorized Artsy and, if applicable, its affiliated
+                  entities to debit the bank account specified above, on behalf
+                  of sellers that use the Artsy website, for any amount owed for
+                  your purchase of artworks from such sellers, according to
+                  Artsy’s website and terms. You can change or cancel this
+                  authorization at any time by providing Artsy with 30 (thirty)
+                  days’ notice. By clicking “Save bank account for later use”,
+                  you authorize Artsy to save the bank account specified above.
+                </Text>
+              }
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoCircleIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
         </Flex>
-      </Flex>
 
-      {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-      <SaveAndContinueButton
-        data-test="bankTransferSaveNew"
-        disabled={!stripe || bankAccountHasInsufficientFunds}
-      />
-      <Spacer mb={4} />
+        {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+        <SaveAndContinueButton
+          data-test="bankTransferSaveNew"
+          disabled={!stripe || bankAccountHasInsufficientFunds}
+        />
+        <Spacer mb={4} />
+      </LoadingArea>
     </form>
   )
 }
