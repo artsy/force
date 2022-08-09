@@ -4,7 +4,7 @@
 
 To add a new app to force we can leverage our React-based SSR router.
 
-- Create a new folder in [the apps directory](https://github.com/artsy/force/tree/main/src/Apps) `v2/Apps/MyAppName`
+- Create a new folder in [the apps directory](https://github.com/artsy/force/tree/main/src/Apps) `Apps/MyAppName`
 - Create a new `routes.tsx` file
 - Add some routes:
 
@@ -62,7 +62,7 @@ For most apps we don't need more than the above to get a new route and SSR rende
 
 Extending the example above, lets add a server-side redirect if the user isn't logged in:
 
-- Create a co-located `/Server` folder -- `v2/Apps/MyNewApp/Server`
+- Create a co-located `/Server` folder -- `Apps/MyNewApp/Server`
 - Create a file inside of it called `myNewAppRedirect.tsx`
 - Add the following to our new file:
 
