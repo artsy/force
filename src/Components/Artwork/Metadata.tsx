@@ -6,9 +6,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { Metadata_artwork } from "__generated__/Metadata_artwork.graphql"
 import { DetailsFragmentContainer as Details } from "./Details"
 
-export interface MetadataProps
-  extends BoxProps,
-    React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface MetadataProps extends BoxProps {
   artwork: Metadata_artwork
   extended?: boolean
   contextModule?: AuthContextModule
@@ -38,14 +36,13 @@ export const Metadata: React.FC<MetadataProps> = ({
   const LinkContainer = disableRouterLinking ? Box : RouterLink
 
   return (
-    // @ts-ignore
     <LinkContainer
-      to={artwork.href}
+      to={disableRouterLinking ? null : artwork.href}
       display="block"
       textDecoration="none"
       textAlign="left"
       mt={mt}
-      {...(!disableRouterLinking && rest)}
+      {...rest}
     >
       <Details
         includeLinks={false}
