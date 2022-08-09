@@ -42,9 +42,7 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       return <RouterAwareLink to={to ?? ""} {...deprecated} {...rest} />
     }
 
-    return (
-      <RouterUnawareLink href={to ?? undefined} {...deprecated} {...rest} />
-    )
+    return <RouterUnawareLink href={to ?? ""} {...deprecated} {...rest} />
   }
 )
 
