@@ -99,7 +99,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
             <ResponsiveBox
               aspectWidth={4}
               aspectHeight={3}
-              width={width}
+              position="relative"
               maxWidth="100%"
             />
           )}
@@ -133,8 +133,15 @@ const Link = styled(RouterLink)`
   left: 0;
 `
 
-const DisabledLink = styled(Link)`
-  cursor: default;
+const DisabledLink = styled(Box)`
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `
 
 export const ArtworkGridItemFragmentContainer = createFragmentContainer(
