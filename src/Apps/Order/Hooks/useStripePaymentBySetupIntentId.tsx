@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react"
-import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
-import { SetPaymentByStripeIntent } from "Apps/Order/Mutations/SetPaymentByStripeIntent"
+import { useSetPaymentByStripeIntent } from "Apps/Order/Mutations/useSetPaymentByStripeIntentMutation"
 
 /*
  * Hook to handle Stripe redirect for newly-linked bank account
  * pulls necessary params from Stripe redirect URL and sets payment by intentId
  */
 export function useStripePaymentBySetupIntentId(orderId: string) {
-  const { relayEnvironment } = useSystemContext()
+  const {
+    submitMutation: setPaymentByStripeIntentMutation,
+  } = useSetPaymentByStripeIntent()
   const { match } = useRouter()
 
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(true)
@@ -20,31 +21,8 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
   )
 
   useEffect(() => {
-    const setPaymentBySetupIntentId = async (
-      setupIntentId: string,
-      oneTimeUse: boolean
-    ) => {
-      try {
-        if (!relayEnvironment) return
-
-        const error = (
-          await SetPaymentByStripeIntent(relayEnvironment, {
-            id: orderId,
-            oneTimeUse,
-            setupIntentId,
-          })
-        ).commerceSetPaymentByStripeIntent?.orderOrError?.error
-
-        if (error) throw error
-        setIsPaymentSetupSuccessful(true)
-      } catch (error) {
-        setIsPaymentSetupSuccessful(false)
-      }
-    }
-
     // pull necessary params from Stripe redirect URL
     const saveAccount = match.location.query.save_account
-
     const setupIntentId = match.location.query.setup_intent
     const setupIntentClientSecret =
       match.location.query.setup_intent_client_secret
@@ -57,7 +35,32 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     }
 
     setIsProcessingRedirect(false)
-  }, [orderId, relayEnvironment, match])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId, match])
+
+  const setPaymentBySetupIntentId = async (
+    setupIntentId: string,
+    oneTimeUse: boolean
+  ) => {
+    try {
+      const orderOrError = (
+        await setPaymentByStripeIntentMutation({
+          variables: {
+            input: {
+              id: orderId,
+              oneTimeUse,
+              setupIntentId,
+            },
+          },
+        })
+      ).commerceSetPaymentByStripeIntent?.orderOrError
+
+      if (orderOrError?.error) throw orderOrError.error
+      setIsPaymentSetupSuccessful(true)
+    } catch (error) {
+      setIsPaymentSetupSuccessful(false)
+    }
+  }
 
   return {
     isProcessingRedirect,
