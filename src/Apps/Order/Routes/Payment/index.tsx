@@ -72,7 +72,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
   */
   const [isProcessingPayment, setIsProcessingPayment] = useState(
-    !!match.location.query.setup_intent
+    !!match?.location?.query?.setup_intent
   )
 
   /*
