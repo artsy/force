@@ -1,4 +1,12 @@
 {
+  "artistPage": {
+    "cv": {
+      "emptyState": "This artist has no {{groupName}} yet.",
+      "fairTitle": "Fair booths",
+      "groupTitle": "Group shows",
+      "soloTitle": "Solo shows"
+    }
+  },
   "navbar": {
     "show": "Show",
     "shows": "Shows",
