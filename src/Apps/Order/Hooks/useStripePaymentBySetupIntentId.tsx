@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSystemContext } from "System"
-import { getClientParam } from "Utils/getClientParam"
+import { useRouter } from "System/Router/useRouter"
 import { SetPaymentByStripeIntent } from "Apps/Order/Mutations/SetPaymentByStripeIntent"
 
 /*
@@ -9,6 +9,8 @@ import { SetPaymentByStripeIntent } from "Apps/Order/Mutations/SetPaymentByStrip
  */
 export function useStripePaymentBySetupIntentId(orderId: string) {
   const { relayEnvironment } = useSystemContext()
+  const { match } = useRouter()
+
   const [isProcessingRedirect, setIsProcessingRedirect] = useState(true)
   const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
     null
@@ -41,10 +43,12 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     }
 
     // pull necessary params from Stripe redirect URL
-    const saveAccount = getClientParam("save_account")
-    const setupIntentId = getClientParam("setup_intent")
-    const setupIntentClientSecret = getClientParam("setup_intent_client_secret")
-    const redirectSuccess = getClientParam("redirect_status") === "succeeded"
+    const saveAccount = match.location.query.save_account
+
+    const setupIntentId = match.location.query.setup_intent
+    const setupIntentClientSecret =
+      match.location.query.setup_intent_client_secret
+    const redirectSuccess = match.location.query.redirect_status === "succeeded"
 
     if (setupIntentId && setupIntentClientSecret && redirectSuccess) {
       setStripeSetupIntentId(setupIntentId)
@@ -53,7 +57,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     }
 
     setIsProcessingRedirect(false)
-  }, [orderId, relayEnvironment])
+  }, [orderId, relayEnvironment, match])
 
   return {
     isProcessingRedirect,
