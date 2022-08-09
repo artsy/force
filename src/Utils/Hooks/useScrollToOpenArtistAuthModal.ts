@@ -78,7 +78,7 @@ export const useScrollToOpenArtistAuthModal = () => {
         setTimeout(() => {
           openAuthModal(mediator, {
             contextModule: ContextModule.popUpModal,
-            copy: `Join Artsy to discover new works by ${artist.name} and more artists you love`,
+            copy: `Sign up to discover new works by ${artist.name} and more artists you love`,
             destination: location.href,
             image,
             intent: Intent.viewArtist,
