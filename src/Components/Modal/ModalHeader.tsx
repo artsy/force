@@ -10,7 +10,7 @@ export const ModalHeader: React.FC<{
       {hasLogo && <ArtsyLogoBlackIcon mb={1} />}
 
       {title && (
-        <Text variant="lg-display" my={2}>
+        <Text variant="lg-display" my={2} textAlign="center">
           {title}
         </Text>
       )}
