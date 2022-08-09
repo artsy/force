@@ -84,6 +84,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // ProcessingPayment is rendered and PaymentContent is hidden when true
   const displayLoading = isProcessingRedirect || isProcessingPayment
 
+  // whether balance check is performed for the current bank account
+  const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
+
   // result of account balance check
   const [
     bankAccountHasInsufficientFunds,
@@ -178,6 +181,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
+    setBalanceCheckComplete(true)
     if (displayInsufficientFundsError) {
       setBankAccountHasInsufficientFunds(true)
       return
@@ -233,7 +237,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         currentStep="Payment"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
-          balanceCheckEnabled && isPaymentSetupSuccessful ? (
+          balanceCheckEnabled &&
+          !balanceCheckComplete &&
+          isPaymentSetupSuccessful ? (
             <PollAccountBalanceQueryRenderer
               setupIntentId={stripeSetupIntentId!}
               onBalanceCheckComplete={onBalanceCheckComplete}
