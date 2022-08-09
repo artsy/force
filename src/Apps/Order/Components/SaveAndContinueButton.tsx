@@ -7,11 +7,23 @@ export const SaveAndContinueButton: FC<{
   media?: { [key: string]: string }
   loading?: boolean
   disabled?: boolean
-}> = ({ onClick, media, loading = false, disabled = false }) => (
-  <>
-    <Spacer mb={4} />
-    {media ? (
-      <Media {...media}>
+}> = ({ onClick, media, loading = false, disabled = false }) => {
+  return (
+    <>
+      <Spacer mb={4} />
+      {media ? (
+        <Media {...media}>
+          <Button
+            onClick={onClick}
+            variant="primaryBlack"
+            width={["100%", "50%"]}
+            loading={loading}
+            disabled={disabled}
+          >
+            Save and Continue
+          </Button>
+        </Media>
+      ) : (
         <Button
           onClick={onClick}
           variant="primaryBlack"
@@ -21,18 +33,8 @@ export const SaveAndContinueButton: FC<{
         >
           Save and Continue
         </Button>
-      </Media>
-    ) : (
-      <Button
-        onClick={onClick}
-        variant="primaryBlack"
-        width={["100%", "50%"]}
-        loading={loading}
-        disabled={disabled}
-      >
-        Save and Continue
-      </Button>
-    )}
-    <Spacer mb={2} />
-  </>
-)
+      )}
+      <Spacer mb={2} />
+    </>
+  )
+}
