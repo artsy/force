@@ -39,7 +39,15 @@ export const AboutApp: React.FC = () => {
               The Future of Art Collecting
             </Text>
           </Flex>
-          <Text position="absolute" bottom={0} right={0} p={1} color="white100">
+          <Text
+            variant={["xs", "sm"]}
+            position="absolute"
+            bottom={0}
+            right={0}
+            textAlign="right"
+            p={1}
+            color="white100"
+          >
             Nicolas Party, Trees, 2019. Damien Cifelli, May You Live in
             Interesting Times, 2022. Anna Park, It's Good For You, 2020
           </Text>
@@ -135,7 +143,14 @@ const Section: React.FC<SectionProps & BoxProps> = ({
             lazyLoad
             alt=""
           />
-          <Text position="absolute" bottom={0} right={0} p={1} color="white100">
+          <Text
+            variant={["xs", "sm"]}
+            position="absolute"
+            bottom={0}
+            right={0}
+            p={1}
+            color="white100"
+          >
             {caption}
           </Text>
         </ResponsiveBox>
@@ -223,7 +238,7 @@ const SECTION_DATA: SectionProps[] = [
     imageUrl: "https://files.artsy.net/images/6-aboutSell.png",
   },
   {
-    title: "Discover New Talents",
+    title: "Discover new talents",
     description:
       "Get to know today’s up-and-coming artists and trends in the art world.",
     caption: "Evie O'Connor, Delivery Down The Grand Canal, 2021.",
@@ -231,7 +246,7 @@ const SECTION_DATA: SectionProps[] = [
     imageUrl: "https://files.artsy.net/images/7-aboutDiscover.png",
   },
   {
-    title: "Follow your Favorite Artists",
+    title: "Follow your favorite artists",
     description:
       "Follow artists for updates on their latest works and career milestones. ",
     caption: "Kerry James Marshall, Vignette 13, 2008.",
