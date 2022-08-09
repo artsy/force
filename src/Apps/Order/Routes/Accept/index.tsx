@@ -313,9 +313,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
             contextModule={ContextModule.ordersAccept}
             contextPageOwnerType={OwnerType.ordersAccept}
           />
-          <Media greaterThan="xs">
-            <Spacer mb={2} />
-          </Media>
+          <Spacer mb={2} />
           <Media at="xs">
             <>
               <Button

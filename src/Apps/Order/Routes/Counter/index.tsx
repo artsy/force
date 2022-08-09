@@ -144,7 +144,6 @@ export const CounterRoute: FC<CounterProps> = props => {
             />
           </Flex>
           <Spacer mb={[2, 4]} />
-          <Flex flexDirection="column" />
           <Media greaterThan="xs">
             <Button
               onClick={onSubmitButtonPressed}
@@ -170,9 +169,6 @@ export const CounterRoute: FC<CounterProps> = props => {
             contextModule={ContextModule.ordersCounter}
             contextPageOwnerType={OwnerType.ordersCounter}
           />
-          <Media greaterThan="xs">
-            <Spacer mb={2} />
-          </Media>
           <Spacer mb={[2, 4]} />
           <Media at="xs">
             <>
