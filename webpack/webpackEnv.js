@@ -9,7 +9,7 @@ const webpackEnv = {
   isDevelopment: process.env.NODE_ENV === "development",
   isProduction: process.env.NODE_ENV === "production",
   experimentalSWCCompiler:
-    process.env.EXPERIMENTAL_SWC_COMPILER_DISABLED !== "true",
+    process.env.EXPERIMENTAL_SWC_COMPILER_ENABLED === "true",
 }
 
 const basePath = process.cwd()
@@ -24,7 +24,7 @@ if (process.env.CI || process.env.WEBPACK_LOG_CONFIG) {
   console.log("\n[Webpack Environment]")
   console.log("  basePath".padEnd(40), chalk.yellow(basePath))
   console.log("  CI".padEnd(40), chalk.yellow(process.env.CI))
-  console.log("  EXPERIMENTAL_SWC_COMPILER_DISABLED".padEnd(40), chalk.yellow(!!process.env.EXPERIMENTAL_SWC_COMPILER_DISABLED))
+  console.log("  EXPERIMENTAL_SWC_COMPILER_ENABLED".padEnd(40), chalk.yellow(webpackEnv.experimentalSWCCompiler))
   console.log("  NODE_ENV".padEnd(40), chalk.yellow(process.env.NODE_ENV))
   console.log("  WEBPACK_BUNDLE_REPORT".padEnd(40), chalk.yellow(process.env.WEBPACK_BUNDLE_REPORT))
   console.log("  WEBPACK_DEVTOOL".padEnd(40), chalk.yellow(process.env.WEBPACK_DEVTOOL))

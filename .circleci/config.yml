@@ -141,7 +141,7 @@ jobs:
     parallelism: 4
     environment:
       # TODO: Remove this flag once things have stabilized
-      - EXPERIMENTAL_SWC_COMPILER_DISABLED: false
+      - EXPERIMENTAL_SWC_COMPILER_ENABLED: false
     steps:
       - run: yarn test --shard=$(expr $CIRCLE_NODE_INDEX + 1)/$CIRCLE_NODE_TOTAL
 
