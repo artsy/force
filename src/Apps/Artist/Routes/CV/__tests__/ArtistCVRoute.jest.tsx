@@ -23,13 +23,13 @@ describe("ArtistCVRoute", () => {
     },
   })
 
-  it("does not render rail if no shows", () => {
+  it("renders a message with no show info", () => {
     const wrapper = getWrapper({
       Artist: () => ({
         showsConnection: { edges: null },
       }),
     })
-    expect(wrapper.find('[data-test="artistCVGroup"]').length).toBe(0)
+    expect(wrapper.text()).toMatch(/This artist has no/)
   })
 
   it("renders correctly", () => {

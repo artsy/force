@@ -37,7 +37,18 @@ const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
   const nodes = extractNodes(artist.showsConnection)
 
   if (nodes.length === 0) {
-    return null
+    return (
+      <GridColumns>
+        <Column span={12}>
+          <Text variant="lg-display">{title}</Text>
+        </Column>
+        <Column span={8} start={4}>
+          <Text variant="sm-display">
+            This dumb artist has no {title.toLowerCase()} yet.
+          </Text>
+        </Column>
+      </GridColumns>
+    )
   }
 
   const groupedByYear = groupBy(nodes, show => show.startAt)
