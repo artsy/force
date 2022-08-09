@@ -15,6 +15,7 @@ import {
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 // utils, hooks, mutations and system tools
+import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import createLogger from "Utils/logger"
 import {
@@ -56,6 +57,7 @@ export interface PaymentRouteProps {
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { order } = props
+  const { match } = useRouter()
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
   const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
@@ -69,7 +71,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     state to render a loading interface while one of the following is happening:
     payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
   */
-  const [isProcessingPayment, setIsProcessingPayment] = useState(true)
+  const [isProcessingPayment, setIsProcessingPayment] = useState(
+    !!match.location.query.setup_intent
+  )
 
   /*
     hook to handle Stripe redirect for newly-linked bank account

@@ -12,7 +12,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
   } = useSetPaymentByStripeIntent()
   const { match } = useRouter()
 
-  const [isProcessingRedirect, setIsProcessingRedirect] = useState(true)
+  const [isProcessingRedirect, setIsProcessingRedirect] = useState(false)
   const [stripeSetupIntentId, setStripeSetupIntentId] = useState<null | string>(
     null
   )
@@ -29,6 +29,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     const redirectSuccess = match.location.query.redirect_status === "succeeded"
 
     if (setupIntentId && setupIntentClientSecret && redirectSuccess) {
+      setIsProcessingRedirect(true)
       setStripeSetupIntentId(setupIntentId)
       // set payment with new bank account by Setup Intent ID
       setPaymentBySetupIntentId(setupIntentId, saveAccount !== "true")
