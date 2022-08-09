@@ -44,7 +44,7 @@ const ArtistCVGroup: FC<ArtistCVGroupProps> = ({ artist, relay, title }) => {
         </Column>
         <Column span={8} start={4}>
           <Text variant="sm-display">
-            This dumb artist has no {title.toLowerCase()} yet.
+            This artist has no {title.toLowerCase()} yet.
           </Text>
         </Column>
       </GridColumns>
