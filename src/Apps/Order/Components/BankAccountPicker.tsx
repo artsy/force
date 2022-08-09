@@ -142,6 +142,7 @@ export const BankAccountPicker: FC<Props> = props => {
             <>
               <Spacer mt={2} />
               <InsufficientFundsError />
+              <Spacer mt={2} />
             </>
           )}
           <SaveAndContinueButton

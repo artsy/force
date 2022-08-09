@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Spacer, Message, Text } from "@artsy/palette"
+import { Message, Text } from "@artsy/palette"
 
 export const InsufficientFundsError: FC = () => {
   return (
@@ -13,7 +13,6 @@ export const InsufficientFundsError: FC = () => {
           payment method.
         </Text>
       </Message>
-      <Spacer mt={2} />
     </>
   )
 }
