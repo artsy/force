@@ -72,7 +72,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
   */
   const [isProcessingPayment, setIsProcessingPayment] = useState(
-    !!match.location.query.setup_intent
+    !!match?.location?.query?.setup_intent
   )
 
   /*
@@ -184,12 +184,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setBalanceCheckComplete(true)
+    setSelectedBankAccountId("")
+
     if (displayInsufficientFundsError) {
-      setSelectedBankAccountId("")
-      setBalanceCheckComplete(true)
       setBankAccountHasInsufficientFunds(true)
       return
     }
+
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
