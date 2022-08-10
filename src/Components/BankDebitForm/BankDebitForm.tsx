@@ -21,12 +21,14 @@ import { LoadingArea } from "../LoadingArea"
 interface Props {
   order: { mode: string | null; internalID: string }
   bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
   setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
+  setBankAccountHasInsufficientFunds,
   setIsProcessingPayment,
 }) => {
   const stripe = useStripe()
@@ -37,17 +39,16 @@ export const BankDebitForm: FC<Props> = ({
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
 
-  const trackPaymentElementEvent = event => {
-    const trackedEvents: any[] = []
+  const onPaymentElementChange = event => {
     if (event.complete) {
-      trackedEvents.push({
+      setBankAccountHasInsufficientFunds(false)
+
+      tracking.trackEvent({
         flow: order.mode,
         order_id: order.internalID,
         subject: "bank_account_selected",
       })
     }
-
-    trackedEvents.forEach(event => tracking.trackEvent(event))
   }
 
   const handleSubmit = async event => {
@@ -84,7 +85,7 @@ export const BankDebitForm: FC<Props> = ({
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
           onReady={() => setIsPaymentElementLoading(false)}
-          onChange={event => trackPaymentElementEvent(event)}
+          onChange={event => onPaymentElementChange(event)}
           options={{
             defaultValues: {
               billingDetails: {

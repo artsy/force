@@ -133,6 +133,9 @@ export const BankAccountPicker: FC<Props> = props => {
         <BankDebitProvider
           order={order}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+          setBankAccountHasInsufficientFunds={
+            setBankAccountHasInsufficientFunds
+          }
           setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>

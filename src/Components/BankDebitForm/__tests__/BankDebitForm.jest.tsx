@@ -57,6 +57,7 @@ describe("BankDebitForm", () => {
       <BankDebitForm
         order={testOrder}
         bankAccountHasInsufficientFunds={false}
+        setBankAccountHasInsufficientFunds={jest.fn()}
         setIsProcessingPayment={jest.fn()}
       />
     )
@@ -74,6 +75,7 @@ describe("BankDebitForm", () => {
         <BankDebitForm
           order={testOrder}
           bankAccountHasInsufficientFunds={true}
+          setBankAccountHasInsufficientFunds={jest.fn()}
           setIsProcessingPayment={jest.fn()}
         />
       )
