@@ -186,6 +186,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setBalanceCheckComplete(true)
+    setIsProcessingPayment(false)
     if (displayInsufficientFundsError) {
       setBankAccountHasInsufficientFunds(true)
       return
