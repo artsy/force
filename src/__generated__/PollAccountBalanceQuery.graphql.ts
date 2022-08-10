@@ -5,7 +5,8 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalanceQueryVariables = {
-    setupIntentId: string;
+    setupIntentId?: string | null | undefined;
+    bankAccountId?: string | null | undefined;
 };
 export type PollAccountBalanceQueryResponse = {
     readonly commerceBankAccountBalance: {
@@ -21,9 +22,10 @@ export type PollAccountBalanceQuery = {
 
 /*
 query PollAccountBalanceQuery(
-  $setupIntentId: ID!
+  $setupIntentId: ID
+  $bankAccountId: ID
 ) {
-  commerceBankAccountBalance(setupIntentId: $setupIntentId) {
+  commerceBankAccountBalance(setupIntentId: $setupIntentId, bankAccountId: $bankAccountId) {
     ...PollAccountBalance_commerceBankAccountBalance
   }
 }
@@ -35,14 +37,22 @@ fragment PollAccountBalance_commerceBankAccountBalance on CommerceBankAccountBal
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "bankAccountId"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "setupIntentId"
+},
+v2 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "setupIntentId"
-  }
-],
-v1 = [
+    "kind": "Variable",
+    "name": "bankAccountId",
+    "variableName": "bankAccountId"
+  },
   {
     "kind": "Variable",
     "name": "setupIntentId",
@@ -51,14 +61,17 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "PollAccountBalanceQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "CommerceBankAccountBalance",
         "kind": "LinkedField",
         "name": "commerceBankAccountBalance",
@@ -78,13 +91,16 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "PollAccountBalanceQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "CommerceBankAccountBalance",
         "kind": "LinkedField",
         "name": "commerceBankAccountBalance",
@@ -110,14 +126,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9e1152debf7dc348f02db8b30fcd4c9",
+    "cacheID": "f7043ed6843b7da9f448a5954e791b08",
     "id": null,
     "metadata": {},
     "name": "PollAccountBalanceQuery",
     "operationKind": "query",
-    "text": "query PollAccountBalanceQuery(\n  $setupIntentId: ID!\n) {\n  commerceBankAccountBalance(setupIntentId: $setupIntentId) {\n    ...PollAccountBalance_commerceBankAccountBalance\n  }\n}\n\nfragment PollAccountBalance_commerceBankAccountBalance on CommerceBankAccountBalance {\n  balanceCents\n  currencyCode\n}\n"
+    "text": "query PollAccountBalanceQuery(\n  $setupIntentId: ID\n  $bankAccountId: ID\n) {\n  commerceBankAccountBalance(setupIntentId: $setupIntentId, bankAccountId: $bankAccountId) {\n    ...PollAccountBalance_commerceBankAccountBalance\n  }\n}\n\nfragment PollAccountBalance_commerceBankAccountBalance on CommerceBankAccountBalance {\n  balanceCents\n  currencyCode\n}\n"
   }
 };
 })();
-(node as any).hash = '982bcadd9eaffde3452567a024dee280';
+(node as any).hash = 'b689bbfa9a6c58e6d8d5e10418240c6a';
 export default node;

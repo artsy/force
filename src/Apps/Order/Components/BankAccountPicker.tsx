@@ -16,8 +16,8 @@ interface Props {
   me: BankAccountPicker_me
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  onBankAccountContinue: () => void
   setIsSavingPayment: (arg: boolean) => void
+  setSelectedBankAccountId: (arg: string) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -26,8 +26,8 @@ export const BankAccountPicker: FC<Props> = props => {
     order,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
-    onBankAccountContinue,
     setIsSavingPayment,
+    setSelectedBankAccountId,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -61,7 +61,7 @@ export const BankAccountPicker: FC<Props> = props => {
         throw orderOrError.error
       }
 
-      onBankAccountContinue()
+      setSelectedBankAccountId(bankAccountSelection.id!)
     } catch (error) {
       console.error(error)
     }

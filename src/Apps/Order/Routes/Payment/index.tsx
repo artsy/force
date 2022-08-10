@@ -88,6 +88,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
   const displayLoading = isProcessingRedirect || isSavingPayment
 
+  // an existing bank account's ID, used to query account balance
+  const [selectedBankAccountId, setSelectedBankAccountId] = useState("")
+
   // whether balance check is performed for the current bank account
   const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
 
@@ -184,15 +187,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     }
   }
 
-  // pushes to the review step, when payment is set with an existing bank account
-  const onBankAccountContinue = () => {
-    props.router.push(`/orders/${props.order.internalID}/review`)
-  }
-
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setBalanceCheckComplete(true)
     setIsSavingPayment(false)
+    setSelectedBankAccountId("")
+
     if (displayInsufficientFundsError) {
       setBankAccountHasInsufficientFunds(true)
       return
@@ -250,9 +250,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         content={
           balanceCheckEnabled &&
           !balanceCheckComplete &&
-          isPaymentSetupSuccessful ? (
+          (isPaymentSetupSuccessful || selectedBankAccountId) ? (
             <PollAccountBalanceQueryRenderer
               setupIntentId={stripeSetupIntentId!}
+              bankAccountId={selectedBankAccountId}
               onBalanceCheckComplete={onBalanceCheckComplete}
               buyerTotalCents={order.buyerTotalCents!}
               orderCurrencyCode={order.currencyCode}
@@ -280,8 +281,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   setBankAccountHasInsufficientFunds={
                     setBankAccountHasInsufficientFunds
                   }
-                  onBankAccountContinue={onBankAccountContinue}
                   setIsSavingPayment={setIsSavingPayment}
+                  setSelectedBankAccountId={setSelectedBankAccountId}
                 />
               </Flex>
             </>
