@@ -21,12 +21,14 @@ interface Props {
   order: { mode: string | null; internalID: string }
   returnURL: string
   bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
   returnURL,
   bankAccountHasInsufficientFunds,
+  setBankAccountHasInsufficientFunds,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
@@ -35,9 +37,11 @@ export const BankDebitForm: FC<Props> = ({
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
   const tracking = useTracking()
 
-  const trackPaymentElementEvent = event => {
+  const onPaymentElementChange = event => {
     const trackedEvents: any[] = []
     if (event.complete) {
+      setBankAccountHasInsufficientFunds(false)
+
       trackedEvents.push({
         flow: order.mode,
         order_id: order.internalID,
@@ -80,7 +84,7 @@ export const BankDebitForm: FC<Props> = ({
             setIsPaymentElementLoading(false)
           }}
           onChange={event => {
-            trackPaymentElementEvent(event)
+            onPaymentElementChange(event)
           }}
           options={{
             defaultValues: {

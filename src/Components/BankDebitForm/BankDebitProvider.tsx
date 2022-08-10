@@ -31,11 +31,13 @@ const BankSetupErrorMessage = () => {
 interface Props {
   order: BankAccountPicker_order
   bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
 }
 
 export const BankDebitProvider: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
+  setBankAccountHasInsufficientFunds,
 }) => {
   const [clientSecret, setClientSecret] = useState("")
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
@@ -137,6 +139,9 @@ export const BankDebitProvider: FC<Props> = ({
             order={order}
             returnURL={returnURL}
             bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+            setBankAccountHasInsufficientFunds={
+              setBankAccountHasInsufficientFunds
+            }
           />
         </Elements>
       )}
