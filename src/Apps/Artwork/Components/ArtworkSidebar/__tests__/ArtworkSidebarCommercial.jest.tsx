@@ -77,6 +77,7 @@ describe("ArtworkSidebarCommercial", () => {
         redirectTo: "http://localhost/artwork/the-id",
         contextModule: "artworkSidebar",
         intent: "buyNow",
+        copy: "Sign up to buy art with ease",
       })
     })
 
@@ -88,6 +89,7 @@ describe("ArtworkSidebarCommercial", () => {
         redirectTo: "http://localhost/artwork/the-id",
         contextModule: "artworkSidebar",
         intent: "makeOffer",
+        copy: "Sign up to make an offer",
       })
     })
   })

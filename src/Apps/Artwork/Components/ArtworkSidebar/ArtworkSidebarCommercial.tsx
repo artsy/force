@@ -263,6 +263,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         redirectTo: location.href,
         contextModule: ContextModule.artworkSidebar,
         intent: Intent.buyNow,
+        copy: "Sign up to buy art with ease",
       })
     }
   }
@@ -352,6 +353,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         redirectTo: location.href,
         contextModule: ContextModule.artworkSidebar,
         intent: Intent.makeOffer,
+        copy: "Sign up to make an offer",
       })
     }
   }

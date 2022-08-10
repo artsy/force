@@ -233,6 +233,8 @@ export const NavBar: React.FC = track(
                           mode: ModalType.login,
                           intent: Intent.login,
                           contextModule: ContextModule.header,
+                          copy:
+                            "Log in to collect art by the world’s leading artists",
                         })
                       }}
                     >
@@ -247,6 +249,8 @@ export const NavBar: React.FC = track(
                           mode: ModalType.signup,
                           intent: Intent.signup,
                           contextModule: ContextModule.header,
+                          copy:
+                            "Sign up to collect art by the world’s leading artists",
                           redirectTo: window.location.href,
                         })
                       }}

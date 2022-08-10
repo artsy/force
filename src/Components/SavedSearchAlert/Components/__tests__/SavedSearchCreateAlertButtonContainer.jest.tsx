@@ -42,6 +42,7 @@ const getAuthModalOptions = () => {
       objectId: "owner-slug",
     },
     contextModule: "artworkGrid",
+    copy: "Sign up to create an alert",
     intent: "createAlert",
     redirectTo: "http://localhost/",
   } as AuthModalOptions
@@ -148,6 +149,7 @@ describe("SavedSearchCreateAlertButtonContainer", () => {
           objectId: "owner-slug",
         },
         contextModule: "artworkGrid",
+        copy: "Sign up to create an alert",
         intent: "createAlert",
         redirectTo: "http://localhost/",
       })

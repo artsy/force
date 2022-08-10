@@ -106,6 +106,7 @@ describe("NavBar", () => {
       wrapper.find("button").at(0).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
+        copy: "Log in to collect art by the world’s leading artists",
         intent: "login",
         mode: "login",
       })
@@ -116,6 +117,7 @@ describe("NavBar", () => {
       wrapper.find("button").at(1).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
+        copy: "Sign up to collect art by the world’s leading artists",
         intent: "signup",
         mode: "signup",
         redirectTo: "http://localhost/",
