@@ -234,7 +234,7 @@ export const NavBar: React.FC = track(
                           intent: Intent.login,
                           contextModule: ContextModule.header,
                           copy:
-                            "Sign up to collect art by the world’s leading artists",
+                            "Log in to collect art by the world’s leading artists",
                         })
                       }}
                     >
