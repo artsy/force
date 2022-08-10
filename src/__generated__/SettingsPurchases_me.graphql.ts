@@ -50,7 +50,8 @@ const node: ReaderFragment = {
         "CANCELED",
         "FULFILLED",
         "REFUNDED",
-        "SUBMITTED"
+        "SUBMITTED",
+        "PROCESSING_APPROVAL"
       ],
       "kind": "LocalArgument",
       "name": "states"
@@ -180,5 +181,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '9468eff95ef41e986a57b3da6a720318';
+(node as any).hash = 'fdad90e8481ba3fb8caf0b87e155d541';
 export default node;
