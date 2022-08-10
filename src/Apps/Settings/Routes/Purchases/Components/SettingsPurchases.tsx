@@ -38,7 +38,14 @@ const SettingsPurchases: FC<SettingsPurchasesProps> = ({
       {
         after: cursor,
         first: 10,
-        states: ["APPROVED", "SUBMITTED", "CANCELED", "FULFILLED", "REFUNDED"],
+        states: [
+          "APPROVED",
+          "SUBMITTED",
+          "CANCELED",
+          "FULFILLED",
+          "REFUNDED",
+          "PROCESSING_APPROVAL",
+        ],
       },
       null,
       error => {
@@ -94,7 +101,14 @@ export const SettingsPurchasesFragmentContainer = createRefetchContainer(
           first: { type: "Int", defaultValue: 10 }
           states: {
             type: "[CommerceOrderStateEnum!]"
-            defaultValue: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED]
+            defaultValue: [
+              APPROVED
+              CANCELED
+              FULFILLED
+              REFUNDED
+              SUBMITTED
+              PROCESSING_APPROVAL
+            ]
           }
         ) {
         name
