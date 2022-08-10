@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Button, Spacer } from "@artsy/palette"
+import { Button } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
 
 export const SaveAndContinueButton: FC<{
@@ -10,7 +10,6 @@ export const SaveAndContinueButton: FC<{
 }> = ({ onClick, media, loading = false, disabled = false }) => {
   return (
     <>
-      <Spacer mb={4} />
       {media ? (
         <Media {...media}>
           <Button
@@ -34,7 +33,6 @@ export const SaveAndContinueButton: FC<{
           Save and Continue
         </Button>
       )}
-      <Spacer mb={2} />
     </>
   )
 }

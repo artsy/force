@@ -128,11 +128,12 @@ export const BankDebitForm: FC<Props> = ({
         </Flex>
 
         {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+        <Spacer mt={4} />
         <SaveAndContinueButton
           data-test="bankTransferSaveNew"
           disabled={!stripe || bankAccountHasInsufficientFunds}
         />
-        <Spacer mb={4} />
+        <Spacer mb={2} />
       </LoadingArea>
     </form>
   )

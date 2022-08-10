@@ -3,7 +3,7 @@ import { createRef, FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
-import { Box, Flex } from "@artsy/palette"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 // relay generated
@@ -295,11 +295,15 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             />
 
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
-              <SaveAndContinueButton
-                media={{ at: "xs" }}
-                onClick={setPayment}
-                loading={isProcessingPayment}
-              />
+              <>
+                <Spacer mt={4} />
+                <SaveAndContinueButton
+                  media={{ at: "xs" }}
+                  onClick={setPayment}
+                  loading={isProcessingPayment}
+                />
+                <Spacer mb={2} />
+              </>
             )}
           </Flex>
         }

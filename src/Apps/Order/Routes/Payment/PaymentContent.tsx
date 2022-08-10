@@ -90,10 +90,12 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
+        <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
         />
+        <Spacer mb={2} />
       </>
     )
   }
@@ -125,10 +127,12 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
+        <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
         />
+        <Spacer mb={2} />
       </Collapse>
 
       {/* Bank debit */}
@@ -172,10 +176,12 @@ export const PaymentContent: FC<Props> = props => {
             orders@artsy.net
           </Clickable>
         </Text>
+        <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={setPayment}
         />
+        <Spacer mb={2} />
       </Collapse>
     </>
   )
