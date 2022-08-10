@@ -4,7 +4,7 @@ import { AppRouteConfig } from "System/Router/Route"
 const MyCollectionArtworkApp = loadable(
   () =>
     import(
-      /* webpackChunkName: "myCollectionArtworkBundle" */ "./MyCollectionArtworkApp"
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/MyCollectionArtwork/MyCollectionArtworkApp"
     ),
   {
     resolveComponent: component =>
@@ -12,9 +12,9 @@ const MyCollectionArtworkApp = loadable(
   }
 )
 
-export const myCollectionArtworkRoutes: AppRouteConfig[] = [
+export const myCollectionRoutes: AppRouteConfig[] = [
   {
-    path: "/my-collection/artwork/:artworkSlug",
+    path: "/my-collection/artwork/:Slug",
     getComponent: () => MyCollectionArtworkApp,
     onClientSideRender: () => {
       MyCollectionArtworkApp.preload()
