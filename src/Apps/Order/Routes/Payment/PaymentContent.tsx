@@ -1,8 +1,8 @@
 import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
+import { useTracking } from "react-tracking"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
-  Button,
   Clickable,
-  Flex,
   Spacer,
   BorderedRadio,
   InstitutionIcon,
@@ -12,51 +12,50 @@ import {
   Collapse,
   RadioProps,
 } from "@artsy/palette"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+
+import { Payment_me } from "__generated__/Payment_me.graphql"
+import {
+  Payment_order,
+  CommercePaymentMethodEnum,
+} from "__generated__/Payment_order.graphql"
+
+import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
   CreditCardPicker,
   CreditCardPickerFragmentContainer,
-} from "../../Components/CreditCardPicker"
-import { Media } from "Utils/Responsive"
-import { ContinueButton } from "./index"
-import { Payment_me } from "__generated__/Payment_me.graphql"
-import { Payment_order } from "__generated__/Payment_order.graphql"
-import { CommitMutation } from "../../Utils/commitMutation"
-import { useTracking } from "react-tracking"
-import { ActionType, OwnerType } from "@artsy/cohesion"
-import { CommercePaymentMethodEnum } from "__generated__/useSetPaymentMutation.graphql"
-import { BankAccountPickerFragmentContainer } from "../../Components/BankAccountPicker"
-import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
+} from "Apps/Order/Components/CreditCardPicker"
+import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 
 export interface Props {
   order: Payment_order
   me: Payment_me
   commitMutation: CommitMutation
-  isLoading: boolean
   paymentMethod: CommercePaymentMethodEnum
   setPayment: () => void
   onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
   CreditCardPicker: RefObject<CreditCardPicker>
-  onSetPaymentSuccess: () => void
-  onSetPaymentError: (error: Error) => void
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onBankAccountContinue: () => void
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
   const {
     commitMutation,
-    isLoading,
     setPayment,
     me,
     order,
     CreditCardPicker,
     paymentMethod,
     onPaymentMethodChange,
-    onSetPaymentSuccess,
-    onSetPaymentError,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
+    onBankAccountContinue,
+    setIsProcessingPayment,
   } = props
   const tracking = useTracking()
 
@@ -84,23 +83,25 @@ export const PaymentContent: FC<Props> = props => {
   // we can be sure that when 1 method is available, it'll always be credit card
   if (order.availablePaymentMethods.length === 1) {
     return (
-      <PaymentContentWrapper isLoading={isLoading}>
+      <>
         <CreditCardPickerFragmentContainer
           commitMutation={props.commitMutation}
           me={me}
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mb={4} />
-        <Media greaterThan="xs">
-          <ContinueButton onClick={setPayment} loading={isLoading} />
-        </Media>
-      </PaymentContentWrapper>
+        <Spacer mt={4} />
+        <SaveAndContinueButton
+          media={{ greaterThan: "xs" }}
+          onClick={setPayment}
+        />
+        <Spacer mb={2} />
+      </>
     )
   }
 
   return (
-    <PaymentContentWrapper isLoading={isLoading}>
+    <>
       <Text variant="lg-display">Payment method</Text>
       <Spacer mb={2} />
       <RadioGroup
@@ -126,10 +127,12 @@ export const PaymentContent: FC<Props> = props => {
           order={order}
           innerRef={CreditCardPicker}
         />
-        <Spacer mb={4} />
-        <Media greaterThan="xs">
-          <ContinueButton onClick={setPayment} loading={isLoading} />
-        </Media>
+        <Spacer mt={4} />
+        <SaveAndContinueButton
+          media={{ greaterThan: "xs" }}
+          onClick={setPayment}
+        />
+        <Spacer mb={2} />
       </Collapse>
 
       {/* Bank debit */}
@@ -148,12 +151,12 @@ export const PaymentContent: FC<Props> = props => {
         <BankAccountPickerFragmentContainer
           me={me}
           order={order}
-          onSetPaymentSuccess={onSetPaymentSuccess}
-          onSetPaymentError={onSetPaymentError}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
           setBankAccountHasInsufficientFunds={
             setBankAccountHasInsufficientFunds
           }
+          onBankAccountContinue={onBankAccountContinue}
+          setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>
 
@@ -173,33 +176,16 @@ export const PaymentContent: FC<Props> = props => {
             orders@artsy.net
           </Clickable>
         </Text>
-        <Spacer mb={4} />
-        <Media greaterThan="xs">
-          <Button
-            onClick={setPayment}
-            variant="primaryBlack"
-            loading={isLoading}
-            width="50%"
-          >
-            Save and Continue
-          </Button>
-        </Media>
+        <Spacer mt={4} />
+        <SaveAndContinueButton
+          media={{ greaterThan: "xs" }}
+          onClick={setPayment}
+        />
+        <Spacer mb={2} />
       </Collapse>
-    </PaymentContentWrapper>
+    </>
   )
 }
-
-const PaymentContentWrapper: FC<{ isLoading: boolean }> = ({
-  isLoading,
-  children,
-}) => (
-  <Flex
-    flexDirection="column"
-    style={isLoading ? { pointerEvents: "none" } : {}}
-  >
-    {children}
-  </Flex>
-)
 
 const USBankOnlyLabel = styled(Text)`
   background-color: ${themeGet("colors.orange10")};
@@ -218,9 +204,9 @@ const RadioWithLabel = styled(BorderedRadio)`
 `
 
 /*
-returns all available payment methods, by checking relevant feature flags
-TODO: when ACH and wire_transfer FFs is removed, this function can be removed and radios can be moved to PaymentContent
-*/
+ * returns all available payment methods in the form of BorderRadio
+ * by checking order's availablePaymentMethods
+ */
 const getAvailablePaymentMethods = (
   availablePaymentMethods: readonly CommercePaymentMethodEnum[]
 ): ReactElement<RadioProps>[] => {

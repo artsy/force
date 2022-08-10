@@ -2,7 +2,6 @@ import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import {
   Box,
-  Button,
   Checkbox,
   Clickable,
   Flex,
@@ -13,47 +12,56 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
-import { LoadingArea } from "../LoadingArea"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
+import { getENV } from "Utils/getENV"
+import { LoadingArea } from "../LoadingArea"
 
 interface Props {
   order: { mode: string | null; internalID: string }
-  returnURL: string
   bankAccountHasInsufficientFunds: boolean
+  setBankAccountHasInsufficientFunds: (arg: boolean) => void
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
-  returnURL,
   bankAccountHasInsufficientFunds,
+  setBankAccountHasInsufficientFunds,
+  setIsProcessingPayment,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
-  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
-  const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
   const tracking = useTracking()
 
-  const trackPaymentElementEvent = event => {
-    const trackedEvents: any[] = []
+  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
+  const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
+
+  const onPaymentElementChange = event => {
     if (event.complete) {
-      trackedEvents.push({
+      setBankAccountHasInsufficientFunds(false)
+
+      tracking.trackEvent({
         flow: order.mode,
         order_id: order.internalID,
         subject: "bank_account_selected",
       })
     }
-
-    trackedEvents.forEach(event => tracking.trackEvent(event))
   }
 
   const handleSubmit = async event => {
+    setIsProcessingPayment(true)
     event.preventDefault()
 
     if (!stripe || !elements || !user) {
       return
     }
+
+    const return_url = `${getENV("APP_URL")}/orders/${
+      order.internalID
+    }/payment?save_account=${isSaveAccountChecked}`
 
     // Disable the "leave/reload site?" confirmation dialog as we're about to
     // confirm Stripe payment setup which leaves and redirects back.
@@ -62,7 +70,7 @@ export const BankDebitForm: FC<Props> = ({
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: `${returnURL}?save_account=${isSaveAccountChecked}`,
+        return_url,
       },
     })
 
@@ -76,12 +84,8 @@ export const BankDebitForm: FC<Props> = ({
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
-          onReady={() => {
-            setIsPaymentElementLoading(false)
-          }}
-          onChange={event => {
-            trackPaymentElementEvent(event)
-          }}
+          onReady={() => setIsPaymentElementLoading(false)}
+          onChange={event => onPaymentElementChange(event)}
           options={{
             defaultValues: {
               billingDetails: {
@@ -91,7 +95,6 @@ export const BankDebitForm: FC<Props> = ({
             },
           }}
         />
-
         <Spacer mt={4} />
         <Flex>
           <Checkbox
@@ -126,19 +129,14 @@ export const BankDebitForm: FC<Props> = ({
             </Tooltip>
           </Flex>
         </Flex>
-        <Spacer mt={4} />
 
         {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-
-        <Button
+        <Spacer mt={4} />
+        <SaveAndContinueButton
           data-test="bankTransferSaveNew"
           disabled={!stripe || bankAccountHasInsufficientFunds}
-          variant="primaryBlack"
-          width={["100%", "50%"]}
-        >
-          Save and Continue
-        </Button>
-        <Spacer mb={4} />
+        />
+        <Spacer mb={2} />
       </LoadingArea>
     </form>
   )

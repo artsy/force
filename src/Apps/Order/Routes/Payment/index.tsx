@@ -1,87 +1,105 @@
+// libs
+import { createRef, FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { Router } from "found"
+import { Box, Flex, Spacer } from "@artsy/palette"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+
+// relay generated
 import { Payment_me } from "__generated__/Payment_me.graphql"
 import {
   CommercePaymentMethodEnum,
   Payment_order,
 } from "__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
+
+// utils, hooks, mutations and system tools
+import { useRouter } from "System/Router/useRouter"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import createLogger from "Utils/logger"
+import {
+  CommitMutation,
+  injectCommitMutation,
+} from "Apps/Order/Utils/commitMutation"
+import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
+import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
+import { useSetPayment } from "../../Mutations/useSetPayment"
+
+// components
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-import { Router } from "found"
-import { createRef, FC, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import type { Stripe, StripeElements } from "@stripe/stripe-js"
-import { getClientParam } from "Utils/getClientParam"
-import createLogger from "Utils/logger"
-import { Media } from "Utils/Responsive"
-import { useFeatureFlag } from "System/useFeatureFlag"
-
-import { Box, Button, Flex, Spacer } from "@artsy/palette"
 import { CreditCardPicker } from "Apps/Order/Components/CreditCardPicker"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
-import {
-  CommitMutation,
-  injectCommitMutation,
-} from "Apps/Order/Utils/commitMutation"
-import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
-import { SetPaymentByStripeIntent } from "../../Components/SetPaymentByStripeIntent"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { PaymentContent } from "./PaymentContent"
-import { useSetPayment } from "../../Components/Mutations/useSetPayment"
-import { getInitialPaymentMethodValue } from "../../Utils/orderUtils"
-import { PollAccountBalanceQueryRenderer } from "../../Components/PollAccountBalance"
+import { PollAccountBalanceQueryRenderer } from "Apps/Order/Components/PollAccountBalance"
+import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { PaymentContent } from "./PaymentContent"
 
-export const ContinueButton = props => (
-  <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
-    Continue
-  </Button>
-)
+const logger = createLogger("Order/Routes/Payment/index.tsx")
 
-export interface StripeProps {
-  stripe: Stripe
-  elements: StripeElements
-}
-
-export interface PaymentProps {
+export interface PaymentRouteProps {
   order: Payment_order
   me: Payment_me
   router: Router
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  stripe: Stripe
+  elements: StripeElements
 }
 
-type Props = PaymentProps & StripeProps
-
-const logger = createLogger("Order/Routes/Payment/index.tsx")
-
-export const PaymentRoute: FC<Props> = props => {
+export const PaymentRoute: FC<PaymentRouteProps> = props => {
+  const { order } = props
+  const { match } = useRouter()
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
-
-  const [isGettingCreditCardId, setIsGettingCreditCardId] = useState(false)
-  const [isSetPaymentCommitting, setIsSetPaymentCommitting] = useState(false)
-  const { order, isCommittingMutation } = props
-  const isLoading =
-    isGettingCreditCardId || isCommittingMutation || isSetPaymentCommitting
   const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
+
+  // user's selected payment method
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
-  const [isPaymentSetupComplete, setIsPaymentSetupComplete] = useState(false)
-  const [shouldPollAccountBalance, setShouldPollAccountBalance] = useState(
-    false
+
+  /*
+    state to render a loading interface while one of the following is happening:
+    payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
+  */
+  const [isProcessingPayment, setIsProcessingPayment] = useState(
+    !!match?.location?.query?.setup_intent
   )
+
+  /*
+    hook to handle Stripe redirect for newly-linked bank account
+    isProcessingRedirect indicates handling redirect and setting payment by SetupIntentId
+  */
+  const {
+    isProcessingRedirect,
+    stripeSetupIntentId,
+    isPaymentSetupSuccessful,
+  } = useStripePaymentBySetupIntentId(order.internalID)
+
+  // ProcessingPayment is rendered and PaymentContent is hidden when true
+  const displayLoading = isProcessingRedirect || isProcessingPayment
+
+  // whether balance check is performed for the current bank account
+  const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
+
+  // result of account balance check
   const [
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
   ] = useState(false)
 
+  // fired when save and continue is clicked for CC and Wire payment methods
   const setPayment = () => {
+    setIsProcessingPayment(true)
     switch (selectedPaymentMethod) {
       case "CREDIT_CARD":
         onCreditCardContinue()
@@ -94,15 +112,12 @@ export const PaymentRoute: FC<Props> = props => {
     }
   }
 
+  // sets payment with Credit Card
   const onCreditCardContinue = async () => {
     try {
-      setIsGettingCreditCardId(true)
       const result = await CreditCardPicker?.current?.getCreditCardId()
-      setIsGettingCreditCardId(false)
 
-      if (result?.type === "invalid_form") {
-        return
-      }
+      if (result?.type === "invalid_form") return
 
       if (result?.type === "error") {
         props.dialog.showErrorDialog({
@@ -131,21 +146,18 @@ export const PaymentRoute: FC<Props> = props => {
         })
       ).commerceSetPayment?.orderOrError
 
-      if (orderOrError?.error) {
-        throw orderOrError.error
-      }
-
+      if (orderOrError?.error) throw orderOrError.error
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
+      setIsProcessingPayment(false)
       logger.error(error)
       props.dialog.showErrorDialog()
     }
   }
 
+  // sets payment with Wire Transfer
   const onWireTransferContinue = async () => {
     try {
-      setIsSetPaymentCommitting(true)
-
       const orderOrError = (
         await setPaymentMutation({
           variables: {
@@ -157,18 +169,29 @@ export const PaymentRoute: FC<Props> = props => {
         })
       ).commerceSetPayment?.orderOrError
 
-      setIsSetPaymentCommitting(false)
-
-      if (orderOrError?.error) {
-        throw orderOrError.error
-      }
-
-      onSetPaymentSuccess()
+      if (orderOrError?.error) throw orderOrError.error
+      props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
-      setIsSetPaymentCommitting(false)
+      setIsProcessingPayment(false)
       logger.error(error)
-      onSetPaymentError(error)
+      props.dialog.showErrorDialog()
     }
+  }
+
+  // pushes to the review step, when payment is set with an existing bank account
+  const onBankAccountContinue = () => {
+    props.router.push(`/orders/${props.order.internalID}/review`)
+  }
+
+  // fired when balance check is done: either sets error state or moves to /review
+  const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
+    setBalanceCheckComplete(true)
+    setIsProcessingPayment(false)
+    if (displayInsufficientFundsError) {
+      setBankAccountHasInsufficientFunds(true)
+      return
+    }
+    props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   const setOrderPayment = (
@@ -213,82 +236,50 @@ export const PaymentRoute: FC<Props> = props => {
     })
   }
 
-  const saveAccount = getClientParam("save_account")
-  const setupIntentId = getClientParam("setup_intent")
-  const isSettingPayment =
-    setupIntentId &&
-    getClientParam("setup_intent_client_secret") &&
-    getClientParam("redirect_status") === "succeeded"
-
-  const onSetPaymentSuccess = () => {
-    if (balanceCheckEnabled && setupIntentId) {
-      setShouldPollAccountBalance(true)
-      setIsPaymentSetupComplete(true)
-      return
-    }
-
-    props.router.push(`/orders/${props.order.internalID}/review`)
-  }
-
-  const onSetPaymentError = error => {
-    logger.error(error)
-    props.dialog.showErrorDialog()
-  }
-
-  const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
-    setShouldPollAccountBalance(false)
-    if (displayInsufficientFundsError) {
-      setBankAccountHasInsufficientFunds(true)
-      return
-    }
-    props.router.push(`/orders/${props.order.internalID}/review`)
-  }
-
   return (
     <Box data-test="orderPayment">
       <OrderRouteContainer
         currentStep="Payment"
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
-          <>
-            {isSettingPayment &&
-            !isPaymentSetupComplete &&
-            !shouldPollAccountBalance ? (
-              <SetPaymentByStripeIntent
-                order={order}
-                setupIntentId={setupIntentId!}
-                saveAccount={saveAccount!}
-                onSuccess={onSetPaymentSuccess}
-                onError={onSetPaymentError}
-              />
-            ) : shouldPollAccountBalance && setupIntentId ? (
-              <PollAccountBalanceQueryRenderer
-                setupIntentId={setupIntentId}
-                onBalanceCheckComplete={onBalanceCheckComplete}
-                buyerTotalCents={order.buyerTotalCents!}
-                orderCurrencyCode={order.currencyCode}
-              />
-            ) : (
-              <PaymentContent
-                commitMutation={props.commitMutation}
-                isLoading={isLoading}
-                paymentMethod={selectedPaymentMethod}
-                me={props.me}
-                order={props.order}
-                CreditCardPicker={CreditCardPicker}
-                setPayment={setPayment}
-                onPaymentMethodChange={setSelectedPaymentMethod}
-                onSetPaymentSuccess={onSetPaymentSuccess}
-                onSetPaymentError={onSetPaymentError}
-                bankAccountHasInsufficientFunds={
-                  bankAccountHasInsufficientFunds
-                }
-                setBankAccountHasInsufficientFunds={
-                  setBankAccountHasInsufficientFunds
-                }
-              />
-            )}
-          </>
+          balanceCheckEnabled &&
+          !balanceCheckComplete &&
+          isPaymentSetupSuccessful ? (
+            <PollAccountBalanceQueryRenderer
+              setupIntentId={stripeSetupIntentId!}
+              onBalanceCheckComplete={onBalanceCheckComplete}
+              buyerTotalCents={order.buyerTotalCents!}
+              orderCurrencyCode={order.currencyCode}
+            />
+          ) : (
+            <>
+              {displayLoading && <ProcessingPayment />}
+              {/* keep PaymentContent mounted but displayed none while 
+                  displayLoading is true; needed to handle Stripe redirect */}
+              <Flex
+                flexDirection="column"
+                style={displayLoading ? { display: "none" } : {}}
+              >
+                <PaymentContent
+                  commitMutation={props.commitMutation}
+                  paymentMethod={selectedPaymentMethod}
+                  me={props.me}
+                  order={props.order}
+                  CreditCardPicker={CreditCardPicker}
+                  setPayment={setPayment}
+                  onPaymentMethodChange={setSelectedPaymentMethod}
+                  bankAccountHasInsufficientFunds={
+                    bankAccountHasInsufficientFunds
+                  }
+                  setBankAccountHasInsufficientFunds={
+                    setBankAccountHasInsufficientFunds
+                  }
+                  onBankAccountContinue={onBankAccountContinue}
+                  setIsProcessingPayment={setIsProcessingPayment}
+                />
+              </Flex>
+            </>
+          )
         }
         sidebar={
           <Flex flexDirection="column">
@@ -303,11 +294,17 @@ export const PaymentRoute: FC<Props> = props => {
               contextModule={ContextModule.ordersPayment}
               contextPageOwnerType={OwnerType.ordersPayment}
             />
-            <Spacer mb={[2, 4]} />
+
             {selectedPaymentMethod !== "US_BANK_ACCOUNT" && (
-              <Media at="xs">
-                <ContinueButton onClick={setPayment} loading={isLoading} />
-              </Media>
+              <>
+                <Spacer mt={4} />
+                <SaveAndContinueButton
+                  media={{ at: "xs" }}
+                  onClick={setPayment}
+                  loading={isProcessingPayment}
+                />
+                <Spacer mb={2} />
+              </>
             )}
           </Flex>
         }
