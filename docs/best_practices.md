@@ -15,7 +15,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [When writing UI, use Palette](#when-writing-ui-use-palette)
 - [For routing, use our framework](#for-routing-use-our-framework)
 - [Leverage TypeScript to prevent runtime bugs](#leverage-typescript-to-prevent-runtime-bugs)
-- [Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags](#avoid-copying-and-try-to-fix--ts-expect-error-strict_null_check-flags)
+- [Avoid copying and try to fix `// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION` flags](#avoid-copying-and-try-to-fix--ts-expect-error-please_fix_me_strict_null_check_migration-flags)
 - [Use Relay for network requests](#use-relay-for-network-requests)
 - [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
 - [Keep file structure organized](#keep-file-structure-organized)
@@ -25,7 +25,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
   - [Manipulating time in unit tests](#manipulating-time-in-unit-tests)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
 - [Adding global script tags](#adding-global-script-tags)
-- [Tracking events](#tracking-events)
+- [Tracking Events](#tracking-events)
 
 ## Current Preferred Practices
 
@@ -98,7 +98,7 @@ Within a sub-app, things are typically structured like so:
 
 If there's a component that might be shared across multiple sub-apps, it should go in the top-level [`/Components`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/Components) folder.
 
-Framework code is located in [`v2/Artsy`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/Artsy).
+Framework code is located in [`/System`](https://github.com/artsy/force/tree/main/src/System).
 
 ### Naming, imports and exports
 

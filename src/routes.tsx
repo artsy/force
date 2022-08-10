@@ -46,6 +46,7 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { viewingRoomRoutes } from "Apps/ViewingRoom/viewingRoomRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
+import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -94,6 +95,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: tagRoutes },
     { routes: viewingRoomRoutes },
     { routes: worksForYouRoutes },
+    { routes: myCollectionRoutes },
 
     // For debugging baseline app shell stuff
     { routes: debugRoutes },
