@@ -1,17 +1,12 @@
 import { FC, useState } from "react"
 import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
-import { Spinner } from "@artsy/palette"
-import styled from "styled-components"
 
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress" // todo
 import { usePoll } from "Utils/Hooks/usePoll"
-import {
-  PollAccountBalanceQuery,
-  PollAccountBalanceQueryResponse,
-} from "__generated__/PollAccountBalanceQuery.graphql"
+import { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
 import { PollAccountBalance_commerceBankAccountBalance } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
+import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
 
 interface PollAccountBalanceProps {
   relay: RelayRefetchProp
@@ -71,7 +66,7 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     clearTimeout(timeoutID)
   }
 
-  return <PollAccountBalancePlaceholder />
+  return <ProcessingPayment />
 }
 
 export const BALANCE_QUERY = graphql`
@@ -112,31 +107,22 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
   return (
     <SystemQueryRenderer<PollAccountBalanceQuery>
       environment={relayEnvironment}
-      placeholder={<PollAccountBalancePlaceholder />}
+      placeholder={<ProcessingPayment />}
       variables={{ setupIntentId }}
       query={BALANCE_QUERY}
-      render={renderWithLoadProgress<PollAccountBalanceQueryResponse>(
-        ({ commerceBankAccountBalance }) => (
+      render={({ props }) => {
+        if (!props?.commerceBankAccountBalance) {
+          return <ProcessingPayment />
+        }
+
+        return (
           <PollAccountBalanceRefetchContainer
-            commerceBankAccountBalance={commerceBankAccountBalance}
+            commerceBankAccountBalance={props?.commerceBankAccountBalance}
             setupIntentId={setupIntentId}
             {...rest}
           />
         )
-      )}
+      }}
     />
-  )
-}
-
-const PollAccountBalancePlaceholder: FC = () => {
-  const SpinnerContainer = styled.div`
-    width: 100%;
-    height: 300px;
-    position: relative;
-  `
-  return (
-    <SpinnerContainer data-testid="account-balance-placeholder">
-      <Spinner position="relative" color="brand" />
-    </SpinnerContainer>
   )
 }

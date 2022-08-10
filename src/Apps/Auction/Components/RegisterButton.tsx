@@ -33,7 +33,7 @@ export const RegisterButton: React.FC<RegisterButtonProps> = ({ me, sale }) => {
       openAuthModal(ModalType.login, {
         redirectTo: `${saleURL}/register`,
         intent: Intent.registerToBid,
-        copy: "Log in to bid on artworks",
+        copy: "Sign up to bid on artworks",
         contextModule: ContextModule.auctionSidebar,
       })
 

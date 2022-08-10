@@ -42,7 +42,7 @@ describe("InquirySignUp", () => {
   it("renders correctly", () => {
     const wrapper = mount(<InquirySignUp />)
 
-    expect(wrapper.html()).toContain("Create an account to send your message")
+    expect(wrapper.html()).toContain("Sign up to send your message")
   })
 
   describe("success", () => {

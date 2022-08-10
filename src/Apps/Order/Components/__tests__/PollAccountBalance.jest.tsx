@@ -44,8 +44,6 @@ describe("Poll account balance", () => {
       }),
     })
 
-    expect(
-      screen.getByTestId("account-balance-placeholder")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Processing payment")).toBeInTheDocument()
   })
 })

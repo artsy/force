@@ -38,6 +38,7 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
         objectId: savedSearchEntity.owner.slug,
       },
       contextModule: ContextModule.artworkGrid,
+      copy: "Sign up to create an alert",
       intent: Intent.createAlert,
       redirectTo: location.href,
     }

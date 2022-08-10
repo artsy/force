@@ -1,12 +1,6 @@
+import { FC, useState } from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  Button,
-  Flex,
-  Message,
-  Spacer,
-  Text,
-  TextAreaChange,
-} from "@artsy/palette"
+import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { Offer_order } from "__generated__/Offer_order.graphql"
 import { OfferMutation } from "__generated__/OfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
@@ -19,9 +13,8 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { track } from "react-tracking"
+import { useTracking } from "react-tracking"
 import { Router } from "found"
-import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -31,10 +24,11 @@ import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
-import { SystemContextProps, withSystemContext } from "System"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
-export interface OfferProps extends SystemContextProps {
+const logger = createLogger("Order/Routes/Offer/index.tsx")
+
+export interface OfferRouteProps {
   order: Offer_order
   relay?: RelayProp
   router: Router
@@ -43,43 +37,40 @@ export interface OfferProps extends SystemContextProps {
   isCommittingMutation: boolean
 }
 
-export interface OfferState {
-  offerValue: number
-  offerNoteValue: TextAreaChange
-  formIsDirty: boolean
-  lowSpeedBumpEncountered: boolean
-  isToggleRadio: boolean
-}
+export const OfferRoute: FC<OfferRouteProps> = ({
+  order,
+  router,
+  dialog,
+  commitMutation,
+  isCommittingMutation,
+}) => {
+  const { trackEvent } = useTracking()
 
-const logger = createLogger("Order/Routes/Offer/index.tsx")
+  const [formIsDirty, setFormIsDirty] = useState(false)
+  const [lowSpeedBumpEncountered, setLowSpeedBumpEncountered] = useState(false)
+  const [offerNoteValue, setOfferNoteValue] = useState({
+    exceedsCharacterLimit: false,
+    value: "",
+  })
+  const [offerValue, setOfferValue] = useState(0)
 
-@track()
-export class OfferRoute extends Component<OfferProps, OfferState> {
-  state: OfferState = {
-    formIsDirty: false,
-    lowSpeedBumpEncountered: false,
-    offerNoteValue: { exceedsCharacterLimit: false, value: "" },
-    offerValue: 0,
-    isToggleRadio: false,
+  const onOfferInputFocus = () => {
+    trackEvent({
+      action_type: DeprecatedAnalyticsSchema.ActionType.FocusedOnOfferInput,
+      flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
+      order_id: order.internalID,
+    })
   }
 
-  @track(props => ({
-    action_type: DeprecatedAnalyticsSchema.ActionType.FocusedOnOfferInput,
-    flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
-    order_id: props.order.internalID,
-  }))
-  onOfferInputFocus() {
-    // noop
-  }
+  const showLowSpeedbump = () => {
+    setLowSpeedBumpEncountered(true)
+    trackEvent({
+      action_type: DeprecatedAnalyticsSchema.ActionType.ViewedOfferTooLow,
+      flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
+      order_id: order.internalID,
+    })
 
-  @track(props => ({
-    action_type: DeprecatedAnalyticsSchema.ActionType.ViewedOfferTooLow,
-    flow: DeprecatedAnalyticsSchema.Flow.MakeOffer,
-    order_id: props.order.internalID,
-  }))
-  showLowSpeedbump() {
-    this.setState({ lowSpeedBumpEncountered: true })
-    this.props.dialog.showErrorDialog({
+    dialog.showErrorDialog({
       continueButtonText: "OK",
       message:
         "Offers within 20% of the list price are most likely to receive a response.",
@@ -87,8 +78,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     })
   }
 
-  addInitialOfferToOrder(variables: OfferMutation["variables"]) {
-    return this.props.commitMutation<OfferMutation>({
+  const addInitialOfferToOrder = (variables: OfferMutation["variables"]) => {
+    return commitMutation<OfferMutation>({
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation OfferMutation($input: CommerceAddInitialOfferToOrderInput!) {
@@ -125,11 +116,11 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     })
   }
 
-  handleSubmitError(error: { code: string }) {
+  const handleSubmitError = (error: { code: string }) => {
     logger.error(error)
     switch (error.code) {
       case "invalid_amount_cents": {
-        this.props.dialog.showErrorDialog({
+        dialog.showErrorDialog({
           message:
             "The offer amount is either missing or invalid. Please try again.",
           title: "Invalid offer",
@@ -137,22 +128,20 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
         break
       }
       default: {
-        this.props.dialog.showErrorDialog()
+        dialog.showErrorDialog()
         break
       }
     }
   }
 
-  onContinueButtonPressed = async () => {
-    const { offerValue, offerNoteValue, lowSpeedBumpEncountered } = this.state
-
+  const onContinueButtonPressed = async () => {
     if (offerValue <= 0 || offerNoteValue.exceedsCharacterLimit) {
-      this.setState({ formIsDirty: true })
+      setFormIsDirty(true)
       return
     }
 
-    const artwork = this?.props?.order?.lineItems?.edges?.[0]?.node?.artwork
-    const listPriceCents = this.props.order.totalListPriceCents
+    const artwork = order?.lineItems?.edges?.[0]?.node?.artwork
+    const listPriceCents = order.totalListPriceCents
     const artworkPrice = artwork?.price
     const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
     const hasPrice =
@@ -164,7 +153,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const showPriceOptions =
       (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
     const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
-    const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
+    const isRangeOffer = getOfferItemFromOrder(order.lineItems)
       ?.displayPriceRange
 
     if (
@@ -174,189 +163,177 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       !lowSpeedBumpEncountered &&
       offerValue * 100 < listPriceCents * 0.8
     ) {
-      this.showLowSpeedbump()
+      showLowSpeedbump()
       return
     }
 
     try {
-      const hasNote =
-        this.state.offerNoteValue &&
-        this.state.offerNoteValue.value.trim() !== ""
+      const hasNote = offerNoteValue && offerNoteValue.value.trim() !== ""
 
       let note = hasNote
-        ? this.state.offerNoteValue.value
+        ? offerNoteValue.value
         : `I sent an offer for ${appendCurrencySymbol(
-            this.state.offerValue.toLocaleString("en-US", {
-              currency: this.props.order.currencyCode,
+            offerValue.toLocaleString("en-US", {
+              currency: order.currencyCode,
               minimumFractionDigits: 2,
               style: "currency",
             }),
-            this.props.order.currencyCode
+            order.currencyCode
           )}`
 
       const orderOrError = (
-        await this.addInitialOfferToOrder({
+        await addInitialOfferToOrder({
           input: {
             amountCents: offerValue * 100,
             note,
-            orderId: this.props.order.internalID,
+            orderId: order.internalID,
           },
         })
       ).commerceAddInitialOfferToOrder?.orderOrError
 
       if (orderOrError?.error) {
-        this.handleSubmitError(orderOrError.error)
+        handleSubmitError(orderOrError.error)
         return
       }
 
-      this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
+      router.push(`/orders/${order.internalID}/shipping`)
     } catch (error) {
       logger.error(error)
-      this.props.dialog.showErrorDialog()
+      dialog.showErrorDialog()
     }
   }
 
-  render() {
-    const { order, isCommittingMutation } = this.props
+  const offerItem = getOfferItemFromOrder(order.lineItems)
+  const artwork = order.lineItems?.edges?.[0]?.node?.artwork
+  const artworkId = artwork?.slug
+  const orderCurrency = order.currencyCode
+  const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
+  const hasPrice =
+    (artwork?.listPrice?.__typename === "Money" && artwork?.listPrice?.major) ||
+    (artwork?.listPrice?.__typename === "PriceRange" &&
+      artwork?.listPrice?.maxPrice?.major &&
+      artwork?.listPrice?.minPrice?.major)
+  const showPriceOptions = (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
 
-    const offerItem = getOfferItemFromOrder(order.lineItems)
-    const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
-    const orderCurrency = order.currencyCode
-    const priceNote = Boolean(offerItem?.price) && (
-      <Text my={1} variant="sm" color="black60">
-        List price: {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
-      </Text>
-    )
+  const priceNote = Boolean(offerItem?.price) && (
+    <Text my={1} variant="sm" color="black60">
+      List price: {appendCurrencySymbol(offerItem?.price, order.currencyCode)}
+    </Text>
+  )
 
-    const artwork = this.props.order.lineItems?.edges?.[0]?.node?.artwork
-    const isInquiryCheckout = !artwork?.isPriceRange && !artwork?.price
-    const hasPrice =
-      (artwork?.listPrice?.__typename === "Money" &&
-        artwork?.listPrice?.major) ||
-      (artwork?.listPrice?.__typename === "PriceRange" &&
-        artwork?.listPrice?.maxPrice?.major &&
-        artwork?.listPrice?.minPrice?.major)
-    const showPriceOptions =
-      (artwork?.editionSets?.length ?? 0) < 2 && !!hasPrice
-
-    return (
-      <OrderRouteContainer
-        currentStep="Offer"
-        steps={offerFlowSteps}
-        content={
-          <Flex
-            flexDirection="column"
-            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-            id="offer-page-left-column"
-          >
-            {(isInquiryCheckout || !showPriceOptions) && (
-              <>
-                <Flex flexDirection="column">
-                  <OfferInput
-                    id="OfferForm_offerValue"
-                    showError={
-                      this.state.formIsDirty && this.state.offerValue <= 0
-                    }
-                    onChange={offerValue => this.setState({ offerValue })}
-                    onFocus={this.onOfferInputFocus.bind(this)}
-                  />
-                </Flex>
-                {priceNote}
-              </>
-            )}
-            {!isInquiryCheckout && showPriceOptions && (
-              <>
-                <Text variant="lg-display">Select an Option</Text>
-
-                {priceNote}
-
-                <Text variant="xs" mt={4} mb={1}>
-                  Your Offer
-                </Text>
-
-                <PriceOptionsFragmentContainer
-                  artwork={artwork}
-                  order={order}
-                  onChange={offerValue => this.setState({ offerValue })}
-                  onFocus={this.onOfferInputFocus.bind(this)}
-                  showError={
-                    this.state.formIsDirty && this.state.offerValue <= 0
-                  }
+  return (
+    <OrderRouteContainer
+      currentStep="Offer"
+      steps={offerFlowSteps}
+      content={
+        <Flex
+          flexDirection="column"
+          style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+          id="offer-page-left-column"
+        >
+          {(isInquiryCheckout || !showPriceOptions) && (
+            <>
+              <Flex flexDirection="column">
+                <OfferInput
+                  id="OfferForm_offerValue"
+                  showError={formIsDirty && offerValue <= 0}
+                  onChange={offerValue => setOfferValue(offerValue)}
+                  onFocus={onOfferInputFocus}
                 />
-              </>
-            )}
+              </Flex>
+              {priceNote}
+            </>
+          )}
+          {!isInquiryCheckout && showPriceOptions && (
+            <>
+              <Text variant="lg-display">Select an Option</Text>
 
-            {!order.isInquiryOrder && (
-              <>
-                <Spacer mb={4} />
-                <OfferNote
-                  onChange={offerNoteValue => this.setState({ offerNoteValue })}
-                  artworkId={artworkId!}
-                />
-              </>
-            )}
-            <Spacer mb={[2, 4]} />
-            <Message variant="info" title="All offers are binding">
-              If your offer is accepted, payment will be processed immediately.
-              Please note that this sale is not final until your offer is
-              accepted.
-            </Message>
-            <Spacer mb={[2, 4]} />
-            <Media greaterThan="xs">
+              {priceNote}
+
+              <Text variant="xs" mt={4} mb={1}>
+                Your Offer
+              </Text>
+
+              <PriceOptionsFragmentContainer
+                artwork={artwork}
+                order={order}
+                onChange={offerValue => setOfferValue(offerValue)}
+                onFocus={onOfferInputFocus}
+                showError={formIsDirty && offerValue <= 0}
+              />
+            </>
+          )}
+
+          {!order.isInquiryOrder && (
+            <>
+              <Spacer mb={4} />
+              <OfferNote
+                onChange={offerNoteValue => setOfferNoteValue(offerNoteValue)}
+                artworkId={artworkId!}
+              />
+            </>
+          )}
+          <Spacer mb={[2, 4]} />
+          <Message variant="info" title="All offers are binding">
+            If your offer is accepted, payment will be processed immediately.
+            Please note that this sale is not final until your offer is
+            accepted.
+          </Message>
+          <Spacer mb={[2, 4]} />
+          <Media greaterThan="xs">
+            <Button
+              onClick={onContinueButtonPressed}
+              loading={isCommittingMutation}
+              variant="primaryBlack"
+              width="50%"
+            >
+              Continue
+            </Button>
+          </Media>
+        </Flex>
+      }
+      sidebar={
+        <Flex flexDirection="column">
+          <Flex flexDirection="column">
+            <ArtworkSummaryItem order={order} />
+            <TransactionDetailsSummaryItem
+              transactionStep="offer"
+              order={order}
+              offerOverride={
+                offerValue &&
+                offerValue.toLocaleString("en-US", {
+                  currency: orderCurrency,
+                  minimumFractionDigits: 2,
+                  style: "currency",
+                })
+              }
+            />
+          </Flex>
+          <BuyerGuarantee
+            contextModule={ContextModule.ordersOffer}
+            contextPageOwnerType={OwnerType.ordersOffer}
+          />
+          <Spacer mb={[2, 4]} />
+          <Media at="xs">
+            <>
               <Button
-                onClick={this.onContinueButtonPressed}
+                onClick={onContinueButtonPressed}
                 loading={isCommittingMutation}
                 variant="primaryBlack"
-                width="50%"
+                width="100%"
               >
                 Continue
               </Button>
-            </Media>
-          </Flex>
-        }
-        sidebar={
-          <Flex flexDirection="column">
-            <Flex flexDirection="column">
-              <ArtworkSummaryItem order={order} />
-              <TransactionDetailsSummaryItem
-                transactionStep="offer"
-                order={order}
-                offerOverride={
-                  this.state.offerValue &&
-                  this.state.offerValue.toLocaleString("en-US", {
-                    currency: orderCurrency,
-                    minimumFractionDigits: 2,
-                    style: "currency",
-                  })
-                }
-              />
-            </Flex>
-            <BuyerGuarantee
-              contextModule={ContextModule.ordersOffer}
-              contextPageOwnerType={OwnerType.ordersOffer}
-            />
-            <Spacer mb={[2, 4]} />
-            <Media at="xs">
-              <>
-                <Button
-                  onClick={this.onContinueButtonPressed}
-                  loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="100%"
-                >
-                  Continue
-                </Button>
-              </>
-            </Media>
-          </Flex>
-        }
-      />
-    )
-  }
+            </>
+          </Media>
+        </Flex>
+      }
+    />
+  )
 }
 
 export const OfferFragmentContainer = createFragmentContainer(
-  withSystemContext(injectCommitMutation(injectDialog(OfferRoute))),
+  injectCommitMutation(injectDialog(OfferRoute)),
   {
     order: graphql`
       fragment Offer_order on CommerceOrder {

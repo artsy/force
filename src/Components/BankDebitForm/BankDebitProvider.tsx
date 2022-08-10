@@ -32,12 +32,14 @@ interface Props {
   order: BankAccountPicker_order
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const BankDebitProvider: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
   setBankAccountHasInsufficientFunds,
+  setIsProcessingPayment,
 }) => {
   const [clientSecret, setClientSecret] = useState("")
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
@@ -129,19 +131,18 @@ export const BankDebitProvider: FC<Props> = ({
     appearance: appearance,
   }
 
-  const returnURL = `${getENV("APP_URL")}/orders/${order.internalID}/payment`
-
   return (
     <div data-test="bankTransferSection">
+      <Spacer mt={2} />
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           <BankDebitForm
             order={order}
-            returnURL={returnURL}
             bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
             setBankAccountHasInsufficientFunds={
               setBankAccountHasInsufficientFunds
             }
+            setIsProcessingPayment={setIsProcessingPayment}
           />
         </Elements>
       )}

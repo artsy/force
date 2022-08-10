@@ -1,41 +1,36 @@
-import { createFragmentContainer, graphql } from "react-relay"
 import { FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
-import {
-  BorderedRadio,
-  RadioGroup,
-  Spacer,
-  Collapse,
-  Button,
-} from "@artsy/palette"
+import { BorderedRadio, RadioGroup, Collapse, Spacer } from "@artsy/palette"
+import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitDetails } from "./BankDebitDetails"
 import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
-import { useSetPayment } from "Apps/Order/Components/Mutations/useSetPayment"
 import { extractNodes } from "Utils/extractNodes"
+import { useSetPayment } from "../Mutations/useSetPayment"
 
 interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
-  onSetPaymentSuccess: () => void
-  onSetPaymentError: (error: Error) => void
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onBankAccountContinue: () => void
+  setIsProcessingPayment: (arg: boolean) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
   const {
     me: { bankAccounts },
     order,
-    onSetPaymentSuccess,
-    onSetPaymentError,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
+    onBankAccountContinue,
+    setIsProcessingPayment,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
-
   const userHasExistingBankAccounts = bankAccountsArray.length > 0
 
   type BankAccountSelectionType = "existing" | "new"
@@ -45,29 +40,10 @@ export const BankAccountPicker: FC<Props> = props => {
     id?: string
   }
 
-  const getInitialBankAccountSelection = (): BankAccountSelection => {
-    if (props.order.bankAccountId) {
-      return {
-        type: "existing",
-        id: props.order.bankAccountId,
-      }
-    } else {
-      return userHasExistingBankAccounts
-        ? {
-            type: "existing",
-            id: order.bankAccountId || bankAccountsArray[0]?.internalID!,
-          }
-        : { type: "new" }
-    }
-  }
-
-  const [bankAccountSelection, setBankAccountSelection] = useState<
-    BankAccountSelection
-  >(getInitialBankAccountSelection())
-
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   const handleContinue = async () => {
+    setIsProcessingPayment(true)
     try {
       const orderOrError = (
         await setPaymentMutation({
@@ -85,11 +61,35 @@ export const BankAccountPicker: FC<Props> = props => {
         throw orderOrError.error
       }
 
-      onSetPaymentSuccess()
+      onBankAccountContinue()
     } catch (error) {
-      onSetPaymentError(error)
+      console.error(error)
     }
   }
+
+  const getInitialBankAccountSelection = (): BankAccountSelection => {
+    /* when current account has insufficient funds, we want to select the new 
+    account in order to show the insufficient funds error under the payment element  */
+    if (bankAccountHasInsufficientFunds) {
+      return { type: "new" }
+    } else if (props.order.bankAccountId) {
+      return {
+        type: "existing",
+        id: props.order.bankAccountId,
+      }
+    } else {
+      return userHasExistingBankAccounts
+        ? {
+            type: "existing",
+            id: order.bankAccountId || bankAccountsArray[0]?.internalID!,
+          }
+        : { type: "new" }
+    }
+  }
+
+  const [bankAccountSelection, setBankAccountSelection] = useState<
+    BankAccountSelection
+  >(getInitialBankAccountSelection())
 
   return (
     <>
@@ -132,7 +132,6 @@ export const BankAccountPicker: FC<Props> = props => {
             ])}
         </RadioGroup>
       )}
-      <Spacer mb={4} />
 
       <Collapse open={bankAccountSelection.type === "new"}>
         <BankDebitProvider
@@ -141,24 +140,20 @@ export const BankAccountPicker: FC<Props> = props => {
           setBankAccountHasInsufficientFunds={
             setBankAccountHasInsufficientFunds
           }
+          setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>
 
       {bankAccountSelection.type === "existing" && (
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-          <Button
+          <Spacer mt={4} />
+          <SaveAndContinueButton
             data-test="bankTransferSaveExisting"
             onClick={handleContinue}
-            disabled={
-              !bankAccountSelection.type || bankAccountHasInsufficientFunds
-            }
-            variant="primaryBlack"
-            width={["100%", "50%"]}
-          >
-            Save and Continue
-          </Button>
-          <Spacer mb={4} />
+            disabled={!bankAccountSelection.type}
+          />
+          <Spacer mb={2} />
         </>
       )}
     </>
