@@ -29,6 +29,15 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
       redirect_status,
     } = match.location.query
 
+    let oneTimeUse = false
+
+    if (
+      save_account === "false" ||
+      (typeof save_account === "boolean" && !save_account)
+    ) {
+      oneTimeUse = true
+    }
+
     if (
       setup_intent &&
       setup_intent_client_secret &&
@@ -37,7 +46,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
       setIsProcessingRedirect(true)
       setStripeSetupIntentId(setup_intent)
       // set payment with new bank account by Setup Intent ID
-      setPaymentBySetupIntentId(setup_intent, save_account !== "true")
+      setPaymentBySetupIntentId(setup_intent, oneTimeUse)
     }
 
     setIsProcessingRedirect(false)
