@@ -68,7 +68,11 @@ export const BankAccountPicker: FC<Props> = props => {
   }
 
   const getInitialBankAccountSelection = (): BankAccountSelection => {
-    if (props.order.bankAccountId) {
+    /* when current account has insufficient funds, we want to select the new 
+    account in order to show the insufficient funds error under the payment element  */
+    if (bankAccountHasInsufficientFunds) {
+      return { type: "new" }
+    } else if (props.order.bankAccountId) {
       return {
         type: "existing",
         id: props.order.bankAccountId,
@@ -147,9 +151,7 @@ export const BankAccountPicker: FC<Props> = props => {
           <SaveAndContinueButton
             data-test="bankTransferSaveExisting"
             onClick={handleContinue}
-            disabled={
-              !bankAccountSelection.type || bankAccountHasInsufficientFunds
-            }
+            disabled={!bankAccountSelection.type}
           />
           <Spacer mb={2} />
         </>
