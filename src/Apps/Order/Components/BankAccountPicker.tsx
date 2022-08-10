@@ -149,7 +149,7 @@ export const BankAccountPicker: FC<Props> = props => {
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Spacer mt={4} />
           <SaveAndContinueButton
-            data-test="bankTransferSaveExisting"
+            testId="bankTransferSaveExisting"
             onClick={handleContinue}
             disabled={!bankAccountSelection.type}
           />
