@@ -1,6 +1,7 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import {
+  Box,
   Checkbox,
   Clickable,
   Flex,
@@ -80,6 +81,7 @@ export const BankDebitForm: FC<Props> = ({
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
       <LoadingArea isLoading={isPaymentElementLoading}>
+        {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
           onReady={() => setIsPaymentElementLoading(false)}
           onChange={event => trackPaymentElementEvent(event)}
