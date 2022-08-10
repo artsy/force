@@ -133,7 +133,7 @@ export const BankDebitForm: FC<Props> = ({
         {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
         <Spacer mt={4} />
         <SaveAndContinueButton
-          data-test="bankTransferSaveNew"
+          testId="bankTransferSaveNew"
           disabled={!stripe || bankAccountHasInsufficientFunds}
         />
         <Spacer mb={2} />
