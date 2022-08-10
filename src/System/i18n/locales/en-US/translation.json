@@ -5,6 +5,9 @@
       "fairTitle": "Fair booths",
       "groupTitle": "Group shows",
       "soloTitle": "Solo shows"
+    },
+    "overview": {
+      "cvLink": "See all past shows and fair booths"
     }
   },
   "navbar": {

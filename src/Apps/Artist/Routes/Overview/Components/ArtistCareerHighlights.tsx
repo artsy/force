@@ -12,7 +12,7 @@ import { ArtistInsightBadgesPlaceholder } from "Apps/Artist/Components/ArtistIns
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { getENV } from "Utils/getENV"
-import { CV_LINK_TEXT } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
+import { useTranslation } from "react-i18next"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -21,6 +21,7 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
+  const { t } = useTranslation()
   const { credit, partner, text } = artist.biographyBlurb!
   const showPartnerBio =
     Boolean(credit) && Boolean(text) && partner?.profile?.href
@@ -52,7 +53,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
           </Box>
           <Spacer my={2} />
           <RouterLink to={`/artist/${artist.slug}/cv`}>
-            {CV_LINK_TEXT}
+            {t("artistPage.overview.cvLink")}
           </RouterLink>
           <Spacer my={4} />
         </>
