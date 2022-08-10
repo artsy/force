@@ -3,13 +3,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { OnboardingGene_gene } from "__generated__/OnboardingGene_gene.graphql"
 import { OnboardingGeneQuery } from "__generated__/OnboardingGeneQuery.graphql"
-import { OnboardingLoadingCollection } from "Components/Onboarding/Components/OnboardingLoadingCollection"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { OnboardingThankYou } from "../Views/OnboardingThankYou"
 
 interface OnboardingGeneProps {
   gene: OnboardingGene_gene
@@ -120,6 +120,14 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
     onComplete()
   }, [onComplete])
 
+  const ThankYouMessage = (
+    <>
+      Great choice
+      <br />
+      We’re finding a collection for you
+    </>
+  )
+
   return (
     <SystemQueryRenderer<OnboardingGeneQuery>
       query={graphql`
@@ -137,7 +145,7 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
         }
 
         if (!props?.gene) {
-          return <OnboardingLoadingCollection />
+          return <OnboardingThankYou message={ThankYouMessage} />
         }
 
         return (
@@ -147,7 +155,7 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
           />
         )
       }}
-      placeholder={<OnboardingLoadingCollection />}
+      placeholder={<OnboardingThankYou message={ThankYouMessage} />}
     />
   )
 }
