@@ -58,6 +58,7 @@ describe("BankDebitForm", () => {
         order={testOrder}
         returnURL={""}
         bankAccountHasInsufficientFunds={false}
+        setBankAccountHasInsufficientFunds={jest.fn()}
       />
     )
 
@@ -75,6 +76,7 @@ describe("BankDebitForm", () => {
           order={testOrder}
           returnURL={""}
           bankAccountHasInsufficientFunds={true}
+          setBankAccountHasInsufficientFunds={jest.fn()}
         />
       )
 
