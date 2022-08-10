@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
 
-export const MyCollectionArtworkAppFragmentContainer = () => {
+export const MyCollectionArtworkFragmentContainer = () => {
   return <Text>YOU'RE HERE!</Text>
 }

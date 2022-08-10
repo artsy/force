@@ -1,23 +1,23 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "System/Router/Route"
 
-const MyCollectionArtworkApp = loadable(
+const MyCollectionArtwork = loadable(
   () =>
     import(
-      /* webpackChunkName: "myCollectionBundle" */ "./Routes/MyCollectionArtwork/MyCollectionArtworkApp"
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/MyCollectionArtwork/MyCollectionArtwork"
     ),
   {
     resolveComponent: component =>
-      component.MyCollectionArtworkAppFragmentContainer,
+      component.MyCollectionArtworkFragmentContainer,
   }
 )
 
 export const myCollectionRoutes: AppRouteConfig[] = [
   {
     path: "/my-collection/artwork/:Slug",
-    getComponent: () => MyCollectionArtworkApp,
+    getComponent: () => MyCollectionArtwork,
     onClientSideRender: () => {
-      MyCollectionArtworkApp.preload()
+      MyCollectionArtwork.preload()
     },
   },
 ]
