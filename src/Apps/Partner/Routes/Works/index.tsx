@@ -9,22 +9,21 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { Match, RouterState, withRouter } from "found"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useRouter } from "System/Router/useRouter"
 
 interface PartnerArtworkFilterProps {
   partner: Works_partner
   relay: RelayRefetchProp
-  match?: Match
 }
 
 export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
   partner,
   relay,
-  match,
 }) => {
   const { sidebar } = partner
-  const filters = match?.location.query ?? {}
+  const { match } = useRouter()
+  const filters = match?.location?.query ?? {}
 
   // Preselects "Recently added" sort option for artsy-2 partner by default
   if (match?.params?.partnerId === "artsy-2" && filters.sort === undefined) {
@@ -60,8 +59,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
 }
 
 export const ArtworksRefetchContainer = createRefetchContainer(
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  withRouter<PartnerArtworkFilterProps & RouterState>(Artworks),
+  Artworks,
   {
     partner: graphql`
       fragment Works_partner on Partner
