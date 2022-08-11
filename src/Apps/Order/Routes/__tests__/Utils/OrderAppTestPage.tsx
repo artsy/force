@@ -119,6 +119,9 @@ export class OrderAppTestPage extends RootTestPage {
       case "USBankAccount":
         this.find("label[data-test-id='us-bank-account']").simulate("click")
         break
+      case "SEPADebit":
+        this.find("label[data-test-id='sepa-debit']").simulate("click")
+        break
     }
     await this.update()
   }

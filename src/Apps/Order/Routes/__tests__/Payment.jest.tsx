@@ -322,7 +322,10 @@ describe("Payment", () => {
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(true)
-      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      const bankDebitCollapse = page
+        .find(BankAccountPickerFragmentContainer)
+        .at(0)
+        .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(false)
     })
 
@@ -334,6 +337,7 @@ describe("Payment", () => {
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page
         .find(BankAccountPickerFragmentContainer)
+        .at(0)
         .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
@@ -347,6 +351,54 @@ describe("Payment", () => {
       )
       expect(page.text()).toContain(
         "• Search for your bank institution or select from the options below."
+      )
+    })
+  })
+
+  describe("stripe SEPA enabled", () => {
+    let page: PaymentTestPage
+    let wrapper: ReactWrapper
+
+    const achOrder = {
+      ...testOrder,
+      paymentMethod: "SEPA_DEBIT",
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "SEPA_DEBIT",
+      ] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders selection of payment methods", async () => {
+      expect(page.text()).toContain("SEPA")
+      expect(page.text()).toContain("Credit card")
+    })
+
+    it("renders bank element when SEPA is chosen as payment method", async () => {
+      page.selectPaymentMethod("SEPADebit")
+      const creditCardCollapse = page
+        .find(CreditCardPickerFragmentContainer)
+        .closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(false)
+      const bankDebitCollapse = page
+        .find(BankAccountPickerFragmentContainer)
+        .at(1)
+        .closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(true)
+    })
+
+    it("renders description body for bank transfer when selected", async () => {
+      page.selectPaymentMethod("SEPADebit")
+
+      expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
+      expect(page.text()).toContain(
+        "• Your bank account must be located in one of the SEPA member-states."
       )
     })
   })
@@ -426,6 +478,7 @@ describe("Payment", () => {
         "US_BANK_ACCOUNT",
         "CREDIT_CARD",
         "WIRE_TRANSFER",
+        "SEPA_DEBIT",
       ] as CommercePaymentMethodEnum[],
     }
 
@@ -492,6 +545,21 @@ describe("Payment", () => {
         flow: "BUY",
         order_id: "1234",
         payment_method: "WIRE_TRANSFER",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("works correctly with SEPA", async () => {
+      page.selectPaymentMethod("SEPADebit")
+
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "SEPA_DEBIT",
         subject: "click_payment_method",
       })
     })
