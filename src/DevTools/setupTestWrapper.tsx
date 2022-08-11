@@ -85,7 +85,8 @@ export const setupTestWrapperTL = <T extends OperationType>({
 }: SetupTestWrapper<T>) => {
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
-    manualEnvControl?: boolean
+    manualEnvControl?: boolean,
+    componentProps?: {}
   ): RenderWithRelay => {
     const env = createMockEnvironment()
     const TestRenderer = () => (
@@ -96,7 +97,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
         render={({ props, error }) => {
           if (props) {
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            return <Component {...props} />
+            return <Component {...componentProps} {...props} />
           } else if (error) {
             console.error(error)
           }
@@ -126,9 +127,13 @@ export const setupTestWrapper = <T extends OperationType>({
   query,
   variables = {},
 }: SetupTestWrapper<T>) => {
-  const getWrapper = (mockResolvers: MockResolvers = {}) => {
+  const getWrapper = (
+    mockResolvers: MockResolvers = {},
+    componentProps: {} = {}
+  ) => {
     const env = createMockEnvironment()
 
+    // componentProps["children"][""]
     const TestRenderer = () => (
       <QueryRenderer<T>
         environment={env}
@@ -137,7 +142,7 @@ export const setupTestWrapper = <T extends OperationType>({
         render={({ props, error }) => {
           if (props) {
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            return <Component {...props} />
+            return <Component {...(componentProps || {})} {...props} />
           } else if (error) {
             console.error(error)
           }

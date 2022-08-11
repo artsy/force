@@ -17,10 +17,11 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   contextModule?: AuthContextModule
   disableRouterLinking?: boolean
   hideSaleInfo?: boolean
+  isMyCollectionArtwork?: boolean
   lazyLoad?: boolean
   onClick?: () => void
-  showSaveButton?: boolean
   showHoverDetails?: boolean
+  showSaveButton?: boolean
 }
 
 export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
@@ -28,6 +29,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   contextModule,
   disableRouterLinking,
   hideSaleInfo,
+  isMyCollectionArtwork = false,
   lazyLoad = true,
   onClick,
   showHoverDetails,
@@ -83,6 +85,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           artwork={artwork}
           disableRouterLinking={disableRouterLinking}
           onClick={handleClick}
+          isMyCollectionArtwork={isMyCollectionArtwork}
         >
           {imageURL ? (
             <MagnifyImage
@@ -141,10 +144,19 @@ const DisabledLink = styled(Box)`
 `
 
 const LinkContainer: React.FC<
-  Pick<ArtworkGridItemProps, "artwork" | "disableRouterLinking"> & {
+  Pick<
+    ArtworkGridItemProps,
+    "artwork" | "disableRouterLinking" | "isMyCollectionArtwork"
+  > & {
     onClick: () => void
   }
-> = ({ artwork, children, disableRouterLinking, onClick }) => {
+> = ({
+  artwork,
+  children,
+  disableRouterLinking,
+  onClick,
+  isMyCollectionArtwork,
+}) => {
   const imageURL = artwork.image?.url
   if (!!disableRouterLinking) {
     return (
@@ -157,12 +169,20 @@ const LinkContainer: React.FC<
       </DisabledLink>
     )
   }
+
+  // My collection artwork is a special case. We don't want to link to the standard artwork page,
+  // but to a custom my collection artwork page.
+  const to = !isMyCollectionArtwork
+    ? artwork.href
+    : `/my-collection/artwork/${artwork.internalID}`
+
   return (
     <Link
-      to={artwork.href}
+      to={to}
       onClick={onClick}
       aria-label={`${artwork.title} by ${artwork.artistNames}`}
       position={imageURL ? "absolute" : "relative"}
+      data-testid="artwork-link"
     >
       {children}
     </Link>

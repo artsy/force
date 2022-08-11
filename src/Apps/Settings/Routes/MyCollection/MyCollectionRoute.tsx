@@ -20,6 +20,7 @@ import { MetaTags } from "Components/MetaTags"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -29,6 +30,9 @@ interface MyCollectionRouteProps {
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
+
+  const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
+
   const { scrollTo } = useScrollTo({ behavior: "smooth" })
 
   useEffect(() => {
@@ -131,7 +135,8 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                     hideSaleInfo
                     showSaveButton={false}
                     showHoverDetails={false}
-                    disableRouterLinking
+                    disableRouterLinking={!enableMyCollectionPhase2}
+                    isMyCollectionArtwork
                   />
 
                   <Spacer mt={4} />
