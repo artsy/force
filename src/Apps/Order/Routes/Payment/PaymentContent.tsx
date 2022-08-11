@@ -13,6 +13,7 @@ import {
   RadioProps,
   InfoCircleIcon,
   Tooltip,
+  Flex,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -137,7 +138,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
       </Collapse>
 
-      {/* Bank debit */}
+      {/* US bank transfer */}
       <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
         <Text color="black60" variant="sm">
           • Search for your bank institution or select from the options below.
@@ -200,12 +201,12 @@ export const PaymentContent: FC<Props> = props => {
         <BankAccountPickerFragmentContainer
           me={me}
           order={order}
-          onSetPaymentSuccess={onSetPaymentSuccess}
-          onSetPaymentError={onSetPaymentError}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
           setBankAccountHasInsufficientFunds={
             setBankAccountHasInsufficientFunds
           }
+          onBankAccountContinue={onBankAccountContinue}
+          setIsProcessingPayment={setIsProcessingPayment}
         />
       </Collapse>
 

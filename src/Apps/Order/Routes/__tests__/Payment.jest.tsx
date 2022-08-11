@@ -13,7 +13,6 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
-import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { MockBoot } from "DevTools"
@@ -296,7 +295,7 @@ describe("Payment", () => {
 
     const achOrder = {
       ...testOrderWithACH,
-      // paymentMethod: "US_BANK_ACCOUNT",
+      paymentMethod: "US_BANK_ACCOUNT",
       availablePaymentMethods: [
         "CREDIT_CARD",
         "US_BANK_ACCOUNT",
@@ -470,20 +469,21 @@ describe("Payment", () => {
   })
 
   describe("tracking", () => {
-    let page
+    let page: PaymentTestPage
 
     const order = {
       ...testOrderWithACH,
+      paymentMethod: "US_BANK_ACCOUNT",
       availablePaymentMethods: [
-        "US_BANK_ACCOUNT",
         "CREDIT_CARD",
-        "WIRE_TRANSFER",
+        "US_BANK_ACCOUNT",
         "SEPA_DEBIT",
+        "WIRE_TRANSFER",
       ] as CommercePaymentMethodEnum[],
     }
 
-    beforeAll(() => {
-      const wrapper = getWrapper({
+    beforeEach(() => {
+      wrapper = getWrapper({
         CommerceOrder: () => order,
       })
 
