@@ -57,7 +57,18 @@ export const OnboardingSteps: FC<OnboardingStepsProps> = () => {
       return <OnboardingFollowGalleries />
 
     case VIEW_THANK_YOU:
-      return <OnboardingThankYou />
+      return (
+        <OnboardingThankYou
+          autoClose
+          message={
+            <>
+              Great start <br />
+              Follow more as you browse and continue tailoring Artsy to your
+              tastes
+            </>
+          }
+        />
+      )
 
     default:
       return null

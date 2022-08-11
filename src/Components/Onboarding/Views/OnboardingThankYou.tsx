@@ -1,33 +1,48 @@
-import { Box, Flex, Text } from "@artsy/palette"
+import { Flex, Spacer, Spinner, Text } from "@artsy/palette"
 import { FC, useEffect } from "react"
-import { OnboardingFigure } from "../Components/OnboardingFigure"
-import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 
-export const OnboardingThankYou: FC = () => {
-  const { onComplete } = useOnboardingContext()
+interface OnboardingThankYouProps {
+  autoClose?: boolean
+  message: JSX.Element
+}
+
+const AUTOCLOSE_DELAY = 3000
+
+export const OnboardingThankYou: FC<OnboardingThankYouProps> = ({
+  autoClose,
+  message,
+}) => {
+  const { register } = useOnboardingFadeTransition({ next: () => {} })
+  const { onComplete, onClose } = useOnboardingContext()
 
   useEffect(() => {
     onComplete()
-  }, [onComplete])
+
+    if (autoClose) {
+      setTimeout(() => {
+        onClose()
+      }, AUTOCLOSE_DELAY)
+    }
+  }, [autoClose, onComplete, onClose])
 
   return (
-    <OnboardingSplitLayout
-      left={
-        <OnboardingFigure
-          src="https://files.artsy.net/images/question-one-img.jpg"
-          aspectWidth={1600}
-          aspectHeight={2764}
-          caption="Adegboyega Adesina, Painting of Rechel, 2021"
-        />
-      }
-      right={
-        <Flex flexDirection="column" justifyContent="space-between" p={4}>
-          <Box width="100%">
-            <Text variant="lg-display">Thank you! Now, get outta here!</Text>
-          </Box>
-        </Flex>
-      }
-    />
+    <Flex
+      ref={register(0)}
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      textAlign="center"
+      width="100%"
+      height="100%"
+      p={4}
+    >
+      <Spinner position="static" color="blue100" />
+
+      <Spacer mt={4} />
+
+      <Text variant="lg-display">{message}</Text>
+    </Flex>
   )
 }
