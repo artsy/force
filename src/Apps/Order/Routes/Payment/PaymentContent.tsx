@@ -11,6 +11,8 @@ import {
   Text,
   Collapse,
   RadioProps,
+  InfoCircleIcon,
+  Tooltip,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -160,6 +162,53 @@ export const PaymentContent: FC<Props> = props => {
         />
       </Collapse>
 
+      {/* Sepa debit */}
+      <Collapse open={paymentMethod === "SEPA_DEBIT"}>
+        <Flex>
+          <Text color="black60" variant="sm">
+            • Your bank account must be located in one of the SEPA
+            member-states.
+          </Text>
+          <Tooltip
+            placement="top-start"
+            size="lg"
+            width={400}
+            content={
+              <>
+                <Text variant="sm">SEPA member-states</Text>
+                <Spacer mb={2} />
+                <Text variant="sm">
+                  Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech
+                  Republic, Denmark, Estonia, Finland, France, Germany, Greece,
+                  Hungary, Iceland, Ireland, Italy, Latvia, Liechtenstein,
+                  Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway,
+                  Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden,
+                  and Switzerland.
+                </Text>
+              </>
+            }
+          >
+            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+              <InfoCircleIcon />
+            </Clickable>
+          </Tooltip>
+        </Flex>
+        <Text color="black60" variant="sm">
+          • Bank transfer is powered by Stripe.
+        </Text>
+        <Spacer mb={2} />
+        <BankAccountPickerFragmentContainer
+          me={me}
+          order={order}
+          onSetPaymentSuccess={onSetPaymentSuccess}
+          onSetPaymentError={onSetPaymentError}
+          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+          setBankAccountHasInsufficientFunds={
+            setBankAccountHasInsufficientFunds
+          }
+        />
+      </Collapse>
+
       {/* Wire transfer */}
       <Collapse open={paymentMethod === "WIRE_TRANSFER"}>
         <Text color="black60" variant="sm">
@@ -258,6 +307,27 @@ const getAvailablePaymentMethods = (
       >
         <USBankOnlyLabel ml={0.5} variant="xs">
           US bank account only
+        </USBankOnlyLabel>
+      </RadioWithLabel>
+    )
+  }
+
+  // when available, unshift SEPA since it's the first option we want to offer
+  if (availablePaymentMethods.includes("SEPA_DEBIT")) {
+    paymentMethods.unshift(
+      <RadioWithLabel
+        data-test-id="sepa-debit"
+        key="SEPA_DEBIT"
+        value={(paymentMethod = "SEPA_DEBIT")}
+        label={
+          <>
+            <InstitutionIcon fill="green100" />
+            <Text ml={0.5}>Bank transfer</Text>
+          </>
+        }
+      >
+        <USBankOnlyLabel ml={0.5} variant="xs">
+          SEPA direct debit
         </USBankOnlyLabel>
       </RadioWithLabel>
     )

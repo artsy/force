@@ -5,6 +5,7 @@ import {
 
 const initialPaymentMethods: CommercePaymentMethodEnum[] = [
   "US_BANK_ACCOUNT",
+  "SEPA_DEBIT",
   "CREDIT_CARD",
 ]
 
