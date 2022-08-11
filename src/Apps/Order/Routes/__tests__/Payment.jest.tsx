@@ -375,7 +375,7 @@ describe("Payment", () => {
     })
 
     it("renders selection of payment methods", async () => {
-      expect(page.text()).toContain("SEPA")
+      expect(page.text()).toContain("SEPA direct debit")
       expect(page.text()).toContain("Credit card")
     })
 
@@ -473,7 +473,6 @@ describe("Payment", () => {
 
     const order = {
       ...testOrderWithACH,
-      paymentMethod: "US_BANK_ACCOUNT",
       availablePaymentMethods: [
         "CREDIT_CARD",
         "US_BANK_ACCOUNT",
