@@ -202,6 +202,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         },
         prepareVariables: (data, props) => {
           const filterStateFromUrl = props.location ? props.location.query : {}
+          const partnerId = props?.params?.partnerId
           const aggregations = [
             "TOTAL",
             "MEDIUM",
@@ -217,6 +218,14 @@ export const partnerRoutes: AppRouteConfig[] = [
           const filterParams = {
             ...initialArtworkFilterState,
             ...paramsToCamelCase(filterStateFromUrl),
+          }
+
+          // Preselects "Recently added" sort option for artsy-2 partner by default
+          if (
+            partnerId === "artsy-2" &&
+            filterParams.sort === initialArtworkFilterState.sort
+          ) {
+            filterParams.sort = "-published_at"
           }
 
           return {
