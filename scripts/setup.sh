@@ -12,6 +12,11 @@ if [[ ! -z $NVM_DIR ]]; then # skip if nvm is not available
   nvm install
 fi
 
+echo "Installing dependencies from Homebrew..."
+brew bundle --file=- <<EOF
+brew 'redis', restart_service: true
+EOF
+
 echo "Installing dependencies..."
 yarn install || (npm install --global yarn@latest && yarn install)
 
