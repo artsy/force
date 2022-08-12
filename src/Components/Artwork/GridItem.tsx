@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Box, ResponsiveBox } from "@artsy/palette"
+import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
@@ -96,12 +96,27 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
               preventRightClick={!isTeam}
             />
           ) : (
-            <ResponsiveBox
-              aspectWidth={4}
-              aspectHeight={3}
-              position="relative"
-              maxWidth="100%"
-            />
+            <>
+              <ResponsiveBox
+                aspectWidth={4}
+                aspectHeight={3}
+                position="relative"
+                maxWidth="100%"
+              />
+              {!!isMyCollectionArtwork && (
+                <Flex
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  width="100%"
+                  height="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <NoImageIcon width="28px" height="28px" fill="black60" />
+                </Flex>
+              )}
+            </>
           )}
         </LinkContainer>
 
