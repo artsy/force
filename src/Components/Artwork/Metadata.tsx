@@ -20,6 +20,7 @@ export interface MetadataProps
   isHovered?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
+  isMyCollectionArtwork?: boolean
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -34,6 +35,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   mt = 1,
   showHoverDetails,
   showSaveButton,
+  isMyCollectionArtwork = false,
   ...rest
 }) => {
   return (
@@ -41,6 +43,7 @@ export const Metadata: React.FC<MetadataProps> = ({
       artwork={artwork}
       mt={mt}
       disableRouterLinking={disableRouterLinking}
+      isMyCollectionArtwork={isMyCollectionArtwork}
       {...rest}
     >
       <Details
@@ -62,14 +65,22 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
   artwork,
   disableRouterLinking,
   mt,
+  isMyCollectionArtwork,
   ...rest
 }) => {
   if (!!disableRouterLinking) {
     return <DisabledLink mt={mt}>{rest.children}</DisabledLink>
   }
+
+  // My collection artwork is a special case. We don't want to link to the standard artwork page,
+  // but to a custom my collection artwork page.
+  const to = !isMyCollectionArtwork
+    ? artwork.href
+    : `/my-collection/artwork/${artwork.internalID}`
+
   return (
     <RouterLink
-      to={artwork.href}
+      to={to}
       display="block"
       textDecoration="none"
       textAlign="left"
@@ -92,6 +103,7 @@ export default createFragmentContainer(Metadata, {
   artwork: graphql`
     fragment Metadata_artwork on Artwork {
       ...Details_artwork
+      internalID
       href
     }
   `,

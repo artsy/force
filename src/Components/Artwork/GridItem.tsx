@@ -131,6 +131,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         hideSaleInfo={hideSaleInfo}
         showHoverDetails={showHoverDetails}
         disableRouterLinking={disableRouterLinking}
+        isMyCollectionArtwork={isMyCollectionArtwork}
       />
     </div>
   )
