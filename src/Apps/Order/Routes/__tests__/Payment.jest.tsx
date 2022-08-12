@@ -323,7 +323,6 @@ describe("Payment", () => {
       expect(creditCardCollapse.first().props().open).toBe(true)
       const bankDebitCollapse = page
         .find(BankAccountPickerFragmentContainer)
-        .at(0)
         .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(false)
     })
@@ -336,7 +335,6 @@ describe("Payment", () => {
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page
         .find(BankAccountPickerFragmentContainer)
-        .at(0)
         .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
@@ -387,7 +385,6 @@ describe("Payment", () => {
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page
         .find(BankAccountPickerFragmentContainer)
-        .at(1)
         .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
@@ -481,7 +478,7 @@ describe("Payment", () => {
       ] as CommercePaymentMethodEnum[],
     }
 
-    beforeEach(() => {
+    beforeAll(() => {
       wrapper = getWrapper({
         CommerceOrder: () => order,
       })
