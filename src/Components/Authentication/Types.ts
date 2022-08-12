@@ -1,4 +1,4 @@
-import { AuthContextModule, AuthIntent } from "@artsy/cohesion"
+import { AuthContextModule, AuthIntent, Intent } from "@artsy/cohesion"
 import { FormikProps } from "formik"
 
 export enum ModalType {
@@ -46,6 +46,15 @@ export interface AfterSignUpAction {
   objectId?: string
   kind?: "artist" | "artworks" | "gene" | "profile" | "show"
 }
+
+export const COMMERCIAL_AUTH_INTENTS = [
+  Intent.bid,
+  Intent.buyNow,
+  Intent.createAlert,
+  Intent.inquire,
+  Intent.makeOffer,
+  Intent.registerToBid,
+]
 
 export interface ModalOptions {
   /**

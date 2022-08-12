@@ -16,7 +16,6 @@ import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRa
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "../Auctions/Components/MyBids/MyBids"
 import { HomeTroveArtworksRailQueryRenderer } from "./Components/HomeTroveArtworksRail"
-import { useOnboarding } from "./Hooks/useOnboarding"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -27,12 +26,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({
   homePage,
   featuredEventsOrderedSet,
 }) => {
-  const { onboardingComponent } = useOnboarding()
-
   return (
     <>
-      {onboardingComponent}
-
       <HomeMeta />
 
       <FlashBannerQueryRenderer />

@@ -15,6 +15,10 @@ jest.mock("react-relay", () => ({
   },
 }))
 
+jest.mock("Utils/Hooks/useOnboardingModal", () => ({
+  useOnboardingModal: jest.fn(),
+}))
+
 describe("buildClientApp", () => {
   it("resolves with a <ClientApp /> component", async () => {
     const { ClientApp } = await buildClientApp({

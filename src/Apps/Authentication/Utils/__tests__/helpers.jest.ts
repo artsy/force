@@ -2,9 +2,13 @@ import {
   apiAuthWithRedirectUrl,
   getRedirect,
   handleSubmit,
+  maybeUpdateRedirectTo,
   setCookies,
 } from "../helpers"
-import { ModalType } from "Components/Authentication/Types"
+import {
+  COMMERCIAL_AUTH_INTENTS,
+  ModalType,
+} from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mockLocation } from "DevTools/mockLocation"
 import { mediator } from "lib/mediator"
@@ -519,6 +523,43 @@ describe("Authentication Helpers", () => {
     it("Returns window.location by default", () => {
       const redirectTo = getRedirect("login")
       expect(redirectTo.toString()).toBe("https://artsy.net/articles")
+    })
+  })
+
+  describe("#maybeUpdateRedirectTo", () => {
+    const originalRedirect = "http://test.com"
+
+    it.each([ModalType.forgot, ModalType.login])(
+      "returns original redirectTo if not signup",
+      type => {
+        const redirectTo = maybeUpdateRedirectTo(
+          type,
+          "http://test.com",
+          Intent.followArtist
+        )
+        expect(redirectTo).toEqual(originalRedirect)
+      }
+    )
+
+    it.each(COMMERCIAL_AUTH_INTENTS)(
+      "returns original redirectTo if signup and commercial intent",
+      intent => {
+        const redirectTo = maybeUpdateRedirectTo(
+          ModalType.signup,
+          "http://test.com",
+          intent
+        )
+        expect(redirectTo).toEqual(originalRedirect)
+      }
+    )
+
+    it("returns redirectTo with onboarding flag if signup and non-commercial intent", () => {
+      const redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(originalRedirect + "?onboarding=true")
     })
   })
 })
