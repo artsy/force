@@ -35,14 +35,14 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
     <>
       <MetaTags title="Settings | Artsy" />
 
-      <Text variant="xl" mt={4}>
+      <Text variant={["lg-display", "xl"]} mt={4}>
         Hi, {me.name}
       </Text>
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
         {tabs.map(tab => {
           return (
-            <RouteTab key={tab.url} to={tab.url}>
+            <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
               {tab.name}
             </RouteTab>
           )
