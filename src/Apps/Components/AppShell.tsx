@@ -20,6 +20,7 @@ import { Z } from "./constants"
 import { MNTNConversionPixel, MNTNTrackingPixel } from "Components/MNTNPixels"
 import { createGlobalStyle } from "styled-components"
 import { useDidMount } from "Utils/Hooks/useDidMount"
+import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -29,6 +30,7 @@ interface AppShellProps {
 
 export const AppShell: React.FC<AppShellProps> = props => {
   const isMounted = useDidMount()
+  const { onboardingComponent } = useOnboardingModal()
 
   useAuthIntent()
   useAuthValidation()
@@ -106,6 +108,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
           </Flex>
         )}
       </Theme>
+
+      {onboardingComponent}
 
       <MNTNConversionPixel />
       <MNTNTrackingPixel />

@@ -1,22 +1,20 @@
 import { omit } from "lodash"
 import { useEffect } from "react"
-import { useOnboarding as _useOnboarding } from "Components/Onboarding"
+import { useOnboarding } from "Components/Onboarding"
 import { useSystemContext } from "System"
 import { useRouter } from "System/Router/useRouter"
 
-export const useOnboarding = () => {
+export const useOnboardingModal = () => {
   const { isLoggedIn } = useSystemContext()
   const { match, router } = useRouter()
 
-  const {
-    onboardingComponent,
-    showOnboarding,
-    hideOnboarding,
-  } = _useOnboarding({
-    onClose: () => {
-      hideOnboarding()
-    },
-  })
+  const { onboardingComponent, showOnboarding, hideOnboarding } = useOnboarding(
+    {
+      onClose: () => {
+        hideOnboarding()
+      },
+    }
+  )
 
   // Check to see if we should open onboarding (logged in + ?onboarding=true),
   // show it, and then immediately remove the query param
