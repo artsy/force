@@ -111,11 +111,25 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
   const { relayEnvironment } = useSystemContext()
   if (!setupIntentId && !bankAccountId) return null
 
+  const variables: {
+    bankAccountId: null | string
+    setupIntentId: null | string
+  } = {
+    bankAccountId: null,
+    setupIntentId: null,
+  }
+
+  if (bankAccountId) {
+    variables.bankAccountId = bankAccountId
+  } else {
+    variables.setupIntentId = setupIntentId
+  }
+
   return (
     <SystemQueryRenderer<PollAccountBalanceQuery>
       environment={relayEnvironment}
       placeholder={<SavingPaymentSpinner />}
-      variables={{ setupIntentId, bankAccountId }}
+      variables={variables}
       query={BALANCE_QUERY}
       render={({ props }) => {
         if (!props?.commerceBankAccountBalance) {

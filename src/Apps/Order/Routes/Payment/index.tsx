@@ -197,6 +197,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       setBankAccountHasInsufficientFunds(true)
       return
     }
+
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
@@ -249,8 +250,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
           balanceCheckEnabled &&
-          !balanceCheckComplete &&
-          (isPaymentSetupSuccessful || selectedBankAccountId) ? (
+          (!balanceCheckComplete || selectedBankAccountId) &&
+          isPaymentSetupSuccessful ? (
             <PollAccountBalanceQueryRenderer
               setupIntentId={stripeSetupIntentId!}
               bankAccountId={selectedBankAccountId}
