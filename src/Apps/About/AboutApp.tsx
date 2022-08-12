@@ -27,7 +27,7 @@ export const AboutApp: React.FC = () => {
         pathname="/about"
       />
 
-      <FullBleedHeader src="https://files.artsy.net/images/0-aboutHero.png">
+      <FullBleedHeader src="https://files.artsy.net/images/00_CVP_About_Hero.png">
         <FullBleedHeaderOverlay
           alignItems="center"
           color="white100"
@@ -189,28 +189,28 @@ const SECTION_DATA: SectionProps[] = [
       "Be the first to know when the art you’re looking for is available with custom alerts.",
     caption: "Angela Heisch, Diving for Pearls, 2021",
     href: "/collect",
-    imageUrl: "https://files.artsy.net/images/1-aboutFind.png",
+    imageUrl: "https://files.artsy.net/images/01_CVP_About_Find.png",
   },
   {
     title: "Buy art with ease",
     description: "Buy art simply and safely, from purchase to delivery. ",
     caption: "Andy Warhol, Flowers F&S ll.64, 1970.",
     href: "/collect",
-    imageUrl: "https://files.artsy.net/images/2-aboutBuy.png",
+    imageUrl: "https://files.artsy.net/images/02_CVP_About_Buy.png",
   },
   {
     title: "Bid in global auctions",
     description: "Bid in leading global auctions, from wherever you are.",
     caption: "Anna Park, Brenda, 2019.",
     href: "/auctions",
-    imageUrl: "https://files.artsy.net/images/3-aboutBid-1659986493124.png",
+    imageUrl: "https://files.artsy.net/images/03_CVP_About_Bid.png",
   },
   {
     title: "Track the art market",
     description: "Invest smarter with our free auction results database.",
     caption: "Harold Ancart, Untitled, 2016.",
     href: "/price-database",
-    imageUrl: "https://files.artsy.net/images/4-aboutTrack.png",
+    imageUrl: "https://files.artsy.net/images/04_CVP_About_Track.png",
   },
   {
     title: "Manage your collection",
@@ -218,7 +218,7 @@ const SECTION_DATA: SectionProps[] = [
       "Get insight into the market value of artworks in your collection.",
     caption: "John Baldessari, Marina Abramovic, 2018.",
     href: "#",
-    imageUrl: "https://files.artsy.net/images/5-aboutManage.png",
+    imageUrl: "https://files.artsy.net/images/05_CVP_About_Manage.png",
     onClick: event => {
       event.preventDefault()
 
@@ -235,7 +235,7 @@ const SECTION_DATA: SectionProps[] = [
       "Sell art from your collection to the right buyer with the help of our experts. ",
     caption: "John Baldessari, Marina Abramovic, 2018.",
     href: "/sell",
-    imageUrl: "https://files.artsy.net/images/6-aboutSell.png",
+    imageUrl: "https://files.artsy.net/images/06_CVP_About_Sell.png",
   },
   {
     title: "Discover new talents",
@@ -243,7 +243,7 @@ const SECTION_DATA: SectionProps[] = [
       "Get to know today’s up-and-coming artists and trends in the art world.",
     caption: "Evie O'Connor, Delivery Down The Grand Canal, 2021.",
     href: "/articles",
-    imageUrl: "https://files.artsy.net/images/7-aboutDiscover.png",
+    imageUrl: "https://files.artsy.net/images/07_CVP_About_Discover.png",
   },
   {
     title: "Follow your favorite artists",
@@ -251,6 +251,6 @@ const SECTION_DATA: SectionProps[] = [
       "Follow artists for updates on their latest works and career milestones. ",
     caption: "Kerry James Marshall, Vignette 13, 2008.",
     href: "/artists",
-    imageUrl: "https://files.artsy.net/images/8-aboutFollow.png",
+    imageUrl: "https://files.artsy.net/images/01_CVP_About_Find.png",
   },
 ]
