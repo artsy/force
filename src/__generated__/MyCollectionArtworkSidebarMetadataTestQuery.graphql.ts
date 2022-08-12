@@ -28,6 +28,7 @@ query MyCollectionArtworkSidebarMetadataTestQuery {
 fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
   artistNames
   title
+  date
   category
   medium
   dimensions {
@@ -132,6 +133,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "date",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "category",
             "storageKey": null
           },
@@ -225,7 +233,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9b945b136281bbc6cd4209c7bcf8685a",
+    "cacheID": "84bf8fa670b3afab14bf534a53e4d82b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -246,6 +254,7 @@ return {
         "artwork.attributionClass.id": (v3/*: any*/),
         "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.category": (v2/*: any*/),
+        "artwork.date": (v2/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
@@ -269,7 +278,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarMetadataTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  artistNames\n  title\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n"
+    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  artistNames\n  title\n  date\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n"
   }
 };
 })();

@@ -14,6 +14,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
     artworkLocation,
     attributionClass,
     category,
+    date,
     dimensions,
     medium,
     pricePaid,
@@ -23,9 +24,12 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
 
   return (
     <>
-      <Text variant="lg">{artistNames}</Text>
-      <Text variant="lg" fontStyle="italic" color="black60" mb={[0.5, 0]}>
-        {title}
+      <Text as="h1" variant="lg-display">
+        {artistNames}
+      </Text>
+      <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
+        <i>{title?.trim()}</i>
+        {date && date.replace(/\s+/g, "").length > 0 && ", " + date}
       </Text>
 
       <Spacer m={[1, 2]} />
@@ -76,6 +80,7 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
       fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
         artistNames
         title
+        date
         category
         medium
         dimensions {
