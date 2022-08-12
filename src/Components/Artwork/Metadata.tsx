@@ -85,6 +85,7 @@ const LinkContainer: React.FC<Omit<MetadataProps, "children">> = ({
       textDecoration="none"
       textAlign="left"
       mt={mt}
+      data-testID="metadata-artwork-link"
       {...rest}
     >
       {rest.children}
