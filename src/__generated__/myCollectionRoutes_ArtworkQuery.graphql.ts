@@ -29,6 +29,11 @@ query myCollectionRoutes_ArtworkQuery(
   }
 }
 
+fragment MyCollectionArtworkMeta_artwork on Artwork {
+  artistNames
+  title
+}
+
 fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
   artistNames
   title
@@ -56,6 +61,7 @@ fragment MyCollectionArtworkSidebar_artwork on Artwork {
 
 fragment MyCollectionArtwork_artwork on Artwork {
   ...MyCollectionArtworkSidebar_artwork
+  ...MyCollectionArtworkMeta_artwork
 }
 */
 
@@ -240,12 +246,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "31d5650022445d4873eb51cc5d9b17f7",
+    "cacheID": "3b198b0f7d5fa990e90b05985fd4e7f5",
     "id": null,
     "metadata": {},
     "name": "myCollectionRoutes_ArtworkQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_ArtworkQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...MyCollectionArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  artistNames\n  title\n  date\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebar_artwork on Artwork {\n  ...MyCollectionArtworkSidebarMetadata_artwork\n}\n\nfragment MyCollectionArtwork_artwork on Artwork {\n  ...MyCollectionArtworkSidebar_artwork\n}\n"
+    "text": "query myCollectionRoutes_ArtworkQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) @principalField {\n    ...MyCollectionArtwork_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkMeta_artwork on Artwork {\n  artistNames\n  title\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  artistNames\n  title\n  date\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebar_artwork on Artwork {\n  ...MyCollectionArtworkSidebarMetadata_artwork\n}\n\nfragment MyCollectionArtwork_artwork on Artwork {\n  ...MyCollectionArtworkSidebar_artwork\n  ...MyCollectionArtworkMeta_artwork\n}\n"
   }
 };
 })();
