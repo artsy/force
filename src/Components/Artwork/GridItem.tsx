@@ -103,19 +103,17 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
                 position="relative"
                 maxWidth="100%"
               />
-              {!!isMyCollectionArtwork && (
-                <Flex
-                  position="absolute"
-                  top={0}
-                  left={0}
-                  width="100%"
-                  height="100%"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <NoImageIcon width="28px" height="28px" fill="black60" />
-                </Flex>
-              )}
+              <Flex
+                position="absolute"
+                top={0}
+                left={0}
+                width="100%"
+                height="100%"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <NoImageIcon width="28px" height="28px" fill="black60" />
+              </Flex>
             </>
           )}
         </LinkContainer>
