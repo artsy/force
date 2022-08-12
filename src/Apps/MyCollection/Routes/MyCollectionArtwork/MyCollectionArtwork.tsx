@@ -1,28 +1,36 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { MyCollectionArtworkSidebar } from "./Components/MyCollectionArtworkSidebar"
+import { Box, Column, GridColumns } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
+import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 
-export const MyCollectionArtworkFragmentContainer = () => {
+interface MyCollectionArtworkProps {
+  artwork: MyCollectionArtwork_artwork
+}
+const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
+  artwork,
+}) => {
   return (
     <>
       <GridColumns>
         <Column span={8}>
-          {/* <ArtworkImageBrowserFragmentContainer artwork={artwork} /> */}
-          <div
-            style={{
-              width: "400px",
-              height: "400px",
-              background: "rebeccapurple",
-            }}
-          />
-          {/* <Media greaterThanOrEqual="sm">{BelowTheFoldArtworkDetails}</Media> */}
+          <Box width={[335, 780]} height={[320, 870]} bg="black5" />
         </Column>
 
         <Column span={4} pt={[0, 2]}>
-          <MyCollectionArtworkSidebar />
-
-          {/* <ArtworkSidebarFragmentContainer artwork={artwork} me={me} /> */}
+          <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
         </Column>
       </GridColumns>
     </>
   )
 }
+
+export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
+  MyCollectionArtwork,
+  {
+    artwork: graphql`
+      fragment MyCollectionArtwork_artwork on Artwork {
+        ...MyCollectionArtworkSidebar_artwork
+      }
+    `,
+  }
+)
