@@ -13,7 +13,6 @@ export type MyCollectionArtworkSidebarMetadata_artwork = {
         readonly in: string | null;
         readonly cm: string | null;
     } | null;
-    readonly date: string | null;
     readonly provenance: string | null;
     readonly attributionClass: {
         readonly shortDescription: string | null;
@@ -95,13 +94,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "date",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "provenance",
       "storageKey": null
     },
@@ -152,5 +144,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'd3fa3b35e98ea5f1120b6ae697f6da54';
+(node as any).hash = 'e9f65618d5d777cda6ea0020c1a5d211';
 export default node;

@@ -82,7 +82,6 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
           in
           cm
         }
-        date
         provenance
         attributionClass {
           shortDescription
