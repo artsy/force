@@ -4,33 +4,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type GridItem_Test_QueryVariables = {};
-export type GridItem_Test_QueryResponse = {
+export type MetadataTestQueryVariables = {};
+export type MetadataTestQueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
     } | null;
 };
-export type GridItem_Test_Query = {
-    readonly response: GridItem_Test_QueryResponse;
-    readonly variables: GridItem_Test_QueryVariables;
+export type MetadataTestQuery = {
+    readonly response: MetadataTestQueryResponse;
+    readonly variables: MetadataTestQueryVariables;
 };
 
 
 
 /*
-query GridItem_Test_Query {
-  artwork(id: "foo") {
-    ...GridItem_artwork
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
+query MetadataTestQuery {
+  artwork(id: "artwork-id") {
+    ...Metadata_artwork
     id
   }
 }
@@ -82,22 +72,6 @@ fragment Details_artwork on Artwork {
   ...HoverDetails_artwork
 }
 
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
 fragment HoverDetails_artwork on Artwork {
   internalID
   attributionClass {
@@ -125,14 +99,6 @@ fragment NewSaveButton_artwork on Artwork {
   is_saved: isSaved
   title
 }
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
 */
 
 const node: ConcreteRequest = (function(){
@@ -140,7 +106,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "foo"
+    "value": "artwork-id"
   }
 ],
 v1 = {
@@ -220,7 +186,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "GridItem_Test_Query",
+    "name": "MetadataTestQuery",
     "selections": [
       {
         "alias": null,
@@ -233,10 +199,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "GridItem_artwork"
+            "name": "Metadata_artwork"
           }
         ],
-        "storageKey": "artwork(id:\"foo\")"
+        "storageKey": "artwork(id:\"artwork-id\")"
       }
     ],
     "type": "Query",
@@ -246,7 +212,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "GridItem_Test_Query",
+    "name": "MetadataTestQuery",
     "selections": [
       {
         "alias": null,
@@ -256,13 +222,7 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -270,59 +230,6 @@ return {
             "name": "title",
             "storageKey": null
           },
-          {
-            "alias": "image_title",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "imageTitle",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "placeholder",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "large"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"large\")"
-              },
-              {
-                "alias": "aspect_ratio",
-                "args": null,
-                "kind": "ScalarField",
-                "name": "aspectRatio",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "artistNames",
-            "storageKey": null
-          },
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -423,21 +330,7 @@ return {
                 "name": "isClosed",
                 "storageKey": null
               },
-              (v3/*: any*/),
-              {
-                "alias": "is_preview",
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isPreview",
-                "storageKey": null
-              },
-              {
-                "alias": "display_timely_at",
-                "args": null,
-                "kind": "ScalarField",
-                "name": "displayTimelyAt",
-                "storageKey": null
-              }
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -525,6 +418,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "slug",
             "storageKey": null
           },
@@ -565,21 +465,14 @@ return {
               }
             ],
             "storageKey": null
-          },
-          {
-            "alias": "is_biddable",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isBiddable",
-            "storageKey": null
           }
         ],
-        "storageKey": "artwork(id:\"foo\")"
+        "storageKey": "artwork(id:\"artwork-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "0ed713ed2411d1ea9e62e45de278ee39",
+    "cacheID": "6d3a165e14354a43a9c3b52464b16b6c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -589,7 +482,6 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artistNames": (v8/*: any*/),
         "artwork.artists": {
           "enumValues": null,
           "nullable": true,
@@ -612,23 +504,7 @@ return {
         "artwork.date": (v8/*: any*/),
         "artwork.href": (v8/*: any*/),
         "artwork.id": (v9/*: any*/),
-        "artwork.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artwork.image.aspect_ratio": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Float"
-        },
-        "artwork.image.placeholder": (v8/*: any*/),
-        "artwork.image.url": (v8/*: any*/),
-        "artwork.image_title": (v8/*: any*/),
         "artwork.internalID": (v9/*: any*/),
-        "artwork.is_biddable": (v10/*: any*/),
         "artwork.is_saved": (v10/*: any*/),
         "artwork.mediumType": {
           "enumValues": null,
@@ -660,13 +536,11 @@ return {
           "type": "Sale"
         },
         "artwork.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
-        "artwork.sale.display_timely_at": (v8/*: any*/),
         "artwork.sale.endAt": (v8/*: any*/),
         "artwork.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
         "artwork.sale.id": (v9/*: any*/),
         "artwork.sale.is_auction": (v10/*: any*/),
         "artwork.sale.is_closed": (v10/*: any*/),
-        "artwork.sale.is_preview": (v10/*: any*/),
         "artwork.sale.startAt": (v8/*: any*/),
         "artwork.sale_artwork": {
           "enumValues": null,
@@ -711,11 +585,11 @@ return {
         "artwork.title": (v8/*: any*/)
       }
     },
-    "name": "GridItem_Test_Query",
+    "name": "MetadataTestQuery",
     "operationKind": "query",
-    "text": "query GridItem_Test_Query {\n  artwork(id: \"foo\") {\n    ...GridItem_artwork\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query MetadataTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...Metadata_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...NewSaveButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment NewSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = '90e7b6e4050a84cea1783b067221fafd';
+(node as any).hash = 'cebe154e3dde0451c32cf0aeae0947c7';
 export default node;
