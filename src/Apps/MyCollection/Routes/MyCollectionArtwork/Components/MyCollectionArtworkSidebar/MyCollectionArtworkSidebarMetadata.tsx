@@ -81,6 +81,8 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
 )
 
 const MetadataField = ({ label, value }) => {
+  const emptyValue = "----"
+
   return (
     <Box mb={[1, 0.5]} display="flex" flexDirection={["column", "row"]}>
       <Text variant="sm" minWidth={190} mr={2}>
@@ -89,7 +91,7 @@ const MetadataField = ({ label, value }) => {
 
       <Box display="flex" flexDirection="column">
         <WrappedTest variant="sm" color="black60">
-          {value || "----"}
+          {value || emptyValue}
         </WrappedTest>
       </Box>
     </Box>
