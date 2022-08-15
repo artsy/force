@@ -41,6 +41,7 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
           "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
         )
       ).toBeInTheDocument()
+      expect(screen.getByText(", 1979")).toBeInTheDocument()
     })
 
     it("displays metadata", () => {
@@ -50,8 +51,11 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
       expect(
         screen.getByText("Drawing, Collage or other Work on Paper")
       ).toBeInTheDocument()
-      expect(screen.getByText("22 × 16 1/2 in")).toBeInTheDocument()
-      expect(screen.getByText("55.9 × 41.9 cm")).toBeInTheDocument()
+      expect(
+        screen.getByText("22 × 16 1/2 in 55.9 × 41.9 cm", {
+          collapseWhitespace: true,
+        })
+      ).toBeInTheDocument()
       expect(screen.getByText("Bought in a gallery")).toBeInTheDocument()
       expect(screen.getByText("This is a unique work")).toBeInTheDocument()
       expect(screen.getByText("€25,300")).toBeInTheDocument()
@@ -71,6 +75,7 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
           "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
         )
       ).toBeInTheDocument()
+      expect(screen.getByText(", 1979")).toBeInTheDocument()
     })
 
     it("displays minimal metadata", () => {
@@ -100,6 +105,7 @@ const mockResolversWithData = {
     title:
       "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
     category: "Drawing, Collage or other Work on Paper",
+    date: "1979",
     medium: "Acrylic on cotton sweatshirt.",
     dimensions: {
       in: "22 × 16 1/2 in",
@@ -121,6 +127,7 @@ const emptyMockResolvers = {
     artistNames: "Jean-Michel Basquiat",
     title:
       "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
+    date: "1979",
     category: "Drawing, Collage or other Work on Paper",
     medium: "Acrylic on cotton sweatshirt.",
     dimensions: null,
