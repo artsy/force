@@ -18,7 +18,6 @@ interface OnboardingGeneProps {
 
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
-  const { onClose } = useOnboardingContext()
 
   return (
     <Box px={[2, 4]} py={6}>
