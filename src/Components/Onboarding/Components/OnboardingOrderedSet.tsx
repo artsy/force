@@ -9,6 +9,9 @@ import { extractNodes } from "Utils/extractNodes"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
+import { ContextModule } from "@artsy/cohesion"
+import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
 
 interface OnboardingOrderedSetProps {
   orderedSet: OnboardingOrderedSet_orderedSet
@@ -31,9 +34,16 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
                   key={node.internalID}
                   artist={node}
                   displayLink={false}
-                  onFollow={() => {
-                    dispatch({ type: "FOLLOW", payload: node.internalID! })
-                  }}
+                  FollowButton={
+                    <FollowArtistButtonQueryRenderer
+                      id={node.internalID}
+                      contextModule={ContextModule.onboardingFlow}
+                      size="small"
+                      onFollow={() => {
+                        dispatch({ type: "FOLLOW", payload: node.internalID! })
+                      }}
+                    />
+                  }
                 />
               )
 
@@ -46,9 +56,17 @@ export const OnboardingOrderedSet: FC<OnboardingOrderedSetProps> = ({
                 <EntityHeaderPartnerFragmentContainer
                   key={node.internalID}
                   partner={partner}
-                  onFollow={() => {
-                    dispatch({ type: "FOLLOW", payload: node.internalID! })
-                  }}
+                  FollowButton={
+                    <FollowProfileButtonFragmentContainer
+                      id={node.internalID}
+                      contextModule={ContextModule.onboardingFlow}
+                      profile={node}
+                      size="small"
+                      onFollow={() => {
+                        dispatch({ type: "FOLLOW", payload: node.internalID! })
+                      }}
+                    />
+                  }
                 />
               )
             }
@@ -74,6 +92,7 @@ export const OnboardingOrderedSetFragmentContainer = createFragmentContainer(
               }
               ... on Profile {
                 internalID
+                ...FollowProfileButton_profile
                 owner {
                   __typename
                   ... on Partner {

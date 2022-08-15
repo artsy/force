@@ -10,6 +10,7 @@ import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "../Views/OnboardingThankYou"
+import { ContextModule } from "@artsy/cohesion"
 
 interface OnboardingGeneProps {
   gene: OnboardingGene_gene
@@ -34,6 +35,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
         <FollowGeneButtonFragmentContainer
           gene={gene}
           display={["none", "block"]}
+          contextModule={ContextModule.onboardingFlow}
         />
       </Flex>
 
@@ -42,6 +44,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
         mt={2}
         display={["block", "none"]}
         size="small"
+        contextModule={ContextModule.onboardingFlow}
       />
 
       <Spacer mb={4} />
