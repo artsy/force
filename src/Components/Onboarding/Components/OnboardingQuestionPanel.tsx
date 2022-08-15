@@ -40,6 +40,7 @@ export const OnboardingQuestionPanel: FC<OnboardingQuestionPanelProps> = ({
         loading={loading}
         onClick={onNext}
         width="100%"
+        minHeight={50}
       >
         Next
       </Button>
