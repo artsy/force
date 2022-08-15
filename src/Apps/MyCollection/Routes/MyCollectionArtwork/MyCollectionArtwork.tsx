@@ -15,12 +15,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
-      <GridColumns>
+      <GridColumns gridRowGap={[4, null]} pt={[2, 6]}>
         <Column span={8}>
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
-        <Column span={4} pt={[0, 2]}>
+        <Column span={4} pt={[0, 1]}>
           <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
         </Column>
       </GridColumns>
