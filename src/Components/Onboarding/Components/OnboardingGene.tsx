@@ -19,7 +19,6 @@ interface OnboardingGeneProps {
 
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
-  const { onClose } = useOnboardingContext()
 
   return (
     <Box px={[2, 4]} py={6}>
@@ -56,14 +55,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
-                <ArtworkGridItemFragmentContainer
-                  artwork={artwork}
-                  onMouseUp={() => {
-                    setTimeout(() => {
-                      onClose()
-                    }, 10)
-                  }}
-                />
+                <ArtworkGridItemFragmentContainer artwork={artwork} />
 
                 <Spacer mb={2} />
               </Fragment>
