@@ -1,5 +1,6 @@
 import { Box, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
 import { MyCollectionArtworkSidebarMetadata_artwork } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
 
 export interface MyCollectionArtworkSidebarMetadataProps {
@@ -40,31 +41,10 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
         label="Rarity"
         value={attributionClass?.shortDescription}
       />
-
-      <Box mb={[1, 0.5]} display="flex" flexDirection={["column", "row"]}>
-        <Text variant="sm" minWidth={190} mr={2}>
-          Size
-        </Text>
-
-        {dimensions ? (
-          <Box>
-            {!!dimensions.in && (
-              <Text variant="sm" color="black60">
-                {dimensions.in}
-              </Text>
-            )}
-            {!!dimensions.cm && (
-              <Text variant="sm" color="black60">
-                {dimensions.cm}
-              </Text>
-            )}
-          </Box>
-        ) : (
-          <Text variant="sm" color="black60">
-            ----
-          </Text>
-        )}
-      </Box>
+      <MetadataField
+        label="Size"
+        value={[dimensions?.in, dimensions?.cm].filter(d => d).join("\n")}
+      />
 
       <MetadataField label="Location" value={artworkLocation} />
       <MetadataField label="Provenance" value={provenance} />
@@ -108,10 +88,14 @@ const MetadataField = ({ label, value }) => {
       </Text>
 
       <Box display="flex" flexDirection="column">
-        <Text variant="sm" color="black60">
+        <WrappedTest variant="sm" color="black60">
           {value || "----"}
-        </Text>
+        </WrappedTest>
       </Box>
     </Box>
   )
 }
+
+const WrappedTest = styled(Text)`
+  white-space: pre-line;
+`
