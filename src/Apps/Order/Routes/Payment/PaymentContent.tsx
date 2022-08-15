@@ -11,6 +11,9 @@ import {
   Text,
   Collapse,
   RadioProps,
+  InfoCircleIcon,
+  Tooltip,
+  Flex,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -135,18 +138,13 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
       </Collapse>
 
-      {/* Bank debit */}
-      <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
-        <Text color="black60" variant="sm">
-          • Search for your bank institution or select from the options below.
-        </Text>
-        <Text color="black60" variant="sm">
-          • If you can not find your bank, please check your spelling or choose
-          another payment method.
-        </Text>
-        <Text color="black60" variant="sm">
-          • Bank transfer is powered by Stripe.
-        </Text>
+      {/* Bank transfer */}
+      <Collapse
+        open={
+          paymentMethod === "US_BANK_ACCOUNT" || paymentMethod === "SEPA_DEBIT"
+        }
+      >
+        {getPaymentMethodInfo(paymentMethod)}
         <Spacer mb={2} />
         <BankAccountPickerFragmentContainer
           me={me}
@@ -162,20 +160,7 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Wire transfer */}
       <Collapse open={paymentMethod === "WIRE_TRANSFER"}>
-        <Text color="black60" variant="sm">
-          • To pay by wire transfer, complete checkout and a member of the Artsy
-          team will contact you with next steps by email.
-        </Text>
-        <Text color="black60" variant="sm">
-          • Please inform your bank that you will be responsible for all wire
-          transfer fees.
-        </Text>
-        <Text color="black60" variant="sm">
-          • Questions? Email{" "}
-          <Clickable cursor="text" textDecoration="underline">
-            orders@artsy.net
-          </Clickable>
-        </Text>
+        {getPaymentMethodInfo(paymentMethod)}
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
@@ -242,7 +227,7 @@ const getAvailablePaymentMethods = (
     )
   }
 
-  // when available, unshift ACH since it's the first option we want to offer
+  // when available, unshift ACH since it's the first option we want to offer for US artworks
   if (availablePaymentMethods.includes("US_BANK_ACCOUNT")) {
     paymentMethods.unshift(
       <RadioWithLabel
@@ -263,5 +248,103 @@ const getAvailablePaymentMethods = (
     )
   }
 
+  // when available, unshift SEPA since it's the first option we want to offer for EU artworks
+  if (availablePaymentMethods.includes("SEPA_DEBIT")) {
+    paymentMethods.unshift(
+      <RadioWithLabel
+        data-test-id="sepa-debit"
+        key="SEPA_DEBIT"
+        value={(paymentMethod = "SEPA_DEBIT")}
+        label={
+          <>
+            <InstitutionIcon fill="green100" />
+            <Text ml={0.5}>Bank transfer</Text>
+          </>
+        }
+      >
+        <USBankOnlyLabel ml={0.5} variant="xs">
+          SEPA direct debit
+        </USBankOnlyLabel>
+      </RadioWithLabel>
+    )
+  }
   return paymentMethods
+}
+
+const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
+  switch (paymentMethod) {
+    case "WIRE_TRANSFER":
+      return (
+        <>
+          <Text color="black60" variant="sm">
+            • To pay by wire transfer, complete checkout and a member of the
+            Artsy team will contact you with next steps by email.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Please inform your bank that you will be responsible for all wire
+            transfer fees.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Questions? Email{" "}
+            <Clickable cursor="text" textDecoration="underline">
+              orders@artsy.net
+            </Clickable>
+          </Text>
+        </>
+      )
+    case "US_BANK_ACCOUNT":
+      return (
+        <>
+          <Text color="black60" variant="sm">
+            • Search for your bank institution or select from the options below.
+          </Text>
+          <Text color="black60" variant="sm">
+            • If you can not find your bank, please check your spelling or
+            choose another payment method.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Bank transfer is powered by Stripe.
+          </Text>
+        </>
+      )
+    case "SEPA_DEBIT":
+      return (
+        <>
+          <Flex>
+            <Text color="black60" variant="sm">
+              • Your bank account must be located in one of the SEPA
+              member-states.
+            </Text>
+            <Tooltip
+              placement="top-start"
+              size="lg"
+              width={400}
+              content={
+                <>
+                  <Text variant="xs">SEPA member-states</Text>
+                  <Spacer mb={2} />
+                  <Text variant="xs">
+                    Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech
+                    Republic, Denmark, Estonia, Finland, France, Germany,
+                    Greece, Hungary, Iceland, Ireland, Italy, Latvia,
+                    Liechtenstein, Lithuania, Luxembourg, Malta, Monaco,
+                    Netherlands, Norway, Poland, Portugal, Romania, Slovakia,
+                    Slovenia, Spain, Sweden, and Switzerland.
+                  </Text>
+                </>
+              }
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoCircleIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
+          <Text color="black60" variant="sm">
+            • Bank transfer is powered by Stripe.
+          </Text>
+        </>
+      )
+    default:
+      return null
+  }
 }

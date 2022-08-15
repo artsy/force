@@ -364,7 +364,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
   const SubmitButton: FC = () => (
     <Button
       variant="primaryBlack"
-      width="100%"
+      width={["100%", "50%"]}
       loading={isCommittingMutation}
       disabled={!submittable}
       onClick={() => onSubmit()}

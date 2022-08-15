@@ -13,7 +13,6 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "../../Components/CreditCardPicker"
-import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { MockBoot } from "DevTools"
@@ -296,7 +295,7 @@ describe("Payment", () => {
 
     const achOrder = {
       ...testOrderWithACH,
-      // paymentMethod: "US_BANK_ACCOUNT",
+      paymentMethod: "US_BANK_ACCOUNT",
       availablePaymentMethods: [
         "CREDIT_CARD",
         "US_BANK_ACCOUNT",
@@ -322,7 +321,9 @@ describe("Payment", () => {
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(true)
-      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      const bankDebitCollapse = page
+        .find(BankAccountPickerFragmentContainer)
+        .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(false)
     })
 
@@ -347,6 +348,53 @@ describe("Payment", () => {
       )
       expect(page.text()).toContain(
         "• Search for your bank institution or select from the options below."
+      )
+    })
+  })
+
+  describe("stripe SEPA enabled", () => {
+    let page: PaymentTestPage
+    let wrapper: ReactWrapper
+
+    const achOrder = {
+      ...testOrder,
+      paymentMethod: "SEPA_DEBIT",
+      availablePaymentMethods: [
+        "CREDIT_CARD",
+        "SEPA_DEBIT",
+      ] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      wrapper = getWrapper({
+        CommerceOrder: () => achOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders selection of payment methods", async () => {
+      expect(page.text()).toContain("SEPA direct debit")
+      expect(page.text()).toContain("Credit card")
+    })
+
+    it("renders bank element when SEPA is chosen as payment method", async () => {
+      page.selectPaymentMethod("SEPADebit")
+      const creditCardCollapse = page
+        .find(CreditCardPickerFragmentContainer)
+        .closest(Collapse)
+      expect(creditCardCollapse.first().props().open).toBe(false)
+      const bankDebitCollapse = page
+        .find(BankAccountPickerFragmentContainer)
+        .closest(Collapse)
+      expect(bankDebitCollapse.first().props().open).toBe(true)
+    })
+
+    it("renders description body for bank transfer when selected", async () => {
+      page.selectPaymentMethod("SEPADebit")
+
+      expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
+      expect(page.text()).toContain(
+        "• Your bank account must be located in one of the SEPA member-states."
       )
     })
   })
@@ -418,19 +466,20 @@ describe("Payment", () => {
   })
 
   describe("tracking", () => {
-    let page
+    let page: PaymentTestPage
 
     const order = {
       ...testOrderWithACH,
       availablePaymentMethods: [
-        "US_BANK_ACCOUNT",
         "CREDIT_CARD",
+        "US_BANK_ACCOUNT",
+        "SEPA_DEBIT",
         "WIRE_TRANSFER",
       ] as CommercePaymentMethodEnum[],
     }
 
     beforeAll(() => {
-      const wrapper = getWrapper({
+      wrapper = getWrapper({
         CommerceOrder: () => order,
       })
 
@@ -492,6 +541,21 @@ describe("Payment", () => {
         flow: "BUY",
         order_id: "1234",
         payment_method: "WIRE_TRANSFER",
+        subject: "click_payment_method",
+      })
+    })
+
+    it("works correctly with SEPA", async () => {
+      page.selectPaymentMethod("SEPADebit")
+
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "clickedPaymentMethod",
+        amount: "$12,000",
+        context_page_owner_type: "orders-payment",
+        currency: "USD",
+        flow: "BUY",
+        order_id: "1234",
+        payment_method: "SEPA_DEBIT",
         subject: "click_payment_method",
       })
     })
