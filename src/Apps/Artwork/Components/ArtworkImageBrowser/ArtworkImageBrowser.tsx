@@ -11,7 +11,7 @@ import { useCursor } from "use-cursor"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"
 
-const MAX_DIMENSION = 800
+export const IMAGE_BROWSER_MAX_DIMENSION = 800
 
 export interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork
@@ -33,11 +33,11 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
       const scaled = scale({
         width: image.width!,
         height: image.height!,
-        maxWidth: MAX_DIMENSION,
-        maxHeight: MAX_DIMENSION,
+        maxWidth: IMAGE_BROWSER_MAX_DIMENSION,
+        maxHeight: IMAGE_BROWSER_MAX_DIMENSION,
       })
 
-      return hasGeometry ? scaled.height : MAX_DIMENSION
+      return hasGeometry ? scaled.height : IMAGE_BROWSER_MAX_DIMENSION
     })
   )
 
