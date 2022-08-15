@@ -7,6 +7,7 @@ import { PartnersLocationAutocomplete_viewer } from "__generated__/PartnersLocat
 import { PartnersLocationAutocompleteQuery } from "__generated__/PartnersLocationAutocompleteQuery.graphql"
 import { useRouter } from "System/Router/useRouter"
 import { omit } from "lodash"
+import { filterCities } from "../Utils/filterUtils"
 
 interface PartnersLocationAutocompleteProps {
   viewer: PartnersLocationAutocomplete_viewer
@@ -28,10 +29,7 @@ const PartnersLocationAutocomplete: FC<PartnersLocationAutocompleteProps> = ({
     }
 
     const cities = value.length > 2 ? allCities : featuredCities
-
-    const filtered = cities.filter(({ text }) => {
-      return text.toLowerCase().includes(value.toLowerCase())
-    })
+    const filtered = filterCities(cities, value)
 
     setOptions(filtered)
   }
