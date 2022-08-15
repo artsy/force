@@ -29,21 +29,13 @@ export const useFollowButtonTracking = ({
 
   const trackFollow = useCallback(
     (isFollowed: boolean) => {
-      if (
-        !contextPageOwnerId ||
-        !contextPageOwnerSlug ||
-        !contextPageOwnerType
-      ) {
-        return
-      }
-
       const args: FollowedArgs = {
         ownerId,
         ownerSlug,
         contextModule,
         contextOwnerId: contextPageOwnerId,
         contextOwnerSlug: contextPageOwnerSlug,
-        contextOwnerType: contextPageOwnerType,
+        contextOwnerType: contextPageOwnerType!,
       }
 
       trackEvent(isFollowed ? unfollowedPartner(args) : followedPartner(args))
