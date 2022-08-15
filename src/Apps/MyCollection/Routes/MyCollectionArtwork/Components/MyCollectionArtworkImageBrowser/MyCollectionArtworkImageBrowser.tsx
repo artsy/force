@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
 import { IMAGE_BROWSER_MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { ArtworkImageBrowserLargeFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
@@ -36,6 +36,32 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectoinArtworkImageBrowserP
       return hasGeometry ? scaled.height : IMAGE_BROWSER_MAX_DIMENSION
     })
   )
+
+  if (!images.length) {
+    return (
+      <Flex>
+        <ResponsiveBox
+          bg="black10"
+          mx={[0, 2, 4]}
+          maxWidth="100%"
+          aspectWidth={1}
+          aspectHeight={1}
+        >
+          <Flex
+            position="absolute"
+            top={0}
+            left={0}
+            width="100%"
+            height="100%"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <NoImageIcon width="28px" height="28px" fill="black60" />
+          </Flex>
+        </ResponsiveBox>
+      </Flex>
+    )
+  }
 
   return (
     <Box
