@@ -12,8 +12,6 @@ export type MyCollectionArtworkImageBrowser_artwork = {
     } | null> | null;
     readonly figures: ReadonlyArray<{
         readonly internalID?: string | null | undefined;
-        readonly isDefault?: boolean | null | undefined;
-        readonly type: "Video";
     }>;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;
     readonly " $refType": "MyCollectionArtworkImageBrowser_artwork";
@@ -77,30 +75,9 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isDefault",
-              "storageKey": null
-            }
+            (v0/*: any*/)
           ],
           "type": "Image",
-          "abstractKey": null
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": [
-            {
-              "alias": "type",
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            }
-          ],
-          "type": "Video",
           "abstractKey": null
         }
       ],
@@ -121,5 +98,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '00401cec6b53c6db844ded0d1ada0aaa';
+(node as any).hash = '9a1a02f2e3421392f1f4322dbd9ee56e';
 export default node;

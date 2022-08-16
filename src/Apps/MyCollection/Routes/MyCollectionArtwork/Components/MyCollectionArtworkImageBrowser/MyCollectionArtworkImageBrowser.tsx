@@ -106,10 +106,6 @@ export const MyCollectionArtworkImageBrowserFragmentContainer = createFragmentCo
         figures {
           ... on Image {
             internalID
-            isDefault
-          }
-          ... on Video {
-            type: __typename
           }
         }
       }
