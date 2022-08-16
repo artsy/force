@@ -1,9 +1,11 @@
 import { Column, GridColumns } from "@artsy/palette"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
+import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
+import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -11,6 +13,11 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
+  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
+    "my-collection-web-phase-4-articles-rail"
+  )
+  const slug = artwork?.artist?.slug!
+
   return (
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
@@ -24,6 +31,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
         </Column>
       </GridColumns>
+
+      {!!enableMyCollectionPhase4ArticlesRail && (
+        <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+      )}
     </>
   )
 }
@@ -36,6 +47,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
         ...MyCollectionArtworkImageBrowser_artwork
+        artist {
+          slug
+        }
       }
     `,
   }
