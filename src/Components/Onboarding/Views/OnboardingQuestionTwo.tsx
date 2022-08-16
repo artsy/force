@@ -11,12 +11,15 @@ import {
 } from "../config"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 export const OnboardingQuestionTwo: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()
   const { register, loading, handleNext } = useOnboardingFadeTransition({
     next,
   })
+
+  const tracking = useOnboardingTracking()
 
   return (
     <OnboardingSplitLayout
@@ -33,7 +36,10 @@ export const OnboardingQuestionTwo: FC = () => {
         <OnboardingQuestionPanel
           disabled={state.questionTwo.length === 0 || loading}
           loading={loading}
-          onNext={handleNext}
+          onNext={() => {
+            tracking.trackQuestionTwo(state.questionTwo)
+            handleNext()
+          }}
         >
           <Text variant="lg-display" ref={register(1)}>
             What do you love most about art?

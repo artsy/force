@@ -24,7 +24,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
   } = artwork
 
   return (
-    <>
+    <Box pl={2}>
       <Text as="h1" variant="lg-display">
         {artistNames}
       </Text>
@@ -49,7 +49,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
       <MetadataField label="Location" value={artworkLocation} />
       <MetadataField label="Provenance" value={provenance} />
       <MetadataField label="Price Paid" value={pricePaid?.display} />
-    </>
+    </Box>
   )
 }
 

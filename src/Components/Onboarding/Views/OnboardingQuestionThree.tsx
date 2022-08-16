@@ -16,12 +16,15 @@ import {
 } from "../config"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 export const OnboardingQuestionThree: FC = () => {
   const { state, dispatch, next } = useOnboardingContext()
   const { register, loading, handleNext } = useOnboardingFadeTransition({
     next,
   })
+
+  const tracking = useOnboardingTracking()
 
   const options = useMemo(() => {
     switch (true) {
@@ -74,7 +77,10 @@ export const OnboardingQuestionThree: FC = () => {
         <OnboardingQuestionPanel
           disabled={state.questionThree === null || loading}
           loading={loading}
-          onNext={handleNext}
+          onNext={() => {
+            tracking.trackQuestionThree(state.questionThree)
+            handleNext()
+          }}
         >
           <Text variant="lg-display" ref={register(1)}>
             Almost done! What would you like to see first?

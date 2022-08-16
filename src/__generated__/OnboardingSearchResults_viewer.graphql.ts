@@ -22,6 +22,7 @@ export type OnboardingSearchResults_viewer = {
                     value in case none of the concrete values match.*/
                     readonly __typename: "%other";
                 };
+                readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
             } | {
                 /*This will never be '%other', but we need some
                 value in case none of the concrete values match.*/
@@ -157,6 +158,11 @@ return {
                         }
                       ],
                       "storageKey": null
+                    },
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "FollowProfileButton_profile"
                     }
                   ],
                   "type": "Profile",
@@ -176,5 +182,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6308eedc3c65cbc97ef33cc1e3d1970e';
+(node as any).hash = '7f56c00baf526e9d490ab6e2413c0567';
 export default node;

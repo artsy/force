@@ -10,6 +10,7 @@ import { useSystemContext } from "System"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useConfig } from "../config"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 export type State = {
   questionOne: string | null
@@ -107,6 +108,8 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
     relayEnvironment,
   })
 
+  const tracking = useOnboardingTracking()
+
   const handleComplete = async () => {
     try {
       await submitUpdateMyUserProfile({
@@ -115,6 +118,8 @@ export const OnboardingProvider: FC<OnboardingProviderProps> = ({
     } catch (error) {
       console.error("Onboarding/useOnboardingContext", error)
     }
+
+    tracking.userCompletedOnboarding()
   }
 
   const { workflowEngine, back, current, next, reset: __reset__ } = useConfig({
