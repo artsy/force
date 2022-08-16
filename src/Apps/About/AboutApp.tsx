@@ -27,7 +27,7 @@ export const AboutApp: React.FC = () => {
         pathname="/about"
       />
 
-      <FullBleedHeader src="https://files.artsy.net/images/00_CVP_About_Hero.png">
+      <FullBleedHeader src="https://files.artsy.net/images/00_CVP_About_Hero%20(1).png">
         <FullBleedHeaderOverlay
           alignItems="center"
           color="white100"
@@ -48,8 +48,8 @@ export const AboutApp: React.FC = () => {
             p={1}
             color="white100"
           >
-            Nicolas Party, Trees, 2019. Damien Cifelli, May You Live in
-            Interesting Times, 2022. Anna Park, It's Good For You, 2020
+            Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
+            Day Lily 1, 1969.
           </Text>
         </FullBleedHeaderOverlay>
       </FullBleedHeader>
@@ -201,7 +201,7 @@ const SECTION_DATA: SectionProps[] = [
   {
     title: "Bid in global auctions",
     description: "Bid in leading global auctions, from wherever you are.",
-    caption: "Anna Park, Brenda, 2019.",
+    caption: "Anna Park, Ready Set, 2020.",
     href: "/auctions",
     imageUrl: "https://files.artsy.net/images/03_CVP_About_Bid.png",
   },
@@ -233,7 +233,7 @@ const SECTION_DATA: SectionProps[] = [
     title: "Sell from your collection",
     description:
       "Sell art from your collection to the right buyer with the help of our experts. ",
-    caption: "John Baldessari, Marina Abramovic, 2018.",
+    caption: "Ezra Johnson, Small Interior, 2022.",
     href: "/sell",
     imageUrl: "https://files.artsy.net/images/06_CVP_About_Sell.png",
   },
@@ -249,8 +249,8 @@ const SECTION_DATA: SectionProps[] = [
     title: "Follow your favorite artists",
     description:
       "Follow artists for updates on their latest works and career milestones. ",
-    caption: "Kerry James Marshall, Vignette 13, 2008.",
+    caption: "Amy Beager, Pixie Dust, 2022.",
     href: "/artists",
-    imageUrl: "https://files.artsy.net/images/01_CVP_About_Find.png",
+    imageUrl: "https://files.artsy.net/images/08_CVP_About_Follow%20(2).png",
   },
 ]

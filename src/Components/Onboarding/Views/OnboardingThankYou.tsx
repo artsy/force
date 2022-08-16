@@ -8,7 +8,7 @@ interface OnboardingThankYouProps {
   message: JSX.Element
 }
 
-const AUTOCLOSE_DELAY = 3000
+const AUTOCLOSE_DELAY = 5000
 
 export const OnboardingThankYou: FC<OnboardingThankYouProps> = ({
   autoClose,

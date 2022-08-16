@@ -9,6 +9,9 @@ import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingSearchResults_viewer } from "__generated__/OnboardingSearchResults_viewer.graphql"
 import { OnboardingSearchResultsQuery } from "__generated__/OnboardingSearchResultsQuery.graphql"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { ContextModule } from "@artsy/cohesion"
+import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
+import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 
 interface OnboardingSearchResultsProps {
   viewer: OnboardingSearchResults_viewer
@@ -39,24 +42,39 @@ const OnboardingSearchResults: FC<OnboardingSearchResultsProps> = ({
               <EntityHeaderArtistFragmentContainer
                 key={node.internalID}
                 artist={node}
-                onFollow={() => {
-                  dispatch({ type: "FOLLOW", payload: node.internalID! })
-                }}
+                FollowButton={
+                  <FollowArtistButtonQueryRenderer
+                    id={node.internalID}
+                    contextModule={ContextModule.onboardingFlow}
+                    size="small"
+                    onFollow={() => {
+                      dispatch({ type: "FOLLOW", payload: node.internalID! })
+                    }}
+                  />
+                }
               />
             )
 
           case "Profile": {
             const partner = node.owner
 
-            if (!partner || partner.__typename !== "Partner") return null
+            if (partner?.__typename !== "Partner") return null
 
             return (
               <EntityHeaderPartnerFragmentContainer
                 key={node.internalID}
                 partner={partner}
-                onFollow={() => {
-                  dispatch({ type: "FOLLOW", payload: node.internalID! })
-                }}
+                FollowButton={
+                  <FollowProfileButtonFragmentContainer
+                    profile={node}
+                    id={node.internalID}
+                    contextModule={ContextModule.onboardingFlow}
+                    size="small"
+                    onFollow={() => {
+                      dispatch({ type: "FOLLOW", payload: node.internalID! })
+                    }}
+                  />
+                }
               />
             )
           }
@@ -90,6 +108,7 @@ export const OnboardingSearchResultsFragmentContainer = createFragmentContainer(
               }
               ... on Profile {
                 internalID
+                ...FollowProfileButton_profile
                 owner {
                   __typename
                   ... on Partner {
