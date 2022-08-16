@@ -22,7 +22,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
-      <GridColumns gridRowGap={[4, null]} pt={[2, 6]}>
+      <GridColumns gridRowGap={[4, null]} py={[2, 6]}>
         <Column span={8}>
           <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
