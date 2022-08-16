@@ -8,7 +8,7 @@ export type MyCollectionArtwork_artwork = {
     readonly artist: {
         readonly slug: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkImageBrowser_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "ArtworkImageBrowser_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$data = MyCollectionArtwork_artwork;
@@ -56,11 +56,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkImageBrowser_artwork"
+      "name": "ArtworkImageBrowser_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'b061d1df21ccc679530f07d5af38e2f5';
+(node as any).hash = 'e145505ac1cde064b4151815037dea72';
 export default node;

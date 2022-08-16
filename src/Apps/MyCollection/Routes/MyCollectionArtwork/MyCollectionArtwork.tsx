@@ -1,9 +1,9 @@
 import { Column, GridColumns } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
@@ -24,7 +24,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
       <GridColumns gridRowGap={[4, null]} py={[2, 6]}>
         <Column span={8}>
-          <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
+          <ArtworkImageBrowserFragmentContainer
+            artwork={artwork}
+            isMyCollectionArtwork
+          />
         </Column>
 
         <Column span={4} pt={[0, 1]}>
@@ -46,7 +49,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
       fragment MyCollectionArtwork_artwork on Artwork {
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
-        ...MyCollectionArtworkImageBrowser_artwork
+        ...ArtworkImageBrowser_artwork
         artist {
           slug
         }

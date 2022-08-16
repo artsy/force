@@ -1,29 +1,25 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from "../MyCollectionArtworkImageBrowser"
-import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
+import { ArtworkImageBrowserTestQuery } from "__generated__/ArtworkImageBrowserTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
+import { ArtworkImageBrowserFragmentContainer } from "../ArtworkImageBrowser"
 
 jest.unmock("react-relay")
 
 describe("MyCollectionArtworkImageBrowser", () => {
-  const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkImageBrowserTestQuery
-  >({
+  const { renderWithRelay } = setupTestWrapperTL<ArtworkImageBrowserTestQuery>({
     Component: props => {
       return (
         <MockBoot>
-          <MyCollectionArtworkImageBrowserFragmentContainer
-            {...(props as any)}
-          />
+          <ArtworkImageBrowserFragmentContainer {...(props as any)} />
         </MockBoot>
       )
     },
     query: graphql`
-      query MyCollectionArtworkImageBrowserTestQuery @relay_test_operation {
+      query ArtworkImageBrowserTestQuery @relay_test_operation {
         artwork(id: "artwork-id") {
-          ...MyCollectionArtworkImageBrowser_artwork
+          ...ArtworkImageBrowser_artwork
         }
       }
     `,
@@ -68,7 +64,7 @@ describe("MyCollectionArtworkImageBrowser", () => {
       renderWithRelay({ Artwork: () => ({ images: [], figures: [] }) }, false)
 
       expect(
-        screen.getByTestId("my-collection-no-image-box")
+        screen.getByTestId("artwork-browser-no-image-box")
       ).toBeInTheDocument()
     })
   })
