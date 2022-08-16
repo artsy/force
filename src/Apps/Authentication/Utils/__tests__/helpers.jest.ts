@@ -561,5 +561,30 @@ describe("Authentication Helpers", () => {
       )
       expect(redirectTo).toEqual(originalRedirect + "?onboarding=true")
     })
+
+    it("preserves existing query params", () => {
+      let redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(originalRedirect + "?onboarding=true")
+
+      redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com?foo=true",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(originalRedirect + "?foo=true&onboarding=true")
+
+      redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com?foo=true&bar=true",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(
+        originalRedirect + "?foo=true&bar=true&onboarding=true"
+      )
+    })
   })
 })

@@ -103,6 +103,9 @@ export const handleSubmit = async (
 
       let afterAuthURL: URL
       if (modalOptions.redirectTo) {
+        // This will potentially update the URL with an onboarding=true query
+        // param which will trigger the onboarding flow
+        // TODO: Move this prop to something more formal, like afterSignupAction
         afterAuthURL = new URL(
           maybeUpdateRedirectTo(type, modalOptions.redirectTo, intent!),
           sd.APP_URL
@@ -153,9 +156,17 @@ export const maybeUpdateRedirectTo = (
   if (COMMERCIAL_AUTH_INTENTS.includes(intent)) {
     return redirectTo
   } else {
+    const [redirectToWithoutParams, params] = redirectTo.split("?")
+
     // For all non-commercial intents, update the redirectTo url with an
     // onboarding query param flag.
-    return redirectTo + "?onboarding=true"
+    const updatedParams = qs.stringify({
+      ...qs.parse(params),
+      onboarding: true,
+    })
+
+    const updatedRedirectTo = redirectToWithoutParams + "?" + updatedParams
+    return updatedRedirectTo
   }
 }
 
