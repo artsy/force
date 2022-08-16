@@ -3,6 +3,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -10,20 +12,29 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
+  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
+    "my-collection-web-phase-4-articles-rail"
+  )
+  const slug = artwork?.artist?.slug!
+
   return (
-    <Flex pt={6}>
-      <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
+    <>
+      <Flex py={6}>
+        <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
+        <GridColumns>
+          <Column span={8}>
+            <Box width={[335, 780]} height={[320, 870]} bg="black5" />
+          </Column>
 
-      <GridColumns>
-        <Column span={8}>
-          <Box width={[335, 780]} height={[320, 870]} bg="black5" />
-        </Column>
-
-        <Column span={4} pt={[0, 2]}>
-          <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-        </Column>
-      </GridColumns>
-    </Flex>
+          <Column span={4} pt={[0, 2]}>
+            <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+          </Column>
+        </GridColumns>
+      </Flex>
+      {!!enableMyCollectionPhase4ArticlesRail && (
+        <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+      )}
+    </>
   )
 }
 
@@ -34,6 +45,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
       fragment MyCollectionArtwork_artwork on Artwork {
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
+        artist {
+          slug
+        }
       }
     `,
   }
