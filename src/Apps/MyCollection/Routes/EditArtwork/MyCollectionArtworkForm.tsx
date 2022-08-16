@@ -124,7 +124,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               </RouterLink>
 
               <StickyProvider>
-                <Sticky withHeaderOffset={false}>
+                <Sticky withoutHeaderOffset>
                   {({ stuck }) => {
                     return (
                       <FullBleed
