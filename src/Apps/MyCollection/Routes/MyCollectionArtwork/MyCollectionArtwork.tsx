@@ -12,7 +12,7 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase2 = useFeatureFlag(
+  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
   const slug = artwork?.artist?.slug!
@@ -31,7 +31,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           </Column>
         </GridColumns>
       </Flex>
-      {!!enableMyCollectionPhase2 && (
+      {!enableMyCollectionPhase4ArticlesRail && (
         <Flex pt={6}>
           <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
         </Flex>
