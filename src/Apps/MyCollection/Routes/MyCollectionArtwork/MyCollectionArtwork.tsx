@@ -31,7 +31,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           </Column>
         </GridColumns>
       </Flex>
-      {!enableMyCollectionPhase4ArticlesRail && (
+      {!!enableMyCollectionPhase4ArticlesRail && (
         <Flex pt={6}>
           <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
         </Flex>
