@@ -19,7 +19,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   return (
     <>
-      <Flex pt={6}>
+      <Flex py={6}>
         <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
         <GridColumns>
           <Column span={8}>
@@ -32,9 +32,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </GridColumns>
       </Flex>
       {!!enableMyCollectionPhase4ArticlesRail && (
-        <Flex pt={6}>
-          <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
-        </Flex>
+        <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
     </>
   )
