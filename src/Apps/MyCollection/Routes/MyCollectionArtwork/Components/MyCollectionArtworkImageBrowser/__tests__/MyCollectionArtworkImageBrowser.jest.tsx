@@ -1,6 +1,3 @@
-// test that images show up when there are images
-// test that noimageicon show up when there are no images
-
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { MyCollectionArtworkImageBrowserFragmentContainer } from "../MyCollectionArtworkImageBrowser"
