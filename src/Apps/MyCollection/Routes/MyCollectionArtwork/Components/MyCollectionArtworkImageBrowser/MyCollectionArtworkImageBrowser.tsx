@@ -41,6 +41,7 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectoinArtworkImageBrowserP
     return (
       <Flex>
         <ResponsiveBox
+          data-testid="my-collection-no-image-box"
           bg="black10"
           mx={[0, 2, 4]}
           maxWidth="100%"
