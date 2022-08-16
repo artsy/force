@@ -44,7 +44,7 @@ export const myCollectionRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           MyCollectionArtwork.preload()
         },
-        prepareVariables: ({ artworkID }, props) => {
+        prepareVariables: ({ artworkID }) => {
           return {
             artworkID,
           }
