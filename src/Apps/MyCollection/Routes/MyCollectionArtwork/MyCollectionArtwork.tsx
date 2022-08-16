@@ -4,6 +4,7 @@ import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyColl
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -11,6 +12,9 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
+  const enableMyCollectionPhase2 = useFeatureFlag(
+    "my-collection-web-phase-4-articles-rail"
+  )
   const slug = artwork?.artist?.slug!
 
   return (
@@ -27,9 +31,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           </Column>
         </GridColumns>
       </Flex>
-      <Flex pt={6}>
-        <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
-      </Flex>
+      {!!enableMyCollectionPhase2 && (
+        <Flex pt={6}>
+          <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+        </Flex>
+      )}
     </>
   )
 }
