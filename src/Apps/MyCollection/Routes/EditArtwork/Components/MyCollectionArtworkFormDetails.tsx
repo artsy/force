@@ -13,100 +13,32 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
-import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import {
-  Location,
-  LocationAutocompleteInput,
-  normalizePlace,
-  Place,
-} from "Components/LocationAutocompleteInput"
+import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { useFormikContext } from "formik"
-import { compact } from "lodash"
 import { useState } from "react"
-import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
-import { postalCodeValidators } from "../../Utils/validation"
-import { ArtistAutoComplete } from "./ArtistAutocomplete"
+import { ArtworkModel } from "../Utils/artworkModel"
+import { categoryOptions } from "../Utils/categoryOptions"
+import { rarityOptions } from "../Utils/rarityOptions"
+import { ProvenanceModal } from "./ProvenanceModal"
 
-export const getArtworkDetailsFormInitialValues = (
-  submission?: ArtworkDetails_submission
-): ArtworkDetailsFormModel => ({
-  artistId: submission?.artist?.internalID ?? "",
-  artistName: submission?.artist?.name ?? "",
-  year: submission?.year ?? "",
-  title: submission?.title ?? "",
-  materials: submission?.medium ?? "",
-  rarity: submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
-  editionNumber: submission?.editionNumber ?? "",
-  editionSize: submission?.editionSize ?? undefined,
-  height: submission?.height ?? "",
-  width: submission?.width ?? "",
-  depth: submission?.depth ?? "",
-  units: submission?.dimensionsMetric ?? "in",
-  provenance: submission?.provenance ?? "",
-  location: {
-    city: submission?.locationCity ?? "",
-    country: submission?.locationCountry ?? undefined,
-    state: submission?.locationState ?? undefined,
-    countryCode: submission?.locationCountryCode ?? undefined,
-  },
-  postalCode: submission?.locationPostalCode ?? undefined,
-})
-
-const rarityOptions = checkboxValues.map(({ name, value }) => ({
-  text: name,
-  value,
-}))
-
-rarityOptions.unshift({ text: "Select a Сlassification", value: "default" })
-
-export interface ArtworkDetailsFormModel {
-  artistName: string
-  artistId: string
-  year: string
-  title: string
-  materials: string
-  rarity: string
-  editionNumber: string
-  editionSize?: string
-  height: string
-  width: string
-  depth: string
-  units: string
-  provenance: string
-  location: Location
-  postalCode?: string
-}
-
-export const ArtworkDetailsForm: React.FC = () => {
+export const MyCollectionArtworkFormDetails: React.FC = () => {
   const { sendToast } = useToasts()
 
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-    handleBlur,
-    touched,
-    errors,
-    setFieldTouched,
-  } = useFormikContext<ArtworkDetailsFormModel>()
+  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
+    ArtworkModel
+  >()
 
-  const limitedEditionRarity = values.rarity === "limited edition"
-  const defaultLocation = compact([
-    values.location.city,
-    values.location.state,
-    values.location.country,
-  ]).join(", ")
+  const isLimitedEdition = values.attributionClass === "LIMITED_EDITION"
 
   const handleAutosuggestError = (isError: boolean) => {
     if (isError) {
       sendToast({
         variant: "error",
         message: "An error occurred",
-        description: "Please contact consign@artsymail.com",
+        description: "Please contact support@artsymail.com",
       })
 
       return
@@ -115,25 +47,6 @@ export const ArtworkDetailsForm: React.FC = () => {
     setFieldValue("artistName", "")
     setFieldValue("artistId", "")
   }
-
-  const handleLocationClose = () => setFieldTouched("location")
-  const handleLocationClick = () => setFieldTouched("location", false)
-  const handleLocationChange = () => {
-    setFieldValue("postalCode", "")
-    setFieldTouched("postalCode", false)
-
-    setFieldValue("location", {})
-    setFieldTouched("location", false)
-  }
-  const handleLocationSelect = (place?: Place) => {
-    setFieldValue("location", normalizePlace(place, true))
-  }
-
-  const showPostalCode =
-    values.location.countryCode &&
-    Object.keys(postalCodeValidators).includes(
-      values.location.countryCode?.toUpperCase()
-    )
 
   return (
     <>
@@ -149,41 +62,59 @@ export const ArtworkDetailsForm: React.FC = () => {
 
       <GridColumns>
         <Column span={6}>
-          <ArtistAutoComplete onError={() => handleAutosuggestError(true)} />
+          <ArtistAutoComplete
+            onError={() => handleAutosuggestError(true)}
+            required
+          />
         </Column>
         <Column span={6} mt={[30, 0]}>
           <Input
-            title="year"
-            maxLength={256}
-            placeholder="YYYY"
-            name="year"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.year}
-          />
-        </Column>
-      </GridColumns>
-      <GridColumns mt={[4, 2]}>
-        <Column span={6}>
-          <Input
             title="Title"
-            placeholder="Add title or write 'Unknown'"
+            placeholder="Title"
             name="title"
+            required
             maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.title}
           />
         </Column>
+      </GridColumns>
+      <GridColumns mt={[4, 2]}>
+        <Column span={6}>
+          <Input
+            title="Year"
+            maxLength={256}
+            placeholder="YYYY"
+            name="date"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.date}
+          />
+        </Column>
         <Column span={6} mt={[30, 0]}>
+          <Select
+            title="Medium"
+            required
+            name="category"
+            options={categoryOptions}
+            selected={values.category}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onSelect={selected => setFieldValue("category", selected)}
+          />
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[4, 2]}>
+        <Column span={6}>
           <Input
             title="Materials"
-            placeholder="Add materials"
-            name="materials"
+            placeholder="Oil on Canvas, Mixed Media, Lithograph…"
+            name="medium"
             maxLength={256}
             onBlur={handleBlur}
             onChange={handleChange}
-            value={values.materials}
+            value={values.medium}
           />
         </Column>
       </GridColumns>
@@ -203,16 +134,16 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Clickable>
           </Flex>
           <Select
-            name="rarity"
+            name="attributionClass"
             options={rarityOptions}
-            selected={values.rarity}
+            selected={values.attributionClass}
             onBlur={handleBlur}
             onChange={handleChange}
-            onSelect={selected => setFieldValue("rarity", selected)}
+            onSelect={selected => setFieldValue("attributionClass", selected)}
           />
         </Column>
         <Column span={6}>
-          {limitedEditionRarity && (
+          {isLimitedEdition && (
             <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
               <Input
                 title="Edition Number"
@@ -248,7 +179,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               </Text>
               <LabeledInput
                 maxLength={256}
-                label={values.units}
+                label={values.metric}
                 name="height"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -261,7 +192,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               </Text>
               <LabeledInput
                 maxLength={256}
-                label={values.units}
+                label={values.metric}
                 name="width"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -277,13 +208,10 @@ export const ArtworkDetailsForm: React.FC = () => {
                 <Text variant="xs" mb={0.5} mr={0.5}>
                   Depth
                 </Text>
-                <Text variant="xs" color="black60">
-                  (Optional)
-                </Text>
               </Flex>
               <LabeledInput
                 maxLength={256}
-                label={values.units}
+                label={values.metric}
                 name="depth"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -292,14 +220,53 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Box>
             <RadioGroup
               width="50%"
-              defaultValue={values.units}
+              defaultValue={values.metric}
               flexDirection="row"
               mt={2}
               ml={2}
-              onSelect={selected => setFieldValue("units", selected)}
+              pt={0.5}
+              alignContent="center"
+              onSelect={selected => setFieldValue("metric", selected)}
             >
               <Radio mr={4} value="in" label="in" selected />
               <Radio value="cm" label="cm" />
+            </RadioGroup>
+          </Flex>
+        </Column>
+      </GridColumns>
+      <GridColumns mt={[30, 2]}>
+        <Column span={6}>
+          <Flex height="100%">
+            <Box mr={2} width="100%" height="100%">
+              <Text variant="xs" mb={0.5} mr={0.5}>
+                Price Paid
+              </Text>
+              <LabeledInput
+                maxLength={256}
+                label={values.pricePaidCurrency}
+                name="pricePaidDollars"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.pricePaidDollars}
+              />
+            </Box>
+          </Flex>
+        </Column>
+        <Column span={6} mt={[30, 0]}>
+          <Flex height="100%">
+            <RadioGroup
+              width="100%"
+              defaultValue={values.pricePaidCurrency}
+              flexDirection="row"
+              mt={2}
+              pt={0.5}
+              onSelect={selected =>
+                setFieldValue("pricePaidCurrency", selected)
+              }
+            >
+              <Radio mr={4} value="USD" label="$&nbsp;USD" selected />
+              <Radio mr={4} value="EUR" label="€&nbsp;EUR" />
+              <Radio mr={4} value="GBP" label="£&nbsp;GBP" />
             </RadioGroup>
           </Flex>
         </Column>
@@ -331,37 +298,19 @@ export const ArtworkDetailsForm: React.FC = () => {
           />
         </Column>
         <Column span={6} mt={[30, 0]}>
-          <LocationAutocompleteInput
-            name="location"
+          <Input
             title="City"
-            placeholder="Enter city where artwork is located"
+            name="artworkLocation"
+            placeholder="City where artwork is located"
             maxLength={256}
-            spellCheck={false}
-            defaultValue={defaultLocation}
-            error={touched.location && errors.location?.city}
-            onClose={handleLocationClose}
-            onSelect={handleLocationSelect}
-            onChange={handleLocationChange}
-            onClick={handleLocationClick}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.artworkLocation}
           />
         </Column>
+
+        {/* TODO: Add image uploader */}
       </GridColumns>
-      {showPostalCode && (
-        <GridColumns mt={[4, 2]}>
-          <Column start={7} span={6}>
-            <Input
-              title="Zip/postal code"
-              placeholder="Zip/Postal code where artwork is located"
-              name="postalCode"
-              maxLength={256}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.postalCode}
-              error={touched.postalCode && errors.postalCode}
-            />
-          </Column>
-        </GridColumns>
-      )}
     </>
   )
 }
