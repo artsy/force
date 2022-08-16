@@ -1,4 +1,4 @@
-import { Box, Column, GridColumns } from "@artsy/palette"
+import { Box, Column, Flex, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
@@ -11,7 +11,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
   return (
-    <>
+    <Flex pt={6}>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
       <GridColumns>
@@ -23,7 +23,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
         </Column>
       </GridColumns>
-    </>
+    </Flex>
   )
 }
 
