@@ -50,7 +50,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
 
   const handleSubmit = async (values: ArtworkModel) => {
-    console.log({ values })
     try {
       const artworkId = await createOrUpdateArtwork({
         artworkId: artwork?.internalID,
