@@ -100,7 +100,7 @@ export const MyColectionArtworkAuctionResultsRefetchContainer = createRefetchCon
   {
     artist: graphql`
       fragment MyCollectionArtworkAuctionResults_artist on Artist
-        @argumentDefinitions(first: { type: "Int", defaultValue: 10 }) {
+        @argumentDefinitions(first: { type: "Int", defaultValue: 6 }) {
         slug
         internalID
         name
