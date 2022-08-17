@@ -95,6 +95,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     }
   }
 
+  const isEditing = !!artwork?.internalID
+
   return (
     <>
       {/* TODO: Update meta tags */}
@@ -151,7 +153,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 loading={isSubmitting}
                                 disabled={!isValid}
                               >
-                                Save
+                                {isEditing ? "Save Artwork" : "Upload Artwork"}
                               </Button>
                             </Flex>
                           </HorizontalPadding>

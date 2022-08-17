@@ -14,10 +14,10 @@ export const useCreateOrUpdateArtwork = () => {
   const createOrUpdateArtwork = async (artwork: ArtworkInput) => {
     let artworkId: string | undefined
 
-    if ("artworkId" in artwork) {
+    if ((artwork as MyCollectionUpdateArtworkInput).artworkId) {
       const res = await updateArtwork({
         variables: {
-          input: artwork,
+          input: artwork as MyCollectionUpdateArtworkInput,
         },
         rejectIf: res => {
           return res.myCollectionUpdateArtwork?.artworkOrError?.mutationError
@@ -29,7 +29,7 @@ export const useCreateOrUpdateArtwork = () => {
     } else {
       const res = await createArtwork({
         variables: {
-          input: artwork,
+          input: artwork as MyCollectionCreateArtworkInput,
         },
       })
 
