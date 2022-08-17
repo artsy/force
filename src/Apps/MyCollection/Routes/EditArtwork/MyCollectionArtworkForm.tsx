@@ -54,6 +54,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       const artworkId = await createOrUpdateArtwork({
         artworkId: artwork?.internalID,
         artistIds: [values.artistId],
+        category: values.category,
         date: values.date,
         title: values.title,
         medium: values.medium,
@@ -75,10 +76,14 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         artworkLocation: values.artworkLocation,
       })
 
-      router.replace({
-        pathname: `/my-collection/artworks/${artworkId}/edit`,
-      })
-      router.push({ pathname: "/settings/my-collection" })
+      if (isEditing) {
+        router.push({ pathname: `/my-collection/artwork/${artworkId}` })
+      } else {
+        router.replace({
+          pathname: `/my-collection/artworks/${artworkId}/edit`,
+        })
+        router.push({ pathname: "/settings/my-collection" })
+      }
     } catch (error) {
       logger.error(
         `Artwork not ${artwork?.internalID ? "updated" : "created"}`,
@@ -138,7 +143,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               py={2}
                             >
                               <BackLink
-                                to="/settings/my-collection"
+                                to={
+                                  isEditing
+                                    ? `/my-collection/artwork/${artwork.internalID}`
+                                    : "/settings/my-collection"
+                                }
                                 width="min-content"
                               >
                                 Back
