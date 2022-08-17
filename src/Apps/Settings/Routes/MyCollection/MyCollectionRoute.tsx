@@ -124,7 +124,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </FullBleed>
           )}
 
-          <Flex justifyContent={"space-between"}>
+          <Flex justifyContent="space-between">
             <Text variant="lg-display" mb={4}>
               My Collection <Sup color="brand">{total}</Sup>
             </Text>

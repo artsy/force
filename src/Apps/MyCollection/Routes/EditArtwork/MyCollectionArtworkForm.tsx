@@ -18,7 +18,6 @@ import { Form, Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
-import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 import createLogger from "Utils/logger"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
@@ -29,7 +28,7 @@ import {
   MyCollectionArtworkDetailsValidationSchema,
   validateArtwork,
 } from "./Utils/artworkValidation"
-import { useCreateOrUpdateArtwork } from "./Utils/createOrUpdateArtwork"
+import { useCreateOrUpdateArtwork } from "./Utils/useCreateOrUpdateArtwork"
 
 const logger = createLogger("MyCollectionArtworkForm.tsx")
 
@@ -98,8 +97,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   return (
     <>
-      <EnableRecaptcha />
-
       {/* TODO: Update meta tags */}
       <MetaTags
         pathname="my-collection"

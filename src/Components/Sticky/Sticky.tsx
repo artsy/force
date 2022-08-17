@@ -1,6 +1,5 @@
 import { Box, themeProps } from "@artsy/palette"
-import * as React from "react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
@@ -39,7 +38,7 @@ export const Sticky: React.FC<
   const containerRef = useRef<HTMLDivElement | null>(null)
   const headerOffset = withoutHeaderOffset ? 0 : isMobile ? mobile : desktop
 
-  React.useEffect(() => {
+  useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
     return deregisterSticky
   }, [registerSticky, deregisterSticky])

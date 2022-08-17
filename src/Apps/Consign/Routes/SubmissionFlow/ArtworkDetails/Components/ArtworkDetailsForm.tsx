@@ -151,7 +151,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         <Column span={6}>
           <ArtistAutoComplete onError={() => handleAutosuggestError(true)} />
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <Input
             title="year"
             maxLength={256}
@@ -175,7 +175,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.title}
           />
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <Input
             title="Materials"
             placeholder="Add materials"
@@ -223,7 +223,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onChange={handleChange}
                 value={values.editionNumber}
               />
-              <Box paddingX={[0.5, 2]} mt={2}>
+              <Box px={[0.5, 2]} mt={2}>
                 /
               </Box>
               <Input
@@ -270,7 +270,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Box>
           </Flex>
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <Flex height="100%">
             <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
@@ -330,7 +330,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <LocationAutocompleteInput
             name="location"
             title="City"
