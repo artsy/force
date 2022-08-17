@@ -35,7 +35,7 @@ export type MyCollectionArtworkAuctionResults_artist$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": 6,
       "kind": "LocalArgument",
       "name": "first"
     }
@@ -154,5 +154,5 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '7c3bfc8a1460fd79e3e9a145dedbe31d';
+(node as any).hash = '053be7be9e6378c8298afd2140f73c76';
 export default node;
