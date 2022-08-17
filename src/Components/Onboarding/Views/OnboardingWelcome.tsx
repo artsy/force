@@ -61,6 +61,7 @@ export const OnboardingWelcome = () => {
               as={RouterLink}
               to="/"
               onClick={onClose}
+              data-test="onboarding-skip-button"
             >
               Skip
             </Button>
