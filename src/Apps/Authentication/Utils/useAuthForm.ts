@@ -32,7 +32,7 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
     pageTitle,
   })
 
-  const redirectTo = getENV("AUTHENTICATION_REDIRECT_TO")
+  const redirectTo = getENV("AUTHENTICATION_REDIRECT_TO") ?? "/"
   const signupReferer = getENV("AUTHENTICATION_REFERER")
 
   if (action) {

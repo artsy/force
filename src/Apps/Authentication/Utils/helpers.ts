@@ -1,5 +1,9 @@
 import Cookies from "cookies-js"
-import { ModalOptions, ModalType } from "Components/Authentication/Types"
+import {
+  COMMERCIAL_AUTH_INTENTS,
+  ModalOptions,
+  ModalType,
+} from "Components/Authentication/Types"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import qs from "qs"
@@ -13,6 +17,7 @@ import {
   AuthModalType,
   AuthTrigger,
   AuthContextModule,
+  AuthIntent,
 } from "@artsy/cohesion"
 import { pick } from "lodash"
 import { mediator } from "lib/mediator"
@@ -98,7 +103,13 @@ export const handleSubmit = async (
 
       let afterAuthURL: URL
       if (modalOptions.redirectTo) {
-        afterAuthURL = new URL(modalOptions.redirectTo, sd.APP_URL)
+        // This will potentially update the URL with an onboarding=true query
+        // param which will trigger the onboarding flow
+        // TODO: Move this prop to something more formal, like afterSignupAction
+        afterAuthURL = new URL(
+          maybeUpdateRedirectTo(type, modalOptions.redirectTo, intent!),
+          sd.APP_URL
+        )
       } else {
         afterAuthURL = getRedirect(type)
       }
@@ -130,6 +141,32 @@ export const handleSubmit = async (
     case ModalType.forgot:
       await forgotUserPassword(userAttributes, options)
       break
+  }
+}
+
+export const maybeUpdateRedirectTo = (
+  type: ModalType,
+  redirectTo: string = "/",
+  intent: AuthIntent
+): string | URL => {
+  if (type !== ModalType.signup) {
+    return redirectTo
+  }
+
+  if (COMMERCIAL_AUTH_INTENTS.includes(intent)) {
+    return redirectTo
+  } else {
+    const [redirectToWithoutParams, params] = redirectTo.split("?")
+
+    // For all non-commercial intents, update the redirectTo url with an
+    // onboarding query param flag.
+    const updatedParams = qs.stringify({
+      ...qs.parse(params),
+      onboarding: true,
+    })
+
+    const updatedRedirectTo = redirectToWithoutParams + "?" + updatedParams
+    return updatedRedirectTo
   }
 }
 
