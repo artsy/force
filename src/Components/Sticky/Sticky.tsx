@@ -1,10 +1,9 @@
-import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { Box, themeProps } from "@artsy/palette"
 import { useEffect, useRef, useState } from "react"
-import * as React from "react"
-import { useSticky } from "./StickyProvider"
+import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
+import { useSticky } from "./StickyProvider"
 
 /**
  * Wrap a component to have it stick below the main nav.
@@ -27,16 +26,17 @@ import { useNavBarHeight } from "../NavBar/useNavBarHeight"
  *      If a selector to a target is specified (for example, bottomBoundary="#footer"),
  *      the offset will be the bottom of the target
  */
-export const Sticky: React.FC<Pick<ReactStickyProps, "bottomBoundary">> = ({
-  children,
-  bottomBoundary,
-}) => {
+export const Sticky: React.FC<
+  Pick<ReactStickyProps, "bottomBoundary"> & {
+    withoutHeaderOffset?: boolean
+  }
+> = ({ children, bottomBoundary, withoutHeaderOffset }) => {
   const { offsetTop, registerSticky, deregisterSticky } = useSticky()
   const { desktop, mobile } = useNavBarHeight()
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const [stuck, setStuck] = useState(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const headerOffset = isMobile ? mobile : desktop
+  const headerOffset = withoutHeaderOffset ? 0 : isMobile ? mobile : desktop
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)

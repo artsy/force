@@ -24,7 +24,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
   } = artwork
 
   return (
-    <Box pl={2}>
+    <>
       <Text as="h1" variant="lg-display">
         {artistNames}
       </Text>
@@ -49,7 +49,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
       <MetadataField label="Location" value={artworkLocation} />
       <MetadataField label="Provenance" value={provenance} />
       <MetadataField label="Price Paid" value={pricePaid?.display} />
-    </Box>
+    </>
   )
 }
 
@@ -85,19 +85,19 @@ const MetadataField = ({ label, value }) => {
 
   return (
     <Box mb={[1, 0.5]} display="flex" flexDirection={["column", "row"]}>
-      <Text variant="sm" minWidth={190} mr={2}>
+      <Text variant="sm" minWidth={[null, 100, 190]} mr={2}>
         {label}
       </Text>
 
       <Box display="flex" flexDirection="column">
-        <WrappedTest variant="sm" color="black60">
+        <WrappedText variant="sm" color="black60">
           {value || emptyValue}
-        </WrappedTest>
+        </WrappedText>
       </Box>
     </Box>
   )
 }
 
-const WrappedTest = styled(Text)`
+const WrappedText = styled(Text)`
   white-space: pre-line;
 `
