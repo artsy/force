@@ -2,7 +2,10 @@ import { buildServerApp } from "System/Router/server"
 import { getRouteConfig } from "System/Router/getRouteConfig"
 import { renderServerApp } from "System/Router/renderServerApp"
 import express from "express"
-import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import type { NextFunction } from "express"
 import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"

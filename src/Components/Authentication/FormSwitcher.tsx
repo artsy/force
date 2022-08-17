@@ -15,7 +15,7 @@ import {
   ModalType,
   SubmitHandler,
 } from "./Types"
-import sanitizeRedirect from "lib/passport/sanitize-redirect"
+import sanitizeRedirect from "Server/passport/sanitize-redirect"
 
 export interface FormSwitcherProps {
   error?: string

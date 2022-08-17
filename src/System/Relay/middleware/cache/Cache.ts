@@ -1,7 +1,7 @@
 import createLogger from "Utils/logger"
 import RelayQueryResponseCache from "relay-runtime/lib/network/RelayQueryResponseCache"
-import { isServer } from "lib/isServer"
-import { cache } from "lib/cacheClient"
+import { isServer } from "Server/isServer"
+import { cache } from "Server/cacheClient"
 
 import {
   GraphQLResponse,

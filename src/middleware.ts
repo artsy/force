@@ -1,12 +1,12 @@
 // Required for @artsy/react-html-parser which is included by @artsy/reaction
 // TODO: Find a way to remove JSDOM from our server.
-import "./lib/DOMParser"
+import "./Server/DOMParser"
 
 // Setup sharify
 // TODO: Export a function instead of loading on import.
-import "./lib/setup_sharify"
+import "./Server/setup_sharify"
 
-import artsyPassport from "lib/passport"
+import artsyPassport from "./Server/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
 import cookieParser from "cookie-parser"
@@ -38,36 +38,36 @@ import {
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
-} from "lib/config"
+} from "./Server/config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
 // see errors like "`CURRENT_USER` is undefined". We need more investigation
 // because this only appears in prod, under load, and seems fine on staging.
 import * as Sentry from "@sentry/node"
 
-import { morganMiddleware } from "./lib/middleware/morgan"
-import { ensureSslMiddleware } from "./lib/middleware/ensureSsl"
-import { hstsMiddleware } from "./lib/middleware/hsts"
-import { ipFilter } from "./lib/middleware/ipFilter"
-import { sessionMiddleware } from "./lib/middleware/session"
-import { assetMiddleware } from "./lib/middleware/asset"
-import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
-import { asyncLocalsMiddleware } from "lib/middleware/asyncLocalMiddleware"
-import { bootstrapSharifyAndContextLocalsMiddleware } from "lib/middleware/bootstrapSharifyAndContextLocalsMiddleware"
-import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
-import { downcaseMiddleware } from "./lib/middleware/downcase"
-import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
-import { localsMiddleware } from "./lib/middleware/locals"
-import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
-import { serverTimingHeaders } from "./lib/middleware/serverTimingHeaders"
-import { IGNORED_ERRORS } from "./lib/analytics/sentryFilters"
-import { featureFlagMiddleware } from "lib/middleware/featureFlagMiddleware"
+import { morganMiddleware } from "./Server/middleware/morgan"
+import { ensureSslMiddleware } from "./Server/middleware/ensureSsl"
+import { hstsMiddleware } from "./Server/middleware/hsts"
+import { ipFilter } from "./Server/middleware/ipFilter"
+import { sessionMiddleware } from "./Server/middleware/session"
+import { assetMiddleware } from "./Server/middleware/asset"
+import { csrfTokenMiddleware } from "./Server/middleware/csrfToken"
+import { asyncLocalsMiddleware } from "./Server/middleware/asyncLocalMiddleware"
+import { bootstrapSharifyAndContextLocalsMiddleware } from "./Server/middleware/bootstrapSharifyAndContextLocalsMiddleware"
+import { userRequiredMiddleware } from "./Server/middleware/userRequiredMiddleware"
+import { downcaseMiddleware } from "./Server/middleware/downcase"
+import { hardcodedRedirectsMiddleware } from "./Server/middleware/hardcodedRedirects"
+import { localsMiddleware } from "./Server/middleware/locals"
+import { sameOriginMiddleware } from "./Server/middleware/sameOrigin"
+import { serverTimingHeaders } from "./Server/middleware/serverTimingHeaders"
+import { IGNORED_ERRORS } from "./Server/analytics/sentryFilters"
+import { featureFlagMiddleware } from "./Server/middleware/featureFlagMiddleware"
 import {
   UnleashFeatureFlagService,
   UnleashService,
-} from "lib/featureFlags/unleashService"
-import { registerFeatureFlagService } from "lib/featureFlags/featureFlagService"
-import { userPreferencesMiddleware } from "lib/middleware/userPreferencesMiddleware"
+} from "./Server/featureFlags/unleashService"
+import { registerFeatureFlagService } from "./Server/featureFlags/featureFlagService"
+import { userPreferencesMiddleware } from "./Server/middleware/userPreferencesMiddleware"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 

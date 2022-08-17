@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import * as React from "react"
 import { graphql } from "relay-runtime"
-import { isServer } from "lib/isServer"
+import { isServer } from "Server/isServer"
 import styled from "styled-components"
 import { NavBarMobileMenuInboxNotificationCountQuery } from "__generated__/NavBarMobileMenuInboxNotificationCountQuery.graphql"
 import { SystemContext } from "System/SystemContext"

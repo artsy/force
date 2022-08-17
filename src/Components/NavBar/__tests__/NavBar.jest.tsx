@@ -4,7 +4,7 @@ import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBar } from "../NavBar"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import "System/i18n/i18n"
 
 jest.mock("Components/Search/SearchBar", () => {
@@ -18,7 +18,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.mock("lib/isServer", () => ({
+jest.mock("Server/isServer", () => ({
   isServer: true,
 }))
 

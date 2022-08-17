@@ -1,7 +1,7 @@
 import { AuthContextModule, AuthIntent, Intent } from "@artsy/cohesion"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import qs from "qs"
-import { Mediator } from "lib/mediator"
+import { Mediator } from "Server/mediator"
 
 export interface AuthModalOptions extends ModalOptions {
   entity: {

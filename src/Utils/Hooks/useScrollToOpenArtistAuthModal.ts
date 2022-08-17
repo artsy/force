@@ -6,7 +6,7 @@ import { getENV } from "../getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
 import { extractNodes } from "../extractNodes"
 import { openAuthModal } from "../openAuthModal"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
