@@ -1,4 +1,4 @@
-import { Box, Column, Join, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Column, Flex, Join, Message, Spacer, Text } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { LoadingArea } from "Components/LoadingArea"
@@ -8,6 +8,7 @@ import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/Auc
 import { extractNodes } from "Utils/extractNodes"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { MyCollectionArtworkAuctionResults_artist } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 const logger = createLogger("MyColectionArtworkAuctionResults.tsx")
 
@@ -51,7 +52,18 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
 
       <Box id="scrollTo--artistAuctionResultsTop" />
 
-      <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
+      <Flex
+        flexDirection={"row"}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text variant={["sm-display", "lg-display"]} textAlign="left">
+          Auction Results
+        </Text>
+        <RouterLink textAlign="right" to={`/artist/${slug}/auction-results`}>
+          View All
+        </RouterLink>
+      </Flex>
 
       <Spacer my={2} />
 
