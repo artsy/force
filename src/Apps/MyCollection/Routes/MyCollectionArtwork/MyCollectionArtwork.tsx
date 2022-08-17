@@ -1,10 +1,11 @@
-import { Box, Column, Flex, GridColumns } from "@artsy/palette"
+import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { MyColectionArtworkAuctionResultsRefetchContainer } from "./Components/MyCollectionArtworkAuctionResults"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -15,6 +16,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
+  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
+    "my-collection-web-phase-4-auction-results"
+  )
+
   const slug = artwork?.artist?.slug!
 
   return (
@@ -31,6 +36,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           </Column>
         </GridColumns>
       </Flex>
+      {!!enableMyCollectionPhase4AuctionResults && (
+        <MyColectionArtworkAuctionResultsRefetchContainer
+          artist={artwork?.artist!}
+        />
+      )}
+      <Spacer pb={6} />
       {!!enableMyCollectionPhase4ArticlesRail && (
         <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
@@ -47,6 +58,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkMeta_artwork
         artist {
           slug
+          ...MyCollectionArtworkAuctionResults_artist
         }
       }
     `,

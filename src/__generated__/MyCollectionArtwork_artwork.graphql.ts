@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork = {
     readonly artist: {
         readonly slug: string;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
@@ -39,6 +40,11 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "MyCollectionArtworkAuctionResults_artist"
         }
       ],
       "storageKey": null
@@ -57,5 +63,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '3637fa23a4efd74e949b2f9ebb3a6d8f';
+(node as any).hash = 'ef56c455512dd92a5ac91cbe6f82c1ac';
 export default node;
