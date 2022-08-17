@@ -1,4 +1,4 @@
-import { Button, Column, Flex, GridColumns } from "@artsy/palette"
+import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,6 +9,8 @@ import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_a
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { MyColectionArtworkAuctionResultsRefetchContainer } from "./Components/MyCollectionArtworkAuctionResults"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -25,6 +27,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const enableMyCollectionPhase4Comparables = useFeatureFlag(
     "my-collection-web-phase-4-comparables"
+  )
+
+  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
+    "my-collection-web-phase-4-auction-results"
   )
 
   const slug = artwork?.artist?.slug!
@@ -70,6 +76,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       {!!enableMyCollectionPhase4Comparables && (
         <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
       )}
+      {!!enableMyCollectionPhase4AuctionResults && (
+        <MyColectionArtworkAuctionResultsRefetchContainer
+          artist={artwork?.artist!}
+        />
+      )}
+      <Spacer pb={6} />
       {!!enableMyCollectionPhase4ArticlesRail && (
         <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
@@ -89,6 +101,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         internalID
         artist {
           slug
+          ...MyCollectionArtworkAuctionResults_artist
         }
       }
     `,
