@@ -1,22 +1,22 @@
-import { useEffect, useMemo, useState } from "react"
-import { fetchQuery, graphql, Environment } from "react-relay"
-import { useSystemContext } from "System"
 import {
   AutocompleteInput,
   AutocompleteInputOptionType,
-  Flex,
-  Text,
   Box,
+  Flex,
   Image,
+  Text,
 } from "@artsy/palette"
+import { useFormikContext } from "formik"
+import { debounce } from "lodash"
+import { useEffect, useMemo, useState } from "react"
+import { Environment, fetchQuery, graphql } from "react-relay"
+import { useSystemContext } from "System"
+import { extractNodes } from "Utils/extractNodes"
 import {
   ArtistAutocomplete_SearchConnection_Query,
   ArtistAutocomplete_SearchConnection_QueryResponse,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
-import { useFormikContext } from "formik"
-import { debounce } from "lodash"
 
 const DEBOUNCE_DELAY = 300
 
@@ -37,9 +37,10 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
   image: SubmissionImage
 }
 
-export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
-  onError,
-}) => {
+export const ArtistAutoComplete: React.FC<{
+  onError: () => void
+  required?: boolean
+}> = ({ onError, required }) => {
   const [suggestions, setSuggestions] = useState<
     Array<ArtistAutocompleteOption>
   >([])
@@ -156,6 +157,7 @@ export const ArtistAutoComplete: React.FC<{ onError: () => void }> = ({
       onSelect={handleSelect}
       onClose={handleClose}
       renderOption={renderOption}
+      required={required}
     />
   )
 }

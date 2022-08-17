@@ -1,26 +1,28 @@
-import { FC, Fragment, useEffect, useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import {
+  Box,
+  Button,
+  Clickable,
+  CloseIcon,
+  Flex,
+  FullBleed,
+  Message,
   Spacer,
   Sup,
   Text,
-  Box,
-  CloseIcon,
-  Flex,
-  Message,
-  FullBleed,
-  Clickable,
 } from "@artsy/palette"
-import { Masonry } from "Components/Masonry"
-import { extractNodes } from "Utils/extractNodes"
-import { PaginationFragmentContainer } from "Components/Pagination"
-import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
+import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
+import { PaginationFragmentContainer } from "Components/Pagination"
+import { FC, Fragment, useEffect, useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { extractNodes } from "Utils/extractNodes"
+import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
-import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface MyCollectionRouteProps {
   me: MyCollectionRoute_me
@@ -28,6 +30,10 @@ interface MyCollectionRouteProps {
 }
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
+  const isMyCollectionPhase3Enabled = useFeatureFlag(
+    "my-collection-web-phase-3"
+  )
+
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
 
@@ -118,9 +124,22 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </FullBleed>
           )}
 
-          <Text variant="lg-display" mb={4}>
-            My Collection <Sup color="brand">{total}</Sup>
-          </Text>
+          <Flex justifyContent="space-between" mb={4}>
+            <Text variant="lg-display" my="auto">
+              My Collection <Sup color="brand">{total}</Sup>
+            </Text>
+
+            {!!isMyCollectionPhase3Enabled && (
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                variant="primaryBlack"
+                to="/my-collection/artworks/new"
+              >
+                Upload Artwork
+              </Button>
+            )}
+          </Flex>
 
           <Masonry
             id="jump--MyCollectionArtworks"
