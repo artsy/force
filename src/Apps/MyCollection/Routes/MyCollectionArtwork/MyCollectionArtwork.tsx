@@ -1,10 +1,11 @@
-import { Box, Column, Flex, GridColumns } from "@artsy/palette"
+import { Column, GridColumns } from "@artsy/palette"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
-import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -19,18 +20,21 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   return (
     <>
-      <Flex py={6}>
-        <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
-        <GridColumns>
-          <Column span={8}>
-            <Box width={[335, 780]} height={[320, 870]} bg="black5" />
-          </Column>
+      <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
 
-          <Column span={4} pt={[0, 2]}>
-            <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
-          </Column>
-        </GridColumns>
-      </Flex>
+      <GridColumns gridRowGap={[4, null]} py={[2, 6]}>
+        <Column span={8}>
+          <ArtworkImageBrowserFragmentContainer
+            artwork={artwork}
+            isMyCollectionArtwork
+          />
+        </Column>
+
+        <Column span={4} pt={[0, 1]}>
+          <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+        </Column>
+      </GridColumns>
+
       {!!enableMyCollectionPhase4ArticlesRail && (
         <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
@@ -45,6 +49,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
       fragment MyCollectionArtwork_artwork on Artwork {
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
+        ...ArtworkImageBrowser_artwork
         artist {
           slug
         }
