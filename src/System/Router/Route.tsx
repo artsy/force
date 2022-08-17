@@ -3,7 +3,7 @@ import { RouteConfig, HttpError, Match } from "found"
 import BaseRoute from "found/Route"
 import * as React from "react";
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
-import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress";
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress";
 import { NextFunction } from "express";
 
 interface RouteConfigProps extends RouteConfig {

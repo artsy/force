@@ -6,7 +6,7 @@ import { ActionType, AuthModalType, AuthService } from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "Apps/Authentication/Utils/helpers"
 import { ModalManager } from "Components/Authentication/ModalManager"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 
 interface SocialAuthArgs extends ModalOptions {
   service: AuthService

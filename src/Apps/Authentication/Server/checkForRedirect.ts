@@ -1,4 +1,4 @@
-import sanitizeRedirect from "lib/passport/sanitize-redirect"
+import sanitizeRedirect from "Server/passport/sanitize-redirect"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
 
 export const checkForRedirect = ({ req, res }) => {

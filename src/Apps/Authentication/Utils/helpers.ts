@@ -20,9 +20,9 @@ import {
   AuthIntent,
 } from "@artsy/cohesion"
 import { pick } from "lodash"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { reportError } from "Utils/errors"
-import { trackEvent } from "lib/analytics/helpers"
+import { trackEvent } from "Server/analytics/helpers"
 import { getENV } from "Utils/getENV"
 
 interface AnalyticsOptions {

@@ -11,7 +11,7 @@ import {
 } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mockLocation } from "DevTools/mockLocation"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { getENV } from "Utils/getENV"
 
 jest.mock("cookies-js", () => ({

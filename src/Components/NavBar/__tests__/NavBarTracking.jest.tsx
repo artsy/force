@@ -10,7 +10,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: false }),
 }))
 
-jest.mock("lib/isServer", () => ({
+jest.mock("Server/isServer", () => ({
   isServer: true,
 }))
 

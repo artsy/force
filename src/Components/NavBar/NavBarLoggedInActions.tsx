@@ -15,7 +15,7 @@ import {
   NavBarLoggedInActionsQuery,
   NavBarLoggedInActionsQueryResponse,
 } from "__generated__/NavBarLoggedInActionsQuery.graphql"
-import { isServer } from "lib/isServer"
+import { isServer } from "Server/isServer"
 import {
   getConversationCount,
   getNotificationCount,

@@ -1,5 +1,5 @@
 import { getENV } from "Utils/getENV"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { ModalOptions, ModalType } from "Components/Authentication/Types"
 import { openAuthModal } from "Utils/openAuthModal"
 import { useEffect } from "react"

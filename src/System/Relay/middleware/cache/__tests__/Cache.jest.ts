@@ -3,8 +3,8 @@
  */
 
 import { Cache } from "../Cache"
-jest.mock("lib/isServer")
-jest.mock("lib/cacheClient", () => {
+jest.mock("Server/isServer")
+jest.mock("Server/cacheClient", () => {
   return {
     cache: {
       get: () =>
@@ -15,7 +15,7 @@ jest.mock("lib/cacheClient", () => {
     },
   }
 })
-import { cache as cacheClient } from "lib/cacheClient"
+import { cache as cacheClient } from "Server/cacheClient"
 
 describe("Cache", () => {
   const getCache = (props = {}) => {

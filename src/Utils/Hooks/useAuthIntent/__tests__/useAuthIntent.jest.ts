@@ -5,7 +5,7 @@ import { followGeneMutation } from "../mutations/AuthIntentFollowGeneMutation"
 import { followArtistMutation } from "../mutations/AuthIntentFollowArtistMutation"
 import { followProfileMutation } from "../mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "../mutations/AuthIntentSaveArtworkMutation"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 
 jest.mock("cookies-js", () => ({
   get: jest.fn(),

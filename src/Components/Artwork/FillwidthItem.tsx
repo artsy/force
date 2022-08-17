@@ -10,7 +10,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "System/Router/RouterLink"
-import { Mediator } from "lib/mediator"
+import { Mediator } from "Server/mediator"
 import { cropped, resized } from "Utils/resized"
 
 const logger = createLogger("FillwidthItem.tsx")

@@ -1,6 +1,9 @@
-import { mediator } from "lib/mediator"
-import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
-import { getContextPageFromReq } from "lib/getContextPage"
+import { mediator } from "Server/mediator"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
+import { getContextPageFromReq } from "Server/getContextPage"
 
 /**
  * Builds initial context for Reaction components from server load. Put commonly

@@ -1,5 +1,5 @@
 import Cookies from "cookies-js"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { useEffect } from "react"
 import { Environment } from "react-relay"
 import { useSystemContext } from "System"
