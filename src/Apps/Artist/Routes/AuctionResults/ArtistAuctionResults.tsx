@@ -199,7 +199,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     })
   }
 
-  const titleString = `${artist.name} - Auction Results on Artsy`
+  const titleString = `${artistName} - Auction Results on Artsy`
 
   const handleMarketStatsRendered = (visible: boolean) => {
     // Scroll to auction results if param flag is present
