@@ -124,8 +124,8 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </FullBleed>
           )}
 
-          <Flex justifyContent="space-between">
-            <Text variant="lg-display" mb={4}>
+          <Flex justifyContent="space-between" mb={4}>
+            <Text variant="lg-display" my="auto">
               My Collection <Sup color="brand">{total}</Sup>
             </Text>
 
@@ -135,7 +135,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                 as={RouterLink}
                 variant="primaryBlack"
                 to="/my-collection/artworks/new"
-                mb={[4, 0]}
               >
                 Upload Artwork
               </Button>

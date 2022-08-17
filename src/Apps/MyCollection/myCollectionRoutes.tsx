@@ -36,30 +36,30 @@ const MyCollectionArtworkForm = loadable(
 
 export const myCollectionRoutes: AppRouteConfig[] = [
   {
+    path: "/my-collection/artwork/:artworkID",
+    getComponent: () => MyCollectionArtwork,
+    onClientSideRender: () => {
+      MyCollectionArtwork.preload()
+    },
+    prepareVariables: ({ artworkID }) => {
+      return {
+        artworkID,
+      }
+    },
+    query: graphql`
+      query myCollectionRoutes_ArtworkQuery($artworkID: String!) {
+        artwork(id: $artworkID) @principalField {
+          ...MyCollectionArtwork_artwork
+        }
+      }
+    `,
+    cacheConfig: {
+      force: true,
+    },
+  },
+  {
     path: "/my-collection",
     children: [
-      {
-        path: "/artwork/:artworkID",
-        getComponent: () => MyCollectionArtwork,
-        onClientSideRender: () => {
-          MyCollectionArtwork.preload()
-        },
-        prepareVariables: ({ artworkID }) => {
-          return {
-            artworkID,
-          }
-        },
-        query: graphql`
-          query myCollectionRoutes_ArtworkQuery($artworkID: String!) {
-            artwork(id: $artworkID) @principalField {
-              ...MyCollectionArtwork_artwork
-            }
-          }
-        `,
-        cacheConfig: {
-          force: true,
-        },
-      },
       {
         path: "artworks/new",
         hideNav: true,
