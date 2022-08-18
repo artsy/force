@@ -125,7 +125,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           )}
 
           <Flex justifyContent="space-between" mb={4}>
-            <Text variant="lg-display" my="auto">
+            <Text as="h1" variant="lg-display" my="auto">
               My Collection <Sup color="brand">{total}</Sup>
             </Text>
 
