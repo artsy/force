@@ -1,9 +1,8 @@
-import { Box, Column, Flex, Join, Message, Spacer, Text } from "@artsy/palette"
+import { Column, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { extractNodes } from "Utils/extractNodes"
-import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { MyCollectionArtworkAuctionResults_artist } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 
@@ -16,6 +15,9 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
 }) => {
   const { slug, name, auctionResultsConnection } = artist
 
+  if (!auctionResultsConnection) {
+    return null
+  }
   const results = extractNodes(auctionResultsConnection)
 
   const titleString = `${name} - Artwork Auction Results on Artsy`
@@ -24,10 +26,8 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
     <>
       <MetaTags title={titleString} />
 
-      <Box id="scrollTo--artistAuctionResultsTop" />
-
       <Flex
-        flexDirection={"row"}
+        flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
       >
@@ -44,25 +44,19 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
       <Column span={9}>
         <Spacer mt={[2, 0]} />
 
-        {results.length > 0 ? (
-          <Join separator={<Spacer mt={2} />}>
-            {results.map((result, index) => {
-              return (
-                <ArtistAuctionResultItemFragmentContainer
-                  key={index}
-                  auctionResult={result}
-                  filtersAtDefault={false}
-                />
-              )
-            })}
-          </Join>
-        ) : (
-          <Message>
-            There aren’t any auction results available by the artist at this
-            time.
-          </Message>
-        )}
+        <Join separator={<Spacer mt={2} />}>
+          {results.map((result, index) => {
+            return (
+              <ArtistAuctionResultItemFragmentContainer
+                key={index}
+                auctionResult={result}
+                filtersAtDefault={false}
+              />
+            )
+          })}
+        </Join>
       </Column>
+      <Spacer pb={6} />
     </>
   )
 }

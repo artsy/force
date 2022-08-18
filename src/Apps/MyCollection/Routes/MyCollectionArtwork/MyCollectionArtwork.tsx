@@ -1,4 +1,4 @@
-import { Button, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
+import { Button, Column, Flex, GridColumns } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -67,12 +67,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       </GridColumns>
 
       {!!enableMyCollectionPhase4AuctionResults && (
-        <>
-          <MyColectionArtworkAuctionResultsFragmentContainer
-            artist={artwork?.artist!}
-          />
-          <Spacer pb={6} />
-        </>
+        <MyColectionArtworkAuctionResultsFragmentContainer
+          artist={artwork?.artist!}
+        />
       )}
       {!!enableMyCollectionPhase4ArticlesRail && (
         <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
