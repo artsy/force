@@ -1,8 +1,8 @@
-import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import { getServerParam } from "Utils/getServerParam"
 import { renderToString } from "react-dom/server"
 import { ServerAppResolve } from "./buildServerApp"
-import loadAssetManifest from "lib/manifest"
+import loadAssetManifest from "Server/manifest"
 import path from "path"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify

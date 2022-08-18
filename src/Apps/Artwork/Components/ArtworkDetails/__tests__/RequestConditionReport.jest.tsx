@@ -6,7 +6,7 @@ import { createTestEnv } from "DevTools/createTestEnv"
 import { RequestConditionReportQueryResponse } from "__generated__/RequestConditionReportQuery.graphql"
 import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 
 jest.unmock("react-relay")

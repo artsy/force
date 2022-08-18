@@ -12,6 +12,7 @@ import {
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingQuestionOneMutation } from "__generated__/OnboardingQuestionOneMutation.graphql"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 export const OnboardingQuestionOne: FC = () => {
   const { next, dispatch, state } = useOnboardingContext()
@@ -33,6 +34,8 @@ export const OnboardingQuestionOne: FC = () => {
     `,
   })
 
+  const tracking = useOnboardingTracking()
+
   const handleNext = () => {
     const level = COLLECTOR_LEVELS[state.questionOne!]
 
@@ -44,6 +47,7 @@ export const OnboardingQuestionOne: FC = () => {
       // Ignore error
     }
 
+    tracking.trackQuestionOne(state.questionOne)
     __handleNext__()
   }
 

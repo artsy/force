@@ -5,6 +5,7 @@ import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { OnboardingWelcomeAnimatedPanel } from "../Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -12,6 +13,8 @@ export const OnboardingWelcome = () => {
   const { register, handleNext, loading } = useOnboardingFadeTransition({
     next,
   })
+
+  const tracking = useOnboardingTracking()
 
   return (
     <OnboardingSplitLayout
@@ -41,7 +44,10 @@ export const OnboardingWelcome = () => {
             <Button
               disabled={loading}
               loading={loading}
-              onClick={handleNext}
+              onClick={() => {
+                tracking.userStartedOnboarding()
+                handleNext()
+              }}
               width="100%"
             >
               Get Started
@@ -55,6 +61,7 @@ export const OnboardingWelcome = () => {
               as={RouterLink}
               to="/"
               onClick={onClose}
+              data-test="onboarding-skip-button"
             >
               Skip
             </Button>

@@ -6,7 +6,7 @@ import { getENV } from "../getENV"
 import { useScrollToOpenArtistAuthModalQuery } from "__generated__/useScrollToOpenArtistAuthModalQuery.graphql"
 import { extractNodes } from "../extractNodes"
 import { openAuthModal } from "../openAuthModal"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
@@ -80,6 +80,9 @@ export const useScrollToOpenArtistAuthModal = () => {
             contextModule: ContextModule.popUpModal,
             copy: `Sign up to discover new works by ${artist.name} and more artists you love`,
             destination: location.href,
+            // TODO: Onboarding is triggered based on contents of redirectTo
+            // prop. Move this to `afterSignupAction` prop
+            redirectTo: location.href,
             image,
             intent: Intent.viewArtist,
             mode: ModalType.signup,

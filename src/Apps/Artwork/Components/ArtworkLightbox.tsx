@@ -62,6 +62,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
         {...rest}
       >
         <ResponsiveBox
+          data-testid="artwork-lightbox-box"
           bg="black10"
           mx={[0, 2]}
           // @ts-ignore
@@ -77,6 +78,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           />
 
           <Image
+            data-testid="artwork-lightbox-image"
             id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
             key={image.src}
             width="100%"

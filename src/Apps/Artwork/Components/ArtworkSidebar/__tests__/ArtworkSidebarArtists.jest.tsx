@@ -7,7 +7,7 @@ import { ArtworkSidebarArtistsFragmentContainer } from "Apps/Artwork/Components/
 import { SystemContextProvider } from "System"
 import { graphql } from "react-relay"
 import { mockLocation } from "DevTools/mockLocation"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen, within, fireEvent } from "@testing-library/react"
 

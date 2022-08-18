@@ -10,6 +10,7 @@ import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/FollowGeneButton"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "../Views/OnboardingThankYou"
+import { ContextModule } from "@artsy/cohesion"
 
 interface OnboardingGeneProps {
   gene: OnboardingGene_gene
@@ -19,6 +20,14 @@ interface OnboardingGeneProps {
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
   const { onClose } = useOnboardingContext()
+
+  useEffect(() => {
+    return () => {
+      if (onClose) {
+        onClose()
+      }
+    }
+  }, [onClose])
 
   return (
     <Box px={[2, 4]} py={6}>
@@ -34,6 +43,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
         <FollowGeneButtonFragmentContainer
           gene={gene}
           display={["none", "block"]}
+          contextModule={ContextModule.onboardingFlow}
         />
       </Flex>
 
@@ -42,6 +52,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
         mt={2}
         display={["block", "none"]}
         size="small"
+        contextModule={ContextModule.onboardingFlow}
       />
 
       <Spacer mb={4} />
@@ -53,14 +64,7 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
           {artworks.map(artwork => {
             return (
               <Fragment key={artwork.internalID}>
-                <ArtworkGridItemFragmentContainer
-                  artwork={artwork}
-                  onMouseUp={() => {
-                    setTimeout(() => {
-                      onClose()
-                    }, 10)
-                  }}
-                />
+                <ArtworkGridItemFragmentContainer artwork={artwork} />
 
                 <Spacer mb={2} />
               </Fragment>

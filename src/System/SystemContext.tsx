@@ -5,9 +5,9 @@ import { Environment } from "relay-runtime"
 
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getUser } from "Utils/user"
-import { Mediator, mediator } from "lib/mediator"
+import { Mediator, mediator } from "Server/mediator"
 import { FeatureFlags } from "./useFeatureFlag"
-import { UserPreferences } from "lib/middleware/userPreferencesMiddleware"
+import { UserPreferences } from "Server/middleware/userPreferencesMiddleware"
 
 export * from "./useSystemContext"
 

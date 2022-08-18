@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { cache } from "lib/cache"
-import { ArtsyRequest } from "lib/middleware/artsyExpress"
+import { cache } from "Server/cache"
+import { ArtsyRequest } from "Server/middleware/artsyExpress"
 
 const adminServerRoutes = Router()
 

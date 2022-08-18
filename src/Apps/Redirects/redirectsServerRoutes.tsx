@@ -1,7 +1,7 @@
 import { Router, Response, Request, NextFunction } from "express"
 import { fetchQuery } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
-import { ENABLE_FAIR_ORGANIZER_REDIRECT } from "lib/config"
+import { ENABLE_FAIR_ORGANIZER_REDIRECT } from "Server/config"
 import { REDIRECTS_SHORTCUTS_QUERY } from "./queries/RedirectsShortcutsQuery"
 import { RedirectsShortcutsQuery } from "__generated__/RedirectsShortcutsQuery.graphql"
 import { REDIRECTS_PROFILE_QUERY } from "./queries/RedirectsProfileQuery"

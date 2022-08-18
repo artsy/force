@@ -1,15 +1,13 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box } from "@artsy/palette"
 import { ModalType } from "Components/Authentication/Types"
-import { isServer } from "lib/isServer"
-import { compact } from "lodash"
+import { isServer } from "Server/isServer"
 import * as React from "react"
 import { useContext } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { SystemContext, useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
 import { NavBarMobileMenuAuthentication_me } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
@@ -26,11 +24,9 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
 }) => {
   const { mediator } = useSystemContext()
 
-  const isMyCollectionEnabled = useFeatureFlag("my-collection-web")
-
   const menu = {
     title: "Account",
-    links: compact([
+    links: [
       {
         text: "Order history",
         href: "/settings/purchases",
@@ -51,7 +47,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         text: "Collector Profile",
         href: "/settings/edit-profile",
       },
-      isMyCollectionEnabled && {
+      {
         text: "My Collection",
         href: "/settings/my-collection",
       },
@@ -76,7 +72,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
           mediator?.trigger("auth:logout")
         },
       },
-    ]),
+    ],
   }
 
   const conversationCount =

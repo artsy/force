@@ -12,7 +12,7 @@ import { useRouter } from "System/Router/useRouter"
 import { BackLink } from "Components/Links/BackLink"
 import { getENV } from "Utils/getENV"
 import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
-import { isServer } from "lib/isServer"
+import { isServer } from "Server/isServer"
 import {
   createFragmentContainer,
   graphql,

@@ -1,33 +1,32 @@
-import { useState } from "react"
 import {
   Box,
+  Clickable,
   Column,
+  Flex,
   GridColumns,
   Input,
-  Text,
-  Select,
-  Flex,
-  RadioGroup,
-  Radio,
   LabeledInput,
-  Clickable,
-  Modal,
-  Button,
+  Radio,
+  RadioGroup,
+  Select,
+  Text,
   useToasts,
 } from "@artsy/palette"
-import { useFormikContext } from "formik"
-import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { ArtistAutoComplete } from "./ArtistAutocomplete"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
+import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
+import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import {
   Location,
   LocationAutocompleteInput,
   normalizePlace,
   Place,
 } from "Components/LocationAutocompleteInput"
+import { useFormikContext } from "formik"
 import { compact } from "lodash"
+import { useState } from "react"
+import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
 import { postalCodeValidators } from "../../Utils/validation"
+import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission
@@ -143,40 +142,16 @@ export const ArtworkDetailsForm: React.FC = () => {
         show={isRarityModalOpen}
         showDisclaimer={false}
       />
-      <Modal
+      <ProvenanceModal
         onClose={() => setIsProvenanceModalOpen(false)}
         show={isProvenanceModalOpen}
-        title="Artwork provenance"
-        FixedButton={
-          <Button onClick={() => setIsProvenanceModalOpen(false)} width="100%">
-            OK
-          </Button>
-        }
-      >
-        <Text variant="sm-display">
-          Provenance is the documented history of an artwork’s ownership and
-          authenticity.
-        </Text>
-        <Text variant="sm-display" mt={2}>
-          Please list any documentation you have that proves your artwork’s
-          provenance, such as:
-        </Text>
-        <Text as="li" variant="sm-display" mt={2}>
-          Invoices from previous owners
-        </Text>
-        <Text as="li" variant="sm-display" mt={1}>
-          Certificates of authenticity
-        </Text>
-        <Text as="li" variant="sm-display" mt={1}>
-          Gallery exhibition catalogues
-        </Text>
-      </Modal>
+      />
 
       <GridColumns>
         <Column span={6}>
           <ArtistAutoComplete onError={() => handleAutosuggestError(true)} />
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <Input
             title="year"
             maxLength={256}
@@ -200,7 +175,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.title}
           />
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <Input
             title="Materials"
             placeholder="Add materials"
@@ -248,7 +223,7 @@ export const ArtworkDetailsForm: React.FC = () => {
                 onChange={handleChange}
                 value={values.editionNumber}
               />
-              <Box paddingX={[0.5, 2]} mt={2}>
+              <Box px={[0.5, 2]} mt={2}>
                 /
               </Box>
               <Input
@@ -295,7 +270,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Box>
           </Flex>
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <Flex height="100%">
             <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
@@ -355,7 +330,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[30, 0]}>
+        <Column span={6} mt={[4, 0]}>
           <LocationAutocompleteInput
             name="location"
             title="City"

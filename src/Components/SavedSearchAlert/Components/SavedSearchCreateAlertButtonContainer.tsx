@@ -4,7 +4,7 @@ import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { AuthModalOptions, openAuthToSatisfyIntent } from "Utils/openAuthModal"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { SavedSearchAlertModalContainer } from "../SavedSearchAlertModal"
 import {
   SavedSearchAlertMutationResult,

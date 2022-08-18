@@ -1,14 +1,17 @@
-import "lib/webpackPublicPath"
+import "Server/webpackPublicPath"
 
 import ReactDOM from "react-dom"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
-import { logoutEventHandler } from "lib/logoutHandler"
-import { mediator } from "lib/mediator"
-import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
+import { logoutEventHandler } from "Server/logoutHandler"
+import { mediator } from "Server/mediator"
+import {
+  beforeAnalyticsReady,
+  onAnalyticsReady,
+} from "Server/analytics/helpers"
 import { getClientParam } from "Utils/getClientParam"
 import { buildClientApp } from "System/Router/buildClientApp"
-import { loadSegment } from "lib/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
+import { loadSegment } from "Server/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
 
 async function setupClient() {
   Promise.all([

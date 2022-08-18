@@ -2,7 +2,7 @@ import { ArtworkImageBrowser_artwork } from "__generated__/ArtworkImageBrowser_a
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
-import { Box, Spacer } from "@artsy/palette"
+import { Box, Flex, NoImageIcon, ResponsiveBox, Spacer } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
@@ -15,10 +15,12 @@ const MAX_DIMENSION = 800
 
 export interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork
+  isMyCollectionArtwork?: boolean
 }
 
 export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   artwork,
+  isMyCollectionArtwork,
 }) => {
   const { figures } = artwork
 
@@ -47,7 +49,30 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   }
 
   if ((figures ?? []).length === 0) {
-    return null
+    return (
+      <Flex>
+        <ResponsiveBox
+          data-testid="artwork-browser-no-image-box"
+          bg="black10"
+          mx={[0, 2, 4]}
+          maxWidth="100%"
+          aspectWidth={1}
+          aspectHeight={1}
+        >
+          <Flex
+            position="absolute"
+            top={0}
+            left={0}
+            width="100%"
+            height="100%"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <NoImageIcon width="28px" height="28px" fill="black60" />
+          </Flex>
+        </ResponsiveBox>
+      </Flex>
+    )
   }
 
   return (
@@ -74,13 +99,16 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
           maxHeight={maxHeight}
         />
       </Media>
+      {!isMyCollectionArtwork && (
+        <>
+          <Spacer mt={2} />
 
-      <Spacer mt={2} />
-
-      <ArtworkActions
-        artwork={artwork}
-        selectDefaultSlide={handleSelectDefaultSlide}
-      />
+          <ArtworkActions
+            artwork={artwork}
+            selectDefaultSlide={handleSelectDefaultSlide}
+          />
+        </>
+      )}
     </Box>
   )
 }
