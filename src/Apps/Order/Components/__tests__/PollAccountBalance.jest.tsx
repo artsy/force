@@ -44,6 +44,6 @@ describe("Poll account balance", () => {
       }),
     })
 
-    expect(screen.getByText("Processing payment")).toBeInTheDocument()
+    expect(screen.getByText("Saving payment preferences")).toBeInTheDocument()
   })
 })
