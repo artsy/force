@@ -138,7 +138,7 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
-    parallelism: 4
+    parallelism: 6
     environment:
       # TODO: Remove this flag once things have stabilized
       - EXPERIMENTAL_SWC_COMPILER_ENABLED: false
@@ -190,7 +190,7 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
-    parallelism: 4
+    parallelism: 6
     steps:
       - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
       - store_artifacts:
@@ -242,7 +242,7 @@ jobs:
         environment:
           TERM: xterm
     working_directory: ~/app
-    parallelism: 4
+    parallelism: 6
     steps:
       - checkout
       - run:
