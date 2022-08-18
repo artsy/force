@@ -47,31 +47,53 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     const defaultIndex = figures?.findIndex(image => !!image?.isDefault) ?? 0
     setCursor(defaultIndex)
   }
+  const noImageImage = (
+    <Flex
+      position="absolute"
+      top={0}
+      left={0}
+      width="100%"
+      height="100%"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <NoImageIcon width="28px" height="28px" fill="black60" />
+    </Flex>
+  )
 
   if ((figures ?? []).length === 0) {
     return (
-      <Flex>
-        <ResponsiveBox
-          data-testid="artwork-browser-no-image-box"
-          bg="black10"
-          mx={[0, 2, 4]}
-          maxWidth="100%"
-          aspectWidth={1}
-          aspectHeight={1}
-        >
-          <Flex
-            position="absolute"
-            top={0}
-            left={0}
-            width="100%"
-            height="100%"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <NoImageIcon width="28px" height="28px" fill="black60" />
+      <>
+        <Media greaterThanOrEqual="md">
+          <Flex justifyContent="center">
+            <ResponsiveBox
+              data-testid="artwork-browser-no-image-box"
+              bg="black10"
+              mx={[0, 2, 4]}
+              maxWidth={600}
+              aspectWidth={1}
+              aspectHeight={1}
+            >
+              {noImageImage}
+            </ResponsiveBox>
           </Flex>
-        </ResponsiveBox>
-      </Flex>
+        </Media>
+
+        <Media lessThan="md">
+          <Flex justifyContent="center">
+            <ResponsiveBox
+              data-testid="artwork-browser-no-image-box"
+              bg="black10"
+              mx={[0, 2, 4]}
+              maxWidth="100%"
+              aspectWidth={1}
+              aspectHeight={1}
+            >
+              {noImageImage}
+            </ResponsiveBox>
+          </Flex>
+        </Media>
+      </>
     )
   }
 
