@@ -146,7 +146,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 to={
                                   isEditing
                                     ? `/my-collection/artwork/${artwork.internalID}`
-                                    : "/settings/my-collection"
+                                    : "/my-collection"
                                 }
                                 width="min-content"
                               >

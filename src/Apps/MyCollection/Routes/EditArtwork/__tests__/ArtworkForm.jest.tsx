@@ -1,10 +1,13 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
+import { graphql } from "relay-runtime"
 import { Breakpoint } from "Utils/Responsive"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
-import { MyCollectionArtworkFormFragmentContainer } from "../MyCollectionArtworkForm"
+import {
+  MyCollectionArtworkForm,
+  MyCollectionArtworkFormFragmentContainer,
+} from "../MyCollectionArtworkForm"
 
 const mockRouterPush = jest.fn()
 const mockRouterReplace = jest.fn()
@@ -30,28 +33,28 @@ jest.mock("../Mutations/useUpdateArtwork", () => ({
 }))
 jest.unmock("react-relay")
 
-const getWrapper = (breakpoint: Breakpoint = "lg") =>
-  setupTestWrapperTL({
-    Component: (props: any) => {
-      return (
-        <MockBoot breakpoint={breakpoint}>
-          <MyCollectionArtworkFormFragmentContainer {...props} />
-        </MockBoot>
-      )
-    },
-    query: graphql`
-      query ArtworkFormTest_Query($slug: String!) {
-        artwork(id: $slug) {
-          ...MyCollectionArtworkForm_artwork
-        }
-      }
-    `,
-    variables: {
-      slug: mockArtwork.internalID,
-    },
-  })
-
 describe("Edit artwork", () => {
+  const getWrapper = (breakpoint: Breakpoint = "lg") =>
+    setupTestWrapperTL({
+      Component: (props: any) => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <MyCollectionArtworkFormFragmentContainer {...props} />
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ArtworkFormTest_Query($slug: String!) {
+          artwork(id: $slug) {
+            ...MyCollectionArtworkForm_artwork
+          }
+        }
+      `,
+      variables: {
+        slug: mockArtwork.internalID,
+      },
+    })
+
   describe("Initial render", () => {
     it("populates inputs with values from the artwork", async () => {
       getWrapper().renderWithRelay({ Artwork: () => mockArtwork })
@@ -146,34 +149,63 @@ describe("Edit artwork", () => {
 
       await flushPromiseQueue()
 
-      expect(mockSubmitArtwork).toHaveBeenCalledWith({
-        rejectIf: expect.any,
-        variables: {
-          input: {
-            artistIds: ["4d8b929e4eb68a1b2c0002f2"],
-            artworkId: "62fc96c48d3ff8000b556c3a",
-            artworkLocation: "Berlin",
-            attributionClass: "LIMITED_EDITION",
-            category: "Drawing, Collage or other Work on Paper",
-            date: "1975",
-            depth: "2",
-            editionNumber: "1",
-            editionSize: "2",
-            height: "8.75",
-            medium: "Charcoal on paper",
-            metric: "in",
-            pricePaidCents: 400000,
-            pricePaidCurrency: "EUR",
-            provenance: "Fooo",
-            title: "Untitled",
-            width: "11",
+      expect(mockSubmitArtwork).toHaveBeenCalledWith(
+        expect.objectContaining({
+          rejectIf: expect.any(Function),
+          variables: {
+            input: {
+              artistIds: ["4d8b929e4eb68a1b2c0002f2"],
+              artworkId: "62fc96c48d3ff8000b556c3a",
+              artworkLocation: "Berlin",
+              attributionClass: "LIMITED_EDITION",
+              category: "Drawing, Collage or other Work on Paper",
+              date: "1975",
+              depth: "2",
+              editionNumber: "1",
+              editionSize: "2",
+              height: "8.75",
+              medium: "Charcoal on paper",
+              metric: "in",
+              pricePaidCents: 400000,
+              pricePaidCurrency: "EUR",
+              provenance: "Fooo",
+              title: "Untitled",
+              width: "11",
+            },
           },
-        },
-      })
+        })
+      )
 
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/my-collection/artwork/internal-id",
       })
+    })
+  })
+})
+
+describe("Create artwork", () => {
+  const getWrapper = (breakpoint: Breakpoint = "lg") => {
+    render(
+      <MockBoot breakpoint={breakpoint}>
+        <MyCollectionArtworkForm />
+      </MockBoot>
+    )
+  }
+
+  describe("Initial render", () => {
+    it("doesn't populates inputs", async () => {
+      getWrapper()
+
+      expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
+      expect(screen.getByTestId("save-button")).toBeDisabled()
+
+      expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+
+      expect(
+        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+      ).toHaveAttribute("href", "/my-collection")
+
+      expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
     })
   })
 })
@@ -229,245 +261,3 @@ const mockArtwork = {
   width: "11",
   " $refType": "MyCollectionArtworkForm_artwork",
 } as MyCollectionArtworkForm_artwork
-//     it("renders learn more link with correct href", () => {
-//       getWrapper().renderWithRelay()
-
-//       const learnMoreLink = screen.getByTestId("learn-more-anchor")
-
-//       expect(learnMoreLink).toBeInTheDocument()
-//       expect(learnMoreLink).toHaveAttribute(
-//         "href",
-//         "https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
-//       )
-//     })
-
-//     it("fields are pre-populating from server", async () => {
-//       getWrapper().renderWithRelay({
-//         ConsignmentSubmission: () => validForm,
-//       })
-
-//       expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
-//         "Banksy"
-//       )
-//       expect(screen.getByPlaceholderText("YYYY")).toHaveValue("2021")
-//       expect(
-//         screen.getByPlaceholderText("Add title or write 'Unknown'")
-//       ).toHaveValue("Some title")
-//       expect(screen.getByPlaceholderText("Add materials")).toHaveValue(
-//         "materials"
-//       )
-//       expect(screen.getByPlaceholderText("Add materials")).toHaveValue(
-//         "materials"
-//       )
-//       expect(
-//         screen
-//           .getAllByRole("combobox")
-//           .find(c => c.getAttribute("name") == "rarity")
-//       ).toHaveValue("limited edition")
-//       expect(screen.getByPlaceholderText("Your work's #")).toHaveValue("1")
-//       expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue("2")
-//       expect(
-//         screen
-//           .getAllByRole("textbox")
-//           .find(c => c.getAttribute("name") == "height")
-//       ).toHaveValue("3")
-//       expect(
-//         screen
-//           .getAllByRole("textbox")
-//           .find(c => c.getAttribute("name") == "width")
-//       ).toHaveValue("4")
-//       expect(
-//         screen
-//           .getAllByRole("textbox")
-//           .find(c => c.getAttribute("name") == "depth")
-//       ).toHaveValue("5")
-//       expect(
-//         screen.getAllByRole("radio").find(c => c.textContent == "cm")
-//       ).toBeChecked()
-//       expect(
-//         screen.getByPlaceholderText("Describe how you acquired the work")
-//       ).toHaveValue("provenance")
-//       expect(
-//         screen.getByPlaceholderText("Enter city where artwork is located")
-//       ).toHaveValue("NY, USA")
-//     })
-
-//     describe("Correct steps", () => {
-//       it("on mobile", async () => {
-//         getWrapper("xs").renderWithRelay()
-
-//         const steps = screen
-//           .getAllByRole("button")
-//           .filter(c => c.getAttribute("disabled"))
-
-//         steps.forEach((n, idx) => {
-//           expect(n).toHaveTextContent(submissionFlowStepsMobile[idx])
-//         })
-//       })
-
-//       it("on desktop", async () => {
-//         getWrapper("lg").renderWithRelay()
-
-//         const steps = screen
-//           .getAllByRole("button")
-//           .filter(c => c.getAttribute("disabled"))
-
-//         steps.forEach((n, idx) => {
-//           expect(n).toHaveTextContent(submissionFlowSteps[idx])
-//         })
-//       })
-//     })
-//   })
-
-//   describe("Save and Continue button", () => {
-//     it("is disabled if form isn't valid", async () => {
-//       getWrapper().renderWithRelay({
-//         ConsignmentSubmission: () => ({
-//           ...validForm,
-//           title: "",
-//         }),
-//       })
-
-//       expect(screen.getByTestId("save-button")).toBeDisabled()
-//     })
-
-//     describe("postal code", () => {
-//       it("is disabled if postal code empty and US address selected", async () => {
-//         getWrapper().renderWithRelay({
-//           ConsignmentSubmission: () => ({
-//             ...validForm,
-//             locationPostalCode: null,
-//           }),
-//         })
-
-//         expect(screen.getByTestId("save-button")).toBeDisabled()
-//       })
-
-//       it("is disabled if postal code empty and selected counry that don't require postal code", async () => {
-//         getWrapper().renderWithRelay({
-//           ConsignmentSubmission: () => ({
-//             ...validForm,
-//             locationCountryCode: "BY",
-//             locationPostalCode: null,
-//           }),
-//         })
-
-//         expect(screen.getByTestId("save-button")).toBeEnabled()
-//       })
-//     })
-
-//     it("is enabled if form is valid", async () => {
-//       getWrapper().renderWithRelay({
-//         ConsignmentSubmission: () => validForm,
-//       })
-
-//       expect(screen.getByTestId("save-button")).toBeEnabled()
-//     })
-
-//     describe("Valid form submit", () => {
-//       it("replace current route and redirects to Upload photos step", async () => {
-//         getWrapper().renderWithRelay({
-//           ConsignmentSubmission: () => validForm,
-//         })
-
-//         fireEvent.click(screen.getByText("Save and Continue"))
-
-//         await flushPromiseQueue()
-
-//         expect(mockRouterReplace).toHaveBeenCalledWith({
-//           pathname: "/sell/submission/1/artwork-details",
-//         })
-//         expect(mockRouterPush).toHaveBeenCalledWith({
-//           pathname: "/sell/submission/1/upload-photos",
-//         })
-//       })
-
-//       it("data with UTM params is saved in session storage and submition created", async () => {
-//         sessionStore = {
-//           utmParams: JSON.stringify(utmParams),
-//         }
-
-//         getWrapper().renderWithRelay({
-//           ConsignmentSubmission: () => validForm,
-//         })
-
-//         fireEvent.click(screen.getByText("Save and Continue"))
-
-//         await flushPromiseQueue()
-
-//         expect(createOrUpdateArtwork).toHaveBeenLastCalledWith(
-//           expect.anything(),
-//           {
-//             artistID: "artistId",
-//             attributionClass: "LIMITED_EDITION",
-//             depth: "5",
-//             dimensionsMetric: "cm",
-//             editionNumber: "1",
-//             editionSizeFormatted: "2",
-//             height: "3",
-//             externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
-//             locationCity: "NY, USA",
-//             locationPostalCode: "12345",
-//             locationCountryCode: "US",
-//             medium: "materials",
-//             provenance: "provenance",
-//             sessionID: undefined,
-//             state: "DRAFT",
-//             title: "Some title",
-//             utmMedium: "Medium",
-//             utmSource: "Source",
-//             utmTerm: "Term",
-//             width: "4",
-//             year: "2021",
-//           }
-//         )
-//       })
-
-//       it("delete spaces before saving", async () => {
-//         getWrapper().renderWithRelay({
-//           ConsignmentSubmission: () => ({
-//             ...validForm,
-//             locationCity: "  NY, USA  ",
-//             year: "  2021  ",
-//             title: "  Some title  ",
-//             medium: "  materials  ",
-//             editionNumber: "  1  ",
-//             editionSize: "  2  ",
-//             height: "  3  ",
-//             width: "  4  ",
-//             depth: "  5  ",
-//             provenance: "  provenance  ",
-//           }),
-//         })
-
-//         fireEvent.click(screen.getByText("Save and Continue"))
-
-//         await flushPromiseQueue()
-
-//         expect(createOrUpdateArtwork).toHaveBeenLastCalledWith(
-//           expect.anything(),
-//           {
-//             artistID: "artistId",
-//             attributionClass: "LIMITED_EDITION",
-//             depth: "5",
-//             dimensionsMetric: "cm",
-//             editionNumber: "1",
-//             editionSizeFormatted: "2",
-//             height: "3",
-//             externalId: "b2449fe2-e828-4a32-ace7-ff0753cd01ef",
-//             locationCity: "NY, USA",
-//             locationPostalCode: "12345",
-//             locationCountryCode: "US",
-//             medium: "materials",
-//             provenance: "provenance",
-//             sessionID: undefined,
-//             state: "DRAFT",
-//             title: "Some title",
-//             width: "4",
-//             year: "2021",
-//           }
-//         )
-//       })
-//     })
-//   })
-// })
