@@ -209,10 +209,9 @@ jobs:
 
   detect-secrets:
     docker:
-      - image: lirantal/detect-secrets
+      - image: artsy/detect-secrets:1.3.0
     working_directory: /usr/src/app
     steps:
-      - run: apt-get update && apt-get install -y openssh-client
       - checkout
       - run: |
           cp .secrets.baseline /tmp/.secrets.baseline
