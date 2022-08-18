@@ -9,7 +9,6 @@ import {
 import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { DownloadAppBadgesDark } from "./DownloadAppBadgesDark"
 
 const image = resized(
   "https://files.artsy.net/images/my-coll-get-app-img.jpg",
