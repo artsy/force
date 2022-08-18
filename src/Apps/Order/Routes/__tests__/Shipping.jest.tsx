@@ -27,7 +27,7 @@ import {
   settingOrderShipmentMissingRegionFailure,
   settingOrderShipmentSuccess,
 } from "../__fixtures__/MutationResults"
-import { ShippingFragmentContainer, ShippingRoute } from "../Shipping"
+import { ShippingFragmentContainer } from "../Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import {
   deleteAddressSuccess,
@@ -36,6 +36,7 @@ import {
 } from "../__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "react-tracking"
 import { flushPromiseQueue } from "DevTools"
+import { shippingQuoteDisplayNames } from "../../Components/ShippingQuotes"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -259,11 +260,10 @@ describe("Shipping", () => {
 
       page.find(`[data-test="save-address-checkbox"]`).first().simulate("click")
 
-      expect(page.find(ShippingRoute).state().saveAddress).toEqual(false)
-
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+
       expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
               Object {
                 "input": Object {
@@ -845,10 +845,7 @@ describe("Shipping", () => {
       )
     })
 
-    it("saves the default address selection into state", async () => {
-      expect(page.find(ShippingRoute).state().selectedAddressID).toEqual("2")
-    })
-    it("commits the mutation with selected address and phone number", async () => {
+    it("commits mutation with saved address and phone number when user submits form directly", async () => {
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -872,10 +869,10 @@ describe("Shipping", () => {
         }
       `)
     })
+
     it("when another saved address is selected commits mutation with selected address and phone number", async () => {
       page.find(`[data-test="savedAddress"]`).first().simulate("click")
       await page.update()
-      expect(page.find(ShippingRoute).state().selectedAddressID).toEqual("1")
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -1116,30 +1113,38 @@ describe("Shipping", () => {
           })
 
           it("shows shipping quotes after set shipping mutation commited", async () => {
+            // HERE
             expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
             expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
               "SetShippingMutation"
             )
 
-            expect(
-              page.find(ShippingRoute).state().shippingQuotes
-            ).toHaveLength(5)
+            selectShippingQuoteSuccess.commerceSelectShippingOption.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges.forEach(
+              edge => {
+                expect(
+                  shippingQuoteDisplayNames[edge.node.typeName]
+                ).toBeTruthy()
+              }
+            )
           })
 
           it("default selects the first quote and submit button is enabled", async () => {
-            expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
-              "4a8f8080-23d3-4c0e-9811-7a41a9df6933"
-            )
-
             expect(page.submitButton.props().disabled).toBeFalsy()
+
+            await page.clickSubmit()
+
+            expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "id": "1234",
+                  "selectedShippingQuoteId": "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                },
+              }
+            `)
           })
 
           it("submit button enabled if shipping quote is selected", async () => {
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
-
-            expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
-              "1eb3ba19-643b-4101-b113-2eb4ef7e30b6"
-            )
 
             expect(page.submitButton.props().disabled).toBeFalsy()
           })
