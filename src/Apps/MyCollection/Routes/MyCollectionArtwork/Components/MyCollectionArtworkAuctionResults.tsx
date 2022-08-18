@@ -67,7 +67,7 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
   )
 }
 
-export const MyColectionArtworkAuctionResultsRefetchContainer = createFragmentContainer(
+export const MyColectionArtworkAuctionResultsFragmentContainer = createFragmentContainer(
   AuctionResultsContainer,
   {
     artist: graphql`

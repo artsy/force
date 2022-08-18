@@ -6,7 +6,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { MyColectionArtworkAuctionResultsRefetchContainer } from "./Components/MyCollectionArtworkAuctionResults"
+import { MyColectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
@@ -68,7 +68,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
       {!!enableMyCollectionPhase4AuctionResults && (
         <>
-          <MyColectionArtworkAuctionResultsRefetchContainer
+          <MyColectionArtworkAuctionResultsFragmentContainer
             artist={artwork?.artist!}
           />
           <Spacer pb={6} />
