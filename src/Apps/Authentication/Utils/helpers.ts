@@ -144,6 +144,20 @@ export const handleSubmit = async (
   }
 }
 
+export const updateURLWithOnboardingParam = (url: string) => {
+  const [redirectToWithoutParams, params] = url.split("?")
+
+  // For all non-commercial intents, update the redirectTo url with an
+  // onboarding query param flag.
+  const updatedParams = qs.stringify({
+    ...qs.parse(params),
+    onboarding: true,
+  })
+
+  const updatedRedirectTo = redirectToWithoutParams + "?" + updatedParams
+  return updatedRedirectTo
+}
+
 export const maybeUpdateRedirectTo = (
   type: ModalType,
   redirectTo: string = "/",
@@ -156,17 +170,8 @@ export const maybeUpdateRedirectTo = (
   if (COMMERCIAL_AUTH_INTENTS.includes(intent)) {
     return redirectTo
   } else {
-    const [redirectToWithoutParams, params] = redirectTo.split("?")
-
-    // For all non-commercial intents, update the redirectTo url with an
-    // onboarding query param flag.
-    const updatedParams = qs.stringify({
-      ...qs.parse(params),
-      onboarding: true,
-    })
-
-    const updatedRedirectTo = redirectToWithoutParams + "?" + updatedParams
-    return updatedRedirectTo
+    const url = updateURLWithOnboardingParam(redirectTo)
+    return url
   }
 }
 
@@ -239,7 +244,8 @@ export function getRedirect(type): URL {
         return new URL(location.href, appBaseURL)
       }
     case "signup":
-      return new URL("/", appBaseURL)
+      const url = new URL(updateURLWithOnboardingParam("/"), appBaseURL)
+      return url
     default:
       return new URL(window.location.href, appBaseURL)
   }
