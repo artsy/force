@@ -22,6 +22,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
+
+  const enableMyCollectionPhase4Comparables = useFeatureFlag(
+    "my-collection-web-phase-4-comparables"
+  )
+
   const slug = artwork?.artist?.slug!
 
   const EditArtworkButton = () => (
@@ -62,7 +67,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </Column>
       </GridColumns>
 
-      {!!isMyCollectionPhase3Enabled && (
+      {!!enableMyCollectionPhase4Comparables && (
         <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
       )}
       {!!enableMyCollectionPhase4ArticlesRail && (
