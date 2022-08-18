@@ -20,7 +20,7 @@ describe("BankDebitProvider", () => {
         }}
         bankAccountHasInsufficientFunds={false}
         setBankAccountHasInsufficientFunds={jest.fn()}
-        setIsProcessingPayment={jest.fn()}
+        setIsSavingPayment={jest.fn()}
       />
     )
 

@@ -2,7 +2,7 @@ import { FC } from "react"
 import styled from "styled-components"
 import { Flex, Spinner, Text } from "@artsy/palette"
 
-export const ProcessingPayment: FC = () => {
+export const SavingPaymentSpinner: FC = () => {
   return (
     <Flex flexDirection="column" alignItems="center">
       <SpinnerContainer>

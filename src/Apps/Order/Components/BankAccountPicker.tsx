@@ -17,7 +17,7 @@ interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   onBankAccountContinue: () => void
-  setIsProcessingPayment: (arg: boolean) => void
+  setIsSavingPayment: (arg: boolean) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -27,7 +27,7 @@ export const BankAccountPicker: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     onBankAccountContinue,
-    setIsProcessingPayment,
+    setIsSavingPayment,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -43,7 +43,7 @@ export const BankAccountPicker: FC<Props> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   const handleContinue = async () => {
-    setIsProcessingPayment(true)
+    setIsSavingPayment(true)
     try {
       const orderOrError = (
         await setPaymentMutation({
@@ -140,7 +140,7 @@ export const BankAccountPicker: FC<Props> = props => {
           setBankAccountHasInsufficientFunds={
             setBankAccountHasInsufficientFunds
           }
-          setIsProcessingPayment={setIsProcessingPayment}
+          setIsSavingPayment={setIsSavingPayment}
         />
       </Collapse>
 

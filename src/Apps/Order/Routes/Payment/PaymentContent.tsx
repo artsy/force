@@ -43,7 +43,7 @@ export interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   onBankAccountContinue: () => void
-  setIsProcessingPayment: (arg: boolean) => void
+  setIsSavingPayment: (arg: boolean) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -58,7 +58,7 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     onBankAccountContinue,
-    setIsProcessingPayment,
+    setIsSavingPayment,
   } = props
   const tracking = useTracking()
 
@@ -154,7 +154,7 @@ export const PaymentContent: FC<Props> = props => {
             setBankAccountHasInsufficientFunds
           }
           onBankAccountContinue={onBankAccountContinue}
-          setIsProcessingPayment={setIsProcessingPayment}
+          setIsSavingPayment={setIsSavingPayment}
         />
       </Collapse>
 
