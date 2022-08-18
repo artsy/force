@@ -6,6 +6,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
@@ -21,6 +22,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
+
+  const enableMyCollectionPhase4Comparables = useFeatureFlag(
+    "my-collection-web-phase-4-comparables"
+  )
+
   const slug = artwork?.artist?.slug!
 
   const EditArtworkButton = () => (
@@ -61,6 +67,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </Column>
       </GridColumns>
 
+      {!!enableMyCollectionPhase4Comparables && (
+        <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
+      )}
       {!!enableMyCollectionPhase4ArticlesRail && (
         <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
@@ -76,6 +85,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
         ...ArtworkImageBrowser_artwork
+        ...MyCollectionArtworkComparables_artwork
         internalID
         artist {
           slug
