@@ -242,6 +242,7 @@ jobs:
         environment:
           TERM: xterm
     working_directory: ~/app
+    parallelism: 4
     steps:
       - checkout
       - run:
