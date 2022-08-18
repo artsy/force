@@ -9,7 +9,7 @@ export const ProcessingPayment: FC = () => {
         <Spinner size="large" color="blue100" />
       </SpinnerContainer>
       <Text variant="md" color="blue100">
-        Processing payment
+        Saving payment preferences
       </Text>
       <Text variant="sm" textColor="black60">
         Please do not close or refresh this window
