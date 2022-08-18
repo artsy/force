@@ -73,13 +73,11 @@ const MobileLayout: React.FC = () => {
       </Column>
 
       <Column span={6}>
-        <DownloadAppBadgesDark justifyContent="center" />
-
         <Text variant="xl" mt={2}>
           Manage Your Art Collection Online
         </Text>
 
-        <Text variant="sm" mt={0.5}>
+        <Text variant="sm" mt={0.5} mb={2}>
           Access price and market insights and build an online record of your
           collection.
         </Text>
@@ -88,6 +86,7 @@ const MobileLayout: React.FC = () => {
           as={RouterLink}
           variant="primaryBlack"
           to="/my-collection/artworks/new"
+          width="100%"
         >
           Upload Artwork
         </Button>
