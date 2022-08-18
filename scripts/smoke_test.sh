@@ -26,8 +26,17 @@ done
 
 export ELECTRON_EXTRA_LAUNCH_ARGS=disable-dev-shm-usage
 
+
+
 # run ./cypress/integration/* tests in headless mode
-./node_modules/.bin/cypress run
+if [ "$CI" == "true" ]; then
+    # Parallelize smoke tests on CI
+    TESTS=$(circleci tests glob "cypress/integration/**/*" | circleci tests split | paste -sd ',')
+    ./node_modules/.bin/cypress run --spec $TESTS
+else
+    ./node_modules/.bin/cypress run
+fi
+
 
 # Kill the server
 kill -9 $! || true
