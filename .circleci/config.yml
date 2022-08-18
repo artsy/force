@@ -227,9 +227,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: yarn install
-      - run:
-          name: Run Smoke Tests on Staging
-          command: ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET
+      - run: |
+          TESTS=$(circleci tests glob "cypress/integration/**/*" | circleci tests split | paste -sd ',')
+          ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET --spec $TESTS
       - store_artifacts:
           path: cypress/screenshots
 
