@@ -1113,7 +1113,6 @@ describe("Shipping", () => {
           })
 
           it("shows shipping quotes after set shipping mutation commited", async () => {
-            // HERE
             expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
             expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
               "SetShippingMutation"
