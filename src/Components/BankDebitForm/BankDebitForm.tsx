@@ -52,7 +52,6 @@ export const BankDebitForm: FC<Props> = ({
   }
 
   const handleSubmit = async event => {
-    setIsSavingPayment(true)
     event.preventDefault()
 
     if (!stripe || !elements || !user) {
@@ -67,6 +66,8 @@ export const BankDebitForm: FC<Props> = ({
     // confirm Stripe payment setup which leaves and redirects back.
     window.removeEventListener("beforeunload", preventHardReload)
 
+    setIsSavingPayment(true)
+
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
@@ -75,7 +76,8 @@ export const BankDebitForm: FC<Props> = ({
     })
 
     if (error) {
-      console.log("error", error)
+      setIsSavingPayment(false)
+      throw error
     }
   }
 

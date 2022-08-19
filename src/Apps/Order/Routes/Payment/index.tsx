@@ -99,7 +99,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // fired when save and continue is clicked for CC and Wire payment methods
   const setPayment = () => {
-    setIsSavingPayment(true)
     switch (selectedPaymentMethod) {
       case "CREDIT_CARD":
         onCreditCardContinue()
@@ -136,6 +135,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         return
       }
 
+      setIsSavingPayment(true)
+
       const orderOrError = (
         await setOrderPayment({
           input: {
@@ -146,7 +147,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         })
       ).commerceSetPayment?.orderOrError
 
-      if (orderOrError?.error) throw orderOrError.error
+      if (orderOrError?.error) {
+        setIsSavingPayment(false)
+        throw orderOrError.error
+      }
+
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
       setIsSavingPayment(false)
@@ -157,6 +162,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // sets payment with Wire Transfer
   const onWireTransferContinue = async () => {
+    setIsSavingPayment(true)
     try {
       const orderOrError = (
         await setPaymentMutation({
