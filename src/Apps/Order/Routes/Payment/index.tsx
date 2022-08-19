@@ -250,8 +250,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
         content={
           balanceCheckEnabled &&
-          (!balanceCheckComplete || selectedBankAccountId) &&
-          isPaymentSetupSuccessful ? (
+          (isPaymentSetupSuccessful || selectedBankAccountId) &&
+          !balanceCheckComplete ? (
             <PollAccountBalanceQueryRenderer
               setupIntentId={stripeSetupIntentId!}
               bankAccountId={selectedBankAccountId}
