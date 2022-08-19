@@ -4,6 +4,7 @@ import {
   handleSubmit,
   maybeUpdateRedirectTo,
   setCookies,
+  updateURLWithOnboardingParam,
 } from "../helpers"
 import {
   COMMERCIAL_AUTH_INTENTS,
@@ -232,7 +233,9 @@ describe("Authentication Helpers", () => {
               Object {},
             ]
           `)
-        expect(window.location.assign).toBeCalledWith("https://artsy.net/")
+        expect(window.location.assign).toBeCalledWith(
+          "https://artsy.net/?onboarding=true"
+        )
       })
     })
 
@@ -515,9 +518,9 @@ describe("Authentication Helpers", () => {
       expect(redirectTo.toString()).toBe("https://artsy.net/")
     })
 
-    it("Returns / if type is signup", () => {
+    it("Returns with `onboarding=true` if type is signup", () => {
       const redirectTo = getRedirect("signup")
-      expect(redirectTo.toString()).toBe("https://artsy.net/")
+      expect(redirectTo.toString()).toBe("https://artsy.net/?onboarding=true")
     })
 
     it("Returns window.location by default", () => {
@@ -585,6 +588,24 @@ describe("Authentication Helpers", () => {
       expect(redirectTo).toEqual(
         originalRedirect + "?foo=true&bar=true&onboarding=true"
       )
+    })
+  })
+
+  describe("#updateURLWithOnboardingParam", () => {
+    it("adds the onboarding param to the url", () => {
+      expect(updateURLWithOnboardingParam("https://artsy.net")).toEqual(
+        "https://artsy.net?onboarding=true"
+      )
+    })
+
+    it("preserves existing query params", () => {
+      expect(
+        updateURLWithOnboardingParam("https://artsy.net?foo=true")
+      ).toEqual("https://artsy.net?foo=true&onboarding=true")
+
+      expect(
+        updateURLWithOnboardingParam("https://artsy.net?foo=true&bar=true")
+      ).toEqual("https://artsy.net?foo=true&bar=true&onboarding=true")
     })
   })
 })
