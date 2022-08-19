@@ -1,4 +1,4 @@
-import { Button, Column, Flex, GridColumns } from "@artsy/palette"
+import { Button, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -64,6 +64,14 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
         </Column>
       </GridColumns>
+
+      {!!enableMyCollectionPhase4DemandIndex && (
+        <>
+          <Text variant={["lg-display", "xl"]}>Insights</Text>
+
+          <Spacer m={[2, 4]} />
+        </>
+      )}
 
       {!!enableMyCollectionPhase4DemandIndex && (
         <MyCollectionArtworkDemandIndexFragmentContainer artwork={artwork} />
