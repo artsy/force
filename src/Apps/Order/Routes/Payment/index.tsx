@@ -1,5 +1,5 @@
 // libs
-import { createRef, FC, useState } from "react"
+import { createRef, FC, useState, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
@@ -198,8 +198,23 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       return
     }
 
+    onPaymentStepComplete()
+  }
+
+  const onPaymentStepComplete = () => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
+
+  // complete payment when balance check is disabled and bank account is set
+  useEffect(() => {
+    if (
+      !balanceCheckEnabled &&
+      (selectedBankAccountId || isPaymentSetupSuccessful)
+    ) {
+      onPaymentStepComplete()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPaymentSetupSuccessful, selectedBankAccountId, balanceCheckEnabled])
 
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]
