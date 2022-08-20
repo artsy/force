@@ -42,7 +42,6 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
           })}
         </Join>
       </Column>
-      <Spacer pb={6} />
     </>
   )
 }
