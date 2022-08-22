@@ -1,4 +1,4 @@
-import { Button, Column, Flex, GridColumns } from "@artsy/palette"
+import { Button, Column, Flex, GridColumns, Join, Spacer } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,6 +9,7 @@ import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_a
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/MyCollectionArtworkArtistMarket"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -22,7 +23,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
-
+  const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
+    "my-collection-web-phase-4-artist-market"
+  )
   const enableMyCollectionPhase4Comparables = useFeatureFlag(
     "my-collection-web-phase-4-comparables"
   )
@@ -67,12 +70,22 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </Column>
       </GridColumns>
 
-      {!!enableMyCollectionPhase4Comparables && (
-        <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
-      )}
-      {!!enableMyCollectionPhase4ArticlesRail && (
-        <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
-      )}
+      <Join separator={<Spacer mt={[2, 6]} />}>
+        {!!enableMyCollectionPhase4ArtistMarket &&
+          artwork.marketPriceInsights && (
+            <MyCollectionArtworkArtistMarketFragmentContainer
+              marketPriceInsights={artwork.marketPriceInsights}
+            />
+          )}
+
+        {!!enableMyCollectionPhase4Comparables && (
+          <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
+        )}
+
+        {!!enableMyCollectionPhase4ArticlesRail && (
+          <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+        )}
+      </Join>
     </>
   )
 }
@@ -89,6 +102,9 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         internalID
         artist {
           slug
+        }
+        marketPriceInsights {
+          ...MyCollectionArtworkArtistMarket_marketPriceInsights
         }
       }
     `,
