@@ -11,6 +11,7 @@ import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useRouter } from "System/Router/useRouter"
+import { getMerchandisingPartnerSlugs } from "Apps/Partner/Utils/getMerchandisingPartnerSlugs"
 
 interface PartnerArtworkFilterProps {
   partner: Works_partner
@@ -24,9 +25,11 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
   const { sidebar } = partner
   const { match } = useRouter()
   const filters = match?.location?.query ?? {}
+  const partnerSlugs = getMerchandisingPartnerSlugs()
+  const partnerId = match?.params?.partnerId
 
-  // Preselects "Recently added" sort option for artsy-2 partner by default
-  if (match?.params?.partnerId === "artsy-2" && filters.sort === undefined) {
+  // Preselects "Recently added" sort option for some partners by default
+  if (filters.sort === undefined && partnerSlugs.includes(partnerId)) {
     filters.sort = "-published_at"
   }
 

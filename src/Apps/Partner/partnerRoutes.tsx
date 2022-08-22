@@ -5,6 +5,7 @@ import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilte
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "System/Router/Route"
+import { getMerchandisingPartnerSlugs } from "./Utils/getMerchandisingPartnerSlugs"
 
 const PartnerApp = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./PartnerApp"),
@@ -203,6 +204,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         prepareVariables: (data, props) => {
           const filterStateFromUrl = props.location ? props.location.query : {}
           const partnerId = props?.params?.partnerId
+          const partnerSlugs = getMerchandisingPartnerSlugs()
           const aggregations = [
             "TOTAL",
             "MEDIUM",
@@ -222,8 +224,8 @@ export const partnerRoutes: AppRouteConfig[] = [
 
           // Preselects "Recently added" sort option for artsy-2 partner by default
           if (
-            partnerId === "artsy-2" &&
-            filterParams.sort === initialArtworkFilterState.sort
+            filterParams.sort === initialArtworkFilterState.sort &&
+            partnerSlugs.includes(partnerId)
           ) {
             filterParams.sort = "-published_at"
           }
