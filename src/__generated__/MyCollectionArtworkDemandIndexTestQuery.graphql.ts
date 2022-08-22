@@ -31,6 +31,7 @@ query MyCollectionArtworkDemandIndexTestQuery {
 
 fragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {
   demandRank
+  demandRankDisplayText
 }
 */
 
@@ -108,6 +109,13 @@ return {
                 "kind": "ScalarField",
                 "name": "demandRank",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "demandRankDisplayText",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -125,7 +133,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "399114f754ca77712b86fb8a5437354c",
+    "cacheID": "83dcc9a0e94ce6d58226825bbdaa8475",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -152,12 +160,18 @@ return {
           "nullable": true,
           "plural": false,
           "type": "Float"
+        },
+        "artwork.marketPriceInsights.demandRankDisplayText": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
         }
       }
     },
     "name": "MyCollectionArtworkDemandIndexTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkDemandIndexTestQuery {\n  artwork(id: \"artwork-ID\") {\n    marketPriceInsights {\n      ...MyCollectionArtworkDemandIndex_marketPriceInsights\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {\n  demandRank\n}\n"
+    "text": "query MyCollectionArtworkDemandIndexTestQuery {\n  artwork(id: \"artwork-ID\") {\n    marketPriceInsights {\n      ...MyCollectionArtworkDemandIndex_marketPriceInsights\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {\n  demandRank\n  demandRankDisplayText\n}\n"
   }
 };
 })();

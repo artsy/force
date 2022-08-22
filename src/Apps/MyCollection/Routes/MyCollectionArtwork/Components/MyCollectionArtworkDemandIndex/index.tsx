@@ -75,7 +75,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
         )}
 
         <Text variant={["md", "lg"]} color={demandRankColor}>
-          {getDemandRankText(demandRank)}
+          {marketPriceInsights.demandRankDisplayText}
         </Text>
       </Flex>
 
@@ -95,24 +95,13 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
   )
 }
 
-const getDemandRankText = (demandRank: number) => {
-  if (demandRank >= 9) {
-    return "High Demand"
-  } else if (demandRank >= 7) {
-    return "Active Demand"
-  } else if (demandRank >= 4) {
-    return "Moderate Demand"
-  }
-
-  return "Less Active Demand"
-}
-
 export const MyCollectionArtworkDemandIndexFragmentContainer = createFragmentContainer(
   MyCollectionArtworkDemandIndex,
   {
     marketPriceInsights: graphql`
       fragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {
         demandRank
+        demandRankDisplayText
       }
     `,
   }
