@@ -92,8 +92,6 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
           10.0
         </Text>
       </Flex>
-
-      <Spacer m={6} />
     </>
   )
 }

@@ -56,7 +56,6 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
           })}
         </Join>
       </Column>
-      <Spacer pb={6} />
     </>
   )
 }
