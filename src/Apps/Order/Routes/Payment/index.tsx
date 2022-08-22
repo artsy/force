@@ -5,6 +5,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 
 // relay generated
 import { Payment_me } from "__generated__/Payment_me.graphql"
@@ -55,7 +56,15 @@ export interface PaymentRouteProps {
   elements: StripeElements
 }
 
+export enum BalanceCheckResult {
+  success = "success",
+  failed = "failed",
+  check_not_possible = "check not possible",
+}
+
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
+  const { trackEvent } = useTracking()
+
   const { order } = props
   const { match } = useRouter()
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
@@ -188,7 +197,23 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   }
 
   // fired when balance check is done: either sets error state or moves to /review
-  const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
+  const onBalanceCheckComplete = (
+    displayInsufficientFundsError: boolean,
+    checkResult: BalanceCheckResult
+  ) => {
+    const event = {
+      subject: "checked_account_balance",
+      outcome: checkResult,
+      payment_method: selectedPaymentMethod,
+      currency: order.currencyCode,
+      amount: order.buyerTotalCents,
+      order_id: order.internalID,
+      context_page_owner_type: OwnerType.ordersPayment,
+      flow: order.mode!,
+    }
+
+    trackEvent(event)
+
     setBalanceCheckComplete(true)
     setIsSavingPayment(false)
 

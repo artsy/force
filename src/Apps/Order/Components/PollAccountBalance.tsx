@@ -6,6 +6,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
 import { PollAccountBalance_commerceBankAccountBalance } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
+import { BalanceCheckResult } from "../Routes/Payment/index"
 import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 
 interface PollAccountBalanceProps {
@@ -13,7 +14,10 @@ interface PollAccountBalanceProps {
   setupIntentId: string
   bankAccountId: string
   commerceBankAccountBalance: PollAccountBalance_commerceBankAccountBalance | null
-  onBalanceCheckComplete: (displayInsufficientFundsError: boolean) => void
+  onBalanceCheckComplete: (
+    displayInsufficientFundsError: boolean,
+    checkResult: BalanceCheckResult
+  ) => void
   buyerTotalCents: number
   orderCurrencyCode: string
 }
@@ -45,7 +49,7 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
   */
   if (shouldStopPolling) {
     clearTimeout(timeoutID)
-    onBalanceCheckComplete(false)
+    onBalanceCheckComplete(false, BalanceCheckResult.check_not_possible)
   }
 
   /*
@@ -64,7 +68,10 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
       balanceCents >= buyerTotalCents && currencyCode === orderCurrencyCode
     )
 
-    onBalanceCheckComplete(!enoughBalance)
+    onBalanceCheckComplete(
+      !enoughBalance,
+      enoughBalance ? BalanceCheckResult.success : BalanceCheckResult.failed
+    )
     clearTimeout(timeoutID)
   }
 
@@ -98,7 +105,10 @@ export const PollAccountBalanceRefetchContainer = createRefetchContainer(
 interface PollAccountBalanceQueryRendererProps {
   setupIntentId: string
   bankAccountId: string
-  onBalanceCheckComplete: (displayInsufficientFundsError: boolean) => void
+  onBalanceCheckComplete: (
+    displayInsufficientFundsError: boolean,
+    checkResult: BalanceCheckResult
+  ) => void
   buyerTotalCents: number
   orderCurrencyCode: string
 }
