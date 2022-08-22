@@ -2,7 +2,7 @@ import { SystemContextProvider } from "System"
 import { ReactWrapper, mount } from "enzyme"
 import { ExtractProps } from "Utils/ExtractProps"
 import { OfferNote } from "../OfferNote"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 
 const simulateTyping = (wrapper: ReactWrapper, text: string) => {

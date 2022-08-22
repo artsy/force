@@ -4,13 +4,13 @@ import { RegisterButton_Test_Query } from "__generated__/RegisterButton_Test_Que
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
-import { openAuthModal } from "lib/openAuthModal"
+import { openAuthModal } from "Server/openAuthModal"
 import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
-jest.mock("lib/openAuthModal")
+jest.mock("Server/openAuthModal")
 jest.mock("System/Router/useRouter")
 
 describe("RegisterButton", () => {

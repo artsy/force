@@ -2,12 +2,12 @@ import { SystemContextProvider } from "System"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import { NavBarMobileMenu } from "../NavBarMobileMenu"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { NavBarMobileMenuTransition } from "../NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "../NavBarMobileSubMenu"
 
 jest.mock("react-tracking")
-jest.mock("lib/isServer", () => ({
+jest.mock("Server/isServer", () => ({
   isServer: true,
 }))
 

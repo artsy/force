@@ -2,12 +2,17 @@ import {
   apiAuthWithRedirectUrl,
   getRedirect,
   handleSubmit,
+  maybeUpdateRedirectTo,
   setCookies,
+  updateURLWithOnboardingParam,
 } from "../helpers"
-import { ModalType } from "Components/Authentication/Types"
+import {
+  COMMERCIAL_AUTH_INTENTS,
+  ModalType,
+} from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mockLocation } from "DevTools/mockLocation"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { getENV } from "Utils/getENV"
 
 jest.mock("cookies-js", () => ({
@@ -228,7 +233,9 @@ describe("Authentication Helpers", () => {
               Object {},
             ]
           `)
-        expect(window.location.assign).toBeCalledWith("https://artsy.net/")
+        expect(window.location.assign).toBeCalledWith(
+          "https://artsy.net/?onboarding=true"
+        )
       })
     })
 
@@ -511,14 +518,94 @@ describe("Authentication Helpers", () => {
       expect(redirectTo.toString()).toBe("https://artsy.net/")
     })
 
-    it("Returns / if type is signup", () => {
+    it("Returns with `onboarding=true` if type is signup", () => {
       const redirectTo = getRedirect("signup")
-      expect(redirectTo.toString()).toBe("https://artsy.net/")
+      expect(redirectTo.toString()).toBe("https://artsy.net/?onboarding=true")
     })
 
     it("Returns window.location by default", () => {
       const redirectTo = getRedirect("login")
       expect(redirectTo.toString()).toBe("https://artsy.net/articles")
+    })
+  })
+
+  describe("#maybeUpdateRedirectTo", () => {
+    const originalRedirect = "http://test.com"
+
+    it.each([ModalType.forgot, ModalType.login])(
+      "returns original redirectTo if not signup",
+      type => {
+        const redirectTo = maybeUpdateRedirectTo(
+          type,
+          "http://test.com",
+          Intent.followArtist
+        )
+        expect(redirectTo).toEqual(originalRedirect)
+      }
+    )
+
+    it.each(COMMERCIAL_AUTH_INTENTS)(
+      "returns original redirectTo if signup and commercial intent",
+      intent => {
+        const redirectTo = maybeUpdateRedirectTo(
+          ModalType.signup,
+          "http://test.com",
+          intent
+        )
+        expect(redirectTo).toEqual(originalRedirect)
+      }
+    )
+
+    it("returns redirectTo with onboarding flag if signup and non-commercial intent", () => {
+      const redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(originalRedirect + "?onboarding=true")
+    })
+
+    it("preserves existing query params", () => {
+      let redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(originalRedirect + "?onboarding=true")
+
+      redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com?foo=true",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(originalRedirect + "?foo=true&onboarding=true")
+
+      redirectTo = maybeUpdateRedirectTo(
+        ModalType.signup,
+        "http://test.com?foo=true&bar=true",
+        Intent.followArtist
+      )
+      expect(redirectTo).toEqual(
+        originalRedirect + "?foo=true&bar=true&onboarding=true"
+      )
+    })
+  })
+
+  describe("#updateURLWithOnboardingParam", () => {
+    it("adds the onboarding param to the url", () => {
+      expect(updateURLWithOnboardingParam("https://artsy.net")).toEqual(
+        "https://artsy.net?onboarding=true"
+      )
+    })
+
+    it("preserves existing query params", () => {
+      expect(
+        updateURLWithOnboardingParam("https://artsy.net?foo=true")
+      ).toEqual("https://artsy.net?foo=true&onboarding=true")
+
+      expect(
+        updateURLWithOnboardingParam("https://artsy.net?foo=true&bar=true")
+      ).toEqual("https://artsy.net?foo=true&bar=true&onboarding=true")
     })
   })
 })

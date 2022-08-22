@@ -2,7 +2,7 @@ import { SystemContextProvider } from "System"
 import { mockTracking } from "DevTools/mockTracking"
 import { mount } from "enzyme"
 import { StickyFooterWithInquiry, StickyFooter } from "../StickyFooter"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 jest.unmock("react-tracking")
 
 describe("Sticky footer", () => {

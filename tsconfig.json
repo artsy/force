@@ -36,7 +36,7 @@
   "include": ["./jest.envSetup.ts", "./src"],
   "exclude": [
     "src/**/__generated__/*.ts",
-    "src/lib/passport-local-with-otp",
+    "src/Server/passport-local-with-otp",
     "**/node_modules",
     "**/.*/"
   ]

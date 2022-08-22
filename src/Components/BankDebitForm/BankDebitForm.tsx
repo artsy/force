@@ -22,14 +22,14 @@ interface Props {
   order: { mode: string | null; internalID: string }
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  setIsProcessingPayment: (arg: boolean) => void
+  setIsSavingPayment: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
   setBankAccountHasInsufficientFunds,
-  setIsProcessingPayment,
+  setIsSavingPayment,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
@@ -52,7 +52,6 @@ export const BankDebitForm: FC<Props> = ({
   }
 
   const handleSubmit = async event => {
-    setIsProcessingPayment(true)
     event.preventDefault()
 
     if (!stripe || !elements || !user) {
@@ -67,6 +66,8 @@ export const BankDebitForm: FC<Props> = ({
     // confirm Stripe payment setup which leaves and redirects back.
     window.removeEventListener("beforeunload", preventHardReload)
 
+    setIsSavingPayment(true)
+
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
@@ -75,7 +76,8 @@ export const BankDebitForm: FC<Props> = ({
     })
 
     if (error) {
-      console.log("error", error)
+      setIsSavingPayment(false)
+      throw error
     }
   }
 

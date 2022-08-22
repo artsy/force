@@ -13,7 +13,10 @@ import {
   getFarceResult,
 } from "found/server"
 import qs from "qs"
-import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
+import type {
+  ArtsyRequest,
+  ArtsyResponse,
+} from "Server/middleware/artsyExpress"
 import { createQueryMiddleware } from "farce"
 
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"

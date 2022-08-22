@@ -1,7 +1,7 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box } from "@artsy/palette"
 import { ModalType } from "Components/Authentication/Types"
-import { isServer } from "lib/isServer"
+import { isServer } from "Server/isServer"
 import * as React from "react"
 import { useContext } from "react"
 import { createFragmentContainer } from "react-relay"

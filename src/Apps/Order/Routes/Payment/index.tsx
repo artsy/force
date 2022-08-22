@@ -37,7 +37,7 @@ import { CreditCardPicker } from "Apps/Order/Components/CreditCardPicker"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { PollAccountBalanceQueryRenderer } from "Apps/Order/Components/PollAccountBalance"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
@@ -71,7 +71,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     state to render a loading interface while one of the following is happening:
     payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
   */
-  const [isProcessingPayment, setIsProcessingPayment] = useState(
+  const [isSavingPayment, setIsSavingPayment] = useState(
     !!match?.location?.query?.setup_intent
   )
 
@@ -85,8 +85,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isPaymentSetupSuccessful,
   } = useStripePaymentBySetupIntentId(order.internalID)
 
-  // ProcessingPayment is rendered and PaymentContent is hidden when true
-  const displayLoading = isProcessingRedirect || isProcessingPayment
+  // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
+  const displayLoading = isProcessingRedirect || isSavingPayment
 
   // whether balance check is performed for the current bank account
   const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
@@ -99,7 +99,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // fired when save and continue is clicked for CC and Wire payment methods
   const setPayment = () => {
-    setIsProcessingPayment(true)
     switch (selectedPaymentMethod) {
       case "CREDIT_CARD":
         onCreditCardContinue()
@@ -136,6 +135,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         return
       }
 
+      setIsSavingPayment(true)
+
       const orderOrError = (
         await setOrderPayment({
           input: {
@@ -146,10 +147,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         })
       ).commerceSetPayment?.orderOrError
 
-      if (orderOrError?.error) throw orderOrError.error
+      if (orderOrError?.error) {
+        setIsSavingPayment(false)
+        throw orderOrError.error
+      }
+
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
-      setIsProcessingPayment(false)
+      setIsSavingPayment(false)
       logger.error(error)
       props.dialog.showErrorDialog()
     }
@@ -157,6 +162,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // sets payment with Wire Transfer
   const onWireTransferContinue = async () => {
+    setIsSavingPayment(true)
     try {
       const orderOrError = (
         await setPaymentMutation({
@@ -172,7 +178,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       if (orderOrError?.error) throw orderOrError.error
       props.router.push(`/orders/${props.order.internalID}/review`)
     } catch (error) {
-      setIsProcessingPayment(false)
+      setIsSavingPayment(false)
       logger.error(error)
       props.dialog.showErrorDialog()
     }
@@ -186,7 +192,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // fired when balance check is done: either sets error state or moves to /review
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setBalanceCheckComplete(true)
-    setIsProcessingPayment(false)
+    setIsSavingPayment(false)
     if (displayInsufficientFundsError) {
       setBankAccountHasInsufficientFunds(true)
       return
@@ -253,7 +259,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             />
           ) : (
             <>
-              {displayLoading && <ProcessingPayment />}
+              {displayLoading && <SavingPaymentSpinner />}
               {/* keep PaymentContent mounted but displayed none while 
                   displayLoading is true; needed to handle Stripe redirect */}
               <Flex
@@ -275,7 +281,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                     setBankAccountHasInsufficientFunds
                   }
                   onBankAccountContinue={onBankAccountContinue}
-                  setIsProcessingPayment={setIsProcessingPayment}
+                  setIsSavingPayment={setIsSavingPayment}
                 />
               </Flex>
             </>
@@ -301,7 +307,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                 <SaveAndContinueButton
                   media={{ at: "xs" }}
                   onClick={setPayment}
-                  loading={isProcessingPayment}
+                  loading={isSavingPayment}
                 />
                 <Spacer mb={2} />
               </>

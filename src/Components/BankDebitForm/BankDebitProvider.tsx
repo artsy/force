@@ -32,14 +32,14 @@ interface Props {
   order: BankAccountPicker_order
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  setIsProcessingPayment: (arg: boolean) => void
+  setIsSavingPayment: (arg: boolean) => void
 }
 
 export const BankDebitProvider: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
   setBankAccountHasInsufficientFunds,
-  setIsProcessingPayment,
+  setIsSavingPayment,
 }) => {
   const [clientSecret, setClientSecret] = useState("")
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
@@ -142,7 +142,7 @@ export const BankDebitProvider: FC<Props> = ({
             setBankAccountHasInsufficientFunds={
               setBankAccountHasInsufficientFunds
             }
-            setIsProcessingPayment={setIsProcessingPayment}
+            setIsSavingPayment={setIsSavingPayment}
           />
         </Elements>
       )}

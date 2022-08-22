@@ -41,10 +41,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 }) => {
   const { router } = useRouter()
   const { sendToast } = useToasts()
-  const initialValue = getMyCollectionArtworkFormInitialValues(artwork)
+  const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
 
   const initialErrors = validateArtwork(
-    initialValue,
+    initialValues,
     MyCollectionArtworkDetailsValidationSchema
   )
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
@@ -116,14 +116,14 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       <AppContainer>
         <Formik<ArtworkModel>
           validateOnMount
-          initialValues={initialValue}
+          initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={MyCollectionArtworkDetailsValidationSchema}
           initialErrors={initialErrors}
         >
           {({ isSubmitting, isValid }) => (
             <Form>
-              <RouterLink to="/sell" display="block">
+              <RouterLink to="/my-collection" display="block">
                 <ArtsyLogoBlackIcon display="block" />
               </RouterLink>
 
@@ -146,7 +146,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 to={
                                   isEditing
                                     ? `/my-collection/artwork/${artwork.internalID}`
-                                    : "/settings/my-collection"
+                                    : "/my-collection"
                                 }
                                 width="min-content"
                               >

@@ -7,6 +7,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
+import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
@@ -22,6 +23,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
+
+  const enableMyCollectionPhase4Comparables = useFeatureFlag(
+    "my-collection-web-phase-4-comparables"
+  )
+
   const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
     "my-collection-web-phase-4-demand-index"
   )
@@ -77,6 +83,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         <MyCollectionArtworkDemandIndexFragmentContainer artwork={artwork} />
       )}
 
+      {!!enableMyCollectionPhase4Comparables && (
+        <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
+      )}
       {!!enableMyCollectionPhase4ArticlesRail && (
         <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
@@ -93,6 +102,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkMeta_artwork
         ...ArtworkImageBrowser_artwork
         ...MyCollectionArtworkDemandIndex_artwork
+        ...MyCollectionArtworkComparables_artwork
         internalID
         artist {
           slug

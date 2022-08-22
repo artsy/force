@@ -1,13 +1,13 @@
-import * as React from "react"
-import { mount } from "enzyme"
 import { render, RenderResult } from "@testing-library/react"
+import { mount } from "enzyme"
+import * as React from "react"
 import { QueryRenderer } from "react-relay"
+import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import {
-  MockPayloadGenerator,
   createMockEnvironment,
+  MockPayloadGenerator,
   RelayMockEnvironment,
 } from "relay-test-utils"
-import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {

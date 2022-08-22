@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { SystemContextProvider } from "System"
 import { NavBarUserMenu } from "../NavBarUserMenu"
 

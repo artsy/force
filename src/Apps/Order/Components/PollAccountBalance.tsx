@@ -6,7 +6,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { PollAccountBalanceQuery } from "__generated__/PollAccountBalanceQuery.graphql"
 import { PollAccountBalance_commerceBankAccountBalance } from "__generated__/PollAccountBalance_commerceBankAccountBalance.graphql"
-import { ProcessingPayment } from "Apps/Order/Components/ProcessingPayment"
+import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner"
 
 interface PollAccountBalanceProps {
   relay: RelayRefetchProp
@@ -66,7 +66,7 @@ const PollAccountBalance: FC<PollAccountBalanceProps> = ({
     clearTimeout(timeoutID)
   }
 
-  return <ProcessingPayment />
+  return <SavingPaymentSpinner />
 }
 
 export const BALANCE_QUERY = graphql`
@@ -107,12 +107,12 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
   return (
     <SystemQueryRenderer<PollAccountBalanceQuery>
       environment={relayEnvironment}
-      placeholder={<ProcessingPayment />}
+      placeholder={<SavingPaymentSpinner />}
       variables={{ setupIntentId }}
       query={BALANCE_QUERY}
       render={({ props }) => {
         if (!props?.commerceBankAccountBalance) {
-          return <ProcessingPayment />
+          return <SavingPaymentSpinner />
         }
 
         return (

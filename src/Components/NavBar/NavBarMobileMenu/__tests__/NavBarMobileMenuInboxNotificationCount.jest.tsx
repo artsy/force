@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenuInboxNotificationCount"
 
-jest.mock("lib/isServer", () => ({
+jest.mock("Server/isServer", () => ({
   isServer: false,
 }))
 

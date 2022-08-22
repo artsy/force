@@ -22,7 +22,7 @@ import { RelayProp, commitMutation as _commitMutation } from "react-relay"
 import { ArtworkSidebarCommercialContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercial"
 import { mockLocation } from "DevTools/mockLocation"
 import { SystemContextProvider } from "System"
-import { mediator } from "lib/mediator"
+import { mediator } from "Server/mediator"
 import { withInquiry } from "Components/Inquiry/useInquiry"
 
 const commitMutation = _commitMutation as jest.Mock<any>

@@ -1,9 +1,9 @@
-import { getContextPageFromClient } from "lib/getContextPage"
+import { getContextPageFromClient } from "Server/getContextPage"
 import { data as sd } from "sharify"
 import { AnalyticsContextProps } from "System/Analytics/AnalyticsContext"
-import { Mediator, mediator } from "lib/mediator"
+import { Mediator, mediator } from "Server/mediator"
 import { FeatureFlags } from "System/useFeatureFlag"
-import { UserPreferences } from "lib/middleware/userPreferencesMiddleware"
+import { UserPreferences } from "Server/middleware/userPreferencesMiddleware"
 
 export interface ClientContext {
   user: User

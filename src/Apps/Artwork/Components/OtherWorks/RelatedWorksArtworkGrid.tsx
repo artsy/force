@@ -12,7 +12,7 @@ import createLogger from "Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
-import { Mediator } from "lib/mediator"
+import { Mediator } from "Server/mediator"
 import track from "react-tracking"
 
 const logger = createLogger("RelatedWorksArtworkGrid.tsx")

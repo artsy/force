@@ -178,12 +178,12 @@ describe("Payment", () => {
     })
   })
 
-  it("shows processing payment interface while setting payment", async () => {
+  it("shows saving payment preferences interface while setting payment", async () => {
     isCommittingMutation = true
     let wrapper = getWrapper()
     let page = new PaymentTestPage(wrapper)
 
-    expect(page.find("Processing payment")).toBeTruthy()
+    expect(page.find("Saving payment preferences")).toBeTruthy()
   })
 
   it("shows the default error modal when the payment picker throws an error", async () => {
