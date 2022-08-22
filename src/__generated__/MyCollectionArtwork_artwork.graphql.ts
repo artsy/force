@@ -10,6 +10,9 @@ export type MyCollectionArtwork_artwork = {
         readonly slug: string;
         readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
     } | null;
+    readonly marketPriceInsights: {
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights">;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "ArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
 };
@@ -58,6 +61,22 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "MyCollectionArtworkArtistMarket_marketPriceInsights"
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSidebar_artwork"
@@ -81,5 +100,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '752f00fe808fdfae14696d35a5098d11';
+(node as any).hash = 'b29e9f0d55bd0228e689a3fe4c45c06c';
 export default node;
