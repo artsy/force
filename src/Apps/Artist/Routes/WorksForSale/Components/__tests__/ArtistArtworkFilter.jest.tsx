@@ -117,7 +117,7 @@ describe("ArtistArtworkFilter", () => {
       const option = screen.getByRole("option", { name: "Default" })
 
       expect(option).toBeInTheDocument()
-      expect(option).toHaveValue("-default_trending_score")
+      expect(option).toHaveValue("-decayed_merch")
     })
   })
 })
