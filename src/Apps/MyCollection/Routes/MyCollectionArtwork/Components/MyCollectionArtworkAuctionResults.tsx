@@ -36,7 +36,7 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
         </Text>
         <RouterLink
           textAlign="right"
-          to={`/artist/${slug}/auction-results?scroll_to_market_signals`}
+          to={`/artist/${slug}/auction-results?scroll_to_market_signals=true`}
         >
           View All
         </RouterLink>
