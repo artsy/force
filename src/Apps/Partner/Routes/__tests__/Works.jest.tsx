@@ -11,18 +11,17 @@ import {
   mediumAggregation,
 } from "Apps/__tests__/Fixtures/aggregations"
 import { fireEvent, screen, within } from "@testing-library/react"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 jest.unmock("react-relay")
-jest.mock("System/Router/useRouter", () => ({
-  useRouter: () => ({
-    match: {
-      location: { query: {}, pathname: "" },
-    },
-  }),
-}))
 jest.mock("react-tracking")
+jest.mock("System/Router/useRouter")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
+}))
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn(),
 }))
 
 const { getWrapper } = setupTestWrapper<Works_Query>({
@@ -59,6 +58,8 @@ const { renderWithRelay } = setupTestWrapperTL<Works_Query>({
 
 describe("PartnerArtworks", () => {
   const trackEvent = jest.fn()
+  const mockUseRouter = useRouter as jest.Mock
+  const mockGetENV = getENV as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -66,6 +67,15 @@ describe("PartnerArtworks", () => {
         trackEvent,
       }
     })
+
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          query: {},
+          pathname: "",
+        },
+      },
+    }))
   })
 
   it("renders correctly", () => {
@@ -197,5 +207,34 @@ describe("PartnerArtworks", () => {
 
     expect(pill).not.toBeInTheDocument()
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
+  })
+
+  it("`Default` sort option should be selected by default for all partners", () => {
+    renderWithRelay()
+    expect(screen.getByDisplayValue("Default")).toBeInTheDocument()
+  })
+
+  it("`Recently Added` sort option should be selected by default for `artsy-2` partner", () => {
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "ARTSY_MERCHANDISING_PARTNER_SLUGS":
+          return "artsy-2"
+      }
+    })
+
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          query: {},
+        },
+        params: {
+          partnerId: "artsy-2",
+        },
+      },
+    }))
+
+    renderWithRelay()
+
+    expect(screen.getByDisplayValue("Recently added")).toBeInTheDocument()
   })
 })

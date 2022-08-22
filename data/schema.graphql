@@ -2376,6 +2376,9 @@ type ArtworkPriceInsights {
     format: String = ""
   ): String
   demandRank: Float
+
+  # The demand rank display text of the artist and medium
+  demandRankDisplayText: String
   lastAuctionResultDate: String
   liquidityRankDisplayText(
     # Return the liquidity rank in a formatted way (Low, medium, high or very high)
