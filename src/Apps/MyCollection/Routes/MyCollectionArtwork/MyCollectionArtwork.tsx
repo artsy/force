@@ -1,4 +1,4 @@
-import { Button, Column, Flex, GridColumns } from "@artsy/palette"
+import { Button, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,8 +10,6 @@ import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/My
 import { MyColectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
-import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
-import { MyColectionArtworkAuctionResultsRefetchContainer } from "./Components/MyCollectionArtworkAuctionResults"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
