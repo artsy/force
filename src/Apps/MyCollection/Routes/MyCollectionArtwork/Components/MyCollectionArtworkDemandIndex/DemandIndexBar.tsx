@@ -7,7 +7,7 @@ export const DemandIndexBar: React.FC<{ progress: number }> = ({
   const progressPercent = progress + "%"
 
   return (
-    <Flex flexDirection="column">
+    <Flex data-testid="demandIndexBar" flexDirection="column">
       <Box width="100%" position="relative" height={20} left={-6}>
         <Box position="absolute" left={progressPercent}>
           <TriangleDown />

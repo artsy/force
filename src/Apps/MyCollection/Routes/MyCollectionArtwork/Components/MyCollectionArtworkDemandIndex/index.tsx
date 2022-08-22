@@ -69,7 +69,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
       </Text>
       <Flex flexDirection="row" alignItems="center">
         {!!isHighDemand && (
-          <Flex alignItems="center" mr={0.5}>
+          <Flex data-testid="highDemandIcon" alignItems="center" mr={0.5}>
             <HighDemandIcon />
           </Flex>
         )}
