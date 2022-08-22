@@ -191,7 +191,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const onBalanceCheckComplete = (displayInsufficientFundsError: boolean) => {
     setBalanceCheckComplete(true)
     setIsSavingPayment(false)
-    setSelectedBankAccountId("")
 
     if (displayInsufficientFundsError) {
       setBankAccountHasInsufficientFunds(true)
@@ -299,6 +298,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   }
                   setIsSavingPayment={setIsSavingPayment}
                   setSelectedBankAccountId={setSelectedBankAccountId}
+                  setBalanceCheckComplete={setBalanceCheckComplete}
                 />
               </Flex>
             </>

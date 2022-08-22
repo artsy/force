@@ -43,6 +43,7 @@ export interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   setIsSavingPayment: (arg: boolean) => void
+  setBalanceCheckComplete: (arg: boolean) => void
   setSelectedBankAccountId: (arg: string) => void
 }
 
@@ -58,6 +59,7 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     setIsSavingPayment,
+    setBalanceCheckComplete,
     setSelectedBankAccountId,
   } = props
   const tracking = useTracking()
@@ -154,6 +156,7 @@ export const PaymentContent: FC<Props> = props => {
             setBankAccountHasInsufficientFunds
           }
           setIsSavingPayment={setIsSavingPayment}
+          setBalanceCheckComplete={setBalanceCheckComplete}
           setSelectedBankAccountId={setSelectedBankAccountId}
         />
       </Collapse>

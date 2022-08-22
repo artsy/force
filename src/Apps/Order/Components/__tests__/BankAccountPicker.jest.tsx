@@ -82,6 +82,7 @@ describe("BankAccountFragmentContainer", () => {
           bankAccountHasInsufficientFunds={false}
           setBankAccountHasInsufficientFunds={jest.fn()}
           setIsSavingPayment={jest.fn()}
+          setBalanceCheckComplete={jest.fn()}
           setSelectedBankAccountId={jest.fn()}
         />
       </MockBoot>

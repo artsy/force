@@ -17,6 +17,7 @@ interface Props {
   bankAccountHasInsufficientFunds: boolean
   setBankAccountHasInsufficientFunds: (arg: boolean) => void
   setIsSavingPayment: (arg: boolean) => void
+  setBalanceCheckComplete: (arg: boolean) => void
   setSelectedBankAccountId: (arg: string) => void
 }
 
@@ -27,6 +28,7 @@ export const BankAccountPicker: FC<Props> = props => {
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     setIsSavingPayment,
+    setBalanceCheckComplete,
     setSelectedBankAccountId,
   } = props
 
@@ -43,7 +45,9 @@ export const BankAccountPicker: FC<Props> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   const handleContinue = async () => {
+    setBalanceCheckComplete(false)
     setIsSavingPayment(true)
+
     try {
       const orderOrError = (
         await setPaymentMutation({
@@ -64,20 +68,22 @@ export const BankAccountPicker: FC<Props> = props => {
       setSelectedBankAccountId(bankAccountSelection.id!)
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsSavingPayment(false)
     }
   }
 
   const getInitialBankAccountSelection = (): BankAccountSelection => {
-    if (props.order.bankAccountId) {
+    if (order.bankAccountId) {
       return {
         type: "existing",
-        id: props.order.bankAccountId,
+        id: order.bankAccountId,
       }
     } else {
       return userHasExistingBankAccounts
         ? {
             type: "existing",
-            id: order.bankAccountId || bankAccountsArray[0]?.internalID!,
+            id: bankAccountsArray[0]?.internalID!,
           }
         : { type: "new" }
     }
@@ -93,10 +99,14 @@ export const BankAccountPicker: FC<Props> = props => {
         <RadioGroup
           data-test="bankAccounts"
           onSelect={val => {
-            setBankAccountHasInsufficientFunds(false)
             if (val === "new") {
-              setBankAccountSelection({ type: "new", id: "" })
+              setBankAccountHasInsufficientFunds(false)
+              setBankAccountSelection({ type: "new" })
             } else {
+              if (val !== bankAccountSelection.id) {
+                setBankAccountHasInsufficientFunds(false)
+              }
+
               setBankAccountSelection({ type: "existing", id: val })
             }
           }}
