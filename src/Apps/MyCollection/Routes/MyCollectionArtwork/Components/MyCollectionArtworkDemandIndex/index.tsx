@@ -33,10 +33,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
   const isHighDemand = Number(demandRank) >= 9
   const demandRankColor = demandRank >= 7 ? "blue100" : "black60"
 
-  let barWidth = demandRank * 10
-  if (barWidth > 100) {
-    barWidth = 100
-  }
+  const barWidth = Math.min(demandRank * 10, 100)
 
   return (
     <>
@@ -47,6 +44,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
           {DemandIndexExplanation}
         </Text>
       </Media>
+
       <Media lessThan="sm">
         <Flex>
           <Text variant={"sm-display"}>Demand Index</Text>
