@@ -1,4 +1,12 @@
-import { Button, Column, Flex, GridColumns, Join, Spacer } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  Flex,
+  GridColumns,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -6,11 +14,12 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/MyCollectionArtworkArtistMarket"
+import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
-import { MyColectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
+import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
-import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/MyCollectionArtworkArtistMarket"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -29,6 +38,9 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   )
   const enableMyCollectionPhase4Comparables = useFeatureFlag(
     "my-collection-web-phase-4-comparables"
+  )
+  const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
+    "my-collection-web-phase-4-demand-index"
   )
 
   const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
@@ -51,6 +63,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       </Button>
     </Flex>
   )
+
+  const hasInsights = !!artwork.marketPriceInsights
 
   return (
     <>
@@ -76,19 +90,32 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       </GridColumns>
 
       <Join separator={<Spacer mt={[2, 6]} />}>
-        {!!enableMyCollectionPhase4ArtistMarket &&
-          artwork.marketPriceInsights && (
-            <MyCollectionArtworkArtistMarketFragmentContainer
-              marketPriceInsights={artwork.marketPriceInsights}
-            />
-          )}
+        {hasInsights && (
+          <>
+            <Text variant={["lg-display", "xl"]}>Insights</Text>
+
+            <Spacer m={[2, 4]} />
+          </>
+        )}
+
+        {!!enableMyCollectionPhase4DemandIndex && hasInsights && (
+          <MyCollectionArtworkDemandIndexFragmentContainer
+            marketPriceInsights={artwork.marketPriceInsights}
+          />
+        )}
+
+        {!!enableMyCollectionPhase4ArtistMarket && hasInsights && (
+          <MyCollectionArtworkArtistMarketFragmentContainer
+            marketPriceInsights={artwork.marketPriceInsights}
+          />
+        )}
 
         {!!enableMyCollectionPhase4Comparables && (
           <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
         )}
 
         {!!enableMyCollectionPhase4AuctionResults && (
-          <MyColectionArtworkAuctionResultsFragmentContainer
+          <MyCollectionArtworkAuctionResultsFragmentContainer
             artist={artwork?.artist!}
           />
         )}
@@ -117,6 +144,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         }
         marketPriceInsights {
           ...MyCollectionArtworkArtistMarket_marketPriceInsights
+          ...MyCollectionArtworkDemandIndex_marketPriceInsights
         }
       }
     `,

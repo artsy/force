@@ -6,11 +6,11 @@ import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkAuctionResults_artist } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
 
-interface MyColectionArtworkAuctionResultsProps {
+interface MyCollectionArtworkAuctionResultsProps {
   artist: MyCollectionArtworkAuctionResults_artist
 }
 
-const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> = ({
+const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionResultsProps> = ({
   artist,
 }) => {
   const { slug, name, auctionResultsConnection } = artist
@@ -59,13 +59,12 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
           })}
         </Join>
       </Column>
-      <Spacer pb={6} />
     </>
   )
 }
 
-export const MyColectionArtworkAuctionResultsFragmentContainer = createFragmentContainer(
-  AuctionResultsContainer,
+export const MyCollectionArtworkAuctionResultsFragmentContainer = createFragmentContainer(
+  MyCollectionAuctionResultsContainer,
   {
     artist: graphql`
       fragment MyCollectionArtworkAuctionResults_artist on Artist
