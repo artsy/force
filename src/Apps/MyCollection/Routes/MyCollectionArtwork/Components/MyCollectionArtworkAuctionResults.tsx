@@ -1,10 +1,10 @@
 import { Column, Flex, Join, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
+import { MetaTags } from "Components/MetaTags"
+import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkAuctionResults_artist } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
-import { RouterLink } from "System/Router/RouterLink"
 
 interface MyColectionArtworkAuctionResultsProps {
   artist: MyCollectionArtworkAuctionResults_artist
@@ -34,7 +34,10 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
         <Text variant={["sm-display", "lg-display"]} textAlign="left">
           Auction Results
         </Text>
-        <RouterLink textAlign="right" to={`/artist/${slug}/auction-results`}>
+        <RouterLink
+          textAlign="right"
+          to={`/artist/${slug}/auction-results?scroll_to_market_signals=true`}
+        >
           View All
         </RouterLink>
       </Flex>
