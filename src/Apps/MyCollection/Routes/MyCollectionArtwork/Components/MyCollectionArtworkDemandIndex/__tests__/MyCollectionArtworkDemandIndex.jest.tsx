@@ -11,15 +11,24 @@ describe("MyCollectionArtworkDemandIndex", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     MyCollectionArtworkDemandIndexTestQuery
   >({
-    Component: props => (
-      <MockBoot>
-        <MyCollectionArtworkDemandIndexFragmentContainer {...(props as any)} />
-      </MockBoot>
-    ),
+    Component: props => {
+      if (props.artwork?.marketPriceInsights) {
+        return (
+          <MockBoot>
+            <MyCollectionArtworkDemandIndexFragmentContainer
+              marketPriceInsights={props.artwork.marketPriceInsights}
+            />
+          </MockBoot>
+        )
+      }
+      return null
+    },
     query: graphql`
       query MyCollectionArtworkDemandIndexTestQuery @relay_test_operation {
         artwork(id: "artwork-ID") {
-          ...MyCollectionArtworkDemandIndex_artwork
+          marketPriceInsights {
+            ...MyCollectionArtworkDemandIndex_marketPriceInsights
+          }
         }
       }
     `,
@@ -37,7 +46,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank less than 4", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          Artwork: () => ({ marketPriceInsights: { demandRank: 0.33 } }),
+          ArtworkPriceInsights: () => ({ demandRank: 0.33 }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
@@ -52,7 +61,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank less than 7", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          Artwork: () => ({ marketPriceInsights: { demandRank: 0.69 } }),
+          ArtworkPriceInsights: () => ({ demandRank: 0.69 }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
@@ -67,7 +76,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank less than 9", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          Artwork: () => ({ marketPriceInsights: { demandRank: 0.77 } }),
+          ArtworkPriceInsights: () => ({ demandRank: 0.77 }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
@@ -82,7 +91,7 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank more than or equals 9", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          Artwork: () => ({ marketPriceInsights: { demandRank: 0.94 } }),
+          ArtworkPriceInsights: () => ({ demandRank: 0.94 }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()

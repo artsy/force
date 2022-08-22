@@ -7,7 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkDemandIndexTestQueryVariables = {};
 export type MyCollectionArtworkDemandIndexTestQueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkDemandIndex_artwork">;
+        readonly marketPriceInsights: {
+            readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkDemandIndex_marketPriceInsights">;
+        } | null;
     } | null;
 };
 export type MyCollectionArtworkDemandIndexTestQuery = {
@@ -20,15 +22,15 @@ export type MyCollectionArtworkDemandIndexTestQuery = {
 /*
 query MyCollectionArtworkDemandIndexTestQuery {
   artwork(id: "artwork-ID") {
-    ...MyCollectionArtworkDemandIndex_artwork
+    marketPriceInsights {
+      ...MyCollectionArtworkDemandIndex_marketPriceInsights
+    }
     id
   }
 }
 
-fragment MyCollectionArtworkDemandIndex_artwork on Artwork {
-  marketPriceInsights {
-    demandRank
-  }
+fragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {
+  demandRank
 }
 */
 
@@ -56,9 +58,20 @@ return {
         "plural": false,
         "selections": [
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "MyCollectionArtworkDemandIndex_artwork"
+            "concreteType": "ArtworkPriceInsights",
+            "kind": "LinkedField",
+            "name": "marketPriceInsights",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "MyCollectionArtworkDemandIndex_marketPriceInsights"
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": "artwork(id:\"artwork-ID\")"
@@ -112,7 +125,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bb98f93f47b5f26ee5a82e4a41a61b3d",
+    "cacheID": "399114f754ca77712b86fb8a5437354c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -144,9 +157,9 @@ return {
     },
     "name": "MyCollectionArtworkDemandIndexTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkDemandIndexTestQuery {\n  artwork(id: \"artwork-ID\") {\n    ...MyCollectionArtworkDemandIndex_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkDemandIndex_artwork on Artwork {\n  marketPriceInsights {\n    demandRank\n  }\n}\n"
+    "text": "query MyCollectionArtworkDemandIndexTestQuery {\n  artwork(id: \"artwork-ID\") {\n    marketPriceInsights {\n      ...MyCollectionArtworkDemandIndex_marketPriceInsights\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkDemandIndex_marketPriceInsights on ArtworkPriceInsights {\n  demandRank\n}\n"
   }
 };
 })();
-(node as any).hash = '65b17f8de7e5153c61bfe16008a63c94';
+(node as any).hash = '7121f0cff6104b5586ec27d63da30ef1';
 export default node;

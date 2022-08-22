@@ -9,7 +9,10 @@ export type MyCollectionArtwork_artwork = {
     readonly artist: {
         readonly slug: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "ArtworkImageBrowser_artwork" | "MyCollectionArtworkDemandIndex_artwork" | "MyCollectionArtworkComparables_artwork">;
+    readonly marketPriceInsights: {
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkDemandIndex_marketPriceInsights">;
+    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "ArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$data = MyCollectionArtwork_artwork;
@@ -52,6 +55,22 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkPriceInsights",
+      "kind": "LinkedField",
+      "name": "marketPriceInsights",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "MyCollectionArtworkDemandIndex_marketPriceInsights"
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSidebar_artwork"
@@ -69,16 +88,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkDemandIndex_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "MyCollectionArtworkComparables_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '4f22cfe7e9d1ffc3fba92c5f60f38630';
+(node as any).hash = 'b4f9f6329d2e937326e4748aa6742a27';
 export default node;

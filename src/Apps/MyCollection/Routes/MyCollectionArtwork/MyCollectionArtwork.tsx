@@ -6,8 +6,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
-import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
+import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
@@ -31,6 +31,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
     "my-collection-web-phase-4-demand-index"
   )
+
   const slug = artwork?.artist?.slug!
 
   const EditArtworkButton = () => (
@@ -79,8 +80,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </>
       )}
 
-      {!!enableMyCollectionPhase4DemandIndex && (
-        <MyCollectionArtworkDemandIndexFragmentContainer artwork={artwork} />
+      {!!enableMyCollectionPhase4DemandIndex && artwork.marketPriceInsights && (
+        <MyCollectionArtworkDemandIndexFragmentContainer
+          marketPriceInsights={artwork.marketPriceInsights}
+        />
       )}
 
       {!!enableMyCollectionPhase4Comparables && (
@@ -101,11 +104,13 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
         ...ArtworkImageBrowser_artwork
-        ...MyCollectionArtworkDemandIndex_artwork
         ...MyCollectionArtworkComparables_artwork
         internalID
         artist {
           slug
+        }
+        marketPriceInsights {
+          ...MyCollectionArtworkDemandIndex_marketPriceInsights
         }
       }
     `,
