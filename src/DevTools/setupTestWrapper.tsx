@@ -96,8 +96,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
         query={query}
         render={({ props, error }) => {
           if (props) {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            return <Component {...componentProps} {...props} />
+            return <Component {...componentProps} {...(props as {})} />
           } else if (error) {
             console.error(error)
           }
@@ -141,8 +140,7 @@ export const setupTestWrapper = <T extends OperationType>({
         query={query}
         render={({ props, error }) => {
           if (props) {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            return <Component {...(componentProps || {})} {...props} />
+            return <Component {...(componentProps || {})} {...(props as {})} />
           } else if (error) {
             console.error(error)
           }
