@@ -15,7 +15,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/MyCollectionArtworkArtistMarket"
-import { MyColectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
+import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
@@ -115,7 +115,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         )}
 
         {!!enableMyCollectionPhase4AuctionResults && (
-          <MyColectionArtworkAuctionResultsFragmentContainer
+          <MyCollectionArtworkAuctionResultsFragmentContainer
             artist={artwork?.artist!}
           />
         )}

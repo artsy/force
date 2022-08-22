@@ -6,11 +6,11 @@ import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkAuctionResults_artist } from "__generated__/MyCollectionArtworkAuctionResults_artist.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 
-interface MyColectionArtworkAuctionResultsProps {
+interface MyCollectionArtworkAuctionResultsProps {
   artist: MyCollectionArtworkAuctionResults_artist
 }
 
-const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> = ({
+const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionResultsProps> = ({
   artist,
 }) => {
   const { slug, name, auctionResultsConnection } = artist
@@ -61,8 +61,8 @@ const AuctionResultsContainer: React.FC<MyColectionArtworkAuctionResultsProps> =
   )
 }
 
-export const MyColectionArtworkAuctionResultsFragmentContainer = createFragmentContainer(
-  AuctionResultsContainer,
+export const MyCollectionArtworkAuctionResultsFragmentContainer = createFragmentContainer(
+  MyCollectionAuctionResultsContainer,
   {
     artist: graphql`
       fragment MyCollectionArtworkAuctionResults_artist on Artist
