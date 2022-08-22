@@ -16,6 +16,11 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
     return null
   }
   const results = extractNodes(artwork.auctionResult)
+
+  if (!results.length) {
+    return null
+  }
+
   const titleString = `${artwork.artist?.name!} - Comparable Works on Artsy`
 
   return (
