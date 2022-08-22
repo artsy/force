@@ -9,24 +9,13 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkArtistMarket_marketPriceInsights } from "../../../../../__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
+import { MyCollectionArtworkArtistMarket_marketPriceInsights } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
 
 export const MyCollectionArtworkArtistMarket = ({
   marketPriceInsights,
 }: {
   marketPriceInsights: MyCollectionArtworkArtistMarket_marketPriceInsights
 }) => {
-  const renderInsight = (name: string, value: string) => {
-    return (
-      <Column span={[6, 4, 2]}>
-        <Flex flexDirection={"column"} justifyContent="flex-start">
-          <Text variant={["xs", "md", "md"]}>{name}</Text>
-          <Text variant={["lg", "xl", "xl"]}>{value}</Text>
-        </Flex>
-      </Column>
-    )
-  }
-
   const {
     annualValueSoldDisplayText,
     liquidityRankDisplayText,
@@ -48,11 +37,24 @@ export const MyCollectionArtworkArtistMarket = ({
       <Spacer mt={[2, 6]} />
 
       <GridColumns>
-        {!!annualValueSoldDisplayText &&
-          renderInsight("Annual Value Sold", annualValueSoldDisplayText)}
-        {annualLotsSold !== null &&
-          renderInsight("Annual Lots Sold", annualLotsSold.toString())}
-        {renderInsight("Sell-through Rate", formattedSellThroughRate + "%")}
+        {!!annualValueSoldDisplayText && (
+          <InsightColumn
+            name="Annual Value Sold"
+            value={annualValueSoldDisplayText}
+          />
+        )}
+        {annualLotsSold !== null && (
+          <InsightColumn
+            name="Annual Lots Sold"
+            value={annualLotsSold.toString()}
+          />
+        )}
+        {
+          <InsightColumn
+            name="Sell-through Rate"
+            value={formattedSellThroughRate + "%"}
+          />
+        }
 
         {!!medianSaleOverEstimatePercentage && (
           <Column span={[6, 4, 2]}>
@@ -65,10 +67,22 @@ export const MyCollectionArtworkArtistMarket = ({
           </Column>
         )}
 
-        {!!liquidityRankDisplayText &&
-          renderInsight("Liquidity", liquidityRankDisplayText)}
+        {!!liquidityRankDisplayText && (
+          <InsightColumn name="Liquidity" value={liquidityRankDisplayText} />
+        )}
       </GridColumns>
     </>
+  )
+}
+
+const InsightColumn = ({ name, value }: { name: string; value: string }) => {
+  return (
+    <Column span={[6, 4, 2]}>
+      <Flex flexDirection={"column"} justifyContent="flex-start">
+        <Text variant={["xs", "md", "md"]}>{name}</Text>
+        <Text variant={["lg", "xl", "xl"]}>{value}</Text>
+      </Flex>
+    </Column>
   )
 }
 
