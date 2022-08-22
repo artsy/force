@@ -46,7 +46,10 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank less than 4", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          ArtworkPriceInsights: () => ({ demandRank: 0.33 }),
+          ArtworkPriceInsights: () => ({
+            demandRank: 0.33,
+            demandRankDisplayText: "Less Active Demand",
+          }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
@@ -61,7 +64,10 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank less than 7", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          ArtworkPriceInsights: () => ({ demandRank: 0.69 }),
+          ArtworkPriceInsights: () => ({
+            demandRank: 0.69,
+            demandRankDisplayText: "Moderate Demand",
+          }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
@@ -76,7 +82,10 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank less than 9", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          ArtworkPriceInsights: () => ({ demandRank: 0.77 }),
+          ArtworkPriceInsights: () => ({
+            demandRank: 0.77,
+            demandRankDisplayText: "Active Demand",
+          }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
@@ -91,7 +100,10 @@ describe("MyCollectionArtworkDemandIndex", () => {
     describe("with demand rank more than or equals 9", () => {
       it("renders the demand rank bar", () => {
         renderWithRelay({
-          ArtworkPriceInsights: () => ({ demandRank: 0.94 }),
+          ArtworkPriceInsights: () => ({
+            demandRank: 0.94,
+            demandRankDisplayText: "High Demand",
+          }),
         })
 
         expect(screen.getByText("Demand Index")).toBeInTheDocument()
