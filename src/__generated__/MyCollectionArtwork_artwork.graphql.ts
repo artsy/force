@@ -8,6 +8,7 @@ export type MyCollectionArtwork_artwork = {
     readonly internalID: string;
     readonly artist: {
         readonly slug: string;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
     } | null;
     readonly marketPriceInsights: {
         readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights">;
@@ -50,6 +51,11 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "MyCollectionArtworkAuctionResults_artist"
         }
       ],
       "storageKey": null
@@ -94,5 +100,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '1eee00337241c31e6693b4fbf73cfa68';
+(node as any).hash = 'b29e9f0d55bd0228e689a3fe4c45c06c';
 export default node;
