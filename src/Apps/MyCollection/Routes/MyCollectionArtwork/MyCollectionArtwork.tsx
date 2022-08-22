@@ -15,6 +15,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/MyCollectionArtworkArtistMarket"
+import { MyColectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
@@ -40,6 +41,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   )
   const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
     "my-collection-web-phase-4-demand-index"
+  )
+
+  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
+    "my-collection-web-phase-4-auction-results"
   )
 
   const slug = artwork?.artist?.slug!
@@ -109,6 +114,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <MyCollectionArtworkComparablesFragmentContainer artwork={artwork} />
         )}
 
+        {!!enableMyCollectionPhase4AuctionResults && (
+          <MyColectionArtworkAuctionResultsFragmentContainer
+            artist={artwork?.artist!}
+          />
+        )}
+
         {!!enableMyCollectionPhase4ArticlesRail && (
           <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
         )}
@@ -129,6 +140,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         internalID
         artist {
           slug
+          ...MyCollectionArtworkAuctionResults_artist
         }
         marketPriceInsights {
           ...MyCollectionArtworkArtistMarket_marketPriceInsights
