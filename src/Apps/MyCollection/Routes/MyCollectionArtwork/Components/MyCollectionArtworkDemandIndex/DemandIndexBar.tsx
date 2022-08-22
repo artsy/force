@@ -1,5 +1,6 @@
 import { Box, Flex } from "@artsy/palette"
 import styled from "styled-components"
+import { TriangleDownIcon } from "./TriangleDownIcon"
 
 export const DemandIndexBar: React.FC<{ progress: number }> = ({
   progress,
@@ -10,7 +11,7 @@ export const DemandIndexBar: React.FC<{ progress: number }> = ({
     <Flex data-testid="demandIndexBar" flexDirection="column">
       <Box width="100%" position="relative" height={20} left={-6}>
         <Box position="absolute" left={progressPercent}>
-          <TriangleDown />
+          <TriangleDownIcon />
         </Box>
       </Box>
 
@@ -18,19 +19,6 @@ export const DemandIndexBar: React.FC<{ progress: number }> = ({
         <GradientBar height={20} width={progressPercent} />
       </Box>
     </Flex>
-  )
-}
-
-const TriangleDown = () => {
-  return (
-    <svg width="11" height="6" viewBox="0 0 11 6" fill="none">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M5.5 6L0 0L11 0L5.5 6Z"
-        fill="#1023D7"
-      />
-    </svg>
   )
 }
 
