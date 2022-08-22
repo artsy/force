@@ -74,50 +74,25 @@ describe("ArtistArtworkFilter", () => {
     expect(option).toHaveValue("-decayed_merch")
   })
 
-  // TODO: Remove when trending sort experiment ends
-  describe("Trending sort experiment", () => {
-    it("should display default sort for control variant", () => {
-      const { renderWithRelay } = getWrapper({
-        context: {
-          featureFlags: {
-            "trending-sort-for-artist-artwork-grids": {
-              flagEnabled: true,
-              variant: {
-                enabled: true,
-                name: "control",
-              },
+  it("should display trending sort for experiment variant", () => {
+    const { renderWithRelay } = getWrapper({
+      context: {
+        featureFlags: {
+          "trending-sort-for-artist-artwork-grids": {
+            flagEnabled: true,
+            variant: {
+              enabled: true,
+              name: "experiment",
             },
           },
         },
-      })
-
-      renderWithRelay()
-      const option = screen.getByRole("option", { name: "Default" })
-
-      expect(option).toBeInTheDocument()
-      expect(option).toHaveValue("-decayed_merch")
+      },
     })
 
-    it("should display trending sort for experiment variant", () => {
-      const { renderWithRelay } = getWrapper({
-        context: {
-          featureFlags: {
-            "trending-sort-for-artist-artwork-grids": {
-              flagEnabled: true,
-              variant: {
-                enabled: true,
-                name: "experiment",
-              },
-            },
-          },
-        },
-      })
+    renderWithRelay()
+    const option = screen.getByRole("option", { name: "Default" })
 
-      renderWithRelay()
-      const option = screen.getByRole("option", { name: "Default" })
-
-      expect(option).toBeInTheDocument()
-      expect(option).toHaveValue("-decayed_merch")
-    })
+    expect(option).toBeInTheDocument()
+    expect(option).toHaveValue("-decayed_merch")
   })
 })

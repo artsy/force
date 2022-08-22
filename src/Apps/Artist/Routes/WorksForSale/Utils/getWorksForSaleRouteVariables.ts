@@ -16,14 +16,6 @@ export function getWorksForSaleRouteVariables(
     ...initialFilterState,
   }
 
-  const trendingScoreSortFlag =
-    featureFlags["trending-sort-for-artist-artwork-grids"]
-  const variantName = trendingScoreSortFlag?.variant?.name
-
-  if (filterParams.sort === "-decayed_merch" && variantName === "experiment") {
-    filterParams.sort = "-default_trending_score"
-  }
-
   const aggregations = [
     "MEDIUM",
     "TOTAL",
