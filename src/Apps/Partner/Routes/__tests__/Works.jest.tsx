@@ -12,12 +12,16 @@ import {
 } from "Apps/__tests__/Fixtures/aggregations"
 import { fireEvent, screen, within } from "@testing-library/react"
 import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Router/useRouter")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
+}))
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn(),
 }))
 
 const { getWrapper } = setupTestWrapper<Works_Query>({
@@ -55,6 +59,7 @@ const { renderWithRelay } = setupTestWrapperTL<Works_Query>({
 describe("PartnerArtworks", () => {
   const trackEvent = jest.fn()
   const mockUseRouter = useRouter as jest.Mock
+  const mockGetENV = getENV as jest.Mock
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -210,6 +215,13 @@ describe("PartnerArtworks", () => {
   })
 
   it("`Recently Added` sort option should be selected by default for `artsy-2` partner", () => {
+    mockGetENV.mockImplementation(key => {
+      switch (key) {
+        case "ARTSY_MERCHANDISING_PARTNER_SLUGS":
+          return "artsy-2"
+      }
+    })
+
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
