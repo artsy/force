@@ -9,25 +9,33 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { Match, RouterState, withRouter } from "found"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { useRouter } from "System/Router/useRouter"
+import { getMerchandisingPartnerSlugs } from "Apps/Partner/Utils/getMerchandisingPartnerSlugs"
 
 interface PartnerArtworkFilterProps {
   partner: Works_partner
   relay: RelayRefetchProp
-  match?: Match
 }
 
 export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
   partner,
   relay,
-  match,
 }) => {
   const { sidebar } = partner
+  const { match } = useRouter()
+  const filters = match?.location?.query ?? {}
+  const partnerSlugs = getMerchandisingPartnerSlugs()
+  const partnerId = match?.params?.partnerId
+
+  // Preselects "Recently added" sort option for some partners by default
+  if (filters.sort === undefined && partnerSlugs.includes(partnerId)) {
+    filters.sort = "-published_at"
+  }
 
   return (
     <ArtworkFilterContextProvider
-      filters={match && match.location.query}
+      filters={filters}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },
@@ -54,8 +62,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
 }
 
 export const ArtworksRefetchContainer = createRefetchContainer(
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  withRouter<PartnerArtworkFilterProps & RouterState>(Artworks),
+  Artworks,
   {
     partner: graphql`
       fragment Works_partner on Partner
