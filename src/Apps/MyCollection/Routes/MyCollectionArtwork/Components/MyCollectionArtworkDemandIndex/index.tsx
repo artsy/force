@@ -80,7 +80,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
         </Text>
       </Flex>
 
-      <Spacer m={2} />
+      <Spacer m={[2, 0]} />
 
       <DemandIndexBar progress={barWidth} />
 
