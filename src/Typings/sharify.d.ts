@@ -29,6 +29,7 @@ declare module "sharify" {
       ARTIST_PAGE_CTA_ARTIST_ID: string
       ARTIST_PAGE_CTA_ENABLED: string
       ARTSY_EDITORIAL_CHANNEL: string
+      ARTSY_MERCHANDISING_PARTNER_SLUGS: string
       ARTSY_XAPP_TOKEN: string
       ARTWORK?: any // mobile artist app data
       AUCTION_ZENDESK_KEY: string
