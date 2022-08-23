@@ -33,7 +33,13 @@ fragment NotificationItem_item on Notification {
     totalCount
     edges {
       node {
-        title
+        internalID
+        image {
+          thumb: cropped(width: 58, height: 58) {
+            src
+            srcSet
+          }
+        }
         id
       }
     }
@@ -63,7 +69,7 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
@@ -130,14 +136,14 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "internalID",
+                    "name": "title",
                     "storageKey": null
                   },
-                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -197,6 +203,53 @@ return {
                             "plural": false,
                             "selections": [
                               (v1/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": "thumb",
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "height",
+                                        "value": 58
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "width",
+                                        "value": 58
+                                      }
+                                    ],
+                                    "concreteType": "CroppedImageUrl",
+                                    "kind": "LinkedField",
+                                    "name": "cropped",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "src",
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "srcSet",
+                                        "storageKey": null
+                                      }
+                                    ],
+                                    "storageKey": "cropped(height:58,width:58)"
+                                  }
+                                ],
+                                "storageKey": null
+                              },
                               (v2/*: any*/)
                             ],
                             "storageKey": null
@@ -220,12 +273,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e5af3ef304c7ee2bd8fad0ec8b6eb82c",
+    "cacheID": "89acffe20abbfd2aa311933df605344a",
     "id": null,
     "metadata": {},
     "name": "notificationsRoutes_NotificationsQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutes_NotificationsQuery {\n  notifications: notificationsConnection(first: 10) {\n    ...NotificationsApp_notifications\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        title\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsApp_notifications on NotificationConnection {\n  edges {\n    node {\n      internalID\n      ...NotificationItem_item\n      id\n    }\n  }\n}\n"
+    "text": "query notificationsRoutes_NotificationsQuery {\n  notifications: notificationsConnection(first: 10) {\n    ...NotificationsApp_notifications\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsApp_notifications on NotificationConnection {\n  edges {\n    node {\n      internalID\n      ...NotificationItem_item\n      id\n    }\n  }\n}\n"
   }
 };
 })();

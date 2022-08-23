@@ -13,7 +13,13 @@ export type NotificationItem_item = {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly title: string | null;
+                readonly internalID: string;
+                readonly image: {
+                    readonly thumb: {
+                        readonly src: string;
+                        readonly srcSet: string;
+                    } | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -27,21 +33,19 @@ export type NotificationItem_item$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "NotificationItem_item",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -100,7 +104,60 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/)
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Image",
+                  "kind": "LinkedField",
+                  "name": "image",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": "thumb",
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "height",
+                          "value": 58
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "width",
+                          "value": 58
+                        }
+                      ],
+                      "concreteType": "CroppedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "cropped",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "src",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "srcSet",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": "cropped(height:58,width:58)"
+                    }
+                  ],
+                  "storageKey": null
+                }
               ],
               "storageKey": null
             }
@@ -114,6 +171,5 @@ return {
   "type": "Notification",
   "abstractKey": null
 };
-})();
-(node as any).hash = '71a103837bea6c5efcbd25f00817e05e';
+(node as any).hash = '257f4b9c77f854e5c8492caac2d2165d';
 export default node;
