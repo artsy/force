@@ -64,13 +64,6 @@ describe("Edit artwork", () => {
 
       expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
 
-      expect(
-        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-      ).toHaveAttribute(
-        "href",
-        `/my-collection/artwork/${mockArtwork.internalID}`
-      )
-
       expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
         "Willem de Kooning"
       )
@@ -115,6 +108,21 @@ describe("Edit artwork", () => {
       expect(
         screen.getByPlaceholderText("City where artwork is located")
       ).toHaveValue("Berlin")
+    })
+  })
+
+  describe("Back Link behavior", () => {
+    it("opens modal on press", async () => {
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+
+      fireEvent.click(screen.getByText("Back"))
+
+      expect(screen.getByTestId("leave-button")).toHaveAttribute(
+        "href",
+        `/my-collection/artwork/${mockArtwork.internalID}`
+      )
     })
   })
 
@@ -193,7 +201,7 @@ describe("Create artwork", () => {
   }
 
   describe("Initial render", () => {
-    it("doesn't populates inputs", async () => {
+    it("doesn't populate inputs", async () => {
       getWrapper()
 
       expect(screen.getByText("Upload Artwork")).toBeInTheDocument()
@@ -201,11 +209,20 @@ describe("Create artwork", () => {
 
       expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
 
-      expect(
-        screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
-      ).toHaveAttribute("href", "/my-collection")
-
       expect(screen.getByPlaceholderText("Enter full name")).toHaveValue("")
+    })
+  })
+
+  describe("Back Link behavior", () => {
+    it("opens modal on press", async () => {
+      getWrapper()
+
+      fireEvent.click(screen.getByText("Back"))
+
+      expect(screen.getByTestId("leave-button")).toHaveAttribute(
+        "href",
+        "/my-collection"
+      )
     })
   })
 })

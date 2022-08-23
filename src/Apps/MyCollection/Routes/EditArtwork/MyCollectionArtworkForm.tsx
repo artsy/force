@@ -4,10 +4,12 @@ import {
   DROP_SHADOW,
   Flex,
   FullBleed,
+  ModalDialog,
   Spacer,
   Step,
   Stepper,
   useToasts,
+  Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -15,6 +17,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
@@ -42,6 +45,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
+  const [shouldShowModal, setShouldShowModal] = useState<boolean>(false)
 
   const initialErrors = validateArtwork(
     initialValues,
@@ -128,6 +132,47 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               </RouterLink>
 
               <StickyProvider>
+                {shouldShowModal && (
+                  <ModalDialog
+                    title="Leave without saving?"
+                    onClose={() => setShouldShowModal(false)}
+                    width={["100%", 600]}
+                    footer={
+                      <>
+                        <Button
+                          // @ts-ignore
+                          as={RouterLink}
+                          to={
+                            isEditing
+                              ? `/my-collection/artwork/${artwork.internalID}`
+                              : "/my-collection"
+                          }
+                          mt={4}
+                          width="100%"
+                          data-testid="leave-button"
+                        >
+                          Leave Without Saving
+                        </Button>
+                        <Button
+                          onClick={() => setShouldShowModal(false)}
+                          variant="secondaryNeutral"
+                          mt={2}
+                          width="100%"
+                        >
+                          {isEditing
+                            ? "Continue Editing"
+                            : "Continue Uploading Artwork"}
+                        </Button>
+                      </>
+                    }
+                  >
+                    <Text mt={4}>
+                      {isEditing
+                        ? "Changes you have made so far will not be saved."
+                        : "Your artwork will not be added to My Collection."}
+                    </Text>
+                  </ModalDialog>
+                )}
                 <Sticky withoutHeaderOffset>
                   {({ stuck }) => {
                     return (
@@ -143,11 +188,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               py={2}
                             >
                               <BackLink
-                                to={
-                                  isEditing
-                                    ? `/my-collection/artwork/${artwork.internalID}`
-                                    : "/my-collection"
-                                }
+                                // @ts-ignore
+                                as={RouterLink}
+                                onClick={() => setShouldShowModal(true)}
                                 width="min-content"
                               >
                                 Back
