@@ -342,6 +342,9 @@ describe("Payment", () => {
     it("renders description body for bank transfer when selected", async () => {
       page.selectPaymentMethod("USBankAccount")
 
+      expect(page.text()).toContain(
+        "• Payment processing will take 4-7 business days once the order is confirmed."
+      )
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
         "• If you can not find your bank, please check your spelling or choose"
