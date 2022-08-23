@@ -1,10 +1,9 @@
-import { Join, Separator, Box, FullBleed } from "@artsy/palette"
+import { FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationsApp_notifications } from "__generated__/NotificationsApp_notifications.graphql"
-import { extractNodes } from "Utils/extractNodes"
-import { NotificationItemFragmentContainer } from "Components/NotificationItem"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { NotificationsListFragmentContainer } from "./Components/NotificationsList"
 
 interface NotificationsAppProps {
   notifications: NotificationsApp_notifications
@@ -13,19 +12,11 @@ interface NotificationsAppProps {
 export const NotificationsApp: React.FC<NotificationsAppProps> = ({
   notifications,
 }) => {
-  const nodes = extractNodes(notifications)
-
   return (
     <FullBleed>
       <AppContainer>
         <HorizontalPadding my={1}>
-          <Join separator={<Separator />}>
-            {nodes.map(node => (
-              <Box key={node.internalID} mx={-2}>
-                <NotificationItemFragmentContainer item={node} />
-              </Box>
-            ))}
-          </Join>
+          <NotificationsListFragmentContainer notifications={notifications} />
         </HorizontalPadding>
       </AppContainer>
     </FullBleed>
@@ -37,12 +28,7 @@ export const NotificationsAppFragmentContainer = createFragmentContainer(
   {
     notifications: graphql`
       fragment NotificationsApp_notifications on NotificationConnection {
-        edges {
-          node {
-            internalID
-            ...NotificationItem_item
-          }
-        }
+        ...NotificationsList_notifications
       }
     `,
   }

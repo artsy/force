@@ -48,6 +48,10 @@ fragment NotificationItem_item on Notification {
 }
 
 fragment NotificationsApp_notifications on NotificationConnection {
+  ...NotificationsList_notifications
+}
+
+fragment NotificationsList_notifications on NotificationConnection {
   edges {
     node {
       internalID
@@ -276,12 +280,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9a00101d8580f82e65eb31bb1aba0ac0",
+    "cacheID": "26344c2f70c69a687ad8717ad6ebeb36",
     "id": null,
     "metadata": {},
     "name": "notificationsRoutes_NotificationsQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutes_NotificationsQuery {\n  notifications: notificationsConnection(first: 10) {\n    ...NotificationsApp_notifications\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsApp_notifications on NotificationConnection {\n  edges {\n    node {\n      internalID\n      ...NotificationItem_item\n      id\n    }\n  }\n}\n"
+    "text": "query notificationsRoutes_NotificationsQuery {\n  notifications: notificationsConnection(first: 10) {\n    ...NotificationsApp_notifications\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsApp_notifications on NotificationConnection {\n  ...NotificationsList_notifications\n}\n\nfragment NotificationsList_notifications on NotificationConnection {\n  edges {\n    node {\n      internalID\n      ...NotificationItem_item\n      id\n    }\n  }\n}\n"
   }
 };
 })();
