@@ -1,8 +1,10 @@
-import { Join, Separator, Spacer, Box } from "@artsy/palette"
+import { Join, Separator, Spacer, Box, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationsApp_notifications } from "__generated__/NotificationsApp_notifications.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItemFragmentContainer } from "Components/NotificationItem"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 interface NotificationsAppProps {
   notifications: NotificationsApp_notifications
@@ -14,18 +16,19 @@ export const NotificationsApp: React.FC<NotificationsAppProps> = ({
   const nodes = extractNodes(notifications)
 
   return (
-    <Box mx={-2}>
-      <Spacer mt={1} />
-
-      <Join separator={<Separator mx={2} />}>
-        {nodes.map(node => (
-          <NotificationItemFragmentContainer
-            key={node.internalID}
-            item={node}
-          />
-        ))}
-      </Join>
-    </Box>
+    <FullBleed>
+      <AppContainer>
+        <HorizontalPadding my={1}>
+          <Join separator={<Separator />}>
+            {nodes.map(node => (
+              <Box key={node.internalID} mx={-2}>
+                <NotificationItemFragmentContainer item={node} />
+              </Box>
+            ))}
+          </Join>
+        </HorizontalPadding>
+      </AppContainer>
+    </FullBleed>
   )
 }
 
