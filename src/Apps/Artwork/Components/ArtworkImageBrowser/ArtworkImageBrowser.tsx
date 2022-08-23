@@ -1,15 +1,16 @@
-import { ArtworkImageBrowser_artwork } from "__generated__/ArtworkImageBrowser_artwork.graphql"
-import * as React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
-import { Box, Flex, NoImageIcon, ResponsiveBox, Spacer } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
-import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
-import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
-import { Media } from "Utils/Responsive"
-import { useCursor } from "use-cursor"
+import { Box, Flex, ResponsiveBox, Spacer } from "@artsy/palette"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useCursor } from "use-cursor"
+import { Media } from "Utils/Responsive"
+import { ArtworkImageBrowser_artwork } from "__generated__/ArtworkImageBrowser_artwork.graphql"
+import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
+import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
+import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
+import { ArtworkNoImageComponent } from "./ArtworkNoImageComponent"
 
 const MAX_DIMENSION = 800
 
@@ -47,19 +48,6 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
     const defaultIndex = figures?.findIndex(image => !!image?.isDefault) ?? 0
     setCursor(defaultIndex)
   }
-  const noImageImage = (
-    <Flex
-      position="absolute"
-      top={0}
-      left={0}
-      width="100%"
-      height="100%"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <NoImageIcon width="28px" height="28px" fill="black60" />
-    </Flex>
-  )
 
   if ((figures ?? []).length === 0) {
     return (
@@ -74,7 +62,10 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
               aspectWidth={1}
               aspectHeight={1}
             >
-              {noImageImage}
+              <ArtworkNoImageComponent
+                artworkID={artwork.internalID}
+                isMyCollectionArtwork={isMyCollectionArtwork}
+              />
             </ResponsiveBox>
           </Flex>
         </Media>
@@ -89,7 +80,10 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
               aspectWidth={1}
               aspectHeight={1}
             >
-              {noImageImage}
+              <ArtworkNoImageComponent
+                artworkID={artwork.internalID}
+                isMyCollectionArtwork={isMyCollectionArtwork}
+              />
             </ResponsiveBox>
           </Flex>
         </Media>
