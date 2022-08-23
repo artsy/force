@@ -47,6 +47,7 @@ export const OnboardingFigure: ForwardRefExoticComponent<
           position="absolute"
           right={2}
           bottom={2}
+          fontStyle="italic"
         >
           {caption}
         </Text>

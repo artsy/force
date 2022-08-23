@@ -47,6 +47,7 @@ export const AboutApp: React.FC = () => {
             textAlign="right"
             p={1}
             color="white100"
+            fontStyle="italic"
           >
             Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969.
@@ -150,6 +151,7 @@ const Section: React.FC<SectionProps & BoxProps> = ({
             right={0}
             p={1}
             color="white100"
+            fontStyle="italic"
           >
             {caption}
           </Text>
