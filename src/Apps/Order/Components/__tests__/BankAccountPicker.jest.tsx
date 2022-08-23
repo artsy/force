@@ -73,6 +73,17 @@ const defaultData: BankAccountPickerTestQueryRawResponse = {
   },
 }
 
+const testQuery = graphql`
+  query BankAccountPickerTestQuery @raw_response_type @relay_test_operation {
+    me {
+      ...BankAccountPicker_me
+    }
+    order: commerceOrder(id: "unused") {
+      ...BankAccountPicker_order
+    }
+  }
+`
+
 let mockBankAccountSelection: BankAccountSelection = {
   type: "new",
 }
@@ -95,18 +106,7 @@ describe("BankAccountFragmentContainer", () => {
           />
         </MockBoot>
       ),
-      query: graphql`
-        query BankAccountPickerTestQuery
-          @raw_response_type
-          @relay_test_operation {
-          me {
-            ...BankAccountPicker_me
-          }
-          order: commerceOrder(id: "unused") {
-            ...BankAccountPicker_order
-          }
-        }
-      `,
+      query: testQuery,
     })
 
     it("does not render bank account selection", () => {
@@ -148,18 +148,7 @@ describe("BankAccountFragmentContainer", () => {
           />
         </MockBoot>
       ),
-      query: graphql`
-        query BankAccountPickerTestQuery
-          @raw_response_type
-          @relay_test_operation {
-          me {
-            ...BankAccountPicker_me
-          }
-          order: commerceOrder(id: "unused") {
-            ...BankAccountPicker_order
-          }
-        }
-      `,
+      query: testQuery,
     })
 
     const bankAccounts: Array<
