@@ -35,6 +35,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
                 key={artwork.internalID}
                 src={image?.src}
                 srcSet={image?.srcSet}
+                alt={`Artwork image of ${artwork.title}`}
                 width={58}
                 height={58}
                 lazyLoad
@@ -61,6 +62,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
+              title
               image {
                 thumb: cropped(width: 58, height: 58) {
                   src

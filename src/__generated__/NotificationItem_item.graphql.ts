@@ -14,6 +14,7 @@ export type NotificationItem_item = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly title: string | null;
                 readonly image: {
                     readonly thumb: {
                         readonly src: string;
@@ -33,19 +34,21 @@ export type NotificationItem_item$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "NotificationItem_item",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -111,6 +114,7 @@ const node: ReaderFragment = {
                   "name": "internalID",
                   "storageKey": null
                 },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -171,5 +175,6 @@ const node: ReaderFragment = {
   "type": "Notification",
   "abstractKey": null
 };
-(node as any).hash = '257f4b9c77f854e5c8492caac2d2165d';
+})();
+(node as any).hash = 'a4c2996b0c1ac9121817ae6af1abddf6';
 export default node;
