@@ -1,48 +1,43 @@
-import { Join, Separator, Spacer } from "@artsy/palette"
+import { Join, Separator, Spacer, Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { NotificationsApp_me } from "__generated__/NotificationsApp_me.graphql"
+import { NotificationsApp_notifications } from "__generated__/NotificationsApp_notifications.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItemFragmentContainer } from "Components/NotificationItem"
 
 interface NotificationsAppProps {
-  me: NotificationsApp_me
+  notifications: NotificationsApp_notifications
 }
 
-export const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
-  const notifications = extractNodes(me.followsAndSaves?.notifications)
+export const NotificationsApp: React.FC<NotificationsAppProps> = ({
+  notifications,
+}) => {
+  const nodes = extractNodes(notifications)
 
   return (
-    <>
+    <Box mx={-2}>
       <Spacer mt={1} />
 
       <Join separator={<Separator mx={2} />}>
-        {notifications.map(notification => (
+        {nodes.map(node => (
           <NotificationItemFragmentContainer
-            key={notification.id}
-            item={notification}
+            key={node.internalID}
+            item={node}
           />
         ))}
       </Join>
-    </>
+    </Box>
   )
 }
 
 export const NotificationsAppFragmentContainer = createFragmentContainer(
   NotificationsApp,
   {
-    me: graphql`
-      fragment NotificationsApp_me on Me {
-        followsAndSaves {
-          notifications: bundledArtworksByArtistConnection(
-            sort: PUBLISHED_AT_DESC
-            first: 10
-          ) {
-            edges {
-              node {
-                id
-                ...NotificationItem_item
-              }
-            }
+    notifications: graphql`
+      fragment NotificationsApp_notifications on NotificationConnection {
+        edges {
+          node {
+            internalID
+            ...NotificationItem_item
           }
         }
       }

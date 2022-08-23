@@ -24,8 +24,8 @@ export const notificationsRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query notificationsRoutes_NotificationsQuery {
-        me {
-          ...NotificationsApp_me
+        notifications: notificationsConnection(first: 10) {
+          ...NotificationsApp_notifications
         }
       }
     `,

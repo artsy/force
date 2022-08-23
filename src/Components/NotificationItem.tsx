@@ -1,18 +1,18 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
+import { NotificationItem_item } from "__generated__/NotificationItem_item.graphql"
 
 interface NotificationItemProps {
-  item: any
+  item: NotificationItem_item
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   return (
-    <Box>
+    <Box p={2}>
       <Flex flexDirection="row">
-        <Text variant="sm" fontWeight="bold">
-          Lee Ufan{" "}
+        <Text variant="sm">
+          <strong>{item.title}</strong> {item.message}
         </Text>
-        <Text variant="sm">8 new works added</Text>
       </Flex>
       <Text variant="xs" color="black60">
         1 day ago
@@ -25,11 +25,17 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
   NotificationItem,
   {
     item: graphql`
-      fragment NotificationItem_item on FollowedArtistsArtworksGroup {
-        href
-        image {
-          thumb: cropped(height: 58, width: 58) {
-            url
+      fragment NotificationItem_item on Notification {
+        title
+        message
+        createdAt
+        targetHref
+        artworksConnection(first: 4) {
+          totalCount
+          edges {
+            node {
+              title
+            }
           }
         }
       }
