@@ -17,11 +17,6 @@ export const notificationsRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       NotificationsApp.preload()
     },
-    onServerSideRender: ({ req, res }) => {
-      if (!req.user) {
-        res.redirect("/")
-      }
-    },
     query: graphql`
       query notificationsRoutes_NotificationsQuery {
         notifications: notificationsConnection(first: 10) {

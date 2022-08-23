@@ -7,6 +7,7 @@ const USER_REQUIRED_ROUTES = [
   "/settings/payments",
   "/settings/purchases(.*)",
   "/settings/shipping",
+  "/notifications",
   "/user/conversations(.*)",
 ]
 
