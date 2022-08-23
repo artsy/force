@@ -316,8 +316,7 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
         <>
           <Flex>
             <Text color="black60" variant="sm">
-              • Your bank account must be located in one of the SEPA
-              member-states.
+              • Your bank account must be located in one of the SEPA countries.
             </Text>
             <Tooltip
               placement="top-start"
@@ -345,6 +344,10 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
           </Flex>
           <Text color="black60" variant="sm">
             • Bank transfer is powered by Stripe.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Payment processing will take 4-7 business days once the order is
+            confirmed.
           </Text>
         </>
       )
