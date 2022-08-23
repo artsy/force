@@ -1,8 +1,9 @@
-import { Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item } from "__generated__/NotificationItem_item.graphql"
 import { DateTime } from "luxon"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface NotificationItemProps {
   item: NotificationItem_item
@@ -12,7 +13,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const artworks = extractNodes(item.artworksConnection)
 
   return (
-    <Box p={2}>
+    <RouterLink
+      display="block"
+      to={item.targetHref}
+      p={2}
+      textDecoration="none"
+    >
       <Flex flexDirection="row">
         <Text variant="sm">
           <strong>{item.title}</strong> {item.message}
@@ -44,7 +50,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
           })}
         </Join>
       </Flex>
-    </Box>
+    </RouterLink>
   )
 }
 
