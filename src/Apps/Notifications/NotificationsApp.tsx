@@ -1,4 +1,4 @@
-import { Join, Separator, Spacer, Box, FullBleed } from "@artsy/palette"
+import { Join, Separator, Box, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationsApp_notifications } from "__generated__/NotificationsApp_notifications.graphql"
 import { extractNodes } from "Utils/extractNodes"

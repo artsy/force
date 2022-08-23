@@ -75,8 +75,8 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
   }
 )
 
-const getDateLabel = (date: string) => {
-  const past = DateTime.fromISO(date)
+export const getDateLabel = (dateInISO: string) => {
+  const past = DateTime.fromISO(dateInISO)
   const now = DateTime.utc()
   const diff = now.diff(past, "days")
   const days = Math.floor(diff.days)
