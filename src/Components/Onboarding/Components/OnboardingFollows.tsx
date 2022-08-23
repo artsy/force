@@ -14,6 +14,7 @@ import { OnboardingSearchResultsQueryRenderer } from "../Components/OnboardingSe
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { OnboardingFigure } from "../Components/OnboardingFigure"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 interface OnboardingFollowsProps {
   kind: "artists" | "galleries"
@@ -44,6 +45,8 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
   const { debouncedValue } = useDebouncedValue({ value: query, delay: 200 })
 
   const { title, placeholder, entities, setId } = CONFIGURATION[kind]
+
+  const tracking = useOnboardingTracking()
 
   return (
     <OnboardingSplitLayout
@@ -94,7 +97,10 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
           <Box p={2}>
             <Button
               width="100%"
-              onClick={handleNext}
+              onClick={() => {
+                tracking.userCompletedOnboarding()
+                handleNext()
+              }}
               loading={loading}
               disabled={state.followedIds.length === 0}
             >
