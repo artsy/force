@@ -4,6 +4,7 @@ import { NotificationsApp_notifications } from "__generated__/NotificationsApp_n
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NotificationsListFragmentContainer } from "./Components/NotificationsList"
+import { MetaTags } from "Components/MetaTags"
 
 interface NotificationsAppProps {
   notifications: NotificationsApp_notifications
@@ -13,13 +14,17 @@ export const NotificationsApp: React.FC<NotificationsAppProps> = ({
   notifications,
 }) => {
   return (
-    <FullBleed>
-      <AppContainer>
-        <HorizontalPadding my={1}>
-          <NotificationsListFragmentContainer notifications={notifications} />
-        </HorizontalPadding>
-      </AppContainer>
-    </FullBleed>
+    <>
+      <MetaTags title="Notifications | Artsy" pathname="/notifications" />
+
+      <FullBleed>
+        <AppContainer>
+          <HorizontalPadding my={1}>
+            <NotificationsListFragmentContainer notifications={notifications} />
+          </HorizontalPadding>
+        </AppContainer>
+      </FullBleed>
+    </>
   )
 }
 
