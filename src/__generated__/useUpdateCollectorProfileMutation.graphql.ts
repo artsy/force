@@ -9,6 +9,8 @@ export type UpdateCollectorProfileInput = {
     affiliatedFairIds?: Array<string | null> | null | undefined;
     affiliatedGalleryIds?: Array<string | null> | null | undefined;
     clientMutationId?: string | null | undefined;
+    companyName?: string | null | undefined;
+    companyWebsite?: string | null | undefined;
     institutionalAffiliations?: string | null | undefined;
     intents?: Array<Intents | null> | null | undefined;
     loyaltyApplicant?: boolean | null | undefined;
