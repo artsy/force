@@ -149,6 +149,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                           }
                           mt={4}
                           width="100%"
+                          data-testid="leave-button"
                         >
                           Leave Without Saving
                         </Button>
