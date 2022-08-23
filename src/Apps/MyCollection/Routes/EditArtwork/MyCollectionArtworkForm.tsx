@@ -138,7 +138,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                     onClose={() => setShouldShowModal(false)}
                     width={["100%", 600]}
                     footer={
-                      <Flex flexGrow={1} flexDirection={"column"}>
+                      <>
                         <Button
                           // @ts-ignore
                           as={RouterLink}
@@ -162,7 +162,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                             ? "Continue Editing"
                             : "Continue Uploading Artwork"}
                         </Button>
-                      </Flex>
+                      </>
                     }
                   >
                     <Text mt={4}>
