@@ -16,5 +16,10 @@ export const notificationsRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       NotificationsApp.preload()
     },
+    onServerSideRender: ({ req, res }) => {
+      if (!req.user) {
+        res.redirect("/")
+      }
+    },
   },
 ]
