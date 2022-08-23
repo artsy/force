@@ -25,12 +25,38 @@ query notificationsRoutes_NotificationsQuery {
   }
 }
 
+fragment NotificationItem_item on FollowedArtistsArtworksGroup {
+  href
+  image {
+    thumb: cropped(height: 58, width: 58) {
+      url
+    }
+  }
+}
+
 fragment NotificationsApp_me on Me {
-  email
+  followsAndSaves {
+    notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {
+      edges {
+        node {
+          id
+          ...NotificationItem_item
+        }
+      }
+    }
+  }
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -74,30 +100,121 @@ const node: ConcreteRequest = {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "email",
+            "concreteType": "FollowsAndSaves",
+            "kind": "LinkedField",
+            "name": "followsAndSaves",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "notifications",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 10
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "sort",
+                    "value": "PUBLISHED_AT_DESC"
+                  }
+                ],
+                "concreteType": "FollowedArtistsArtworksGroupConnection",
+                "kind": "LinkedField",
+                "name": "bundledArtworksByArtistConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "FollowedArtistsArtworksGroupEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "FollowedArtistsArtworksGroup",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v0/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "href",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Image",
+                            "kind": "LinkedField",
+                            "name": "image",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": "thumb",
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "height",
+                                    "value": 58
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "width",
+                                    "value": 58
+                                  }
+                                ],
+                                "concreteType": "CroppedImageUrl",
+                                "kind": "LinkedField",
+                                "name": "cropped",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "url",
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": "cropped(height:58,width:58)"
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "bundledArtworksByArtistConnection(first:10,sort:\"PUBLISHED_AT_DESC\")"
+              }
+            ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9399ae7269c23d18bb354ba37bb58437",
+    "cacheID": "f7100731efd6498624f2e90d6c082213",
     "id": null,
     "metadata": {},
     "name": "notificationsRoutes_NotificationsQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutes_NotificationsQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  email\n}\n"
+    "text": "query notificationsRoutes_NotificationsQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationItem_item on FollowedArtistsArtworksGroup {\n  href\n  image {\n    thumb: cropped(height: 58, width: 58) {\n      url\n    }\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  followsAndSaves {\n    notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n      edges {\n        node {\n          id\n          ...NotificationItem_item\n        }\n      }\n    }\n  }\n}\n"
   }
 };
+})();
 (node as any).hash = '0fb4eed7cb54bfb9a7f244f5ee360bce';
 export default node;
