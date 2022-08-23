@@ -2,6 +2,7 @@ import { Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item } from "__generated__/NotificationItem_item.graphql"
+import { DateTime } from "luxon"
 
 interface NotificationItemProps {
   item: NotificationItem_item
@@ -19,7 +20,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
       </Flex>
 
       <Text variant="xs" color="black60">
-        1 day ago
+        {getDateLabel(item.createdAt!)}
       </Text>
 
       <Spacer mb={1} />
@@ -73,3 +74,16 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const getDateLabel = (date: string) => {
+  const past = DateTime.fromISO(date)
+  const now = DateTime.utc()
+  const diff = now.diff(past, "days")
+  const days = Math.floor(diff.days)
+
+  if (days === 0) {
+    return "Today"
+  }
+
+  return `${days} days ago`
+}
