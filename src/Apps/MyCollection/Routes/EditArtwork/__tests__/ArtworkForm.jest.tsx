@@ -17,11 +17,6 @@ const mockSubmitArtwork = jest.fn().mockResolvedValue({
   },
 })
 
-const setHookState = state =>
-  jest.fn().mockImplementation(() => [state, () => {}])
-
-const reactMock = require("react")
-
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
     router: { push: mockRouterPush, replace: mockRouterReplace },
