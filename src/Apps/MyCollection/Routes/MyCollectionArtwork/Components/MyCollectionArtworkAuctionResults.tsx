@@ -20,6 +20,10 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
   }
   const results = extractNodes(auctionResultsConnection)
 
+  if (!results.length) {
+    return null
+  }
+
   const titleString = `${name} - Artwork Auction Results on Artsy`
 
   return (
