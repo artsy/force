@@ -26,6 +26,7 @@ import { jobsRoutes } from "Apps/Jobs/jobsRoutes"
 import { meetTheSpecialistsRoutes } from "Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
 import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
+import { notificationsRoutes } from "./Apps/Notifications/notificationsRoutes"
 import { onboardingRoutes } from "Apps/Onboarding/onboardingRoutes"
 import { orderRoutes } from "Apps/Order/orderRoutes"
 import { pageRoutes } from "Apps/Page/pageRoutes"
@@ -81,6 +82,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: meetTheSpecialistsRoutes },
     { routes: myCollectionRoutes },
     { routes: newForYouRoutes },
+    { routes: notificationsRoutes },
     { routes: onboardingRoutes },
     { routes: orderRoutes },
     { routes: pageRoutes },
