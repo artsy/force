@@ -11,6 +11,7 @@ import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
 import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
+import { setTrackingPreferences } from "Server/analytics/segmentOneTrustIntegration/setTrackingPreferences"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
@@ -49,29 +50,8 @@ app.get(
  * Mount server-side Express routes
  */
 
-// TODO: Extract into an app file
-// Experiment with overwriting OneTrust consent cookie with server-side version
-// to get around Safari's 7 day limit for client-side cookies.
 app
-  .get("/set-tracking-preferences", (req, res) => {
-    const { OptanonAlertBoxClosed, OptanonConsent } = req.query
-
-    const cookieConfig = {
-      maxAge: 1000 * 60 * 60 * 24 * 365,
-      httpOnly: false,
-      secure: true,
-    }
-
-    if (OptanonAlertBoxClosed !== "undefined") {
-      res.cookie("OptanonAlertBoxClosed", OptanonAlertBoxClosed, cookieConfig)
-    }
-
-    if (OptanonConsent) {
-      res.cookie("OptanonConsent", OptanonConsent, cookieConfig)
-    }
-
-    res.send("[Force] Consent cookie set.")
-  })
+  .get("/set-tracking-preferences", setTrackingPreferences)
   .use(adminServerRoutes)
   .use(sitemapsServerApp)
   .use(rssServerApp)
