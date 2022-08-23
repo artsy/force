@@ -5,6 +5,14 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_me = {
+    readonly bankAccounts: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+                readonly last4: string;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"CreditCardPicker_me" | "BankAccountPicker_me">;
     readonly " $refType": "Payment_me";
 };
@@ -23,6 +31,59 @@ const node: ReaderFragment = {
   "name": "Payment_me",
   "selections": [
     {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 100
+        }
+      ],
+      "concreteType": "BankAccountConnection",
+      "kind": "LinkedField",
+      "name": "bankAccounts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "BankAccountEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "BankAccount",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "last4",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "bankAccounts(first:100)"
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "CreditCardPicker_me"
@@ -36,5 +97,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '1dbcb71aa69b82bc716a858129c43710';
+(node as any).hash = '1286c3ebd7b93b1c12d1c450fc570c6e';
 export default node;

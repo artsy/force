@@ -42,6 +42,7 @@ import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
+import { extractNodes } from "Utils/extractNodes"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -62,10 +63,16 @@ export enum BalanceCheckResult {
   check_not_possible = "check not possible",
 }
 
+export type BankAccountSelectionType = "existing" | "new"
+
+export interface BankAccountSelection {
+  type: BankAccountSelectionType
+  id?: string
+}
+
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { trackEvent } = useTracking()
-
-  const { order } = props
+  const { order, me } = props
   const { match } = useRouter()
   const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
   const CreditCardPicker = createRef<CreditCardPicker>()
@@ -99,6 +106,30 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // an existing bank account's ID, used to query account balance
   const [selectedBankAccountId, setSelectedBankAccountId] = useState("")
+
+  // user's existing bank accounts, if any
+  const bankAccountsArray = extractNodes(me.bankAccounts)
+
+  const getInitialBankAccountSelection = (): BankAccountSelection => {
+    if (order.bankAccountId) {
+      return {
+        type: "existing",
+        id: order.bankAccountId,
+      }
+    } else {
+      return bankAccountsArray.length > 0
+        ? {
+            type: "existing",
+            id: bankAccountsArray[0]?.internalID!,
+          }
+        : { type: "new" }
+    }
+  }
+
+  // user's desired bank account; either already on Order or user's profile
+  const [bankAccountSelection, setBankAccountSelection] = useState<
+    BankAccountSelection
+  >(getInitialBankAccountSelection())
 
   // whether balance check is performed for the current bank account
   const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
@@ -324,6 +355,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   setIsSavingPayment={setIsSavingPayment}
                   setSelectedBankAccountId={setSelectedBankAccountId}
                   setBalanceCheckComplete={setBalanceCheckComplete}
+                  bankAccountSelection={bankAccountSelection}
+                  setBankAccountSelection={setBankAccountSelection}
                 />
               </Flex>
             </>
@@ -384,12 +417,21 @@ export const PaymentFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment Payment_me on Me {
+        bankAccounts(first: 100) {
+          edges {
+            node {
+              internalID
+              last4
+            }
+          }
+        }
         ...CreditCardPicker_me
         ...BankAccountPicker_me
       }
     `,
     order: graphql`
       fragment Payment_order on CommerceOrder {
+        bankAccountId
         availablePaymentMethods
         buyerTotalCents
         internalID

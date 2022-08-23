@@ -23,6 +23,7 @@ import {
   Payment_order,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
+import { BankAccountSelection } from "./index"
 
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
@@ -45,6 +46,8 @@ export interface Props {
   setIsSavingPayment: (arg: boolean) => void
   setBalanceCheckComplete: (arg: boolean) => void
   setSelectedBankAccountId: (arg: string) => void
+  bankAccountSelection: BankAccountSelection
+  setBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
@@ -61,6 +64,8 @@ export const PaymentContent: FC<Props> = props => {
     setIsSavingPayment,
     setBalanceCheckComplete,
     setSelectedBankAccountId,
+    bankAccountSelection,
+    setBankAccountSelection,
   } = props
   const tracking = useTracking()
 
@@ -158,6 +163,8 @@ export const PaymentContent: FC<Props> = props => {
           setIsSavingPayment={setIsSavingPayment}
           setBalanceCheckComplete={setBalanceCheckComplete}
           setSelectedBankAccountId={setSelectedBankAccountId}
+          bankAccountSelection={bankAccountSelection}
+          setBankAccountSelection={setBankAccountSelection}
         />
       </Collapse>
 

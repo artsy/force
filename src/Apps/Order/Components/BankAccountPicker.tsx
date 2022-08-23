@@ -1,8 +1,9 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
+import { BankAccountSelection } from "../Routes/Payment/index"
 import { BorderedRadio, RadioGroup, Collapse, Spacer } from "@artsy/palette"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitDetails } from "./BankDebitDetails"
@@ -19,6 +20,8 @@ interface Props {
   setIsSavingPayment: (arg: boolean) => void
   setBalanceCheckComplete: (arg: boolean) => void
   setSelectedBankAccountId: (arg: string) => void
+  bankAccountSelection: BankAccountSelection
+  setBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -30,17 +33,11 @@ export const BankAccountPicker: FC<Props> = props => {
     setIsSavingPayment,
     setBalanceCheckComplete,
     setSelectedBankAccountId,
+    bankAccountSelection,
+    setBankAccountSelection,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
-  const userHasExistingBankAccounts = bankAccountsArray.length > 0
-
-  type BankAccountSelectionType = "existing" | "new"
-
-  interface BankAccountSelection {
-    type: BankAccountSelectionType
-    id?: string
-  }
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -73,29 +70,9 @@ export const BankAccountPicker: FC<Props> = props => {
     }
   }
 
-  const getInitialBankAccountSelection = (): BankAccountSelection => {
-    if (order.bankAccountId) {
-      return {
-        type: "existing",
-        id: order.bankAccountId,
-      }
-    } else {
-      return userHasExistingBankAccounts
-        ? {
-            type: "existing",
-            id: bankAccountsArray[0]?.internalID!,
-          }
-        : { type: "new" }
-    }
-  }
-
-  const [bankAccountSelection, setBankAccountSelection] = useState<
-    BankAccountSelection
-  >(getInitialBankAccountSelection())
-
   return (
     <>
-      {userHasExistingBankAccounts && (
+      {bankAccountsArray.length > 0 && (
         <RadioGroup
           data-test="bankAccounts"
           onSelect={val => {
