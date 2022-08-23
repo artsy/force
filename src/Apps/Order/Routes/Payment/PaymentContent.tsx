@@ -305,6 +305,10 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
           <Text color="black60" variant="sm">
             • Bank transfer is powered by Stripe.
           </Text>
+          <Text color="black60" variant="sm">
+            • Payment processing will take 4-7 business days once the order is
+            confirmed.
+          </Text>
         </>
       )
     case "SEPA_DEBIT":
