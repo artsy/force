@@ -11,6 +11,7 @@ import { FollowGeneButtonFragmentContainer } from "Components/FollowButton/Follo
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { OnboardingThankYou } from "../Views/OnboardingThankYou"
 import { ContextModule } from "@artsy/cohesion"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
 interface OnboardingGeneProps {
   gene: OnboardingGene_gene
@@ -20,14 +21,16 @@ interface OnboardingGeneProps {
 const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   const artworks = extractNodes(gene.artworks)
   const { onClose } = useOnboardingContext()
+  const tracking = useOnboardingTracking()
 
   useEffect(() => {
     return () => {
       if (onClose) {
+        tracking.userCompletedOnboarding()
         onClose()
       }
     }
-  }, [onClose])
+  }, [onClose, tracking])
 
   return (
     <Box px={[2, 4]} py={6}>
