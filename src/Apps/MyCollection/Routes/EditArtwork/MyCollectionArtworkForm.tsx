@@ -56,7 +56,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   )
   const {
     createOrUpdateArtwork,
-    deleteArtworkInside,
+    deleteArtworkRequest,
   } = useCreateOrUpdateOrDeleteArtwork()
 
   const handleSubmit = async (values: ArtworkModel) => {
@@ -154,7 +154,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   const handleDelete = async () => {
     try {
-      await deleteArtworkInside({
+      await deleteArtworkRequest({
         artworkId: artwork?.internalID!,
       }).then(() => router.push({ pathname: "/settings/my-collection" }))
     } catch (error) {
@@ -181,7 +181,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
             onClick={handleDelete}
             mt={4}
             width="100%"
-            data-testid="leave-button"
+            data-testid="submit-delete-button"
           >
             Delete Artwork
           </Button>
@@ -291,6 +291,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
             mt={6}
             width={["100%", "auto"]}
             variant="secondaryNeutral"
+            data-testid="delete-button"
           >
             Delete Artwork
           </Button>

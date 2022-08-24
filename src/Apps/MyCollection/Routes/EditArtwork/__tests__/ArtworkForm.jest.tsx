@@ -16,6 +16,11 @@ const mockSubmitArtwork = jest.fn().mockResolvedValue({
     artworkOrError: { artwork: { internalID: "internal-id" } },
   },
 })
+const mockDeleteArtwork = jest.fn().mockResolvedValue({
+  myCollectionDeleteArtwork: {
+    artworkOrError: { artwork: { internalID: "internal-id" } },
+  },
+})
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
@@ -29,6 +34,12 @@ jest.mock("../Mutations/useUpdateArtwork", () => ({
   ...jest.requireActual("../Mutations/useUpdateArtwork"),
   useUpdateArtwork: jest.fn(() => ({
     submitMutation: mockSubmitArtwork,
+  })),
+}))
+jest.mock("../Mutations/useDeleteArtwork", () => ({
+  ...jest.requireActual("../Mutations/useDeleteArtwork"),
+  useDeleteArtwork: jest.fn(() => ({
+    submitMutation: mockDeleteArtwork,
   })),
 }))
 jest.unmock("react-relay")
@@ -187,6 +198,56 @@ describe("Edit artwork", () => {
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/my-collection/artwork/internal-id",
       })
+    })
+  })
+})
+
+describe("Delete artwork", () => {
+  const getWrapper = (breakpoint: Breakpoint = "lg") =>
+    setupTestWrapperTL({
+      Component: (props: any) => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <MyCollectionArtworkFormFragmentContainer {...props} />
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ArtworkFormTest_Query($slug: String!) {
+          artwork(id: $slug) {
+            ...MyCollectionArtworkForm_artwork
+          }
+        }
+      `,
+      variables: {
+        slug: mockArtwork.internalID,
+      },
+    })
+
+  it("deletes artwork", async () => {
+    getWrapper().renderWithRelay({
+      Artwork: () => mockArtwork,
+    })
+
+    // opens modal
+    fireEvent.click(screen.getByTestId("delete-button"))
+    fireEvent.click(screen.getByTestId("submit-delete-button"))
+
+    await flushPromiseQueue()
+
+    expect(mockDeleteArtwork).toHaveBeenCalledWith(
+      expect.objectContaining({
+        rejectIf: expect.any(Function),
+        variables: {
+          input: {
+            artworkId: "62fc96c48d3ff8000b556c3a",
+          },
+        },
+      })
+    )
+
+    expect(mockRouterPush).toHaveBeenCalledWith({
+      pathname: "/settings/my-collection",
     })
   })
 })

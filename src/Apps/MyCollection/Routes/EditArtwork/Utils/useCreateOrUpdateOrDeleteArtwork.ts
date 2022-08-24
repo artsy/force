@@ -44,7 +44,7 @@ export const useCreateOrUpdateOrDeleteArtwork = () => {
     return artworkId
   }
 
-  const deleteArtworkInside = async (
+  const deleteArtworkRequest = async (
     artwork: MyCollectionDeleteArtworkInput
   ) => {
     await deleteArtwork({
@@ -57,5 +57,5 @@ export const useCreateOrUpdateOrDeleteArtwork = () => {
     })
   }
 
-  return { createOrUpdateArtwork, deleteArtworkInside }
+  return { createOrUpdateArtwork, deleteArtworkRequest }
 }
