@@ -16,6 +16,10 @@ export const MyCollectionArtworkArtistMarket = ({
 }: {
   marketPriceInsights: MyCollectionArtworkArtistMarket_marketPriceInsights
 }) => {
+  if (!marketPriceInsights) {
+    return null
+  }
+
   const {
     annualValueSoldDisplayText,
     liquidityRankDisplayText,
