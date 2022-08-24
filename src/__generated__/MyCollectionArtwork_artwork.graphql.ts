@@ -6,14 +6,18 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork = {
     readonly internalID: string;
+    readonly comparables: {
+        readonly totalCount: number | null;
+    } | null;
     readonly artist: {
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
+        readonly auctionResults: {
+            readonly totalCount: number | null;
+        } | null;
     } | null;
-    readonly marketPriceInsights: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
+    readonly priceInsights: {
+        readonly artistId: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "ArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowser_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkSidebar_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$data = MyCollectionArtwork_artwork;
@@ -24,7 +28,17 @@ export type MyCollectionArtwork_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -38,6 +52,16 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "comparables",
+      "args": null,
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "comparableAuctionResults",
+      "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
       "alias": null,
       "args": null,
       "concreteType": "Artist",
@@ -46,22 +70,20 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": null,
+          "alias": "auctionResults",
           "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
+          "concreteType": "AuctionResultConnection",
+          "kind": "LinkedField",
+          "name": "auctionResultsConnection",
+          "plural": false,
+          "selections": (v0/*: any*/),
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "MyCollectionArtworkAuctionResults_artist"
         }
       ],
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "priceInsights",
       "args": null,
       "concreteType": "ArtworkPriceInsights",
       "kind": "LinkedField",
@@ -69,27 +91,14 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "MyCollectionArtworkArtistMarket_marketPriceInsights"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "MyCollectionArtworkDemandIndex_marketPriceInsights"
+          "kind": "ScalarField",
+          "name": "artistId",
+          "storageKey": null
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSidebar_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkMeta_artwork"
     },
     {
       "args": null,
@@ -99,11 +108,22 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkComparables_artwork"
+      "name": "MyCollectionArtworkMeta_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkInsights_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkSidebar_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '9244193fbf1171997e9c6ad7a5f62f0b';
+})();
+(node as any).hash = '320e4aed8f719cad445f22a152d8c608';
 export default node;
