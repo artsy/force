@@ -207,7 +207,7 @@ export const NavBar: React.FC = track(
                     {t`navbar.priceDatabase`}
                   </NavBarItemLink>
 
-                  <Flex alignItems="center" display={["none", "none", "flex"]}>
+                  <Flex alignItems="center" display={["none", "flex"]}>
                     <NavBarItemLink
                       href="/articles"
                       textDecoration="none"
@@ -423,7 +423,7 @@ export const NavBar: React.FC = track(
                 </NavBarItemLink>
 
                 <NavBarItemLink
-                  href="/nft"
+                  href="/collect?additional_gene_ids[0]=nft"
                   onClick={handleClick}
                   data-label="NFTs"
                 >
