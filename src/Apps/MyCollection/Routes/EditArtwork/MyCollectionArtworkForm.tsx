@@ -31,7 +31,7 @@ import {
   MyCollectionArtworkDetailsValidationSchema,
   validateArtwork,
 } from "./Utils/artworkValidation"
-import { useCreateOrUpdateArtwork } from "./Utils/useCreateOrUpdateArtwork"
+import { useCreateOrUpdateOrDeleteArtwork } from "./Utils/useCreateOrUpdateOrDeleteArtwork"
 
 const logger = createLogger("MyCollectionArtworkForm.tsx")
 
@@ -45,13 +45,19 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
-  const [shouldShowModal, setShouldShowModal] = useState<boolean>(false)
+  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
+  const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
+    boolean
+  >(false)
 
   const initialErrors = validateArtwork(
     initialValues,
     MyCollectionArtworkDetailsValidationSchema
   )
-  const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
+  const {
+    createOrUpdateArtwork,
+    deleteArtworkInside,
+  } = useCreateOrUpdateOrDeleteArtwork()
 
   const handleSubmit = async (values: ArtworkModel) => {
     try {
@@ -106,6 +112,94 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   const isEditing = !!artwork?.internalID
 
+  const backModal = (
+    <ModalDialog
+      title="Leave without saving?"
+      onClose={() => setShouldShowBackModal(false)}
+      width={["100%", 600]}
+      footer={
+        <>
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            to={
+              isEditing
+                ? `/my-collection/artwork/${artwork.internalID}`
+                : "/my-collection"
+            }
+            mt={4}
+            width="100%"
+            data-testid="leave-button"
+          >
+            Leave Without Saving
+          </Button>
+          <Button
+            onClick={() => setShouldShowBackModal(false)}
+            variant="secondaryNeutral"
+            mt={2}
+            width="100%"
+          >
+            {isEditing ? "Continue Editing" : "Continue Uploading Artwork"}
+          </Button>
+        </>
+      }
+    >
+      <Text mt={4}>
+        {isEditing
+          ? "Changes you have made so far will not be saved."
+          : "Your artwork will not be added to My Collection."}
+      </Text>
+    </ModalDialog>
+  )
+
+  const handleDelete = async () => {
+    try {
+      await deleteArtworkInside({
+        artworkId: artwork?.internalID!,
+      }).then(() => router.push({ pathname: "/settings/my-collection" }))
+    } catch (error) {
+      logger.error(`Artwork not deleted`, error)
+
+      sendToast({
+        variant: "error",
+        message: "An error occurred",
+        description: "Please contact support@artsymail.com",
+      })
+
+      return
+    }
+  }
+
+  const deletionModal = (
+    <ModalDialog
+      title="Delete this artwork?"
+      onClose={() => setShouldShowDeletionModal(false)}
+      width={["100%", 600]}
+      footer={
+        <>
+          <Button
+            onClick={handleDelete}
+            mt={4}
+            width="100%"
+            data-testid="leave-button"
+          >
+            Delete Artwork
+          </Button>
+          <Button
+            onClick={() => setShouldShowDeletionModal(false)}
+            variant="secondaryNeutral"
+            mt={2}
+            width="100%"
+          >
+            Keep Artwork
+          </Button>
+        </>
+      }
+    >
+      <Text mt={4}>This artwork will be removed from My Collection.</Text>
+    </ModalDialog>
+  )
+
   return (
     <>
       {/* TODO: Update meta tags */}
@@ -132,47 +226,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               </RouterLink>
 
               <StickyProvider>
-                {shouldShowModal && (
-                  <ModalDialog
-                    title="Leave without saving?"
-                    onClose={() => setShouldShowModal(false)}
-                    width={["100%", 600]}
-                    footer={
-                      <>
-                        <Button
-                          // @ts-ignore
-                          as={RouterLink}
-                          to={
-                            isEditing
-                              ? `/my-collection/artwork/${artwork.internalID}`
-                              : "/my-collection"
-                          }
-                          mt={4}
-                          width="100%"
-                          data-testid="leave-button"
-                        >
-                          Leave Without Saving
-                        </Button>
-                        <Button
-                          onClick={() => setShouldShowModal(false)}
-                          variant="secondaryNeutral"
-                          mt={2}
-                          width="100%"
-                        >
-                          {isEditing
-                            ? "Continue Editing"
-                            : "Continue Uploading Artwork"}
-                        </Button>
-                      </>
-                    }
-                  >
-                    <Text mt={4}>
-                      {isEditing
-                        ? "Changes you have made so far will not be saved."
-                        : "Your artwork will not be added to My Collection."}
-                    </Text>
-                  </ModalDialog>
-                )}
+                {shouldShowBackModal && backModal}
+                {shouldShowDeletionModal && deletionModal}
                 <Sticky withoutHeaderOffset>
                   {({ stuck }) => {
                     return (
@@ -190,7 +245,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               <BackLink
                                 // @ts-ignore
                                 as={RouterLink}
-                                onClick={() => setShouldShowModal(true)}
+                                onClick={() => setShouldShowBackModal(true)}
                                 width="min-content"
                               >
                                 Back
@@ -230,6 +285,16 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
             </Form>
           )}
         </Formik>
+        {isEditing && (
+          <Button
+            onClick={() => setShouldShowDeletionModal(true)}
+            mt={6}
+            width={["100%", "auto"]}
+            variant="secondaryNeutral"
+          >
+            Delete Artwork
+          </Button>
+        )}
       </AppContainer>
 
       <Spacer mt={4} />
