@@ -1,7 +1,7 @@
 import { FullBleed } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { NotificationsListQueryRenderer } from "./Components/NotificationsList"
+import { NotificationsQueryRenderer } from "./Components/Notifications"
 import { MetaTags } from "Components/MetaTags"
 
 export const NotificationsApp: React.FC = () => {
@@ -12,7 +12,7 @@ export const NotificationsApp: React.FC = () => {
       <FullBleed>
         <AppContainer>
           <HorizontalPadding my={1}>
-            <NotificationsListQueryRenderer />
+            <NotificationsQueryRenderer />
           </HorizontalPadding>
         </AppContainer>
       </FullBleed>

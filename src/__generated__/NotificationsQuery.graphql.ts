@@ -4,21 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type NotificationsListQueryVariables = {};
-export type NotificationsListQueryResponse = {
+export type NotificationsQueryVariables = {};
+export type NotificationsQueryResponse = {
     readonly viewer: {
         readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
     } | null;
 };
-export type NotificationsListQuery = {
-    readonly response: NotificationsListQueryResponse;
-    readonly variables: NotificationsListQueryVariables;
+export type NotificationsQuery = {
+    readonly response: NotificationsQueryResponse;
+    readonly variables: NotificationsQueryVariables;
 };
 
 
 
 /*
-query NotificationsListQuery {
+query NotificationsQuery {
   viewer {
     ...NotificationsList_viewer
   }
@@ -87,7 +87,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "NotificationsListQuery",
+    "name": "NotificationsQuery",
     "selections": [
       {
         "alias": null,
@@ -113,7 +113,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "NotificationsListQuery",
+    "name": "NotificationsQuery",
     "selections": [
       {
         "alias": null,
@@ -288,14 +288,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4dee6e7652dd6a4ece4dc6a45ede89fa",
+    "cacheID": "e7c3072970fa11bc8dcbdecec3ef12f8",
     "id": null,
     "metadata": {},
-    "name": "NotificationsListQuery",
+    "name": "NotificationsQuery",
     "operationKind": "query",
-    "text": "query NotificationsListQuery {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationsQuery {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '295c93ff58e11bfd2068914ff241e091';
+(node as any).hash = 'c24f82bf90ff25aec533b9567114b94c';
 export default node;

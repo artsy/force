@@ -2,8 +2,8 @@ import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item } from "__generated__/NotificationItem_item.graphql"
-import { DateTime } from "luxon"
 import { RouterLink } from "System/Router/RouterLink"
+import { getDateLabel } from "./util"
 
 interface NotificationItemProps {
   item: NotificationItem_item
@@ -82,16 +82,3 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export const getDateLabel = (dateInISO: string) => {
-  const past = DateTime.fromISO(dateInISO)
-  const now = DateTime.utc()
-  const diff = now.diff(past, "days")
-  const days = Math.floor(diff.days)
-
-  if (days === 0) {
-    return "Today"
-  }
-
-  return `${days} days ago`
-}
