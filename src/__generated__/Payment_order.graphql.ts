@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type Payment_order = {
+    readonly bankAccountId: string | null;
     readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
     readonly buyerTotalCents: number | null;
     readonly internalID: string;
@@ -64,6 +65,13 @@ return {
   "metadata": null,
   "name": "Payment_order",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "bankAccountId",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -239,5 +247,5 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '776eb4cdec34eaf39297dd3860c8d6f3';
+(node as any).hash = '36bd58e36dba50cf9a0c1a266ee9b9e2';
 export default node;

@@ -19,8 +19,8 @@ describe("BankDebitProvider", () => {
           " $refType": "BankAccountPicker_order",
         }}
         bankAccountHasInsufficientFunds={false}
-        setBankAccountHasInsufficientFunds={jest.fn()}
-        setIsSavingPayment={jest.fn()}
+        onSetBankAccountHasInsufficientFunds={jest.fn()}
+        onSetIsSavingPayment={jest.fn()}
       />
     )
 

@@ -21,15 +21,15 @@ import { LoadingArea } from "../LoadingArea"
 interface Props {
   order: { mode: string | null; internalID: string }
   bankAccountHasInsufficientFunds: boolean
-  setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  setIsSavingPayment: (arg: boolean) => void
+  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onSetIsSavingPayment: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
   bankAccountHasInsufficientFunds,
-  setBankAccountHasInsufficientFunds,
-  setIsSavingPayment,
+  onSetBankAccountHasInsufficientFunds,
+  onSetIsSavingPayment,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
@@ -39,9 +39,9 @@ export const BankDebitForm: FC<Props> = ({
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
 
-  const onPaymentElementChange = event => {
+  const handlePaymentElementChange = event => {
     if (event.complete) {
-      setBankAccountHasInsufficientFunds(false)
+      onSetBankAccountHasInsufficientFunds(false)
 
       tracking.trackEvent({
         flow: order.mode,
@@ -66,7 +66,7 @@ export const BankDebitForm: FC<Props> = ({
     // confirm Stripe payment setup which leaves and redirects back.
     window.removeEventListener("beforeunload", preventHardReload)
 
-    setIsSavingPayment(true)
+    onSetIsSavingPayment(true)
 
     const { error } = await stripe.confirmSetup({
       elements,
@@ -76,7 +76,7 @@ export const BankDebitForm: FC<Props> = ({
     })
 
     if (error) {
-      setIsSavingPayment(false)
+      onSetIsSavingPayment(false)
       throw error
     }
   }
@@ -87,7 +87,7 @@ export const BankDebitForm: FC<Props> = ({
         {isPaymentElementLoading && <Box height={300}></Box>}
         <PaymentElement
           onReady={() => setIsPaymentElementLoading(false)}
-          onChange={event => onPaymentElementChange(event)}
+          onChange={event => handlePaymentElementChange(event)}
           options={{
             defaultValues: {
               billingDetails: {
