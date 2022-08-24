@@ -4,21 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type NotificationsList_test_QueryVariables = {};
-export type NotificationsList_test_QueryResponse = {
+export type NotificationsListQueryVariables = {};
+export type NotificationsListQueryResponse = {
     readonly viewer: {
         readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
     } | null;
 };
-export type NotificationsList_test_Query = {
-    readonly response: NotificationsList_test_QueryResponse;
-    readonly variables: NotificationsList_test_QueryVariables;
+export type NotificationsListQuery = {
+    readonly response: NotificationsListQueryResponse;
+    readonly variables: NotificationsListQueryVariables;
 };
 
 
 
 /*
-query NotificationsList_test_Query {
+query NotificationsListQuery {
   viewer {
     ...NotificationsList_viewer
   }
@@ -81,31 +81,13 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v3 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v4 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
 };
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "NotificationsList_test_Query",
+    "name": "NotificationsListQuery",
     "selections": [
       {
         "alias": null,
@@ -131,7 +113,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "NotificationsList_test_Query",
+    "name": "NotificationsListQuery",
     "selections": [
       {
         "alias": null,
@@ -306,88 +288,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8d0981e7250698a8f08d9d0ab4a75bff",
+    "cacheID": "4dee6e7652dd6a4ece4dc6a45ede89fa",
     "id": null,
-    "metadata": {
-      "relayTestingSelectionTypeInfo": {
-        "viewer": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Viewer"
-        },
-        "viewer.notifications": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "NotificationConnection"
-        },
-        "viewer.notifications.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "NotificationEdge"
-        },
-        "viewer.notifications.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Notification"
-        },
-        "viewer.notifications.edges.node.artworksConnection": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "ArtworkConnection"
-        },
-        "viewer.notifications.edges.node.artworksConnection.edges": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "ArtworkEdge"
-        },
-        "viewer.notifications.edges.node.artworksConnection.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artwork"
-        },
-        "viewer.notifications.edges.node.artworksConnection.edges.node.id": (v3/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.edges.node.image": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "viewer.notifications.edges.node.artworksConnection.edges.node.image.thumb": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "viewer.notifications.edges.node.artworksConnection.edges.node.image.thumb.src": (v4/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v4/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.edges.node.internalID": (v3/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.edges.node.title": (v5/*: any*/),
-        "viewer.notifications.edges.node.artworksConnection.totalCount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
-        "viewer.notifications.edges.node.createdAt": (v5/*: any*/),
-        "viewer.notifications.edges.node.id": (v3/*: any*/),
-        "viewer.notifications.edges.node.internalID": (v3/*: any*/),
-        "viewer.notifications.edges.node.message": (v4/*: any*/),
-        "viewer.notifications.edges.node.targetHref": (v4/*: any*/),
-        "viewer.notifications.edges.node.title": (v4/*: any*/)
-      }
-    },
-    "name": "NotificationsList_test_Query",
+    "metadata": {},
+    "name": "NotificationsListQuery",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationsListQuery {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a502783f36b263d10c37dfce56cd8b9a';
+(node as any).hash = '295c93ff58e11bfd2068914ff241e091';
 export default node;

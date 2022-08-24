@@ -1,17 +1,19 @@
-import { Join, Separator, Box } from "@artsy/palette"
+import { Join, Separator, Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationItemFragmentContainer } from "Components/NotificationItem"
 import { extractNodes } from "Utils/extractNodes"
-import { NotificationsList_notifications } from "__generated__/NotificationsList_notifications.graphql"
+import { NotificationsListQuery } from "__generated__/NotificationsListQuery.graphql"
+import { NotificationsList_viewer } from "__generated__/NotificationsList_viewer.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useContext } from "react"
+import { SystemContext } from "System"
 
 interface NotificationsListProps {
-  notifications: NotificationsList_notifications
+  viewer: NotificationsList_viewer
 }
 
-const NotificationsList: React.FC<NotificationsListProps> = ({
-  notifications,
-}) => {
-  const nodes = extractNodes(notifications)
+const NotificationsList: React.FC<NotificationsListProps> = ({ viewer }) => {
+  const nodes = extractNodes(viewer.notifications)
 
   return (
     <Join separator={<Separator />}>
@@ -27,15 +29,56 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 export const NotificationsListFragmentContainer = createFragmentContainer(
   NotificationsList,
   {
-    notifications: graphql`
-      fragment NotificationsList_notifications on NotificationConnection {
-        edges {
-          node {
-            internalID
-            ...NotificationItem_item
+    viewer: graphql`
+      fragment NotificationsList_viewer on Viewer {
+        notifications: notificationsConnection(first: 10) {
+          edges {
+            node {
+              internalID
+              ...NotificationItem_item
+            }
           }
         }
       }
     `,
   }
 )
+
+export const NotificationsListQueryRenderer = () => {
+  const { relayEnvironment } = useContext(SystemContext)
+
+  return (
+    <SystemQueryRenderer<NotificationsListQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query NotificationsListQuery {
+          viewer {
+            ...NotificationsList_viewer
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          return (
+            <Flex justifyContent="center">
+              <Text variant="xs" color="red100">
+                {error.message}
+              </Text>
+            </Flex>
+          )
+        }
+
+        // TODO: Style loading state
+        if (!props || !props.viewer) {
+          return (
+            <Flex justifyContent="center">
+              <Text variant="xs">Loading</Text>
+            </Flex>
+          )
+        }
+
+        return <NotificationsListFragmentContainer viewer={props.viewer} />
+      }}
+    />
+  )
+}

@@ -10,8 +10,8 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationsList_test_Query>({
   Component: NotificationsListFragmentContainer,
   query: graphql`
     query NotificationsList_test_Query @relay_test_operation {
-      notifications: notificationsConnection(first: 3) {
-        ...NotificationsList_notifications
+      viewer {
+        ...NotificationsList_viewer
       }
     }
   `,
