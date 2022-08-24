@@ -78,7 +78,7 @@ spec:
               command:
               - sh
               - -c
-              - sleep 35
+              - sleep 10
       dnsPolicy: ClusterFirst
       dnsConfig:
         options:
