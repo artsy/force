@@ -17,6 +17,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
       display="block"
       to={item.targetHref}
       p={2}
+      mx={-2}
       textDecoration="none"
     >
       <Flex flexDirection="row">

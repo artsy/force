@@ -1,4 +1,4 @@
-import { Join, Separator, Box } from "@artsy/palette"
+import { Join, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationsList_viewer } from "__generated__/NotificationsList_viewer.graphql"
@@ -14,9 +14,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({ viewer }) => {
   return (
     <Join separator={<Separator />}>
       {nodes.map(node => (
-        <Box key={node.internalID} mx={-2}>
-          <NotificationItemFragmentContainer item={node} />
-        </Box>
+        <NotificationItemFragmentContainer key={node.internalID} item={node} />
       ))}
     </Join>
   )
