@@ -14,6 +14,7 @@ import { NavBarMobileMenuAuthentication_me } from "__generated__/NavBarMobileMen
 import { getConversationCount, updateConversationCache } from "../helpers"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me | null
@@ -23,6 +24,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
   me,
 }) => {
   const { mediator } = useSystemContext()
+  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
 
   const menu = {
     title: "Account",
@@ -97,6 +99,12 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       </NavBarMobileMenuItemLink>
 
       <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
+
+      {enableActivityPanel && (
+        <NavBarMobileMenuItemLink to="/notifications">
+          Activity
+        </NavBarMobileMenuItemLink>
+      )}
     </>
   )
 }
