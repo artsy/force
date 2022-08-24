@@ -15,12 +15,11 @@ interface CuritorialRailsTabBarProps {
 export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
   viewer,
 }) => {
-  const isFollowingArtists = !!viewer.me?.followsAndSaves?.artistsConnection
-    ?.totalCount!
+  const showWorksForYouTab = !!viewer.followedArtistsInAuction?.counts?.total
 
   return (
     <Tabs mb={4}>
-      {isFollowingArtists && (
+      {showWorksForYouTab && (
         <Tab name="Works For You">
           <Join separator={<Spacer mt={2} />}>
             <MyBidsFragmentContainer me={viewer.me!} />
@@ -47,13 +46,19 @@ export const CuritorialRailsTabBarFragmentContainer = createFragmentContainer(
         ...TrendingLotsRail_viewer
         ...StandoutLotsRail_viewer
 
+        followedArtistsInAuction: saleArtworksConnection(
+          includeArtworksByFollowedArtists: true
+          isAuction: true
+          liveSale: true
+          first: 1
+        ) {
+          counts {
+            total
+          }
+        }
+
         me {
           ...MyBids_me
-          followsAndSaves {
-            artistsConnection {
-              totalCount
-            }
-          }
         }
       }
     `,
