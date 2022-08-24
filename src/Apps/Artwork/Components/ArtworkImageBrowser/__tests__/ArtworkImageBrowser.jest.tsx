@@ -1,20 +1,20 @@
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "relay-runtime"
-import { ArtworkImageBrowserTestQuery } from "__generated__/ArtworkImageBrowserTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
-import { ArtworkImageBrowserFragmentContainer } from "../ArtworkImageBrowser"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "relay-runtime"
 import { useSystemContext } from "System/useSystemContext"
+import { ArtworkImageBrowserTestQuery } from "__generated__/ArtworkImageBrowserTestQuery.graphql"
+import { ArtworkImageBrowserFragmentContainer } from "../ArtworkImageBrowser"
 
-jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
+jest.unmock("react-relay")
 
 describe("ArtworkImageBrowser", () => {
   const { renderWithRelay } = setupTestWrapperTL<ArtworkImageBrowserTestQuery>({
-    Component: props => {
+    Component: (props: any) => {
       return (
         <MockBoot>
-          <ArtworkImageBrowserFragmentContainer {...(props as any)} />
+          <ArtworkImageBrowserFragmentContainer {...props} />
         </MockBoot>
       )
     },
@@ -70,14 +70,22 @@ describe("ArtworkImageBrowser", () => {
 
       it("renders the Upload Photo button", () => {
         renderWithRelay(
-          { Artwork: () => ({ images: [], figures: [] }) },
-          false,
           {
-            isMyCollectionArtwork: true,
-          }
+            Artwork: () => ({
+              images: [],
+              figures: [],
+              internalID: "artwork-x",
+            }),
+          },
+          false,
+          { isMyCollectionArtwork: true }
         )
 
         expect(screen.getByText("Upload Photos")).toBeInTheDocument()
+        expect(screen.getByTestId("uploadPhotosButton")).toHaveAttribute(
+          "href",
+          "/my-collection/artworks/artwork-x/edit"
+        )
       })
     })
 

@@ -1,4 +1,5 @@
-import { AddCircleIcon, Button, Flex, NoImageIcon, Text } from "@artsy/palette"
+import { AddCircleIcon, Button, Flex, NoImageIcon } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkNoImageComponentProps {
@@ -26,14 +27,15 @@ export const ArtworkNoImageComponent: React.FC<ArtworkNoImageComponentProps> = (
     >
       {isMyCollectionArtwork && isMyCollectionPhase3Enabled ? (
         <Button
-          // on click transfer the user to the upload photos flow using artworkID
-          // TODO: waiting for CX-2701
-          onClick={() => {}}
-          size="large"
+          data-testid="uploadPhotosButton"
+          // @ts-ignore
+          as={RouterLink}
+          to={`/my-collection/artworks/${artworkID}/edit`}
           variant="secondaryNeutral"
+          size="large"
           Icon={AddCircleIcon}
         >
-          <Text variant="sm">Upload Photos</Text>
+          Upload Photos
         </Button>
       ) : (
         <NoImageIcon width="28px" height="28px" fill="black60" />
