@@ -4,10 +4,12 @@ import { ArtworkImageBrowserTestQuery } from "__generated__/ArtworkImageBrowserT
 import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { ArtworkImageBrowserFragmentContainer } from "../ArtworkImageBrowser"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
+jest.mock("System/useSystemContext")
 
-describe("MyCollectionArtworkImageBrowser", () => {
+describe("ArtworkImageBrowser", () => {
   const { renderWithRelay } = setupTestWrapperTL<ArtworkImageBrowserTestQuery>({
     Component: props => {
       return (
@@ -60,12 +62,33 @@ describe("MyCollectionArtworkImageBrowser", () => {
   })
 
   describe("when there are no images", () => {
-    it("renders the empty state correctly", () => {
-      renderWithRelay({ Artwork: () => ({ images: [], figures: [] }) }, false)
+    describe("when the artwork is a My Collection artwork", () => {
+      // Enable my-collection-web-phase-3 feature flag
+      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+        featureFlags: { "my-collection-web-phase-3": { flagEnabled: true } },
+      }))
 
-      expect(
-        screen.getByTestId("artwork-browser-no-image-box")
-      ).toBeInTheDocument()
+      it("renders the Upload Photo button", () => {
+        renderWithRelay(
+          { Artwork: () => ({ images: [], figures: [] }) },
+          false,
+          {
+            isMyCollectionArtwork: true,
+          }
+        )
+
+        expect(screen.getByText("Upload Photos")).toBeInTheDocument()
+      })
+    })
+
+    describe("when the artwork is a normal artwork", () => {
+      it("renders the empty state correctly", () => {
+        renderWithRelay({ Artwork: () => ({ images: [], figures: [] }) }, false)
+
+        expect(
+          screen.getByTestId("artwork-browser-no-image-box")
+        ).toBeInTheDocument()
+      })
     })
   })
 })
