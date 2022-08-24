@@ -16,12 +16,12 @@ interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
   bankAccountHasInsufficientFunds: boolean
-  setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  setIsSavingPayment: (arg: boolean) => void
-  setBalanceCheckComplete: (arg: boolean) => void
-  setSelectedBankAccountId: (arg: string) => void
+  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onSetIsSavingPayment: (arg: boolean) => void
+  onSetBalanceCheckComplete: (arg: boolean) => void
+  onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
-  setBankAccountSelection: (arg: BankAccountSelection) => void
+  onSetBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -29,12 +29,12 @@ export const BankAccountPicker: FC<Props> = props => {
     me: { bankAccounts },
     order,
     bankAccountHasInsufficientFunds,
-    setBankAccountHasInsufficientFunds,
-    setIsSavingPayment,
-    setBalanceCheckComplete,
-    setSelectedBankAccountId,
+    onSetBankAccountHasInsufficientFunds,
+    onSetIsSavingPayment,
+    onSetBalanceCheckComplete,
+    onSetSelectedBankAccountId,
     bankAccountSelection,
-    setBankAccountSelection,
+    onSetBankAccountSelection,
   } = props
 
   const bankAccountsArray = extractNodes(bankAccounts)
@@ -42,8 +42,8 @@ export const BankAccountPicker: FC<Props> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   const handleContinue = async () => {
-    setBalanceCheckComplete(false)
-    setIsSavingPayment(true)
+    onSetBalanceCheckComplete(false)
+    onSetIsSavingPayment(true)
 
     try {
       const orderOrError = (
@@ -62,11 +62,11 @@ export const BankAccountPicker: FC<Props> = props => {
         throw orderOrError.error
       }
 
-      setSelectedBankAccountId(bankAccountSelection.id!)
+      onSetSelectedBankAccountId(bankAccountSelection.id!)
     } catch (error) {
       console.error(error)
     } finally {
-      setIsSavingPayment(false)
+      onSetIsSavingPayment(false)
     }
   }
 
@@ -77,14 +77,14 @@ export const BankAccountPicker: FC<Props> = props => {
           data-test="bankAccounts"
           onSelect={val => {
             if (val === "new") {
-              setBankAccountHasInsufficientFunds(false)
-              setBankAccountSelection({ type: "new" })
+              onSetBankAccountHasInsufficientFunds(false)
+              onSetBankAccountSelection({ type: "new" })
             } else {
               if (val !== bankAccountSelection.id) {
-                setBankAccountHasInsufficientFunds(false)
+                onSetBankAccountHasInsufficientFunds(false)
               }
 
-              setBankAccountSelection({ type: "existing", id: val })
+              onSetBankAccountSelection({ type: "existing", id: val })
             }
           }}
           defaultValue={
@@ -120,10 +120,10 @@ export const BankAccountPicker: FC<Props> = props => {
         <BankDebitProvider
           order={order}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          setBankAccountHasInsufficientFunds={
-            setBankAccountHasInsufficientFunds
+          onSetBankAccountHasInsufficientFunds={
+            onSetBankAccountHasInsufficientFunds
           }
-          setIsSavingPayment={setIsSavingPayment}
+          onSetIsSavingPayment={onSetIsSavingPayment}
         />
       </Collapse>
 

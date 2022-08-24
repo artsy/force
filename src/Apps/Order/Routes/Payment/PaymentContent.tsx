@@ -38,34 +38,34 @@ export interface Props {
   me: Payment_me
   commitMutation: CommitMutation
   paymentMethod: CommercePaymentMethodEnum
-  setPayment: () => void
-  onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
+  onSetPayment: () => void
+  onSetSelectedPaymentMethod: (paymentMethod: CommercePaymentMethodEnum) => void
   CreditCardPicker: RefObject<CreditCardPicker>
   bankAccountHasInsufficientFunds: boolean
-  setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  setIsSavingPayment: (arg: boolean) => void
-  setBalanceCheckComplete: (arg: boolean) => void
-  setSelectedBankAccountId: (arg: string) => void
+  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onSetIsSavingPayment: (arg: boolean) => void
+  onSetBalanceCheckComplete: (arg: boolean) => void
+  onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
-  setBankAccountSelection: (arg: BankAccountSelection) => void
+  onSetBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
   const {
     commitMutation,
-    setPayment,
+    onSetPayment,
     me,
     order,
     CreditCardPicker,
     paymentMethod,
-    onPaymentMethodChange,
+    onSetSelectedPaymentMethod,
     bankAccountHasInsufficientFunds,
-    setBankAccountHasInsufficientFunds,
-    setIsSavingPayment,
-    setBalanceCheckComplete,
-    setSelectedBankAccountId,
+    onSetBankAccountHasInsufficientFunds,
+    onSetIsSavingPayment,
+    onSetBalanceCheckComplete,
+    onSetSelectedBankAccountId,
     bankAccountSelection,
-    setBankAccountSelection,
+    onSetBankAccountSelection,
   } = props
   const tracking = useTracking()
 
@@ -103,7 +103,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
-          onClick={setPayment}
+          onClick={onSetPayment}
         />
         <Spacer mb={2} />
       </>
@@ -117,7 +117,7 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         data-test="payment-methods"
         onSelect={val => {
-          onPaymentMethodChange(val as CommercePaymentMethodEnum)
+          onSetSelectedPaymentMethod(val as CommercePaymentMethodEnum)
         }}
         defaultValue={paymentMethod}
       >
@@ -140,7 +140,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
-          onClick={setPayment}
+          onClick={onSetPayment}
         />
         <Spacer mb={2} />
       </Collapse>
@@ -157,14 +157,14 @@ export const PaymentContent: FC<Props> = props => {
           me={me}
           order={order}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          setBankAccountHasInsufficientFunds={
-            setBankAccountHasInsufficientFunds
+          onSetBankAccountHasInsufficientFunds={
+            onSetBankAccountHasInsufficientFunds
           }
-          setIsSavingPayment={setIsSavingPayment}
-          setBalanceCheckComplete={setBalanceCheckComplete}
-          setSelectedBankAccountId={setSelectedBankAccountId}
+          onSetIsSavingPayment={onSetIsSavingPayment}
+          onSetBalanceCheckComplete={onSetBalanceCheckComplete}
+          onSetSelectedBankAccountId={onSetSelectedBankAccountId}
           bankAccountSelection={bankAccountSelection}
-          setBankAccountSelection={setBankAccountSelection}
+          onSetBankAccountSelection={onSetBankAccountSelection}
         />
       </Collapse>
 
@@ -174,7 +174,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
-          onClick={setPayment}
+          onClick={onSetPayment}
         />
         <Spacer mb={2} />
       </Collapse>

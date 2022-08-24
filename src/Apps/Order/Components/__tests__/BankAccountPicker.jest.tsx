@@ -97,12 +97,12 @@ describe("BankAccountFragmentContainer", () => {
             order={props.order}
             me={props.me}
             bankAccountHasInsufficientFunds={false}
-            setBankAccountHasInsufficientFunds={jest.fn()}
-            setIsSavingPayment={jest.fn()}
-            setBalanceCheckComplete={jest.fn()}
-            setSelectedBankAccountId={jest.fn()}
+            onSetBankAccountHasInsufficientFunds={jest.fn()}
+            onSetIsSavingPayment={jest.fn()}
+            onSetBalanceCheckComplete={jest.fn()}
+            onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
-            setBankAccountSelection={jest.fn()}
+            onSetBankAccountSelection={jest.fn()}
           />
         </MockBoot>
       ),
@@ -139,12 +139,12 @@ describe("BankAccountFragmentContainer", () => {
             order={props.order}
             me={props.me}
             bankAccountHasInsufficientFunds={false}
-            setBankAccountHasInsufficientFunds={jest.fn()}
-            setIsSavingPayment={jest.fn()}
-            setBalanceCheckComplete={jest.fn()}
-            setSelectedBankAccountId={jest.fn()}
+            onSetBankAccountHasInsufficientFunds={jest.fn()}
+            onSetIsSavingPayment={jest.fn()}
+            onSetBalanceCheckComplete={jest.fn()}
+            onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
-            setBankAccountSelection={jest.fn()}
+            onSetBankAccountSelection={jest.fn()}
           />
         </MockBoot>
       ),

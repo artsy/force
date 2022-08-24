@@ -141,13 +141,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   ] = useState(false)
 
   // fired when save and continue is clicked for CC and Wire payment methods
-  const setPayment = () => {
+  const handleSetPayment = () => {
     switch (selectedPaymentMethod) {
       case "CREDIT_CARD":
-        onCreditCardContinue()
+        handleCreditCardContinue()
         break
       case "WIRE_TRANSFER":
-        onWireTransferContinue()
+        handleWireTransferContinue()
         break
       default:
         break
@@ -155,7 +155,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   }
 
   // sets payment with Credit Card
-  const onCreditCardContinue = async () => {
+  const handleCreditCardContinue = async () => {
     try {
       const result = await CreditCardPicker?.current?.getCreditCardId()
 
@@ -204,7 +204,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   }
 
   // sets payment with Wire Transfer
-  const onWireTransferContinue = async () => {
+  const handleWireTransferContinue = async () => {
     setIsSavingPayment(true)
     try {
       const orderOrError = (
@@ -228,7 +228,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   }
 
   // fired when balance check is done: either sets error state or moves to /review
-  const onBalanceCheckComplete = (
+  const handleBalanceCheckComplete = (
     displayInsufficientFundsError: boolean,
     checkResult: BalanceCheckResult
   ) => {
@@ -253,10 +253,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       return
     }
 
-    onPaymentStepComplete()
+    handlePaymentStepComplete()
   }
 
-  const onPaymentStepComplete = () => {
+  const handlePaymentStepComplete = () => {
     props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
@@ -266,7 +266,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       !balanceCheckEnabled &&
       (selectedBankAccountId || isPaymentSetupSuccessful)
     ) {
-      onPaymentStepComplete()
+      handlePaymentStepComplete()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPaymentSetupSuccessful, selectedBankAccountId, balanceCheckEnabled])
@@ -325,7 +325,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             <PollAccountBalanceQueryRenderer
               setupIntentId={stripeSetupIntentId!}
               bankAccountId={selectedBankAccountId}
-              onBalanceCheckComplete={onBalanceCheckComplete}
+              onBalanceCheckComplete={handleBalanceCheckComplete}
               buyerTotalCents={order.buyerTotalCents!}
               orderCurrencyCode={order.currencyCode}
             />
@@ -344,19 +344,19 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   me={props.me}
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
-                  setPayment={setPayment}
-                  onPaymentMethodChange={setSelectedPaymentMethod}
+                  onSetPayment={handleSetPayment}
+                  onSetSelectedPaymentMethod={setSelectedPaymentMethod}
                   bankAccountHasInsufficientFunds={
                     bankAccountHasInsufficientFunds
                   }
-                  setBankAccountHasInsufficientFunds={
+                  onSetBankAccountHasInsufficientFunds={
                     setBankAccountHasInsufficientFunds
                   }
-                  setIsSavingPayment={setIsSavingPayment}
-                  setSelectedBankAccountId={setSelectedBankAccountId}
-                  setBalanceCheckComplete={setBalanceCheckComplete}
+                  onSetIsSavingPayment={setIsSavingPayment}
+                  onSetSelectedBankAccountId={setSelectedBankAccountId}
+                  onSetBalanceCheckComplete={setBalanceCheckComplete}
                   bankAccountSelection={bankAccountSelection}
-                  setBankAccountSelection={setBankAccountSelection}
+                  onSetBankAccountSelection={setBankAccountSelection}
                 />
               </Flex>
             </>
@@ -381,7 +381,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                 <Spacer mt={4} />
                 <SaveAndContinueButton
                   media={{ at: "xs" }}
-                  onClick={setPayment}
+                  onClick={handleSetPayment}
                   loading={isSavingPayment}
                 />
                 <Spacer mb={2} />
