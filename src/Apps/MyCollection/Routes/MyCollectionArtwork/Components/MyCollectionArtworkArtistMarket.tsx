@@ -38,7 +38,7 @@ export const MyCollectionArtworkArtistMarket = ({
         auction houses.
       </Text>
 
-      <Spacer mt={[2, 6]} />
+      <Spacer mt={[2, 4]} />
 
       <GridColumns>
         {!!annualValueSoldDisplayText && (
