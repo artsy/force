@@ -31,8 +31,8 @@ import {
 } from "./types"
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
-import { isArtsyEmail } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor/isArtsyEmail"
 import { DEFAULT_FREQUENCY } from "./constants"
+import { isArtsyEmail } from "Utils/isArtsyEmail"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity

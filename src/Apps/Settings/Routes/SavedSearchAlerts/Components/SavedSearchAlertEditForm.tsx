@@ -50,8 +50,8 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
-import { isArtsyEmail } from "../../EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor/isArtsyEmail"
 import { useSystemContext } from "System"
+import { isArtsyEmail } from "Utils/isArtsyEmail"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
