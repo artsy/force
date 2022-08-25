@@ -93,6 +93,17 @@ spec:
                 operator: In
                 values:
                 - foreground
+                - foreground-spot
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: tier
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app: force
+            layer: application
+            component: web
+
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
