@@ -57,33 +57,10 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       </Text>
       <Text>
         Or get in touch with one of our specialists at{" "}
-        {
-          <Clickable
-            textDecoration="underline"
-            onClick={() => {
-              return
-            }}
-          >
-            sell@artsymail.com.
-          </Clickable>
-        }
+        <Clickable textDecoration="underline">
+          <a href="mailto:sell@artsymail.com">sell@artsymail.com</a>
+        </Clickable>
       </Text>
     </ModalDialog>
   )
 }
-
-/*
-Upload photos
-Submit images of an artwork in your collection, along with relevant details, like the artist, time period, and medium.
-
-Get a sales option
-If your artwork is accepted, our specialists will give you a price estimate and the best sales option: at auction, via private sale, or as a direct listing on Artsy.
-
-Sell your artwork
-We’ll find the best buyer for your work and arrange shipping and secure payment when it sells.
-
-find out more
-For more information, see our Collector Help Center
-
-Or get in touch with one of our specialists at sell@artsymail.com.
-*/

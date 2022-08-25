@@ -23,14 +23,8 @@ export const MyCollectionArtworkSWASectionSubmitted = () => {
           help center
         </Clickable>{" "}
         or get in touch with one of our specialists at{" "}
-        <Clickable
-          onClick={() => {
-            return
-          }}
-          color="black100"
-          textDecoration="underline"
-        >
-          sell@artsymail.com
+        <Clickable color="black100" textDecoration="underline">
+          <a href="mailto:sell@artsymail.com">sell@artsymail.com</a>
         </Clickable>
       </Text>
     </>
