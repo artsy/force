@@ -23,7 +23,6 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
     "my-collection-web-phase-4-demand-index"
   )
-
   const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
     "my-collection-web-phase-4-auction-results"
   )
@@ -68,7 +67,6 @@ export const MyCollectionArtworkInsightsFragmentContainer = createFragmentContai
       fragment MyCollectionArtworkInsights_artwork on Artwork {
         ...MyCollectionArtworkComparables_artwork
         artist {
-          slug
           ...MyCollectionArtworkAuctionResults_artist
         }
         marketPriceInsights {
