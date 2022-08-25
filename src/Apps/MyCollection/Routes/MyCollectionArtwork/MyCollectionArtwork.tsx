@@ -9,6 +9,7 @@ import {
 } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -20,7 +21,8 @@ import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/My
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
-import { MyCollectionArtworkSWASectionMobileLayout } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionMobileLayout } from "./Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -28,6 +30,11 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
+  // TODO: use real value
+  const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
+    boolean
+  >(false)
+
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
   )
@@ -94,7 +101,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </Column>
       </GridColumns>
 
-      <Join separator={<Spacer mt={[2, 6]} />}>
+      <Join separator={<Spacer mt={[4, 6]} />}>
         {hasInsights && (
           <>
             <Text variant={["lg-display", "xl"]}>Insights</Text>
@@ -125,14 +132,25 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           />
         )}
 
-        {!!enableMyCollectionPhase4ArticlesRail && (
-          <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
-        )}
-
         {!!isMyCollectionPhase5Enabled && (
           <Media lessThan="sm">
-            <MyCollectionArtworkSWASectionMobileLayout />
+            {!!isArtworkSubmittedToSell ? (
+              <MyCollectionArtworkSWASectionSubmitted />
+            ) : (
+              <MyCollectionArtworkSWASectionMobileLayout
+                onSubmit={() =>
+                  setIsArtworkSubmittedToSell(!isArtworkSubmittedToSell)
+                }
+              />
+            )}
           </Media>
+        )}
+
+        {!!enableMyCollectionPhase4ArticlesRail && (
+          <>
+            <Spacer m={4} />
+            <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+          </>
         )}
       </Join>
     </>

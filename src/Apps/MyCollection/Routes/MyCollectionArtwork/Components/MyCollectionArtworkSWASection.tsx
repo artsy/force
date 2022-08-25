@@ -1,9 +1,15 @@
 import { Button, Clickable, Separator, Text } from "@artsy/palette"
 
-export const MyCollectionArtworkSWASectionMobileLayout: React.FC = () => {
+interface Props {
+  onSubmit: () => void
+}
+
+export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
+  onSubmit,
+}) => {
   return (
     <>
-      <Text mb={2} mt={4} variant="md">
+      <Text mb={2} mt={4} variant="sm-display">
         Interested in Selling This Work?
       </Text>
       <Text mb={2} color="black60">
@@ -23,9 +29,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC = () => {
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
-          onClick={() => {
-            return
-          }}
+          onClick={onSubmit}
           color="black60"
           textDecoration="underline"
         >
@@ -36,23 +40,18 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC = () => {
   )
 }
 
-export const MyCollectionArtworkSWASectionDesktopLayout: React.FC = () => {
+export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
+  onSubmit,
+}) => {
   return (
     <>
-      <Text mb={2} variant="md" color={"black100"}>
+      <Text mb={2} variant="sm-display">
         Interested in Selling This Work?
       </Text>
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button
-        variant="secondaryNeutral"
-        width="100%"
-        onClick={() => {
-          return
-        }}
-        mb={2}
-      >
+      <Button variant="secondaryNeutral" width="100%" onClick={onSubmit} mb={2}>
         Submit for Sale
       </Button>
       <Text mb={2} color="black60">
@@ -67,7 +66,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC = () => {
           selling with Artsy.
         </Clickable>
       </Text>
-      <Separator mt={4} mb={2} />
+      <Separator mt={2} />
     </>
   )
 }
