@@ -368,7 +368,7 @@ describe("SavedSearchAlertEditForm", () => {
       })
 
       const checkbox = screen.getByRole("radio", {
-        name: "Instant",
+        name: /Instant/,
       })
 
       fireEvent.click(checkbox)
