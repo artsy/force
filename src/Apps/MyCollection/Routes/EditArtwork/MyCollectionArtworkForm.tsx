@@ -8,8 +8,8 @@ import {
   Spacer,
   Step,
   Stepper,
-  useToasts,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -140,13 +140,16 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                     footer={
                       <>
                         <Button
-                          // @ts-ignore
-                          as={RouterLink}
-                          to={
-                            isEditing
-                              ? `/my-collection/artwork/${artwork.internalID}`
-                              : "/my-collection"
-                          }
+                          onClick={e => {
+                            e.preventDefault()
+
+                            router.replace({ pathname: "/my-collection" })
+                            router.push({
+                              pathname: isEditing
+                                ? `/my-collection/artwork/${artwork.internalID}`
+                                : "/settings/my-collection",
+                            })
+                          }}
                           mt={4}
                           width="100%"
                           data-testid="leave-button"
