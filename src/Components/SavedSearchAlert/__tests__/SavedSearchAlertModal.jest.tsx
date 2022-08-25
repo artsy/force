@@ -1,6 +1,7 @@
 import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { ArtworkFiltersState } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useSystemContext } from "System"
 import {
   SavedSearchAlertModalContainer,
   SavedSearchAlertFormContainerProps,
@@ -43,7 +44,23 @@ interface Props extends Partial<SavedSearchAlertFormContainerProps> {
   filters?: ArtworkFiltersState
 }
 
+jest.mock("System/useSystemContext")
+
 describe("SavedSearchAlertModal", () => {
+  const useSystemContextMock = useSystemContext as jest.Mock
+
+  beforeEach(() => {
+    useSystemContextMock.mockImplementation(() => {
+      return {
+        relayEnvironment: {},
+        user: {
+          name: "User Name",
+          email: "loggedin@example.com",
+        },
+      }
+    })
+  })
+
   const TestComponent = (props: Props) => {
     const { criteria = defaultCriteria, ...rest } = props
 
@@ -146,5 +163,38 @@ describe("SavedSearchAlertModal", () => {
     expect(screen.getByRole("textbox")).toHaveValue("")
     expect(screen.getAllByRole("checkbox")[0]).toBeChecked()
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
+  })
+
+  describe("Frequency setting", () => {
+    it("should NOT be displayed by default", () => {
+      render(<TestComponent />)
+
+      expect(screen.queryByText("Frequency")).not.toBeInTheDocument()
+    })
+
+    it("should NOT be displayed when it is not an artsy employee", () => {
+      render(<TestComponent />)
+
+      // Select "Mobile Alerts" checkbox
+      fireEvent.click(screen.getAllByRole("checkbox")[1])
+
+      expect(screen.queryByText("Frequency")).not.toBeInTheDocument()
+    })
+
+    it("should be displayed when 'Mobile Alerts' is selected and it is an artsy employee", () => {
+      useSystemContextMock.mockImplementation(() => ({
+        relayEnvironment: {},
+        user: {
+          email: "me@artsymail.com",
+        },
+      }))
+
+      render(<TestComponent />)
+
+      // Select "Mobile Alerts" checkbox
+      fireEvent.click(screen.getAllByRole("checkbox")[1])
+
+      expect(screen.queryByText("Frequency")).toBeInTheDocument()
+    })
   })
 })

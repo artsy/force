@@ -8,6 +8,8 @@ import {
   Input,
   Join,
   ModalDialog,
+  RadioGroup,
+  Radio,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -29,6 +31,7 @@ import {
 } from "./types"
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
+import { isArtsyEmail } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor/isArtsyEmail"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -53,8 +56,9 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   onClose,
   onComplete,
 }) => {
-  const { relayEnvironment } = useSystemContext()
+  const { relayEnvironment, user } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
+  const isArtsyEmployee = isArtsyEmail(user?.email ?? "")
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -162,6 +166,18 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                     selected={values.push}
                   />
                 </Box>
+
+                <Spacer mt={4} />
+
+                {values.push && isArtsyEmployee && (
+                  <Box display="flex" justifyContent="space-between">
+                    <Text variant="sm-display">Frequency</Text>
+                    <RadioGroup defaultValue="daily" flexDirection="row">
+                      <Radio value="daily" label="Daily" mr={2} />
+                      <Radio value="instant" label="Instant" />
+                    </RadioGroup>
+                  </Box>
+                )}
               </Box>
             </Join>
           </ModalDialog>
