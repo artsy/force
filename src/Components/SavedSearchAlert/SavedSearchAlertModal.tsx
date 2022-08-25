@@ -8,8 +8,6 @@ import {
   Input,
   Join,
   ModalDialog,
-  RadioGroup,
-  Radio,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -32,7 +30,7 @@ import {
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
-import { isArtsyEmail } from "Utils/isArtsyEmail"
+import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -57,9 +55,8 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
   onClose,
   onComplete,
 }) => {
-  const { relayEnvironment, user } = useSystemContext()
+  const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
-  const isArtsyEmployee = isArtsyEmail(user?.email ?? "")
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -178,20 +175,13 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 
                 <Spacer mt={4} />
 
-                {values.push && isArtsyEmployee && (
-                  <Box display="flex" justifyContent="space-between">
-                    <Text variant="sm-display">Frequency</Text>
-                    <RadioGroup
-                      defaultValue={values.frequency}
-                      onSelect={selectedOption =>
-                        setFieldValue("frequency", selectedOption)
-                      }
-                      flexDirection="row"
-                    >
-                      <Radio value="instant" label="Instant" mr={2} />
-                      <Radio value="daily" label="Daily" />
-                    </RadioGroup>
-                  </Box>
+                {values.push && (
+                  <FrequenceRadioButtons
+                    defaultFrequence={values.frequency}
+                    onSelect={selectedOption =>
+                      setFieldValue("frequency", selectedOption)
+                    }
+                  />
                 )}
               </Box>
             </Join>

@@ -6,10 +6,8 @@ import {
   Input,
   Join,
   Message,
-  Radio,
   Spacer,
   Text,
-  RadioGroup,
 } from "@artsy/palette"
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -50,8 +48,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
-import { useSystemContext } from "System"
-import { isArtsyEmail } from "Utils/isArtsyEmail"
+import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -94,8 +91,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     removeCriteriaValue,
     removePill,
   } = useSavedSearchAlertContext()
-  const { user } = useSystemContext()
-  const isArtsyEmployee = isArtsyEmail(user?.email ?? "")
 
   const initialValues: SavedSearchAleftFormValues = {
     name: userAlertSettings.name ?? "",
@@ -243,20 +238,13 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
                 <Spacer mt={4} />
 
-                {values.push && isArtsyEmployee && (
-                  <Box display="flex" justifyContent="space-between">
-                    <Text variant="sm-display">Frequency</Text>
-                    <RadioGroup
-                      defaultValue={values.frequency}
-                      onSelect={selectedOption =>
-                        setFieldValue("frequency", selectedOption)
-                      }
-                      flexDirection="row"
-                    >
-                      <Radio value="instant" label="Instant" mr={2} />
-                      <Radio value="daily" label="Daily" />
-                    </RadioGroup>
-                  </Box>
+                {values.push && (
+                  <FrequenceRadioButtons
+                    defaultFrequence={values.frequency}
+                    onSelect={selectedOption =>
+                      setFieldValue("frequency", selectedOption)
+                    }
+                  />
                 )}
               </Box>
 
