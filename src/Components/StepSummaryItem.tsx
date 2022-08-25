@@ -60,7 +60,7 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
         </Flex>
       )}
       {!showHeading && locked && (
-        <LockIconPositioner p={[2, 3]}>
+        <LockIconPositioner p={2}>
           <LockIcon />
         </LockIconPositioner>
       )}
