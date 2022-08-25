@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSidebarMetadataTestQueryVariables = {};
 export type MyCollectionArtworkSidebarMetadataTestQueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarMetadata_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebarMetadata_artwork">;
     } | null;
 };
 export type MyCollectionArtworkSidebarMetadataTestQuery = {
@@ -20,6 +20,7 @@ export type MyCollectionArtworkSidebarMetadataTestQuery = {
 /*
 query MyCollectionArtworkSidebarMetadataTestQuery {
   artwork(id: "foo") {
+    ...MyCollectionArtworkSidebarTitleInfo_artwork
     ...MyCollectionArtworkSidebarMetadata_artwork
     id
   }
@@ -41,6 +42,12 @@ fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
     display
   }
   artworkLocation
+}
+
+fragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {
+  artistNames
+  title
+  date
 }
 */
 
@@ -89,6 +96,11 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
+            "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
             "name": "MyCollectionArtworkSidebarMetadata_artwork"
           }
         ],
@@ -112,6 +124,27 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artistNames",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "date",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -209,7 +242,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c7cfc481ce6d8cf37beac424bd55a16b",
+    "cacheID": "06dbebc77f480d95a39f16650de82dee",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -219,6 +252,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.artistNames": (v2/*: any*/),
         "artwork.artworkLocation": (v2/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
@@ -229,6 +263,7 @@ return {
         "artwork.attributionClass.id": (v3/*: any*/),
         "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.category": (v2/*: any*/),
+        "artwork.date": (v2/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
@@ -246,14 +281,15 @@ return {
           "type": "Money"
         },
         "artwork.pricePaid.display": (v2/*: any*/),
-        "artwork.provenance": (v2/*: any*/)
+        "artwork.provenance": (v2/*: any*/),
+        "artwork.title": (v2/*: any*/)
       }
     },
     "name": "MyCollectionArtworkSidebarMetadataTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n"
+    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n}\n"
   }
 };
 })();
-(node as any).hash = 'ca880f2c1b88f4a29ab5905c4d9cfb26';
+(node as any).hash = '3ca4199002ae9dab527fe26aa2b7d8b8';
 export default node;
