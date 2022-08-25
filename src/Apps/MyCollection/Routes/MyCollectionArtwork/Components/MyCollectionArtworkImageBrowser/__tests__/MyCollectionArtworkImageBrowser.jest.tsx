@@ -3,25 +3,27 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { useSystemContext } from "System/useSystemContext"
-import { ArtworkImageBrowserTestQuery } from "__generated__/ArtworkImageBrowserTestQuery.graphql"
-import { ArtworkImageBrowserFragmentContainer } from "../ArtworkImageBrowser"
+import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
+import { MyCollectionArtworkImageBrowserFragmentContainer } from ".."
 
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
-describe("ArtworkImageBrowser", () => {
-  const { renderWithRelay } = setupTestWrapperTL<ArtworkImageBrowserTestQuery>({
+describe("MyCollectionArtworkImageBrowser", () => {
+  const { renderWithRelay } = setupTestWrapperTL<
+    MyCollectionArtworkImageBrowserTestQuery
+  >({
     Component: (props: any) => {
       return (
         <MockBoot>
-          <ArtworkImageBrowserFragmentContainer {...props} />
+          <MyCollectionArtworkImageBrowserFragmentContainer {...props} />
         </MockBoot>
       )
     },
     query: graphql`
-      query ArtworkImageBrowserTestQuery @relay_test_operation {
+      query MyCollectionArtworkImageBrowserTestQuery @relay_test_operation {
         artwork(id: "artwork-id") {
-          ...ArtworkImageBrowser_artwork
+          ...MyCollectionArtworkImageBrowser_artwork
         }
       }
     `,

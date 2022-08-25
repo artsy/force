@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Flex, ResponsiveBox, Spacer } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { compact } from "lodash"
 import { scale } from "proportional-scale"
 import * as React from "react"
@@ -10,7 +10,6 @@ import { ArtworkImageBrowser_artwork } from "__generated__/ArtworkImageBrowser_a
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowserLargeFragmentContainer } from "./ArtworkImageBrowserLarge"
 import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowserSmall"
-import { ArtworkNoImageComponent } from "./ArtworkNoImageComponent"
 
 const MAX_DIMENSION = 800
 
@@ -50,45 +49,7 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   }
 
   if ((figures ?? []).length === 0) {
-    return (
-      <>
-        <Media greaterThanOrEqual="md">
-          <Flex justifyContent="center">
-            <ResponsiveBox
-              data-testid="artwork-browser-no-image-box"
-              bg="black10"
-              mx={[0, 2, 4]}
-              maxWidth={600}
-              aspectWidth={1}
-              aspectHeight={1}
-            >
-              <ArtworkNoImageComponent
-                artworkID={artwork.internalID}
-                isMyCollectionArtwork={isMyCollectionArtwork}
-              />
-            </ResponsiveBox>
-          </Flex>
-        </Media>
-
-        <Media lessThan="md">
-          <Flex justifyContent="center">
-            <ResponsiveBox
-              data-testid="artwork-browser-no-image-box"
-              bg="black10"
-              mx={[0, 2, 4]}
-              maxWidth="100%"
-              aspectWidth={1}
-              aspectHeight={1}
-            >
-              <ArtworkNoImageComponent
-                artworkID={artwork.internalID}
-                isMyCollectionArtwork={isMyCollectionArtwork}
-              />
-            </ResponsiveBox>
-          </Flex>
-        </Media>
-      </>
-    )
+    return null
   }
 
   return (

@@ -2,13 +2,11 @@ import { AddCircleIcon, Button, Flex, NoImageIcon } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
-interface ArtworkNoImageComponentProps {
-  isMyCollectionArtwork?: boolean
+interface MyCollectionArtworkNoImageComponentProps {
   artworkID?: string
 }
 
-export const ArtworkNoImageComponent: React.FC<ArtworkNoImageComponentProps> = ({
-  isMyCollectionArtwork,
+export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNoImageComponentProps> = ({
   artworkID,
 }) => {
   const isMyCollectionPhase3Enabled = useFeatureFlag(
@@ -25,7 +23,7 @@ export const ArtworkNoImageComponent: React.FC<ArtworkNoImageComponentProps> = (
       justifyContent="center"
       alignItems="center"
     >
-      {isMyCollectionArtwork && isMyCollectionPhase3Enabled ? (
+      {isMyCollectionPhase3Enabled ? (
         <Button
           data-testid="uploadPhotosButton"
           // @ts-ignore

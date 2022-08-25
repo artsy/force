@@ -8,7 +8,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
-import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -18,6 +17,7 @@ import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/M
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
+import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
@@ -75,10 +75,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media lessThan="sm">
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
           </Media>
-          <ArtworkImageBrowserFragmentContainer
-            artwork={artwork}
-            isMyCollectionArtwork
-          />
+          <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
@@ -135,7 +132,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
       fragment MyCollectionArtwork_artwork on Artwork {
         ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
-        ...ArtworkImageBrowser_artwork
+        ...MyCollectionArtworkImageBrowser_artwork
         ...MyCollectionArtworkComparables_artwork
         internalID
         artist {
