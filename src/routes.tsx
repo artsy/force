@@ -36,6 +36,7 @@ import { settingsRoutes } from "Apps/Settings/settingsRoutes"
 import { showRoutes } from "Apps/Show/showRoutes"
 import { showsRoutes } from "Apps/Shows/showsRoutes"
 import { viewingRoomRoutes } from "Apps/ViewingRoom/viewingRoomRoutes"
+import { HttpError } from "found"
 import { buildAppRoutes } from "System/Router/buildAppRoutes"
 import { AppRouteConfig } from "System/Router/Route"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
@@ -99,5 +100,16 @@ export const getAppRoutes = (): AppRouteConfig[] => {
 
     // For debugging baseline app shell stuff
     { routes: debugRoutes },
+
+    {
+      routes: [
+        {
+          path: "/oembed",
+          render: () => {
+            throw new HttpError(404)
+          },
+        },
+      ],
+    },
   ])
 }
