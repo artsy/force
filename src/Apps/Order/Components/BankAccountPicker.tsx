@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
@@ -36,6 +36,8 @@ export const BankAccountPicker: FC<Props> = props => {
     bankAccountSelection,
     onSetBankAccountSelection,
   } = props
+
+  const [clientSecret, setClientSecret] = useState("")
 
   const bankAccountsArray = extractNodes(bankAccounts)
 
@@ -117,14 +119,18 @@ export const BankAccountPicker: FC<Props> = props => {
       )}
 
       <Collapse open={bankAccountSelection.type === "new"}>
-        <BankDebitProvider
-          order={order}
-          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          onSetBankAccountHasInsufficientFunds={
-            onSetBankAccountHasInsufficientFunds
-          }
-          onSetIsSavingPayment={onSetIsSavingPayment}
-        />
+        {bankAccountSelection.type === "new" && (
+          <BankDebitProvider
+            order={order}
+            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+            onSetBankAccountHasInsufficientFunds={
+              onSetBankAccountHasInsufficientFunds
+            }
+            onSetIsSavingPayment={onSetIsSavingPayment}
+            onSetClientSecret={setClientSecret}
+            clientSecret={clientSecret}
+          />
+        )}
       </Collapse>
 
       {bankAccountSelection.type === "existing" && (

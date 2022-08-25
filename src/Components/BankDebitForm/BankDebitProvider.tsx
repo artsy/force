@@ -33,6 +33,8 @@ interface Props {
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
+  onSetClientSecret: (arg: string) => void
+  clientSecret: string
 }
 
 export const BankDebitProvider: FC<Props> = ({
@@ -40,10 +42,13 @@ export const BankDebitProvider: FC<Props> = ({
   bankAccountHasInsufficientFunds,
   onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
+  onSetClientSecret,
+  clientSecret,
 }) => {
-  const [clientSecret, setClientSecret] = useState("")
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const { submitMutation } = CreateBankDebitSetupForOrder()
+
+  // const previousPaymentMethod = useRef<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +61,7 @@ export const BankDebitProvider: FC<Props> = ({
           orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
             .__typename === "CommerceOrderRequiresAction"
         ) {
-          setClientSecret(
+          onSetClientSecret(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
               .actionData.clientSecret
           )
@@ -75,7 +80,9 @@ export const BankDebitProvider: FC<Props> = ({
       }
     }
 
-    fetchData()
+    if (!clientSecret) {
+      fetchData()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
