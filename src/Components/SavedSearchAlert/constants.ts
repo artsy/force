@@ -1,4 +1,5 @@
 import { Slice } from "../ArtworkFilter/ArtworkFilterContext"
+import { SavedSearchFrequency } from "./types"
 
 export const shouldExtractValueNamesFromAggregation = [
   "locationCities",
@@ -38,3 +39,5 @@ export const allowedSearchCriteriaKeys = [
   "width",
   "artistNationalities",
 ]
+
+export const DEFAULT_FREQUENCY: SavedSearchFrequency = "daily"
