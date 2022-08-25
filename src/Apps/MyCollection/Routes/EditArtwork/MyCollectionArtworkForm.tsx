@@ -25,13 +25,14 @@ import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutat
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
 import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
+import { useDeleteArtwork } from "./Mutations/useDeleteArtwork"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import {
   MyCollectionArtworkDetailsValidationSchema,
   validateArtwork,
 } from "./Utils/artworkValidation"
-import { useCreateOrUpdateOrDeleteArtwork } from "./Utils/useCreateOrUpdateOrDeleteArtwork"
+import { useCreateOrUpdateArtwork } from "./Utils/useCreateOrUpdateArtwork"
 
 const logger = createLogger("MyCollectionArtworkForm.tsx")
 
@@ -54,10 +55,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     initialValues,
     MyCollectionArtworkDetailsValidationSchema
   )
-  const {
-    createOrUpdateArtwork,
-    deleteArtworkRequest,
-  } = useCreateOrUpdateOrDeleteArtwork()
+  const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
+  const { submitMutation } = useDeleteArtwork()
 
   const handleSubmit = async (values: ArtworkModel) => {
     try {
@@ -114,8 +113,13 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   const handleDelete = async () => {
     try {
-      await deleteArtworkRequest({
-        artworkId: artwork?.internalID!,
+      await submitMutation({
+        variables: {
+          input: { artworkId: artwork?.internalID! },
+        },
+        rejectIf: res => {
+          return res.myCollectionDeleteArtwork?.artworkOrError?.mutationError
+        },
       })
       router.push({ pathname: "/settings/my-collection" })
     } catch (error) {
