@@ -1,4 +1,13 @@
-import { Button, Column, Flex, GridColumns, Tab, Tabs } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Tab,
+  Tabs,
+} from "@artsy/palette"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -8,6 +17,7 @@ import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_a
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -18,6 +28,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 }) => {
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
+  )
+
+  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
+    "my-collection-web-phase-4-articles-rail"
   )
 
   const EditArtworkButton = () => (
@@ -34,6 +48,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
       </Button>
     </Flex>
   )
+
+  const slug = artwork?.artist?.slug!
 
   const hasInsights =
     !!artwork.comparables?.totalCount ||
@@ -63,8 +79,11 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           </Media>
 
           <Media lessThan="sm">
+            <MyCollectionArtworkSidebarTitleInfoFragmentContainer
+              artwork={artwork}
+            />
             {hasInsights ? (
-              <Tabs justifyContent="space-evenly">
+              <Tabs mt={2} justifyContent="space-evenly">
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
@@ -72,13 +91,31 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 </Tab>
 
                 <Tab name="About">
-                  <MyCollectionArtworkSidebarFragmentContainer
-                    artwork={artwork}
-                  />
+                  <>
+                    <MyCollectionArtworkSidebarFragmentContainer
+                      artwork={artwork}
+                    />
+
+                    <Spacer m={6} />
+
+                    {!!enableMyCollectionPhase4ArticlesRail && (
+                      <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+                    )}
+                  </>
                 </Tab>
               </Tabs>
             ) : (
-              <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+              <>
+                <MyCollectionArtworkSidebarFragmentContainer
+                  artwork={artwork}
+                />
+
+                <Spacer m={6} />
+
+                {!!enableMyCollectionPhase4ArticlesRail && (
+                  <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+                )}
+              </>
             )}
           </Media>
         </Column>
@@ -86,7 +123,15 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
       <Media greaterThanOrEqual="sm">
         {hasInsights && (
-          <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
+          <>
+            <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
+
+            <Spacer m={6} />
+
+            {!!enableMyCollectionPhase4ArticlesRail && (
+              <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+            )}
+          </>
         )}
       </Media>
     </>
@@ -103,13 +148,16 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         ...MyCollectionArtworkMeta_artwork
         ...MyCollectionArtworkInsights_artwork
         ...MyCollectionArtworkSidebar_artwork
+        ...MyCollectionArtworkSidebarTitleInfo_artwork
         comparables: comparableAuctionResults {
           totalCount
         }
         artist {
+          slug
           auctionResults: auctionResultsConnection {
             totalCount
           }
+          ...MyCollectionArtworkAuctionResults_artist
         }
         priceInsights: marketPriceInsights {
           artistId

@@ -10,14 +10,16 @@ export type MyCollectionArtwork_artwork = {
         readonly totalCount: number | null;
     } | null;
     readonly artist: {
+        readonly slug: string;
         readonly auctionResults: {
             readonly totalCount: number | null;
         } | null;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
     } | null;
     readonly priceInsights: {
         readonly artistId: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowser_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkSidebar_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowser_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$data = MyCollectionArtwork_artwork;
@@ -70,6 +72,13 @@ return {
       "plural": false,
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
+        {
           "alias": "auctionResults",
           "args": null,
           "concreteType": "AuctionResultConnection",
@@ -78,6 +87,11 @@ return {
           "plural": false,
           "selections": (v0/*: any*/),
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "MyCollectionArtworkAuctionResults_artist"
         }
       ],
       "storageKey": null
@@ -119,11 +133,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSidebar_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '320e4aed8f719cad445f22a152d8c608';
+(node as any).hash = 'ddd30315ca01e89d04a04ea757ba93cc';
 export default node;

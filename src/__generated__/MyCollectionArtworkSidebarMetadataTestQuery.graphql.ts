@@ -26,9 +26,6 @@ query MyCollectionArtworkSidebarMetadataTestQuery {
 }
 
 fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
-  artistNames
-  title
-  date
   category
   medium
   dimensions {
@@ -115,27 +112,6 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "artistNames",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "date",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -233,7 +209,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "84bf8fa670b3afab14bf534a53e4d82b",
+    "cacheID": "c7cfc481ce6d8cf37beac424bd55a16b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -243,7 +219,6 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artistNames": (v2/*: any*/),
         "artwork.artworkLocation": (v2/*: any*/),
         "artwork.attributionClass": {
           "enumValues": null,
@@ -254,7 +229,6 @@ return {
         "artwork.attributionClass.id": (v3/*: any*/),
         "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.category": (v2/*: any*/),
-        "artwork.date": (v2/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
           "nullable": true,
@@ -272,13 +246,12 @@ return {
           "type": "Money"
         },
         "artwork.pricePaid.display": (v2/*: any*/),
-        "artwork.provenance": (v2/*: any*/),
-        "artwork.title": (v2/*: any*/)
+        "artwork.provenance": (v2/*: any*/)
       }
     },
     "name": "MyCollectionArtworkSidebarMetadataTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  artistNames\n  title\n  date\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n"
+    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n"
   }
 };
 })();

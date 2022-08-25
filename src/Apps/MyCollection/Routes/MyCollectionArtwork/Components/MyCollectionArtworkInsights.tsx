@@ -1,5 +1,4 @@
 import { Join, Spacer, Text } from "@artsy/palette"
-import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { MyCollectionArtworkInsights_artwork } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
@@ -15,9 +14,6 @@ interface MyCollectionArtworkInsightsProps {
 const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = ({
   artwork,
 }) => {
-  const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
-    "my-collection-web-phase-4-articles-rail"
-  )
   const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
     "my-collection-web-phase-4-artist-market"
   )
@@ -31,8 +27,6 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
     "my-collection-web-phase-4-auction-results"
   )
-
-  const slug = artwork?.artist?.slug!
 
   return (
     <Join separator={<Spacer mt={[2, 6]} />}>
@@ -62,10 +56,6 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
         <MyCollectionArtworkAuctionResultsFragmentContainer
           artist={artwork?.artist!}
         />
-      )}
-
-      {!!enableMyCollectionPhase4ArticlesRail && (
-        <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
       )}
     </Join>
   )

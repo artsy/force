@@ -1,4 +1,4 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { MyCollectionArtworkSidebarMetadata_artwork } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
@@ -11,30 +11,17 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
   artwork,
 }) => {
   const {
-    artistNames,
     artworkLocation,
     attributionClass,
     category,
-    date,
     dimensions,
     medium,
     pricePaid,
     provenance,
-    title,
   } = artwork
 
   return (
     <>
-      <Text as="h1" variant="lg-display">
-        {artistNames}
-      </Text>
-      <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
-        <i>{title?.trim()}</i>
-        {date && date.replace(/\s+/g, "").length > 0 && ", " + date}
-      </Text>
-
-      <Spacer m={[1, 2]} />
-
       <MetadataField label="Medium" value={category} />
       <MetadataField label="Materials" value={medium} />
       <MetadataField
@@ -58,9 +45,6 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
   {
     artwork: graphql`
       fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
-        artistNames
-        title
-        date
         category
         medium
         dimensions {
