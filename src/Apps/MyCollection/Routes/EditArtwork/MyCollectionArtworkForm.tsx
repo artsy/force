@@ -8,8 +8,8 @@ import {
   Spacer,
   Step,
   Stepper,
-  useToasts,
   Text,
+  useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -108,11 +108,12 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   return (
     <>
-      {/* TODO: Update meta tags */}
       <MetaTags
-        pathname="my-collection"
-        title="Artwork | My Collection | Artsy"
-        description="..."
+        title={
+          artwork
+            ? `Edit ${artwork.title} - ${artwork.artistNames} | Artsy`
+            : "Upload Artwork | Artsy"
+        }
       />
 
       <Spacer mt={4} />
