@@ -1,12 +1,12 @@
 import { MetaTags } from "Components/MetaTags"
-import { NotificationsQueryRenderer } from "Components/Notifications/Notifications"
+import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 
 export const NotificationsApp: React.FC = () => {
   return (
     <>
       <MetaTags title="Notifications | Artsy" pathname="/notifications" />
 
-      <NotificationsQueryRenderer />
+      <NotificationsListQueryRenderer />
     </>
   )
 }
