@@ -2,16 +2,22 @@ import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { ArtworkFiltersState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System"
+import { DEFAULT_FREQUENCY } from "../constants"
 import {
   SavedSearchAlertModalContainer,
   SavedSearchAlertFormContainerProps,
 } from "../SavedSearchAlertModal"
-import { SavedSearchEntity, SearchCriteriaAttributes } from "../types"
+import {
+  SavedSearchAleftFormValues,
+  SavedSearchEntity,
+  SearchCriteriaAttributes,
+} from "../types"
 
-const formInitialValues = {
+const formInitialValues: SavedSearchAleftFormValues = {
   name: "",
   email: true,
   push: false,
+  frequency: DEFAULT_FREQUENCY,
 }
 
 const savedSearchEntity: SavedSearchEntity = {

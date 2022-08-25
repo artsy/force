@@ -32,6 +32,7 @@ import {
 import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
 import { isArtsyEmail } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor/isArtsyEmail"
+import { DEFAULT_FREQUENCY } from "./constants"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -77,6 +78,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
       name: values.name || entity.placeholder,
       email: values.email,
       push: values.push,
+      frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
     }
 
     try {
@@ -162,7 +164,14 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 <Box display="flex" justifyContent="space-between">
                   <Text variant="sm-display">Mobile Alerts</Text>
                   <Checkbox
-                    onSelect={selected => setFieldValue("push", selected)}
+                    onSelect={selected => {
+                      setFieldValue("push", selected)
+
+                      // Restore default frequency when "Mobile Alerts" is unselected
+                      if (!selected) {
+                        setFieldValue("frequency", DEFAULT_FREQUENCY)
+                      }
+                    }}
                     selected={values.push}
                   />
                 </Box>
@@ -172,9 +181,15 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                 {values.push && isArtsyEmployee && (
                   <Box display="flex" justifyContent="space-between">
                     <Text variant="sm-display">Frequency</Text>
-                    <RadioGroup defaultValue="daily" flexDirection="row">
-                      <Radio value="daily" label="Daily" mr={2} />
-                      <Radio value="instant" label="Instant" />
+                    <RadioGroup
+                      defaultValue={values.frequency}
+                      onSelect={selectedOption =>
+                        setFieldValue("frequency", selectedOption)
+                      }
+                      flexDirection="row"
+                    >
+                      <Radio value="instant" label="Instant" mr={2} />
+                      <Radio value="daily" label="Daily" />
                     </RadioGroup>
                   </Box>
                 )}
