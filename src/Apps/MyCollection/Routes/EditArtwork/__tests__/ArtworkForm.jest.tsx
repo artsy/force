@@ -200,54 +200,33 @@ describe("Edit artwork", () => {
       })
     })
   })
-})
 
-describe("Delete artwork", () => {
-  const getWrapper = (breakpoint: Breakpoint = "lg") =>
-    setupTestWrapperTL({
-      Component: (props: any) => {
-        return (
-          <MockBoot breakpoint={breakpoint}>
-            <MyCollectionArtworkFormFragmentContainer {...props} />
-          </MockBoot>
-        )
-      },
-      query: graphql`
-        query ArtworkFormTest_Query($slug: String!) {
-          artwork(id: $slug) {
-            ...MyCollectionArtworkForm_artwork
-          }
-        }
-      `,
-      variables: {
-        slug: mockArtwork.internalID,
-      },
-    })
-
-  it("deletes artwork", async () => {
-    getWrapper().renderWithRelay({
-      Artwork: () => mockArtwork,
-    })
-
-    // opens modal
-    fireEvent.click(screen.getByTestId("delete-button"))
-    fireEvent.click(screen.getByTestId("submit-delete-button"))
-
-    await flushPromiseQueue()
-
-    expect(mockDeleteArtwork).toHaveBeenCalledWith(
-      expect.objectContaining({
-        rejectIf: expect.any(Function),
-        variables: {
-          input: {
-            artworkId: "62fc96c48d3ff8000b556c3a",
-          },
-        },
+  describe("Delete artwork", () => {
+    it("deletes artwork", async () => {
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
       })
-    )
 
-    expect(mockRouterPush).toHaveBeenCalledWith({
-      pathname: "/settings/my-collection",
+      // opens modal
+      fireEvent.click(screen.getByTestId("delete-button"))
+      fireEvent.click(screen.getByTestId("submit-delete-button"))
+
+      await flushPromiseQueue()
+
+      expect(mockDeleteArtwork).toHaveBeenCalledWith(
+        expect.objectContaining({
+          rejectIf: expect.any(Function),
+          variables: {
+            input: {
+              artworkId: "62fc96c48d3ff8000b556c3a",
+            },
+          },
+        })
+      )
+
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/settings/my-collection",
+      })
     })
   })
 })
