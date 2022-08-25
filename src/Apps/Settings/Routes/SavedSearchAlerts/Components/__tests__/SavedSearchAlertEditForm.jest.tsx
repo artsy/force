@@ -189,8 +189,8 @@ describe("SavedSearchAlertEditForm", () => {
       Array [
         Object {
           "action": "editedSavedSearch",
-          "changed": "{\\"name\\":\\"Updated Name\\",\\"push\\":false,\\"email\\":true}",
-          "current": "{\\"name\\":\\"Alert #1\\",\\"email\\":true,\\"push\\":false}",
+          "changed": "{\\"name\\":\\"Updated Name\\",\\"push\\":false,\\"email\\":true,\\"frequency\\":\\"daily\\"}",
+          "current": "{\\"name\\":\\"Alert #1\\",\\"email\\":true,\\"push\\":false,\\"frequency\\":\\"daily\\"}",
           "saved_search_id": "alert-id",
         },
       ]
@@ -376,6 +376,7 @@ const savedSearchAlertMocked = {
     name: "Alert #1",
     email: true,
     push: false,
+    frequency: "daily",
   },
   width: null,
   labels: savedSearchAlertLabelsMocked,
