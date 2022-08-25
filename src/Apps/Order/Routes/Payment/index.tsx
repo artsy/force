@@ -227,8 +227,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     }
   }
 
-  console.log()
-
   // fired when balance check is done: either sets error state or moves to /review
   const handleBalanceCheckComplete = (
     displayInsufficientFundsError: boolean,
