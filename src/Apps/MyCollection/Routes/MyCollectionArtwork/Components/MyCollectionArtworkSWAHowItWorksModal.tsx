@@ -1,8 +1,11 @@
-import { ModalDialog, Button, Text, Clickable } from "@artsy/palette"
+import { ModalDialog, Button, Text } from "@artsy/palette"
 
 export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
   onClose: () => void
 }> = ({ onClose }) => {
+  const article =
+    "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+
   return (
     <ModalDialog
       title="How It Works"
@@ -44,22 +47,13 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       </Text>
       <Text mb={2}>
         For more information, see our{" "}
-        {
-          <Clickable
-            textDecoration="underline"
-            onClick={() => {
-              return
-            }}
-          >
-            Collector Help Center
-          </Clickable>
-        }
+        <a href={article} target="_blank" rel="noopener noreferrer">
+          Collector Help Center
+        </a>
       </Text>
       <Text>
         Or get in touch with one of our specialists at{" "}
-        <Clickable textDecoration="underline">
-          <a href="mailto:sell@artsymail.com">sell@artsymail.com</a>
-        </Clickable>
+        <a href="mailto:sell@artsymail.com">sell@artsymail.com</a>
       </Text>
     </ModalDialog>
   )

@@ -2,6 +2,9 @@ import { Flex, Text, Clickable } from "@artsy/palette"
 import { CheckMarkIcon } from "../CheckMarkIcon"
 
 export const MyCollectionArtworkSWASectionSubmitted = () => {
+  const article =
+    "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+
   return (
     <>
       <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
@@ -13,14 +16,10 @@ export const MyCollectionArtworkSWASectionSubmitted = () => {
 
       <Text mb={2} color="black60">
         Have a question? Visit our{" "}
-        <Clickable
-          onClick={() => {
-            return
-          }}
-          color="black100"
-          textDecoration="underline"
-        >
-          help center
+        <Clickable color="black100">
+          <a href={article} target="_blank" rel="noopener noreferrer">
+            help center
+          </a>
         </Clickable>{" "}
         or get in touch with one of our specialists at{" "}
         <Clickable color="black100" textDecoration="underline">
