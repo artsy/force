@@ -142,7 +142,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                         <Button
                           onClick={e => {
                             e.preventDefault()
-
                             router.replace({ pathname: "/my-collection" })
                             router.push({
                               pathname: isEditing
