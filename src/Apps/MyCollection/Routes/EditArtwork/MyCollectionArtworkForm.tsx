@@ -127,7 +127,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                 ? `/my-collection/artwork/${artwork.internalID}`
                 : "/my-collection"
             }
-            mt={4}
             width="100%"
             data-testid="leave-button"
           >
@@ -144,7 +143,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         </>
       }
     >
-      <Text mt={4}>
+      <Text>
         {isEditing
           ? "Changes you have made so far will not be saved."
           : "Your artwork will not be added to My Collection."}
@@ -179,7 +178,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         <>
           <Button
             onClick={handleDelete}
-            mt={4}
             width="100%"
             data-testid="submit-delete-button"
           >
@@ -196,7 +194,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         </>
       }
     >
-      <Text mt={4}>This artwork will be removed from My Collection.</Text>
+      <Text>This artwork will be removed from My Collection.</Text>
     </ModalDialog>
   )
 
