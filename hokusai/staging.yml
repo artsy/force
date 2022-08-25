@@ -103,7 +103,6 @@ spec:
             app: force
             layer: application
             component: web
-
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
