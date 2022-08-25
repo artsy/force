@@ -1,5 +1,6 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
   Box,
   Checkbox,
@@ -46,7 +47,9 @@ export const BankDebitForm: FC<Props> = ({
       tracking.trackEvent({
         flow: order.mode,
         order_id: order.internalID,
-        subject: "bank_account_selected",
+        subject: "link_account",
+        context_page_owner_type: OwnerType.ordersPayment,
+        action: ActionType.clickedPaymentDetails,
       })
     }
   }
