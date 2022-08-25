@@ -6,10 +6,12 @@ import { SavedSearchAlertEditForm_Test_Query } from "__generated__/SavedSearchAl
 import { EditAlertEntity } from "../../types"
 import { SavedSearchAlertEditFormFragmentContainer } from "../SavedSearchAlertEditForm"
 import { useTracking } from "react-tracking"
+import { useSystemContext } from "System"
 
 const mockEditSavedSearchAlert = jest.fn()
 
 jest.unmock("react-relay")
+jest.mock("System/useSystemContext")
 jest.mock("../../useEditSavedSearchAlert", () => ({
   useEditSavedSearchAlert: () => ({
     submitMutation: mockEditSavedSearchAlert,
@@ -28,6 +30,7 @@ describe("SavedSearchAlertEditForm", () => {
   const mockOnCompleted = jest.fn()
   const mockOnDeleteClick = jest.fn()
   const trackEvent = jest.fn()
+  const useSystemContextMock = useSystemContext as jest.Mock
 
   beforeAll(() => {
     jest.clearAllMocks()
@@ -36,6 +39,15 @@ describe("SavedSearchAlertEditForm", () => {
     mockTracking.mockImplementation(() => {
       return {
         trackEvent,
+      }
+    })
+
+    useSystemContextMock.mockImplementation(() => {
+      return {
+        user: {
+          name: "User Name",
+          email: "loggedin@example.com",
+        },
       }
     })
   })
@@ -197,6 +209,62 @@ describe("SavedSearchAlertEditForm", () => {
     `)
   })
 
+  describe("Frequency setting", () => {
+    it("should NOT be displayed by default", () => {
+      renderWithRelay({
+        ArtistConnection: () => artistsConnectionMocked,
+        FilterArtworksConnection: () => filterArtworksConnectionMocked,
+        Me: () => meMocked,
+      })
+
+      expect(screen.queryByText("Frequency")).not.toBeInTheDocument()
+    })
+
+    it("should NOT be displayed when it is not an artsy employee", () => {
+      renderWithRelay({
+        ArtistConnection: () => artistsConnectionMocked,
+        FilterArtworksConnection: () => filterArtworksConnectionMocked,
+        Me: () => ({
+          ...meMocked,
+          savedSearch: {
+            ...savedSearchAlertMocked,
+            userAlertSettings: {
+              ...savedSearchAlertMocked.userAlertSettings,
+              push: true,
+            },
+          },
+        }),
+      })
+
+      expect(screen.queryByText("Frequency")).not.toBeInTheDocument()
+    })
+
+    it("should be displayed when 'Mobile Alerts' is selected and it is an artsy employee", () => {
+      useSystemContextMock.mockImplementation(() => ({
+        user: {
+          email: "me@artsymail.com",
+        },
+      }))
+
+      renderWithRelay({
+        ArtistConnection: () => artistsConnectionMocked,
+        FilterArtworksConnection: () => filterArtworksConnectionMocked,
+        Me: () => ({
+          ...meMocked,
+          savedSearch: {
+            ...savedSearchAlertMocked,
+            userAlertSettings: {
+              ...savedSearchAlertMocked.userAlertSettings,
+              push: true,
+            },
+          },
+        }),
+      })
+
+      expect(screen.queryByText("Frequency")).toBeInTheDocument()
+    })
+  })
+
   describe("Save Alert button", () => {
     it("should be disabled by default", () => {
       renderWithRelay({
@@ -272,6 +340,35 @@ describe("SavedSearchAlertEditForm", () => {
       })
       const checkbox = screen.getByRole("checkbox", {
         name: "Mobile Alerts",
+      })
+
+      fireEvent.click(checkbox)
+
+      const saveAlertButton = screen.getByRole("button", {
+        name: "Save Alert",
+      })
+
+      expect(saveAlertButton).toBeEnabled()
+    })
+
+    it("should be enabled if frequency is changed", () => {
+      renderWithRelay({
+        ArtistConnection: () => artistsConnectionMocked,
+        FilterArtworksConnection: () => filterArtworksConnectionMocked,
+        Me: () => ({
+          ...meMocked,
+          savedSearch: {
+            ...savedSearchAlertMocked,
+            userAlertSettings: {
+              ...savedSearchAlertMocked.userAlertSettings,
+              push: true,
+            },
+          },
+        }),
+      })
+
+      const checkbox = screen.getByRole("radio", {
+        name: "Instant",
       })
 
       fireEvent.click(checkbox)
