@@ -7,6 +7,7 @@ import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkSWASectionDesktopLayout } from "../MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "../MyCollectionArtworkSWASectionSubmitted"
 import { useState } from "react"
+import { MyCollectionArtworkSWAHowItWorksModal } from "../MyCollectionArtworkSWAHowItWorksModal"
 
 const MyCollectionArtworkSidebarContainer = Box
 
@@ -21,6 +22,7 @@ export const MyCollectionArtworkSidebar: React.FC<MyCollectionArtworkSidebarProp
   const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
     boolean
   >(false)
+  const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase5Enabled = useFeatureFlag(
     "my-collection-web-phase-5"
@@ -28,6 +30,11 @@ export const MyCollectionArtworkSidebar: React.FC<MyCollectionArtworkSidebarProp
 
   return (
     <MyCollectionArtworkSidebarContainer>
+      {showHowItWorksModal && (
+        <MyCollectionArtworkSWAHowItWorksModal
+          onClose={() => setShowHowItWorksModal(false)}
+        />
+      )}
       <Join separator={<Separator mt={4} mb={2} />}>
         <MyCollectionArtworkSidebarMetadataFragmentContainer
           artwork={artwork}
@@ -44,6 +51,7 @@ export const MyCollectionArtworkSidebar: React.FC<MyCollectionArtworkSidebarProp
                 onSubmit={() => {
                   setIsArtworkSubmittedToSell(!isArtworkSubmittedToSell)
                 }}
+                learnMore={() => setShowHowItWorksModal(true)}
               />
             )}
           </Media>

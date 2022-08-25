@@ -2,10 +2,12 @@ import { Button, Clickable, Separator, Text } from "@artsy/palette"
 
 interface Props {
   onSubmit: () => void
+  learnMore: () => void
 }
 
 export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
   onSubmit,
+  learnMore,
 }) => {
   return (
     <>
@@ -15,21 +17,14 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button
-        variant="primaryBlack"
-        width="100%"
-        onClick={() => {
-          return
-        }}
-        mb={2}
-      >
+      <Button variant="primaryBlack" width="100%" onClick={onSubmit} mb={2}>
         Submit for Sale
       </Button>
 
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
-          onClick={onSubmit}
+          onClick={learnMore}
           color="black60"
           textDecoration="underline"
         >
@@ -42,6 +37,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 
 export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
   onSubmit,
+  learnMore,
 }) => {
   return (
     <>
@@ -57,9 +53,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
-          onClick={() => {
-            return
-          }}
+          onClick={learnMore}
           color="black60"
           textDecoration="underline"
         >

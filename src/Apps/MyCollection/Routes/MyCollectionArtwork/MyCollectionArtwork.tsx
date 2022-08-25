@@ -21,6 +21,7 @@ import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/My
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
 import { MyCollectionArtworkSWASectionMobileLayout } from "./Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 
@@ -34,6 +35,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
     boolean
   >(false)
+  const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
@@ -81,6 +83,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   return (
     <>
       <MyCollectionArtworkMetaFragmentContainer artwork={artwork} />
+
+      {showHowItWorksModal && (
+        <MyCollectionArtworkSWAHowItWorksModal
+          onClose={() => setShowHowItWorksModal(false)}
+        />
+      )}
 
       <GridColumns gridRowGap={[4, null]} py={[2, 6]}>
         <Column span={8}>
@@ -141,6 +149,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 onSubmit={() =>
                   setIsArtworkSubmittedToSell(!isArtworkSubmittedToSell)
                 }
+                learnMore={() => setShowHowItWorksModal(true)}
               />
             )}
           </Media>
