@@ -7,7 +7,6 @@ import {
   Spacer,
   Step,
   Stepper,
-  Text,
   useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
