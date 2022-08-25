@@ -4,11 +4,9 @@ import {
   DROP_SHADOW,
   Flex,
   FullBleed,
-  ModalDialog,
   Spacer,
   Step,
   Stepper,
-  Text,
   useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -25,6 +23,9 @@ import createLogger from "Utils/logger"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
+import { ConfirmationModalBack } from "./ConfirmationModalBack"
+import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
+import { useDeleteArtwork } from "./Mutations/useDeleteArtwork"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import {
@@ -45,13 +46,17 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
-  const [shouldShowModal, setShouldShowModal] = useState<boolean>(false)
+  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
+  const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
+    boolean
+  >(false)
 
   const initialErrors = validateArtwork(
     initialValues,
     MyCollectionArtworkDetailsValidationSchema
   )
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
+  const { submitMutation } = useDeleteArtwork()
 
   const handleSubmit = async (values: ArtworkModel) => {
     try {
@@ -106,6 +111,30 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   const isEditing = !!artwork?.internalID
 
+  const handleDelete = async () => {
+    try {
+      await submitMutation({
+        variables: {
+          input: { artworkId: artwork?.internalID! },
+        },
+        rejectIf: res => {
+          return res.myCollectionDeleteArtwork?.artworkOrError?.mutationError
+        },
+      })
+      router.push({ pathname: "/settings/my-collection" })
+    } catch (error) {
+      logger.error(`Artwork not deleted`, error)
+
+      sendToast({
+        variant: "error",
+        message: "An error occurred",
+        description: "Please contact support@artsymail.com",
+      })
+
+      return
+    }
+  }
+
   return (
     <>
       <MetaTags
@@ -133,46 +162,22 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               </RouterLink>
 
               <StickyProvider>
-                {shouldShowModal && (
-                  <ModalDialog
-                    title="Leave without saving?"
-                    onClose={() => setShouldShowModal(false)}
-                    width={["100%", 600]}
-                    footer={
-                      <>
-                        <Button
-                          // @ts-ignore
-                          as={RouterLink}
-                          to={
-                            isEditing
-                              ? `/my-collection/artwork/${artwork.internalID}`
-                              : "/my-collection"
-                          }
-                          mt={4}
-                          width="100%"
-                          data-testid="leave-button"
-                        >
-                          Leave Without Saving
-                        </Button>
-                        <Button
-                          onClick={() => setShouldShowModal(false)}
-                          variant="secondaryNeutral"
-                          mt={2}
-                          width="100%"
-                        >
-                          {isEditing
-                            ? "Continue Editing"
-                            : "Continue Uploading Artwork"}
-                        </Button>
-                      </>
+                {shouldShowBackModal && (
+                  <ConfirmationModalBack
+                    onClose={() => setShouldShowBackModal(false)}
+                    isEditing={isEditing}
+                    handleSubmit={
+                      isEditing
+                        ? `/my-collection/artwork/${artwork.internalID}`
+                        : "/my-collection"
                     }
-                  >
-                    <Text mt={4}>
-                      {isEditing
-                        ? "Changes you have made so far will not be saved."
-                        : "Your artwork will not be added to My Collection."}
-                    </Text>
-                  </ModalDialog>
+                  />
+                )}
+                {shouldShowDeletionModal && (
+                  <ConfirmationModalDelete
+                    onClose={() => setShouldShowDeletionModal(false)}
+                    handleDelete={handleDelete}
+                  />
                 )}
                 <Sticky withoutHeaderOffset>
                   {({ stuck }) => {
@@ -191,7 +196,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               <BackLink
                                 // @ts-ignore
                                 as={RouterLink}
-                                onClick={() => setShouldShowModal(true)}
+                                onClick={() => setShouldShowBackModal(true)}
                                 width="min-content"
                               >
                                 Back
@@ -231,6 +236,17 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
             </Form>
           )}
         </Formik>
+        {isEditing && (
+          <Button
+            onClick={() => setShouldShowDeletionModal(true)}
+            mt={6}
+            width={["100%", "auto"]}
+            variant="secondaryNeutral"
+            data-testid="delete-button"
+          >
+            Delete Artwork
+          </Button>
+        )}
       </AppContainer>
 
       <Spacer mt={4} />
