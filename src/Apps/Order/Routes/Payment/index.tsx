@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
 import { Box, Flex, Spacer } from "@artsy/palette"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 // relay generated
@@ -227,19 +227,22 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     }
   }
 
+  console.log()
+
   // fired when balance check is done: either sets error state or moves to /review
   const handleBalanceCheckComplete = (
     displayInsufficientFundsError: boolean,
     checkResult: BalanceCheckResult
   ) => {
     const event = {
-      subject: "checked_account_balance",
+      subject: "balance_account_check",
       outcome: checkResult,
       payment_method: selectedPaymentMethod,
       currency: order.currencyCode,
       amount: order.buyerTotalCents,
       order_id: order.internalID,
       context_page_owner_type: OwnerType.ordersPayment,
+      action: ActionType.checkedAccountBalance,
       flow: order.mode!,
     }
 
