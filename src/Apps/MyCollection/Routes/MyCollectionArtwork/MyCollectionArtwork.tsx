@@ -20,6 +20,7 @@ import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/My
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
+import { MyCollectionArtworkSWASectionMobileLayout } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSWASection"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -45,6 +46,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
     "my-collection-web-phase-4-auction-results"
+  )
+
+  const isMyCollectionPhase5Enabled = useFeatureFlag(
+    "my-collection-web-phase-5"
   )
 
   const slug = artwork?.artist?.slug!
@@ -122,6 +127,12 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
         {!!enableMyCollectionPhase4ArticlesRail && (
           <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+        )}
+
+        {!!isMyCollectionPhase5Enabled && (
+          <Media lessThan="sm">
+            <MyCollectionArtworkSWASectionMobileLayout />
+          </Media>
         )}
       </Join>
     </>
