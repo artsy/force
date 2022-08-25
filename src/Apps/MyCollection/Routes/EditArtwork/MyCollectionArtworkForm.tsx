@@ -4,12 +4,10 @@ import {
   DROP_SHADOW,
   Flex,
   FullBleed,
-  ModalDialog,
   Spacer,
   Step,
   Stepper,
   useToasts,
-  Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -25,6 +23,8 @@ import createLogger from "Utils/logger"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
+import { ConfirmationModalBack } from "./ConfirmationModalBack"
+import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import {
@@ -112,50 +112,12 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
   const isEditing = !!artwork?.internalID
 
-  const backModal = (
-    <ModalDialog
-      title="Leave without saving?"
-      onClose={() => setShouldShowBackModal(false)}
-      width={["100%", 600]}
-      footer={
-        <>
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            to={
-              isEditing
-                ? `/my-collection/artwork/${artwork.internalID}`
-                : "/my-collection"
-            }
-            width="100%"
-            data-testid="leave-button"
-          >
-            Leave Without Saving
-          </Button>
-          <Button
-            onClick={() => setShouldShowBackModal(false)}
-            variant="secondaryNeutral"
-            mt={2}
-            width="100%"
-          >
-            {isEditing ? "Continue Editing" : "Continue Uploading Artwork"}
-          </Button>
-        </>
-      }
-    >
-      <Text>
-        {isEditing
-          ? "Changes you have made so far will not be saved."
-          : "Your artwork will not be added to My Collection."}
-      </Text>
-    </ModalDialog>
-  )
-
   const handleDelete = async () => {
     try {
       await deleteArtworkRequest({
         artworkId: artwork?.internalID!,
-      }).then(() => router.push({ pathname: "/settings/my-collection" }))
+      })
+      router.push({ pathname: "/settings/my-collection" })
     } catch (error) {
       logger.error(`Artwork not deleted`, error)
 
@@ -168,35 +130,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       return
     }
   }
-
-  const deletionModal = (
-    <ModalDialog
-      title="Delete this artwork?"
-      onClose={() => setShouldShowDeletionModal(false)}
-      width={["100%", 600]}
-      footer={
-        <>
-          <Button
-            onClick={handleDelete}
-            width="100%"
-            data-testid="submit-delete-button"
-          >
-            Delete Artwork
-          </Button>
-          <Button
-            onClick={() => setShouldShowDeletionModal(false)}
-            variant="secondaryNeutral"
-            mt={2}
-            width="100%"
-          >
-            Keep Artwork
-          </Button>
-        </>
-      }
-    >
-      <Text>This artwork will be removed from My Collection.</Text>
-    </ModalDialog>
-  )
 
   return (
     <>
@@ -224,8 +157,23 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               </RouterLink>
 
               <StickyProvider>
-                {shouldShowBackModal && backModal}
-                {shouldShowDeletionModal && deletionModal}
+                {shouldShowBackModal && (
+                  <ConfirmationModalBack
+                    onClose={() => setShouldShowBackModal(false)}
+                    isEditing={isEditing}
+                    handleSubmit={
+                      isEditing
+                        ? `/my-collection/artwork/${artwork.internalID}`
+                        : "/my-collection"
+                    }
+                  />
+                )}
+                {shouldShowDeletionModal && (
+                  <ConfirmationModalDelete
+                    onClose={() => setShouldShowDeletionModal(false)}
+                    handleDelete={handleDelete}
+                  />
+                )}
                 <Sticky withoutHeaderOffset>
                   {({ stuck }) => {
                     return (
