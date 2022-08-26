@@ -1,15 +1,14 @@
 import { Button, ModalDialog, Text } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
 
 interface ConfirmationModalProps {
-  onClose: () => void
-  handleSubmit: string
   isEditing: boolean
+  onClose: () => void
+  onLeave: () => void
 }
 export const ConfirmationModalBack: React.FC<ConfirmationModalProps> = ({
-  onClose,
   isEditing,
-  handleSubmit,
+  onClose,
+  onLeave,
 }) => {
   return (
     <ModalDialog
@@ -18,13 +17,7 @@ export const ConfirmationModalBack: React.FC<ConfirmationModalProps> = ({
       width={["100%", 600]}
       footer={
         <>
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            to={handleSubmit}
-            width="100%"
-            data-testid="leave-button"
-          >
+          <Button onClick={onLeave} width="100%" data-testid="leave-button">
             Leave Without Saving
           </Button>
           <Button

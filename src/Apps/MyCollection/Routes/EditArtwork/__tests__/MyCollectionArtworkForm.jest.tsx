@@ -142,11 +142,14 @@ describe("Edit artwork", () => {
       })
 
       fireEvent.click(screen.getByText("Back"))
+      fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(screen.getByTestId("leave-button")).toHaveAttribute(
-        "href",
-        `/my-collection/artwork/${mockArtwork.internalID}`
-      )
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+      expect(mockRouterReplace).toHaveBeenCalledWith({
+        pathname: "/my-collection",
+      })
     })
   })
 
@@ -409,11 +412,14 @@ describe("Create artwork", () => {
       getWrapper()
 
       fireEvent.click(screen.getByText("Back"))
+      fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(screen.getByTestId("leave-button")).toHaveAttribute(
-        "href",
-        "/my-collection"
-      )
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+      expect(mockRouterReplace).toHaveBeenCalledWith({
+        pathname: "/my-collection",
+      })
     })
   })
 })

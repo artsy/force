@@ -206,11 +206,14 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                   <ConfirmationModalBack
                     onClose={() => setShouldShowBackModal(false)}
                     isEditing={isEditing}
-                    handleSubmit={
-                      isEditing
-                        ? `/my-collection/artwork/${artwork.internalID}`
-                        : "/my-collection"
-                    }
+                    onLeave={() => {
+                      router.replace({ pathname: "/my-collection" })
+                      router.push({
+                        pathname: isEditing
+                          ? `/my-collection/artwork/${artwork.internalID}`
+                          : "/settings/my-collection",
+                      })
+                    }}
                   />
                 )}
                 {shouldShowDeletionModal && (
