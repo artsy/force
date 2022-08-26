@@ -84,11 +84,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         attributionClass: values.attributionClass
           ?.replace(" ", "_")
           ?.toUpperCase() as ArtworkAttributionClassType,
-        editionNumber: values.editionNumber,
-        editionSize: values.editionSize,
-        height: values.height,
-        width: values.width,
-        depth: values.depth,
+        editionNumber: String(values.editionNumber),
+        editionSize: String(values.editionSize),
+        height: String(values.height),
+        width: String(values.width),
+        depth: String(values.depth),
         metric: values.metric,
         externalImageUrls: values.newPhotos.flatMap(photo => photo.url || null),
         pricePaidCents:

@@ -106,23 +106,23 @@ describe("Edit artwork", () => {
           .getAllByRole("combobox")
           .find(c => c.getAttribute("name") == "attributionClass")
       ).toHaveValue("LIMITED_EDITION")
-      expect(screen.getByPlaceholderText("Your work's #")).toHaveValue("1")
-      expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue("2")
+      expect(screen.getByPlaceholderText("Your work's #")).toHaveValue(1)
+      expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue(2)
       expect(
         screen
           .getAllByRole("textbox")
           .find(c => c.getAttribute("name") == "height")
-      ).toHaveValue("8.75")
+      ).toHaveValue(8.75)
       expect(
         screen
           .getAllByRole("textbox")
           .find(c => c.getAttribute("name") == "width")
-      ).toHaveValue("11")
+      ).toHaveValue(11)
       expect(
         screen
           .getAllByRole("textbox")
           .find(c => c.getAttribute("name") == "depth")
-      ).toHaveValue("2")
+      ).toHaveValue(2)
       expect(
         screen.getAllByRole("radio").find(c => c.textContent == "in")
       ).toBeChecked()
