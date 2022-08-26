@@ -8,10 +8,16 @@ import { computeTitle } from "./computeTitle"
 interface UseAuthFormProps {
   canonical: string
   pageTitle: string
+  description?: string
   type: ModalType
 }
 
-export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
+export function useAuthForm({
+  canonical,
+  description,
+  pageTitle,
+  type,
+}: UseAuthFormProps) {
   const { match } = useRouter()
 
   const {
@@ -48,7 +54,7 @@ export function useAuthForm({ canonical, pageTitle, type }: UseAuthFormProps) {
 
   const meta: AuthenticationMetaProps["meta"] = {
     canonical,
-    description: "",
+    description: description ?? "",
     title,
   }
 
