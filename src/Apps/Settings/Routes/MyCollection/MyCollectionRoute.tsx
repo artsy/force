@@ -133,6 +133,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
               <Button
                 // @ts-ignore
                 as={RouterLink}
+                size={["small", "large"]}
                 variant="primaryBlack"
                 to="/my-collection/artworks/new"
               >
