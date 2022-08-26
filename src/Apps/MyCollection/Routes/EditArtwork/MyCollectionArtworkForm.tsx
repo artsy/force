@@ -4,9 +4,9 @@ import {
   DROP_SHADOW,
   Flex,
   FullBleed,
+  Separator,
   Spacer,
-  Step,
-  Stepper,
+  Text,
   useToasts,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -265,13 +265,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                 </Sticky>
               </StickyProvider>
 
-              <Stepper
-                initialTabIndex={0}
-                currentStepIndex={0}
-                disableNavigation
-              >
-                <Step name="Add Artwork Details" />
-              </Stepper>
+              <Text mx={2} mb={1}>
+                {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
+              </Text>
+              <Separator color="black100" />
 
               <Spacer mb={4} />
 
