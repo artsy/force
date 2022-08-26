@@ -2,7 +2,7 @@ import { BorderedRadio, Box, RadioGroup, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 import { useSystemContext } from "System"
-import { isArtsyEmail } from "Utils/isArtsyEmail"
+import { userIsAdmin, userIsTeam } from "Utils/user"
 import { SavedSearchFrequency } from "../types"
 
 interface FrequenceRadioButtonsProps {
@@ -15,7 +15,7 @@ export const FrequenceRadioButtons: React.FC<FrequenceRadioButtonsProps> = ({
   onSelect,
 }) => {
   const { user } = useSystemContext()
-  const isArtsyEmployee = isArtsyEmail(user?.email ?? "")
+  const isArtsyEmployee = userIsTeam(user) || userIsAdmin(user)
 
   if (isArtsyEmployee) {
     return (

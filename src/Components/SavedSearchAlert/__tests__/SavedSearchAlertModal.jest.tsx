@@ -192,6 +192,7 @@ describe("SavedSearchAlertModal", () => {
         relayEnvironment: {},
         user: {
           email: "me@artsymail.com",
+          roles: ["team"],
         },
       }))
 

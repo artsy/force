@@ -22,7 +22,7 @@ import { SmsSecondFactor_me } from "__generated__/SmsSecondFactor_me.graphql"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
-import { isArtsyEmail } from "Utils/isArtsyEmail"
+import { isArtsyEmail } from "./isArtsyEmail"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me

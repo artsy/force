@@ -243,6 +243,7 @@ describe("SavedSearchAlertEditForm", () => {
       useSystemContextMock.mockImplementation(() => ({
         user: {
           email: "me@artsymail.com",
+          roles: ["team"],
         },
       }))
 
