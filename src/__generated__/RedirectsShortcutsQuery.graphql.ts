@@ -9,7 +9,7 @@ export type RedirectsShortcutsQueryVariables = {
 export type RedirectsShortcutsQueryResponse = {
     readonly shortcut: {
         readonly long: string;
-    };
+    } | null;
 };
 export type RedirectsShortcutsQuery = {
     readonly response: RedirectsShortcutsQueryResponse;
