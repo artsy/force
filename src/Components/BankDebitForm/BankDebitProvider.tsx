@@ -50,8 +50,6 @@ export const BankDebitProvider: FC<Props> = ({
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
-  // const previousPaymentMethod = useRef<string | null>(null)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
