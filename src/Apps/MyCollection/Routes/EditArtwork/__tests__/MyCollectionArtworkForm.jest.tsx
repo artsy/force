@@ -86,7 +86,7 @@ describe("Edit artwork", () => {
       expect(screen.getByText("Save Artwork")).toBeInTheDocument()
       expect(screen.getByTestId("save-button")).toBeEnabled()
 
-      expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+      expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
 
       expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
         "Willem de Kooning"

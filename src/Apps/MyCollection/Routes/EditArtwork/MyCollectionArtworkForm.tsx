@@ -266,7 +266,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               </StickyProvider>
 
               <Text mx={2} mb={1}>
-                Edit Artwork Details
+                {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
               </Text>
               <Separator color="black100" />
 
