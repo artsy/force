@@ -316,8 +316,6 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             value={values.artworkLocation}
           />
         </Column>
-
-        {/* TODO: Add image uploader */}
       </GridColumns>
     </>
   )
