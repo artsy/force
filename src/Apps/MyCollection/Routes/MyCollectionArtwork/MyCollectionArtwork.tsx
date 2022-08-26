@@ -8,12 +8,12 @@ import {
   Tabs,
 } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
-import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtwork_artwork } from "__generated__/MyCollectionArtwork_artwork.graphql"
+import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCollectionArtworkInsights"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
@@ -65,10 +65,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <Media lessThan="sm">
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
           </Media>
-          <ArtworkImageBrowserFragmentContainer
-            artwork={artwork}
-            isMyCollectionArtwork
-          />
+          <MyCollectionArtworkImageBrowserFragmentContainer artwork={artwork} />
         </Column>
 
         <Column span={4}>
@@ -143,15 +140,16 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment MyCollectionArtwork_artwork on Artwork {
-        internalID
-        ...ArtworkImageBrowser_artwork
+        ...MyCollectionArtworkSidebar_artwork
         ...MyCollectionArtworkMeta_artwork
         ...MyCollectionArtworkInsights_artwork
-        ...MyCollectionArtworkSidebar_artwork
+        ...MyCollectionArtworkImageBrowser_artwork
+        ...MyCollectionArtworkComparables_artwork
         ...MyCollectionArtworkSidebarTitleInfo_artwork
         comparables: comparableAuctionResults {
           totalCount
         }
+        internalID
         artist {
           slug
           auctionResults: auctionResultsConnection {

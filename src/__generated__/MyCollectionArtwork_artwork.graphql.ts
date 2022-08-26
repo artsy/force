@@ -5,10 +5,10 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork = {
-    readonly internalID: string;
     readonly comparables: {
         readonly totalCount: number | null;
     } | null;
+    readonly internalID: string;
     readonly artist: {
         readonly slug: string;
         readonly auctionResults: {
@@ -19,7 +19,7 @@ export type MyCollectionArtwork_artwork = {
     readonly priceInsights: {
         readonly artistId: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowser_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
 };
 export type MyCollectionArtwork_artwork$data = MyCollectionArtwork_artwork;
@@ -47,13 +47,6 @@ return {
   "name": "MyCollectionArtwork_artwork",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
       "alias": "comparables",
       "args": null,
       "concreteType": "AuctionResultConnection",
@@ -61,6 +54,13 @@ return {
       "name": "comparableAuctionResults",
       "plural": false,
       "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -117,7 +117,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkImageBrowser_artwork"
+      "name": "MyCollectionArtworkSidebar_artwork"
     },
     {
       "args": null,
@@ -132,7 +132,12 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "MyCollectionArtworkSidebar_artwork"
+      "name": "MyCollectionArtworkImageBrowser_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "MyCollectionArtworkComparables_artwork"
     },
     {
       "args": null,
@@ -144,5 +149,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ddd30315ca01e89d04a04ea757ba93cc';
+(node as any).hash = 'd6cf42c37c492669be654d50cb7511ea';
 export default node;
