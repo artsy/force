@@ -113,6 +113,15 @@ const prepareSubmissionFlowStepVariables = data => {
   }
 }
 
+const preparePrefillSubmissionFromArtworkVariables = data => {
+  console.log("data => ", data)
+
+  return {
+    id: data.id,
+    ...data,
+  }
+}
+
 export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell",
@@ -159,6 +168,23 @@ export const consignRoutes: AppRouteConfig[] = [
         onClientSideRender: () => {
           ArtworkDetails.preload()
         },
+      },
+      {
+        path: "artwork/:id/submit",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_myCollectionArtworkDetailsQuery($id: String!) {
+            myCollectionArtwork: artwork(id: $id) {
+              ...ArtworkDetails_myCollectionArtwork
+            }
+          }
+        `,
+        prepareVariables: preparePrefillSubmissionFromArtworkVariables,
       },
       {
         path: ":id/artwork-details",
