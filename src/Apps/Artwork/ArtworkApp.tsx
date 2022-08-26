@@ -30,6 +30,7 @@ import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { useCallback, useEffect } from "react"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -44,46 +45,11 @@ export interface Props {
 
 declare const window: any
 
-export class ArtworkApp extends React.Component<Props> {
-  /**
-   * On mount, trigger a page view and product view
-   *
-   * FIXME: We're manually invoking pageView tracking here, instead of within
-   * the `trackingMiddleware` file as we need to pass along additional metadata.
-   * Waiting on analytics team to decide if there's a better way to capture this
-   * data that remains consistent with the rest of the app.
-   */
-  componentDidMount() {
-    if (this.shouldRenderSubmittedOrderModal()) {
-      // TODO: Look into using router push
-      // this.props.router.replace(this.props.match.location.pathname)
-      window.history.pushState({}, null, this.props.match.location.pathname)
-    }
-    this.track()
-  }
+export const ArtworkApp: React.FC<Props> = props => {
+  const { artwork, me, referrer, tracking, shouldTrackPageView } = props
 
-  componentDidUpdate() {
-    if (this.props.shouldTrackPageView) {
-      this.track()
-    }
-  }
-
-  shouldRenderSubmittedOrderModal() {
-    return !!this.props.match.location.query["order-submitted"]
-  }
-
-  track() {
-    this.trackPageview()
-    this.trackProductView()
-    this.trackLotView()
-  }
-
-  trackPageview() {
-    const {
-      artwork: { listPrice, availability, is_offerable, is_acquireable },
-      referrer,
-    } = this.props
-
+  const trackPageview = useCallback(() => {
+    const { listPrice, availability, is_offerable, is_acquireable } = artwork
     const path = window.location.pathname
 
     if (typeof window.analytics !== "undefined") {
@@ -115,13 +81,10 @@ export class ArtworkApp extends React.Component<Props> {
         window._sift.push(["_trackPageview"])
       }
     }
-  }
+  }, [artwork, referrer])
 
-  trackProductView() {
-    const {
-      tracking,
-      artwork: { is_acquireable, is_in_auction, internalID },
-    } = this.props
+  const trackProductView = useCallback(() => {
+    const { is_acquireable, is_in_auction, internalID } = artwork
 
     if (is_acquireable || is_in_auction) {
       const trackingData = {
@@ -132,13 +95,10 @@ export class ArtworkApp extends React.Component<Props> {
         tracking.trackEvent(trackingData)
       }
     }
-  }
+  }, [artwork, tracking])
 
-  trackLotView() {
-    const {
-      tracking,
-      artwork: { is_in_auction, slug, internalID, sale },
-    } = this.props
+  const trackLotView = useCallback(() => {
+    const { is_in_auction, slug, internalID, sale } = artwork
 
     if (tracking && is_in_auction) {
       const trackingData = {
@@ -150,83 +110,113 @@ export class ArtworkApp extends React.Component<Props> {
       }
       tracking.trackEvent(trackingData)
     }
-  }
+  }, [artwork, tracking])
 
-  render() {
-    const { artwork, me } = this.props
+  const track = useCallback(() => {
+    trackPageview()
+    trackProductView()
+    trackLotView()
+  }, [trackPageview, trackProductView, trackLotView])
 
-    const BelowTheFoldArtworkDetails = (
-      <>
-        <Spacer mt={6} />
-        <Join separator={<Spacer mt={2} />}>
-          <ArtworkDetailsQueryRenderer slug={artwork.slug} />
+  const shouldRenderSubmittedOrderModal = useCallback(() => {
+    return !!props.match.location.query["order-submitted"]
+  }, [props.match.location.query])
 
-          <PricingContextQueryRenderer slug={artwork.slug} />
+  /**
+   * On mount, trigger a page view and product view
+   *
+   * FIXME: We're manually invoking pageView tracking here, instead of within
+   * the `trackingMiddleware` file as we need to pass along additional metadata.
+   * Waiting on analytics team to decide if there's a better way to capture this
+   * data that remains consistent with the rest of the app.
+   */
+  useEffect(() => {
+    if (shouldRenderSubmittedOrderModal()) {
+      // TODO: Look into using router push
+      // this.props.router.replace(this.props.match.location.pathname)
+      window.history.pushState({}, null, props.match.location.pathname)
+    }
+    track()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-          {artwork.artists &&
-            artwork.artists.map(artist => {
-              if (!artist) return null
+  useEffect(() => {
+    if (shouldTrackPageView) {
+      track()
+    }
+  }, [shouldTrackPageView, track])
 
-              return (
-                <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
-              )
-            })}
-        </Join>
-      </>
-    )
+  const BelowTheFoldArtworkDetails = (
+    <>
+      <Spacer mt={6} />
+      <Join separator={<Spacer mt={2} />}>
+        <ArtworkDetailsQueryRenderer slug={artwork.slug} />
 
-    return (
-      <>
-        <UseRecordArtworkView />
+        <PricingContextQueryRenderer slug={artwork.slug} />
 
-        {artwork.sale && (
-          <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
-        )}
+        {artwork.artists &&
+          artwork.artists.map(artist => {
+            if (!artist) return null
 
-        <ArtworkMetaFragmentContainer artwork={artwork} />
+            return (
+              <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
+            )
+          })}
+      </Join>
+    </>
+  )
 
-        <ArtworkTopContextBarFragmentContainer artwork={artwork} />
+  return (
+    <>
+      <UseRecordArtworkView />
 
-        <GridColumns>
-          <Column span={8}>
-            <ArtworkImageBrowserFragmentContainer artwork={artwork} />
+      {artwork.sale && (
+        <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
+      )}
 
-            <Media greaterThanOrEqual="sm">{BelowTheFoldArtworkDetails}</Media>
-          </Column>
+      <ArtworkMetaFragmentContainer artwork={artwork} />
 
-          <Column span={4} pt={[0, 2]}>
-            <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
-          </Column>
-        </GridColumns>
+      <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
-        <Media lessThan="sm">{BelowTheFoldArtworkDetails}</Media>
+      <GridColumns>
+        <Column span={8}>
+          <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
-        <Spacer mt={6} />
+          <Media greaterThanOrEqual="sm">{BelowTheFoldArtworkDetails}</Media>
+        </Column>
 
-        <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
+        <Column span={4} pt={[0, 2]}>
+          <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+        </Column>
+      </GridColumns>
 
-        <Spacer mt={6} />
+      <Media lessThan="sm">{BelowTheFoldArtworkDetails}</Media>
 
-        <OtherWorksQueryRenderer slug={artwork.slug} />
+      <Spacer mt={6} />
 
-        {artwork.artist && (
-          <>
-            <Spacer mt={6} />
+      <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
 
-            <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
-          </>
-        )}
+      <Spacer mt={6} />
 
-        <Spacer mt={6} />
+      <OtherWorksQueryRenderer slug={artwork.slug} />
 
-        <RecentlyViewed />
+      {artwork.artist && (
+        <>
+          <Spacer mt={6} />
 
-        {this.shouldRenderSubmittedOrderModal() && (
-          <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
-        )}
-      </>
-    )
-  }
+          <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
+        </>
+      )}
+
+      <Spacer mt={6} />
+
+      <RecentlyViewed />
+
+      {shouldRenderSubmittedOrderModal() && (
+        <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
+      )}
+    </>
+  )
 }
 
 const TrackingWrappedArtworkApp: React.FC<Props> = props => {
@@ -240,7 +230,6 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
     },
   } = useRouter()
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
