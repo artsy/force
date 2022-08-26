@@ -2,7 +2,7 @@ import { BorderedRadio, Box, RadioGroup, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 import { useSystemContext } from "System"
-import { userIsAdmin, userIsTeam } from "Utils/user"
+import { userIsTeam } from "Utils/user"
 import { SavedSearchFrequency } from "../types"
 
 interface FrequenceRadioButtonsProps {
@@ -15,7 +15,7 @@ export const FrequenceRadioButtons: React.FC<FrequenceRadioButtonsProps> = ({
   onSelect,
 }) => {
   const { user } = useSystemContext()
-  const isArtsyEmployee = userIsTeam(user) || userIsAdmin(user)
+  const isArtsyEmployee = userIsTeam(user)
 
   if (isArtsyEmployee) {
     return (
@@ -28,7 +28,7 @@ export const FrequenceRadioButtons: React.FC<FrequenceRadioButtonsProps> = ({
             value="instant"
             label={
               <Text>
-                Instant <Warning>(beta / admin only)</Warning>
+                Instant <Warning>(beta / internal only)</Warning>
               </Text>
             }
           >
