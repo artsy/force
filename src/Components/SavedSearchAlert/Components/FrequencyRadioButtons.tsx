@@ -28,13 +28,11 @@ export const FrequenceRadioButtons: React.FC<FrequenceRadioButtonsProps> = ({
             value="instant"
             label={
               <Text>
-                Instant <Warning>(experimental feature)</Warning>
+                Instant <Warning>(beta / admin only)</Warning>
               </Text>
             }
           >
-            <Text color="black60">
-              Frequency of sending notifications ~ 1 time per hour
-            </Text>
+            <Text color="black60">Max 1 notification per hour</Text>
           </BorderedRadio>
           <BorderedRadio value="daily" label="Daily" />
         </RadioGroup>
