@@ -65,6 +65,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
         <Column span={6}>
           <ArtistAutoComplete
             onError={() => handleAutosuggestError(true)}
+            onSelect={({ artistId }) => setFieldValue("artistId", artistId)}
             required
           />
         </Column>
