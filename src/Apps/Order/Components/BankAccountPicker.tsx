@@ -37,7 +37,7 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetBankAccountSelection,
   } = props
 
-  const [clientSecret, setClientSecret] = useState("")
+  const [clientSecret, setClientSecret] = useState<string | null>(null)
 
   const bankAccountsArray = extractNodes(bankAccounts)
 

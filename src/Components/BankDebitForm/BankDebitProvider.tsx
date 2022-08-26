@@ -35,7 +35,7 @@ interface Props {
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
   onSetClientSecret: (arg: string) => void
-  clientSecret: string
+  clientSecret: string | null
 }
 
 export const BankDebitProvider: FC<Props> = ({
@@ -134,7 +134,7 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   const options = {
-    clientSecret: clientSecret,
+    clientSecret: clientSecret || "",
     appearance: appearance,
   }
 
