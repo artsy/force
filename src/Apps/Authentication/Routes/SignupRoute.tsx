@@ -9,6 +9,8 @@ export const SignupRoute: React.FC = props => {
   const { meta, options, type } = useAuthForm({
     canonical: `${getENV("APP_URL")}/signup`,
     pageTitle: "Sign up for Artsy",
+    description:
+      "Build your personalized profile. Get art market insights. Buy and sell with confidence.",
     type: ModalType.signup,
   })
 

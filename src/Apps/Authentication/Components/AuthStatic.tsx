@@ -8,13 +8,13 @@ import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
 interface AuthStaticProps extends BoxProps {
   type: ModalType
-  meta: { title?: string }
+  meta: { description?: string; title?: string }
   options: ModalOptions
 }
 
 export const AuthStatic: React.FC<AuthStaticProps> = ({
   type,
-  meta: { title },
+  meta: { description, title },
   options,
   ...rest
 }) => {
@@ -30,10 +30,11 @@ export const AuthStatic: React.FC<AuthStaticProps> = ({
         maxWidth={440}
       >
         <ModalHeader title={title} hasLogo />
-        <Text textAlign="center" variant="sm-display">
-          Build your personalized profile. Get art market insights. Buy and sell
-          with confidence.
-        </Text>
+        {description && (
+          <Text textAlign="center" variant="sm-display">
+            {description}
+          </Text>
+        )}
         <Spacer my={0.5} />
         <FormSwitcher
           type={type}
