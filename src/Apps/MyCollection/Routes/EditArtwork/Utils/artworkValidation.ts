@@ -17,6 +17,10 @@ export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({
       value => !!value && trim(value) !== ""
     ),
   category: yup.string().required("Medium is required"),
+  newPhotos: yup
+    .array()
+    .transform(fields => fields.filter(c => !c.errorMessage))
+    .of(yup.object().test("newPhotos", value => value.url)),
 })
 
 export const validateArtwork = <T>(

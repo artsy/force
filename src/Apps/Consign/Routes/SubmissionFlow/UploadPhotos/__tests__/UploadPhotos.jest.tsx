@@ -1,10 +1,10 @@
-import { graphql } from "relay-runtime"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { UploadPhotosFragmentContainer } from "../UploadPhotos"
-import { SystemContextProvider } from "System"
-import { MBSize, uploadPhoto } from "../../Utils/fileUtils"
-import { fetchQuery } from "react-relay"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { MBSize, uploadPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { fetchQuery } from "react-relay"
+import { graphql } from "relay-runtime"
+import { SystemContextProvider } from "System"
+import { UploadPhotosFragmentContainer } from "../UploadPhotos"
 
 jest.unmock("react-relay")
 
@@ -19,8 +19,8 @@ jest.mock("System/Router/useRouter", () => {
   }
 })
 
-jest.mock("../../Utils/fileUtils", () => ({
-  ...jest.requireActual("../../Utils/fileUtils"),
+jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
+  ...jest.requireActual("Components/PhotoUpload/Utils/fileUtils"),
   uploadPhoto: jest.fn(),
 }))
 

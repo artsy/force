@@ -37,11 +37,11 @@ export type MyCollectionArtworkForm_artwork = {
     } | null;
     readonly id: string;
     readonly images: ReadonlyArray<{
+        readonly internalID: string | null;
         readonly isDefault: boolean | null;
         readonly imageURL: string | null;
         readonly width: number | null;
         readonly height: number | null;
-        readonly internalID: string | null;
     } | null> | null;
     readonly internalID: string;
     readonly isEdition: boolean | null;
@@ -280,6 +280,7 @@ return {
       "name": "images",
       "plural": true,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -295,8 +296,7 @@ return {
           "storageKey": null
         },
         (v3/*: any*/),
-        (v2/*: any*/),
-        (v0/*: any*/)
+        (v2/*: any*/)
       ],
       "storageKey": null
     },
@@ -356,5 +356,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1df0e58f66f1855195536a3c3b5ba922';
+(node as any).hash = '994888b6b6d5a10c58f9a4a95608e1d2';
 export default node;

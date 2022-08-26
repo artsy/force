@@ -23,9 +23,11 @@ import createLogger from "Utils/logger"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
+import { MyCollectionArtworkFormImages } from "./Components/MyCollectionArtworkFormImages"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
 import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
 import { useDeleteArtwork } from "./Mutations/useDeleteArtwork"
+import { useDeleteArtworkImage } from "./Mutations/useDeleteArtworkImage"
 import { getMyCollectionArtworkFormInitialValues } from "./Utils/artworkFormHelpers"
 import { ArtworkModel } from "./Utils/artworkModel"
 import {
@@ -46,19 +48,31 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { router } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
-  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
-  const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
-    boolean
-  >(false)
-
   const initialErrors = validateArtwork(
     initialValues,
     MyCollectionArtworkDetailsValidationSchema
   )
+
+  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
+  const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
+    boolean
+  >(false)
   const { createOrUpdateArtwork } = useCreateOrUpdateArtwork()
-  const { submitMutation } = useDeleteArtwork()
+  const { submitMutation: deleteArtworkImage } = useDeleteArtworkImage()
+  const { submitMutation: deleteArtwork } = useDeleteArtwork()
+
+  const isEditing = !!artwork?.internalID
 
   const handleSubmit = async (values: ArtworkModel) => {
+    // Set edition values for attribution class
+
+    if (values.attributionClass !== "LIMITED_EDITION") {
+      values.editionNumber = ""
+      values.editionSize = ""
+    }
+
+    // Create or update artwork
+
     try {
       const artworkId = await createOrUpdateArtwork({
         artworkId: artwork?.internalID,
@@ -76,6 +90,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         width: values.width,
         depth: values.depth,
         metric: values.metric,
+        externalImageUrls: values.newPhotos.flatMap(photo => photo.url || null),
         pricePaidCents:
           !values.pricePaidDollars || isNaN(Number(values.pricePaidDollars))
             ? undefined
@@ -84,6 +99,33 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         provenance: values.provenance,
         artworkLocation: values.artworkLocation,
       })
+
+      // Remove photos marked for deletion
+
+      const removedPhotos = values.photos.filter(photo => photo.removed)
+
+      await Promise.all(
+        removedPhotos.map(async photo => {
+          try {
+            await deleteArtworkImage({
+              variables: {
+                input: {
+                  artworkID: artwork?.internalID!,
+                  imageID: photo.internalID!,
+                },
+              },
+            })
+          } catch (error) {
+            logger.error("An error occured while removing images.", error)
+
+            sendToast({
+              variant: "error",
+              message: "An error occurred",
+              description: "Couldn't remove all images.",
+            })
+          }
+        })
+      )
 
       if (isEditing) {
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })
@@ -109,11 +151,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     }
   }
 
-  const isEditing = !!artwork?.internalID
-
   const handleDelete = async () => {
     try {
-      await submitMutation({
+      await deleteArtwork({
         variables: {
           input: { artworkId: artwork?.internalID! },
         },
@@ -233,13 +273,19 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               <Spacer mb={4} />
 
               <MyCollectionArtworkFormDetails />
+
+              <Spacer mb={4} />
+
+              <MyCollectionArtworkFormImages />
             </Form>
           )}
         </Formik>
+
+        <Spacer mt={4} />
+
         {isEditing && (
           <Button
             onClick={() => setShouldShowDeletionModal(true)}
-            mt={6}
             width={["100%", "auto"]}
             variant="secondaryNeutral"
             data-testid="delete-button"
@@ -291,6 +337,7 @@ export const MyCollectionArtworkFormFragmentContainer = createFragmentContainer(
         }
         id
         images {
+          internalID
           isDefault
           imageURL
           width
