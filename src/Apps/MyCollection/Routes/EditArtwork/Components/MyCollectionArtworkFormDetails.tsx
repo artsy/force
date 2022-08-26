@@ -155,6 +155,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber}
+                role="textbox"
               />
               <Box px={[0.5, 2]} mt={2}>
                 /
@@ -168,6 +169,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize}
+                role="textbox"
               />
             </Flex>
           )}
@@ -187,6 +189,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.height}
+                role="textbox"
               />
             </Box>
             <Box width="50%" height="100%">
@@ -200,6 +203,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.width}
+                role="textbox"
               />
             </Box>
           </Flex>
@@ -219,6 +223,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.depth}
+                role="textbox"
               />
             </Box>
             <RadioGroup
