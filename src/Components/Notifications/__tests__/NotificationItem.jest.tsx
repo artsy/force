@@ -74,27 +74,52 @@ describe("NotificationItem", () => {
     expect(screen.getAllByRole("img")).toHaveLength(4)
   })
 
-  it("should NOT render the remaining artworks count if there are less or equal to 4", () => {
-    renderWithRelay({
-      Notification: () => notification,
+  describe("the remaining artworks count", () => {
+    it("should NOT be rendered if there are less or equal to 4", () => {
+      renderWithRelay({
+        Notification: () => notification,
+      })
+
+      const label = screen.queryByLabelText("Remaining artworks count")
+      expect(label).not.toBeInTheDocument()
     })
 
-    const label = screen.queryByLabelText("Remaining artworks count")
-    expect(label).not.toBeInTheDocument()
+    it("should be rendered if there are more than 4", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          artworksConnection: {
+            ...notification.artworksConnection,
+            totalCount: 10,
+          },
+        }),
+      })
+
+      expect(screen.getByText("+ 6")).toBeInTheDocument()
+    })
   })
 
-  it("should render the remaining artworks count if there are more than 4", () => {
-    renderWithRelay({
-      Notification: () => ({
-        ...notification,
-        artworksConnection: {
-          ...notification.artworksConnection,
-          totalCount: 10,
-        },
-      }),
+  describe("Unread notification indicator", () => {
+    it("should NOT be rendered by default", () => {
+      renderWithRelay({
+        Notification: () => notification,
+      })
+
+      const indicator = screen.queryByLabelText("Unread notification indicator")
+      expect(indicator).not.toBeInTheDocument()
     })
 
-    expect(screen.getByText("+ 6")).toBeInTheDocument()
+    it("should be rendered when notification is unread", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          isUnread: true,
+        }),
+      })
+
+      const indicator = screen.queryByLabelText("Unread notification indicator")
+      expect(indicator).toBeInTheDocument()
+    })
   })
 })
 
@@ -153,6 +178,7 @@ const notification = {
   title: "Notification Title",
   message: "Notification Message",
   createdAt: DateTime.utc().minus({ days: 1 }),
+  isUnread: false,
   artworksConnection: {
     totalCount: 4,
     edges: artworks,

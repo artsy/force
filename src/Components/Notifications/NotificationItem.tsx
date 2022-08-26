@@ -9,60 +9,76 @@ interface NotificationItemProps {
   item: NotificationItem_item
 }
 
+const UNREAD_INDICATOR_SIZE = 8
+
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const artworks = extractNodes(item.artworksConnection)
   const remainingArtworksCount = (item.artworksConnection?.totalCount ?? 0) - 4
 
   return (
     <RouterLink
-      display="block"
+      display="flex"
+      alignItems="center"
       to={item.targetHref}
       p={2}
       mx={-2}
       textDecoration="none"
     >
-      <Text variant="xs" color="black60">
-        {getDateLabel(item.createdAt!)}
-      </Text>
+      <Flex flex={1} flexDirection="column">
+        <Text variant="xs" color="black60">
+          {getDateLabel(item.createdAt!)}
+        </Text>
 
-      <Text variant="sm-display" fontWeight="bold">
-        {item.title}
-      </Text>
+        <Text variant="sm-display" fontWeight="bold">
+          {item.title}
+        </Text>
 
-      <Text variant="sm-display">{item.message}</Text>
+        <Text variant="sm-display">{item.message}</Text>
 
-      <Spacer mb={1} />
+        <Spacer mb={1} />
 
-      <Flex flexDirection="row" alignItems="center">
-        <Join separator={<Spacer ml={1} />}>
-          {artworks.map(artwork => {
-            const image = artwork.image?.thumb
+        <Flex flexDirection="row" alignItems="center">
+          <Join separator={<Spacer ml={1} />}>
+            {artworks.map(artwork => {
+              const image = artwork.image?.thumb
 
-            return (
-              <Image
-                key={artwork.internalID}
-                src={image?.src}
-                srcSet={image?.srcSet}
-                alt={`Artwork image of ${artwork.title}`}
-                width={58}
-                height={58}
-                lazyLoad
-              />
-            )
-          })}
-        </Join>
+              return (
+                <Image
+                  key={artwork.internalID}
+                  src={image?.src}
+                  srcSet={image?.srcSet}
+                  alt={`Artwork image of ${artwork.title}`}
+                  width={58}
+                  height={58}
+                  lazyLoad
+                />
+              )
+            })}
+          </Join>
 
-        {remainingArtworksCount > 0 && (
-          <Text
-            variant="xs"
-            color="black60"
-            aria-label="Remaining artworks count"
-            ml={1}
-          >
-            + {remainingArtworksCount}
-          </Text>
-        )}
+          {remainingArtworksCount > 0 && (
+            <Text
+              variant="xs"
+              color="black60"
+              aria-label="Remaining artworks count"
+              ml={1}
+            >
+              + {remainingArtworksCount}
+            </Text>
+          )}
+        </Flex>
       </Flex>
+
+      {item.isUnread && (
+        <Flex
+          width={UNREAD_INDICATOR_SIZE}
+          height={UNREAD_INDICATOR_SIZE}
+          borderRadius={UNREAD_INDICATOR_SIZE / 2}
+          ml={1}
+          bg="blue100"
+          aria-label="Unread notification indicator"
+        />
+      )}
     </RouterLink>
   )
 }
@@ -76,6 +92,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         message
         createdAt
         targetHref
+        isUnread
         artworksConnection(first: 4) {
           totalCount
           edges {
