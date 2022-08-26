@@ -54,7 +54,10 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 
         <FullBleed mb={[2, 4]}>
           {firstEligibleBadgeName ? (
-            <Marquee speed="static" marqueeText={firstEligibleBadgeName} />
+            <Marquee
+              speed="static"
+              marqueeText={firstEligibleBadgeName.replace(" ", "-")} // hypenate gallery badges
+            />
           ) : (
             <Separator />
           )}
