@@ -1,4 +1,4 @@
-import { Box, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
@@ -104,6 +104,11 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
     }
   }
 
+  const allPhotos = [
+    ...values.photos.filter(p => !p.removed).map(MyCollectionPhotoToPhoto),
+    ...values.newPhotos,
+  ]
+
   return (
     <>
       <Text variant="xs" mb={0.5}>
@@ -139,22 +144,15 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
         )
       })}
 
-      <Box>
-        {[
-          ...values.photos
-            .filter(p => !p.removed)
-            .map(MyCollectionPhotoToPhoto),
-          ...values.newPhotos,
-        ].map(photo => (
-          <PhotoThumbnail
-            mt={2}
-            key={photo?.id}
-            photo={photo}
-            data-testid="photo-thumbnail"
-            onDelete={handlePhotoDelete}
-          />
-        ))}
-      </Box>
+      {allPhotos.map(photo => (
+        <PhotoThumbnail
+          mt={2}
+          key={photo?.id}
+          photo={photo}
+          data-testid="photo-thumbnail"
+          onDelete={handlePhotoDelete}
+        />
+      ))}
     </>
   )
 }
