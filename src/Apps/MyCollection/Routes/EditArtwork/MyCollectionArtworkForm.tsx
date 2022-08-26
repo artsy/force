@@ -228,6 +228,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                       <FullBleed
                         backgroundColor="white100"
                         style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+                        zIndex={10000}
                       >
                         <AppContainer>
                           <HorizontalPadding>
@@ -269,6 +270,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                 initialTabIndex={0}
                 currentStepIndex={0}
                 disableNavigation
+                zIndex={0}
               >
                 <Step name="Add Artwork Details" />
               </Stepper>
