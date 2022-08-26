@@ -14,6 +14,7 @@ import {
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilterNew"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ArtworkModel } from "../Utils/artworkModel"
@@ -145,7 +146,8 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
         <Column span={6}>
           {isLimitedEdition && (
             <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
-              <Input
+              <NumericInput
+                label=""
                 title="Edition Number"
                 placeholder="Your work's #"
                 name="editionNumber"
@@ -157,7 +159,8 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
               <Box px={[0.5, 2]} mt={2}>
                 /
               </Box>
-              <Input
+              <NumericInput
+                label=""
                 title="Edition Size"
                 placeholder="Total # in edition"
                 name="editionSize"
@@ -177,7 +180,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
               <Text variant="xs" mb={0.5} mr={0.5}>
                 Height
               </Text>
-              <LabeledInput
+              <NumericInput
                 maxLength={256}
                 label={values.metric}
                 name="height"
@@ -190,7 +193,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
               <Text variant="xs" mb={0.5} mr={0.5}>
                 Width
               </Text>
-              <LabeledInput
+              <NumericInput
                 maxLength={256}
                 label={values.metric}
                 name="width"
@@ -209,7 +212,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
                   Depth
                 </Text>
               </Flex>
-              <LabeledInput
+              <NumericInput
                 maxLength={256}
                 label={values.metric}
                 name="depth"
