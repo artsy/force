@@ -32,6 +32,7 @@ import {
 } from "Apps/Order/Components/CreditCardPicker"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
+import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 
 export interface Props {
   order: Payment_order
@@ -145,12 +146,8 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
       </Collapse>
 
-      {/* Bank transfer */}
-      <Collapse
-        open={
-          paymentMethod === "US_BANK_ACCOUNT" || paymentMethod === "SEPA_DEBIT"
-        }
-      >
+      {/* US Bank transfer */}
+      <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
         {getPaymentMethodInfo(paymentMethod)}
         <Spacer mb={2} />
         <BankAccountPickerFragmentContainer
@@ -165,6 +162,20 @@ export const PaymentContent: FC<Props> = props => {
           onSetSelectedBankAccountId={onSetSelectedBankAccountId}
           bankAccountSelection={bankAccountSelection}
           onSetBankAccountSelection={onSetBankAccountSelection}
+        />
+      </Collapse>
+
+      {/* SEPA bank transfer */}
+      <Collapse open={paymentMethod === "SEPA_DEBIT"}>
+        {getPaymentMethodInfo(paymentMethod)}
+        <Spacer mb={2} />
+        <BankDebitProvider
+          order={order}
+          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+          onSetBankAccountHasInsufficientFunds={
+            onSetBankAccountHasInsufficientFunds
+          }
+          onSetIsSavingPayment={onSetIsSavingPayment}
         />
       </Collapse>
 

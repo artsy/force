@@ -19,6 +19,7 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ReactWrapper } from "enzyme"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -387,7 +388,8 @@ describe("Payment", () => {
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
       const bankDebitCollapse = page
-        .find(BankAccountPickerFragmentContainer)
+        .find(BankDebitProvider)
+        .at(1)
         .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })

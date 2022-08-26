@@ -74,7 +74,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { trackEvent } = useTracking()
   const { order, me } = props
   const { match } = useRouter()
-  const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
   const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -82,6 +81,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
+
+  const balanceCheckEnabled =
+    useFeatureFlag("bank_account_balance_check") &&
+    selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   /*
     state to render a loading interface while one of the following is happening:

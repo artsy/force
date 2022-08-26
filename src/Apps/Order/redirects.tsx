@@ -60,7 +60,10 @@ const goToShippingIfShippingIsNotCompleted: OrderPredicate = ({ order }) => {
 }
 
 const goToPaymentIfPaymentIsNotCompleted: OrderPredicate = ({ order }) => {
-  if (!isPaymentSet(order.paymentMethodDetails)) {
+  if (
+    !isPaymentSet(order.paymentMethodDetails) &&
+    order.paymentMethod !== "SEPA_DEBIT"
+  ) {
     return {
       path: `/orders/${order.internalID}/payment`,
       reason: "Payment was not yet completed",

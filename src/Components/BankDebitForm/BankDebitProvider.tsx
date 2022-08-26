@@ -7,6 +7,7 @@ import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupFo
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import createLogger from "Utils/logger"
 import { Message, Spacer, Text } from "@artsy/palette"
+import { Payment_order } from "__generated__/Payment_order.graphql"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
@@ -29,7 +30,7 @@ const BankSetupErrorMessage = () => {
 }
 
 interface Props {
-  order: BankAccountPicker_order
+  order: BankAccountPicker_order | Payment_order
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
