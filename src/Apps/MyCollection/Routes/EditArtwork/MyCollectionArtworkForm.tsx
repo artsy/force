@@ -228,7 +228,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                       <FullBleed
                         backgroundColor="white100"
                         style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-                        zIndex={10000}
                       >
                         <AppContainer>
                           <HorizontalPadding>
