@@ -1,4 +1,4 @@
-import { AssetCredentials } from "../Mutations"
+import { AssetCredentials } from "../Mutations/getGeminiCredentialsForEnvironment"
 import { Photo } from "./fileUtils"
 
 export const uploadFileToS3 = (

@@ -59,13 +59,16 @@ describe("BankDebitForm", () => {
         bankAccountHasInsufficientFunds={false}
         onSetBankAccountHasInsufficientFunds={jest.fn()}
         onSetIsSavingPayment={jest.fn()}
+        onSetIsPaymentElementLoading={jest.fn()}
       />
     )
 
     expect(trackEvent).toHaveBeenCalledWith({
       flow: "BUY",
       order_id: "1234",
-      subject: "bank_account_selected",
+      subject: "link_account",
+      context_page_owner_type: "orders-payment",
+      action: "clickedPaymentDetails",
     })
   })
 
@@ -77,6 +80,7 @@ describe("BankDebitForm", () => {
           bankAccountHasInsufficientFunds={true}
           onSetBankAccountHasInsufficientFunds={jest.fn()}
           onSetIsSavingPayment={jest.fn()}
+          onSetIsPaymentElementLoading={jest.fn()}
         />
       )
 

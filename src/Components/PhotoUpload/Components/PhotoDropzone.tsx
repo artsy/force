@@ -1,11 +1,9 @@
-import { Box, Text, Button, BoxProps } from "@artsy/palette"
-import { useFormikContext } from "formik"
+import { Box, BoxProps, Button, Text } from "@artsy/palette"
 import { cloneDeep } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
 import { FileRejection, useDropzone } from "react-dropzone"
 import { Media } from "Utils/Responsive"
-import { CustomErrorCode, MBSize, Photo } from "../../Utils/fileUtils"
-import { UploadPhotosFormModel } from "./UploadPhotosForm"
+import { CustomErrorCode, MBSize, Photo } from "../Utils/fileUtils"
 
 const validateTotalMaxSize = (
   currentFiles: Array<Photo>,
@@ -16,7 +14,7 @@ const validateTotalMaxSize = (
   const fileRejections: Array<FileRejection> = []
   const totalSize = maxTotalSize * MBSize
   const currentFilesSize = currentFiles.reduce((acc, photo) => {
-    return acc + photo.size
+    return acc + (photo.size || 0)
   }, 0)
 
   filesToAdd
@@ -64,25 +62,26 @@ const concatErrors = (
 }
 
 export interface PhotoDropzoneProps extends BoxProps {
+  allPhotos: Photo[]
   maxTotalSize: number
   onDrop: (files: File[]) => void
   onReject: (rejections: FileRejection[]) => void
 }
 
 export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
+  allPhotos,
   maxTotalSize,
   onDrop,
   onReject,
   ...rest
 }) => {
   const [customErrors, setCustomErrors] = useState<Array<FileRejection>>([])
-  const { values } = useFormikContext<UploadPhotosFormModel>()
   const buttonRef = useRef<HTMLButtonElement | null>(null)
 
   const { getRootProps, getInputProps, open, fileRejections } = useDropzone({
     onDropAccepted: files => {
       const [acceptedFiles, errors] = validateTotalMaxSize(
-        values.photos,
+        allPhotos,
         files,
         maxTotalSize
       )

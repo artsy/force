@@ -64,11 +64,11 @@ fragment MyCollectionArtworkForm_artwork on Artwork {
   }
   id
   images {
+    internalID
     isDefault
     imageURL
     width
     height
-    internalID
   }
   internalID
   isEdition
@@ -352,6 +352,7 @@ return {
             "name": "images",
             "plural": true,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -367,8 +368,7 @@ return {
                 "storageKey": null
               },
               (v6/*: any*/),
-              (v5/*: any*/),
-              (v2/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -429,12 +429,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "61300f3bdc1e914452a1830b0137c240",
+    "cacheID": "a6cdcc4f360a3a40bf9ac73a6c5e0919",
     "id": null,
     "metadata": {},
     "name": "myCollectionRoutes_MyCollectionArtworkFormQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_MyCollectionArtworkFormQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionArtworkForm_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkForm_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    isDefault\n    imageURL\n    width\n    height\n    internalID\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n}\n"
+    "text": "query myCollectionRoutes_MyCollectionArtworkFormQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionArtworkForm_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkForm_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n}\n"
   }
 };
 })();

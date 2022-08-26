@@ -1,13 +1,13 @@
+import { Input } from "@artsy/palette"
+import { flushPromiseQueue } from "DevTools"
 import { mount, ReactWrapper } from "enzyme"
+import { Form, Formik } from "formik"
+import { SystemContextProvider } from "System"
+import { ArtistAutoComplete } from "../Components/ArtistAutocomplete"
 import {
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
 } from "../Components/ArtworkDetailsForm"
-import { ArtistAutoComplete } from "../Components/ArtistAutocomplete"
-import { Form, Formik } from "formik"
-import { Input } from "@artsy/palette"
-import { SystemContextProvider } from "System"
-import { flushPromiseQueue } from "DevTools"
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({ match: { params: { id: null } } })),
@@ -57,7 +57,10 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
           formikValues = values
           return (
             <Form>
-              <ArtistAutoComplete onError={() => mockErrorHandler(true)} />
+              <ArtistAutoComplete
+                onSelect={() => {}}
+                onError={() => mockErrorHandler(true)}
+              />
             </Form>
           )
         }}
