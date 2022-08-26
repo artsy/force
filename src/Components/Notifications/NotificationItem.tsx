@@ -11,6 +11,7 @@ interface NotificationItemProps {
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const artworks = extractNodes(item.artworksConnection)
+  const remainingArtworksCount = (item.artworksConnection?.totalCount ?? 0) - 4
 
   return (
     <RouterLink
@@ -20,19 +21,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
       mx={-2}
       textDecoration="none"
     >
-      <Flex flexDirection="row">
-        <Text variant="sm">
-          <strong>{item.title}</strong> {item.message}
-        </Text>
-      </Flex>
-
       <Text variant="xs" color="black60">
         {getDateLabel(item.createdAt!)}
       </Text>
 
+      <Text variant="sm-display" fontWeight="bold">
+        {item.title}
+      </Text>
+
+      <Text variant="sm-display">{item.message}</Text>
+
       <Spacer mb={1} />
 
-      <Flex flexDirection="row">
+      <Flex flexDirection="row" alignItems="center">
         <Join separator={<Spacer ml={1} />}>
           {artworks.map(artwork => {
             const image = artwork.image?.thumb
@@ -50,6 +51,17 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
             )
           })}
         </Join>
+
+        {remainingArtworksCount > 0 && (
+          <Text
+            variant="xs"
+            color="black60"
+            aria-label="Remaining artworks count"
+            ml={1}
+          >
+            + {remainingArtworksCount}
+          </Text>
+        )}
       </Flex>
     </RouterLink>
   )

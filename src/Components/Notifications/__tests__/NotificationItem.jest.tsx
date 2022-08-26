@@ -71,15 +71,34 @@ describe("NotificationItem", () => {
       Notification: () => notification,
     })
 
-    const imageOne = screen.getByAltText("Artwork image of artwork one")
-    expect(imageOne).toBeInTheDocument()
+    expect(screen.getAllByRole("img")).toHaveLength(4)
+  })
 
-    const imageTwo = screen.getByAltText("Artwork image of artwork one")
-    expect(imageTwo).toBeInTheDocument()
+  it("should NOT render the remaining artworks count if there are less or equal to 4", () => {
+    renderWithRelay({
+      Notification: () => notification,
+    })
+
+    const label = screen.queryByLabelText("Remaining artworks count")
+    expect(label).not.toBeInTheDocument()
+  })
+
+  it("should render the remaining artworks count if there are more than 4", () => {
+    renderWithRelay({
+      Notification: () => ({
+        ...notification,
+        artworksConnection: {
+          ...notification.artworksConnection,
+          totalCount: 10,
+        },
+      }),
+    })
+
+    expect(screen.getByText("+ 6")).toBeInTheDocument()
   })
 })
 
-const notificationEdges = [
+const artworks = [
   {
     node: {
       internalID: "artwork-id-one",
@@ -104,6 +123,30 @@ const notificationEdges = [
       },
     },
   },
+  {
+    node: {
+      internalID: "artwork-id-three",
+      title: "artwork three",
+      image: {
+        thumb: {
+          src: "artwork-image-three",
+          srcSet: "artwork-image-three",
+        },
+      },
+    },
+  },
+  {
+    node: {
+      internalID: "artwork-id-four",
+      title: "artwork four",
+      image: {
+        thumb: {
+          src: "artwork-image-four",
+          srcSet: "artwork-image-four",
+        },
+      },
+    },
+  },
 ]
 
 const notification = {
@@ -111,7 +154,7 @@ const notification = {
   message: "Notification Message",
   createdAt: DateTime.utc().minus({ days: 1 }),
   artworksConnection: {
-    totalCount: 2,
-    edges: notificationEdges,
+    totalCount: 4,
+    edges: artworks,
   },
 }
