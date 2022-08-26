@@ -16,6 +16,7 @@ import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
+import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -24,16 +25,20 @@ const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
+  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
+  myCollectionArtwork,
+  ...rest
 }) => {
   const { router } = useRouter()
+  console.log("myCollectionArtwork", myCollectionArtwork)
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
-  const initialValue = getArtworkDetailsFormInitialValues(submission)
-  const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
+  const initialValues = getArtworkDetailsFormInitialValues(submission)
+  const initialErrors = validate(initialValues, artworkDetailsValidationSchema)
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -141,7 +146,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
       <Formik<ArtworkDetailsFormModel>
         validateOnMount
-        initialValues={initialValue}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={artworkDetailsValidationSchema}
         initialErrors={initialErrors}
@@ -193,6 +198,35 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         width
         depth
         dimensionsMetric
+        provenance
+      }
+    `,
+    // We already have the same name for the fragment used somewhere,
+    // so we need to use a different name here.
+    myCollectionArtwork: graphql`
+      fragment ArtworkDetails_myCollectionArtwork on Artwork {
+        artist {
+          internalID
+          name
+        }
+        location {
+          city
+          country
+          state
+          postalCode
+        }
+        date
+        title
+        medium
+        attributionClass {
+          name
+        }
+        editionNumber
+        editionSize
+        height
+        width
+        depth
+        metric
         provenance
       }
     `,
