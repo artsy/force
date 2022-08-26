@@ -21,13 +21,12 @@ describe("BankDebitProvider", () => {
         bankAccountHasInsufficientFunds={false}
         onSetBankAccountHasInsufficientFunds={jest.fn()}
         onSetIsSavingPayment={jest.fn()}
+        onSetClientSecret={jest.fn()}
+        clientSecret={"client-secret"}
       />
     )
 
   it("renders bank debit form", () => {
-    reactMock.useState = setHookState({
-      clientSecret: "client-secret",
-    })
     const wrapper = getWrapper()
     expect(wrapper.find(BankDebitForm).length).toBe(1)
   })

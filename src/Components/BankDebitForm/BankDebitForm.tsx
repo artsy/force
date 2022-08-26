@@ -2,7 +2,6 @@ import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
-  Box,
   Checkbox,
   Clickable,
   Flex,
@@ -17,13 +16,13 @@ import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsE
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
-import { LoadingArea } from "../LoadingArea"
 
 interface Props {
   order: { mode: string | null; internalID: string }
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
+  onSetIsPaymentElementLoading: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
@@ -31,13 +30,13 @@ export const BankDebitForm: FC<Props> = ({
   bankAccountHasInsufficientFunds,
   onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
+  onSetIsPaymentElementLoading,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
   const tracking = useTracking()
 
-  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
 
   const handlePaymentElementChange = event => {
@@ -86,63 +85,60 @@ export const BankDebitForm: FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
-      <LoadingArea isLoading={isPaymentElementLoading}>
-        {isPaymentElementLoading && <Box height={300}></Box>}
-        <PaymentElement
-          onReady={() => setIsPaymentElementLoading(false)}
-          onChange={event => handlePaymentElementChange(event)}
-          options={{
-            defaultValues: {
-              billingDetails: {
-                name: user?.name,
-                email: user?.email,
-              },
+      <PaymentElement
+        onReady={() => onSetIsPaymentElementLoading(false)}
+        onChange={event => handlePaymentElementChange(event)}
+        options={{
+          defaultValues: {
+            billingDetails: {
+              name: user?.name,
+              email: user?.email,
             },
-          }}
-        />
-        <Spacer mt={4} />
+          },
+        }}
+      />
+      <Spacer mt={4} />
+      <Flex>
+        <Checkbox
+          selected={isSaveAccountChecked}
+          onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
+          data-test="SaveBankAccountCheckbox"
+        >
+          Save bank account for later use.
+        </Checkbox>
         <Flex>
-          <Checkbox
-            selected={isSaveAccountChecked}
-            onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
-            data-test="SaveBankAccountCheckbox"
+          <Tooltip
+            placement="top-start"
+            size="lg"
+            width={400}
+            content={
+              <Text fontSize={13} lineHeight={"18px"}>
+                Thank you for signing up for direct debits from Artsy. You have
+                authorized Artsy and, if applicable, its affiliated entities to
+                debit the bank account specified above, on behalf of sellers
+                that use the Artsy website, for any amount owed for your
+                purchase of artworks from such sellers, according to Artsy’s
+                website and terms. You can change or cancel this authorization
+                at any time by providing Artsy with 30 (thirty) days’ notice. By
+                clicking “Save bank account for later use”, you authorize Artsy
+                to save the bank account specified above.
+              </Text>
+            }
           >
-            Save bank account for later use.
-          </Checkbox>
-          <Flex>
-            <Tooltip
-              placement="top-start"
-              size="lg"
-              width={400}
-              content={
-                <Text fontSize={13} lineHeight={"18px"}>
-                  Thank you for signing up for direct debits from Artsy. You
-                  have authorized Artsy and, if applicable, its affiliated
-                  entities to debit the bank account specified above, on behalf
-                  of sellers that use the Artsy website, for any amount owed for
-                  your purchase of artworks from such sellers, according to
-                  Artsy’s website and terms. You can change or cancel this
-                  authorization at any time by providing Artsy with 30 (thirty)
-                  days’ notice. By clicking “Save bank account for later use”,
-                  you authorize Artsy to save the bank account specified above.
-                </Text>
-              }
-            >
-              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-                <InfoCircleIcon />
-              </Clickable>
-            </Tooltip>
-          </Flex>
+            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+              <InfoCircleIcon />
+            </Clickable>
+          </Tooltip>
         </Flex>
+      </Flex>
 
-        {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-        <Spacer mt={4} />
-        <SaveAndContinueButton
-          testId="bankTransferSaveNew"
-          disabled={!stripe || bankAccountHasInsufficientFunds}
-        />
-        <Spacer mb={2} />
-      </LoadingArea>
+      {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+      <Spacer mt={4} />
+      <SaveAndContinueButton
+        testId="bankTransferSaveNew"
+        disabled={!stripe || bankAccountHasInsufficientFunds}
+      />
+      <Spacer mb={2} />
     </form>
   )
 }
