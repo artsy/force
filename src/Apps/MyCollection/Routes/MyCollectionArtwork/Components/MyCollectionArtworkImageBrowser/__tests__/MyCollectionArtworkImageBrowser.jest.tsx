@@ -4,7 +4,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkImageBrowserTestQuery } from "__generated__/MyCollectionArtworkImageBrowserTestQuery.graphql"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from ".."
+import { MyCollectionArtworkImageBrowserFragmentContainer } from "../MyCollectionArtworkImageBrowser"
 
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")

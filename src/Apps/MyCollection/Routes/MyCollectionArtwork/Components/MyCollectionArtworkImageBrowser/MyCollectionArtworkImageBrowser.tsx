@@ -1,43 +1,54 @@
-import { AddCircleIcon, Button, Flex, NoImageIcon } from "@artsy/palette"
-import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { Flex, ResponsiveBox } from "@artsy/palette"
+import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
+import { createFragmentContainer } from "react-relay"
+import { graphql } from "relay-runtime"
+import { MyCollectionArtworkImageBrowser_artwork } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
+import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
 
-interface MyCollectionArtworkNoImageComponentProps {
-  artworkID?: string
+interface MyCollectionArtworkImageBrowserProps {
+  artwork: MyCollectionArtworkImageBrowser_artwork
 }
-
-export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNoImageComponentProps> = ({
-  artworkID,
+const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserProps> = ({
+  artwork,
 }) => {
-  const isMyCollectionPhase3Enabled = useFeatureFlag(
-    "my-collection-web-phase-3"
-  )
+  const { images } = artwork
+
+  if ((images ?? []).length == 0) {
+    return (
+      <Flex maxWidth={["100%", 600]} mx="auto">
+        <ResponsiveBox
+          data-testid="artwork-browser-no-image-box"
+          bg="black10"
+          mx={[0, 2, 4]}
+          maxWidth="100%"
+          aspectWidth={1}
+          aspectHeight={1}
+        >
+          <MyCollectionArtworkNoImageComponent artworkID={artwork.internalID} />
+        </ResponsiveBox>
+      </Flex>
+    )
+  }
 
   return (
-    <Flex
-      position="absolute"
-      top={0}
-      left={0}
-      width="100%"
-      height="100%"
-      justifyContent="center"
-      alignItems="center"
-    >
-      {isMyCollectionPhase3Enabled ? (
-        <Button
-          data-testid="uploadPhotosButton"
-          // @ts-ignore
-          as={RouterLink}
-          to={`/my-collection/artworks/${artworkID}/edit`}
-          variant="secondaryNeutral"
-          size="large"
-          Icon={AddCircleIcon}
-        >
-          Upload Photos
-        </Button>
-      ) : (
-        <NoImageIcon width="28px" height="28px" fill="black60" />
-      )}
-    </Flex>
+    <ArtworkImageBrowserFragmentContainer
+      artwork={artwork}
+      isMyCollectionArtwork
+    />
   )
 }
+export const MyCollectionArtworkImageBrowserFragmentContainer = createFragmentContainer(
+  MyCollectionArtworkImageBrowser,
+  {
+    artwork: graphql`
+      fragment MyCollectionArtworkImageBrowser_artwork on Artwork {
+        ...ArtworkImageBrowser_artwork
+        internalID
+        images {
+          width
+          height
+        }
+      }
+    `,
+  }
+)

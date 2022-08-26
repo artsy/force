@@ -17,7 +17,7 @@ import { MyCollectionArtworkArtistMarketFragmentContainer } from "./Components/M
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./Components/MyCollectionArtworkAuctionResults"
 import { MyCollectionArtworkComparablesFragmentContainer } from "./Components/MyCollectionArtworkComparables"
 import { MyCollectionArtworkDemandIndexFragmentContainer } from "./Components/MyCollectionArtworkDemandIndex"
-import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser"
+import { MyCollectionArtworkImageBrowserFragmentContainer } from "./Components/MyCollectionArtworkImageBrowser/MyCollectionArtworkImageBrowser"
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 
