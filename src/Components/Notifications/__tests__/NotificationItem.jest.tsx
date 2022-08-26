@@ -121,6 +121,29 @@ describe("NotificationItem", () => {
       expect(indicator).toBeInTheDocument()
     })
   })
+
+  describe("Notification type", () => {
+    it("should NOT be rendered by default", () => {
+      renderWithRelay({
+        Notification: () => notification,
+      })
+
+      const label = screen.queryByLabelText(/Notification type: .+/i)
+      expect(label).not.toBeInTheDocument()
+    })
+
+    it("should render 'Alert'", () => {
+      renderWithRelay({
+        Notification: () => ({
+          ...notification,
+          notificationType: "ARTWORK_ALERT",
+        }),
+      })
+
+      const label = screen.getByLabelText("Notification type: Alert")
+      expect(label).toBeInTheDocument()
+    })
+  })
 })
 
 const artworks = [
@@ -179,6 +202,7 @@ const notification = {
   message: "Notification Message",
   createdAt: DateTime.utc().minus({ days: 1 }),
   isUnread: false,
+  notificationType: "ARTWORK_PUBLISHED",
   artworksConnection: {
     totalCount: 4,
     edges: artworks,

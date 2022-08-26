@@ -4,6 +4,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item } from "__generated__/NotificationItem_item.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { getDateLabel } from "./util"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface NotificationItemProps {
   item: NotificationItem_item
@@ -14,6 +16,15 @@ const UNREAD_INDICATOR_SIZE = 8
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const artworks = extractNodes(item.artworksConnection)
   const remainingArtworksCount = (item.artworksConnection?.totalCount ?? 0) - 4
+
+  const getNotificationType = () => {
+    if (item.notificationType === "ARTWORK_ALERT") {
+      return "Alert"
+    }
+
+    return null
+  }
+  const notificationTypeLabel = getNotificationType()
 
   return (
     <RouterLink
@@ -26,6 +37,13 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
     >
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
+          {notificationTypeLabel && (
+            <NotificationTypeLabel
+              aria-label={`Notification type: ${notificationTypeLabel}`}
+            >
+              {notificationTypeLabel} •{" "}
+            </NotificationTypeLabel>
+          )}
           {getDateLabel(item.createdAt!)}
         </Text>
 
@@ -93,6 +111,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         createdAt
         targetHref
         isUnread
+        notificationType
         artworksConnection(first: 4) {
           totalCount
           edges {
@@ -112,3 +131,7 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const NotificationTypeLabel = styled.span`
+  color: ${themeGet("colors.blue100")};
+`

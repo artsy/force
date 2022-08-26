@@ -30,6 +30,7 @@ fragment NotificationItem_item on Notification {
   createdAt
   targetHref
   isUnread
+  notificationType
   artworksConnection(first: 4) {
     totalCount
     edges {
@@ -204,6 +205,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "notificationType",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -314,7 +322,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f905f3951ae1cdec77725c4b0400dcbb",
+    "cacheID": "689943d9b17ef8f8858d0091c944ef73",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -393,13 +401,22 @@ return {
           "type": "Boolean"
         },
         "viewer.notifications.edges.node.message": (v4/*: any*/),
+        "viewer.notifications.edges.node.notificationType": {
+          "enumValues": [
+            "ARTWORK_ALERT",
+            "ARTWORK_PUBLISHED"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "NotificationTypesEnum"
+        },
         "viewer.notifications.edges.node.targetHref": (v4/*: any*/),
         "viewer.notifications.edges.node.title": (v4/*: any*/)
       }
     },
     "name": "NotificationsList_test_Query",
     "operationKind": "query",
-    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationsList_test_Query {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

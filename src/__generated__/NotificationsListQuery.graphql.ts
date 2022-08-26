@@ -30,6 +30,7 @@ fragment NotificationItem_item on Notification {
   createdAt
   targetHref
   isUnread
+  notificationType
   artworksConnection(first: 4) {
     totalCount
     edges {
@@ -186,6 +187,13 @@ return {
                       },
                       {
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "notificationType",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -296,12 +304,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "066d89136e6c752727f5aca5065d815c",
+    "cacheID": "242abbcc37d5a32c05b653101b764d1e",
     "id": null,
     "metadata": {},
     "name": "NotificationsListQuery",
     "operationKind": "query",
-    "text": "query NotificationsListQuery {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationsListQuery {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

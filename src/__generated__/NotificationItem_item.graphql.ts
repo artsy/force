@@ -4,12 +4,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "%future added value";
 export type NotificationItem_item = {
     readonly title: string;
     readonly message: string;
     readonly createdAt: string | null;
     readonly targetHref: string;
     readonly isUnread: boolean;
+    readonly notificationType: NotificationTypesEnum;
     readonly artworksConnection: {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
@@ -76,6 +78,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "isUnread",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "notificationType",
       "storageKey": null
     },
     {
@@ -184,5 +193,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9b9bbef8c6b52057040e6a7ab002c8d2';
+(node as any).hash = '00ea44f628b676260e68860b4294e07a';
 export default node;
