@@ -1,4 +1,5 @@
 import { ModalDialog, Button, Text } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
   onClose: () => void
@@ -47,13 +48,16 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       </Text>
       <Text mb={2}>
         For more information, see our{" "}
-        <a href={article} target="_blank" rel="noopener noreferrer">
+        <RouterLink to={article} target="_blank">
           Collector Help Center
-        </a>
+        </RouterLink>
       </Text>
       <Text>
         Or get in touch with one of our specialists at{" "}
-        <a href="mailto:sell@artsymail.com">sell@artsymail.com</a>
+        <RouterLink to={"mailto:sell@artsymail.com"}>
+          sell@artsymail.com
+        </RouterLink>
+        {"."}
       </Text>
     </ModalDialog>
   )

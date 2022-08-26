@@ -1,5 +1,5 @@
-import { Flex, Text, Clickable } from "@artsy/palette"
-import { CheckMarkIcon } from "../CheckMarkIcon"
+import { Flex, Text, WinningBidIcon } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const MyCollectionArtworkSWASectionSubmitted = () => {
   const article =
@@ -8,7 +8,7 @@ export const MyCollectionArtworkSWASectionSubmitted = () => {
   return (
     <>
       <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
-        <CheckMarkIcon />
+        <WinningBidIcon />
         <Text variant="sm" ml={0.5}>
           Artwork has been submitted for sale
         </Text>
@@ -16,15 +16,13 @@ export const MyCollectionArtworkSWASectionSubmitted = () => {
 
       <Text mb={2} color="black60">
         Have a question? Visit our{" "}
-        <Clickable color="black100">
-          <a href={article} target="_blank" rel="noopener noreferrer">
-            help center
-          </a>
-        </Clickable>{" "}
+        <RouterLink to={article} target="_blank" color="black100">
+          help center
+        </RouterLink>{" "}
         or get in touch with one of our specialists at{" "}
-        <Clickable color="black100" textDecoration="underline">
-          <a href="mailto:sell@artsymail.com">sell@artsymail.com</a>
-        </Clickable>
+        <RouterLink to={"mailto:sell@artsymail.com"} color="black100">
+          sell@artsymail.com
+        </RouterLink>
       </Text>
     </>
   )
