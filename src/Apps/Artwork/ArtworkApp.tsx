@@ -31,6 +31,8 @@ import { Router, Match } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { useCallback, useEffect } from "react"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ArtworkSidebar2 } from "./Components/ArtworkSidebar2"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -46,6 +48,7 @@ export interface Props {
 declare const window: any
 
 export const ArtworkApp: React.FC<Props> = props => {
+  const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
 
   const trackPageview = useCallback(() => {
@@ -186,7 +189,11 @@ export const ArtworkApp: React.FC<Props> = props => {
         </Column>
 
         <Column span={4} pt={[0, 2]}>
-          <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+          {isNewArtworkSidebarEnabled ? (
+            <ArtworkSidebar2 />
+          ) : (
+            <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+          )}
         </Column>
       </GridColumns>
 
