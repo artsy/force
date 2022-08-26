@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { MyCollectionArtworkSidebarMetadataTestQuery } from "__generated__/MyCollectionArtworkSidebarMetadataTestQuery.graphql"
-import { MyCollectionArtworkSidebarMetadataFragmentContainer } from "../MyCollectionArtworkSidebarMetadata"
+import { MyCollectionArtworkSidebarFragmentContainer } from ".."
 
 jest.unmock("react-relay")
 
@@ -13,9 +13,7 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
     Component: props => {
       if (props?.artwork) {
         return (
-          <MyCollectionArtworkSidebarMetadataFragmentContainer
-            {...(props as any)}
-          />
+          <MyCollectionArtworkSidebarFragmentContainer {...(props as any)} />
         )
       }
       return null
@@ -23,6 +21,7 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
     query: graphql`
       query MyCollectionArtworkSidebarMetadataTestQuery @relay_test_operation {
         artwork(id: "foo") {
+          ...MyCollectionArtworkSidebarTitleInfo_artwork
           ...MyCollectionArtworkSidebarMetadata_artwork
         }
       }
