@@ -36,7 +36,7 @@ describe("EntityHeaderPartner", () => {
 
     expect(screen.getByText("Example Partner")).toBeInTheDocument()
     expect(screen.getByText("New York")).toBeInTheDocument()
-    expect(screen.getByText("Black Owned")).toBeInTheDocument()
+    expect(screen.getByText("Black-Owned")).toBeInTheDocument()
     expect(screen.queryByText("Example Category")).not.toBeInTheDocument()
   })
 

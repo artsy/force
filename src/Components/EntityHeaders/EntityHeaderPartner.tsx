@@ -72,7 +72,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
           <Text variant="sm-display">
             {badges.map(badge => (
               <Fragment key={badge.slug}>
-                <Label>{badge.name}</Label>{" "}
+                <Label>{badge.name?.replace(" ", "-")}</Label>{" "}
               </Fragment>
             ))}
           </Text>
