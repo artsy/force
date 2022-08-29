@@ -1,3 +1,17 @@
+import {
+  Box,
+  Button,
+  Join,
+  Skeleton,
+  SkeletonText,
+  Spacer,
+  Sup,
+  Text,
+} from "@artsy/palette"
+import {
+  CategoryRailFragmentContainer,
+  CATEGORY_RAIL_PLACEHOLDER,
+} from "Components/CategoryRail"
 import { FC, Fragment, useState } from "react"
 import {
   createPaginationContainer,
@@ -5,23 +19,9 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SettingsSavesCategories_me } from "__generated__/SettingsSavesCategories_me.graphql"
-import { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
-import {
-  Box,
-  Button,
-  Join,
-  Spacer,
-  Sup,
-  Text,
-  SkeletonText,
-  Skeleton,
-} from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
-import {
-  CategoryRailFragmentContainer,
-  CATEGORY_RAIL_PLACEHOLDER,
-} from "Components/CategoryRail"
+import { SettingsSavesCategoriesQuery } from "__generated__/SettingsSavesCategoriesQuery.graphql"
+import { SettingsSavesCategories_me } from "__generated__/SettingsSavesCategories_me.graphql"
 
 interface SettingsSavesCategoriesProps {
   me: SettingsSavesCategories_me
@@ -53,7 +53,7 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Followed Categories {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -81,7 +81,7 @@ const SettingsSavesCategories: FC<SettingsSavesCategoriesProps> = ({
           )}
         </>
       ) : (
-        <Text variant="lg-display" color="black60">
+        <Text variant={["md", "lg"]} color="black60">
           Nothing yet.
         </Text>
       )}
@@ -136,7 +136,7 @@ export const SettingsSavesCategoriesPaginationContainer = createPaginationContai
 const SETTINGS_SAVES_CATEGORIES_PLACEHOLDER = (
   <>
     <Skeleton>
-      <SkeletonText variant="lg-display" mb={4}>
+      <SkeletonText variant={["md", "lg"]} mb={4}>
         Followed Categories
       </SkeletonText>
     </Skeleton>

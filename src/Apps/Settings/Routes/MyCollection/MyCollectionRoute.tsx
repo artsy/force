@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Clickable,
   CloseIcon,
@@ -100,7 +99,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                 mb={SETTINGS_ROUTE_TABS_MARGIN}
               >
                 <Flex flexDirection="row" justifyContent="space-between">
-                  <Box />
                   <Text mx={1}>
                     Access all the My Collection features on the{" "}
                     <Clickable
@@ -125,7 +123,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           )}
 
           <Flex justifyContent="space-between" mb={4}>
-            <Text as="h1" variant="lg-display" my="auto">
+            <Text as="h1" variant={["md", "lg"]}>
               My Collection <Sup color="brand">{total}</Sup>
             </Text>
 

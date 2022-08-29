@@ -1,8 +1,3 @@
-import { FC, Fragment, useState } from "react"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SettingsSavesArtworks_me } from "__generated__/SettingsSavesArtworks_me.graphql"
-import { SettingsSavesArtworksQuery } from "__generated__/SettingsSavesArtworksQuery.graphql"
 import {
   ResponsiveBox,
   Skeleton,
@@ -12,11 +7,16 @@ import {
   Sup,
   Text,
 } from "@artsy/palette"
-import { Masonry } from "Components/Masonry"
-import { extractNodes } from "Utils/extractNodes"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
+import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
+import { FC, Fragment, useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { extractNodes } from "Utils/extractNodes"
 import { useScrollToElement } from "Utils/Hooks/useScrollTo"
+import { SettingsSavesArtworksQuery } from "__generated__/SettingsSavesArtworksQuery.graphql"
+import { SettingsSavesArtworks_me } from "__generated__/SettingsSavesArtworks_me.graphql"
 
 interface SettingsSavesArtworksProps {
   me: SettingsSavesArtworks_me
@@ -64,7 +64,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Saved Artworks {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -94,7 +94,7 @@ const SettingsSavesArtworks: FC<SettingsSavesArtworksProps> = ({
           />
         </>
       ) : (
-        <Text variant="lg-display" color="black60">
+        <Text variant={["md", "lg"]} color="black60">
           Nothing yet.
         </Text>
       )}
@@ -143,7 +143,7 @@ export const SettingsSavesArtworksRefetchContainer = createRefetchContainer(
 
 const SETTINGS_SAVES_ARTWORKS_PLACEHOLDER = (
   <Skeleton>
-    <SkeletonText variant="lg-display" mb={4}>
+    <SkeletonText variant={["md", "lg"]} mb={4}>
       Saved Artworks
     </SkeletonText>
 
