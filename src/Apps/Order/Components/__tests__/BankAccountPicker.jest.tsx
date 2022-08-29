@@ -96,6 +96,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
+            paymentMethod="US_BANK_ACCOUNT"
             bankAccountHasInsufficientFunds={false}
             onSetBankAccountHasInsufficientFunds={jest.fn()}
             onSetIsSavingPayment={jest.fn()}
@@ -140,6 +141,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
+            paymentMethod="US_BANK_ACCOUNT"
             bankAccountHasInsufficientFunds={false}
             onSetBankAccountHasInsufficientFunds={jest.fn()}
             onSetIsSavingPayment={jest.fn()}

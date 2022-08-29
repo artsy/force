@@ -56,6 +56,7 @@ describe("BankDebitForm", () => {
     render(
       <BankDebitForm
         order={testOrder}
+        paymentMethod="US_BANK_ACCOUNT"
         bankAccountHasInsufficientFunds={false}
         onSetBankAccountHasInsufficientFunds={jest.fn()}
         onSetIsSavingPayment={jest.fn()}
@@ -77,6 +78,7 @@ describe("BankDebitForm", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
+          paymentMethod="US_BANK_ACCOUNT"
           bankAccountHasInsufficientFunds={true}
           onSetBankAccountHasInsufficientFunds={jest.fn()}
           onSetIsSavingPayment={jest.fn()}
@@ -87,6 +89,25 @@ describe("BankDebitForm", () => {
       expect(
         screen.queryByText("This bank account doesn’t have enough funds.")
       ).toBeInTheDocument()
+    })
+  })
+
+  describe("with SEPA", () => {
+    it("does not render a checkbox to save bank account", () => {
+      const screen = render(
+        <BankDebitForm
+          order={testOrder}
+          paymentMethod="SEPA_DEBIT"
+          bankAccountHasInsufficientFunds={true}
+          onSetBankAccountHasInsufficientFunds={jest.fn()}
+          onSetIsSavingPayment={jest.fn()}
+          onSetIsPaymentElementLoading={jest.fn()}
+        />
+      )
+
+      expect(
+        screen.queryByTestId("SaveBankAccountCheckbox")
+      ).not.toBeInTheDocument()
     })
   })
 })
