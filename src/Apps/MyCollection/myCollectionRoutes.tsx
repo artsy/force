@@ -16,7 +16,7 @@ const MyCollectionArtwork = loadable(
 const MyCollectionArtworkFormFragmentContainer = loadable(
   () =>
     import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/EditArtwork/MyCollectionArtworkForm"
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionArtworkForm"
     ),
   {
     resolveComponent: component =>
@@ -27,7 +27,7 @@ const MyCollectionArtworkFormFragmentContainer = loadable(
 const MyCollectionArtworkForm = loadable(
   () =>
     import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/EditArtwork/MyCollectionArtworkForm"
+      /* webpackChunkName: "myCollectionBundle" */ "./Routes/EditArtwork/MyCollectionArtworkForm"
     ),
   {
     resolveComponent: component => component.MyCollectionArtworkForm,
@@ -91,8 +91,5 @@ export const myCollectionRoutes: AppRouteConfig[] = [
         },
       },
     ],
-    cacheConfig: {
-      force: true,
-    },
   },
 ]

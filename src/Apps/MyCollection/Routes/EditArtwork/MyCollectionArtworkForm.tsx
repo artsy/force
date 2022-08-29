@@ -40,12 +40,14 @@ const logger = createLogger("MyCollectionArtworkForm.tsx")
 
 export interface MyCollectionArtworkFormProps {
   artwork?: MyCollectionArtworkForm_artwork
+  step?: string
 }
 
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({
   artwork,
+  step,
 }) => {
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
   const initialErrors = validateArtwork(
@@ -62,6 +64,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { submitMutation: deleteArtwork } = useDeleteArtwork()
 
   const isEditing = !!artwork?.internalID
+  const onlyPhotos = match?.location?.query?.step === "photos"
 
   const handleSubmit = async (values: ArtworkModel) => {
     // Set edition values for attribution class
@@ -270,14 +273,18 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                 </Sticky>
               </StickyProvider>
 
-              <Text mx={2} mb={1}>
-                {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
-              </Text>
-              <Separator color="black100" />
+              {!onlyPhotos && (
+                <>
+                  <Text mx={2} mb={1}>
+                    {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
+                  </Text>
+                  <Separator color="black100" />
+                </>
+              )}
 
               <Spacer mb={4} />
 
-              <MyCollectionArtworkFormDetails />
+              {!onlyPhotos && <MyCollectionArtworkFormDetails />}
 
               <Spacer mb={4} />
 
@@ -288,7 +295,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
         <Spacer mt={4} />
 
-        {isEditing && (
+        {isEditing && !onlyPhotos && (
           <Button
             onClick={() => setShouldShowDeletionModal(true)}
             width={["100%", "auto"]}
