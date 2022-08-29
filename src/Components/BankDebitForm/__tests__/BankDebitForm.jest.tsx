@@ -59,6 +59,7 @@ describe("BankDebitForm", () => {
         bankAccountHasInsufficientFunds={false}
         onSetBankAccountHasInsufficientFunds={jest.fn()}
         onSetIsSavingPayment={jest.fn()}
+        onSetIsPaymentElementLoading={jest.fn()}
       />
     )
 
@@ -79,6 +80,7 @@ describe("BankDebitForm", () => {
           bankAccountHasInsufficientFunds={true}
           onSetBankAccountHasInsufficientFunds={jest.fn()}
           onSetIsSavingPayment={jest.fn()}
+          onSetIsPaymentElementLoading={jest.fn()}
         />
       )
 

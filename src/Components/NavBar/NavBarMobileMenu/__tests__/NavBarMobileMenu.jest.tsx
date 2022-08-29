@@ -5,6 +5,7 @@ import { NavBarMobileMenu } from "../NavBarMobileMenu"
 import { mediator } from "Server/mediator"
 import { NavBarMobileMenuTransition } from "../NavBarMobileMenuTransition"
 import { NavBarMobileSubMenuBack } from "../NavBarMobileSubMenu"
+import { FeatureFlags } from "System/useFeatureFlag"
 
 jest.mock("react-tracking")
 jest.mock("Server/isServer", () => ({
@@ -17,7 +18,10 @@ describe("NavBarMobileMenu", () => {
   const noop = () => {}
   const getWrapper = props => {
     return mount(
-      <SystemContextProvider user={props.user}>
+      <SystemContextProvider
+        user={props.user}
+        featureFlags={props.featureFlags}
+      >
         <NavBarMobileMenu isOpen onClose={noop} />
       </SystemContextProvider>
     )
@@ -25,9 +29,13 @@ describe("NavBarMobileMenu", () => {
 
   const getMobileMenuLinkContainer = (
     userType: string | null = null,
-    lab_features: string[] = []
+    lab_features: string[] = [],
+    featureFlags?: FeatureFlags
   ) =>
-    getWrapper({ user: userType ? { userType, lab_features } : null })
+    getWrapper({
+      user: userType ? { userType, lab_features } : null,
+      featureFlags,
+    })
       .find(NavBarMobileMenuTransition)
       .findWhere(element => element.props().isOpen)
 
@@ -108,6 +116,40 @@ describe("NavBarMobileMenu", () => {
       ])
 
       expect(linkContainer.html()).toContain("Inbox")
+    })
+
+    describe("Activity menu item", () => {
+      it("should NOT render activity menu option when logged out", () => {
+        const wrapper = getMobileMenuLinkContainer(null)
+        const menuLinks = wrapper.find("a").map(node => node.text())
+        const hasActivityMenuItem = menuLinks.includes("Activity")
+
+        expect(hasActivityMenuItem).toBe(false)
+      })
+
+      it("should NOT render activity menu option by default", () => {
+        const wrapper = getMobileMenuLinkContainer("NotAdmin")
+        const menuLinks = wrapper.find("a").map(node => node.text())
+        const hasActivityMenuItem = menuLinks.includes("Activity")
+
+        expect(hasActivityMenuItem).toBe(false)
+      })
+
+      it("should render activity menu option when feature flag is enabled", () => {
+        const wrapper = getMobileMenuLinkContainer("NotAdmin", [], {
+          "force-enable-new-activity-panel": {
+            flagEnabled: true,
+            variant: {
+              name: "disabled",
+              enabled: false,
+            },
+          },
+        })
+        const menuLinks = wrapper.find("a").map(node => node.text())
+        const hasActivityMenuItem = menuLinks.includes("Activity")
+
+        expect(hasActivityMenuItem).toBe(true)
+      })
     })
   })
 

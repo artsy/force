@@ -26,6 +26,7 @@ import { jobsRoutes } from "Apps/Jobs/jobsRoutes"
 import { meetTheSpecialistsRoutes } from "Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
 import { newForYouRoutes } from "Apps/NewForYou/newForYouRoutes"
+import { notificationsRoutes } from "./Apps/Notifications/notificationsRoutes"
 import { onboardingRoutes } from "Apps/Onboarding/onboardingRoutes"
 import { orderRoutes } from "Apps/Order/orderRoutes"
 import { pageRoutes } from "Apps/Page/pageRoutes"
@@ -36,6 +37,7 @@ import { settingsRoutes } from "Apps/Settings/settingsRoutes"
 import { showRoutes } from "Apps/Show/showRoutes"
 import { showsRoutes } from "Apps/Shows/showsRoutes"
 import { viewingRoomRoutes } from "Apps/ViewingRoom/viewingRoomRoutes"
+import { HttpError } from "found"
 import { buildAppRoutes } from "System/Router/buildAppRoutes"
 import { AppRouteConfig } from "System/Router/Route"
 import { auctionRoutes } from "./Apps/Auction/auctionRoutes"
@@ -81,6 +83,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: meetTheSpecialistsRoutes },
     { routes: myCollectionRoutes },
     { routes: newForYouRoutes },
+    { routes: notificationsRoutes },
     { routes: onboardingRoutes },
     { routes: orderRoutes },
     { routes: pageRoutes },
@@ -99,5 +102,16 @@ export const getAppRoutes = (): AppRouteConfig[] => {
 
     // For debugging baseline app shell stuff
     { routes: debugRoutes },
+
+    {
+      routes: [
+        {
+          path: "/oembed",
+          render: () => {
+            throw new HttpError(404)
+          },
+        },
+      ],
+    },
   ])
 }

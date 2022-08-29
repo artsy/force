@@ -1,20 +1,23 @@
-import uuid from "uuid"
-import { Environment } from "relay-runtime"
-import { uploadFileToS3 } from "./uploadFileToS3"
-import {
-  getConvectionGeminiKey,
-  getGeminiCredentialsForEnvironment,
-  createGeminiAssetWithS3Credentials,
-} from "../Mutations"
 import { ErrorCode, FileRejection } from "react-dropzone"
+import { Environment } from "relay-runtime"
 import createLogger from "Utils/logger"
+import uuid from "uuid"
+import { createGeminiAssetWithS3Credentials } from "../Mutations/createGeminiAssetWithS3Credentials"
+import { getConvectionGeminiKey } from "../Mutations/getConvectionGeminiKey"
+import { getGeminiCredentialsForEnvironment } from "../Mutations/getGeminiCredentialsForEnvironment"
+import { uploadFileToS3 } from "./uploadFileToS3"
 
-const logger = createLogger("SubmissionFlow/uploadFileToS3.ts")
+const logger = createLogger("PhotoUpload/fileUtils.ts")
 
 export const KBSize = 1000
 export const MBSize = Math.pow(KBSize, 2)
+const NO_SIZE = ""
 
-export function formatFileSize(size: number): string {
+export function formatFileSize(size?: number): string {
+  if (!size) {
+    return NO_SIZE
+  }
+
   const sizeInMB = (size / MBSize).toFixed(2)
 
   return `${sizeInMB} MB`
@@ -25,7 +28,7 @@ export interface Photo {
   assetId?: string
   file?: File
   name: string
-  size: number
+  size?: number
   url?: string
   geminiToken?: string
   abortUploading?: () => void
@@ -117,4 +120,35 @@ export const uploadPhoto = async (
     logger.error("Error during Photo Upload", error)
     return
   }
+}
+
+export const uploadMyCollectionPhoto = async (
+  relayEnvironment: Environment,
+  photo: Photo,
+  updateProgress: (progress: number) => void,
+  acl: string = "private"
+) => {
+  const convectionKey = await getConvectionGeminiKey(relayEnvironment)
+
+  const assetCredentials = await getGeminiCredentialsForEnvironment(
+    relayEnvironment,
+    {
+      acl,
+      name: convectionKey || "",
+    }
+  )
+
+  if (!assetCredentials) {
+    return null
+  }
+
+  const bucket = assetCredentials.policyDocument.conditions.bucket
+
+  const s3 = await uploadFileToS3(photo, acl, assetCredentials, updateProgress)
+
+  if (!s3) {
+    return null
+  }
+
+  return `https://${bucket}.s3.amazonaws.com/${s3}`
 }

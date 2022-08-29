@@ -16,6 +16,10 @@ export const MyCollectionArtworkArtistMarket = ({
 }: {
   marketPriceInsights: MyCollectionArtworkArtistMarket_marketPriceInsights
 }) => {
+  if (!marketPriceInsights) {
+    return null
+  }
+
   const {
     annualValueSoldDisplayText,
     liquidityRankDisplayText,
@@ -34,7 +38,7 @@ export const MyCollectionArtworkArtistMarket = ({
         auction houses.
       </Text>
 
-      <Spacer mt={[2, 6]} />
+      <Spacer mt={[2, 4]} />
 
       <GridColumns>
         {!!annualValueSoldDisplayText && (

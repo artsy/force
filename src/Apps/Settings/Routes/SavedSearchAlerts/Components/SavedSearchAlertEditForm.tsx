@@ -33,6 +33,7 @@ import {
   SavedSearchAleftFormValues,
   SavedSearchEntity,
   SavedSearchEntityCriteria,
+  SavedSearchFrequency,
   SearchCriteriaAttributeKeys,
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
@@ -46,6 +47,8 @@ import {
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
+import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
+import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -93,6 +96,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     name: userAlertSettings.name ?? "",
     push: userAlertSettings.push,
     email: userAlertSettings.email,
+    frequency: userAlertSettings.frequency as SavedSearchFrequency,
   }
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
@@ -120,9 +124,10 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
-      const updatedAlertSettings = {
+      const updatedAlertSettings: SavedSearchAleftFormValues = {
         ...values,
         name: values.name || entity.placeholder,
+        frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
       }
 
       await submitEditAlert({
@@ -218,11 +223,29 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 <Spacer mt={4} />
 
                 <Checkbox
-                  onSelect={selected => setFieldValue("push", selected)}
+                  onSelect={selected => {
+                    setFieldValue("push", selected)
+
+                    // Restore initial frequency when "Mobile Alerts" is unselected
+                    if (!selected) {
+                      setFieldValue("frequency", initialValues.frequency)
+                    }
+                  }}
                   selected={values.push}
                 >
                   Mobile Alerts
                 </Checkbox>
+
+                <Spacer mt={4} />
+
+                {values.push && (
+                  <FrequenceRadioButtons
+                    defaultFrequence={values.frequency}
+                    onSelect={selectedOption =>
+                      setFieldValue("frequency", selectedOption)
+                    }
+                  />
+                )}
               </Box>
 
               <Media greaterThanOrEqual="md">
@@ -374,6 +397,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
             name
             email
             push
+            frequency
           }
           labels @skip(if: $withAggregations) {
             field

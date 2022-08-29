@@ -1,9 +1,9 @@
+import { Image, ProgressBar } from "@artsy/palette"
 import { mount, ReactWrapper } from "enzyme"
 import {
   PhotoThumbnail,
   PhotoThumbnailProps,
 } from "../Components/PhotoThumbnail"
-import { Image, ProgressBar } from "@artsy/palette"
 
 const deleteFn = jest.fn()
 const file = new File([new Array(10000).join(" ")], "foo.png", {

@@ -6,8 +6,9 @@ import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import createLogger from "Utils/logger"
-import { Message, Spacer, Text } from "@artsy/palette"
 import { Payment_order } from "__generated__/Payment_order.graphql"
+import { Box, Message, Spacer, Text } from "@artsy/palette"
+import { LoadingArea } from "../LoadingArea"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
@@ -34,6 +35,8 @@ interface Props {
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
+  onSetClientSecret: (arg: string) => void
+  clientSecret: string | null
 }
 
 export const BankDebitProvider: FC<Props> = ({
@@ -41,9 +44,11 @@ export const BankDebitProvider: FC<Props> = ({
   bankAccountHasInsufficientFunds,
   onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
+  onSetClientSecret,
+  clientSecret,
 }) => {
-  const [clientSecret, setClientSecret] = useState("")
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
+  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -57,7 +62,7 @@ export const BankDebitProvider: FC<Props> = ({
           orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
             .__typename === "CommerceOrderRequiresAction"
         ) {
-          setClientSecret(
+          onSetClientSecret(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
               .actionData.clientSecret
           )
@@ -76,7 +81,9 @@ export const BankDebitProvider: FC<Props> = ({
       }
     }
 
-    fetchData()
+    if (!clientSecret) {
+      fetchData()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -128,26 +135,30 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   const options = {
-    clientSecret: clientSecret,
+    clientSecret: clientSecret || "",
     appearance: appearance,
   }
 
   return (
     <div data-test="bankTransferSection">
-      <Spacer mt={2} />
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <BankDebitForm
-            order={order}
-            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-            onSetBankAccountHasInsufficientFunds={
-              onSetBankAccountHasInsufficientFunds
-            }
-            onSetIsSavingPayment={onSetIsSavingPayment}
-          />
-        </Elements>
-      )}
-      {bankDebitSetupError && <BankSetupErrorMessage />}
+      <LoadingArea isLoading={isPaymentElementLoading}>
+        {isPaymentElementLoading && <Box height={300}></Box>}
+        <Spacer mt={2} />
+        {clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            <BankDebitForm
+              order={order}
+              bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+              onSetBankAccountHasInsufficientFunds={
+                onSetBankAccountHasInsufficientFunds
+              }
+              onSetIsSavingPayment={onSetIsSavingPayment}
+              onSetIsPaymentElementLoading={setIsPaymentElementLoading}
+            />
+          </Elements>
+        )}
+        {bankDebitSetupError && <BankSetupErrorMessage />}
+      </LoadingArea>
     </div>
   )
 }
