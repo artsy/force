@@ -154,10 +154,9 @@ export const ArtworkApp: React.FC<Props> = props => {
   /**
    * On mount, trigger a page view and product view
    *
-   * FIXME: We're manually invoking pageView tracking here, instead of within
+   * We're manually invoking pageView tracking here, instead of within
    * the `trackingMiddleware` file as we need to pass along additional metadata.
-   * Waiting on analytics team to decide if there's a better way to capture this
-   * data that remains consistent with the rest of the app.
+   *
    */
   useEffect(() => {
     if (shouldRenderSubmittedOrderModal()) {
@@ -173,7 +172,8 @@ export const ArtworkApp: React.FC<Props> = props => {
     if (shouldTrackPageView) {
       track()
     }
-  }, [shouldTrackPageView, track])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldTrackPageView])
 
   return (
     <>
