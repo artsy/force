@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
@@ -22,6 +22,8 @@ interface Props {
   onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
   onSetBankAccountSelection: (arg: BankAccountSelection) => void
+  onSetClientSecret: (arg: string) => void
+  clientSecret: string | null
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -35,9 +37,9 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetSelectedBankAccountId,
     bankAccountSelection,
     onSetBankAccountSelection,
+    onSetClientSecret,
+    clientSecret,
   } = props
-
-  const [clientSecret, setClientSecret] = useState<string | null>(null)
 
   const bankAccountsArray = extractNodes(bankAccounts)
 
@@ -127,7 +129,7 @@ export const BankAccountPicker: FC<Props> = props => {
               onSetBankAccountHasInsufficientFunds
             }
             onSetIsSavingPayment={onSetIsSavingPayment}
-            onSetClientSecret={setClientSecret}
+            onSetClientSecret={onSetClientSecret}
             clientSecret={clientSecret}
           />
         )}
