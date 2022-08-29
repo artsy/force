@@ -154,6 +154,7 @@ export const PaymentContent: FC<Props> = props => {
         <BankAccountPickerFragmentContainer
           me={me}
           order={order}
+          paymentMethod={paymentMethod}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
           onSetBankAccountHasInsufficientFunds={
             onSetBankAccountHasInsufficientFunds
@@ -174,6 +175,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mb={2} />
         <BankDebitProvider
           order={order}
+          paymentMethod={paymentMethod}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
           onSetBankAccountHasInsufficientFunds={
             onSetBankAccountHasInsufficientFunds
