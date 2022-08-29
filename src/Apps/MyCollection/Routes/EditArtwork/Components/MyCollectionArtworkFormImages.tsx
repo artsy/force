@@ -24,26 +24,30 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
   const uploadPhoto = async (photo: Photo) => {
     photo.loading = true
 
-    const photoURL = await uploadMyCollectionPhoto(
-      relayEnvironment!,
-      photo,
-      progress => {
-        photo.progress = progress
-        setFieldValue("newPhotos", values.newPhotos)
+    try {
+      const photoURL = await uploadMyCollectionPhoto(
+        relayEnvironment!,
+        photo,
+        progress => {
+          photo.progress = progress
+          setFieldValue("newPhotos", values.newPhotos)
+        }
+      )
+
+      if (!photoURL) {
+        throw Error(`Photo could not be added: ${photo.name}`)
       }
-    )
 
-    photo.loading = false
+      photo.url = photoURL
 
-    if (!photoURL) {
+      setFieldValue("newPhotos", values.newPhotos, true)
+    } catch (error) {
       photo.errorMessage = `Photo could not be added: ${photo.name}`
       setFieldValue("newPhotos", values.newPhotos)
       return
+    } finally {
+      photo.loading = false
     }
-
-    photo.url = photoURL
-
-    setFieldValue("newPhotos", values.newPhotos, true)
   }
 
   useEffect(() => {
@@ -76,10 +80,18 @@ export const MyCollectionArtworkFormImages: React.FC<MyCollectionArtworkFormImag
     )
   }
 
-  const handlePhotoDelete = (photo: { id: string; size?: number }) => {
+  const handlePhotoDelete = (photo: {
+    id: string
+    size?: number
+    removed?: boolean
+    abortUploading?: () => void
+  }) => {
     const isNewPhoto = !!photo.size // Only photos that have been newly added have a size attribute.
 
     if (isNewPhoto) {
+      photo.removed = true
+      photo.abortUploading?.()
+
       // Remove photo from newPhotos
       setFieldValue(
         "newPhotos",
