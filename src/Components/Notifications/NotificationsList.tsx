@@ -6,11 +6,16 @@ import {
 } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationsList_viewer } from "__generated__/NotificationsList_viewer.graphql"
-import { NotificationsListQuery } from "__generated__/NotificationsListQuery.graphql"
+import {
+  NotificationsListQuery,
+  NotificationTypesEnum,
+} from "__generated__/NotificationsListQuery.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext, useState } from "react"
 import { SystemContext } from "System"
+
+export type NotificationType = "all" | "alerts"
 
 interface NotificationsListProps {
   viewer: NotificationsList_viewer
@@ -75,9 +80,13 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
         @argumentDefinitions(
           count: { type: "Int", defaultValue: 10 }
           cursor: { type: "String" }
+          types: { type: "[NotificationTypesEnum]" }
         ) {
-        notifications: notificationsConnection(first: $count, after: $cursor)
-          @connection(key: "NotificationsList_notifications") {
+        notifications: notificationsConnection(
+          first: $count
+          after: $cursor
+          notificationTypes: $types
+        ) @connection(key: "NotificationsList_notifications") {
           edges {
             node {
               internalID
@@ -102,19 +111,29 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
   }
 )
 
-export const NotificationsListQueryRenderer = () => {
+interface NotificationsListQueryRendererProps {
+  type: NotificationType
+}
+
+export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRendererProps> = ({
+  type,
+}) => {
   const { relayEnvironment } = useContext(SystemContext)
+  const notificationType = getNotificationTypeEnum(type)
 
   return (
     <SystemQueryRenderer<NotificationsListQuery>
       environment={relayEnvironment}
       query={graphql`
-        query NotificationsListQuery {
+        query NotificationsListQuery($types: [NotificationTypesEnum]) {
           viewer {
-            ...NotificationsList_viewer
+            ...NotificationsList_viewer @arguments(types: $types)
           }
         }
       `}
+      variables={{
+        types: [notificationType],
+      }}
       render={({ error, props }) => {
         if (error) {
           return (
@@ -139,4 +158,14 @@ export const NotificationsListQueryRenderer = () => {
       }}
     />
   )
+}
+
+const getNotificationTypeEnum = (
+  type: NotificationType
+): NotificationTypesEnum | undefined => {
+  if (type === "alerts") {
+    return "ARTWORK_ALERT"
+  }
+
+  return
 }

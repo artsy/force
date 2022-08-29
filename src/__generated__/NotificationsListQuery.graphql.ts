@@ -4,7 +4,10 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type NotificationsListQueryVariables = {};
+export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "%future added value";
+export type NotificationsListQueryVariables = {
+    types?: Array<NotificationTypesEnum | null> | null | undefined;
+};
 export type NotificationsListQueryResponse = {
     readonly viewer: {
         readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
@@ -18,9 +21,11 @@ export type NotificationsListQuery = {
 
 
 /*
-query NotificationsListQuery {
+query NotificationsListQuery(
+  $types: [NotificationTypesEnum]
+) {
   viewer {
-    ...NotificationsList_viewer
+    ...NotificationsList_viewer_1OKkmt
   }
 }
 
@@ -49,8 +54,8 @@ fragment NotificationItem_item on Notification {
   }
 }
 
-fragment NotificationsList_viewer on Viewer {
-  notifications: notificationsConnection(first: 10) {
+fragment NotificationsList_viewer_1OKkmt on Viewer {
+  notifications: notificationsConnection(first: 10, notificationTypes: $types) {
     edges {
       node {
         internalID
@@ -71,26 +76,38 @@ fragment NotificationsList_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "types"
+  }
+],
+v1 = [
+  {
     "kind": "Literal",
     "name": "first",
     "value": 10
+  },
+  {
+    "kind": "Variable",
+    "name": "notificationTypes",
+    "variableName": "types"
   }
 ],
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -99,7 +116,7 @@ v3 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "NotificationsListQuery",
@@ -113,7 +130,13 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "types",
+                "variableName": "types"
+              }
+            ],
             "kind": "FragmentSpread",
             "name": "NotificationsList_viewer"
           }
@@ -126,7 +149,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "NotificationsListQuery",
     "selections": [
@@ -140,7 +163,7 @@ return {
         "selections": [
           {
             "alias": "notifications",
-            "args": (v0/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "NotificationConnection",
             "kind": "LinkedField",
             "name": "notificationsConnection",
@@ -162,8 +185,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
                       (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -236,8 +259,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v1/*: any*/),
                                   (v2/*: any*/),
+                                  (v3/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -285,7 +308,7 @@ return {
                                     ],
                                     "storageKey": null
                                   },
-                                  (v3/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -295,7 +318,7 @@ return {
                         ],
                         "storageKey": "artworksConnection(first:4)"
                       },
-                      (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -342,12 +365,14 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "notificationsConnection(first:10)"
+            "storageKey": null
           },
           {
             "alias": "notifications",
-            "args": (v0/*: any*/),
-            "filters": null,
+            "args": (v1/*: any*/),
+            "filters": [
+              "notificationTypes"
+            ],
             "handle": "connection",
             "key": "NotificationsList_notifications",
             "kind": "LinkedHandle",
@@ -359,14 +384,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "25cd1c1b60dfce45bb7478b67b77f795",
+    "cacheID": "95162cf0a33077a27d7dad7545cbc98f",
     "id": null,
     "metadata": {},
     "name": "NotificationsListQuery",
     "operationKind": "query",
-    "text": "query NotificationsListQuery {\n  viewer {\n    ...NotificationsList_viewer\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer on Viewer {\n  notifications: notificationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListQuery(\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_1OKkmt\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_1OKkmt on Viewer {\n  notifications: notificationsConnection(first: 10, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '295c93ff58e11bfd2068914ff241e091';
+(node as any).hash = 'a93775d63acdbaeff5c73aff83d3d5d5';
 export default node;

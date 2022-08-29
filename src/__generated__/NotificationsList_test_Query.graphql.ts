@@ -371,7 +371,9 @@ return {
           {
             "alias": "notifications",
             "args": (v0/*: any*/),
-            "filters": null,
+            "filters": [
+              "notificationTypes"
+            ],
             "handle": "connection",
             "key": "NotificationsList_notifications",
             "kind": "LinkedHandle",
