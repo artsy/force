@@ -32,7 +32,7 @@ import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { useCallback, useEffect } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { ArtworkSidebar2 } from "./Components/ArtworkSidebar2"
+import { ArtworkSidebar2 } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -46,6 +46,32 @@ export interface Props {
 }
 
 declare const window: any
+
+interface BelowTheFoldArtworkDetailsProps {
+  artists: ArtworkApp_artwork["artists"]
+  slug: ArtworkApp_artwork["slug"]
+}
+
+const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
+  artists,
+  slug,
+}) => (
+  <>
+    <Spacer mt={6} />
+    <Join separator={<Spacer mt={2} />}>
+      <ArtworkDetailsQueryRenderer slug={slug} />
+
+      <PricingContextQueryRenderer slug={slug} />
+
+      {!!artists &&
+        artists.map(artist => {
+          if (!artist) return null
+
+          return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
+        })}
+    </Join>
+  </>
+)
 
 export const ArtworkApp: React.FC<Props> = props => {
   const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
@@ -149,26 +175,6 @@ export const ArtworkApp: React.FC<Props> = props => {
     }
   }, [shouldTrackPageView, track])
 
-  const BelowTheFoldArtworkDetails = (
-    <>
-      <Spacer mt={6} />
-      <Join separator={<Spacer mt={2} />}>
-        <ArtworkDetailsQueryRenderer slug={artwork.slug} />
-
-        <PricingContextQueryRenderer slug={artwork.slug} />
-
-        {artwork.artists &&
-          artwork.artists.map(artist => {
-            if (!artist) return null
-
-            return (
-              <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
-            )
-          })}
-      </Join>
-    </>
-  )
-
   return (
     <>
       <UseRecordArtworkView />
@@ -185,7 +191,12 @@ export const ArtworkApp: React.FC<Props> = props => {
         <Column span={8}>
           <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
-          <Media greaterThanOrEqual="sm">{BelowTheFoldArtworkDetails}</Media>
+          <Media greaterThanOrEqual="sm">
+            <BelowTheFoldArtworkDetails
+              slug={artwork.slug}
+              artists={artwork.artists}
+            />
+          </Media>
         </Column>
 
         <Column span={4} pt={[0, 2]}>
@@ -197,7 +208,12 @@ export const ArtworkApp: React.FC<Props> = props => {
         </Column>
       </GridColumns>
 
-      <Media lessThan="sm">{BelowTheFoldArtworkDetails}</Media>
+      <Media lessThan="sm">
+        <BelowTheFoldArtworkDetails
+          slug={artwork.slug}
+          artists={artwork.artists}
+        />
+      </Media>
 
       <Spacer mt={6} />
 
