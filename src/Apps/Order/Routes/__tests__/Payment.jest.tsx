@@ -387,10 +387,7 @@ describe("Payment", () => {
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
-      const bankDebitCollapse = page
-        .find(BankDebitProvider)
-        .at(1)
-        .closest(Collapse)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
 
