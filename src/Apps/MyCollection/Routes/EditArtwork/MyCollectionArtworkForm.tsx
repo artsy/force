@@ -47,10 +47,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   artwork,
   step,
 }) => {
-  const {
-    router,
-    match: { location },
-  } = useRouter()
+  const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
   const initialErrors = validateArtwork(
@@ -67,7 +64,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   const { submitMutation: deleteArtwork } = useDeleteArtwork()
 
   const isEditing = !!artwork?.internalID
-  const onlyPhotos = location.query.step === "photos"
+  const onlyPhotos = match?.location?.query?.step === "photos"
 
   const handleSubmit = async (values: ArtworkModel) => {
     // Set edition values for attribution class
