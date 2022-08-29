@@ -24,23 +24,39 @@ export type NotificationsList_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 10,
+      "kind": "LocalArgument",
+      "name": "count"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "cursor"
+    }
+  ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "cursor",
+        "direction": "forward",
+        "path": [
+          "notifications"
+        ]
+      }
+    ]
+  },
   "name": "NotificationsList_viewer",
   "selections": [
     {
       "alias": "notifications",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 10
-        }
-      ],
+      "args": null,
       "concreteType": "NotificationConnection",
       "kind": "LinkedField",
-      "name": "notificationsConnection",
+      "name": "__NotificationsList_notifications_connection",
       "plural": false,
       "selections": [
         {
@@ -67,22 +83,61 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "NotificationItem_item"
                 }
               ],
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "notificationsConnection(first:10)"
+      "storageKey": null
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '86592ba5edad92bee58f00361828e4ae';
+(node as any).hash = 'dfd237babd9b1e50f567e81277042e20';
 export default node;
