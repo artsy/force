@@ -210,7 +210,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                     onClose={() => setShouldShowBackModal(false)}
                     isEditing={isEditing}
                     onLeave={() => {
-                      router.replace({ pathname: "/my-collection" })
+                      router.replace({ pathname: "/settings/my-collection" })
                       router.push({
                         pathname: isEditing
                           ? `/my-collection/artwork/${artwork.internalID}`
