@@ -1,5 +1,4 @@
 import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork } from "__generated__/ArtworkApp_artwork.graphql"
@@ -100,10 +99,8 @@ export const ArtworkApp: React.FC<Props> = props => {
         properties.referrer = referrer
       }
 
-      // FIXME: This breaks our automatic global pageview tracking middleware
-      // patterns. Can these props be tracked on mount using our typical @track()
-      // or trackEvent() patterns as used in other apps?
-      // See trackingMiddleware.ts
+      // This breaks our automatic global pageview tracking middleware
+      // patterns due passing some custom properties to the pageview.
       window.analytics.page(properties, { integrations: { Marketo: false } })
 
       if (typeof window._sift !== "undefined") {
@@ -147,9 +144,9 @@ export const ArtworkApp: React.FC<Props> = props => {
     trackLotView()
   }, [trackPageview, trackProductView, trackLotView])
 
-  const shouldRenderSubmittedOrderModal = useCallback(() => {
-    return !!props.match.location.query["order-submitted"]
-  }, [props.match.location.query])
+  const shouldRenderSubmittedOrderModal = !!props.match.location.query[
+    "order-submitted"
+  ]
 
   /**
    * On mount, trigger a page view and product view
@@ -159,7 +156,7 @@ export const ArtworkApp: React.FC<Props> = props => {
    *
    */
   useEffect(() => {
-    if (shouldRenderSubmittedOrderModal()) {
+    if (shouldRenderSubmittedOrderModal) {
       // TODO: Look into using router push
       // this.props.router.replace(this.props.match.location.pathname)
       window.history.pushState({}, null, props.match.location.pathname)
@@ -235,7 +232,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <RecentlyViewed />
 
-      {shouldRenderSubmittedOrderModal() && (
+      {shouldRenderSubmittedOrderModal && (
         <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
       )}
     </>
