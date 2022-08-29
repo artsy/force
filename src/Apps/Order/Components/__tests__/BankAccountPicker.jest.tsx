@@ -103,6 +103,8 @@ describe("BankAccountFragmentContainer", () => {
             onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
             onSetBankAccountSelection={jest.fn()}
+            clientSecret="client-secret"
+            onSetClientSecret={jest.fn()}
           />
         </MockBoot>
       ),
@@ -145,6 +147,8 @@ describe("BankAccountFragmentContainer", () => {
             onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
             onSetBankAccountSelection={jest.fn()}
+            clientSecret="client-secret"
+            onSetClientSecret={jest.fn()}
           />
         </MockBoot>
       ),
