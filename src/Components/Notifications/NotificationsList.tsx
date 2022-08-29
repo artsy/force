@@ -65,9 +65,14 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
 }
 
 const NOTIFICATIONS_NEXT_QUERY = graphql`
-  query NotificationsListNextQuery($count: Int!, $cursor: String) {
+  query NotificationsListNextQuery(
+    $count: Int!
+    $cursor: String
+    $types: [NotificationTypesEnum]
+  ) {
     viewer {
-      ...NotificationsList_viewer @arguments(count: $count, cursor: $cursor)
+      ...NotificationsList_viewer
+        @arguments(count: $count, cursor: $cursor, types: $types)
     }
   }
 `
@@ -106,7 +111,11 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
       }
     },
     getVariables(_props, { count, cursor }, fragmentVariables) {
-      return { ...fragmentVariables, count, cursor }
+      return {
+        ...fragmentVariables,
+        count,
+        cursor,
+      }
     },
   }
 )
@@ -119,7 +128,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
   type,
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
-  const notificationType = getNotificationTypeEnum(type)
+  const types = getNotificationTypes(type)
 
   return (
     <SystemQueryRenderer<NotificationsListQuery>
@@ -132,7 +141,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
         }
       `}
       variables={{
-        types: [notificationType],
+        types,
       }}
       render={({ error, props }) => {
         if (error) {
@@ -160,11 +169,11 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
   )
 }
 
-const getNotificationTypeEnum = (
+const getNotificationTypes = (
   type: NotificationType
-): NotificationTypesEnum | undefined => {
+): NotificationTypesEnum[] | undefined => {
   if (type === "alerts") {
-    return "ARTWORK_ALERT"
+    return ["ARTWORK_ALERT"]
   }
 
   return
