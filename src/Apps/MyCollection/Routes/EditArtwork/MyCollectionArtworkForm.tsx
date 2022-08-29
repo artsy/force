@@ -195,7 +195,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           validationSchema={MyCollectionArtworkDetailsValidationSchema}
           initialErrors={initialErrors}
         >
-          {({ isSubmitting, isValid }) => (
+          {({ isSubmitting, isValid, values }) => (
             <Form>
               <RouterLink to="/my-collection" display="block">
                 <ArtsyLogoBlackIcon display="block" />
@@ -251,7 +251,12 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 type="submit"
                                 size={["small", "large"]}
                                 variant="primaryBlack"
-                                loading={isSubmitting}
+                                loading={
+                                  isSubmitting ||
+                                  values.newPhotos.filter(
+                                    photo => photo.loading
+                                  ).length > 0
+                                }
                                 disabled={!isValid}
                               >
                                 {isEditing ? "Save Artwork" : "Upload Artwork"}
