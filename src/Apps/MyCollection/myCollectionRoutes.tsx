@@ -86,6 +86,9 @@ export const myCollectionRoutes: AppRouteConfig[] = [
             }
           }
         `,
+        cacheConfig: {
+          force: true,
+        },
       },
     ],
     cacheConfig: {
