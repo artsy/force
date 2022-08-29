@@ -148,7 +148,7 @@ describe("Edit artwork", () => {
         pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
       })
       expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/my-collection",
+        pathname: "/settings/my-collection",
       })
     })
   })
@@ -418,7 +418,7 @@ describe("Create artwork", () => {
         pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
       })
       expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: "/my-collection",
+        pathname: "/settings/my-collection",
       })
     })
   })
