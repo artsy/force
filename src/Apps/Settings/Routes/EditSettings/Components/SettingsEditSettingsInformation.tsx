@@ -1,18 +1,18 @@
-import * as React from "react"
-import * as Yup from "yup"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Form, Formik } from "formik"
-import { SettingsEditSettingsInformation_me } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import {
   Button,
-  Text,
   Input,
   Join,
-  Spacer,
-  useToasts,
   PasswordInput,
+  Spacer,
+  Text,
+  useToasts,
 } from "@artsy/palette"
-import { email, password, name } from "Components/Authentication/Validators"
+import { email, name, password } from "Components/Authentication/Validators"
+import { Form, Formik } from "formik"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import * as Yup from "yup"
+import { SettingsEditSettingsInformation_me } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
 
 interface SettingsEditSettingsInformationProps {
@@ -27,7 +27,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Information
       </Text>
 
