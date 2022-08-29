@@ -13,6 +13,7 @@ import {
 } from "../types"
 import { Metric } from "Utils/metrics"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { DEFAULT_FREQUENCY } from "../constants"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -96,7 +97,12 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
       {renderButton({ onClick: handleClick })}
       <SavedSearchAlertModalContainer
         visible={visibleForm}
-        initialValues={{ name: "", email: true, push: false }}
+        initialValues={{
+          name: "",
+          email: true,
+          push: false,
+          frequency: DEFAULT_FREQUENCY,
+        }}
         entity={entity}
         criteria={criteria}
         metric={metric}
