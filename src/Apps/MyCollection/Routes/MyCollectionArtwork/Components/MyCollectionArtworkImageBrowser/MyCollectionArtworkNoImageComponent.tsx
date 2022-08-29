@@ -28,10 +28,7 @@ export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNo
           data-testid="uploadPhotosButton"
           // @ts-ignore
           as={RouterLink}
-          to={`/my-collection/artworks/${artworkID}/edit`}
-          queryParams={{
-            step: "photos",
-          }}
+          to={`/my-collection/artworks/${artworkID}/edit?step=photos`}
           variant="secondaryNeutral"
           size="large"
           Icon={AddCircleIcon}
