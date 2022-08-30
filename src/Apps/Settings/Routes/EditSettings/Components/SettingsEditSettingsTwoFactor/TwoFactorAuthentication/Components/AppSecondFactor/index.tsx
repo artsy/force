@@ -1,25 +1,25 @@
 import {
+  Box,
   Button,
   Flex,
-  Box,
-  Text,
-  Spacer,
   ModalDialog,
+  Spacer,
+  Text,
   useToasts,
 } from "@artsy/palette"
-import { useState } from "react"
 import * as React from "react"
-import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
+import { useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
+import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import request from "superagent"
 import { useSystemContext } from "System"
-import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
-import { ApiError } from "../../ApiError"
-import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
-import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { AppSecondFactor_me } from "__generated__/AppSecondFactor_me.graphql"
-import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
+import { ApiError } from "../../ApiError"
+import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
+import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
+import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 
 import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 
@@ -166,10 +166,10 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg-display">App Authenticator</Text>
+          <Text variant={["md", "lg"]}>App Authenticator</Text>
 
           {enabledSecondFactorLabel && (
-            <Text variant="lg-display" color="black60">
+            <Text variant={["md", "lg"]} color="black60">
               {enabledSecondFactorLabel}
             </Text>
           )}

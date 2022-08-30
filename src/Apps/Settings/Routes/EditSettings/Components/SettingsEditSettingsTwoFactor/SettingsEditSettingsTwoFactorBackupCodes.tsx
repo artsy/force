@@ -8,9 +8,9 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { useMode } from "Utils/Hooks/useMode"
 import { SettingsEditSettingsTwoFactorBackupCodes_me } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
 import { CreateBackupSecondFactorsInput } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
@@ -72,7 +72,7 @@ export const SettingsEditSettingsTwoFactorBackupCodes: FC<SettingsEditSettingsTw
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant="lg-display" mb={2}>
+          <Text variant={["md", "lg"]} mb={2}>
             Backup Codes
             {me.backupSecondFactors && me.backupSecondFactors.length > 0 && (
               <>

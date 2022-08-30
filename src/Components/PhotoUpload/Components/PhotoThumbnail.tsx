@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react"
 import {
-  CSSGrid,
+  Box,
   BoxProps,
+  Clickable,
+  CloseCircleIcon,
+  Column,
+  CSSGrid,
   Flex,
   Image,
-  Text,
-  Column,
-  Box,
-  Clickable,
   ProgressBar,
-  CloseCircleIcon,
   Spinner,
+  Text,
 } from "@artsy/palette"
-import { Media } from "Utils/Responsive"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { formatFileSize, Photo } from "../../Utils/fileUtils"
+import { Media } from "Utils/Responsive"
+import { formatFileSize, Photo } from "../Utils/fileUtils"
 
 export interface PhotoThumbnailProps {
   photo: Photo

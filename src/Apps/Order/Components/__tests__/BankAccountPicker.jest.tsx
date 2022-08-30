@@ -96,6 +96,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
+            paymentMethod="US_BANK_ACCOUNT"
             bankAccountHasInsufficientFunds={false}
             onSetBankAccountHasInsufficientFunds={jest.fn()}
             onSetIsSavingPayment={jest.fn()}
@@ -103,6 +104,8 @@ describe("BankAccountFragmentContainer", () => {
             onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
             onSetBankAccountSelection={jest.fn()}
+            clientSecret="client-secret"
+            onSetClientSecret={jest.fn()}
           />
         </MockBoot>
       ),
@@ -138,6 +141,7 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
+            paymentMethod="US_BANK_ACCOUNT"
             bankAccountHasInsufficientFunds={false}
             onSetBankAccountHasInsufficientFunds={jest.fn()}
             onSetIsSavingPayment={jest.fn()}
@@ -145,6 +149,8 @@ describe("BankAccountFragmentContainer", () => {
             onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
             onSetBankAccountSelection={jest.fn()}
+            clientSecret="client-secret"
+            onSetClientSecret={jest.fn()}
           />
         </MockBoot>
       ),

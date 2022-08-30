@@ -8,13 +8,13 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { Formik } from "formik"
-import { FC, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
   LocationAutocompleteInput,
   normalizePlace,
 } from "Components/LocationAutocompleteInput"
+import { Formik } from "formik"
+import { FC, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileAboutYou_me } from "__generated__/SettingsEditProfileAboutYou_me.graphql"
 
@@ -32,7 +32,7 @@ const SettingsEditProfileAboutYou: FC<SettingsEditProfileAboutYouProps> = ({
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         About You
       </Text>
 

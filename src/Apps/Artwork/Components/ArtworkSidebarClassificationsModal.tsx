@@ -1,17 +1,17 @@
 import {
   Box,
-  SkeletonText,
   Button,
   Join,
-  Spacer,
   ModalDialog,
+  SkeletonText,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { ArtworkSidebarClassificationsModal_viewer } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
 import { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
-import { Text } from "@artsy/palette"
+import { ArtworkSidebarClassificationsModal_viewer } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
 
 const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(3)].map((_, i) => {
   return (
@@ -46,7 +46,7 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
   return (
     <ModalDialog
       onClose={onClose}
-      title="Artwork classifications"
+      title="Rarity classifications"
       footer={
         <Button onClick={onClose} width="100%">
           OK

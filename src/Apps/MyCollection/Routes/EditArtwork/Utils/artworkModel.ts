@@ -1,3 +1,5 @@
+import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+
 export interface ArtworkModel {
   artistName: string
   artistId: string
@@ -11,10 +13,20 @@ export interface ArtworkModel {
   height: string
   width: string
   depth: string
+  photos: MyCollectionPhoto[]
+  newPhotos: Photo[]
   metric: string
   pricePaidDollars: string
   pricePaidCurrency: string
   provenance: string
   artworkLocation: string
   postalCode?: string
+}
+
+export interface MyCollectionPhoto {
+  height?: number | null
+  isDefault?: boolean | null
+  imageURL?: string | null
+  internalID?: string | null
+  removed?: boolean
 }

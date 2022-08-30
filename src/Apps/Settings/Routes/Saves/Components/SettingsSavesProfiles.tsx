@@ -1,3 +1,17 @@
+import {
+  Box,
+  Button,
+  Column,
+  GridColumns,
+  Skeleton,
+  SkeletonText,
+  Sup,
+  Text,
+} from "@artsy/palette"
+import { EntityHeaderFairFragmentContainer } from "Components/EntityHeaders/EntityHeaderFair"
+import { EntityHeaderFairOrganizerFragmentContainer } from "Components/EntityHeaders/EntityHeaderFairOrganizer"
+import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
+import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 import { FC, useState } from "react"
 import {
   createPaginationContainer,
@@ -5,23 +19,9 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SettingsSavesProfiles_me } from "__generated__/SettingsSavesProfiles_me.graphql"
-import { SettingsSavesProfilesQuery } from "__generated__/SettingsSavesProfilesQuery.graphql"
-import {
-  Box,
-  Button,
-  Sup,
-  Text,
-  SkeletonText,
-  Skeleton,
-  GridColumns,
-  Column,
-} from "@artsy/palette"
 import { extractNodes } from "Utils/extractNodes"
-import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
-import { EntityHeaderFairOrganizerFragmentContainer } from "Components/EntityHeaders/EntityHeaderFairOrganizer"
-import { EntityHeaderFairFragmentContainer } from "Components/EntityHeaders/EntityHeaderFair"
-import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import { SettingsSavesProfilesQuery } from "__generated__/SettingsSavesProfilesQuery.graphql"
+import { SettingsSavesProfiles_me } from "__generated__/SettingsSavesProfiles_me.graphql"
 
 interface SettingsSavesProfilesProps {
   me: SettingsSavesProfiles_me
@@ -51,7 +51,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Followed Profiles {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>
 
@@ -104,7 +104,7 @@ const SettingsSavesProfiles: FC<SettingsSavesProfilesProps> = ({
           )}
         </>
       ) : (
-        <Text variant="lg-display" color="black60">
+        <Text variant={["md", "lg"]} color="black60">
           Nothing yet.
         </Text>
       )}
@@ -177,7 +177,7 @@ export const SettingsSavesProfilesPaginationContainer = createPaginationContaine
 const SETTINGS_SAVES_PROFILES_PLACEHOLDER = (
   <>
     <Skeleton>
-      <SkeletonText variant="lg-display" mb={4}>
+      <SkeletonText variant={["md", "lg"]} mb={4}>
         Followed Profiles
       </SkeletonText>
     </Skeleton>

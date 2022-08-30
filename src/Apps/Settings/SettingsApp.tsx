@@ -5,7 +5,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsApp_me } from "__generated__/SettingsApp_me.graphql"
 
-export const SETTINGS_ROUTE_TABS_MARGIN = 4
+export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
 
 const TABS = [
   { name: "Edit Settings", url: "/settings/edit-settings" },

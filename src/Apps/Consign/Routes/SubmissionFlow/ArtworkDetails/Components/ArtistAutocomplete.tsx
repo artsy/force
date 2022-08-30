@@ -39,8 +39,9 @@ interface ArtistAutocompleteOption extends AutocompleteInputOptionType {
 
 export const ArtistAutoComplete: React.FC<{
   onError: () => void
+  onSelect: ({ artistId: string }) => void
   required?: boolean
-}> = ({ onError, required }) => {
+}> = ({ onError, onSelect, required }) => {
   const [suggestions, setSuggestions] = useState<
     Array<ArtistAutocompleteOption>
   >([])
@@ -111,11 +112,13 @@ export const ArtistAutoComplete: React.FC<{
     setSuggestions([])
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
+    onSelect({ artistId: "" })
   }
 
   const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
     setFieldValue("artistId", value)
     setFieldValue("artistName", text)
+    onSelect({ artistId: value })
   }
 
   const handleClose = () => {

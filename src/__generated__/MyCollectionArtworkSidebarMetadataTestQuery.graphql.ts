@@ -7,7 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSidebarMetadataTestQueryVariables = {};
 export type MyCollectionArtworkSidebarMetadataTestQueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarMetadata_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebarMetadata_artwork">;
     } | null;
 };
 export type MyCollectionArtworkSidebarMetadataTestQuery = {
@@ -20,15 +20,13 @@ export type MyCollectionArtworkSidebarMetadataTestQuery = {
 /*
 query MyCollectionArtworkSidebarMetadataTestQuery {
   artwork(id: "foo") {
+    ...MyCollectionArtworkSidebarTitleInfo_artwork
     ...MyCollectionArtworkSidebarMetadata_artwork
     id
   }
 }
 
 fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
-  artistNames
-  title
-  date
   category
   medium
   dimensions {
@@ -44,6 +42,12 @@ fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
     display
   }
   artworkLocation
+}
+
+fragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {
+  artistNames
+  title
+  date
 }
 */
 
@@ -89,6 +93,11 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "MyCollectionArtworkSidebarTitleInfo_artwork"
+          },
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -233,7 +242,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "84bf8fa670b3afab14bf534a53e4d82b",
+    "cacheID": "06dbebc77f480d95a39f16650de82dee",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -278,9 +287,9 @@ return {
     },
     "name": "MyCollectionArtworkSidebarMetadataTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  artistNames\n  title\n  date\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n"
+    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n}\n"
   }
 };
 })();
-(node as any).hash = 'ca880f2c1b88f4a29ab5905c4d9cfb26';
+(node as any).hash = '3ca4199002ae9dab527fe26aa2b7d8b8';
 export default node;

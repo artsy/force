@@ -1,33 +1,32 @@
 import { Box, Button, Text } from "@artsy/palette"
-import { useSystemContext } from "System"
-import { Form, Formik } from "formik"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
+import { BackLink } from "Components/Links/BackLink"
+import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
+import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { Form, Formik } from "formik"
+import { useRef, useState } from "react"
+import {
+  createFragmentContainer,
+  Environment,
+  fetchQuery,
+  graphql,
+} from "react-relay"
+import { isServer } from "Server/isServer"
+import { useSystemContext } from "System"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
+import createLogger from "Utils/logger"
+import { UploadPhotos_ImageRefetch_Query } from "__generated__/UploadPhotos_ImageRefetch_Query.graphql"
+import { UploadPhotos_submission } from "__generated__/UploadPhotos_submission.graphql"
+import {
+  useAddAssetToConsignmentSubmission,
+  useRemoveAssetFromConsignmentSubmission,
+} from "../Mutations"
+import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
 import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
-import { PhotoThumbnail } from "./Components/PhotoThumbnail"
-import { Photo } from "../Utils/fileUtils"
-import { useRouter } from "System/Router/useRouter"
-import { BackLink } from "Components/Links/BackLink"
-import { getENV } from "Utils/getENV"
-import { uploadPhotosValidationSchema, validate } from "../Utils/validation"
-import { isServer } from "Server/isServer"
-import {
-  createFragmentContainer,
-  graphql,
-  fetchQuery,
-  Environment,
-} from "react-relay"
-import { UploadPhotos_submission } from "__generated__/UploadPhotos_submission.graphql"
-import { UploadPhotos_ImageRefetch_Query } from "__generated__/UploadPhotos_ImageRefetch_Query.graphql"
-
-import {
-  useRemoveAssetFromConsignmentSubmission,
-  useAddAssetToConsignmentSubmission,
-} from "../Mutations"
-import createLogger from "Utils/logger"
-import { useRef, useState } from "react"
 
 const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
@@ -155,7 +154,7 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
                       externalSubmissionId: submission.externalId,
                       sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
                       filename: photo.name,
-                      size: photo.size.toString(),
+                      size: photo.size?.toString(),
                     },
                   },
                 })

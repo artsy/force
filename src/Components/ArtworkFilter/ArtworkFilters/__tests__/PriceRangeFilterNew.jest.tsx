@@ -19,7 +19,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 jest.mock("Utils/getENV")
-jest.mock("lodash/debounce", () => jest.fn(e => e))
 
 describe("PriceRangeFilterNew", () => {
   let context: ArtworkFilterContextProps
