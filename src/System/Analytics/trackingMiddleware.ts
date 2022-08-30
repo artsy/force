@@ -1,7 +1,6 @@
 import { ActionTypes } from "farce"
 import { get } from "Utils/get"
 import { match } from "path-to-regexp"
-import { debounce } from "lodash"
 import { getENV } from "Utils/getENV"
 
 /**
@@ -17,8 +16,6 @@ interface TrackingMiddlewareOptions {
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
-  const trackPageview = debounce(window.analytics?.page!, 30)
-
   return store => next => action => {
     const { excludePaths = [] } = options
     const { type, payload } = action
@@ -86,7 +83,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               trackingData.referrer = getFullReferrerUrl()
             }
 
-            trackPageview(trackingData, {
+            window.analytics?.page(trackingData, {
               integrations: {
                 Marketo: false,
               },
