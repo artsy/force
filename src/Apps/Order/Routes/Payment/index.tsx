@@ -82,6 +82,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
 
+  useEffect(() => {
+    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
+  }, [order])
+
   const balanceCheckEnabled =
     useFeatureFlag("bank_account_balance_check") &&
     selectedPaymentMethod === "US_BANK_ACCOUNT"
@@ -275,7 +279,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       handlePaymentStepComplete()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPaymentSetupSuccessful, selectedBankAccountId, balanceCheckEnabled])
+  }, [
+    isPaymentSetupSuccessful,
+    selectedBankAccountId,
+    balanceCheckEnabled,
+    selectedPaymentMethod,
+  ])
 
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]
