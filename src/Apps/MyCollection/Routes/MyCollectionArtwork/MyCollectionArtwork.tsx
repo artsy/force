@@ -3,11 +3,13 @@ import {
   Column,
   Flex,
   GridColumns,
+  Separator,
   Spacer,
   Tab,
   Tabs,
 } from "@artsy/palette"
 import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -18,6 +20,12 @@ import { MyCollectionArtworkInsightsFragmentContainer } from "./Components/MyCol
 import { MyCollectionArtworkMetaFragmentContainer } from "./Components/MyCollectionArtworkMeta"
 import { MyCollectionArtworkSidebarFragmentContainer } from "./Components/MyCollectionArtworkSidebar"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./Components/MyCollectionArtworkSidebar/MyCollectionArtworkSidebarTitleInfo"
+import { MyCollectionArtworkSWAHowItWorksModal } from "./Components/MyCollectionArtworkSWAHowItWorksModal"
+import {
+  MyCollectionArtworkSWASectionDesktopLayout,
+  MyCollectionArtworkSWASectionMobileLayout,
+} from "./Components/MyCollectionArtworkSWASection"
+import { MyCollectionArtworkSWASectionSubmitted } from "./Components/MyCollectionArtworkSWASectionSubmitted"
 
 interface MyCollectionArtworkProps {
   artwork: MyCollectionArtwork_artwork
@@ -38,6 +46,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
+  )
+
+  const isMyCollectionPhase5Enabled = useFeatureFlag(
+    "my-collection-web-phase-5"
   )
 
   const EditArtworkButton = () => (
@@ -85,6 +97,24 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
 
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
+            {isMyCollectionPhase5Enabled && (
+              <Media greaterThanOrEqual="sm">
+                {!!isArtworkSubmittedToSell ? (
+                  <>
+                    <Separator my={2} />
+                    <MyCollectionArtworkSWASectionSubmitted />
+                    <Separator my={2} />
+                  </>
+                ) : (
+                  <MyCollectionArtworkSWASectionDesktopLayout
+                    onSubmit={() => {
+                      setIsArtworkSubmittedToSell(!isArtworkSubmittedToSell)
+                    }}
+                    learnMore={() => setShowHowItWorksModal(true)}
+                  />
+                )}
+              </Media>
+            )}
           </Media>
 
           <Media lessThan="sm">
@@ -97,6 +127,22 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
                   />
+                  {!!isMyCollectionPhase5Enabled && (
+                    <Media lessThan="sm">
+                      {!!isArtworkSubmittedToSell ? (
+                        <MyCollectionArtworkSWASectionSubmitted />
+                      ) : (
+                        <MyCollectionArtworkSWASectionMobileLayout
+                          onSubmit={() =>
+                            setIsArtworkSubmittedToSell(
+                              !isArtworkSubmittedToSell
+                            )
+                          }
+                          learnMore={() => setShowHowItWorksModal(true)}
+                        />
+                      )}
+                    </Media>
+                  )}
                 </Tab>
 
                 <Tab name="About">
@@ -130,9 +176,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         </Column>
       </GridColumns>
 
-
       <Media greaterThanOrEqual="sm">
-
         {hasInsights && (
           <>
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
@@ -142,7 +186,6 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             {!!enableMyCollectionPhase4ArticlesRail && (
               <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
             )}
-
           </>
         )}
       </Media>
