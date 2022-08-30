@@ -122,7 +122,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
               artwork={artwork}
             />
             {hasInsights ? (
-              <Tabs mt={2} justifyContent="space-evenly">
+              <Tabs fill mt={2}>
                 <Tab name="Insights">
                   <MyCollectionArtworkInsightsFragmentContainer
                     artwork={artwork}
