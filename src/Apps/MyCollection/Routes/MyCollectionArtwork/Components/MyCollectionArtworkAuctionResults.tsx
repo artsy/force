@@ -34,6 +34,7 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
+        mb={2}
       >
         <Text variant={["sm-display", "lg-display"]} textAlign="left">
           Auction Results
