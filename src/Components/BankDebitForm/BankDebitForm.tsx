@@ -12,6 +12,7 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
+import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
@@ -19,6 +20,7 @@ import { getENV } from "Utils/getENV"
 
 interface Props {
   order: { mode: string | null; internalID: string }
+  paymentMethod: CommercePaymentMethodEnum
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
@@ -27,6 +29,7 @@ interface Props {
 
 export const BankDebitForm: FC<Props> = ({
   order,
+  paymentMethod,
   bankAccountHasInsufficientFunds,
   onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
@@ -60,9 +63,15 @@ export const BankDebitForm: FC<Props> = ({
       return
     }
 
+    // save account only for US_BANK_ACCOUNT (ACH)
+    let saveAccount = isSaveAccountChecked
+    if (paymentMethod !== "US_BANK_ACCOUNT") {
+      saveAccount = false
+    }
+
     const return_url = `${getENV("APP_URL")}/orders/${
       order.internalID
-    }/payment?save_account=${isSaveAccountChecked}`
+    }/payment?save_account=${saveAccount}`
 
     // Disable the "leave/reload site?" confirmation dialog as we're about to
     // confirm Stripe payment setup which leaves and redirects back.
@@ -98,39 +107,42 @@ export const BankDebitForm: FC<Props> = ({
         }}
       />
       <Spacer mt={4} />
-      <Flex>
-        <Checkbox
-          selected={isSaveAccountChecked}
-          onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
-          data-test="SaveBankAccountCheckbox"
-        >
-          Save bank account for later use.
-        </Checkbox>
+      {/* Display checkbox for saving account only for ACH */}
+      {paymentMethod === "US_BANK_ACCOUNT" && (
         <Flex>
-          <Tooltip
-            placement="top-start"
-            size="lg"
-            width={400}
-            content={
-              <Text fontSize={13} lineHeight={"18px"}>
-                Thank you for signing up for direct debits from Artsy. You have
-                authorized Artsy and, if applicable, its affiliated entities to
-                debit the bank account specified above, on behalf of sellers
-                that use the Artsy website, for any amount owed for your
-                purchase of artworks from such sellers, according to Artsy’s
-                website and terms. You can change or cancel this authorization
-                at any time by providing Artsy with 30 (thirty) days’ notice. By
-                clicking “Save bank account for later use”, you authorize Artsy
-                to save the bank account specified above.
-              </Text>
-            }
+          <Checkbox
+            selected={isSaveAccountChecked}
+            onSelect={() => setIsSaveAccountChecked(!isSaveAccountChecked)}
+            data-test="SaveBankAccountCheckbox"
           >
-            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-              <InfoCircleIcon />
-            </Clickable>
-          </Tooltip>
+            Save bank account for later use.
+          </Checkbox>
+          <Flex>
+            <Tooltip
+              placement="top-start"
+              size="lg"
+              width={400}
+              content={
+                <Text fontSize={13} lineHeight={"18px"}>
+                  Thank you for signing up for direct debits from Artsy. You
+                  have authorized Artsy and, if applicable, its affiliated
+                  entities to debit the bank account specified above, on behalf
+                  of sellers that use the Artsy website, for any amount owed for
+                  your purchase of artworks from such sellers, according to
+                  Artsy’s website and terms. You can change or cancel this
+                  authorization at any time by providing Artsy with 30 (thirty)
+                  days’ notice. By clicking “Save bank account for later use”,
+                  you authorize Artsy to save the bank account specified above.
+                </Text>
+              }
+            >
+              <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+                <InfoCircleIcon />
+              </Clickable>
+            </Tooltip>
+          </Flex>
         </Flex>
-      </Flex>
+      )}
 
       {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
       <Spacer mt={4} />

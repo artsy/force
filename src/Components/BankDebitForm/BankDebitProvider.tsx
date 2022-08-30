@@ -6,6 +6,10 @@ import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import createLogger from "Utils/logger"
+import {
+  CommercePaymentMethodEnum,
+  Payment_order,
+} from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 
@@ -30,7 +34,8 @@ const BankSetupErrorMessage = () => {
 }
 
 interface Props {
-  order: BankAccountPicker_order
+  order: BankAccountPicker_order | Payment_order
+  paymentMethod: CommercePaymentMethodEnum
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
@@ -40,6 +45,7 @@ interface Props {
 
 export const BankDebitProvider: FC<Props> = ({
   order,
+  paymentMethod,
   bankAccountHasInsufficientFunds,
   onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
@@ -147,6 +153,7 @@ export const BankDebitProvider: FC<Props> = ({
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm
               order={order}
+              paymentMethod={paymentMethod}
               bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
               onSetBankAccountHasInsufficientFunds={
                 onSetBankAccountHasInsufficientFunds
