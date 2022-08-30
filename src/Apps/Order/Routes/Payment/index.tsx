@@ -268,7 +268,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   useEffect(() => {
     if (
       !balanceCheckEnabled &&
-      (selectedBankAccountId || isPaymentSetupSuccessful)
+      (selectedBankAccountId || isPaymentSetupSuccessful) &&
+      (selectedPaymentMethod === "US_BANK_ACCOUNT" ||
+        selectedPaymentMethod === "SEPA_DEBIT")
     ) {
       handlePaymentStepComplete()
     }
