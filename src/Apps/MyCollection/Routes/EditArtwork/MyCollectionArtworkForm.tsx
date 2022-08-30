@@ -20,6 +20,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
+import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
@@ -129,6 +130,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           }
         })
       )
+
+      // Waiting for a few seconds to make sure the new images are processed
+      // and ready to be displayed
+      await wait(3000)
 
       if (isEditing) {
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })

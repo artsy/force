@@ -36,6 +36,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   showSaveButton = true,
   ...rest
 }) => {
+  console.log({ artwork })
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
