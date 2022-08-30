@@ -145,7 +145,7 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   return (
-    <div data-test="bankTransferSection">
+    <div data-test={`${paymentMethod}_PaymentSection`}>
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
