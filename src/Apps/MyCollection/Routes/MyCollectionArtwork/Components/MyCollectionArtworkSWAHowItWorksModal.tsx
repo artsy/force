@@ -13,7 +13,7 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       onClose={onClose}
       width={["100%", 600]}
       footer={
-        <Button onClick={onClose} width="100%">
+        <Button onClick={onClose} width="100%" data-testId="modal-close-button">
           Close
         </Button>
       }
@@ -48,7 +48,11 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       </Text>
       <Text mb={2}>
         For more information, see our{" "}
-        <RouterLink to={article} target="_blank">
+        <RouterLink
+          to={article}
+          target="_blank"
+          data-testid="collector-help-center-link"
+        >
           Collector Help Center
         </RouterLink>
       </Text>

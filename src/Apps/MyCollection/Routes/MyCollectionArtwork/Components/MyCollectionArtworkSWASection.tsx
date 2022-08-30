@@ -17,7 +17,13 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button variant="primaryBlack" width="100%" onClick={onSubmit} mb={2}>
+      <Button
+        onClick={onSubmit}
+        variant="primaryBlack"
+        width="100%"
+        mb={2}
+        data-testid="submit-for-sale"
+      >
         Submit for Sale
       </Button>
 
@@ -27,6 +33,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
           onClick={learnMore}
           color="black60"
           textDecoration="underline"
+          data-testid="learn-more"
         >
           selling with Artsy.
         </Clickable>
@@ -47,7 +54,13 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button variant="secondaryNeutral" width="100%" onClick={onSubmit} mb={2}>
+      <Button
+        onClick={onSubmit}
+        variant="secondaryNeutral"
+        width="100%"
+        mb={2}
+        data-testid="submit-for-sale-desktop"
+      >
         Submit for Sale
       </Button>
       <Text mb={2} color="black60">
@@ -56,6 +69,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
           onClick={learnMore}
           color="black60"
           textDecoration="underline"
+          data-testid="learn-more-desktop"
         >
           selling with Artsy.
         </Clickable>
