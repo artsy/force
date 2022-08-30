@@ -133,7 +133,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
       // Waiting for a few seconds to make sure the new images are processed
       // and ready to be displayed
-      await wait(3000)
+      await wait(5000)
 
       if (isEditing) {
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })
