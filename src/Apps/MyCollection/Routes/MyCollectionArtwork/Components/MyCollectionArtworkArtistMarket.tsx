@@ -28,7 +28,7 @@ export const MyCollectionArtworkArtistMarket = ({
     sellThroughRate,
   } = marketPriceInsights
 
-  const formattedSellThroughRate = (Number(sellThroughRate) * 100).toFixed(2)
+  const formattedSellThroughRate = Number(sellThroughRate).toFixed(3)
 
   return (
     <>
