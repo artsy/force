@@ -26,11 +26,14 @@ import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
   NavBarLoggedInActionsQueryResponse
 >> = ({ me }) => {
+  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const hasUnreadNotifications =
     (me?.unreadNotificationsCount ?? 0) > 0 || getNotificationCount() > 0
   const hasUnreadConversations =
@@ -43,7 +46,13 @@ export const NavBarLoggedInActions: React.FC<Partial<
     <>
       <Dropdown
         zIndex={Z.dropdown}
-        dropdown={<NavBarNotificationsQueryRenderer />}
+        dropdown={
+          enableActivityPanel ? (
+            <NavBarNewNotifications />
+          ) : (
+            <NavBarNotificationsQueryRenderer />
+          )
+        }
         placement="bottom-end"
         offset={0}
         openDropdownByClick
