@@ -21,14 +21,12 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
   return (
     <Flex flexDirection="column">
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
-      <Flex flexDirection="row">
-        <Text color="black60" variant="lg-display" fontStyle="italic">
-          {artwork.title}
-        </Text>
-        <Text color="black60" variant="lg-display">
-          , {artwork.date}
-        </Text>
-      </Flex>
+      <Text color="black60" variant="lg-display">
+        <i>{artwork.title?.trim()}</i>
+        {artwork.date &&
+          artwork.date.replace(/\s+/g, "").length > 0 &&
+          ", " + artwork.date}
+      </Text>
       <Spacer mt={2} />
 
       {!isSold && artworkEcommerceAvailable && (
