@@ -5,6 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebar2ArtistsFragmentContainer } from "./ArtworkSidebar2Artists"
 import { ArtworkSidebar2_artwork } from "__generated__/ArtworkSidebar2_artwork.graphql"
 import { ArtworkSidebar2ShippingInformationFragmentContainer } from "./ArtworkSidebar2ShippingInformation"
+import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
 }
@@ -19,12 +20,14 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
     <Flex flexDirection="column">
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
       {!isSold && artworkEcommerceAvailable && (
-        // TODO: wrap this in a dropdown
+        // TODO: i18n?
         <>
           <Separator />
-          <ArtworkSidebar2ShippingInformationFragmentContainer
-            artwork={artwork}
-          />
+          <SidebarExpandable label="Shipping and Taxes">
+            <ArtworkSidebar2ShippingInformationFragmentContainer
+              artwork={artwork}
+            />
+          </SidebarExpandable>
         </>
       )}
     </Flex>
