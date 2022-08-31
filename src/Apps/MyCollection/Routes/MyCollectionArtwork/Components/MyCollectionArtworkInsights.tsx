@@ -29,7 +29,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   )
 
   return (
-    <Join separator={<Spacer mt={[2, 6]} />}>
+    <Join separator={<Spacer mt={[4, 6]} />}>
       <Media greaterThanOrEqual="sm">
         <Text variant="xl">Insights</Text>
 
