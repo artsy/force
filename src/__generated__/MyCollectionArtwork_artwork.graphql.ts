@@ -8,6 +8,7 @@ export type MyCollectionArtwork_artwork = {
     readonly comparables: {
         readonly totalCount: number | null;
     } | null;
+    readonly hasMarketPriceInsights: boolean | null;
     readonly internalID: string;
     readonly artist: {
         readonly slug: string;
@@ -15,9 +16,6 @@ export type MyCollectionArtwork_artwork = {
             readonly totalCount: number | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
-    } | null;
-    readonly priceInsights: {
-        readonly artistId: string | null;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebar_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork">;
     readonly " $refType": "MyCollectionArtwork_artwork";
@@ -54,6 +52,13 @@ return {
       "name": "comparableAuctionResults",
       "plural": false,
       "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasMarketPriceInsights",
       "storageKey": null
     },
     {
@@ -97,24 +102,6 @@ return {
       "storageKey": null
     },
     {
-      "alias": "priceInsights",
-      "args": null,
-      "concreteType": "ArtworkPriceInsights",
-      "kind": "LinkedField",
-      "name": "marketPriceInsights",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artistId",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkSidebar_artwork"
@@ -149,5 +136,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd6cf42c37c492669be654d50cb7511ea';
+(node as any).hash = 'c60f02bdf1b6a7b0f4beaf4a58896681';
 export default node;

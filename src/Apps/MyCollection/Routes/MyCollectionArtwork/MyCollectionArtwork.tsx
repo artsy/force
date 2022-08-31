@@ -72,7 +72,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const hasInsights =
     !!artwork.comparables?.totalCount ||
     !!artwork.artist?.auctionResults?.totalCount ||
-    !!artwork.priceInsights?.artistId
+    !!artwork.hasMarketPriceInsights
 
   return (
     <>
@@ -207,6 +207,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         comparables: comparableAuctionResults {
           totalCount
         }
+        hasMarketPriceInsights
         internalID
         artist {
           slug
@@ -214,9 +215,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
             totalCount
           }
           ...MyCollectionArtworkAuctionResults_artist
-        }
-        priceInsights: marketPriceInsights {
-          artistId
         }
       }
     `,
