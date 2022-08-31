@@ -47,6 +47,18 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
+  const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
+    "my-collection-web-phase-4-artist-market"
+  )
+  const enableMyCollectionPhase4Comparables = useFeatureFlag(
+    "my-collection-web-phase-4-comparables"
+  )
+  const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
+    "my-collection-web-phase-4-demand-index"
+  )
+  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
+    "my-collection-web-phase-4-auction-results"
+  )
 
   const isMyCollectionPhase5Enabled = useFeatureFlag(
     "my-collection-web-phase-5"
@@ -69,10 +81,21 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
 
+  const showComparables =
+    !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
+
+  const showAuctionResults =
+    !!artwork.artist?.auctionResults?.totalCount &&
+    enableMyCollectionPhase4AuctionResults
+
+  const showDemandIndex =
+    !!artwork.hasMarketPriceInsights && enableMyCollectionPhase4DemandIndex
+
+  const showArtistMarket =
+    !!artwork.hasMarketPriceInsights && enableMyCollectionPhase4ArtistMarket
+
   const hasInsights =
-    !!artwork.comparables?.totalCount ||
-    !!artwork.artist?.auctionResults?.totalCount ||
-    !!artwork.hasMarketPriceInsights
+    showComparables || showAuctionResults || showDemandIndex || showArtistMarket
 
   return (
     <>
