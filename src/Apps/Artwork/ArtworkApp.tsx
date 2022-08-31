@@ -31,7 +31,7 @@ import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 import { useCallback, useEffect } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { ArtworkSidebar2 } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
+import { ArtworkSidebar2FragmentContainer } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -198,7 +198,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 
         <Column span={4} pt={[0, 2]}>
           {isNewArtworkSidebarEnabled ? (
-            <ArtworkSidebar2 />
+            <ArtworkSidebar2FragmentContainer artwork={artwork} />
           ) : (
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
           )}
@@ -323,6 +323,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkTopContextBar_artwork
         ...ArtworkSidebar_artwork
         ...ArtworkImageBrowser_artwork
+        ...ArtworkSidebar2_artwork
       }
     `,
     me: graphql`
