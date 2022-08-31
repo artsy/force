@@ -1,5 +1,5 @@
 // libs
-import { createRef, FC, useState, useEffect } from "react"
+import { createRef, FC, useState, useEffect, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
@@ -43,6 +43,8 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
 import { extractNodes } from "Utils/extractNodes"
+import { PaymentContext } from "./context"
+import { PaymentActions } from "./types"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -71,6 +73,17 @@ export interface BankAccountSelection {
 }
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
+  const { state, dispatch } = useContext(PaymentContext)
+  console.log({ state })
+
+  useEffect(() => {
+    dispatch({
+      type: PaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
+      payload: "XXX",
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const { trackEvent } = useTracking()
   const { order, me } = props
   const { match } = useRouter()
