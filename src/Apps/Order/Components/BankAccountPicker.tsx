@@ -12,6 +12,7 @@ import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useSetPayment } from "../Mutations/useSetPayment"
+import { camelCase, upperFirst } from "lodash"
 
 interface Props {
   order: BankAccountPicker_order
@@ -144,7 +145,7 @@ export const BankAccountPicker: FC<Props> = props => {
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Spacer mt={4} />
           <SaveAndContinueButton
-            testId="bankTransferSaveExisting"
+            testId={`saveExisting${upperFirst(camelCase(paymentMethod))}`}
             onClick={handleContinue}
             disabled={!bankAccountSelection.type}
           />
