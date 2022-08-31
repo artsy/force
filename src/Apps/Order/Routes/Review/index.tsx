@@ -129,24 +129,28 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        if (
-          order.mode === "OFFER" &&
-          isEigen &&
-          order.source === "artwork_page"
-        ) {
-          window?.ReactNativeWebView?.postMessage(
-            JSON.stringify({
-              key: "goToInboxOnMakeOfferSubmission",
-              orderCode: order.code,
-              message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
-            })
-          )
-          // We cannot expect Eigen to respond all the time to messages sent from the webview
-          // a default fallback page is safer for old/broken Eigen versions
-          setTimeout(() => {
-            router.push(`/orders/${order.internalID}/status`)
-          }, 500)
-          return
+        if (isEigen) {
+          if (order.mode === "OFFER" && order.source === "artwork_page") {
+            window?.ReactNativeWebView?.postMessage(
+              JSON.stringify({
+                key: "goToInboxOnMakeOfferSubmission",
+                orderCode: order.code,
+                message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+              })
+            )
+            // We cannot expect Eigen to respond all the time to messages sent from the webview
+            // a default fallback page is safer for old/broken Eigen versions
+            setTimeout(() => {
+              router.push(`/orders/${order.internalID}/status`)
+            }, 500)
+            return
+          }
+
+          if (order.mode === "BUY") {
+            window?.ReactNativeWebView?.postMessage(
+              JSON.stringify({ key: "orderSuccessful", orderCode: order.code })
+            )
+          }
         }
 
         // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
