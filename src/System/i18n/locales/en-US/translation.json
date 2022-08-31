@@ -37,5 +37,15 @@
     "meetTheSpecialists": "Meet the Specialists",
     "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
     "privateSales": "Private Sales & Advisory"
+  },
+  "artworkPage": {
+    "sidebar": {
+      "shippingAndTaxes": {
+        "expandableLabel": "Shipping and Taxes",
+        "taxInformation": "Taxes may apply at checkout.",
+        "taxInformationLearnMore": "Learn more",
+        "shipsFrom": "Ships from"
+      }
+    }
   }
 }
