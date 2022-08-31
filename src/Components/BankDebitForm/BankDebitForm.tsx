@@ -17,6 +17,7 @@ import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsE
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
+import { camelCase, upperFirst } from "lodash"
 
 interface Props {
   order: { mode: string | null; internalID: string }
@@ -147,7 +148,7 @@ export const BankDebitForm: FC<Props> = ({
       {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
       <Spacer mt={4} />
       <SaveAndContinueButton
-        testId="bankTransferSaveNew"
+        testId={`saveNew${upperFirst(camelCase(paymentMethod))}`}
         disabled={!stripe || bankAccountHasInsufficientFunds}
       />
       <Spacer mb={2} />

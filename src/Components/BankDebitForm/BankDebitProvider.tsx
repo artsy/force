@@ -12,6 +12,7 @@ import {
 } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
+import { camelCase, upperFirst } from "lodash"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 
@@ -145,7 +146,7 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   return (
-    <div data-test={`${paymentMethod}_PaymentSection`}>
+    <div data-test={`paymentSection${upperFirst(camelCase(paymentMethod))}`}>
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
