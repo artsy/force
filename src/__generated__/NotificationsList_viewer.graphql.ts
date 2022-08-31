@@ -34,6 +34,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "cursor"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "types"
     }
   ],
   "kind": "Fragment",
@@ -53,7 +58,13 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": "notifications",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "notificationTypes",
+          "variableName": "types"
+        }
+      ],
       "concreteType": "NotificationConnection",
       "kind": "LinkedField",
       "name": "__NotificationsList_notifications_connection",
@@ -139,5 +150,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'dfd237babd9b1e50f567e81277042e20';
+(node as any).hash = '2665432172af659075afecd662ae8a2d';
 export default node;

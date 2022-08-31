@@ -4,9 +4,11 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type NotificationTypesEnum = "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "%future added value";
 export type NotificationsListNextQueryVariables = {
     count: number;
     cursor?: string | null | undefined;
+    types?: Array<NotificationTypesEnum | null> | null | undefined;
 };
 export type NotificationsListNextQueryResponse = {
     readonly viewer: {
@@ -24,9 +26,10 @@ export type NotificationsListNextQuery = {
 query NotificationsListNextQuery(
   $count: Int!
   $cursor: String
+  $types: [NotificationTypesEnum]
 ) {
   viewer {
-    ...NotificationsList_viewer_1G22uz
+    ...NotificationsList_viewer_2TJroH
   }
 }
 
@@ -55,8 +58,8 @@ fragment NotificationItem_item on Notification {
   }
 }
 
-fragment NotificationsList_viewer_1G22uz on Viewer {
-  notifications: notificationsConnection(first: $count, after: $cursor) {
+fragment NotificationsList_viewer_2TJroH on Viewer {
+  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {
     edges {
       node {
         internalID
@@ -85,6 +88,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "cursor"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "types"
   }
 ],
 v1 = [
@@ -97,6 +105,11 @@ v1 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "count"
+  },
+  {
+    "kind": "Variable",
+    "name": "notificationTypes",
+    "variableName": "types"
   }
 ],
 v2 = {
@@ -146,6 +159,11 @@ return {
                 "kind": "Variable",
                 "name": "cursor",
                 "variableName": "cursor"
+              },
+              {
+                "kind": "Variable",
+                "name": "types",
+                "variableName": "types"
               }
             ],
             "kind": "FragmentSpread",
@@ -381,7 +399,9 @@ return {
           {
             "alias": "notifications",
             "args": (v1/*: any*/),
-            "filters": null,
+            "filters": [
+              "notificationTypes"
+            ],
             "handle": "connection",
             "key": "NotificationsList_notifications",
             "kind": "LinkedHandle",
@@ -393,14 +413,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e7ed74f9b6ebaac6fd98cbdd3528fb84",
+    "cacheID": "e26bb00cd9ad953ebc3c9a2c14b6cd7a",
     "id": null,
     "metadata": {},
     "name": "NotificationsListNextQuery",
     "operationKind": "query",
-    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n) {\n  viewer {\n    ...NotificationsList_viewer_1G22uz\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_1G22uz on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query NotificationsListNextQuery(\n  $count: Int!\n  $cursor: String\n  $types: [NotificationTypesEnum]\n) {\n  viewer {\n    ...NotificationsList_viewer_2TJroH\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  title\n  message\n  createdAt\n  targetHref\n  isUnread\n  notificationType\n  artworksConnection(first: 4) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationsList_viewer_2TJroH on Viewer {\n  notifications: notificationsConnection(first: $count, after: $cursor, notificationTypes: $types) {\n    edges {\n      node {\n        internalID\n        ...NotificationItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5eeba4d5f5e9307fa4a29372fe391358';
+(node as any).hash = 'c3f8425fbd367176f113851c58588ee2';
 export default node;
