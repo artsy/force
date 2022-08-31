@@ -21,10 +21,14 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
   return (
     <Flex flexDirection="column">
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
-
-      <Text color="black60" variant="lg-display" fontStyle="italic">
-        {artwork.title}
-      </Text>
+      <Flex flexDirection="row">
+        <Text color="black60" variant="lg-display" fontStyle="italic">
+          {artwork.title}
+        </Text>
+        <Text color="black60" variant="lg-display">
+          , {artwork.date}
+        </Text>
+      </Flex>
       <Spacer mt={2} />
 
       {!isSold && artworkEcommerceAvailable && (
@@ -51,6 +55,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         slug
         isSold
         title
+        date
         isAcquireable
         isOfferable
         ...ArtworkSidebar2Artists_artwork
