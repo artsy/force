@@ -9,7 +9,6 @@ import {
   Sup,
   Text,
 } from "@artsy/palette"
-import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
@@ -93,13 +92,17 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
         <>
           {!hasDismissedMessage && (
             <FullBleed>
-              <Message
-                variant="info"
-                mt={-SETTINGS_ROUTE_TABS_MARGIN}
-                mb={SETTINGS_ROUTE_TABS_MARGIN}
-              >
-                <Flex flexDirection="row" justifyContent="space-between">
-                  <Text mx={1}>
+              <Message variant="info" mt={[-2, -4]} mb={[2, 4]} py={1}>
+                <Flex
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Text
+                    flex={1}
+                    textAlign={["left", "center"]}
+                    variant={["xs", "sm"]}
+                  >
                     Access all the My Collection features on the{" "}
                     <Clickable
                       onClick={() => {
