@@ -9,12 +9,20 @@ interface ArtworkSidebar2ArtworkTitleProps {
 const ArtworkSidebar2ArtworkTitle: React.FC<ArtworkSidebar2ArtworkTitleProps> = ({
   artwork,
 }) => {
+  const getArtworkDate = () => {
+    const formattedDate = artwork.date?.replace(/\s+/g, "") ?? ""
+
+    if (formattedDate.length > 0) {
+      return `, ${artwork.date}`
+    }
+
+    return
+  }
+
   return (
     <Text color="black60" variant="lg-display">
       <i>{artwork.title?.trim()}</i>
-      {artwork.date &&
-        artwork.date.replace(/\s+/g, "").length > 0 &&
-        ", " + artwork.date}
+      {getArtworkDate()}
     </Text>
   )
 }
