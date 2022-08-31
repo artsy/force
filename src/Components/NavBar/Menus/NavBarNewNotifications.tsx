@@ -11,7 +11,7 @@ export const NavBarNewNotifications = () => {
       flexDirection="column"
       aria-live="assertive"
     >
-      <Notifications />
+      <Notifications paginationType="infinite" />
     </Flex>
   )
 }
