@@ -54,6 +54,16 @@ describe("Conversation app", () => {
   beforeAll(() => {
     jest.resetAllMocks()
   })
+  beforeEach(() => {
+    // IntersectionObserver isn't available in test environment
+    const mockIntersectionObserver = jest.fn()
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    })
+    window.IntersectionObserver = mockIntersectionObserver
+  })
 
   describe("as non admin user", () => {
     describe("having previous conversations", () => {
