@@ -7,11 +7,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar2_artwork = {
     readonly slug: string;
     readonly isSold: boolean | null;
-    readonly title: string | null;
-    readonly date: string | null;
     readonly isAcquireable: boolean | null;
     readonly isOfferable: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
     readonly " $refType": "ArtworkSidebar2_artwork";
 };
 export type ArtworkSidebar2_artwork$data = ArtworkSidebar2_artwork;
@@ -46,20 +44,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "date",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "isAcquireable",
       "storageKey": null
     },
@@ -69,6 +53,11 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isOfferable",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2ArtworkTitle_artwork"
     },
     {
       "args": null,
@@ -84,5 +73,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'b4d74bcf78d0beeb8239eee31f54a365';
+(node as any).hash = '78ad528e0730b4a2c86bd086c10abf87';
 export default node;

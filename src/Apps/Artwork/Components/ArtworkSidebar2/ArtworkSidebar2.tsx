@@ -1,10 +1,11 @@
-import { Flex, Separator, Spacer, Text } from "@artsy/palette"
+import { Flex, Separator, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebar2ArtistsFragmentContainer } from "./ArtworkSidebar2Artists"
 import { ArtworkSidebar2_artwork } from "__generated__/ArtworkSidebar2_artwork.graphql"
 import { ArtworkSidebar2ShippingInformationFragmentContainer } from "./ArtworkSidebar2ShippingInformation"
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useTranslation } from "react-i18next"
+import { ArtworkSidebar2ArtworkTitleFragmentContainer } from "./ArtworkSidebar2ArtworkTitle"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
@@ -21,12 +22,8 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
   return (
     <Flex flexDirection="column">
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
-      <Text color="black60" variant="lg-display">
-        <i>{artwork.title?.trim()}</i>
-        {artwork.date &&
-          artwork.date.replace(/\s+/g, "").length > 0 &&
-          ", " + artwork.date}
-      </Text>
+      <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />
+
       <Spacer mt={2} />
 
       {!isSold && artworkEcommerceAvailable && (
@@ -52,10 +49,9 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
       fragment ArtworkSidebar2_artwork on Artwork {
         slug
         isSold
-        title
-        date
         isAcquireable
         isOfferable
+        ...ArtworkSidebar2ArtworkTitle_artwork
         ...ArtworkSidebar2Artists_artwork
         ...ArtworkSidebar2ShippingInformation_artwork
       }
