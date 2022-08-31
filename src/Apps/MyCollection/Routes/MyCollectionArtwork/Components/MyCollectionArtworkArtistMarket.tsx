@@ -16,6 +16,10 @@ export const MyCollectionArtworkArtistMarket = ({
 }: {
   marketPriceInsights: MyCollectionArtworkArtistMarket_marketPriceInsights
 }) => {
+  if (!marketPriceInsights) {
+    return null
+  }
+
   const {
     annualValueSoldDisplayText,
     liquidityRankDisplayText,
@@ -24,7 +28,7 @@ export const MyCollectionArtworkArtistMarket = ({
     sellThroughRate,
   } = marketPriceInsights
 
-  const formattedSellThroughRate = (Number(sellThroughRate) * 100).toFixed(2)
+  const formattedSellThroughRate = Number(sellThroughRate).toFixed(3)
 
   return (
     <>
@@ -34,7 +38,7 @@ export const MyCollectionArtworkArtistMarket = ({
         auction houses.
       </Text>
 
-      <Spacer mt={[2, 6]} />
+      <Spacer mt={[2, 4]} />
 
       <GridColumns>
         {!!annualValueSoldDisplayText && (

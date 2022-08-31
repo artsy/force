@@ -1,4 +1,4 @@
-import { Text, GridColumns, Message } from "@artsy/palette"
+import { GridColumns, Message, Text } from "@artsy/palette"
 import React from "react"
 
 interface SectionContainerProps {
@@ -14,7 +14,7 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         {title}
       </Text>
 

@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
+import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
-  Box,
   Checkbox,
   Clickable,
   Flex,
@@ -12,31 +12,35 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
+import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
-import { LoadingArea } from "../LoadingArea"
+import { camelCase, upperFirst } from "lodash"
 
 interface Props {
   order: { mode: string | null; internalID: string }
+  paymentMethod: CommercePaymentMethodEnum
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
+  onSetIsPaymentElementLoading: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
+  paymentMethod,
   bankAccountHasInsufficientFunds,
   onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
+  onSetIsPaymentElementLoading,
 }) => {
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
   const tracking = useTracking()
 
-  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const [isSaveAccountChecked, setIsSaveAccountChecked] = useState(true)
 
   const handlePaymentElementChange = event => {
@@ -46,7 +50,9 @@ export const BankDebitForm: FC<Props> = ({
       tracking.trackEvent({
         flow: order.mode,
         order_id: order.internalID,
-        subject: "bank_account_selected",
+        subject: "link_account",
+        context_page_owner_type: OwnerType.ordersPayment,
+        action: ActionType.clickedPaymentDetails,
       })
     }
   }
@@ -58,9 +64,15 @@ export const BankDebitForm: FC<Props> = ({
       return
     }
 
+    // save account only for US_BANK_ACCOUNT (ACH)
+    let saveAccount = isSaveAccountChecked
+    if (paymentMethod !== "US_BANK_ACCOUNT") {
+      saveAccount = false
+    }
+
     const return_url = `${getENV("APP_URL")}/orders/${
       order.internalID
-    }/payment?save_account=${isSaveAccountChecked}`
+    }/payment?save_account=${saveAccount}`
 
     // Disable the "leave/reload site?" confirmation dialog as we're about to
     // confirm Stripe payment setup which leaves and redirects back.
@@ -83,21 +95,21 @@ export const BankDebitForm: FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
-      <LoadingArea isLoading={isPaymentElementLoading}>
-        {isPaymentElementLoading && <Box height={300}></Box>}
-        <PaymentElement
-          onReady={() => setIsPaymentElementLoading(false)}
-          onChange={event => handlePaymentElementChange(event)}
-          options={{
-            defaultValues: {
-              billingDetails: {
-                name: user?.name,
-                email: user?.email,
-              },
+      <PaymentElement
+        onReady={() => onSetIsPaymentElementLoading(false)}
+        onChange={event => handlePaymentElementChange(event)}
+        options={{
+          defaultValues: {
+            billingDetails: {
+              name: user?.name,
+              email: user?.email,
             },
-          }}
-        />
-        <Spacer mt={4} />
+          },
+        }}
+      />
+      <Spacer mt={4} />
+      {/* Display checkbox for saving account only for ACH */}
+      {paymentMethod === "US_BANK_ACCOUNT" && (
         <Flex>
           <Checkbox
             selected={isSaveAccountChecked}
@@ -131,15 +143,15 @@ export const BankDebitForm: FC<Props> = ({
             </Tooltip>
           </Flex>
         </Flex>
+      )}
 
-        {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
-        <Spacer mt={4} />
-        <SaveAndContinueButton
-          testId="bankTransferSaveNew"
-          disabled={!stripe || bankAccountHasInsufficientFunds}
-        />
-        <Spacer mb={2} />
-      </LoadingArea>
+      {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
+      <Spacer mt={4} />
+      <SaveAndContinueButton
+        testId={`saveNew${upperFirst(camelCase(paymentMethod))}`}
+        disabled={!stripe || bankAccountHasInsufficientFunds}
+      />
+      <Spacer mb={2} />
     </form>
   )
 }

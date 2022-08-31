@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from "react"
-import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
-import { useFormikContext } from "formik"
-import { useSystemContext } from "System"
+import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
+import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
   getErrorMessage,
   normalizePhoto,
   Photo,
   uploadPhoto,
-} from "../../Utils/fileUtils"
-import { PhotoDropzone } from "./PhotoDropzone"
+} from "Components/PhotoUpload/Utils/fileUtils"
+import { useFormikContext } from "formik"
+import * as React from "react"
+import { useCallback, useEffect, useState } from "react"
 import { FileRejection } from "react-dropzone"
-import { PhotoThumbnail } from "./PhotoThumbnail"
+import { useSystemContext } from "System"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
@@ -95,6 +95,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   return (
     <Box {...rest}>
       <PhotoDropzone
+        allPhotos={values.photos}
         onDrop={onDrop}
         maxTotalSize={maxTotalSize}
         px={[2, 4]}

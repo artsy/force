@@ -4,23 +4,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkFormTest_QueryVariables = {
+export type MyCollectionArtworkFormTest_QueryVariables = {
     slug: string;
 };
-export type ArtworkFormTest_QueryResponse = {
+export type MyCollectionArtworkFormTest_QueryResponse = {
     readonly artwork: {
         readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkForm_artwork">;
     } | null;
 };
-export type ArtworkFormTest_Query = {
-    readonly response: ArtworkFormTest_QueryResponse;
-    readonly variables: ArtworkFormTest_QueryVariables;
+export type MyCollectionArtworkFormTest_Query = {
+    readonly response: MyCollectionArtworkFormTest_QueryResponse;
+    readonly variables: MyCollectionArtworkFormTest_QueryVariables;
 };
 
 
 
 /*
-query ArtworkFormTest_Query(
+query MyCollectionArtworkFormTest_Query(
   $slug: String!
 ) {
   artwork(id: $slug) {
@@ -64,11 +64,11 @@ fragment MyCollectionArtworkForm_artwork on Artwork {
   }
   id
   images {
+    internalID
     isDefault
     imageURL
     width
     height
-    internalID
   }
   internalID
   isEdition
@@ -137,7 +137,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkFormTest_Query",
+    "name": "MyCollectionArtworkFormTest_Query",
     "selections": [
       {
         "alias": null,
@@ -163,7 +163,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtworkFormTest_Query",
+    "name": "MyCollectionArtworkFormTest_Query",
     "selections": [
       {
         "alias": null,
@@ -352,6 +352,7 @@ return {
             "name": "images",
             "plural": true,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -367,8 +368,7 @@ return {
                 "storageKey": null
               },
               (v6/*: any*/),
-              (v5/*: any*/),
-              (v2/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -429,14 +429,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e3b511ad42b4230b8c1db6bb3fd4bfad",
+    "cacheID": "b998408a86db7082e2fb7d188b6e7342",
     "id": null,
     "metadata": {},
-    "name": "ArtworkFormTest_Query",
+    "name": "MyCollectionArtworkFormTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkFormTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionArtworkForm_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkForm_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    isDefault\n    imageURL\n    width\n    height\n    internalID\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n}\n"
+    "text": "query MyCollectionArtworkFormTest_Query(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...MyCollectionArtworkForm_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkForm_artwork on Artwork {\n  artist {\n    internalID\n    name\n    formattedNationalityAndBirthday\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  consignmentSubmission {\n    inProgress\n  }\n  artistNames\n  category\n  pricePaid {\n    display\n    minor\n    currencyCode\n  }\n  date\n  depth\n  dimensions {\n    in\n    cm\n  }\n  editionSize\n  editionNumber\n  height\n  attributionClass {\n    name\n    id\n  }\n  id\n  images {\n    internalID\n    isDefault\n    imageURL\n    width\n    height\n  }\n  internalID\n  isEdition\n  medium\n  metric\n  artworkLocation\n  provenance\n  slug\n  title\n  width\n}\n"
   }
 };
 })();
-(node as any).hash = '2887434ce5ef9c924c477d86b4a153cd';
+(node as any).hash = '1d521dcbc2788e59998436db4ad9cdc0';
 export default node;

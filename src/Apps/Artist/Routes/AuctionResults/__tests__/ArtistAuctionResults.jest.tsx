@@ -9,7 +9,6 @@ import { screen, fireEvent, within, act } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("Utils/openAuthModal")
 jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({

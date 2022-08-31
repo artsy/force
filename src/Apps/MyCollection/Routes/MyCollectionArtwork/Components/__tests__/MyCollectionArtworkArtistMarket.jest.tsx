@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { MyCollectionArtworkArtistMarketFragmentContainer } from "../MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkArtistMarket_Test_Query } from "../../../../../../__generated__/MyCollectionArtworkArtistMarket_Test_Query.graphql"
+import { MyCollectionArtworkArtistMarketFragmentContainer } from "../MyCollectionArtworkArtistMarket"
 
 jest.unmock("react-relay")
 
@@ -39,7 +39,7 @@ describe("MyCollectionArtworkArtistMarket", () => {
     expect(screen.getByText("Annual Lots Sold")).toBeInTheDocument()
     expect(screen.getByText("123")).toBeInTheDocument()
     expect(screen.getByText("Sell-through Rate")).toBeInTheDocument()
-    expect(screen.getByText("13.40%")).toBeInTheDocument()
+    expect(screen.getByText("0.134%")).toBeInTheDocument()
     expect(screen.getByText("Sale Price to Estimate")).toBeInTheDocument()
     expect(screen.getByText("95%")).toBeInTheDocument()
     expect(screen.getByText("Liquidity")).toBeInTheDocument()

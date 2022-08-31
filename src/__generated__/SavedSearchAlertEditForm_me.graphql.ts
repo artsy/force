@@ -4,6 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 export type SavedSearchAlertEditForm_me = {
     readonly savedSearch: {
         readonly internalID: string;
@@ -28,6 +29,7 @@ export type SavedSearchAlertEditForm_me = {
             readonly name: string | null;
             readonly email: boolean;
             readonly push: boolean;
+            readonly frequency: UserSearchCriteriaFrequency;
         };
         readonly labels?: ReadonlyArray<{
             readonly field: string;
@@ -230,6 +232,13 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "push",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "frequency",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -280,5 +289,5 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '1f8ca40d6ff77c4fb56b84763c946395';
+(node as any).hash = 'cdf4ed6880ed831b6be810a1b79b767a';
 export default node;

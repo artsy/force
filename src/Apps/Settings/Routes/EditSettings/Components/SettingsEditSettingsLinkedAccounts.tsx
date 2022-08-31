@@ -1,24 +1,24 @@
-import { FC, useEffect } from "react"
 import {
   AppleIcon,
+  Button,
   FacebookIcon,
   GoogleIcon,
-  Button,
+  IconProps,
   Join,
   Spacer,
   Text,
   useToasts,
-  IconProps,
 } from "@artsy/palette"
+import { FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  SettingsEditSettingsLinkedAccounts_me,
-  AuthenticationProvider,
-} from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
 import { useRouter } from "System/Router/useRouter"
-import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
 import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
+import {
+  AuthenticationProvider,
+  SettingsEditSettingsLinkedAccounts_me,
+} from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
+import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
 
 interface SettingsEditSettingsLinkedAccountsProps {
   me: SettingsEditSettingsLinkedAccounts_me
@@ -48,7 +48,7 @@ export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAc
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Linked Accounts
       </Text>
 

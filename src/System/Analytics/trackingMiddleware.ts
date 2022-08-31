@@ -1,7 +1,7 @@
 import { ActionTypes } from "farce"
-import { data as sd } from "sharify"
 import { get } from "Utils/get"
 import { match } from "path-to-regexp"
+import { getENV } from "Utils/getENV"
 
 /**
  * PageView tracking middleware for use in our router apps. Middleware conforms
@@ -34,7 +34,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
         )
 
         const getFullReferrerUrl = () => {
-          const fullReferrerUrl = sd.APP_URL + clientSideRoutingReferrer
+          const fullReferrerUrl = getENV("APP_URL") + clientSideRoutingReferrer
           return fullReferrerUrl
         }
 
@@ -69,7 +69,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
           })
 
           if (!foundExcludedPath) {
-            const url = sd.APP_URL + pathname
+            const url = getENV("APP_URL") + pathname
             const trackingData: {
               path: string
               referrer?: string
@@ -83,7 +83,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               trackingData.referrer = getFullReferrerUrl()
             }
 
-            analytics.page(trackingData, {
+            window.analytics?.page(trackingData, {
               integrations: {
                 Marketo: false,
               },

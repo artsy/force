@@ -125,7 +125,9 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
     <SystemQueryRenderer<PollAccountBalanceQuery>
       environment={relayEnvironment}
       placeholder={<SavingPaymentSpinner />}
-      variables={bankAccountId ? { bankAccountId } : { setupIntentId }}
+      variables={
+        bankAccountId ? { bankAccountId } : { setupIntentId, bankAccountId: "" }
+      }
       query={BALANCE_QUERY}
       render={({ props }) => {
         if (!props?.commerceBankAccountBalance) {
@@ -134,7 +136,7 @@ export const PollAccountBalanceQueryRenderer: FC<PollAccountBalanceQueryRenderer
 
         return (
           <PollAccountBalanceRefetchContainer
-            commerceBankAccountBalance={props?.commerceBankAccountBalance}
+            commerceBankAccountBalance={props.commerceBankAccountBalance}
             setupIntentId={setupIntentId}
             bankAccountId={bankAccountId}
             {...rest}

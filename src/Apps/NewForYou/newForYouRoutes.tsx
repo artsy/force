@@ -16,7 +16,7 @@ export const newForYouRoutes: AppRouteConfig[] = [
     prepareVariables: (params, props) => {
       const first = parseInt(props.location.query.first, 10) || 20
       const includeBackfill = props.location.query.includeBackfill ?? true
-      const version = props.location.query.version
+      const version = props.location.query.version?.toUpperCase()
 
       return {
         ...params,

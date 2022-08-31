@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { uploadMyCollectionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
 import { flushPromiseQueue, MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
@@ -42,6 +43,18 @@ jest.mock("../Mutations/useDeleteArtwork", () => ({
     submitMutation: mockDeleteArtwork,
   })),
 }))
+const mockSubmitDeleteArtworkImage = jest.fn()
+jest.mock("../Mutations/useDeleteArtworkImage", () => ({
+  ...jest.requireActual("../Mutations/useDeleteArtworkImage"),
+  useDeleteArtworkImage: jest.fn(() => ({
+    submitMutation: mockSubmitDeleteArtworkImage,
+  })),
+}))
+jest.mock("Components/PhotoUpload/Utils/fileUtils", () => ({
+  ...jest.requireActual("Components/PhotoUpload/Utils/fileUtils"),
+  uploadMyCollectionPhoto: jest.fn(),
+}))
+const mockUploadPhoto = uploadMyCollectionPhoto as jest.Mock
 jest.unmock("react-relay")
 
 describe("Edit artwork", () => {
@@ -55,7 +68,7 @@ describe("Edit artwork", () => {
         )
       },
       query: graphql`
-        query ArtworkFormTest_Query($slug: String!) {
+        query MyCollectionArtworkFormTest_Query($slug: String!) {
           artwork(id: $slug) {
             ...MyCollectionArtworkForm_artwork
           }
@@ -73,7 +86,7 @@ describe("Edit artwork", () => {
       expect(screen.getByText("Save Artwork")).toBeInTheDocument()
       expect(screen.getByTestId("save-button")).toBeEnabled()
 
-      expect(screen.getByText("Add Artwork Details")).toBeInTheDocument()
+      expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
 
       expect(screen.getByPlaceholderText("Enter full name")).toHaveValue(
         "Willem de Kooning"
@@ -93,23 +106,23 @@ describe("Edit artwork", () => {
           .getAllByRole("combobox")
           .find(c => c.getAttribute("name") == "attributionClass")
       ).toHaveValue("LIMITED_EDITION")
-      expect(screen.getByPlaceholderText("Your work's #")).toHaveValue("1")
-      expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue("2")
+      expect(screen.getByPlaceholderText("Your work's #")).toHaveValue(1)
+      expect(screen.getByPlaceholderText("Total # in edition")).toHaveValue(2)
       expect(
         screen
           .getAllByRole("textbox")
           .find(c => c.getAttribute("name") == "height")
-      ).toHaveValue("8.75")
+      ).toHaveValue(8.75)
       expect(
         screen
           .getAllByRole("textbox")
           .find(c => c.getAttribute("name") == "width")
-      ).toHaveValue("11")
+      ).toHaveValue(11)
       expect(
         screen
           .getAllByRole("textbox")
           .find(c => c.getAttribute("name") == "depth")
-      ).toHaveValue("2")
+      ).toHaveValue(2)
       expect(
         screen.getAllByRole("radio").find(c => c.textContent == "in")
       ).toBeChecked()
@@ -129,11 +142,14 @@ describe("Edit artwork", () => {
       })
 
       fireEvent.click(screen.getByText("Back"))
+      fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(screen.getByTestId("leave-button")).toHaveAttribute(
-        "href",
-        `/my-collection/artwork/${mockArtwork.internalID}`
-      )
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+      expect(mockRouterReplace).toHaveBeenCalledWith({
+        pathname: "/settings/my-collection",
+      })
     })
   })
 
@@ -182,6 +198,7 @@ describe("Edit artwork", () => {
               depth: "2",
               editionNumber: "1",
               editionSize: "2",
+              externalImageUrls: [],
               height: "8.75",
               medium: "Charcoal on paper",
               metric: "in",
@@ -197,6 +214,143 @@ describe("Edit artwork", () => {
 
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/my-collection/artwork/internal-id",
+      })
+    })
+  })
+
+  describe("Adding images", () => {
+    beforeEach(() => {
+      //@ts-ignore
+      jest.spyOn(global, "FileReader").mockImplementation(function () {
+        this.readAsDataURL = jest.fn()
+      })
+      mockUploadPhoto.mockResolvedValue("image-url")
+    })
+
+    afterEach(() => {
+      mockUploadPhoto.mockReset()
+    })
+
+    it.each([
+      ["foo.png", "image/png"],
+      ["foo.jpg", "image/jpeg"],
+      ["foo.jpeg", "image/jpeg"],
+    ])("uploads and shows image for %s", async (name, type) => {
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+
+      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+        target: {
+          files: [
+            {
+              name: name,
+              path: name,
+              type: type,
+              size: 20000,
+            },
+          ],
+        },
+      })
+
+      expect(await screen.findByText("0.02 MB")).toBeInTheDocument()
+      expect(await screen.findByText(name)).toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(2)
+      })
+
+      expect(mockUploadPhoto).toHaveBeenCalledWith(
+        expect.anything(),
+        {
+          abortUploading: undefined,
+          assetId: undefined,
+          errorMessage: undefined,
+          file: {
+            name: name,
+            path: name,
+            size: 20000,
+            type: type,
+          },
+          geminiToken: undefined,
+          id: expect.any(String),
+          loading: false,
+          name: name,
+          progress: undefined,
+          removed: false,
+          size: 20000,
+          url: "image-url",
+        },
+        expect.any(Function)
+      )
+
+      fireEvent.click(screen.getByText("Save Artwork"))
+    })
+  })
+
+  describe("Removing images", () => {
+    it("correctly removes new images", async () => {
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+
+      fireEvent.change(screen.getByTestId("image-dropzone-input"), {
+        target: {
+          files: [
+            {
+              name: "foo.png",
+              path: "foo.png",
+              type: "image/png",
+              size: 200,
+            },
+          ],
+        },
+      })
+
+      fireEvent.click(screen.getByTestId("delete-photo-thumbnail"))
+
+      await waitFor(() => {
+        expect(screen.queryByText("foo.png")).not.toBeInTheDocument()
+      })
+    })
+
+    it("correctly removes already uploaded images", async () => {
+      getWrapper().renderWithRelay({
+        Artwork: () => ({
+          ...mockArtwork,
+          photos: [
+            {
+              internalID: "123",
+              isDefault: false,
+              imageURL: "image-url",
+              width: 1200,
+              height: 800,
+            },
+          ],
+        }),
+      })
+
+      await waitFor(() => {
+        expect(screen.getAllByTestId("photo-thumbnail").length).toEqual(1)
+      })
+
+      fireEvent.click(screen.getByTestId("delete-photo-thumbnail"))
+
+      await waitFor(() => {
+        expect(screen.queryByTestId("photo-thumbnail")).not.toBeInTheDocument()
+      })
+
+      fireEvent.click(screen.getByText("Save Artwork"))
+
+      await flushPromiseQueue()
+
+      expect(mockSubmitDeleteArtworkImage).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            artworkID: "62fc96c48d3ff8000b556c3a",
+            imageID: "62fc96c4aa88f0000d053af7",
+          },
+        },
       })
     })
   })
@@ -258,11 +412,14 @@ describe("Create artwork", () => {
       getWrapper()
 
       fireEvent.click(screen.getByText("Back"))
+      fireEvent.click(screen.getByText("Leave Without Saving"))
 
-      expect(screen.getByTestId("leave-button")).toHaveAttribute(
-        "href",
-        "/my-collection"
-      )
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+      expect(mockRouterReplace).toHaveBeenCalledWith({
+        pathname: "/settings/my-collection",
+      })
     })
   })
 })

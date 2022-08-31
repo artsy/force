@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
 import { Box, Flex, Spacer } from "@artsy/palette"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 // relay generated
@@ -74,7 +74,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { trackEvent } = useTracking()
   const { order, me } = props
   const { match } = useRouter()
-  const balanceCheckEnabled = useFeatureFlag("bank_account_balance_check")
   const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -82,6 +81,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     CommercePaymentMethodEnum
   >(getInitialPaymentMethodValue(order))
+
+  useEffect(() => {
+    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
+  }, [order])
+
+  const balanceCheckEnabled =
+    useFeatureFlag("bank_account_balance_check") &&
+    selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   /*
     state to render a loading interface while one of the following is happening:
@@ -233,13 +240,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     checkResult: BalanceCheckResult
   ) => {
     const event = {
-      subject: "checked_account_balance",
+      subject: "balance_account_check",
       outcome: checkResult,
       payment_method: selectedPaymentMethod,
       currency: order.currencyCode,
       amount: order.buyerTotalCents,
       order_id: order.internalID,
       context_page_owner_type: OwnerType.ordersPayment,
+      action: ActionType.checkedAccountBalance,
       flow: order.mode!,
     }
 
@@ -264,12 +272,19 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   useEffect(() => {
     if (
       !balanceCheckEnabled &&
-      (selectedBankAccountId || isPaymentSetupSuccessful)
+      (selectedBankAccountId || isPaymentSetupSuccessful) &&
+      (selectedPaymentMethod === "US_BANK_ACCOUNT" ||
+        selectedPaymentMethod === "SEPA_DEBIT")
     ) {
       handlePaymentStepComplete()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPaymentSetupSuccessful, selectedBankAccountId, balanceCheckEnabled])
+  }, [
+    isPaymentSetupSuccessful,
+    selectedBankAccountId,
+    balanceCheckEnabled,
+    selectedPaymentMethod,
+  ])
 
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]

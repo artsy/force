@@ -1,5 +1,8 @@
+import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
+import { compact } from "lodash"
+import { uuid } from "uuid"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
-import { ArtworkModel } from "./artworkModel"
+import { ArtworkModel, MyCollectionPhoto } from "./artworkModel"
 import { getAttributionClassByName } from "./rarityOptions"
 
 export const getMyCollectionArtworkFormInitialValues = (
@@ -18,6 +21,8 @@ export const getMyCollectionArtworkFormInitialValues = (
   width: artwork?.width ?? "",
   depth: artwork?.depth ?? "",
   metric: artwork?.metric ?? "in",
+  photos: compact(artwork?.images),
+  newPhotos: [],
   pricePaidDollars: artwork?.pricePaid
     ? (artwork?.pricePaid.minor / 100).toString()
     : "",
@@ -25,3 +30,18 @@ export const getMyCollectionArtworkFormInitialValues = (
   provenance: artwork?.provenance ?? "",
   artworkLocation: artwork?.artworkLocation ?? "",
 })
+
+export const MyCollectionPhotoToPhoto = (photo: MyCollectionPhoto): Photo => {
+  return {
+    id: photo.internalID ?? uuid(),
+    assetId: undefined,
+    name: "",
+    size: undefined,
+    geminiToken: undefined,
+    abortUploading: undefined,
+    progress: undefined,
+    removed: false,
+    loading: false,
+    url: photo.imageURL?.replace(":version", "square"),
+  }
+}
