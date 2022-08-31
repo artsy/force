@@ -31,7 +31,7 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
         alignItems="center"
         mb={2}
       >
-        <Text variant={["sm-display", "lg-display"]} textAlign="left">
+        <Text variant={["sm-display", "lg"]} textAlign="left">
           Auction Results
         </Text>
         <RouterLink

@@ -65,7 +65,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   )
 
   const EditArtworkButton = () => (
-    <Flex justifyContent="flex-end" pb={2}>
+    <Flex justifyContent="flex-end" pb={[1, 2]}>
       <Button
         // @ts-ignore
         as={RouterLink}
@@ -107,7 +107,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         />
       )}
 
-      <GridColumns gridRowGap={[4, null]} py={[2, 6]}>
+      <GridColumns gridRowGap={[2, null]} py={[2, 6]}>
         <Column span={8}>
           <Media lessThan="sm">
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
