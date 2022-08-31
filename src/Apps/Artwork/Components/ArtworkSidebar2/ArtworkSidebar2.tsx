@@ -1,6 +1,4 @@
-import * as React from "react"
-
-import { Flex, Separator } from "@artsy/palette"
+import { Flex, Separator, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebar2ArtistsFragmentContainer } from "./ArtworkSidebar2Artists"
 import { ArtworkSidebar2_artwork } from "__generated__/ArtworkSidebar2_artwork.graphql"
@@ -23,6 +21,12 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
   return (
     <Flex flexDirection="column">
       <ArtworkSidebar2ArtistsFragmentContainer artwork={artwork} />
+
+      <Text color="black60" variant="lg-display" fontStyle="italic">
+        {artwork.title}
+      </Text>
+      <Spacer mt={2} />
+
       {!isSold && artworkEcommerceAvailable && (
         <>
           <Separator />
@@ -46,6 +50,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
       fragment ArtworkSidebar2_artwork on Artwork {
         slug
         isSold
+        title
         isAcquireable
         isOfferable
         ...ArtworkSidebar2Artists_artwork
