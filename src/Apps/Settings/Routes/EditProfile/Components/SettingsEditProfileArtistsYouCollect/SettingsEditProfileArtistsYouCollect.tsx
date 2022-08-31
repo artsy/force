@@ -1,19 +1,19 @@
-import { FC, useState } from "react"
-import { compact } from "lodash"
 import {
-  Text,
   AutocompleteInput,
-  BoxProps,
   Box,
+  BoxProps,
+  Text,
   useToasts,
 } from "@artsy/palette"
+import { compact } from "lodash"
+import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsEditProfileArtistsYouCollectRemoveButton } from "./SettingsEditProfileArtistsYouCollectRemoveButton"
-import { SettingsEditProfileArtistsYouCollect_me } from "__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
-import { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
+import { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"
+import { SettingsEditProfileArtistsYouCollect_me } from "__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
+import { SettingsEditProfileArtistsYouCollectRemoveButton } from "./SettingsEditProfileArtistsYouCollectRemoveButton"
 import { useAddArtistYouCollect } from "./useAddArtistYouCollect"
 import { useRemoveArtistYouCollect } from "./useRemoveArtistYouCollect"
 
@@ -61,7 +61,7 @@ export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtists
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Artists You Collect
       </Text>
 

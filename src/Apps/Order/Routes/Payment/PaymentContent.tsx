@@ -1,4 +1,4 @@
-import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
+import { FC, RefObject, ReactElement, useState, useEffect, useRef } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
@@ -23,6 +23,7 @@ import {
   Payment_order,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
+import { BankAccountSelection } from "./index"
 
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
@@ -31,38 +32,46 @@ import {
 } from "Apps/Order/Components/CreditCardPicker"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
+import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 
 export interface Props {
   order: Payment_order
   me: Payment_me
   commitMutation: CommitMutation
   paymentMethod: CommercePaymentMethodEnum
-  setPayment: () => void
-  onPaymentMethodChange: (paymentMethod: CommercePaymentMethodEnum) => void
+  onSetPayment: () => void
+  onSetSelectedPaymentMethod: (paymentMethod: CommercePaymentMethodEnum) => void
   CreditCardPicker: RefObject<CreditCardPicker>
   bankAccountHasInsufficientFunds: boolean
-  setBankAccountHasInsufficientFunds: (arg: boolean) => void
-  onBankAccountContinue: () => void
-  setIsSavingPayment: (arg: boolean) => void
+  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
+  onSetIsSavingPayment: (arg: boolean) => void
+  onSetBalanceCheckComplete: (arg: boolean) => void
+  onSetSelectedBankAccountId: (arg: string) => void
+  bankAccountSelection: BankAccountSelection
+  onSetBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
   const {
     commitMutation,
-    setPayment,
+    onSetPayment,
     me,
     order,
     CreditCardPicker,
     paymentMethod,
-    onPaymentMethodChange,
+    onSetSelectedPaymentMethod,
     bankAccountHasInsufficientFunds,
-    setBankAccountHasInsufficientFunds,
-    onBankAccountContinue,
-    setIsSavingPayment,
+    onSetBankAccountHasInsufficientFunds,
+    onSetIsSavingPayment,
+    onSetBalanceCheckComplete,
+    onSetSelectedBankAccountId,
+    bankAccountSelection,
+    onSetBankAccountSelection,
   } = props
   const tracking = useTracking()
 
   const previousPaymentMethod = useRef<string | null>(null)
+  const [clientSecret, setClientSecret] = useState<string | null>(null)
 
   useEffect(() => {
     if (paymentMethod !== previousPaymentMethod.current) {
@@ -96,7 +105,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
-          onClick={setPayment}
+          onClick={onSetPayment}
         />
         <Spacer mb={2} />
       </>
@@ -110,7 +119,7 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         data-test="payment-methods"
         onSelect={val => {
-          onPaymentMethodChange(val as CommercePaymentMethodEnum)
+          onSetSelectedPaymentMethod(val as CommercePaymentMethodEnum)
         }}
         defaultValue={paymentMethod}
       >
@@ -133,28 +142,47 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
-          onClick={setPayment}
+          onClick={onSetPayment}
         />
         <Spacer mb={2} />
       </Collapse>
 
-      {/* Bank transfer */}
-      <Collapse
-        open={
-          paymentMethod === "US_BANK_ACCOUNT" || paymentMethod === "SEPA_DEBIT"
-        }
-      >
+      {/* US Bank transfer */}
+      <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
         {getPaymentMethodInfo(paymentMethod)}
         <Spacer mb={2} />
         <BankAccountPickerFragmentContainer
           me={me}
           order={order}
+          paymentMethod={paymentMethod}
           bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          setBankAccountHasInsufficientFunds={
-            setBankAccountHasInsufficientFunds
+          onSetBankAccountHasInsufficientFunds={
+            onSetBankAccountHasInsufficientFunds
           }
-          onBankAccountContinue={onBankAccountContinue}
-          setIsSavingPayment={setIsSavingPayment}
+          onSetIsSavingPayment={onSetIsSavingPayment}
+          onSetBalanceCheckComplete={onSetBalanceCheckComplete}
+          onSetSelectedBankAccountId={onSetSelectedBankAccountId}
+          bankAccountSelection={bankAccountSelection}
+          onSetBankAccountSelection={onSetBankAccountSelection}
+          clientSecret={clientSecret}
+          onSetClientSecret={setClientSecret}
+        />
+      </Collapse>
+
+      {/* SEPA bank transfer */}
+      <Collapse open={paymentMethod === "SEPA_DEBIT"}>
+        {getPaymentMethodInfo(paymentMethod)}
+        <Spacer mb={2} />
+        <BankDebitProvider
+          order={order}
+          paymentMethod={paymentMethod}
+          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+          onSetBankAccountHasInsufficientFunds={
+            onSetBankAccountHasInsufficientFunds
+          }
+          onSetIsSavingPayment={onSetIsSavingPayment}
+          clientSecret={clientSecret}
+          onSetClientSecret={setClientSecret}
         />
       </Collapse>
 
@@ -164,7 +192,7 @@ export const PaymentContent: FC<Props> = props => {
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
-          onClick={setPayment}
+          onClick={onSetPayment}
         />
         <Spacer mb={2} />
       </Collapse>
@@ -316,8 +344,7 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
         <>
           <Flex>
             <Text color="black60" variant="sm">
-              • Your bank account must be located in one of the SEPA
-              member-states.
+              • Your bank account must be located in one of the SEPA countries.
             </Text>
             <Tooltip
               placement="top-start"
@@ -345,6 +372,10 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
           </Flex>
           <Text color="black60" variant="sm">
             • Bank transfer is powered by Stripe.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Payment processing will take 4-7 business days once the order is
+            confirmed.
           </Text>
         </>
       )

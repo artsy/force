@@ -1,5 +1,4 @@
 import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
-import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork } from "__generated__/ArtworkApp_artwork.graphql"
@@ -30,6 +29,9 @@ import { UseRecordArtworkView } from "./useRecordArtworkView"
 import { Router, Match } from "found"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { useCallback, useEffect } from "react"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ArtworkSidebar2 } from "./Components/ArtworkSidebar2/ArtworkSidebar2"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -44,46 +46,38 @@ export interface Props {
 
 declare const window: any
 
-export class ArtworkApp extends React.Component<Props> {
-  /**
-   * On mount, trigger a page view and product view
-   *
-   * FIXME: We're manually invoking pageView tracking here, instead of within
-   * the `trackingMiddleware` file as we need to pass along additional metadata.
-   * Waiting on analytics team to decide if there's a better way to capture this
-   * data that remains consistent with the rest of the app.
-   */
-  componentDidMount() {
-    if (this.shouldRenderSubmittedOrderModal()) {
-      // TODO: Look into using router push
-      // this.props.router.replace(this.props.match.location.pathname)
-      window.history.pushState({}, null, this.props.match.location.pathname)
-    }
-    this.track()
-  }
+interface BelowTheFoldArtworkDetailsProps {
+  artists: ArtworkApp_artwork["artists"]
+  slug: ArtworkApp_artwork["slug"]
+}
 
-  componentDidUpdate() {
-    if (this.props.shouldTrackPageView) {
-      this.track()
-    }
-  }
+const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
+  artists,
+  slug,
+}) => (
+  <>
+    <Spacer mt={6} />
+    <Join separator={<Spacer mt={2} />}>
+      <ArtworkDetailsQueryRenderer slug={slug} />
 
-  shouldRenderSubmittedOrderModal() {
-    return !!this.props.match.location.query["order-submitted"]
-  }
+      <PricingContextQueryRenderer slug={slug} />
 
-  track() {
-    this.trackPageview()
-    this.trackProductView()
-    this.trackLotView()
-  }
+      {!!artists &&
+        artists.map(artist => {
+          if (!artist) return null
 
-  trackPageview() {
-    const {
-      artwork: { listPrice, availability, is_offerable, is_acquireable },
-      referrer,
-    } = this.props
+          return <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
+        })}
+    </Join>
+  </>
+)
 
+export const ArtworkApp: React.FC<Props> = props => {
+  const isNewArtworkSidebarEnabled = useFeatureFlag("fx-force-artwork-sidebar")
+  const { artwork, me, referrer, tracking, shouldTrackPageView } = props
+
+  const trackPageview = useCallback(() => {
+    const { listPrice, availability, is_offerable, is_acquireable } = artwork
     const path = window.location.pathname
 
     if (typeof window.analytics !== "undefined") {
@@ -105,23 +99,18 @@ export class ArtworkApp extends React.Component<Props> {
         properties.referrer = referrer
       }
 
-      // FIXME: This breaks our automatic global pageview tracking middleware
-      // patterns. Can these props be tracked on mount using our typical @track()
-      // or trackEvent() patterns as used in other apps?
-      // See trackingMiddleware.ts
+      // This breaks our automatic global pageview tracking middleware
+      // patterns due passing some custom properties to the pageview.
       window.analytics.page(properties, { integrations: { Marketo: false } })
 
       if (typeof window._sift !== "undefined") {
         window._sift.push(["_trackPageview"])
       }
     }
-  }
+  }, [artwork, referrer])
 
-  trackProductView() {
-    const {
-      tracking,
-      artwork: { is_acquireable, is_in_auction, internalID },
-    } = this.props
+  const trackProductView = useCallback(() => {
+    const { is_acquireable, is_in_auction, internalID } = artwork
 
     if (is_acquireable || is_in_auction) {
       const trackingData = {
@@ -132,13 +121,10 @@ export class ArtworkApp extends React.Component<Props> {
         tracking.trackEvent(trackingData)
       }
     }
-  }
+  }, [artwork, tracking])
 
-  trackLotView() {
-    const {
-      tracking,
-      artwork: { is_in_auction, slug, internalID, sale },
-    } = this.props
+  const trackLotView = useCallback(() => {
+    const { is_in_auction, slug, internalID, sale } = artwork
 
     if (tracking && is_in_auction) {
       const trackingData = {
@@ -150,83 +136,107 @@ export class ArtworkApp extends React.Component<Props> {
       }
       tracking.trackEvent(trackingData)
     }
-  }
+  }, [artwork, tracking])
 
-  render() {
-    const { artwork, me } = this.props
+  const track = useCallback(() => {
+    trackPageview()
+    trackProductView()
+    trackLotView()
+  }, [trackPageview, trackProductView, trackLotView])
 
-    const BelowTheFoldArtworkDetails = (
-      <>
-        <Spacer mt={6} />
-        <Join separator={<Spacer mt={2} />}>
-          <ArtworkDetailsQueryRenderer slug={artwork.slug} />
+  const shouldRenderSubmittedOrderModal = !!props.match.location.query[
+    "order-submitted"
+  ]
 
-          <PricingContextQueryRenderer slug={artwork.slug} />
+  /**
+   * On mount, trigger a page view and product view
+   *
+   * We're manually invoking pageView tracking here, instead of within
+   * the `trackingMiddleware` file as we need to pass along additional metadata.
+   *
+   */
+  useEffect(() => {
+    if (shouldRenderSubmittedOrderModal) {
+      // TODO: Look into using router push
+      // this.props.router.replace(this.props.match.location.pathname)
+      window.history.pushState({}, null, props.match.location.pathname)
+    }
+    track()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-          {artwork.artists &&
-            artwork.artists.map(artist => {
-              if (!artist) return null
+  useEffect(() => {
+    if (shouldTrackPageView) {
+      track()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldTrackPageView])
 
-              return (
-                <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
-              )
-            })}
-        </Join>
-      </>
-    )
+  return (
+    <>
+      <UseRecordArtworkView />
 
-    return (
-      <>
-        <UseRecordArtworkView />
+      {artwork.sale && (
+        <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
+      )}
 
-        {artwork.sale && (
-          <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
-        )}
+      <ArtworkMetaFragmentContainer artwork={artwork} />
 
-        <ArtworkMetaFragmentContainer artwork={artwork} />
+      <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
-        <ArtworkTopContextBarFragmentContainer artwork={artwork} />
+      <GridColumns>
+        <Column span={8}>
+          <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
-        <GridColumns>
-          <Column span={8}>
-            <ArtworkImageBrowserFragmentContainer artwork={artwork} />
+          <Media greaterThanOrEqual="sm">
+            <BelowTheFoldArtworkDetails
+              slug={artwork.slug}
+              artists={artwork.artists}
+            />
+          </Media>
+        </Column>
 
-            <Media greaterThanOrEqual="sm">{BelowTheFoldArtworkDetails}</Media>
-          </Column>
-
-          <Column span={4} pt={[0, 2]}>
+        <Column span={4} pt={[0, 2]}>
+          {isNewArtworkSidebarEnabled ? (
+            <ArtworkSidebar2 />
+          ) : (
             <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
-          </Column>
-        </GridColumns>
+          )}
+        </Column>
+      </GridColumns>
 
-        <Media lessThan="sm">{BelowTheFoldArtworkDetails}</Media>
+      <Media lessThan="sm">
+        <BelowTheFoldArtworkDetails
+          slug={artwork.slug}
+          artists={artwork.artists}
+        />
+      </Media>
 
-        <Spacer mt={6} />
+      <Spacer mt={6} />
 
-        <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
+      <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
 
-        <Spacer mt={6} />
+      <Spacer mt={6} />
 
-        <OtherWorksQueryRenderer slug={artwork.slug} />
+      <OtherWorksQueryRenderer slug={artwork.slug} />
 
-        {artwork.artist && (
-          <>
-            <Spacer mt={6} />
+      {artwork.artist && (
+        <>
+          <Spacer mt={6} />
 
-            <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
-          </>
-        )}
+          <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
+        </>
+      )}
 
-        <Spacer mt={6} />
+      <Spacer mt={6} />
 
-        <RecentlyViewed />
+      <RecentlyViewed />
 
-        {this.shouldRenderSubmittedOrderModal() && (
-          <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
-        )}
-      </>
-    )
-  }
+      {shouldRenderSubmittedOrderModal && (
+        <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
+      )}
+    </>
+  )
 }
 
 const TrackingWrappedArtworkApp: React.FC<Props> = props => {
@@ -240,7 +250,6 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
     },
   } = useRouter()
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref

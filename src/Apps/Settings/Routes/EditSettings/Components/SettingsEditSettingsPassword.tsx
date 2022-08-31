@@ -1,22 +1,22 @@
-import * as Yup from "yup"
-import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import {
-  Text,
-  Input,
   Button,
   Flex,
-  PasswordInput,
+  Input,
   Join,
+  PasswordInput,
   Spacer,
+  Text,
   useToasts,
 } from "@artsy/palette"
-import { Form, Formik } from "formik"
-import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
-import { logout } from "Utils/auth"
-import { SettingsEditSettingsPassword_me } from "__generated__/SettingsEditSettingsPassword_me.graphql"
-import { useMode } from "Utils/Hooks/useMode"
 import { password } from "Components/Authentication/Validators"
+import { Form, Formik } from "formik"
+import { FC } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { logout } from "Utils/auth"
+import { useMode } from "Utils/Hooks/useMode"
+import * as Yup from "yup"
+import { SettingsEditSettingsPassword_me } from "__generated__/SettingsEditSettingsPassword_me.graphql"
+import { useUpdateSettingsPassword } from "../useUpdateSettingsPassword"
 
 interface SettingsEditSettingsPasswordProps {
   me: SettingsEditSettingsPassword_me
@@ -41,7 +41,7 @@ export const SettingsEditSettingsPassword: FC<SettingsEditSettingsPasswordProps>
 
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Password
       </Text>
 

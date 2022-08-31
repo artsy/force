@@ -18,16 +18,16 @@ describe("BankDebitProvider", () => {
           bankAccountId: "bank-id-1",
           " $refType": "BankAccountPicker_order",
         }}
+        paymentMethod="US_BANK_ACCOUNT"
         bankAccountHasInsufficientFunds={false}
-        setBankAccountHasInsufficientFunds={jest.fn()}
-        setIsSavingPayment={jest.fn()}
+        onSetBankAccountHasInsufficientFunds={jest.fn()}
+        onSetIsSavingPayment={jest.fn()}
+        onSetClientSecret={jest.fn()}
+        clientSecret={"client-secret"}
       />
     )
 
   it("renders bank debit form", () => {
-    reactMock.useState = setHookState({
-      clientSecret: "client-secret",
-    })
     const wrapper = getWrapper()
     expect(wrapper.find(BankDebitForm).length).toBe(1)
   })

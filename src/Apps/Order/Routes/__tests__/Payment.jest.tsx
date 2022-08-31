@@ -19,6 +19,7 @@ import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ReactWrapper } from "enzyme"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
+import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -386,18 +387,19 @@ describe("Payment", () => {
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
-      const bankDebitCollapse = page
-        .find(BankAccountPickerFragmentContainer)
-        .closest(Collapse)
+      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
 
-    it("renders description body for bank transfer when selected", async () => {
+    it("renders description body for SEPA when selected", async () => {
       page.selectPaymentMethod("SEPADebit")
 
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
-        "• Your bank account must be located in one of the SEPA member-states."
+        "• Your bank account must be located in one of the SEPA countries."
+      )
+      expect(page.text()).toContain(
+        "• Payment processing will take 4-7 business days once the order is confirmed."
       )
     })
   })

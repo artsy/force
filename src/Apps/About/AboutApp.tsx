@@ -24,6 +24,7 @@ export const AboutApp: React.FC = () => {
       <MetaTags
         title="About | Artsy"
         description="Artsy’s mission is to make all of the world’s art accessible to anyone with an Internet connection."
+        imageURL="https://files.artsy.net/images/00_CVP_About_Hero_og.png"
         pathname="/about"
       />
 
@@ -47,6 +48,7 @@ export const AboutApp: React.FC = () => {
             textAlign="right"
             p={1}
             color="white100"
+            fontStyle="italic"
           >
             Detail of Cassi Namoda, A Strange Song, 2022. Detail of Alex Katz,
             Day Lily 1, 1969.
@@ -150,6 +152,7 @@ const Section: React.FC<SectionProps & BoxProps> = ({
             right={0}
             p={1}
             color="white100"
+            fontStyle="italic"
           >
             {caption}
           </Text>

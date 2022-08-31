@@ -1,9 +1,9 @@
 import { Join, Spacer, Sup, Text } from "@artsy/palette"
+import { AppSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/AppSecondFactor"
+import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditSettingsTwoFactor_me } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
-import { SmsSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/SmsSecondFactor"
-import { AppSecondFactorRefetchContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/AppSecondFactor"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
 export interface SettingsEditSettingsTwoFactorProps {
@@ -15,7 +15,7 @@ export const SettingsEditSettingsTwoFactor: React.FC<SettingsEditSettingsTwoFact
 }) => {
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Two-Factor Authentication{" "}
         {me.hasSecondFactorEnabled && <Sup color="green100">Enabled</Sup>}
       </Text>

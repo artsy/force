@@ -1,15 +1,15 @@
 import {
-  Box,
-  Text,
-  Flex,
-  Clickable,
-  Spacer,
-  Pill,
-  IconProps,
   ArrowDownIcon,
   ArrowUpIcon,
-  GridColumns,
+  Box,
+  Clickable,
   Column,
+  Flex,
+  GridColumns,
+  IconProps,
+  Pill,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -59,7 +59,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           alignItems={["stretch", "center"]}
         >
           <Text
-            variant="lg-display"
+            variant={["md", "lg"]}
             color={variant === "active" ? "blue100" : "black100"}
           >
             {item.userAlertSettings.name}

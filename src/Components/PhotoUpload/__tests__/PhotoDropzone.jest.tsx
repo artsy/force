@@ -1,8 +1,8 @@
+import { flushPromiseQueue } from "DevTools"
 import { mount } from "enzyme"
 import { Formik } from "formik"
-import { flushPromiseQueue } from "DevTools"
-import { MBSize } from "../../Utils/fileUtils"
 import { PhotoDropzone } from "../Components/PhotoDropzone"
+import { MBSize } from "../Utils/fileUtils"
 
 const validImage = {
   name: "foo.png",
@@ -39,6 +39,7 @@ const getWrapper = () => {
   return mount(
     <Formik initialValues={{ photos: [] }} onSubmit={jest.fn()}>
       <PhotoDropzone
+        allPhotos={[]}
         maxTotalSize={10}
         onDrop={onDropMock}
         onReject={onRejectMock}

@@ -33,6 +33,7 @@ const ORDER_LABELS = {
   PROCESSING: "Processing",
   REFUNDED: "Refunded",
   SUBMITTED: "Pending",
+  PROCESSING_APPROVAL: "Payment processing",
 } as const
 
 const ORDER_ICONS = {
@@ -43,6 +44,7 @@ const ORDER_ICONS = {
   PROCESSING: <PendingCircleIcon fill="black60" />,
   REFUNDED: <XCircleIcon fill="red100" />,
   SUBMITTED: <PendingCircleIcon fill="black60" />,
+  PROCESSING_APPROVAL: <PendingCircleIcon fill="black60" />,
 } as const
 
 const ORDER_COLORS = {
@@ -53,6 +55,7 @@ const ORDER_COLORS = {
   PROCESSING: "black60",
   REFUNDED: "red100",
   SUBMITTED: "black60",
+  PROCESSING_APPROVAL: "black60",
 } as const
 
 const getPaymentMethodText = (

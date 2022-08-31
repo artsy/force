@@ -8,21 +8,21 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { useState } from "react"
 import * as React from "react"
-import { RelayRefetchProp, graphql, createRefetchContainer } from "react-relay"
+import { useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
+import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import request from "superagent"
 import { useSystemContext } from "System"
-import { ApiError } from "../../ApiError"
-import { SmsSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
-import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me } from "__generated__/SmsSecondFactor_me.graphql"
+import { ApiError } from "../../ApiError"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
-import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
-import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
 import { isArtsyEmail } from "./isArtsyEmail"
+import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
+import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me
@@ -181,10 +181,10 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
 
         <Flex p={2} flexDirection={["column", "row"]}>
           <Box flexBasis="50%">
-            <Text variant="lg-display">Use Text Messages</Text>
+            <Text variant={["md", "lg"]}>Use Text Messages</Text>
 
             {enabledSecondFactorLabel && (
-              <Text variant="lg-display" color="black60">
+              <Text variant={["md", "lg"]} color="black60">
                 {enabledSecondFactorLabel}
               </Text>
             )}

@@ -1,40 +1,34 @@
 import { Environment } from "relay-runtime"
-import {
-  getConvectionGeminiKey,
-  getGeminiCredentialsForEnvironment,
-  createGeminiAssetWithS3Credentials,
-} from "../../Mutations"
-import { Photo, uploadPhoto } from "../fileUtils"
-import { uploadFileToS3 } from "../uploadFileToS3"
+import { createGeminiAssetWithS3Credentials } from "../Mutations/createGeminiAssetWithS3Credentials"
+import { getConvectionGeminiKey } from "../Mutations/getConvectionGeminiKey"
+import { getGeminiCredentialsForEnvironment } from "../Mutations/getGeminiCredentialsForEnvironment"
+import { Photo, uploadPhoto } from "../Utils/fileUtils"
+import { uploadFileToS3 } from "../Utils/uploadFileToS3"
 
-jest.mock("../../Mutations/Gemini/getConvectionGeminiKey", () => ({
-  ...jest.requireActual("../../Mutations/Gemini/getConvectionGeminiKey"),
+jest.mock("../Mutations/getConvectionGeminiKey", () => ({
+  ...jest.requireActual("../Mutations/getConvectionGeminiKey"),
   getConvectionGeminiKey: jest.fn().mockResolvedValue("convectionKey"),
 }))
 
-jest.mock("../../Mutations/Gemini/getGeminiCredentialsForEnvironment", () => ({
-  ...jest.requireActual(
-    "../../Mutations/Gemini/getGeminiCredentialsForEnvironment"
-  ),
+jest.mock("../Mutations/getGeminiCredentialsForEnvironment", () => ({
+  ...jest.requireActual("../Mutations/getGeminiCredentialsForEnvironment"),
   getGeminiCredentialsForEnvironment: jest.fn(),
 }))
 
-jest.mock("../../Mutations/Gemini/createGeminiAssetWithS3Credentials", () => ({
-  ...jest.requireActual(
-    "../../Mutations/Gemini/createGeminiAssetWithS3Credentials"
-  ),
+jest.mock("../Mutations/createGeminiAssetWithS3Credentials", () => ({
+  ...jest.requireActual("../Mutations/createGeminiAssetWithS3Credentials"),
   createGeminiAssetWithS3Credentials: jest
     .fn()
     .mockResolvedValue("geminiToken"),
 }))
 
-jest.mock("../../Mutations/addAssetToConsignment", () => ({
-  ...jest.requireActual("../../Mutations/addAssetToConsignment"),
-  addAssetToConsignment: jest.fn(),
-}))
+// jest.mock("../Mutations/addAssetToConsignment", () => ({
+//   ...jest.requireActual("../Mutations/addAssetToConsignment"),
+//   addAssetToConsignment: jest.fn(),
+// }))
 
-jest.mock("../uploadFileToS3", () => ({
-  ...jest.requireActual("../uploadFileToS3"),
+jest.mock("../Utils/uploadFileToS3", () => ({
+  ...jest.requireActual("../Utils/uploadFileToS3"),
   uploadFileToS3: jest.fn().mockResolvedValue("key"),
 }))
 

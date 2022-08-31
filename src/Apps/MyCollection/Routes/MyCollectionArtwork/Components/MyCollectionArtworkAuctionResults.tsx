@@ -20,6 +20,10 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
   }
   const results = extractNodes(auctionResultsConnection)
 
+  if (!results.length) {
+    return null
+  }
+
   const titleString = `${name} - Artwork Auction Results on Artsy`
 
   return (
@@ -30,6 +34,7 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
+        mb={2}
       >
         <Text variant={["sm-display", "lg-display"]} textAlign="left">
           Auction Results

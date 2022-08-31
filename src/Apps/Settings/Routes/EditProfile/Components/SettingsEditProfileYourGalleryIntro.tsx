@@ -13,7 +13,7 @@ const SettingsEditProfileYourGalleryIntro: FC<SettingsEditProfileYourGalleryIntr
 }) => {
   return (
     <>
-      <Text variant="lg-display" mb={4}>
+      <Text variant={["md", "lg"]} mb={4}>
         Your Gallery Intro
       </Text>
 
@@ -21,7 +21,7 @@ const SettingsEditProfileYourGalleryIntro: FC<SettingsEditProfileYourGalleryIntr
         Preview
       </Text>
 
-      <Text variant="lg-display" color="black60">
+      <Text variant={["md", "lg"]} color="black60">
         {me.inquiryIntroduction}
       </Text>
     </>

@@ -34,7 +34,9 @@ export const handleShort = async (
       { id: short }
     )
 
-    res.redirect(301, shortcut.long)
+    if (shortcut) return res.redirect(301, shortcut.long)
+
+    next()
   } catch {
     next()
   }
@@ -183,9 +185,6 @@ export const handleFairOrganizer = (
 }
 
 redirectsServerRoutes
-  // Shortcuts
-  .get("/:short", handleShort)
-
   // Fetch profile for remaining routes
   .get(["/:id", "/:id/:tab*"], handleProfile)
 
@@ -256,5 +255,8 @@ redirectsServerRoutes
 
   // Fair Organziers
   .get("/:id", handleFairOrganizer)
+
+  // Shortcuts
+  .get("/:short", handleShort)
 
 export { redirectsServerRoutes }
