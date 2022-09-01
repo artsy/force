@@ -6,6 +6,7 @@ import { ArtworkSidebar2ShippingInformationFragmentContainer } from "./ArtworkSi
 import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebar2ArtworkTitleFragmentContainer } from "./ArtworkSidebar2ArtworkTitle"
+import { ArtworkSidebar2DetailsFragmentContainer } from "./ArtworkSidebar2Details"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
@@ -25,6 +26,16 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
       <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />
 
       <Spacer mt={2} />
+
+
+      <>
+        <Separator />
+        <SidebarExpandable
+          label={t`artworkPage.sidebar.details.expandableLabel`}
+        >
+          <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
+        </SidebarExpandable>
+      </>
 
       {!isSold && artworkEcommerceAvailable && (
         <>
@@ -53,6 +64,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         isOfferable
         ...ArtworkSidebar2ArtworkTitle_artwork
         ...ArtworkSidebar2Artists_artwork
+        ...ArtworkSidebar2Details_artwork
         ...ArtworkSidebar2ShippingInformation_artwork
       }
     `,
