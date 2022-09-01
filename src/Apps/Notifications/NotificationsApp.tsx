@@ -7,7 +7,7 @@ export const NotificationsApp: React.FC = () => {
     <>
       <MetaTags title="Notifications | Artsy" pathname="/notifications" />
 
-      <Spacer mt={4} />
+      <Spacer mt={2} />
 
       <Notifications />
     </>
