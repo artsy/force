@@ -33,11 +33,13 @@ export const NewForYouArtworksGridFragmentContainer = createFragmentContainer(
           first: { type: "Int" }
           includeBackfill: { type: "Boolean!" }
           version: { type: "String" }
+          maxWorksPerArtist: { type: "Int" }
         ) {
         artworksForUser(
           first: $first
           includeBackfill: $includeBackfill
           version: $version
+          maxWorksPerArtist: $maxWorksPerArtist
         ) {
           totalCount
           ...ArtworkGrid_artworks
