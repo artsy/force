@@ -142,6 +142,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       }
 
       if (isEditing) {
+        router.replace({
+          pathname: `/settings/my-collection`,
+        })
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })
       } else {
         router.replace({
