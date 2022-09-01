@@ -126,10 +126,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
           )}
 
           <Flex justifyContent="space-between" mb={4}>
-            <Text as="h1" variant={["md", "lg"]}>
-              My Collection <Sup color="brand">{total}</Sup>
-            </Text>
-
             {!!isMyCollectionPhase3Enabled && (
               <Button
                 // @ts-ignore
