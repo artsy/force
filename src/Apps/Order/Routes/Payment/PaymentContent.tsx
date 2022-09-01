@@ -1,4 +1,12 @@
-import { FC, RefObject, ReactElement, useState, useEffect, useRef } from "react"
+import {
+  FC,
+  RefObject,
+  ReactElement,
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+} from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
@@ -33,14 +41,14 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
+import { PaymentContext } from "./context"
+import { PaymentActions } from "./types"
 
 export interface Props {
   order: Payment_order
   me: Payment_me
   commitMutation: CommitMutation
-  paymentMethod: CommercePaymentMethodEnum
   onSetPayment: () => void
-  onSetSelectedPaymentMethod: (paymentMethod: CommercePaymentMethodEnum) => void
   CreditCardPicker: RefObject<CreditCardPicker>
   bankAccountHasInsufficientFunds: boolean
   onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
@@ -58,8 +66,6 @@ export const PaymentContent: FC<Props> = props => {
     me,
     order,
     CreditCardPicker,
-    paymentMethod,
-    onSetSelectedPaymentMethod,
     bankAccountHasInsufficientFunds,
     onSetBankAccountHasInsufficientFunds,
     onSetIsSavingPayment,
@@ -68,19 +74,20 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountSelection,
     onSetBankAccountSelection,
   } = props
+  const { state, dispatch } = useContext(PaymentContext)
+  const { selectedPaymentMethod } = state
   const tracking = useTracking()
-
   const previousPaymentMethod = useRef<string | null>(null)
   const [clientSecret, setClientSecret] = useState<string | null>(null)
 
   useEffect(() => {
-    if (paymentMethod !== previousPaymentMethod.current) {
+    if (selectedPaymentMethod !== previousPaymentMethod.current) {
       const { mode, internalID, buyerTotal, currencyCode } = order
-      previousPaymentMethod.current = paymentMethod
+      previousPaymentMethod.current = selectedPaymentMethod
 
       const event = {
         subject: "click_payment_method",
-        payment_method: paymentMethod,
+        payment_method: selectedPaymentMethod,
         action: ActionType.clickedPaymentMethod,
         flow: mode!,
         context_page_owner_type: OwnerType.ordersPayment,
@@ -90,7 +97,7 @@ export const PaymentContent: FC<Props> = props => {
       }
       tracking.trackEvent(event)
     }
-  }, [order, paymentMethod, tracking])
+  }, [order, selectedPaymentMethod, tracking])
 
   // we can be sure that when 1 method is available, it'll always be credit card
   if (order.availablePaymentMethods.length === 1) {
@@ -119,9 +126,12 @@ export const PaymentContent: FC<Props> = props => {
       <RadioGroup
         data-test="payment-methods"
         onSelect={val => {
-          onSetSelectedPaymentMethod(val as CommercePaymentMethodEnum)
+          dispatch({
+            type: PaymentActions.SET_SELECTED_PAYMENT_METHOD,
+            payload: val as CommercePaymentMethodEnum,
+          })
         }}
-        defaultValue={paymentMethod}
+        defaultValue={selectedPaymentMethod}
       >
         {getAvailablePaymentMethods(order.availablePaymentMethods).map(
           method => method
@@ -132,7 +142,7 @@ export const PaymentContent: FC<Props> = props => {
       <Spacer mb={2} />
 
       {/* Credit card */}
-      <Collapse open={paymentMethod === "CREDIT_CARD"}>
+      <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
         <CreditCardPickerFragmentContainer
           commitMutation={commitMutation}
           me={me}
@@ -148,8 +158,8 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* US Bank transfer */}
-      <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
-        {getPaymentMethodInfo(paymentMethod)}
+      <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
+        {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         <BankAccountPickerFragmentContainer
           me={me}
@@ -170,8 +180,8 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* SEPA bank transfer */}
-      <Collapse open={paymentMethod === "SEPA_DEBIT"}>
-        {getPaymentMethodInfo(paymentMethod)}
+      <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
+        {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         <BankDebitProvider
           order={order}
@@ -187,8 +197,8 @@ export const PaymentContent: FC<Props> = props => {
       </Collapse>
 
       {/* Wire transfer */}
-      <Collapse open={paymentMethod === "WIRE_TRANSFER"}>
-        {getPaymentMethodInfo(paymentMethod)}
+      <Collapse open={selectedPaymentMethod === "WIRE_TRANSFER"}>
+        {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mt={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
@@ -299,7 +309,9 @@ const getAvailablePaymentMethods = (
   return paymentMethods
 }
 
-const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
+const getPaymentMethodInfo = (
+  paymentMethod: CommercePaymentMethodEnum | string
+) => {
   switch (paymentMethod) {
     case "WIRE_TRANSFER":
       return (

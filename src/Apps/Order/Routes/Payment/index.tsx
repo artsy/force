@@ -9,10 +9,7 @@ import { useTracking } from "react-tracking"
 
 // relay generated
 import { Payment_me } from "__generated__/Payment_me.graphql"
-import {
-  CommercePaymentMethodEnum,
-  Payment_order,
-} from "__generated__/Payment_order.graphql"
+import { Payment_order } from "__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 // utils, hooks, mutations and system tools
@@ -74,15 +71,8 @@ export interface BankAccountSelection {
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { state, dispatch } = useContext(PaymentContext)
+  const { selectedPaymentMethod } = state
   console.log({ state })
-
-  useEffect(() => {
-    dispatch({
-      type: PaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
-      payload: "XXX",
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const { trackEvent } = useTracking()
   const { order, me } = props
@@ -90,14 +80,17 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const CreditCardPicker = createRef<CreditCardPicker>()
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
-  // user's selected payment method
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-    CommercePaymentMethodEnum
-  >(getInitialPaymentMethodValue(order))
-
   useEffect(() => {
-    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
-  }, [order])
+    dispatch({
+      type: PaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
+      payload: "XXX",
+    })
+    dispatch({
+      type: PaymentActions.SET_SELECTED_PAYMENT_METHOD,
+      payload: getInitialPaymentMethodValue(order),
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const balanceCheckEnabled =
     useFeatureFlag("bank_account_balance_check") &&
@@ -368,12 +361,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               >
                 <PaymentContent
                   commitMutation={props.commitMutation}
-                  paymentMethod={selectedPaymentMethod}
                   me={props.me}
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
                   onSetPayment={handleSetPayment}
-                  onSetSelectedPaymentMethod={setSelectedPaymentMethod}
                   bankAccountHasInsufficientFunds={
                     bankAccountHasInsufficientFunds
                   }

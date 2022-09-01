@@ -4,6 +4,7 @@ import { PaymentAction, PaymentState } from "./types"
 
 const initialPaymentState = {
   selectedBankAccountId: "",
+  selectedPaymentMethod: "",
 }
 
 const PaymentContext = createContext<{
