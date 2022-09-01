@@ -15,6 +15,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
+import { isEqual } from "lodash"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -189,6 +190,15 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     }
   }
 
+  const leaveForm = () => {
+    router.replace({ pathname: "/settings/my-collection" })
+    router.push({
+      pathname: isEditing
+        ? `/my-collection/artwork/${artwork.internalID}`
+        : "/settings/my-collection",
+    })
+  }
+
   return (
     <>
       <MetaTags
@@ -220,14 +230,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                   <ConfirmationModalBack
                     onClose={() => setShouldShowBackModal(false)}
                     isEditing={isEditing}
-                    onLeave={() => {
-                      router.replace({ pathname: "/settings/my-collection" })
-                      router.push({
-                        pathname: isEditing
-                          ? `/my-collection/artwork/${artwork.internalID}`
-                          : "/settings/my-collection",
-                      })
-                    }}
+                    onLeave={() => leaveForm()}
                   />
                 )}
                 {shouldShowDeletionModal && (
@@ -253,7 +256,16 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               <BackLink
                                 // @ts-ignore
                                 as={RouterLink}
-                                onClick={() => setShouldShowBackModal(true)}
+                                onClick={() => {
+                                  const formIsDirty = !isEqual(
+                                    initialValues,
+                                    values
+                                  )
+
+                                  return formIsDirty
+                                    ? setShouldShowBackModal(true)
+                                    : leaveForm()
+                                }}
                                 width="min-content"
                               >
                                 Back
