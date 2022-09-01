@@ -4,7 +4,8 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_myCollectionArtwork = {
+export type ArtworkDetails_myCollectionArtworkSubmissionDetails = {
+    readonly internalID: string;
     readonly artist: {
         readonly internalID: string;
         readonly name: string | null;
@@ -28,18 +29,25 @@ export type ArtworkDetails_myCollectionArtwork = {
     readonly depth: string | null;
     readonly metric: string | null;
     readonly provenance: string | null;
-    readonly " $refType": "ArtworkDetails_myCollectionArtwork";
+    readonly " $refType": "ArtworkDetails_myCollectionArtworkSubmissionDetails";
 };
-export type ArtworkDetails_myCollectionArtwork$data = ArtworkDetails_myCollectionArtwork;
-export type ArtworkDetails_myCollectionArtwork$key = {
-    readonly " $data"?: ArtworkDetails_myCollectionArtwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
+export type ArtworkDetails_myCollectionArtworkSubmissionDetails$data = ArtworkDetails_myCollectionArtworkSubmissionDetails;
+export type ArtworkDetails_myCollectionArtworkSubmissionDetails$key = {
+    readonly " $data"?: ArtworkDetails_myCollectionArtworkSubmissionDetails$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtworkSubmissionDetails">;
 };
 
 
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -50,8 +58,9 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkDetails_myCollectionArtwork",
+  "name": "ArtworkDetails_myCollectionArtworkSubmissionDetails",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -60,14 +69,8 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
-        (v0/*: any*/)
+        (v0/*: any*/),
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -139,7 +142,7 @@ return {
       "name": "attributionClass",
       "plural": false,
       "selections": [
-        (v0/*: any*/)
+        (v1/*: any*/)
       ],
       "storageKey": null
     },
@@ -197,5 +200,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f8b2f405850e8f7d8ecd1b048548d109';
+(node as any).hash = '6b1196f3c5fe5e2d761132c4fe2f2321';
 export default node;

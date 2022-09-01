@@ -16,7 +16,7 @@ import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
-import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import { ArtworkDetails_myCollectionArtworkSubmissionDetails } from "__generated__/ArtworkDetails_myCollectionArtworkSubmissionDetails.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -25,20 +25,53 @@ const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
-  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork
+  myCollectionArtworkSubmissionDetails?: ArtworkDetails_myCollectionArtworkSubmissionDetails
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
-  myCollectionArtwork,
+  myCollectionArtworkSubmissionDetails,
   ...rest
 }) => {
   const { router } = useRouter()
-  console.log("myCollectionArtwork", myCollectionArtwork)
+  console.log(
+    "[LOGD] myCollectionArtworkSubmissionDetails",
+    myCollectionArtworkSubmissionDetails
+  )
+  console.log("[LOGD] submission", submission)
+
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
-  const initialValues = getArtworkDetailsFormInitialValues(submission)
-  const initialErrors = validate(initialValues, artworkDetailsValidationSchema)
+
+  const initialValuesFromMyCollection = {
+    artistName: myCollectionArtworkSubmissionDetails?.artist?.name ?? "",
+    artistId: myCollectionArtworkSubmissionDetails?.artist?.internalID ?? "",
+    year: myCollectionArtworkSubmissionDetails?.date ?? "",
+    title: myCollectionArtworkSubmissionDetails?.title ?? "",
+    materials: myCollectionArtworkSubmissionDetails?.medium ?? "",
+    rarity: "string",
+    editionNumber: myCollectionArtworkSubmissionDetails?.editionNumber ?? "",
+    editionSize: myCollectionArtworkSubmissionDetails?.editionSize ?? undefined,
+    height: myCollectionArtworkSubmissionDetails?.height ?? "",
+    width: myCollectionArtworkSubmissionDetails?.width ?? "",
+    depth: myCollectionArtworkSubmissionDetails?.depth ?? "",
+    units: myCollectionArtworkSubmissionDetails?.metric ?? "in",
+    provenance: myCollectionArtworkSubmissionDetails?.provenance ?? "",
+    location: {
+      city: myCollectionArtworkSubmissionDetails?.location?.city ?? "",
+    },
+  }
+
+  const initialValues = submission
+    ? getArtworkDetailsFormInitialValues(submission)
+    : initialValuesFromMyCollection // come to this later (if an artwork was already submitted)
+
+  console.log("[LOGD] initialValues = ", initialValues)
+
+  const initialErrors = validate(
+    submission ? initialValues : initialValuesFromMyCollection,
+    artworkDetailsValidationSchema
+  )
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -95,6 +128,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
           sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
         })
       } catch (error) {
+        console.log("[LOGD] error = ", error)
         logger.error(
           `Submission not ${submission?.externalId ? "updated" : "created"}`,
           error
@@ -203,8 +237,9 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
     `,
     // We already have the same name for the fragment used somewhere,
     // so we need to use a different name here.
-    myCollectionArtwork: graphql`
-      fragment ArtworkDetails_myCollectionArtwork on Artwork {
+    myCollectionArtworkSubmissionDetails: graphql`
+      fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+        internalID
         artist {
           internalID
           name

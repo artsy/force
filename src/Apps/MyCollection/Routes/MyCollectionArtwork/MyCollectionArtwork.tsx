@@ -81,6 +81,8 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
 
+  const id = artwork.internalID
+
   const showComparables =
     !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
 
@@ -130,9 +132,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   </>
                 ) : (
                   <MyCollectionArtworkSWASectionDesktopLayout
-                    onSubmit={() => {
-                      setIsArtworkSubmittedToSell(!isArtworkSubmittedToSell)
-                    }}
+                    route={`/sell/submission/artwork-details/${id}`}
                     learnMore={() => setShowHowItWorksModal(true)}
                   />
                 )}
@@ -156,11 +156,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
-                          onSubmit={() =>
-                            setIsArtworkSubmittedToSell(
-                              !isArtworkSubmittedToSell
-                            )
-                          }
+                          route={"/"}
                           learnMore={() => setShowHowItWorksModal(true)}
                         />
                       )}

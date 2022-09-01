@@ -170,7 +170,7 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
       {
-        path: "artwork/:id/submit",
+        path: "artwork-details/:id", // sell/submission/artwork-details/:id // artwork/:id/submit
         hideNav: true,
         hideFooter: true,
         getComponent: () => ArtworkDetailsFragmentContainer,
@@ -178,9 +178,11 @@ export const consignRoutes: AppRouteConfig[] = [
           ArtworkDetailsFragmentContainer.preload()
         },
         query: graphql`
-          query consignRoutes_myCollectionArtworkDetailsQuery($id: String!) {
-            myCollectionArtwork: artwork(id: $id) {
-              ...ArtworkDetails_myCollectionArtwork
+          query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(
+            $id: String!
+          ) {
+            myCollectionArtworkSubmissionDetails: artwork(id: $id) {
+              ...ArtworkDetails_myCollectionArtworkSubmissionDetails
             }
           }
         `,
