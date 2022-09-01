@@ -3,12 +3,15 @@ import {
   Button,
   Clickable,
   CloseIcon,
+  DROP_SHADOW,
   Flex,
   FullBleed,
   Message,
   Spacer,
   Text,
 } from "@artsy/palette"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
@@ -128,23 +131,36 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
           <Box mt={[-2, -4]}>
             <Sticky>
-              <Flex
-                backgroundColor="white100"
-                justifyContent="flex-end"
-                py={[2, 4]}
-              >
-                {!!isMyCollectionPhase3Enabled && (
-                  <Button
-                    // @ts-ignore
-                    as={RouterLink}
-                    size={["small", "large"]}
-                    variant="primaryBlack"
-                    to="/my-collection/artworks/new"
+              {({ stuck }) => {
+                return (
+                  <FullBleed
+                    backgroundColor="white100"
+                    style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
                   >
-                    Upload Artwork
-                  </Button>
-                )}
-              </Flex>
+                    <AppContainer>
+                      <HorizontalPadding>
+                        <Flex
+                          backgroundColor="white100"
+                          justifyContent="flex-end"
+                          py={[2, 4]}
+                        >
+                          {!!isMyCollectionPhase3Enabled && (
+                            <Button
+                              // @ts-ignore
+                              as={RouterLink}
+                              size={["small", "large"]}
+                              variant="primaryBlack"
+                              to="/my-collection/artworks/new"
+                            >
+                              Upload Artwork
+                            </Button>
+                          )}
+                        </Flex>
+                      </HorizontalPadding>
+                    </AppContainer>
+                  </FullBleed>
+                )
+              }}
             </Sticky>
           </Box>
 
