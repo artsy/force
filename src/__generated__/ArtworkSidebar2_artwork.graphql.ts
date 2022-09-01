@@ -9,11 +9,7 @@ export type ArtworkSidebar2_artwork = {
     readonly isSold: boolean | null;
     readonly isAcquireable: boolean | null;
     readonly isOfferable: boolean | null;
-<<<<<<< HEAD
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
-=======
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
->>>>>>> 094a560ca3 (feat: add details section)
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
     readonly " $refType": "ArtworkSidebar2_artwork";
 };
 export type ArtworkSidebar2_artwork$data = ArtworkSidebar2_artwork;
@@ -82,9 +78,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-<<<<<<< HEAD
-(node as any).hash = '78ad528e0730b4a2c86bd086c10abf87';
-=======
-(node as any).hash = 'ee600d8072cbd19c50cc55005696b214';
->>>>>>> 094a560ca3 (feat: add details section)
+(node as any).hash = '2f7adc2fd2e4ac7ef5b211f91a0d6e0d';
 export default node;
