@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Clickable,
   CloseIcon,
@@ -6,13 +7,13 @@ import {
   FullBleed,
   Message,
   Spacer,
-  Sup,
   Text,
 } from "@artsy/palette"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
+import { Sticky } from "Components/Sticky"
 import { FC, Fragment, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -125,19 +126,27 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </FullBleed>
           )}
 
-          <Flex justifyContent="space-between" mb={4}>
-            {!!isMyCollectionPhase3Enabled && (
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                size={["small", "large"]}
-                variant="primaryBlack"
-                to="/my-collection/artworks/new"
+          <Box mt={[-2, -4]}>
+            <Sticky>
+              <Flex
+                backgroundColor="white100"
+                justifyContent="flex-end"
+                py={[2, 4]}
               >
-                Upload Artwork
-              </Button>
-            )}
-          </Flex>
+                {!!isMyCollectionPhase3Enabled && (
+                  <Button
+                    // @ts-ignore
+                    as={RouterLink}
+                    size={["small", "large"]}
+                    variant="primaryBlack"
+                    to="/my-collection/artworks/new"
+                  >
+                    Upload Artwork
+                  </Button>
+                )}
+              </Flex>
+            </Sticky>
+          </Box>
 
           <Masonry
             id="jump--MyCollectionArtworks"
