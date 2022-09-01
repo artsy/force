@@ -39,7 +39,7 @@ describe("MyCollectionArtworkArtistMarket", () => {
     expect(screen.getByText("Annual Lots Sold")).toBeInTheDocument()
     expect(screen.getByText("123")).toBeInTheDocument()
     expect(screen.getByText("Sell-through Rate")).toBeInTheDocument()
-    expect(screen.getByText("0.134%")).toBeInTheDocument()
+    expect(screen.getByText("13.4%")).toBeInTheDocument()
     expect(screen.getByText("Sale Price to Estimate")).toBeInTheDocument()
     expect(screen.getByText("95%")).toBeInTheDocument()
     expect(screen.getByText("Liquidity")).toBeInTheDocument()
