@@ -26,16 +26,8 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
       <ArtworkSidebar2ArtworkTitleFragmentContainer artwork={artwork} />
 
       <Spacer mt={2} />
-
-
-      <>
-        <Separator />
-        <SidebarExpandable
-          label={t`artworkPage.sidebar.details.expandableLabel`}
-        >
-          <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
-        </SidebarExpandable>
-      </>
+      <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
+      <Spacer mt={4} />
 
       {!isSold && artworkEcommerceAvailable && (
         <>
