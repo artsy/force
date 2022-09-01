@@ -14,17 +14,21 @@ import { NotificationItemFragmentContainer } from "Components/Notifications/Noti
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext, useState } from "react"
 import { SystemContext } from "System"
+import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 
 export type NotificationType = "all" | "alerts"
+export type NotificationPaginationType = "showMoreButton" | "infinite"
 
 interface NotificationsListProps {
   viewer: NotificationsList_viewer
   relay: RelayPaginationProp
+  paginationType?: NotificationPaginationType
 }
 
 const NotificationsList: React.FC<NotificationsListProps> = ({
   viewer,
   relay,
+  paginationType = "showMoreButton",
 }) => {
   const [loading, setLoading] = useState(false)
   const nodes = extractNodes(viewer.notifications)
@@ -42,6 +46,24 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     })
   }
 
+  const renderFooter = () => {
+    if (!relay.hasMore()) {
+      return
+    }
+
+    if (paginationType === "infinite") {
+      return <NotificationsListScrollSentinel onNext={handleLoadNext} />
+    }
+
+    return (
+      <Box textAlign="center" mt={4}>
+        <Button onClick={handleLoadNext} loading={loading}>
+          Show More
+        </Button>
+      </Box>
+    )
+  }
+
   return (
     <>
       <Join separator={<Separator />}>
@@ -53,13 +75,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
         ))}
       </Join>
 
-      {relay.hasMore() && (
-        <Box textAlign="center" mt={4}>
-          <Button onClick={handleLoadNext} loading={loading}>
-            Show More
-          </Button>
-        </Box>
-      )}
+      {renderFooter()}
     </>
   )
 }
@@ -122,10 +138,12 @@ export const NotificationsListFragmentContainer = createPaginationContainer(
 
 interface NotificationsListQueryRendererProps {
   type: NotificationType
+  paginationType?: NotificationPaginationType
 }
 
 export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRendererProps> = ({
   type,
+  paginationType,
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
   const types = getNotificationTypes(type)
@@ -163,7 +181,12 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
           )
         }
 
-        return <NotificationsListFragmentContainer viewer={props.viewer} />
+        return (
+          <NotificationsListFragmentContainer
+            viewer={props.viewer}
+            paginationType={paginationType}
+          />
+        )
       }}
     />
   )
