@@ -40,7 +40,7 @@ const ArtworkSidebar2Classification: React.FC<ArtworkSidebar2ClassificationProps
         onClose={closeModal}
         show={isModalOpen}
       />
-      <Flex alignItems="center">
+      <Flex alignItems="center" data-testid="artwork-classification">
         <ArtworkIcon mr={1} />
         <Text variant="sm-display" color="black60">
           {shortArrayDescription![0]}{" "}

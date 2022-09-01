@@ -10,7 +10,6 @@ import {
 import { ArtworkSidebar2AuthenticityCertificate_artwork } from "__generated__/ArtworkSidebar2AuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { shouldRenderAuthenticityCertificate } from "Apps/Artwork/Utils/badges"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebar2AuthenticityCertificateProps {
@@ -31,13 +30,16 @@ export const ArtworkSidebar2AuthenticityCertificate: React.FC<ArtworkSidebar2Aut
     setIsShowingModal(true)
   }
 
-  if (!shouldRenderAuthenticityCertificate(artwork)) {
+  const shouldRenderAuthenticityCertificate =
+    artwork.hasCertificateOfAuthenticity && !artwork.isBiddable
+
+  if (!shouldRenderAuthenticityCertificate) {
     return null
   }
 
   return (
     <>
-      <Flex alignItems="center">
+      <Flex alignItems="center" data-testid="authenticity-certificate">
         <CertificateIcon mr={1} />
         <Text variant="sm-display">
           {t("artworkPage.sidebar.details.AuthenticityCertificate.includes")}
@@ -107,7 +109,7 @@ export const ArtworkSidebar2AuthenticityCertificateFragmentContainer = createFra
     artwork: graphql`
       fragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {
         hasCertificateOfAuthenticity
-        is_biddable: isBiddable
+        isBiddable
       }
     `,
   }
