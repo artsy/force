@@ -10,6 +10,7 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkArtistMarket_marketPriceInsights } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
@@ -30,8 +31,6 @@ export const MyCollectionArtworkArtistMarket = ({
     medianSaleOverEstimatePercentage,
     sellThroughRate,
   } = marketPriceInsights
-
-  const formattedSellThroughRate = Number(sellThroughRate).toFixed(3)
 
   return (
     <>
@@ -86,7 +85,7 @@ export const MyCollectionArtworkArtistMarket = ({
         {
           <InsightColumn
             name="Sell-through Rate"
-            value={formattedSellThroughRate + "%"}
+            value={formatSellThroughRate(sellThroughRate)}
           />
         }
 

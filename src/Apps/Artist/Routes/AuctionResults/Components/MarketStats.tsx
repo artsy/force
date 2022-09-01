@@ -1,9 +1,10 @@
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
+import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { rest } from "lodash"
-import { useEffect, useRef, useState } from "react"
 import * as React from "react"
+import { useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
@@ -67,12 +68,6 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
   const formattedMedianSaleOverEstimatePercentage = Math.abs(
     actualMedianSaleOverEstimatePercentage
   )
-
-  const sellThroughRatePercentage =
-    (selectedPriceInsight.sellThroughRate as number) * 100
-  // show up to 2 decimal places
-  const formattedSellThroughRate =
-    Math.round(sellThroughRatePercentage * 100) / 100
 
   return (
     <Box mb={[4, 12]} mt={[0, 6]}>
@@ -155,7 +150,9 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
                     style={{ whiteSpace: "nowrap" }}
                     textAlign="right"
                   >
-                    {formattedSellThroughRate}%
+                    {formatSellThroughRate(
+                      selectedPriceInsight.sellThroughRate
+                    )}
                   </Text>
                 </Column>
               </GridColumns>
