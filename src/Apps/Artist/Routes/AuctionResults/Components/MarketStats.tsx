@@ -1,7 +1,7 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
-import { formatSellThroughRate } from "Apps/Artwork/Utils/insightUtils"
+import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { rest } from "lodash"
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"

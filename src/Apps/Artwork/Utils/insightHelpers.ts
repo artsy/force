@@ -3,7 +3,6 @@ export const formatSellThroughRate = (sellThroughRate: number | null) => {
     return ""
   }
 
-  const sellThroughRatePercentage = (sellThroughRate as number) * 100
   // show up to 2 decimal places
-  return `${Math.round(sellThroughRatePercentage * 100) / 100}%`
+  return `${Math.round(sellThroughRate * 10000) / 100}%`
 }
