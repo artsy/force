@@ -20,6 +20,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
+import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
@@ -74,6 +75,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       values.editionSize = ""
     }
 
+    const externalImageUrls = values.newPhotos.flatMap(
+      photo => photo.url || null
+    )
+
     // Create or update artwork
 
     try {
@@ -93,7 +98,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         width: String(values.width),
         depth: String(values.depth),
         metric: values.metric,
-        externalImageUrls: values.newPhotos.flatMap(photo => photo.url || null),
+        externalImageUrls,
         pricePaidCents:
           !values.pricePaidDollars || isNaN(Number(values.pricePaidDollars))
             ? undefined
@@ -129,6 +134,12 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           }
         })
       )
+
+      // Waiting for a few seconds to make sure the new images are processed
+      // and ready to be displayed
+      if (externalImageUrls.length) {
+        await wait(3000)
+      }
 
       if (isEditing) {
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })
