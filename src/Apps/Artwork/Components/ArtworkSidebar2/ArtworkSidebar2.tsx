@@ -27,7 +27,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
 
       <Spacer mt={2} />
       <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
-      <Spacer mt={4} />
+      <Spacer mt={2} />
 
       {!isSold && artworkEcommerceAvailable && (
         <>
