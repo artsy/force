@@ -31,7 +31,7 @@ const ArtworkSidebar2ShippingInformation: React.FC<ShippingInformationProps> = (
       )}
 
       {shippingInfo && (
-        <Text variant="sm" color="black60">
+        <Text variant="sm" color="black60" data-testid="shipping-info">
           {shippingInfo}
         </Text>
       )}
