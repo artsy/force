@@ -5,6 +5,8 @@ import { mount } from "enzyme"
 import { NavBar } from "../NavBar"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { mediator } from "Server/mediator"
+import { I18nextProvider } from "react-i18next"
+import i18n from "System/i18n/i18n"
 
 jest.mock("Components/Search/SearchBar", () => {
   return {
@@ -35,7 +37,9 @@ describe("NavBar", () => {
   const getWrapper = ({ user = null, isEigen = false } = {}) => {
     return mount(
       <SystemContextProvider user={user} isEigen={isEigen}>
-        <NavBar />
+        <I18nextProvider i18n={i18n}>
+          <NavBar />
+        </I18nextProvider>
       </SystemContextProvider>
     )
   }

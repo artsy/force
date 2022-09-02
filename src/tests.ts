@@ -4,8 +4,6 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"
-// this import makes sure that the translations are accessible in the test environment
-import "System/i18n/i18n"
 
 jest.mock("react-tracking")
 import _track, { useTracking as _useTracking } from "react-tracking"
