@@ -27,6 +27,8 @@ describe("Meta tags", () => {
     const component = getWrapper()
     const link = component.find(Link).at(0).html()
 
-    expect(link).toEqual('<link rel="canonical" href="/search?term=cats">')
+    expect(link).toEqual(
+      '<link rel="canonical" href="test-url/search?term=cats">'
+    )
   })
 })

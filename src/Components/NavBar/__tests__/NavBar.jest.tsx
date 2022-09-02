@@ -5,7 +5,6 @@ import { mount } from "enzyme"
 import { NavBar } from "../NavBar"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { mediator } from "Server/mediator"
-import "System/i18n/i18n"
 
 jest.mock("Components/Search/SearchBar", () => {
   return {
