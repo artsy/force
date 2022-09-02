@@ -1,11 +1,17 @@
 import { BaseTab, BaseTabs, Box, Clickable, useTabs } from "@artsy/palette"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import styled from "styled-components"
-import { Media } from "Utils/Responsive"
 
 const TABS_CONTAINER_HEIGHT = 60
 
-export const NofiticationsTabs: React.FC = ({ children }) => {
+export interface NofiticationsTabsProps {
+  mode: "dropdown" | "page"
+}
+
+export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
+  mode,
+  children,
+}) => {
   const { tabs, activeTab, activeTabIndex, handleClick, ref } = useTabs({
     children,
   })
@@ -30,16 +36,9 @@ export const NofiticationsTabs: React.FC = ({ children }) => {
     </BaseTabs>
   )
 
-  return (
-    <>
-      <Media at="xs">
-        <StickyProvider>
-          <Sticky>{Tabs}</Sticky>
-          {activeTab.current.child}
-        </StickyProvider>
-      </Media>
-
-      <Media greaterThan="xs">
+  if (mode === "dropdown") {
+    return (
+      <>
         {Tabs}
         <Box
           maxHeight={`calc(90vh - ${TABS_CONTAINER_HEIGHT}px)`}
@@ -47,8 +46,15 @@ export const NofiticationsTabs: React.FC = ({ children }) => {
         >
           {activeTab.current.child}
         </Box>
-      </Media>
-    </>
+      </>
+    )
+  }
+
+  return (
+    <StickyProvider>
+      <Sticky>{Tabs}</Sticky>
+      {activeTab.current.child}
+    </StickyProvider>
   )
 }
 

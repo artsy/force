@@ -8,7 +8,7 @@ export const NotificationsApp: React.FC = () => {
       <MetaTags title="Notifications | Artsy" pathname="/notifications" />
 
       <FullBleed>
-        <Notifications />
+        <Notifications mode="page" />
       </FullBleed>
     </>
   )

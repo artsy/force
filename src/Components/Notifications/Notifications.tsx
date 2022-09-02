@@ -3,17 +3,18 @@ import {
   NotificationPaginationType,
   NotificationsListQueryRenderer,
 } from "./NotificationsList"
-import { NofiticationsTabs } from "./NotificationsTabs"
+import { NofiticationsTabs, NofiticationsTabsProps } from "./NotificationsTabs"
 
-interface NotificationsProps {
+interface NotificationsProps extends NofiticationsTabsProps {
   paginationType?: NotificationPaginationType
 }
 
 export const Notifications: React.FC<NotificationsProps> = ({
   paginationType,
+  ...rest
 }) => {
   return (
-    <NofiticationsTabs>
+    <NofiticationsTabs {...rest}>
       <Tab name="All">
         <NotificationsListQueryRenderer
           type="all"
