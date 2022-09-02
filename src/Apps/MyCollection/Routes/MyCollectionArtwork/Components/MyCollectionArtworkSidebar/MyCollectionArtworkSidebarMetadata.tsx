@@ -68,15 +68,13 @@ const MetadataField = ({ label, value }) => {
   const emptyValue = "----"
 
   return (
-    <Box mb={[1, 0.5]} display="flex" flexDirection={["column", "row"]}>
-      <Text variant="sm" minWidth={[null, 100, 190]} mr={2}>
+    <Box mb={[1, 0.5]} display="flex">
+      <Text color="black60" variant="sm" minWidth={[100, 100, 190]} mr={2}>
         {label}
       </Text>
 
-      <Box display="flex" flexDirection="column">
-        <WrappedText variant="sm" color="black60">
-          {value || emptyValue}
-        </WrappedText>
+      <Box display="flex" flex={1} flexDirection="column">
+        <WrappedText variant="sm">{value || emptyValue}</WrappedText>
       </Box>
     </Box>
   )

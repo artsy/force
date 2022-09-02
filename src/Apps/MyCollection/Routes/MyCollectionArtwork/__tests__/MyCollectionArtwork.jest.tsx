@@ -70,8 +70,6 @@ describe("MyCollectionArtwork", () => {
 
         expect(screen.getByText("Morons")).toBeInTheDocument()
 
-        // Testing for the title
-        expect(screen.getByText("Insights")).toBeInTheDocument()
         expect(screen.queryByText("About")).not.toBeInTheDocument()
       })
     })

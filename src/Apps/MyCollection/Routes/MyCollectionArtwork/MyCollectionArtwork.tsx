@@ -204,7 +204,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <>
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
 
-            <Spacer m={6} />
+            <Spacer m={[4, 6]} />
 
             {!!enableMyCollectionPhase4ArticlesRail && (
               <ArtistCurrentArticlesRailQueryRenderer slug={slug} />

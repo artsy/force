@@ -52,7 +52,7 @@ export const MyCollectionArtworkArtistMarket = ({
             size="lg"
             content={
               <Text variant="xs">
-                These statistics are based on the last 36 months of auction slae
+                These statistics are based on the last 36 months of auction sale
                 data from top commercial auction houses.
               </Text>
             }
