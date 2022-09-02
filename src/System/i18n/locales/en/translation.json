@@ -1,6 +1,7 @@
 {
   "artistPage": {
     "cv": {
+      "newKey": "I'm a new string",
       "emptyState": "This artist has no {{groupName}} yet.",
       "fairTitle": "Fair booths",
       "groupTitle": "Group shows",
