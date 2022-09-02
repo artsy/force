@@ -1,0 +1,7 @@
+git:
+  filters:
+    - filter_type: file
+      file_format: KEYVALUEJSON
+      source_language: en
+      source_file: src/System/i18n/locales/en/translation.json
+      translation_files_expression: 'src/System/i18n/<lang>/translation.json'
