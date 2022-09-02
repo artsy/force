@@ -13,12 +13,12 @@ import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 import i18n from "System/i18n/i18n"
 
 // overide mount to provide access to i18n inside the setupTestWrapper function
-const mount = ui =>
-  enzMount(<I18nextProvider i18n={i18n}>{ui}</I18nextProvider>)
+const mount = children =>
+  enzMount(<I18nextProvider i18n={i18n}>{children}</I18nextProvider>)
 
 // overide render to provide access to i18n inside the setupTestWrapperTL function
-const render = ui =>
-  rtlRender(<I18nextProvider i18n={i18n}>{ui}</I18nextProvider>)
+const render = children =>
+  rtlRender(<I18nextProvider i18n={i18n}>{children}</I18nextProvider>)
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<T["response"]>
