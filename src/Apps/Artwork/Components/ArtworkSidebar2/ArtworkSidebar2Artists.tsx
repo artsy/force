@@ -33,7 +33,7 @@ export const ArtworkSidebar2Artists: React.FC<ArtistsProps> = ({
     <div>
       <ShowMore
         initial={ARTISTS_TO_DISPLAY}
-        variant={"lg-display"}
+        variant="lg-display"
         textDecoration="underline"
         showMoreText={showMoreText}
         hideText="Show less"
