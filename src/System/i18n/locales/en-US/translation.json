@@ -92,5 +92,13 @@
     "newNotifications_one": "{{count}} new notification",
     "newNotifications_other": "{{count}} new notifications",
     "markAllAsRead": "Mark all as read"
+  },
+  "artQuizPage": {
+    "welcomeScreen": {
+      "title": "Art Curator Quiz",
+      "subtitle": "See more of what you love. Rate artworks to discover your taste profile and get recommendations tailored to you.",
+      "getStartedButton": "Start the Quiz",
+      "skipButton": "Skip"
+    }
   }
 }
