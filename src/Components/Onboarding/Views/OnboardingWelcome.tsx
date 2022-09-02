@@ -1,11 +1,11 @@
 import { Flex, Text, Spacer, Button, Box } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
-import { OnboardingSplitLayout } from "../Components/OnboardingSplitLayout"
 import { OnboardingWelcomeAnimatedPanel } from "../Components/OnboardingWelcomeAnimatedPanel"
 import { useOnboardingFadeTransition } from "../Hooks/useOnboardingFadeTransition"
 import { useOnboardingContext } from "../Hooks/useOnboardingContext"
 import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
+import { SplitLayout } from "Components/SplitLayout"
 
 export const OnboardingWelcome = () => {
   const { user } = useSystemContext()
@@ -17,7 +17,7 @@ export const OnboardingWelcome = () => {
   const tracking = useOnboardingTracking()
 
   return (
-    <OnboardingSplitLayout
+    <SplitLayout
       left={<OnboardingWelcomeAnimatedPanel ref={register(0)} />}
       leftProps={{ display: "block" }}
       right={
