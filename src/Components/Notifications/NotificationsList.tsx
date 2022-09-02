@@ -175,7 +175,7 @@ export const NotificationsListQueryRenderer: React.FC<NotificationsListQueryRend
         // TODO: Style loading state
         if (!props || !props.viewer) {
           return (
-            <Flex justifyContent="center" mt={2}>
+            <Flex justifyContent="center" my={2}>
               <Text variant="xs">Loading</Text>
             </Flex>
           )
