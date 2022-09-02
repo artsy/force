@@ -6,10 +6,12 @@ const TABS_CONTAINER_HEIGHT = 60
 
 export interface NofiticationsTabsProps {
   mode: "dropdown" | "page"
+  maxDropdownHeight?: string
 }
 
 export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   mode,
+  maxDropdownHeight,
   children,
 }) => {
   const { tabs, activeTab, activeTabIndex, handleClick, ref } = useTabs({
@@ -41,7 +43,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
       <>
         {Tabs}
         <Box
-          maxHeight={`calc(90vh - ${TABS_CONTAINER_HEIGHT}px)`}
+          maxHeight={`calc(${maxDropdownHeight} - ${TABS_CONTAINER_HEIGHT}px)`}
           overflowY="scroll"
         >
           {activeTab.current.child}

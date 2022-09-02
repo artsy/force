@@ -12,7 +12,11 @@ export const NavBarNewNotifications = () => {
       onMouseEnter={lockScroll}
       onMouseLeave={unlockScroll}
     >
-      <Notifications mode="dropdown" paginationType="infinite" />
+      <Notifications
+        mode="dropdown"
+        maxDropdownHeight="90vh"
+        paginationType="infinite"
+      />
     </Box>
   )
 }
