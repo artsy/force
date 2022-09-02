@@ -12,7 +12,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
   paginationType,
 }) => {
   return (
-    <Tabs mb={0}>
+    <Tabs mt={1} mb={0}>
       <Tab name="All">
         <NotificationsListQueryRenderer
           type="all"

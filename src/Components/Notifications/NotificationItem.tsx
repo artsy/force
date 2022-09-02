@@ -27,14 +27,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   const notificationTypeLabel = getNotificationType()
 
   return (
-    <RouterLink
-      display="flex"
-      alignItems="center"
-      to={item.targetHref}
-      p={2}
-      mx={-2}
-      textDecoration="none"
-    >
+    <NotificationItemLink to={item.targetHref}>
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
           {notificationTypeLabel && (
@@ -97,7 +90,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
           aria-label="Unread notification indicator"
         />
       )}
-    </RouterLink>
+    </NotificationItemLink>
   )
 }
 
@@ -135,3 +128,17 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
 const NotificationTypeLabel = styled.span`
   color: ${themeGet("colors.blue100")};
 `
+
+const NotificationItemLink = styled(RouterLink)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  &:hover {
+    background-color: ${themeGet("colors.black5")};
+  }
+`
+
+NotificationItemLink.defaultProps = {
+  p: 2,
+}

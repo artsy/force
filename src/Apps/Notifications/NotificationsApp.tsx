@@ -1,4 +1,4 @@
-import { Spacer } from "@artsy/palette"
+import { FullBleed, Spacer } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { Notifications } from "Components/Notifications/Notifications"
 
@@ -9,7 +9,9 @@ export const NotificationsApp: React.FC = () => {
 
       <Spacer mt={2} />
 
-      <Notifications />
+      <FullBleed>
+        <Notifications />
+      </FullBleed>
     </>
   )
 }

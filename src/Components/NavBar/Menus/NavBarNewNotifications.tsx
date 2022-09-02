@@ -8,7 +8,6 @@ export const NavBarNewNotifications = () => {
   return (
     <Flex
       width={420}
-      p={2}
       maxHeight="90vh"
       overflowY="scroll"
       flexDirection="column"
