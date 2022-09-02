@@ -1,9 +1,9 @@
 import { ShowMore, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebar2Artists_artwork } from "__generated__/ArtworkSidebar2Artists_artwork.graphql"
-import { RouterLink } from "System/Router/RouterLink"
-import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { RouterLink } from "System/Router/RouterLink"
+import { ArtworkSidebar2Artists_artwork } from "__generated__/ArtworkSidebar2Artists_artwork.graphql"
 
 const ARTISTS_TO_DISPLAY = 4
 
@@ -33,7 +33,7 @@ export const ArtworkSidebar2Artists: React.FC<ArtistsProps> = ({
     <div>
       <ShowMore
         initial={ARTISTS_TO_DISPLAY}
-        variant={"lg-display"}
+        variant="lg-display"
         textDecoration="underline"
         showMoreText={showMoreText}
         hideText="Show less"
