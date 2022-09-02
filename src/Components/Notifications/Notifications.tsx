@@ -1,8 +1,9 @@
-import { Tab, Tabs } from "@artsy/palette"
+import { Tab } from "@artsy/palette"
 import {
   NotificationPaginationType,
   NotificationsListQueryRenderer,
 } from "./NotificationsList"
+import { NofiticationsTabs } from "./NotificationsTabs"
 
 interface NotificationsProps {
   paginationType?: NotificationPaginationType
@@ -12,7 +13,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
   paginationType,
 }) => {
   return (
-    <Tabs mt={1} mb={0}>
+    <NofiticationsTabs>
       <Tab name="All">
         <NotificationsListQueryRenderer
           type="all"
@@ -25,6 +26,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
           paginationType={paginationType}
         />
       </Tab>
-    </Tabs>
+    </NofiticationsTabs>
   )
 }

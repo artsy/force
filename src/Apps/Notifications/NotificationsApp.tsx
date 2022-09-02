@@ -1,4 +1,4 @@
-import { FullBleed, Spacer } from "@artsy/palette"
+import { FullBleed } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { Notifications } from "Components/Notifications/Notifications"
 
@@ -6,8 +6,6 @@ export const NotificationsApp: React.FC = () => {
   return (
     <>
       <MetaTags title="Notifications | Artsy" pathname="/notifications" />
-
-      <Spacer mt={2} />
 
       <FullBleed>
         <Notifications />
