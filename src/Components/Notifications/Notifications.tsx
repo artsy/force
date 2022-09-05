@@ -1,4 +1,5 @@
-import { Tab, Tabs } from "@artsy/palette"
+import { Separator, Tab, Tabs } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 import {
   NotificationPaginationType,
   NotificationsListQueryRenderer,
@@ -24,6 +25,17 @@ export const Notifications: React.FC<NotificationsProps> = ({
           type="alerts"
           paginationType={paginationType}
         />
+
+        <Separator mb={2} />
+
+        <RouterLink
+          to="/settings/alerts"
+          color="black60"
+          display="flex"
+          justifyContent="center"
+        >
+          Manage your alerts
+        </RouterLink>
       </Tab>
     </Tabs>
   )
