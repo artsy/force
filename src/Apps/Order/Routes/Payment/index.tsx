@@ -40,8 +40,7 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
 import { extractNodes } from "Utils/extractNodes"
-import { PaymentContext } from "./context"
-import { PaymentActions } from "./types"
+import { OrderPaymentContext, OrderPaymentActions } from "./OrderPaymentContext"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -70,9 +69,8 @@ export interface BankAccountSelection {
 }
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
-  const { state, dispatch } = useContext(PaymentContext)
+  const { state, dispatch } = useContext(OrderPaymentContext)
   const { selectedPaymentMethod } = state
-  console.log({ state })
 
   const { trackEvent } = useTracking()
   const { order, me } = props
@@ -82,11 +80,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   useEffect(() => {
     dispatch({
-      type: PaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
+      type: OrderPaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
       payload: "XXX",
     })
     dispatch({
-      type: PaymentActions.SET_SELECTED_PAYMENT_METHOD,
+      type: OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD,
       payload: getInitialPaymentMethodValue(order),
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps

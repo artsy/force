@@ -41,8 +41,7 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { PaymentContext } from "./context"
-import { PaymentActions } from "./types"
+import { OrderPaymentContext, OrderPaymentActions } from "./OrderPaymentContext"
 
 export interface Props {
   order: Payment_order
@@ -74,7 +73,7 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountSelection,
     onSetBankAccountSelection,
   } = props
-  const { state, dispatch } = useContext(PaymentContext)
+  const { state, dispatch } = useContext(OrderPaymentContext)
   const { selectedPaymentMethod } = state
   const tracking = useTracking()
   const previousPaymentMethod = useRef<string | null>(null)
@@ -127,7 +126,7 @@ export const PaymentContent: FC<Props> = props => {
         data-test="payment-methods"
         onSelect={val => {
           dispatch({
-            type: PaymentActions.SET_SELECTED_PAYMENT_METHOD,
+            type: OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD,
             payload: val as CommercePaymentMethodEnum,
           })
         }}
