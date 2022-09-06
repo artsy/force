@@ -1,4 +1,4 @@
-import React, { useReducer, createContext, Dispatch } from "react"
+import React, { useReducer, useContext, createContext, Dispatch } from "react"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { orderPaymentReducer } from "./orderPaymentReducer"
 import createLogger from "Utils/logger"
@@ -6,7 +6,7 @@ import createLogger from "Utils/logger"
 const logger = createLogger("[dev: OrderPaymentContext] state:")
 
 /* ACTIONS ------------------------------------------------------------------ */
-export enum OrderPaymentActions {
+enum OrderPaymentActions {
   SET_SELECTED_BANK_ACCOUNT_ID = "SET_SELECTED_BANK_ACCOUNT_ID",
   SET_SELECTED_PAYMENT_METHOD = "SET_SELECTED_PAYMENT_METHOD",
 }
@@ -16,9 +16,9 @@ type OrderPaymentActionsPayload = {
   [OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD]: CommercePaymentMethodEnum
 }
 
-export type OrderPaymentAction = ActionMap<
+type OrderPaymentAction = ActionMap<OrderPaymentActionsPayload>[keyof ActionMap<
   OrderPaymentActionsPayload
->[keyof ActionMap<OrderPaymentActionsPayload>]
+>]
 
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -32,7 +32,7 @@ type ActionMap<M extends { [index: string]: any }> = {
 }
 
 /* STATE -------------------------------------------------------------------- */
-export type OrderPaymentState = {
+type OrderPaymentState = {
   selectedBankAccountId: string
   selectedPaymentMethod: CommercePaymentMethodEnum | string
 }
@@ -70,4 +70,16 @@ const OrderPaymentProvider: React.FC = ({ children }) => {
   )
 }
 
-export { OrderPaymentContext, OrderPaymentProvider }
+/* HOOK --------------------------------------------------------------------- */
+const useOrderPaymentContext = () => {
+  const { state, dispatch } = useContext(OrderPaymentContext)
+  return { state, dispatch }
+}
+
+export {
+  useOrderPaymentContext,
+  OrderPaymentProvider,
+  OrderPaymentState,
+  OrderPaymentAction,
+  OrderPaymentActions,
+}

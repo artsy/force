@@ -1,12 +1,4 @@
-import {
-  FC,
-  RefObject,
-  ReactElement,
-  useState,
-  useEffect,
-  useRef,
-  useContext,
-} from "react"
+import { FC, RefObject, ReactElement, useState, useEffect, useRef } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
@@ -41,7 +33,10 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
-import { OrderPaymentContext, OrderPaymentActions } from "./OrderPaymentContext"
+import {
+  useOrderPaymentContext,
+  OrderPaymentActions,
+} from "./OrderPaymentContext"
 
 export interface Props {
   order: Payment_order
@@ -73,7 +68,7 @@ export const PaymentContent: FC<Props> = props => {
     bankAccountSelection,
     onSetBankAccountSelection,
   } = props
-  const { state, dispatch } = useContext(OrderPaymentContext)
+  const { state, dispatch } = useOrderPaymentContext()
   const { selectedPaymentMethod } = state
   const tracking = useTracking()
   const previousPaymentMethod = useRef<string | null>(null)
