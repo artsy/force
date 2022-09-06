@@ -396,10 +396,13 @@ describe("Payment", () => {
 
       expect(page.text()).toContain("• Bank transfer is powered by Stripe.")
       expect(page.text()).toContain(
+        "• Enter your billing address in the form below."
+      )
+      expect(page.text()).toContain(
         "• Your bank account must be located in one of the SEPA countries."
       )
       expect(page.text()).toContain(
-        "• Payment processing will take 4-7 business days once the order is confirmed."
+        "• Payment processing will take 4-7 business days once the gallery accepts the order."
       )
     })
   })

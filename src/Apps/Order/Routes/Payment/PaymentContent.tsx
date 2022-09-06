@@ -371,11 +371,14 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
             </Tooltip>
           </Flex>
           <Text color="black60" variant="sm">
-            • Bank transfer is powered by Stripe.
+            • Enter your billing address in the form below.
           </Text>
           <Text color="black60" variant="sm">
-            • Payment processing will take 4-7 business days once the order is
-            confirmed.
+            • Payment processing will take 4-7 business days once the gallery
+            accepts the order.
+          </Text>
+          <Text color="black60" variant="sm">
+            • Bank transfer is powered by Stripe.
           </Text>
         </>
       )
