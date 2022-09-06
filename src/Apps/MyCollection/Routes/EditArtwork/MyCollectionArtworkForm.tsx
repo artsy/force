@@ -15,7 +15,6 @@ import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
-import { isEqual } from "lodash"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -57,7 +56,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     MyCollectionArtworkDetailsValidationSchema
   )
 
-  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
+  const [
+    showLeaveWithoutSavingModal,
+    setShowLeaveWithoutSavingModal,
+  ] = useState<boolean>(false)
   const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
     boolean
   >(false)
@@ -219,16 +221,16 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           validationSchema={MyCollectionArtworkDetailsValidationSchema}
           initialErrors={initialErrors}
         >
-          {({ isSubmitting, isValid, values }) => (
+          {({ isSubmitting, isValid, values, dirty }) => (
             <Form>
               <RouterLink to="/my-collection" display="block">
                 <ArtsyLogoBlackIcon display="block" />
               </RouterLink>
 
               <StickyProvider>
-                {shouldShowBackModal && (
+                {showLeaveWithoutSavingModal && (
                   <ConfirmationModalBack
-                    onClose={() => setShouldShowBackModal(false)}
+                    onClose={() => setShowLeaveWithoutSavingModal(false)}
                     isEditing={isEditing}
                     onLeave={() => leaveForm()}
                   />
@@ -257,13 +259,8 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 // @ts-ignore
                                 as={RouterLink}
                                 onClick={() => {
-                                  const formIsDirty = !isEqual(
-                                    initialValues,
-                                    values
-                                  )
-
-                                  return formIsDirty
-                                    ? setShouldShowBackModal(true)
+                                  dirty
+                                    ? setShowLeaveWithoutSavingModal(true)
                                     : leaveForm()
                                 }}
                                 width="min-content"
