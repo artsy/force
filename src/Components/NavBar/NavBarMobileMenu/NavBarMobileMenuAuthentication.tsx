@@ -11,10 +11,17 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
 import { NavBarMobileMenuAuthentication_me } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
-import { getConversationCount, updateConversationCache } from "../helpers"
+import {
+  getConversationCount,
+  getNotificationCount,
+  updateConversationCache,
+  updateNotificationCache,
+} from "../helpers"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
+import styled from "styled-components"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me | null
@@ -77,10 +84,19 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
     ],
   }
 
-  const conversationCount =
-    me?.unreadConversationCount || getConversationCount()
+  const { unreadConversationCount, unreadNotificationsCount } = me ?? {}
+  const conversationCount = unreadConversationCount || getConversationCount()
+  let hasUnreadNotifications = false
 
   updateConversationCache(me?.unreadConversationCount)
+
+  if (enableActivityPanel) {
+    const notificationsCount =
+      unreadNotificationsCount || getNotificationCount()
+    hasUnreadNotifications = notificationsCount > 0
+
+    updateNotificationCache(unreadNotificationsCount)
+  }
 
   return (
     <>
@@ -89,6 +105,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       {enableActivityPanel && (
         <NavBarMobileMenuItemLink to="/notifications">
           Activity
+          {hasUnreadNotifications && <Indicator />}
         </NavBarMobileMenuItemLink>
       )}
 
@@ -182,3 +199,8 @@ export const NavBarMobileMenuAuthentication: React.FC = () => {
     <NavBarMobileMenuLoggedOut />
   )
 }
+
+const Indicator = styled(NavBarNotificationIndicator)`
+  margin-left: 5px;
+  margin-top: -15px;
+`
