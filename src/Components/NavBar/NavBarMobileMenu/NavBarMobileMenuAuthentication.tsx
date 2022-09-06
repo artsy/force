@@ -11,12 +11,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
 import { NavBarMobileMenuAuthentication_me } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
-import {
-  getConversationCount,
-  getNotificationCount,
-  updateConversationCache,
-  updateNotificationCache,
-} from "../helpers"
+import { checkAndSyncIndicatorsCount } from "../helpers"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -32,6 +27,14 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
 }) => {
   const { mediator } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
+  const {
+    hasConversations,
+    hasNotifications,
+    counts,
+  } = checkAndSyncIndicatorsCount({
+    notifications: me?.unreadNotificationsCount,
+    conversations: me?.unreadConversationCount,
+  })
 
   const menu = {
     title: "Account",
@@ -84,20 +87,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
     ],
   }
 
-  const { unreadConversationCount, unreadNotificationsCount } = me ?? {}
-  const conversationCount = unreadConversationCount || getConversationCount()
-  let hasUnreadNotifications = false
-
-  updateConversationCache(me?.unreadConversationCount)
-
-  if (enableActivityPanel) {
-    const notificationsCount =
-      unreadNotificationsCount || getNotificationCount()
-    hasUnreadNotifications = notificationsCount > 0
-
-    updateNotificationCache(unreadNotificationsCount)
-  }
-
   return (
     <>
       <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
@@ -105,7 +94,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       {enableActivityPanel && (
         <NavBarMobileMenuItemLink to="/notifications">
           Activity
-          {hasUnreadNotifications && <Indicator />}
+          {hasNotifications && <Indicator />}
         </NavBarMobileMenuItemLink>
       )}
 
@@ -114,8 +103,8 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         justifyContent="space-between"
       >
         Inbox
-        {conversationCount > 0 && (
-          <Box color="brand">{conversationCount} new</Box>
+        {hasConversations && (
+          <Box color="brand">{counts.conversations} new</Box>
         )}
       </NavBarMobileMenuItemLink>
 

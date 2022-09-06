@@ -5,12 +5,7 @@ import { isServer } from "Server/isServer"
 import { NavBarMobileMenuNotificationsIndicatorQuery } from "__generated__/NavBarMobileMenuNotificationsIndicatorQuery.graphql"
 import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
-  getConversationCount,
-  getNotificationCount,
-  updateConversationCache,
-  updateNotificationCache,
-} from "../helpers"
+import { checkAndSyncIndicatorsCount } from "../helpers"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileMenuNotificationsIndicator_me } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
@@ -22,15 +17,13 @@ interface NavBarMobileMenuNotificationsIndicatorProps {
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
   me,
 }) => {
-  const { unreadConversationCount, unreadNotificationsCount } = me ?? {}
-  const conversationCount = unreadConversationCount || getConversationCount()
-  const notificationsCount = unreadNotificationsCount || getNotificationCount()
-  const hasNotifications = conversationCount > 0 || notificationsCount > 0
+  const { hasConversations, hasNotifications } = checkAndSyncIndicatorsCount({
+    notifications: me?.unreadNotificationsCount,
+    conversations: me?.unreadConversationCount,
+  })
+  const shouldDisplayIndicator = hasConversations || hasNotifications
 
-  updateConversationCache(unreadConversationCount)
-  updateNotificationCache(unreadNotificationsCount)
-
-  if (hasNotifications) {
+  if (shouldDisplayIndicator) {
     return (
       <NavBarNotificationIndicator position="absolute" top="7px" right="4px" />
     )
