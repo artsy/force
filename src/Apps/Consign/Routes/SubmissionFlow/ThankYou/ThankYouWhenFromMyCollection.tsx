@@ -1,10 +1,7 @@
 import { Button, Flex, Text } from "@artsy/palette"
-import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
 
 export const ThankYouWhenFromMyCollection: React.FC = () => {
-  const { isLoggedIn } = useSystemContext()
-
   return (
     <>
       <Text variant="xl" mt={4}>
@@ -19,29 +16,16 @@ export const ThankYouWhenFromMyCollection: React.FC = () => {
         flexDirection={["column", "row"]}
         alignItems={["stretch", "center"]}
       >
-        {isLoggedIn ? (
-          <RouterLink to="/my-collection">
-            <Button
-              width={["100%", "auto"]}
-              data-test-id="back-to-my-collection"
-              size="large"
-              variant="primaryBlack"
-            >
-              Back to My Collection
-            </Button>
-          </RouterLink>
-        ) : (
-          <RouterLink to="/">
-            <Button
-              width={["100%", "auto"]}
-              data-test-id="back-to-artsy-homepage"
-              size="large"
-              variant="primaryBlack"
-            >
-              Back to Artsy Homepage
-            </Button>
-          </RouterLink>
-        )}
+        <RouterLink to="/my-collection">
+          <Button
+            width={["100%", "auto"]}
+            data-test-id="back-to-my-collection"
+            size="large"
+            variant="primaryBlack"
+          >
+            Back to My Collection
+          </Button>
+        </RouterLink>
       </Flex>
     </>
   )
