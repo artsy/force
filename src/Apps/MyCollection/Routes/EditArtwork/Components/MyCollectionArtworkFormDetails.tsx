@@ -79,6 +79,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.title}
+            data-testid="my-collection-artwork-details-title"
           />
         </Column>
       </GridColumns>

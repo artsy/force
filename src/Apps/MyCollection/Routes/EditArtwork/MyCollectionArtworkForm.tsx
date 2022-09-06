@@ -56,7 +56,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     MyCollectionArtworkDetailsValidationSchema
   )
 
-  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
+  const [
+    showLeaveWithoutSavingModal,
+    setShowLeaveWithoutSavingModal,
+  ] = useState<boolean>(false)
   const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
     boolean
   >(false)
@@ -192,6 +195,15 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     }
   }
 
+  const leaveForm = () => {
+    router.replace({ pathname: "/settings/my-collection" })
+    router.push({
+      pathname: isEditing
+        ? `/my-collection/artwork/${artwork.internalID}`
+        : "/settings/my-collection",
+    })
+  }
+
   return (
     <>
       <MetaTags
@@ -212,25 +224,18 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           validationSchema={MyCollectionArtworkDetailsValidationSchema}
           initialErrors={initialErrors}
         >
-          {({ isSubmitting, isValid, values }) => (
+          {({ isSubmitting, isValid, values, dirty }) => (
             <Form>
               <RouterLink to="/my-collection" display="block">
                 <ArtsyLogoBlackIcon display="block" />
               </RouterLink>
 
               <StickyProvider>
-                {shouldShowBackModal && (
+                {showLeaveWithoutSavingModal && (
                   <ConfirmationModalBack
-                    onClose={() => setShouldShowBackModal(false)}
+                    onClose={() => setShowLeaveWithoutSavingModal(false)}
                     isEditing={isEditing}
-                    onLeave={() => {
-                      router.replace({ pathname: "/settings/my-collection" })
-                      router.push({
-                        pathname: isEditing
-                          ? `/my-collection/artwork/${artwork.internalID}`
-                          : "/settings/my-collection",
-                      })
-                    }}
+                    onLeave={() => leaveForm()}
                   />
                 )}
                 {shouldShowDeletionModal && (
@@ -256,7 +261,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               <BackLink
                                 // @ts-ignore
                                 as={RouterLink}
-                                onClick={() => setShouldShowBackModal(true)}
+                                onClick={() => {
+                                  dirty
+                                    ? setShowLeaveWithoutSavingModal(true)
+                                    : leaveForm()
+                                }}
                                 width="min-content"
                               >
                                 Back
