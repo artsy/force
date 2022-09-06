@@ -48,6 +48,10 @@ fragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {
   artistNames
   title
   date
+  artist {
+    href
+    id
+  }
 }
 */
 
@@ -148,6 +152,25 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "href",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "category",
             "storageKey": null
@@ -242,7 +265,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "06dbebc77f480d95a39f16650de82dee",
+    "cacheID": "f301621761369ee5c2a9e899f3649226",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -252,6 +275,14 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "artwork.artist.href": (v2/*: any*/),
+        "artwork.artist.id": (v3/*: any*/),
         "artwork.artistNames": (v2/*: any*/),
         "artwork.artworkLocation": (v2/*: any*/),
         "artwork.attributionClass": {
@@ -287,7 +318,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarMetadataTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n}\n"
+    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
   }
 };
 })();
