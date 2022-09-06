@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
@@ -13,6 +13,11 @@ import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.g
 import { extractNodes } from "Utils/extractNodes"
 import { useSetPayment } from "../Mutations/useSetPayment"
 import { camelCase, upperFirst } from "lodash"
+
+interface BankAccountRecord {
+  internalID: string
+  last4: string
+}
 
 interface Props {
   order: BankAccountPicker_order
@@ -45,7 +50,33 @@ export const BankAccountPicker: FC<Props> = props => {
     clientSecret,
   } = props
 
-  const bankAccountsArray = extractNodes(bankAccounts)
+  const [bankAccountsArray, setBankAccountsArray] = useState<
+    BankAccountRecord[] | null
+  >(null)
+
+  useEffect(() => {
+    // user's saved banks
+    const banks = extractNodes(bankAccounts)
+
+    // if order has a bank account on it
+    if (
+      order.paymentMethodDetails &&
+      order.paymentMethodDetails.internalID &&
+      order.paymentMethodDetails.last4
+    ) {
+      // if account on order is not saved on user's profile
+      const isOrderBankSaved = banks.find(
+        bank => bank.last4 === order.paymentMethodDetails?.last4
+      )
+
+      if (!isOrderBankSaved) {
+        // populate banks array with the account on order
+        banks.unshift(order.paymentMethodDetails as BankAccountRecord)
+      }
+    }
+
+    setBankAccountsArray(banks)
+  }, [bankAccounts, order.paymentMethodDetails])
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -80,7 +111,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
   return (
     <>
-      {bankAccountsArray.length > 0 && (
+      {bankAccountsArray && bankAccountsArray.length > 0 && (
         <RadioGroup
           data-test="bankAccounts"
           onSelect={val => {
@@ -107,7 +138,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
               return (
                 <BorderedRadio value={internalID} key={internalID}>
-                  <BankDebitDetails last4={last4} />
+                  <BankDebitDetails last4={last4!} />
                 </BorderedRadio>
               )
             })
@@ -176,6 +207,12 @@ export const BankAccountPickerFragmentContainer = createFragmentContainer(
         internalID
         mode
         bankAccountId
+        paymentMethodDetails {
+          ... on BankAccount {
+            internalID
+            last4
+          }
+        }
       }
     `,
   }
