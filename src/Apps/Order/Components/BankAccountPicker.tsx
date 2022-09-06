@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
@@ -50,33 +50,23 @@ export const BankAccountPicker: FC<Props> = props => {
     clientSecret,
   } = props
 
-  const [bankAccountsArray, setBankAccountsArray] = useState<
-    BankAccountRecord[] | null
-  >(null)
+  const bankAccountsArray: BankAccountRecord[] = extractNodes(bankAccounts)
 
-  useEffect(() => {
-    // user's saved banks
-    const banks = extractNodes(bankAccounts)
+  if (
+    order.paymentMethodDetails &&
+    order.paymentMethodDetails.internalID &&
+    order.paymentMethodDetails.last4
+  ) {
+    // if account on order is not saved on user's profile
+    const isOrderBankSaved = bankAccountsArray.find(
+      bank => bank.last4 === order.paymentMethodDetails?.last4
+    )
 
-    // if order has a bank account on it
-    if (
-      order.paymentMethodDetails &&
-      order.paymentMethodDetails.internalID &&
-      order.paymentMethodDetails.last4
-    ) {
-      // if account on order is not saved on user's profile
-      const isOrderBankSaved = banks.find(
-        bank => bank.last4 === order.paymentMethodDetails?.last4
-      )
-
-      if (!isOrderBankSaved) {
-        // populate banks array with the account on order
-        banks.unshift(order.paymentMethodDetails as BankAccountRecord)
-      }
+    if (!isOrderBankSaved) {
+      // populate banks array with the account on order
+      bankAccountsArray.unshift(order.paymentMethodDetails as BankAccountRecord)
     }
-
-    setBankAccountsArray(banks)
-  }, [bankAccounts, order.paymentMethodDetails])
+  }
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
