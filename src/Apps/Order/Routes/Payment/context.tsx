@@ -1,6 +1,9 @@
 import React, { useReducer, createContext, Dispatch } from "react"
 import { paymentReducer } from "./reducer"
 import { PaymentAction, PaymentState } from "./types"
+import createLogger from "Utils/logger"
+
+const logger = createLogger("[dev: OrderPaymentContext] state:")
 
 const initialPaymentState = {
   selectedBankAccountId: "",
@@ -20,7 +23,7 @@ const PaymentProvider: React.FC = ({ children }) => {
 
   // for developers' convenience only
   if (process.env.NODE_ENV === "development") {
-    console.log({ paymentState: state })
+    logger.log(state)
   }
 
   return (
