@@ -2,8 +2,8 @@ import cookie from "cookies-js"
 import { isServer } from "Server/isServer"
 
 interface Counts {
-  conversations: number | undefined
-  notifications: number | undefined
+  conversations?: number
+  notifications?: number
 }
 
 export const getNotificationCount = () =>

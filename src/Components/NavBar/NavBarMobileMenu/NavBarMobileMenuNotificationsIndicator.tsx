@@ -23,13 +23,13 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNo
   })
   const shouldDisplayIndicator = hasConversations || hasNotifications
 
-  if (shouldDisplayIndicator) {
-    return (
-      <NavBarNotificationIndicator position="absolute" top="5px" right="5px" />
-    )
+  if (!shouldDisplayIndicator) {
+    return null
   }
 
-  return null
+  return (
+    <NavBarNotificationIndicator position="absolute" top="5px" right="5px" />
+  )
 }
 
 export const NavBarMobileMenuNotificationsIndicatorFragmentContainer = createFragmentContainer(
