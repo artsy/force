@@ -3,7 +3,6 @@ import { ArtistHeaderFragmentContainer } from "../ArtistHeader"
 import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
-import "System/i18n/i18n"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
