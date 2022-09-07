@@ -1,8 +1,8 @@
-import { useContext } from "react"
-import * as React from "react"
+import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   ArtworkIcon,
   BellIcon,
+  GraphIcon,
   HeartIcon,
   PowerIcon,
   ReceiptIcon,
@@ -11,12 +11,14 @@ import {
   SoloIcon,
   Text,
 } from "@artsy/palette"
-import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { SystemContext } from "System"
+import * as React from "react"
+import { useContext } from "react"
 import { useTracking } from "react-tracking"
+import { SystemContext } from "System"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { getENV } from "Utils/getENV"
 import { userIsAdmin } from "Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
-import { getENV } from "Utils/getENV"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -42,6 +44,8 @@ export const NavBarUserMenu: React.FC = () => {
 
   const isAdmin = userIsAdmin(user)
   const hasPartnerAccess = Boolean(user?.has_partner_access)
+
+  const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
 
   return (
     <Text variant="sm" py={1} width={230}>
@@ -100,6 +104,16 @@ export const NavBarUserMenu: React.FC = () => {
       >
         <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
       </NavBarMenuItemLink>
+
+      {isInsightsEnabled && (
+        <NavBarMenuItemLink
+          aria-label="View your Collection's Insights"
+          to="/settings/insights"
+          onClick={trackClick}
+        >
+          <GraphIcon mr={1} aria-hidden="true" /> Insights
+        </NavBarMenuItemLink>
+      )}
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"

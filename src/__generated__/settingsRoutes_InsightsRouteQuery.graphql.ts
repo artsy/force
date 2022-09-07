@@ -3,10 +3,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type settingsRoutes_InsightsRouteQueryVariables = {};
 export type settingsRoutes_InsightsRouteQueryResponse = {
     readonly me: {
-        readonly internalID: string;
+        readonly " $fragmentRefs": FragmentRefs<"InsightsRoute_me">;
     } | null;
 };
 export type settingsRoutes_InsightsRouteQuery = {
@@ -19,21 +20,17 @@ export type settingsRoutes_InsightsRouteQuery = {
 /*
 query settingsRoutes_InsightsRouteQuery {
   me {
-    internalID
+    ...InsightsRoute_me
     id
   }
 }
+
+fragment InsightsRoute_me on Me {
+  internalID
+}
 */
 
-const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -48,7 +45,11 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/)
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "InsightsRoute_me"
+          }
         ],
         "storageKey": null
       }
@@ -70,7 +71,13 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -84,14 +91,13 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3a927ffd4abb4c5ac82295b21c571912",
+    "cacheID": "db36ab712dcb9814f6a9eaa7b6a56ea7",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_InsightsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    internalID\n    id\n  }\n}\n"
+    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n}\n"
   }
 };
-})();
-(node as any).hash = '527e52752540492ccd8cb9b91666dc2d';
+(node as any).hash = '05488390d019c37ca002a2608bb08e1b';
 export default node;
