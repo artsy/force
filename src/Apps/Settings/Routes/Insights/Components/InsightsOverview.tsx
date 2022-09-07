@@ -7,6 +7,10 @@ interface InsightsOverviewProps {
 }
 
 const InsightsOverview: React.FC<InsightsOverviewProps> = ({ info }) => {
+  if (!info) {
+    return null
+  }
+
   const { artistsCount, artworksCount } = info
 
   return (

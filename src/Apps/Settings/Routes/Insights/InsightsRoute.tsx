@@ -1,5 +1,6 @@
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { InsightsRoute_me } from "__generated__/InsightsRoute_me.graphql"
 import { InsightsOverviewFragmentContainer } from "./Components/InsightsOverview"
 
@@ -8,12 +9,14 @@ interface InsightsRouteProps {
 }
 
 const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
+  const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+
   return (
     <>
       <Text>Sup</Text>
 
-      {me.myCollectionInfo && (
-        <InsightsOverviewFragmentContainer info={me.myCollectionInfo} />
+      {isInsightsEnabled && (
+        <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
       )}
     </>
   )
