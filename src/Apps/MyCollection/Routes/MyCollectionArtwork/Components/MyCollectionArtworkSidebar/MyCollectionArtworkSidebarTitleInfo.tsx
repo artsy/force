@@ -15,11 +15,11 @@ const MyCollectionArtworkSidebarTitleInfo: React.FC<MyCollectionArtworkSidebarTi
 
   return (
     <>
-      <RouterLink textDecoration="none" to={artist?.href ?? ""}>
-        <Text as="h1" variant="lg-display">
+      <Text as="h1" variant="lg-display">
+        <RouterLink textDecoration="none" to={artist?.href ?? ""}>
           {artistNames}
-        </Text>
-      </RouterLink>
+        </RouterLink>
+      </Text>
       <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
         <i>{title?.trim()}</i>
         {date && date.replace(/\s+/g, "").length > 0 && ", " + date}

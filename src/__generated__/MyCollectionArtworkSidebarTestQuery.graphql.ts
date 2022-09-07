@@ -4,21 +4,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSidebarMetadataTestQueryVariables = {};
-export type MyCollectionArtworkSidebarMetadataTestQueryResponse = {
+export type MyCollectionArtworkSidebarTestQueryVariables = {};
+export type MyCollectionArtworkSidebarTestQueryResponse = {
     readonly artwork: {
         readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebarMetadata_artwork">;
     } | null;
 };
-export type MyCollectionArtworkSidebarMetadataTestQuery = {
-    readonly response: MyCollectionArtworkSidebarMetadataTestQueryResponse;
-    readonly variables: MyCollectionArtworkSidebarMetadataTestQueryVariables;
+export type MyCollectionArtworkSidebarTestQuery = {
+    readonly response: MyCollectionArtworkSidebarTestQueryResponse;
+    readonly variables: MyCollectionArtworkSidebarTestQueryVariables;
 };
 
 
 
 /*
-query MyCollectionArtworkSidebarMetadataTestQuery {
+query MyCollectionArtworkSidebarTestQuery {
   artwork(id: "foo") {
     ...MyCollectionArtworkSidebarTitleInfo_artwork
     ...MyCollectionArtworkSidebarMetadata_artwork
@@ -87,7 +87,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MyCollectionArtworkSidebarMetadataTestQuery",
+    "name": "MyCollectionArtworkSidebarTestQuery",
     "selections": [
       {
         "alias": null,
@@ -118,7 +118,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "MyCollectionArtworkSidebarMetadataTestQuery",
+    "name": "MyCollectionArtworkSidebarTestQuery",
     "selections": [
       {
         "alias": null,
@@ -265,7 +265,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f301621761369ee5c2a9e899f3649226",
+    "cacheID": "86726615c0da40f6bba58e5540c83eb6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -316,11 +316,11 @@ return {
         "artwork.title": (v2/*: any*/)
       }
     },
-    "name": "MyCollectionArtworkSidebarMetadataTestQuery",
+    "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarMetadataTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3ca4199002ae9dab527fe26aa2b7d8b8';
+(node as any).hash = '7d2cccb01a3a93af464433277d27a66a';
 export default node;
