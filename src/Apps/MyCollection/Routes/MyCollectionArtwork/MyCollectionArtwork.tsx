@@ -177,7 +177,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                     <Spacer m={6} />
 
                     {!!enableMyCollectionPhase4ArticlesRail && (
-                      <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+                      <ArtistCurrentArticlesRailQueryRenderer
+                        slug={slug}
+                        artworkId={artwork.internalID}
+                      />
                     )}
                   </>
                 </Tab>
@@ -191,7 +194,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <Spacer m={6} />
 
                 {!!enableMyCollectionPhase4ArticlesRail && (
-                  <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+                  <ArtistCurrentArticlesRailQueryRenderer
+                    slug={slug}
+                    artworkId={artwork.internalID}
+                  />
                 )}
               </>
             )}
@@ -207,7 +213,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <Spacer m={[4, 6]} />
 
             {!!enableMyCollectionPhase4ArticlesRail && (
-              <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+              <ArtistCurrentArticlesRailQueryRenderer
+                slug={slug}
+                artworkId={artwork.internalID}
+              />
             )}
           </>
         )}

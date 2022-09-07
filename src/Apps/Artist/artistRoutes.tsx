@@ -198,6 +198,22 @@ export const artistRoutes: AppRouteConfig[] = [
         `,
       },
       {
+        path: "articles/:artworkId",
+        hideNavigationTabs: true,
+        getComponent: () => ArticlesRoute,
+        onClientSideRender: () => {
+          ArticlesRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_ArticlesQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistArticlesRoute_artist
+            }
+          }
+        `,
+      },
+
+      {
         path: "consign",
         displayFullPage: true,
         hideNavigationTabs: true,

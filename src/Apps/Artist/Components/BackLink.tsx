@@ -4,27 +4,37 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { BackLink_artist } from "__generated__/BackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
+import { useRouter } from "System/Router/useRouter"
 
 interface BackLinkProps {
   artist: BackLink_artist
+  artworkId?: string
 }
 
-const BackLink: React.FC<BackLinkProps> = ({ artist }) => {
+const BackLink: React.FC<BackLinkProps> = ({ artist, artworkId }) => {
   const { trackEvent } = useTracking()
+  const { router } = useRouter()
+  const redirectLink = `/my-collection/artwork/${artworkId}`
 
   return (
     <TopContextBar
-      href={artist.href}
+      href={artworkId ? undefined : artist.href}
+      redirectTo={artworkId ? redirectLink : undefined}
       displayBackArrow
-      onClick={() =>
+      onClick={() => {
         trackEvent({
           action_type: DeprecatedAnalyticsSchema.ActionType.Click,
           destination_path: artist.href,
           subject: "Back to artist link",
         })
-      }
+
+        artworkId &&
+          router.replace({
+            pathname: redirectLink,
+          })
+      }}
     >
-      Back to {artist.name}
+      Back to {artworkId ? "My Collection" : artist.name}
     </TopContextBar>
   )
 }
