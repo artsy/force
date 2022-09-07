@@ -86,6 +86,12 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
     <>
       <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
 
+      {enableActivityPanel && (
+        <NavBarMobileMenuItemLink to="/notifications">
+          Activity
+        </NavBarMobileMenuItemLink>
+      )}
+
       <NavBarMobileMenuItemLink
         to="/user/conversations"
         justifyContent="space-between"
@@ -99,12 +105,6 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       <NavBarMobileMenuItemLink to="/works-for-you">
         Works for you
       </NavBarMobileMenuItemLink>
-
-      {enableActivityPanel && (
-        <NavBarMobileMenuItemLink to="/notifications">
-          Activity
-        </NavBarMobileMenuItemLink>
-      )}
     </>
   )
 }
