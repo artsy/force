@@ -2,7 +2,7 @@ import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
 describe("/collections", () => {
   before(() => {
-    visitWithStatusRetries("collections")
+    visitWithStatusRetries("collections", { timeout: 60000 })
   })
 
   it("renders metadata", () => {
