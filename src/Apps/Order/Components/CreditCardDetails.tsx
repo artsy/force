@@ -5,7 +5,6 @@ interface Props {
   lastDigits: string
   expirationMonth: number
   expirationYear: number
-  responsive?: boolean
   textColor?: string
 }
 
@@ -15,7 +14,6 @@ export const CreditCardDetails = (props: Props) => {
     expirationMonth,
     expirationYear,
     brand,
-    responsive = true,
     textColor = "black100",
   } = props
 
@@ -23,7 +21,7 @@ export const CreditCardDetails = (props: Props) => {
     <Flex alignItems="center">
       <CreditCardIcon mr={1} type={brand} width="25px" />
       <Text
-        size={responsive ? ["2", "3"] : "3"}
+        variant="sm-display"
         color={textColor}
         style={{ position: "relative", top: "1px" }}
       >

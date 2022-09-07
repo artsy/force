@@ -286,10 +286,7 @@ export class CreditCardPicker extends React.Component<
                   const { internalID, ...creditCardProps } = e
                   return (
                     <BorderedRadio value={internalID} key={internalID}>
-                      <CreditCardDetails
-                        responsive={false}
-                        {...creditCardProps}
-                      />
+                      <CreditCardDetails {...creditCardProps} />
                     </BorderedRadio>
                   )
                 })

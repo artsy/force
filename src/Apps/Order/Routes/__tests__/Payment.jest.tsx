@@ -377,7 +377,7 @@ describe("Payment", () => {
     })
 
     it("renders selection of payment methods", async () => {
-      expect(page.text()).toContain("SEPA direct debit")
+      expect(page.text()).toContain("SEPA bank transfer")
       expect(page.text()).toContain("Credit card")
     })
 
