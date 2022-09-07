@@ -52,9 +52,9 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                   height={24}
                 >
                   <Text
+                    variant="sm-display"
                     textTransform="capitalize"
                     textColor={index === 0 ? "black100" : "black60"}
-                    variant="sm"
                   >
                     {line}
                   </Text>

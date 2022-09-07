@@ -44,6 +44,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { Z } from "Apps/Components/constants"
 import { useTranslation } from "react-i18next"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -74,6 +76,7 @@ export const NavBar: React.FC = track(
   }
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
+  const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
@@ -121,6 +124,18 @@ export const NavBar: React.FC = track(
   }
 
   const { height } = useNavBarHeight()
+
+  const renderNotificationsIndicator = () => {
+    if (!showNotificationCount) {
+      return null
+    }
+
+    if (enableActivityPanel) {
+      return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
+    }
+
+    return <NavBarMobileMenuInboxNotificationCountQueryRenderer />
+  }
 
   return (
     <ThemeProviderV3>
@@ -290,9 +305,7 @@ export const NavBar: React.FC = track(
                 >
                   <NavBarMobileMenuIcon open={showMobileMenu} />
 
-                  {showNotificationCount && (
-                    <NavBarMobileMenuInboxNotificationCountQueryRenderer />
-                  )}
+                  {renderNotificationsIndicator()}
                 </NavBarItemButton>
               </Flex>
             </Flex>

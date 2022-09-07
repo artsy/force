@@ -232,7 +232,9 @@ const getAvailablePaymentMethods = (
       label={
         <>
           <CreditCardIcon type="Unknown" fill="black100" />
-          <Text ml={0.5}>Credit card</Text>
+          <Text variant="sm-display" ml={0.5}>
+            Credit card
+          </Text>
         </>
       }
     />,
@@ -248,7 +250,9 @@ const getAvailablePaymentMethods = (
         label={
           <>
             <InstitutionIcon fill="green100" />
-            <Text ml={0.5}>Wire transfer</Text>
+            <Text variant="sm-display" ml={0.5}>
+              Wire transfer
+            </Text>
           </>
         }
       />
@@ -265,7 +269,9 @@ const getAvailablePaymentMethods = (
         label={
           <>
             <InstitutionIcon fill="green100" />
-            <Text ml={0.5}>Bank transfer</Text>
+            <Text variant="sm-display" ml={0.5}>
+              Bank transfer
+            </Text>
           </>
         }
       >
@@ -279,21 +285,23 @@ const getAvailablePaymentMethods = (
   // when available, unshift SEPA since it's the first option we want to offer for EU artworks
   if (availablePaymentMethods.includes("SEPA_DEBIT")) {
     paymentMethods.unshift(
-      <RadioWithLabel
+      <BorderedRadio
         data-test-id="sepa-debit"
         key="SEPA_DEBIT"
         value={(paymentMethod = "SEPA_DEBIT")}
         label={
           <>
             <InstitutionIcon fill="green100" />
-            <Text ml={0.5}>Bank transfer</Text>
+            <Text variant="sm-display" ml={0.5}>
+              SEPA bank transfer
+            </Text>
           </>
         }
       >
-        <USBankOnlyLabel ml={0.5} variant="xs">
-          SEPA direct debit
-        </USBankOnlyLabel>
-      </RadioWithLabel>
+        <Text ml="24px" variant="xs" color="black60">
+          See full list of SEPA countries below
+        </Text>
+      </BorderedRadio>
     )
   }
   return paymentMethods
