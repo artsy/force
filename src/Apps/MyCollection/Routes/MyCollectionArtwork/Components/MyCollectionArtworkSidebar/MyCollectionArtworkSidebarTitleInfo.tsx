@@ -16,7 +16,7 @@ const MyCollectionArtworkSidebarTitleInfo: React.FC<MyCollectionArtworkSidebarTi
   return (
     <>
       <Text as="h1" variant="lg-display">
-        <RouterLink textDecoration="none" to={artist?.href ?? ""}>
+        <RouterLink textDecoration="none" to={artist!.href}>
           {artistNames}
         </RouterLink>
       </Text>
