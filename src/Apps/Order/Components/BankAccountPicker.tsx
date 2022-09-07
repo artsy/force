@@ -52,11 +52,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
   const bankAccountsArray: BankAccountRecord[] = extractNodes(bankAccounts)
 
-  if (
-    order.paymentMethodDetails &&
-    order.paymentMethodDetails.internalID &&
-    order.paymentMethodDetails.last4
-  ) {
+  if (order?.paymentMethodDetails?.internalID) {
     // if account on order is not saved on user's profile
     const isOrderBankSaved = bankAccountsArray.find(
       bank => bank.last4 === order.paymentMethodDetails?.last4
@@ -101,7 +97,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
   return (
     <>
-      {bankAccountsArray && bankAccountsArray.length > 0 && (
+      {bankAccountsArray?.length > 0 && (
         <RadioGroup
           data-test="bankAccounts"
           onSelect={val => {
@@ -128,7 +124,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
               return (
                 <BorderedRadio value={internalID} key={internalID}>
-                  <BankDebitDetails last4={last4!} />
+                  <BankDebitDetails last4={last4} />
                 </BorderedRadio>
               )
             })
