@@ -25,7 +25,7 @@ export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNo
 
   if (shouldDisplayIndicator) {
     return (
-      <NavBarNotificationIndicator position="absolute" top="7px" right="4px" />
+      <NavBarNotificationIndicator position="absolute" top="5px" right="5px" />
     )
   }
 
