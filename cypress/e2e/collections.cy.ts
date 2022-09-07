@@ -1,6 +1,8 @@
+import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
+
 describe("/collections", () => {
   before(() => {
-    cy.visit("collections")
+    visitWithStatusRetries("collections")
   })
 
   it("renders metadata", () => {
