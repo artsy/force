@@ -74,7 +74,7 @@ const InsightsRoute = loadable(
       /* webpackChunkName: "settingsBundle" */ "./Routes/Insights/InsightsRoute"
     ),
   {
-    resolveComponent: component => component.InsightsRouteRefetchContainer,
+    resolveComponent: component => component.InsightsRouteFragmentContainer,
   }
 )
 
