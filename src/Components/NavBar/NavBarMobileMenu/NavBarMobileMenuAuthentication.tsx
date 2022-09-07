@@ -1,22 +1,23 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box } from "@artsy/palette"
 import { ModalType } from "Components/Authentication/Types"
-import { isServer } from "Server/isServer"
+import { compact } from "lodash"
 import * as React from "react"
 import { useContext } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
+import { isServer } from "Server/isServer"
+import styled from "styled-components"
 import { SystemContext, useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { getMobileAuthLink } from "Utils/openAuthModal"
 import { NavBarMobileMenuAuthenticationQuery } from "__generated__/NavBarMobileMenuAuthenticationQuery.graphql"
 import { NavBarMobileMenuAuthentication_me } from "__generated__/NavBarMobileMenuAuthentication_me.graphql"
 import { checkAndSyncIndicatorsCount } from "../helpers"
+import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
-import styled from "styled-components"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me | null
@@ -27,6 +28,8 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
 }) => {
   const { mediator } = useSystemContext()
   const enableActivityPanel = useFeatureFlag("force-enable-new-activity-panel")
+  const isInsightsEnabled = useFeatureFlag("my-collection-web-phase-7-insights")
+
   const {
     hasConversations,
     hasNotifications,
@@ -38,7 +41,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
 
   const menu = {
     title: "Account",
-    links: [
+    links: compact([
       {
         text: "Order history",
         href: "/settings/purchases",
@@ -63,6 +66,10 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         text: "My Collection",
         href: "/settings/my-collection",
       },
+      isInsightsEnabled && {
+        text: "Insights",
+        href: "/settings/insights",
+      },
       {
         text: "Settings",
         href: "/settings/edit-settings",
@@ -84,7 +91,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
           mediator?.trigger("auth:logout")
         },
       },
-    ],
+    ]),
   }
 
   return (

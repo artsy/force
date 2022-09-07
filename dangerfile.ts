@@ -33,7 +33,7 @@ function warnCreateSmokeTestIfRoutesFileChanged() {
   const modified = danger.git.modified_files
   if (modified.includes("src/routes.tsx")) {
     warn(
-      "Routes added to `routes.tsx` should have a corresponding cypress.js smoke test. See the `cypress/integration` folder for examples."
+      "Routes added to `routes.tsx` should have a corresponding cypress.js smoke test. See the `cypress/e2e` folder for examples."
     )
   }
 }

@@ -115,7 +115,7 @@ COPY .env.oss \
   .swcrc.js \
   apollo.config.js \
   babel.config.js \
-  cypress.json \
+  cypress.config.ts \
   dangerfile.ts \
   jest.config.js \
   package.json \

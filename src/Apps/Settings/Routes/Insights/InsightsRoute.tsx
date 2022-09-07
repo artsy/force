@@ -22,7 +22,7 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   )
 }
 
-export const InsightsRouteRefetchContainer = createFragmentContainer(
+export const InsightsRouteFragmentContainer = createFragmentContainer(
   InsightsRoute,
   {
     me: graphql`
