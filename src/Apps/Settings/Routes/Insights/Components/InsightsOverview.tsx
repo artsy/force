@@ -10,23 +10,23 @@ const InsightsOverview: React.FC<InsightsOverviewProps> = ({ info }) => {
   const { artistsCount, artworksCount } = info
 
   return (
-    <Flex>
-      <Box minWidth={290}>
-        <Text variant={"sm-display"} mb={0.5}>
+    <Flex mt={[2, 4]}>
+      <Box minWidth={[150, 290]}>
+        <Text variant={["xs", "sm-display"]} mb={[0, 0.5]}>
           Total Artists
         </Text>
-        <Text variant={"xl"} color="blue100">
+        <Text variant={["lg-display", "xl"]} color="blue100">
           {artistsCount}
         </Text>
       </Box>
 
       <Spacer m={2} />
 
-      <Box minWidth={290}>
-        <Text variant={"sm-display"} mb={0.5}>
+      <Box minWidth={[150, 290]}>
+        <Text variant={["xs", "sm-display"]} mb={[0, 0.5]}>
           Total Artworks
         </Text>
-        <Text variant={"xl"} color="blue100">
+        <Text variant={["lg-display", "xl"]} color="blue100">
           {artworksCount}
         </Text>
       </Box>
