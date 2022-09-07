@@ -5,7 +5,10 @@ import createLogger from "Utils/logger"
 
 const logger = createLogger("[dev: OrderPaymentContext] state:")
 
-/* ACTIONS ------------------------------------------------------------------ */
+/**
+ * Actions
+ */
+
 enum OrderPaymentActions {
   SET_SELECTED_BANK_ACCOUNT_ID = "SET_SELECTED_BANK_ACCOUNT_ID",
   SET_SELECTED_PAYMENT_METHOD = "SET_SELECTED_PAYMENT_METHOD",
@@ -31,7 +34,10 @@ type ActionMap<M extends { [index: string]: any }> = {
       }
 }
 
-/* STATE -------------------------------------------------------------------- */
+/**
+ * State
+ */
+
 type OrderPaymentState = {
   selectedBankAccountId: string
   selectedPaymentMethod: CommercePaymentMethodEnum | string
@@ -42,7 +48,10 @@ const initialOrderPaymentState = {
   selectedPaymentMethod: "",
 }
 
-/* CONTEXT ------------------------------------------------------------------ */
+/**
+ * Context
+ */
+
 const OrderPaymentContext = createContext<{
   state: OrderPaymentState
   dispatch: Dispatch<OrderPaymentAction>
@@ -51,7 +60,10 @@ const OrderPaymentContext = createContext<{
   dispatch: () => null,
 })
 
-/* PROVIDER ----------------------------------------------------------------- */
+/**
+ * Provider
+ */
+
 const OrderPaymentProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(
     orderPaymentReducer,
@@ -70,7 +82,10 @@ const OrderPaymentProvider: React.FC = ({ children }) => {
   )
 }
 
-/* HOOK --------------------------------------------------------------------- */
+/**
+ * Hook
+ */
+
 const useOrderPaymentContext = () => {
   const { state, dispatch } = useContext(OrderPaymentContext)
   return { state, dispatch }
