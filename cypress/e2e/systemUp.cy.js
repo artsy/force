@@ -6,7 +6,7 @@ describe("/system/up", () => {
       .should("include", "application/json")
   })
 
-  context("mobile", () => {
+  describe("mobile", () => {
     before(() => {
       cy.viewport("iphone-x")
     })

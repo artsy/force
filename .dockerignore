@@ -21,7 +21,7 @@
 !cypress/
 !.env.oss
 !.env.test
-!cypress.json
+!cypress.config.ts
 !jest.config.js
 
 # Build Configuration
