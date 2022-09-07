@@ -30,7 +30,7 @@ export const NotificationsEmptyStateByType: React.FC<NotificationsEmptyStateByTy
   const state = emptyStateByType[type]
 
   return (
-    <Box aria-label="There is nothing to show">
+    <Box p={2} aria-label="There is nothing to show">
       <Text variant="sm-display" textAlign="center">
         {state.title}
       </Text>
