@@ -5,7 +5,7 @@ describe("/terms", () => {
   })
 })
 
-context("mobile", () => {
+describe("mobile", () => {
   before(() => {
     cy.viewport("iphone-x")
   })

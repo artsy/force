@@ -10,7 +10,7 @@ export const BankDebitDetails = (props: Props) => {
       <InstitutionIcon fill="green100" />
       <Spacer ml={0.5} />
       <Text
-        size={["2", "3"]}
+        variant="sm-display"
         color="black100"
         style={{ position: "relative", top: "1px" }}
       >

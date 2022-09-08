@@ -16079,6 +16079,7 @@ type User {
     # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     timezone: String
   ): String
+  follows: UserFollows
 
   # A globally unique ID.
   id: ID!
@@ -16156,6 +16157,12 @@ type User {
 
   # The sale profile of the user.
   saleProfile: UserSaleProfile
+  savedArtworksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtworkConnection
 
   # If the user has enabled two-factor authentication on their account
   secondFactorEnabled: Boolean!
@@ -16312,6 +16319,21 @@ type UserEdge {
 
   # The item at the end of the edge
   node: User
+}
+
+type UserFollows {
+  artistsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtistConnection
+  genesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): GeneConnection
 }
 
 type UserIconDeleteFailureType {

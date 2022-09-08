@@ -8,6 +8,9 @@ export type MyCollectionArtworkSidebarTitleInfo_artwork = {
     readonly artistNames: string | null;
     readonly title: string | null;
     readonly date: string | null;
+    readonly artist: {
+        readonly href: string | null;
+    } | null;
     readonly " $refType": "MyCollectionArtworkSidebarTitleInfo_artwork";
 };
 export type MyCollectionArtworkSidebarTitleInfo_artwork$data = MyCollectionArtworkSidebarTitleInfo_artwork;
@@ -44,10 +47,28 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "date",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '60120603938afed466e07220e7b757d3';
+(node as any).hash = '24af03d4f484b14c3653cb2ed472a822';
 export default node;

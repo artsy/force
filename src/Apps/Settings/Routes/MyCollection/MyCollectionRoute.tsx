@@ -142,7 +142,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                         <Flex
                           backgroundColor="white100"
                           justifyContent="flex-end"
-                          py={[2, 4]}
+                          py={2}
                         >
                           {!!isMyCollectionPhase3Enabled && (
                             <Button

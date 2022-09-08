@@ -117,7 +117,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["src/**/*.test.js", "src/**/*.test.ts"],
+      files: ["*.cy.js", "*.cy.ts"],
       rules: {
         "jest/expect-expect": "off",
         "jest/valid-describe": "off",

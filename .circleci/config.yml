@@ -218,7 +218,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/base:16.17.0
+      - image: cypress/included:10.7.0
         environment:
           TERM: xterm
     working_directory: ~/app
@@ -229,7 +229,7 @@ jobs:
           name: Install Dependencies
           command: yarn install
       - run: |
-          TESTS=$(circleci tests glob "cypress/integration/**/*" | circleci tests split | paste -sd ',')
+          TESTS=$(circleci tests glob "cypress/e2e/**/*" | circleci tests split | paste -sd ',')
           ./node_modules/.bin/cypress run --config baseUrl=$SMOKE_TEST_TARGET --spec $TESTS
       - store_artifacts:
           path: cypress/screenshots
