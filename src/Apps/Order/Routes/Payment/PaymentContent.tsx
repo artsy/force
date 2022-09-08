@@ -32,7 +32,6 @@ import {
 } from "Apps/Order/Components/CreditCardPicker"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
-import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 
 export interface Props {
   order: Payment_order
@@ -151,39 +150,48 @@ export const PaymentContent: FC<Props> = props => {
       <Collapse open={paymentMethod === "US_BANK_ACCOUNT"}>
         {getPaymentMethodInfo(paymentMethod)}
         <Spacer mb={2} />
-        <BankAccountPickerFragmentContainer
-          me={me}
-          order={order}
-          paymentMethod="US_BANK_ACCOUNT"
-          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          onSetBankAccountHasInsufficientFunds={
-            onSetBankAccountHasInsufficientFunds
-          }
-          onSetIsSavingPayment={onSetIsSavingPayment}
-          onSetBalanceCheckComplete={onSetBalanceCheckComplete}
-          onSetSelectedBankAccountId={onSetSelectedBankAccountId}
-          bankAccountSelection={bankAccountSelection}
-          onSetBankAccountSelection={onSetBankAccountSelection}
-          clientSecret={clientSecret}
-          onSetClientSecret={setClientSecret}
-        />
+        {paymentMethod === "US_BANK_ACCOUNT" && (
+          <BankAccountPickerFragmentContainer
+            me={me}
+            order={order}
+            paymentMethod="US_BANK_ACCOUNT"
+            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+            onSetBankAccountHasInsufficientFunds={
+              onSetBankAccountHasInsufficientFunds
+            }
+            onSetIsSavingPayment={onSetIsSavingPayment}
+            onSetBalanceCheckComplete={onSetBalanceCheckComplete}
+            onSetSelectedBankAccountId={onSetSelectedBankAccountId}
+            bankAccountSelection={bankAccountSelection}
+            onSetBankAccountSelection={onSetBankAccountSelection}
+            clientSecret={clientSecret}
+            onSetClientSecret={setClientSecret}
+          />
+        )}
       </Collapse>
 
       {/* SEPA bank transfer */}
       <Collapse open={paymentMethod === "SEPA_DEBIT"}>
         {getPaymentMethodInfo(paymentMethod)}
         <Spacer mb={2} />
-        <BankDebitProvider
-          order={order}
-          paymentMethod="SEPA_DEBIT"
-          bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-          onSetBankAccountHasInsufficientFunds={
-            onSetBankAccountHasInsufficientFunds
-          }
-          onSetIsSavingPayment={onSetIsSavingPayment}
-          clientSecret={clientSecret}
-          onSetClientSecret={setClientSecret}
-        />
+        {paymentMethod === "SEPA_DEBIT" && (
+          <BankAccountPickerFragmentContainer
+            me={me}
+            order={order}
+            paymentMethod="SEPA_DEBIT"
+            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
+            onSetBankAccountHasInsufficientFunds={
+              onSetBankAccountHasInsufficientFunds
+            }
+            onSetIsSavingPayment={onSetIsSavingPayment}
+            onSetBalanceCheckComplete={onSetBalanceCheckComplete}
+            onSetSelectedBankAccountId={onSetSelectedBankAccountId}
+            bankAccountSelection={bankAccountSelection}
+            onSetBankAccountSelection={onSetBankAccountSelection}
+            clientSecret={clientSecret}
+            onSetClientSecret={setClientSecret}
+          />
+        )}
       </Collapse>
 
       {/* Wire transfer */}
