@@ -22,16 +22,17 @@ const BackLink: React.FC<BackLinkProps> = ({ artist, artworkId }) => {
       redirectTo={artworkId ? redirectLink : undefined}
       displayBackArrow
       onClick={() => {
-        trackEvent({
-          action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-          destination_path: artist.href,
-          subject: "Back to artist link",
-        })
-
-        artworkId &&
+        if (artworkId) {
           router.replace({
             pathname: redirectLink,
           })
+        } else {
+          trackEvent({
+            action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+            destination_path: artist.href,
+            subject: "Back to artist link",
+          })
+        }
       }}
     >
       Back to {artworkId ? "My Collection" : artist.name}
