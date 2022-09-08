@@ -1,14 +1,14 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
-import { MyCollectionArtworkSidebarMetadataTestQuery } from "__generated__/MyCollectionArtworkSidebarMetadataTestQuery.graphql"
+import { MyCollectionArtworkSidebarTestQuery } from "__generated__/MyCollectionArtworkSidebarTestQuery.graphql"
 import { MyCollectionArtworkSidebarFragmentContainer } from ".."
 
 jest.unmock("react-relay")
 
-describe("MyCollectionArtworkSidebarMetadata", () => {
+describe("MyCollectionArtworkSidebar", () => {
   const { renderWithRelay } = setupTestWrapperTL<
-    MyCollectionArtworkSidebarMetadataTestQuery
+    MyCollectionArtworkSidebarTestQuery
   >({
     Component: props => {
       if (props?.artwork) {
@@ -19,7 +19,7 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
       return null
     },
     query: graphql`
-      query MyCollectionArtworkSidebarMetadataTestQuery @relay_test_operation {
+      query MyCollectionArtworkSidebarTestQuery @relay_test_operation {
         artwork(id: "foo") {
           ...MyCollectionArtworkSidebarTitleInfo_artwork
           ...MyCollectionArtworkSidebarMetadata_artwork
@@ -33,8 +33,13 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
       renderWithRelay(mockResolversWithData, false)
     })
 
-    it("displays artists names and title", () => {
+    it("displays artists names and title with the artist url", () => {
       expect(screen.getByText("Jean-Michel Basquiat")).toBeInTheDocument()
+      expect(screen.getByText("Jean-Michel Basquiat")).toHaveAttribute(
+        "href",
+        "/artist/artist-id"
+      )
+
       expect(
         screen.getByText(
           "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
@@ -69,6 +74,11 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
 
     it("displays artists names and title", () => {
       expect(screen.getByText("Jean-Michel Basquiat")).toBeInTheDocument()
+      expect(screen.getByText("Jean-Michel Basquiat")).toHaveAttribute(
+        "href",
+        "/artist/artist-id"
+      )
+
       expect(
         screen.getByText(
           "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)"
@@ -101,6 +111,9 @@ describe("MyCollectionArtworkSidebarMetadata", () => {
 const mockResolversWithData = {
   Artwork: () => ({
     artistNames: "Jean-Michel Basquiat",
+    artist: {
+      href: "/artist/artist-id",
+    },
     title:
       "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
     category: "Drawing, Collage or other Work on Paper",
@@ -124,6 +137,9 @@ const mockResolversWithData = {
 const emptyMockResolvers = {
   Artwork: () => ({
     artistNames: "Jean-Michel Basquiat",
+    artist: {
+      href: "/artist/artist-id",
+    },
     title:
       "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
     date: "1979",
