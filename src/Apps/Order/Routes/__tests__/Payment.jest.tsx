@@ -322,10 +322,6 @@ describe("Payment", () => {
         .find(CreditCardPickerFragmentContainer)
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(true)
-      const bankDebitCollapse = page
-        .find(BankAccountPickerFragmentContainer)
-        .closest(Collapse)
-      expect(bankDebitCollapse.first().props().open).toBe(false)
     })
 
     it("renders bank element when bank transfer is chosen as payment method", async () => {
