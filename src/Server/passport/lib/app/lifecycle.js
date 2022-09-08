@@ -156,11 +156,8 @@ module.exports.afterSocialAuth = provider =>
         err.response.body &&
         err.response.body.error === "Another Account Already Linked"
       ) {
-        msg =
-          `${providerName} account already linked to another Artsy account. ` +
-          `Try logging out and back in with ${providerName}. Then consider ` +
-          `deleting that user account and re-linking ${providerName}. `
-        return res.redirect(opts.settingsPagePath + "?error=" + msg)
+        alreadyLinkedParams = `?error=already-linked&provider=${providerName}`
+        return res.redirect(opts.settingsPagePath + alreadyLinkedParams)
       } else if (
         err &&
         err.message &&
