@@ -183,22 +183,7 @@ export const artistRoutes: AppRouteConfig[] = [
 
       // Routes not in tabs
       {
-        path: "articles",
-        hideNavigationTabs: true,
-        getComponent: () => ArticlesRoute,
-        onClientSideRender: () => {
-          ArticlesRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_ArticlesQuery($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistArticlesRoute_artist
-            }
-          }
-        `,
-      },
-      {
-        path: "articles/:artworkId",
+        path: "articles/:artworkId?",
         hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
