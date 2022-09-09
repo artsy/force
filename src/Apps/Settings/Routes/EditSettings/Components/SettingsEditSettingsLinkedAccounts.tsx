@@ -24,6 +24,8 @@ interface SettingsEditSettingsLinkedAccountsProps {
   me: SettingsEditSettingsLinkedAccounts_me
 }
 
+const providerNames = ["Apple", "Facebook", "Google"]
+
 export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAccountsProps> = ({
   me,
 }) => {
@@ -31,20 +33,26 @@ export const SettingsEditSettingsLinkedAccounts: FC<SettingsEditSettingsLinkedAc
   const { sendToast } = useToasts()
 
   const authenticationPaths = getENV("AP")
-
-  // Errors from authentication providers are handled by routing back to
-  // this page with an `error` query string.
   const query = match?.location?.query ?? {}
 
   useEffect(() => {
-    if (query.error) {
-      sendToast({
-        variant: "error",
-        message: query.error,
-        ttl: Infinity,
-      })
+    if (query.error === "already-linked") {
+      const providerName = query.provider
+
+      if (providerNames.includes(providerName)) {
+        const message =
+          `${providerName} account already linked to another Artsy account. ` +
+          `Try logging out and back in with ${providerName}. Then consider ` +
+          `deleting that user account and re-linking ${providerName}. `
+
+        sendToast({
+          variant: "error",
+          message,
+          ttl: Infinity,
+        })
+      }
     }
-  }, [query.error, sendToast])
+  }, [query.error, query.provider, sendToast])
 
   return (
     <>

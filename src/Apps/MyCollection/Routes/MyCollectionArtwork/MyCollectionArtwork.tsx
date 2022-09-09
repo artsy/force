@@ -47,13 +47,25 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   const enableMyCollectionPhase4ArticlesRail = useFeatureFlag(
     "my-collection-web-phase-4-articles-rail"
   )
+  const enableMyCollectionPhase4ArtistMarket = useFeatureFlag(
+    "my-collection-web-phase-4-artist-market"
+  )
+  const enableMyCollectionPhase4Comparables = useFeatureFlag(
+    "my-collection-web-phase-4-comparables"
+  )
+  const enableMyCollectionPhase4DemandIndex = useFeatureFlag(
+    "my-collection-web-phase-4-demand-index"
+  )
+  const enableMyCollectionPhase4AuctionResults = useFeatureFlag(
+    "my-collection-web-phase-4-auction-results"
+  )
 
   const isMyCollectionPhase5Enabled = useFeatureFlag(
     "my-collection-web-phase-5"
   )
 
   const EditArtworkButton = () => (
-    <Flex justifyContent="flex-end" pb={2}>
+    <Flex justifyContent="flex-end" pb={[1, 2]}>
       <Button
         // @ts-ignore
         as={RouterLink}
@@ -69,10 +81,21 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
 
+  const showComparables =
+    !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
+
+  const showAuctionResults =
+    !!artwork.artist?.auctionResults?.totalCount &&
+    enableMyCollectionPhase4AuctionResults
+
+  const showDemandIndex =
+    !!artwork.hasMarketPriceInsights && enableMyCollectionPhase4DemandIndex
+
+  const showArtistMarket =
+    !!artwork.hasMarketPriceInsights && enableMyCollectionPhase4ArtistMarket
+
   const hasInsights =
-    !!artwork.comparables?.totalCount ||
-    !!artwork.artist?.auctionResults?.totalCount ||
-    !!artwork.priceInsights?.artistId
+    showComparables || showAuctionResults || showDemandIndex || showArtistMarket
 
   return (
     <>
@@ -84,7 +107,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
         />
       )}
 
-      <GridColumns gridRowGap={[4, null]} py={[2, 6]}>
+      <GridColumns gridRowGap={[2, null]} py={[2, 6]}>
         <Column span={8}>
           <Media lessThan="sm">
             {!!isMyCollectionPhase3Enabled && <EditArtworkButton />}
@@ -154,7 +177,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                     <Spacer m={6} />
 
                     {!!enableMyCollectionPhase4ArticlesRail && (
-                      <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+                      <ArtistCurrentArticlesRailQueryRenderer
+                        slug={slug}
+                        artworkId={artwork.internalID}
+                      />
                     )}
                   </>
                 </Tab>
@@ -168,7 +194,10 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                 <Spacer m={6} />
 
                 {!!enableMyCollectionPhase4ArticlesRail && (
-                  <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+                  <ArtistCurrentArticlesRailQueryRenderer
+                    slug={slug}
+                    artworkId={artwork.internalID}
+                  />
                 )}
               </>
             )}
@@ -181,10 +210,13 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
           <>
             <MyCollectionArtworkInsightsFragmentContainer artwork={artwork} />
 
-            <Spacer m={6} />
+            <Spacer m={[4, 6]} />
 
             {!!enableMyCollectionPhase4ArticlesRail && (
-              <ArtistCurrentArticlesRailQueryRenderer slug={slug} />
+              <ArtistCurrentArticlesRailQueryRenderer
+                slug={slug}
+                artworkId={artwork.internalID}
+              />
             )}
           </>
         )}
@@ -207,6 +239,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         comparables: comparableAuctionResults {
           totalCount
         }
+        hasMarketPriceInsights
         internalID
         artist {
           slug
@@ -214,9 +247,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
             totalCount
           }
           ...MyCollectionArtworkAuctionResults_artist
-        }
-        priceInsights: marketPriceInsights {
-          artistId
         }
       }
     `,

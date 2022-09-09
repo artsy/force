@@ -1,6 +1,7 @@
-describe("/collections", () => {
+// context: https://artsy.slack.com/archives/C02BC3HEJ/p1662560324260439?thread_ts=1662541292.220899&cid=C02BC3HEJ
+describe.skip("/collections", () => {
   before(() => {
-    cy.visit("collections")
+    cy.visit("collections", { timeout: 60000 })
   })
 
   it("renders metadata", () => {

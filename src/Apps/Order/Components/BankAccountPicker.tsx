@@ -12,6 +12,12 @@ import { InsufficientFundsError } from "./InsufficientFundsError"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useSetPayment } from "../Mutations/useSetPayment"
+import { camelCase, upperFirst } from "lodash"
+
+interface BankAccountRecord {
+  internalID: string
+  last4: string
+}
 
 interface Props {
   order: BankAccountPicker_order
@@ -43,8 +49,20 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetClientSecret,
     clientSecret,
   } = props
+  const bankAccountsArray: BankAccountRecord[] =
+    paymentMethod === "US_BANK_ACCOUNT" ? extractNodes(bankAccounts) : []
 
-  const bankAccountsArray = extractNodes(bankAccounts)
+  if (order?.paymentMethodDetails?.internalID) {
+    // if account on order is not saved on user's profile
+    const isOrderBankSaved = bankAccountsArray.find(
+      bank => bank.last4 === order.paymentMethodDetails?.last4
+    )
+
+    if (!isOrderBankSaved) {
+      // populate banks array with the account on order
+      bankAccountsArray.unshift(order.paymentMethodDetails as BankAccountRecord)
+    }
+  }
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
@@ -58,7 +76,7 @@ export const BankAccountPicker: FC<Props> = props => {
           variables: {
             input: {
               id: order.internalID,
-              paymentMethod: "US_BANK_ACCOUNT",
+              paymentMethod,
               paymentMethodId: bankAccountSelection.id,
             },
           },
@@ -79,7 +97,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
   return (
     <>
-      {bankAccountsArray.length > 0 && (
+      {bankAccountsArray?.length > 0 && (
         <RadioGroup
           data-test="bankAccounts"
           onSelect={val => {
@@ -144,7 +162,7 @@ export const BankAccountPicker: FC<Props> = props => {
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Spacer mt={4} />
           <SaveAndContinueButton
-            testId="bankTransferSaveExisting"
+            testId={`saveExisting${upperFirst(camelCase(paymentMethod))}`}
             onClick={handleContinue}
             disabled={!bankAccountSelection.type}
           />
@@ -175,6 +193,12 @@ export const BankAccountPickerFragmentContainer = createFragmentContainer(
         internalID
         mode
         bankAccountId
+        paymentMethodDetails {
+          ... on BankAccount {
+            internalID
+            last4
+          }
+        }
       }
     `,
   }

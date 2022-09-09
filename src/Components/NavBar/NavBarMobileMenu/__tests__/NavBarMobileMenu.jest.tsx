@@ -53,7 +53,7 @@ describe("NavBarMobileMenu", () => {
 
     wrapper
       .find("a")
-      .at(length - 2)
+      .at(length - 4)
       .simulate("click")
 
     expect(mediator.trigger).toBeCalledWith("auth:logout")

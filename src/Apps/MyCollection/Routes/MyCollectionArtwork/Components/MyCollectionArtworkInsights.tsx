@@ -1,7 +1,6 @@
-import { Join, Spacer, Text } from "@artsy/palette"
+import { Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkInsights_artwork } from "__generated__/MyCollectionArtworkInsights_artwork.graphql"
 import { MyCollectionArtworkArtistMarketFragmentContainer } from "./MyCollectionArtworkArtistMarket"
 import { MyCollectionArtworkAuctionResultsFragmentContainer } from "./MyCollectionArtworkAuctionResults"
@@ -29,13 +28,7 @@ const MyCollectionArtworkInsights: React.FC<MyCollectionArtworkInsightsProps> = 
   )
 
   return (
-    <Join separator={<Spacer mt={[2, 6]} />}>
-      <Media greaterThanOrEqual="sm">
-        <Text variant="xl">Insights</Text>
-
-        <Spacer m={4} />
-      </Media>
-
+    <Join separator={<Spacer mt={[4, 6]} />}>
       {!!enableMyCollectionPhase4DemandIndex && (
         <MyCollectionArtworkDemandIndexFragmentContainer
           marketPriceInsights={artwork.marketPriceInsights!}

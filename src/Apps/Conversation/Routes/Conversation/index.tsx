@@ -16,6 +16,10 @@ import { ConversationPaginationContainer as Conversation } from "Apps/Conversati
 import { ConversationListPaginationContainer as ConversationList } from "Apps/Conversation/Components/ConversationList"
 import { Conversation_me } from "__generated__/Conversation_me.graphql"
 import { DetailsSidebarFragmentContainer } from "../../Components/DetailsSidebar"
+import {
+  MOBILE_LOGGED_IN_NAV_HEIGHT,
+  DESKTOP_NAV_BAR_HEIGHT,
+} from "Components/NavBar"
 const LARGE_SCREEN_CONVERSATION_LIST_WIDTH = "375px"
 
 interface ConversationRouteProps {
@@ -26,9 +30,9 @@ interface ConversationRouteProps {
 }
 
 const ConstrainedHeightContainer = styled(Box)`
-  height: calc(100vh - 103px);
+  height: calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px);
   @media ${themeGet("mediaQueries.xs")} {
-    height: calc(100vh - 60px);
+    height: calc(100vh - ${MOBILE_LOGGED_IN_NAV_HEIGHT}px);
   }
 `
 

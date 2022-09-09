@@ -85,7 +85,9 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
             <Flex flexDirection="column" width="100%">
               <GridColumns>
                 <Column span={10}>
-                  <Text textTransform="capitalize">{displayName}</Text>
+                  <Text variant="sm-display" textTransform="capitalize">
+                    {displayName}
+                  </Text>
                   <Text textColor="black60">{description}</Text>
                 </Column>
                 <Column span={2} textAlign={"right"}>

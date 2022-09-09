@@ -37,5 +37,31 @@
     "meetTheSpecialists": "Meet the Specialists",
     "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
     "privateSales": "Private Sales & Advisory"
+  },
+  "artworkPage": {
+    "sidebar": {
+      "details": {
+        "expandableLabel": "Details",
+        "frame": "Frame",
+        "AuthenticityCertificate": {
+          "includes": "This work includes a ",
+          "certificateOfAuthenticity": "Certificate of Authenticity"
+        },
+        "AuthenticityCertificateModal": {
+          "close": "OK",
+          "title": "Certificate of Authenticity",
+          "description1": "A certificate of authenticity (COA) is a document from an authoritative source that verifies the artwork’s authenticity. While many COAs are signed by the artist, others will be signed by the representing gallery or the printmaker who collaborated with the artist on the work. For secondary market works, authorized estates or foundations are often the issuing party.",
+          "description2": "COAs typically include the name of the artist, the details (title, date, medium, dimensions) of the work in question, and whenever possible an image of the work.",
+          "readMore": "Read more about artwork authenticity in our ",
+          "helpCenterLink": "Help Center"
+        }
+      },
+      "shippingAndTaxes": {
+        "expandableLabel": "Shipping and Taxes",
+        "taxInformation": "Taxes may apply at checkout.",
+        "taxInformationLearnMore": "Learn more",
+        "shipsFrom": "Ships from"
+      }
+    }
   }
 }

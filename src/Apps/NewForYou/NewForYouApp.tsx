@@ -50,12 +50,14 @@ export const NewForYouAppFragmentContainer = createFragmentContainer(
           first: { type: "Int" }
           includeBackfill: { type: "Boolean!" }
           version: { type: "String" }
+          maxWorksPerArtist: { type: "Int" }
         ) {
         ...NewForYouArtworksGrid_viewer
           @arguments(
             first: $first
             includeBackfill: $includeBackfill
             version: $version
+            maxWorksPerArtist: $maxWorksPerArtist
           )
       }
     `,

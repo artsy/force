@@ -183,7 +183,7 @@ export const artistRoutes: AppRouteConfig[] = [
 
       // Routes not in tabs
       {
-        path: "articles",
+        path: "articles/:artworkId?",
         hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
@@ -197,6 +197,7 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
+
       {
         path: "consign",
         displayFullPage: true,

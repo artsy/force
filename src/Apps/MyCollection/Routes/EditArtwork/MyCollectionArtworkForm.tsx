@@ -20,6 +20,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
+import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
@@ -55,7 +56,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     MyCollectionArtworkDetailsValidationSchema
   )
 
-  const [shouldShowBackModal, setShouldShowBackModal] = useState<boolean>(false)
+  const [
+    showLeaveWithoutSavingModal,
+    setShowLeaveWithoutSavingModal,
+  ] = useState<boolean>(false)
   const [shouldShowDeletionModal, setShouldShowDeletionModal] = useState<
     boolean
   >(false)
@@ -73,6 +77,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       values.editionNumber = ""
       values.editionSize = ""
     }
+
+    const externalImageUrls = values.newPhotos.flatMap(
+      photo => photo.url || null
+    )
 
     // Create or update artwork
 
@@ -93,7 +101,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         width: String(values.width),
         depth: String(values.depth),
         metric: values.metric,
-        externalImageUrls: values.newPhotos.flatMap(photo => photo.url || null),
+        externalImageUrls,
         pricePaidCents:
           !values.pricePaidDollars || isNaN(Number(values.pricePaidDollars))
             ? undefined
@@ -130,7 +138,16 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         })
       )
 
+      // Waiting for a few seconds to make sure the new images are processed
+      // and ready to be displayed
+      if (externalImageUrls.length) {
+        await wait(3000)
+      }
+
       if (isEditing) {
+        router.replace({
+          pathname: `/settings/my-collection`,
+        })
         router.push({ pathname: `/my-collection/artwork/${artworkId}` })
       } else {
         router.replace({
@@ -178,6 +195,15 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     }
   }
 
+  const leaveForm = () => {
+    router.replace({ pathname: "/settings/my-collection" })
+    router.push({
+      pathname: isEditing
+        ? `/my-collection/artwork/${artwork.internalID}`
+        : "/settings/my-collection",
+    })
+  }
+
   return (
     <>
       <MetaTags
@@ -198,25 +224,18 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
           validationSchema={MyCollectionArtworkDetailsValidationSchema}
           initialErrors={initialErrors}
         >
-          {({ isSubmitting, isValid, values }) => (
+          {({ isSubmitting, isValid, values, dirty }) => (
             <Form>
               <RouterLink to="/my-collection" display="block">
                 <ArtsyLogoBlackIcon display="block" />
               </RouterLink>
 
               <StickyProvider>
-                {shouldShowBackModal && (
+                {showLeaveWithoutSavingModal && (
                   <ConfirmationModalBack
-                    onClose={() => setShouldShowBackModal(false)}
+                    onClose={() => setShowLeaveWithoutSavingModal(false)}
                     isEditing={isEditing}
-                    onLeave={() => {
-                      router.replace({ pathname: "/settings/my-collection" })
-                      router.push({
-                        pathname: isEditing
-                          ? `/my-collection/artwork/${artwork.internalID}`
-                          : "/settings/my-collection",
-                      })
-                    }}
+                    onLeave={() => leaveForm()}
                   />
                 )}
                 {shouldShowDeletionModal && (
@@ -242,7 +261,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                               <BackLink
                                 // @ts-ignore
                                 as={RouterLink}
-                                onClick={() => setShouldShowBackModal(true)}
+                                onClick={() => {
+                                  dirty
+                                    ? setShowLeaveWithoutSavingModal(true)
+                                    : leaveForm()
+                                }}
                                 width="min-content"
                               >
                                 Back

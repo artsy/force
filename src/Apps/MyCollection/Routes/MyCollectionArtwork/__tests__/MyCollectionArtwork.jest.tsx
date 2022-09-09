@@ -3,9 +3,11 @@ import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
+import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
 import { MyCollectionArtworkFragmentContainer } from "../MyCollectionArtwork"
 
+jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
 describe("MyCollectionArtwork", () => {
@@ -25,6 +27,14 @@ describe("MyCollectionArtwork", () => {
       `,
     })
   }
+
+  beforeAll(() => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      featureFlags: {
+        "my-collection-web-phase-4-demand-index": { flagEnabled: true },
+      },
+    }))
+  })
 
   describe("In a mobile view", () => {
     describe("When the artwork has insights", () => {
@@ -60,8 +70,6 @@ describe("MyCollectionArtwork", () => {
 
         expect(screen.getByText("Morons")).toBeInTheDocument()
 
-        // Testing for the title
-        expect(screen.getByText("Insights")).toBeInTheDocument()
         expect(screen.queryByText("About")).not.toBeInTheDocument()
       })
     })
@@ -74,9 +82,7 @@ const mockResolversWithInsights = {
     title: "Morons",
     date: "2007",
     artistNames: "Banksy",
-    priceInsights: {
-      artistId: "4dd1584de0091e000100207c",
-    },
+    hasMarketPriceInsights: true,
   }),
 }
 
@@ -86,7 +92,7 @@ const mockResolversWithoutInsights = {
     title: "Morons",
     date: "2007",
     artistNames: "Banksy",
-    priceInsights: null,
+    hasMarketPriceInsights: false,
     comparables: null,
     artist: {
       auctionResults: null,

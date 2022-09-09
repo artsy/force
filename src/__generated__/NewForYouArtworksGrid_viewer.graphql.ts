@@ -38,6 +38,11 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "maxWorksPerArtist"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "version"
     }
   ],
@@ -57,6 +62,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "includeBackfill",
           "variableName": "includeBackfill"
+        },
+        {
+          "kind": "Variable",
+          "name": "maxWorksPerArtist",
+          "variableName": "maxWorksPerArtist"
         },
         {
           "kind": "Variable",
@@ -113,5 +123,5 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'f5bf554270769e034860baf604d273e6';
+(node as any).hash = 'cbae1f0c92730af09b6a42016a53d692';
 export default node;

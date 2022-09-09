@@ -16,6 +16,7 @@ describe("BankDebitProvider", () => {
           internalID: "1234",
           mode: "BUY",
           bankAccountId: "bank-id-1",
+          paymentMethodDetails: null,
           " $refType": "BankAccountPicker_order",
         }}
         paymentMethod="US_BANK_ACCOUNT"

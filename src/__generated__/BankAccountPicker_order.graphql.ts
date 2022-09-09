@@ -9,6 +9,10 @@ export type BankAccountPicker_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly bankAccountId: string | null;
+    readonly paymentMethodDetails: {
+        readonly internalID?: string | undefined;
+        readonly last4?: string | undefined;
+    } | null;
     readonly " $refType": "BankAccountPicker_order";
 };
 export type BankAccountPicker_order$data = BankAccountPicker_order;
@@ -19,19 +23,21 @@ export type BankAccountPicker_order$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "BankAccountPicker_order",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -45,10 +51,37 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "bankAccountId",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "paymentMethodDetails",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "last4",
+              "storageKey": null
+            }
+          ],
+          "type": "BankAccount",
+          "abstractKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = '79d6b9712f15b368966fa6c105d3519d';
+})();
+(node as any).hash = 'af47de094175b0f2bb78406d24307d4d';
 export default node;

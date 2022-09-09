@@ -1,19 +1,22 @@
 import {
+  Box,
   Button,
   Clickable,
   CloseIcon,
+  DROP_SHADOW,
   Flex,
   FullBleed,
   Message,
   Spacer,
-  Sup,
   Text,
 } from "@artsy/palette"
-import { SETTINGS_ROUTE_TABS_MARGIN } from "Apps/Settings/SettingsApp"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
+import { Sticky } from "Components/Sticky"
 import { FC, Fragment, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
@@ -93,13 +96,17 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
         <>
           {!hasDismissedMessage && (
             <FullBleed>
-              <Message
-                variant="info"
-                mt={-SETTINGS_ROUTE_TABS_MARGIN}
-                mb={SETTINGS_ROUTE_TABS_MARGIN}
-              >
-                <Flex flexDirection="row" justifyContent="space-between">
-                  <Text mx={1}>
+              <Message variant="info" mt={[-2, -4]} mb={[2, 4]} py={1}>
+                <Flex
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Text
+                    flex={1}
+                    textAlign={["left", "center"]}
+                    variant={["xs", "sm"]}
+                  >
                     Access all the My Collection features on the{" "}
                     <Clickable
                       onClick={() => {
@@ -122,23 +129,40 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
             </FullBleed>
           )}
 
-          <Flex justifyContent="space-between" mb={4}>
-            <Text as="h1" variant={["md", "lg"]}>
-              My Collection <Sup color="brand">{total}</Sup>
-            </Text>
-
-            {!!isMyCollectionPhase3Enabled && (
-              <Button
-                // @ts-ignore
-                as={RouterLink}
-                size={["small", "large"]}
-                variant="primaryBlack"
-                to="/my-collection/artworks/new"
-              >
-                Upload Artwork
-              </Button>
-            )}
-          </Flex>
+          <Box mt={[-2, -4]}>
+            <Sticky>
+              {({ stuck }) => {
+                return (
+                  <FullBleed
+                    backgroundColor="white100"
+                    style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+                  >
+                    <AppContainer>
+                      <HorizontalPadding>
+                        <Flex
+                          backgroundColor="white100"
+                          justifyContent="flex-end"
+                          py={2}
+                        >
+                          {!!isMyCollectionPhase3Enabled && (
+                            <Button
+                              // @ts-ignore
+                              as={RouterLink}
+                              size={["small", "large"]}
+                              variant="primaryBlack"
+                              to="/my-collection/artworks/new"
+                            >
+                              Upload Artwork
+                            </Button>
+                          )}
+                        </Flex>
+                      </HorizontalPadding>
+                    </AppContainer>
+                  </FullBleed>
+                )
+              }}
+            </Sticky>
+          </Box>
 
           <Masonry
             id="jump--MyCollectionArtworks"

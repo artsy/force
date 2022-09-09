@@ -1,7 +1,7 @@
 import { Column, Join, Spacer, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { MetaTags } from "Components/MetaTags"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
+import { MetaTags } from "Components/MetaTags"
+import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { MyCollectionArtworkComparables_artwork } from "__generated__/MyCollectionArtworkComparables_artwork.graphql"
 
@@ -27,7 +27,7 @@ const MyCollectionArtworkComparables: React.FC<MyCollectionArtworkComparablesPro
     <>
       <MetaTags title={titleString} />
 
-      <Text variant={["sm-display", "lg-display"]} textAlign="left">
+      <Text variant={["sm-display", "lg"]} textAlign="left">
         Comparable Works
       </Text>
 

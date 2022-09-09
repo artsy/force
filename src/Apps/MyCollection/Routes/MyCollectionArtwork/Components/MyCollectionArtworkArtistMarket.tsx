@@ -1,12 +1,16 @@
 import {
+  Clickable,
   Column,
   DecreaseIcon,
   Flex,
   GridColumns,
   IncreaseIcon,
+  InfoCircleIcon,
   Spacer,
   Text,
+  Tooltip,
 } from "@artsy/palette"
+import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkArtistMarket_marketPriceInsights } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
@@ -28,15 +32,40 @@ export const MyCollectionArtworkArtistMarket = ({
     sellThroughRate,
   } = marketPriceInsights
 
-  const formattedSellThroughRate = Number(sellThroughRate).toFixed(3)
-
   return (
     <>
-      <Text variant="lg-display">Artist Market</Text>
-      <Text variant={["xs", "md"]} color="black60">
-        Based on the last 36 months of auction sale data from top commercial
-        auction houses.
-      </Text>
+      <Media greaterThanOrEqual="sm">
+        <Text variant="lg">Artist Market</Text>
+
+        <Text variant="md" color="black60">
+          Based on the last 36 months of auction sale data from top commercial
+          auction houses.
+        </Text>
+      </Media>
+
+      <Media lessThan="sm">
+        <Flex>
+          <Text variant="sm-display">Artist Market</Text>
+
+          <Tooltip
+            placement="top-start"
+            size="lg"
+            content={
+              <Text variant="xs">
+                These statistics are based on the last 36 months of auction sale
+                data from top commercial auction houses.
+              </Text>
+            }
+          >
+            <Clickable ml={0.5} style={{ lineHeight: 0 }}>
+              <InfoCircleIcon />
+            </Clickable>
+          </Tooltip>
+        </Flex>
+        <Text variant="xs" color="black60">
+          Based on the last 36 months of auction data
+        </Text>
+      </Media>
 
       <Spacer mt={[2, 4]} />
 
@@ -56,7 +85,7 @@ export const MyCollectionArtworkArtistMarket = ({
         {
           <InsightColumn
             name="Sell-through Rate"
-            value={formattedSellThroughRate + "%"}
+            value={formatSellThroughRate(sellThroughRate)}
           />
         }
 

@@ -1,6 +1,5 @@
 import { Column, Flex, Join, Spacer, Text } from "@artsy/palette"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
-import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -13,7 +12,7 @@ interface MyCollectionArtworkAuctionResultsProps {
 const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionResultsProps> = ({
   artist,
 }) => {
-  const { slug, name, auctionResultsConnection } = artist
+  const { slug, auctionResultsConnection } = artist
 
   if (!auctionResultsConnection) {
     return null
@@ -24,19 +23,15 @@ const MyCollectionAuctionResultsContainer: React.FC<MyCollectionArtworkAuctionRe
     return null
   }
 
-  const titleString = `${name} - Artwork Auction Results on Artsy`
-
   return (
     <>
-      <MetaTags title={titleString} />
-
       <Flex
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
         mb={2}
       >
-        <Text variant={["sm-display", "lg-display"]} textAlign="left">
+        <Text variant={["sm-display", "lg"]} textAlign="left">
           Auction Results
         </Text>
         <RouterLink
@@ -76,7 +71,6 @@ export const MyCollectionArtworkAuctionResultsFragmentContainer = createFragment
         @argumentDefinitions(first: { type: "Int", defaultValue: 6 }) {
         slug
         internalID
-        name
         auctionResultsConnection(first: $first) {
           totalCount
           pageInfo {

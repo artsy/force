@@ -11,7 +11,11 @@ import { Box, Flex, Spinner } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { ConversationListHeader } from "./ConversationListHeader"
-
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import {
+  MOBILE_LOGGED_IN_NAV_HEIGHT,
+  DESKTOP_NAV_BAR_HEIGHT,
+} from "Components/NavBar"
 import { ConversationList_me } from "__generated__/ConversationList_me.graphql"
 
 const ScrollContainer = styled(Box)`
@@ -27,12 +31,12 @@ const SpinnerContainer = styled.div`
 `
 
 const ConstrainedHeightContainer = styled(Flex)`
-  height: calc(100vh - 103px);
+  height: calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px);
   width: 100%;
   overflow: hidden;
   flex-direction: column;
   @media ${themeGet("mediaQueries.xs")} {
-    height: calc(100vh - 60px);
+    height: calc(100vh - ${MOBILE_LOGGED_IN_NAV_HEIGHT}px);
   }
 `
 
@@ -62,18 +66,16 @@ const ConversationList: React.FC<ConversationsProps> = props => {
       setFetchingMore(false)
     })
   }
-
-  const handleScroll = (event: React.UIEvent<HTMLElement>): void => {
-    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget
-    if (scrollHeight - scrollTop <= clientHeight) {
-      loadMore()
-    }
-  }
+  const { ref } = useIntersectionObserver({
+    once: false,
+    options: { threshold: 0.2 },
+    onIntersection: loadMore,
+  })
 
   return (
     <ConstrainedHeightContainer>
       <ConversationListHeader />
-      <ScrollContainer onScroll={handleScroll}>
+      <ScrollContainer>
         {conversations.map(edge => (
           <ConversationSnippet
             isSelected={edge?.node?.internalID === selectedConversationID}
@@ -86,11 +88,14 @@ const ConversationList: React.FC<ConversationsProps> = props => {
             }
           />
         ))}
-        {fetchingMore && (
-          <SpinnerContainer>
-            <Spinner />
-          </SpinnerContainer>
-        )}
+        <Flex>
+          {!!fetchingMore && (
+            <SpinnerContainer>
+              <Spinner />
+            </SpinnerContainer>
+          )}
+          <Box ref={ref as any} height={1} />
+        </Flex>
       </ScrollContainer>
     </ConstrainedHeightContainer>
   )

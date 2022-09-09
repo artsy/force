@@ -2,7 +2,6 @@ import { graphql } from "react-relay"
 import { ArtistCareerHighlightsFragmentContainer } from "../ArtistCareerHighlights"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import "System/i18n/i18n"
 
 jest.unmock("react-relay")
 

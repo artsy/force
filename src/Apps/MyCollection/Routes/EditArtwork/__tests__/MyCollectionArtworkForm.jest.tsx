@@ -136,13 +136,35 @@ describe("Edit artwork", () => {
   })
 
   describe("Back Link behavior", () => {
-    it("opens modal on press", async () => {
+    it("opens modal on press when the form has been changed", async () => {
+      getWrapper().renderWithRelay({
+        Artwork: () => mockArtwork,
+      })
+
+      fireEvent.change(
+        screen.getByTestId("my-collection-artwork-details-title"),
+        {
+          target: { value: "Some new value" },
+        }
+      )
+
+      fireEvent.click(screen.getByText("Back"))
+      fireEvent.click(screen.getByText("Leave Without Saving"))
+
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+      expect(mockRouterReplace).toHaveBeenCalledWith({
+        pathname: "/settings/my-collection",
+      })
+    })
+
+    it("navigates to the previous screen when the form has not been changed", async () => {
       getWrapper().renderWithRelay({
         Artwork: () => mockArtwork,
       })
 
       fireEvent.click(screen.getByText("Back"))
-      fireEvent.click(screen.getByText("Leave Without Saving"))
 
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
@@ -213,7 +235,7 @@ describe("Edit artwork", () => {
       )
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/internal-id",
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
       })
     })
   })
@@ -408,11 +430,31 @@ describe("Create artwork", () => {
   })
 
   describe("Back Link behavior", () => {
-    it("opens modal on press", async () => {
+    it("opens modal on press when the form has been changed", async () => {
       getWrapper()
+
+      fireEvent.change(
+        screen.getByTestId("my-collection-artwork-details-title"),
+        {
+          target: { value: "Some new value" },
+        }
+      )
 
       fireEvent.click(screen.getByText("Back"))
       fireEvent.click(screen.getByText("Leave Without Saving"))
+
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+      })
+      expect(mockRouterReplace).toHaveBeenCalledWith({
+        pathname: "/settings/my-collection",
+      })
+    })
+
+    it("navigates to the previous screen when the form has not been changed", async () => {
+      getWrapper()
+
+      fireEvent.click(screen.getByText("Back"))
 
       expect(mockRouterPush).toHaveBeenCalledWith({
         pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",

@@ -113,8 +113,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
   const displayLoading = isProcessingRedirect || isSavingPayment
 
-  // user's existing bank accounts, if any
-  const bankAccountsArray = extractNodes(me.bankAccounts)
+  // user's existing ACH bank accounts, if any
+  const bankAccountsArray =
+    selectedPaymentMethod === "US_BANK_ACCOUNT"
+      ? extractNodes(me.bankAccounts)
+      : []
 
   const getInitialBankAccountSelection = (): BankAccountSelection => {
     if (order.bankAccountId) {
