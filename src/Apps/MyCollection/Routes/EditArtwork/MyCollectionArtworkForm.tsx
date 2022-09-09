@@ -290,6 +290,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                             </Flex>
                           </HorizontalPadding>
                         </AppContainer>
+                        <Separator />
                       </FullBleed>
                     )
                   }}
@@ -298,10 +299,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
               {!onlyPhotos && (
                 <>
-                  <Text mx={2} mb={1}>
+                  <Text mb={1} mt={4} variant="lg-display">
                     {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
                   </Text>
-                  <Separator color="black100" />
                 </>
               )}
 
