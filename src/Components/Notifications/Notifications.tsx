@@ -1,9 +1,7 @@
 import { Tab } from "@artsy/palette"
-import {
-  NotificationPaginationType,
-  NotificationsListQueryRenderer,
-} from "./NotificationsList"
 import { NofiticationsTabs, NofiticationsTabsProps } from "./NotificationsTabs"
+import { NotificationsListQueryRenderer } from "./NotificationsList"
+import { NotificationPaginationType } from "./types"
 
 interface NotificationsProps extends NofiticationsTabsProps {
   paginationType?: NotificationPaginationType
