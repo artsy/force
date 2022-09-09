@@ -53,7 +53,9 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          {isFairBooth && <BackToFairBanner show={show} />}
+          {show.fair?.hasFullFeature && isFairBooth && (
+            <BackToFairBanner show={show} />
+          )}
 
           <Spacer mt={4} />
 
