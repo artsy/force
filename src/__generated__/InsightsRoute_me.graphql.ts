@@ -6,6 +6,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type InsightsRoute_me = {
     readonly internalID: string;
+    readonly myCollectionInfo: {
+        readonly " $fragmentRefs": FragmentRefs<"InsightsOverview_info">;
+    } | null;
     readonly " $refType": "InsightsRoute_me";
 };
 export type InsightsRoute_me$data = InsightsRoute_me;
@@ -28,10 +31,26 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "MyCollectionInfo",
+      "kind": "LinkedField",
+      "name": "myCollectionInfo",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "InsightsOverview_info"
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '76291bcddf3a5c12d1c020fdfe2c8e63';
+(node as any).hash = 'b47c57b1e1c06f1959925755c9d614e8';
 export default node;

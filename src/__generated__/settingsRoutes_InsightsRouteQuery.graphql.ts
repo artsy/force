@@ -25,8 +25,16 @@ query settingsRoutes_InsightsRouteQuery {
   }
 }
 
+fragment InsightsOverview_info on MyCollectionInfo {
+  artworksCount
+  artistsCount
+}
+
 fragment InsightsRoute_me on Me {
   internalID
+  myCollectionInfo {
+    ...InsightsOverview_info
+  }
 }
 */
 
@@ -81,6 +89,31 @@ const node: ConcreteRequest = {
           {
             "alias": null,
             "args": null,
+            "concreteType": "MyCollectionInfo",
+            "kind": "LinkedField",
+            "name": "myCollectionInfo",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "artworksCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "artistsCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
             "name": "id",
             "storageKey": null
@@ -91,12 +124,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "db36ab712dcb9814f6a9eaa7b6a56ea7",
+    "cacheID": "721560a82d2462babd437b495ee06d47",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_InsightsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n}\n"
+    "text": "query settingsRoutes_InsightsRouteQuery {\n  me {\n    ...InsightsRoute_me\n    id\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n\nfragment InsightsRoute_me on Me {\n  internalID\n  myCollectionInfo {\n    ...InsightsOverview_info\n  }\n}\n"
   }
 };
 (node as any).hash = '05488390d019c37ca002a2608bb08e1b';
