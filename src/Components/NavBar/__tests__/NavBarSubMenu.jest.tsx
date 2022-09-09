@@ -32,21 +32,24 @@ describe("NavBarSubMenu", () => {
     const wrapper = getWrapper()
     const linkMenuItems = wrapper.find("a")
 
-    // expect(linkMenuItems.length).toBe(5)
     expect(linkMenuItems.at(0).text()).toContain("Trove: Editor's Picks")
-    expect(linkMenuItems.at(0).prop("href")).toEqual("/gene/trove")
+    expect(linkMenuItems.at(0).prop("href")).toEqual(
+      "/collection/trove-editors-picks"
+    )
 
     expect(linkMenuItems.at(1).text()).toContain("Top Auction Lots")
     expect(linkMenuItems.at(1).prop("href")).toEqual(
-      "/gene/our-top-auction-lots"
+      "/collection/top-auction-lots"
     )
 
     expect(linkMenuItems.at(2).text()).toContain("Iconic Prints")
-    expect(linkMenuItems.at(2).prop("href")).toEqual("/gene/iconic-prints")
+    expect(linkMenuItems.at(2).prop("href")).toEqual(
+      "/collection/iconic-prints"
+    )
 
     expect(linkMenuItems.at(3).text()).toContain("The Collectibles Shop")
     expect(linkMenuItems.at(3).prop("href")).toEqual(
-      "/gene/the-collectibles-shop"
+      "/collection/the-collectibles-shop"
     )
 
     expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
