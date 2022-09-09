@@ -42,14 +42,13 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
           </SidebarExpandable>
         </>
       )}
-      <>
-        <Separator />
-        <SidebarExpandable
-          label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
-        >
-          <ArtworkSidebar2ArtsyGuarantee />
-        </SidebarExpandable>
-      </>
+
+      <Separator />
+      <SidebarExpandable
+        label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
+      >
+        <ArtworkSidebar2ArtsyGuarantee />
+      </SidebarExpandable>
     </Flex>
   )
 }
