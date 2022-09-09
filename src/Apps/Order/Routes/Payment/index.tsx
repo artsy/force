@@ -40,10 +40,7 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
 import { extractNodes } from "Utils/extractNodes"
-import {
-  useOrderPaymentContext,
-  OrderPaymentActions,
-} from "./PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -72,8 +69,12 @@ export interface BankAccountSelection {
 }
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
-  const { state, dispatch } = useOrderPaymentContext()
-  const { selectedPaymentMethod } = state
+  const {
+    selectedBankAccountId,
+    selectedPaymentMethod,
+    setSelectedBankAccountId,
+    setSelectedPaymentMethod,
+  } = useOrderPaymentContext()
 
   const { trackEvent } = useTracking()
   const { order, me } = props
@@ -82,14 +83,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   useEffect(() => {
-    dispatch({
-      type: OrderPaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
-      payload: "XXX",
-    })
-    dispatch({
-      type: OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD,
-      payload: getInitialPaymentMethodValue(order),
-    })
+    setSelectedBankAccountId("XXX")
+    setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -117,9 +112,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
   const displayLoading = isProcessingRedirect || isSavingPayment
-
-  // an existing bank account's ID, used to query account balance
-  const [selectedBankAccountId, setSelectedBankAccountId] = useState("")
 
   // user's existing bank accounts, if any
   const bankAccountsArray = extractNodes(me.bankAccounts)

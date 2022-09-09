@@ -88,7 +88,20 @@ const OrderPaymentContextProvider: React.FC = ({ children }) => {
 
 const useOrderPaymentContext = () => {
   const { state, dispatch } = useContext(OrderPaymentContext)
-  return { state, dispatch }
+
+  const setSelectedBankAccountId = payload =>
+    dispatch({
+      type: OrderPaymentActions.SET_SELECTED_BANK_ACCOUNT_ID,
+      payload,
+    })
+
+  const setSelectedPaymentMethod = payload =>
+    dispatch({
+      type: OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD,
+      payload,
+    })
+
+  return { ...state, setSelectedBankAccountId, setSelectedPaymentMethod }
 }
 
 export {
