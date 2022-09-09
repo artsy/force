@@ -1,7 +1,5 @@
 # A/B Testing with Unleash
 
-## Creating a test
-
 ### Create an A/B test via our Internal Tools app: 
 - Login to https://tools.artsy.net/feature-flags
 - Select `Create` 
