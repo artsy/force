@@ -26,17 +26,17 @@ export const ArtworkSidebar2ArtsyGuarantee: React.FC<{}> = () => {
           <LockIcon {...iconProps} />
           <Text>{t("artworkPage.sidebar.artsyGuarantee.securePayment")}</Text>
         </Flex>
-        <Spacer mt={10} />
+        <Spacer mt={1} />
         <Flex flexDirection="row" alignItems="center">
           <VerifiedIcon {...iconProps} />
           <Text>{t("artworkPage.sidebar.artsyGuarantee.moneyBack")}</Text>
         </Flex>
-        <Spacer mt={10} />
+        <Spacer mt={1} />
         <Flex flexDirection="row" alignItems="center">
           <CertificateIcon {...iconProps} />
           <Text>{t("artworkPage.sidebar.artsyGuarantee.authenticity")}</Text>
         </Flex>
-        <Spacer mt={10} />
+        <Spacer mt={1} />
       </Text>
       <RouterLink
         to={"/buyer-guarantee"}
