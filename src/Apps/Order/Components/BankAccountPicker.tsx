@@ -49,8 +49,8 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetClientSecret,
     clientSecret,
   } = props
-
-  const bankAccountsArray: BankAccountRecord[] = extractNodes(bankAccounts)
+  const bankAccountsArray: BankAccountRecord[] =
+    paymentMethod === "US_BANK_ACCOUNT" ? extractNodes(bankAccounts) : []
 
   if (order?.paymentMethodDetails?.internalID) {
     // if account on order is not saved on user's profile
@@ -76,7 +76,7 @@ export const BankAccountPicker: FC<Props> = props => {
           variables: {
             input: {
               id: order.internalID,
-              paymentMethod: "US_BANK_ACCOUNT",
+              paymentMethod,
               paymentMethodId: bankAccountSelection.id,
             },
           },

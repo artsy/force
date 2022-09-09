@@ -114,8 +114,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // an existing bank account's ID, used to query account balance
   const [selectedBankAccountId, setSelectedBankAccountId] = useState("")
 
-  // user's existing bank accounts, if any
-  const bankAccountsArray = extractNodes(me.bankAccounts)
+  // user's existing ACH bank accounts, if any
+  const bankAccountsArray =
+    selectedPaymentMethod === "US_BANK_ACCOUNT"
+      ? extractNodes(me.bankAccounts)
+      : []
 
   const getInitialBankAccountSelection = (): BankAccountSelection => {
     if (order.bankAccountId) {
