@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Join, Message, Spacer } from "@artsy/palette"
+import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import { Review_order } from "__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
@@ -385,10 +385,6 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         content={
           <Join separator={<Spacer mb={4} />}>
             <Flex flexDirection="column" mb={[2, 4]}>
-              <Message mb={[2, 4]}>
-                Disruptions caused by COVID-19 may cause delays — we appreciate
-                your understanding.
-              </Message>
               {isEigen && (
                 <>
                   <SubmitButton />
