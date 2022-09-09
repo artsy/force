@@ -64,7 +64,7 @@ const OrderPaymentContext = createContext<{
  * Provider
  */
 
-const OrderPaymentProvider: React.FC = ({ children }) => {
+const OrderPaymentContextProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(
     orderPaymentReducer,
     initialOrderPaymentState
@@ -93,7 +93,7 @@ const useOrderPaymentContext = () => {
 
 export {
   useOrderPaymentContext,
-  OrderPaymentProvider,
+  OrderPaymentContextProvider,
   OrderPaymentState,
   OrderPaymentAction,
   OrderPaymentActions,

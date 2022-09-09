@@ -43,7 +43,7 @@ import { extractNodes } from "Utils/extractNodes"
 import {
   useOrderPaymentContext,
   OrderPaymentActions,
-} from "./OrderPaymentContext"
+} from "./PaymentContext/OrderPaymentContext"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 

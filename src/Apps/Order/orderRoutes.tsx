@@ -5,7 +5,7 @@ import { ErrorPage } from "Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
-import { OrderPaymentProvider } from "./Routes/Payment/OrderPaymentContext"
+import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
@@ -138,9 +138,9 @@ export const orderRoutes: AppRouteConfig[] = [
       }
 
       return (
-        <OrderPaymentProvider>
+        <OrderPaymentContextProvider>
           <Component {...props} />
-        </OrderPaymentProvider>
+        </OrderPaymentContextProvider>
       )
     },
     children: [

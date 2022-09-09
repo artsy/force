@@ -36,7 +36,7 @@ import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import {
   useOrderPaymentContext,
   OrderPaymentActions,
-} from "./OrderPaymentContext"
+} from "./PaymentContext/OrderPaymentContext"
 
 export interface Props {
   order: Payment_order
