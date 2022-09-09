@@ -1,7 +1,5 @@
+import { ArtQuizInterface } from "Apps/ArtQuiz/ArtQuizInterface"
+
 export const ArtQuizApp = () => {
-  return (
-    <div>
-      <h1>ArtQuiz</h1>
-    </div>
-  )
+  return <ArtQuizInterface />
 }
