@@ -34,14 +34,19 @@ describe("ArtistApp", () => {
   describe("for default routes", () => {
     it("renders correct components", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper({
-        Artist: () => ({
-          statuses: {
-            auctionLots: true,
-            artworks: true,
-          },
-        }),
-      })
+
+      const wrapper = getWrapper(
+        {
+          Artist: () => ({
+            statuses: {
+              auctionLots: true,
+              artworks: true,
+            },
+          }),
+        },
+        { match: { params: { artworkId: undefined } } }
+      )
+
       expect(wrapper.find("ArtistMetaFragmentContainer").length).toBe(1)
       expect(wrapper.find("ArtistHeaderFragmentContainer").length).toBe(1)
       expect(wrapper.find("RouteTabs").length).toBe(1)
@@ -52,15 +57,18 @@ describe("ArtistApp", () => {
 
     it("tabs navigate to the correct urls", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper({
-        Artist: () => ({
-          slug: "artist-slug",
-          statuses: {
-            auctionLots: true,
-            artworks: true,
-          },
-        }),
-      })
+      const wrapper = getWrapper(
+        {
+          Artist: () => ({
+            slug: "artist-slug",
+            statuses: {
+              auctionLots: true,
+              artworks: true,
+            },
+          }),
+        },
+        { match: { params: { artworkId: undefined } } }
+      )
       expect(wrapper.find("RouteTab").at(0).html()).toContain(
         'href="/artist/artist-slug"'
       )
@@ -75,48 +83,57 @@ describe("ArtistApp", () => {
     describe("hiding main tabs", () => {
       it("hides tabs overview tab when appropriate", () => {
         mockfindCurrentRoute.mockImplementation(() => ({}))
-        const wrapper = getWrapper({
-          Artist: () => ({
-            biographyBlurb: null,
-            related: null,
-            insights: null,
-            statuses: {
-              articles: false,
-              cv: false,
-              shows: false,
-              auctionLots: true,
-              artworks: true,
-            },
-          }),
-        })
+        const wrapper = getWrapper(
+          {
+            Artist: () => ({
+              biographyBlurb: null,
+              related: null,
+              insights: null,
+              statuses: {
+                articles: false,
+                cv: false,
+                shows: false,
+                auctionLots: true,
+                artworks: true,
+              },
+            }),
+          },
+          { match: { params: { artworkId: undefined } } }
+        )
         expect(wrapper.find("RouteTab").at(0).text()).toBe("Artworks")
         expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction Results")
       })
 
       it("hides works-for-sale tab when appropriate", () => {
         mockfindCurrentRoute.mockImplementation(() => ({}))
-        const wrapper = getWrapper({
-          Artist: () => ({
-            statuses: {
-              artworks: false,
-              auctionLots: true,
-            },
-          }),
-        })
+        const wrapper = getWrapper(
+          {
+            Artist: () => ({
+              statuses: {
+                artworks: false,
+                auctionLots: true,
+              },
+            }),
+          },
+          { match: { params: { artworkId: undefined } } }
+        )
         expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
         expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction Results")
       })
 
       it("hides auction results tab when appropriate", () => {
         mockfindCurrentRoute.mockImplementation(() => ({}))
-        const wrapper = getWrapper({
-          Artist: () => ({
-            statuses: {
-              auctionLots: false,
-              artworks: true,
-            },
-          }),
-        })
+        const wrapper = getWrapper(
+          {
+            Artist: () => ({
+              statuses: {
+                auctionLots: false,
+                artworks: true,
+              },
+            }),
+          },
+          { match: { params: { artworkId: undefined } } }
+        )
         expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
         expect(wrapper.find("RouteTab").at(1).text()).toBe("Artworks")
       })
@@ -124,32 +141,38 @@ describe("ArtistApp", () => {
 
     it("renders the correct for sale artwork tab count", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper({
-        Artist: () => ({
-          counts: {
-            forSaleArtworks: 20,
-          },
-          statuses: {
-            artworks: true,
-          },
-        }),
-      })
+      const wrapper = getWrapper(
+        {
+          Artist: () => ({
+            counts: {
+              forSaleArtworks: 20,
+            },
+            statuses: {
+              artworks: true,
+            },
+          }),
+        },
+        { match: { params: { artworkId: undefined } } }
+      )
       expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
     })
 
     it("does not render auction results tab when no auction results are available", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper({
-        Artist: () => ({
-          statuses: {
-            auctionLots: false,
-            artworks: true,
-          },
-          counts: {
-            forSaleArtworks: 20,
-          },
-        }),
-      })
+      const wrapper = getWrapper(
+        {
+          Artist: () => ({
+            statuses: {
+              auctionLots: false,
+              artworks: true,
+            },
+            counts: {
+              forSaleArtworks: 20,
+            },
+          }),
+        },
+        { match: { params: { artworkId: undefined } } }
+      )
 
       expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
       expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
@@ -158,17 +181,20 @@ describe("ArtistApp", () => {
 
     it("renders auction results tab when auction results are available", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper({
-        Artist: () => ({
-          statuses: {
-            artworks: true,
-            auctionLots: true,
-          },
-          counts: {
-            forSaleArtworks: 20,
-          },
-        }),
-      })
+      const wrapper = getWrapper(
+        {
+          Artist: () => ({
+            statuses: {
+              artworks: true,
+              auctionLots: true,
+            },
+            counts: {
+              forSaleArtworks: 20,
+            },
+          }),
+        },
+        { match: { params: { artworkId: undefined } } }
+      )
 
       expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
       expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
@@ -181,7 +207,10 @@ describe("ArtistApp", () => {
       mockfindCurrentRoute.mockImplementation(() => ({
         displayFullPage: true,
       }))
-      const wrapper = getWrapper()
+      const wrapper = getWrapper(
+        {},
+        { match: { params: { artworkId: undefined } } }
+      )
       expect(wrapper.find("ArtistMetaFragmentContainer").length).toBe(1)
       expect(wrapper.find("ArtistHeaderFragmentContainer").length).toBe(0)
       expect(wrapper.find("RouteTabs").length).toBe(0)
@@ -193,7 +222,10 @@ describe("ArtistApp", () => {
       mockfindCurrentRoute.mockImplementation(() => ({
         hideNavigationTabs: true,
       }))
-      const wrapper = getWrapper()
+      const wrapper = getWrapper(
+        {},
+        { match: { params: { artworkId: undefined } } }
+      )
       expect(wrapper.find("ArtistMetaFragmentContainer").length).toBe(1)
       expect(wrapper.find("ArtistHeaderFragmentContainer").length).toBe(0)
       expect(wrapper.find("RouteTabs").length).toBe(0)

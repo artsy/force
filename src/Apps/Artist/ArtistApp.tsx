@@ -24,6 +24,7 @@ interface ArtistAppProps {
 
 const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   const route = findCurrentRoute(match)!
+  const artworkId = match.params.artworkId
   const { isEigen } = useSystemContext()
 
   useScrollToOpenArtistAuthModal()
@@ -37,7 +38,9 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   if (route.hideNavigationTabs) {
     return (
       <>
-        {!isEigen && <BackLinkFragmentContainer artist={artist} />}
+        {!isEigen && (
+          <BackLinkFragmentContainer artist={artist} artworkId={artworkId} />
+        )}
 
         <PageWrapper artist={artist}>{children}</PageWrapper>
       </>

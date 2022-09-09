@@ -14,6 +14,7 @@ import { cropped } from "Utils/resized"
 export interface TopContextBarProps {
   displayBackArrow?: boolean
   href?: string | null
+  redirectTo?: string | undefined
   /** Should the biggest size image available */
   src?: string | null
   onClick?(): void
@@ -23,6 +24,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
   children,
   displayBackArrow = false,
   href,
+  redirectTo,
   src,
   onClick,
 }) => {
@@ -37,6 +39,13 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
           ? {
               as: RouterLink,
               to: href,
+              textDecoration: "none",
+              onClick,
+            }
+          : {})}
+        {...(redirectTo
+          ? {
+              as: RouterLink,
               textDecoration: "none",
               onClick,
             }
