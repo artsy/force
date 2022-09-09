@@ -158,7 +158,11 @@ export const setupTestWrapper = <T extends OperationType>({
       />
     )
 
-    const wrapper = mount(<TestRenderer />)
+    const wrapper = mount(
+      <ErrorBoundary>
+        <TestRenderer />
+      </ErrorBoundary>
+    )
 
     env.mock.resolveMostRecentOperation(operation => {
       return MockPayloadGenerator.generate(operation, mockResolvers)
@@ -170,4 +174,16 @@ export const setupTestWrapper = <T extends OperationType>({
   }
 
   return { getWrapper }
+}
+
+class ErrorBoundary extends React.Component {
+  componentDidCatch(error) {
+    // Print an error to the console for a better debugging experience
+    console.log("Something went wrong while rendering a component")
+    console.log(error)
+  }
+
+  render() {
+    return this.props.children
+  }
 }
