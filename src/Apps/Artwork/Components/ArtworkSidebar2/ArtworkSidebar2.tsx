@@ -7,6 +7,7 @@ import { SidebarExpandable } from "Components/Artwork/SidebarExpandable"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebar2ArtworkTitleFragmentContainer } from "./ArtworkSidebar2ArtworkTitle"
 import { ArtworkSidebar2DetailsFragmentContainer } from "./ArtworkSidebar2Details"
+import { ArtworkSidebar2ArtsyGuarantee } from "./ArtworkSidebar2ArtsyGuarantee"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
@@ -41,6 +42,13 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
           </SidebarExpandable>
         </>
       )}
+
+      <Separator />
+      <SidebarExpandable
+        label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
+      >
+        <ArtworkSidebar2ArtsyGuarantee />
+      </SidebarExpandable>
     </Flex>
   )
 }

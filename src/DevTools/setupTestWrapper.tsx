@@ -17,7 +17,7 @@ const mount = children =>
   enzMount(<I18nextProvider i18n={i18n}>{children}</I18nextProvider>)
 
 // overide render to provide access to i18n inside the setupTestWrapperTL function
-const render = children =>
+export const render = children =>
   rtlRender(<I18nextProvider i18n={i18n}>{children}</I18nextProvider>)
 
 type SetupTestWrapper<T extends OperationType> = {

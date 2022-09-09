@@ -61,6 +61,13 @@
         "taxInformation": "Taxes may apply at checkout.",
         "taxInformationLearnMore": "Learn more",
         "shipsFrom": "Ships from"
+      },
+      "artsyGuarantee": {
+        "expandableLabel": "Be covered by the Artsy Guarantee",
+        "securePayment": "Secure Payment",
+        "moneyBack": "Money-Back Guarantee",
+        "authenticity": "Authenticity Guarantee",
+        "learnMore": "Learn more"
       }
     }
   }
