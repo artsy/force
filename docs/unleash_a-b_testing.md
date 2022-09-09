@@ -3,7 +3,13 @@
 ## Creating a test
 
 ### Create an A/B test via our Internal Tools app: 
-- https://tools.artsy.net/feature-flags
+- Login to https://tools.artsy.net/feature-flags
+- Select `Create` 
+- Give your A/B test a name
+- Select `Experiment` checkbox 
+- Assign weights to each `control` and `experiment` (eg, 50-50; 50% of users will see control and 50% of users will see experiment) 
+- Add additional variants if necessary
+- Hit `Create`
 
 ### Manually creating a test via Unleash UI:
 
