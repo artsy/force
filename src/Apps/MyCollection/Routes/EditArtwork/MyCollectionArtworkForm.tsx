@@ -1,6 +1,8 @@
 import {
   ArtsyLogoBlackIcon,
+  Box,
   Button,
+  Clickable,
   DROP_SHADOW,
   Flex,
   FullBleed,
@@ -20,6 +22,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
+import { Media } from "Utils/Responsive"
 import { wait } from "Utils/wait"
 import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
@@ -271,25 +274,30 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                 Back
                               </BackLink>
 
-                              <Button
-                                width={[120, 300]}
-                                data-testid="save-button"
-                                type="submit"
-                                size={["small", "large"]}
-                                variant="primaryBlack"
-                                loading={
-                                  isSubmitting ||
-                                  values.newPhotos.filter(
-                                    photo => photo.loading
-                                  ).length > 0
-                                }
-                                disabled={!isValid}
-                              >
-                                {isEditing ? "Save Artwork" : "Upload Artwork"}
-                              </Button>
+                              <Media greaterThan="xs">
+                                <Button
+                                  width={300}
+                                  data-testid="save-button"
+                                  type="submit"
+                                  size="large"
+                                  variant="primaryBlack"
+                                  loading={
+                                    isSubmitting ||
+                                    values.newPhotos.filter(
+                                      photo => photo.loading
+                                    ).length > 0
+                                  }
+                                  disabled={!isValid}
+                                >
+                                  {isEditing
+                                    ? "Save Changes"
+                                    : "Upload Artwork"}
+                                </Button>
+                              </Media>
                             </Flex>
                           </HorizontalPadding>
                         </AppContainer>
+                        <Separator />
                       </FullBleed>
                     )
                   }}
@@ -298,10 +306,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
               {!onlyPhotos && (
                 <>
-                  <Text mx={2} mb={1}>
+                  <Text mb={1} mt={4} variant="lg-display">
                     {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
                   </Text>
-                  <Separator color="black100" />
                 </>
               )}
 
@@ -312,22 +319,58 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
               <Spacer mb={4} />
 
               <MyCollectionArtworkFormImages />
+
+              <Spacer mt={6} />
+
+              {isEditing && !onlyPhotos && (
+                <>
+                  <Flex width="100%" justifyContent={["center", "flex-start"]}>
+                    <Clickable
+                      onClick={() => setShouldShowDeletionModal(true)}
+                      textDecoration="underline"
+                      color="red100"
+                      alignItems="center"
+                      data-testid="delete-button"
+                    >
+                      Delete Artwork
+                    </Clickable>
+                  </Flex>
+                  <Spacer mt={6} />
+                </>
+              )}
+              <Media at="xs">
+                <Flex>
+                  <Box
+                    position="fixed"
+                    bottom={0}
+                    width="100%"
+                    left={0}
+                    px={2}
+                    py={1}
+                    backgroundColor="white100"
+                    style={{ boxShadow: DROP_SHADOW }}
+                  >
+                    <Button
+                      width="100%"
+                      data-testid="save-button"
+                      type="submit"
+                      size="large"
+                      variant="primaryBlack"
+                      loading={
+                        isSubmitting ||
+                        values.newPhotos.filter(photo => photo.loading).length >
+                          0
+                      }
+                      disabled={!isValid}
+                    >
+                      {isEditing ? "Save Changes" : "Upload Artwork"}
+                    </Button>
+                  </Box>
+                </Flex>
+              </Media>
             </Form>
           )}
         </Formik>
-
-        <Spacer mt={4} />
-
-        {isEditing && !onlyPhotos && (
-          <Button
-            onClick={() => setShouldShowDeletionModal(true)}
-            width={["100%", "auto"]}
-            variant="secondaryNeutral"
-            data-testid="delete-button"
-          >
-            Delete Artwork
-          </Button>
-        )}
       </AppContainer>
 
       <Spacer mt={4} />
