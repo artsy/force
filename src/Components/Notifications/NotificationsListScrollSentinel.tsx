@@ -13,5 +13,6 @@ export const NotificationsListScrollSentinel: React.FC<NotificationsListScrollSe
     once: false,
   })
 
-  return <Box ref={ref as any} height={0} />
+  // NOTE: If we set height=0, then `onIntersection` will not be called
+  return <Box ref={ref as any} height={1} />
 }
