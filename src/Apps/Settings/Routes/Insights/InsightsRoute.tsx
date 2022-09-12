@@ -1,6 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { InsightsRoute_me } from "__generated__/InsightsRoute_me.graphql"
+import { InsightsHeader } from "./Components/InsightsHeader"
 import { InsightsOverviewFragmentContainer } from "./Components/InsightsOverview"
 
 interface InsightsRouteProps {
@@ -13,7 +14,10 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   return (
     <>
       {isInsightsEnabled && (
-        <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+        <>
+          <InsightsHeader />
+          <InsightsOverviewFragmentContainer info={me?.myCollectionInfo!} />
+        </>
       )}
     </>
   )
