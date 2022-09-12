@@ -9,7 +9,7 @@ const logger = createLogger("[dev: OrderPaymentContext] state:")
  * Actions
  */
 
-enum OrderPaymentActions {
+export enum OrderPaymentActions {
   SET_SELECTED_BANK_ACCOUNT_ID = "SET_SELECTED_BANK_ACCOUNT_ID",
   SET_SELECTED_PAYMENT_METHOD = "SET_SELECTED_PAYMENT_METHOD",
 }
@@ -19,9 +19,9 @@ type OrderPaymentActionsPayload = {
   [OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD]: CommercePaymentMethodEnum
 }
 
-type OrderPaymentAction = ActionMap<OrderPaymentActionsPayload>[keyof ActionMap<
+export type OrderPaymentAction = ActionMap<
   OrderPaymentActionsPayload
->]
+>[keyof ActionMap<OrderPaymentActionsPayload>]
 
 type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -38,7 +38,7 @@ type ActionMap<M extends { [index: string]: any }> = {
  * State
  */
 
-type OrderPaymentState = {
+export type OrderPaymentState = {
   selectedBankAccountId: string
   selectedPaymentMethod: CommercePaymentMethodEnum | string
 }
@@ -64,7 +64,7 @@ const OrderPaymentContext = createContext<{
  * Provider
  */
 
-const OrderPaymentContextProvider: React.FC = ({ children }) => {
+export const OrderPaymentContextProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(
     orderPaymentReducer,
     initialOrderPaymentState
@@ -86,7 +86,7 @@ const OrderPaymentContextProvider: React.FC = ({ children }) => {
  * Hook
  */
 
-const useOrderPaymentContext = () => {
+export const useOrderPaymentContext = () => {
   const { state, dispatch } = useContext(OrderPaymentContext)
 
   const setSelectedBankAccountId = payload =>
@@ -102,12 +102,4 @@ const useOrderPaymentContext = () => {
     })
 
   return { ...state, setSelectedBankAccountId, setSelectedPaymentMethod }
-}
-
-export {
-  useOrderPaymentContext,
-  OrderPaymentContextProvider,
-  OrderPaymentState,
-  OrderPaymentAction,
-  OrderPaymentActions,
 }

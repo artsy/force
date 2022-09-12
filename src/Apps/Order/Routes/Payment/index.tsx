@@ -83,7 +83,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   useEffect(() => {
-    setSelectedBankAccountId("XXX")
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
