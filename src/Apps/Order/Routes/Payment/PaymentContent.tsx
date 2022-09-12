@@ -151,7 +151,7 @@ export const PaymentContent: FC<Props> = props => {
       <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
-        {paymentMethod === "US_BANK_ACCOUNT" && (
+        {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
@@ -175,7 +175,7 @@ export const PaymentContent: FC<Props> = props => {
       <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
-        {paymentMethod === "SEPA_DEBIT" && (
+        {selectedPaymentMethod === "SEPA_DEBIT" && (
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
