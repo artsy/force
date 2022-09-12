@@ -37,9 +37,9 @@ const ORDER_LABELS = {
 } as const
 
 const ORDER_ICONS = {
-  APPROVED: <PendingCircleIcon fill="black60" />,
+  APPROVED: <PendingCircleIcon fill="black100" />,
   CANCELED: <XCircleIcon fill="red100" />,
-  FULFILLED: <CheckCircleFillIcon />,
+  FULFILLED: <CheckCircleFillIcon fill="green100" />,
   IN_TRANSIT: <PendingCircleIcon fill="black60" />,
   PROCESSING: <PendingCircleIcon fill="black60" />,
   REFUNDED: <XCircleIcon fill="red100" />,
@@ -48,10 +48,10 @@ const ORDER_ICONS = {
 } as const
 
 const ORDER_COLORS = {
-  APPROVED: "black60",
+  APPROVED: "black100",
   CANCELED: "red100",
-  FULFILLED: "black100",
-  IN_TRANSIT: "black100",
+  FULFILLED: "green100",
+  IN_TRANSIT: "black60",
   PROCESSING: "black60",
   REFUNDED: "red100",
   SUBMITTED: "black60",
@@ -102,7 +102,11 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         <Flex alignItems="center">
           {ORDER_ICONS[order.displayState]}
 
-          <Text ml={0.5} variant="xs" color={ORDER_COLORS[order.displayState]}>
+          <Text
+            ml={0.5}
+            variant="sm-display"
+            color={ORDER_COLORS[order.displayState]}
+          >
             {ORDER_LABELS[order.displayState]}
           </Text>
 
