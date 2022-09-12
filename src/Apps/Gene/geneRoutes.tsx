@@ -5,6 +5,7 @@ import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { AppRouteConfig } from "System/Router/Route"
+import { redirectGeneToCollection } from "./Server/redirectGeneToCollection"
 
 const GeneApp = loadable(
   () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
@@ -24,6 +25,7 @@ export const geneRoutes: AppRouteConfig[] = [
   {
     path: "/gene/:slug",
     getComponent: () => GeneApp,
+    onServerSideRender: redirectGeneToCollection,
     onClientSideRender: () => {
       return GeneApp.preload()
     },
