@@ -276,10 +276,10 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
                               <Media greaterThan="xs">
                                 <Button
-                                  width={[120, 300]}
+                                  width={300}
                                   data-testid="save-button"
                                   type="submit"
-                                  size={"large"}
+                                  size="large"
                                   variant="primaryBlack"
                                   loading={
                                     isSubmitting ||
