@@ -68,6 +68,9 @@
         "moneyBack": "Money-Back Guarantee",
         "authenticity": "Authenticity Guarantee",
         "learnMore": "Learn more"
+      },
+      "partner": {
+        "contactGalleryCta": "Contact gallery"
       }
     }
   }
