@@ -2,6 +2,7 @@ import {
   ArtsyLogoBlackIcon,
   Box,
   Button,
+  Clickable,
   DROP_SHADOW,
   Flex,
   FullBleed,
@@ -323,14 +324,17 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
               {isEditing && !onlyPhotos && (
                 <>
-                  <Button
-                    onClick={() => setShouldShowDeletionModal(true)}
-                    width={["100%", "auto"]}
-                    variant="secondaryNeutral"
-                    data-testid="delete-button"
-                  >
-                    Delete Artwork
-                  </Button>
+                  <Flex width="100%" justifyContent={["center", "flex-start"]}>
+                    <Clickable
+                      onClick={() => setShouldShowDeletionModal(true)}
+                      textDecoration="underline"
+                      color="red100"
+                      alignItems="center"
+                      data-testid="delete-button"
+                    >
+                      Delete Artwork
+                    </Clickable>
+                  </Flex>
                   <Spacer mt={6} />
                 </>
               )}
@@ -350,7 +354,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                       width="100%"
                       data-testid="save-button"
                       type="submit"
-                      size={"large"}
+                      size="large"
                       variant="primaryBlack"
                       loading={
                         isSubmitting ||
