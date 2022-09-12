@@ -320,7 +320,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
               <MyCollectionArtworkFormImages />
 
-              <Spacer mt={4} />
+              <Spacer mt={6} />
 
               {isEditing && !onlyPhotos && (
                 <>
