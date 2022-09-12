@@ -56,6 +56,8 @@ export const ArtistAutoComplete: React.FC<{
     setFieldTouched,
   } = useFormikContext<ArtworkDetailsFormModel>()
 
+  const [artistNotFoundMessage, setArtistNotFoundMessage] = useState<string>("")
+
   useEffect(() => {
     if (!isError) return
 
@@ -82,6 +84,8 @@ export const ArtistAutoComplete: React.FC<{
               image: option?.image,
             }))
           )
+        } else {
+          setArtistNotFoundMessage(errors.artistId as string)
         }
       } catch {
         setIsLoading(false)
@@ -102,6 +106,10 @@ export const ArtistAutoComplete: React.FC<{
     setFieldValue("artistId", "")
     setFieldValue("artistName", value)
     handleSuggestionsFetchRequested(value)
+    setArtistNotFoundMessage("")
+    if (!value.trim()) {
+      setArtistNotFoundMessage(errors.artistId as string)
+    }
   }
 
   const handleClick = () => {
@@ -152,7 +160,10 @@ export const ArtistAutoComplete: React.FC<{
       spellCheck={false}
       loading={isLoading}
       defaultValue={values.artistName}
-      error={values.artistName.trim() && touched.artistName && errors.artistId}
+      error={
+        (values.artistName.trim() && touched.artistName && errors.artistId) ||
+        artistNotFoundMessage
+      }
       onChange={handleChange}
       onClick={handleClick}
       onClear={handleClear}
