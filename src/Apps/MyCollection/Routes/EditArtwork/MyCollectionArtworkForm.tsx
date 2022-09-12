@@ -290,7 +290,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                                   disabled={!isValid}
                                 >
                                   {isEditing
-                                    ? "Save Artwork"
+                                    ? "Save Changes"
                                     : "Upload Artwork"}
                                 </Button>
                               </Media>
@@ -363,7 +363,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                       }
                       disabled={!isValid}
                     >
-                      {isEditing ? "Save Artwork" : "Upload Artwork"}
+                      {isEditing ? "Save Changes" : "Upload Artwork"}
                     </Button>
                   </Box>
                 </Flex>
