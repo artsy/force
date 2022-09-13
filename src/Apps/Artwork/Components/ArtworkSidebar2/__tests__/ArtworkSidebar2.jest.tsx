@@ -19,80 +19,84 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtworkSidebar2Artists", () => {
-  it("renders the create alert section", () => {
-    renderWithRelay()
+  describe("should display the create alert section", () => {
+    it("renders the create alert section", () => {
+      renderWithRelay()
 
-    expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
-    expect(
-      screen.queryByText(/Get notifications for similar works/i)
-    ).toBeInTheDocument()
-  })
-
-  it("hide the create alert section if there are no associated artists", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        artists: [],
-      }),
+      expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
+      expect(
+        screen.queryByText(/Get notifications for similar works/i)
+      ).toBeInTheDocument()
     })
 
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Get notifications for similar works/i
-    )
+    it("shows the create alert section for artworks that are on loan", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          saleMessage: "On loan",
+        }),
+      })
 
-    expect(button).not.toBeInTheDocument()
-    expect(description).not.toBeInTheDocument()
-  })
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
 
-  it("hide the create alert section for bidding closed artworks if there are no associated artists", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        isInAuction: true,
-        artists: [],
-      }),
-      Sale: () => ({
-        isClosed: true,
-      }),
+      expect(button).toBeInTheDocument()
+      expect(description).toBeInTheDocument()
     })
 
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Get notifications for similar works/i
-    )
+    it("shows the create alert section for artworks that are on a permanent collection", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          saleMessage: "Permanent collection",
+        }),
+      })
 
-    expect(button).not.toBeInTheDocument()
-    expect(description).not.toBeInTheDocument()
-  })
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
 
-  it("shows the create alert section for artworks that are on loan", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        saleMessage: "On loan",
-      }),
+      expect(button).toBeInTheDocument()
+      expect(description).toBeInTheDocument()
     })
 
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Get notifications for similar works/i
-    )
+    it("hide the create alert section if there are no associated artists", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          artists: [],
+        }),
+      })
 
-    expect(button).toBeInTheDocument()
-    expect(description).toBeInTheDocument()
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
+
+      expect(button).not.toBeInTheDocument()
+      expect(description).not.toBeInTheDocument()
+    })
   })
 
-  it("shows the create alert section for artworks that are on a permanent collection", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        saleMessage: "Permanent collection",
-      }),
+  describe("should not display the create alert section", () => {
+    it("for bidding closed artworks if there are no associated artists", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isInAuction: true,
+          artists: [],
+        }),
+        Sale: () => ({
+          isClosed: true,
+        }),
+      })
+
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
+
+      expect(button).not.toBeInTheDocument()
+      expect(description).not.toBeInTheDocument()
     })
-
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Get notifications for similar works/i
-    )
-
-    expect(button).toBeInTheDocument()
-    expect(description).toBeInTheDocument()
   })
 })
