@@ -20,8 +20,6 @@ describe("BankDebitProvider", () => {
           " $refType": "BankAccountPicker_order",
         }}
         paymentMethod="US_BANK_ACCOUNT"
-        bankAccountHasInsufficientFunds={false}
-        onSetBankAccountHasInsufficientFunds={jest.fn()}
         onSetIsSavingPayment={jest.fn()}
         onSetClientSecret={jest.fn()}
         clientSecret={"client-secret"}

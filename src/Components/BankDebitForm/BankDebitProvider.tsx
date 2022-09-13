@@ -15,7 +15,6 @@ import { LoadingArea } from "../LoadingArea"
 import { camelCase, upperFirst } from "lodash"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
-
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 const BankSetupErrorMessage = () => {
@@ -37,8 +36,6 @@ const BankSetupErrorMessage = () => {
 interface Props {
   order: BankAccountPicker_order | Payment_order
   paymentMethod: CommercePaymentMethodEnum
-  bankAccountHasInsufficientFunds: boolean
-  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
   onSetClientSecret: (arg: string) => void
   clientSecret: string | null
@@ -47,8 +44,6 @@ interface Props {
 export const BankDebitProvider: FC<Props> = ({
   order,
   paymentMethod,
-  bankAccountHasInsufficientFunds,
-  onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
   onSetClientSecret,
   clientSecret,
@@ -155,10 +150,6 @@ export const BankDebitProvider: FC<Props> = ({
             <BankDebitForm
               order={order}
               paymentMethod={paymentMethod}
-              bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-              onSetBankAccountHasInsufficientFunds={
-                onSetBankAccountHasInsufficientFunds
-              }
               onSetIsSavingPayment={onSetIsSavingPayment}
               onSetIsPaymentElementLoading={setIsPaymentElementLoading}
             />

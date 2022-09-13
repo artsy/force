@@ -72,8 +72,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const {
     selectedBankAccountId,
     selectedPaymentMethod,
+    balanceCheckComplete,
     setSelectedBankAccountId,
     setSelectedPaymentMethod,
+    setBalanceCheckComplete,
+    setBankAccountHasInsufficientFunds,
   } = useOrderPaymentContext()
 
   const { trackEvent } = useTracking()
@@ -138,15 +141,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const [bankAccountSelection, setBankAccountSelection] = useState<
     BankAccountSelection
   >(getInitialBankAccountSelection())
-
-  // whether balance check is performed for the current bank account
-  const [balanceCheckComplete, setBalanceCheckComplete] = useState(false)
-
-  // result of account balance check
-  const [
-    bankAccountHasInsufficientFunds,
-    setBankAccountHasInsufficientFunds,
-  ] = useState(false)
 
   // fired when save and continue is clicked for CC and Wire payment methods
   const handleSetPayment = () => {
@@ -360,15 +354,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
                   onSetPayment={handleSetPayment}
-                  bankAccountHasInsufficientFunds={
-                    bankAccountHasInsufficientFunds
-                  }
-                  onSetBankAccountHasInsufficientFunds={
-                    setBankAccountHasInsufficientFunds
-                  }
                   onSetIsSavingPayment={setIsSavingPayment}
                   onSetSelectedBankAccountId={setSelectedBankAccountId}
-                  onSetBalanceCheckComplete={setBalanceCheckComplete}
                   bankAccountSelection={bankAccountSelection}
                   onSetBankAccountSelection={setBankAccountSelection}
                 />

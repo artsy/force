@@ -21,6 +21,18 @@ export const orderPaymentReducer = (
         selectedPaymentMethod: action.payload,
       }
     }
+    case OrderPaymentActions.SET_BALANCE_CHECK_COMPLETE: {
+      return {
+        ...state,
+        balanceCheckComplete: action.payload,
+      }
+    }
+    case OrderPaymentActions.SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS: {
+      return {
+        ...state,
+        bankAccountHasInsufficientFunds: action.payload,
+      }
+    }
     default: {
       return state
     }

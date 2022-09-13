@@ -4,6 +4,7 @@ import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { PaymentTestQueryRawResponse } from "__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "../BankDebitForm"
+import { useOrderPaymentContext } from "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 // In our stripe PaymentElement mock
 // we automatically fire this event if defined
@@ -26,6 +27,9 @@ jest.mock("@stripe/react-stripe-js", () => {
 })
 jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
+jest.mock(
+  "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+)
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
@@ -34,6 +38,13 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 const trackEvent = jest.fn()
 
 beforeAll(() => {
+  ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+    return {
+      bankAccountHasInsufficientFunds: true,
+      setBankAccountHasInsufficientFunds: jest.fn(),
+    }
+  })
+
   trackEvent.mockClear()
   mockEvent = null
   const mockTracking = useTracking as jest.Mock
@@ -57,8 +68,6 @@ describe("BankDebitForm", () => {
       <BankDebitForm
         order={testOrder}
         paymentMethod="US_BANK_ACCOUNT"
-        bankAccountHasInsufficientFunds={false}
-        onSetBankAccountHasInsufficientFunds={jest.fn()}
         onSetIsSavingPayment={jest.fn()}
         onSetIsPaymentElementLoading={jest.fn()}
       />
@@ -79,8 +88,6 @@ describe("BankDebitForm", () => {
         <BankDebitForm
           order={testOrder}
           paymentMethod="US_BANK_ACCOUNT"
-          bankAccountHasInsufficientFunds={true}
-          onSetBankAccountHasInsufficientFunds={jest.fn()}
           onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />
@@ -98,8 +105,6 @@ describe("BankDebitForm", () => {
         <BankDebitForm
           order={testOrder}
           paymentMethod="SEPA_DEBIT"
-          bankAccountHasInsufficientFunds={true}
-          onSetBankAccountHasInsufficientFunds={jest.fn()}
           onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />

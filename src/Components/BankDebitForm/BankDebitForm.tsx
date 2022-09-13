@@ -18,12 +18,11 @@ import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
 import { camelCase, upperFirst } from "lodash"
+import { useOrderPaymentContext } from "../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 interface Props {
   order: { mode: string | null; internalID: string }
   paymentMethod: CommercePaymentMethodEnum
-  bankAccountHasInsufficientFunds: boolean
-  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
   onSetIsPaymentElementLoading: (arg: boolean) => void
 }
@@ -31,11 +30,14 @@ interface Props {
 export const BankDebitForm: FC<Props> = ({
   order,
   paymentMethod,
-  bankAccountHasInsufficientFunds,
-  onSetBankAccountHasInsufficientFunds,
   onSetIsSavingPayment,
   onSetIsPaymentElementLoading,
 }) => {
+  const {
+    bankAccountHasInsufficientFunds,
+    setBankAccountHasInsufficientFunds,
+  } = useOrderPaymentContext()
+
   const stripe = useStripe()
   const elements = useElements()
   const { user } = useSystemContext()
@@ -45,7 +47,7 @@ export const BankDebitForm: FC<Props> = ({
 
   const handlePaymentElementChange = event => {
     if (event.complete) {
-      onSetBankAccountHasInsufficientFunds(false)
+      setBankAccountHasInsufficientFunds(false)
 
       tracking.trackEvent({
         flow: order.mode,

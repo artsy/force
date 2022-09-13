@@ -40,10 +40,7 @@ export interface Props {
   commitMutation: CommitMutation
   onSetPayment: () => void
   CreditCardPicker: RefObject<CreditCardPicker>
-  bankAccountHasInsufficientFunds: boolean
-  onSetBankAccountHasInsufficientFunds: (arg: boolean) => void
   onSetIsSavingPayment: (arg: boolean) => void
-  onSetBalanceCheckComplete: (arg: boolean) => void
   onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
   onSetBankAccountSelection: (arg: BankAccountSelection) => void
@@ -56,10 +53,7 @@ export const PaymentContent: FC<Props> = props => {
     me,
     order,
     CreditCardPicker,
-    bankAccountHasInsufficientFunds,
-    onSetBankAccountHasInsufficientFunds,
     onSetIsSavingPayment,
-    onSetBalanceCheckComplete,
     onSetSelectedBankAccountId,
     bankAccountSelection,
     onSetBankAccountSelection,
@@ -156,12 +150,7 @@ export const PaymentContent: FC<Props> = props => {
             me={me}
             order={order}
             paymentMethod="US_BANK_ACCOUNT"
-            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-            onSetBankAccountHasInsufficientFunds={
-              onSetBankAccountHasInsufficientFunds
-            }
             onSetIsSavingPayment={onSetIsSavingPayment}
-            onSetBalanceCheckComplete={onSetBalanceCheckComplete}
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
             onSetBankAccountSelection={onSetBankAccountSelection}
@@ -180,12 +169,7 @@ export const PaymentContent: FC<Props> = props => {
             me={me}
             order={order}
             paymentMethod="SEPA_DEBIT"
-            bankAccountHasInsufficientFunds={bankAccountHasInsufficientFunds}
-            onSetBankAccountHasInsufficientFunds={
-              onSetBankAccountHasInsufficientFunds
-            }
             onSetIsSavingPayment={onSetIsSavingPayment}
-            onSetBalanceCheckComplete={onSetBalanceCheckComplete}
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
             onSetBankAccountSelection={onSetBankAccountSelection}
