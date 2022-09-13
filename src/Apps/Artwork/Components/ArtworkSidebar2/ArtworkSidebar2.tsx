@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next"
 import { ArtworkSidebar2ArtworkTitleFragmentContainer } from "./ArtworkSidebar2ArtworkTitle"
 import { ArtworkSidebar2DetailsFragmentContainer } from "./ArtworkSidebar2Details"
 import { ArtworkSidebar2ArtsyGuarantee } from "./ArtworkSidebar2ArtsyGuarantee"
+import { ArtworkSidebar2PartnerInfoFragmentContainer } from "./ArtworkSidebar2PartnerInfo"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
@@ -49,6 +50,14 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
       >
         <ArtworkSidebar2ArtsyGuarantee />
       </SidebarExpandable>
+
+      <Separator />
+      <Spacer mt={2} />
+
+      <ArtworkSidebar2PartnerInfoFragmentContainer artwork={artwork} />
+
+      <Spacer mt={2} />
+      <Separator />
     </Flex>
   )
 }
@@ -66,6 +75,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         ...ArtworkSidebar2Artists_artwork
         ...ArtworkSidebar2Details_artwork
         ...ArtworkSidebar2ShippingInformation_artwork
+        ...ArtworkSidebar2PartnerInfo_artwork
       }
     `,
   }
