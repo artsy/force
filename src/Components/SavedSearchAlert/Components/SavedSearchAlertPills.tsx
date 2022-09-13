@@ -13,7 +13,7 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
   return (
     <>
       {items.map(item => {
-        const key = `filter-label-${item.value}`
+        const key = `filter-label-${item.field}-${item.value}`
 
         if (item.isDefault) {
           return (
