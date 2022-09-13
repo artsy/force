@@ -65,8 +65,7 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
     artwork.artists?.length === 0 ||
     (isInAuction && hasEnded) ||
     (isInAuction && lotIsClosed(sale, saleArtwork)) ||
-    isSold ||
-    !checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)
+    isSold
 
   return (
     <Flex flexDirection="column">
@@ -96,13 +95,14 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
       >
         <ArtworkSidebar2ArtsyGuarantee />
       </SidebarExpandable>
-
       <Separator />
       <Spacer mt={2} />
-      <ArtworkSidebar2PartnerInfoFragmentContainer artwork={artwork} />
-      <Spacer mt={2} />
 
-      {!shouldHideDetailsCreateAlertCTA && (
+      <ArtworkSidebar2PartnerInfoFragmentContainer artwork={artwork} />
+
+      <Spacer mt={2} />
+      {(!shouldHideDetailsCreateAlertCTA ||
+        checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
         <ArtworkSidebar2CreateArtworkAlertFragmentContainer artwork={artwork} />
       )}
       <Separator />
