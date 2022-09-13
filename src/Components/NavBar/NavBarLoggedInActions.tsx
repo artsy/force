@@ -23,6 +23,7 @@ import { NavBarItemButton, NavBarItemLink } from "./NavBarItem"
 import { Z } from "Apps/Components/constants"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
+import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -62,7 +63,16 @@ export const NavBarLoggedInActions: React.FC<Partial<
               fill="currentColor"
             />
 
-            {hasNotifications && <NavBarLoggedInActionsNotificationIndicator />}
+            {hasNotifications &&
+              (enableActivityPanel ? (
+                <NavBarNotificationIndicator
+                  position="absolute"
+                  top="15px"
+                  right="9px"
+                />
+              ) : (
+                <NavBarLoggedInActionsNotificationIndicator />
+              ))}
           </NavBarItemButton>
         )}
       </Dropdown>
