@@ -71,6 +71,9 @@
       },
       "partner": {
         "contactGalleryCta": "Contact Gallery"
+      },
+      "createAlert": {
+        "description": "Get notifications for similar works"
       }
     }
   }
