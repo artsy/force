@@ -1,4 +1,5 @@
 import { Box, Text } from "@artsy/palette"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { ArtworkSidebar2SizeInfo_piece } from "__generated__/ArtworkSidebar2SizeInfo_piece.graphql"
@@ -27,8 +28,8 @@ const ArtworkSidebar2SizeInfo: React.FC<ArtworkSidebar2SizeInfoProps> = ({
   }
 
   return (
-    <>
-      <Media greaterThan="sm">
+    <React.Fragment data-testid="size-info">
+      <Media greaterThanOrEqual="md">
         <Box color="black60">
           <Text variant="sm-display">
             {hasInDimensions && dimensions.in}{" "}
@@ -38,14 +39,14 @@ const ArtworkSidebar2SizeInfo: React.FC<ArtworkSidebar2SizeInfoProps> = ({
           {editionOf && <Text variant="sm-display">{editionOf}</Text>}
         </Box>
       </Media>
-      <Media at="sm">
+      <Media lessThan="md">
         <Box color="black60">
           {hasInDimensions && <Text variant="sm-display">{dimensions.in}</Text>}
           {hasCmDimensions && <Text variant="sm-display">{dimensions.cm}</Text>}
           {editionOf && <Text variant="sm-display">{editionOf}</Text>}
         </Box>
       </Media>
-    </>
+    </React.Fragment>
   )
 }
 
