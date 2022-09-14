@@ -368,7 +368,7 @@ const getPaymentMethodInfo = (paymentMethod: CommercePaymentMethodEnum) => {
               width={400}
               content={
                 <>
-                  <Text variant="xs">SEPA member-states</Text>
+                  <Text variant="xs">SEPA countries</Text>
                   <Spacer mb={2} />
                   <Text variant="xs">
                     Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech
