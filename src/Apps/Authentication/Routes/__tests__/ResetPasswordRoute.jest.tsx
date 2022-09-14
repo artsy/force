@@ -49,11 +49,11 @@ describe("ResetPasswordRoute", () => {
 
   it("resets the password and redirects", async () => {
     fireEvent.change(screen.getByPlaceholderText("New password"), {
-      target: { name: "password", value: "secretsecret" },
+      target: { name: "password", value: "Secretsecret1" },
     })
 
     fireEvent.change(screen.getByPlaceholderText("Confirm new password"), {
-      target: { name: "passwordConfirmation", value: "secretsecret" },
+      target: { name: "passwordConfirmation", value: "Secretsecret1" },
     })
 
     fireEvent.submit(screen.getByText("Change My Password"))
@@ -62,8 +62,8 @@ describe("ResetPasswordRoute", () => {
       expect(screen.getByText("Password Updated")).toBeInTheDocument()
 
       expect(mockResetPassword).toBeCalledWith({
-        password: "secretsecret",
-        passwordConfirmation: "secretsecret",
+        password: "Secretsecret1",
+        passwordConfirmation: "Secretsecret1",
         resetPasswordToken: "token", // pragma: allowlist secret
       })
 

@@ -1,5 +1,6 @@
 import { fetchQuery } from "relay-runtime"
 import { checkEmail } from "../helpers"
+import { password } from "../Validators"
 
 jest.mock("relay-runtime", () => ({ fetchQuery: jest.fn() }))
 const mockFetchQuery = fetchQuery as jest.Mock<any>
@@ -115,6 +116,41 @@ describe("Authentication Helpers", () => {
         expect(result).toBeFalsy()
         done()
       })
+    })
+  })
+
+  describe("password validation", () => {
+    it("rejects passwords that are too short", async () => {
+      const candidate = "short"
+      await expect(password.validate(candidate)).rejects.toThrow(
+        "must be at least 8"
+      )
+    })
+
+    it("rejects passwords that have no digits", async () => {
+      const candidate = "longenough"
+      await expect(password.validate(candidate)).rejects.toThrow(
+        "must have at least 1 digit"
+      )
+    })
+
+    it("rejects passwords that have no lowercase letters", async () => {
+      const candidate = "LONGENOUGH1"
+      await expect(password.validate(candidate)).rejects.toThrow(
+        "must have at least 1 lowercase letter"
+      )
+    })
+
+    it("rejects passwords that have no uppercase letters", async () => {
+      const candidate = "longenough1"
+      await expect(password.validate(candidate)).rejects.toThrow(
+        "must have at least 1 uppercase letter"
+      )
+    })
+
+    it("resolves passwords that are valid", async () => {
+      const candidate = "Longenough1"
+      await expect(password.validate(candidate)).resolves.toEqual(candidate)
     })
   })
 })

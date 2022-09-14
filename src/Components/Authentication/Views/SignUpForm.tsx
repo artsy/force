@@ -168,7 +168,8 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
 
                   {!passwordErrorMessage && (
                     <Text variant="xs" color="black60" mt={0.5}>
-                      Password must be at least 8 characters.
+                      Password must be at least 8 characters and include a
+                      lowercase letter, uppercase letter, and digit.
                     </Text>
                   )}
                 </Box>
