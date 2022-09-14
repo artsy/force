@@ -86,6 +86,7 @@ spec:
                 operator: In
                 values:
                 - foreground
+                - foreground-spot
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
