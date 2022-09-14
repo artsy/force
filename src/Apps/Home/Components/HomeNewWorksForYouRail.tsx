@@ -116,7 +116,11 @@ export const HomeNewWorksForYouRailQueryRenderer: React.FC = () => {
       environment={relayEnvironment}
       query={graphql`
         query HomeNewWorksForYouRailQuery {
-          artworksForUser(includeBackfill: true, first: 20) {
+          artworksForUser(
+            includeBackfill: true
+            first: 20
+            maxWorksPerArtist: 3
+          ) {
             ...HomeNewWorksForYouRail_artworksForUser
           }
         }
