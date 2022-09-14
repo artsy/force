@@ -10,9 +10,11 @@ import {
 } from "@artsy/palette"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { SplitLayout } from "Components/SplitLayout"
+import { useRouter } from "System/Router/useRouter"
 
 export const ArtQuizWelcome = () => {
   const { desktop } = useNavBarHeight()
+  const { router } = useRouter()
 
   return (
     <FullBleed height={`calc(100vh - ${desktop}px)`}>
@@ -57,7 +59,7 @@ export const ArtQuizWelcome = () => {
                   mt={1}
                   width="100%"
                   onClick={() => {
-                    //redirect to home
+                    router.push("/")
                   }}
                 >
                   Skip
