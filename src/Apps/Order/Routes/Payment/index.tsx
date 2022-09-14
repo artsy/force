@@ -1,5 +1,5 @@
 // libs
-import { createRef, FC, useState, useEffect } from "react"
+import { createRef, FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { Router } from "found"
@@ -20,7 +20,10 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
+import {
+  getInitialPaymentMethodValue,
+  getInitialBankAccountSelection,
+} from "Apps/Order/Utils/orderUtils"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 
@@ -74,7 +77,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedPaymentMethod,
     balanceCheckComplete,
     isSavingPayment,
-    setSelectedBankAccountId,
+    setBankAccountSelection,
     setSelectedPaymentMethod,
     setBalanceCheckComplete,
     setBankAccountHasInsufficientFunds,
@@ -88,6 +91,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const { submitMutation: setPaymentMutation } = useSetPayment()
 
   useEffect(() => {
+    const bankAccountsArray =
+      selectedPaymentMethod === "US_BANK_ACCOUNT"
+        ? extractNodes(me.bankAccounts)
+        : []
+
+    setBankAccountSelection(
+      getInitialBankAccountSelection(order, bankAccountsArray)
+    )
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
     setIsSavingPayment(!!match?.location?.query?.setup_intent)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,31 +122,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const displayLoading = isProcessingRedirect || isSavingPayment
 
   // user's existing ACH bank accounts, if any
-  const bankAccountsArray =
-    selectedPaymentMethod === "US_BANK_ACCOUNT"
-      ? extractNodes(me.bankAccounts)
-      : []
-
-  const getInitialBankAccountSelection = (): BankAccountSelection => {
-    if (order.bankAccountId) {
-      return {
-        type: "existing",
-        id: order.bankAccountId,
-      }
-    } else {
-      return bankAccountsArray.length > 0
-        ? {
-            type: "existing",
-            id: bankAccountsArray[0]?.internalID!,
-          }
-        : { type: "new" }
-    }
-  }
-
-  // user's desired bank account; either already on Order or user's profile
-  const [bankAccountSelection, setBankAccountSelection] = useState<
-    BankAccountSelection
-  >(getInitialBankAccountSelection())
 
   // fired when save and continue is clicked for CC and Wire payment methods
   const handleSetPayment = () => {
@@ -349,9 +335,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
                   onSetPayment={handleSetPayment}
-                  onSetSelectedBankAccountId={setSelectedBankAccountId}
-                  bankAccountSelection={bankAccountSelection}
-                  onSetBankAccountSelection={setBankAccountSelection}
                 />
               </Flex>
             </>

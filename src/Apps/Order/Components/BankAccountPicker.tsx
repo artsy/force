@@ -4,7 +4,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
-import { BankAccountSelection } from "../Routes/Payment/index"
 import { BorderedRadio, RadioGroup, Collapse, Spacer } from "@artsy/palette"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { BankDebitDetails } from "./BankDebitDetails"
@@ -23,24 +22,21 @@ interface BankAccountRecord {
 interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
-  onSetSelectedBankAccountId: (arg: string) => void
-  bankAccountSelection: BankAccountSelection
-  onSetBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const BankAccountPicker: FC<Props> = props => {
   const {
     me: { bankAccounts },
     order,
-    onSetSelectedBankAccountId,
-    bankAccountSelection,
-    onSetBankAccountSelection,
   } = props
 
   const {
+    bankAccountSelection,
     selectedPaymentMethod,
     setBalanceCheckComplete,
     bankAccountHasInsufficientFunds,
+    setBankAccountSelection,
+    setSelectedBankAccountId,
     setBankAccountHasInsufficientFunds,
     setIsSavingPayment,
   } = useOrderPaymentContext()
@@ -75,7 +71,7 @@ export const BankAccountPicker: FC<Props> = props => {
             input: {
               id: order.internalID,
               paymentMethod: selectedPaymentMethod as CommercePaymentMethodEnum,
-              paymentMethodId: bankAccountSelection.id,
+              paymentMethodId: bankAccountSelection?.id,
             },
           },
         })
@@ -85,7 +81,7 @@ export const BankAccountPicker: FC<Props> = props => {
         throw orderOrError.error
       }
 
-      onSetSelectedBankAccountId(bankAccountSelection.id!)
+      setSelectedBankAccountId(bankAccountSelection?.id!)
     } catch (error) {
       console.error(error)
     } finally {
@@ -101,19 +97,19 @@ export const BankAccountPicker: FC<Props> = props => {
           onSelect={val => {
             if (val === "new") {
               setBankAccountHasInsufficientFunds(false)
-              onSetBankAccountSelection({ type: "new" })
+              setBankAccountSelection({ type: "new" })
             } else {
-              if (val !== bankAccountSelection.id) {
+              if (val !== bankAccountSelection?.id) {
                 setBankAccountHasInsufficientFunds(false)
               }
 
-              onSetBankAccountSelection({ type: "existing", id: val })
+              setBankAccountSelection({ type: "existing", id: val })
             }
           }}
           defaultValue={
-            bankAccountSelection.type === "new"
+            bankAccountSelection?.type === "new"
               ? "new"
-              : bankAccountSelection.id
+              : bankAccountSelection?.id
           }
         >
           {bankAccountsArray
@@ -131,7 +127,7 @@ export const BankAccountPicker: FC<Props> = props => {
                 data-test="AddNewBankAccount"
                 value="new"
                 key="new"
-                selected={bankAccountSelection.type === "new"}
+                selected={bankAccountSelection?.type === "new"}
               >
                 Add another bank account.
               </BorderedRadio>,
@@ -139,13 +135,13 @@ export const BankAccountPicker: FC<Props> = props => {
         </RadioGroup>
       )}
 
-      <Collapse open={bankAccountSelection.type === "new"}>
-        {bankAccountSelection.type === "new" && (
+      <Collapse open={bankAccountSelection?.type === "new"}>
+        {bankAccountSelection?.type === "new" && (
           <BankDebitProvider order={order} />
         )}
       </Collapse>
 
-      {bankAccountSelection.type === "existing" && (
+      {bankAccountSelection?.type === "existing" && (
         <>
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Spacer mt={4} />
@@ -154,7 +150,7 @@ export const BankAccountPicker: FC<Props> = props => {
               camelCase(selectedPaymentMethod)
             )}`}
             onClick={handleContinue}
-            disabled={!bankAccountSelection.type}
+            disabled={!bankAccountSelection?.type}
           />
           <Spacer mb={2} />
         </>

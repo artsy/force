@@ -23,7 +23,6 @@ import {
   Payment_order,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
-import { BankAccountSelection } from "./index"
 
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
@@ -40,22 +39,10 @@ export interface Props {
   commitMutation: CommitMutation
   onSetPayment: () => void
   CreditCardPicker: RefObject<CreditCardPicker>
-  onSetSelectedBankAccountId: (arg: string) => void
-  bankAccountSelection: BankAccountSelection
-  onSetBankAccountSelection: (arg: BankAccountSelection) => void
 }
 
 export const PaymentContent: FC<Props> = props => {
-  const {
-    commitMutation,
-    onSetPayment,
-    me,
-    order,
-    CreditCardPicker,
-    onSetSelectedBankAccountId,
-    bankAccountSelection,
-    onSetBankAccountSelection,
-  } = props
+  const { commitMutation, onSetPayment, me, order, CreditCardPicker } = props
   const {
     selectedPaymentMethod,
     setSelectedPaymentMethod,
@@ -143,13 +130,7 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
-          <BankAccountPickerFragmentContainer
-            me={me}
-            order={order}
-            onSetSelectedBankAccountId={onSetSelectedBankAccountId}
-            bankAccountSelection={bankAccountSelection}
-            onSetBankAccountSelection={onSetBankAccountSelection}
-          />
+          <BankAccountPickerFragmentContainer me={me} order={order} />
         )}
       </Collapse>
 
@@ -158,13 +139,7 @@ export const PaymentContent: FC<Props> = props => {
         {getPaymentMethodInfo(selectedPaymentMethod)}
         <Spacer mb={2} />
         {selectedPaymentMethod === "SEPA_DEBIT" && (
-          <BankAccountPickerFragmentContainer
-            me={me}
-            order={order}
-            onSetSelectedBankAccountId={onSetSelectedBankAccountId}
-            bankAccountSelection={bankAccountSelection}
-            onSetBankAccountSelection={onSetBankAccountSelection}
-          />
+          <BankAccountPickerFragmentContainer me={me} order={order} />
         )}
       </Collapse>
 

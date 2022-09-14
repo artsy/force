@@ -2,6 +2,7 @@ import React, { useReducer, useContext, createContext, Dispatch } from "react"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { orderPaymentReducer } from "./orderPaymentReducer"
 import createLogger from "Utils/logger"
+import { BankAccountSelection } from "../index"
 
 const logger = createLogger("[dev: OrderPaymentContext] state:")
 
@@ -11,6 +12,7 @@ const logger = createLogger("[dev: OrderPaymentContext] state:")
 
 export enum OrderPaymentActions {
   SET_SELECTED_BANK_ACCOUNT_ID = "SET_SELECTED_BANK_ACCOUNT_ID",
+  SET_BANK_ACCOUNT_SELECTION = "SET_BANK_ACCOUNT_SELECTION",
   SET_SELECTED_PAYMENT_METHOD = "SET_SELECTED_PAYMENT_METHOD",
   SET_BALANCE_CHECK_COMPLETE = "SET_BALANCE_CHECK_COMPLETE",
   SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS = "SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS",
@@ -20,6 +22,7 @@ export enum OrderPaymentActions {
 
 type OrderPaymentActionsPayload = {
   [OrderPaymentActions.SET_SELECTED_BANK_ACCOUNT_ID]: string
+  [OrderPaymentActions.SET_BANK_ACCOUNT_SELECTION]: BankAccountSelection | null
   [OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD]: CommercePaymentMethodEnum
   [OrderPaymentActions.SET_BALANCE_CHECK_COMPLETE]: boolean
   [OrderPaymentActions.SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS]: boolean
@@ -48,6 +51,7 @@ type ActionMap<M extends { [index: string]: any }> = {
 
 export type OrderPaymentState = {
   selectedBankAccountId: string
+  bankAccountSelection: BankAccountSelection | null
   selectedPaymentMethod: CommercePaymentMethodEnum | string
   balanceCheckComplete: boolean
   bankAccountHasInsufficientFunds: boolean
@@ -57,6 +61,7 @@ export type OrderPaymentState = {
 
 const initialOrderPaymentState = {
   selectedBankAccountId: "",
+  bankAccountSelection: null,
   selectedPaymentMethod: "",
   balanceCheckComplete: false,
   bankAccountHasInsufficientFunds: false,
@@ -141,9 +146,16 @@ export const useOrderPaymentContext = () => {
       payload,
     })
 
+  const setBankAccountSelection = payload =>
+    dispatch({
+      type: OrderPaymentActions.SET_BANK_ACCOUNT_SELECTION,
+      payload,
+    })
+
   return {
     ...state,
     setSelectedBankAccountId,
+    setBankAccountSelection,
     setSelectedPaymentMethod,
     setBalanceCheckComplete,
     setBankAccountHasInsufficientFunds,

@@ -15,6 +15,12 @@ export const orderPaymentReducer = (
         selectedBankAccountId: action.payload,
       }
     }
+    case OrderPaymentActions.SET_BANK_ACCOUNT_SELECTION: {
+      return {
+        ...state,
+        bankAccountSelection: action.payload,
+      }
+    }
     case OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD: {
       return {
         ...state,

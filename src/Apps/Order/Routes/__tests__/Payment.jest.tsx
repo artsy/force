@@ -18,7 +18,6 @@ import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { MockBoot } from "DevTools"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useOrderPaymentContext } from "../Payment/PaymentContext/OrderPaymentContext"
 
 jest.unmock("react-tracking")
@@ -320,6 +319,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "US_BANK_ACCOUNT",
           setSelectedPaymentMethod: jest.fn(),
+          setBankAccountSelection: jest.fn(),
           setIsSavingPayment: jest.fn(),
         }
       })
@@ -410,6 +410,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "SEPA_DEBIT",
           setSelectedPaymentMethod: jest.fn(),
+          setBankAccountSelection: jest.fn(),
           setIsSavingPayment: jest.fn(),
         }
       })
@@ -432,7 +433,9 @@ describe("Payment", () => {
         .closest(Collapse)
       expect(creditCardCollapse.first().props().open).toBe(false)
 
-      const bankDebitCollapse = page.find(BankDebitProvider).closest(Collapse)
+      const bankDebitCollapse = page
+        .find(BankAccountPickerFragmentContainer)
+        .closest(Collapse)
       expect(bankDebitCollapse.first().props().open).toBe(true)
     })
 
@@ -490,6 +493,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "WIRE_TRANSFER",
           setSelectedPaymentMethod: jest.fn(),
+          setBankAccountSelection: jest.fn(),
           setIsSavingPayment: jest.fn(),
         }
       })
