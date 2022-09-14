@@ -33,6 +33,12 @@ export const orderPaymentReducer = (
         bankAccountHasInsufficientFunds: action.payload,
       }
     }
+    case OrderPaymentActions.SET_STRIPE_CLIENT_SECRET: {
+      return {
+        ...state,
+        stripeClientSecret: action.payload,
+      }
+    }
     default: {
       return state
     }

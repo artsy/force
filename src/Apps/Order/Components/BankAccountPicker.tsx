@@ -28,8 +28,6 @@ interface Props {
   onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
   onSetBankAccountSelection: (arg: BankAccountSelection) => void
-  onSetClientSecret: (arg: string) => void
-  clientSecret: string | null
 }
 
 export const BankAccountPicker: FC<Props> = props => {
@@ -41,8 +39,6 @@ export const BankAccountPicker: FC<Props> = props => {
     onSetSelectedBankAccountId,
     bankAccountSelection,
     onSetBankAccountSelection,
-    onSetClientSecret,
-    clientSecret,
   } = props
 
   const {
@@ -149,8 +145,6 @@ export const BankAccountPicker: FC<Props> = props => {
             order={order}
             paymentMethod={paymentMethod}
             onSetIsSavingPayment={onSetIsSavingPayment}
-            onSetClientSecret={onSetClientSecret}
-            clientSecret={clientSecret}
           />
         )}
       </Collapse>

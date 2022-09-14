@@ -14,6 +14,7 @@ export enum OrderPaymentActions {
   SET_SELECTED_PAYMENT_METHOD = "SET_SELECTED_PAYMENT_METHOD",
   SET_BALANCE_CHECK_COMPLETE = "SET_BALANCE_CHECK_COMPLETE",
   SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS = "SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS",
+  SET_STRIPE_CLIENT_SECRET = "SET_STRIPE_CLIENT_SECRET",
 }
 
 type OrderPaymentActionsPayload = {
@@ -21,6 +22,7 @@ type OrderPaymentActionsPayload = {
   [OrderPaymentActions.SET_SELECTED_PAYMENT_METHOD]: CommercePaymentMethodEnum
   [OrderPaymentActions.SET_BALANCE_CHECK_COMPLETE]: boolean
   [OrderPaymentActions.SET_BANK_ACCOUNT_HAS_INSUFFICIENT_FUNDS]: boolean
+  [OrderPaymentActions.SET_STRIPE_CLIENT_SECRET]: null | string
 }
 
 export type OrderPaymentAction = ActionMap<
@@ -47,6 +49,7 @@ export type OrderPaymentState = {
   selectedPaymentMethod: CommercePaymentMethodEnum | string
   balanceCheckComplete: boolean
   bankAccountHasInsufficientFunds: boolean
+  stripeClientSecret: null | string
 }
 
 const initialOrderPaymentState = {
@@ -54,6 +57,7 @@ const initialOrderPaymentState = {
   selectedPaymentMethod: "",
   balanceCheckComplete: false,
   bankAccountHasInsufficientFunds: false,
+  stripeClientSecret: null,
 }
 
 /**
@@ -121,11 +125,18 @@ export const useOrderPaymentContext = () => {
       payload,
     })
 
+  const setStripeClientSecret = payload =>
+    dispatch({
+      type: OrderPaymentActions.SET_STRIPE_CLIENT_SECRET,
+      payload,
+    })
+
   return {
     ...state,
     setSelectedBankAccountId,
     setSelectedPaymentMethod,
     setBalanceCheckComplete,
     setBankAccountHasInsufficientFunds,
+    setStripeClientSecret,
   }
 }

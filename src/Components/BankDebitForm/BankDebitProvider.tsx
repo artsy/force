@@ -13,6 +13,7 @@ import {
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 import { camelCase, upperFirst } from "lodash"
+import { useOrderPaymentContext } from "../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order/Routes/Payment/index.tsx")
@@ -37,17 +38,15 @@ interface Props {
   order: BankAccountPicker_order | Payment_order
   paymentMethod: CommercePaymentMethodEnum
   onSetIsSavingPayment: (arg: boolean) => void
-  onSetClientSecret: (arg: string) => void
-  clientSecret: string | null
 }
 
 export const BankDebitProvider: FC<Props> = ({
   order,
   paymentMethod,
   onSetIsSavingPayment,
-  onSetClientSecret,
-  clientSecret,
 }) => {
+  const { stripeClientSecret, setStripeClientSecret } = useOrderPaymentContext()
+
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const { submitMutation } = CreateBankDebitSetupForOrder()
@@ -63,7 +62,7 @@ export const BankDebitProvider: FC<Props> = ({
           orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
             .__typename === "CommerceOrderRequiresAction"
         ) {
-          onSetClientSecret(
+          setStripeClientSecret(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
               .actionData.clientSecret
           )
@@ -82,7 +81,7 @@ export const BankDebitProvider: FC<Props> = ({
       }
     }
 
-    if (!clientSecret) {
+    if (!stripeClientSecret) {
       fetchData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,7 +135,7 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   const options = {
-    clientSecret: clientSecret || "",
+    clientSecret: stripeClientSecret || "",
     appearance: appearance,
   }
 
@@ -145,7 +144,7 @@ export const BankDebitProvider: FC<Props> = ({
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
-        {clientSecret && (
+        {stripeClientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm
               order={order}

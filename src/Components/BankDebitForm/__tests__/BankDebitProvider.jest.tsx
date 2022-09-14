@@ -2,6 +2,11 @@ import { mount } from "enzyme"
 import { BankDebitProvider } from "../BankDebitProvider"
 import React from "react"
 import { BankDebitForm } from "../BankDebitForm"
+import { useOrderPaymentContext } from "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+
+jest.mock(
+  "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+)
 
 const setHookState = state =>
   jest.fn().mockImplementation(() => [state, () => {}])
@@ -9,6 +14,15 @@ const setHookState = state =>
 const reactMock = require("react")
 
 describe("BankDebitProvider", () => {
+  beforeAll(() => {
+    ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+      return {
+        stripeClientSecret: "client-secret",
+        setStripeClientSecret: jest.fn(),
+      }
+    })
+  })
+
   const getWrapper = (props: any = {}) =>
     mount(
       <BankDebitProvider
@@ -21,8 +35,6 @@ describe("BankDebitProvider", () => {
         }}
         paymentMethod="US_BANK_ACCOUNT"
         onSetIsSavingPayment={jest.fn()}
-        onSetClientSecret={jest.fn()}
-        clientSecret={"client-secret"}
       />
     )
 

@@ -1,4 +1,4 @@
-import { FC, RefObject, ReactElement, useState, useEffect, useRef } from "react"
+import { FC, RefObject, ReactElement, useEffect, useRef } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import {
@@ -65,7 +65,6 @@ export const PaymentContent: FC<Props> = props => {
 
   const tracking = useTracking()
   const previousPaymentMethod = useRef<string | null>(null)
-  const [clientSecret, setClientSecret] = useState<string | null>(null)
 
   useEffect(() => {
     if (selectedPaymentMethod !== previousPaymentMethod.current) {
@@ -154,8 +153,6 @@ export const PaymentContent: FC<Props> = props => {
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
             onSetBankAccountSelection={onSetBankAccountSelection}
-            clientSecret={clientSecret}
-            onSetClientSecret={setClientSecret}
           />
         )}
       </Collapse>
@@ -173,8 +170,6 @@ export const PaymentContent: FC<Props> = props => {
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
             onSetBankAccountSelection={onSetBankAccountSelection}
-            clientSecret={clientSecret}
-            onSetClientSecret={setClientSecret}
           />
         )}
       </Collapse>
