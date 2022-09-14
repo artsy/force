@@ -62,7 +62,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
     const reasonRejected = stateReason?.includes("_rejected")
     if (state === "PROCESSING_APPROVAL") {
       Icon = AlertCircleFillIcon
-      color = THEME_V3.colors.yellow100 as Color
+      color = "yellow100"
       textColor = "black100"
       message = "Offer accepted. Payment processing"
     } else if (state === "APPROVED") {
@@ -97,8 +97,8 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
         mb={1}
       />
       <Flex px={2} justifyContent="center" flexDirection="row">
-        <Flex flexDirection="row">
-          <Icon fill={color} />
+        <Flex flexDirection="row" color={color}>
+          <Icon fill="currentColor" />
           <Flex flexDirection="column" pl={1}>
             <Text color={textColor || color} variant="xs">
               {message}
