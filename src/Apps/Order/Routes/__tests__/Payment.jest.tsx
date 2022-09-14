@@ -176,6 +176,7 @@ describe("Payment", () => {
       ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
         return {
           selectedPaymentMethod: "CREDIT_CARD",
+          setIsSavingPayment: jest.fn(),
         }
       })
       const mockTracking = useTracking as jest.Mock
@@ -319,6 +320,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "US_BANK_ACCOUNT",
           setSelectedPaymentMethod: jest.fn(),
+          setIsSavingPayment: jest.fn(),
         }
       })
       isCommittingMutation = false
@@ -408,6 +410,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "SEPA_DEBIT",
           setSelectedPaymentMethod: jest.fn(),
+          setIsSavingPayment: jest.fn(),
         }
       })
       isCommittingMutation = false
@@ -487,6 +490,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "WIRE_TRANSFER",
           setSelectedPaymentMethod: jest.fn(),
+          setIsSavingPayment: jest.fn(),
         }
       })
       ;(useSetPayment as jest.Mock).mockImplementation(() => ({
