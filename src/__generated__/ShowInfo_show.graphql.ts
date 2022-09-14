@@ -9,6 +9,12 @@ export type ShowInfo_show = {
     readonly about: string | null;
     readonly pressRelease: string | null;
     readonly hasLocation: boolean | null;
+    readonly events: ReadonlyArray<{
+        readonly dateTimeRange: string | null;
+        readonly description: string | null;
+        readonly eventType: string | null;
+        readonly title: string | null;
+    } | null> | null;
     readonly partner: ({
         readonly __typename: "Partner";
         readonly type: string | null;
@@ -72,6 +78,45 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ShowEventType",
+      "kind": "LinkedField",
+      "name": "events",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "dateTimeRange",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "eventType",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "partner",
@@ -120,5 +165,5 @@ const node: ReaderFragment = {
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = '093a8b1f2819b7cb2556cbb3352decda';
+(node as any).hash = 'fec6d5d1a6d802b0be2ddd9e4b3f4630';
 export default node;
