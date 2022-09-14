@@ -37,57 +37,58 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 }
 const trackEvent = jest.fn()
 
-beforeAll(() => {
-  ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
-    return {
-      bankAccountHasInsufficientFunds: true,
-      setBankAccountHasInsufficientFunds: jest.fn(),
-    }
-  })
-
-  trackEvent.mockClear()
-  mockEvent = null
-  const mockTracking = useTracking as jest.Mock
-  mockTracking.mockImplementation(() => {
-    return {
-      trackEvent,
-    }
-  })
-
-  const mockUseSystemContext = useSystemContext as jest.Mock
-  mockUseSystemContext.mockImplementation(() => ({
-    user: {},
-  }))
-})
-
 describe("BankDebitForm", () => {
-  it("tracks a `complete` event from the onChange handler", () => {
-    mockEvent = { complete: true, empty: true }
-
-    render(
-      <BankDebitForm
-        order={testOrder}
-        paymentMethod="US_BANK_ACCOUNT"
-        onSetIsSavingPayment={jest.fn()}
-        onSetIsPaymentElementLoading={jest.fn()}
-      />
-    )
-
-    expect(trackEvent).toHaveBeenCalledWith({
-      flow: "BUY",
-      order_id: "1234",
-      subject: "link_account",
-      context_page_owner_type: "orders-payment",
-      action: "clickedPaymentDetails",
+  beforeAll(() => {
+    trackEvent.mockClear()
+    mockEvent = null
+    const mockTracking = useTracking as jest.Mock
+    mockTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
     })
+
+    const mockUseSystemContext = useSystemContext as jest.Mock
+    mockUseSystemContext.mockImplementation(() => ({
+      user: {},
+    }))
   })
 
   describe("with not enough balance", () => {
+    beforeEach(() => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "US_BANK_ACCOUNT",
+          bankAccountHasInsufficientFunds: true,
+          setBankAccountHasInsufficientFunds: jest.fn(),
+        }
+      })
+    })
+
+    it("tracks a `complete` event from the onChange handler", () => {
+      mockEvent = { complete: true, empty: true }
+
+      render(
+        <BankDebitForm
+          order={testOrder}
+          onSetIsSavingPayment={jest.fn()}
+          onSetIsPaymentElementLoading={jest.fn()}
+        />
+      )
+
+      expect(trackEvent).toHaveBeenCalledWith({
+        flow: "BUY",
+        order_id: "1234",
+        subject: "link_account",
+        context_page_owner_type: "orders-payment",
+        action: "clickedPaymentDetails",
+      })
+    })
+
     it("renders correct not enough funds message", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
-          paymentMethod="US_BANK_ACCOUNT"
           onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />
@@ -100,11 +101,20 @@ describe("BankDebitForm", () => {
   })
 
   describe("with SEPA", () => {
+    beforeEach(() => {
+      ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
+        return {
+          selectedPaymentMethod: "SEPA_DEBIT",
+          bankAccountHasInsufficientFunds: true,
+          setBankAccountHasInsufficientFunds: jest.fn(),
+        }
+      })
+    })
+
     it("does not render a checkbox to save bank account", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
-          paymentMethod="SEPA_DEBIT"
           onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />

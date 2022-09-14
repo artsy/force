@@ -12,7 +12,6 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
-import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
 import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
@@ -22,18 +21,17 @@ import { useOrderPaymentContext } from "../../Apps/Order/Routes/Payment/PaymentC
 
 interface Props {
   order: { mode: string | null; internalID: string }
-  paymentMethod: CommercePaymentMethodEnum
   onSetIsSavingPayment: (arg: boolean) => void
   onSetIsPaymentElementLoading: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
-  paymentMethod,
   onSetIsSavingPayment,
   onSetIsPaymentElementLoading,
 }) => {
   const {
+    selectedPaymentMethod,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
   } = useOrderPaymentContext()
@@ -68,7 +66,7 @@ export const BankDebitForm: FC<Props> = ({
 
     // save account only for US_BANK_ACCOUNT (ACH)
     let saveAccount = isSaveAccountChecked
-    if (paymentMethod !== "US_BANK_ACCOUNT") {
+    if (selectedPaymentMethod !== "US_BANK_ACCOUNT") {
       saveAccount = false
     }
 
@@ -111,7 +109,7 @@ export const BankDebitForm: FC<Props> = ({
       />
       <Spacer mt={4} />
       {/* Display checkbox for saving account only for ACH */}
-      {paymentMethod === "US_BANK_ACCOUNT" && (
+      {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
         <Flex>
           <Checkbox
             selected={isSaveAccountChecked}
@@ -150,7 +148,7 @@ export const BankDebitForm: FC<Props> = ({
       {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
       <Spacer mt={4} />
       <SaveAndContinueButton
-        testId={`saveNew${upperFirst(camelCase(paymentMethod))}`}
+        testId={`saveNew${upperFirst(camelCase(selectedPaymentMethod))}`}
         disabled={!stripe || bankAccountHasInsufficientFunds}
       />
       <Spacer mb={2} />

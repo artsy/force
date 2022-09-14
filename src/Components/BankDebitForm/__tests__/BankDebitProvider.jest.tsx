@@ -17,6 +17,7 @@ describe("BankDebitProvider", () => {
   beforeAll(() => {
     ;(useOrderPaymentContext as jest.Mock).mockImplementation(() => {
       return {
+        selectedPaymentMethod: "US_BANK_ACCOUNT",
         stripeClientSecret: "client-secret",
         setStripeClientSecret: jest.fn(),
       }
@@ -33,7 +34,6 @@ describe("BankDebitProvider", () => {
           paymentMethodDetails: null,
           " $refType": "BankAccountPicker_order",
         }}
-        paymentMethod="US_BANK_ACCOUNT"
         onSetIsSavingPayment={jest.fn()}
       />
     )

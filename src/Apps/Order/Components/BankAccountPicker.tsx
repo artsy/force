@@ -23,7 +23,6 @@ interface BankAccountRecord {
 interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
-  paymentMethod: CommercePaymentMethodEnum
   onSetIsSavingPayment: (arg: boolean) => void
   onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
@@ -34,7 +33,6 @@ export const BankAccountPicker: FC<Props> = props => {
   const {
     me: { bankAccounts },
     order,
-    paymentMethod,
     onSetIsSavingPayment,
     onSetSelectedBankAccountId,
     bankAccountSelection,
@@ -42,13 +40,16 @@ export const BankAccountPicker: FC<Props> = props => {
   } = props
 
   const {
+    selectedPaymentMethod,
     setBalanceCheckComplete,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
   } = useOrderPaymentContext()
 
   const bankAccountsArray: BankAccountRecord[] =
-    paymentMethod === "US_BANK_ACCOUNT" ? extractNodes(bankAccounts) : []
+    selectedPaymentMethod === "US_BANK_ACCOUNT"
+      ? extractNodes(bankAccounts)
+      : []
 
   if (order?.paymentMethodDetails?.internalID) {
     // if account on order is not saved on user's profile
@@ -74,7 +75,7 @@ export const BankAccountPicker: FC<Props> = props => {
           variables: {
             input: {
               id: order.internalID,
-              paymentMethod,
+              paymentMethod: selectedPaymentMethod as CommercePaymentMethodEnum,
               paymentMethodId: bankAccountSelection.id,
             },
           },
@@ -143,7 +144,6 @@ export const BankAccountPicker: FC<Props> = props => {
         {bankAccountSelection.type === "new" && (
           <BankDebitProvider
             order={order}
-            paymentMethod={paymentMethod}
             onSetIsSavingPayment={onSetIsSavingPayment}
           />
         )}
@@ -154,7 +154,9 @@ export const BankAccountPicker: FC<Props> = props => {
           {bankAccountHasInsufficientFunds && <InsufficientFundsError />}
           <Spacer mt={4} />
           <SaveAndContinueButton
-            testId={`saveExisting${upperFirst(camelCase(paymentMethod))}`}
+            testId={`saveExisting${upperFirst(
+              camelCase(selectedPaymentMethod)
+            )}`}
             onClick={handleContinue}
             disabled={!bankAccountSelection.type}
           />

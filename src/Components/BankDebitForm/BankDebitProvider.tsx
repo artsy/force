@@ -6,10 +6,7 @@ import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
 import createLogger from "Utils/logger"
-import {
-  CommercePaymentMethodEnum,
-  Payment_order,
-} from "__generated__/Payment_order.graphql"
+import { Payment_order } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 import { camelCase, upperFirst } from "lodash"
@@ -36,16 +33,18 @@ const BankSetupErrorMessage = () => {
 
 interface Props {
   order: BankAccountPicker_order | Payment_order
-  paymentMethod: CommercePaymentMethodEnum
   onSetIsSavingPayment: (arg: boolean) => void
 }
 
 export const BankDebitProvider: FC<Props> = ({
   order,
-  paymentMethod,
   onSetIsSavingPayment,
 }) => {
-  const { stripeClientSecret, setStripeClientSecret } = useOrderPaymentContext()
+  const {
+    selectedPaymentMethod,
+    stripeClientSecret,
+    setStripeClientSecret,
+  } = useOrderPaymentContext()
 
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
   const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
@@ -140,7 +139,11 @@ export const BankDebitProvider: FC<Props> = ({
   }
 
   return (
-    <div data-test={`paymentSection${upperFirst(camelCase(paymentMethod))}`}>
+    <div
+      data-test={`paymentSection${upperFirst(
+        camelCase(selectedPaymentMethod)
+      )}`}
+    >
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
@@ -148,7 +151,6 @@ export const BankDebitProvider: FC<Props> = ({
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm
               order={order}
-              paymentMethod={paymentMethod}
               onSetIsSavingPayment={onSetIsSavingPayment}
               onSetIsPaymentElementLoading={setIsPaymentElementLoading}
             />

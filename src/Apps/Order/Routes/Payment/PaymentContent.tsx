@@ -148,7 +148,6 @@ export const PaymentContent: FC<Props> = props => {
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
-            paymentMethod="US_BANK_ACCOUNT"
             onSetIsSavingPayment={onSetIsSavingPayment}
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
@@ -165,7 +164,6 @@ export const PaymentContent: FC<Props> = props => {
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
-            paymentMethod="SEPA_DEBIT"
             onSetIsSavingPayment={onSetIsSavingPayment}
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
