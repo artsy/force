@@ -61,6 +61,7 @@ describe("BankDebitForm", () => {
           selectedPaymentMethod: "US_BANK_ACCOUNT",
           bankAccountHasInsufficientFunds: true,
           setBankAccountHasInsufficientFunds: jest.fn(),
+          setIsSavingPayment: jest.fn(),
         }
       })
     })
@@ -71,7 +72,6 @@ describe("BankDebitForm", () => {
       render(
         <BankDebitForm
           order={testOrder}
-          onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />
       )
@@ -89,7 +89,6 @@ describe("BankDebitForm", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
-          onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />
       )
@@ -107,6 +106,7 @@ describe("BankDebitForm", () => {
           selectedPaymentMethod: "SEPA_DEBIT",
           bankAccountHasInsufficientFunds: true,
           setBankAccountHasInsufficientFunds: jest.fn(),
+          setIsSavingPayment: jest.fn(),
         }
       })
     })
@@ -115,7 +115,6 @@ describe("BankDebitForm", () => {
       const screen = render(
         <BankDebitForm
           order={testOrder}
-          onSetIsSavingPayment={jest.fn()}
           onSetIsPaymentElementLoading={jest.fn()}
         />
       )

@@ -21,19 +21,18 @@ import { useOrderPaymentContext } from "../../Apps/Order/Routes/Payment/PaymentC
 
 interface Props {
   order: { mode: string | null; internalID: string }
-  onSetIsSavingPayment: (arg: boolean) => void
   onSetIsPaymentElementLoading: (arg: boolean) => void
 }
 
 export const BankDebitForm: FC<Props> = ({
   order,
-  onSetIsSavingPayment,
   onSetIsPaymentElementLoading,
 }) => {
   const {
     selectedPaymentMethod,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
+    setIsSavingPayment,
   } = useOrderPaymentContext()
 
   const stripe = useStripe()
@@ -78,7 +77,7 @@ export const BankDebitForm: FC<Props> = ({
     // confirm Stripe payment setup which leaves and redirects back.
     window.removeEventListener("beforeunload", preventHardReload)
 
-    onSetIsSavingPayment(true)
+    setIsSavingPayment(true)
 
     const { error } = await stripe.confirmSetup({
       elements,
@@ -88,7 +87,7 @@ export const BankDebitForm: FC<Props> = ({
     })
 
     if (error) {
-      onSetIsSavingPayment(false)
+      setIsSavingPayment(false)
       throw error
     }
   }

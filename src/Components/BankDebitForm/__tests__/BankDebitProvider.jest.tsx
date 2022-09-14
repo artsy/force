@@ -20,6 +20,7 @@ describe("BankDebitProvider", () => {
         selectedPaymentMethod: "US_BANK_ACCOUNT",
         stripeClientSecret: "client-secret",
         setStripeClientSecret: jest.fn(),
+        setIsSavingPayment: jest.fn(),
       }
     })
   })
@@ -34,7 +35,6 @@ describe("BankDebitProvider", () => {
           paymentMethodDetails: null,
           " $refType": "BankAccountPicker_order",
         }}
-        onSetIsSavingPayment={jest.fn()}
       />
     )
 

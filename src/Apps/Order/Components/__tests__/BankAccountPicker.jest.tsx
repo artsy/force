@@ -99,6 +99,7 @@ describe("BankAccountFragmentContainer", () => {
         setBalanceCheckComplete: jest.fn(),
         bankAccountHasInsufficientFunds: false,
         setBankAccountHasInsufficientFunds: jest.fn(),
+        setIsSavingPayment: jest.fn(),
       }
     })
   })
@@ -110,7 +111,6 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
-            onSetIsSavingPayment={jest.fn()}
             onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
             onSetBankAccountSelection={jest.fn()}
@@ -149,7 +149,6 @@ describe("BankAccountFragmentContainer", () => {
           <BankAccountPickerFragmentContainer
             order={props.order}
             me={props.me}
-            onSetIsSavingPayment={jest.fn()}
             onSetSelectedBankAccountId={jest.fn()}
             bankAccountSelection={mockBankAccountSelection}
             onSetBankAccountSelection={jest.fn()}

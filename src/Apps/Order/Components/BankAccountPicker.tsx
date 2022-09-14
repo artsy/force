@@ -23,7 +23,6 @@ interface BankAccountRecord {
 interface Props {
   order: BankAccountPicker_order
   me: BankAccountPicker_me
-  onSetIsSavingPayment: (arg: boolean) => void
   onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
   onSetBankAccountSelection: (arg: BankAccountSelection) => void
@@ -33,7 +32,6 @@ export const BankAccountPicker: FC<Props> = props => {
   const {
     me: { bankAccounts },
     order,
-    onSetIsSavingPayment,
     onSetSelectedBankAccountId,
     bankAccountSelection,
     onSetBankAccountSelection,
@@ -44,6 +42,7 @@ export const BankAccountPicker: FC<Props> = props => {
     setBalanceCheckComplete,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
+    setIsSavingPayment,
   } = useOrderPaymentContext()
 
   const bankAccountsArray: BankAccountRecord[] =
@@ -67,7 +66,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
   const handleContinue = async () => {
     setBalanceCheckComplete(false)
-    onSetIsSavingPayment(true)
+    setIsSavingPayment(true)
 
     try {
       const orderOrError = (
@@ -90,7 +89,7 @@ export const BankAccountPicker: FC<Props> = props => {
     } catch (error) {
       console.error(error)
     } finally {
-      onSetIsSavingPayment(false)
+      setIsSavingPayment(false)
     }
   }
 
@@ -142,10 +141,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
       <Collapse open={bankAccountSelection.type === "new"}>
         {bankAccountSelection.type === "new" && (
-          <BankDebitProvider
-            order={order}
-            onSetIsSavingPayment={onSetIsSavingPayment}
-          />
+          <BankDebitProvider order={order} />
         )}
       </Collapse>
 

@@ -33,13 +33,9 @@ const BankSetupErrorMessage = () => {
 
 interface Props {
   order: BankAccountPicker_order | Payment_order
-  onSetIsSavingPayment: (arg: boolean) => void
 }
 
-export const BankDebitProvider: FC<Props> = ({
-  order,
-  onSetIsSavingPayment,
-}) => {
+export const BankDebitProvider: FC<Props> = ({ order }) => {
   const {
     selectedPaymentMethod,
     stripeClientSecret,
@@ -151,7 +147,6 @@ export const BankDebitProvider: FC<Props> = ({
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm
               order={order}
-              onSetIsSavingPayment={onSetIsSavingPayment}
               onSetIsPaymentElementLoading={setIsPaymentElementLoading}
             />
           </Elements>

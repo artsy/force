@@ -73,10 +73,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedBankAccountId,
     selectedPaymentMethod,
     balanceCheckComplete,
+    isSavingPayment,
     setSelectedBankAccountId,
     setSelectedPaymentMethod,
     setBalanceCheckComplete,
     setBankAccountHasInsufficientFunds,
+    setIsSavingPayment,
   } = useOrderPaymentContext()
 
   const { trackEvent } = useTracking()
@@ -87,20 +89,13 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   useEffect(() => {
     setSelectedPaymentMethod(getInitialPaymentMethodValue(order))
+    setIsSavingPayment(!!match?.location?.query?.setup_intent)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const balanceCheckEnabled =
     useFeatureFlag("bank_account_balance_check") &&
     selectedPaymentMethod === "US_BANK_ACCOUNT"
-
-  /*
-    state to render a loading interface while one of the following is happening:
-    payment element is loading, confirming Stripe setup, and setting payment with CC, Wire or Saved bank account
-  */
-  const [isSavingPayment, setIsSavingPayment] = useState(
-    !!match?.location?.query?.setup_intent
-  )
 
   /*
     hook to handle Stripe redirect for newly-linked bank account
@@ -354,7 +349,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                   order={props.order}
                   CreditCardPicker={CreditCardPicker}
                   onSetPayment={handleSetPayment}
-                  onSetIsSavingPayment={setIsSavingPayment}
                   onSetSelectedBankAccountId={setSelectedBankAccountId}
                   bankAccountSelection={bankAccountSelection}
                   onSetBankAccountSelection={setBankAccountSelection}

@@ -40,7 +40,6 @@ export interface Props {
   commitMutation: CommitMutation
   onSetPayment: () => void
   CreditCardPicker: RefObject<CreditCardPicker>
-  onSetIsSavingPayment: (arg: boolean) => void
   onSetSelectedBankAccountId: (arg: string) => void
   bankAccountSelection: BankAccountSelection
   onSetBankAccountSelection: (arg: BankAccountSelection) => void
@@ -53,7 +52,6 @@ export const PaymentContent: FC<Props> = props => {
     me,
     order,
     CreditCardPicker,
-    onSetIsSavingPayment,
     onSetSelectedBankAccountId,
     bankAccountSelection,
     onSetBankAccountSelection,
@@ -148,7 +146,6 @@ export const PaymentContent: FC<Props> = props => {
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
-            onSetIsSavingPayment={onSetIsSavingPayment}
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
             onSetBankAccountSelection={onSetBankAccountSelection}
@@ -164,7 +161,6 @@ export const PaymentContent: FC<Props> = props => {
           <BankAccountPickerFragmentContainer
             me={me}
             order={order}
-            onSetIsSavingPayment={onSetIsSavingPayment}
             onSetSelectedBankAccountId={onSetSelectedBankAccountId}
             bankAccountSelection={bankAccountSelection}
             onSetBankAccountSelection={onSetBankAccountSelection}

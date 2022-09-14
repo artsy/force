@@ -39,6 +39,12 @@ export const orderPaymentReducer = (
         stripeClientSecret: action.payload,
       }
     }
+    case OrderPaymentActions.SET_IS_SAVING_PAYMENT: {
+      return {
+        ...state,
+        isSavingPayment: action.payload,
+      }
+    }
     default: {
       return state
     }
