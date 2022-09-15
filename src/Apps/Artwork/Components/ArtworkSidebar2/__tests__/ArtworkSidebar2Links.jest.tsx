@@ -1,20 +1,27 @@
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkSidebar2LinksFragmentContainer } from "../ArtworkSidebar2Links"
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { ArtworkSidebar2Links_Test_Query } from "__generated__/ArtworkSidebar2Links_Test_Query.graphql"
+import { useTracking } from "react-tracking"
 
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 
-const mockRouterPush = jest.fn()
-
-jest.mock("System/Router/useRouter", () => ({
-  useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush },
-  })),
-}))
+const mockUseTracking = useTracking as jest.Mock
+const trackEvent = jest.fn()
 
 describe("ArtworkSidebar2Links", () => {
+  beforeEach(() => {
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
+  })
+
+  afterEach(() => {
+    trackEvent.mockClear()
+  })
+
   const { renderWithRelay } = setupTestWrapperTL<
     ArtworkSidebar2Links_Test_Query
   >({
@@ -39,6 +46,23 @@ describe("ArtworkSidebar2Links", () => {
     expect(screen.queryByText(/Sell with Artsy/i)).toBeInTheDocument()
   })
 
+  it("tracks sell with artsy link click", () => {
+    renderWithRelay({})
+
+    fireEvent.click(screen.getByText(/Sell with Artsy/i))
+
+    expect(trackEvent).toHaveBeenCalledTimes(1)
+    expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "action_type": "Click",
+              "subject": "sell with artsy",
+              "type": "Link",
+            },
+          ]
+        `)
+  })
+
   describe("render auction faq section when artwork", () => {
     it("is in auction and auction is ongoing", () => {
       renderWithRelay({
@@ -54,6 +78,30 @@ describe("ArtworkSidebar2Links", () => {
         screen.queryByText(/By placing your bid you agree to Artsy's/i)
       ).toBeInTheDocument()
       expect(screen.queryByText(/Conditions of Sale/i)).toBeInTheDocument()
+    })
+
+    it("tracks conditions of sale link click", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isInAuction: true,
+          sale: {
+            isClosed: false,
+          },
+        }),
+      })
+
+      fireEvent.click(screen.getByText(/Sell with Artsy/i))
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "action_type": "Click",
+              "subject": "sell with artsy",
+              "type": "Link",
+            },
+          ]
+        `)
     })
   })
 
