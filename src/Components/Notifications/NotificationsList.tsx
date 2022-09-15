@@ -203,5 +203,5 @@ const getNotificationTypes = (
     return ["ARTWORK_ALERT"]
   }
 
-  return
+  return []
 }
