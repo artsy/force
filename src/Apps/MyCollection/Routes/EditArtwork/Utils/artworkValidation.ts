@@ -3,11 +3,7 @@ import { trim } from "lodash"
 import * as yup from "yup"
 
 export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({
-  artistId: yup
-    .string()
-    .required(
-      "Please select an artist from the list. Other artists cannot be submitted due to limited demand."
-    ),
+  artistId: yup.string().required("Please seleсt an artist from the list."),
   title: yup
     .string()
     .required("Title is required")
