@@ -1,5 +1,6 @@
 import {
   ArtsyLogoBlackIcon,
+  AlertIcon,
   Button,
   DROP_SHADOW,
   Flex,
@@ -8,6 +9,7 @@ import {
   Spacer,
   Text,
   useToasts,
+  Banner,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -302,6 +304,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
                     {isEditing ? "Edit Artwork Details" : "Add Artwork Details"}
                   </Text>
                   <Separator color="black100" />
+                  <Banner variant="defaultLight">
+                    <AlertIcon mr={1} />
+                    Currently you can upload artworks by artists from Artsy
+                    database
+                  </Banner>
                 </>
               )}
 
