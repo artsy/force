@@ -17,6 +17,7 @@ import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDe
 import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilterNew"
 import { useFormikContext } from "formik"
 import { useState } from "react"
+import { Media } from "Utils/Responsive"
 import { ArtworkModel } from "../Utils/artworkModel"
 import { categoryOptions } from "../Utils/categoryOptions"
 import { rarityOptions } from "../Utils/rarityOptions"
@@ -83,31 +84,60 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[4, 2]}>
-        <Column span={6}>
-          <Input
-            title="Year"
-            maxLength={256}
-            placeholder="YYYY"
-            name="date"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.date}
-          />
-        </Column>
-        <Column span={6} mt={[4, 0]}>
-          <Select
-            title="Medium"
-            required
-            name="category"
-            options={categoryOptions}
-            selected={values.category}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            onSelect={selected => setFieldValue("category", selected)}
-          />
-        </Column>
-      </GridColumns>
+      <Media at="xs">
+        <GridColumns mt={4}>
+          <Column span={6}>
+            <Select
+              title="Medium"
+              required
+              name="category"
+              options={categoryOptions}
+              selected={values.category}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              onSelect={selected => setFieldValue("category", selected)}
+            />
+          </Column>
+          <Column span={6} mt={4}>
+            <Input
+              title="Year"
+              maxLength={256}
+              placeholder="YYYY"
+              name="date"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.date}
+            />
+          </Column>
+        </GridColumns>
+      </Media>
+      <Media greaterThan="xs">
+        <GridColumns mt={2}>
+          <Column span={6}>
+            <Input
+              title="Year"
+              maxLength={256}
+              placeholder="YYYY"
+              name="date"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.date}
+            />
+          </Column>
+          <Column span={6} mt={0}>
+            <Select
+              title="Medium"
+              required
+              name="category"
+              options={categoryOptions}
+              selected={values.category}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              onSelect={selected => setFieldValue("category", selected)}
+            />
+          </Column>
+        </GridColumns>
+      </Media>
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
           <Input
