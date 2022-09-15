@@ -9,7 +9,6 @@ import {
   MoneyFillIcon,
   Spacer,
   Text,
-  THEME_V3,
 } from "@artsy/palette"
 
 import { TimeSince } from "./TimeSince"
