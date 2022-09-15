@@ -118,6 +118,7 @@ export const ArtistAutoComplete: React.FC<{
     setFieldValue("artistId", "")
     setFieldValue("artistName", "")
     onSelect({ artistId: "" })
+    setArtistNotFoundMessage("")
   }
 
   const handleSelect = ({ text, value }: ArtistAutocompleteOption) => {
