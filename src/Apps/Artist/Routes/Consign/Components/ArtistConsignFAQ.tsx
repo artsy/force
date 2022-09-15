@@ -126,9 +126,9 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                 <>
                   If you wish to edit your submission or update missing
                   information, please email us at{" "}
-                  <a href="mailto:consign@artsty.net">consign@artsty.net</a>{" "}
-                  with your submission ID number, and we will update the
-                  submission on your behalf.
+                  <a href="mailto:sell@artsty.net">sell@artsty.net</a> with your
+                  submission ID number, and we will update the submission on
+                  your behalf.
                 </>
               }
             />
@@ -138,7 +138,7 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
               answer={
                 <>
                   Contact us at{" "}
-                  <a href="mailto:consign@artsty.net">consign@artsty.net</a>.
+                  <a href="mailto:sell@artsty.net">sell@artsty.net</a>.
                 </>
               }
             />
