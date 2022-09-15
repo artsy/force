@@ -1,4 +1,13 @@
-import { BaseTab, BaseTabs, Box, Clickable, useTabs } from "@artsy/palette"
+import {
+  BaseTab,
+  BaseTabs,
+  Box,
+  Clickable,
+  CloseIcon,
+  Flex,
+  useTabs,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import styled from "styled-components"
 
@@ -19,7 +28,7 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
   })
 
   const Tabs = (
-    <BaseTabs ref={ref as any} left={0} right={0} px={2} bg="white100">
+    <InnerTabs ref={ref as any} borderBottomColor="transparent" width="100%">
       {tabs.map((tab, i) => {
         return (
           <Clickable
@@ -35,13 +44,22 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
           </Clickable>
         )
       })}
-    </BaseTabs>
+    </InnerTabs>
   )
 
   if (mode === "dropdown") {
     return (
       <>
-        {Tabs}
+        <HeaderContainer display="flex" flexDirection="row" alignItems="center">
+          <Flex flex={1} overflow="hidden">
+            {Tabs}
+          </Flex>
+
+          <Clickable as="a" ml={1}>
+            <CloseIcon display="block" />
+          </Clickable>
+        </HeaderContainer>
+
         <Box
           maxHeight={`calc(${maxDropdownHeight} - ${TABS_CONTAINER_HEIGHT}px)`}
           overflowY="scroll"
@@ -54,7 +72,9 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
 
   return (
     <StickyProvider>
-      <Sticky>{Tabs}</Sticky>
+      <Sticky>
+        <HeaderContainer>{Tabs}</HeaderContainer>
+      </Sticky>
       {activeTab.current.child}
     </StickyProvider>
   )
@@ -63,4 +83,20 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
 const NotificationBaseTab = styled(BaseTab)`
   height: ${TABS_CONTAINER_HEIGHT}px;
   align-items: center;
+`
+
+/**
+ * NOTE: Small offset from the bottom is used here
+ * so that the fade-out gradient from the HorizontalOverflow component (used in BaseTabs) does not overlap the bottom line
+ */
+const InnerTabs = styled(BaseTabs)`
+  &::after {
+    bottom: 1px;
+  }
+`
+
+const HeaderContainer = styled(Box)`
+  background: ${themeGet("colors.white100")};
+  padding: 0 ${themeGet("space.2")};
+  box-shadow: inset 0 -1px ${themeGet("colors.black10")};
 `

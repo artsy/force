@@ -68,6 +68,12 @@
         "moneyBack": "Money-Back Guarantee",
         "authenticity": "Authenticity Guarantee",
         "learnMore": "Learn more"
+      },
+      "partner": {
+        "contactGalleryCta": "Contact Gallery"
+      },
+      "createAlert": {
+        "description": "Get notifications for similar works"
       }
     }
   }

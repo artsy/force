@@ -83,7 +83,7 @@ describe("Edit artwork", () => {
     it("populates inputs with values from the artwork", async () => {
       getWrapper().renderWithRelay({ Artwork: () => mockArtwork })
 
-      expect(screen.getByText("Save Artwork")).toBeInTheDocument()
+      expect(screen.getByText("Save Changes")).toBeInTheDocument()
       expect(screen.getByTestId("save-button")).toBeEnabled()
 
       expect(screen.getByText("Edit Artwork Details")).toBeInTheDocument()
@@ -202,7 +202,7 @@ describe("Edit artwork", () => {
         Artwork: () => mockArtwork,
       })
 
-      fireEvent.click(screen.getByText("Save Artwork"))
+      fireEvent.click(screen.getByText("Save Changes"))
 
       await flushPromiseQueue()
 
@@ -306,7 +306,7 @@ describe("Edit artwork", () => {
         expect.any(Function)
       )
 
-      fireEvent.click(screen.getByText("Save Artwork"))
+      fireEvent.click(screen.getByText("Save Changes"))
     })
   })
 
@@ -362,7 +362,7 @@ describe("Edit artwork", () => {
         expect(screen.queryByTestId("photo-thumbnail")).not.toBeInTheDocument()
       })
 
-      fireEvent.click(screen.getByText("Save Artwork"))
+      fireEvent.click(screen.getByText("Save Changes"))
 
       await flushPromiseQueue()
 

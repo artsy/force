@@ -9,7 +9,20 @@ export type ArtworkSidebar2_artwork = {
     readonly isSold: boolean | null;
     readonly isAcquireable: boolean | null;
     readonly isOfferable: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2ShippingInformation_artwork">;
+    readonly isInAuction: boolean | null;
+    readonly saleMessage: string | null;
+    readonly sale: {
+        readonly startAt: string | null;
+    } | null;
+    readonly saleArtwork: {
+        readonly lotID: string | null;
+        readonly extendedBiddingEndAt: string | null;
+        readonly endAt: string | null;
+    } | null;
+    readonly artists: ReadonlyArray<{
+        readonly internalID: string;
+    } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2ArtworkTitle_artwork" | "ArtworkSidebar2Artists_artwork" | "ArtworkSidebar2Details_artwork" | "ArtworkSidebar2ShippingInformation_artwork" | "ArtworkSidebar2PartnerInfo_artwork" | "ArtworkSidebar2CreateArtworkAlert_artwork">;
     readonly " $refType": "ArtworkSidebar2_artwork";
 };
 export type ArtworkSidebar2_artwork$data = ArtworkSidebar2_artwork;
@@ -55,6 +68,88 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInAuction",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleMessage",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "startAt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lotID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "extendedBiddingEndAt",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endAt",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar2ArtworkTitle_artwork"
@@ -73,10 +168,20 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar2ShippingInformation_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2PartnerInfo_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebar2CreateArtworkAlert_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = '2f7adc2fd2e4ac7ef5b211f91a0d6e0d';
+(node as any).hash = '8f1066fa7dbd91bad4e5679d85e02e99';
 export default node;
