@@ -77,6 +77,11 @@ spec:
         options:
         - name: ndots
           value: '1'
+      tolerations:
+        - key: reserved
+          operator: Equal
+          value: spot
+          effect: NoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
