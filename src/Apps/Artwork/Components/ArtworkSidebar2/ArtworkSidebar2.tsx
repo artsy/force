@@ -15,6 +15,7 @@ import { useState } from "react"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { ArtworkSidebar2EditionSetFragmentContainer } from "./ArtworkSidebar2EditionSets"
+import { ArtworkSidebar2LinksFragmentContainer } from "./ArtworkSidebar2Links"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
@@ -109,6 +110,8 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
         <ArtworkSidebar2CreateArtworkAlertFragmentContainer artwork={artwork} />
       )}
       <Separator />
+
+      <ArtworkSidebar2LinksFragmentContainer artwork={artwork} />
     </Flex>
   )
 }
@@ -131,6 +134,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         ...ArtworkSidebar2ShippingInformation_artwork
         ...ArtworkSidebar2PartnerInfo_artwork
         ...ArtworkSidebar2CreateArtworkAlert_artwork
+        ...ArtworkSidebar2Links_artwork
         sale {
           startAt
         }
