@@ -97,8 +97,12 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
     tracking.trackEvent(trackingData)
   }
 
-  const route = (tab: string) =>
-    `/search${tab.replace(/\s/g, "_")}?term=${term}`
+  const route = (tab: string) => {
+    const encodedTerm = encodeURIComponent(term)
+    const formattedTab = tab.replace(/\s/g, "_")
+
+    return `/search${formattedTab}?term=${encodedTerm}`
+  }
 
   const renderTab = (
     text: string,
