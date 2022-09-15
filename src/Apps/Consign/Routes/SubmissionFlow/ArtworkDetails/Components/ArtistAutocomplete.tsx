@@ -107,9 +107,6 @@ export const ArtistAutoComplete: React.FC<{
     setFieldValue("artistName", value)
     handleSuggestionsFetchRequested(value)
     setArtistNotFoundMessage("")
-    if (!value.trim()) {
-      setArtistNotFoundMessage(errors.artistId as string)
-    }
   }
 
   const handleClick = () => {
