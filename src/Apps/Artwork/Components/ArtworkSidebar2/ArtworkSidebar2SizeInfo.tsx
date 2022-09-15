@@ -16,6 +16,16 @@ const ArtworkSidebar2SizeInfo: React.FC<ArtworkSidebar2SizeInfoProps> = ({
   const hasInDimensions = !!dimensions?.in
   const hasCmDimensions = !!dimensions?.cm
 
+  const renderDimensions = () => {
+    if (hasInDimensions && hasCmDimensions) {
+      return `${dimensions.in} | ${dimensions.cm}`
+    }
+
+    return dimensions?.in ?? dimensions?.cm
+  }
+
+  const label = renderDimensions()
+
   const sizeInfoMissing = (dimensions, editionOf) => {
     const dimensionsPresent =
       /\d/.test(dimensions?.in) || /\d/.test(dimensions?.cm)
@@ -31,14 +41,11 @@ const ArtworkSidebar2SizeInfo: React.FC<ArtworkSidebar2SizeInfoProps> = ({
     <React.Fragment data-testid="size-info">
       <Media greaterThanOrEqual="md">
         <Box color="black60">
-          <Text variant="sm-display">
-            {hasInDimensions && dimensions.in}{" "}
-            {hasInDimensions && hasCmDimensions && "|"}{" "}
-            {hasCmDimensions && dimensions.cm}
-          </Text>
+          {!!label && <Text variant="sm-display">{label}</Text>}
           {editionOf && <Text variant="sm-display">{editionOf}</Text>}
         </Box>
       </Media>
+
       <Media lessThan="md">
         <Box color="black60">
           {hasInDimensions && <Text variant="sm-display">{dimensions.in}</Text>}
