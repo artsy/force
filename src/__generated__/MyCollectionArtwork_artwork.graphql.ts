@@ -9,6 +9,7 @@ export type MyCollectionArtwork_artwork = {
         readonly totalCount: number | null;
     } | null;
     readonly hasMarketPriceInsights: boolean | null;
+    readonly submissionId: string | null;
     readonly internalID: string;
     readonly artist: {
         readonly slug: string;
@@ -59,6 +60,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "hasMarketPriceInsights",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "submissionId",
       "storageKey": null
     },
     {
@@ -136,5 +144,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c60f02bdf1b6a7b0f4beaf4a58896681';
+(node as any).hash = '2852e3a55d0de5f4506897403c32f82a';
 export default node;

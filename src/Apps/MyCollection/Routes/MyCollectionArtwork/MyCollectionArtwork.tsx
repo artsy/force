@@ -34,10 +34,6 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
-  // TODO: use real value
-  const [isArtworkSubmittedToSell, setIsArtworkSubmittedToSell] = useState<
-    boolean
-  >(false)
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase3Enabled = useFeatureFlag(
@@ -81,6 +77,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
 
   const slug = artwork?.artist?.slug!
   const id = artwork.internalID
+  const submissionId = artwork.submissionId
 
   const showComparables =
     !!artwork.comparables?.totalCount && enableMyCollectionPhase4Comparables
@@ -123,7 +120,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
             <MyCollectionArtworkSidebarFragmentContainer artwork={artwork} />
             {isMyCollectionPhase5Enabled && (
               <Media greaterThanOrEqual="sm">
-                {!!isArtworkSubmittedToSell ? (
+                {!!submissionId ? (
                   <>
                     <Separator my={2} />
                     <MyCollectionArtworkSWASectionSubmitted />
@@ -151,7 +148,7 @@ const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
                   />
                   {!!isMyCollectionPhase5Enabled && (
                     <Media lessThan="sm">
-                      {!!isArtworkSubmittedToSell ? (
+                      {!!submissionId ? (
                         <MyCollectionArtworkSWASectionSubmitted />
                       ) : (
                         <MyCollectionArtworkSWASectionMobileLayout
@@ -235,6 +232,7 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
           totalCount
         }
         hasMarketPriceInsights
+        submissionId
         internalID
         artist {
           slug
