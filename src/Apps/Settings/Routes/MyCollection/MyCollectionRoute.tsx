@@ -1,4 +1,10 @@
 import {
+  AddCollectedArtwork,
+  ActionType,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   Box,
   Button,
   Clickable,
@@ -19,6 +25,7 @@ import { PaginationFragmentContainer } from "Components/Pagination"
 import { Sticky } from "Components/Sticky"
 import { FC, Fragment, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
@@ -32,6 +39,7 @@ interface MyCollectionRouteProps {
 }
 
 const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
+  const { trackEvent } = useTracking()
   const isMyCollectionPhase3Enabled = useFeatureFlag(
     "my-collection-web-phase-3"
   )
@@ -151,6 +159,9 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
                               size={["small", "large"]}
                               variant="primaryBlack"
                               to="/my-collection/artworks/new"
+                              onClick={() =>
+                                trackEvent(tracks.addCollectedArtwork())
+                              }
                             >
                               Upload Artwork
                             </Button>
@@ -241,3 +252,12 @@ export const MyCollectionRouteRefetchContainer = createRefetchContainer(
   },
   MY_COLLECTION_ROUTE_QUERY
 )
+
+const tracks = {
+  addCollectedArtwork: (): AddCollectedArtwork => ({
+    action: ActionType.addCollectedArtwork,
+    context_module: ContextModule.myCollectionHome,
+    context_owner_type: OwnerType.myCollection,
+    platform: "web",
+  }),
+}

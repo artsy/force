@@ -1,4 +1,10 @@
 import {
+  DeleteCollectedArtwork,
+  ActionType,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   ArtsyLogoBlackIcon,
   Box,
   Button,
@@ -19,6 +25,7 @@ import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
@@ -49,6 +56,7 @@ export interface MyCollectionArtworkFormProps {
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({
   artwork,
 }) => {
+  const { trackEvent } = useTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
@@ -173,6 +181,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
   }
 
   const handleDelete = async () => {
+    trackEvent(
+      tracks.deleteCollectedArtwork(artwork?.internalID!, artwork?.slug!)
+    )
     try {
       await deleteArtwork({
         variables: {
@@ -433,3 +444,17 @@ export const MyCollectionArtworkFormFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const tracks = {
+  deleteCollectedArtwork: (
+    internalID: string,
+    slug: string
+  ): DeleteCollectedArtwork => ({
+    action: ActionType.deleteCollectedArtwork,
+    context_module: ContextModule.myCollectionArtwork,
+    context_owner_id: internalID,
+    context_owner_slug: slug,
+    context_owner_type: OwnerType.myCollectionArtwork,
+    platform: "web",
+  }),
+}
