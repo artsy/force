@@ -120,6 +120,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         artworkLocation: values.artworkLocation,
       })
 
+      // Adding tracking after a successfully adding an artwork
+      if (!isEditing) {
+        trackEvent(tracks.saveCollectedArtwork())
+      }
+
       // Remove photos marked for deletion
 
       const removedPhotos = values.photos.filter(photo => photo.removed)
@@ -455,6 +460,12 @@ const tracks = {
     context_owner_id: internalID,
     context_owner_slug: slug,
     context_owner_type: OwnerType.myCollectionArtwork,
+    platform: "web",
+  }),
+  saveCollectedArtwork: () => ({
+    action: ActionType.saveCollectedArtwork,
+    context_module: ContextModule.myCollectionHome,
+    context_owner_type: OwnerType.myCollection,
     platform: "web",
   }),
 }
