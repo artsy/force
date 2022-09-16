@@ -53,14 +53,14 @@ describe("ArtworkSidebar2Links", () => {
 
     expect(trackEvent).toHaveBeenCalledTimes(1)
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "action_type": "Click",
-              "subject": "sell with artsy",
-              "type": "Link",
-            },
-          ]
-        `)
+      Array [
+        Object {
+          "action_type": "Click",
+          "subject": "sell with artsy",
+          "type": "Link",
+        },
+      ]
+    `)
   })
 
   describe("render auction faq section when artwork", () => {
