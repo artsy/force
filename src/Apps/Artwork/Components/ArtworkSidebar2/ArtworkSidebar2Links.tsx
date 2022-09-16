@@ -41,7 +41,7 @@ const ArtworkSidebar2Links: React.FC<ArtworkSidebar2LinksProps> = ({
       {isInOpenAuction && (
         <>
           <Text variant="xs" color="black60">
-            {t("artworkPage.sidebar.conditionsOfSale")}
+            {t("artworkPage.sidebar.conditionsOfSale")}{" "}
             <RouterLink
               to="/conditions-of-sale"
               onClick={trackClickedConditionsOfSale}
@@ -53,7 +53,7 @@ const ArtworkSidebar2Links: React.FC<ArtworkSidebar2LinksProps> = ({
         </>
       )}
       <Text variant="xs" color="black60">
-        {t("artworkPage.sidebar.sellWithArtsy")}
+        {t("artworkPage.sidebar.sellWithArtsy")}{" "}
         <RouterLink to="/sell" onClick={trackClickedSellWithArtsy}>
           {t("artworkPage.sidebar.sellWithArtsyLink")}
         </RouterLink>

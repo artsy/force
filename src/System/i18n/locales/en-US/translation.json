@@ -75,9 +75,9 @@
       "createAlert": {
         "description": "Get notifications for similar works"
       },
-      "sellWithArtsy": "Want to sell a work by this artist? ",
+      "sellWithArtsy": "Want to sell a work by this artist?",
       "sellWithArtsyLink": "Sell with Artsy",
-      "conditionsOfSale": "By placing your bid you agree to Artsy's ",
+      "conditionsOfSale": "By placing your bid you agree to Artsy's",
       "conditionsOfSaleLink": "Conditions of Sale"
     }
   }
