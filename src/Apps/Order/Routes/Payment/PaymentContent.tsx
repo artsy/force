@@ -217,6 +217,7 @@ const USBankOnlyLabel = styled(Text)`
 `
 
 const RadioWithLabel = styled(BorderedRadio)`
+  padding-right: 0px !important;
   div {
     flex-direction: row;
     flex-grow: 0;
