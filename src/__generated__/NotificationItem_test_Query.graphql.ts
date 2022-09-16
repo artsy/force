@@ -404,8 +404,7 @@ return {
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
             "ARTWORK_ALERT",
-            "ARTWORK_PUBLISHED",
-            "VIEWING_ROOM_PUBLISHED"
+            "ARTWORK_PUBLISHED"
           ],
           "nullable": false,
           "plural": false,

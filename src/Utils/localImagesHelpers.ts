@@ -1,8 +1,6 @@
-import { DateTime } from "luxon"
-
 const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 2
 export interface LocalImage {
-  path: string
+  data: string
   width: number
   height: number
 }
@@ -13,88 +11,100 @@ interface Expirable {
 
 type StoredImage = LocalImage & Expirable
 
+type StoredArtworkWithImages = {
+  artworkID: string
+  images: StoredImage[]
+}
+
 const addMinutes = (date: Date, minutes: number) => {
   return new Date(date.getTime() + minutes * 60000)
 }
 
-export const storeLocalImages = (images: LocalImage[], rootKey: string) => {
-  const expirattionDate = addMinutes(
+export const storeArtworkLocalImages = (
+  artworkID: string,
+  images: LocalImage[],
+  rootKey: string
+) => {
+  const expirationDate = addMinutes(
     new Date(),
     GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES
   )
   const imagesToStore: StoredImage[] = []
   for (const image of images) {
     const imageToStore: StoredImage = {
-      expirationDate: expirattionDate.toString(),
-      path: image.path,
+      expirationDate: expirationDate.toString(),
+      data: image.data,
       height: image.height,
       width: image.width,
     }
     imagesToStore.push(imageToStore)
   }
-  const serializedImages = JSON.stringify(imagesToStore)
-  return window.localStorage.setItem(rootKey, serializedImages)
+
+  const localArtworksImages = getLocalImagesByArtwork(rootKey)
+
+  // Get existing artworks with images except the one we are storing
+  const updatedLocalArtworksImages = localArtworksImages.filter(
+    artworkImagesObj => artworkImagesObj.artworkID !== artworkID
+  )
+
+  // Add the new artwork with images to the list
+  updatedLocalArtworksImages.push({
+    artworkID,
+    images: imagesToStore.concat(
+      retrieveArtworkLocalImages(artworkID, rootKey)
+    ),
+  })
+
+  // Store the updated list
+  const artworkImages = JSON.stringify(updatedLocalArtworksImages || [])
+
+  return window.localStorage.setItem(rootKey, artworkImages)
 }
 
 export const deleteLocalImages = (key: string) => {
   return window.localStorage.removeItem(key)
 }
 
-// Retrieve all local images that have not expired from local storage
-export const retrieveLocalImages = async (
-  key: string,
-  currentTime: number = Date.now()
-): Promise<LocalImage[] | null> => {
-  return new Promise(async resolve => {
-    const imagesJSON = window.localStorage.getItem(key)
+// Retrieve all artworks local images that have not expired from local storage
+export const getLocalImagesByArtwork = (
+  key: string
+): StoredArtworkWithImages[] => {
+  const imagesByArtworkJSONString = window.localStorage.getItem(key)
 
-    if (!imagesJSON) {
-      resolve(null)
-      return
+  const imagesByArtwork = JSON.parse(imagesByArtworkJSONString || "") as
+    | StoredArtworkWithImages[]
+    | null
+
+  if (Array.isArray(imagesByArtwork)) {
+    return imagesByArtwork
+  }
+  return []
+}
+
+// Return height and width of local image file
+export const getHeightAndWidthFromDataUrl = file => {
+  const imageDataURL = URL.createObjectURL(file)
+  return new Promise(resolve => {
+    const img = new Image()
+    img.onload = () => {
+      resolve({
+        height: img.height,
+        width: img.width,
+      })
     }
-
-    const images = JSON.parse(imagesJSON)
-
-    if (!images) {
-      resolve(null)
-      return
-    }
-
-    if (!Array.isArray(images)) {
-      resolve(null)
-      return
-    }
-
-    const resolvedImages: LocalImage[] = []
-    for (const image of images) {
-      if (
-        "expirationDate" in image &&
-        "path" in image &&
-        "height" in image &&
-        "width" in image
-      ) {
-        const expirationDate = DateTime.fromISO(image.expirationDate).toMillis()
-        const currentDate = currentTime ? currentTime : Date.now()
-        if (currentDate > expirationDate) {
-          break
-        }
-        const width = parseInt(image.width, 10)
-        const height = parseInt(image.height, 10)
-
-        resolvedImages.push({
-          path: image.path,
-          width,
-          height,
-        })
-      } else {
-        break
-      }
-    }
-
-    if (resolvedImages.length === 0) {
-      resolve(null)
-    }
-
-    resolve(resolvedImages)
+    img.src = imageDataURL
   })
+}
+
+// Retrieve artwork local images from local storage
+export const retrieveArtworkLocalImages = (
+  artworkID: string,
+  rootKey: string
+): StoredImage[] => {
+  const localArtworksImages = getLocalImagesByArtwork(rootKey)
+  const artworkImages = localArtworksImages?.find(
+    artworkImagesObj => artworkImagesObj.artworkID === artworkID
+  )
+
+  return artworkImages?.images || []
 }

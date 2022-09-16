@@ -17,7 +17,7 @@ import { BackLink } from "Components/Links/BackLink"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import { Form, Formik } from "formik"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
@@ -28,7 +28,10 @@ import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtwo
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
-import { MyCollectionArtworkFormImages } from "./Components/MyCollectionArtworkFormImages"
+import {
+  MyCollectionArtworkFormImages,
+  MyCollectionArtworkFormImagesComponentRef,
+} from "./Components/MyCollectionArtworkFormImages"
 import { ConfirmationModalBack } from "./ConfirmationModalBack"
 import { ConfirmationModalDelete } from "./ConfirmationModalDelete"
 import { useDeleteArtwork } from "./Mutations/useDeleteArtwork"
@@ -55,6 +58,9 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
     saveCollectedArtwork: trackSaveCollectedArtwork,
   } = useMyCollectionTracking()
   const { router, match } = useRouter()
+  const artworkFormImagesRef = useRef<MyCollectionArtworkFormImagesComponentRef | null>(
+    null
+  )
   const { sendToast } = useToasts()
   const initialValues = getMyCollectionArtworkFormInitialValues(artwork)
   const initialErrors = validateArtwork(
@@ -120,6 +126,11 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
       // Track saving only when the user adds a new artwork.
       if (!isEditing) {
         trackSaveCollectedArtwork()
+      }
+
+      // Store images locally
+      if (artworkId && artworkFormImagesRef.current) {
+        artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
       }
 
       // Remove photos marked for deletion
@@ -327,7 +338,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
               <Spacer mb={4} />
 
-              <MyCollectionArtworkFormImages />
+              <MyCollectionArtworkFormImages ref={artworkFormImagesRef} />
 
               <Spacer mt={6} />
 
