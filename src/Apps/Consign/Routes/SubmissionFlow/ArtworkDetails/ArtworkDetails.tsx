@@ -10,7 +10,10 @@ import { useRouter } from "System/Router/useRouter"
 import { artworkDetailsValidationSchema, validate } from "../Utils/validation"
 import { BackLink } from "Components/Links/BackLink"
 import { useSystemContext } from "System"
-import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
+import {
+  createOrUpdateConsignSubmission,
+  SubmissionInput,
+} from "../Utils/createOrUpdateConsignSubmission"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   ArtworkDetails_submission,
@@ -20,6 +23,7 @@ import { ArtworkDetails_myCollectionArtworkSubmissionDetails } from "__generated
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
+import { ConsignmentSubmissionSource } from "__generated__/CreateConsignSubmissionMutation.graphql"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -69,34 +73,45 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
       : undefined
 
     if (relayEnvironment) {
+      let submissionData: SubmissionInput
+      submissionData = {
+        externalId: submission?.externalId,
+        artistID: artworkDetailsForm.artistId,
+        year: artworkDetailsForm.year,
+        title: artworkDetailsForm.title,
+        medium: artworkDetailsForm.materials,
+        attributionClass: artworkDetailsForm.rarity
+          .replace(" ", "_")
+          .toUpperCase() as ConsignmentAttributionClass,
+        editionNumber: artworkDetailsForm.editionNumber,
+        editionSizeFormatted: artworkDetailsForm.editionSize,
+        height: artworkDetailsForm.height,
+        width: artworkDetailsForm.width,
+        depth: artworkDetailsForm.depth,
+        dimensionsMetric: artworkDetailsForm.units,
+        provenance: artworkDetailsForm.provenance,
+        locationCity: artworkDetailsForm.location.city.trim(),
+        locationCountry: artworkDetailsForm.location.country?.trim(),
+        locationState: artworkDetailsForm.location.state?.trim(),
+        locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
+        locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
+        state: "DRAFT",
+        utmMedium: utmParams?.utmMedium,
+        utmSource: utmParams?.utmSource,
+        utmTerm: utmParams?.utmTerm,
+        sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
+      }
+      if (artworkId) {
+        // @ts-ignore
+        ;(submissionData.source as ConsignmentSubmissionSource) = "MY_COLLECTION"
+        // @ts-ignore
+        ;(submissionData.myCollectionArtworkID as string) = artworkId
+      }
       try {
-        submissionId = await createOrUpdateConsignSubmission(relayEnvironment, {
-          externalId: submission?.externalId,
-          artistID: artworkDetailsForm.artistId,
-          year: artworkDetailsForm.year,
-          title: artworkDetailsForm.title,
-          medium: artworkDetailsForm.materials,
-          attributionClass: artworkDetailsForm.rarity
-            .replace(" ", "_")
-            .toUpperCase() as ConsignmentAttributionClass,
-          editionNumber: artworkDetailsForm.editionNumber,
-          editionSizeFormatted: artworkDetailsForm.editionSize,
-          height: artworkDetailsForm.height,
-          width: artworkDetailsForm.width,
-          depth: artworkDetailsForm.depth,
-          dimensionsMetric: artworkDetailsForm.units,
-          provenance: artworkDetailsForm.provenance,
-          locationCity: artworkDetailsForm.location.city.trim(),
-          locationCountry: artworkDetailsForm.location.country?.trim(),
-          locationState: artworkDetailsForm.location.state?.trim(),
-          locationCountryCode: artworkDetailsForm.location.countryCode?.trim(),
-          locationPostalCode: artworkDetailsForm.postalCode?.trim() || null,
-          state: "DRAFT",
-          utmMedium: utmParams?.utmMedium,
-          utmSource: utmParams?.utmSource,
-          utmTerm: utmParams?.utmTerm,
-          sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
-        })
+        submissionId = await createOrUpdateConsignSubmission(
+          relayEnvironment,
+          submissionData
+        )
       } catch (error) {
         logger.error(
           `Submission not ${submission?.externalId ? "updated" : "created"}`,

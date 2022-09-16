@@ -88,7 +88,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         })
 
         router.push(
-          `/sell/submission/${submission?.externalId}/thank-you/${artworkId}`
+          artworkId
+            ? `/sell/submission/${submission?.externalId}/thank-you/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/thank-you`
         )
       } catch (error) {
         logger.error("Submission error", error)

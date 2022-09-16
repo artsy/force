@@ -274,7 +274,7 @@ export const consignRoutes: AppRouteConfig[] = [
         render: renderSubmissionFlowStep,
       },
       {
-        path: ":id/contact-information/:artworkId?",
+        path: ":id/contact-information",
         hideNav: true,
         hideFooter: true,
         getComponent: () => ContactInformation,
@@ -302,6 +302,45 @@ export const consignRoutes: AppRouteConfig[] = [
         `,
         render: renderSubmissionFlowStep,
         prepareVariables: prepareSubmissionFlowStepVariables,
+      },
+      {
+        path: ":id/contact-information/:artworkId?",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: graphql`
+          query consignRoutes_contactInformationArtworkOwnerQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ContactInformation_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            me {
+              ...ContactInformation_me
+            }
+          }
+        `,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+      },
+      {
+        path: ":id/thank-you",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ThankYou,
+        onClientSideRender: () => {
+          ThankYou.preload()
+        },
       },
       {
         path: ":id/thank-you/:artworkId?",

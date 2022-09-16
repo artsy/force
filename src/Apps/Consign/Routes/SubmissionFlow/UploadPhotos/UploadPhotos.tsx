@@ -90,7 +90,9 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
     if (submission) {
       router.push({
-        pathname: `/sell/submission/${submission.externalId}/contact-information/${artworkId}`,
+        pathname: artworkId
+          ? `/sell/submission/${submission.externalId}/contact-information/${artworkId}`
+          : `/sell/submission/${submission.externalId}/contact-information`,
       })
     }
   }
