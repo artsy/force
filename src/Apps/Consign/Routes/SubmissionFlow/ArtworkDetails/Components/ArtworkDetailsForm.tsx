@@ -24,34 +24,64 @@ import {
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
 import { useState } from "react"
+import { ArtworkDetails_myCollectionArtworkSubmissionDetails } from "__generated__/ArtworkDetails_myCollectionArtworkSubmissionDetails.graphql"
 import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
 import { postalCodeValidators } from "../../Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export const getArtworkDetailsFormInitialValues = (
-  submission?: ArtworkDetails_submission
-): ArtworkDetailsFormModel => ({
-  artistId: submission?.artist?.internalID ?? "",
-  artistName: submission?.artist?.name ?? "",
-  year: submission?.year ?? "",
-  title: submission?.title ?? "",
-  materials: submission?.medium ?? "",
-  rarity: submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
-  editionNumber: submission?.editionNumber ?? "",
-  editionSize: submission?.editionSize ?? undefined,
-  height: submission?.height ?? "",
-  width: submission?.width ?? "",
-  depth: submission?.depth ?? "",
-  units: submission?.dimensionsMetric ?? "in",
-  provenance: submission?.provenance ?? "",
-  location: {
-    city: submission?.locationCity ?? "",
-    country: submission?.locationCountry ?? undefined,
-    state: submission?.locationState ?? undefined,
-    countryCode: submission?.locationCountryCode ?? undefined,
-  },
-  postalCode: submission?.locationPostalCode ?? undefined,
-})
+  submission?: ArtworkDetails_submission,
+  myCollectionArtworkSubmissionDetails?: ArtworkDetails_myCollectionArtworkSubmissionDetails
+): ArtworkDetailsFormModel =>
+  submission
+    ? {
+        artistId: submission?.artist?.internalID ?? "",
+        artistName: submission?.artist?.name ?? "",
+        year: submission?.year ?? "",
+        title: submission?.title ?? "",
+        materials: submission?.medium ?? "",
+        rarity:
+          submission?.attributionClass?.replace("_", " ").toLowerCase() ?? "",
+        editionNumber: submission?.editionNumber ?? "",
+        editionSize: submission?.editionSize ?? undefined,
+        height: submission?.height ?? "",
+        width: submission?.width ?? "",
+        depth: submission?.depth ?? "",
+        units: submission?.dimensionsMetric ?? "in",
+        provenance: submission?.provenance ?? "",
+        location: {
+          city: submission?.locationCity ?? "",
+          country: submission?.locationCountry ?? undefined,
+          state: submission?.locationState ?? undefined,
+          countryCode: submission?.locationCountryCode ?? undefined,
+        },
+        postalCode: submission?.locationPostalCode ?? undefined,
+      }
+    : {
+        artistId:
+          myCollectionArtworkSubmissionDetails?.artist?.internalID ?? "",
+        artistName: myCollectionArtworkSubmissionDetails?.artist?.name ?? "",
+        year: myCollectionArtworkSubmissionDetails?.date ?? "",
+        title: myCollectionArtworkSubmissionDetails?.title ?? "",
+        materials: myCollectionArtworkSubmissionDetails?.medium ?? "",
+        rarity:
+          myCollectionArtworkSubmissionDetails?.attributionClass?.name
+            ?.replace("_", " ")
+            .toLowerCase() ?? "",
+        editionNumber:
+          myCollectionArtworkSubmissionDetails?.editionNumber ?? "",
+        editionSize:
+          myCollectionArtworkSubmissionDetails?.editionSize ?? undefined,
+        height: myCollectionArtworkSubmissionDetails?.height ?? "",
+        width: myCollectionArtworkSubmissionDetails?.width ?? "",
+        depth: myCollectionArtworkSubmissionDetails?.depth ?? "",
+        units: myCollectionArtworkSubmissionDetails?.metric ?? "in",
+        provenance: myCollectionArtworkSubmissionDetails?.provenance ?? "",
+        location: {
+          city: "",
+        },
+        postalCode: undefined,
+      }
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -156,7 +186,7 @@ export const ArtworkDetailsForm: React.FC = () => {
         </Column>
         <Column span={6} mt={[4, 0]}>
           <Input
-            title="year"
+            title="Year"
             maxLength={256}
             placeholder="YYYY"
             name="year"

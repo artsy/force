@@ -16,6 +16,7 @@ import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
+import { ArtworkDetails_myCollectionArtworkSubmissionDetails } from "__generated__/ArtworkDetails_myCollectionArtworkSubmissionDetails.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -24,16 +25,29 @@ const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
+  myCollectionArtworkSubmissionDetails?: ArtworkDetails_myCollectionArtworkSubmissionDetails
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
+  myCollectionArtworkSubmissionDetails,
 }) => {
   const { router } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
-  const initialValue = getArtworkDetailsFormInitialValues(submission)
+  const initialValue = getArtworkDetailsFormInitialValues(
+    submission,
+    myCollectionArtworkSubmissionDetails
+  )
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
+
+  console.log(
+    "[LOGD] myCollectionArtworkSubmissionDetails",
+    myCollectionArtworkSubmissionDetails
+  )
+
+  console.log("[LOGD] submission", submission)
+  console.log("====== [LOGD] initialValue", initialValue)
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
