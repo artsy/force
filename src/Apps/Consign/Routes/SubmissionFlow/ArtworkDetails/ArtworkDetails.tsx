@@ -196,5 +196,33 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         provenance
       }
     `,
+    myCollectionArtworkSubmissionDetails: graphql`
+      fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+        internalID
+        artist {
+          internalID
+          name
+        }
+        location {
+          city
+          country
+          state
+          postalCode
+        }
+        date
+        title
+        medium
+        attributionClass {
+          name
+        }
+        editionNumber
+        editionSize
+        height
+        width
+        depth
+        metric
+        provenance
+      }
+    `,
   }
 )

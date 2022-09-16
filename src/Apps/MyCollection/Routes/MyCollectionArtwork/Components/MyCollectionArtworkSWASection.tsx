@@ -1,12 +1,13 @@
 import { Button, Clickable, Separator, Text } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface Props {
-  onSubmit: () => void
+  route: string
   learnMore: () => void
 }
 
 export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
-  onSubmit,
+  route,
   learnMore,
 }) => {
   return (
@@ -17,16 +18,16 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button
-        onClick={onSubmit}
-        variant="primaryBlack"
-        width="100%"
-        mb={2}
-        data-testid="submit-for-sale"
-      >
-        Submit for Sale
-      </Button>
-
+      <RouterLink noUnderline to={route}>
+        <Button
+          variant="primaryBlack"
+          width="100%"
+          mb={2}
+          data-testid="submit-for-sale"
+        >
+          Submit for Sale
+        </Button>
+      </RouterLink>
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
@@ -43,7 +44,7 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
 }
 
 export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
-  onSubmit,
+  route,
   learnMore,
 }) => {
   return (
@@ -55,15 +56,16 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
       <Text mb={2} color="black60">
         Let our experts find the best sales option for you.
       </Text>
-      <Button
-        onClick={onSubmit}
-        variant="secondaryNeutral"
-        width="100%"
-        mb={2}
-        data-testid="submit-for-sale-desktop"
-      >
-        Submit for Sale
-      </Button>
+      <RouterLink noUnderline to={route}>
+        <Button
+          variant="secondaryNeutral"
+          width="100%"
+          mb={2}
+          data-testid="submit-for-sale-desktop"
+        >
+          Submit for Sale
+        </Button>
+      </RouterLink>
       <Text mb={2} color="black60">
         Learn more about{" "}
         <Clickable
