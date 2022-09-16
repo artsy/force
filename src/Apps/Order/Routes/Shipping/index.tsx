@@ -560,9 +560,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     shippingQuotes.length > 0 &&
     !shippingQuoteId
 
+  // TODO: consider to move this block to a useEffect
   if (useDefaultArtsyShippingQuote) {
     const defaultShippingQuoteId = getDefaultShippingQuoteId(order)
-    setShippingQuoteId(defaultShippingQuoteId)
+    shippingQuoteId !== defaultShippingQuoteId &&
+      setShippingQuoteId(defaultShippingQuoteId)
   }
 
   return (

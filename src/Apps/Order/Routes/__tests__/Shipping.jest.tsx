@@ -8,6 +8,7 @@ import {
   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
   UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
   UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
+  UntouchedBuyOrderWithShippingQuotes,
 } from "Apps/__tests__/Fixtures/Order"
 import {
   fillAddressForm,
@@ -17,7 +18,6 @@ import {
 } from "Components/__tests__/Utils/addressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
-import { createTestEnv } from "DevTools/createTestEnv"
 import { graphql } from "react-relay"
 import {
   selectShippingQuoteSuccess,
@@ -30,13 +30,13 @@ import {
 import { ShippingFragmentContainer } from "../Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import {
-  deleteAddressSuccess,
   saveAddressSuccess,
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "react-tracking"
-import { flushPromiseQueue } from "DevTools"
-import { shippingQuoteDisplayNames } from "../../Components/ShippingQuotes"
+import { flushPromiseQueue, MockBoot } from "DevTools"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import * as updateUserAddress from "../../Mutations/UpdateUserAddress"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -59,6 +59,26 @@ jest.mock("@artsy/palette", () => {
     },
   }
 })
+
+const mockShowErrorDialog = jest.fn()
+jest.mock("Apps/Order/Dialogs", () => ({
+  ...jest.requireActual("../../Dialogs"),
+  injectDialog: Component => props => (
+    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
+  ),
+}))
+
+const mockCommitMutation = jest.fn()
+jest.mock("Apps/Order/Utils/commitMutation", () => ({
+  ...jest.requireActual("../../Utils/commitMutation"),
+  injectCommitMutation: Component => props => (
+    <Component {...props} commitMutation={mockCommitMutation} />
+  ),
+}))
+jest.mock("relay-runtime", () => ({
+  ...jest.requireActual("relay-runtime"),
+  commitMutation: (...args) => mockCommitMutation(args),
+}))
 
 const testOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrder,
@@ -172,16 +192,35 @@ class ShippingTestPage extends OrderAppTestPage {
 }
 
 describe("Shipping", () => {
-  const { mutations, buildPage, routes, ...hooks } = createTestEnv({
-    Component: ShippingFragmentContainer,
-    defaultData: { order: testOrder, me: emptyTestMe },
-    defaultMutationResults: {
-      ...settingOrderShipmentSuccess,
-      ...saveAddressSuccess,
-      ...updateAddressSuccess,
-      ...deleteAddressSuccess,
-      ...selectShippingQuoteSuccess,
-    },
+  const pushMock = jest.fn()
+  let isCommittingMutation
+
+  beforeEach(() => {
+    isCommittingMutation = false
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <MockBoot>
+        <ShippingFragmentContainer
+          router={{ push: pushMock } as any}
+          order={props.order}
+          me={props.me}
+          // @ts-ignore
+          isCommittingMutation={isCommittingMutation}
+        />
+      </MockBoot>
+    ),
     query: graphql`
       query ShippingTestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
@@ -192,25 +231,17 @@ describe("Shipping", () => {
         }
       }
     `,
-    TestPage: ShippingTestPage,
-  })
-
-  beforeEach(hooks.clearErrors)
-  afterEach(hooks.clearMocksAndErrors)
-
-  beforeAll(() => {
-    ;(useTracking as jest.Mock).mockImplementation(() => ({
-      trackEvent: jest.fn(),
-    }))
   })
 
   describe("with no saved addresses", () => {
     it("removes radio group if pickup_available flag is false", async () => {
       const pickupAvailableOrder = cloneDeep(testOrder) as any
       pickupAvailableOrder.lineItems.edges[0].node.artwork.pickup_available = false
-      const page = await buildPage({
-        mockData: { order: pickupAvailableOrder },
+      const wrapper = getWrapper({
+        CommerceOrder: () => pickupAvailableOrder,
       })
+      const page = new ShippingTestPage(wrapper)
+
       expect(page.find(`[data-test="shipping-options"]`).length).toEqual(0)
     })
 
@@ -218,267 +249,364 @@ describe("Shipping", () => {
       const domesticShippingOnlyOrder = cloneDeep(testOrder) as any
       domesticShippingOnlyOrder.lineItems.edges[0].node.artwork.onlyShipsDomestically = true
       domesticShippingOnlyOrder.lineItems.edges[0].node.artwork.euShippingOrigin = false
-      const page = await buildPage({
-        mockData: { order: domesticShippingOnlyOrder },
+      const wrapper = getWrapper({
+        CommerceOrder: () => domesticShippingOnlyOrder,
       })
+      const page = new ShippingTestPage(wrapper)
+
       expect(page.find(CountrySelect).props().disabled).toBe(true)
     })
 
     it("does not disable select when onlyShipsDomestically is true but artwork is located in EU local zone", async () => {
       const domesticShippingEUOrder = cloneDeep(testOrder) as any
-      domesticShippingEUOrder.lineItems.edges[0].node.artwork.onlyShipsDomestically = true
+      domesticShippingEUOrder.lineItems.edges[0].node.artworkShipsDomestically = true
       domesticShippingEUOrder.lineItems.edges[0].node.artwork.euShippingOrigin = true
-      const page = await buildPage({
-        mockData: { order: domesticShippingEUOrder },
+      const wrapper = getWrapper({
+        CommerceOrder: () => domesticShippingEUOrder,
       })
+      const page = new ShippingTestPage(wrapper)
+
       expect(page.find(CountrySelect).props().disabled).toBe(false)
     })
 
     it("commits set shipping mutation with the orderId and save address", async () => {
-      const page = await buildPage()
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => emptyTestMe,
+      })
+      const page = new ShippingTestPage(wrapper)
 
       fillAddressForm(page.root, validAddress)
-
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
 
       await page.clickSubmit()
 
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-      expect(mutations.mockFetch.mock.calls.map(call => call[0].name)).toEqual([
-        "SetShippingMutation",
-        "CreateUserAddressMutation",
-      ])
-      expect(mutations.mockFetch.mock.calls).toMatchSnapshot()
+      expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+      expect(mockCommitMutation).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          variables: {
+            input: {
+              id: "1234",
+              fulfillmentType: "SHIP",
+              phoneNumber: validAddress.phoneNumber,
+              shipping: {
+                ...validAddress,
+                phoneNumber: "",
+              },
+            },
+          },
+        })
+      )
+      expect(mockCommitMutation).toHaveBeenNthCalledWith(
+        2,
+        expect.arrayContaining([
+          expect.anything(),
+          expect.objectContaining({
+            variables: {
+              input: {
+                attributes: validAddress,
+              },
+            },
+          }),
+        ])
+      )
     })
 
     it("commits the mutation with the orderId when save address is not selected", async () => {
-      const page = await buildPage()
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => emptyTestMe,
+      })
+      const page = new ShippingTestPage(wrapper)
 
       fillAddressForm(page.root, validAddress)
 
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
+      expect(mockCommitMutation).not.toHaveBeenCalled()
 
       page.find(`[data-test="save-address-checkbox"]`).first().simulate("click")
 
       await page.clickSubmit()
 
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-
-      expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "fulfillmentType": "SHIP",
-                  "id": "1234",
-                  "phoneNumber": "8475937743",
-                  "shipping": Object {
-                    "addressLine1": "14 Gower's Walk",
-                    "addressLine2": "Suite 2.5, The Loom",
-                    "city": "Whitechapel",
-                    "country": "UK",
-                    "name": "Artsy UK Ltd",
-                    "phoneNumber": "",
-                    "postalCode": "E1 8PY",
-                    "region": "London",
-                  },
-                },
-              }
-          `)
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              id: "1234",
+              fulfillmentType: "SHIP",
+              phoneNumber: validAddress.phoneNumber,
+              shipping: {
+                ...validAddress,
+                phoneNumber: "",
+              },
+            },
+          },
+        })
+      )
     })
 
     it("commits the mutation with shipping option", async () => {
-      const page = await buildPage()
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => emptyTestMe,
+      })
+      const page = new ShippingTestPage(wrapper)
 
-      fillAddressForm(page.root, {
+      const address = {
         ...validAddress,
         region: "New Brunswick",
         country: "US",
-      })
+      }
+      fillAddressForm(page.root, address)
 
       await page.clickSubmit()
-      expect(mutations.mockFetch.mock.calls.map(call => call[1].input))
-        .toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "fulfillmentType": "SHIP",
-            "id": "1234",
-            "phoneNumber": "8475937743",
-            "shipping": Object {
-              "addressLine1": "14 Gower's Walk",
-              "addressLine2": "Suite 2.5, The Loom",
-              "city": "Whitechapel",
-              "country": "US",
-              "name": "Artsy UK Ltd",
-              "phoneNumber": "",
-              "postalCode": "E1 8PY",
-              "region": "New Brunswick",
+      expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+      expect(mockCommitMutation).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          variables: {
+            input: {
+              id: "1234",
+              fulfillmentType: "SHIP",
+              phoneNumber: address.phoneNumber,
+              shipping: {
+                ...address,
+                phoneNumber: "",
+              },
             },
           },
-          Object {
-            "attributes": Object {
-              "addressLine1": "14 Gower's Walk",
-              "addressLine2": "Suite 2.5, The Loom",
-              "city": "Whitechapel",
-              "country": "US",
-              "name": "Artsy UK Ltd",
-              "phoneNumber": "8475937743",
-              "postalCode": "E1 8PY",
-              "region": "New Brunswick",
+        })
+      )
+      expect(mockCommitMutation).toHaveBeenNthCalledWith(
+        2,
+        expect.arrayContaining([
+          expect.anything(),
+          expect.objectContaining({
+            variables: {
+              input: {
+                attributes: address,
+              },
             },
-          },
-        ]
-      `)
+          }),
+        ])
+      )
     })
 
     it("commits the mutation with pickup option", async () => {
-      const page = await buildPage()
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => emptyTestMe,
+      })
+      const page = new ShippingTestPage(wrapper)
+
       await page.selectPickupOption()
       fillInPhoneNumber(page.root, { isPickup: true, value: "2813308004" })
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
+      expect(mockCommitMutation).not.toHaveBeenCalled()
+
       await page.clickSubmit()
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(mutations.lastFetchVariables.input.fulfillmentType).toBe("PICKUP")
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              id: "1234",
+              fulfillmentType: "PICKUP",
+              shipping: {
+                addressLine1: "",
+                addressLine2: "",
+                country: "US",
+                name: "",
+                city: "",
+                postalCode: "",
+                region: "",
+                phoneNumber: "",
+              },
+              phoneNumber: "2813308004",
+            },
+          },
+        })
+      )
     })
 
     describe("mutation", () => {
-      let page: ShippingTestPage
-      beforeEach(async () => {
-        page = await buildPage()
-      })
-
       it("routes to payment screen after mutation completes", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, validAddress)
         await page.clickSubmit()
-        expect(routes.mockPushRoute).toHaveBeenCalledWith(
-          "/orders/1234/payment"
-        )
+
+        expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
       })
 
       it("shows the button spinner while loading the mutation", async () => {
+        isCommittingMutation = true
+        const wrapper = getWrapper()
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, validAddress)
-        await page.expectButtonSpinnerWhenSubmitting()
+
+        expect(page.isLoading()).toBeTruthy()
       })
 
       it("shows an error modal when there is an error from the server", async () => {
-        mutations.useResultsOnce(settingOrderShipmentFailure)
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentFailure)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, validAddress)
         await page.clickSubmit()
-        await page.expectAndDismissDefaultErrorDialog()
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith()
       })
 
       it("shows an error modal when there is a network error", async () => {
+        mockCommitMutation.mockRejectedValueOnce({})
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, validAddress)
-        mutations.mockNetworkFailureOnce()
         await page.clickSubmit()
-        await page.expectAndDismissDefaultErrorDialog()
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith()
       })
 
       it("shows a validation error modal when there is a missing_country error from the server", async () => {
-        mutations.useResultsOnce(settingOrderShipmentMissingCountryFailure)
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderShipmentMissingCountryFailure
+        )
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, validAddress)
         await page.clickSubmit()
-        await page.expectAndDismissErrorDialogMatching(
-          "Invalid address",
-          "There was an error processing your address. Please review and try again."
-        )
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
+        })
       })
 
       it("shows a validation error modal when there is a missing_region error from the server", async () => {
-        mutations.useResultsOnce(settingOrderShipmentMissingRegionFailure)
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderShipmentMissingRegionFailure
+        )
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, validAddress)
         await page.clickSubmit()
-        await page.expectAndDismissErrorDialogMatching(
-          "Invalid address",
-          "There was an error processing your address. Please review and try again."
-        )
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
+        })
       })
     })
 
     describe("Artsy domestic shipping", () => {
-      let page
-
-      beforeEach(async () => {
-        page = await buildPage({
-          mockData: {
-            order: {
-              ...ArtsyShippingDomesticFromUSOrder,
-            },
-          },
-        })
-      })
-
       it("commits set shipping mutation and save address", async () => {
-        fillAddressForm(page.root, {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
+        const address = {
           ...validAddress,
           region: "New Brunswick",
           country: "US",
-        })
+        }
+        fillAddressForm(page.root, address)
 
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          1,
+          expect.objectContaining({
+            variables: {
+              input: {
+                id: "1234",
+                fulfillmentType: "SHIP_ARTA",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...address,
+                  phoneNumber: "",
+                },
+              },
+            },
+          })
         )
-
-        expect(mutations.mockFetch.mock.calls.map(call => call[1].input))
-          .toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "fulfillmentType": "SHIP_ARTA",
-              "id": "1234",
-              "phoneNumber": "8475937743",
-              "shipping": Object {
-                "addressLine1": "14 Gower's Walk",
-                "addressLine2": "Suite 2.5, The Loom",
-                "city": "Whitechapel",
-                "country": "US",
-                "name": "Artsy UK Ltd",
-                "phoneNumber": "",
-                "postalCode": "E1 8PY",
-                "region": "New Brunswick",
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          2,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  attributes: address,
+                },
               },
-            },
-            Object {
-              "attributes": Object {
-                "addressLine1": "14 Gower's Walk",
-                "addressLine2": "Suite 2.5, The Loom",
-                "city": "Whitechapel",
-                "country": "US",
-                "name": "Artsy UK Ltd",
-                "phoneNumber": "8475937743",
-                "postalCode": "E1 8PY",
-                "region": "New Brunswick",
-              },
-            },
-          ]
-        `)
+            }),
+          ])
+        )
       })
 
       it("commits selectShippingOption mutation and save address", async () => {
-        fillAddressForm(page.root, {
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderArtaShipmentSuccess
+        )
+        const wrapper = getWrapper({
+          CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
+        const address = {
           ...validAddress,
           region: "New Brunswick",
           country: "US",
-        })
+        }
+        fillAddressForm(page.root, address)
 
         page
           .find(`[data-test="save-address-checkbox"]`)
           .first()
           .simulate("click")
 
-        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
-
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
-        )
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
         expect(page.submitButton.props().disabled).toBeFalsy()
 
+        mockCommitMutation.mockResolvedValueOnce(selectShippingQuoteSuccess)
         page
           .find(`[data-test="save-address-checkbox"]`)
           .first()
@@ -486,52 +614,52 @@ describe("Shipping", () => {
 
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
-        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-          "SelectShippingOptionMutation"
-        )
-        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
-          "CreateUserAddressMutation"
-        )
-
-        expect(mutations.mockFetch.mock.calls[1][1].input)
-          .toMatchInlineSnapshot(`
-            Object {
-              "id": "1234",
-              "selectedShippingQuoteId": "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
-            }
-        `)
-
-        expect(mutations.mockFetch.mock.calls[2][1].input)
-          .toMatchInlineSnapshot(`
-            Object {
-              "attributes": Object {
-                "addressLine1": "14 Gower's Walk",
-                "addressLine2": "Suite 2.5, The Loom",
-                "city": "Whitechapel",
-                "country": "US",
-                "name": "Artsy UK Ltd",
-                "phoneNumber": "8475937743",
-                "postalCode": "E1 8PY",
-                "region": "New Brunswick",
+        expect(mockCommitMutation).toHaveBeenCalledTimes(3)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          2,
+          expect.objectContaining({
+            variables: {
+              input: {
+                id: "2939023",
+                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
               },
-            }
-        `)
+            },
+          })
+        )
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          3,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  attributes: address,
+                },
+              },
+            }),
+          ])
+        )
       })
 
       it("show error message if arta doesn't return shipping quotes", async () => {
+        const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
+          settingOrderArtaShipmentSuccess
+        ) as any
+        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderArtaShipmentSuccessWithoutQuotes
+        )
+        const wrapper = getWrapper({
+          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
         fillAddressForm(page.root, {
           ...validAddress,
           region: "New Brunswick",
           country: "US",
         })
-
-        const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
-          settingOrderArtaShipmentSuccess
-        ) as any
-        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
-
-        mutations.useResultsOnce(settingOrderArtaShipmentSuccessWithoutQuotes)
 
         await page.clickSubmit()
 
@@ -540,55 +668,138 @@ describe("Shipping", () => {
       })
 
       it("save address only once", async () => {
-        fillAddressForm(page.root, {
+        mockCommitMutation
+          .mockReturnValueOnce(settingOrderArtaShipmentSuccess)
+          .mockImplementationOnce(relayProps => {
+            relayProps[1].onCompleted(saveAddressSuccess)
+          })
+          .mockReturnValueOnce(selectShippingQuoteSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
+        const address = {
           ...validAddress,
           region: "New Brunswick",
           country: "US",
-        })
-
-        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+        }
+        fillAddressForm(page.root, address)
 
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          1,
+          expect.objectContaining({
+            variables: {
+              input: {
+                fulfillmentType: "SHIP_ARTA",
+                id: "2939023",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...address,
+                  phoneNumber: "",
+                },
+              },
+            },
+          })
         )
-
-        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-          "CreateUserAddressMutation"
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          2,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: { attributes: address },
+              },
+            }),
+          ])
         )
 
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(4)
-        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
-          "SelectShippingOptionMutation"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          3,
+          expect.objectContaining({
+            variables: {
+              input: {
+                id: "2939023",
+                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+              },
+            },
+          })
         )
-        expect(mutations.mockFetch.mock.calls[3][0].name).toEqual(
-          "UpdateUserAddressMutation"
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          4,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  attributes: address,
+                  userAddressID: "address-id",
+                },
+              },
+            }),
+          ])
         )
       })
 
       it("remove previously saved address if save address is not selected", async () => {
-        fillAddressForm(page.root, {
+        mockCommitMutation
+          .mockReturnValueOnce(settingOrderArtaShipmentSuccess)
+          .mockImplementationOnce(relayProps => {
+            relayProps[1].onCompleted(saveAddressSuccess)
+          })
+          .mockReturnValueOnce(selectShippingQuoteSuccess)
+
+        const wrapper = getWrapper({
+          CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
+        const address = {
           ...validAddress,
           region: "New Brunswick",
           country: "US",
-        })
-
-        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+        }
+        fillAddressForm(page.root, address)
 
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-          "SetShippingMutation"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          1,
+          expect.objectContaining({
+            variables: {
+              input: {
+                fulfillmentType: "SHIP_ARTA",
+                id: "2939023",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...address,
+                  phoneNumber: "",
+                },
+              },
+            },
+          })
         )
-        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-          "CreateUserAddressMutation"
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          2,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: { attributes: address },
+              },
+            }),
+          ])
         )
 
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
@@ -599,31 +810,50 @@ describe("Shipping", () => {
 
         await page.clickSubmit()
 
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(4)
-        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
-          "SelectShippingOptionMutation"
+        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          3,
+          expect.objectContaining({
+            variables: {
+              input: {
+                id: "2939023",
+                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+              },
+            },
+          })
         )
-        expect(mutations.mockFetch.mock.calls[3][0].name).toEqual(
-          "DeleteUserAddressMutation"
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          4,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  userAddressID: "address-id",
+                },
+              },
+            }),
+          ])
         )
       })
     })
 
     describe("with previously filled-in data", () => {
       let page: ShippingTestPage
+
       beforeEach(async () => {
-        page = await buildPage({
-          mockData: {
-            order: {
-              ...testOrder,
-              requestedFulfillment: {
-                ...validAddress,
-                __typename: "CommerceShip",
-                name: "Dr Collector",
-              },
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...testOrder,
+            requestedFulfillment: {
+              ...validAddress,
+              __typename: "CommerceShip",
+              name: "Dr Collector",
             },
-          },
+          }),
+          Me: () => emptyTestMe,
         })
+        page = new ShippingTestPage(wrapper)
       })
 
       it("includes already-filled-in data if available", () => {
@@ -636,42 +866,60 @@ describe("Shipping", () => {
 
       it("includes already-filled-in data in mutation if re-sent", async () => {
         await page.clickSubmit()
-        expect(mutations.mockFetch).toBeCalled()
-        expect(
-          mutations.mockFetch.mock.calls[0][1].input.shipping.name
-        ).toEqual("Dr Collector")
-        expect(
-          mutations.mockFetch.mock.calls[1][1].input.attributes.name
-        ).toEqual("Dr Collector")
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(mockCommitMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {
+                fulfillmentType: "SHIP",
+                id: "1234",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...validAddress,
+                  name: "Dr Collector",
+                },
+              },
+            },
+          })
+        )
       })
     })
 
     describe("Validations", () => {
       let page: ShippingTestPage
       beforeEach(async () => {
-        page = await buildPage()
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        page = new ShippingTestPage(wrapper)
       })
 
       describe("for Ship orders", () => {
         it("does not submit an empty form for a SHIP order", async () => {
           await page.clickSubmit()
-          expect(mutations.mockFetch).not.toBeCalled()
+
+          expect(mockCommitMutation).not.toBeCalled()
         })
 
         it("does not submit the mutation with an incomplete form for a SHIP order", async () => {
           fillIn(page.root, { title: "Full name", value: "Air Bud" })
           await page.clickSubmit()
-          expect(mutations.mockFetch).not.toBeCalled()
+
+          expect(mockCommitMutation).not.toBeCalled()
         })
 
         it("does submit the mutation with a complete form for a SHIP order", async () => {
           fillAddressForm(page.root, validAddress)
           await page.clickSubmit()
-          expect(mutations.mockFetch).toBeCalled()
+
+          expect(mockCommitMutation).toBeCalled()
         })
 
         it("says a required field is required for a SHIP order", async () => {
           await page.clickSubmit()
+
           const input = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "Full name")
@@ -699,8 +947,7 @@ describe("Shipping", () => {
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "Postal code")
           expect(input.props().error).toBeFalsy()
-
-          expect(mutations.mockFetch).toBeCalled()
+          expect(mockCommitMutation).toHaveBeenCalled()
         })
 
         it("before submit, only shows a validation error on inputs that have been touched", async () => {
@@ -748,7 +995,8 @@ describe("Shipping", () => {
           }
           fillAddressForm(page.root, address)
           await page.clickSubmit()
-          expect(mutations.mockFetch).not.toBeCalled()
+
+          expect(mockCommitMutation).not.toHaveBeenCalled()
         })
 
         it("allows a missing state/province if the selected country is not US or Canada", async () => {
@@ -768,7 +1016,7 @@ describe("Shipping", () => {
           await flushPromiseQueue()
           page.update()
 
-          expect(mutations.mockFetch).toBeCalled()
+          expect(mockCommitMutation).toHaveBeenCalled()
         })
       })
 
@@ -776,23 +1024,26 @@ describe("Shipping", () => {
         await page.selectPickupOption()
         fillInPhoneNumber(page.root, { isPickup: true, value: "2813308004" })
         await page.clickSubmit()
-        expect(mutations.mockFetch).toBeCalled()
+
+        expect(mockCommitMutation).toHaveBeenCalled()
       })
 
       it("does not submit the mutation with an incomplete form for a PICKUP order", async () => {
         await page.selectPickupOption()
         await page.clickSubmit()
-        expect(mutations.mockFetch).not.toBeCalled()
+
+        expect(mockCommitMutation).not.toHaveBeenCalled()
       })
     })
 
     describe("Offer-mode orders", () => {
       it("shows an active offer stepper if the order is an Offer Order", async () => {
-        const page = await buildPage({
-          mockData: {
-            order: UntouchedOfferOrder,
-          },
+        const wrapper = getWrapper({
+          CommerceOrder: () => UntouchedOfferOrder,
+          Me: () => emptyTestMe,
         })
+        const page = new ShippingTestPage(wrapper)
+
         expect(page.orderStepper.text()).toMatchInlineSnapshot(
           `"OfferCheckNavigate rightShippingNavigate rightPaymentNavigate rightReviewNavigate right"`
         )
@@ -801,21 +1052,25 @@ describe("Shipping", () => {
     })
   })
   describe("with saved addresses", () => {
-    let page
+    let page: ShippingTestPage
+
     beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          me: testMe,
-        },
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+        Me: () => testMe,
       })
+      page = new ShippingTestPage(wrapper)
     })
+
     it("does not show the new address form", async () => {
       expect(
         page.find(`[data-test="addressFormCollapse"]`).props().open
       ).toEqual(false)
     })
+
     it("opens the empty pick-up phone number input", async () => {
       await page.selectPickupOption()
+
       expect(
         page.find(`[data-test="phoneNumberCollapse"]`).props().open
       ).toEqual(true)
@@ -848,26 +1103,28 @@ describe("Shipping", () => {
     it("commits mutation with saved address and phone number when user submits form directly", async () => {
       await page.clickSubmit()
 
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-        Object {
-          "input": Object {
-            "fulfillmentType": "SHIP",
-            "id": "1234",
-            "phoneNumber": "422-424-4242",
-            "shipping": Object {
-              "addressLine1": "401 Broadway",
-              "addressLine2": "Floor 25",
-              "city": "New York",
-              "country": "US",
-              "name": "Test Name",
-              "phoneNumber": "422-424-4242",
-              "postalCode": "10013",
-              "region": "NY",
+      expect(mockCommitMutation).toBeCalledTimes(1)
+      expect(mockCommitMutation).toBeCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              fulfillmentType: "SHIP",
+              id: "1234",
+              phoneNumber: "422-424-4242",
+              shipping: {
+                addressLine1: "401 Broadway",
+                addressLine2: "Floor 25",
+                city: "New York",
+                country: "US",
+                name: "Test Name",
+                phoneNumber: "422-424-4242",
+                postalCode: "10013",
+                region: "NY",
+              },
             },
           },
-        }
-      `)
+        })
+      )
     })
 
     it("when another saved address is selected commits mutation with selected address and phone number", async () => {
@@ -875,29 +1132,28 @@ describe("Shipping", () => {
       await page.update()
       await page.clickSubmit()
 
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-        "SetShippingMutation"
-      )
-      expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-        Object {
-          "input": Object {
-            "fulfillmentType": "SHIP",
-            "id": "1234",
-            "phoneNumber": "555-555-5555",
-            "shipping": Object {
-              "addressLine1": "1 Main St",
-              "addressLine2": "",
-              "city": "Madrid",
-              "country": "ES",
-              "name": "Test Name",
-              "phoneNumber": "555-555-5555",
-              "postalCode": "28001",
-              "region": "",
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+      expect(mockCommitMutation).toBeCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              fulfillmentType: "SHIP",
+              id: "1234",
+              phoneNumber: "555-555-5555",
+              shipping: {
+                addressLine1: "1 Main St",
+                addressLine2: "",
+                city: "Madrid",
+                country: "ES",
+                name: "Test Name",
+                phoneNumber: "555-555-5555",
+                postalCode: "28001",
+                region: "",
+              },
             },
           },
-        }
-      `)
+        })
+      )
     })
 
     it("does not commit set shipping mutation if address in Europe", async () => {
@@ -905,17 +1161,14 @@ describe("Shipping", () => {
       collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
       collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
 
-      page = await buildPage({
-        mockData: {
-          me: collectorWithDefaultAddressInEurope,
-          order: {
-            ...ArtsyShippingDomesticFromUSOrder,
-          },
-        },
+      const wrapper = getWrapper({
+        CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+        Me: () => collectorWithDefaultAddressInEurope,
       })
+      page = new ShippingTestPage(wrapper)
       await page.update()
 
-      expect(mutations.mockFetch).not.toHaveBeenCalled()
+      expect(mockCommitMutation).not.toHaveBeenCalled()
     })
 
     describe("Artsy shipping international", () => {
@@ -930,33 +1183,27 @@ describe("Shipping", () => {
           })
 
           it("commits the set shipping mutation", async () => {
-            page = await buildPage({
-              mockData: {
-                me: collectorWithDefaultAddressInEurope,
-                order: {
-                  ...ArtsyShippingInternationalFromUSTestOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingInternationalFromUSTestOrder,
+              Me: () => collectorWithDefaultAddressInEurope,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
 
-            expect(mutations.mockFetch).toHaveBeenCalled()
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
           })
         })
 
         describe("when collector is located in US", () => {
           it("does not commit set shipping mutation", async () => {
-            page = await buildPage({
-              mockData: {
-                me: testMe,
-                order: {
-                  ...ArtsyShippingInternationalFromUSTestOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingInternationalFromUSTestOrder,
+              Me: () => testMe,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
 
-            expect(mutations.mockFetch).not.toHaveBeenCalled()
+            expect(mockCommitMutation).not.toHaveBeenCalled()
           })
         })
       })
@@ -973,31 +1220,27 @@ describe("Shipping", () => {
           })
 
           it("does not commit set shipping mutation", async () => {
-            page = await buildPage({
-              mockData: {
-                me: collectorWithDefaultAddressInEurope,
-                order: {
-                  ...ArtsyShippingInternationalFromGermanyOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingInternationalFromGermanyOrder,
+              Me: () => collectorWithDefaultAddressInEurope,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
-            expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+            expect(mockCommitMutation).not.toHaveBeenCalled()
           })
         })
 
         describe("when collector is located in US", () => {
           it("does commit set shipping mutation", async () => {
-            page = await buildPage({
-              mockData: {
-                me: testMe,
-                order: {
-                  ...ArtsyShippingInternationalFromGermanyOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingInternationalFromGermanyOrder,
+              Me: () => testMe,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
-            expect(mutations.mockFetch).toHaveBeenCalled()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
           })
         })
       })
@@ -1016,31 +1259,27 @@ describe("Shipping", () => {
           })
 
           it("does commit set shipping mutation", async () => {
-            page = await buildPage({
-              mockData: {
-                me: collectorWithDefaultAddressInEurope,
-                order: {
-                  ...ArtsyShippingDomesticFromGermanyOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingDomesticFromGermanyOrder,
+              Me: () => collectorWithDefaultAddressInEurope,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
-            expect(mutations.mockFetch).toHaveBeenCalled()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
           })
         })
 
         describe("when collector is located in US", () => {
           it("does not commit set shipping mutation", async () => {
-            page = await buildPage({
-              mockData: {
-                me: testMe,
-                order: {
-                  ...ArtsyShippingDomesticFromGermanyOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingDomesticFromGermanyOrder,
+              Me: () => testMe,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
-            expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+            expect(mockCommitMutation).not.toHaveBeenCalled()
           })
         })
       })
@@ -1057,14 +1296,11 @@ describe("Shipping", () => {
           })
 
           it("does not show shipping quotes", async () => {
-            page = await buildPage({
-              mockData: {
-                me: collectorWithDefaultAddressInEurope,
-                order: {
-                  ...ArtsyShippingDomesticFromUSOrder,
-                },
-              },
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+              Me: () => collectorWithDefaultAddressInEurope,
             })
+            const page = new ShippingTestPage(wrapper)
             await page.update()
 
             expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
@@ -1073,118 +1309,158 @@ describe("Shipping", () => {
 
         describe("when collector is located in US", () => {
           beforeEach(async () => {
-            mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
-
-            page = await buildPage({
-              mockData: {
-                me: testMe,
-                order: {
-                  ...ArtsyShippingDomesticFromUSOrder,
-                },
-              },
-            })
+            mockCommitMutation.mockResolvedValueOnce(
+              settingOrderArtaShipmentSuccess
+            )
           })
 
           it("commits set shipping mutation", async () => {
-            expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-              "SetShippingMutation"
-            )
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+            await page.update()
 
-            expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "fulfillmentType": "SHIP_ARTA",
-                  "id": "1234",
-                  "phoneNumber": "422-424-4242",
-                  "shipping": Object {
-                    "addressLine1": "401 Broadway",
-                    "addressLine2": "Floor 25",
-                    "city": "New York",
-                    "country": "US",
-                    "name": "Test Name",
-                    "phoneNumber": "422-424-4242",
-                    "postalCode": "10013",
-                    "region": "NY",
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+            expect(mockCommitMutation).toHaveBeenCalledWith(
+              expect.objectContaining({
+                variables: {
+                  input: {
+                    fulfillmentType: "SHIP_ARTA",
+                    id: "1234",
+                    phoneNumber: "422-424-4242",
+                    shipping: {
+                      addressLine1: "401 Broadway",
+                      addressLine2: "Floor 25",
+                      city: "New York",
+                      country: "US",
+                      name: "Test Name",
+                      phoneNumber: "422-424-4242",
+                      postalCode: "10013",
+                      region: "NY",
+                    },
                   },
                 },
-              }
-            `)
+              })
+            )
           })
 
           it("shows shipping quotes after set shipping mutation commited", async () => {
-            expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-              "SetShippingMutation"
-            )
+            const wrapper = getWrapper({
+              CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
 
-            selectShippingQuoteSuccess.commerceSelectShippingOption.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges.forEach(
-              edge => {
-                expect(
-                  shippingQuoteDisplayNames[edge.node.typeName]
-                ).toBeTruthy()
-              }
-            )
+            await page.update()
+
+            expect(
+              page.find("ShippingQuotes").find("BorderedRadio")
+            ).toHaveLength(5)
           })
 
           it("default selects the first quote and submit button is enabled", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+
             expect(page.submitButton.props().disabled).toBeFalsy()
 
             await page.clickSubmit()
 
-            expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "id": "1234",
-                  "selectedShippingQuoteId": "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+            expect(mockCommitMutation).toHaveBeenLastCalledWith(
+              expect.objectContaining({
+                variables: {
+                  input: {
+                    id: "2939023",
+                    selectedShippingQuoteId:
+                      "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                  },
                 },
-              }
-            `)
+              })
+            )
           })
 
-          it("submit button enabled if shipping quote is selected", async () => {
+          it("submit button enabled if shipping quote is selected", () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
             expect(page.submitButton.props().disabled).toBeFalsy()
           })
 
-          it("commites selectShippingOption mutation with correct input", async () => {
+          it("commits selectShippingOption mutation with correct input", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
             await page.clickSubmit()
 
-            expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "id": "1234",
-                  "selectedShippingQuoteId": "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+            expect(mockCommitMutation).toHaveBeenLastCalledWith(
+              expect.objectContaining({
+                variables: {
+                  input: {
+                    id: "2939023",
+                    selectedShippingQuoteId:
+                      "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                  },
                 },
-              }
-            `)
+              })
+            )
           })
 
           it("routes to payment screen after selectShippingOption mutation completes", async () => {
+            mockCommitMutation.mockResolvedValueOnce(
+              settingOrderArtaShipmentSuccess
+            )
+            const wrapper = getWrapper({
+              CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+              Me: () => emptyTestMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
             await page.clickSubmit()
 
-            expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-              "SetShippingMutation"
-            )
-
-            expect(routes.mockPushRoute).toHaveBeenCalledWith(
-              "/orders/1234/payment"
-            )
+            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            expect(pushMock).toHaveBeenCalledWith("/orders/2939023/payment")
           })
 
           it("reload shipping quotes after selected address edited", async () => {
+            const updateAddressSpy = jest
+              .spyOn(updateUserAddress, "updateUserAddress")
+              // @ts-ignore
+              .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
+                onSuccess(updateAddressSuccess)
+              })
+
+            const wrapper = getWrapper({
+              CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+
+            await page.update()
+
             page
               .find(`[data-test="editAddressInShipping"]`)
               .last()
               .simulate("click")
             const inputs = page.find("AddressModal").find("input")
             inputs.forEach(input => {
+              // @ts-ignore
               input.instance().value = `Test input '${input.props().name}'`
               input.simulate("change")
             })
@@ -1192,64 +1468,92 @@ describe("Shipping", () => {
               .find("AddressModal")
               .find("select")
               .first()
+            // @ts-ignore
             countrySelect.instance().value = `US`
             countrySelect.simulate("change")
 
-            mutations.useResultsOnce({
-              updateUserAddress: {
-                userAddressOrErrors: {
-                  internalID: "2",
-                  id: "addressID2",
-                  isDefault: true,
-                  addressLine1: "Test input 'addressLine1'",
-                  addressLine2: "Test input 'addressLine2'",
-                  city: "Test input 'city'",
-                  country: "US",
-                  name: "Test input 'name'",
-                  phoneNumber: "Test input 'phoneNumber'",
-                  postalCode: "Test input 'postalCode'",
-                  region: "Test input 'region'",
-                },
-              },
-            })
+            const newAddress = {
+              addressLine1: "Test input 'addressLine1'",
+              addressLine2: "Test input 'addressLine2'",
+              addressLine3: "",
+              city: "Test input 'city'",
+              country: "US",
+              name: "Test input 'name'",
+              postalCode: "Test input 'postalCode'",
+              region: "Test input 'region'",
+            }
 
             const form = page.find("form").first()
+            // @ts-ignore
             form.props().onSubmit()
 
-            await page.update()
+            // await page.update()
+            await page.clickSubmit()
 
-            expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-              "UpdateUserAddressMutation"
-            )
-            expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
-              "SetShippingMutation"
-            )
+            page
+              .find("SavedAddresses")
+              .props()
+              // @ts-ignore
+              .onAddressEdit({ userAddressOrErrors: { internalID: "2" } })
 
-            expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
-            expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "attributes": Object {
-                    "addressLine1": "Test input 'addressLine1'",
-                    "addressLine2": "Test input 'addressLine2'",
-                    "addressLine3": "",
-                    "city": "Test input 'city'",
-                    "country": "US",
-                    "name": "Test input 'name'",
-                    "phoneNumber": "422-424-4242",
-                    "postalCode": "Test input 'postalCode'",
-                    "region": "Test input 'region'",
+            expect(updateAddressSpy).toHaveBeenCalledTimes(1)
+            expect(updateAddressSpy).toHaveBeenCalledWith(
+              expect.anything(),
+              "2",
+              {
+                ...newAddress,
+                phoneNumber: "422-424-4242",
+              },
+              expect.anything(),
+              expect.anything(),
+              expect.anything()
+            )
+            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            // the intention here is to trigger the commitMutation again with the same value of the first
+            // call once the selected adddress is edited
+            expect(mockCommitMutation).toHaveBeenNthCalledWith(
+              2,
+              expect.objectContaining({
+                variables: {
+                  input: {
+                    fulfillmentType: "SHIP_ARTA",
+                    id: "2939023",
+                    phoneNumber: "422-424-4242",
+                    shipping: {
+                      addressLine1: "401 Broadway",
+                      addressLine2: "Floor 25",
+                      city: "New York",
+                      country: "US",
+                      name: "Test Name",
+                      phoneNumber: "422-424-4242",
+                      postalCode: "10013",
+                      region: "NY",
+                    },
                   },
-                  "userAddressID": "2",
                 },
-              }
-            `)
+              })
+            )
           })
 
           it("does not reload shipping quotes after edit not selected address", async () => {
-            expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-              "SetShippingMutation"
+            mockCommitMutation.mockResolvedValueOnce(
+              settingOrderArtaShipmentSuccess
             )
+            const updateAddressSpy = jest
+              .spyOn(updateUserAddress, "updateUserAddress")
+              // @ts-ignore
+              .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
+                onSuccess(updateAddressSuccess)
+              })
+            const wrapper = getWrapper({
+              CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+              Me: () => testMe,
+            })
+            const page = new ShippingTestPage(wrapper)
+
+            await page.update()
+
+            expect(mockCommitMutation).toBeCalledTimes(1)
 
             page
               .find(`[data-test="editAddressInShipping"]`)
@@ -1257,6 +1561,7 @@ describe("Shipping", () => {
               .simulate("click")
             const inputs = page.find("AddressModal").find("input")
             inputs.forEach(input => {
+              // @ts-ignore
               input.instance().value = `Test input '${input.props().name}'`
               input.simulate("change")
             })
@@ -1264,67 +1569,58 @@ describe("Shipping", () => {
               .find("AddressModal")
               .find("select")
               .first()
+            // @ts-ignore
             countrySelect.instance().value = `US`
             countrySelect.simulate("change")
 
-            mutations.useResultsOnce({
-              updateUserAddress: {
-                userAddressOrErrors: {
-                  internalID: "1",
-                  id: "addressID1",
-                  isDefault: false,
-                  addressLine1: "Test input 'addressLine1'",
-                  addressLine2: "Test input 'addressLine2'",
-                  city: "Test input 'city'",
-                  country: "US",
-                  name: "Test input 'name'",
-                  phoneNumber: "Test input 'phoneNumber'",
-                  postalCode: "Test input 'postalCode'",
-                  region: "Test input 'region'",
-                },
-              },
-            })
-
             const form = page.find("form").first()
+            // @ts-ignore
             form.props().onSubmit()
 
             await page.update()
 
-            expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-              "UpdateUserAddressMutation"
+            expect(updateAddressSpy).toBeCalledTimes(1)
+            expect(updateAddressSpy).toHaveBeenCalledWith(
+              expect.anything(),
+              expect.anything(),
+              {
+                addressLine1: "Test input 'addressLine1'",
+                addressLine2: "Test input 'addressLine2'",
+                addressLine3: "",
+                city: "Test input 'city'",
+                country: "US",
+                name: "Test input 'name'",
+                phoneNumber: "555-555-5555",
+                postalCode: "Test input 'postalCode'",
+                region: "Test input 'region'",
+              },
+              expect.anything(),
+              expect.anything(),
+              expect.anything()
             )
-
-            expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
-            expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "attributes": Object {
-                    "addressLine1": "Test input 'addressLine1'",
-                    "addressLine2": "Test input 'addressLine2'",
-                    "addressLine3": "",
-                    "city": "Test input 'city'",
-                    "country": "US",
-                    "name": "Test input 'name'",
-                    "phoneNumber": "555-555-5555",
-                    "postalCode": "Test input 'postalCode'",
-                    "region": "Test input 'region'",
-                  },
-                  "userAddressID": "1",
-                },
-              }
-            `)
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
           })
         })
       })
     })
 
     describe("editing address", () => {
+      let page: ShippingTestPage
+      beforeEach(() => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => testMe,
+        })
+        page = new ShippingTestPage(wrapper) as any
+      })
+
       it("opens modal with correct title and action properties", async () => {
         await page
           .find(`[data-test="editAddressInShipping"]`)
           .first()
           .simulate("click")
         expect(
+          // @ts-ignore
           page.find("AddressModal").at(0).props().modalDetails
         ).toStrictEqual({
           addressModalTitle: "Edit address",
@@ -1362,35 +1658,43 @@ describe("Shipping", () => {
           .simulate("click")
         const inputs = page.find("AddressModal").find("input")
         inputs.forEach(input => {
+          // @ts-ignore
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
         const countrySelect = page.find("AddressModal").find("select").first()
+        // @ts-ignore
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
         const form = page.find("form").first()
+        // @ts-ignore
         form.props().onSubmit()
 
         await page.update()
-        expect(mutations.mockFetch.mock.calls[0][1]).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
-                "addressLine3": "",
-                "city": "Test input 'city'",
-                "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "555-555-5555",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
+        expect(mockCommitMutation).toHaveBeenCalledWith(
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  attributes: {
+                    addressLine1: "Test input 'addressLine1'",
+                    addressLine2: "Test input 'addressLine2'",
+                    addressLine3: "",
+                    city: "Test input 'city'",
+                    country: "US",
+                    name: "Test input 'name'",
+                    phoneNumber: "555-555-5555",
+                    postalCode: "Test input 'postalCode'",
+                    region: "Test input 'region'",
+                  },
+                  userAddressID: "1",
+                },
               },
-              "userAddressID": "1",
-            },
-          }
-        `)
+            }),
+          ])
+        )
       })
     })
   })
