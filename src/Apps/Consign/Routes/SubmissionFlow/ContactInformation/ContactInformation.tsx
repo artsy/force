@@ -47,7 +47,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   submission,
 }) => {
   const { trackEvent } = useTracking()
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const { sendToast } = useToasts()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const initialValue = getContactInformationFormInitialValues(me)
@@ -55,6 +55,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     initialValue,
     contactInformationValidationSchema
   )
+  const artworkId = match.params.artworkId
 
   const handleRecaptcha = (action: RecaptchaAction) =>
     new Promise(resolve => recaptcha(action, resolve))
@@ -86,7 +87,9 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
-        router.push(`/sell/submission/${submission?.externalId}/thank-you`)
+        router.push(
+          `/sell/submission/${submission?.externalId}/thank-you/${artworkId}`
+        )
       } catch (error) {
         logger.error("Submission error", error)
 

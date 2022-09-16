@@ -5,7 +5,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type consignRoutes_myCollectionArtworkSubmissionDetailsQueryVariables = {
-    id: string;
+    artworkId: string;
 };
 export type consignRoutes_myCollectionArtworkSubmissionDetailsQueryResponse = {
     readonly myCollectionArtworkSubmissionDetails: {
@@ -21,9 +21,9 @@ export type consignRoutes_myCollectionArtworkSubmissionDetailsQuery = {
 
 /*
 query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(
-  $id: String!
+  $artworkId: String!
 ) {
-  myCollectionArtworkSubmissionDetails: artwork(id: $id) {
+  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
     ...ArtworkDetails_myCollectionArtworkSubmissionDetails
     id
   }
@@ -65,14 +65,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "artworkId"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "artworkId"
   }
 ],
 v2 = {
@@ -282,14 +282,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5009d290fa974c3243e578a71efc2417",
+    "cacheID": "248a836c17fc1be928cbaee1acba2999",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_myCollectionArtworkSubmissionDetailsQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(\n  $id: String!\n) {\n  myCollectionArtworkSubmissionDetails: artwork(id: $id) {\n    ...ArtworkDetails_myCollectionArtworkSubmissionDetails\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(\n  $artworkId: String!\n) {\n  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtworkSubmissionDetails\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = '396d755e0c247e27797f0d76ed25ef7f';
+(node as any).hash = '0a237d35a950c5b7a0825b15a1256dc9';
 export default node;

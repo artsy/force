@@ -10,6 +10,9 @@ export type MyCollectionArtwork_artwork = {
     } | null;
     readonly hasMarketPriceInsights: boolean | null;
     readonly submissionId: string | null;
+    readonly consignmentSubmission: {
+        readonly displayText: string | null;
+    } | null;
     readonly internalID: string;
     readonly artist: {
         readonly slug: string;
@@ -67,6 +70,24 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "submissionId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkConsignmentSubmission",
+      "kind": "LinkedField",
+      "name": "consignmentSubmission",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayText",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -144,5 +165,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '2852e3a55d0de5f4506897403c32f82a';
+(node as any).hash = '67c4c39b5d53a62e99f395bbf55378e9';
 export default node;

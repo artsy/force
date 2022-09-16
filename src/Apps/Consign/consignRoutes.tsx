@@ -170,7 +170,7 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
       {
-        path: "artwork-details/:id",
+        path: "artwork-details/:artworkId",
         hideNav: true,
         hideFooter: true,
         getComponent: () => ArtworkDetailsFragmentContainer,
@@ -179,9 +179,9 @@ export const consignRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(
-            $id: String!
+            $artworkId: String!
           ) {
-            myCollectionArtworkSubmissionDetails: artwork(id: $id) {
+            myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
               ...ArtworkDetails_myCollectionArtworkSubmissionDetails
             }
           }
@@ -243,7 +243,38 @@ export const consignRoutes: AppRouteConfig[] = [
         render: renderSubmissionFlowStep,
       },
       {
-        path: ":id/contact-information",
+        path: ":id/upload-photos/:artworkId",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => UploadPhotosFragmentContainer,
+        onClientSideRender: () => {
+          UploadPhotosFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_uploadArtworkPhotosQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...UploadPhotos_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtworkSubmissionPhotos: artwork(id: $artworkId) {
+              ...UploadPhotos_myCollectionArtworkSubmissionPhotos
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
+        path: ":id/contact-information/:artworkId?",
         hideNav: true,
         hideFooter: true,
         getComponent: () => ContactInformation,
@@ -273,7 +304,7 @@ export const consignRoutes: AppRouteConfig[] = [
         prepareVariables: prepareSubmissionFlowStepVariables,
       },
       {
-        path: ":id/thank-you",
+        path: ":id/thank-you/:artworkId?",
         hideNav: true,
         hideFooter: true,
         getComponent: () => ThankYou,

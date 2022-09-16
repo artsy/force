@@ -41,13 +41,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   )
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
-  console.log(
-    "[LOGD] myCollectionArtworkSubmissionDetails",
-    myCollectionArtworkSubmissionDetails
-  )
-
-  console.log("[LOGD] submission", submission)
-  console.log("====== [LOGD] initialValue", initialValue)
+  const artworkId = myCollectionArtworkSubmissionDetails?.internalID
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -122,7 +116,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         pathname: `/sell/submission/${submissionId}/artwork-details`,
       })
       router.push({
-        pathname: `/sell/submission/${submissionId}/upload-photos`,
+        pathname: artworkId
+          ? `/sell/submission/${submissionId}/upload-photos/${artworkId}`
+          : `/sell/submission/${submissionId}/upload-photos`,
       })
     }
   }

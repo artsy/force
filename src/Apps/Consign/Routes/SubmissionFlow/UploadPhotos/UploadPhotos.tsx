@@ -18,6 +18,7 @@ import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { UploadPhotos_ImageRefetch_Query } from "__generated__/UploadPhotos_ImageRefetch_Query.graphql"
 import { UploadPhotos_submission } from "__generated__/UploadPhotos_submission.graphql"
+import { UploadPhotos_myCollectionArtworkSubmissionPhotos } from "__generated__/UploadPhotos_myCollectionArtworkSubmissionPhotos.graphql"
 import {
   useAddAssetToConsignmentSubmission,
   useRemoveAssetFromConsignmentSubmission,
@@ -32,6 +33,7 @@ const logger = createLogger("SubmissionFlow/UploadPhotos.tsx")
 
 export interface UploadPhotosProps {
   submission?: UploadPhotos_submission
+  myCollectionArtworkSubmissionPhotos?: UploadPhotos_myCollectionArtworkSubmissionPhotos
 }
 
 type SubmissionAsset = NonNullable<UploadPhotos_submission["assets"]>[0]
@@ -45,7 +47,6 @@ const getPhotoUrlFromAsset = (asset: SubmissionAsset) => {
     (asset?.imageUrls as any)?.thumbnail || (asset?.imageUrls as any)?.square
   )
 }
-
 export const getUploadPhotosFormInitialValues = (
   submission?: UploadPhotos_submission
 ): UploadPhotosFormModel => {
@@ -66,7 +67,12 @@ export const getUploadPhotosFormInitialValues = (
   }
 }
 
-export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
+export const UploadPhotos: React.FC<UploadPhotosProps> = ({
+  submission,
+  myCollectionArtworkSubmissionPhotos,
+}) => {
+  console.log("[LOGD] submission = ", submission)
+
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
@@ -80,9 +86,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({ submission }) => {
   const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
 
   const handleSubmit = async () => {
+    const artworkId = myCollectionArtworkSubmissionPhotos?.internalID
+
     if (submission) {
       router.push({
-        pathname: `/sell/submission/${submission.externalId}/contact-information`,
+        pathname: `/sell/submission/${submission.externalId}/contact-information/${artworkId}`,
       })
     }
   }
@@ -293,6 +301,11 @@ export const UploadPhotosFragmentContainer = createFragmentContainer(
           size
           filename
         }
+      }
+    `,
+    myCollectionArtworkSubmissionPhotos: graphql`
+      fragment UploadPhotos_myCollectionArtworkSubmissionPhotos on Artwork {
+        internalID
       }
     `,
   }

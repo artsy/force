@@ -10,11 +10,13 @@ import {
   FAQ,
 } from "../../MarketingLanding/Components"
 import { useTracking } from "react-tracking"
+import { ThankYouWhenFromMyCollection } from "./ThankYouWhenFromMyCollection"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
   const { match } = useRouter()
   const { trackEvent } = useTracking()
+  const withArtworkId = match.params.artworkId
 
   const trackSubmitAnotherWorkClick = () =>
     trackEvent({
@@ -25,6 +27,10 @@ export const ThankYou: React.FC = () => {
       user_email: isLoggedIn ? user?.email : undefined,
       user_id: isLoggedIn ? user?.id : undefined,
     })
+
+  if (withArtworkId) {
+    return <ThankYouWhenFromMyCollection />
+  }
 
   return (
     <>
