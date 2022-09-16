@@ -1,4 +1,4 @@
-const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 2
+const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 5
 export interface LocalImage {
   data: string
   width: number
@@ -40,7 +40,7 @@ export const storeArtworkLocalImages = (
     imagesToStore.push(imageToStore)
   }
 
-  const localArtworksImages = getLocalImagesByArtwork(rootKey)
+  const localArtworksImages = getLocalImagesByArtwork({ key: rootKey })
 
   // Get existing artworks with images except the one we are storing
   const updatedLocalArtworksImages = localArtworksImages.filter(
@@ -66,9 +66,13 @@ export const deleteLocalImages = (key: string) => {
 }
 
 // Retrieve all artworks local images that have not expired from local storage
-export const getLocalImagesByArtwork = (
+export const getLocalImagesByArtwork = ({
+  key,
+  excludeExpired = true,
+}: {
   key: string
-): StoredArtworkWithImages[] => {
+  excludeExpired?: boolean
+}): StoredArtworkWithImages[] => {
   const imagesByArtworkJSONString = window.localStorage.getItem(key)
 
   const imagesByArtwork = JSON.parse(imagesByArtworkJSONString || "") as
@@ -76,6 +80,17 @@ export const getLocalImagesByArtwork = (
     | null
 
   if (Array.isArray(imagesByArtwork)) {
+    if (excludeExpired) {
+      return imagesByArtwork.filter(artworkImagesObj => {
+        const images = artworkImagesObj.images.filter(image => {
+          const expirationDate = new Date(image.expirationDate)
+          // Only return images that have not expired
+          return expirationDate > new Date()
+        })
+        // Return only artworks that have at least one image that has not expired
+        return images.length > 0
+      })
+    }
     return imagesByArtwork
   }
   return []
@@ -101,7 +116,7 @@ export const retrieveArtworkLocalImages = (
   artworkID: string,
   rootKey: string
 ): StoredImage[] => {
-  const localArtworksImages = getLocalImagesByArtwork(rootKey)
+  const localArtworksImages = getLocalImagesByArtwork({ key: rootKey })
   const artworkImages = localArtworksImages?.find(
     artworkImagesObj => artworkImagesObj.artworkID === artworkID
   )
