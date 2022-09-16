@@ -14,6 +14,7 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { useState } from "react"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
+import { ArtworkSidebar2EditionSetFragmentContainer } from "./ArtworkSidebar2EditionSets"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar2_artwork
@@ -74,7 +75,9 @@ export const ArtworkSidebar2: React.FC<ArtworkSidebarProps> = props => {
 
       <Spacer mt={2} />
       <ArtworkSidebar2DetailsFragmentContainer artwork={artwork} />
-      <Spacer mt={2} />
+      <Separator />
+
+      <ArtworkSidebar2EditionSetFragmentContainer artwork={artwork} />
 
       {!isSold && artworkEcommerceAvailable && (
         <>
@@ -124,6 +127,7 @@ export const ArtworkSidebar2FragmentContainer = createFragmentContainer(
         ...ArtworkSidebar2ArtworkTitle_artwork
         ...ArtworkSidebar2Artists_artwork
         ...ArtworkSidebar2Details_artwork
+        ...ArtworkSidebar2EditionSets_artwork
         ...ArtworkSidebar2ShippingInformation_artwork
         ...ArtworkSidebar2PartnerInfo_artwork
         ...ArtworkSidebar2CreateArtworkAlert_artwork
