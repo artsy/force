@@ -76,5 +76,11 @@
         "description": "Get notifications for similar works"
       }
     }
+  },
+  "searchApp" : {
+    "noResultsFound": "No results found.",
+    "resultsCount_zero": "No results found for",
+    "resultsCount_one": "1 result for",
+    "resultsCount_other": "{{count}} results for"
   }
 }
