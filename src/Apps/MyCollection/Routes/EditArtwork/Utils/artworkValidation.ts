@@ -3,7 +3,9 @@ import { trim } from "lodash"
 import * as yup from "yup"
 
 export const MyCollectionArtworkDetailsValidationSchema = yup.object().shape({
-  artistId: yup.string().required("Please seleсt an artist from the list."),
+  artistId: yup
+    .string()
+    .required("Please select from the list of artists in the Artsy database."),
   title: yup
     .string()
     .required("Title is required")
