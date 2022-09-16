@@ -1,0 +1,3 @@
+files:
+  - source: /src/System/i18n/locales/en-US/translation.json
+    translation: /src/System/i18n/locales/%locale%/translation.json
