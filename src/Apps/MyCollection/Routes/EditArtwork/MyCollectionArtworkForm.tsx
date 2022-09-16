@@ -160,12 +160,6 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         })
       )
 
-      // Waiting for a few seconds to make sure the new images are processed
-      // and ready to be displayed
-      if (externalImageUrls.length) {
-        await wait(3000)
-      }
-
       if (isEditing) {
         router.replace({
           pathname: `/settings/my-collection`,
