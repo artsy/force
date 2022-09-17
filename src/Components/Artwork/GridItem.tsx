@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
+import { StoredImage } from "Utils/localImagesHelpers"
 import { cropped, resized } from "Utils/resized"
 import { userIsTeam } from "Utils/user"
 import { GridItem_artwork } from "__generated__/GridItem_artwork.graphql"
@@ -19,6 +20,7 @@ interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   hideSaleInfo?: boolean
   isMyCollectionArtwork?: boolean
   lazyLoad?: boolean
+  localHeroImage?: StoredImage | null
   onClick?: () => void
   showHoverDetails?: boolean
   showSaveButton?: boolean
@@ -31,23 +33,13 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   hideSaleInfo,
   isMyCollectionArtwork = false,
   lazyLoad = true,
+  localHeroImage,
   onClick,
   showHoverDetails,
   showSaveButton = true,
   ...rest
 }) => {
-  const { user } = useSystemContext()
-  const isTeam = userIsTeam(user)
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
-
-  const aspectRatio = artwork.image?.aspect_ratio ?? 1
-  const width = 445
-  const height = Math.floor(width / aspectRatio)
-  const transform = aspectRatio === 1 ? cropped : resized
-  const imageURL = artwork.image?.url
-  const { src, srcSet } = imageURL
-    ? transform(imageURL, { width, height })
-    : { src: "", srcSet: "" }
 
   const handleClick = () => {
     onClick?.()
@@ -87,35 +79,11 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           onClick={handleClick}
           isMyCollectionArtwork={isMyCollectionArtwork}
         >
-          {imageURL ? (
-            <MagnifyImage
-              alt={artwork.image_title ?? ""}
-              src={src}
-              srcSet={srcSet}
-              lazyLoad={lazyLoad}
-              preventRightClick={!isTeam}
-            />
-          ) : (
-            <>
-              <ResponsiveBox
-                aspectWidth={4}
-                aspectHeight={3}
-                position="relative"
-                maxWidth="100%"
-              />
-              <Flex
-                position="absolute"
-                top={0}
-                left={0}
-                width="100%"
-                height="100%"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <NoImageIcon width="28px" height="28px" fill="black60" />
-              </Flex>
-            </>
-          )}
+          <ArtworkGridItemImage
+            artwork={artwork}
+            lazyLoad={lazyLoad}
+            localHeroImage={localHeroImage}
+          />
         </LinkContainer>
 
         <Badge artwork={artwork} />
@@ -132,6 +100,66 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         isMyCollectionArtwork={isMyCollectionArtwork}
       />
     </div>
+  )
+}
+
+const ArtworkGridItemImage: React.FC<Pick<
+  ArtworkGridItemProps,
+  "localHeroImage" | "artwork" | "lazyLoad"
+>> = ({ artwork, lazyLoad, localHeroImage }) => {
+  const { user } = useSystemContext()
+  const isTeam = userIsTeam(user)
+
+  const aspectRatio = artwork.image?.aspect_ratio ?? 1
+  const width = 445
+  const height = Math.floor(width / aspectRatio)
+  const transform = aspectRatio === 1 ? cropped : resized
+  const imageURL = artwork.image?.url
+  const { src, srcSet } = imageURL
+    ? transform(imageURL, { width, height })
+    : { src: "", srcSet: "" }
+
+  if (imageURL) {
+    return (
+      <MagnifyImage
+        alt={artwork.image_title ?? ""}
+        src={src}
+        srcSet={srcSet}
+        lazyLoad={lazyLoad}
+        preventRightClick={!isTeam}
+      />
+    )
+  }
+  if (localHeroImage) {
+    return (
+      <MagnifyImage
+        src={localHeroImage.data}
+        srcSet={""}
+        lazyLoad={lazyLoad}
+        preventRightClick={!isTeam}
+      />
+    )
+  }
+  return (
+    <>
+      <ResponsiveBox
+        aspectWidth={4}
+        aspectHeight={3}
+        position="relative"
+        maxWidth="100%"
+      />
+      <Flex
+        position="absolute"
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <NoImageIcon width="28px" height="28px" fill="black60" />
+      </Flex>
+    </>
   )
 }
 

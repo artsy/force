@@ -9,7 +9,7 @@ interface Expirable {
   expirationDate: string
 }
 
-type StoredImage = LocalImage & Expirable
+export type StoredImage = LocalImage & Expirable
 
 type StoredArtworkWithImages = {
   artworkID: string
