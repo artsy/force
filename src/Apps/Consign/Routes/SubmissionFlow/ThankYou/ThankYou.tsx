@@ -1,7 +1,7 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { DownloadApps } from "./Components/DownloadApps"
+import { DownloadApp } from "./Components/DownloadApp"
 import { useSystemContext } from "System"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
@@ -96,7 +96,7 @@ export const ThankYou: React.FC = () => {
         </RouterLink>
       </Flex>
 
-      <DownloadApps mb={[2, 6]} />
+      <DownloadApp mb={[2, 6]} />
 
       <SoldRecentlyOnArtsyQueryRenderer />
       <Spacer mt={6} />
