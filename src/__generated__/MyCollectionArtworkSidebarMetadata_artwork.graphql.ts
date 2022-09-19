@@ -7,7 +7,6 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSidebarMetadata_artwork = {
     readonly category: string | null;
     readonly medium: string | null;
-    readonly metric: string | null;
     readonly dimensions: {
         readonly in: string | null;
         readonly cm: string | null;
@@ -48,13 +47,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "medium",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "metric",
       "storageKey": null
     },
     {
@@ -136,5 +128,5 @@ const node: ReaderFragment = {
   "type": "Artwork",
   "abstractKey": null
 };
-(node as any).hash = 'c250744be463a5dbffca79870782261b';
+(node as any).hash = '81cec4de868a7900dacd9e087a98e7b7';
 export default node;

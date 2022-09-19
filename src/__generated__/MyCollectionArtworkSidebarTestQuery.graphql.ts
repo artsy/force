@@ -29,7 +29,6 @@ query MyCollectionArtworkSidebarTestQuery {
 fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
   category
   medium
-  metric
   dimensions {
     in
     cm
@@ -186,13 +185,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "metric",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "dimensions",
             "kind": "LinkedField",
             "name": "dimensions",
@@ -273,7 +265,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "64f14afd74105a367adeccdc9ede1433",
+    "cacheID": "86726615c0da40f6bba58e5540c83eb6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -313,7 +305,6 @@ return {
         "artwork.dimensions.in": (v2/*: any*/),
         "artwork.id": (v3/*: any*/),
         "artwork.medium": (v2/*: any*/),
-        "artwork.metric": (v2/*: any*/),
         "artwork.pricePaid": {
           "enumValues": null,
           "nullable": true,
@@ -327,7 +318,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    id\n  }\n}\n"
   }
 };
 })();

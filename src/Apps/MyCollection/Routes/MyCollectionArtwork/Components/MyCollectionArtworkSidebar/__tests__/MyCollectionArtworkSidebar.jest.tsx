@@ -56,7 +56,7 @@ describe("MyCollectionArtworkSidebar", () => {
         screen.getByText("Drawing, Collage or other Work on Paper")
       ).toBeInTheDocument()
       expect(
-        screen.getByText("22 × 16 1/2 in", {
+        screen.getByText("22 × 16 1/2 in 55.9 × 41.9 cm", {
           collapseWhitespace: true,
         })
       ).toBeInTheDocument()
@@ -64,52 +64,6 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("This is a unique work")).toBeInTheDocument()
       expect(screen.getByText("€25,300")).toBeInTheDocument()
       expect(screen.getByText("Berlin")).toBeInTheDocument()
-    })
-
-    describe("when metric is set to 'in'", () => {
-      beforeEach(() => {
-        renderWithRelay(
-          { Artwork: () => ({ ...mockResolversWithData, metric: "IN" }) },
-          false
-        )
-      })
-
-      it("displays artists names and title with the artist url", () => {
-        expect(
-          screen.getByText("22 × 16 1/2 in", {
-            collapseWhitespace: true,
-          })
-        ).toBeInTheDocument()
-
-        expect(
-          screen.queryByText("55.9 × 41.9 cm", {
-            collapseWhitespace: true,
-          })
-        ).not.toBeInTheDocument()
-      })
-    })
-
-    describe("when metric is set to 'cm'", () => {
-      beforeEach(() => {
-        renderWithRelay(
-          { Artwork: () => ({ ...mockResolversWithData, metric: "CM" }) },
-          false
-        )
-      })
-
-      it("displays artists names and title with the artist url", () => {
-        expect(
-          screen.getByText("55.9 × 41.9 cm", {
-            collapseWhitespace: true,
-          })
-        ).toBeInTheDocument()
-
-        expect(
-          screen.queryByText("22 × 16 1/2 in", {
-            collapseWhitespace: true,
-          })
-        ).not.toBeInTheDocument()
-      })
     })
   })
 
