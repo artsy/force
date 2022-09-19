@@ -32,6 +32,7 @@ describe("MyCollectionArtwork", () => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       featureFlags: {
         "my-collection-web-phase-4-demand-index": { flagEnabled: true },
+        "my-collection-web-phase-5": { flagEnabled: true },
       },
     }))
   })
@@ -74,6 +75,21 @@ describe("MyCollectionArtwork", () => {
       })
     })
   })
+
+  describe("SWA section", () => {
+    it("renders correct component when artwork has submission id", () => {
+      const { renderWithRelay } = getWrapper("lg")
+      renderWithRelay(mockResolversWithInsights)
+
+      expect(screen.getByText("Artwork has been submitted for sale"))
+    })
+    it("renders correct component when artwork does not have submission id", () => {
+      const { renderWithRelay } = getWrapper("lg")
+      renderWithRelay(mockResolversWithoutInsights)
+
+      expect(screen.getByText("Interested in Selling This Work?"))
+    })
+  })
 })
 
 const mockResolversWithInsights = {
@@ -83,6 +99,7 @@ const mockResolversWithInsights = {
     date: "2007",
     artistNames: "Banksy",
     hasMarketPriceInsights: true,
+    submissionId: "submission-id",
   }),
 }
 
@@ -97,5 +114,6 @@ const mockResolversWithoutInsights = {
     artist: {
       auctionResults: null,
     },
+    submissionId: null,
   }),
 }
