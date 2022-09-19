@@ -4,7 +4,7 @@ import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 import { PaymentTestQueryRawResponse } from "__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "../BankDebitForm"
-import { useOrderPaymentContext } from "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 // In our stripe PaymentElement mock
 // we automatically fire this event if defined
@@ -27,9 +27,7 @@ jest.mock("@stripe/react-stripe-js", () => {
 })
 jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
-jest.mock(
-  "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-)
+jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 
 const testOrder: PaymentTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,

@@ -2,11 +2,9 @@ import { mount } from "enzyme"
 import { BankDebitProvider } from "../BankDebitProvider"
 import React from "react"
 import { BankDebitForm } from "../BankDebitForm"
-import { useOrderPaymentContext } from "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
-jest.mock(
-  "../../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
-)
+jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 
 const setHookState = state =>
   jest.fn().mockImplementation(() => [state, () => {}])

@@ -12,7 +12,7 @@ import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.g
 import { extractNodes } from "Utils/extractNodes"
 import { useSetPayment } from "../Mutations/useSetPayment"
 import { camelCase, upperFirst } from "lodash"
-import { useOrderPaymentContext } from "../Routes/Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 interface BankAccountRecord {
   internalID: string

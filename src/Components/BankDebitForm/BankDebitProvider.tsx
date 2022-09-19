@@ -10,7 +10,7 @@ import { Payment_order } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 import { camelCase, upperFirst } from "lodash"
-import { useOrderPaymentContext } from "../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
 const logger = createLogger("Order/Routes/Payment/index.tsx")

@@ -13,9 +13,9 @@ import { BankAccountPicker_me } from "__generated__/BankAccountPicker_me.graphql
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
 import { useSetPayment } from "../../Mutations/useSetPayment"
 import { BankAccountSelection } from "../../Routes/Payment/index"
-import { useOrderPaymentContext } from "../../Routes/Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
-jest.mock("../../Routes/Payment/PaymentContext/OrderPaymentContext")
+jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")

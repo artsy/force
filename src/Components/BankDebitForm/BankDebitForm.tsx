@@ -17,7 +17,7 @@ import { preventHardReload } from "Apps/Order/OrderApp"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { getENV } from "Utils/getENV"
 import { camelCase, upperFirst } from "lodash"
-import { useOrderPaymentContext } from "../../Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
 interface Props {
   order: { mode: string | null; internalID: string }
