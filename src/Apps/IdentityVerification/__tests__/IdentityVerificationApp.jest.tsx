@@ -1,32 +1,37 @@
-import { IdentityVerificationAppTestQueryRawResponse } from "__generated__/IdentityVerificationAppTestQuery.graphql"
-import deepMerge from "deepmerge"
-import { createTestEnv } from "DevTools/createTestEnv"
 import { graphql } from "react-relay"
-import { IdentityVerificationAppQueryResponseFixture } from "../__fixtures__/routes_IdentityVerificationAppQuery"
 import { IdentityVerificationAppFragmentContainer } from "../IdentityVerificationApp"
 import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { HttpError } from "found"
 import { Toasts, ToastsProvider } from "@artsy/palette"
+import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { MockBoot } from "DevTools"
+import { useTracking } from "react-tracking"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
-jest.unmock("react-tracking")
+jest.mock("react-tracking")
 jest.mock("Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 jest.mock("found")
 
-const mockPostEvent = require("Utils/Events").postEvent as jest.Mock
+describe("IdentityVerification route", () => {
+  let sendProps
+  let trackEvent
 
-const setupTestEnv = () => {
-  return createTestEnv({
-    TestPage: IdentityVerificationAppTestPage,
-    Component: props => (
-      <ToastsProvider>
-        <Toasts />
-        <IdentityVerificationAppFragmentContainer {...props} />
-      </ToastsProvider>
-    ),
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => {
+      const propsFiltered = sendProps ? props : {}
+      return (
+        <MockBoot>
+          <ToastsProvider>
+            <Toasts />
+            <IdentityVerificationAppFragmentContainer {...propsFiltered} />
+          </ToastsProvider>
+        </MockBoot>
+      )
+    },
     query: graphql`
       query IdentityVerificationAppTestQuery
         @raw_response_type
@@ -37,42 +42,31 @@ const setupTestEnv = () => {
         }
       }
     `,
-    defaultData: IdentityVerificationAppQueryResponseFixture as IdentityVerificationAppTestQueryRawResponse,
-    defaultMutationResults: {
-      startIdentityVerification: {
-        startIdentityVerificationResponseOrError: {
-          identityVerificationFlowUrl: "www.identity.biz",
-          mutationError: null,
-        },
-      },
-    },
   })
-}
 
-describe("IdentityVerification route", () => {
+  beforeEach(() => {
+    sendProps = true
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+  })
+
   describe("for a visitor", () => {
     describe("unactionable end states", () => {
       it("returns a 404 when the identity verification is not found", async () => {
+        sendProps = false
         const mockHttpError = HttpError as jest.Mock
-        const env = setupTestEnv()
-        await env.buildPage({
-          mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
-            identityVerification: null,
-          }),
-        })
+        getWrapper()
+
         expect(mockHttpError).toHaveBeenCalledWith(404)
       })
 
       it("renders a message about an identity verification that is `passed`", async () => {
-        const env = setupTestEnv()
-
-        const page = await env.buildPage({
-          mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
-            identityVerification: {
-              state: "passed",
-            },
+        const wrapper = getWrapper({
+          IdentityVerification: () => ({
+            state: "passed",
           }),
         })
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         expect(page.text()).toContain("Identity verification complete")
         expect(page.startVerificationButton.exists()).toBeFalsy()
@@ -80,15 +74,12 @@ describe("IdentityVerification route", () => {
       })
 
       it("renders a message about an identity verification that is `failed`", async () => {
-        const env = setupTestEnv()
-
-        const page = await env.buildPage({
-          mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
-            identityVerification: {
-              state: "failed",
-            },
+        const wrapper = getWrapper({
+          IdentityVerification: () => ({
+            state: "failed",
           }),
         })
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         expect(page.text()).toContain("Identity verification failed")
         expect(page.startVerificationButton.exists()).toBeFalsy()
@@ -96,15 +87,12 @@ describe("IdentityVerification route", () => {
       })
 
       it("renders a message about an identity verification that is `watchlist_hit`", async () => {
-        const env = setupTestEnv()
-
-        const page = await env.buildPage({
-          mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
-            identityVerification: {
-              state: "watchlist_hit",
-            },
+        const wrapper = getWrapper({
+          IdentityVerification: () => ({
+            state: "watchlist_hit",
           }),
         })
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         expect(page.text()).toContain(
           "Artsy is reviewing your identity verification"
@@ -115,8 +103,8 @@ describe("IdentityVerification route", () => {
     })
 
     it("allows an identity verification instance's owner to view the landing page", async () => {
-      const env = setupTestEnv()
-      const page = await env.buildPage()
+      const wrapper = getWrapper()
+      const page = new IdentityVerificationAppTestPage(wrapper)
 
       expect(page.text()).toContain("Artsy identity verification")
     })
@@ -127,55 +115,80 @@ describe("IdentityVerification route", () => {
       })
 
       it("user click on 'continue to verification' button is tracked", async () => {
-        const env = setupTestEnv()
-        const page = await env.buildPage()
+        const wrapper = getWrapper()
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
 
-        expect(mockPostEvent).toHaveBeenCalledTimes(1)
-        expect(mockPostEvent).toHaveBeenCalledWith({
+        expect(trackEvent).toHaveBeenCalledTimes(1)
+        expect(trackEvent).toHaveBeenCalledWith({
           action_type: "ClickedContinueToIdVerification",
           context_page: "Identity Verification page",
-          context_page_owner_id: "identity-verification-id",
+          context_page_owner_id: "<IdentityVerification-mock-id-1>",
         })
       })
 
       it("user is redirected to the verification flow on a successful mutation", async () => {
-        const env = setupTestEnv()
-        const page = await env.buildPage()
+        const env = createMockEnvironment()
+        const wrapper = getWrapper({}, {}, env)
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
+
+        env.mock.resolveMostRecentOperation(operation =>
+          MockPayloadGenerator.generate(operation, {
+            startIdentityVerificationMutationPayload: () => ({
+              __typename: "StartIdentityVerificationSuccess",
+              startIdentityVerificationResponseOrError: {
+                identityVerificationFlowUrl: "www.identity.biz",
+                mutationError: null,
+              },
+            }),
+          })
+        )
+        await page.update()
+
         expect(window.location.assign).toHaveBeenCalledWith("www.identity.biz")
       })
 
       it("user sees an error toast if the mutation fails", async () => {
-        const env = setupTestEnv()
-        const page = await env.buildPage()
-        const badResult = {
-          startIdentityVerification: {
-            startIdentityVerificationResponseOrError: {
-              mutationError: {
-                error: "something bad :|",
-                message: "oh noes",
-                detail: "beep boop beep",
-              },
-            },
-          },
-        }
-        env.mutations.useResultsOnce(badResult)
+        const env = createMockEnvironment()
+        const wrapper = getWrapper({}, {}, env)
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
+
+        env.mock.resolveMostRecentOperation(operation =>
+          MockPayloadGenerator.generate(operation, {
+            startIdentityVerificationMutationPayload: () => ({
+              startIdentityVerificationResponseOrError: {
+                __typename: "StartIdentityVerificationFailure",
+                mutationError: {
+                  error: "something bad :|",
+                  message: "oh noes",
+                  detail: "beep boop beep",
+                },
+              },
+            }),
+          })
+        )
+        await page.update()
+
         expect(page.text()).toContain(
           "Something went wrong. Please try again or contact verification@artsy.net."
         )
       })
 
       it("shows an error message on network failiure", async () => {
-        const env = setupTestEnv()
-        const page = await env.buildPage()
-        env.mutations.mockNetworkFailureOnce()
+        const env = createMockEnvironment()
+        const wrapper = getWrapper({}, {}, env)
+        const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
+
+        env.mock.rejectMostRecentOperation(new Error("something went wrong"))
+        await page.update()
+
         expect(page.text()).toContain(
           "Something went wrong. Please try again or contact verification@artsy.net."
         )
