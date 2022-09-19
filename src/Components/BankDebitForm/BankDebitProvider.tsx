@@ -38,8 +38,8 @@ interface Props {
 export const BankDebitProvider: FC<Props> = ({ order }) => {
   const {
     selectedPaymentMethod,
-    stripeClientSecret,
-    setStripeClientSecret,
+    stripeClient,
+    setStripeClient,
   } = useOrderPaymentContext()
 
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
@@ -57,7 +57,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
           orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
             .__typename === "CommerceOrderRequiresAction"
         ) {
-          setStripeClientSecret(
+          setStripeClient(
             orderOrError.commerceCreateBankDebitSetupForOrder?.actionOrError
               .actionData.clientSecret
           )
@@ -76,7 +76,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
       }
     }
 
-    if (!stripeClientSecret) {
+    if (!stripeClient) {
       fetchData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,7 +130,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
   }
 
   const options = {
-    clientSecret: stripeClientSecret || "",
+    clientSecret: stripeClient || "",
     appearance: appearance,
   }
 
@@ -143,7 +143,7 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
       <LoadingArea isLoading={isPaymentElementLoading}>
         {isPaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
-        {stripeClientSecret && (
+        {stripeClient && (
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm
               order={order}
