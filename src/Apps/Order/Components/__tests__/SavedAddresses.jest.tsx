@@ -3,7 +3,6 @@ import { SavedAddressesFragmentContainer } from "../SavedAddresses"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BorderBox } from "@artsy/palette"
 import { AddressModal } from "Apps/Order/Components/AddressModal"
-import { createTestEnv } from "DevTools/createTestEnv"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResults"
 import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
@@ -24,30 +23,35 @@ class SavedAddressesTestPage extends RootTestPage {
 
 describe("Saved Addresses", () => {
   const trackEvent = jest.fn()
+  let inCollectorProfile
+
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
     }))
+    inCollectorProfile = true
+  })
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => (
+      <SavedAddressesFragmentContainer
+        inCollectorProfile={inCollectorProfile}
+        {...props}
+      />
+    ),
+    query: graphql`
+      query SavedAddressesMutation_Test_Query @relay_test_operation {
+        me {
+          ...SavedAddresses_me
+        }
+      }
+    `,
   })
 
   describe("Saved Addresses mutations", () => {
-    const { mutations, buildPage } = createTestEnv({
-      Component: (props: any) => (
-        <SavedAddressesFragmentContainer inCollectorProfile {...props} />
-      ),
-      defaultData: userAddressMutation,
-      TestPage: SavedAddressesTestPage,
-      query: graphql`
-        query SavedAddressesMutation_Test_Query @relay_test_operation {
-          me {
-            ...SavedAddresses_me
-          }
-        }
-      `,
-    })
-
     it("edits the saved addresses after calling edit address mutation", async () => {
-      const page = await buildPage()
+      const wrapper = getWrapper({ Me: () => userAddressMutation.me })
+      const page = new SavedAddressesTestPage(wrapper)
       const editButton = page
         .find(`[data-test="editAddressInProfileClick"]`)
         .first()
@@ -57,31 +61,13 @@ describe("Saved Addresses", () => {
         .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)
       const addresses = page.find(SavedAddressItem).first().text()
 
-      setTimeout(() => {
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-
-        expect(addresses).toBe(
-          "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
-        )
-      }, 0)
+      expect(addresses).toBe(
+        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
+      )
     })
   })
 
   describe("SavedAddresses in collector profile", () => {
-    const { getWrapper } = setupTestWrapper({
-      Component: (props: any) => (
-        <SavedAddressesFragmentContainer inCollectorProfile {...props} />
-      ),
-      query: graphql`
-        query SavedAddressesInCollectorProfile_Test_Query
-          @relay_test_operation {
-          me {
-            ...SavedAddresses_me
-          }
-        }
-      `,
-    })
-
     it("renders modal when button is clicked", () => {
       const wrapper = getWrapper({
         Me: () => ({
@@ -93,12 +79,10 @@ describe("Saved Addresses", () => {
       expect(modal.props().show).toBe(false)
       button.simulate("click")
 
-      setTimeout(() => {
-        expect(modal).toHaveLength(1)
-      }, 0)
+      expect(modal).toHaveLength(1)
     })
 
-    it("add address modal with expected props", () => {
+    it("add address modal with expected props", async () => {
       const wrapper = getWrapper({
         Me: () => ({
           addressConnection: mockAddressConnection,
@@ -106,16 +90,13 @@ describe("Saved Addresses", () => {
       })
 
       const button = wrapper.find("Button[data-test='profileButton']")
-      const modal = wrapper.find(AddressModal)
-      expect(modal.props().show).toBe(false)
+      expect(wrapper.find(AddressModal).props().show).toBe(false)
       button.simulate("click")
 
-      setTimeout(() => {
-        expect(modal.props().modalDetails).toBe({
-          addressModalTitle: "Add new address",
-          addressModalAction: "createUserAddress",
-        })
-      }, 0)
+      expect(wrapper.find(AddressModal).props().modalDetails).toEqual({
+        addressModalTitle: "Add new address",
+        addressModalAction: "createUserAddress",
+      })
     })
 
     it("edit address modal with expected props", () => {
@@ -124,16 +105,14 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      const button = wrapper.find("Button[data-test='profileButton']")
-      const modal = wrapper.find(AddressModal)
-      expect(modal.props().show).toBe(false)
+      const button = wrapper.find({ "data-test": "editAddressInProfile" }).at(0)
+      expect(wrapper.find(AddressModal).props().show).toBe(false)
       button.simulate("click")
-      setTimeout(() => {
-        expect(modal.props().modalDetails).toBe({
-          addressModalTitle: "Edit address",
-          addressModalAction: "editUserAddress",
-        })
-      }, 0)
+
+      expect(wrapper.find(AddressModal).props().modalDetails).toEqual({
+        addressModalTitle: "Edit address",
+        addressModalAction: "editUserAddress",
+      })
     })
 
     it("render an add address button", () => {
@@ -176,21 +155,8 @@ describe("Saved Addresses", () => {
   })
 
   describe("SavedAddresses outside collector profile", () => {
-    const { getWrapper } = setupTestWrapper({
-      Component: (props: any) => (
-        <SavedAddressesFragmentContainer
-          inCollectorProfile={false}
-          {...props}
-        />
-      ),
-      query: graphql`
-        query SavedAddressesOutsiseCollectorProfile_Test_Query
-          @relay_test_operation {
-          me {
-            ...SavedAddresses_me
-          }
-        }
-      `,
+    beforeEach(() => {
+      inCollectorProfile = false
     })
 
     it("renders modal when button is clicked", () => {
@@ -204,9 +170,7 @@ describe("Saved Addresses", () => {
       expect(modal.props().show).toBe(false)
       button.simulate("click")
 
-      setTimeout(() => {
-        expect(modal).toHaveLength(1)
-      }, 0)
+      expect(modal).toHaveLength(1)
     })
 
     it("add address modal with expected props", () => {
@@ -216,12 +180,11 @@ describe("Saved Addresses", () => {
         }),
       })
       const button = wrapper.find("Button[data-test='shippingButton']")
-      const modal = wrapper.find(AddressModal)
-      expect(modal.props().show).toBe(false)
+      expect(wrapper.find(AddressModal).props().show).toBe(false)
       button.simulate("click")
 
       setTimeout(() => {
-        expect(modal.props().modalDetails).toBe({
+        expect(wrapper.find(AddressModal).props().modalDetails).toEqual({
           addressModalTitle: "Add address",
           addressModalAction: "createUserAddress",
         })
