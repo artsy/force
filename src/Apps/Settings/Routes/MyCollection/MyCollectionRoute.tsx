@@ -23,8 +23,13 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
+import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
-import { getLocalImagesByArtwork, StoredImage } from "Utils/localImagesHelpers"
+import {
+  getLocalImagesByArtwork,
+  StoredArtworkWithImages,
+  StoredImage,
+} from "Utils/localImagesHelpers"
 import { MyCollectionRoute_me } from "__generated__/MyCollectionRoute_me.graphql"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 import { RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY } from "./constants"
@@ -45,12 +50,9 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
 
-  const localArtworksImages = useRef(
-    getLocalImagesByArtwork({ key: RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY })
-  ).current
+  const localArtworksImages = useRef<StoredArtworkWithImages[]>([])
 
-  console.log("====================================")
-  console.log(localArtworksImages)
+  const isMounted = useDidMount(typeof window !== "undefined")
 
   const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
 
@@ -63,6 +65,14 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     )
   }, [])
 
+  useEffect(() => {
+    if (isMounted) {
+      localArtworksImages.current = getLocalImagesByArtwork({
+        key: RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY,
+      })
+    }
+  }, [isMounted])
+
   const { scrollTo: scrollToMyCollection } = useScrollToElement({
     selectorOrRef: "#jump--MyCollectionArtworks",
     behavior: "smooth",
@@ -73,7 +83,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   const getLocalImageSrcByArtworkID = useCallback(
     (artworkID: string): StoredImage | null => {
-      const allArtworkImages = localArtworksImages.find(
+      const allArtworkImages = localArtworksImages.current.find(
         localArtworkImagesObj => localArtworkImagesObj.artworkID === artworkID
       )?.images
       if (allArtworkImages?.length) {
@@ -84,7 +94,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     [localArtworksImages]
   )
 
-  if (!myCollectionConnection) {
+  if (!myCollectionConnection || !isMounted) {
     return null
   }
 

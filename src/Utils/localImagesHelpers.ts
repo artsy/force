@@ -11,7 +11,7 @@ interface Expirable {
 
 export type StoredImage = LocalImage & Expirable
 
-type StoredArtworkWithImages = {
+export type StoredArtworkWithImages = {
   artworkID: string
   images: StoredImage[]
 }
