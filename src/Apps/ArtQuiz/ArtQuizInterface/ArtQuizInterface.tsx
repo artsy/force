@@ -1,121 +1,172 @@
-import { Flex } from "@artsy/palette"
-import { FC } from "react"
+import {
+  HeartIcon,
+  CloseIcon,
+  ArrowLeftIcon,
+  Text,
+  Clickable,
+  HeartFillIcon,
+  Image,
+  ClickableProps,
+  Flex,
+  CSSGrid,
+  FullBleed,
+  ImageProps,
+  TextProps,
+  FlexProps,
+} from "@artsy/palette"
+import { useArtQuizContext } from "Apps/ArtQuiz/ArtQuizContext"
+import { processImageUrl } from "Apps/ArtQuiz/ArtQuizInterface/maxHeight"
+import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
+import { FC, useState } from "react"
+import styled from "styled-components"
+import { flex, grid, GridProps } from "styled-system"
 
 export const ArtQuizInterface: FC = () => {
-  return <Flex></Flex>
+  const { desktop, mobile } = useNavBarHeight()
+  const { currentArtwork } = useArtQuizContext()
+
+  const aspectRatio = currentArtwork.image?.aspectRatio ?? 1
+  const width = 445
+  const { src, srcSet } = processImageUrl({
+    aspectRatio,
+    width,
+    url: currentArtwork.image?.url,
+  })
+
+  return (
+    // Should we lift this FullBleed up into the ArtQuizApp?
+    <FullBleed
+      height={[`calc(100vh - ${mobile}px)`, `calc(100vh - ${desktop}px)`]}
+    >
+      <CSSGrid
+        gridTemplateAreas={[
+          `"mobile-header"
+          "image"
+          "controls"`,
+          `"back progress skip"
+          ". image ."
+          ". controls ."`,
+        ]}
+        gridTemplateColumns={["1fr", "240px 1fr 240px"]}
+        gridTemplateRows={["80px 1fr 80px", "120px 1fr 120px"]}
+      >
+        <GridClickable
+          alignSelf={"center"}
+          gridArea={["mobile-header", "back"]}
+          justifySelf={["flex-start", "flex-end"]}
+          px={[2, 0]}
+        >
+          <ArrowLeftIcon />
+        </GridClickable>
+        <GridText
+          gridArea={["mobile-header", "progress"]}
+          alignSelf="center"
+          justifySelf="center"
+        >
+          1/16
+        </GridText>
+        <GridClickable
+          gridArea={["mobile-header", "skip"]}
+          alignSelf="center"
+          justifySelf={["flex-end", "flex-start"]}
+          px={[2, 0]}
+        >
+          <CloseIcon />
+        </GridClickable>
+
+        <GridImage
+          justifySelf="center"
+          alt={currentArtwork.title}
+          src={src}
+          srcSet={srcSet}
+          preventRightClick={true}
+          gridArea="image"
+          py={2}
+          px={[0, 2]}
+          height="100%"
+        />
+
+        <GridFlex
+          gridArea="controls"
+          width="100%"
+          height="100%"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <ArtQuizDislikeButton mx={6} />
+          <ArtQuizSaveButton slug={currentArtwork.slug} mx={6} />
+        </GridFlex>
+      </CSSGrid>
+    </FullBleed>
+  )
 }
 
-const edges = [
-  {
-    node: {
-      title: "Untitled (It's Yellow)",
-      slug: "sam-gilliam-untitled-its-yellow-1",
-      id: "QXJ0d29yazo2MmJhYzQ4NDg4YTY5NTAwMGI5YzI0Y2M=",
-    },
-  },
-  {
-    node: {
-      title: "I Shine, You Shine, We Shine",
-      slug: "derrick-adams-i-shine-you-shine-we-shine",
-      id: "QXJ0d29yazo2MmUwNTgzNDQxYzMxMzAwMGMwMDYyZDk=",
-    },
-  },
-  {
-    node: {
-      slug: "chivas-leung-shaking-between-day-and-night",
-      title: "Shaking between Day and Night",
-      id: "QXJ0d29yazo2MjllYzE5MWU5ZWNjZDAwMGI0ZWRhM2U=",
-    },
-  },
-  {
-    node: {
-      slug: "daniel-maccarthy-the-crossing",
-      title: "The Crossing",
-      id: "QXJ0d29yazo2MmU0M2JlYWNjMTg0OTAwMGQwYjUyN2Y=",
-    },
-  },
-  {
-    node: {
-      slug: "hiba-schahbaz-dreaming-at-sunset",
-      title: "Dreaming at Sunset",
-      id: "QXJ0d29yazo2MmM4YWExZTU5NmJjYjAwMGNiZGIyNmU=",
-    },
-  },
-  {
-    node: {
-      slug: "camila-quintero-2-june-2021-abstract-painting",
-      title: "2 June 2021 (Abstract painting)",
-      id: "QXJ0d29yazo2MmNiZmRmNjYzZDQwOTAwMGM3MTZlNTg=",
-    },
-  },
-  {
-    node: {
-      slug: "derrick-adams-i-shine-you-shine-we-shine",
-      title: "I Shine, You Shine, We Shine",
-      id: "QXJ0d29yazo2MmUwNTgzNDQxYzMxMzAwMGMwMDYyZDk=",
-    },
-  },
-  {
-    node: {
-      slug: "banksy-flying-copper-197",
-      title: "Flying Copper",
-      id: "QXJ0d29yazo2MmZkMGRiNmI2M2E3MDAwMGNlMWFhNjE=",
-    },
-  },
-  {
-    node: {
-      slug: "danym-kwon-folded-memories-1",
-      title: "Folded Memories",
-      id: "QXJ0d29yazo2MmI0ZGY5ZDliNzVjMTAwMGM1Y2Y4NmY=",
-    },
-  },
-  {
-    node: {
-      slug: "giorgio-celin-back-to-the-road-back-to-the-blues-1",
-      title: "back to the road, back to the blues",
-      id: "QXJ0d29yazo2MmI5YzA1OTRiZTAxZTAwMGJkNjZlMGQ=",
-    },
-  },
-  {
-    node: {
-      slug: "blek-le-rat-the-anarchist-6",
-      title: "The Anarchist",
-      id: "QXJ0d29yazo2MmU0NDFmYWZhNzAzNTAwMGViZDZkMjI=",
-    },
-  },
-  {
-    node: {
-      slug: "invader-calcul-dot-e-d",
-      title: "CalcuL.E.D.",
-      id: "QXJ0d29yazo2MmVhYTE4MzVjMGI0YjAwMGRhNjFjZmU=",
-    },
-  },
-  {
-    node: {
-      slug: "kayla-mahaffey-the-sweeter-the-juice",
-      title: "The Sweeter The Juice",
-      id: "QXJ0d29yazo2MmRjNTM0OTVkNzBmMTAwMGRhNDU5ZDc=",
-    },
-  },
-  {
-    node: {
-      slug: "kai-staudacher-ass-kick",
-      title: "Ass kick",
-      id: "QXJ0d29yazo2MmI1YTc0NjgxM2ZmNDAwMGU3ZTVkMmU=",
-    },
-  },
-  {
-    node: {
-      slug: "nicolas-party-portrait-with-a-seahorse",
-      title: "Portrait with a Seahorse",
-      id: "QXJ0d29yazo2MmVhOWQyMDM2OTYyYTAwMGM5YjlkZjc=",
-    },
-  },
-  {
-    node: {
-      slug: "shirin-neshat-i-am-its-secret-6",
-      title: "I am its secret",
-      id: "QXJ0d29yazo2MmRhOWM5M2IzMjc4YTAwMGM3OTgzZTY=",
-    },
-  },
-]
+const ArtQuizSaveButton: FC<{ slug: string } & ClickableProps> = ({
+  slug,
+  ...rest
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+  const handleClick = () => {}
+
+  return (
+    <Clickable
+      display="flex"
+      p={0.5}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      alignItems="center"
+      {...rest}
+    >
+      {isHovered ? <HeartFillIcon /> : <HeartIcon />}
+    </Clickable>
+  )
+}
+
+// HEY LAURA DONT FORGET
+const ArtQuizDislikeButton: FC<ClickableProps> = ({ ...rest }) => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+  const handleClick = () => {}
+  return (
+    <Clickable
+      display="flex"
+      p={0.5}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      alignItems="center"
+      {...rest}
+    >
+      <CloseIcon height={isHovered ? 22 : 18} width={isHovered ? 22 : 18} />
+    </Clickable>
+  )
+}
+
+// It would be my preference to grid-enable our base Box component
+const GridClickable = styled(Clickable)<ClickableProps & GridProps>`
+  ${grid}
+`
+const GridImage = styled(Image)<ImageProps & GridProps & FlexProps>`
+  ${grid}
+  ${flex}
+`
+const GridText = styled(Text)<TextProps & GridProps>`
+  ${grid}
+`
+const GridFlex = styled(Flex)<FlexProps & GridProps>`
+  ${grid}
+`
