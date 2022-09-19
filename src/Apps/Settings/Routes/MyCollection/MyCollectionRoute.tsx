@@ -18,7 +18,7 @@ import { Masonry } from "Components/Masonry"
 import { MetaTags } from "Components/MetaTags"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Sticky } from "Components/Sticky"
-import { FC, Fragment, useCallback, useEffect, useRef, useState } from "react"
+import { FC, Fragment, useCallback, useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -50,7 +50,9 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   const [loading, setLoading] = useState(false)
   const [hasDismissedMessage, setHasDismissedMessage] = useState(true)
 
-  const localArtworksImages = useRef<StoredArtworkWithImages[]>([])
+  const [localArtworksImages, setLocalArtworksImages] = useState<
+    StoredArtworkWithImages[]
+  >([])
 
   const isMounted = useDidMount(typeof window !== "undefined")
 
@@ -67,9 +69,16 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   useEffect(() => {
     if (isMounted) {
-      localArtworksImages.current = getLocalImagesByArtwork({
+      getLocalImagesByArtwork({
         key: RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY,
       })
+        .then(localImagesByArtwork => {
+          setLocalArtworksImages(localImagesByArtwork)
+        })
+        .catch(error => {
+          console.error("Error getting local images by artwork", error)
+          return undefined
+        })
     }
   }, [isMounted])
 
@@ -83,7 +92,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
   const getLocalImageSrcByArtworkID = useCallback(
     (artworkID: string): StoredImage | null => {
-      const allArtworkImages = localArtworksImages.current.find(
+      const allArtworkImages = localArtworksImages.find(
         localArtworkImagesObj => localArtworkImagesObj.artworkID === artworkID
       )?.images
       if (allArtworkImages?.length) {

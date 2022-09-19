@@ -17,7 +17,7 @@ import { MyCollectionPhotoToPhoto } from "../Utils/artworkFormHelpers"
 import { ArtworkModel } from "../Utils/artworkModel"
 
 export interface MyCollectionArtworkFormImagesComponentRef {
-  saveImagesToLocalStorage: (artworkId: string) => void
+  saveImagesToLocalStorage: (artworkId: string) => Promise<string | undefined>
 }
 export const MyCollectionArtworkFormImages = forwardRef<
   MyCollectionArtworkFormImagesComponentRef
@@ -29,19 +29,25 @@ export const MyCollectionArtworkFormImages = forwardRef<
   const { relayEnvironment } = useSystemContext()
   const { values, setFieldValue } = useFormikContext<ArtworkModel>()
 
+  const saveImagesToLocalStorage = async (artworkId: string) => {
+    try {
+      // Store the artwork's local images in local storage
+      //and remove unnecessary fields
+      return await storeArtworkLocalImages(
+        artworkId,
+        localImages.map(({ photoID, ...rest }) => rest),
+        RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY
+      )
+    } catch (error) {
+      console.error("Error saving images to localforage storage", error)
+    }
+  }
+
   useImperativeHandle(
     formImagesRef,
     () => {
       return {
-        saveImagesToLocalStorage: (artworkId: string) => {
-          // Store the artwork's local images in local storage
-          //and remove unnecessary fields
-          storeArtworkLocalImages(
-            artworkId,
-            localImages.map(({ photoID, ...rest }) => rest),
-            RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY
-          )
-        },
+        saveImagesToLocalStorage,
       }
     },
     [localImages]
@@ -112,7 +118,11 @@ export const MyCollectionArtworkFormImages = forwardRef<
     image: React.SyntheticEvent<HTMLImageElement, Event>,
     photoID: string
   ) => {
-    const { width, height, currentSrc } = image.target as any
+    const {
+      naturalHeight: height,
+      naturalWidth: width,
+      currentSrc,
+    } = image.target as any
 
     const imageAlreadyAdded = localImages.find(
       localImage => localImage.photoID === photoID

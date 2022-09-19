@@ -129,7 +129,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
 
       // Store images locally
       if (artworkId && artworkFormImagesRef.current) {
-        artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
+        await artworkFormImagesRef.current?.saveImagesToLocalStorage(artworkId)
       }
 
       // Remove photos marked for deletion

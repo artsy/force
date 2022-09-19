@@ -119,7 +119,7 @@ const ArtworkGridItemImage: React.FC<Pick<
     ? transform(imageURL, { width, height })
     : { src: "", srcSet: "" }
 
-  if (imageURL) {
+  if (imageURL && false) {
     return (
       <MagnifyImage
         alt={artwork.image_title ?? ""}
@@ -135,6 +135,8 @@ const ArtworkGridItemImage: React.FC<Pick<
       <MagnifyImage
         src={localHeroImage.data}
         srcSet={""}
+        height={localHeroImage.height}
+        width={localHeroImage.width}
         lazyLoad={lazyLoad}
         preventRightClick={!isTeam}
       />

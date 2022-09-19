@@ -154,7 +154,7 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
     <ImageContainer>
       <Image
         src={photoSrc}
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "contain" }}
         height="100%"
         width="100%"
       />
@@ -193,7 +193,7 @@ const PhotoThumbnailSuccessState: React.FC<
       <ImageContainer>
         <Image
           src={photoSrc}
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "contain" }}
           height="100%"
           width="100%"
           onLoad={onLoad}

@@ -1,3 +1,5 @@
+import localforage from "localforage"
+
 const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 5
 export interface LocalImage {
   data: string
@@ -20,7 +22,7 @@ const addMinutes = (date: Date, minutes: number) => {
   return new Date(date.getTime() + minutes * 60000)
 }
 
-export const storeArtworkLocalImages = (
+export const storeArtworkLocalImages = async (
   artworkID: string,
   images: LocalImage[],
   rootKey: string
@@ -40,29 +42,31 @@ export const storeArtworkLocalImages = (
     imagesToStore.push(imageToStore)
   }
 
-  const localArtworksImages = getLocalImagesByArtwork({ key: rootKey })
+  const localArtworksImages = await getLocalImagesByArtwork({ key: rootKey })
 
   // Get existing artworks with images except the one we are storing
   const updatedLocalArtworksImages = localArtworksImages.filter(
     artworkImagesObj => artworkImagesObj.artworkID !== artworkID
   )
 
+  const existingArtworkImages = await retrieveArtworkLocalImages(
+    artworkID,
+    rootKey
+  )
   // Add the new artwork with images to the list
   updatedLocalArtworksImages.push({
     artworkID,
-    images: imagesToStore.concat(
-      retrieveArtworkLocalImages(artworkID, rootKey)
-    ),
+    images: imagesToStore.concat(existingArtworkImages),
   })
 
   // Store the updated list
   const artworkImages = JSON.stringify(updatedLocalArtworksImages || [])
 
-  return window.localStorage.setItem(rootKey, artworkImages)
+  return localforage.setItem(rootKey, artworkImages)
 }
 
 export const deleteLocalImages = (key: string) => {
-  return window.localStorage.removeItem(key)
+  return localforage.removeItem(key)
 }
 
 // Retrieve all artworks local images that have not expired from local storage
@@ -72,28 +76,35 @@ export const getLocalImagesByArtwork = ({
 }: {
   key: string
   excludeExpired?: boolean
-}): StoredArtworkWithImages[] => {
-  const imagesByArtworkJSONString = window.localStorage.getItem(key)
-
-  const imagesByArtwork = JSON.parse(imagesByArtworkJSONString || "") as
-    | StoredArtworkWithImages[]
-    | null
-
-  if (Array.isArray(imagesByArtwork)) {
-    if (excludeExpired) {
-      return imagesByArtwork.filter(artworkImagesObj => {
-        const images = artworkImagesObj.images.filter(image => {
-          const expirationDate = new Date(image.expirationDate)
-          // Only return images that have not expired
-          return expirationDate > new Date()
-        })
-        // Return only artworks that have at least one image that has not expired
-        return images.length > 0
-      })
-    }
-    return imagesByArtwork
-  }
-  return []
+}): Promise<StoredArtworkWithImages[]> => {
+  return localforage
+    .getItem(key)
+    .then((imagesByArtworkJSONString: string) => {
+      const imagesByArtwork = JSON.parse(imagesByArtworkJSONString || "") as
+        | StoredArtworkWithImages[]
+        | null
+      if (Array.isArray(imagesByArtwork)) {
+        if (excludeExpired) {
+          return imagesByArtwork.filter(artworkImagesObj => {
+            const images = artworkImagesObj.images.filter(image => {
+              // @ts-ignore
+              const expirationDate = new Date(image.expirationDate)
+              // Only return images that have not expired
+              // return expirationDate > new Date()
+              return true
+            })
+            // Return only artworks that have at least one image that has not expired
+            return images.length > 0
+          })
+        }
+        return imagesByArtwork
+      }
+      return []
+    })
+    .catch(error => {
+      console.error(error)
+      return []
+    })
 }
 
 // Return height and width of local image file
@@ -112,11 +123,13 @@ export const getHeightAndWidthFromDataUrl = file => {
 }
 
 // Retrieve artwork local images from local storage
-export const retrieveArtworkLocalImages = (
+export const retrieveArtworkLocalImages = async (
   artworkID: string,
   rootKey: string
-): StoredImage[] => {
-  const localArtworksImages = getLocalImagesByArtwork({ key: rootKey })
+): Promise<StoredImage[]> => {
+  const localArtworksImages = await getLocalImagesByArtwork({
+    key: rootKey,
+  })
   const artworkImages = localArtworksImages?.find(
     artworkImagesObj => artworkImagesObj.artworkID === artworkID
   )
