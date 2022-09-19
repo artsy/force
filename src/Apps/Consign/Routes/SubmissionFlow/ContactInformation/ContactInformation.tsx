@@ -112,7 +112,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={`/sell/submission/${submission?.externalId}/upload-photos`}
+        to={
+          artworkId
+            ? `/sell/submission/${submission?.externalId}/upload-photos/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/upload-photos`
+        }
       >
         Back
       </BackLink>

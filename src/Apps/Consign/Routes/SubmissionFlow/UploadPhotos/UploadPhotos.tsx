@@ -82,10 +82,9 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   const initialValue = getUploadPhotosFormInitialValues(submission)
   const initialErrors = validate(initialValue, uploadPhotosValidationSchema)
+  const artworkId = myCollectionArtworkSubmissionPhotos?.internalID
 
   const handleSubmit = async () => {
-    const artworkId = myCollectionArtworkSubmissionPhotos?.internalID
-
     if (submission) {
       router.push({
         pathname: artworkId
@@ -101,7 +100,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={`/sell/submission/${submission?.externalId}/artwork-details`}
+        to={
+          artworkId
+            ? `/sell/submission/${submission?.externalId}/artwork-details/${artworkId}`
+            : `/sell/submission/${submission?.externalId}/artwork-details`
+        }
       >
         Back
       </BackLink>

@@ -36,7 +36,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
   myCollectionArtworkSubmissionDetails,
 }) => {
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
   const initialValue = getArtworkDetailsFormInitialValues(
@@ -101,7 +101,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         utmTerm: utmParams?.utmTerm,
         sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
       }
-      if (artworkId) {
+      if (artworkId && !match?.params?.id) {
         // @ts-ignore
         ;(submissionData.source as ConsignmentSubmissionSource) = "MY_COLLECTION"
         // @ts-ignore

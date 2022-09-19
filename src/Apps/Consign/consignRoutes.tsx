@@ -224,6 +224,37 @@ export const consignRoutes: AppRouteConfig[] = [
         render: renderSubmissionFlowStep,
       },
       {
+        path: ":id/artwork-details/:artworkId",
+        hideNav: true,
+        hideFooter: true,
+        getComponent: () => ArtworkDetailsFragmentContainer,
+        onClientSideRender: () => {
+          ArtworkDetailsFragmentContainer.preload()
+        },
+        query: graphql`
+          query consignRoutes_artworkDetailsWithArtworkIdQuery(
+            $id: ID
+            $externalId: ID
+            $sessionID: String
+            $artworkId: String!
+          ) {
+            submission(
+              id: $id
+              externalId: $externalId
+              sessionID: $sessionID
+            ) {
+              ...ArtworkDetails_submission
+              ...redirects_submission @relay(mask: false)
+            }
+            myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+            }
+          }
+        `,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+        render: renderSubmissionFlowStep,
+      },
+      {
         path: ":id/upload-photos",
         hideNav: true,
         hideFooter: true,
