@@ -56,7 +56,7 @@ describe("MyCollectionArtworkSidebar", () => {
         screen.getByText("Drawing, Collage or other Work on Paper")
       ).toBeInTheDocument()
       expect(
-        screen.getByText("22 × 16 1/2 in 55.9 × 41.9 cm", {
+        screen.getByText("22 × 16 1/2 in", {
           collapseWhitespace: true,
         })
       ).toBeInTheDocument()
@@ -64,6 +64,23 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("This is a unique work")).toBeInTheDocument()
       expect(screen.getByText("€25,300")).toBeInTheDocument()
       expect(screen.getByText("Berlin")).toBeInTheDocument()
+    })
+
+    describe("when metric is set to 'cm'", () => {
+      beforeEach(() => {
+        renderWithRelay(
+          { Artwork: () => ({ ...mockResolversWithData, metric: "cm" }) },
+          false
+        )
+      })
+
+      it("displays size in cm", () => {
+        expect(
+          screen.getByText("55.9 × 41.9 cm", {
+            collapseWhitespace: true,
+          })
+        ).toBeInTheDocument()
+      })
     })
   })
 
@@ -118,7 +135,7 @@ const mockResolversWithData = {
   category: "Drawing, Collage or other Work on Paper",
   date: "1979",
   medium: "Acrylic on cotton sweatshirt.",
-  metric: "IN",
+  metric: "in",
   dimensions: {
     in: "22 × 16 1/2 in",
     cm: "55.9 × 41.9 cm",

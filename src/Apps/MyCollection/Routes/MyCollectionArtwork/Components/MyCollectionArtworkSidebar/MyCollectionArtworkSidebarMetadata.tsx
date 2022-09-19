@@ -16,6 +16,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
     category,
     dimensions,
     medium,
+    metric,
     pricePaid,
     provenance,
   } = artwork
@@ -30,7 +31,7 @@ export const MyCollectionArtworkSidebarMetadata: React.FC<MyCollectionArtworkSid
       />
       <MetadataField
         label="Size"
-        value={[dimensions?.in, dimensions?.cm].filter(d => d).join("\n")}
+        value={metric === "in" ? dimensions?.in : dimensions?.cm}
       />
 
       <MetadataField label="Location" value={artworkLocation} />
@@ -47,6 +48,7 @@ export const MyCollectionArtworkSidebarMetadataFragmentContainer = createFragmen
       fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
         category
         medium
+        metric
         dimensions {
           in
           cm
