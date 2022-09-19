@@ -50,7 +50,7 @@ export const Header: React.FC = () => {
               auction, private sale, or direct listing on Artsy.
             </Text>
 
-            {!showGetInTouchCTA ? (
+            {showGetInTouchCTA ? (
               <Flex flexDirection={["column", "row"]} maxWidth="450px">
                 <Flex flex={1}>
                   <Button
