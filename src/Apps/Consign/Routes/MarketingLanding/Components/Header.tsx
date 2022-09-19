@@ -61,6 +61,7 @@ export const Header: React.FC = () => {
                     onClick={trackSubmitClick}
                     mb={[2, 0]}
                     width={"100%"}
+                    data-testid="submit-artwork-button"
                   >
                     Submit an Artwork
                   </Button>
@@ -75,6 +76,7 @@ export const Header: React.FC = () => {
                     onClick={trackSubmitClick}
                     mb={[4, 0]}
                     width={"100%"}
+                    data-testid="get-in-touch-button"
                   >
                     Get in Touch
                   </Button>
@@ -88,6 +90,7 @@ export const Header: React.FC = () => {
                 to="/sell/submission/artwork-details"
                 onClick={trackSubmitClick}
                 mb={[4, 0]}
+                data-testid="submit-artwork-button"
               >
                 Submit an Artwork
               </Button>
