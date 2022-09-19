@@ -1,0 +1,356 @@
+/* tslint:disable */
+/* eslint-disable */
+// @ts-nocheck
+
+import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
+export type ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryVariables = {
+    artworkId: string;
+};
+export type ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryResponse = {
+    readonly myCollectionArtworkSubmissionDetails: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtworkSubmissionDetails">;
+    } | null;
+};
+export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query = {
+    readonly response: ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryResponse;
+    readonly variables: ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryVariables;
+};
+
+
+
+/*
+query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(
+  $artworkId: String!
+) {
+  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
+    ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+    id
+  }
+}
+
+fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+  internalID
+  artist {
+    internalID
+    name
+    id
+  }
+  location {
+    city
+    country
+    state
+    postalCode
+    id
+  }
+  date
+  title
+  medium
+  attributionClass {
+    name
+    id
+  }
+  editionNumber
+  editionSize
+  height
+  width
+  depth
+  metric
+  provenance
+}
+*/
+
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "artworkId"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "artworkId"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+};
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
+    "selections": [
+      {
+        "alias": "myCollectionArtworkSubmissionDetails",
+        "args": (v1/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtworkDetails_myCollectionArtworkSubmissionDetails"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Operation",
+    "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
+    "selections": [
+      {
+        "alias": "myCollectionArtworkSubmissionDetails",
+        "args": (v1/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "city",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "country",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "postalCode",
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "date",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "medium",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "AttributionClass",
+            "kind": "LinkedField",
+            "name": "attributionClass",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "editionNumber",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "editionSize",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "height",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "width",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "depth",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "metric",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "provenance",
+            "storageKey": null
+          },
+          (v4/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ]
+  },
+  "params": {
+    "cacheID": "7075b389ab8854e910514a63ca3df226",
+    "id": null,
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "myCollectionArtworkSubmissionDetails": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "myCollectionArtworkSubmissionDetails.artist": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artist"
+        },
+        "myCollectionArtworkSubmissionDetails.artist.id": (v5/*: any*/),
+        "myCollectionArtworkSubmissionDetails.artist.internalID": (v5/*: any*/),
+        "myCollectionArtworkSubmissionDetails.artist.name": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.attributionClass": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "AttributionClass"
+        },
+        "myCollectionArtworkSubmissionDetails.attributionClass.id": (v5/*: any*/),
+        "myCollectionArtworkSubmissionDetails.attributionClass.name": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.date": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.depth": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.editionNumber": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.editionSize": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.height": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.id": (v5/*: any*/),
+        "myCollectionArtworkSubmissionDetails.internalID": (v5/*: any*/),
+        "myCollectionArtworkSubmissionDetails.location": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Location"
+        },
+        "myCollectionArtworkSubmissionDetails.location.city": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.location.country": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.location.id": (v5/*: any*/),
+        "myCollectionArtworkSubmissionDetails.location.postalCode": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.location.state": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.medium": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.metric": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.provenance": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.title": (v6/*: any*/),
+        "myCollectionArtworkSubmissionDetails.width": (v6/*: any*/)
+      }
+    },
+    "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
+    "operationKind": "query",
+    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtworkSubmissionDetails\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+  }
+};
+})();
+(node as any).hash = '9eea8a7889de891e7dae5e6900cd06f5';
+export default node;

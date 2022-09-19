@@ -71,8 +71,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   submission,
   myCollectionArtworkSubmissionPhotos,
 }) => {
-  console.log("[LOGD] submission = ", submission)
-
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
