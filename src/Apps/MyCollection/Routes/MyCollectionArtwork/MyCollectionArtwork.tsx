@@ -233,9 +233,6 @@ export const MyCollectionArtworkFragmentContainer = createFragmentContainer(
         }
         hasMarketPriceInsights
         submissionId
-        consignmentSubmission {
-          displayText
-        }
         internalID
         artist {
           slug
