@@ -112,7 +112,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       openAuthModal(ModalType.login, {
         redirectTo,
         intent: Intent.bid,
-        copy: "Sign up to bid on artworks",
+        copy: "Log in to bid on artworks",
         contextModule: ContextModule.artworkSidebar,
       })
     } else {
