@@ -76,6 +76,16 @@ const ThankYou = loadable(
   }
 )
 
+const ThankYouWhenFromMyCollection = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ThankYou/ThankYouWhenFromMyCollection"
+    ),
+  {
+    resolveComponent: component => component.ThankYouWhenFromMyCollection,
+  }
+)
+
 const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
   if (!(Component && props)) {
     return undefined
@@ -346,11 +356,12 @@ export const consignRoutes: AppRouteConfig[] = [
         path: ":id/thank-you/:artworkId?",
         hideNav: true,
         hideFooter: true,
-        getComponent: () => ThankYou,
+        getComponent: () => ThankYouWhenFromMyCollection,
         onClientSideRender: () => {
-          ThankYou.preload()
+          ThankYouWhenFromMyCollection.preload()
         },
       },
     ],
   },
 ]
+// ThankYouWhenFromMyCollection
