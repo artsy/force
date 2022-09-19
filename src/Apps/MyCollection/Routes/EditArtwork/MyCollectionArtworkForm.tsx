@@ -120,7 +120,7 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         artworkLocation: values.artworkLocation,
       })
 
-      // Adding tracking after a successfully adding an artwork
+      // Track saving only when the user adds a new artwork.
       if (!isEditing) {
         trackEvent(tracks.saveCollectedArtwork())
       }
