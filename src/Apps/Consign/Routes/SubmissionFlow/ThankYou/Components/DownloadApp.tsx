@@ -50,7 +50,7 @@ const BannerFrontPartStyledImage = styled(Image)`
   `}
 `
 
-export const DownloadApps: React.FC<BoxProps> = props => {
+export const DownloadApp: React.FC<BoxProps> = props => {
   return (
     <GridColumns {...props}>
       <Column

@@ -70,7 +70,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
           data-test="buyerTotalDisplayAmount"
         />
         <Spacer mb={2} />
-        <Text variant={["xs", "sm"]} color="black60">
+        <Text variant="xs" color="black60">
           *Additional duties and taxes{" "}
           <a
             href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
@@ -80,12 +80,14 @@ export class TransactionDetailsSummaryItem extends React.Component<
             may apply at import.
           </a>
         </Text>
-        <Spacer mb={2} />
         {this.shippingNotCalculated() && (
-          <Text variant={["xs", "sm"]} color="black60">
-            **Shipping costs to be confirmed by gallery. You will be able to
-            review the total price before payment.
-          </Text>
+          <>
+            <Spacer mb={2} />
+            <Text variant="xs" color="black60">
+              **Shipping costs to be confirmed by gallery. You will be able to
+              review the total price before payment.
+            </Text>
+          </>
         )}
         {showOfferNote && order.mode === "OFFER" && this.renderNoteEntry()}
         {showCongratulationMessage && (
@@ -98,7 +100,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
             justifyContent="center"
             order={[2, 1]}
             p={2}
-            mt={4}
+            mt={2}
           >
             <Flex flexDirection="column" mr="auto">
               <Text variant="sm" color="blue100">
@@ -281,11 +283,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
     if (offer?.note) {
       return (
         <>
-          <Spacer mb={[2, 4]} />
-          <Text variant={["xs", "sm"]} fontWeight="bold" color="black100">
+          <Spacer mt={2} />
+          <Text variant="sm" fontWeight="bold" color="black100">
             Your note
           </Text>
-          <Text size={["xs", "sm"]} color="black60">
+          <Text size="sm" color="black60">
             {offer.note}
           </Text>
         </>
@@ -306,13 +308,13 @@ interface EntryProps extends SecondaryEntryProps {
 const Entry: React.FC<EntryProps> = ({ label, value, final }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
-      <Text variant={["xs", "sm"]} color={final ? "black100" : "black60"}>
+      <Text variant="sm" color={final ? "black100" : "black60"}>
         {label}
       </Text>
     </div>
     <div>
       <Text
-        variant={["xs", "sm"]}
+        variant="sm"
         color={final ? "black100" : "black60"}
         fontWeight={final ? "semibold" : "regular"}
       >

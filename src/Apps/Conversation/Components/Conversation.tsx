@@ -64,8 +64,8 @@ const GuaranteeBanner: React.FC<{ conversationID: string }> = ({
   return showBanner ? (
     <Banner variant="brand">
       <GuaranteeIcon mr={1} fill="white100" />
-      To protect your payment, always communicate and pay through the Artsy
-      platform.
+      To be covered by the Artsy Guarantee, always communicate and pay through
+      the Artsy platform.
     </Banner>
   ) : null
 }

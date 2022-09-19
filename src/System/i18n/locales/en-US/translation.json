@@ -27,7 +27,7 @@
     "sell": "Sell",
     "priceDatabase": "Price Database",
     "editorial": "Editorial",
-    "downloadApp": "Download Apps",
+    "downloadApp": "Download App",
     "searchBy": "Search by artist, gallery, style, theme, tag, etc.",
     "searchArtsy": "Search Artsy"
   },
@@ -76,5 +76,11 @@
         "description": "Get notifications for similar works"
       }
     }
+  },
+  "searchApp" : {
+    "noResultsFound": "No results found.",
+    "resultsCount_zero": "No results found for",
+    "resultsCount_one": "1 result for",
+    "resultsCount_other": "{{count}} results for"
   }
 }

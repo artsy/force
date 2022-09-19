@@ -30,7 +30,7 @@ describe("MyCollectionArtworkSidebar", () => {
 
   describe("for artwork with metadata", () => {
     beforeEach(() => {
-      renderWithRelay(mockResolversWithData, false)
+      renderWithRelay({ Artwork: () => mockResolversWithData }, false)
     })
 
     it("displays artists names and title with the artist url", () => {
@@ -56,7 +56,7 @@ describe("MyCollectionArtworkSidebar", () => {
         screen.getByText("Drawing, Collage or other Work on Paper")
       ).toBeInTheDocument()
       expect(
-        screen.getByText("22 × 16 1/2 in 55.9 × 41.9 cm", {
+        screen.getByText("22 × 16 1/2 in", {
           collapseWhitespace: true,
         })
       ).toBeInTheDocument()
@@ -65,11 +65,28 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("€25,300")).toBeInTheDocument()
       expect(screen.getByText("Berlin")).toBeInTheDocument()
     })
+
+    describe("when metric is set to 'cm'", () => {
+      beforeEach(() => {
+        renderWithRelay(
+          { Artwork: () => ({ ...mockResolversWithData, metric: "cm" }) },
+          false
+        )
+      })
+
+      it("displays size in cm", () => {
+        expect(
+          screen.getByText("55.9 × 41.9 cm", {
+            collapseWhitespace: true,
+          })
+        ).toBeInTheDocument()
+      })
+    })
   })
 
   describe("for artwork with minimal metadata", () => {
     beforeEach(() => {
-      renderWithRelay(emptyMockResolvers, false)
+      renderWithRelay({ Artwork: () => emptyMockResolvers }, false)
     })
 
     it("displays artists names and title", () => {
@@ -109,46 +126,43 @@ describe("MyCollectionArtworkSidebar", () => {
 })
 
 const mockResolversWithData = {
-  Artwork: () => ({
-    artistNames: "Jean-Michel Basquiat",
-    artist: {
-      href: "/artist/artist-id",
-    },
-    title:
-      "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
-    category: "Drawing, Collage or other Work on Paper",
-    date: "1979",
-    medium: "Acrylic on cotton sweatshirt.",
-    dimensions: {
-      in: "22 × 16 1/2 in",
-      cm: "55.9 × 41.9 cm",
-    },
-    provenance: "Bought in a gallery",
-    attributionClass: {
-      shortDescription: "This is a unique work",
-    },
-    pricePaid: {
-      display: "€25,300",
-    },
-    artworkLocation: "Berlin",
-  }),
+  artistNames: "Jean-Michel Basquiat",
+  artist: {
+    href: "/artist/artist-id",
+  },
+  title:
+    "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
+  category: "Drawing, Collage or other Work on Paper",
+  date: "1979",
+  medium: "Acrylic on cotton sweatshirt.",
+  metric: "in",
+  dimensions: {
+    in: "22 × 16 1/2 in",
+    cm: "55.9 × 41.9 cm",
+  },
+  provenance: "Bought in a gallery",
+  attributionClass: {
+    shortDescription: "This is a unique work",
+  },
+  pricePaid: {
+    display: "€25,300",
+  },
+  artworkLocation: "Berlin",
 }
 
 const emptyMockResolvers = {
-  Artwork: () => ({
-    artistNames: "Jean-Michel Basquiat",
-    artist: {
-      href: "/artist/artist-id",
-    },
-    title:
-      "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
-    date: "1979",
-    category: "Drawing, Collage or other Work on Paper",
-    medium: "Acrylic on cotton sweatshirt.",
-    dimensions: null,
-    provenance: null,
-    attributionClass: null,
-    pricePaid: null,
-    artworkLocation: null,
-  }),
+  artistNames: "Jean-Michel Basquiat",
+  artist: {
+    href: "/artist/artist-id",
+  },
+  title:
+    "Basquiat hand-painted sweatshirt 1979/1980 (early Jean-Michel Basquiat)",
+  date: "1979",
+  category: "Drawing, Collage or other Work on Paper",
+  medium: "Acrylic on cotton sweatshirt.",
+  dimensions: null,
+  provenance: null,
+  attributionClass: null,
+  pricePaid: null,
+  artworkLocation: null,
 }

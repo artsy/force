@@ -16,6 +16,7 @@ import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "System/Router/useRouter"
 import { Sticky, StickyProvider } from "Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
+import { useTranslation } from "react-i18next"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer
@@ -25,10 +26,12 @@ const TotalResults: React.FC<{ count: number; term: string }> = ({
   count,
   term,
 }) => {
+  const { t } = useTranslation()
+
   return (
     <>
       <Text variant={["lg-display", "xl"]} display="inline">
-        {count.toLocaleString()} result{count > 1 ? "s" : ""} for
+        {t(`searchApp.resultsCount`, { count: count })}
       </Text>
       <Text variant={["lg-display", "xl"]} color="blue100" display="inline">
         {` \u201C${term}\u201D`}
