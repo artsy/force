@@ -235,7 +235,7 @@ describe("Edit artwork", () => {
       )
 
       expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/my-collection/artwork/62fc96c48d3ff8000b556c3a",
+        pathname: "/settings/my-collection",
       })
     })
   })
