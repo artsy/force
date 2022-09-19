@@ -34,7 +34,6 @@ interface MyCollectionArtworkProps {
 const MyCollectionArtwork: React.FC<MyCollectionArtworkProps> = ({
   artwork,
 }) => {
-  console.log("[LOGD] artwork = ", artwork)
   const [showHowItWorksModal, setShowHowItWorksModal] = useState<boolean>(false)
 
   const isMyCollectionPhase3Enabled = useFeatureFlag(

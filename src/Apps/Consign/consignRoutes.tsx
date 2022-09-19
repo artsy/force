@@ -104,8 +104,6 @@ const renderSubmissionFlowStep = ({ Component, props, match, resolving }) => {
 }
 
 const preparePrefillSubmissionFromArtworkVariables = data => {
-  console.log("[LOGD] data => ", data)
-
   return {
     id: data.id,
     ...data,
