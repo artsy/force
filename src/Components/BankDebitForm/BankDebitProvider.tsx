@@ -39,11 +39,11 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
   const {
     selectedPaymentMethod,
     stripeClient,
+    isStripePaymentElementLoading,
     setStripeClient,
   } = useOrderPaymentContext()
 
   const [bankDebitSetupError, setBankDebitSetupError] = useState(false)
-  const [isPaymentElementLoading, setIsPaymentElementLoading] = useState(true)
   const { submitMutation } = CreateBankDebitSetupForOrder()
 
   useEffect(() => {
@@ -140,15 +140,12 @@ export const BankDebitProvider: FC<Props> = ({ order }) => {
         camelCase(selectedPaymentMethod)
       )}`}
     >
-      <LoadingArea isLoading={isPaymentElementLoading}>
-        {isPaymentElementLoading && <Box height={300}></Box>}
+      <LoadingArea isLoading={isStripePaymentElementLoading}>
+        {isStripePaymentElementLoading && <Box height={300}></Box>}
         <Spacer mt={2} />
         {stripeClient && (
           <Elements options={options} stripe={stripePromise}>
-            <BankDebitForm
-              order={order}
-              onSetIsPaymentElementLoading={setIsPaymentElementLoading}
-            />
+            <BankDebitForm order={order} />
           </Elements>
         )}
         {bankDebitSetupError && <BankSetupErrorMessage />}

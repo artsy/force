@@ -21,18 +21,15 @@ import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext
 
 interface Props {
   order: { mode: string | null; internalID: string }
-  onSetIsPaymentElementLoading: (arg: boolean) => void
 }
 
-export const BankDebitForm: FC<Props> = ({
-  order,
-  onSetIsPaymentElementLoading,
-}) => {
+export const BankDebitForm: FC<Props> = ({ order }) => {
   const {
     selectedPaymentMethod,
     bankAccountHasInsufficientFunds,
     setBankAccountHasInsufficientFunds,
     setIsSavingPayment,
+    setIsStripePaymentElementLoading,
   } = useOrderPaymentContext()
 
   const stripe = useStripe()
@@ -95,7 +92,7 @@ export const BankDebitForm: FC<Props> = ({
   return (
     <form onSubmit={handleSubmit} style={{ padding: "0px 4px" }}>
       <PaymentElement
-        onReady={() => onSetIsPaymentElementLoading(false)}
+        onReady={() => setIsStripePaymentElementLoading(false)}
         onChange={event => handlePaymentElementChange(event)}
         options={{
           defaultValues: {

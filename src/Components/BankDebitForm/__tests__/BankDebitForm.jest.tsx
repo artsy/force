@@ -60,6 +60,7 @@ describe("BankDebitForm", () => {
           bankAccountHasInsufficientFunds: true,
           setBankAccountHasInsufficientFunds: jest.fn(),
           setIsSavingPayment: jest.fn(),
+          setIsStripePaymentElementLoading: jest.fn(),
         }
       })
     })
@@ -67,12 +68,7 @@ describe("BankDebitForm", () => {
     it("tracks a `complete` event from the onChange handler", () => {
       mockEvent = { complete: true, empty: true }
 
-      render(
-        <BankDebitForm
-          order={testOrder}
-          onSetIsPaymentElementLoading={jest.fn()}
-        />
-      )
+      render(<BankDebitForm order={testOrder} />)
 
       expect(trackEvent).toHaveBeenCalledWith({
         flow: "BUY",
@@ -84,12 +80,7 @@ describe("BankDebitForm", () => {
     })
 
     it("renders correct not enough funds message", () => {
-      const screen = render(
-        <BankDebitForm
-          order={testOrder}
-          onSetIsPaymentElementLoading={jest.fn()}
-        />
-      )
+      const screen = render(<BankDebitForm order={testOrder} />)
 
       expect(
         screen.queryByText("This bank account doesn’t have enough funds.")
@@ -105,17 +96,13 @@ describe("BankDebitForm", () => {
           bankAccountHasInsufficientFunds: true,
           setBankAccountHasInsufficientFunds: jest.fn(),
           setIsSavingPayment: jest.fn(),
+          setIsStripePaymentElementLoading: jest.fn(),
         }
       })
     })
 
     it("does not render a checkbox to save bank account", () => {
-      const screen = render(
-        <BankDebitForm
-          order={testOrder}
-          onSetIsPaymentElementLoading={jest.fn()}
-        />
-      )
+      const screen = render(<BankDebitForm order={testOrder} />)
 
       expect(
         screen.queryByTestId("SaveBankAccountCheckbox")
