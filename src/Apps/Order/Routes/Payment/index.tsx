@@ -13,6 +13,7 @@ import { Payment_order } from "__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 // utils, hooks, mutations and system tools
+import { extractNodes } from "Utils/extractNodes"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import createLogger from "Utils/logger"
@@ -26,6 +27,10 @@ import {
 } from "Apps/Order/Utils/orderUtils"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "../../Mutations/useSetPayment"
+import {
+  useOrderPaymentContext,
+  OrderPaymentContextProvider,
+} from "./PaymentContext/OrderPaymentContext"
 
 // components
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
@@ -42,8 +47,6 @@ import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
-import { extractNodes } from "Utils/extractNodes"
-import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -72,6 +75,84 @@ export interface BankAccountSelection {
 }
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
+  return (
+    <OrderPaymentContextProvider>
+      <PaymentRouteContent {...props} />
+    </OrderPaymentContextProvider>
+  )
+}
+
+graphql`
+  fragment Payment_validation on CommerceOrder {
+    paymentMethod
+    paymentMethodDetails {
+      __typename
+      ... on CreditCard {
+        id
+      }
+      ... on BankAccount {
+        id
+      }
+      ... on WireTransfer {
+        isManualPayment
+      }
+    }
+  }
+`
+
+export const PaymentFragmentContainer = createFragmentContainer(
+  injectCommitMutation(injectDialog(PaymentRoute)),
+  {
+    me: graphql`
+      fragment Payment_me on Me {
+        bankAccounts(first: 100) {
+          edges {
+            node {
+              internalID
+              last4
+            }
+          }
+        }
+        ...CreditCardPicker_me
+        ...BankAccountPicker_me
+      }
+    `,
+    order: graphql`
+      fragment Payment_order on CommerceOrder {
+        bankAccountId
+        availablePaymentMethods
+        buyerTotalCents
+        internalID
+        mode
+        currencyCode
+        buyerTotal(precision: 2)
+        lineItems {
+          edges {
+            node {
+              artwork {
+                slug
+              }
+            }
+          }
+        }
+        ...Payment_validation @relay(mask: false)
+        ...CreditCardPicker_order
+        ...BankAccountPicker_order
+        ...ArtworkSummaryItem_order
+        ...TransactionDetailsSummaryItem_order
+      }
+    `,
+  }
+)
+
+export const PaymentRouteContent: FC<PaymentRouteProps> = props => {
+  const { order, me } = props
+  const { trackEvent } = useTracking()
+  const { match } = useRouter()
+  const { submitMutation: setPaymentMutation } = useSetPayment()
+
+  const CreditCardPicker = createRef<CreditCardPicker>()
+
   const {
     selectedBankAccountId,
     selectedPaymentMethod,
@@ -84,11 +165,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     setIsSavingPayment,
   } = useOrderPaymentContext()
 
-  const { trackEvent } = useTracking()
-  const { order, me } = props
-  const { match } = useRouter()
-  const CreditCardPicker = createRef<CreditCardPicker>()
-  const { submitMutation: setPaymentMutation } = useSetPayment()
+  const balanceCheckEnabled =
+    useFeatureFlag("bank_account_balance_check") &&
+    selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   useEffect(() => {
     const bankAccountsArray =
@@ -104,10 +183,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const balanceCheckEnabled =
-    useFeatureFlag("bank_account_balance_check") &&
-    selectedPaymentMethod === "US_BANK_ACCOUNT"
-
   /*
     hook to handle Stripe redirect for newly-linked bank account
     isProcessingRedirect indicates handling redirect and setting payment by SetupIntentId
@@ -121,7 +196,39 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
   const displayLoading = isProcessingRedirect || isSavingPayment
 
-  // user's existing ACH bank accounts, if any
+  // fired when balance check is done: either sets error state or moves to /review
+  const handleBalanceCheckComplete = (
+    displayInsufficientFundsError: boolean,
+    checkResult: BalanceCheckResult
+  ) => {
+    const event = {
+      subject: "balance_account_check",
+      outcome: checkResult,
+      payment_method: selectedPaymentMethod,
+      currency: order.currencyCode,
+      amount: order.buyerTotalCents,
+      order_id: order.internalID,
+      context_page_owner_type: OwnerType.ordersPayment,
+      action: ActionType.checkedAccountBalance,
+      flow: order.mode!,
+    }
+
+    trackEvent(event)
+
+    setBalanceCheckComplete(true)
+    setIsSavingPayment(false)
+
+    if (displayInsufficientFundsError) {
+      setBankAccountHasInsufficientFunds(true)
+      return
+    }
+
+    handlePaymentStepComplete()
+  }
+
+  const handlePaymentStepComplete = () => {
+    props.router.push(`/orders/${props.order.internalID}/review`)
+  }
 
   // fired when save and continue is clicked for CC and Wire payment methods
   const handleSetPayment = () => {
@@ -208,40 +315,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       logger.error(error)
       props.dialog.showErrorDialog()
     }
-  }
-
-  // fired when balance check is done: either sets error state or moves to /review
-  const handleBalanceCheckComplete = (
-    displayInsufficientFundsError: boolean,
-    checkResult: BalanceCheckResult
-  ) => {
-    const event = {
-      subject: "balance_account_check",
-      outcome: checkResult,
-      payment_method: selectedPaymentMethod,
-      currency: order.currencyCode,
-      amount: order.buyerTotalCents,
-      order_id: order.internalID,
-      context_page_owner_type: OwnerType.ordersPayment,
-      action: ActionType.checkedAccountBalance,
-      flow: order.mode!,
-    }
-
-    trackEvent(event)
-
-    setBalanceCheckComplete(true)
-    setIsSavingPayment(false)
-
-    if (displayInsufficientFundsError) {
-      setBankAccountHasInsufficientFunds(true)
-      return
-    }
-
-    handlePaymentStepComplete()
-  }
-
-  const handlePaymentStepComplete = () => {
-    props.router.push(`/orders/${props.order.internalID}/review`)
   }
 
   // complete payment when balance check is disabled and bank account is set
@@ -371,66 +444,3 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     </Box>
   )
 }
-
-graphql`
-  fragment Payment_validation on CommerceOrder {
-    paymentMethod
-    paymentMethodDetails {
-      __typename
-      ... on CreditCard {
-        id
-      }
-      ... on BankAccount {
-        id
-      }
-      ... on WireTransfer {
-        isManualPayment
-      }
-    }
-  }
-`
-
-export const PaymentFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(PaymentRoute)),
-  {
-    me: graphql`
-      fragment Payment_me on Me {
-        bankAccounts(first: 100) {
-          edges {
-            node {
-              internalID
-              last4
-            }
-          }
-        }
-        ...CreditCardPicker_me
-        ...BankAccountPicker_me
-      }
-    `,
-    order: graphql`
-      fragment Payment_order on CommerceOrder {
-        bankAccountId
-        availablePaymentMethods
-        buyerTotalCents
-        internalID
-        mode
-        currencyCode
-        buyerTotal(precision: 2)
-        lineItems {
-          edges {
-            node {
-              artwork {
-                slug
-              }
-            }
-          }
-        }
-        ...Payment_validation @relay(mask: false)
-        ...CreditCardPicker_order
-        ...BankAccountPicker_order
-        ...ArtworkSummaryItem_order
-        ...TransactionDetailsSummaryItem_order
-      }
-    `,
-  }
-)
