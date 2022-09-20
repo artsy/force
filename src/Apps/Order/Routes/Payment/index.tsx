@@ -27,10 +27,7 @@ import {
 } from "Apps/Order/Utils/orderUtils"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "../../Mutations/useSetPayment"
-import {
-  useOrderPaymentContext,
-  OrderPaymentContextProvider,
-} from "./PaymentContext/OrderPaymentContext"
+import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 // components
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
@@ -75,77 +72,6 @@ export interface BankAccountSelection {
 }
 
 export const PaymentRoute: FC<PaymentRouteProps> = props => {
-  return (
-    <OrderPaymentContextProvider>
-      <PaymentRouteContent {...props} />
-    </OrderPaymentContextProvider>
-  )
-}
-
-graphql`
-  fragment Payment_validation on CommerceOrder {
-    paymentMethod
-    paymentMethodDetails {
-      __typename
-      ... on CreditCard {
-        id
-      }
-      ... on BankAccount {
-        id
-      }
-      ... on WireTransfer {
-        isManualPayment
-      }
-    }
-  }
-`
-
-export const PaymentFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(PaymentRoute)),
-  {
-    me: graphql`
-      fragment Payment_me on Me {
-        bankAccounts(first: 100) {
-          edges {
-            node {
-              internalID
-              last4
-            }
-          }
-        }
-        ...CreditCardPicker_me
-        ...BankAccountPicker_me
-      }
-    `,
-    order: graphql`
-      fragment Payment_order on CommerceOrder {
-        bankAccountId
-        availablePaymentMethods
-        buyerTotalCents
-        internalID
-        mode
-        currencyCode
-        buyerTotal(precision: 2)
-        lineItems {
-          edges {
-            node {
-              artwork {
-                slug
-              }
-            }
-          }
-        }
-        ...Payment_validation @relay(mask: false)
-        ...CreditCardPicker_order
-        ...BankAccountPicker_order
-        ...ArtworkSummaryItem_order
-        ...TransactionDetailsSummaryItem_order
-      }
-    `,
-  }
-)
-
-export const PaymentRouteContent: FC<PaymentRouteProps> = props => {
   const { order, me } = props
   const { trackEvent } = useTracking()
   const { match } = useRouter()
@@ -444,3 +370,66 @@ export const PaymentRouteContent: FC<PaymentRouteProps> = props => {
     </Box>
   )
 }
+
+graphql`
+  fragment Payment_validation on CommerceOrder {
+    paymentMethod
+    paymentMethodDetails {
+      __typename
+      ... on CreditCard {
+        id
+      }
+      ... on BankAccount {
+        id
+      }
+      ... on WireTransfer {
+        isManualPayment
+      }
+    }
+  }
+`
+
+export const PaymentFragmentContainer = createFragmentContainer(
+  injectCommitMutation(injectDialog(PaymentRoute)),
+  {
+    me: graphql`
+      fragment Payment_me on Me {
+        bankAccounts(first: 100) {
+          edges {
+            node {
+              internalID
+              last4
+            }
+          }
+        }
+        ...CreditCardPicker_me
+        ...BankAccountPicker_me
+      }
+    `,
+    order: graphql`
+      fragment Payment_order on CommerceOrder {
+        bankAccountId
+        availablePaymentMethods
+        buyerTotalCents
+        internalID
+        mode
+        currencyCode
+        buyerTotal(precision: 2)
+        lineItems {
+          edges {
+            node {
+              artwork {
+                slug
+              }
+            }
+          }
+        }
+        ...Payment_validation @relay(mask: false)
+        ...CreditCardPicker_order
+        ...BankAccountPicker_order
+        ...ArtworkSummaryItem_order
+        ...TransactionDetailsSummaryItem_order
+      }
+    `,
+  }
+)
