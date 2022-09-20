@@ -1,6 +1,6 @@
 import localforage from "localforage"
 
-const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 5
+const GEMINI_IMAGE_PROCESS_TIME_IN_MINUTES = 1
 export interface LocalImage {
   data: string
   width: number
@@ -49,10 +49,7 @@ export const storeArtworkLocalImages = async (
     artworkImagesObj => artworkImagesObj.artworkID !== artworkID
   )
 
-  const existingArtworkImages = await retrieveArtworkLocalImages(
-    artworkID,
-    rootKey
-  )
+  const existingArtworkImages = await getArtworkLocalImages(artworkID, rootKey)
   // Add the new artwork with images to the list
   updatedLocalArtworksImages.push({
     artworkID,
@@ -90,8 +87,7 @@ export const getLocalImagesByArtwork = ({
               // @ts-ignore
               const expirationDate = new Date(image.expirationDate)
               // Only return images that have not expired
-              // return expirationDate > new Date()
-              return true
+              return expirationDate > new Date()
             })
             // Return only artworks that have at least one image that has not expired
             return images.length > 0
@@ -123,7 +119,7 @@ export const getHeightAndWidthFromDataUrl = file => {
 }
 
 // Retrieve artwork local images from local storage
-export const retrieveArtworkLocalImages = async (
+export const getArtworkLocalImages = async (
   artworkID: string,
   rootKey: string
 ): Promise<StoredImage[]> => {

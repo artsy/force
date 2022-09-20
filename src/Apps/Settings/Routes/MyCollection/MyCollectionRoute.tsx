@@ -23,7 +23,6 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { extractNodes } from "Utils/extractNodes"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useScrollTo, useScrollToElement } from "Utils/Hooks/useScrollTo"
 import {
   getLocalImagesByArtwork,
@@ -54,8 +53,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     StoredArtworkWithImages[]
   >([])
 
-  const isMounted = useDidMount(typeof window !== "undefined")
-
   const enableMyCollectionPhase2 = useFeatureFlag("my-collection-web-phase-2")
 
   const { scrollTo } = useScrollTo({ behavior: "smooth" })
@@ -68,19 +65,17 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
   }, [])
 
   useEffect(() => {
-    if (isMounted) {
-      getLocalImagesByArtwork({
-        key: RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY,
+    getLocalImagesByArtwork({
+      key: RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY,
+    })
+      .then(localImagesByArtwork => {
+        setLocalArtworksImages(localImagesByArtwork)
       })
-        .then(localImagesByArtwork => {
-          setLocalArtworksImages(localImagesByArtwork)
-        })
-        .catch(error => {
-          console.error("Error getting local images by artwork", error)
-          return undefined
-        })
-    }
-  }, [isMounted])
+      .catch(error => {
+        console.error("Error getting local images by artwork", error)
+        return undefined
+      })
+  }, [])
 
   const { scrollTo: scrollToMyCollection } = useScrollToElement({
     selectorOrRef: "#jump--MyCollectionArtworks",
@@ -103,7 +98,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     [localArtworksImages]
   )
 
-  if (!myCollectionConnection || !isMounted) {
+  if (!myCollectionConnection) {
     return null
   }
 

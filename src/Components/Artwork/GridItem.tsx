@@ -119,7 +119,7 @@ const ArtworkGridItemImage: React.FC<Pick<
     ? transform(imageURL, { width, height })
     : { src: "", srcSet: "" }
 
-  if (imageURL && false) {
+  if (imageURL) {
     return (
       <MagnifyImage
         alt={artwork.image_title ?? ""}

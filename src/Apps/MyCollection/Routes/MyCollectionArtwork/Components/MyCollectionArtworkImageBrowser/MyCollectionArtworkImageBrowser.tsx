@@ -1,7 +1,10 @@
-import { Flex, ResponsiveBox } from "@artsy/palette"
+import { Flex, ResponsiveBox, Image } from "@artsy/palette"
 import { ArtworkImageBrowserFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser"
+import { RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY } from "Apps/Settings/Routes/MyCollection/constants"
+import { useEffect, useState } from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
+import { getArtworkLocalImages, StoredImage } from "Utils/localImagesHelpers"
 import { MyCollectionArtworkImageBrowser_artwork } from "__generated__/MyCollectionArtworkImageBrowser_artwork.graphql"
 import { MyCollectionArtworkNoImageComponent } from "./MyCollectionArtworkNoImageComponent"
 
@@ -12,8 +15,55 @@ const MyCollectionArtworkImageBrowser: React.FC<MyCollectionArtworkImageBrowserP
   artwork,
 }) => {
   const { images } = artwork
+  const [localArtworkImages, setLocalArtworkImages] = useState<StoredImage[]>()
 
-  if ((images ?? []).length == 0) {
+  useEffect(() => {
+    getArtworkLocalImages(
+      artwork.internalID,
+      RECENTLY_UPLOADED_IMAGES_LOCAL_PATHS_KEY
+    )
+      .then(images => {
+        if (images) {
+          setLocalArtworkImages(images)
+        }
+      })
+      .catch(error => {
+        console.error("Error getting local images by artwork", error)
+      })
+  }, [])
+
+  if ((images ?? []).length === 0) {
+    if (localArtworkImages && localArtworkImages.length) {
+      return (
+        <Flex maxWidth={["100%", 600]} mx="auto">
+          <ResponsiveBox
+            maxWidth="100%"
+            aspectWidth={1}
+            aspectHeight={1}
+            mx={[0, 2, 4]}
+          >
+            <Flex
+              position="absolute"
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Image
+                src={localArtworkImages[0].data}
+                style={{ objectFit: "contain" }}
+                height={["100%", "auto"]}
+                width={["100%", "auto"]}
+                alt=""
+                lazyLoad
+              />
+            </Flex>
+          </ResponsiveBox>
+        </Flex>
+      )
+    }
     return (
       <Flex maxWidth={["100%", 600]} mx="auto">
         <ResponsiveBox
