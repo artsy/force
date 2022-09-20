@@ -15,6 +15,16 @@ const MarketingLandingApp = loadable(
   }
 )
 
+const FAQApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/FAQApp"
+    ),
+  {
+    resolveComponent: component => component.FAQApp,
+  }
+)
+
 const SubmissionLayout = loadable(
   () =>
     import(
@@ -116,11 +126,25 @@ const prepareSubmissionFlowStepVariables = data => {
 export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell",
-    getComponent: () => MarketingLandingApp,
-    onClientSideRender: () => {
-      MarketingLandingApp.preload()
-    },
+    children: [
+      {
+        path: "/",
+        getComponent: () => MarketingLandingApp,
+        onClientSideRender: () => {
+          MarketingLandingApp.preload()
+        },
+      },
+      {
+        path: "faq",
+        hideFooter: true,
+        getComponent: () => FAQApp,
+        onClientSideRender: () => {
+          FAQApp.preload()
+        },
+      },
+    ],
   },
+
   {
     path: "/consign",
     children: [
