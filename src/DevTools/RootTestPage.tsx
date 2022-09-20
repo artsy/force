@@ -10,7 +10,6 @@ export function expectOne<T>(component: ReactWrapper<T>): ReactWrapper<T> {
 }
 
 export class RootTestPage {
-  // these three properties get hydrated by createTestEnv
   readonly root: ReactWrapper
 
   constructor(wrapper?: ReactWrapper) {
