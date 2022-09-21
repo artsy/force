@@ -27,46 +27,39 @@ describe("Header", () => {
       }
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "get-in-touch-flow-web": { flagEnabled: true },
-      },
+      user: { id: "user-id", email: "user-email@artsy.net" },
     }))
   })
 
-  it("links out to submission flow", () => {
-    render(<Header />)
+  describe("Submit an Artwork button", () => {
+    it("links out to submission flow", () => {
+      render(<Header />)
 
-    const link = screen.getByTestId("submit-artwork-button")
+      const link = screen.getByTestId("submit-artwork-button")
 
-    expect(link).toBeInTheDocument()
-    expect(link).toHaveTextContent("Submit an Artwork")
-    expect(link).toHaveAttribute("href", "/sell/submission/artwork-details")
-  })
+      expect(link).toBeInTheDocument()
+      expect(link).toHaveTextContent("Submit an Artwork")
+      expect(link).toHaveAttribute("href", "/sell/submission/artwork-details")
+    })
 
-  it("tracks click", () => {
-    render(<Header />)
+    it("tracks click", () => {
+      render(<Header />)
 
-    fireEvent.click(screen.getByTestId("submit-artwork-button"))
+      fireEvent.click(screen.getByTestId("submit-artwork-button"))
 
-    expect(trackEvent).toHaveBeenCalled()
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: "clickedSubmitAnArtwork",
-      context_module: "Header",
-      context_page_owner_type: "sell",
-      label: "Submit an Artwork",
-      destination_path: "/sell/submission/artwork-details",
+      expect(trackEvent).toHaveBeenCalled()
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedSubmitAnArtwork",
+        context_module: "Header",
+        context_page_owner_type: "sell",
+        label: "Submit an Artwork",
+        destination_path: "/sell/submission/artwork-details",
+        user_id: "user-id",
+      })
     })
   })
 
-  describe("when get-in-touch-flow-web feature is turned on", () => {
-    beforeAll(() => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "get-in-touch-flow-web": { flagEnabled: true },
-        },
-      }))
-    })
-
+  describe("Get in Touch button", () => {
     it("links out to get in touch flow", () => {
       render(<Header />)
 
@@ -74,6 +67,22 @@ describe("Header", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Get in Touch")
+    })
+
+    it("tracks click", () => {
+      render(<Header />)
+
+      fireEvent.click(screen.getByTestId("get-in-touch-button"))
+
+      expect(trackEvent).toHaveBeenCalled()
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedGetInTouch",
+        context_module: "Header",
+        context_page_owner_type: "sell",
+        label: "Get in Touch",
+        user_id: "user-id",
+        user_email: "user-email@artsy.net",
+      })
     })
   })
 })
