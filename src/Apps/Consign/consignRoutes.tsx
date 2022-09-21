@@ -186,11 +186,9 @@ export const consignRoutes: AppRouteConfig[] = [
           ArtworkDetailsFragmentContainer.preload()
         },
         query: graphql`
-          query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(
-            $artworkId: String!
-          ) {
-            myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
-              ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+          query consignRoutes_myCollectionArtworkQuery($artworkId: String!) {
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
             }
           }
         `,
@@ -246,8 +244,8 @@ export const consignRoutes: AppRouteConfig[] = [
               ...ArtworkDetails_submission
               ...redirects_submission @relay(mask: false)
             }
-            myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
-              ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...ArtworkDetails_myCollectionArtwork
             }
           }
         `,

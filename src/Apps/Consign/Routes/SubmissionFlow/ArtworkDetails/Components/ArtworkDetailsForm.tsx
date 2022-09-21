@@ -24,14 +24,14 @@ import {
 import { useFormikContext } from "formik"
 import { compact } from "lodash"
 import { useState } from "react"
-import { ArtworkDetails_myCollectionArtworkSubmissionDetails } from "__generated__/ArtworkDetails_myCollectionArtworkSubmissionDetails.graphql"
+import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { ArtworkDetails_submission } from "__generated__/ArtworkDetails_submission.graphql"
 import { postalCodeValidators } from "../../Utils/validation"
 import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export const getArtworkDetailsFormInitialValues = (
   submission?: ArtworkDetails_submission,
-  myCollectionArtworkSubmissionDetails?: ArtworkDetails_myCollectionArtworkSubmissionDetails
+  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork
 ): ArtworkDetailsFormModel =>
   submission
     ? {
@@ -58,25 +58,22 @@ export const getArtworkDetailsFormInitialValues = (
         postalCode: submission?.locationPostalCode ?? undefined,
       }
     : {
-        artistId:
-          myCollectionArtworkSubmissionDetails?.artist?.internalID ?? "",
-        artistName: myCollectionArtworkSubmissionDetails?.artist?.name ?? "",
-        year: myCollectionArtworkSubmissionDetails?.date ?? "",
-        title: myCollectionArtworkSubmissionDetails?.title ?? "",
-        materials: myCollectionArtworkSubmissionDetails?.medium ?? "",
+        artistId: myCollectionArtwork?.artist?.internalID ?? "",
+        artistName: myCollectionArtwork?.artist?.name ?? "",
+        year: myCollectionArtwork?.date ?? "",
+        title: myCollectionArtwork?.title ?? "",
+        materials: myCollectionArtwork?.medium ?? "",
         rarity:
-          myCollectionArtworkSubmissionDetails?.attributionClass?.name
+          myCollectionArtwork?.attributionClass?.name
             ?.replace("_", " ")
             .toLowerCase() ?? "",
-        editionNumber:
-          myCollectionArtworkSubmissionDetails?.editionNumber ?? "",
-        editionSize:
-          myCollectionArtworkSubmissionDetails?.editionSize ?? undefined,
-        height: myCollectionArtworkSubmissionDetails?.height ?? "",
-        width: myCollectionArtworkSubmissionDetails?.width ?? "",
-        depth: myCollectionArtworkSubmissionDetails?.depth ?? "",
-        units: myCollectionArtworkSubmissionDetails?.metric ?? "in",
-        provenance: myCollectionArtworkSubmissionDetails?.provenance ?? "",
+        editionNumber: myCollectionArtwork?.editionNumber ?? "",
+        editionSize: myCollectionArtwork?.editionSize ?? undefined,
+        height: myCollectionArtwork?.height ?? "",
+        width: myCollectionArtwork?.width ?? "",
+        depth: myCollectionArtwork?.depth ?? "",
+        units: myCollectionArtwork?.metric ?? "in",
+        provenance: myCollectionArtwork?.provenance ?? "",
         location: {
           city: "",
         },

@@ -118,8 +118,8 @@ const getAutopopulateWrapper = () =>
       query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(
         $artworkId: String!
       ) @relay_test_operation {
-        myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
-          ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+        myCollectionArtwork: artwork(id: $artworkId) {
+          ...ArtworkDetails_myCollectionArtwork
         }
       }
     `,

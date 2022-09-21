@@ -4,32 +4,32 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type consignRoutes_myCollectionArtworkSubmissionDetailsQueryVariables = {
+export type consignRoutes_myCollectionArtworkQueryVariables = {
     artworkId: string;
 };
-export type consignRoutes_myCollectionArtworkSubmissionDetailsQueryResponse = {
-    readonly myCollectionArtworkSubmissionDetails: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtworkSubmissionDetails">;
+export type consignRoutes_myCollectionArtworkQueryResponse = {
+    readonly myCollectionArtwork: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
     } | null;
 };
-export type consignRoutes_myCollectionArtworkSubmissionDetailsQuery = {
-    readonly response: consignRoutes_myCollectionArtworkSubmissionDetailsQueryResponse;
-    readonly variables: consignRoutes_myCollectionArtworkSubmissionDetailsQueryVariables;
+export type consignRoutes_myCollectionArtworkQuery = {
+    readonly response: consignRoutes_myCollectionArtworkQueryResponse;
+    readonly variables: consignRoutes_myCollectionArtworkQueryVariables;
 };
 
 
 
 /*
-query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(
+query consignRoutes_myCollectionArtworkQuery(
   $artworkId: String!
 ) {
-  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
-    ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+  myCollectionArtwork: artwork(id: $artworkId) {
+    ...ArtworkDetails_myCollectionArtwork
     id
   }
 }
 
-fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+fragment ArtworkDetails_myCollectionArtwork on Artwork {
   internalID
   artist {
     internalID
@@ -101,10 +101,10 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "consignRoutes_myCollectionArtworkSubmissionDetailsQuery",
+    "name": "consignRoutes_myCollectionArtworkQuery",
     "selections": [
       {
-        "alias": "myCollectionArtworkSubmissionDetails",
+        "alias": "myCollectionArtwork",
         "args": (v1/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -114,7 +114,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkDetails_myCollectionArtworkSubmissionDetails"
+            "name": "ArtworkDetails_myCollectionArtwork"
           }
         ],
         "storageKey": null
@@ -127,10 +127,10 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "consignRoutes_myCollectionArtworkSubmissionDetailsQuery",
+    "name": "consignRoutes_myCollectionArtworkQuery",
     "selections": [
       {
-        "alias": "myCollectionArtworkSubmissionDetails",
+        "alias": "myCollectionArtwork",
         "args": (v1/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -282,14 +282,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "248a836c17fc1be928cbaee1acba2999",
+    "cacheID": "5a23ffe3252b392339e2bbb644208329",
     "id": null,
     "metadata": {},
-    "name": "consignRoutes_myCollectionArtworkSubmissionDetailsQuery",
+    "name": "consignRoutes_myCollectionArtworkQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_myCollectionArtworkSubmissionDetailsQuery(\n  $artworkId: String!\n) {\n  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtworkSubmissionDetails\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query consignRoutes_myCollectionArtworkQuery(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = '0a237d35a950c5b7a0825b15a1256dc9';
+(node as any).hash = 'e52ab9ec15be4a8176eded188385c990';
 export default node;

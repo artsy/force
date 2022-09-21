@@ -4,7 +4,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkDetails_myCollectionArtworkSubmissionDetails = {
+export type ArtworkDetails_myCollectionArtwork = {
     readonly internalID: string;
     readonly artist: {
         readonly internalID: string;
@@ -29,12 +29,12 @@ export type ArtworkDetails_myCollectionArtworkSubmissionDetails = {
     readonly depth: string | null;
     readonly metric: string | null;
     readonly provenance: string | null;
-    readonly " $refType": "ArtworkDetails_myCollectionArtworkSubmissionDetails";
+    readonly " $refType": "ArtworkDetails_myCollectionArtwork";
 };
-export type ArtworkDetails_myCollectionArtworkSubmissionDetails$data = ArtworkDetails_myCollectionArtworkSubmissionDetails;
-export type ArtworkDetails_myCollectionArtworkSubmissionDetails$key = {
-    readonly " $data"?: ArtworkDetails_myCollectionArtworkSubmissionDetails$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtworkSubmissionDetails">;
+export type ArtworkDetails_myCollectionArtwork$data = ArtworkDetails_myCollectionArtwork;
+export type ArtworkDetails_myCollectionArtwork$key = {
+    readonly " $data"?: ArtworkDetails_myCollectionArtwork$data | undefined;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
 };
 
 
@@ -58,7 +58,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkDetails_myCollectionArtworkSubmissionDetails",
+  "name": "ArtworkDetails_myCollectionArtwork",
   "selections": [
     (v0/*: any*/),
     {
@@ -200,5 +200,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '6b1196f3c5fe5e2d761132c4fe2f2321';
+(node as any).hash = '2d2f0d7fa843cfc7614df4071613e8b7';
 export default node;

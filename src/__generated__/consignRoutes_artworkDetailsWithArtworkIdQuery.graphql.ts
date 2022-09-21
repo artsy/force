@@ -43,8 +43,8 @@ export type consignRoutes_artworkDetailsWithArtworkIdQueryResponse = {
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
     } | null;
-    readonly myCollectionArtworkSubmissionDetails: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtworkSubmissionDetails">;
+    readonly myCollectionArtwork: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
     } | null;
 };
 export type consignRoutes_artworkDetailsWithArtworkIdQuery = {
@@ -94,13 +94,13 @@ query consignRoutes_artworkDetailsWithArtworkIdQuery(
     }
     id
   }
-  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
-    ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+  myCollectionArtwork: artwork(id: $artworkId) {
+    ...ArtworkDetails_myCollectionArtwork
     id
   }
 }
 
-fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+fragment ArtworkDetails_myCollectionArtwork on Artwork {
   internalID
   artist {
     internalID
@@ -455,7 +455,7 @@ return {
         "storageKey": null
       },
       {
-        "alias": "myCollectionArtworkSubmissionDetails",
+        "alias": "myCollectionArtwork",
         "args": (v26/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -465,7 +465,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkDetails_myCollectionArtworkSubmissionDetails"
+            "name": "ArtworkDetails_myCollectionArtwork"
           }
         ],
         "storageKey": null
@@ -517,7 +517,7 @@ return {
         "storageKey": null
       },
       {
-        "alias": "myCollectionArtworkSubmissionDetails",
+        "alias": "myCollectionArtwork",
         "args": (v26/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -608,14 +608,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "58a84275adef864f2d76fb8c598dddb5",
+    "cacheID": "ac37da8e335bc76513d75c17357b66e1",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_artworkDetailsWithArtworkIdQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtworkSubmissionDetails\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
+    "text": "query consignRoutes_artworkDetailsWithArtworkIdQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...ArtworkDetails_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n\nfragment ArtworkDetails_submission on ConsignmentSubmission {\n  externalId\n  artist {\n    internalID\n    name\n    id\n  }\n  locationCity\n  locationCountry\n  locationState\n  locationPostalCode\n  locationCountryCode\n  year\n  title\n  medium\n  attributionClass\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  dimensionsMetric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = 'e87d9778c53b93b2f0a35b845f7b9265';
+(node as any).hash = 'f98b0a54a46dc066c754bb45dd093781';
 export default node;

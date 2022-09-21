@@ -19,33 +19,33 @@ import {
   ArtworkDetails_submission,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
-import { ArtworkDetails_myCollectionArtworkSubmissionDetails } from "__generated__/ArtworkDetails_myCollectionArtworkSubmissionDetails.graphql"
+import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import { ConsignmentSubmissionSource } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
   submission?: ArtworkDetails_submission
-  myCollectionArtworkSubmissionDetails?: ArtworkDetails_myCollectionArtworkSubmissionDetails
+  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
   submission,
-  myCollectionArtworkSubmissionDetails,
+  myCollectionArtwork,
 }) => {
   const { router, match } = useRouter()
   const { relayEnvironment, isLoggedIn } = useSystemContext()
   const { sendToast } = useToasts()
   const initialValue = getArtworkDetailsFormInitialValues(
     submission,
-    myCollectionArtworkSubmissionDetails
+    myCollectionArtwork
   )
   const initialErrors = validate(initialValue, artworkDetailsValidationSchema)
 
-  const artworkId = myCollectionArtworkSubmissionDetails?.internalID
+  const artworkId = myCollectionArtwork?.internalID
 
   const handleSubmit = async (values: ArtworkDetailsFormModel) => {
     const isLimitedEditionRarity = values.rarity === "limited edition"
@@ -102,10 +102,9 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         sessionID: !isLoggedIn ? getENV("SESSION_ID") : undefined,
       }
       if (artworkId && !match?.params?.id) {
-        // @ts-ignore
-        ;(submissionData.source as ConsignmentSubmissionSource) = "MY_COLLECTION"
-        // @ts-ignore
-        ;(submissionData.myCollectionArtworkID as string) = artworkId
+        ;(submissionData as CreateSubmissionMutationInput).source =
+          "MY_COLLECTION"
+        ;(submissionData as CreateSubmissionMutationInput).myCollectionArtworkID = artworkId
       }
       try {
         submissionId = await createOrUpdateConsignSubmission(
@@ -221,8 +220,8 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
         provenance
       }
     `,
-    myCollectionArtworkSubmissionDetails: graphql`
-      fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+    myCollectionArtwork: graphql`
+      fragment ArtworkDetails_myCollectionArtwork on Artwork {
         internalID
         artist {
           internalID

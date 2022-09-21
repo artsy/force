@@ -8,8 +8,8 @@ export type ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryVariables = {
     artworkId: string;
 };
 export type ArtworkDetails_SubmissionFlowPrepopulatedTest_QueryResponse = {
-    readonly myCollectionArtworkSubmissionDetails: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtworkSubmissionDetails">;
+    readonly myCollectionArtwork: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
     } | null;
 };
 export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query = {
@@ -23,13 +23,13 @@ export type ArtworkDetails_SubmissionFlowPrepopulatedTest_Query = {
 query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(
   $artworkId: String!
 ) {
-  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {
-    ...ArtworkDetails_myCollectionArtworkSubmissionDetails
+  myCollectionArtwork: artwork(id: $artworkId) {
+    ...ArtworkDetails_myCollectionArtwork
     id
   }
 }
 
-fragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {
+fragment ArtworkDetails_myCollectionArtwork on Artwork {
   internalID
   artist {
     internalID
@@ -116,7 +116,7 @@ return {
     "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
     "selections": [
       {
-        "alias": "myCollectionArtworkSubmissionDetails",
+        "alias": "myCollectionArtwork",
         "args": (v1/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -126,7 +126,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkDetails_myCollectionArtworkSubmissionDetails"
+            "name": "ArtworkDetails_myCollectionArtwork"
           }
         ],
         "storageKey": null
@@ -142,7 +142,7 @@ return {
     "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
     "selections": [
       {
-        "alias": "myCollectionArtworkSubmissionDetails",
+        "alias": "myCollectionArtwork",
         "args": (v1/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -294,63 +294,63 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7075b389ab8854e910514a63ca3df226",
+    "cacheID": "c5ae4cca0c14ce449a93133fc2f08d4b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "myCollectionArtworkSubmissionDetails": {
+        "myCollectionArtwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artwork"
         },
-        "myCollectionArtworkSubmissionDetails.artist": {
+        "myCollectionArtwork.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "myCollectionArtworkSubmissionDetails.artist.id": (v5/*: any*/),
-        "myCollectionArtworkSubmissionDetails.artist.internalID": (v5/*: any*/),
-        "myCollectionArtworkSubmissionDetails.artist.name": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.attributionClass": {
+        "myCollectionArtwork.artist.id": (v5/*: any*/),
+        "myCollectionArtwork.artist.internalID": (v5/*: any*/),
+        "myCollectionArtwork.artist.name": (v6/*: any*/),
+        "myCollectionArtwork.attributionClass": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "AttributionClass"
         },
-        "myCollectionArtworkSubmissionDetails.attributionClass.id": (v5/*: any*/),
-        "myCollectionArtworkSubmissionDetails.attributionClass.name": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.date": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.depth": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.editionNumber": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.editionSize": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.height": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.id": (v5/*: any*/),
-        "myCollectionArtworkSubmissionDetails.internalID": (v5/*: any*/),
-        "myCollectionArtworkSubmissionDetails.location": {
+        "myCollectionArtwork.attributionClass.id": (v5/*: any*/),
+        "myCollectionArtwork.attributionClass.name": (v6/*: any*/),
+        "myCollectionArtwork.date": (v6/*: any*/),
+        "myCollectionArtwork.depth": (v6/*: any*/),
+        "myCollectionArtwork.editionNumber": (v6/*: any*/),
+        "myCollectionArtwork.editionSize": (v6/*: any*/),
+        "myCollectionArtwork.height": (v6/*: any*/),
+        "myCollectionArtwork.id": (v5/*: any*/),
+        "myCollectionArtwork.internalID": (v5/*: any*/),
+        "myCollectionArtwork.location": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Location"
         },
-        "myCollectionArtworkSubmissionDetails.location.city": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.location.country": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.location.id": (v5/*: any*/),
-        "myCollectionArtworkSubmissionDetails.location.postalCode": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.location.state": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.medium": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.metric": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.provenance": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.title": (v6/*: any*/),
-        "myCollectionArtworkSubmissionDetails.width": (v6/*: any*/)
+        "myCollectionArtwork.location.city": (v6/*: any*/),
+        "myCollectionArtwork.location.country": (v6/*: any*/),
+        "myCollectionArtwork.location.id": (v5/*: any*/),
+        "myCollectionArtwork.location.postalCode": (v6/*: any*/),
+        "myCollectionArtwork.location.state": (v6/*: any*/),
+        "myCollectionArtwork.medium": (v6/*: any*/),
+        "myCollectionArtwork.metric": (v6/*: any*/),
+        "myCollectionArtwork.provenance": (v6/*: any*/),
+        "myCollectionArtwork.title": (v6/*: any*/),
+        "myCollectionArtwork.width": (v6/*: any*/)
       }
     },
     "name": "ArtworkDetails_SubmissionFlowPrepopulatedTest_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtworkSubmissionDetails: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtworkSubmissionDetails\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtworkSubmissionDetails on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
+    "text": "query ArtworkDetails_SubmissionFlowPrepopulatedTest_Query(\n  $artworkId: String!\n) {\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...ArtworkDetails_myCollectionArtwork\n    id\n  }\n}\n\nfragment ArtworkDetails_myCollectionArtwork on Artwork {\n  internalID\n  artist {\n    internalID\n    name\n    id\n  }\n  location {\n    city\n    country\n    state\n    postalCode\n    id\n  }\n  date\n  title\n  medium\n  attributionClass {\n    name\n    id\n  }\n  editionNumber\n  editionSize\n  height\n  width\n  depth\n  metric\n  provenance\n}\n"
   }
 };
 })();
-(node as any).hash = '9eea8a7889de891e7dae5e6900cd06f5';
+(node as any).hash = 'c1eeec6eea9462ac17150645c68e7a85';
 export default node;
