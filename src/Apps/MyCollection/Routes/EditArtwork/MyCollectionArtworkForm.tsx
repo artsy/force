@@ -145,13 +145,17 @@ export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = (
         await wait(3000)
       }
 
-      if (!isEditing) {
+      if (isEditing) {
+        router.replace({
+          pathname: `/settings/my-collection`,
+        })
+        router.push({ pathname: `/my-collection/artwork/${artworkId}` })
+      } else {
         router.replace({
           pathname: `/my-collection/artworks/${artworkId}/edit`,
         })
+        router.push({ pathname: "/settings/my-collection" })
       }
-
-      router.push({ pathname: "/settings/my-collection" })
     } catch (error) {
       logger.error(
         `Artwork not ${artwork?.internalID ? "updated" : "created"}`,
