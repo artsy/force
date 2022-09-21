@@ -31,6 +31,8 @@ interface ArtworkSidebar2EditionSetsProps {
 
 const ArtworkSidebar2EditionSets: React.FC<ArtworkSidebar2EditionSetsProps> = ({
   artwork,
+  selectedEditionSet,
+  onSelectEditionSet,
 }) => {
   const { editionSets, isInquireable, isOfferable, isAcquireable } = artwork
 
@@ -59,13 +61,9 @@ const ArtworkSidebar2EditionSets: React.FC<ArtworkSidebar2EditionSetsProps> = ({
           <Radio
             flex={1}
             onSelect={() => {
-              // TODO: will be added in the next pr
-              // this.setState({ selectedEditionSet: editionSet })
+              onSelectEditionSet?.(editionSet)
             }}
-            selected={
-              // TODO: will be added in the next pr
-              false
-            }
+            selected={selectedEditionSet?.id === editionSet?.id}
             disabled={!editionEcommerceAvailable}
             label={editionFragment}
           />
