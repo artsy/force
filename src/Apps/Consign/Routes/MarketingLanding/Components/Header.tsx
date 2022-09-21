@@ -4,9 +4,11 @@ import { FullBleedHeader } from "Components/FullBleedHeader"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "System"
 import { RouterLink } from "System/Router/RouterLink"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const Header: React.FC = () => {
   const { trackEvent } = useTracking()
+  const showGetInTouchCTA = useFeatureFlag("get-in-touch-flow-web")
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
 
@@ -57,38 +59,53 @@ export const Header: React.FC = () => {
               auction, private sale, or direct listing on Artsy.
             </Text>
 
-            <Flex flexDirection={["column", "row"]} maxWidth="450px">
-              <Flex flex={1}>
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  variant="primaryWhite"
-                  to="/sell/submission/artwork-details"
-                  onClick={trackSubmitClick}
-                  mb={[2, 0]}
-                  width={"100%"}
-                  data-testid="submit-artwork-button"
-                >
-                  Submit an Artwork
-                </Button>
-              </Flex>
+            {showGetInTouchCTA ? (
+              <Flex flexDirection={["column", "row"]} maxWidth="450px">
+                <Flex flex={1}>
+                  <Button
+                    // @ts-ignore
+                    as={RouterLink}
+                    variant="primaryWhite"
+                    to="/sell/submission/artwork-details"
+                    onClick={trackSubmitClick}
+                    mb={[2, 0]}
+                    width={"100%"}
+                    data-testid="submit-artwork-button"
+                  >
+                    Submit an Artwork
+                  </Button>
+                </Flex>
 
-              <Spacer ml={[0, 2]} />
-              <Flex flex={1}>
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  variant="secondaryWhite"
-                  onClick={trackGetInTouchClick}
-                  mb={[4, 0]}
-                  width={"100%"}
-                  data-testid="get-in-touch-button"
-                  to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-                >
-                  Get in Touch
-                </Button>
+                <Spacer ml={[0, 2]} />
+
+                <Flex flex={1}>
+                  <Button
+                    // @ts-ignore
+                    as={RouterLink}
+                    variant="secondaryWhite"
+                    onClick={trackGetInTouchClick}
+                    mb={[4, 0]}
+                    width={"100%"}
+                    data-testid="get-in-touch-button"
+                    to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+                  >
+                    Get in Touch
+                  </Button>
+                </Flex>
               </Flex>
-            </Flex>
+            ) : (
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                variant="primaryWhite"
+                to="/sell/submission/artwork-details"
+                onClick={trackSubmitClick}
+                mb={[4, 0]}
+                data-testid="submit-artwork-button"
+              >
+                Submit an Artwork
+              </Button>
+            )}
           </Box>
         </AppContainer>
       </Flex>
