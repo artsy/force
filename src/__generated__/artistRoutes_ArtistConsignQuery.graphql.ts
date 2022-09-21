@@ -1,276 +1,30 @@
+/**
+ * @generated SignedSource<<50cc107901fc5135d10111a2b293e8a9>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artistRoutes_ArtistConsignQueryVariables = {
-    artistID: string;
+export type artistRoutes_ArtistConsignQuery$variables = {
+  artistID: string;
 };
-export type artistRoutes_ArtistConsignQueryResponse = {
-    readonly artist: {
-        readonly targetSupply: {
-            readonly isInMicrofunnel: boolean | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtistConsignRoute_artist">;
+export type artistRoutes_ArtistConsignQuery$data = {
+  readonly artist: {
+    readonly targetSupply: {
+      readonly isInMicrofunnel: boolean | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignRoute_artist">;
+  } | null;
 };
 export type artistRoutes_ArtistConsignQuery = {
-    readonly response: artistRoutes_ArtistConsignQueryResponse;
-    readonly variables: artistRoutes_ArtistConsignQueryVariables;
+  variables: artistRoutes_ArtistConsignQuery$variables;
+  response: artistRoutes_ArtistConsignQuery$data;
 };
-
-
-
-/*
-query artistRoutes_ArtistConsignQuery(
-  $artistID: String!
-) {
-  artist(id: $artistID) {
-    ...ArtistConsignRoute_artist
-    targetSupply {
-      isInMicrofunnel
-    }
-    id
-  }
-}
-
-fragment ArtistConsignFAQ_artist on Artist {
-  href
-}
-
-fragment ArtistConsignHeader_artist on Artist {
-  name
-  href
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            image {
-              cropped(width: 300, height: 300) {
-                width
-                height
-                src
-                srcSet
-              }
-            }
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignHowToSell_artist on Artist {
-  href
-}
-
-fragment ArtistConsignMarketTrends_artist on Artist {
-  href
-  targetSupply {
-    microfunnel {
-      metadata {
-        highestRealized
-        str
-        realized
-      }
-    }
-  }
-}
-
-fragment ArtistConsignMeta_artist on Artist {
-  name
-  href
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            image {
-              imageURL: url(version: "medium")
-            }
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignPageViews_artist on Artist {
-  name
-  targetSupply {
-    microfunnel {
-      metadata {
-        roundedViews
-        roundedUniqueVisitors
-      }
-    }
-  }
-}
-
-fragment ArtistConsignRecentlySold_artist on Artist {
-  name
-  targetSupply {
-    microfunnel {
-      artworksConnection {
-        edges {
-          node {
-            ...FillwidthItem_artwork
-            ...ShelfArtwork_artwork
-            internalID
-            realizedPrice
-            id
-          }
-        }
-      }
-    }
-  }
-}
-
-fragment ArtistConsignRoute_artist on Artist {
-  ...ArtistConsignMeta_artist
-  ...ArtistConsignHeader_artist
-  ...ArtistConsignRecentlySold_artist
-  ...ArtistConsignPageViews_artist
-  ...ArtistConsignMarketTrends_artist
-  ...ArtistConsignHowToSell_artist
-  ...ArtistConsignFAQ_artist
-  ...ArtistConsignSellArt_artist
-}
-
-fragment ArtistConsignSellArt_artist on Artist {
-  href
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FillwidthItem_artwork on Artwork {
-  image {
-    url(version: "larger")
-    aspectRatio
-  }
-  imageTitle
-  title
-  href
-  is_saved: isSaved
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -386,6 +140,11 @@ return {
         "plural": false,
         "selections": [
           {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtistConsignRoute_artist"
+          },
+          {
             "alias": null,
             "args": null,
             "concreteType": "ArtistTargetSupply",
@@ -396,11 +155,6 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          },
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtistConsignRoute_artist"
           }
         ],
         "storageKey": null
@@ -914,5 +668,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1c543ebf7dbaf870dd02b598cb7e94b3';
+
+(node as any).hash = "1c543ebf7dbaf870dd02b598cb7e94b3";
+
 export default node;

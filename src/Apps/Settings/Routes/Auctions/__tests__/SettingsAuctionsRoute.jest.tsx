@@ -9,6 +9,7 @@ describe("SettingsAuctionsRoute", () => {
   const { getWrapper } = setupTestWrapper<
     SettingsAuctionsRouteQuery_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: SettingsAuctionsRouteFragmentContainer,
     query: graphql`
       query SettingsAuctionsRouteQuery_Test_Query @relay_test_operation {

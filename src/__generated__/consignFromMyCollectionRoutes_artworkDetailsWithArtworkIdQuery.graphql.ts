@@ -1,160 +1,62 @@
+/**
+ * @generated SignedSource<<4359d2a652a9a9de50fae7dbfe882c49>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
-export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQueryVariables = {
-    id?: string | null | undefined;
-    externalId?: string | null | undefined;
-    sessionID?: string | null | undefined;
-    artworkId: string;
+export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables = {
+  id?: string | null;
+  externalId?: string | null;
+  sessionID?: string | null;
+  artworkId: string;
 };
-export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQueryResponse = {
-    readonly submission: {
-        readonly externalId: string;
-        readonly artist: {
-            readonly internalID: string;
-            readonly name: string | null;
-        } | null;
-        readonly locationCity: string | null;
-        readonly locationCountry: string | null;
-        readonly locationState: string | null;
-        readonly locationPostalCode: string | null;
-        readonly locationCountryCode: string | null;
-        readonly year: string | null;
-        readonly title: string | null;
-        readonly medium: string | null;
-        readonly attributionClass: ConsignmentAttributionClass | null;
-        readonly editionNumber: string | null;
-        readonly editionSize: string | null;
-        readonly height: string | null;
-        readonly width: string | null;
-        readonly depth: string | null;
-        readonly dimensionsMetric: string | null;
-        readonly provenance: string | null;
-        readonly assets: ReadonlyArray<{
-            readonly id: string;
-            readonly imageUrls: unknown | null;
-            readonly geminiToken: string | null;
-            readonly size: string | null;
-            readonly filename: string | null;
-        } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_submission">;
+export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data = {
+  readonly submission: {
+    readonly externalId: string;
+    readonly artist: {
+      readonly internalID: string;
+      readonly name: string | null;
     } | null;
-    readonly myCollectionArtwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
-    } | null;
+    readonly locationCity: string | null;
+    readonly locationCountry: string | null;
+    readonly locationState: string | null;
+    readonly locationPostalCode: string | null;
+    readonly locationCountryCode: string | null;
+    readonly year: string | null;
+    readonly title: string | null;
+    readonly medium: string | null;
+    readonly attributionClass: ConsignmentAttributionClass | null;
+    readonly editionNumber: string | null;
+    readonly editionSize: string | null;
+    readonly height: string | null;
+    readonly width: string | null;
+    readonly depth: string | null;
+    readonly dimensionsMetric: string | null;
+    readonly provenance: string | null;
+    readonly assets: ReadonlyArray<{
+      readonly id: string;
+      readonly imageUrls: any | null;
+      readonly geminiToken: string | null;
+      readonly size: string | null;
+      readonly filename: string | null;
+    } | null> | null;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
+  } | null;
+  readonly myCollectionArtwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
+  } | null;
 };
 export type consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery = {
-    readonly response: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQueryResponse;
-    readonly variables: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQueryVariables;
+  variables: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$variables;
+  response: consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery$data;
 };
-
-
-
-/*
-query consignFromMyCollectionRoutes_artworkDetailsWithArtworkIdQuery(
-  $id: ID
-  $externalId: ID
-  $sessionID: String
-  $artworkId: String!
-) {
-  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {
-    ...ArtworkDetails_submission
-    externalId
-    artist {
-      internalID
-      name
-      id
-    }
-    locationCity
-    locationCountry
-    locationState
-    locationPostalCode
-    locationCountryCode
-    year
-    title
-    medium
-    attributionClass
-    editionNumber
-    editionSize
-    height
-    width
-    depth
-    dimensionsMetric
-    provenance
-    assets {
-      id
-      imageUrls
-      geminiToken
-      size
-      filename
-    }
-    id
-  }
-  myCollectionArtwork: artwork(id: $artworkId) {
-    ...ArtworkDetails_myCollectionArtwork
-    id
-  }
-}
-
-fragment ArtworkDetails_myCollectionArtwork on Artwork {
-  internalID
-  artist {
-    internalID
-    name
-    id
-  }
-  location {
-    city
-    country
-    state
-    postalCode
-    id
-  }
-  date
-  title
-  medium
-  attributionClass {
-    name
-    id
-  }
-  editionNumber
-  editionSize
-  height
-  width
-  depth
-  metric
-  provenance
-}
-
-fragment ArtworkDetails_submission on ConsignmentSubmission {
-  externalId
-  artist {
-    internalID
-    name
-    id
-  }
-  locationCity
-  locationCountry
-  locationState
-  locationPostalCode
-  locationCountryCode
-  year
-  title
-  medium
-  attributionClass
-  editionNumber
-  editionSize
-  height
-  width
-  depth
-  dimensionsMetric
-  provenance
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -415,6 +317,11 @@ return {
         "name": "submission",
         "plural": false,
         "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtworkDetails_submission"
+          },
           (v5/*: any*/),
           {
             "alias": null,
@@ -445,12 +352,7 @@ return {
           (v21/*: any*/),
           (v22/*: any*/),
           (v23/*: any*/),
-          (v25/*: any*/),
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtworkDetails_submission"
-          }
+          (v25/*: any*/)
         ],
         "storageKey": null
       },
@@ -617,5 +519,7 @@ return {
   }
 };
 })();
-(node as any).hash = '180f402702c575ea0a72f6e0932e6c05';
+
+(node as any).hash = "180f402702c575ea0a72f6e0932e6c05";
+
 export default node;

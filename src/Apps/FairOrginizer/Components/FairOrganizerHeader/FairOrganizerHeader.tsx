@@ -5,14 +5,14 @@ import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "../../Components/FairOrganizerFollowButton"
 import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
-import { FairOrganizerHeader_fairOrganizer } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
+import { FairOrganizerHeader_fairOrganizer$data } from "__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { Timer } from "Components/Timer"
 import { useCurrentTime } from "Utils/Hooks/useCurrentTime"
 import { RouterLink } from "System/Router/RouterLink"
 
 interface FairOrganizerHeaderProps {
-  fairOrganizer: FairOrganizerHeader_fairOrganizer
+  fairOrganizer: FairOrganizerHeader_fairOrganizer$data
 }
 
 export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
@@ -69,6 +69,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
 
             <GridColumns>
               <Column span={[12, 8, 6]}>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
               </Column>
             </GridColumns>
@@ -78,6 +79,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         </Column>
 
         <Column span={6}>
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <FairOrganizerInfo fairOrganizer={fairOrganizer} />
         </Column>
       </GridColumns>

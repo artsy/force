@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<4ea01dd9e40568d4ee2371ac80b43859>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkImageBrowserLarge_artwork = {
-    readonly figures: ReadonlyArray<{
-        readonly type: "Image";
-        readonly internalID: string | null;
-        readonly isZoomable: boolean | null;
-        readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
-    } | {
-        readonly type: "Video";
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly type: "%other";
-    }>;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
-    readonly " $refType": "ArtworkImageBrowserLarge_artwork";
+export type ArtworkImageBrowserLarge_artwork$data = {
+  readonly figures: ReadonlyArray<{
+    readonly type: "Image";
+    readonly internalID: string | null;
+    readonly isZoomable: boolean | null;
+    readonly " $fragmentSpreads": FragmentRefs<"DeepZoom_image">;
+  } | {
+    readonly type: "Video";
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly type: "%other";
+  }>;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
+  readonly " $fragmentType": "ArtworkImageBrowserLarge_artwork";
 };
-export type ArtworkImageBrowserLarge_artwork$data = ArtworkImageBrowserLarge_artwork;
 export type ArtworkImageBrowserLarge_artwork$key = {
-    readonly " $data"?: ArtworkImageBrowserLarge_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowserLarge_artwork">;
+  readonly " $data"?: ArtworkImageBrowserLarge_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowserLarge_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -42,6 +45,16 @@ return {
   "metadata": null,
   "name": "ArtworkImageBrowserLarge_artwork",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkLightbox_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkVideoPlayer_artwork"
+    },
     {
       "alias": null,
       "args": null,
@@ -87,21 +100,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkLightbox_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkVideoPlayer_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 })();
-(node as any).hash = '0fbd2aa0ff6cd5b4408ab9ef486540b6';
+
+(node as any).hash = "0fbd2aa0ff6cd5b4408ab9ef486540b6";
+
 export default node;

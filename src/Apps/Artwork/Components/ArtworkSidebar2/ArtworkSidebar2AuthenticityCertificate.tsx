@@ -7,13 +7,13 @@ import {
   ModalDialog,
   Button,
 } from "@artsy/palette"
-import { ArtworkSidebar2AuthenticityCertificate_artwork } from "__generated__/ArtworkSidebar2AuthenticityCertificate_artwork.graphql"
+import { ArtworkSidebar2AuthenticityCertificate_artwork$data } from "__generated__/ArtworkSidebar2AuthenticityCertificate_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebar2AuthenticityCertificateProps {
-  artwork: ArtworkSidebar2AuthenticityCertificate_artwork
+  artwork: ArtworkSidebar2AuthenticityCertificate_artwork$data
 }
 
 export const ArtworkSidebar2AuthenticityCertificate: React.FC<ArtworkSidebar2AuthenticityCertificateProps> = ({

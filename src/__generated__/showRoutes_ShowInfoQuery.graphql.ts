@@ -1,164 +1,27 @@
+/**
+ * @generated SignedSource<<3b975620f4fc36167413f24217f02441>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type showRoutes_ShowInfoQueryVariables = {
-    slug: string;
+export type showRoutes_ShowInfoQuery$variables = {
+  slug: string;
 };
-export type showRoutes_ShowInfoQueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowInfo_show">;
-    } | null;
+export type showRoutes_ShowInfoQuery$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowInfo_show">;
+  } | null;
 };
 export type showRoutes_ShowInfoQuery = {
-    readonly response: showRoutes_ShowInfoQueryResponse;
-    readonly variables: showRoutes_ShowInfoQueryVariables;
+  variables: showRoutes_ShowInfoQuery$variables;
+  response: showRoutes_ShowInfoQuery$data;
 };
-
-
-
-/*
-query showRoutes_ShowInfoQuery(
-  $slug: String!
-) {
-  show(id: $slug) @principalField {
-    ...ShowInfo_show
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment ShowHours_show on Show {
-  location {
-    ...ShowLocationHours_location
-    id
-  }
-  fair {
-    location {
-      ...ShowLocationHours_location
-      id
-    }
-    id
-  }
-}
-
-fragment ShowInfoLocation_show on Show {
-  fair {
-    location {
-      display
-      address
-      address2
-      city
-      state
-      country
-      summary
-      id
-    }
-    id
-  }
-  location {
-    display
-    address
-    address2
-    city
-    state
-    country
-    summary
-    id
-  }
-}
-
-fragment ShowInfo_show on Show {
-  ...ShowInfoLocation_show
-  ...ShowHours_show
-  name
-  about: description
-  pressRelease(format: HTML)
-  hasLocation
-  events {
-    dateTimeRange
-    description
-    eventType
-    title
-  }
-  partner {
-    __typename
-    ... on Partner {
-      ...EntityHeaderPartner_partner
-      type
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-}
-
-fragment ShowLocationHours_location on Location {
-  openingHours {
-    __typename
-    ... on OpeningHoursArray {
-      schedules {
-        days
-        hours
-      }
-    }
-    ... on OpeningHoursText {
-      text
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -686,5 +549,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3ba49991620cbe42fe79b6b433c1c468';
+
+(node as any).hash = "3ba49991620cbe42fe79b6b433c1c468";
+
 export default node;

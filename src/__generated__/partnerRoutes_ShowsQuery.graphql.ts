@@ -1,130 +1,30 @@
+/**
+ * @generated SignedSource<<0c46d2963d3a383114534428665c22bc>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_ShowsQueryVariables = {
-    partnerId: string;
+export type partnerRoutes_ShowsQuery$variables = {
+  partnerId: string;
 };
-export type partnerRoutes_ShowsQueryResponse = {
-    readonly partner: {
-        readonly counts: {
-            readonly displayableShows: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Shows_partner">;
+export type partnerRoutes_ShowsQuery$data = {
+  readonly partner: {
+    readonly counts: {
+      readonly displayableShows: any | null;
     } | null;
+    readonly " $fragmentSpreads": FragmentRefs<"Shows_partner">;
+  } | null;
 };
 export type partnerRoutes_ShowsQuery = {
-    readonly response: partnerRoutes_ShowsQueryResponse;
-    readonly variables: partnerRoutes_ShowsQueryVariables;
+  variables: partnerRoutes_ShowsQuery$variables;
+  response: partnerRoutes_ShowsQuery$data;
 };
-
-
-
-/*
-query partnerRoutes_ShowsQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    counts {
-      displayableShows
-    }
-    ...Shows_partner
-    id
-  }
-}
-
-fragment CellShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  isFairBooth
-  exhibitionPeriod
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ShowBanner_show on Show {
-  slug
-  name
-  href
-  isFairBooth
-  exhibitionPeriod
-  status
-  description
-  location {
-    city
-    id
-  }
-  coverImage {
-    medium: cropped(width: 600, height: 480, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment ShowEvents_edges on ShowEdge {
-  node {
-    ...CellShow_show
-    internalID
-    id
-  }
-}
-
-fragment Shows_partner on Partner {
-  slug
-  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {
-    edges {
-      node {
-        isFeatured
-        internalID
-        ...ShowBanner_show
-        id
-      }
-    }
-  }
-  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {
-    edges {
-      node {
-        internalID
-        id
-      }
-      ...ShowEvents_edges
-    }
-  }
-  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {
-    edges {
-      node {
-        internalID
-        id
-      }
-      ...ShowEvents_edges
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -588,5 +488,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1b9e1e09f499c2691cedced5d59664ec';
+
+(node as any).hash = "1b9e1e09f499c2691cedced5d59664ec";
+
 export default node;

@@ -2,13 +2,13 @@ import { Box, Image, ResponsiveBox, SkeletonBox, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { CellPartner_partner } from "__generated__/CellPartner_partner.graphql"
+import { CellPartner_partner$data } from "__generated__/CellPartner_partner.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 import { EntityHeaderPlaceholder } from "../EntityHeaders/EntityHeaderPlaceholder"
 
 export interface CellPartnerProps extends Omit<RouterLinkProps, "to"> {
-  partner: CellPartner_partner
+  partner: CellPartner_partner$data
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
@@ -34,6 +34,7 @@ const CellPartner: React.FC<CellPartnerProps> = ({
       {...rest}
     >
       <EntityHeaderPartnerFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         partner={partner}
         displayAvatar={false}
         displayLink={false}

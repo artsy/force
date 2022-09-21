@@ -13,6 +13,7 @@ jest.mock("Components/MetaTags", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<PageApp_Test_Query>({
+  // @ts-ignore RELAY UPGRADE 13
   Component: PageAppFragmentContainer,
   query: graphql`
     query PageApp_Test_Query @relay_test_operation {

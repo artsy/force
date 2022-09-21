@@ -10,7 +10,7 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EntityTooltipPartnerQuery } from "__generated__/EntityTooltipPartnerQuery.graphql"
-import { EntityTooltipPartner_partner } from "__generated__/EntityTooltipPartner_partner.graphql"
+import { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPartner_partner.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderPartnerFragmentContainer } from "../EntityHeaders/EntityHeaderPartner"
 import { useTracking } from "react-tracking"
@@ -18,7 +18,7 @@ import { useAnalyticsContext } from "System"
 import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipPartnerProps {
-  partner: EntityTooltipPartner_partner
+  partner: EntityTooltipPartner_partner$data
 }
 
 const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
@@ -64,6 +64,7 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
       )}
 
       <EntityHeaderPartnerFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         partner={partner}
         displayAvatar={false}
         alignItems="flex-start"
@@ -159,6 +160,7 @@ export const EntityTooltipPartnerQueryRenderer: FC<EntityTooltipPartnerQueryRend
           return <EntityTooltipPartnerPlaceholder />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <EntityTooltipPartnerFragmentContainer partner={props.partner} />
       }}
     />

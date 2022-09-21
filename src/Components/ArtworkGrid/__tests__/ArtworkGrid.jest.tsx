@@ -1,6 +1,6 @@
-import { ArtworkGrid_artist } from "__generated__/ArtworkGrid_artist.graphql"
-import { ArtworkGrid_artworks } from "__generated__/ArtworkGrid_artworks.graphql"
-import { ArtworkGrid_Test_QueryRawResponse } from "__generated__/ArtworkGrid_Test_Query.graphql"
+import { ArtworkGrid_artist$data } from "__generated__/ArtworkGrid_artist.graphql"
+import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
+import { ArtworkGrid_Test_Query$rawResponse } from "__generated__/ArtworkGrid_Test_Query.graphql"
 import { renderRelayTree } from "DevTools"
 import { cloneDeep } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -28,7 +28,9 @@ const TestContainer = createFragmentContainer(
   ({
     artist,
     ...props
-  }: ExtractProps<typeof ArtworkGrid> & { artist: ArtworkGrid_artist }) => {
+  }: ExtractProps<typeof ArtworkGrid> & {
+    artist: ArtworkGrid_artist$data
+  }) => {
     return <ArtworkGrid {...props} artworks={artist.artworks_connection} />
   },
   {
@@ -82,7 +84,7 @@ describe("ArtworkGrid", () => {
           ],
           []
         ),
-      } as ArtworkGrid_artworks
+      } as ArtworkGrid_artworks$data
 
       function expected(columnsRatios: number[][]) {
         return columnsRatios.map(columnRatios =>
@@ -116,7 +118,7 @@ describe("ArtworkGrid", () => {
       ...componentProps
     }: Omit<ArtworkGridProps, "artworks"> & {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      artworks: ArtworkGrid_Test_QueryRawResponse["artist"]["artworks_connection"]
+      artworks: ArtworkGrid_Test_Query$rawResponse["artist"]["artworks_connection"]
     }) => {
       return await renderRelayTree({
         Component: TestContainer,
@@ -132,7 +134,7 @@ describe("ArtworkGrid", () => {
         `,
         mockData: {
           artist: { artworks_connection: artworks },
-        } as ArtworkGrid_Test_QueryRawResponse,
+        } as ArtworkGrid_Test_Query$rawResponse,
       })
     }
 
@@ -194,7 +196,7 @@ describe("ArtworkGrid", () => {
         .find(ArtworkGridContainer)
         .instance() as ArtworkGridContainer
       const artworks = wrapper.sectionedArtworksForAllBreakpoints(
-        (props.artworks as any) as ArtworkGrid_artworks,
+        (props.artworks as any) as ArtworkGrid_artworks$data,
         [2, 2, 2, 3]
       )
       expect(artworks[0].length).toBe(2)

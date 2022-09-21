@@ -1,41 +1,32 @@
+/**
+ * @generated SignedSource<<f2dcab2ba3fde5536dba6a8520d45548>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddUserToSubmissionMutationInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
+  clientMutationId?: string | null;
+  id: string;
 };
-export type addUserToSubmissionMutationVariables = {
-    input: AddUserToSubmissionMutationInput;
+export type addUserToSubmissionMutation$variables = {
+  input: AddUserToSubmissionMutationInput;
 };
-export type addUserToSubmissionMutationResponse = {
-    readonly addUserToSubmission: {
-        readonly consignmentSubmission: {
-            readonly internalID: string | null;
-        } | null;
+export type addUserToSubmissionMutation$data = {
+  readonly addUserToSubmission: {
+    readonly consignmentSubmission: {
+      readonly internalID: string | null;
     } | null;
+  } | null;
 };
 export type addUserToSubmissionMutation = {
-    readonly response: addUserToSubmissionMutationResponse;
-    readonly variables: addUserToSubmissionMutationVariables;
+  variables: addUserToSubmissionMutation$variables;
+  response: addUserToSubmissionMutation$data;
 };
-
-
-
-/*
-mutation addUserToSubmissionMutation(
-  $input: AddUserToSubmissionMutationInput!
-) {
-  addUserToSubmission(input: $input) {
-    consignmentSubmission {
-      internalID
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -141,5 +132,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a6a0f697494fd47c1189c1852ab893fa';
+
+(node as any).hash = "a6a0f697494fd47c1189c1852ab893fa";
+
 export default node;

@@ -15,13 +15,13 @@ import * as React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "Components/FollowButton/FollowArtistButton"
-import { ArtistHeader_artist } from "__generated__/ArtistHeader_artist.graphql"
+import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
 
 interface ArtistHeaderProps {
-  artist: ArtistHeader_artist
+  artist: ArtistHeader_artist$data
 }
 
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
@@ -90,6 +90,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
               <Column start={avatar ? 3 : undefined} span={4}>
                 <FollowArtistButtonFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   artist={artist}
                   contextModule={ContextModule.artistHeader}
                   size="large"
@@ -116,6 +117,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ArtistInsightPillsFragmentContainer artist={artist} />
 
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (

@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<3122a271ba3a340a88edf3e8d57e4ae4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsCreditCard_creditCard = {
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly brand: string;
-    readonly lastDigits: string;
-    readonly expirationYear: number;
-    readonly expirationMonth: number;
-    readonly " $refType": "SettingsCreditCard_creditCard";
+export type SettingsCreditCard_creditCard$data = {
+  readonly internalID: string;
+  readonly name: string | null;
+  readonly brand: string;
+  readonly lastDigits: string;
+  readonly expirationYear: number;
+  readonly expirationMonth: number;
+  readonly " $fragmentType": "SettingsCreditCard_creditCard";
 };
-export type SettingsCreditCard_creditCard$data = SettingsCreditCard_creditCard;
 export type SettingsCreditCard_creditCard$key = {
-    readonly " $data"?: SettingsCreditCard_creditCard$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsCreditCard_creditCard">;
+  readonly " $data"?: SettingsCreditCard_creditCard$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -73,5 +76,7 @@ const node: ReaderFragment = {
   "type": "CreditCard",
   "abstractKey": null
 };
-(node as any).hash = '901989cbe42f4fb17b0fd6e9af202e93';
+
+(node as any).hash = "901989cbe42f4fb17b0fd6e9af202e93";
+
 export default node;

@@ -14,7 +14,7 @@ import {
   PinterestIcon,
   TumblrIcon,
 } from "@artsy/palette"
-import { ArtworkSharePanel_artwork } from "__generated__/ArtworkSharePanel_artwork.graphql"
+import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_artwork.graphql"
 import { useRef, useState } from "react"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,7 +22,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 
 interface ArtworkSharePanelProps extends BoxProps {
-  artwork: ArtworkSharePanel_artwork
+  artwork: ArtworkSharePanel_artwork$data
 }
 
 export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({

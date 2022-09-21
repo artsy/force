@@ -1,8 +1,8 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
-import { WorksForYouApp_viewerArtist } from "__generated__/WorksForYouApp_viewerArtist.graphql"
-import { WorksForYouApp_viewerFeed } from "__generated__/WorksForYouApp_viewerFeed.graphql"
-import { WorksForYouApp_viewerMe } from "__generated__/WorksForYouApp_viewerMe.graphql"
+import { WorksForYouApp_viewerArtist$data } from "__generated__/WorksForYouApp_viewerArtist.graphql"
+import { WorksForYouApp_viewerFeed$data } from "__generated__/WorksForYouApp_viewerFeed.graphql"
+import { WorksForYouApp_viewerMe$data } from "__generated__/WorksForYouApp_viewerMe.graphql"
 import { WorksForYouFeedPaginationContainer } from "./Components/WorksForYouFeed"
 import {
   Button,
@@ -20,9 +20,9 @@ import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 
 interface WorksForYouProps {
-  viewerArtist: WorksForYouApp_viewerArtist
-  viewerFeed: WorksForYouApp_viewerFeed
-  viewerMe: WorksForYouApp_viewerMe
+  viewerArtist: WorksForYouApp_viewerArtist$data
+  viewerFeed: WorksForYouApp_viewerFeed$data
+  viewerMe: WorksForYouApp_viewerMe$data
 }
 
 const WorksForYouApp: React.FC<WorksForYouProps> = ({
@@ -121,10 +121,12 @@ const WorksForYouApp: React.FC<WorksForYouProps> = ({
             <Spacer my={4} />
 
             {viewerArtist && (
+              // @ts-ignore RELAY UPGRADE 13
               <WorksForYouArtistFeedPaginationContainer viewer={viewerArtist} />
             )}
 
             {viewerFeed && (
+              // @ts-ignore RELAY UPGRADE 13
               <WorksForYouFeedPaginationContainer viewer={viewerFeed} />
             )}
           </Column>

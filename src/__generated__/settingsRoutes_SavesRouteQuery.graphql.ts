@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<587133373ac7c7a58810fad5567dd881>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavesRouteQueryVariables = {};
-export type settingsRoutes_SavesRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsSavesRoute_me">;
-    } | null;
+export type settingsRoutes_SavesRouteQuery$variables = {};
+export type settingsRoutes_SavesRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesRoute_me">;
+  } | null;
 };
 export type settingsRoutes_SavesRouteQuery = {
-    readonly response: settingsRoutes_SavesRouteQueryResponse;
-    readonly variables: settingsRoutes_SavesRouteQueryVariables;
+  variables: settingsRoutes_SavesRouteQuery$variables;
+  response: settingsRoutes_SavesRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_SavesRouteQuery {
-  me {
-    ...SettingsSavesRoute_me
-    id
-  }
-}
-
-fragment SettingsSavesRoute_me on Me {
-  name
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -99,5 +90,7 @@ const node: ConcreteRequest = {
     "text": "query settingsRoutes_SavesRouteQuery {\n  me {\n    ...SettingsSavesRoute_me\n    id\n  }\n}\n\nfragment SettingsSavesRoute_me on Me {\n  name\n}\n"
   }
 };
-(node as any).hash = '8a48749211445b923f4545dcf880f9f6';
+
+(node as any).hash = "8a48749211445b923f4545dcf880f9f6";
+
 export default node;

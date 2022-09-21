@@ -1,32 +1,26 @@
+/**
+ * @generated SignedSource<<6f1b75fd7bedbe035545fc6b98bd08fb>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type useRecordArtworkViewMutationVariables = {
-    artworkID: string;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type useRecordArtworkViewMutation$variables = {
+  artworkID: string;
 };
-export type useRecordArtworkViewMutationResponse = {
-    readonly recordArtworkView: {
-        readonly artwork_id: string;
-    } | null;
+export type useRecordArtworkViewMutation$data = {
+  readonly recordArtworkView: {
+    readonly artwork_id: string;
+  } | null;
 };
 export type useRecordArtworkViewMutation = {
-    readonly response: useRecordArtworkViewMutationResponse;
-    readonly variables: useRecordArtworkViewMutationVariables;
+  variables: useRecordArtworkViewMutation$variables;
+  response: useRecordArtworkViewMutation$data;
 };
-
-
-
-/*
-mutation useRecordArtworkViewMutation(
-  $artworkID: String!
-) {
-  recordArtworkView(input: {artwork_id: $artworkID}) {
-    artwork_id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -95,5 +89,7 @@ return {
   }
 };
 })();
-(node as any).hash = '72efc43f89c40e5d308f495b42ff8f26';
+
+(node as any).hash = "72efc43f89c40e5d308f495b42ff8f26";
+
 export default node;

@@ -1,20 +1,23 @@
+/**
+ * @generated SignedSource<<92586a323a3396264d611eae1538d9e7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NotificationsApp_me = {
-    readonly unreadNotificationsCount: number;
-    readonly " $refType": "NotificationsApp_me";
+export type NotificationsApp_me$data = {
+  readonly unreadNotificationsCount: number;
+  readonly " $fragmentType": "NotificationsApp_me";
 };
-export type NotificationsApp_me$data = NotificationsApp_me;
 export type NotificationsApp_me$key = {
-    readonly " $data"?: NotificationsApp_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"NotificationsApp_me">;
+  readonly " $data"?: NotificationsApp_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -33,5 +36,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '14dbb767eaa152c635acc649e417f853';
+
+(node as any).hash = "14dbb767eaa152c635acc649e417f853";
+
 export default node;

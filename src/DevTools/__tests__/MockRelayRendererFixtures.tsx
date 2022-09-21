@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { MockRelayRendererFixtures_artist } from "__generated__/MockRelayRendererFixtures_artist.graphql"
-import { MockRelayRendererFixtures_artwork } from "__generated__/MockRelayRendererFixtures_artwork.graphql"
-import { MockRelayRendererFixtures_artworkMetadata } from "__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
+import { MockRelayRendererFixtures_artist$data } from "__generated__/MockRelayRendererFixtures_artist.graphql"
+import { MockRelayRendererFixtures_artwork$data } from "__generated__/MockRelayRendererFixtures_artwork.graphql"
+import { MockRelayRendererFixtures_artworkMetadata$data } from "__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
 import { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 import { SystemContextConsumer } from "System"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
@@ -11,9 +11,9 @@ import { render } from "enzyme"
 import { createFragmentContainer, graphql } from "react-relay"
 
 const Metadata = createFragmentContainer(
-  (props: { artworkMetadata: MockRelayRendererFixtures_artworkMetadata }) => (
-    <div>{props.artworkMetadata.title}</div>
-  ),
+  (props: {
+    artworkMetadata: MockRelayRendererFixtures_artworkMetadata$data
+  }) => <div>{props.artworkMetadata.title}</div>,
   {
     artworkMetadata: graphql`
       fragment MockRelayRendererFixtures_artworkMetadata on Artwork {
@@ -24,10 +24,12 @@ const Metadata = createFragmentContainer(
 )
 
 export const Artwork = createFragmentContainer(
-  (props: { artwork: MockRelayRendererFixtures_artwork }) => (
+  (props: { artwork: MockRelayRendererFixtures_artwork$data }) => (
     <div>
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <img src={props.artwork.image.url} />
+
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <Metadata artworkMetadata={props.artwork} />
       {props.artwork.artist && (
         <ArtistQueryRenderer id={props.artwork.artist.slug} />
@@ -50,7 +52,7 @@ export const Artwork = createFragmentContainer(
 )
 
 const Artist = createFragmentContainer(
-  (props: { artist: MockRelayRendererFixtures_artist }) => (
+  (props: { artist: MockRelayRendererFixtures_artist$data }) => (
     <div>{props.artist.name}</div>
   ),
   {

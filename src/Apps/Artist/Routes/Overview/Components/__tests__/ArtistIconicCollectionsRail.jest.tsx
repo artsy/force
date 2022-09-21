@@ -14,6 +14,7 @@ describe("ArtistIconicCollectionsRail", () => {
   const { getWrapper } = setupTestWrapper<
     ArtistIconicCollectionsRail_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistIconicCollectionsRailFragmentContainer,
     query: graphql`
       query ArtistIconicCollectionsRail_Test_Query(

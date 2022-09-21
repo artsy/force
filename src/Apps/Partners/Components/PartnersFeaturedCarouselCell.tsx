@@ -4,10 +4,10 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer } from "Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "System/Router/RouterLink"
-import { PartnersFeaturedCarouselCell_profile } from "__generated__/PartnersFeaturedCarouselCell_profile.graphql"
+import { PartnersFeaturedCarouselCell_profile$data } from "__generated__/PartnersFeaturedCarouselCell_profile.graphql"
 
 interface PartnersFeaturedCarouselCellProps {
-  profile: PartnersFeaturedCarouselCell_profile
+  profile: PartnersFeaturedCarouselCell_profile$data
 }
 
 const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
@@ -71,6 +71,7 @@ const PartnersFeaturedCarouselCell: FC<PartnersFeaturedCarouselCellProps> = ({
             </Text>
 
             <FollowProfileButtonFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               profile={profile}
               contextModule={ContextModule.featuredGalleriesRail}
             />

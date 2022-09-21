@@ -1,9 +1,9 @@
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
-import { MyCollectionArtworkMeta_artwork } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
+import { MyCollectionArtworkMeta_artwork$data } from "__generated__/MyCollectionArtworkMeta_artwork.graphql"
 
 interface MyCollectionArtworkMetaProps {
-  artwork: MyCollectionArtworkMeta_artwork
+  artwork: MyCollectionArtworkMeta_artwork$data
 }
 
 const MyCollectionArtworkMeta: React.FC<MyCollectionArtworkMetaProps> = ({

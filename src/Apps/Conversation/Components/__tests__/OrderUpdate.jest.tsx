@@ -16,6 +16,7 @@ const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
 
     return (
       <OrderUpdateFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         event={event}
         setShowDetails={setShowDetailsSpy}
       />

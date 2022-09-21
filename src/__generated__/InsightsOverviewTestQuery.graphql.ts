@@ -1,39 +1,27 @@
+/**
+ * @generated SignedSource<<53f50c4fd52249fad5fac7d4ecae55b4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InsightsOverviewTestQueryVariables = {};
-export type InsightsOverviewTestQueryResponse = {
-    readonly me: {
-        readonly myCollectionInfo: {
-            readonly " $fragmentRefs": FragmentRefs<"InsightsOverview_info">;
-        } | null;
+export type InsightsOverviewTestQuery$variables = {};
+export type InsightsOverviewTestQuery$data = {
+  readonly me: {
+    readonly myCollectionInfo: {
+      readonly " $fragmentSpreads": FragmentRefs<"InsightsOverview_info">;
     } | null;
+  } | null;
 };
 export type InsightsOverviewTestQuery = {
-    readonly response: InsightsOverviewTestQueryResponse;
-    readonly variables: InsightsOverviewTestQueryVariables;
+  variables: InsightsOverviewTestQuery$variables;
+  response: InsightsOverviewTestQuery$data;
 };
-
-
-
-/*
-query InsightsOverviewTestQuery {
-  me {
-    myCollectionInfo {
-      ...InsightsOverview_info
-    }
-    id
-  }
-}
-
-fragment InsightsOverview_info on MyCollectionInfo {
-  artworksCount
-  artistsCount
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -164,5 +152,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1e7e8caff3661ed6ab28ab6063928645';
+
+(node as any).hash = "1e7e8caff3661ed6ab28ab6063928645";
+
 export default node;

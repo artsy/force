@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { BarChart, BarDescriptor } from "@artsy/palette-charts"
-import { PricingContext_artwork } from "__generated__/PricingContext_artwork.graphql"
+import { PricingContext_artwork$data } from "__generated__/PricingContext_artwork.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
 import * as React from "react"
@@ -26,7 +26,7 @@ import { useSystemContext } from "System"
 import track from "react-tracking"
 
 interface PricingContextProps {
-  artwork: PricingContext_artwork
+  artwork: PricingContext_artwork$data
 }
 
 @track(
@@ -259,6 +259,7 @@ export const PricingContextQueryRenderer: React.FC<{
           return PLACEHOLDER
         }
         if (props.artwork) {
+          // @ts-ignore RELAY UPGRADE 13
           return <PricingContextFragmentContainer artwork={props.artwork} />
         }
       }}

@@ -1,40 +1,43 @@
+/**
+ * @generated SignedSource<<cc3058c0304e50102388e320ecc7e424>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
-export type ArticleHero_article = {
-    readonly title: string | null;
-    readonly href: string | null;
-    readonly vertical: string | null;
-    readonly byline: string | null;
-    readonly hero: {
-        readonly layout?: ArticleFeatureSectionType | undefined;
-        readonly embed?: string | null | undefined;
-        readonly media?: string | null | undefined;
-        readonly image?: {
-            readonly url: string | null;
-            readonly split: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-            readonly text: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null | undefined;
+import { FragmentRefs } from "relay-runtime";
+export type ArticleHero_article$data = {
+  readonly title: string | null;
+  readonly href: string | null;
+  readonly vertical: string | null;
+  readonly byline: string | null;
+  readonly hero: {
+    readonly layout?: ArticleFeatureSectionType;
+    readonly embed?: string | null;
+    readonly media?: string | null;
+    readonly image?: {
+      readonly url: string | null;
+      readonly split: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+      readonly text: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
-    readonly " $refType": "ArticleHero_article";
+  } | null;
+  readonly " $fragmentType": "ArticleHero_article";
 };
-export type ArticleHero_article$data = ArticleHero_article;
 export type ArticleHero_article$key = {
-    readonly " $data"?: ArticleHero_article$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleHero_article">;
+  readonly " $data"?: ArticleHero_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleHero_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -186,5 +189,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '45805b6be826c1703e38be65c93b2225';
+
+(node as any).hash = "45805b6be826c1703e38be65c93b2225";
+
 export default node;

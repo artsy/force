@@ -1,64 +1,30 @@
+/**
+ * @generated SignedSource<<71fa9e12dda1e9a372596964fe0ef706>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionRoutes_ConfirmRegistrationRouteQueryVariables = {
-    slug: string;
+export type auctionRoutes_ConfirmRegistrationRouteQuery$variables = {
+  slug: string;
 };
-export type auctionRoutes_ConfirmRegistrationRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionConfirmRegistrationRoute_me">;
-    } | null;
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionConfirmRegistrationRoute_sale">;
-    } | null;
+export type auctionRoutes_ConfirmRegistrationRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_me">;
+  } | null;
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_sale">;
+  } | null;
 };
 export type auctionRoutes_ConfirmRegistrationRouteQuery = {
-    readonly response: auctionRoutes_ConfirmRegistrationRouteQueryResponse;
-    readonly variables: auctionRoutes_ConfirmRegistrationRouteQueryVariables;
+  variables: auctionRoutes_ConfirmRegistrationRouteQuery$variables;
+  response: auctionRoutes_ConfirmRegistrationRouteQuery$data;
 };
-
-
-
-/*
-query auctionRoutes_ConfirmRegistrationRouteQuery(
-  $slug: String!
-) {
-  me {
-    ...AuctionConfirmRegistrationRoute_me
-    id
-  }
-  sale(id: $slug) @principalField {
-    ...AuctionConfirmRegistrationRoute_sale
-    id
-  }
-}
-
-fragment AuctionConfirmRegistrationRoute_me on Me {
-  internalID
-  identityVerified
-  hasQualifiedCreditCards
-  phoneNumber {
-    originalNumber
-  }
-}
-
-fragment AuctionConfirmRegistrationRoute_sale on Sale {
-  slug
-  name
-  internalID
-  status
-  isClosed
-  isLiveOpen
-  requireIdentityVerification
-  bidder {
-    qualifiedForBidding
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -269,5 +235,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9da61080e7b4edf8b1e25aa8110ad72f';
+
+(node as any).hash = "9da61080e7b4edf8b1e25aa8110ad72f";
+
 export default node;

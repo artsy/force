@@ -1,68 +1,30 @@
+/**
+ * @generated SignedSource<<58c061b9aa82d9949066f985e76e4110>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchesSortEnum = "CREATED_AT_DESC" | "NAME_ASC" | "%future added value";
-export type SavedSearchAlertsAppRefetchQueryVariables = {
-    after?: string | null | undefined;
-    count: number;
-    sort?: SavedSearchesSortEnum | null | undefined;
+export type SavedSearchAlertsAppRefetchQuery$variables = {
+  after?: string | null;
+  count: number;
+  sort?: SavedSearchesSortEnum | null;
 };
-export type SavedSearchAlertsAppRefetchQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
-    } | null;
+export type SavedSearchAlertsAppRefetchQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
+  } | null;
 };
 export type SavedSearchAlertsAppRefetchQuery = {
-    readonly response: SavedSearchAlertsAppRefetchQueryResponse;
-    readonly variables: SavedSearchAlertsAppRefetchQueryVariables;
+  variables: SavedSearchAlertsAppRefetchQuery$variables;
+  response: SavedSearchAlertsAppRefetchQuery$data;
 };
-
-
-
-/*
-query SavedSearchAlertsAppRefetchQuery(
-  $after: String
-  $count: Int!
-  $sort: SavedSearchesSortEnum
-) {
-  me {
-    ...SavedSearchAlertsApp_me_3P8D4U
-    id
-  }
-}
-
-fragment SavedSearchAlertListItem_item on SearchCriteria {
-  internalID
-  artistIDs
-  href
-  labels {
-    displayValue
-  }
-  userAlertSettings {
-    name
-  }
-}
-
-fragment SavedSearchAlertsApp_me_3P8D4U on Me {
-  savedSearchesConnection(first: $count, after: $after, sort: $sort) {
-    edges {
-      node {
-        internalID
-        ...SavedSearchAlertListItem_item
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -312,5 +274,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cc3a87efafde010064adaeb79d565e4c';
+
+(node as any).hash = "cc3a87efafde010064adaeb79d565e4c";
+
 export default node;

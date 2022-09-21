@@ -1,34 +1,25 @@
+/**
+ * @generated SignedSource<<77ae776f7a9669c7775bf4a5dda0ad91>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuInboxNotificationCountQueryVariables = {};
-export type NavBarMobileMenuInboxNotificationCountQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"NavBarMobileMenuInboxNotificationCount_me">;
-    } | null;
+export type NavBarMobileMenuInboxNotificationCountQuery$variables = {};
+export type NavBarMobileMenuInboxNotificationCountQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuInboxNotificationCount_me">;
+  } | null;
 };
 export type NavBarMobileMenuInboxNotificationCountQuery = {
-    readonly response: NavBarMobileMenuInboxNotificationCountQueryResponse;
-    readonly variables: NavBarMobileMenuInboxNotificationCountQueryVariables;
+  variables: NavBarMobileMenuInboxNotificationCountQuery$variables;
+  response: NavBarMobileMenuInboxNotificationCountQuery$data;
 };
-
-
-
-/*
-query NavBarMobileMenuInboxNotificationCountQuery {
-  me {
-    ...NavBarMobileMenuInboxNotificationCount_me
-    id
-  }
-}
-
-fragment NavBarMobileMenuInboxNotificationCount_me on Me {
-  unreadConversationCount
-}
-*/
 
 const node: ConcreteRequest = {
   "fragment": {
@@ -99,5 +90,7 @@ const node: ConcreteRequest = {
     "text": "query NavBarMobileMenuInboxNotificationCountQuery {\n  me {\n    ...NavBarMobileMenuInboxNotificationCount_me\n    id\n  }\n}\n\nfragment NavBarMobileMenuInboxNotificationCount_me on Me {\n  unreadConversationCount\n}\n"
   }
 };
-(node as any).hash = '3ac9061da386abc266030be66f9094bc';
+
+(node as any).hash = "3ac9061da386abc266030be66f9094bc";
+
 export default node;

@@ -4,7 +4,7 @@ import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { PartnerArtistsCarouselRendererQuery } from "__generated__/PartnerArtistsCarouselRendererQuery.graphql"
-import { PartnerArtistsCarousel_partner } from "__generated__/PartnerArtistsCarousel_partner.graphql"
+import { PartnerArtistsCarousel_partner$data } from "__generated__/PartnerArtistsCarousel_partner.graphql"
 import { PartnerArtistsCarouselItemFragmentContainer } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -12,7 +12,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 const PAGE_SIZE = 20
 
 export interface PartnerArtistsCarouselProps {
-  partner: PartnerArtistsCarousel_partner
+  partner: PartnerArtistsCarousel_partner$data
 }
 
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
@@ -35,6 +35,7 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
         <Box maxWidth={320}>
           <PartnerArtistsCarouselItemFragmentContainer
             key={artist.node?.id}
+            // @ts-ignore RELAY UPGRADE 13
             artist={artist!}
             partnerArtistHref={`/partner/${slug}/artists/${artist.node?.slug}`}
           />
@@ -96,6 +97,7 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         return (
           <PartnerArtistsCarouselFragmentContainer
             {...rest}
+            // @ts-ignore RELAY UPGRADE 13
             partner={props.partner!}
           />
         )

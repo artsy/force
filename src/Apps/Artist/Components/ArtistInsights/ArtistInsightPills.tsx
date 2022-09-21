@@ -1,11 +1,11 @@
 import { Flex, Pill, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistInsightPills_artist } from "__generated__/ArtistInsightPills_artist.graphql"
+import { ArtistInsightPills_artist$data } from "__generated__/ArtistInsightPills_artist.graphql"
 import { useScrollTo } from "Utils/Hooks/useScrollTo"
 
 interface ArtistInsightPillsProps {
-  artist: ArtistInsightPills_artist
+  artist: ArtistInsightPills_artist$data
 }
 
 export const ArtistInsightPills: FC<ArtistInsightPillsProps> = ({ artist }) => {

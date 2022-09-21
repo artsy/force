@@ -12,7 +12,7 @@ import { Component } from "react"
 import * as React from "react"
 import { recaptcha } from "Utils/recaptcha"
 import { data as sd } from "sharify" // eslint-disable-line no-restricted-imports
-import { SignUpForm_requestLocation } from "__generated__/SignUpForm_requestLocation.graphql"
+import { SignUpForm_requestLocation$data } from "__generated__/SignUpForm_requestLocation.graphql"
 import { Banner, Box, Button, Input, Join, Spacer, Text } from "@artsy/palette"
 import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswordInput"
 import { AuthenticationCheckbox } from "../Components/AuthenticationCheckbox"
@@ -55,7 +55,7 @@ export interface SignUpFormState {
 }
 
 interface SignUpFormProps extends FormProps {
-  requestLocation?: SignUpForm_requestLocation
+  requestLocation?: SignUpForm_requestLocation$data
 }
 
 export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
@@ -326,6 +326,7 @@ export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
           return (
             <SignUpFormFragmentContainer
               {...passedProps}
+              // @ts-ignore RELAY UPGRADE 13
               requestLocation={props.requestLocation}
             />
           )

@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<51ba62a696726115094f8165709ec736>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
-export type ArtistInsightBadges_artist = {
-    readonly insightBadges: ReadonlyArray<{
-        readonly kind: ArtistInsightKind | null;
-        readonly label: string;
-        readonly description: string | null;
-    }>;
-    readonly " $refType": "ArtistInsightBadges_artist";
+import { FragmentRefs } from "relay-runtime";
+export type ArtistInsightBadges_artist$data = {
+  readonly insightBadges: ReadonlyArray<{
+    readonly kind: ArtistInsightKind | null;
+    readonly label: string;
+    readonly description: string | null;
+  }>;
+  readonly " $fragmentType": "ArtistInsightBadges_artist";
 };
-export type ArtistInsightBadges_artist$data = ArtistInsightBadges_artist;
 export type ArtistInsightBadges_artist$key = {
-    readonly " $data"?: ArtistInsightBadges_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist">;
+  readonly " $data"?: ArtistInsightBadges_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightBadges_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -74,5 +77,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '401988bcd1f142307f1ae32913d58d1f';
+
+(node as any).hash = "401988bcd1f142307f1ae32913d58d1f";
+
 export default node;

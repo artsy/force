@@ -1,77 +1,25 @@
+/**
+ * @generated SignedSource<<778f6871a19b8c33e6244705ec9aed53>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentShowsRail_Test_QueryVariables = {};
-export type ArtistCurrentShowsRail_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentShowsRail_artist">;
-    } | null;
+export type ArtistCurrentShowsRail_Test_Query$variables = {};
+export type ArtistCurrentShowsRail_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentShowsRail_artist">;
+  } | null;
 };
 export type ArtistCurrentShowsRail_Test_Query = {
-    readonly response: ArtistCurrentShowsRail_Test_QueryResponse;
-    readonly variables: ArtistCurrentShowsRail_Test_QueryVariables;
+  variables: ArtistCurrentShowsRail_Test_Query$variables;
+  response: ArtistCurrentShowsRail_Test_Query$data;
 };
-
-
-
-/*
-query ArtistCurrentShowsRail_Test_Query {
-  artist(id: "test") {
-    ...ArtistCurrentShowsRail_artist
-    id
-  }
-}
-
-fragment ArtistCurrentShowsRail_artist on Artist {
-  internalID
-  name
-  slug
-  showsConnection(first: 5, sort: END_AT_ASC, status: "running") {
-    edges {
-      node {
-        ...CellShow_show
-        internalID
-        slug
-        href
-        id
-      }
-    }
-  }
-}
-
-fragment CellShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  isFairBooth
-  exhibitionPeriod
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -441,5 +389,7 @@ return {
   }
 };
 })();
-(node as any).hash = '71aa6c6728c5b37aa5e6ddcf67e50900';
+
+(node as any).hash = "71aa6c6728c5b37aa5e6ddcf67e50900";
+
 export default node;

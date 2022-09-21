@@ -11,7 +11,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { compactObject } from "Utils/compactObject"
 import { useMode } from "Utils/Hooks/useMode"
-import { SettingsShippingAddress_address } from "__generated__/SettingsShippingAddress_address.graphql"
+import { SettingsShippingAddress_address$data } from "__generated__/SettingsShippingAddress_address.graphql"
 import { useDeleteAddress } from "../useDeleteAddress"
 import {
   INITIAL_ADDRESS,
@@ -19,7 +19,7 @@ import {
 } from "./SettingsShippingAddressForm"
 
 interface SettingsShippingAddressProps {
-  address: SettingsShippingAddress_address
+  address: SettingsShippingAddress_address$data
 }
 
 type Mode = "Pending" | "Editing" | "Deleting"

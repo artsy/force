@@ -18,6 +18,7 @@ describe("EntityHeaderGene", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderGeneFragmentContainer_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderGeneFragmentContainer,
     query: QUERY,
   })

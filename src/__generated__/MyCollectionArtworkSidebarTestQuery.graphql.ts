@@ -1,60 +1,25 @@
+/**
+ * @generated SignedSource<<e31d714e899ed8e92e18c61e76ab6758>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkSidebarTestQueryVariables = {};
-export type MyCollectionArtworkSidebarTestQueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebarMetadata_artwork">;
-    } | null;
+export type MyCollectionArtworkSidebarTestQuery$variables = {};
+export type MyCollectionArtworkSidebarTestQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebarMetadata_artwork">;
+  } | null;
 };
 export type MyCollectionArtworkSidebarTestQuery = {
-    readonly response: MyCollectionArtworkSidebarTestQueryResponse;
-    readonly variables: MyCollectionArtworkSidebarTestQueryVariables;
+  variables: MyCollectionArtworkSidebarTestQuery$variables;
+  response: MyCollectionArtworkSidebarTestQuery$data;
 };
-
-
-
-/*
-query MyCollectionArtworkSidebarTestQuery {
-  artwork(id: "foo") {
-    ...MyCollectionArtworkSidebarTitleInfo_artwork
-    ...MyCollectionArtworkSidebarMetadata_artwork
-    id
-  }
-}
-
-fragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {
-  category
-  medium
-  metric
-  dimensions {
-    in
-    cm
-  }
-  provenance
-  attributionClass {
-    shortDescription
-    id
-  }
-  pricePaid {
-    display
-  }
-  artworkLocation
-}
-
-fragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {
-  artistNames
-  title
-  date
-  artist {
-    href
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -331,5 +296,7 @@ return {
   }
 };
 })();
-(node as any).hash = '7d2cccb01a3a93af464433277d27a66a';
+
+(node as any).hash = "7d2cccb01a3a93af464433277d27a66a";
+
 export default node;

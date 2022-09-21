@@ -1,13 +1,14 @@
-import { ArtistAuctionResultsRoute_artist } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
+import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistAuctionResultsRefetchContainer } from "./ArtistAuctionResults"
 
 export interface AuctionResultsRouteProps {
-  artist: ArtistAuctionResultsRoute_artist
+  artist: ArtistAuctionResultsRoute_artist$data
 }
 
 export const ArtistAuctionResultsRoute: React.FC<AuctionResultsRouteProps> = props => {
+  // @ts-ignore RELAY UPGRADE 13
   return <ArtistAuctionResultsRefetchContainer artist={props.artist} />
 }
 

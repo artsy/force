@@ -9,10 +9,10 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { getConversationCount, updateConversationCache } from "../helpers"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer } from "react-relay"
-import { NavBarMobileMenuInboxNotificationCount_me } from "__generated__/NavBarMobileMenuInboxNotificationCount_me.graphql"
+import { NavBarMobileMenuInboxNotificationCount_me$data } from "__generated__/NavBarMobileMenuInboxNotificationCount_me.graphql"
 
 interface NavBarMobileMenuInboxNotificationCountProps {
-  me?: NavBarMobileMenuInboxNotificationCount_me | null
+  me?: NavBarMobileMenuInboxNotificationCount_me$data | null
 }
 
 export const NavBarMobileMenuInboxNotificationCount: React.FC<NavBarMobileMenuInboxNotificationCountProps> = ({
@@ -70,6 +70,7 @@ export const NavBarMobileMenuInboxNotificationCountQueryRenderer: React.FC<{}> =
 
         return (
           <NavBarMobileMenuInboxNotificationCountFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             me={props.me}
           />
         )

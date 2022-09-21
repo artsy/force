@@ -1,60 +1,25 @@
+/**
+ * @generated SignedSource<<62b73adda2e5996ddddba10a5ed4a8a3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyBidsBidItem_Test_QueryVariables = {};
-export type MyBidsBidItem_Test_QueryResponse = {
-    readonly saleArtwork: {
-        readonly " $fragmentRefs": FragmentRefs<"MyBidsBidItem_saleArtwork">;
-    } | null;
+export type MyBidsBidItem_Test_Query$variables = {};
+export type MyBidsBidItem_Test_Query$data = {
+  readonly saleArtwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyBidsBidItem_saleArtwork">;
+  } | null;
 };
 export type MyBidsBidItem_Test_Query = {
-    readonly response: MyBidsBidItem_Test_QueryResponse;
-    readonly variables: MyBidsBidItem_Test_QueryVariables;
+  variables: MyBidsBidItem_Test_Query$variables;
+  response: MyBidsBidItem_Test_Query$data;
 };
-
-
-
-/*
-query MyBidsBidItem_Test_Query {
-  saleArtwork(id: "foo") {
-    ...MyBidsBidItem_saleArtwork
-    id
-  }
-}
-
-fragment MyBidsBidItem_saleArtwork on SaleArtwork {
-  artwork {
-    artistNames
-    image {
-      cropped(width: 55, height: 55) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    id
-  }
-  estimate
-  currentBid {
-    display
-  }
-  internalID
-  isHighestBidder
-  isWatching
-  lotState {
-    bidCount
-    sellingPrice {
-      display
-    }
-  }
-  lotLabel
-  slug
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -393,5 +358,7 @@ return {
   }
 };
 })();
-(node as any).hash = '98a4cc76d8e7d26934b94ab456ae5355';
+
+(node as any).hash = "98a4cc76d8e7d26934b94ab456ae5355";
+
 export default node;

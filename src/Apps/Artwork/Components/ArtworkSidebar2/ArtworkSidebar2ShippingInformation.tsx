@@ -1,10 +1,10 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
-import { ArtworkSidebar2ShippingInformation_artwork } from "__generated__/ArtworkSidebar2ShippingInformation_artwork.graphql"
+import { ArtworkSidebar2ShippingInformation_artwork$data } from "__generated__/ArtworkSidebar2ShippingInformation_artwork.graphql"
 import { useTranslation } from "react-i18next"
 
 export interface ShippingInformationProps {
-  artwork: ArtworkSidebar2ShippingInformation_artwork
+  artwork: ArtworkSidebar2ShippingInformation_artwork$data
 }
 
 const ArtworkSidebar2ShippingInformation: React.FC<ShippingInformationProps> = ({

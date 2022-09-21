@@ -1,5 +1,5 @@
 import { LosingBidIcon, WinningBidIcon } from "@artsy/palette"
-import { ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
+import { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
 import {
   AuctionPreview,
   AuctionPreviewNoStartingBid,
@@ -28,7 +28,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
     ArtworkSidebarCurrentBidInfoFragmentContainer
   )
   const getWrapper = async (
-    response: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"]
+    response: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"]
   ) => {
     return renderRelayTree({
       Component,
@@ -43,7 +43,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       `,
       mockData: {
         artwork: response,
-      } as ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse,
+      } as ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse,
     })
   }
 

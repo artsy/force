@@ -1,26 +1,29 @@
+/**
+ * @generated SignedSource<<dd0f5f6b2c28e61a78c583b00a046a4d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionWorksByFollowedArtistsRail_viewer = {
-    readonly saleArtworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "AuctionWorksByFollowedArtistsRail_viewer";
+export type AuctionWorksByFollowedArtistsRail_viewer$data = {
+  readonly saleArtworksConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "AuctionWorksByFollowedArtistsRail_viewer";
 };
-export type AuctionWorksByFollowedArtistsRail_viewer$data = AuctionWorksByFollowedArtistsRail_viewer;
 export type AuctionWorksByFollowedArtistsRail_viewer$key = {
-    readonly " $data"?: AuctionWorksByFollowedArtistsRail_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionWorksByFollowedArtistsRail_viewer">;
+  readonly " $data"?: AuctionWorksByFollowedArtistsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionWorksByFollowedArtistsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -99,5 +102,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = 'eaeaf0a9b395815a4f26bff8640cdbcd';
+
+(node as any).hash = "eaeaf0a9b395815a4f26bff8640cdbcd";
+
 export default node;

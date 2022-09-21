@@ -1,42 +1,45 @@
+/**
+ * @generated SignedSource<<d4dcf1fd4f7197ec454bd29502592269>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedEventsRail_orderedSet = {
-    readonly items: ReadonlyArray<({
-        readonly __typename: "FeaturedLink";
-        readonly internalID: string;
-        readonly title: string | null;
-        readonly subtitle: string | null;
-        readonly href: string | null;
-        readonly image: {
-            readonly small: {
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number;
-                readonly height: number;
-            } | null;
-            readonly large: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null> | null;
-    readonly " $refType": "HomeFeaturedEventsRail_orderedSet";
+export type HomeFeaturedEventsRail_orderedSet$data = {
+  readonly items: ReadonlyArray<{
+    readonly __typename: "FeaturedLink";
+    readonly internalID: string;
+    readonly title: string | null;
+    readonly subtitle: string | null;
+    readonly href: string | null;
+    readonly image: {
+      readonly small: {
+        readonly src: string;
+        readonly srcSet: string;
+        readonly width: number;
+        readonly height: number;
+      } | null;
+      readonly large: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null> | null;
+  readonly " $fragmentType": "HomeFeaturedEventsRail_orderedSet";
 };
-export type HomeFeaturedEventsRail_orderedSet$data = HomeFeaturedEventsRail_orderedSet;
 export type HomeFeaturedEventsRail_orderedSet$key = {
-    readonly " $data"?: HomeFeaturedEventsRail_orderedSet$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;
+  readonly " $data"?: HomeFeaturedEventsRail_orderedSet$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedEventsRail_orderedSet">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -201,5 +204,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '12d52ffc1a89ddb9b661fb39aed95546';
+
+(node as any).hash = "12d52ffc1a89ddb9b661fb39aed95546";
+
 export default node;

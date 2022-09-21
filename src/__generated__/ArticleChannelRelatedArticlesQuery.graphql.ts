@@ -1,60 +1,27 @@
+/**
+ * @generated SignedSource<<74790bb8814645ab53a850c49f363cee>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleChannelRelatedArticlesQueryVariables = {
-    id: string;
+export type ArticleChannelRelatedArticlesQuery$variables = {
+  id: string;
 };
-export type ArticleChannelRelatedArticlesQueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleChannelRelatedArticles_article">;
-    } | null;
+export type ArticleChannelRelatedArticlesQuery$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleChannelRelatedArticles_article">;
+  } | null;
 };
 export type ArticleChannelRelatedArticlesQuery = {
-    readonly response: ArticleChannelRelatedArticlesQueryResponse;
-    readonly variables: ArticleChannelRelatedArticlesQueryVariables;
+  variables: ArticleChannelRelatedArticlesQuery$variables;
+  response: ArticleChannelRelatedArticlesQuery$data;
 };
-
-
-
-/*
-query ArticleChannelRelatedArticlesQuery(
-  $id: String!
-) {
-  article(id: $id) {
-    ...ArticleChannelRelatedArticles_article
-    id
-  }
-}
-
-fragment ArticleChannelRelatedArticles_article on Article {
-  byline
-  channelArticles {
-    internalID
-    ...CellArticle_article
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -265,5 +232,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f30c64d90b669773afb245e0c654d1b7';
+
+(node as any).hash = "f30c64d90b669773afb245e0c654d1b7";
+
 export default node;

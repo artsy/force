@@ -12,13 +12,13 @@ import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useMode } from "Utils/Hooks/useMode"
-import { SettingsEditSettingsTwoFactorBackupCodes_me } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
+import { SettingsEditSettingsTwoFactorBackupCodes_me$data } from "__generated__/SettingsEditSettingsTwoFactorBackupCodes_me.graphql"
 import { CreateBackupSecondFactorsInput } from "__generated__/useCreateSettingsBackupSecondFactorsMutation.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesDialogQueryRenderer } from "./SettingsEditSettingsTwoFactorBackupCodesDialog"
 import { useCreateSettingsBackupSecondFactors } from "./useCreateSettingsBackupSecondFactorsMutation"
 
 interface SettingsEditSettingsTwoFactorBackupCodesProps {
-  me: SettingsEditSettingsTwoFactorBackupCodes_me
+  me: SettingsEditSettingsTwoFactorBackupCodes_me$data
 }
 
 type Mode = "Pending" | "Show" | "Creating"

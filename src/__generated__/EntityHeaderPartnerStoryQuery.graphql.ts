@@ -1,80 +1,27 @@
+/**
+ * @generated SignedSource<<6ac388452c8313abdc6743968de3eecd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderPartnerStoryQueryVariables = {
-    id: string;
+export type EntityHeaderPartnerStoryQuery$variables = {
+  id: string;
 };
-export type EntityHeaderPartnerStoryQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-    } | null;
+export type EntityHeaderPartnerStoryQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
+  } | null;
 };
 export type EntityHeaderPartnerStoryQuery = {
-    readonly response: EntityHeaderPartnerStoryQueryResponse;
-    readonly variables: EntityHeaderPartnerStoryQueryVariables;
+  variables: EntityHeaderPartnerStoryQuery$variables;
+  response: EntityHeaderPartnerStoryQuery$data;
 };
-
-
-
-/*
-query EntityHeaderPartnerStoryQuery(
-  $id: String!
-) {
-  partner(id: $id) {
-    ...EntityHeaderPartner_partner
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -366,5 +313,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b673831def60d8c87e59728eced8043f';
+
+(node as any).hash = "b673831def60d8c87e59728eced8043f";
+
 export default node;

@@ -1,11 +1,11 @@
 import { BoxProps } from "@artsy/palette"
-import { BackToFairBanner_show } from "__generated__/BackToFairBanner_show.graphql"
+import { BackToFairBanner_show$data } from "__generated__/BackToFairBanner_show.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Router/useRouter"
 
 interface BackToFairBannerProps {
-  show: BackToFairBanner_show
+  show: BackToFairBanner_show$data
 }
 
 const BackToFairBanner: React.FC<BackToFairBannerProps & BoxProps> = ({

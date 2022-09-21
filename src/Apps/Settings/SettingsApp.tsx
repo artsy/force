@@ -5,12 +5,12 @@ import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { SettingsApp_me } from "__generated__/SettingsApp_me.graphql"
+import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
 
 interface SettingsAppProps {
-  me: SettingsApp_me
+  me: SettingsApp_me$data
 }
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {

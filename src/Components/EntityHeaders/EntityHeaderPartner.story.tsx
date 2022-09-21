@@ -48,6 +48,7 @@ export const EntityHeaderPartner = () => {
 
               return (
                 <EntityHeaderPartnerFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   partner={props.partner}
                   {...rest}
                 />

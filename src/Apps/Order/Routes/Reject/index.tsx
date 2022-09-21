@@ -1,5 +1,5 @@
 import { Button, Flex, Text, Spacer } from "@artsy/palette"
-import { Reject_order } from "__generated__/Reject_order.graphql"
+import { Reject_order$data } from "__generated__/Reject_order.graphql"
 import { RejectOfferMutation } from "__generated__/RejectOfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
@@ -19,7 +19,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 interface RejectProps {
-  order: Reject_order
+  order: Reject_order$data
   router: Router
   dialog: Dialog
   commitMutation: CommitMutation
@@ -100,6 +100,7 @@ export const Reject: FC<RejectProps> = ({
         >
           <Media at="xs">
             <Flex flexDirection="column">
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
             </Flex>
             <Spacer mb={2} />
@@ -140,6 +141,7 @@ export const Reject: FC<RejectProps> = ({
         <Flex flexDirection="column">
           <Media greaterThan="xs">
             <Flex flexDirection="column">
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
             </Flex>
             <Spacer mb={2} />

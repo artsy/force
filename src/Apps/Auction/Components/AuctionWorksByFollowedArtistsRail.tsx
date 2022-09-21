@@ -2,11 +2,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { Rail } from "Components/Rail"
 import { extractNodes } from "Utils/extractNodes"
-import { AuctionWorksByFollowedArtistsRail_viewer } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
+import { AuctionWorksByFollowedArtistsRail_viewer$data } from "__generated__/AuctionWorksByFollowedArtistsRail_viewer.graphql"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface AuctionWorksByFollowedArtistsRailProps {
-  viewer: AuctionWorksByFollowedArtistsRail_viewer
+  viewer: AuctionWorksByFollowedArtistsRail_viewer$data
 }
 
 const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsRailProps> = ({
@@ -30,6 +30,7 @@ const AuctionWorksByFollowedArtistsRail: React.FC<AuctionWorksByFollowedArtistsR
           return nodes.map((node, index) => {
             return (
               <ShelfArtworkFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={node}
                 key={index}
                 lazyLoad

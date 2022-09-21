@@ -1,11 +1,11 @@
 import { InstitutionIcon, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SettingsBankAccount_bankAccount } from "__generated__/SettingsBankAccount_bankAccount.graphql"
+import { SettingsBankAccount_bankAccount$data } from "__generated__/SettingsBankAccount_bankAccount.graphql"
 import { useDeleteBankAccount } from "../useDeleteBankAccount"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
 
 interface SettingsBankAccountProps {
-  bankAccount: SettingsBankAccount_bankAccount
+  bankAccount: SettingsBankAccount_bankAccount$data
 }
 
 const SettingsBankAccount: React.FC<SettingsBankAccountProps> = ({

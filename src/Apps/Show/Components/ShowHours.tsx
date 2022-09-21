@@ -2,10 +2,10 @@ import { BoxProps } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowLocationHoursFragmentContainer } from "./ShowLocationHours"
-import { ShowHours_show } from "__generated__/ShowHours_show.graphql"
+import { ShowHours_show$data } from "__generated__/ShowHours_show.graphql"
 
 export interface ShowHoursProps extends BoxProps {
-  show: ShowHours_show
+  show: ShowHours_show$data
 }
 
 export const ShowHours: React.FC<ShowHoursProps> = ({ show, ...rest }) => {
@@ -15,6 +15,7 @@ export const ShowHours: React.FC<ShowHoursProps> = ({ show, ...rest }) => {
     return null
   }
 
+  // @ts-ignore RELAY UPGRADE 13
   return <ShowLocationHoursFragmentContainer location={location} {...rest} />
 }
 

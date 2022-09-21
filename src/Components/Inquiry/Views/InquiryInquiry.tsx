@@ -17,7 +17,7 @@ import { useSystemContext } from "System"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { InquiryInquiry_artwork } from "__generated__/InquiryInquiry_artwork.graphql"
+import { InquiryInquiry_artwork$data } from "__generated__/InquiryInquiry_artwork.graphql"
 import { InquiryInquiryQuery } from "__generated__/InquiryInquiryQuery.graphql"
 import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { wait } from "Utils/wait"
@@ -32,7 +32,7 @@ import { logger } from "../util"
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
 interface InquiryInquiryProps {
-  artwork: InquiryInquiry_artwork
+  artwork: InquiryInquiry_artwork$data
 }
 
 const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
@@ -316,6 +316,7 @@ export const InquiryInquiryQueryRenderer: React.FC = () => {
           return <InquiryInquiryPlaceholder />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <InquiryInquiryFragmentContainer artwork={props.artwork} />
       }}
     />

@@ -1,39 +1,29 @@
+/**
+ * @generated SignedSource<<aef52fd7ee84e200c916777d3570398e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type InquiryFairsYouAttendQueryVariables = {
-    term: string;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type InquiryFairsYouAttendQuery$variables = {
+  term: string;
 };
-export type InquiryFairsYouAttendQueryResponse = {
-    readonly external: {
-        readonly fairs: ReadonlyArray<{
-            readonly internalID: string;
-            readonly name: string;
-        }>;
-    };
+export type InquiryFairsYouAttendQuery$data = {
+  readonly external: {
+    readonly fairs: ReadonlyArray<{
+      readonly internalID: string;
+      readonly name: string;
+    }>;
+  };
 };
 export type InquiryFairsYouAttendQuery = {
-    readonly response: InquiryFairsYouAttendQueryResponse;
-    readonly variables: InquiryFairsYouAttendQueryVariables;
+  variables: InquiryFairsYouAttendQuery$variables;
+  response: InquiryFairsYouAttendQuery$data;
 };
-
-
-
-/*
-query InquiryFairsYouAttendQuery(
-  $term: String!
-) {
-  external {
-    fairs(size: 5, term: $term) {
-      internalID
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -153,5 +143,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8054b7dee581b03378483646085411fc';
+
+(node as any).hash = "8054b7dee581b03378483646085411fc";
+
 export default node;

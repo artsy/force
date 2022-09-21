@@ -1,6 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Column, Flex, GridColumns } from "@artsy/palette"
-import { ArtworkGrid_artworks } from "__generated__/ArtworkGrid_artworks.graphql"
+import { ArtworkGrid_artworks$data } from "__generated__/ArtworkGrid_artworks.graphql"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 import { isEmpty, isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
@@ -17,14 +17,13 @@ import { extractNodes } from "Utils/extractNodes"
 import { FlatGridItemFragmentContainer } from "../Artwork/FlatGridItem"
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type SectionedArtworks = Array<Array<ArtworkGrid_artworks["edges"][0]["node"]>>
+type Artwork = ArtworkGrid_artworks$data["edges"][0]["node"]
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-type Artwork = ArtworkGrid_artworks["edges"][0]["node"]
+type SectionedArtworks = Array<Array<Artwork>>
 
 export interface ArtworkGridProps
   extends React.HTMLProps<ArtworkGridContainer> {
-  artworks: ArtworkGrid_artworks
+  artworks: ArtworkGrid_artworks$data
   contextModule?: AuthContextModule
   columnCount?: number | number[]
   preloadImageCount?: number
@@ -91,7 +90,7 @@ export class ArtworkGridContainer extends React.Component<
   //       artworks are added (paginated). Ideally it would just continue
   //       calculations from where it finished last time.
   sectionedArtworksForAllBreakpoints: (
-    artworks: ArtworkGrid_artworks,
+    artworks: ArtworkGrid_artworks$data,
     columnCount: number[]
   ) => SectionedArtworks[] = memoizeOnce(
     (artworks, columnCount) =>
@@ -179,6 +178,7 @@ export class ArtworkGridContainer extends React.Component<
         {nodes.map(artwork => {
           return (
             <Column span={[6, 4]} key={artwork.internalID} minWidth={0}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <FlatGridItemFragmentContainer artwork={artwork} />
             </Column>
           )
@@ -290,8 +290,8 @@ function areSectionedArtworksEqual(current: any, previous: any) {
   if (Array.isArray(current)) {
     return isEqual(current, previous)
   } else {
-    const currentEdges = (current as ArtworkGrid_artworks).edges
-    const previousEdges = (previous as ArtworkGrid_artworks).edges
+    const currentEdges = (current as ArtworkGrid_artworks$data).edges
+    const previousEdges = (previous as ArtworkGrid_artworks$data).edges
     return (
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       currentEdges.length === previousEdges.length &&
@@ -302,7 +302,7 @@ function areSectionedArtworksEqual(current: any, previous: any) {
 }
 
 export function createSectionedArtworks(
-  artworksConnection: ArtworkGrid_artworks,
+  artworksConnection: ArtworkGrid_artworks$data,
   columnCount: number
 ): SectionedArtworks {
   const sectionedArtworks: SectionedArtworks = []

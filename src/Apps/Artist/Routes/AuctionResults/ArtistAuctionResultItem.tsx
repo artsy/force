@@ -14,7 +14,7 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import { ArtistAuctionResultItem_auctionResult } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
+import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { SystemContextProps, useSystemContext } from "System"
 import { SystemContext } from "System"
 import { ModalType } from "Components/Authentication/Types"
@@ -27,7 +27,7 @@ import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
-  auctionResult: ArtistAuctionResultItem_auctionResult
+  auctionResult: ArtistAuctionResultItem_auctionResult$data
   filtersAtDefault: boolean
   showArtistName?: boolean
 }

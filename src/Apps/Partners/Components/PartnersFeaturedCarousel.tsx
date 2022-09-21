@@ -3,11 +3,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { HeroCarousel } from "Components/HeroCarousel/HeroCarousel"
 import { extractNodes } from "Utils/extractNodes"
 import { useStableShuffle } from "Utils/Hooks/useStableShuffle"
-import { PartnersFeaturedCarousel_viewer } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
+import { PartnersFeaturedCarousel_viewer$data } from "__generated__/PartnersFeaturedCarousel_viewer.graphql"
 import { PartnersFeaturedCarouselCellFragmentContainer } from "./PartnersFeaturedCarouselCell"
 
 interface PartnersFeaturedCarouselProps {
-  viewer: PartnersFeaturedCarousel_viewer
+  viewer: PartnersFeaturedCarousel_viewer$data
 }
 
 const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
@@ -22,6 +22,7 @@ const PartnersFeaturedCarousel: FC<PartnersFeaturedCarouselProps> = ({
         return (
           <PartnersFeaturedCarouselCellFragmentContainer
             key={profile.internalID}
+            // @ts-ignore RELAY UPGRADE 13
             profile={profile}
           />
         )

@@ -1,38 +1,25 @@
+/**
+ * @generated SignedSource<<7a13eac3275ae1a7e28ba0566939547d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistInsightBadges_Test_QueryVariables = {};
-export type ArtistInsightBadges_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistInsightBadges_artist">;
-    } | null;
+export type ArtistInsightBadges_Test_Query$variables = {};
+export type ArtistInsightBadges_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistInsightBadges_artist">;
+  } | null;
 };
 export type ArtistInsightBadges_Test_Query = {
-    readonly response: ArtistInsightBadges_Test_QueryResponse;
-    readonly variables: ArtistInsightBadges_Test_QueryVariables;
+  variables: ArtistInsightBadges_Test_Query$variables;
+  response: ArtistInsightBadges_Test_Query$data;
 };
-
-
-
-/*
-query ArtistInsightBadges_Test_Query {
-  artist(id: "example") {
-    ...ArtistInsightBadges_artist
-    id
-  }
-}
-
-fragment ArtistInsightBadges_artist on Artist {
-  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {
-    kind
-    label
-    description
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -197,5 +184,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2a482b8055edf6c1126558e2b36c9f9b';
+
+(node as any).hash = "2a482b8055edf6c1126558e2b36c9f9b";
+
 export default node;

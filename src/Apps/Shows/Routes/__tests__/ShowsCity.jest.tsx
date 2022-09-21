@@ -22,6 +22,7 @@ const { getWrapper } = setupTestWrapper<ShowsCity_Test_Query>({
   Component: ({ viewer, city }) => {
     return (
       <MockBoot>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ShowsCityRefetchContainer viewer={viewer!} city={city!} />
       </MockBoot>
     )

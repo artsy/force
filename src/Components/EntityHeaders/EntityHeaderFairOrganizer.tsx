@@ -3,11 +3,11 @@ import { Text, BoxProps, Flex, Avatar } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { EntityHeaderFairOrganizer_fairOrganizer } from "__generated__/EntityHeaderFairOrganizer_fairOrganizer.graphql"
+import { EntityHeaderFairOrganizer_fairOrganizer$data } from "__generated__/EntityHeaderFairOrganizer_fairOrganizer.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
 export interface EntityHeaderFairOrganizerProps extends BoxProps {
-  fairOrganizer: EntityHeaderFairOrganizer_fairOrganizer
+  fairOrganizer: EntityHeaderFairOrganizer_fairOrganizer$data
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
@@ -65,6 +65,7 @@ const EntityHeaderFairOrganizer: FC<EntityHeaderFairOrganizerProps> = ({
 
       {FollowButton || (
         <FollowProfileButtonFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           profile={fairOrganizer.profile!}
           contextModule={ContextModule.fairsHeader}
           size="small"

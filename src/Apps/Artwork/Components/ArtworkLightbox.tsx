@@ -3,13 +3,13 @@ import { Link } from "react-head"
 import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkLightbox_artwork } from "__generated__/ArtworkLightbox_artwork.graphql"
+import { ArtworkLightbox_artwork$data } from "__generated__/ArtworkLightbox_artwork.graphql"
 import { useSystemContext } from "System"
 import { userIsTeam } from "Utils/user"
 import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
 
 interface ArtworkLightboxProps extends ClickableProps {
-  artwork: ArtworkLightbox_artwork
+  artwork: ArtworkLightbox_artwork$data
   activeIndex: number
   maxHeight: number
   lazyLoad?: boolean

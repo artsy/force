@@ -1,5 +1,5 @@
 import { Box, Text, Spacer, GridColumns, Column } from "@artsy/palette"
-import { ArtistConsignFAQ_artist } from "__generated__/ArtistConsignFAQ_artist.graphql"
+import { ArtistConsignFAQ_artist$data } from "__generated__/ArtistConsignFAQ_artist.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import * as React from "react"
@@ -10,7 +10,7 @@ import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 import { Masonry } from "Components/Masonry"
 
 interface ArtistConsignFAQProps {
-  artist: ArtistConsignFAQ_artist
+  artist: ArtistConsignFAQ_artist$data
 }
 
 const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {

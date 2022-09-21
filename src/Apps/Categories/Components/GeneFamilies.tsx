@@ -2,11 +2,11 @@ import { Box, Spacer } from "@artsy/palette"
 import { GeneFamilyFragmentContainer } from "./GeneFamily"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { GeneFamilies_geneFamiliesConnection } from "__generated__/GeneFamilies_geneFamiliesConnection.graphql"
+import { GeneFamilies_geneFamiliesConnection$data } from "__generated__/GeneFamilies_geneFamiliesConnection.graphql"
 import { extractNodes } from "Utils/extractNodes"
 
 interface GeneFamiliesProps {
-  geneFamiliesConnection: GeneFamilies_geneFamiliesConnection
+  geneFamiliesConnection: GeneFamilies_geneFamiliesConnection$data
 }
 
 const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
@@ -18,6 +18,7 @@ const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
       {geneFamilies.map(geneFamily => {
         return (
           <Box key={geneFamily.internalID}>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <GeneFamilyFragmentContainer geneFamily={geneFamily} />
             <Spacer mt={6} />
           </Box>

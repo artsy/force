@@ -1,32 +1,26 @@
+/**
+ * @generated SignedSource<<6c977d1f58bffa3fef6404f2236f4444>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type OnboardingQuestionOneMutationVariables = {
-    collectorLevel: number;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type OnboardingQuestionOneMutation$variables = {
+  collectorLevel: number;
 };
-export type OnboardingQuestionOneMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly clientMutationId: string | null;
-    } | null;
+export type OnboardingQuestionOneMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly clientMutationId: string | null;
+  } | null;
 };
 export type OnboardingQuestionOneMutation = {
-    readonly response: OnboardingQuestionOneMutationResponse;
-    readonly variables: OnboardingQuestionOneMutationVariables;
+  variables: OnboardingQuestionOneMutation$variables;
+  response: OnboardingQuestionOneMutation$data;
 };
-
-
-
-/*
-mutation OnboardingQuestionOneMutation(
-  $collectorLevel: Int!
-) {
-  updateMyUserProfile(input: {collectorLevel: $collectorLevel}) {
-    clientMutationId
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -95,5 +89,7 @@ return {
   }
 };
 })();
-(node as any).hash = '03e662450934de12f0bb2c51879ace20';
+
+(node as any).hash = "03e662450934de12f0bb2c51879ace20";
+
 export default node;

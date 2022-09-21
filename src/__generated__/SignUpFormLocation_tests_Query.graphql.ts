@@ -1,38 +1,27 @@
+/**
+ * @generated SignedSource<<0512849716be6a55802282885e878e52>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SignUpFormLocation_tests_QueryVariables = {
-    ip: string;
+export type SignUpFormLocation_tests_Query$variables = {
+  ip: string;
 };
-export type SignUpFormLocation_tests_QueryResponse = {
-    readonly requestLocation: {
-        readonly " $fragmentRefs": FragmentRefs<"SignUpForm_requestLocation">;
-    } | null;
+export type SignUpFormLocation_tests_Query$data = {
+  readonly requestLocation: {
+    readonly " $fragmentSpreads": FragmentRefs<"SignUpForm_requestLocation">;
+  } | null;
 };
 export type SignUpFormLocation_tests_Query = {
-    readonly response: SignUpFormLocation_tests_QueryResponse;
-    readonly variables: SignUpFormLocation_tests_QueryVariables;
+  variables: SignUpFormLocation_tests_Query$variables;
+  response: SignUpFormLocation_tests_Query$data;
 };
-
-
-
-/*
-query SignUpFormLocation_tests_Query(
-  $ip: String!
-) {
-  requestLocation(ip: $ip) {
-    ...SignUpForm_requestLocation
-    id
-  }
-}
-
-fragment SignUpForm_requestLocation on RequestLocation {
-  countryCode
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -140,5 +129,7 @@ return {
   }
 };
 })();
-(node as any).hash = '4902fe6fc6c22dcb9596a2d6b7ea89e2';
+
+(node as any).hash = "4902fe6fc6c22dcb9596a2d6b7ea89e2";
+
 export default node;

@@ -20,6 +20,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 const { renderWithRelay } = setupTestWrapperTL<PriceOptions_Test_Query>({
   Component: props => (
+    // @ts-ignore RELAY UPGRADE 13
     <PriceOptionsFragmentContainer
       artwork={props.artwork}
       order={props.order!}

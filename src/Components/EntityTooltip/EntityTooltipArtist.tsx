@@ -13,7 +13,7 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EntityTooltipArtistQuery } from "__generated__/EntityTooltipArtistQuery.graphql"
-import { EntityTooltipArtist_artist } from "__generated__/EntityTooltipArtist_artist.graphql"
+import { EntityTooltipArtist_artist$data } from "__generated__/EntityTooltipArtist_artist.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderArtistFragmentContainer } from "../EntityHeaders/EntityHeaderArtist"
 import { useTracking } from "react-tracking"
@@ -21,7 +21,7 @@ import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System"
 
 interface EntityTooltipArtistProps {
-  artist: EntityTooltipArtist_artist
+  artist: EntityTooltipArtist_artist$data
 }
 
 const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
@@ -75,6 +75,7 @@ const EntityTooltipArtist: FC<EntityTooltipArtistProps> = ({ artist }) => {
       )}
 
       <EntityHeaderArtistFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         artist={artist}
         displayAvatar={false}
         alignItems="flex-start"
@@ -177,6 +178,7 @@ export const EntityTooltipArtistQueryRenderer: FC<EntityTooltipArtistQueryRender
           return <EntityTooltipArtistPlaceholder />
         }
 
+        // @ts-ignore RELAY UPGRADE 13
         return <EntityTooltipArtistFragmentContainer artist={props.artist} />
       }}
     />

@@ -1,5 +1,5 @@
-import { CreditCardPicker_me } from "__generated__/CreditCardPicker_me.graphql"
-import { CreditCardPicker_order } from "__generated__/CreditCardPicker_order.graphql"
+import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import { CreditCardPicker_order$data } from "__generated__/CreditCardPicker_order.graphql"
 import { CreditCardPickerCreateCreditCardMutation } from "__generated__/CreditCardPickerCreateCreditCardMutation.graphql"
 import {
   Address,
@@ -46,8 +46,8 @@ export interface StripeProps {
 }
 
 export interface CreditCardPickerProps {
-  order: CreditCardPicker_order
-  me: CreditCardPicker_me
+  order: CreditCardPicker_order$data
+  me: CreditCardPicker_me$data
   commitMutation: CommitMutation
   innerRef: React.RefObject<CreditCardPicker>
 }

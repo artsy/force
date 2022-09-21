@@ -1,47 +1,25 @@
+/**
+ * @generated SignedSource<<fc147ba84cf84bb183f75be985233d2e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellArticleFragmentContainer_Test_QueryVariables = {};
-export type CellArticleFragmentContainer_Test_QueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-    } | null;
+export type CellArticleFragmentContainer_Test_Query$variables = {};
+export type CellArticleFragmentContainer_Test_Query$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+  } | null;
 };
 export type CellArticleFragmentContainer_Test_Query = {
-    readonly response: CellArticleFragmentContainer_Test_QueryResponse;
-    readonly variables: CellArticleFragmentContainer_Test_QueryVariables;
+  variables: CellArticleFragmentContainer_Test_Query$variables;
+  response: CellArticleFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query CellArticleFragmentContainer_Test_Query {
-  article(id: "example") {
-    ...CellArticle_article
-    id
-  }
-}
-
-fragment CellArticle_article on Article {
-  vertical
-  title
-  thumbnailTitle
-  byline
-  href
-  publishedAt(format: "MMM D, YYYY")
-  thumbnailImage {
-    cropped(width: 445, height: 334) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -278,5 +256,7 @@ return {
   }
 };
 })();
-(node as any).hash = '18e94a9dc3a0d468734c5e11faa5245a';
+
+(node as any).hash = "18e94a9dc3a0d468734c5e11faa5245a";
+
 export default node;

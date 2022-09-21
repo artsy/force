@@ -1,48 +1,25 @@
+/**
+ * @generated SignedSource<<931c27de1955a3c45f063d848ec81be2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersLocationAutocompleteQueryVariables = {};
-export type PartnersLocationAutocompleteQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnersLocationAutocomplete_viewer">;
-    } | null;
+export type PartnersLocationAutocompleteQuery$variables = {};
+export type PartnersLocationAutocompleteQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnersLocationAutocomplete_viewer">;
+  } | null;
 };
 export type PartnersLocationAutocompleteQuery = {
-    readonly response: PartnersLocationAutocompleteQueryResponse;
-    readonly variables: PartnersLocationAutocompleteQueryVariables;
+  variables: PartnersLocationAutocompleteQuery$variables;
+  response: PartnersLocationAutocompleteQuery$data;
 };
-
-
-
-/*
-query PartnersLocationAutocompleteQuery {
-  viewer {
-    ...PartnersLocationAutocomplete_viewer
-  }
-}
-
-fragment PartnersLocationAutocomplete_viewer on Viewer {
-  featuredCities: cities(featured: true) {
-    text: name
-    value: slug
-    coordinates {
-      lat
-      lng
-    }
-  }
-  allCities: cities {
-    text: name
-    value: slug
-    coordinates {
-      lat
-      lng
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -168,5 +145,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1d8669d65db802a6ebce1789c1735b2f';
+
+(node as any).hash = "1d8669d65db802a6ebce1789c1735b2f";
+
 export default node;

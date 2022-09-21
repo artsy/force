@@ -6,7 +6,7 @@ import {
   PartnerArtistDetailsRenderer,
   PartnerArtistsFragmentContainer,
 } from "../../Components/PartnerArtists"
-import { ArtistsRoute_partner } from "__generated__/ArtistsRoute_partner.graphql"
+import { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
 import { PARTNER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
@@ -16,7 +16,7 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 
 export interface ArtistsRouteProps {
-  partner: ArtistsRoute_partner
+  partner: ArtistsRoute_partner$data
   match: Match
 }
 
@@ -54,6 +54,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
             selector: "#jump--PartnerArtistDetails",
             offset: PARTNER_NAV_BAR_HEIGHT + desktop + 20,
           }}
+          // @ts-ignore RELAY UPGRADE 13
           partner={partner}
         />
       </Media>
@@ -63,6 +64,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
             selector: "#jump--PartnerArtistDetails",
             offset: PARTNER_NAV_BAR_HEIGHT + mobile + 20,
           }}
+          // @ts-ignore RELAY UPGRADE 13
           partner={partner}
         />
       </Media>

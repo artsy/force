@@ -1,103 +1,63 @@
+/**
+ * @generated SignedSource<<8f0bfce35282e661aad8e12efda8307e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type BankAccountPickerTestQueryVariables = {};
-export type BankAccountPickerTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"BankAccountPicker_me">;
-    } | null;
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"BankAccountPicker_order">;
-    } | null;
+export type BankAccountPickerTestQuery$variables = {};
+export type BankAccountPickerTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_me">;
+  } | null;
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_order">;
+  } | null;
 };
-export type BankAccountPickerTestQueryRawResponse = {
-    readonly me: ({
-        readonly bankAccounts: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly internalID: string;
-                    readonly last4: string;
-                    readonly id: string;
-                }) | null;
-            }) | null> | null;
-        }) | null;
-        readonly id: string;
-    }) | null;
-    readonly order: ({
-        readonly __typename: string;
-        readonly __isCommerceOrder: string;
-        readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
-        readonly bankAccountId: string | null;
-        readonly paymentMethodDetails: ({
-            readonly __typename: "BankAccount";
-            readonly internalID: string;
-            readonly last4: string;
-            readonly id: string;
-        } | {
-            readonly __typename: "CreditCard";
-            readonly id: string;
-        } | {
-            readonly __typename: string;
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type BankAccountPickerTestQuery$rawResponse = {
+  readonly me: {
+    readonly bankAccounts: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly last4: string;
+          readonly id: string;
+        } | null;
+      } | null> | null;
+    } | null;
+    readonly id: string;
+  } | null;
+  readonly order: {
+    readonly __typename: string;
+    readonly __isCommerceOrder: string;
+    readonly internalID: string;
+    readonly mode: CommerceOrderModeEnum | null;
+    readonly bankAccountId: string | null;
+    readonly paymentMethodDetails: {
+      readonly __typename: "BankAccount";
+      readonly internalID: string;
+      readonly last4: string;
+      readonly id: string;
+    } | {
+      readonly __typename: "CreditCard";
+      readonly id: string;
+    } | {
+      readonly __typename: string;
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type BankAccountPickerTestQuery = {
-    readonly response: BankAccountPickerTestQueryResponse;
-    readonly variables: BankAccountPickerTestQueryVariables;
-    readonly rawResponse: BankAccountPickerTestQueryRawResponse;
+  variables: BankAccountPickerTestQuery$variables;
+  response: BankAccountPickerTestQuery$data;
+  rawResponse: BankAccountPickerTestQuery$rawResponse;
 };
-
-
-
-/*
-query BankAccountPickerTestQuery {
-  me {
-    ...BankAccountPicker_me
-    id
-  }
-  order: commerceOrder(id: "unused") {
-    __typename
-    ...BankAccountPicker_order
-    id
-  }
-}
-
-fragment BankAccountPicker_me on Me {
-  bankAccounts(first: 100) {
-    edges {
-      node {
-        internalID
-        last4
-        id
-      }
-    }
-  }
-}
-
-fragment BankAccountPicker_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-  mode
-  bankAccountId
-  paymentMethodDetails {
-    __typename
-    ... on BankAccount {
-      internalID
-      last4
-      id
-    }
-    ... on CreditCard {
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -386,5 +346,7 @@ return {
   }
 };
 })();
-(node as any).hash = '984e3467ab35b04ff9fff3adc200b65e';
+
+(node as any).hash = "984e3467ab35b04ff9fff3adc200b65e";
+
 export default node;

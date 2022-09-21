@@ -9,11 +9,11 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { ArtistInsightAchievements_artist } from "__generated__/ArtistInsightAchievements_artist.graphql"
+import { ArtistInsightAchievements_artist$data } from "__generated__/ArtistInsightAchievements_artist.graphql"
 import { useTracking } from "react-tracking"
 
 interface ArtistInsightAchievementsProps {
-  artist: ArtistInsightAchievements_artist
+  artist: ArtistInsightAchievements_artist$data
 }
 
 export const ArtistInsightAchievements: FC<ArtistInsightAchievementsProps> = ({

@@ -5,7 +5,7 @@ import {
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import { FollowArtistPopoverRow_artist } from "__generated__/FollowArtistPopoverRow_artist.graphql"
+import { FollowArtistPopoverRow_artist$data } from "__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "__generated__/FollowArtistPopoverRowMutation.graphql"
 import { SystemContextProps } from "System"
 import { Component } from "react"
@@ -21,13 +21,13 @@ import { FollowArtistPopoverState } from "./state"
 import { FollowButton } from "../FollowButton/Button"
 
 interface Props extends SystemContextProps {
-  artist: FollowArtistPopoverRow_artist
+  artist: FollowArtistPopoverRow_artist$data
   excludeArtistIdsState?: FollowArtistPopoverState
   relay: RelayProp
 }
 
 interface State {
-  swappedArtist: FollowArtistPopoverRow_artist
+  swappedArtist: FollowArtistPopoverRow_artist$data
   followed: boolean
 }
 
@@ -98,7 +98,7 @@ class FollowArtistPopoverRow extends Component<Props, State> {
             () => {
               setTimeout(() => {
                 this.setState({
-                  swappedArtist: (node as unknown) as FollowArtistPopoverRow_artist,
+                  swappedArtist: (node as unknown) as FollowArtistPopoverRow_artist$data,
                   followed: false,
                 })
               }, 500)

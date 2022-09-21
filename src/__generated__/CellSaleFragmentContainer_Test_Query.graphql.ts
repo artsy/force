@@ -1,42 +1,25 @@
+/**
+ * @generated SignedSource<<61eb1130f28f3ff9b32a5ed987f45f3b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellSaleFragmentContainer_Test_QueryVariables = {};
-export type CellSaleFragmentContainer_Test_QueryResponse = {
-    readonly sale: {
-        readonly " $fragmentRefs": FragmentRefs<"CellSale_sale">;
-    } | null;
+export type CellSaleFragmentContainer_Test_Query$variables = {};
+export type CellSaleFragmentContainer_Test_Query$data = {
+  readonly sale: {
+    readonly " $fragmentSpreads": FragmentRefs<"CellSale_sale">;
+  } | null;
 };
 export type CellSaleFragmentContainer_Test_Query = {
-    readonly response: CellSaleFragmentContainer_Test_QueryResponse;
-    readonly variables: CellSaleFragmentContainer_Test_QueryVariables;
+  variables: CellSaleFragmentContainer_Test_Query$variables;
+  response: CellSaleFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query CellSaleFragmentContainer_Test_Query {
-  sale(id: "example") {
-    ...CellSale_sale
-    id
-  }
-}
-
-fragment CellSale_sale on Sale {
-  name
-  formattedStartDateTime
-  href
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -230,5 +213,7 @@ return {
   }
 };
 })();
-(node as any).hash = '874dfbad29bea56a2ce81889270a1e94';
+
+(node as any).hash = "874dfbad29bea56a2ce81889270a1e94";
+
 export default node;

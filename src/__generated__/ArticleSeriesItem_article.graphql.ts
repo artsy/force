@@ -1,38 +1,41 @@
+/**
+ * @generated SignedSource<<81f9aefc459da29a5781b976f136fc63>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSeriesItem_article = {
-    readonly href: string | null;
-    readonly vertical: string | null;
+export type ArticleSeriesItem_article$data = {
+  readonly href: string | null;
+  readonly vertical: string | null;
+  readonly title: string | null;
+  readonly thumbnailTitle: string | null;
+  readonly byline: string | null;
+  readonly description: string | null;
+  readonly publishedAt: string | null;
+  readonly thumbnailImage: {
+    readonly display: {
+      readonly src: string;
+      readonly srcSet: string;
+    } | null;
+  } | null;
+  readonly media: {
+    readonly duration: string | null;
+  } | null;
+  readonly seriesArticle: {
     readonly title: string | null;
-    readonly thumbnailTitle: string | null;
-    readonly byline: string | null;
-    readonly description: string | null;
-    readonly publishedAt: string | null;
-    readonly thumbnailImage: {
-        readonly display: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-    } | null;
-    readonly media: {
-        readonly duration: string | null;
-    } | null;
-    readonly seriesArticle: {
-        readonly title: string | null;
-    } | null;
-    readonly " $refType": "ArticleSeriesItem_article";
+  } | null;
+  readonly " $fragmentType": "ArticleSeriesItem_article";
 };
-export type ArticleSeriesItem_article$data = ArticleSeriesItem_article;
 export type ArticleSeriesItem_article$key = {
-    readonly " $data"?: ArticleSeriesItem_article$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSeriesItem_article">;
+  readonly " $data"?: ArticleSeriesItem_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSeriesItem_article">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -179,5 +182,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '16a4037c1b10f7ead04149b6cf7233cc';
+
+(node as any).hash = "16a4037c1b10f7ead04149b6cf7233cc";
+
 export default node;

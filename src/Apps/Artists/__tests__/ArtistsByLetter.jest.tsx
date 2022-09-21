@@ -15,6 +15,7 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
   Component: props => {
     return (
       <MockBoot>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistsByLetterFragmentContainer {...props} />
       </MockBoot>
     )

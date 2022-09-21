@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<5eb7438069068eb34b7c4444646346ea>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ChannelArticles_channel = {
-    readonly articlesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ChannelArticles_channel";
+export type ChannelArticles_channel$data = {
+  readonly articlesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ChannelArticles_channel";
 };
-export type ChannelArticles_channel$data = ChannelArticles_channel;
 export type ChannelArticles_channel$key = {
-    readonly " $data"?: ChannelArticles_channel$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ChannelArticles_channel">;
+  readonly " $data"?: ChannelArticles_channel$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ChannelArticles_channel">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -77,6 +80,11 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArticle_article"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -89,11 +97,6 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArticle_article"
                 }
               ],
               "storageKey": null
@@ -140,5 +143,7 @@ const node: ReaderFragment = {
   "type": "Channel",
   "abstractKey": null
 };
-(node as any).hash = '371ca9aeeeeb13684c899d12157f3a4c';
+
+(node as any).hash = "371ca9aeeeeb13684c899d12157f3a4c";
+
 export default node;

@@ -1,38 +1,25 @@
+/**
+ * @generated SignedSource<<48c37e7df459eea67fb28e1f722f033e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BackToFairBanner_Test_QueryVariables = {};
-export type BackToFairBanner_Test_QueryResponse = {
-    readonly show: {
-        readonly " $fragmentRefs": FragmentRefs<"BackToFairBanner_show">;
-    } | null;
+export type BackToFairBanner_Test_Query$variables = {};
+export type BackToFairBanner_Test_Query$data = {
+  readonly show: {
+    readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show">;
+  } | null;
 };
 export type BackToFairBanner_Test_Query = {
-    readonly response: BackToFairBanner_Test_QueryResponse;
-    readonly variables: BackToFairBanner_Test_QueryVariables;
+  variables: BackToFairBanner_Test_Query$variables;
+  response: BackToFairBanner_Test_Query$data;
 };
-
-
-
-/*
-query BackToFairBanner_Test_Query {
-  show(id: "show-id") {
-    ...BackToFairBanner_show
-    id
-  }
-}
-
-fragment BackToFairBanner_show on Show {
-  fair {
-    name
-    href
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -163,5 +150,7 @@ return {
   }
 };
 })();
-(node as any).hash = '52f47020325199c51fd1895e9c5dfa38';
+
+(node as any).hash = "52f47020325199c51fd1895e9c5dfa38";
+
 export default node;

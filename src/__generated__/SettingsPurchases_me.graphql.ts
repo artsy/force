@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<6ef24655a5baff0c8da5a01ef9dc6d7d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsPurchases_me = {
-    readonly name: string | null;
-    readonly orders: {
-        readonly totalCount: number | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"CommercePagination_pageCursors">;
-        } | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly code: string;
-                readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRow_order">;
-            } | null;
-        } | null> | null;
+export type SettingsPurchases_me$data = {
+  readonly name: string | null;
+  readonly orders: {
+    readonly totalCount: number | null;
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"CommercePagination_pageCursors">;
     } | null;
-    readonly " $refType": "SettingsPurchases_me";
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly code: string;
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchasesRow_order">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SettingsPurchases_me";
 };
-export type SettingsPurchases_me$data = SettingsPurchases_me;
 export type SettingsPurchases_me$key = {
-    readonly " $data"?: SettingsPurchases_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsPurchases_me">;
+  readonly " $data"?: SettingsPurchases_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchases_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -181,5 +184,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = 'fdad90e8481ba3fb8caf0b87e155d541';
+
+(node as any).hash = "fdad90e8481ba3fb8caf0b87e155d541";
+
 export default node;

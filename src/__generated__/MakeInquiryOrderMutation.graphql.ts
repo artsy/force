@@ -1,74 +1,51 @@
+/**
+ * @generated SignedSource<<733a58998afbe433a1813b7f5b656286>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateInquiryOrderWithArtworkInput = {
-    artworkId: string;
-    clientMutationId?: string | null | undefined;
-    editionSetId?: string | null | undefined;
-    impulseConversationId: string;
-    quantity?: number | null | undefined;
+  artworkId: string;
+  clientMutationId?: string | null;
+  editionSetId?: string | null;
+  impulseConversationId: string;
+  quantity?: number | null;
 };
-export type MakeInquiryOrderMutationVariables = {
-    input: CommerceCreateInquiryOrderWithArtworkInput;
+export type MakeInquiryOrderMutation$variables = {
+  input: CommerceCreateInquiryOrderWithArtworkInput;
 };
-export type MakeInquiryOrderMutationResponse = {
-    readonly createInquiryOrder: {
-        readonly orderOrError: {
-            readonly __typename: "CommerceOrderWithMutationSuccess";
-            readonly order: {
-                readonly internalID: string;
-                readonly mode: CommerceOrderModeEnum | null;
-            };
-        } | {
-            readonly __typename: "CommerceOrderWithMutationFailure";
-            readonly error: {
-                readonly type: string;
-                readonly code: string;
-                readonly data: string | null;
-            };
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type MakeInquiryOrderMutation$data = {
+  readonly createInquiryOrder: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order: {
+        readonly internalID: string;
+        readonly mode: CommerceOrderModeEnum | null;
+      };
+    } | {
+      readonly __typename: "CommerceOrderWithMutationFailure";
+      readonly error: {
+        readonly type: string;
+        readonly code: string;
+        readonly data: string | null;
+      };
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
 export type MakeInquiryOrderMutation = {
-    readonly response: MakeInquiryOrderMutationResponse;
-    readonly variables: MakeInquiryOrderMutationVariables;
+  variables: MakeInquiryOrderMutation$variables;
+  response: MakeInquiryOrderMutation$data;
 };
-
-
-
-/*
-mutation MakeInquiryOrderMutation(
-  $input: CommerceCreateInquiryOrderWithArtworkInput!
-) {
-  createInquiryOrder(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationSuccess {
-        order {
-          __typename
-          internalID
-          mode
-          id
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          type
-          code
-          data
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -270,5 +247,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5607e39e05337490846bb67931481e48';
+
+(node as any).hash = "5607e39e05337490846bb67931481e48";
+
 export default node;

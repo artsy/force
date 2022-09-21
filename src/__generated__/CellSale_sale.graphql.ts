@@ -1,28 +1,31 @@
+/**
+ * @generated SignedSource<<679bce7ecbaef568b5abc0d6df514d1d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellSale_sale = {
-    readonly name: string | null;
-    readonly formattedStartDateTime: string | null;
-    readonly href: string | null;
-    readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type CellSale_sale$data = {
+  readonly name: string | null;
+  readonly formattedStartDateTime: string | null;
+  readonly href: string | null;
+  readonly coverImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly " $refType": "CellSale_sale";
+  } | null;
+  readonly " $fragmentType": "CellSale_sale";
 };
-export type CellSale_sale$data = CellSale_sale;
 export type CellSale_sale$key = {
-    readonly " $data"?: CellSale_sale$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CellSale_sale">;
+  readonly " $data"?: CellSale_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CellSale_sale">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -111,5 +114,7 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = '6548a4992af1b2cbc5fdb190e87502b1';
+
+(node as any).hash = "6548a4992af1b2cbc5fdb190e87502b1";
+
 export default node;

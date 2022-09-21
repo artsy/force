@@ -1,128 +1,25 @@
+/**
+ * @generated SignedSource<<490bc1d192ff3b68b526f07951ea7495>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserBidHistory_Test_QueryVariables = {};
-export type UserBidHistory_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"UserBidHistory_me">;
-    } | null;
+export type UserBidHistory_Test_Query$variables = {};
+export type UserBidHistory_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"UserBidHistory_me">;
+  } | null;
 };
 export type UserBidHistory_Test_Query = {
-    readonly response: UserBidHistory_Test_QueryResponse;
-    readonly variables: UserBidHistory_Test_QueryVariables;
+  variables: UserBidHistory_Test_Query$variables;
+  response: UserBidHistory_Test_Query$data;
 };
-
-
-
-/*
-query UserBidHistory_Test_Query {
-  me {
-    ...UserBidHistory_me
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SettingsAuctionsLotStanding_lotStanding on LotStanding {
-  isLeadingBidder
-  saleArtwork {
-    lotLabel
-    sale {
-      isClosed
-      id
-    }
-    artwork {
-      ...Details_artwork
-      href
-      image {
-        cropped(height: 100, width: 100) {
-          src
-          srcSet
-        }
-      }
-      id
-    }
-    id
-  }
-}
-
-fragment UserBidHistory_me on Me {
-  inactiveLotStandings: lotStandings(live: false) {
-    ...SettingsAuctionsLotStanding_lotStanding
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -765,5 +662,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'aab7c7a1013e923a09c9119116d89fa3';
+
+(node as any).hash = "aab7c7a1013e923a09c9119116d89fa3";
+
 export default node;

@@ -13,8 +13,8 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarBidAction_artwork } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
-import { ArtworkSidebarBidAction_me } from "__generated__/ArtworkSidebarBidAction_me.graphql"
+import { ArtworkSidebarBidAction_artwork$data } from "__generated__/ArtworkSidebarBidAction_artwork.graphql"
+import { ArtworkSidebarBidAction_me$data } from "__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
@@ -28,8 +28,8 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { lotIsClosed } from "../../Utils/lotIsClosed"
 
 export interface ArtworkSidebarBidActionProps {
-  artwork: ArtworkSidebarBidAction_artwork
-  me: ArtworkSidebarBidAction_me
+  artwork: ArtworkSidebarBidAction_artwork$data
+  me: ArtworkSidebarBidAction_me$data
   router?: Router
 }
 
@@ -127,7 +127,7 @@ export class ArtworkSidebarBidAction extends React.Component<
     context_module: DeprecatedSchema.ContextModule.Sidebar,
     action_type: DeprecatedSchema.ActionType.Click,
   })
-  redirectToLiveBidding(me: ArtworkSidebarBidAction_me | null) {
+  redirectToLiveBidding(me: ArtworkSidebarBidAction_me$data | null) {
     const slug = this.props.artwork.sale?.slug
     const liveUrl = `${getENV("PREDICTION_URL")}/${slug}`
     if (me) {

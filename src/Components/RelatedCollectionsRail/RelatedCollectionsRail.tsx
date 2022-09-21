@@ -1,4 +1,4 @@
-import { RelatedCollectionsRail_collections } from "__generated__/RelatedCollectionsRail_collections.graphql"
+import { RelatedCollectionsRail_collections$data } from "__generated__/RelatedCollectionsRail_collections.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { once } from "lodash"
 import * as React from "react"
@@ -10,7 +10,7 @@ import { Rail } from "../Rail"
 import { useTracking } from "react-tracking"
 
 interface RelatedCollectionsRailProps {
-  collections: RelatedCollectionsRail_collections
+  collections: RelatedCollectionsRail_collections$data
   title?: string
   lazyLoadImages?: boolean
 }
@@ -50,6 +50,7 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
                 <RelatedCollectionEntity
                   key={i}
                   lazyLoad={lazyLoadImages}
+                  // @ts-ignore RELAY UPGRADE 13
                   collection={slide}
                   slideIndex={i}
                 />

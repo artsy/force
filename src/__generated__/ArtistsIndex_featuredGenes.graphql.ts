@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<4147e996d2506871d253170ba8e4cf75>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistsIndex_featuredGenes = ReadonlyArray<{
-    readonly name: string | null;
-    readonly genes: ReadonlyArray<{
-        readonly internalID?: string | undefined;
-        readonly name?: string | null | undefined;
-        readonly href?: string | null | undefined;
-        readonly trendingArtists?: ReadonlyArray<{
-            readonly internalID: string;
-            readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
-        } | null> | null | undefined;
+export type ArtistsIndex_featuredGenes$data = ReadonlyArray<{
+  readonly name: string | null;
+  readonly genes: ReadonlyArray<{
+    readonly internalID?: string;
+    readonly name?: string | null;
+    readonly href?: string | null;
+    readonly trendingArtists?: ReadonlyArray<{
+      readonly internalID: string;
+      readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
     } | null> | null;
-    readonly " $refType": "ArtistsIndex_featuredGenes";
+  } | null> | null;
+  readonly " $fragmentType": "ArtistsIndex_featuredGenes";
 }>;
-export type ArtistsIndex_featuredGenes$data = ArtistsIndex_featuredGenes;
 export type ArtistsIndex_featuredGenes$key = ReadonlyArray<{
-    readonly " $data"?: ArtistsIndex_featuredGenes$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistsIndex_featuredGenes">;
+  readonly " $data"?: ArtistsIndex_featuredGenes$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistsIndex_featuredGenes">;
 }>;
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -83,12 +86,12 @@ return {
               "name": "trendingArtists",
               "plural": true,
               "selections": [
-                (v1/*: any*/),
                 {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "CellArtist_artist"
-                }
+                },
+                (v1/*: any*/)
               ],
               "storageKey": "trendingArtists(sample:4)"
             }
@@ -104,5 +107,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ba3c9a816ff34b7dc7fef04365df621a';
+
+(node as any).hash = "ba3c9a816ff34b7dc7fef04365df621a";
+
 export default node;

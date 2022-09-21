@@ -13,7 +13,7 @@ import {
 import { TimeSince } from "./TimeSince"
 import { Truncator } from "Components/Truncator"
 
-import { ConversationSnippet_conversation } from "__generated__/ConversationSnippet_conversation.graphql"
+import { ConversationSnippet_conversation$data } from "__generated__/ConversationSnippet_conversation.graphql"
 
 const StyledImage = styled(ImageWithFallback)`
   object-fit: cover;
@@ -54,7 +54,7 @@ const PurpleCircle = styled.div`
 `
 
 interface ConversationSnippetProps {
-  conversation: ConversationSnippet_conversation
+  conversation: ConversationSnippet_conversation$data
   hasDivider: boolean
   isSelected: boolean
 }

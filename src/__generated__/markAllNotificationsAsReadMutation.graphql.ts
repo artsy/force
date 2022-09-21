@@ -1,43 +1,29 @@
+/**
+ * @generated SignedSource<<590da3df9c7bcb2bfc84a91ef9a35736>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type markAllNotificationsAsReadMutationVariables = {};
-export type markAllNotificationsAsReadMutationResponse = {
-    readonly markAllNotificationsAsRead: {
-        readonly responseOrError: {
-            readonly success?: boolean | null | undefined;
-            readonly mutationError?: {
-                readonly message: string;
-            } | null | undefined;
-        } | null;
+import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type markAllNotificationsAsReadMutation$variables = {};
+export type markAllNotificationsAsReadMutation$data = {
+  readonly markAllNotificationsAsRead: {
+    readonly responseOrError: {
+      readonly success?: boolean | null;
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
     } | null;
+  } | null;
 };
 export type markAllNotificationsAsReadMutation = {
-    readonly response: markAllNotificationsAsReadMutationResponse;
-    readonly variables: markAllNotificationsAsReadMutationVariables;
+  variables: markAllNotificationsAsReadMutation$variables;
+  response: markAllNotificationsAsReadMutation$data;
 };
-
-
-
-/*
-mutation markAllNotificationsAsReadMutation {
-  markAllNotificationsAsRead(input: {}) {
-    responseOrError {
-      __typename
-      ... on MarkAllNotificationsAsReadSuccess {
-        success
-      }
-      ... on MarkAllNotificationsAsReadFailure {
-        mutationError {
-          message
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -170,5 +156,7 @@ return {
   }
 };
 })();
-(node as any).hash = '69f2b3bf625a94023e88f559683ecd66';
+
+(node as any).hash = "69f2b3bf625a94023e88f559683ecd66";
+
 export default node;

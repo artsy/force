@@ -1,72 +1,61 @@
+/**
+ * @generated SignedSource<<c6d7fb8f2e68cb61684ed5213af52faf>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 export type CreateSavedSearchInput = {
-    attributes: SearchCriteriaAttributes;
-    clientMutationId?: string | null | undefined;
-    userAlertSettings?: UserAlertSettingsInput | null | undefined;
+  attributes: SearchCriteriaAttributes;
+  clientMutationId?: string | null;
+  userAlertSettings?: UserAlertSettingsInput | null;
 };
 export type SearchCriteriaAttributes = {
-    acquireable?: boolean | null | undefined;
-    additionalGeneIDs?: Array<string> | null | undefined;
-    artistID?: string | null | undefined;
-    artistIDs?: Array<string> | null | undefined;
-    atAuction?: boolean | null | undefined;
-    attributionClass?: Array<string> | null | undefined;
-    colors?: Array<string> | null | undefined;
-    dimensionRange?: string | null | undefined;
-    height?: string | null | undefined;
-    inquireableOnly?: boolean | null | undefined;
-    keyword?: string | null | undefined;
-    locationCities?: Array<string> | null | undefined;
-    majorPeriods?: Array<string> | null | undefined;
-    materialsTerms?: Array<string> | null | undefined;
-    offerable?: boolean | null | undefined;
-    partnerIDs?: Array<string> | null | undefined;
-    priceRange?: string | null | undefined;
-    sizes?: Array<string> | null | undefined;
-    width?: string | null | undefined;
+  acquireable?: boolean | null;
+  additionalGeneIDs?: ReadonlyArray<string> | null;
+  artistID?: string | null;
+  artistIDs?: ReadonlyArray<string> | null;
+  atAuction?: boolean | null;
+  attributionClass?: ReadonlyArray<string> | null;
+  colors?: ReadonlyArray<string> | null;
+  dimensionRange?: string | null;
+  height?: string | null;
+  inquireableOnly?: boolean | null;
+  keyword?: string | null;
+  locationCities?: ReadonlyArray<string> | null;
+  majorPeriods?: ReadonlyArray<string> | null;
+  materialsTerms?: ReadonlyArray<string> | null;
+  offerable?: boolean | null;
+  partnerIDs?: ReadonlyArray<string> | null;
+  priceRange?: string | null;
+  sizes?: ReadonlyArray<string> | null;
+  width?: string | null;
 };
 export type UserAlertSettingsInput = {
-    email?: boolean | null | undefined;
-    frequency?: UserSearchCriteriaFrequency | null | undefined;
-    name?: string | null | undefined;
-    push?: boolean | null | undefined;
+  email?: boolean | null;
+  frequency?: UserSearchCriteriaFrequency | null;
+  name?: string | null;
+  push?: boolean | null;
 };
-export type createSavedSearchAlertMutationVariables = {
-    input: CreateSavedSearchInput;
+export type createSavedSearchAlertMutation$variables = {
+  input: CreateSavedSearchInput;
 };
-export type createSavedSearchAlertMutationResponse = {
-    readonly createSavedSearch: {
-        readonly savedSearchOrErrors: {
-            readonly internalID?: string | undefined;
-        };
-    } | null;
+export type createSavedSearchAlertMutation$data = {
+  readonly createSavedSearch: {
+    readonly savedSearchOrErrors: {
+      readonly internalID?: string;
+    };
+  } | null;
 };
 export type createSavedSearchAlertMutation = {
-    readonly response: createSavedSearchAlertMutationResponse;
-    readonly variables: createSavedSearchAlertMutationVariables;
+  variables: createSavedSearchAlertMutation$variables;
+  response: createSavedSearchAlertMutation$data;
 };
-
-
-
-/*
-mutation createSavedSearchAlertMutation(
-  $input: CreateSavedSearchInput!
-) {
-  createSavedSearch(input: $input) {
-    savedSearchOrErrors {
-      __typename
-      ... on SearchCriteria {
-        internalID
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -179,5 +168,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5dc7cf49cf14f0328a9f6c5ef66e72c9';
+
+(node as any).hash = "5dc7cf49cf14f0328a9f6c5ef66e72c9";
+
 export default node;

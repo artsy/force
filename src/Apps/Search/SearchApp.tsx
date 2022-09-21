@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SearchApp_viewer } from "__generated__/SearchApp_viewer.graphql"
+import { SearchApp_viewer$data } from "__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "Apps/Search/Components/SearchMeta"
 import { RecentlyViewed } from "Components/RecentlyViewed"
@@ -19,7 +19,7 @@ import { AppContainer } from "../Components/AppContainer"
 import { useTranslation } from "react-i18next"
 
 export interface SearchAppProps {
-  viewer: SearchApp_viewer
+  viewer: SearchApp_viewer$data
 }
 
 const TotalResults: React.FC<{ count: number; term: string }> = ({
@@ -91,6 +91,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
                     <NavigationTabs
                       artworkCount={artworkCount}
                       term={term}
+                      // @ts-ignore RELAY UPGRADE 13
                       searchableConnection={searchConnection!}
                     />
                   </AppContainer>

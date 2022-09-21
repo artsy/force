@@ -13,6 +13,7 @@ jest.mock("System/useSystemContext")
 const { renderWithRelay } = setupTestWrapperTL<
   ArtworkSidebar2CreateArtworkAlert_Test_Query
 >({
+  // @ts-ignore RELAY UPGRADE 13
   Component: ArtworkSidebar2CreateArtworkAlertFragmentContainer,
   query: graphql`
     query ArtworkSidebar2CreateArtworkAlert_Test_Query @relay_test_operation {

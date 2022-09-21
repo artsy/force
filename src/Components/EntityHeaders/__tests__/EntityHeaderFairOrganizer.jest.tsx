@@ -19,6 +19,7 @@ describe("EntityHeaderFairOrganizer", () => {
   const { renderWithRelay } = setupTestWrapperTL<
     EntityHeaderFairOrganizerFragmentContainer_Test_Query
   >({
+    // @ts-ignore RELAY UPGRADE 13
     Component: EntityHeaderFairOrganizerFragmentContainer,
     query: QUERY,
   })

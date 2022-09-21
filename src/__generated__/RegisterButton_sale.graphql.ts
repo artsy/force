@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<f836d01695320597b56957ab73725f39>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RegisterButton_sale = {
-    readonly bidder: {
-        readonly qualifiedForBidding: boolean | null;
-    } | null;
-    readonly isAuction: boolean | null;
-    readonly isClosed: boolean | null;
-    readonly isLiveOpen: boolean | null;
-    readonly isPreview: boolean | null;
-    readonly isRegistrationClosed: boolean | null;
-    readonly liveURLIfOpen: string | null;
-    readonly requireIdentityVerification: boolean | null;
-    readonly registrationStatus: {
-        readonly internalID: string;
-    } | null;
-    readonly slug: string;
-    readonly status: string | null;
-    readonly " $refType": "RegisterButton_sale";
+export type RegisterButton_sale$data = {
+  readonly bidder: {
+    readonly qualifiedForBidding: boolean | null;
+  } | null;
+  readonly isAuction: boolean | null;
+  readonly isClosed: boolean | null;
+  readonly isLiveOpen: boolean | null;
+  readonly isPreview: boolean | null;
+  readonly isRegistrationClosed: boolean | null;
+  readonly liveURLIfOpen: string | null;
+  readonly requireIdentityVerification: boolean | null;
+  readonly registrationStatus: {
+    readonly internalID: string;
+  } | null;
+  readonly slug: string;
+  readonly status: string | null;
+  readonly " $fragmentType": "RegisterButton_sale";
 };
-export type RegisterButton_sale$data = RegisterButton_sale;
 export type RegisterButton_sale$key = {
-    readonly " $data"?: RegisterButton_sale$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"RegisterButton_sale">;
+  readonly " $data"?: RegisterButton_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_sale">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -139,5 +142,7 @@ const node: ReaderFragment = {
   "type": "Sale",
   "abstractKey": null
 };
-(node as any).hash = 'e18690c44438367e8901d36af57723fa';
+
+(node as any).hash = "e18690c44438367e8901d36af57723fa";
+
 export default node;

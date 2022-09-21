@@ -8,12 +8,12 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { TagArtworkFilter_tag } from "__generated__/TagArtworkFilter_tag.graphql"
+import { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System"
 
 interface TagArtworkFilterProps {
-  tag: TagArtworkFilter_tag
+  tag: TagArtworkFilter_tag$data
   relay: RelayRefetchProp
 }
 

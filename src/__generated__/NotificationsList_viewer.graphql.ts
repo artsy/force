@@ -1,27 +1,30 @@
+/**
+ * @generated SignedSource<<33384683602355681f1db529cd816ae8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NotificationsList_viewer = {
-    readonly notifications: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"NotificationItem_item">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "NotificationsList_viewer";
+export type NotificationsList_viewer$data = {
+  readonly notifications: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "NotificationsList_viewer";
 };
-export type NotificationsList_viewer$data = NotificationsList_viewer;
 export type NotificationsList_viewer$key = {
-    readonly " $data"?: NotificationsList_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
+  readonly " $data"?: NotificationsList_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -88,16 +91,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "NotificationItem_item"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "NotificationItem_item"
                 }
               ],
               "storageKey": null
@@ -144,5 +147,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '24853e1171ff783f11859741da1be54e';
+
+(node as any).hash = "24853e1171ff783f11859741da1be54e";
+
 export default node;

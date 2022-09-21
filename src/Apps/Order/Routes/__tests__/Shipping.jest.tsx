@@ -1,4 +1,4 @@
-import { ShippingTestQueryRawResponse } from "__generated__/ShippingTestQuery.graphql"
+import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
 import { cloneDeep } from "lodash"
 
 import {
@@ -80,13 +80,13 @@ jest.mock("relay-runtime", () => ({
   commitMutation: (...args) => mockCommitMutation(args),
 }))
 
-const testOrder: ShippingTestQueryRawResponse["order"] = {
+const testOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",
   id: "1234",
 }
 
-const ArtsyShippingDomesticFromUSOrder: ShippingTestQueryRawResponse["order"] = {
+const ArtsyShippingDomesticFromUSOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
@@ -94,7 +94,7 @@ const ArtsyShippingDomesticFromUSOrder: ShippingTestQueryRawResponse["order"] = 
   id: "1234",
 }
 
-const ArtsyShippingInternationalFromUSTestOrder: ShippingTestQueryRawResponse["order"] = {
+const ArtsyShippingInternationalFromUSTestOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
@@ -102,7 +102,7 @@ const ArtsyShippingInternationalFromUSTestOrder: ShippingTestQueryRawResponse["o
   id: "1234",
 }
 
-const ArtsyShippingDomesticFromGermanyOrder: ShippingTestQueryRawResponse["order"] = {
+const ArtsyShippingDomesticFromGermanyOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
@@ -110,7 +110,7 @@ const ArtsyShippingDomesticFromGermanyOrder: ShippingTestQueryRawResponse["order
   id: "1234",
 }
 
-const ArtsyShippingInternationalFromGermanyOrder: ShippingTestQueryRawResponse["order"] = {
+const ArtsyShippingInternationalFromGermanyOrder: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
@@ -125,7 +125,7 @@ const pageInfo = {
   hasPreviousPage: false,
 }
 
-const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
+const emptyTestMe: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
@@ -136,7 +136,7 @@ const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
   },
 }
 
-const testMe: ShippingTestQueryRawResponse["me"] = {
+const testMe: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",

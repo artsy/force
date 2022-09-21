@@ -1,30 +1,25 @@
+/**
+ * @generated SignedSource<<424949b999ebf1733ea00cce92491338>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
-export type fetchUserPreferencesQueryVariables = {};
-export type fetchUserPreferencesQueryResponse = {
-    readonly me: {
-        readonly lengthUnitPreference: LengthUnitPreference;
-    } | null;
+export type fetchUserPreferencesQuery$variables = {};
+export type fetchUserPreferencesQuery$data = {
+  readonly me: {
+    readonly lengthUnitPreference: LengthUnitPreference;
+  } | null;
 };
 export type fetchUserPreferencesQuery = {
-    readonly response: fetchUserPreferencesQueryResponse;
-    readonly variables: fetchUserPreferencesQueryVariables;
+  variables: fetchUserPreferencesQuery$variables;
+  response: fetchUserPreferencesQuery$data;
 };
-
-
-
-/*
-query fetchUserPreferencesQuery {
-  me {
-    lengthUnitPreference
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -94,5 +89,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3b561d0da012a9e902e3237f942c6b80';
+
+(node as any).hash = "3b561d0da012a9e902e3237f942c6b80";
+
 export default node;

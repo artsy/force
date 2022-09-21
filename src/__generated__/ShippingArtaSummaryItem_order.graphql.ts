@@ -1,32 +1,35 @@
+/**
+ * @generated SignedSource<<a908b331c2dc54b6d4f0c6ec21ca5d1d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShippingArtaSummaryItem_order = {
-    readonly requestedFulfillment: {
-        readonly __typename: string;
-    } | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly selectedShippingQuote: {
-                    readonly typeName: string;
-                    readonly price: string | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "ShippingArtaSummaryItem_order";
+export type ShippingArtaSummaryItem_order$data = {
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly selectedShippingQuote: {
+          readonly typeName: string;
+          readonly price: string | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "ShippingArtaSummaryItem_order";
 };
-export type ShippingArtaSummaryItem_order$data = ShippingArtaSummaryItem_order;
 export type ShippingArtaSummaryItem_order$key = {
-    readonly " $data"?: ShippingArtaSummaryItem_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ShippingArtaSummaryItem_order">;
+  readonly " $data"?: ShippingArtaSummaryItem_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShippingArtaSummaryItem_order">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -120,5 +123,7 @@ const node: ReaderFragment = {
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
-(node as any).hash = '53837b0dfca37358282774a18a4cdb5a';
+
+(node as any).hash = "53837b0dfca37358282774a18a4cdb5a";
+
 export default node;

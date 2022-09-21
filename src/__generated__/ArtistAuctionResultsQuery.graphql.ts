@@ -1,145 +1,41 @@
+/**
+ * @generated SignedSource<<12dad2441ce309e32d9c65b6edf94877>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AuctionResultSorts = "DATE_DESC" | "ESTIMATE_AND_DATE_DESC" | "PRICE_AND_DATE_DESC" | "%future added value";
-export type ArtistAuctionResultsQueryVariables = {
-    first?: number | null | undefined;
-    last?: number | null | undefined;
-    after?: string | null | undefined;
-    before?: string | null | undefined;
-    sort?: AuctionResultSorts | null | undefined;
-    artistID: string;
-    organizations?: Array<string | null> | null | undefined;
-    keyword?: string | null | undefined;
-    categories?: Array<string | null> | null | undefined;
-    sizes?: Array<ArtworkSizes | null> | null | undefined;
-    createdBeforeYear?: number | null | undefined;
-    createdAfterYear?: number | null | undefined;
-    allowEmptyCreatedDates?: boolean | null | undefined;
+export type ArtistAuctionResultsQuery$variables = {
+  first?: number | null;
+  last?: number | null;
+  after?: string | null;
+  before?: string | null;
+  sort?: AuctionResultSorts | null;
+  artistID: string;
+  organizations?: ReadonlyArray<string | null> | null;
+  keyword?: string | null;
+  categories?: ReadonlyArray<string | null> | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
+  createdBeforeYear?: number | null;
+  createdAfterYear?: number | null;
+  allowEmptyCreatedDates?: boolean | null;
 };
-export type ArtistAuctionResultsQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResults_artist">;
-    } | null;
+export type ArtistAuctionResultsQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
+  } | null;
 };
 export type ArtistAuctionResultsQuery = {
-    readonly response: ArtistAuctionResultsQueryResponse;
-    readonly variables: ArtistAuctionResultsQueryVariables;
+  variables: ArtistAuctionResultsQuery$variables;
+  response: ArtistAuctionResultsQuery$data;
 };
-
-
-
-/*
-query ArtistAuctionResultsQuery(
-  $first: Int
-  $last: Int
-  $after: String
-  $before: String
-  $sort: AuctionResultSorts
-  $artistID: String!
-  $organizations: [String]
-  $keyword: String
-  $categories: [String]
-  $sizes: [ArtworkSizes]
-  $createdBeforeYear: Int
-  $createdAfterYear: Int
-  $allowEmptyCreatedDates: Boolean
-) {
-  artist(id: $artistID) {
-    ...ArtistAuctionResults_artist_2dM7Jd
-    id
-  }
-}
-
-fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
-  title
-  dimension_text: dimensionText
-  organization
-  artist {
-    name
-    id
-  }
-  images {
-    larger {
-      cropped(width: 100, height: 100) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-  }
-  mediumText
-  categoryText
-  date_text: dateText
-  saleDate
-  boughtIn
-  currency
-  price_realized: priceRealized {
-    display
-    display_usd: displayUSD
-    cents_usd: centsUSD
-  }
-  performance {
-    mid
-  }
-  estimate {
-    display
-  }
-}
-
-fragment ArtistAuctionResults_artist_2dM7Jd on Artist {
-  slug
-  internalID
-  name
-  auctionResultsConnection(first: $first, after: $after, before: $before, last: $last, sort: $sort, organizations: $organizations, keyword: $keyword, categories: $categories, sizes: $sizes, earliestCreatedYear: $createdAfterYear, latestCreatedYear: $createdBeforeYear, allowEmptyCreatedDates: $allowEmptyCreatedDates) {
-    createdYearRange {
-      startAt
-      endAt
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    totalCount
-    edges {
-      node {
-        ...ArtistAuctionResultItem_auctionResult
-        id
-      }
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -801,5 +697,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'f81edb1347afde0906b9a253a8d02686';
+
+(node as any).hash = "f81edb1347afde0906b9a253a8d02686";
+
 export default node;

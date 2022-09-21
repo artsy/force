@@ -2,7 +2,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { FairBoothRailArtworksQuery } from "__generated__/FairBoothRailArtworksQuery.graphql"
-import { FairBoothRailArtworks_show } from "__generated__/FairBoothRailArtworks_show.graphql"
+import { FairBoothRailArtworks_show$data } from "__generated__/FairBoothRailArtworks_show.graphql"
 import {
   ActionType,
   ClickedArtworkGroup,
@@ -19,7 +19,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { IMG_HEIGHT } from "Components/Artwork/ShelfArtwork"
 
 export interface FairBoothRailArtworksProps {
-  show: FairBoothRailArtworks_show
+  show: FairBoothRailArtworks_show$data
 }
 
 const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
@@ -61,6 +61,7 @@ const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
           <ShelfArtworkFragmentContainer
             key={artwork.internalID}
             contextModule={ContextModule.fairRail}
+            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             lazyLoad
             onClick={() =>
@@ -148,6 +149,7 @@ export const FairBoothRailArtworksQueryRenderer: React.FC<{
           return (
             <FairBoothRailArtworksFragmentContainer
               {...rest}
+              // @ts-ignore RELAY UPGRADE 13
               show={props.show}
             />
           )

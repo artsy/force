@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<f905772d875d7fbd19c9114c1be967e3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
-export type AuctionArtworkFilter_viewer = {
-    readonly sidebarAggregations: {
-        readonly counts: {
-            readonly followedArtists: number | null;
-        } | null;
-        readonly aggregations: ReadonlyArray<{
-            readonly slice: ArtworkAggregation | null;
-            readonly counts: ReadonlyArray<{
-                readonly name: string;
-                readonly value: string;
-                readonly count: number;
-            } | null> | null;
-        } | null> | null;
+import { FragmentRefs } from "relay-runtime";
+export type AuctionArtworkFilter_viewer$data = {
+  readonly sidebarAggregations: {
+    readonly counts: {
+      readonly followedArtists: any | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
-    readonly " $refType": "AuctionArtworkFilter_viewer";
+    readonly aggregations: ReadonlyArray<{
+      readonly slice: ArtworkAggregation | null;
+      readonly counts: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly count: number;
+      } | null> | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
+  readonly " $fragmentType": "AuctionArtworkFilter_viewer";
 };
-export type AuctionArtworkFilter_viewer$data = AuctionArtworkFilter_viewer;
 export type AuctionArtworkFilter_viewer$key = {
-    readonly " $data"?: AuctionArtworkFilter_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworkFilter_viewer">;
+  readonly " $data"?: AuctionArtworkFilter_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -48,6 +51,13 @@ return {
   "metadata": null,
   "name": "AuctionArtworkFilter_viewer",
   "selections": [
+    {
+      "args": [
+        (v0/*: any*/)
+      ],
+      "kind": "FragmentSpread",
+      "name": "ArtworkFilter_viewer"
+    },
     {
       "alias": "sidebarAggregations",
       "args": [
@@ -133,18 +143,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": [
-        (v0/*: any*/)
-      ],
-      "kind": "FragmentSpread",
-      "name": "ArtworkFilter_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 })();
-(node as any).hash = '5fba4c2b4f9d24038de90ae2bae9c11b';
+
+(node as any).hash = "5fba4c2b4f9d24038de90ae2bae9c11b";
+
 export default node;

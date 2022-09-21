@@ -14,10 +14,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "Components/FollowButton/FollowProfileButton"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "System/Router/RouterLink"
-import { PartnerHeader_partner } from "__generated__/PartnerHeader_partner.graphql"
+import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 
 export interface PartnerHeaderProps {
-  partner: PartnerHeader_partner
+  partner: PartnerHeader_partner$data
 }
 
 export const HeaderImage = styled(Image)`
@@ -79,6 +79,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
       <Column span={[12, 2]}>
         {canFollow && (
           <FollowProfileButton
+            // @ts-ignore RELAY UPGRADE 13
             profile={partner.profile}
             contextModule={ContextModule.partnerHeader}
             width="100%"

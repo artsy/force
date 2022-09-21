@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<487851853a7a34b295ef0fe92fe6ebf0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedGeneCategories_artist = {
-    readonly related: {
-        readonly genes: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly href: string | null;
-                    readonly name: string | null;
-                } | null;
-            } | null> | null;
+export type ArtistRelatedGeneCategories_artist$data = {
+  readonly related: {
+    readonly genes: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly href: string | null;
+          readonly name: string | null;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "ArtistRelatedGeneCategories_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistRelatedGeneCategories_artist";
 };
-export type ArtistRelatedGeneCategories_artist$data = ArtistRelatedGeneCategories_artist;
 export type ArtistRelatedGeneCategories_artist$key = {
-    readonly " $data"?: ArtistRelatedGeneCategories_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
+  readonly " $data"?: ArtistRelatedGeneCategories_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -93,5 +96,7 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
-(node as any).hash = '9bceff0b831e055c43a3aa8fc66d1754';
+
+(node as any).hash = "9bceff0b831e055c43a3aa8fc66d1754";
+
 export default node;

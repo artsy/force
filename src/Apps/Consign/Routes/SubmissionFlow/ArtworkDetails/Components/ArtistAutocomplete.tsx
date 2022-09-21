@@ -14,7 +14,7 @@ import { useSystemContext } from "System"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ArtistAutocomplete_SearchConnection_Query,
-  ArtistAutocomplete_SearchConnection_QueryResponse,
+  ArtistAutocomplete_SearchConnection_Query$data,
 } from "__generated__/ArtistAutocomplete_SearchConnection_Query.graphql"
 import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 
@@ -25,7 +25,7 @@ type SubmissionImage =
       NonNullable<
         NonNullable<
           NonNullable<
-            ArtistAutocomplete_SearchConnection_QueryResponse["searchConnection"]
+            ArtistAutocomplete_SearchConnection_Query$data["searchConnection"]
           >["edges"]
         >[number]
       >["node"]

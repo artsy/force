@@ -1,181 +1,27 @@
+/**
+ * @generated SignedSource<<97eac08ca4ef96335ab632d192af5665>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleZoomGalleryQueryVariables = {
-    id: string;
+export type ArticleZoomGalleryQuery$variables = {
+  id: string;
 };
-export type ArticleZoomGalleryQueryResponse = {
-    readonly article: {
-        readonly " $fragmentRefs": FragmentRefs<"ArticleZoomGallery_article">;
-    } | null;
+export type ArticleZoomGalleryQuery$data = {
+  readonly article: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGallery_article">;
+  } | null;
 };
 export type ArticleZoomGalleryQuery = {
-    readonly response: ArticleZoomGalleryQueryResponse;
-    readonly variables: ArticleZoomGalleryQueryVariables;
+  variables: ArticleZoomGalleryQuery$variables;
+  response: ArticleZoomGalleryQuery$data;
 };
-
-
-
-/*
-query ArticleZoomGalleryQuery(
-  $id: String!
-) {
-  article(id: $id) {
-    ...ArticleZoomGallery_article
-    id
-  }
-}
-
-fragment ArticleZoomGalleryCaption_figure on ArticleSectionImageCollectionFigure {
-  __isArticleSectionImageCollectionFigure: __typename
-  __typename
-  ... on Artwork {
-    ...Metadata_artwork
-    href
-  }
-  ... on ArticleImageSection {
-    caption
-  }
-}
-
-fragment ArticleZoomGalleryFigure_figure on ArticleSectionImageCollectionFigure {
-  __isArticleSectionImageCollectionFigure: __typename
-  __typename
-  ... on Artwork {
-    image {
-      width
-      height
-      url(version: ["normalized", "larger", "large"])
-    }
-  }
-  ... on ArticleImageSection {
-    image {
-      width
-      height
-      url(version: ["normalized", "larger", "large"])
-    }
-  }
-}
-
-fragment ArticleZoomGallery_article on Article {
-  sections {
-    __typename
-    ... on ArticleSectionImageCollection {
-      figures {
-        ...ArticleZoomGalleryFigure_figure
-        ...ArticleZoomGalleryCaption_figure
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on ArticleImageSection {
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-    ... on ArticleSectionImageSet {
-      title
-      figures {
-        ...ArticleZoomGalleryFigure_figure
-        ...ArticleZoomGalleryCaption_figure
-        __typename
-        ... on Artwork {
-          id
-        }
-        ... on ArticleImageSection {
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -712,5 +558,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a60d1403ba560027786e81b0edfb2597';
+
+(node as any).hash = "a60d1403ba560027786e81b0edfb2597";
+
 export default node;

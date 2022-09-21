@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<a6721a16acb594ad0b1615c61643617b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleMetaTags_article = {
-    readonly byline: string | null;
-    readonly href: string | null;
-    readonly keywords: ReadonlyArray<string>;
-    readonly metaPublishedAt: string | null;
-    readonly title: string | null;
-    readonly searchTitle: string | null;
-    readonly description: string | null;
-    readonly searchDescription: string | null;
-    readonly thumbnailImage: {
-        readonly url: string | null;
-    } | null;
-    readonly " $refType": "ArticleMetaTags_article";
+export type ArticleMetaTags_article$data = {
+  readonly byline: string | null;
+  readonly href: string | null;
+  readonly keywords: ReadonlyArray<string>;
+  readonly metaPublishedAt: string | null;
+  readonly title: string | null;
+  readonly searchTitle: string | null;
+  readonly description: string | null;
+  readonly searchDescription: string | null;
+  readonly thumbnailImage: {
+    readonly url: string | null;
+  } | null;
+  readonly " $fragmentType": "ArticleMetaTags_article";
 };
-export type ArticleMetaTags_article$data = ArticleMetaTags_article;
 export type ArticleMetaTags_article$key = {
-    readonly " $data"?: ArticleMetaTags_article$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleMetaTags_article">;
+  readonly " $data"?: ArticleMetaTags_article$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleMetaTags_article">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -110,5 +113,7 @@ const node: ReaderFragment = {
   "type": "Article",
   "abstractKey": null
 };
-(node as any).hash = '79c17ffae9985576d77cb87aad7750d9';
+
+(node as any).hash = "79c17ffae9985576d77cb87aad7750d9";
+
 export default node;

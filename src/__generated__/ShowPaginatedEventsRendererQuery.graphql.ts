@@ -1,117 +1,31 @@
+/**
+ * @generated SignedSource<<de68511994ba257ef5dd60346b0f67f4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNING" | "RUNNING_AND_UPCOMING" | "UPCOMING" | "%future added value";
-export type ShowPaginatedEventsRendererQueryVariables = {
-    partnerId: string;
-    first?: number | null | undefined;
-    page?: number | null | undefined;
-    status?: EventStatus | null | undefined;
+export type ShowPaginatedEventsRendererQuery$variables = {
+  partnerId: string;
+  first?: number | null;
+  page?: number | null;
+  status?: EventStatus | null;
 };
-export type ShowPaginatedEventsRendererQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowPaginatedEvents_partner">;
-    } | null;
+export type ShowPaginatedEventsRendererQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowPaginatedEvents_partner">;
+  } | null;
 };
 export type ShowPaginatedEventsRendererQuery = {
-    readonly response: ShowPaginatedEventsRendererQueryResponse;
-    readonly variables: ShowPaginatedEventsRendererQueryVariables;
+  variables: ShowPaginatedEventsRendererQuery$variables;
+  response: ShowPaginatedEventsRendererQuery$data;
 };
-
-
-
-/*
-query ShowPaginatedEventsRendererQuery(
-  $partnerId: String!
-  $first: Int
-  $page: Int
-  $status: EventStatus
-) {
-  partner(id: $partnerId) @principalField {
-    ...ShowPaginatedEvents_partner_JfDnP
-    id
-  }
-}
-
-fragment CellShow_show on Show {
-  internalID
-  slug
-  name
-  href
-  startAt
-  endAt
-  isFairBooth
-  exhibitionPeriod
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on ExternalPartner {
-      id
-    }
-  }
-  coverImage {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment ShowEvents_edges on ShowEdge {
-  node {
-    ...CellShow_show
-    internalID
-    id
-  }
-}
-
-fragment ShowPaginatedEvents_partner_JfDnP on Partner {
-  slug
-  showsList: showsConnection(first: $first, status: $status, page: $page, isDisplayable: true) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      ...ShowEvents_edges
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -537,5 +451,7 @@ return {
   }
 };
 })();
-(node as any).hash = '8787f2e69fc3c8c39b1065daefcd3a5a';
+
+(node as any).hash = "8787f2e69fc3c8c39b1065daefcd3a5a";
+
 export default node;

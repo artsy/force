@@ -10,6 +10,7 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationsList_test_Query>({
   Component: props => {
     if (props.viewer) {
       return (
+        // @ts-ignore RELAY UPGRADE 13
         <NotificationsListFragmentContainer type="all" viewer={props.viewer} />
       )
     }

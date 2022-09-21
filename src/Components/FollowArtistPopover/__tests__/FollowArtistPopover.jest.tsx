@@ -1,5 +1,5 @@
 import { Breakpoint } from "@artsy/palette"
-import { FollowArtistPopover_Test_QueryRawResponse } from "__generated__/FollowArtistPopover_Test_Query.graphql"
+import { FollowArtistPopover_Test_Query$rawResponse } from "__generated__/FollowArtistPopover_Test_Query.graphql"
 import { FollowArtistPopoverFragmentContainer as FollowArtistPopover } from "Components/FollowArtistPopover"
 import { MockBoot, renderRelayTree } from "DevTools"
 import { ReactWrapper } from "enzyme"
@@ -10,7 +10,7 @@ jest.unmock("react-relay")
 describe("Follow Artist Popover", () => {
   let wrapper: ReactWrapper
 
-  const artistResponse: FollowArtistPopover_Test_QueryRawResponse = {
+  const artistResponse: FollowArtistPopover_Test_Query$rawResponse = {
     artist: {
       id: "opaque-artist-id",
       related: {
@@ -48,7 +48,7 @@ describe("Follow Artist Popover", () => {
           }
         }
       `,
-      mockData: artistResponse as FollowArtistPopover_Test_QueryRawResponse,
+      mockData: artistResponse as FollowArtistPopover_Test_Query$rawResponse,
       variables: {
         artistID: "percy-z",
       },

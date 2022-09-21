@@ -8,8 +8,8 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
 // relay generated
-import { Payment_me } from "__generated__/Payment_me.graphql"
-import { Payment_order } from "__generated__/Payment_order.graphql"
+import { Payment_me$data } from "__generated__/Payment_me.graphql"
+import { Payment_order$data } from "__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
 // utils, hooks, mutations and system tools
@@ -48,8 +48,8 @@ import { PaymentContent } from "./PaymentContent"
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
 export interface PaymentRouteProps {
-  order: Payment_order
-  me: Payment_me
+  order: Payment_order$data
+  me: Payment_me$data
   router: Router
   dialog: Dialog
   commitMutation: CommitMutation
@@ -335,7 +335,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
           ) : (
             <>
               {displayLoading && <SavingPaymentSpinner />}
-              {/* keep PaymentContent mounted but displayed none while 
+              {/* keep PaymentContent mounted but displayed none while
                   displayLoading is true; needed to handle Stripe redirect */}
               <Flex
                 flexDirection="column"
@@ -355,6 +355,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {/* @ts-ignore RELAY UPGRADE 13  */}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 transactionStep="payment"

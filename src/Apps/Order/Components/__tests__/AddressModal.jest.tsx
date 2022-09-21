@@ -57,6 +57,7 @@ describe("AddressModal", () => {
           totalCount: 0,
           edges: [],
         },
+        // @ts-ignore RELAY UPGRADE 13
         " $refType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),
@@ -306,6 +307,7 @@ describe("AddressModal feature flag", () => {
           totalCount: 0,
           edges: [],
         },
+        // @ts-ignore RELAY UPGRADE 13
         " $refType": "SavedAddresses_me",
       },
       closeModal: jest.fn(),

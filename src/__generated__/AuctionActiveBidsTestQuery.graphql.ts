@@ -1,95 +1,27 @@
+/**
+ * @generated SignedSource<<ace6dcce91785c77b3a88fb952f9cb66>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionActiveBidsTestQueryVariables = {
-    slug: string;
+export type AuctionActiveBidsTestQuery$variables = {
+  slug: string;
 };
-export type AuctionActiveBidsTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionActiveBids_me">;
-    } | null;
+export type AuctionActiveBidsTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
+  } | null;
 };
 export type AuctionActiveBidsTestQuery = {
-    readonly response: AuctionActiveBidsTestQueryResponse;
-    readonly variables: AuctionActiveBidsTestQueryVariables;
+  variables: AuctionActiveBidsTestQuery$variables;
+  response: AuctionActiveBidsTestQuery$data;
 };
-
-
-
-/*
-query AuctionActiveBidsTestQuery(
-  $slug: String!
-) {
-  me {
-    ...AuctionActiveBids_me_96HcF
-    id
-  }
-}
-
-fragment AuctionActiveBids_me_96HcF on Me {
-  internalID
-  lotStandings(saleID: $slug, live: true) {
-    isHighestBidder
-    saleArtwork {
-      ...AuctionLotInfo_saleArtwork_4oTW5x
-      counts {
-        bidderPositions
-      }
-      currentBid {
-        display
-      }
-      slug
-      lotLabel
-      reserveStatus
-      saleID
-      highestBid {
-        display
-      }
-      endedAt
-      sale {
-        slug
-        liveStartAt
-        endAt
-        isLiveOpen
-        isClosed
-        id
-      }
-      id
-    }
-  }
-}
-
-fragment AuctionLotInfo_saleArtwork_4oTW5x on SaleArtwork {
-  counts {
-    bidderPositions
-  }
-  lotLabel
-  currentBid {
-    display
-  }
-  formattedEndDateTime
-  artwork {
-    internalID
-    date
-    title
-    image {
-      resized(width: 100, height: 100, version: "medium") {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    imageUrl
-    artistNames
-    slug
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -582,5 +514,7 @@ return {
   }
 };
 })();
-(node as any).hash = '26fd9ecab21876705e8631c119d8e2cd';
+
+(node as any).hash = "26fd9ecab21876705e8631c119d8e2cd";
+
 export default node;

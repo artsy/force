@@ -9,7 +9,7 @@ import {
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { usePathnameComplete } from "Utils/Hooks/usePathnameComplete"
 import { useRouter } from "System/Router/useRouter"
-import { CollectionArtworksFilter_collection } from "__generated__/CollectionArtworksFilter_collection.graphql"
+import { CollectionArtworksFilter_collection$data } from "__generated__/CollectionArtworksFilter_collection.graphql"
 import { ColorFilter } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
@@ -28,7 +28,7 @@ import { useSystemContext } from "System"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
-  collection: CollectionArtworksFilter_collection
+  collection: CollectionArtworksFilter_collection$data
   aggregations?: SharedArtworkFilterContextProps["aggregations"]
   counts?: Counts
 }

@@ -12,13 +12,13 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticleShare } from "Components/ArticleShare"
 import { TopContextBar } from "Components/TopContextBar"
-import { ArticleSeries_article } from "__generated__/ArticleSeries_article.graphql"
+import { ArticleSeries_article$data } from "__generated__/ArticleSeries_article.graphql"
 import { ArticleAd } from "./ArticleAd"
 import { ArticleSponsorFragmentContainer } from "./ArticleSponsor"
 import { ArticleSeriesItemFragmentContainer } from "./ArticleSeriesItem"
 
 interface ArticleSeriesProps {
-  article: ArticleSeries_article
+  article: ArticleSeries_article$data
 }
 
 const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
@@ -33,6 +33,7 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
       </Text>
 
       {article.sponsor && (
+        // @ts-ignore RELAY UPGRADE 13
         <ArticleSponsorFragmentContainer sponsor={article.sponsor} mt={4} />
       )}
 
@@ -43,6 +44,7 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
           return (
             <ArticleSeriesItemFragmentContainer
               key={relatedArticle.internalID}
+              // @ts-ignore RELAY UPGRADE 13
               article={relatedArticle}
             />
           )
@@ -66,6 +68,7 @@ const ArticleSeries: FC<ArticleSeriesProps> = ({ article }) => {
             {article.sponsor && (
               <ArticleSponsorFragmentContainer
                 mt={4}
+                // @ts-ignore RELAY UPGRADE 13
                 sponsor={article.sponsor}
               />
             )}

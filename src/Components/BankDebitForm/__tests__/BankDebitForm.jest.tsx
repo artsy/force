@@ -2,7 +2,7 @@ import { render } from "@testing-library/react"
 import { BuyOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
 import { useSystemContext } from "System"
 import { useTracking } from "react-tracking"
-import { PaymentTestQueryRawResponse } from "__generated__/PaymentTestQuery.graphql"
+import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "../BankDebitForm"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
 
@@ -29,7 +29,7 @@ jest.mock("System/useSystemContext")
 jest.mock("react-tracking")
 jest.mock("Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext")
 
-const testOrder: PaymentTestQueryRawResponse["order"] = {
+const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
 }

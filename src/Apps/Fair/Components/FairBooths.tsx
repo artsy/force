@@ -5,7 +5,7 @@ import useDeepCompareEffect from "use-deep-compare-effect"
 import { Box, Flex, FullBleed, Spacer } from "@artsy/palette"
 import { isEqual } from "lodash"
 import { usePrevious } from "Utils/Hooks/usePrevious"
-import { FairBooths_fair } from "__generated__/FairBooths_fair.graphql"
+import { FairBooths_fair$data } from "__generated__/FairBooths_fair.graphql"
 import { Media } from "Utils/Responsive"
 import { Sticky } from "Components/Sticky"
 import { LoadingArea } from "Components/LoadingArea"
@@ -31,7 +31,7 @@ const logger = createLogger("FairBooths.tsx")
 const PAGE_SIZE = 15
 
 interface FairBoothsProps {
-  fair: FairBooths_fair
+  fair: FairBooths_fair$data
   relay: RelayRefetchProp
 }
 
@@ -135,6 +135,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
 
           return (
             <Box my={6} key={index}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <FairBoothRail key={show.id} show={show} />
             </Box>
           )
@@ -145,6 +146,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
 
       <Pagination
         hasNextPage={hasNextPage}
+        // @ts-ignore RELAY UPGRADE 13
         pageCursors={pageCursors}
         onClick={(_cursor, page) => loadPage(page)}
         onNext={() => loadNext()}
@@ -271,6 +273,7 @@ export const FairBoothsQueryRenderer: React.FC<{ slug: string }> = ({
         }
 
         if (props?.fair) {
+          // @ts-ignore RELAY UPGRADE 13
           return <FairBoothsFragmentContainer fair={props.fair!} />
         }
 

@@ -1,12 +1,12 @@
 import { Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistShowsRoute_viewer } from "__generated__/ArtistShowsRoute_viewer.graphql"
+import { ArtistShowsRoute_viewer$data } from "__generated__/ArtistShowsRoute_viewer.graphql"
 import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
 import { Title } from "react-head"
 
 interface ArtistShowsRouteProps {
-  viewer: ArtistShowsRoute_viewer
+  viewer: ArtistShowsRoute_viewer$data
 }
 
 const ArtistShowsRoute: React.FC<ArtistShowsRouteProps> = ({ viewer }) => {
@@ -16,12 +16,14 @@ const ArtistShowsRoute: React.FC<ArtistShowsRouteProps> = ({ viewer }) => {
 
       <Join separator={<Spacer mb={4} />}>
         <ArtistShowsGroupRefetchContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.currentShows!}
           title="Current Shows"
           sort="END_AT_ASC"
           status="running"
         />
         <ArtistShowsGroupRefetchContainer
+          // @ts-ignore RELAY UPGRADE 13
           artist={viewer.upcomingShows!}
           title="Upcoming Shows"
           sort="START_AT_ASC"

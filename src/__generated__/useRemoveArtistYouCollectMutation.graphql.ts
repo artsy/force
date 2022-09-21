@@ -1,69 +1,36 @@
+/**
+ * @generated SignedSource<<e7d93ee7cab94f27c8ea29b43067a7df>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserInterestMutationInput = {
-    anonymousSessionId?: string | null | undefined;
-    clientMutationId?: string | null | undefined;
-    id: string;
-    sessionID?: string | null | undefined;
+  anonymousSessionId?: string | null;
+  clientMutationId?: string | null;
+  id: string;
+  sessionID?: string | null;
 };
-export type useRemoveArtistYouCollectMutationVariables = {
-    input: DeleteUserInterestMutationInput;
+export type useRemoveArtistYouCollectMutation$variables = {
+  input: DeleteUserInterestMutationInput;
 };
-export type useRemoveArtistYouCollectMutationResponse = {
-    readonly deleteUserInterest: {
-        readonly clientMutationId: string | null;
-        readonly me: {
-            readonly " $fragmentRefs": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
-        };
-    } | null;
+export type useRemoveArtistYouCollectMutation$data = {
+  readonly deleteUserInterest: {
+    readonly clientMutationId: string | null;
+    readonly me: {
+      readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
+    };
+  } | null;
 };
 export type useRemoveArtistYouCollectMutation = {
-    readonly response: useRemoveArtistYouCollectMutationResponse;
-    readonly variables: useRemoveArtistYouCollectMutationVariables;
+  variables: useRemoveArtistYouCollectMutation$variables;
+  response: useRemoveArtistYouCollectMutation$data;
 };
-
-
-
-/*
-mutation useRemoveArtistYouCollectMutation(
-  $input: DeleteUserInterestMutationInput!
-) {
-  deleteUserInterest(input: $input) {
-    clientMutationId
-    me {
-      ...SettingsEditProfileArtistsYouCollect_me
-      id
-    }
-  }
-}
-
-fragment SettingsEditProfileArtistsYouCollect_me on Me {
-  collectorProfile {
-    userInterests {
-      internalID
-      category
-      interest {
-        __typename
-        ... on Artist {
-          internalID
-          name
-          slug
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-      }
-      id
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -262,5 +229,7 @@ return {
   }
 };
 })();
-(node as any).hash = '9631c605bb0b9c793403276a2ced3a88';
+
+(node as any).hash = "9631c605bb0b9c793403276a2ced3a88";
+
 export default node;

@@ -1,5 +1,5 @@
 import { Link, Text, LinkProps, Flex, Spacer, Box, Join } from "@artsy/palette"
-import { Details_artwork } from "__generated__/Details_artwork.graphql"
+import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useArtworkGridContext } from "../ArtworkGrid/ArtworkGridContext"
@@ -13,7 +13,7 @@ import { useState } from "react"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 
 interface DetailsProps {
-  artwork: Details_artwork
+  artwork: Details_artwork$data
   contextModule?: AuthContextModule
   includeLinks: boolean
   hideSaleInfo?: boolean
@@ -209,6 +209,7 @@ export const Details: React.FC<DetailsProps> = ({
         {showSaveButton && (
           <NewSaveButtonFragmentContainer
             contextModule={contextModule!}
+            // @ts-ignore RELAY UPGRADE 13
             artwork={rest.artwork}
           />
         )}
@@ -217,6 +218,7 @@ export const Details: React.FC<DetailsProps> = ({
         <TitleLine {...rest} />
         {!hidePartnerName && <PartnerLine {...rest} />}
         {isHovered && showHoverDetails && (
+          // @ts-ignore RELAY UPGRADE 13
           <HoverDetailsFragmentContainer artwork={rest.artwork} />
         )}
       </Box>
@@ -226,8 +228,8 @@ export const Details: React.FC<DetailsProps> = ({
 }
 
 interface LotCloseInfoProps {
-  saleArtwork: NonNullable<Details_artwork["sale_artwork"]>
-  sale: NonNullable<Details_artwork["sale"]>
+  saleArtwork: NonNullable<Details_artwork$data["sale_artwork"]>
+  sale: NonNullable<Details_artwork$data["sale"]>
 }
 
 export const LotCloseInfo: React.FC<LotCloseInfoProps> = ({

@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<6ce67fbdad89b4e9054347b9407c888e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CreateArtworkAlertSection_artwork = {
+export type CreateArtworkAlertSection_artwork$data = {
+  readonly internalID: string;
+  readonly title: string | null;
+  readonly slug: string;
+  readonly artists: ReadonlyArray<{
     readonly internalID: string;
-    readonly title: string | null;
+    readonly name: string | null;
     readonly slug: string;
-    readonly artists: ReadonlyArray<{
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
-    readonly attributionClass: {
-        readonly internalID: string;
+  } | null> | null;
+  readonly attributionClass: {
+    readonly internalID: string;
+  } | null;
+  readonly mediumType: {
+    readonly filterGene: {
+      readonly slug: string;
+      readonly name: string | null;
     } | null;
-    readonly mediumType: {
-        readonly filterGene: {
-            readonly slug: string;
-            readonly name: string | null;
-        } | null;
-    } | null;
-    readonly " $refType": "CreateArtworkAlertSection_artwork";
+  } | null;
+  readonly " $fragmentType": "CreateArtworkAlertSection_artwork";
 };
-export type CreateArtworkAlertSection_artwork$data = CreateArtworkAlertSection_artwork;
 export type CreateArtworkAlertSection_artwork$key = {
-    readonly " $data"?: CreateArtworkAlertSection_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"CreateArtworkAlertSection_artwork">;
+  readonly " $data"?: CreateArtworkAlertSection_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CreateArtworkAlertSection_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -124,5 +127,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9ca1426f14bb12aac7cab50c39f76613';
+
+(node as any).hash = "9ca1426f14bb12aac7cab50c39f76613";
+
 export default node;

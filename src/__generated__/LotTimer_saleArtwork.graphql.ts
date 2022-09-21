@@ -1,29 +1,32 @@
+/**
+ * @generated SignedSource<<2db55fe298beacb37fff00367480dd9c>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type LotTimer_saleArtwork = {
-    readonly endAt: string | null;
-    readonly formattedStartDateTime: string | null;
-    readonly extendedBiddingEndAt: string | null;
-    readonly lotID: string | null;
-    readonly sale: {
-        readonly startAt: string | null;
-        readonly extendedBiddingPeriodMinutes: number | null;
-        readonly extendedBiddingIntervalMinutes: number | null;
-        readonly internalID: string;
-    } | null;
-    readonly " $refType": "LotTimer_saleArtwork";
+export type LotTimer_saleArtwork$data = {
+  readonly endAt: string | null;
+  readonly formattedStartDateTime: string | null;
+  readonly extendedBiddingEndAt: string | null;
+  readonly lotID: string | null;
+  readonly sale: {
+    readonly startAt: string | null;
+    readonly extendedBiddingPeriodMinutes: number | null;
+    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly internalID: string;
+  } | null;
+  readonly " $fragmentType": "LotTimer_saleArtwork";
 };
-export type LotTimer_saleArtwork$data = LotTimer_saleArtwork;
 export type LotTimer_saleArtwork$key = {
-    readonly " $data"?: LotTimer_saleArtwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"LotTimer_saleArtwork">;
+  readonly " $data"?: LotTimer_saleArtwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"LotTimer_saleArtwork">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -102,5 +105,7 @@ const node: ReaderFragment = {
   "type": "SaleArtwork",
   "abstractKey": null
 };
-(node as any).hash = '55716d023ef3ebdf22143acc9c455550';
+
+(node as any).hash = "55716d023ef3ebdf22143acc9c455550";
+
 export default node;

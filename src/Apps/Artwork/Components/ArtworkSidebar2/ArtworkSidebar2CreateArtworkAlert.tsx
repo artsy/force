@@ -1,6 +1,6 @@
 import { Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebar2CreateArtworkAlert_artwork } from "__generated__/ArtworkSidebar2CreateArtworkAlert_artwork.graphql"
+import { ArtworkSidebar2CreateArtworkAlert_artwork$data } from "__generated__/ArtworkSidebar2CreateArtworkAlert_artwork.graphql"
 import {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
@@ -16,7 +16,7 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useTranslation } from "react-i18next"
 
 interface ArtworkSidebar2CreateArtworkAlertProps {
-  artwork: ArtworkSidebar2CreateArtworkAlert_artwork
+  artwork: ArtworkSidebar2CreateArtworkAlert_artwork$data
 }
 
 const ArtworkSidebar2CreateArtworkAlert: React.FC<ArtworkSidebar2CreateArtworkAlertProps> = ({

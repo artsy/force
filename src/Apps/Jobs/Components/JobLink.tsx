@@ -2,10 +2,10 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { Text } from "@artsy/palette"
-import { JobLink_job } from "__generated__/JobLink_job.graphql"
+import { JobLink_job$data } from "__generated__/JobLink_job.graphql"
 
 interface JobLinkProps {
-  job: JobLink_job
+  job: JobLink_job$data
 }
 
 const JobLink: FC<JobLinkProps> = ({ job }) => {

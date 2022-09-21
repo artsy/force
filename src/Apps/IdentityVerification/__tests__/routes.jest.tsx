@@ -10,7 +10,7 @@ import { Environment, RecordSource, Store } from "relay-runtime"
 
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 
-import { identityVerificationRoutes_IdentityVerificationAppQueryRawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
+import { identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse } from "__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
 import { createRender } from "found"
 
 describe("IdentityVerification/routes", () => {
@@ -19,7 +19,7 @@ describe("IdentityVerification/routes", () => {
     IdentityVerificationAppQueryResponseFixture.identityVerification.internalID
   async function render(
     url,
-    mockData: identityVerificationRoutes_IdentityVerificationAppQueryRawResponse
+    mockData: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse
   ) {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()

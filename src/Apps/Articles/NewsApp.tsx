@@ -4,7 +4,7 @@ import { Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { getENV } from "Utils/getENV"
-import { NewsApp_viewer } from "__generated__/NewsApp_viewer.graphql"
+import { NewsApp_viewer$data } from "__generated__/NewsApp_viewer.graphql"
 import { NewsIndexArticlesPaginationContainer } from "./Components/NewsIndexArticles"
 import { ArticleAdProvider } from "../Article/Components/ArticleAd"
 import { useScrollToOpenAuthModal } from "Utils/Hooks/useScrollToOpenAuthModal"
@@ -12,7 +12,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 
 interface NewsAppProps {
-  viewer: NewsApp_viewer
+  viewer: NewsApp_viewer$data
 }
 
 const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
@@ -53,6 +53,7 @@ const NewsApp: FC<NewsAppProps> = ({ viewer }) => {
 
       <Spacer mt={6} />
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <NewsIndexArticlesPaginationContainer viewer={viewer} />
     </ArticleAdProvider>
   )

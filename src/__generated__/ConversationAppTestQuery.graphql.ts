@@ -1,163 +1,83 @@
+/**
+ * @generated SignedSource<<385588dda50551e0c8dbb16b71fb5162>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationAppTestQueryVariables = {};
-export type ConversationAppTestQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ConversationApp_me">;
-    } | null;
+export type ConversationAppTestQuery$variables = {};
+export type ConversationAppTestQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_me">;
+  } | null;
 };
-export type ConversationAppTestQueryRawResponse = {
-    readonly me: ({
-        readonly conversationsConnection: ({
-            readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly internalID: string | null;
-                    readonly to: {
-                        readonly name: string;
-                        readonly id: string;
-                    };
-                    readonly id: string;
-                    readonly lastMessage: string | null;
-                    readonly lastMessageAt: string | null;
-                    readonly unread: boolean | null;
-                    readonly items: ReadonlyArray<({
-                        readonly item: ({
-                            readonly __typename: "Artwork";
-                            readonly __isNode: "Artwork";
-                            readonly id: string;
-                            readonly date: string | null;
-                            readonly title: string | null;
-                            readonly artistNames: string | null;
-                            readonly image: ({
-                                readonly url: string | null;
-                            }) | null;
-                        } | {
-                            readonly __typename: "Show";
-                            readonly __isNode: "Show";
-                            readonly id: string;
-                            readonly fair: ({
-                                readonly name: string | null;
-                                readonly id: string;
-                            }) | null;
-                            readonly name: string | null;
-                            readonly coverImage: ({
-                                readonly url: string | null;
-                            }) | null;
-                        } | {
-                            readonly __typename: string;
-                            readonly __isNode: string;
-                            readonly id: string;
-                        }) | null;
-                    }) | null> | null;
-                    readonly __typename: "Conversation";
-                }) | null;
-                readonly cursor: string;
-            }) | null> | null;
-            readonly pageInfo: {
-                readonly endCursor: string | null;
-                readonly hasNextPage: boolean;
-                readonly hasPreviousPage: boolean;
-                readonly startCursor: string | null;
-            };
-        }) | null;
-        readonly id: string;
-    }) | null;
+export type ConversationAppTestQuery$rawResponse = {
+  readonly me: {
+    readonly conversationsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string | null;
+          readonly to: {
+            readonly name: string;
+            readonly id: string;
+          };
+          readonly id: string;
+          readonly lastMessage: string | null;
+          readonly lastMessageAt: string | null;
+          readonly unread: boolean | null;
+          readonly items: ReadonlyArray<{
+            readonly item: {
+              readonly __typename: "Artwork";
+              readonly __isNode: "Artwork";
+              readonly id: string;
+              readonly date: string | null;
+              readonly title: string | null;
+              readonly artistNames: string | null;
+              readonly image: {
+                readonly url: string | null;
+              } | null;
+            } | {
+              readonly __typename: "Show";
+              readonly __isNode: "Show";
+              readonly id: string;
+              readonly fair: {
+                readonly name: string | null;
+                readonly id: string;
+              } | null;
+              readonly name: string | null;
+              readonly coverImage: {
+                readonly url: string | null;
+              } | null;
+            } | {
+              readonly __typename: string;
+              readonly __isNode: string;
+              readonly id: string;
+            } | null;
+          } | null> | null;
+          readonly __typename: "Conversation";
+        } | null;
+        readonly cursor: string;
+      } | null> | null;
+      readonly pageInfo: {
+        readonly endCursor: string | null;
+        readonly hasNextPage: boolean;
+        readonly hasPreviousPage: boolean;
+        readonly startCursor: string | null;
+      };
+    } | null;
+    readonly id: string;
+  } | null;
 };
 export type ConversationAppTestQuery = {
-    readonly response: ConversationAppTestQueryResponse;
-    readonly variables: ConversationAppTestQueryVariables;
-    readonly rawResponse: ConversationAppTestQueryRawResponse;
+  variables: ConversationAppTestQuery$variables;
+  response: ConversationAppTestQuery$data;
+  rawResponse: ConversationAppTestQuery$rawResponse;
 };
-
-
-
-/*
-query ConversationAppTestQuery {
-  me {
-    ...ConversationApp_me
-    id
-  }
-}
-
-fragment ConversationApp_me on Me {
-  conversationsConnection(first: 25) {
-    edges {
-      node {
-        internalID
-        to {
-          name
-          id
-        }
-        id
-      }
-    }
-  }
-  ...ConversationList_me
-}
-
-fragment ConversationList_me on Me {
-  conversationsConnection(first: 25) {
-    edges {
-      cursor
-      node {
-        id
-        internalID
-        lastMessage
-        ...ConversationSnippet_conversation
-        __typename
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
-
-fragment ConversationSnippet_conversation on Conversation {
-  internalID
-  to {
-    name
-    id
-  }
-  lastMessage
-  lastMessageAt
-  unread
-  items {
-    item {
-      __typename
-      ... on Artwork {
-        date
-        title
-        artistNames
-        image {
-          url
-        }
-      }
-      ... on Show {
-        fair {
-          name
-          id
-        }
-        name
-        coverImage {
-          url
-        }
-      }
-      ... on Node {
-        __isNode: __typename
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -607,5 +527,7 @@ return {
   }
 };
 })();
-(node as any).hash = '147aa4e89f37fe45ef44d5211bcfc0d9';
+
+(node as any).hash = "147aa4e89f37fe45ef44d5211bcfc0d9";
+
 export default node;

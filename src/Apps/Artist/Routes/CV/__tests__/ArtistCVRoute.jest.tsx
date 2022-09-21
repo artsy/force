@@ -10,6 +10,7 @@ jest.mock("Components/MetaTags", () => ({
 
 describe("ArtistCVRoute", () => {
   const { getWrapper } = setupTestWrapper<ArtistCVRoute_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: ArtistCVRouteFragmentContainer,
     query: graphql`
       query ArtistCVRoute_Test_Query($artistID: String!) @relay_test_operation {

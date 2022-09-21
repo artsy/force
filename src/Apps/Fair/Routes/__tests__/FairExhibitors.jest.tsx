@@ -22,6 +22,7 @@ jest.mock("System/Router/useRouter", () => ({
 
 describe("FairExhibitors", () => {
   const { renderWithRelay } = setupTestWrapperTL<FairExhibitors_Test_Query>({
+    // @ts-ignore RELAY UPGRADE 13
     Component: FairExhibitorsFragmentContainer,
     query: graphql`
       query FairExhibitors_Test_Query($id: String!) @relay_test_operation {

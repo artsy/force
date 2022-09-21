@@ -1,25 +1,28 @@
+/**
+ * @generated SignedSource<<a693fdaef9f7fed85e5daaaa375a102d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RegisterButton_me = {
+export type RegisterButton_me$data = {
+  readonly internalID: string;
+  readonly identityVerified: boolean | null;
+  readonly hasCreditCards: boolean | null;
+  readonly pendingIdentityVerification: {
     readonly internalID: string;
-    readonly identityVerified: boolean | null;
-    readonly hasCreditCards: boolean | null;
-    readonly pendingIdentityVerification: {
-        readonly internalID: string;
-    } | null;
-    readonly " $refType": "RegisterButton_me";
+  } | null;
+  readonly " $fragmentType": "RegisterButton_me";
 };
-export type RegisterButton_me$data = RegisterButton_me;
 export type RegisterButton_me$key = {
-    readonly " $data"?: RegisterButton_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"RegisterButton_me">;
+  readonly " $data"?: RegisterButton_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RegisterButton_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -67,5 +70,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a92c693069d35859e07a2f479f5721cf';
+
+(node as any).hash = "a92c693069d35859e07a2f479f5721cf";
+
 export default node;

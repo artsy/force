@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<cf3a3e56dfe6ec2356ba47fdd2f8541b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsPaymentsMethods_me = {
-    readonly creditCards: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"SettingsCreditCard_creditCard">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly bankAccounts: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"SettingsBankAccount_bankAccount">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SettingsPaymentsMethods_me";
+export type SettingsPaymentsMethods_me$data = {
+  readonly creditCards: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly bankAccounts: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SettingsPaymentsMethods_me";
 };
-export type SettingsPaymentsMethods_me$data = SettingsPaymentsMethods_me;
 export type SettingsPaymentsMethods_me$key = {
-    readonly " $data"?: SettingsPaymentsMethods_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsMethods_me">;
+  readonly " $data"?: SettingsPaymentsMethods_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -135,5 +138,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ac17c5262c90aa4d9a410b45fce4ab47';
+
+(node as any).hash = "ac17c5262c90aa4d9a410b45fce4ab47";
+
 export default node;

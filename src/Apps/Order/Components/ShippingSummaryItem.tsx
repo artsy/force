@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { ShippingSummaryItem_order } from "__generated__/ShippingSummaryItem_order.graphql"
+import { ShippingSummaryItem_order$data } from "__generated__/ShippingSummaryItem_order.graphql"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -19,7 +19,7 @@ const ShippingSummaryItem = ({
   textColor = "black100",
   ...others
 }: {
-  order: ShippingSummaryItem_order
+  order: ShippingSummaryItem_order$data
   textColor?: string
 } & StepSummaryItemProps) => {
   if (!requestedFulfillment) return null
@@ -27,6 +27,7 @@ const ShippingSummaryItem = ({
   return requestedFulfillment.__typename === "CommerceShip" ||
     requestedFulfillment.__typename === "CommerceShipArta" ? (
     <StepSummaryItem title="Ship to" {...others}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ShippingAddress ship={requestedFulfillment} textColor={textColor} />
     </StepSummaryItem>
   ) : (

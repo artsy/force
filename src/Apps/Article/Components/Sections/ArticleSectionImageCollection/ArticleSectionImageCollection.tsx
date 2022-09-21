@@ -9,7 +9,7 @@ import {
   GridColumns,
   Column,
 } from "@artsy/palette"
-import { ArticleSectionImageCollection_section } from "__generated__/ArticleSectionImageCollection_section.graphql"
+import { ArticleSectionImageCollection_section$data } from "__generated__/ArticleSectionImageCollection_section.graphql"
 import { ArticleSectionImageCollectionImageFragmentContainer } from "./ArticleSectionImageCollectionImage"
 import { ArticleSectionImageCollectionCaptionFragmentContainer } from "./ArticleSectionImageCollectionCaption"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -20,7 +20,7 @@ const MAX_IMAGE_WIDTH = 910
 const FIGURE_GUTTER_WIDTH = 10
 
 interface ArticleSectionImageCollectionProps {
-  section: ArticleSectionImageCollection_section
+  section: ArticleSectionImageCollection_section$data
 }
 
 const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
@@ -57,6 +57,7 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
             return (
               <ArticleSectionImageCollectionImageFragmentContainer
                 key={i}
+                // @ts-ignore RELAY UPGRADE 13
                 figure={figure}
                 targetWidth={targetWidth}
               />
@@ -74,6 +75,7 @@ const ArticleSectionImageCollection: FC<ArticleSectionImageCollectionProps> = ({
               <Box key={i} flex={1} overflow="hidden">
                 <Caption>
                   <ArticleSectionImageCollectionCaptionFragmentContainer
+                    // @ts-ignore RELAY UPGRADE 13
                     figure={figure}
                   />
                 </Caption>

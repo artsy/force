@@ -1,6 +1,6 @@
 import {
   useBidderPositionQuery,
-  useBidderPositionQueryVariables,
+  useBidderPositionQuery$variables,
 } from "__generated__/useBidderPositionQuery.graphql"
 import { graphql } from "react-relay"
 import { Environment, fetchQuery as fetchRelayQuery } from "relay-runtime"
@@ -12,7 +12,7 @@ export const useBidderPosition = () => {
   const fetchBidderPosition = ({
     variables,
   }: {
-    variables: useBidderPositionQueryVariables
+    variables: useBidderPositionQuery$variables
   }) => {
     return fetchRelayQuery<useBidderPositionQuery>(
       relayEnvironment as Environment,

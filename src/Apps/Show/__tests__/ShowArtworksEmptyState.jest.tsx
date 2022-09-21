@@ -6,6 +6,7 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper<ShowArtworksEmptyState_Test_Query>({
+  // @ts-ignore RELAY UPGRADE 13
   Component: ShowArtworksEmptyStateFragmentContainer,
   query: graphql`
     query ShowArtworksEmptyState_Test_Query @relay_test_operation {

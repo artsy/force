@@ -1,41 +1,44 @@
+/**
+ * @generated SignedSource<<9583041dbc9daedd4b6eb0bf35bda446>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type WorksForYouApp_viewerMe = {
-    readonly me: {
-        readonly followsAndSaves: {
-            readonly artistsConnection: {
-                readonly totalCount: number | null;
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly artist: {
-                            readonly name: string | null;
-                            readonly slug: string;
-                        } | null;
-                    } | null;
-                } | null> | null;
+export type WorksForYouApp_viewerMe$data = {
+  readonly me: {
+    readonly followsAndSaves: {
+      readonly artistsConnection: {
+        readonly totalCount: number | null;
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly artist: {
+              readonly name: string | null;
+              readonly slug: string;
             } | null;
-            readonly bundledArtworksByArtistConnection: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly id: string;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null;
+          } | null;
+        } | null> | null;
+      } | null;
+      readonly bundledArtworksByArtistConnection: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly id: string;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
-    readonly " $refType": "WorksForYouApp_viewerMe";
+  } | null;
+  readonly " $fragmentType": "WorksForYouApp_viewerMe";
 };
-export type WorksForYouApp_viewerMe$data = WorksForYouApp_viewerMe;
 export type WorksForYouApp_viewerMe$key = {
-    readonly " $data"?: WorksForYouApp_viewerMe$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"WorksForYouApp_viewerMe">;
+  readonly " $data"?: WorksForYouApp_viewerMe$data;
+  readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerMe">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -191,5 +194,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '59756fcfef6d5f4aed844db5bbf18075';
+
+(node as any).hash = "59756fcfef6d5f4aed844db5bbf18075";
+
 export default node;

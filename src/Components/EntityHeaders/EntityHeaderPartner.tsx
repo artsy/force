@@ -5,13 +5,13 @@ import { FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { EntityHeaderPartner_partner } from "__generated__/EntityHeaderPartner_partner.graphql"
+import { EntityHeaderPartner_partner$data } from "__generated__/EntityHeaderPartner_partner.graphql"
 import { FollowProfileButtonFragmentContainer } from "../FollowButton/FollowProfileButton"
 
 const DISPLAYABLE_BADGES = ["black-owned", "women-owned"]
 
 export interface EntityHeaderPartnerProps extends BoxProps {
-  partner: EntityHeaderPartner_partner
+  partner: EntityHeaderPartner_partner$data
   displayAvatar?: boolean
   displayLink?: boolean
   FollowButton?: JSX.Element
@@ -88,6 +88,7 @@ const EntityHeaderPartner: FC<EntityHeaderPartnerProps> = ({
       {isFollowable &&
         (FollowButton || (
           <FollowProfileButtonFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             profile={partner.profile!}
             contextModule={ContextModule.partnerHeader}
             size="small"

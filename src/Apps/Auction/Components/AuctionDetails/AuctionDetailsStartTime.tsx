@@ -3,10 +3,10 @@ import { SkeletonText, Text, TextProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AuctionDetailsStartTimeQuery } from "__generated__/AuctionDetailsStartTimeQuery.graphql"
-import { AuctionDetailsStartTime_sale } from "__generated__/AuctionDetailsStartTime_sale.graphql"
+import { AuctionDetailsStartTime_sale$data } from "__generated__/AuctionDetailsStartTime_sale.graphql"
 
 interface AuctionDetailsStartTimeProps extends TextProps {
-  sale: AuctionDetailsStartTime_sale
+  sale: AuctionDetailsStartTime_sale$data
 }
 
 /**
@@ -81,6 +81,7 @@ export const AuctionDetailsStartTimeQueryRenderer: FC<AuctionDetailsStartTimeQue
 
         return (
           <AuctionDetailsStartTimeFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             sale={props.sale}
             {...rest}
           />

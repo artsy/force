@@ -21,6 +21,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowGeneButton_Test_Query>({
   Component: props => {
     return (
       <FollowGeneButtonFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         gene={props.gene!}
         onFollow={onFollow}
       />

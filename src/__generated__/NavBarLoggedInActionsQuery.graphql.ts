@@ -1,72 +1,42 @@
+/**
+ * @generated SignedSource<<113d73a328266eeba11d0a9072b9e483>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type NavBarLoggedInActionsQueryVariables = {};
-export type NavBarLoggedInActionsQueryResponse = {
-    readonly me: {
-        readonly unreadNotificationsCount: number;
-        readonly unreadConversationCount: number;
-        readonly followsAndSaves: {
-            readonly notifications: {
-                readonly edges: ReadonlyArray<{
-                    readonly node: {
-                        readonly href: string | null;
-                        readonly summary: string | null;
-                        readonly artists: string | null;
-                        readonly published_at: string | null;
-                        readonly image: {
-                            readonly resized: {
-                                readonly url: string;
-                            } | null;
-                        } | null;
-                    } | null;
-                } | null> | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type NavBarLoggedInActionsQuery$variables = {};
+export type NavBarLoggedInActionsQuery$data = {
+  readonly me: {
+    readonly unreadNotificationsCount: number;
+    readonly unreadConversationCount: number;
+    readonly followsAndSaves: {
+      readonly notifications: {
+        readonly edges: ReadonlyArray<{
+          readonly node: {
+            readonly href: string | null;
+            readonly summary: string | null;
+            readonly artists: string | null;
+            readonly published_at: string | null;
+            readonly image: {
+              readonly resized: {
+                readonly url: string;
+              } | null;
             } | null;
-        } | null;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type NavBarLoggedInActionsQuery = {
-    readonly response: NavBarLoggedInActionsQueryResponse;
-    readonly variables: NavBarLoggedInActionsQueryVariables;
+  variables: NavBarLoggedInActionsQuery$variables;
+  response: NavBarLoggedInActionsQuery$data;
 };
-
-
-
-/*
-query NavBarLoggedInActionsQuery {
-  me {
-    unreadNotificationsCount
-    unreadConversationCount
-    followsAndSaves {
-      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {
-        edges {
-          node {
-            href
-            summary
-            artists
-            published_at: publishedAt(format: "MMM DD")
-            image {
-              resized(height: 40, width: 40) {
-                url
-              }
-            }
-            id
-            __typename
-          }
-          cursor
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -403,5 +373,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'cfcc4ec76e30e889d67960d77123214d';
+
+(node as any).hash = "cfcc4ec76e30e889d67960d77123214d";
+
 export default node;

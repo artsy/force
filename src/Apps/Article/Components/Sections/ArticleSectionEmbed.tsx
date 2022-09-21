@@ -1,10 +1,10 @@
 import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, FullBleed, ResponsiveBox } from "@artsy/palette"
-import { ArticleSectionEmbed_section } from "__generated__/ArticleSectionEmbed_section.graphql"
+import { ArticleSectionEmbed_section$data } from "__generated__/ArticleSectionEmbed_section.graphql"
 
 interface ArticleSectionEmbedProps {
-  section: ArticleSectionEmbed_section
+  section: ArticleSectionEmbed_section$data
 }
 
 const ArticleSectionEmbed: FC<ArticleSectionEmbedProps> = ({ section }) => {

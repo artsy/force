@@ -18,8 +18,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { ModalType } from "Components/Authentication/Types"
 import { openAuthModal } from "Utils/openAuthModal"
 import { Media } from "Utils/Responsive"
-import { FairsIndex_featuredFairs } from "__generated__/FairsIndex_featuredFairs.graphql"
-import { FairsIndex_viewer } from "__generated__/FairsIndex_viewer.graphql"
+import { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
+import { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
 import { FairsFairBannerFragmentContainer } from "../Components/FairsFairBanner"
 import { FairsFairRowFragmentContainer } from "../Components/FairsFairRow"
 import { FairsPhonePromo } from "../Components/FairsPhonePromo"
@@ -32,8 +32,8 @@ import { compact } from "lodash"
 import { cropped } from "Utils/resized"
 
 interface FairsIndexProps {
-  featuredFairs: FairsIndex_featuredFairs
-  viewer: FairsIndex_viewer
+  featuredFairs: FairsIndex_featuredFairs$data
+  viewer: FairsIndex_viewer$data
 }
 
 export const FairsIndex: React.FC<FairsIndexProps> = ({
@@ -133,6 +133,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 {currentFairs.map(fair => (
                   <FairsFairRowFragmentContainer
                     key={fair.internalID}
+                    // @ts-ignore RELAY UPGRADE 13
                     fair={fair}
                   />
                 ))}
@@ -143,6 +144,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 {upcomingFairs.map(fair => (
                   <FairsFairRowFragmentContainer
                     key={fair.internalID}
+                    // @ts-ignore RELAY UPGRADE 13
                     fair={fair}
                   />
                 ))}
@@ -154,6 +156,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 {closedFairs.map(fair => (
                   <FairsFairRowFragmentContainer
                     key={fair.internalID}
+                    // @ts-ignore RELAY UPGRADE 13
                     fair={fair}
                   />
                 ))}
@@ -242,6 +245,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                       key={fair.internalID}
                       span={fair.bannerSize === "x-large" ? 12 : 6}
                     >
+                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <FairsFairBannerFragmentContainer fair={fair} />
                     </Column>
                   )
@@ -273,6 +277,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               Past Events
             </Text>
 
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <FairsPastFairsPaginationContainer viewer={viewer} />
           </Column>
 

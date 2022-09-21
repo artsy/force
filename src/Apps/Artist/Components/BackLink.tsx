@@ -2,12 +2,12 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { BackLink_artist } from "__generated__/BackLink_artist.graphql"
+import { BackLink_artist$data } from "__generated__/BackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Router/useRouter"
 
 interface BackLinkProps {
-  artist: BackLink_artist
+  artist: BackLink_artist$data
   artworkId?: string
 }
 

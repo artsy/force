@@ -1,58 +1,30 @@
+/**
+ * @generated SignedSource<<cb4932ee1446fa54b70ac8624251ca7e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContactInformation_SubmissionFlowTest_QueryVariables = {
-    externalId?: string | null | undefined;
+export type ContactInformation_SubmissionFlowTest_Query$variables = {
+  externalId?: string | null;
 };
-export type ContactInformation_SubmissionFlowTest_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_me">;
-    } | null;
-    readonly submission: {
-        readonly " $fragmentRefs": FragmentRefs<"ContactInformation_submission">;
-    } | null;
+export type ContactInformation_SubmissionFlowTest_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
+  } | null;
+  readonly submission: {
+    readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
+  } | null;
 };
 export type ContactInformation_SubmissionFlowTest_Query = {
-    readonly response: ContactInformation_SubmissionFlowTest_QueryResponse;
-    readonly variables: ContactInformation_SubmissionFlowTest_QueryVariables;
+  variables: ContactInformation_SubmissionFlowTest_Query$variables;
+  response: ContactInformation_SubmissionFlowTest_Query$data;
 };
-
-
-
-/*
-query ContactInformation_SubmissionFlowTest_Query(
-  $externalId: ID
-) {
-  me {
-    ...ContactInformation_me
-    id
-  }
-  submission(externalId: $externalId) {
-    ...ContactInformation_submission
-    id
-  }
-}
-
-fragment ContactInformation_me on Me {
-  internalID
-  name
-  email
-  phone
-  phoneNumber {
-    isValid
-    international: display(format: INTERNATIONAL)
-    national: display(format: NATIONAL)
-    regionCode
-  }
-}
-
-fragment ContactInformation_submission on ConsignmentSubmission {
-  externalId
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -296,5 +268,7 @@ return {
   }
 };
 })();
-(node as any).hash = '3a25683fc533f44cedfd5528a565c3f7';
+
+(node as any).hash = "3a25683fc533f44cedfd5528a565c3f7";
+
 export default node;

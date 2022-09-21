@@ -4,9 +4,9 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { scrollIntoView } from "Utils/scrollHelpers"
-import { StickyNav_geneFamiliesConnection } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
+import { StickyNav_geneFamiliesConnection$data } from "__generated__/StickyNav_geneFamiliesConnection.graphql"
 interface StickyNavProps {
-  geneFamiliesConnection: StickyNav_geneFamiliesConnection
+  geneFamiliesConnection: StickyNav_geneFamiliesConnection$data
   navBarHeight: number
 }
 

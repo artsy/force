@@ -2,7 +2,7 @@ import { getInitialPaymentMethodValue } from "./../orderUtils"
 import { isPaymentSet } from "../orderUtils"
 import {
   CommercePaymentMethodEnum,
-  Payment_order,
+  Payment_order$data,
 } from "__generated__/Payment_order.graphql"
 
 describe("order utils", () => {
@@ -43,7 +43,7 @@ describe("order utils", () => {
   describe("get initial payment method value", () => {
     describe("order payment is valid", () => {
       it.each<
-        [CommercePaymentMethodEnum, Payment_order["paymentMethodDetails"]]
+        [CommercePaymentMethodEnum, Payment_order$data["paymentMethodDetails"]]
       >([
         ["CREDIT_CARD", { __typename: "CreditCard", id: "id" }],
         ["US_BANK_ACCOUNT", { __typename: "BankAccount", id: "id" }],
@@ -56,7 +56,7 @@ describe("order utils", () => {
           getInitialPaymentMethodValue({
             paymentMethodDetails,
             paymentMethod,
-          } as Payment_order)
+          } as Payment_order$data)
         ).toEqual(paymentMethod)
       })
     })
@@ -72,7 +72,7 @@ describe("order utils", () => {
               "CREDIT_CARD",
               "WIRE_TRANSFER",
             ],
-          } as unknown) as Payment_order)
+          } as unknown) as Payment_order$data)
         ).toEqual("US_BANK_ACCOUNT")
       })
 
@@ -82,7 +82,7 @@ describe("order utils", () => {
             paymentMethodDetails: null,
             paymentMethod: "CREDIT_CARD",
             availablePaymentMethods: ["CREDIT_CARD", "WIRE_TRANSFER"],
-          } as unknown) as Payment_order)
+          } as unknown) as Payment_order$data)
         ).toEqual("CREDIT_CARD")
       })
     })

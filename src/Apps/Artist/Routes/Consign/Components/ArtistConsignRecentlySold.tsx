@@ -1,6 +1,6 @@
 import { Text, Spacer, Shelf } from "@artsy/palette"
 import * as React from "react"
-import { ArtistConsignRecentlySold_artist } from "__generated__/ArtistConsignRecentlySold_artist.graphql"
+import { ArtistConsignRecentlySold_artist$data } from "__generated__/ArtistConsignRecentlySold_artist.graphql"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
@@ -9,7 +9,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 
 interface ArtistConsignRecentlySoldProps {
-  artist: ArtistConsignRecentlySold_artist
+  artist: ArtistConsignRecentlySold_artist$data
 }
 
 export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps> = ({
@@ -34,6 +34,7 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
           <>
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
+              // @ts-ignore RELAY UPGRADE 13
               artwork={artwork}
               showExtended={false}
               contextModule={ContextModule.artistRecentlySold}

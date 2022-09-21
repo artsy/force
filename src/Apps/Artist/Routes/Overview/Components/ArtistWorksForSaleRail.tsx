@@ -5,7 +5,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "System"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistWorksForSaleRail_artist } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
+import { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
 import { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "Components/Rail"
@@ -13,7 +13,7 @@ import { Box, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 
 interface ArtistWorksForSaleRailProps {
-  artist: ArtistWorksForSaleRail_artist
+  artist: ArtistWorksForSaleRail_artist$data
 }
 
 const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
@@ -58,6 +58,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
           return (
             <Box data-test="worksForSaleRail">
               <ShelfArtworkFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={node}
                 contextModule={ContextModule.worksForSaleRail}
                 key={index}
@@ -158,6 +159,7 @@ export const ArtistWorksForSaleRailQueryRenderer: React.FC<{
           }
           if (props.artist) {
             return (
+              // @ts-ignore RELAY UPGRADE 13
               <ArtistWorksForSaleRailFragmentContainer artist={props.artist} />
             )
           }

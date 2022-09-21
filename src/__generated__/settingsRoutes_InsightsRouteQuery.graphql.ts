@@ -1,92 +1,25 @@
+/**
+ * @generated SignedSource<<59596c43e2e5e21c6826d71b23521ee1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_InsightsRouteQueryVariables = {};
-export type settingsRoutes_InsightsRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"InsightsRoute_me">;
-    } | null;
+export type settingsRoutes_InsightsRouteQuery$variables = {};
+export type settingsRoutes_InsightsRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"InsightsRoute_me">;
+  } | null;
 };
 export type settingsRoutes_InsightsRouteQuery = {
-    readonly response: settingsRoutes_InsightsRouteQueryResponse;
-    readonly variables: settingsRoutes_InsightsRouteQueryVariables;
+  variables: settingsRoutes_InsightsRouteQuery$variables;
+  response: settingsRoutes_InsightsRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_InsightsRouteQuery {
-  me {
-    ...InsightsRoute_me
-    id
-  }
-}
-
-fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
-  title
-  dimension_text: dimensionText
-  organization
-  artist {
-    name
-    id
-  }
-  images {
-    larger {
-      cropped(width: 100, height: 100) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-  }
-  mediumText
-  categoryText
-  date_text: dateText
-  saleDate
-  boughtIn
-  currency
-  price_realized: priceRealized {
-    display
-    display_usd: displayUSD
-    cents_usd: centsUSD
-  }
-  performance {
-    mid
-  }
-  estimate {
-    display
-  }
-}
-
-fragment InsightsAuctionResults_me on Me {
-  myCollectionAuctionResults(first: 6) {
-    edges {
-      node {
-        ...ArtistAuctionResultItem_auctionResult
-        id
-      }
-    }
-  }
-}
-
-fragment InsightsOverview_info on MyCollectionInfo {
-  artworksCount
-  artistsCount
-}
-
-fragment InsightsRoute_me on Me {
-  internalID
-  myCollectionInfo {
-    artworksCount
-    ...InsightsOverview_info
-  }
-  ...InsightsAuctionResults_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -442,5 +375,7 @@ return {
   }
 };
 })();
-(node as any).hash = '05488390d019c37ca002a2608bb08e1b';
+
+(node as any).hash = "05488390d019c37ca002a2608bb08e1b";
+
 export default node;

@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<ce0fdea759566dd09344e5d8fe30e70d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShow_show = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"CellShow_show">;
-    readonly " $refType": "HomeFeaturedShow_show";
+export type HomeFeaturedShow_show$data = {
+  readonly internalID: string;
+  readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
+  readonly " $fragmentType": "HomeFeaturedShow_show";
 };
-export type HomeFeaturedShow_show$data = HomeFeaturedShow_show;
 export type HomeFeaturedShow_show$key = {
-    readonly " $data"?: HomeFeaturedShow_show$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShow_show">;
+  readonly " $data"?: HomeFeaturedShow_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedShow_show">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -24,6 +27,11 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "HomeFeaturedShow_show",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CellShow_show"
+    },
     {
       "alias": null,
       "args": null,
@@ -37,15 +45,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CellShow_show"
     }
   ],
   "type": "Show",
   "abstractKey": null
 };
-(node as any).hash = '014d4afd3a3ef6ddcf09f229e5baa2eb';
+
+(node as any).hash = "014d4afd3a3ef6ddcf09f229e5baa2eb";
+
 export default node;

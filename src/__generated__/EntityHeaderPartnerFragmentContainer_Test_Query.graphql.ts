@@ -1,76 +1,25 @@
+/**
+ * @generated SignedSource<<991680b5698aa0df66c588d2abf36b2a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EntityHeaderPartnerFragmentContainer_Test_QueryVariables = {};
-export type EntityHeaderPartnerFragmentContainer_Test_QueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-    } | null;
+export type EntityHeaderPartnerFragmentContainer_Test_Query$variables = {};
+export type EntityHeaderPartnerFragmentContainer_Test_Query$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
+  } | null;
 };
 export type EntityHeaderPartnerFragmentContainer_Test_Query = {
-    readonly response: EntityHeaderPartnerFragmentContainer_Test_QueryResponse;
-    readonly variables: EntityHeaderPartnerFragmentContainer_Test_QueryVariables;
+  variables: EntityHeaderPartnerFragmentContainer_Test_Query$variables;
+  response: EntityHeaderPartnerFragmentContainer_Test_Query$data;
 };
-
-
-
-/*
-query EntityHeaderPartnerFragmentContainer_Test_Query {
-  partner(id: "example") {
-    ...EntityHeaderPartner_partner
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -454,5 +403,7 @@ return {
   }
 };
 })();
-(node as any).hash = '6e0673baeb7a307bc2dc1a21498bf171';
+
+(node as any).hash = "6e0673baeb7a307bc2dc1a21498bf171";
+
 export default node;

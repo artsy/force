@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Box, BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowViewingRoom_show } from "__generated__/ShowViewingRoom_show.graphql"
+import { ShowViewingRoom_show$data } from "__generated__/ShowViewingRoom_show.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import { useTracking } from "react-tracking"
@@ -16,7 +16,7 @@ import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 import { extractNodes } from "Utils/extractNodes"
 
 interface ShowViewingRoomProps extends BoxProps {
-  show: ShowViewingRoom_show
+  show: ShowViewingRoom_show$data
 }
 
 export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({

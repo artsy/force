@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<83fbcea62f79835ec667d217f77119fd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TrendingLotsRail_viewer = {
-    readonly trendingLotsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly counts: {
-                readonly bidderPositions: number | null;
-            } | null;
-            readonly node: {
-                readonly internalID: string;
-                readonly slug: string;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "TrendingLotsRail_viewer";
+export type TrendingLotsRail_viewer$data = {
+  readonly trendingLotsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly counts: {
+        readonly bidderPositions: any | null;
+      } | null;
+      readonly node: {
+        readonly internalID: string;
+        readonly slug: string;
+        readonly sale: {
+          readonly isClosed: boolean | null;
+        } | null;
+        readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "TrendingLotsRail_viewer";
 };
-export type TrendingLotsRail_viewer$data = TrendingLotsRail_viewer;
 export type TrendingLotsRail_viewer$key = {
-    readonly " $data"?: TrendingLotsRail_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TrendingLotsRail_viewer">;
+  readonly " $data"?: TrendingLotsRail_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"TrendingLotsRail_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -155,5 +158,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '2f73e7cdd51767d0f7cd4a0a7a0b7e5a';
+
+(node as any).hash = "2f73e7cdd51767d0f7cd4a0a7a0b7e5a";
+
 export default node;

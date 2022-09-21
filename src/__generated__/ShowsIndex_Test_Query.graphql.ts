@@ -1,119 +1,28 @@
+/**
+ * @generated SignedSource<<6942402ef55d76fd18220285755d301a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowsIndex_Test_QueryVariables = {};
-export type ShowsIndex_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsIndex_viewer">;
-    } | null;
-    readonly featuredShows: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsIndex_featuredShows">;
-    } | null;
+export type ShowsIndex_Test_Query$variables = {};
+export type ShowsIndex_Test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsIndex_viewer">;
+  } | null;
+  readonly featuredShows: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowsIndex_featuredShows">;
+  } | null;
 };
 export type ShowsIndex_Test_Query = {
-    readonly response: ShowsIndex_Test_QueryResponse;
-    readonly variables: ShowsIndex_Test_QueryVariables;
+  variables: ShowsIndex_Test_Query$variables;
+  response: ShowsIndex_Test_Query$data;
 };
-
-
-
-/*
-query ShowsIndex_Test_Query {
-  viewer {
-    ...ShowsIndex_viewer
-  }
-  featuredShows: orderedSet(id: "example") {
-    ...ShowsIndex_featuredShows
-    id
-  }
-}
-
-fragment ShowsFeaturedShow_show on Show {
-  ...ShowsShowDates_show
-  id
-  name
-  href
-  coverImage {
-    title
-    large: cropped(width: 910, height: 683) {
-      width
-      height
-      src
-      srcSet
-    }
-    small: cropped(width: 600, height: 450) {
-      width
-      height
-      src
-      srcSet
-    }
-  }
-  partner {
-    __typename
-    ... on Partner {
-      name
-    }
-    ... on ExternalPartner {
-      name
-      id
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment ShowsHeader_viewer on Viewer {
-  allCities: cities {
-    text: name
-    value: slug
-  }
-  featuredCities: cities(featured: true) {
-    text: name
-    value: slug
-  }
-}
-
-fragment ShowsIndex_featuredShows on OrderedSet {
-  name
-  items {
-    __typename
-    ... on Show {
-      id
-      ...ShowsFeaturedShow_show
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-    ... on FeaturedLink {
-      id
-    }
-    ... on Profile {
-      id
-    }
-  }
-}
-
-fragment ShowsIndex_viewer on Viewer {
-  ...ShowsHeader_viewer
-}
-
-fragment ShowsShowDates_show on Show {
-  startAt
-  endAt
-  formattedStartAt: startAt(format: "MMM D")
-  formattedEndAt: endAt(format: "MMM D")
-  location {
-    city
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -604,5 +513,7 @@ return {
   }
 };
 })();
-(node as any).hash = '78ce8874a54dc95631e0249533aaf1d1';
+
+(node as any).hash = "78ce8874a54dc95631e0249533aaf1d1";
+
 export default node;

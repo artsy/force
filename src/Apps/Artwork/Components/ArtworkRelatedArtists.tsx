@@ -10,7 +10,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkRelatedArtists_artwork } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
+import { ArtworkRelatedArtists_artwork$data } from "__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "Apps/Artwork/Components/OtherWorks"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useState } from "react"
@@ -31,7 +31,7 @@ import track, { useTracking } from "react-tracking"
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
 export interface ArtworkRelatedArtistsProps {
-  artwork: ArtworkRelatedArtists_artwork
+  artwork: ArtworkRelatedArtists_artwork$data
   relay: RelayPaginationProp
 }
 
@@ -80,6 +80,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
             return (
               <Column key={index} span={[12, 6, 4, 4]}>
                 <EntityHeaderArtistFragmentContainer
+                  // @ts-ignore RELAY UPGRADE 13
                   artist={node}
                   onClick={() => {
                     trackEvent({
@@ -243,6 +244,7 @@ export const ArtworkRelatedArtistsQueryRenderer: React.FC<{
           if (props.artwork) {
             return (
               <ArtworkRelatedArtistsPaginationContainer
+                // @ts-ignore RELAY UPGRADE 13
                 artwork={props.artwork}
               />
             )

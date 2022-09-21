@@ -7,11 +7,11 @@ import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { checkAndSyncIndicatorsCount } from "../helpers"
 import { createFragmentContainer } from "react-relay"
-import { NavBarMobileMenuNotificationsIndicator_me } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
+import { NavBarMobileMenuNotificationsIndicator_me$data } from "__generated__/NavBarMobileMenuNotificationsIndicator_me.graphql"
 import { NavBarNotificationIndicator } from "../NavBarNotificationIndicator"
 
 interface NavBarMobileMenuNotificationsIndicatorProps {
-  me?: NavBarMobileMenuNotificationsIndicator_me | null
+  me?: NavBarMobileMenuNotificationsIndicator_me$data | null
 }
 
 export const NavBarMobileMenuNotificationsIndicator: React.FC<NavBarMobileMenuNotificationsIndicatorProps> = ({
@@ -70,6 +70,7 @@ export const NavBarMobileMenuNotificationsIndicatorQueryRenderer: React.FC<{}> =
         if (props?.me) {
           return (
             <NavBarMobileMenuNotificationsIndicatorFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               me={props.me}
             />
           )

@@ -2,10 +2,10 @@ import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
-import { ArtworkZendesk_artwork } from "__generated__/ArtworkZendesk_artwork.graphql"
+import { ArtworkZendesk_artwork$data } from "__generated__/ArtworkZendesk_artwork.graphql"
 
 interface ArtworkZendeskProps {
-  artwork: ArtworkZendesk_artwork
+  artwork: ArtworkZendesk_artwork$data
 }
 
 const ArtworkZendesk: FC<ArtworkZendeskProps> = ({ artwork }) => {

@@ -1,184 +1,25 @@
+/**
+ * @generated SignedSource<<f1199e325a7ccaffda2406c5040cebe3>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type auctionsRoutes_Upcoming_AuctionsQueryVariables = {};
-export type auctionsRoutes_Upcoming_AuctionsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_viewer">;
-    } | null;
+export type auctionsRoutes_Upcoming_AuctionsQuery$variables = {};
+export type auctionsRoutes_Upcoming_AuctionsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"UpcomingAuctions_viewer">;
+  } | null;
 };
 export type auctionsRoutes_Upcoming_AuctionsQuery = {
-    readonly response: auctionsRoutes_Upcoming_AuctionsQueryResponse;
-    readonly variables: auctionsRoutes_Upcoming_AuctionsQueryVariables;
+  variables: auctionsRoutes_Upcoming_AuctionsQuery$variables;
+  response: auctionsRoutes_Upcoming_AuctionsQuery$data;
 };
-
-
-
-/*
-query auctionsRoutes_Upcoming_AuctionsQuery {
-  viewer {
-    ...UpcomingAuctions_viewer
-  }
-}
-
-fragment AuctionArtworksRail_sale on Sale {
-  artworksConnection(first: 20) {
-    edges {
-      node {
-        internalID
-        slug
-        ...ShelfArtwork_artwork_OqwQs
-        id
-      }
-    }
-  }
-  internalID
-  slug
-  href
-  name
-  formattedStartDateTime
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment ShelfArtwork_artwork_OqwQs on Artwork {
-  image {
-    resized(width: 200) {
-      src
-      srcSet
-      width
-      height
-    }
-    aspectRatio
-    height
-  }
-  imageTitle
-  title
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment UpcomingAuctions_viewer on Viewer {
-  salesConnection(first: 10, sort: START_AT_ASC, auctionState: UPCOMING) {
-    totalCount
-    edges {
-      node {
-        slug
-        name
-        href
-        status
-        formattedStartDateTime
-        eventStartAt
-        isLiveOpen
-        ...AuctionArtworksRail_sale
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -804,5 +645,7 @@ return {
   }
 };
 })();
-(node as any).hash = '18715237296d4b138f32be151c9b4bd7';
+
+(node as any).hash = "18715237296d4b138f32be151c9b4bd7";
+
 export default node;

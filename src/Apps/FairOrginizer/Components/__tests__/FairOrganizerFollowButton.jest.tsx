@@ -14,6 +14,7 @@ jest.mock("Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation.ts")
 describe("FairOrganizerFollowButton", () => {
   const { getWrapper } = setupTestWrapper<FairOrganizerFollowButton_Test_Query>(
     {
+      // @ts-ignore RELAY UPGRADE 13
       Component: FairOrganizerFollowButtonFragmentContainer,
       query: graphql`
         query FairOrganizerFollowButton_Test_Query($id: String!)

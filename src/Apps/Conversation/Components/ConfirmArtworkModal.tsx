@@ -12,13 +12,13 @@ import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
 
 import {
   ConfirmArtworkModalQuery,
-  ConfirmArtworkModalQueryResponse,
+  ConfirmArtworkModalQuery$data,
 } from "__generated__/ConfirmArtworkModalQuery.graphql"
-import { ConfirmArtworkModal_artwork } from "__generated__/ConfirmArtworkModal_artwork.graphql"
+import { ConfirmArtworkModal_artwork$data } from "__generated__/ConfirmArtworkModal_artwork.graphql"
 import { useTracking } from "react-tracking"
 
 export interface ConfirmArtworkModalProps {
-  artwork: ConfirmArtworkModal_artwork
+  artwork: ConfirmArtworkModal_artwork$data
   conversationID: string
   show: boolean
   closeModal: () => void
@@ -59,6 +59,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
           </Button>
           <Spacer m={1} />
           <ConfirmArtworkButtonFragmentContainer
+            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
             disabled={!!isEdition && !selectedEdition}
             conversationID={conversationID}
@@ -76,12 +77,14 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
         </Flex>
       }
     >
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <CollapsibleArtworkDetailsFragmentContainer artwork={artwork} />
       <Separator mb={2} />
       {!!isEdition && editionSets?.length && (
         <Flex flexDirection="column">
           {editionSets?.map(edition => (
             <EditionSelectBoxFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               edition={edition!}
               selected={edition!.internalID === selectedEdition}
               onSelect={selectEdition}
@@ -134,8 +137,9 @@ export const ConfirmArtworkModalQueryRenderer: React.FC<{
       variables={{
         artworkID,
       }}
-      render={renderWithLoadProgress<ConfirmArtworkModalQueryResponse>(
+      render={renderWithLoadProgress<ConfirmArtworkModalQuery$data>(
         ({ artwork }) => (
+          // @ts-ignore RELAY UPGRADE 13
           <ConfirmArtworkModalFragmentContainer artwork={artwork!} {...rest} />
         )
       )}

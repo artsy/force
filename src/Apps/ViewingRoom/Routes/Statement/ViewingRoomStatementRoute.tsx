@@ -6,11 +6,11 @@ import { ViewingRoomPullQuoteFragmentContainer as ViewingRoomPullQuote } from ".
 import { ViewingRoomBodyFragmentContainer as ViewingRoomBody } from "./Components/ViewingRoomBody"
 import { ViewingRoomSubsectionsFragmentContainer as ViewingRoomSubsections } from "./Components/ViewingRoomSubsections"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomStatementRoute_viewingRoom } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
+import { ViewingRoomStatementRoute_viewingRoom$data } from "__generated__/ViewingRoomStatementRoute_viewingRoom.graphql"
 import { ViewWorksButton } from "./Components/ViewWorksButton"
 
 interface ViewingRoomStatementRouteProps {
-  viewingRoom: ViewingRoomStatementRoute_viewingRoom
+  viewingRoom: ViewingRoomStatementRoute_viewingRoom$data
 }
 
 const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
@@ -20,17 +20,22 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
     <GridColumns gridRowGap={4}>
       <Column span={6} start={4}>
         <Join separator={<Spacer mt={4} />}>
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomIntro viewingRoom={viewingRoom} />
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomWorks viewingRoom={viewingRoom} />
 
           <Separator />
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomPullQuote viewingRoom={viewingRoom} />
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <ViewingRoomBody viewingRoom={viewingRoom} />
 
           {viewingRoom.subsections.length > 0 && (
+            // @ts-ignore RELAY UPGRADE 13
             <ViewingRoomSubsections viewingRoom={viewingRoom} />
           )}
         </Join>

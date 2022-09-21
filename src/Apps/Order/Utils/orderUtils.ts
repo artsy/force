@@ -1,6 +1,6 @@
 import {
   CommercePaymentMethodEnum,
-  Payment_order,
+  Payment_order$data,
 } from "__generated__/Payment_order.graphql"
 import { BankAccountSelection } from "../Routes/Payment/index"
 
@@ -11,7 +11,7 @@ const initialPaymentMethods: CommercePaymentMethodEnum[] = [
 ]
 
 export const isPaymentSet = (
-  paymentMethodDetails: Payment_order["paymentMethodDetails"]
+  paymentMethodDetails: Payment_order$data["paymentMethodDetails"]
 ): boolean => {
   switch (paymentMethodDetails?.__typename) {
     case "CreditCard":
@@ -29,7 +29,7 @@ export const getInitialPaymentMethodValue = ({
   paymentMethod,
   paymentMethodDetails,
   availablePaymentMethods,
-}: Payment_order): CommercePaymentMethodEnum =>
+}: Payment_order$data): CommercePaymentMethodEnum =>
   isPaymentSet(paymentMethodDetails)
     ? paymentMethod!
     : initialPaymentMethods.find(method =>

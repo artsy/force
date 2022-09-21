@@ -1,62 +1,28 @@
+/**
+ * @generated SignedSource<<77826b3cd69860d36b6816abcc9d22b1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PriceOptions_Test_QueryVariables = {};
-export type PriceOptions_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"PriceOptions_artwork">;
-    } | null;
-    readonly order: {
-        readonly " $fragmentRefs": FragmentRefs<"PriceOptions_order">;
-    } | null;
+export type PriceOptions_Test_Query$variables = {};
+export type PriceOptions_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_artwork">;
+  } | null;
+  readonly order: {
+    readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_order">;
+  } | null;
 };
 export type PriceOptions_Test_Query = {
-    readonly response: PriceOptions_Test_QueryResponse;
-    readonly variables: PriceOptions_Test_QueryVariables;
+  variables: PriceOptions_Test_Query$variables;
+  response: PriceOptions_Test_Query$data;
 };
-
-
-
-/*
-query PriceOptions_Test_Query {
-  artwork(id: "artwork-id") {
-    ...PriceOptions_artwork
-    id
-  }
-  order: commerceOrder(id: "order-id") {
-    __typename
-    ...PriceOptions_order
-    id
-  }
-}
-
-fragment PriceOptions_artwork on Artwork {
-  priceCurrency
-  isPriceRange
-  listPrice {
-    __typename
-    ... on Money {
-      major
-    }
-    ... on PriceRange {
-      maxPrice {
-        major
-      }
-      minPrice {
-        major
-      }
-    }
-  }
-}
-
-fragment PriceOptions_order on CommerceOrder {
-  __isCommerceOrder: __typename
-  internalID
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -252,5 +218,7 @@ return {
   }
 };
 })();
-(node as any).hash = '70868563e3cda3defa5a5124665c755a';
+
+(node as any).hash = "70868563e3cda3defa5a5124665c755a";
+
 export default node;

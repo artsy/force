@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { NewSaveButton_artwork } from "__generated__/NewSaveButton_artwork.graphql"
+import { NewSaveButton_artwork$data } from "__generated__/NewSaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
@@ -13,7 +13,7 @@ export interface SaveTrackingProps {
 }
 
 export interface SaveButtonProps {
-  artwork: NewSaveButton_artwork
+  artwork: NewSaveButton_artwork$data
   contextModule: AuthContextModule
 }
 

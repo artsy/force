@@ -4,10 +4,10 @@ import { compact } from "lodash"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { HoverDetails_artwork } from "__generated__/HoverDetails_artwork.graphql"
+import { HoverDetails_artwork$data } from "__generated__/HoverDetails_artwork.graphql"
 
 interface HoverDetailsProps {
-  artwork: HoverDetails_artwork
+  artwork: HoverDetails_artwork$data
 }
 
 const HoverDetails: FC<HoverDetailsProps> = ({ artwork }) => {

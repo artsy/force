@@ -26,7 +26,7 @@ import { setLocalImagesStoreLastUpdatedAt } from "Utils/localImagesHelpers"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { wait } from "Utils/wait"
-import { MyCollectionArtworkForm_artwork } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
+import { MyCollectionArtworkForm_artwork$data } from "__generated__/MyCollectionArtworkForm_artwork.graphql"
 import { ArtworkAttributionClassType } from "__generated__/useCreateArtworkMutation.graphql"
 import { useMyCollectionTracking } from "../Hooks/useMyCollectionTracking"
 import { MyCollectionArtworkFormDetails } from "./Components/MyCollectionArtworkFormDetails"
@@ -49,7 +49,7 @@ import { useCreateOrUpdateArtwork } from "./Utils/useCreateOrUpdateArtwork"
 const logger = createLogger("MyCollectionArtworkForm.tsx")
 
 export interface MyCollectionArtworkFormProps {
-  artwork?: MyCollectionArtworkForm_artwork
+  artwork?: MyCollectionArtworkForm_artwork$data
 }
 
 export const MyCollectionArtworkForm: React.FC<MyCollectionArtworkFormProps> = ({

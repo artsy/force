@@ -1,143 +1,29 @@
+/**
+ * @generated SignedSource<<ec39362dd9b912ba9caf5670295c33d5>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type OnboardingSearchResultsQueryVariables = {
-    term: string;
-    entities: Array<SearchEntity>;
+export type OnboardingSearchResultsQuery$variables = {
+  term: string;
+  entities: ReadonlyArray<SearchEntity>;
 };
-export type OnboardingSearchResultsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"OnboardingSearchResults_viewer">;
-    } | null;
+export type OnboardingSearchResultsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"OnboardingSearchResults_viewer">;
+  } | null;
 };
 export type OnboardingSearchResultsQuery = {
-    readonly response: OnboardingSearchResultsQueryResponse;
-    readonly variables: OnboardingSearchResultsQueryVariables;
+  variables: OnboardingSearchResultsQuery$variables;
+  response: OnboardingSearchResultsQuery$data;
 };
-
-
-
-/*
-query OnboardingSearchResultsQuery(
-  $term: String!
-  $entities: [SearchEntity!]!
-) {
-  viewer {
-    ...OnboardingSearchResults_viewer_plJt2
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment OnboardingSearchResults_viewer_plJt2 on Viewer {
-  matchConnection(term: $term, entities: $entities, first: 10, mode: AUTOSUGGEST) {
-    edges {
-      node {
-        __typename
-        ... on Artist {
-          internalID
-          ...EntityHeaderArtist_artist
-        }
-        ... on Profile {
-          internalID
-          ...FollowProfileButton_profile
-          owner {
-            __typename
-            ... on Partner {
-              ...EntityHeaderPartner_partner
-            }
-            ... on Node {
-              __isNode: __typename
-              id
-            }
-            ... on FairOrganizer {
-              id
-            }
-          }
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on Feature {
-          id
-        }
-        ... on Page {
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -606,5 +492,7 @@ return {
   }
 };
 })();
-(node as any).hash = '2739e833d6fd9864920fe6f1e7796bed';
+
+(node as any).hash = "2739e833d6fd9864920fe6f1e7796bed";
+
 export default node;

@@ -1,50 +1,37 @@
+/**
+ * @generated SignedSource<<95073e3fb3ae63063470178d466aa97e>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
-    paymentMethod: CommercePaymentMethodEnum;
-    paymentMethodId?: string | null | undefined;
+  clientMutationId?: string | null;
+  id: string;
+  paymentMethod: CommercePaymentMethodEnum;
+  paymentMethodId?: string | null;
 };
-export type commitMutationTest1MutationVariables = {
-    input: CommerceSetPaymentInput;
+export type commitMutationTest1Mutation$variables = {
+  input: CommerceSetPaymentInput;
 };
-export type commitMutationTest1MutationResponse = {
-    readonly commerceSetPayment: {
-        readonly orderOrError: {
-            readonly error?: {
-                readonly code: string;
-            } | undefined;
-        };
-    } | null;
+export type commitMutationTest1Mutation$data = {
+  readonly commerceSetPayment: {
+    readonly orderOrError: {
+      readonly error?: {
+        readonly code: string;
+      };
+    };
+  } | null;
 };
 export type commitMutationTest1Mutation = {
-    readonly response: commitMutationTest1MutationResponse;
-    readonly variables: commitMutationTest1MutationVariables;
+  variables: commitMutationTest1Mutation$variables;
+  response: commitMutationTest1Mutation$data;
 };
-
-
-
-/*
-mutation commitMutationTest1Mutation(
-  $input: CommerceSetPaymentInput!
-) {
-  commerceSetPayment(input: $input) {
-    orderOrError {
-      __typename
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -168,5 +155,7 @@ return {
   }
 };
 })();
-(node as any).hash = '00dce5aa5f8ecdb281f7afb350b5d5b8';
+
+(node as any).hash = "00dce5aa5f8ecdb281f7afb350b5d5b8";
+
 export default node;

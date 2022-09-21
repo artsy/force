@@ -1,77 +1,80 @@
+/**
+ * @generated SignedSource<<e9ec6fe4090361964f6ae80d61b29561>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type Status_order = {
-    readonly __typename: string;
-    readonly internalID: string;
-    readonly code: string;
-    readonly displayState: CommerceOrderDisplayStateEnum;
-    readonly state: CommerceOrderStateEnum;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly source: CommerceOrderSourceEnum;
-    readonly stateReason: string | null;
-    readonly stateExpiresAt: string | null;
-    readonly requestedFulfillment: ({
-        readonly __typename: "CommerceShip";
-    } | {
-        readonly __typename: "CommercePickup";
-    } | {
-        readonly __typename: "CommerceShipArta";
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
+import { FragmentRefs } from "relay-runtime";
+export type Status_order$data = {
+  readonly __typename: string;
+  readonly internalID: string;
+  readonly code: string;
+  readonly displayState: CommerceOrderDisplayStateEnum;
+  readonly state: CommerceOrderStateEnum;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly source: CommerceOrderSourceEnum;
+  readonly stateReason: string | null;
+  readonly stateExpiresAt: string | null;
+  readonly requestedFulfillment: {
+    readonly __typename: "CommerceShip";
+  } | {
+    readonly __typename: "CommercePickup";
+  } | {
+    readonly __typename: "CommerceShipArta";
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly shipment: {
+          readonly trackingNumber: string | null;
+          readonly trackingUrl: string | null;
+          readonly carrierName: string | null;
+          readonly estimatedDeliveryWindow: string | null;
+        } | null;
+        readonly selectedShippingQuote: {
+          readonly typeName: string;
+        } | null;
+        readonly fulfillments: {
+          readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly shipment: {
-                    readonly trackingNumber: string | null;
-                    readonly trackingUrl: string | null;
-                    readonly carrierName: string | null;
-                    readonly estimatedDeliveryWindow: string | null;
-                } | null;
-                readonly selectedShippingQuote: {
-                    readonly typeName: string;
-                } | null;
-                readonly fulfillments: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly courier: string;
-                            readonly trackingId: string | null;
-                            readonly estimatedDelivery: string | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
+              readonly courier: string;
+              readonly trackingId: string | null;
+              readonly estimatedDelivery: string | null;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly myLastOffer?: {
-        readonly internalID: string;
-        readonly amount: string | null;
-        readonly amountCents: number;
-        readonly shippingTotal: string | null;
-        readonly shippingTotalCents: number | null;
-        readonly taxTotal: string | null;
-        readonly taxTotalCents: number | null;
-    } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
-    readonly " $refType": "Status_order";
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly myLastOffer?: {
+    readonly internalID: string;
+    readonly amount: string | null;
+    readonly amountCents: number;
+    readonly shippingTotal: string | null;
+    readonly shippingTotalCents: number | null;
+    readonly taxTotal: string | null;
+    readonly taxTotalCents: number | null;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order">;
+  readonly " $fragmentType": "Status_order";
 };
-export type Status_order$data = Status_order;
 export type Status_order$key = {
-    readonly " $data"?: Status_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Status_order">;
+  readonly " $data"?: Status_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Status_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -189,6 +192,26 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "TransactionDetailsSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShippingSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PaymentMethodSummaryItem_order"
     },
     {
       "alias": null,
@@ -341,26 +364,6 @@ return {
       "storageKey": null
     },
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "TransactionDetailsSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShippingSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PaymentMethodSummaryItem_order"
-    },
-    {
       "kind": "InlineFragment",
       "selections": [
         {
@@ -426,5 +429,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = 'b9d9d73bb92eb7d6ab6ce8b34968dba1';
+
+(node as any).hash = "b9d9d73bb92eb7d6ab6ce8b34968dba1";
+
 export default node;

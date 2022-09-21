@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<4bff42855fecb25abfe9923d517fe416>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerLatestArticles_fairOrganizer = {
-    readonly name: string | null;
-    readonly slug: string;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"CellArticle_article">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "FairOrganizerLatestArticles_fairOrganizer";
+export type FairOrganizerLatestArticles_fairOrganizer$data = {
+  readonly name: string | null;
+  readonly slug: string;
+  readonly articlesConnection: {
+    readonly totalCount: number | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "FairOrganizerLatestArticles_fairOrganizer";
 };
-export type FairOrganizerLatestArticles_fairOrganizer$data = FairOrganizerLatestArticles_fairOrganizer;
 export type FairOrganizerLatestArticles_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
+  readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -89,16 +92,16 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArticle_article"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CellArticle_article"
                 }
               ],
               "storageKey": null
@@ -113,5 +116,7 @@ const node: ReaderFragment = {
   "type": "FairOrganizer",
   "abstractKey": null
 };
-(node as any).hash = 'cada9ae0f5adfc805213ff6fc9df1be4';
+
+(node as any).hash = "cada9ae0f5adfc805213ff6fc9df1be4";
+
 export default node;

@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { ArtistSeriesItem } from "../ArtistSeriesItem"
-import { ArtistSeriesItem_artistSeries } from "__generated__/ArtistSeriesItem_artistSeries.graphql"
+import { ArtistSeriesItem_artistSeries$data } from "__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
@@ -71,7 +71,7 @@ describe("Artist Series Rail Item", () => {
   })
 })
 
-const itemContent: ArtistSeriesItem_artistSeries = {
+const itemContent: ArtistSeriesItem_artistSeries$data = {
   artworksCountMessage: "5 available",
   internalID: "internal-id",
   slug: "slug",

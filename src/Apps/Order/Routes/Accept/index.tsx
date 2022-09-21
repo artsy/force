@@ -1,5 +1,5 @@
 import { Button, Flex, Spacer } from "@artsy/palette"
-import { Accept_order } from "__generated__/Accept_order.graphql"
+import { Accept_order$data } from "__generated__/Accept_order.graphql"
 import { RouteConfig, Router } from "found"
 import { FC } from "react"
 import { Media } from "Utils/Responsive"
@@ -27,7 +27,7 @@ import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 interface AcceptProps {
-  order: Accept_order
+  order: Accept_order$data
   relay?: RelayProp
   router: Router
   route: RouteConfig
@@ -265,6 +265,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
         >
           <Media at="xs">
             <Flex flexDirection="column">
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArtworkSummaryItem order={order} />
             </Flex>
             <Spacer mb={2} />
@@ -303,10 +304,13 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
           <Flex flexDirection="column">
             <Media greaterThan="xs">
               {className => (
+                // @ts-ignore RELAY UPGRADE 13
                 <ArtworkSummaryItem className={className} order={order} />
               )}
             </Media>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <ShippingSummaryItem order={order} locked />
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <PaymentMethodSummaryItem order={order} locked />
           </Flex>
           <BuyerGuarantee

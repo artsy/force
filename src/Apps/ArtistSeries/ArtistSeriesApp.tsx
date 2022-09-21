@@ -1,6 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesApp_artistSeries } from "__generated__/ArtistSeriesApp_artistSeries.graphql"
+import { ArtistSeriesApp_artistSeries$data } from "__generated__/ArtistSeriesApp_artistSeries.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
 import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilter } from "./Components/ArtistSeriesArtworksFilter"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
@@ -14,7 +14,7 @@ import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/Artwor
 import { Spacer } from "@artsy/palette"
 
 interface ArtistSeriesAppProps {
-  artistSeries: ArtistSeriesApp_artistSeries
+  artistSeries: ArtistSeriesApp_artistSeries$data
 }
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
@@ -31,13 +31,16 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
       }}
     >
       <>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistSeriesMeta artistSeries={artistSeries} />
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtistSeriesHeader artistSeries={artistSeries} />
 
         <Spacer mt={6} />
 
         <ArtistSeriesArtworksFilter
+          // @ts-ignore RELAY UPGRADE 13
           artistSeries={artistSeries}
           aggregations={
             sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
@@ -49,6 +52,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
             <Spacer mt={6} />
 
             <OtherArtistSeriesRail
+              // @ts-ignore RELAY UPGRADE 13
               artist={(railArtist ?? [])[0]!}
               title="Series by this artist"
               contextModule={ContextModule.moreSeriesByThisArtist}

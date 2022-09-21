@@ -1,5 +1,5 @@
 import { VerifiedIcon } from "@artsy/palette"
-import { VerifiedSeller_artwork } from "__generated__/VerifiedSeller_artwork.graphql"
+import { VerifiedSeller_artwork$data } from "__generated__/VerifiedSeller_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
@@ -8,7 +8,7 @@ import { shouldRenderVerifiedSeller } from "Apps/Artwork/Utils/badges"
 
 interface VerifiedSellerProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {
-  artwork: VerifiedSeller_artwork
+  artwork: VerifiedSeller_artwork$data
 }
 
 export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({

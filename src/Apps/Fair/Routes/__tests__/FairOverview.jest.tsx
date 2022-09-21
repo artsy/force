@@ -14,6 +14,7 @@ jest.mock("Utils/Hooks/useScrollTo", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<FairOverview_Test_Query>({
+  // @ts-ignore RELAY UPGRADE 13
   Component: FairOverviewFragmentContainer,
   query: graphql`
     query FairOverview_Test_Query @relay_test_operation {

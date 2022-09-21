@@ -1,69 +1,25 @@
+/**
+ * @generated SignedSource<<2c562a2382a4bbeb71a892872a3cfd06>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_PaymentsRouteQueryVariables = {};
-export type settingsRoutes_PaymentsRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsRoute_me">;
-    } | null;
+export type settingsRoutes_PaymentsRouteQuery$variables = {};
+export type settingsRoutes_PaymentsRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsRoute_me">;
+  } | null;
 };
 export type settingsRoutes_PaymentsRouteQuery = {
-    readonly response: settingsRoutes_PaymentsRouteQueryResponse;
-    readonly variables: settingsRoutes_PaymentsRouteQueryVariables;
+  variables: settingsRoutes_PaymentsRouteQuery$variables;
+  response: settingsRoutes_PaymentsRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_PaymentsRouteQuery {
-  me {
-    ...SettingsPaymentsRoute_me
-    id
-  }
-}
-
-fragment SettingsBankAccount_bankAccount on BankAccount {
-  internalID
-  last4
-}
-
-fragment SettingsCreditCard_creditCard on CreditCard {
-  internalID
-  name
-  brand
-  lastDigits
-  expirationYear
-  expirationMonth
-}
-
-fragment SettingsPaymentsMethods_me on Me {
-  creditCards(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsCreditCard_creditCard
-        id
-      }
-    }
-  }
-  bankAccounts(first: 50) {
-    edges {
-      node {
-        internalID
-        ...SettingsBankAccount_bankAccount
-        id
-      }
-    }
-  }
-}
-
-fragment SettingsPaymentsRoute_me on Me {
-  ...SettingsPaymentsMethods_me
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -256,5 +212,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'df10e3450f8a62cda2fcd7e65139c4bf';
+
+(node as any).hash = "df10e3450f8a62cda2fcd7e65139c4bf";
+
 export default node;

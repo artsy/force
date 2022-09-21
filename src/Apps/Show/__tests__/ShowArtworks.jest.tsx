@@ -35,6 +35,7 @@ const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
         counts={{
           followedArtists: 10,
         }}
+        // @ts-ignore RELAY UPGRADE 13
         show={show!}
       />
     </MockBoot>

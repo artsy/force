@@ -3,10 +3,10 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import { useRouter } from "System/Router/useRouter"
-import { ExampleArtworkFilterRoute_viewer } from "__generated__/ExampleArtworkFilterRoute_viewer.graphql"
+import { ExampleArtworkFilterRoute_viewer$data } from "__generated__/ExampleArtworkFilterRoute_viewer.graphql"
 
 interface ExampleArtworkFilterProps {
-  viewer: ExampleArtworkFilterRoute_viewer
+  viewer: ExampleArtworkFilterRoute_viewer$data
 }
 
 const ExampleArtworkFilterRoute: React.FC<ExampleArtworkFilterProps> = ({

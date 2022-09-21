@@ -7,7 +7,7 @@ import {
   Text,
   Spacer,
 } from "@artsy/palette"
-import { CreateAppSecondFactorMutationResponse } from "__generated__/CreateAppSecondFactorMutation.graphql"
+import { CreateAppSecondFactorMutation$data } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "System"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
 import QRCode from "qrcode.react"
@@ -41,7 +41,7 @@ interface AppSecondFactorModalProps {
   show?: boolean
   onComplete: () => void
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
+  secondFactor: CreateAppSecondFactorMutation$data["createAppSecondFactor"]["secondFactorOrErrors"]
   password: string
 }
 
@@ -100,7 +100,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         password: password,
       })
 
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      // @ts-ignore RELAY UPGRADE 13
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       actions.setSubmitting(false)

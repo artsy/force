@@ -1,72 +1,25 @@
+/**
+ * @generated SignedSource<<d6f6528f067cc894983a694a3aded7cd>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NotificationsList_test_QueryVariables = {};
-export type NotificationsList_test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"NotificationsList_viewer">;
-    } | null;
+export type NotificationsList_test_Query$variables = {};
+export type NotificationsList_test_Query$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
+  } | null;
 };
 export type NotificationsList_test_Query = {
-    readonly response: NotificationsList_test_QueryResponse;
-    readonly variables: NotificationsList_test_QueryVariables;
+  variables: NotificationsList_test_Query$variables;
+  response: NotificationsList_test_Query$data;
 };
-
-
-
-/*
-query NotificationsList_test_Query {
-  viewer {
-    ...NotificationsList_viewer
-  }
-}
-
-fragment NotificationItem_item on Notification {
-  title
-  message
-  createdAt
-  targetHref
-  isUnread
-  notificationType
-  artworksConnection(first: 4) {
-    totalCount
-    edges {
-      node {
-        internalID
-        title
-        image {
-          thumb: cropped(width: 58, height: 58) {
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-  }
-}
-
-fragment NotificationsList_viewer on Viewer {
-  notifications: notificationsConnection(first: 10) {
-    edges {
-      node {
-        internalID
-        ...NotificationItem_item
-        id
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -487,5 +440,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a502783f36b263d10c37dfce56cd8b9a';
+
+(node as any).hash = "a502783f36b263d10c37dfce56cd8b9a";
+
 export default node;

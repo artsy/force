@@ -1,134 +1,25 @@
+/**
+ * @generated SignedSource<<b89c03d445bf611c3cae4f3e8c8b4ae1>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OnboardingOrderedSet_Test_QueryVariables = {};
-export type OnboardingOrderedSet_Test_QueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"OnboardingOrderedSet_orderedSet">;
-    } | null;
+export type OnboardingOrderedSet_Test_Query$variables = {};
+export type OnboardingOrderedSet_Test_Query$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"OnboardingOrderedSet_orderedSet">;
+  } | null;
 };
 export type OnboardingOrderedSet_Test_Query = {
-    readonly response: OnboardingOrderedSet_Test_QueryResponse;
-    readonly variables: OnboardingOrderedSet_Test_QueryVariables;
+  variables: OnboardingOrderedSet_Test_Query$variables;
+  response: OnboardingOrderedSet_Test_Query$data;
 };
-
-
-
-/*
-query OnboardingOrderedSet_Test_Query {
-  orderedSet(id: "onboarding:test-ordered-set") {
-    ...OnboardingOrderedSet_orderedSet
-    id
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment OnboardingOrderedSet_orderedSet on OrderedSet {
-  orderedItemsConnection(first: 50) {
-    edges {
-      node {
-        __typename
-        ... on Artist {
-          internalID
-          ...EntityHeaderArtist_artist
-        }
-        ... on Profile {
-          internalID
-          ...FollowProfileButton_profile
-          owner {
-            __typename
-            ... on Partner {
-              ...EntityHeaderPartner_partner
-            }
-            ... on Node {
-              __isNode: __typename
-              id
-            }
-            ... on FairOrganizer {
-              id
-            }
-          }
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on FeaturedLink {
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -718,5 +609,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'dd0ec315e43e9ea305e6c7fb6b67782c';
+
+(node as any).hash = "dd0ec315e43e9ea305e6c7fb6b67782c";
+
 export default node;

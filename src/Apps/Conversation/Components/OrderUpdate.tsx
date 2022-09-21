@@ -14,9 +14,9 @@ import {
 
 import { TimeSince } from "./TimeSince"
 
-import { OrderUpdate_event } from "../../../__generated__/OrderUpdate_event.graphql"
+import { OrderUpdate_event$data } from "../../../__generated__/OrderUpdate_event.graphql"
 export interface OrderUpdateProps {
-  event: OrderUpdate_event
+  event: OrderUpdate_event$data
   setShowDetails: (showDetails: boolean) => void
 }
 

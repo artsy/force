@@ -3,10 +3,10 @@ import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerContactAddressFragmentContainer as PartnerContactAddress } from "./PartnerContactAddress"
 import { PartnerContactMapFragmentContainer as PartnerContactMap } from "./PartnerContactMap"
-import { PartnerContactCard_location } from "__generated__/PartnerContactCard_location.graphql"
+import { PartnerContactCard_location$data } from "__generated__/PartnerContactCard_location.graphql"
 
 export interface PartnerContactCardProps {
-  location: PartnerContactCard_location
+  location: PartnerContactCard_location$data
 }
 
 export const PartnerContactCard: React.FC<PartnerContactCardProps> = ({
@@ -15,9 +15,11 @@ export const PartnerContactCard: React.FC<PartnerContactCardProps> = ({
   return (
     <GridColumns gridRowGap={2}>
       <Column span={[12, 6]}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerContactAddress location={location} />
       </Column>
       <Column span={[12, 6]}>
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <PartnerContactMap location={location} />
       </Column>
     </GridColumns>

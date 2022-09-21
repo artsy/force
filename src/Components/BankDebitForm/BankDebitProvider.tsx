@@ -4,9 +4,9 @@ import { Elements } from "@stripe/react-stripe-js"
 import { getENV } from "Utils/getENV"
 import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
-import { BankAccountPicker_order } from "__generated__/BankAccountPicker_order.graphql"
+import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import createLogger from "Utils/logger"
-import { Payment_order } from "__generated__/Payment_order.graphql"
+import { Payment_order$data } from "__generated__/Payment_order.graphql"
 import { Box, Message, Spacer, Text } from "@artsy/palette"
 import { LoadingArea } from "../LoadingArea"
 import { camelCase, upperFirst } from "lodash"
@@ -32,7 +32,7 @@ const BankSetupErrorMessage = () => {
 }
 
 interface Props {
-  order: BankAccountPicker_order | Payment_order
+  order: BankAccountPicker_order$data | Payment_order$data
 }
 
 export const BankDebitProvider: FC<Props> = ({ order }) => {

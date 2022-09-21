@@ -1,14 +1,14 @@
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { MyCollectionArtworkSidebar_artwork } from "__generated__/MyCollectionArtworkSidebar_artwork.graphql"
+import { MyCollectionArtworkSidebar_artwork$data } from "__generated__/MyCollectionArtworkSidebar_artwork.graphql"
 import { MyCollectionArtworkSidebarMetadataFragmentContainer } from "./MyCollectionArtworkSidebarMetadata"
 import { MyCollectionArtworkSidebarTitleInfoFragmentContainer } from "./MyCollectionArtworkSidebarTitleInfo"
 
 const MyCollectionArtworkSidebarContainer = Box
 
 interface MyCollectionArtworkSidebarProps {
-  artwork: MyCollectionArtworkSidebar_artwork
+  artwork: MyCollectionArtworkSidebar_artwork$data
 }
 
 export const MyCollectionArtworkSidebar: React.FC<MyCollectionArtworkSidebarProps> = ({
@@ -18,10 +18,12 @@ export const MyCollectionArtworkSidebar: React.FC<MyCollectionArtworkSidebarProp
     <MyCollectionArtworkSidebarContainer>
       <Media greaterThanOrEqual="sm">
         <MyCollectionArtworkSidebarTitleInfoFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
         />
       </Media>
 
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <MyCollectionArtworkSidebarMetadataFragmentContainer artwork={artwork} />
     </MyCollectionArtworkSidebarContainer>
   )

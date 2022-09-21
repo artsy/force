@@ -1,11 +1,11 @@
 import * as React from "react"
 import { Text } from "@artsy/palette"
 import { getContactAddressLines } from "./partnerContactUtils"
-import { PartnerContactAddress_location } from "__generated__/PartnerContactAddress_location.graphql"
+import { PartnerContactAddress_location$data } from "__generated__/PartnerContactAddress_location.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface PartnerContactAddressProps {
-  location: PartnerContactAddress_location
+  location: PartnerContactAddress_location$data
 }
 
 export const PartnerContactAddress: React.FC<PartnerContactAddressProps> = ({

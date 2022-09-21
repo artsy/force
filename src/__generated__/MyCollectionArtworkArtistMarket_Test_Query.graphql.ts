@@ -1,42 +1,27 @@
+/**
+ * @generated SignedSource<<acfba303a54ee47ac02abbe54daf5eb6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkArtistMarket_Test_QueryVariables = {};
-export type MyCollectionArtworkArtistMarket_Test_QueryResponse = {
-    readonly artwork: {
-        readonly marketPriceInsights: {
-            readonly " $fragmentRefs": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights">;
-        } | null;
+export type MyCollectionArtworkArtistMarket_Test_Query$variables = {};
+export type MyCollectionArtworkArtistMarket_Test_Query$data = {
+  readonly artwork: {
+    readonly marketPriceInsights: {
+      readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights">;
     } | null;
+  } | null;
 };
 export type MyCollectionArtworkArtistMarket_Test_Query = {
-    readonly response: MyCollectionArtworkArtistMarket_Test_QueryResponse;
-    readonly variables: MyCollectionArtworkArtistMarket_Test_QueryVariables;
+  variables: MyCollectionArtworkArtistMarket_Test_Query$variables;
+  response: MyCollectionArtworkArtistMarket_Test_Query$data;
 };
-
-
-
-/*
-query MyCollectionArtworkArtistMarket_Test_Query {
-  artwork(id: "foo") {
-    marketPriceInsights {
-      ...MyCollectionArtworkArtistMarket_marketPriceInsights
-    }
-    id
-  }
-}
-
-fragment MyCollectionArtworkArtistMarket_marketPriceInsights on ArtworkPriceInsights {
-  annualLotsSold
-  annualValueSoldDisplayText
-  medianSaleOverEstimatePercentage
-  liquidityRankDisplayText
-  sellThroughRate
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -209,5 +194,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd80d43a3006dcfe6a3a879d3556af8e6';
+
+(node as any).hash = "d80d43a3006dcfe6a3a879d3556af8e6";
+
 export default node;

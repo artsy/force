@@ -1,52 +1,25 @@
+/**
+ * @generated SignedSource<<326ee2bd84c50ae03d7d02245b708c43>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type exampleRoutes_AddToCollectionRouteQueryVariables = {};
-export type exampleRoutes_AddToCollectionRouteQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AddToCollectionRoute_viewer">;
-    } | null;
+export type exampleRoutes_AddToCollectionRouteQuery$variables = {};
+export type exampleRoutes_AddToCollectionRouteQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AddToCollectionRoute_viewer">;
+  } | null;
 };
 export type exampleRoutes_AddToCollectionRouteQuery = {
-    readonly response: exampleRoutes_AddToCollectionRouteQueryResponse;
-    readonly variables: exampleRoutes_AddToCollectionRouteQueryVariables;
+  variables: exampleRoutes_AddToCollectionRouteQuery$variables;
+  response: exampleRoutes_AddToCollectionRouteQuery$data;
 };
-
-
-
-/*
-query exampleRoutes_AddToCollectionRouteQuery {
-  viewer {
-    ...AddToCollectionRoute_viewer
-  }
-}
-
-fragment AddToCollectionRoute_viewer on Viewer {
-  artworksConnection(first: 50, marketable: true, medium: "painting") {
-    edges {
-      node {
-        internalID
-        artistNames
-        title
-        date
-        image {
-          cropped(width: 200, height: 200) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
-        id
-      }
-    }
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -252,5 +225,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a648de1e3469b3ccbc1ae4d9fbcd20d3';
+
+(node as any).hash = "a648de1e3469b3ccbc1ae4d9fbcd20d3";
+
 export default node;

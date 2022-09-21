@@ -1,143 +1,25 @@
+/**
+ * @generated SignedSource<<066e471ef7dff041879f32d23e933d9b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedGalleriesRail_Test_QueryVariables = {};
-export type HomeFeaturedGalleriesRail_Test_QueryResponse = {
-    readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
-    } | null;
+export type HomeFeaturedGalleriesRail_Test_Query$variables = {};
+export type HomeFeaturedGalleriesRail_Test_Query$data = {
+  readonly orderedSet: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
+  } | null;
 };
 export type HomeFeaturedGalleriesRail_Test_Query = {
-    readonly response: HomeFeaturedGalleriesRail_Test_QueryResponse;
-    readonly variables: HomeFeaturedGalleriesRail_Test_QueryVariables;
+  variables: HomeFeaturedGalleriesRail_Test_Query$variables;
+  response: HomeFeaturedGalleriesRail_Test_Query$data;
 };
-
-
-
-/*
-query HomeFeaturedGalleriesRail_Test_Query {
-  orderedSet(id: "example") {
-    ...HomeFeaturedGalleriesRail_orderedSet
-    id
-  }
-}
-
-fragment CellPartner_partner on Partner {
-  ...EntityHeaderPartner_partner
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-
-fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
-  orderedItemsConnection(first: 20) {
-    edges {
-      node {
-        __typename
-        ... on Profile {
-          owner {
-            __typename
-            ...CellPartner_partner
-            ... on Partner {
-              internalID
-              slug
-            }
-            ... on Node {
-              __isNode: __typename
-              id
-            }
-            ... on FairOrganizer {
-              id
-            }
-          }
-          id
-        }
-        ... on Node {
-          __isNode: __typename
-          id
-        }
-        ... on FeaturedLink {
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -694,5 +576,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'e59183886bc1733b39d5345c9d24b6a9';
+
+(node as any).hash = "e59183886bc1733b39d5345c9d24b6a9";
+
 export default node;

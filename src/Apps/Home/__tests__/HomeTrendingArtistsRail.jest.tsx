@@ -12,6 +12,7 @@ jest.mock("Components/FollowButton/FollowArtistButton", () => ({
 
 const { getWrapper } = setupTestWrapper<HomeTrendingArtistsRail_Test_Query>({
   Component: props => {
+    // @ts-ignore RELAY UPGRADE 13
     return <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`

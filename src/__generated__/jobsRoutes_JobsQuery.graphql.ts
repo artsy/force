@@ -1,55 +1,25 @@
+/**
+ * @generated SignedSource<<8eae37ed3d058512bda744f0ab0ab632>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type jobsRoutes_JobsQueryVariables = {};
-export type jobsRoutes_JobsQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"JobsApp_viewer">;
-    } | null;
+export type jobsRoutes_JobsQuery$variables = {};
+export type jobsRoutes_JobsQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"JobsApp_viewer">;
+  } | null;
 };
 export type jobsRoutes_JobsQuery = {
-    readonly response: jobsRoutes_JobsQueryResponse;
-    readonly variables: jobsRoutes_JobsQueryVariables;
+  variables: jobsRoutes_JobsQuery$variables;
+  response: jobsRoutes_JobsQuery$data;
 };
-
-
-
-/*
-query jobsRoutes_JobsQuery {
-  viewer {
-    ...JobsApp_viewer
-  }
-}
-
-fragment JobLink_job on Job {
-  id
-  title
-  location
-}
-
-fragment JobsApp_viewer on Viewer {
-  ...JobsFilter_viewer
-}
-
-fragment JobsFilter_viewer on Viewer {
-  jobs {
-    ...JobLink_job
-    id
-    location
-  }
-  departments {
-    id
-    name
-    jobs {
-      ...JobLink_job
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -162,5 +132,7 @@ return {
   }
 };
 })();
-(node as any).hash = '12575517b4d2656d8cc49a592a3d093a';
+
+(node as any).hash = "12575517b4d2656d8cc49a592a3d093a";
+
 export default node;

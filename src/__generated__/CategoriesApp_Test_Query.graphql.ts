@@ -1,68 +1,25 @@
+/**
+ * @generated SignedSource<<62a4e03fc9a229b507acd6f91bde428a>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CategoriesApp_Test_QueryVariables = {};
-export type CategoriesApp_Test_QueryResponse = {
-    readonly geneFamiliesConnection: {
-        readonly " $fragmentRefs": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
-    } | null;
+export type CategoriesApp_Test_Query$variables = {};
+export type CategoriesApp_Test_Query$data = {
+  readonly geneFamiliesConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
+  } | null;
 };
 export type CategoriesApp_Test_Query = {
-    readonly response: CategoriesApp_Test_QueryResponse;
-    readonly variables: CategoriesApp_Test_QueryVariables;
+  variables: CategoriesApp_Test_Query$variables;
+  response: CategoriesApp_Test_Query$data;
 };
-
-
-
-/*
-query CategoriesApp_Test_Query {
-  geneFamiliesConnection(first: 20) {
-    ...CategoriesApp_geneFamiliesConnection
-  }
-}
-
-fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
-  ...StickyNav_geneFamiliesConnection
-  ...GeneFamilies_geneFamiliesConnection
-}
-
-fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
-  edges {
-    node {
-      internalID
-      ...GeneFamily_geneFamily
-      id
-    }
-  }
-}
-
-fragment GeneFamily_geneFamily on GeneFamily {
-  id
-  slug
-  name
-  genes {
-    isPublished
-    id
-    displayName
-    name
-    slug
-  }
-}
-
-fragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {
-  edges {
-    node {
-      internalID
-      slug
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -267,5 +224,7 @@ return {
   }
 };
 })();
-(node as any).hash = '59bcc4dc0101c4b7d18d920d14968697';
+
+(node as any).hash = "59bcc4dc0101c4b7d18d920d14968697";
+
 export default node;

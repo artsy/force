@@ -1,31 +1,34 @@
+/**
+ * @generated SignedSource<<79166274acdb0d480b4009ac2a9f636f>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyBidsBidHeader_sale = {
-    readonly coverImage: {
-        readonly cropped: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+export type MyBidsBidHeader_sale$data = {
+  readonly coverImage: {
+    readonly cropped: {
+      readonly src: string;
+      readonly srcSet: string;
     } | null;
-    readonly formattedStartDateTime: string | null;
+  } | null;
+  readonly formattedStartDateTime: string | null;
+  readonly name: string | null;
+  readonly partner: {
     readonly name: string | null;
-    readonly partner: {
-        readonly name: string | null;
-    } | null;
-    readonly slug: string;
-    readonly " $refType": "MyBidsBidHeader_sale";
+  } | null;
+  readonly slug: string;
+  readonly " $fragmentType": "MyBidsBidHeader_sale";
 };
-export type MyBidsBidHeader_sale$data = MyBidsBidHeader_sale;
 export type MyBidsBidHeader_sale$key = {
-    readonly " $data"?: MyBidsBidHeader_sale$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyBidsBidHeader_sale">;
+  readonly " $data"?: MyBidsBidHeader_sale$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyBidsBidHeader_sale">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -129,5 +132,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '8c8b47d3ce96cbd1b1dae2646a0085c4';
+
+(node as any).hash = "8c8b47d3ce96cbd1b1dae2646a0085c4";
+
 export default node;

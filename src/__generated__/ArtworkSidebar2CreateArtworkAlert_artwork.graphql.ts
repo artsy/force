@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<edb3cd06cd43fe05d9fcf82e61484ce4>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2CreateArtworkAlert_artwork = {
+export type ArtworkSidebar2CreateArtworkAlert_artwork$data = {
+  readonly internalID: string;
+  readonly title: string | null;
+  readonly slug: string;
+  readonly artists: ReadonlyArray<{
     readonly internalID: string;
-    readonly title: string | null;
+    readonly name: string | null;
     readonly slug: string;
-    readonly artists: ReadonlyArray<{
-        readonly internalID: string;
-        readonly name: string | null;
-        readonly slug: string;
-    } | null> | null;
-    readonly attributionClass: {
-        readonly internalID: string;
+  } | null> | null;
+  readonly attributionClass: {
+    readonly internalID: string;
+  } | null;
+  readonly mediumType: {
+    readonly filterGene: {
+      readonly slug: string;
+      readonly name: string | null;
     } | null;
-    readonly mediumType: {
-        readonly filterGene: {
-            readonly slug: string;
-            readonly name: string | null;
-        } | null;
-    } | null;
-    readonly " $refType": "ArtworkSidebar2CreateArtworkAlert_artwork";
+  } | null;
+  readonly " $fragmentType": "ArtworkSidebar2CreateArtworkAlert_artwork";
 };
-export type ArtworkSidebar2CreateArtworkAlert_artwork$data = ArtworkSidebar2CreateArtworkAlert_artwork;
 export type ArtworkSidebar2CreateArtworkAlert_artwork$key = {
-    readonly " $data"?: ArtworkSidebar2CreateArtworkAlert_artwork$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2CreateArtworkAlert_artwork">;
+  readonly " $data"?: ArtworkSidebar2CreateArtworkAlert_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2CreateArtworkAlert_artwork">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -124,5 +127,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'c10f80ca746df60d991e339f63f70771';
+
+(node as any).hash = "c10f80ca746df60d991e339f63f70771";
+
 export default node;

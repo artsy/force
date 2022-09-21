@@ -1,11 +1,11 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ShowEvents_edges } from "__generated__/ShowEvents_edges.graphql"
+import { ShowEvents_edges$data } from "__generated__/ShowEvents_edges.graphql"
 import { CellShowFragmentContainer } from "Components/Cells/CellShow"
 
 interface ShowEventsProps {
-  edges: ShowEvents_edges
+  edges: ShowEvents_edges$data
   eventTitle: string
 }
 
@@ -26,6 +26,7 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
           return (
             <Column key={show.internalID} span={[6, 6, 3, 3]}>
               <CellShowFragmentContainer
+                // @ts-ignore RELAY UPGRADE 13
                 show={show}
                 mode="GRID"
                 displayKind

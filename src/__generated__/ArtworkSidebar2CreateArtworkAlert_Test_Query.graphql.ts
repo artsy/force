@@ -1,53 +1,25 @@
+/**
+ * @generated SignedSource<<8b66548706d3e419cd7d53f46852d4d2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2CreateArtworkAlert_Test_QueryVariables = {};
-export type ArtworkSidebar2CreateArtworkAlert_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2CreateArtworkAlert_artwork">;
-    } | null;
+export type ArtworkSidebar2CreateArtworkAlert_Test_Query$variables = {};
+export type ArtworkSidebar2CreateArtworkAlert_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2CreateArtworkAlert_artwork">;
+  } | null;
 };
 export type ArtworkSidebar2CreateArtworkAlert_Test_Query = {
-    readonly response: ArtworkSidebar2CreateArtworkAlert_Test_QueryResponse;
-    readonly variables: ArtworkSidebar2CreateArtworkAlert_Test_QueryVariables;
+  variables: ArtworkSidebar2CreateArtworkAlert_Test_Query$variables;
+  response: ArtworkSidebar2CreateArtworkAlert_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebar2CreateArtworkAlert_Test_Query {
-  artwork(id: "test-artwork-id") {
-    ...ArtworkSidebar2CreateArtworkAlert_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebar2CreateArtworkAlert_artwork on Artwork {
-  internalID
-  title
-  slug
-  artists {
-    internalID
-    name
-    slug
-    id
-  }
-  attributionClass {
-    internalID
-    id
-  }
-  mediumType {
-    filterGene {
-      slug
-      name
-      id
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -262,5 +234,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5d89ae81064c38097c31c4a478f3d124';
+
+(node as any).hash = "5d89ae81064c38097c31c4a478f3d124";
+
 export default node;

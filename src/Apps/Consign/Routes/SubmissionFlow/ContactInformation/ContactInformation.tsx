@@ -10,8 +10,8 @@ import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
-import { ContactInformation_me } from "__generated__/ContactInformation_me.graphql"
-import { ContactInformation_submission } from "__generated__/ContactInformation_submission.graphql"
+import { ContactInformation_me$data } from "__generated__/ContactInformation_me.graphql"
+import { ContactInformation_submission$data } from "__generated__/ContactInformation_submission.graphql"
 import { createOrUpdateConsignSubmission } from "../Utils/createOrUpdateConsignSubmission"
 import {
   contactInformationValidationSchema,
@@ -25,7 +25,7 @@ import {
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
 const getContactInformationFormInitialValues = (
-  me: ContactInformation_me
+  me: ContactInformation_me$data
 ): ContactInformationFormModel => ({
   name: me?.name || "",
   email: me?.email || "",
@@ -38,8 +38,8 @@ const getContactInformationFormInitialValues = (
 })
 
 export interface ContactInformationProps {
-  me: ContactInformation_me
-  submission: ContactInformation_submission
+  me: ContactInformation_me$data
+  submission: ContactInformation_submission$data
 }
 
 export const ContactInformation: React.FC<ContactInformationProps> = ({

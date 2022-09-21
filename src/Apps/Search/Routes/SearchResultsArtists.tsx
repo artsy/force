@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, Separator } from "@artsy/palette"
-import { SearchResultsArtists_viewer } from "__generated__/SearchResultsArtists_viewer.graphql"
+import { SearchResultsArtists_viewer$data } from "__generated__/SearchResultsArtists_viewer.graphql"
 import { GenericSearchResultItem } from "Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "Apps/Search/Components/ZeroState"
 import { LoadingArea, LoadingAreaState } from "Components/LoadingArea"
@@ -10,7 +10,7 @@ import qs from "qs"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {
-  viewer: SearchResultsArtists_viewer
+  viewer: SearchResultsArtists_viewer$data
   relay: RelayRefetchProp
 }
 
@@ -133,6 +133,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
           )
         })}
         <Pagination
+          // @ts-ignore RELAY UPGRADE 13
           pageCursors={searchConnection!.pageCursors}
           onClick={(_cursor, page) => this.loadPage(page)}
           onNext={this.loadNext}

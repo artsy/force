@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { CategoriesIntro } from "./Components/CategoriesIntro"
 import { GeneFamiliesFragmentContainer } from "./Components/GeneFamilies"
-import { CategoriesApp_geneFamiliesConnection } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
+import { CategoriesApp_geneFamiliesConnection$data } from "__generated__/CategoriesApp_geneFamiliesConnection.graphql"
 import { StickyNavFragmentContainer } from "./Components/StickyNav"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { StickyProvider, Sticky } from "Components/Sticky"
@@ -12,7 +12,7 @@ import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { Media } from "Utils/Responsive"
 
 interface CategoriesAppProps {
-  geneFamiliesConnection: CategoriesApp_geneFamiliesConnection
+  geneFamiliesConnection: CategoriesApp_geneFamiliesConnection$data
 }
 
 const CategoriesApp: React.FC<CategoriesAppProps> = props => {
@@ -38,12 +38,14 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
                   <Media at="xs">
                     <StickyNavFragmentContainer
                       navBarHeight={mobile}
+                      // @ts-ignore RELAY UPGRADE 13
                       geneFamiliesConnection={geneFamiliesConnection}
                     />
                   </Media>
                   <Media greaterThan="xs">
                     <StickyNavFragmentContainer
                       navBarHeight={desktop}
+                      // @ts-ignore RELAY UPGRADE 13
                       geneFamiliesConnection={geneFamiliesConnection}
                     />
                   </Media>
@@ -56,6 +58,7 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
       </StickyProvider>
       <Spacer mt={6} />
       <GeneFamiliesFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         geneFamiliesConnection={geneFamiliesConnection}
       />
     </>

@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<c99172c714c9fcb792d00a0a59a99513>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type JobApp_job = {
-    readonly id: string;
-    readonly title: string;
-    readonly location: string;
-    readonly content: string;
-    readonly externalURL: string;
-    readonly " $refType": "JobApp_job";
+export type JobApp_job$data = {
+  readonly id: string;
+  readonly title: string;
+  readonly location: string;
+  readonly content: string;
+  readonly externalURL: string;
+  readonly " $fragmentType": "JobApp_job";
 };
-export type JobApp_job$data = JobApp_job;
 export type JobApp_job$key = {
-    readonly " $data"?: JobApp_job$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"JobApp_job">;
+  readonly " $data"?: JobApp_job$data;
+  readonly " $fragmentSpreads": FragmentRefs<"JobApp_job">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -65,5 +68,7 @@ const node: ReaderFragment = {
   "type": "Job",
   "abstractKey": null
 };
-(node as any).hash = 'ec690c0f899637fd65f90e8e81104f88';
+
+(node as any).hash = "ec690c0f899637fd65f90e8e81104f88";
+
 export default node;

@@ -12,13 +12,13 @@ import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { SettingsEditProfileArtistsYouCollectAutocompleteQuery } from "__generated__/SettingsEditProfileArtistsYouCollectAutocompleteQuery.graphql"
-import { SettingsEditProfileArtistsYouCollect_me } from "__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
+import { SettingsEditProfileArtistsYouCollect_me$data } from "__generated__/SettingsEditProfileArtistsYouCollect_me.graphql"
 import { SettingsEditProfileArtistsYouCollectRemoveButton } from "./SettingsEditProfileArtistsYouCollectRemoveButton"
 import { useAddArtistYouCollect } from "./useAddArtistYouCollect"
 import { useRemoveArtistYouCollect } from "./useRemoveArtistYouCollect"
 
 interface SettingsEditProfileArtistsYouCollectProps {
-  me: SettingsEditProfileArtistsYouCollect_me
+  me: SettingsEditProfileArtistsYouCollect_me$data
 }
 
 export const SettingsEditProfileArtistsYouCollect: FC<SettingsEditProfileArtistsYouCollectProps> = ({

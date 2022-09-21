@@ -1,35 +1,38 @@
+/**
+ * @generated SignedSource<<cd7f99d4d34047f067599cef0e29f147>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedGalleriesRail_orderedSet = {
-    readonly orderedItemsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: ({
-                readonly __typename: "Profile";
-                readonly owner: {
-                    readonly internalID?: string | undefined;
-                    readonly slug?: string | undefined;
-                    readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
-                };
-            } | {
-                /*This will never be '%other', but we need some
-                value in case none of the concrete values match.*/
-                readonly __typename: "%other";
-            }) | null;
-        } | null> | null;
-    };
-    readonly " $refType": "HomeFeaturedGalleriesRail_orderedSet";
+export type HomeFeaturedGalleriesRail_orderedSet$data = {
+  readonly orderedItemsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly __typename: "Profile";
+        readonly owner: {
+          readonly internalID?: string;
+          readonly slug?: string;
+          readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
+        };
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
+      } | null;
+    } | null> | null;
+  };
+  readonly " $fragmentType": "HomeFeaturedGalleriesRail_orderedSet";
 };
-export type HomeFeaturedGalleriesRail_orderedSet$data = HomeFeaturedGalleriesRail_orderedSet;
 export type HomeFeaturedGalleriesRail_orderedSet$key = {
-    readonly " $data"?: HomeFeaturedGalleriesRail_orderedSet$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
+  readonly " $data"?: HomeFeaturedGalleriesRail_orderedSet$data;
+  readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -131,5 +134,7 @@ const node: ReaderFragment = {
   "type": "OrderedSet",
   "abstractKey": null
 };
-(node as any).hash = 'bc03fec288ee3abe0afef9a8712853c0';
+
+(node as any).hash = "bc03fec288ee3abe0afef9a8712853c0";
+
 export default node;

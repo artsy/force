@@ -27,6 +27,7 @@ jest.mock("Utils/getENV", () => ({
 const { getWrapper } = setupTestWrapper<Works_Query>({
   Component: ({ partner }) => (
     <MockBoot user={{ id: "percy-z" }}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworksRefetchContainer partner={partner!} />
     </MockBoot>
   ),
@@ -43,6 +44,7 @@ const { getWrapper } = setupTestWrapper<Works_Query>({
 const { renderWithRelay } = setupTestWrapperTL<Works_Query>({
   Component: ({ partner }) => (
     <MockBoot user={{ id: "percy-z" }}>
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <ArtworksRefetchContainer partner={partner!} />
     </MockBoot>
   ),

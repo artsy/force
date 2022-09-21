@@ -1,59 +1,25 @@
+/**
+ * @generated SignedSource<<115b6e1e040499a9d59f901dbb13d961>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsQueryVariables = {};
-export type settingsRoutes_SavedSearchAlertsQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedSearchAlertsApp_me">;
-    } | null;
+export type settingsRoutes_SavedSearchAlertsQuery$variables = {};
+export type settingsRoutes_SavedSearchAlertsQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
+  } | null;
 };
 export type settingsRoutes_SavedSearchAlertsQuery = {
-    readonly response: settingsRoutes_SavedSearchAlertsQueryResponse;
-    readonly variables: settingsRoutes_SavedSearchAlertsQueryVariables;
+  variables: settingsRoutes_SavedSearchAlertsQuery$variables;
+  response: settingsRoutes_SavedSearchAlertsQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_SavedSearchAlertsQuery {
-  me {
-    ...SavedSearchAlertsApp_me
-    id
-  }
-}
-
-fragment SavedSearchAlertListItem_item on SearchCriteria {
-  internalID
-  artistIDs
-  href
-  labels {
-    displayValue
-  }
-  userAlertSettings {
-    name
-  }
-}
-
-fragment SavedSearchAlertsApp_me on Me {
-  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {
-    edges {
-      node {
-        internalID
-        ...SavedSearchAlertListItem_item
-        __typename
-      }
-      cursor
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -271,5 +237,7 @@ return {
   }
 };
 })();
-(node as any).hash = '1a1527fe89bb166c9f3f58b8618f9220';
+
+(node as any).hash = "1a1527fe89bb166c9f3f58b8618f9220";
+
 export default node;

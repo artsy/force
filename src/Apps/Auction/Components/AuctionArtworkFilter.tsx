@@ -10,12 +10,12 @@ import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilt
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useSystemContext } from "System"
-import { AuctionArtworkFilter_viewer } from "__generated__/AuctionArtworkFilter_viewer.graphql"
+import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 
 interface AuctionArtworkFilterProps {
   relay: RelayRefetchProp
-  viewer: AuctionArtworkFilter_viewer
+  viewer: AuctionArtworkFilter_viewer$data
 }
 
 const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({

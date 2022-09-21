@@ -1,37 +1,25 @@
+/**
+ * @generated SignedSource<<bc2138056fd64eafcb55eb3f735a88d6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsLinkedAccounts_Test_QueryVariables = {};
-export type SettingsEditSettingsLinkedAccounts_Test_QueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsLinkedAccounts_me">;
-    } | null;
+export type SettingsEditSettingsLinkedAccounts_Test_Query$variables = {};
+export type SettingsEditSettingsLinkedAccounts_Test_Query$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsLinkedAccounts_me">;
+  } | null;
 };
 export type SettingsEditSettingsLinkedAccounts_Test_Query = {
-    readonly response: SettingsEditSettingsLinkedAccounts_Test_QueryResponse;
-    readonly variables: SettingsEditSettingsLinkedAccounts_Test_QueryVariables;
+  variables: SettingsEditSettingsLinkedAccounts_Test_Query$variables;
+  response: SettingsEditSettingsLinkedAccounts_Test_Query$data;
 };
-
-
-
-/*
-query SettingsEditSettingsLinkedAccounts_Test_Query {
-  me {
-    ...SettingsEditSettingsLinkedAccounts_me
-    id
-  }
-}
-
-fragment SettingsEditSettingsLinkedAccounts_me on Me {
-  authentications {
-    provider
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -117,5 +105,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'a33dc101bcfeb151ef5b8580868c5874';
+
+(node as any).hash = "a33dc101bcfeb151ef5b8580868c5874";
+
 export default node;

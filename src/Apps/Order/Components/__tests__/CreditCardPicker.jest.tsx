@@ -1,6 +1,6 @@
 import { BorderedRadio, Checkbox, Collapse, Link, Input } from "@artsy/palette"
-import { CreditCardPicker_me } from "__generated__/CreditCardPicker_me.graphql"
-import { CreditCardPickerTestQueryRawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
+import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
+import { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -137,7 +137,7 @@ class CreditCardPickerTestPage extends RootTestPage {
   }
 }
 
-const defaultData: CreditCardPickerTestQueryRawResponse = {
+const defaultData: CreditCardPickerTestQuery$rawResponse = {
   me: {
     id: "my-id",
     creditCards: {
@@ -378,7 +378,7 @@ describe("CreditCardPickerFragmentContainer", () => {
   describe("when the user has existing credit cards", () => {
     const cards: Array<
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      CreditCardPicker_me["creditCards"]["edges"][0]["node"]
+      CreditCardPicker_me$data["creditCards"]["edges"][0]["node"]
     > = [
       {
         internalID: "card-id-1",

@@ -1,44 +1,47 @@
+/**
+ * @generated SignedSource<<912bb7583795551e2c55bf7f5018615b>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OnboardingSearchResults_viewer = {
-    readonly matchConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: ({
-                readonly __typename: "Artist";
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"EntityHeaderArtist_artist">;
-            } | {
-                readonly __typename: "Profile";
-                readonly internalID: string;
-                readonly owner: {
-                    readonly __typename: "Partner";
-                    readonly " $fragmentRefs": FragmentRefs<"EntityHeaderPartner_partner">;
-                } | {
-                    /*This will never be '%other', but we need some
-                    value in case none of the concrete values match.*/
-                    readonly __typename: "%other";
-                };
-                readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-            } | {
-                /*This will never be '%other', but we need some
-                value in case none of the concrete values match.*/
-                readonly __typename: "%other";
-            }) | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "OnboardingSearchResults_viewer";
+export type OnboardingSearchResults_viewer$data = {
+  readonly matchConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly __typename: "Artist";
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
+      } | {
+        readonly __typename: "Profile";
+        readonly internalID: string;
+        readonly owner: {
+          readonly __typename: "Partner";
+          readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
+        };
+        readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
+      } | {
+        // This will never be '%other', but we need some
+        // value in case none of the concrete values match.
+        readonly __typename: "%other";
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "OnboardingSearchResults_viewer";
 };
-export type OnboardingSearchResults_viewer$data = OnboardingSearchResults_viewer;
 export type OnboardingSearchResults_viewer$key = {
-    readonly " $data"?: OnboardingSearchResults_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"OnboardingSearchResults_viewer">;
+  readonly " $data"?: OnboardingSearchResults_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OnboardingSearchResults_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -136,6 +139,11 @@ return {
                   "selections": [
                     (v1/*: any*/),
                     {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "FollowProfileButton_profile"
+                    },
+                    {
                       "alias": null,
                       "args": null,
                       "concreteType": null,
@@ -158,11 +166,6 @@ return {
                         }
                       ],
                       "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FollowProfileButton_profile"
                     }
                   ],
                   "type": "Profile",
@@ -182,5 +185,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '7f56c00baf526e9d490ab6e2413c0567';
+
+(node as any).hash = "7f56c00baf526e9d490ab6e2413c0567";
+
 export default node;

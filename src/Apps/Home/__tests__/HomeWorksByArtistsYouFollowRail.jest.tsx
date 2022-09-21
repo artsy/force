@@ -13,6 +13,7 @@ const { getWrapper } = setupTestWrapper<
   Component: props => {
     return (
       <HomeWorksByArtistsYouFollowRailFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         homePage={props.homePage!}
       />
     )

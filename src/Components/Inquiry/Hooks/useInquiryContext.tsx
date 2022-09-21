@@ -10,7 +10,7 @@ import * as React from "react"
 import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useEngine } from "../config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
-import { useInquiryContext_me } from "__generated__/useInquiryContext_me.graphql"
+import { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
 import { useInquiryContextQuery } from "__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System"
@@ -18,6 +18,7 @@ import { Visited } from "../Visited"
 import { logger } from "../util"
 import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 export type Context = {
   askSpecialist: boolean
@@ -145,10 +146,13 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
    * where we have to execute mutations like sending the inquiry, saving your
    * information, etc. We store the Relay environment in a ref then update it here.
    */
-  const setRelayEnvironment = useCallback((updatedEnvironment: Environment) => {
-    relayEnvironment.current = updatedEnvironment
-    return relayEnvironment
-  }, [])
+  const setRelayEnvironment = useCallback(
+    (updatedEnvironment: RelayModernEnvironment) => {
+      relayEnvironment.current = updatedEnvironment
+      return relayEnvironment
+    },
+    []
+  )
 
   return (
     <InquiryContext.Provider
@@ -174,7 +178,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
 }
 
 interface InquiryContextContextProps {
-  me: useInquiryContext_me | null
+  me: useInquiryContext_me$data | null
 }
 
 const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
@@ -239,6 +243,7 @@ export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
         }
 
         return (
+          // @ts-ignore RELAY UPGRADE 13
           <InquiryContextContextFragmentContainer me={props.me}>
             {children}
           </InquiryContextContextFragmentContainer>

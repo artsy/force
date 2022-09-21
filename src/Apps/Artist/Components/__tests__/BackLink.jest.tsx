@@ -37,6 +37,7 @@ describe("BackLink", () => {
       Component: props => {
         return (
           <MockBoot>
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <BackLinkFragmentContainer artist={props.artist!} />
           </MockBoot>
         )
@@ -76,6 +77,7 @@ describe("BackLink", () => {
         return (
           <MockBoot>
             <BackLinkFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist!}
               artworkId={artworkId}
             />

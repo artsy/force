@@ -1,6 +1,6 @@
 import {
-  TransactionDetailsSummaryItemTestQueryRawResponse,
-  TransactionDetailsSummaryItemTestQueryResponse,
+  TransactionDetailsSummaryItemTestQuery$rawResponse,
+  TransactionDetailsSummaryItemTestQuery$data,
 } from "__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
 import {
   BuyOrderWithSelectedShippingQuote,
@@ -17,11 +17,11 @@ import { Text } from "@artsy/palette"
 jest.unmock("react-relay")
 
 type TestOfferOrder = Extract<
-  TransactionDetailsSummaryItemTestQueryRawResponse["order"],
+  TransactionDetailsSummaryItemTestQuery$rawResponse["order"],
   { __typename: "CommerceOfferOrder" }
 >
 type TestBuyOrder = Exclude<
-  TransactionDetailsSummaryItemTestQueryRawResponse["order"],
+  TransactionDetailsSummaryItemTestQuery$rawResponse["order"],
   { __typename: "CommerceBuyOrder" }
 >
 
@@ -67,13 +67,13 @@ const transactionSummaryOfferOrderPounds: TestOfferOrder = {
 }
 
 const render = (
-  order: TransactionDetailsSummaryItemTestQueryRawResponse["order"],
+  order: TransactionDetailsSummaryItemTestQuery$rawResponse["order"],
   extraProps?: Partial<
     ExtractProps<typeof TransactionDetailsSummaryItemFragmentContainer>
   >
 ) =>
   renderRelayTree({
-    Component: (props: TransactionDetailsSummaryItemTestQueryResponse) => (
+    Component: (props: TransactionDetailsSummaryItemTestQuery$data) => (
       <TransactionDetailsSummaryItemFragmentContainer
         {...props}
         {...extraProps}

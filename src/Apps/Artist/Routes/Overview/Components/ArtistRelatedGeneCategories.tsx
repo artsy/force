@@ -5,11 +5,11 @@ import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistRelatedGeneCategories_artist } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
+import { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
 import { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
 
 interface ArtistRelatedGeneCategoriesProps {
-  artist: ArtistRelatedGeneCategories_artist
+  artist: ArtistRelatedGeneCategories_artist$data
 }
 
 const ArtistRelatedGeneCategories: FC<ArtistRelatedGeneCategoriesProps> = ({
@@ -90,6 +90,7 @@ export const ArtistRelatedGeneCategoriesQueryRenderer: FC<{ slug: string }> = ({
         if (props?.artist) {
           return (
             <ArtistRelatedGeneCategoriesFragmentContainer
+              // @ts-ignore RELAY UPGRADE 13
               artist={props.artist}
             />
           )

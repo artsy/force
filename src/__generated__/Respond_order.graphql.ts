@@ -1,48 +1,51 @@
+/**
+ * @generated SignedSource<<9bd04d041deae7ceb3f8cf50e1d49102>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type Respond_order = {
+import { FragmentRefs } from "relay-runtime";
+export type Respond_order$data = {
+  readonly internalID: string;
+  readonly mode: CommerceOrderModeEnum | null;
+  readonly state: CommerceOrderStateEnum;
+  readonly currencyCode: string;
+  readonly itemsTotal: string | null;
+  readonly itemsTotalCents: number | null;
+  readonly stateExpiresAt: string | null;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly slug: string;
+          readonly price: string | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly isInquiryOrder?: boolean;
+  readonly lastOffer?: {
+    readonly createdAt: string;
     readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly state: CommerceOrderStateEnum;
-    readonly currencyCode: string;
-    readonly itemsTotal: string | null;
-    readonly itemsTotalCents: number | null;
-    readonly stateExpiresAt: string | null;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly slug: string;
-                    readonly price: string | null;
-                } | null;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly isInquiryOrder?: boolean | undefined;
-    readonly lastOffer?: {
-        readonly createdAt: string;
-        readonly internalID: string;
-        readonly note: string | null;
-    } | null | undefined;
-    readonly myLastOffer?: {
-        readonly createdAt: string;
-    } | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "OfferHistoryItem_order">;
-    readonly " $refType": "Respond_order";
+    readonly note: string | null;
+  } | null;
+  readonly myLastOffer?: {
+    readonly createdAt: string;
+  } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"TransactionDetailsSummaryItem_order" | "ArtworkSummaryItem_order" | "ShippingSummaryItem_order" | "PaymentMethodSummaryItem_order" | "OfferHistoryItem_order">;
+  readonly " $fragmentType": "Respond_order";
 };
-export type Respond_order$data = Respond_order;
 export type Respond_order$key = {
-    readonly " $data"?: Respond_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Respond_order">;
+  readonly " $data"?: Respond_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Respond_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -248,5 +251,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '523fd9e13a22c46e90e9b2e8a75f93f4';
+
+(node as any).hash = "523fd9e13a22c46e90e9b2e8a75f93f4";
+
 export default node;

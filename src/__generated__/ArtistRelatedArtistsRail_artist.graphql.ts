@@ -1,33 +1,36 @@
+/**
+ * @generated SignedSource<<d2ec083c669edd3d745c34533773e070>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedArtistsRail_artist = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly related: {
-        readonly artistsConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly internalID: string;
-                    readonly slug: string;
-                    readonly href: string | null;
-                    readonly " $fragmentRefs": FragmentRefs<"CellArtist_artist">;
-                } | null;
-            } | null> | null;
+export type ArtistRelatedArtistsRail_artist$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly related: {
+    readonly artistsConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+          readonly slug: string;
+          readonly href: string | null;
+          readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
         } | null;
+      } | null> | null;
     } | null;
-    readonly " $refType": "ArtistRelatedArtistsRail_artist";
+  } | null;
+  readonly " $fragmentType": "ArtistRelatedArtistsRail_artist";
 };
-export type ArtistRelatedArtistsRail_artist$data = ArtistRelatedArtistsRail_artist;
 export type ArtistRelatedArtistsRail_artist$key = {
-    readonly " $data"?: ArtistRelatedArtistsRail_artist$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
+  readonly " $data"?: ArtistRelatedArtistsRail_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -95,6 +98,11 @@ return {
                   "plural": false,
                   "selections": [
                     {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "CellArtist_artist"
+                    },
+                    {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
@@ -108,12 +116,7 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/),
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "CellArtist_artist"
-                    }
+                    (v0/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -131,5 +134,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '4a6a762d769be3f2f6465e7c12e16269';
+
+(node as any).hash = "4a6a762d769be3f2f6465e7c12e16269";
+
 export default node;

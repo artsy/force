@@ -24,14 +24,14 @@ import { extractNodes } from "Utils/extractNodes"
 import { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQuery.graphql"
 import { ArticleBodyFragmentContainer } from "./ArticleBody"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./ArticleVerticalRelatedArticles"
-import { ArticleInfiniteScroll_viewer } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
+import { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useMode } from "Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
 import { ArticleVisibilityMetadataFragmentContainer } from "./ArticleVisibilityMetadata"
 
 interface ArticleInfiniteScrollProps {
-  viewer: ArticleInfiniteScroll_viewer
+  viewer: ArticleInfiniteScroll_viewer$data
   relay: RelayPaginationProp
 }
 
@@ -63,7 +63,9 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
         {articles.map(article => {
           return (
             <Fragment key={article.internalID}>
+              {/* @ts-ignore RELAY UPGRADE 13 */}
               <ArticleVisibilityMetadataFragmentContainer article={article}>
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <ArticleBodyFragmentContainer article={article} />
               </ArticleVisibilityMetadataFragmentContainer>
 
@@ -181,6 +183,7 @@ export const ArticleInfiniteScrollQueryRenderer: FC<ArticleInfiniteScrollQueryRe
           }
 
           return (
+            // @ts-ignore RELAY UPGRADE 13
             <ArticleInfiniteScrollPaginationContainer viewer={props.viewer} />
           )
         }}

@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesRail_artist } from "__generated__/ArtistSeriesRail_artist.graphql"
+import { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
 import { ContextModule } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
@@ -9,7 +9,7 @@ import { SpaceProps } from "styled-system"
 import { Rail } from "../Rail"
 
 interface Props extends SpaceProps {
-  artist: ArtistSeriesRail_artist
+  artist: ArtistSeriesRail_artist$data
   showProgress?: boolean
   title?: string
   contextModule: ContextModule
@@ -39,7 +39,9 @@ const ArtistSeriesRail: React.FC<Props> = ({
           return series.map((node, index) => {
             return (
               <ArtistSeriesItem
+                // @ts-ignore RELAY UPGRADE 13
                 key={node.internalID}
+                // @ts-ignore RELAY UPGRADE 13
                 artistSeries={node}
                 index={index}
                 contextModule={contextModule}

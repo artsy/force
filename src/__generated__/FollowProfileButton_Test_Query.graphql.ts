@@ -1,43 +1,27 @@
+/**
+ * @generated SignedSource<<3264bba19dca40ed9337bece187e76e0>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowProfileButton_Test_QueryVariables = {};
-export type FollowProfileButton_Test_QueryResponse = {
-    readonly partner: {
-        readonly profile: {
-            readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-        } | null;
+export type FollowProfileButton_Test_Query$variables = {};
+export type FollowProfileButton_Test_Query$data = {
+  readonly partner: {
+    readonly profile: {
+      readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
+  } | null;
 };
 export type FollowProfileButton_Test_Query = {
-    readonly response: FollowProfileButton_Test_QueryResponse;
-    readonly variables: FollowProfileButton_Test_QueryVariables;
+  variables: FollowProfileButton_Test_Query$variables;
+  response: FollowProfileButton_Test_Query$data;
 };
-
-
-
-/*
-query FollowProfileButton_Test_Query {
-  partner(id: "example") {
-    profile {
-      ...FollowProfileButton_profile
-      id
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -199,5 +183,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b07d88251880bd24bdfa7de9fb3d0ebb';
+
+(node as any).hash = "b07d88251880bd24bdfa7de9fb3d0ebb";
+
 export default node;

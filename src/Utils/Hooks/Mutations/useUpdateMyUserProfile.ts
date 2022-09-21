@@ -1,3 +1,4 @@
+import { Environment } from "react-relay"
 import { commitMutation, graphql } from "relay-runtime"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "System"
@@ -7,7 +8,7 @@ import {
 } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 
 interface UseUpdateMyUserProfile {
-  relayEnvironment?: RelayModernEnvironment | undefined
+  relayEnvironment?: RelayModernEnvironment | Environment | undefined
 }
 
 export const useUpdateMyUserProfile = ({

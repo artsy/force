@@ -8,12 +8,12 @@ import createLogger from "Utils/logger"
 import { MakeInquiryOffer } from "../Mutation/MakeInquiryOfferMutation"
 import { MakeInquiryOrder } from "../Mutation/MakeInquiryOrderMutation"
 
-import { ConfirmArtworkButton_artwork } from "__generated__/ConfirmArtworkButton_artwork.graphql"
+import { ConfirmArtworkButton_artwork$data } from "__generated__/ConfirmArtworkButton_artwork.graphql"
 
 const logger = createLogger("Conversation/Components/ConfirmArtworkButton.tsx")
 
 export interface ConfirmArtworkButtonProps extends ButtonProps {
-  artwork: ConfirmArtworkButton_artwork
+  artwork: ConfirmArtworkButton_artwork$data
   relay: RelayProp
   editionSetID: string | null
   createsOfferOrder?: boolean

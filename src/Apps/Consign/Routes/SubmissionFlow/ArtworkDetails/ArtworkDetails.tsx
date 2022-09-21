@@ -19,19 +19,19 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import {
-  ArtworkDetails_submission,
+  ArtworkDetails_submission$data,
   ConsignmentAttributionClass,
 } from "__generated__/ArtworkDetails_submission.graphql"
 import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
-import { ArtworkDetails_myCollectionArtwork } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
+import { ArtworkDetails_myCollectionArtwork$data } from "__generated__/ArtworkDetails_myCollectionArtwork.graphql"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
 export interface ArtworkDetailsProps {
-  submission?: ArtworkDetails_submission
-  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork
+  submission?: ArtworkDetails_submission$data
+  myCollectionArtwork?: ArtworkDetails_myCollectionArtwork$data
 }
 
 export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({

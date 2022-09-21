@@ -1,53 +1,39 @@
+/**
+ * @generated SignedSource<<8c4dcc5e5406d00ebafee2ae47ee1130>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateBackupSecondFactorsInput = {
-    clientMutationId?: string | null | undefined;
-    password: string;
+  clientMutationId?: string | null;
+  password: string;
 };
-export type useCreateSettingsBackupSecondFactorsMutationVariables = {
-    input: CreateBackupSecondFactorsInput;
+export type useCreateSettingsBackupSecondFactorsMutation$variables = {
+  input: CreateBackupSecondFactorsInput;
 };
-export type useCreateSettingsBackupSecondFactorsMutationResponse = {
-    readonly createBackupSecondFactors: {
-        readonly secondFactorsOrErrors: {
-            readonly __typename: "BackupSecondFactors";
-            readonly secondFactors: ReadonlyArray<{
-                readonly code: string;
-            }>;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type useCreateSettingsBackupSecondFactorsMutation$data = {
+  readonly createBackupSecondFactors: {
+    readonly secondFactorsOrErrors: {
+      readonly __typename: "BackupSecondFactors";
+      readonly secondFactors: ReadonlyArray<{
+        readonly code: string;
+      }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
 export type useCreateSettingsBackupSecondFactorsMutation = {
-    readonly response: useCreateSettingsBackupSecondFactorsMutationResponse;
-    readonly variables: useCreateSettingsBackupSecondFactorsMutationVariables;
+  variables: useCreateSettingsBackupSecondFactorsMutation$variables;
+  response: useCreateSettingsBackupSecondFactorsMutation$data;
 };
-
-
-
-/*
-mutation useCreateSettingsBackupSecondFactorsMutation(
-  $input: CreateBackupSecondFactorsInput!
-) {
-  createBackupSecondFactors(input: $input) {
-    secondFactorsOrErrors {
-      __typename
-      ... on BackupSecondFactors {
-        __typename
-        secondFactors {
-          code
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -180,5 +166,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'd4d45fbde2bbcb128e5225f9a06c4b8c';
+
+(node as any).hash = "d4d45fbde2bbcb128e5225f9a06c4b8c";
+
 export default node;

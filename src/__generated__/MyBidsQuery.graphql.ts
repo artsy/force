@@ -1,92 +1,25 @@
+/**
+ * @generated SignedSource<<01034cc1779bf3e88b53e47e8c5e3a57>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyBidsQueryVariables = {};
-export type MyBidsQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"MyBids_me">;
-    } | null;
+export type MyBidsQuery$variables = {};
+export type MyBidsQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"MyBids_me">;
+  } | null;
 };
 export type MyBidsQuery = {
-    readonly response: MyBidsQueryResponse;
-    readonly variables: MyBidsQueryVariables;
+  variables: MyBidsQuery$variables;
+  response: MyBidsQuery$data;
 };
-
-
-
-/*
-query MyBidsQuery {
-  me {
-    ...MyBids_me
-    id
-  }
-}
-
-fragment MyBidsBidHeader_sale on Sale {
-  coverImage {
-    cropped(width: 330, height: 100, version: ["source", "wide", "large_rectangle"]) {
-      src
-      srcSet
-    }
-  }
-  formattedStartDateTime
-  name
-  partner {
-    name
-    id
-  }
-  slug
-}
-
-fragment MyBidsBidItem_saleArtwork on SaleArtwork {
-  artwork {
-    artistNames
-    image {
-      cropped(width: 55, height: 55) {
-        src
-        srcSet
-        width
-        height
-      }
-    }
-    id
-  }
-  estimate
-  currentBid {
-    display
-  }
-  internalID
-  isHighestBidder
-  isWatching
-  lotState {
-    bidCount
-    sellingPrice {
-      display
-    }
-  }
-  lotLabel
-  slug
-}
-
-fragment MyBids_me on Me {
-  myBids {
-    active {
-      sale {
-        slug
-        ...MyBidsBidHeader_sale
-        id
-      }
-      saleArtworks {
-        ...MyBidsBidItem_saleArtwork
-        id
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -444,5 +377,7 @@ return {
   }
 };
 })();
-(node as any).hash = '981b9c40ce8be1aaa7b0e0ee02952b42';
+
+(node as any).hash = "981b9c40ce8be1aaa7b0e0ee02952b42";
+
 export default node;

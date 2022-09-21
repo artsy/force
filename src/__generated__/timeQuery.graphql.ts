@@ -1,32 +1,26 @@
+/**
+ * @generated SignedSource<<3e54814cc8463b3a8fa8d26f1c31aa33>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
-export type timeQueryVariables = {};
-export type timeQueryResponse = {
-    readonly system: {
-        readonly time: {
-            readonly unix: number | null;
-        } | null;
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type timeQuery$variables = {};
+export type timeQuery$data = {
+  readonly system: {
+    readonly time: {
+      readonly unix: number | null;
     } | null;
+  } | null;
 };
 export type timeQuery = {
-    readonly response: timeQueryResponse;
-    readonly variables: timeQueryVariables;
+  variables: timeQuery$variables;
+  response: timeQuery$data;
 };
-
-
-
-/*
-query timeQuery {
-  system {
-    time {
-      unix
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -87,5 +81,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5b825690c273b568243eaa817a5fd0dc';
+
+(node as any).hash = "5b825690c273b568243eaa817a5fd0dc";
+
 export default node;

@@ -1,24 +1,27 @@
+/**
+ * @generated SignedSource<<7ab44de9e242831d4a14fe07bbc6ae19>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
-export type PreferencesApp_viewer = {
-    readonly notificationPreferences: ReadonlyArray<{
-        readonly name: string;
-        readonly status: SubGroupStatus;
-    }>;
-    readonly " $refType": "PreferencesApp_viewer";
+import { FragmentRefs } from "relay-runtime";
+export type PreferencesApp_viewer$data = {
+  readonly notificationPreferences: ReadonlyArray<{
+    readonly name: string;
+    readonly status: SubGroupStatus;
+  }>;
+  readonly " $fragmentType": "PreferencesApp_viewer";
 };
-export type PreferencesApp_viewer$data = PreferencesApp_viewer;
 export type PreferencesApp_viewer$key = {
-    readonly " $data"?: PreferencesApp_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"PreferencesApp_viewer">;
+  readonly " $data"?: PreferencesApp_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"PreferencesApp_viewer">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -67,5 +70,7 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
-(node as any).hash = '010b0db11226b29964bff79c43adcc2a';
+
+(node as any).hash = "010b0db11226b29964bff79c43adcc2a";
+
 export default node;

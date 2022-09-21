@@ -1,96 +1,25 @@
+/**
+ * @generated SignedSource<<84d8d347529cb5890b27e8b1fc496073>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SettingsEditSettingsRouteQueryVariables = {};
-export type settingsRoutes_SettingsEditSettingsRouteQueryResponse = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SettingsEditSettingsRoute_me">;
-    } | null;
+export type settingsRoutes_SettingsEditSettingsRouteQuery$variables = {};
+export type settingsRoutes_SettingsEditSettingsRouteQuery$data = {
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsRoute_me">;
+  } | null;
 };
 export type settingsRoutes_SettingsEditSettingsRouteQuery = {
-    readonly response: settingsRoutes_SettingsEditSettingsRouteQueryResponse;
-    readonly variables: settingsRoutes_SettingsEditSettingsRouteQueryVariables;
+  variables: settingsRoutes_SettingsEditSettingsRouteQuery$variables;
+  response: settingsRoutes_SettingsEditSettingsRouteQuery$data;
 };
-
-
-
-/*
-query settingsRoutes_SettingsEditSettingsRouteQuery {
-  me {
-    ...SettingsEditSettingsRoute_me
-    id
-  }
-}
-
-fragment AppSecondFactor_me on Me {
-  hasSecondFactorEnabled
-  appSecondFactors: secondFactors(kinds: [app]) {
-    __typename
-    ... on AppSecondFactor {
-      __typename
-      internalID
-      name
-    }
-  }
-}
-
-fragment SettingsEditSettingsInformation_me on Me {
-  email
-  name
-  paddleNumber
-  phone
-}
-
-fragment SettingsEditSettingsLinkedAccounts_me on Me {
-  authentications {
-    provider
-    id
-  }
-}
-
-fragment SettingsEditSettingsPassword_me on Me {
-  hasPassword
-}
-
-fragment SettingsEditSettingsRoute_me on Me {
-  ...SettingsEditSettingsInformation_me
-  ...SettingsEditSettingsPassword_me
-  ...SettingsEditSettingsTwoFactor_me
-  ...SettingsEditSettingsLinkedAccounts_me
-}
-
-fragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {
-  backupSecondFactors: secondFactors(kinds: [backup]) {
-    __typename
-    ... on BackupSecondFactor {
-      __typename
-    }
-  }
-}
-
-fragment SettingsEditSettingsTwoFactor_me on Me {
-  hasSecondFactorEnabled
-  ...AppSecondFactor_me
-  ...SmsSecondFactor_me
-  ...SettingsEditSettingsTwoFactorBackupCodes_me
-}
-
-fragment SmsSecondFactor_me on Me {
-  email
-  hasSecondFactorEnabled
-  smsSecondFactors: secondFactors(kinds: [sms]) {
-    __typename
-    ... on SmsSecondFactor {
-      __typename
-      internalID
-      formattedPhoneNumber
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = {
@@ -317,5 +246,7 @@ return {
   }
 };
 })();
-(node as any).hash = '87f56be623fa0ca771be8d9298fd830e';
+
+(node as any).hash = "87f56be623fa0ca771be8d9298fd830e";
+
 export default node;

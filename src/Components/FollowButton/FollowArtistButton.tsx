@@ -3,7 +3,7 @@ import { ButtonProps, Popover } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "__generated__/FollowArtistButtonMutation.graphql"
 import { FollowArtistPopoverQueryRenderer } from "Components/FollowArtistPopover"
 import * as React from "react"
-import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
+import { FollowArtistButton_artist$data } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowArtistButtonQuery } from "../../__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton } from "./Button"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,7 +14,7 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { useMutation } from "Utils/Hooks/useMutation"
 
 interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
-  artist: FollowArtistButton_artist
+  artist: FollowArtistButton_artist$data
   contextModule?: AuthContextModule
   triggerSuggestions?: boolean
   onFollow?: (followed: boolean) => void
@@ -198,6 +198,7 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
         return (
           <FollowArtistButtonFragmentContainer
             {...rest}
+            // @ts-ignore RELAY UPGRADE 13
             artist={props.artist}
           />
         )

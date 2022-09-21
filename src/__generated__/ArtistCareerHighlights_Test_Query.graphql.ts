@@ -1,80 +1,25 @@
+/**
+ * @generated SignedSource<<5737b649a08c9c797cceec5e66a9e364>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCareerHighlights_Test_QueryVariables = {};
-export type ArtistCareerHighlights_Test_QueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistCareerHighlights_artist">;
-    } | null;
+export type ArtistCareerHighlights_Test_Query$variables = {};
+export type ArtistCareerHighlights_Test_Query$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlights_artist">;
+  } | null;
 };
 export type ArtistCareerHighlights_Test_Query = {
-    readonly response: ArtistCareerHighlights_Test_QueryResponse;
-    readonly variables: ArtistCareerHighlights_Test_QueryVariables;
+  variables: ArtistCareerHighlights_Test_Query$variables;
+  response: ArtistCareerHighlights_Test_Query$data;
 };
-
-
-
-/*
-query ArtistCareerHighlights_Test_Query {
-  artist(id: "example") {
-    ...ArtistCareerHighlights_artist
-    id
-  }
-}
-
-fragment ArtistCareerHighlights_artist on Artist {
-  ...ArtistInsightBadges_artist
-  ...ArtistInsightAchievements_artist
-  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
-    __typename
-  }
-  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {
-    __typename
-  }
-  artistHighlights: highlights {
-    partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
-      edges {
-        node {
-          __typename
-          id
-        }
-        id
-      }
-    }
-  }
-  biographyBlurb(format: HTML, partnerBio: false) {
-    partner {
-      profile {
-        href
-        id
-      }
-      id
-    }
-    credit
-    text
-  }
-  slug
-}
-
-fragment ArtistInsightAchievements_artist on Artist {
-  slug
-  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {
-    label
-    entities
-  }
-}
-
-fragment ArtistInsightBadges_artist on Artist {
-  insightBadges: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {
-    kind
-    label
-    description
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -476,5 +421,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ccf85f96655c4345a60f6ee08ea79f37';
+
+(node as any).hash = "ccf85f96655c4345a60f6ee08ea79f37";
+
 export default node;

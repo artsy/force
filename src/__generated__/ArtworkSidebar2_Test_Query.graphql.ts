@@ -1,177 +1,25 @@
+/**
+ * @generated SignedSource<<e8c706a301e446cac84b87eb365b3fe6>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebar2_Test_QueryVariables = {};
-export type ArtworkSidebar2_Test_QueryResponse = {
-    readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar2_artwork">;
-    } | null;
+export type ArtworkSidebar2_Test_Query$variables = {};
+export type ArtworkSidebar2_Test_Query$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebar2_artwork">;
+  } | null;
 };
 export type ArtworkSidebar2_Test_Query = {
-    readonly response: ArtworkSidebar2_Test_QueryResponse;
-    readonly variables: ArtworkSidebar2_Test_QueryVariables;
+  variables: ArtworkSidebar2_Test_Query$variables;
+  response: ArtworkSidebar2_Test_Query$data;
 };
-
-
-
-/*
-query ArtworkSidebar2_Test_Query {
-  artwork(id: "josef-albers-homage-to-the-square-85") {
-    ...ArtworkSidebar2_artwork
-    id
-  }
-}
-
-fragment ArtworkSidebar2Artists_artwork on Artwork {
-  culturalMaker
-  artists {
-    slug
-    name
-    id
-  }
-}
-
-fragment ArtworkSidebar2ArtworkTitle_artwork on Artwork {
-  date
-  title
-}
-
-fragment ArtworkSidebar2AuthenticityCertificate_artwork on Artwork {
-  hasCertificateOfAuthenticity
-  isBiddable
-}
-
-fragment ArtworkSidebar2Classification_artwork on Artwork {
-  attributionClass {
-    shortArrayDescription
-    id
-  }
-}
-
-fragment ArtworkSidebar2CreateArtworkAlert_artwork on Artwork {
-  internalID
-  title
-  slug
-  artists {
-    internalID
-    name
-    slug
-    id
-  }
-  attributionClass {
-    internalID
-    id
-  }
-  mediumType {
-    filterGene {
-      slug
-      name
-      id
-    }
-  }
-}
-
-fragment ArtworkSidebar2Details_artwork on Artwork {
-  medium
-  dimensions {
-    in
-    cm
-  }
-  framed {
-    details
-  }
-  editionOf
-  ...ArtworkSidebar2Classification_artwork
-  ...ArtworkSidebar2AuthenticityCertificate_artwork
-}
-
-fragment ArtworkSidebar2EditionSets_artwork on Artwork {
-  isInquireable
-  isOfferable
-  isAcquireable
-  editionSets {
-    id
-    isOfferable
-    isAcquireable
-    saleMessage
-    ...ArtworkSidebar2SizeInfo_piece
-  }
-}
-
-fragment ArtworkSidebar2Links_artwork on Artwork {
-  isInAuction
-  sale {
-    isClosed
-    id
-  }
-}
-
-fragment ArtworkSidebar2PartnerInfo_artwork on Artwork {
-  internalID
-  slug
-  isInquireable
-  isInAuction
-  partner {
-    name
-    href
-    cities
-    id
-  }
-  sale {
-    name
-    href
-    id
-  }
-}
-
-fragment ArtworkSidebar2ShippingInformation_artwork on Artwork {
-  shippingOrigin
-  shippingInfo
-}
-
-fragment ArtworkSidebar2SizeInfo_piece on Sellable {
-  __isSellable: __typename
-  dimensions {
-    in
-    cm
-  }
-  editionOf
-}
-
-fragment ArtworkSidebar2_artwork on Artwork {
-  slug
-  isSold
-  isAcquireable
-  isOfferable
-  isInAuction
-  saleMessage
-  ...ArtworkSidebar2ArtworkTitle_artwork
-  ...ArtworkSidebar2Artists_artwork
-  ...ArtworkSidebar2Details_artwork
-  ...ArtworkSidebar2EditionSets_artwork
-  ...ArtworkSidebar2ShippingInformation_artwork
-  ...ArtworkSidebar2PartnerInfo_artwork
-  ...ArtworkSidebar2CreateArtworkAlert_artwork
-  ...ArtworkSidebar2Links_artwork
-  sale {
-    startAt
-    id
-  }
-  saleArtwork {
-    lotID
-    extendedBiddingEndAt
-    endAt
-    id
-  }
-  artists {
-    internalID
-    id
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -746,5 +594,7 @@ return {
   }
 };
 })();
-(node as any).hash = '294f17acf004be6c6ab46fe052d8338b';
+
+(node as any).hash = "294f17acf004be6c6ab46fe052d8338b";
+
 export default node;

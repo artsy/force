@@ -1,4 +1,4 @@
-import { ArtworkSummaryItem_order } from "__generated__/ArtworkSummaryItem_order.graphql"
+import { ArtworkSummaryItem_order$data } from "__generated__/ArtworkSummaryItem_order.graphql"
 import { Omit } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,7 +15,7 @@ import {
 } from "@artsy/palette"
 
 export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
-  order: ArtworkSummaryItem_order
+  order: ArtworkSummaryItem_order$data
   className?: string
 }
 

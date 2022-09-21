@@ -2,9 +2,9 @@ import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader"
 import { AnalyticsContext, useAnalyticsContext } from "System"
-import { AuctionApp_me } from "__generated__/AuctionApp_me.graphql"
-import { AuctionApp_sale } from "__generated__/AuctionApp_sale.graphql"
-import { AuctionApp_viewer } from "__generated__/AuctionApp_viewer.graphql"
+import { AuctionApp_me$data } from "__generated__/AuctionApp_me.graphql"
+import { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
+import { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"
 import { AuctionMetaFragmentContainer } from "./Components/AuctionMeta"
 import { AuctionActiveBidsRefetchContainer } from "./Components/AuctionActiveBids"
 import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtworkFilter"
@@ -20,9 +20,9 @@ import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
 
 export interface AuctionAppProps {
-  me: AuctionApp_me
-  sale: AuctionApp_sale
-  viewer: AuctionApp_viewer
+  me: AuctionApp_me$data
+  sale: AuctionApp_sale$data
+  viewer: AuctionApp_viewer$data
 }
 
 export const AuctionApp: React.FC<AuctionAppProps> = ({
@@ -80,8 +80,10 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
           }}
           enabled={websocketEnabled}
         >
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <CascadingEndTimesBannerFragmentContainer sale={sale} />
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <AuctionMetaFragmentContainer sale={sale} />
 
           <Join separator={<Spacer my={4} />}>
@@ -94,6 +96,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
               <Spacer my={2} />
             )}
 
+            {/* @ts-ignore RELAY UPGRADE 13 */}
             <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
             {tabBar.isVisible && (
@@ -104,23 +107,27 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
                 <Tabs key={sale.internalID} mb={4}>
                   {tabBar.showAssociatedSale && (
                     <Tab name="Associated Sale">
+                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <AuctionAssociatedSaleFragmentContainer sale={sale} />
                     </Tab>
                   )}
                   {tabBar.showActiveBids && (
                     <Tab name="Your Active Bids">
+                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <AuctionActiveBidsRefetchContainer me={me} />
                     </Tab>
                   )}
                   {tabBar.showFollowedArtistsTab && (
                     <Tab name="Works By Artists You Follow">
                       <AuctionWorksByFollowedArtistsRailFragmentContainer
+                        // @ts-ignore RELAY UPGRADE 13
                         viewer={viewer}
                       />
                     </Tab>
                   )}
                   {tabBar.showBuyNowTab && (
                     <Tab name="Buy Now">
+                      {/* @ts-ignore RELAY UPGRADE 13 */}
                       <AuctionBuyNowRailFragmentContainer sale={sale} />
                     </Tab>
                   )}
@@ -142,9 +149,11 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
                 <Spacer my={2} />
 
+                {/* @ts-ignore RELAY UPGRADE 13 */}
                 <AuctionCurrentAuctionsRailFragmentContainer viewer={viewer} />
               </>
             ) : (
+              // @ts-ignore RELAY UPGRADE 13
               <AuctionArtworkFilterRefetchContainer viewer={viewer} />
             )}
 

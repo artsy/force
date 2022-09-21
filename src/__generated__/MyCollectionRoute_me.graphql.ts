@@ -1,36 +1,39 @@
+/**
+ * @generated SignedSource<<9a1f0e684e25c6ca6e7ebca967cc944d>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionRoute_me = {
-    readonly myCollectionConnection: {
-        readonly totalCount: number | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly startCursor: string | null;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "MyCollectionRoute_me";
+export type MyCollectionRoute_me$data = {
+  readonly myCollectionConnection: {
+    readonly totalCount: number | null;
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly startCursor: string | null;
+      readonly endCursor: string | null;
+    };
+    readonly pageCursors: {
+      readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
+    };
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string;
+        readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "MyCollectionRoute_me";
 };
-export type MyCollectionRoute_me$data = MyCollectionRoute_me;
 export type MyCollectionRoute_me$key = {
-    readonly " $data"?: MyCollectionRoute_me$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"MyCollectionRoute_me">;
+  readonly " $data"?: MyCollectionRoute_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"MyCollectionRoute_me">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
@@ -142,16 +145,16 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "GridItem_artwork"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "GridItem_artwork"
                 }
               ],
               "storageKey": null
@@ -173,5 +176,7 @@ const node: ReaderFragment = {
   "type": "Me",
   "abstractKey": null
 };
-(node as any).hash = '89bb03afb09fa419ee5f61b9bed90449';
+
+(node as any).hash = "89bb03afb09fa419ee5f61b9bed90449";
+
 export default node;

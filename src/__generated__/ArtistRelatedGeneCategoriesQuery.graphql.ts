@@ -1,48 +1,27 @@
+/**
+ * @generated SignedSource<<0beb87b98c86bb41d41da883e075cd34>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedGeneCategoriesQueryVariables = {
-    slug: string;
+export type ArtistRelatedGeneCategoriesQuery$variables = {
+  slug: string;
 };
-export type ArtistRelatedGeneCategoriesQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
-    } | null;
+export type ArtistRelatedGeneCategoriesQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
+  } | null;
 };
 export type ArtistRelatedGeneCategoriesQuery = {
-    readonly response: ArtistRelatedGeneCategoriesQueryResponse;
-    readonly variables: ArtistRelatedGeneCategoriesQueryVariables;
+  variables: ArtistRelatedGeneCategoriesQuery$variables;
+  response: ArtistRelatedGeneCategoriesQuery$data;
 };
-
-
-
-/*
-query ArtistRelatedGeneCategoriesQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistRelatedGeneCategories_artist
-    id
-  }
-}
-
-fragment ArtistRelatedGeneCategories_artist on Artist {
-  related {
-    genes {
-      edges {
-        node {
-          href
-          name
-          id
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -182,5 +161,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'ad9a9271415e610cbfea0e73e1cda031';
+
+(node as any).hash = "ad9a9271415e610cbfea0e73e1cda031";
+
 export default node;

@@ -11,7 +11,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkSidebarClassificationsModalQuery } from "__generated__/ArtworkSidebarClassificationsModalQuery.graphql"
-import { ArtworkSidebarClassificationsModal_viewer } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
+import { ArtworkSidebarClassificationsModal_viewer$data } from "__generated__/ArtworkSidebarClassificationsModal_viewer.graphql"
 
 const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(3)].map((_, i) => {
   return (
@@ -29,7 +29,7 @@ const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(3)].map((_, i) => {
 })
 
 interface ArtworkSidebarClassificationsModalProps {
-  viewer?: ArtworkSidebarClassificationsModal_viewer
+  viewer?: ArtworkSidebarClassificationsModal_viewer$data
   show: boolean
   onClose(): void
   showDisclaimer?: boolean
@@ -126,6 +126,7 @@ export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<Omit<
         return (
           <ArtworkSidebarClassificationsModalFragmentContainer
             {...rest}
+            // @ts-ignore RELAY UPGRADE 13
             viewer={props.viewer}
           />
         )

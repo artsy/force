@@ -2,13 +2,13 @@ import { Text, Flex, Box, Image } from "@artsy/palette"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtistShowsGroup_artist } from "__generated__/ArtistShowsGroup_artist.graphql"
+import { ArtistShowsGroup_artist$data } from "__generated__/ArtistShowsGroup_artist.graphql"
 import { PaginationFragmentContainer } from "Components/Pagination"
 
 const REFETCH_PAGE_SIZE = 10
 
 interface ArtistShowsGroupProps {
-  artist: ArtistShowsGroup_artist
+  artist: ArtistShowsGroup_artist$data
   relay: RelayRefetchProp
   title: string
   sort: string
@@ -97,6 +97,7 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
 
       <PaginationFragmentContainer
         getHref={() => ""}
+        // @ts-ignore RELAY UPGRADE 13
         pageCursors={artist?.showsConnection?.pageCursors!}
         onClick={loadAfter}
         onNext={loadNext}

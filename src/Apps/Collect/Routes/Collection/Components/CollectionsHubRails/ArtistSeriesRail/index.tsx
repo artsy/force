@@ -1,11 +1,11 @@
-import { ArtistSeriesRail_collectionGroup } from "__generated__/ArtistSeriesRail_collectionGroup.graphql"
+import { ArtistSeriesRail_collectionGroup$data } from "__generated__/ArtistSeriesRail_collectionGroup.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
 import { Rail } from "Components/Rail"
 
 export interface ArtistSeriesRailProps {
-  collectionGroup: ArtistSeriesRail_collectionGroup
+  collectionGroup: ArtistSeriesRail_collectionGroup$data
 }
 export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
   collectionGroup: { members, name },
@@ -18,6 +18,7 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
           return (
             <ArtistSeriesEntity
               key={slide.slug || slideIndex}
+              // @ts-ignore RELAY UPGRADE 13
               member={slide}
               itemNumber={slideIndex}
             />

@@ -2,14 +2,14 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { TappedMakeOffer, ActionType, OwnerType } from "@artsy/cohesion"
-import { MakeOfferOnInquiryButton_conversation } from "__generated__/MakeOfferOnInquiryButton_conversation.graphql"
+import { MakeOfferOnInquiryButton_conversation$data } from "__generated__/MakeOfferOnInquiryButton_conversation.graphql"
 import { Button, Spacer } from "@artsy/palette"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface MakeOfferOnInquiryButtonProps {
   openInquiryModal: () => void
-  conversation: MakeOfferOnInquiryButton_conversation
+  conversation: MakeOfferOnInquiryButton_conversation$data
 }
 
 export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> = ({
@@ -54,6 +54,7 @@ export const MakeOfferOnInquiryButton: React.FC<MakeOfferOnInquiryButtonProps> =
       ) : (
         // Creates an offer and redirects to the checkout flow
         <ConfirmArtworkButtonFragmentContainer
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           conversationID={conversationID}
           editionSetID={editionSets?.[0]?.internalID || null}

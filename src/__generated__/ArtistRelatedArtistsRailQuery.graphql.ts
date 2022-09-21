@@ -1,86 +1,27 @@
+/**
+ * @generated SignedSource<<2c6adcd8eed468df53d22d897ea72022>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedArtistsRailQueryVariables = {
-    slug: string;
+export type ArtistRelatedArtistsRailQuery$variables = {
+  slug: string;
 };
-export type ArtistRelatedArtistsRailQueryResponse = {
-    readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
-    } | null;
+export type ArtistRelatedArtistsRailQuery$data = {
+  readonly artist: {
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
+  } | null;
 };
 export type ArtistRelatedArtistsRailQuery = {
-    readonly response: ArtistRelatedArtistsRailQueryResponse;
-    readonly variables: ArtistRelatedArtistsRailQueryVariables;
+  variables: ArtistRelatedArtistsRailQuery$variables;
+  response: ArtistRelatedArtistsRailQuery$data;
 };
-
-
-
-/*
-query ArtistRelatedArtistsRailQuery(
-  $slug: String!
-) {
-  artist(id: $slug) {
-    ...ArtistRelatedArtistsRail_artist
-    id
-  }
-}
-
-fragment ArtistRelatedArtistsRail_artist on Artist {
-  name
-  href
-  related {
-    artistsConnection(kind: MAIN, first: 20) {
-      edges {
-        node {
-          ...CellArtist_artist
-          internalID
-          slug
-          href
-          id
-        }
-      }
-    }
-  }
-}
-
-fragment CellArtist_artist on Artist {
-  ...EntityHeaderArtist_artist
-  internalID
-  slug
-  name
-  href
-  initials
-  image {
-    cropped(width: 445, height: 334, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-    }
-  }
-}
-
-fragment EntityHeaderArtist_artist on Artist {
-  internalID
-  href
-  slug
-  name
-  initials
-  formattedNationalityAndBirthday
-  counts {
-    artworks
-    forSaleArtworks
-  }
-  avatar: image {
-    cropped(width: 45, height: 45) {
-      src
-      srcSet
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -377,5 +318,7 @@ return {
   }
 };
 })();
-(node as any).hash = 'b1c36c43ce75912bdf69405f7b37dd92';
+
+(node as any).hash = "b1c36c43ce75912bdf69405f7b37dd92";
+
 export default node;

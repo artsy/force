@@ -13,7 +13,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { useState } from "react"
-import { SavedSearchAlertsApp_me } from "__generated__/SavedSearchAlertsApp_me.graphql"
+import { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "Utils/Responsive"
 import { EditAlertEntity } from "./types"
 import { extractNodes } from "Utils/extractNodes"
@@ -33,7 +33,7 @@ import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 
 interface SavedSearchAlertsAppProps {
-  me: SavedSearchAlertsApp_me
+  me: SavedSearchAlertsApp_me$data
   relay: RelayPaginationProp
 }
 
@@ -144,6 +144,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
           return (
             <SavedSearchAlertListItemFragmentContainer
               key={edge.internalID}
+              // @ts-ignore RELAY UPGRADE 13
               item={edge}
               variant={variant}
               onEditAlertClick={setEditAlertEntity}

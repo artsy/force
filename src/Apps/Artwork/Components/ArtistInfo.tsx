@@ -6,7 +6,7 @@ import {
   Spacer,
   StackableBorderBox,
 } from "@artsy/palette"
-import { ArtistInfo_artist } from "__generated__/ArtistInfo_artist.graphql"
+import { ArtistInfo_artist$data } from "__generated__/ArtistInfo_artist.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "Components/FollowButton/FollowArtistButton"
 import { ArtistBioFragmentContainer as ArtistBio } from "Components/ArtistBio"
@@ -21,7 +21,7 @@ import { data as sd } from "sharify"
 import Events from "Utils/Events"
 
 interface ArtistInfoProps {
-  artist: ArtistInfo_artist
+  artist: ArtistInfo_artist$data
 }
 
 const Container = ({ children }) => (
@@ -62,6 +62,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
             }}
             FollowButton={
               <FollowArtistButton
+                // @ts-ignore RELAY UPGRADE 13
                 artist={artist}
                 contextModule={ContextModule.aboutTheWork}
                 size="small"
@@ -73,6 +74,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
               <Spacer mt={2} />
 
               <ArtistBio
+                // @ts-ignore RELAY UPGRADE 13
                 bio={artist}
                 onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(this)}
               />
@@ -81,6 +83,7 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
         </StackableBorderBox>
 
         <ArtistMarketInsights
+          // @ts-ignore RELAY UPGRADE 13
           artist={artist}
           border={false}
           Container={Container}
@@ -225,6 +228,7 @@ export const ArtistInfoQueryRenderer: React.FC<{
           return PLACEHOLDER
         }
         if (props.artist) {
+          // @ts-ignore RELAY UPGRADE 13
           return <ArtistInfoFragmentContainer artist={props.artist} />
         }
       }}

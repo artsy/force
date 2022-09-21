@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<ee20968b272e4fbf8b29bbd69b8a0de7>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneMeta_gene = {
-    readonly name: string | null;
-    readonly displayName: string | null;
-    readonly href: string | null;
-    readonly meta: {
-        readonly description: string;
-    };
-    readonly image: {
-        readonly cropped: {
-            readonly src: string;
-        } | null;
+export type GeneMeta_gene$data = {
+  readonly name: string | null;
+  readonly displayName: string | null;
+  readonly href: string | null;
+  readonly meta: {
+    readonly description: string;
+  };
+  readonly image: {
+    readonly cropped: {
+      readonly src: string;
     } | null;
-    readonly " $refType": "GeneMeta_gene";
+  } | null;
+  readonly " $fragmentType": "GeneMeta_gene";
 };
-export type GeneMeta_gene$data = GeneMeta_gene;
 export type GeneMeta_gene$key = {
-    readonly " $data"?: GeneMeta_gene$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene">;
+  readonly " $data"?: GeneMeta_gene$data;
+  readonly " $fragmentSpreads": FragmentRefs<"GeneMeta_gene">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -115,5 +118,7 @@ const node: ReaderFragment = {
   "type": "Gene",
   "abstractKey": null
 };
-(node as any).hash = '2e27d5537beb9dd961399d8fc7cdfcc5';
+
+(node as any).hash = "2e27d5537beb9dd961399d8fc7cdfcc5";
+
 export default node;

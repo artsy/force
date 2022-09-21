@@ -18,7 +18,7 @@ import {
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { extractNodes } from "Utils/extractNodes"
-import { NavBarNotifications_me } from "__generated__/NavBarNotifications_me.graphql"
+import { NavBarNotifications_me$data } from "__generated__/NavBarNotifications_me.graphql"
 
 interface NavBarNotificationsItemContentProps {
   image: JSX.Element
@@ -58,7 +58,7 @@ const NavBarNotificationsItemPlaceholder = () => {
 }
 
 interface NavBarNotificationsProps {
-  me: NavBarNotifications_me
+  me: NavBarNotifications_me$data
 }
 
 export const NavBarNotifications: React.FC<NavBarNotificationsProps> = ({
@@ -219,6 +219,7 @@ export const NavBarNotificationsQueryRenderer: React.FC = () => {
             return <NavBarNotificationsPlaceholder />
           }
 
+          // @ts-ignore RELAY UPGRADE 13
           return <NavBarNotificationsFragmentContainer me={props.me} />
         }}
       />

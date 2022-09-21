@@ -13,8 +13,8 @@ import { BreadCrumbList } from "Components/Seo"
 
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 
-import { Collect_marketingCollections } from "__generated__/Collect_marketingCollections.graphql"
-import { collectRoutes_ArtworkFilterQueryResponse } from "__generated__/collectRoutes_ArtworkFilterQuery.graphql"
+import { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
+import { collectRoutes_ArtworkFilterQuery$data } from "__generated__/collectRoutes_ArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
 import { ArtworkFilter } from "Components/ArtworkFilter"
 import { RouterLink } from "System/Router/RouterLink"
@@ -30,9 +30,9 @@ import { useSystemContext } from "System"
 export interface CollectAppProps {
   match: Match
   router: Router
-  marketingCollections: Collect_marketingCollections
-  viewer: collectRoutes_ArtworkFilterQueryResponse["viewer"]
-  filterArtworks: collectRoutes_ArtworkFilterQueryResponse["filterArtworks"]
+  marketingCollections: Collect_marketingCollections$data
+  viewer: collectRoutes_ArtworkFilterQuery$data["viewer"]
+  filterArtworks: collectRoutes_ArtworkFilterQuery$data["filterArtworks"]
 }
 
 export const CollectApp: React.FC<CollectAppProps> = ({
@@ -98,6 +98,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
         <BreadCrumbList items={items} />
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
         <Box mt={4}>
@@ -117,6 +118,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
           <Separator my={4} />
 
+          {/* @ts-ignore RELAY UPGRADE 13 */}
           <CollectionsHubsNav marketingCollections={marketingCollections} />
 
           <Spacer my={6} />

@@ -1,86 +1,89 @@
+/**
+ * @generated SignedSource<<dbc16c58203390bcfb21a5c93e7844ba>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type SettingsPurchasesRow_order = {
-    readonly internalID: string;
-    readonly code: string;
-    readonly displayState: CommerceOrderDisplayStateEnum;
-    readonly state: CommerceOrderStateEnum;
-    readonly requestedFulfillment: {
-        readonly __typename: string;
-    } | null;
-    readonly paymentMethodDetails: ({
-        readonly __typename: "CreditCard";
-        readonly lastDigits: string;
-    } | {
-        readonly __typename: "BankAccount";
-        readonly last4: string;
-    } | {
-        readonly __typename: "WireTransfer";
-        readonly isManualPayment: boolean;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly buyerTotal: string | null;
-    readonly createdAt: string;
-    readonly currencyCode: string;
-    readonly lineItems: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly artwork: {
-                    readonly href: string | null;
-                    readonly image: {
-                        readonly cropped: {
-                            readonly src: string;
-                            readonly srcSet: string;
-                        } | null;
-                    } | null;
-                    readonly partner: {
-                        readonly href: string | null;
-                        readonly initials: string | null;
-                        readonly name: string | null;
-                        readonly profile: {
-                            readonly icon: {
-                                readonly cropped: {
-                                    readonly src: string;
-                                    readonly srcSet: string;
-                                } | null;
-                            } | null;
-                        } | null;
-                    } | null;
-                    readonly shippingOrigin: string | null;
-                    readonly title: string | null;
-                    readonly artistNames: string | null;
-                    readonly artists: ReadonlyArray<{
-                        readonly href: string | null;
-                    } | null> | null;
-                } | null;
-                readonly fulfillments: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly trackingId: string | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
+import { FragmentRefs } from "relay-runtime";
+export type SettingsPurchasesRow_order$data = {
+  readonly internalID: string;
+  readonly code: string;
+  readonly displayState: CommerceOrderDisplayStateEnum;
+  readonly state: CommerceOrderStateEnum;
+  readonly requestedFulfillment: {
+    readonly __typename: string;
+  } | null;
+  readonly paymentMethodDetails: {
+    readonly __typename: "CreditCard";
+    readonly lastDigits: string;
+  } | {
+    readonly __typename: "BankAccount";
+    readonly last4: string;
+  } | {
+    readonly __typename: "WireTransfer";
+    readonly isManualPayment: boolean;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
+  readonly buyerTotal: string | null;
+  readonly createdAt: string;
+  readonly currencyCode: string;
+  readonly lineItems: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly artwork: {
+          readonly href: string | null;
+          readonly image: {
+            readonly cropped: {
+              readonly src: string;
+              readonly srcSet: string;
             } | null;
-        } | null> | null;
-    } | null;
-    readonly " $refType": "SettingsPurchasesRow_order";
+          } | null;
+          readonly partner: {
+            readonly href: string | null;
+            readonly initials: string | null;
+            readonly name: string | null;
+            readonly profile: {
+              readonly icon: {
+                readonly cropped: {
+                  readonly src: string;
+                  readonly srcSet: string;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+          readonly shippingOrigin: string | null;
+          readonly title: string | null;
+          readonly artistNames: string | null;
+          readonly artists: ReadonlyArray<{
+            readonly href: string | null;
+          } | null> | null;
+        } | null;
+        readonly fulfillments: {
+          readonly edges: ReadonlyArray<{
+            readonly node: {
+              readonly trackingId: string | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null> | null;
+  } | null;
+  readonly " $fragmentType": "SettingsPurchasesRow_order";
 };
-export type SettingsPurchasesRow_order$data = SettingsPurchasesRow_order;
 export type SettingsPurchasesRow_order$key = {
-    readonly " $data"?: SettingsPurchasesRow_order$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"SettingsPurchasesRow_order">;
+  readonly " $data"?: SettingsPurchasesRow_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchasesRow_order">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -448,5 +451,7 @@ return {
   "abstractKey": "__isCommerceOrder"
 };
 })();
-(node as any).hash = '358468f62a7ebc385fbba3df2a4390fb';
+
+(node as any).hash = "358468f62a7ebc385fbba3df2a4390fb";
+
 export default node;

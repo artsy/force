@@ -1,13 +1,13 @@
 import * as React from "react"
 import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureSet_set } from "__generated__/FeatureSet_set.graphql"
+import { FeatureSet_set$data } from "__generated__/FeatureSet_set.graphql"
 import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
 import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./FeatureSetContainer"
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
 
 export interface FeatureSetProps extends Omit<BoxProps, "color"> {
-  set: FeatureSet_set
+  set: FeatureSet_set$data
 }
 
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
@@ -37,10 +37,12 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
   return (
     <Box {...rest}>
       {set.name || set.description ? (
+        // @ts-ignore RELAY UPGRADE 13
         <FeatureSetMeta set={set} mt={4} mb={2} />
       ) : (
         <Spacer my={4} />
       )}
+      {/* @ts-ignore RELAY UPGRADE 13 */}
       <FeatureSetContainer set={set}>
         {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {set.orderedItems.edges.map(({ node: setItem }) => {

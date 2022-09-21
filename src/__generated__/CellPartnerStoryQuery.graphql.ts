@@ -1,112 +1,27 @@
+/**
+ * @generated SignedSource<<a107816943299c891b71788d9ca85ac2>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellPartnerStoryQueryVariables = {
-    id: string;
+export type CellPartnerStoryQuery$variables = {
+  id: string;
 };
-export type CellPartnerStoryQueryResponse = {
-    readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"CellPartner_partner">;
-    } | null;
+export type CellPartnerStoryQuery$data = {
+  readonly partner: {
+    readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
+  } | null;
 };
 export type CellPartnerStoryQuery = {
-    readonly response: CellPartnerStoryQueryResponse;
-    readonly variables: CellPartnerStoryQueryVariables;
+  variables: CellPartnerStoryQuery$variables;
+  response: CellPartnerStoryQuery$data;
 };
-
-
-
-/*
-query CellPartnerStoryQuery(
-  $id: String!
-) {
-  partner(id: $id) {
-    ...CellPartner_partner
-    id
-  }
-}
-
-fragment CellPartner_partner on Partner {
-  ...EntityHeaderPartner_partner
-  internalID
-  slug
-  name
-  href
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    image {
-      cropped(width: 445, height: 334, version: ["wide", "large", "featured", "larger"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment EntityHeaderPartner_partner on Partner {
-  internalID
-  type
-  slug
-  href
-  name
-  initials
-  locationsConnection(first: 15) {
-    edges {
-      node {
-        city
-        id
-      }
-    }
-  }
-  categories {
-    name
-    slug
-    id
-  }
-  profile {
-    ...FollowProfileButton_profile
-    avatar: image {
-      cropped(width: 45, height: 45) {
-        src
-        srcSet
-      }
-    }
-    icon {
-      cropped(width: 45, height: 45, version: ["untouched-png", "large", "square"]) {
-        src
-        srcSet
-      }
-    }
-    id
-  }
-}
-
-fragment FollowProfileButton_profile on Profile {
-  id
-  slug
-  name
-  internalID
-  isFollowed
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -440,5 +355,7 @@ return {
   }
 };
 })();
-(node as any).hash = '5b7dd2f91dc8517906e2db8f6780acf0';
+
+(node as any).hash = "5b7dd2f91dc8517906e2db8f6780acf0";
+
 export default node;

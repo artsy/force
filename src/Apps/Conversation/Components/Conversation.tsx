@@ -31,10 +31,10 @@ import useOnScreen from "../Utils/useOnScreen"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
-import { Conversation_conversation } from "__generated__/Conversation_conversation.graphql"
+import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import { useRouter } from "System/Router/useRouter"
 export interface ConversationProps {
-  conversation: Conversation_conversation
+  conversation: Conversation_conversation$data
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
   relay: RelayPaginationProp
@@ -92,6 +92,7 @@ const Conversation: React.FC<ConversationProps> = props => {
 
     return (
       <ItemFragmentContainer
+        // @ts-ignore RELAY UPGRADE 13
         item={i.item!}
         key={isValidType ? i.item?.id : idx}
       />
@@ -244,7 +245,9 @@ const Conversation: React.FC<ConversationProps> = props => {
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}
               <ConversationMessages
+                // @ts-ignore RELAY UPGRADE 13
                 messages={conversation.messagesConnection!}
+                // @ts-ignore RELAY UPGRADE 13
                 events={conversation.orderConnection}
                 lastViewedMessageID={conversation?.fromLastViewedMessageID}
                 setShowDetails={setShowDetails}

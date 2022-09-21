@@ -1,30 +1,33 @@
+/**
+ * @generated SignedSource<<041562d90ba228b7429dc8f361141566>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowMeta_show = {
-    readonly name: string | null;
-    readonly href: string | null;
-    readonly metaDescription: string | null;
-    readonly metaImage: {
-        readonly src: string | null;
-    } | null;
-    readonly partner: {
-        readonly name?: string | null | undefined;
-    } | null;
-    readonly formattedStartAt: string | null;
-    readonly formattedEndAt: string | null;
-    readonly " $refType": "ShowMeta_show";
+export type ShowMeta_show$data = {
+  readonly name: string | null;
+  readonly href: string | null;
+  readonly metaDescription: string | null;
+  readonly metaImage: {
+    readonly src: string | null;
+  } | null;
+  readonly partner: {
+    readonly name?: string | null;
+  } | null;
+  readonly formattedStartAt: string | null;
+  readonly formattedEndAt: string | null;
+  readonly " $fragmentType": "ShowMeta_show";
 };
-export type ShowMeta_show$data = ShowMeta_show;
 export type ShowMeta_show$key = {
-    readonly " $data"?: ShowMeta_show$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show">;
+  readonly " $data"?: ShowMeta_show$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ShowMeta_show">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = {
@@ -133,5 +136,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'e1404626f15ca6b5d2d9c1552850a96b';
+
+(node as any).hash = "e1404626f15ca6b5d2d9c1552850a96b";
+
 export default node;

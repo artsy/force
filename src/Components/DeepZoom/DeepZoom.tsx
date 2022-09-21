@@ -6,7 +6,7 @@ import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
 import { DeepZoomSlider } from "./DeepZoomSlider"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { DeepZoom_image } from "__generated__/DeepZoom_image.graphql"
+import { DeepZoom_image$data } from "__generated__/DeepZoom_image.graphql"
 import { useRef } from "react"
 import { useEffect } from "react"
 import { useDidMount } from "Utils/Hooks/useDidMount"
@@ -15,7 +15,7 @@ import { useTracking } from "react-tracking"
 const ZOOM_PER_CLICK = 1.4
 
 interface DeepZoomProps {
-  image: DeepZoom_image
+  image: DeepZoom_image$data
   onClose(): void
 }
 

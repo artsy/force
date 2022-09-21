@@ -1,314 +1,79 @@
+/**
+ * @generated SignedSource<<211bf048523ccba34de50195d9b064b8>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type FilterArtworksInput = {
-    acquireable?: boolean | null | undefined;
-    additionalGeneIDs?: Array<string | null> | null | undefined;
-    after?: string | null | undefined;
-    aggregationPartnerCities?: Array<string | null> | null | undefined;
-    aggregations?: Array<ArtworkAggregation | null> | null | undefined;
-    artistID?: string | null | undefined;
-    artistIDs?: Array<string | null> | null | undefined;
-    artistNationalities?: Array<string | null> | null | undefined;
-    artistSeriesID?: string | null | undefined;
-    atAuction?: boolean | null | undefined;
-    attributionClass?: Array<string | null> | null | undefined;
-    before?: string | null | undefined;
-    color?: string | null | undefined;
-    colors?: Array<string | null> | null | undefined;
-    dimensionRange?: string | null | undefined;
-    excludeArtworkIDs?: Array<string | null> | null | undefined;
-    extraAggregationGeneIDs?: Array<string | null> | null | undefined;
-    first?: number | null | undefined;
-    forSale?: boolean | null | undefined;
-    geneID?: string | null | undefined;
-    geneIDs?: Array<string | null> | null | undefined;
-    height?: string | null | undefined;
-    includeArtworksByFollowedArtists?: boolean | null | undefined;
-    includeMediumFilterInAggregation?: boolean | null | undefined;
-    inquireableOnly?: boolean | null | undefined;
-    keyword?: string | null | undefined;
-    keywordMatchExact?: boolean | null | undefined;
-    last?: number | null | undefined;
-    locationCities?: Array<string | null> | null | undefined;
-    majorPeriods?: Array<string | null> | null | undefined;
-    marketable?: boolean | null | undefined;
-    marketingCollectionID?: string | null | undefined;
-    materialsTerms?: Array<string | null> | null | undefined;
-    medium?: string | null | undefined;
-    offerable?: boolean | null | undefined;
-    page?: number | null | undefined;
-    partnerCities?: Array<string | null> | null | undefined;
-    partnerID?: string | null | undefined;
-    partnerIDs?: Array<string | null> | null | undefined;
-    period?: string | null | undefined;
-    periods?: Array<string | null> | null | undefined;
-    priceRange?: string | null | undefined;
-    saleID?: string | null | undefined;
-    size?: number | null | undefined;
-    sizes?: Array<ArtworkSizes | null> | null | undefined;
-    sort?: string | null | undefined;
-    tagID?: string | null | undefined;
-    width?: string | null | undefined;
+  acquireable?: boolean | null;
+  additionalGeneIDs?: ReadonlyArray<string | null> | null;
+  after?: string | null;
+  aggregationPartnerCities?: ReadonlyArray<string | null> | null;
+  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
+  artistID?: string | null;
+  artistIDs?: ReadonlyArray<string | null> | null;
+  artistNationalities?: ReadonlyArray<string | null> | null;
+  artistSeriesID?: string | null;
+  atAuction?: boolean | null;
+  attributionClass?: ReadonlyArray<string | null> | null;
+  before?: string | null;
+  color?: string | null;
+  colors?: ReadonlyArray<string | null> | null;
+  dimensionRange?: string | null;
+  excludeArtworkIDs?: ReadonlyArray<string | null> | null;
+  extraAggregationGeneIDs?: ReadonlyArray<string | null> | null;
+  first?: number | null;
+  forSale?: boolean | null;
+  geneID?: string | null;
+  geneIDs?: ReadonlyArray<string | null> | null;
+  height?: string | null;
+  includeArtworksByFollowedArtists?: boolean | null;
+  includeMediumFilterInAggregation?: boolean | null;
+  inquireableOnly?: boolean | null;
+  keyword?: string | null;
+  keywordMatchExact?: boolean | null;
+  last?: number | null;
+  locationCities?: ReadonlyArray<string | null> | null;
+  majorPeriods?: ReadonlyArray<string | null> | null;
+  marketable?: boolean | null;
+  marketingCollectionID?: string | null;
+  materialsTerms?: ReadonlyArray<string | null> | null;
+  medium?: string | null;
+  offerable?: boolean | null;
+  page?: number | null;
+  partnerCities?: ReadonlyArray<string | null> | null;
+  partnerID?: string | null;
+  partnerIDs?: ReadonlyArray<string | null> | null;
+  period?: string | null;
+  periods?: ReadonlyArray<string | null> | null;
+  priceRange?: string | null;
+  saleID?: string | null;
+  size?: number | null;
+  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
+  sort?: string | null;
+  tagID?: string | null;
+  width?: string | null;
 };
-export type AuctionArtworkFilterTestQueryVariables = {
-    input: FilterArtworksInput;
+export type AuctionArtworkFilterTestQuery$variables = {
+  input: FilterArtworksInput;
 };
-export type AuctionArtworkFilterTestQueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionArtworkFilter_viewer">;
-    } | null;
+export type AuctionArtworkFilterTestQuery$data = {
+  readonly viewer: {
+    readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer">;
+  } | null;
 };
 export type AuctionArtworkFilterTestQuery = {
-    readonly response: AuctionArtworkFilterTestQueryResponse;
-    readonly variables: AuctionArtworkFilterTestQueryVariables;
+  variables: AuctionArtworkFilterTestQuery$variables;
+  response: AuctionArtworkFilterTestQuery$data;
 };
-
-
-
-/*
-query AuctionArtworkFilterTestQuery(
-  $input: FilterArtworksInput!
-) {
-  viewer {
-    ...AuctionArtworkFilter_viewer_2VV6jB
-  }
-}
-
-fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
-  id
-  pageInfo {
-    hasNextPage
-    endCursor
-  }
-  pageCursors {
-    ...Pagination_pageCursors
-  }
-  edges {
-    node {
-      id
-    }
-  }
-  ...ArtworkGrid_artworks
-}
-
-fragment ArtworkFilter_viewer_2VV6jB on Viewer {
-  filtered_artworks: artworksConnection(input: $input) {
-    ...ArtworkFilterArtworkGrid_filtered_artworks
-    counts {
-      total(format: "0,0")
-    }
-    id
-  }
-}
-
-fragment ArtworkGrid_artworks on ArtworkConnectionInterface {
-  __isArtworkConnectionInterface: __typename
-  edges {
-    __typename
-    node {
-      id
-      slug
-      href
-      internalID
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...GridItem_artwork
-      ...FlatGridItem_artwork
-    }
-    ... on Node {
-      __isNode: __typename
-      id
-    }
-  }
-}
-
-fragment AuctionArtworkFilter_viewer_2VV6jB on Viewer {
-  ...ArtworkFilter_viewer_2VV6jB
-  sidebarAggregations: artworksConnection(input: $input, first: 1) {
-    counts {
-      followedArtists
-    }
-    aggregations {
-      slice
-      counts {
-        name
-        value
-        count
-      }
-    }
-    id
-  }
-}
-
-fragment Badge_artwork on Artwork {
-  is_biddable: isBiddable
-  href
-  sale {
-    is_preview: isPreview
-    display_timely_at: displayTimelyAt
-    id
-  }
-}
-
-fragment Details_artwork on Artwork {
-  href
-  title
-  date
-  sale_message: saleMessage
-  cultural_maker: culturalMaker
-  artists(shallow: true) {
-    id
-    href
-    name
-  }
-  collecting_institution: collectingInstitution
-  partner(shallow: true) {
-    name
-    href
-    id
-  }
-  sale {
-    endAt
-    cascadingEndTimeIntervalMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    is_auction: isAuction
-    is_closed: isClosed
-    id
-  }
-  sale_artwork: saleArtwork {
-    lotID
-    lotLabel
-    endAt
-    extendedBiddingEndAt
-    formattedEndDateTime
-    counts {
-      bidder_positions: bidderPositions
-    }
-    highest_bid: highestBid {
-      display
-    }
-    opening_bid: openingBid {
-      display
-    }
-    id
-  }
-  ...NewSaveButton_artwork
-  ...HoverDetails_artwork
-}
-
-fragment FlatGridItem_artwork on Artwork {
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  sale {
-    extendedBiddingPeriodMinutes
-    extendedBiddingIntervalMinutes
-    startAt
-    id
-  }
-  saleArtwork {
-    endAt
-    extendedBiddingEndAt
-    lotID
-    id
-  }
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    resized(width: 445, version: ["normalized", "larger", "large"]) {
-      src
-      srcSet
-      width
-      height
-    }
-  }
-  artistNames
-  href
-  is_saved: isSaved
-}
-
-fragment GridItem_artwork on Artwork {
-  internalID
-  title
-  image_title: imageTitle
-  image {
-    placeholder
-    url(version: "large")
-    aspect_ratio: aspectRatio
-  }
-  artistNames
-  href
-  ...Metadata_artwork
-  ...SaveButton_artwork
-  ...Badge_artwork
-}
-
-fragment HoverDetails_artwork on Artwork {
-  internalID
-  attributionClass {
-    name
-    id
-  }
-  mediumType {
-    filterGene {
-      name
-      id
-    }
-  }
-}
-
-fragment Metadata_artwork on Artwork {
-  ...Details_artwork
-  internalID
-  href
-}
-
-fragment NewSaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-
-fragment Pagination_pageCursors on PageCursors {
-  around {
-    cursor
-    page
-    isCurrent
-  }
-  first {
-    cursor
-    page
-    isCurrent
-  }
-  last {
-    cursor
-    page
-    isCurrent
-  }
-  previous {
-    cursor
-    page
-  }
-}
-
-fragment SaveButton_artwork on Artwork {
-  id
-  internalID
-  slug
-  is_saved: isSaved
-  title
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -1111,5 +876,7 @@ return {
   }
 };
 })();
-(node as any).hash = '86c6dd6d96fee65c1d962e3756af51c7';
+
+(node as any).hash = "86c6dd6d96fee65c1d962e3756af51c7";
+
 export default node;

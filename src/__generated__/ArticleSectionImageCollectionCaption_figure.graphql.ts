@@ -1,22 +1,25 @@
+/**
+ * @generated SignedSource<<3dfbbdbb3c2b11c9aec82320da4cd272>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArticleSectionImageCollectionCaption_figure = {
-    readonly __typename: string;
-    readonly caption?: string | null | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
-    readonly " $refType": "ArticleSectionImageCollectionCaption_figure";
+export type ArticleSectionImageCollectionCaption_figure$data = {
+  readonly __typename: string;
+  readonly caption?: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
+  readonly " $fragmentType": "ArticleSectionImageCollectionCaption_figure";
 };
-export type ArticleSectionImageCollectionCaption_figure$data = ArticleSectionImageCollectionCaption_figure;
 export type ArticleSectionImageCollectionCaption_figure$key = {
-    readonly " $data"?: ArticleSectionImageCollectionCaption_figure$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"ArticleSectionImageCollectionCaption_figure">;
+  readonly " $data"?: ArticleSectionImageCollectionCaption_figure$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArticleSectionImageCollectionCaption_figure">;
 };
-
-
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
@@ -54,5 +57,7 @@ const node: ReaderFragment = {
   "type": "ArticleSectionImageCollectionFigure",
   "abstractKey": "__isArticleSectionImageCollectionFigure"
 };
-(node as any).hash = '446271f2fd3efad0800c1e6260f3fd5b';
+
+(node as any).hash = "446271f2fd3efad0800c1e6260f3fd5b";
+
 export default node;

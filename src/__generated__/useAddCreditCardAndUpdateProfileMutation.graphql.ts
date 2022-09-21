@@ -1,126 +1,96 @@
+/**
+ * @generated SignedSource<<062b2ce7694997e52428807d02f44451>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type CreditCardInput = {
-    clientMutationId?: string | null | undefined;
-    oneTimeUse?: boolean | null | undefined;
-    token: string;
+  clientMutationId?: string | null;
+  oneTimeUse?: boolean | null;
+  token: string;
 };
 export type UpdateMyProfileInput = {
-    artworksPerYear?: string | null | undefined;
-    bio?: string | null | undefined;
-    clientMutationId?: string | null | undefined;
-    collectorLevel?: number | null | undefined;
-    completedOnboarding?: boolean | null | undefined;
-    currencyPreference?: CurrencyPreference | null | undefined;
-    email?: string | null | undefined;
-    emailFrequency?: string | null | undefined;
-    gender?: string | null | undefined;
-    iconUrl?: string | null | undefined;
-    industry?: string | null | undefined;
-    isCollector?: boolean | null | undefined;
-    lengthUnitPreference?: LengthUnitPreference | null | undefined;
-    location?: EditableLocation | null | undefined;
-    name?: string | null | undefined;
-    notes?: string | null | undefined;
-    otherRelevantPositions?: string | null | undefined;
-    password?: string | null | undefined;
-    phone?: string | null | undefined;
-    priceRangeMax?: number | null | undefined;
-    priceRangeMin?: number | null | undefined;
-    privacy?: string | null | undefined;
-    profession?: string | null | undefined;
-    receiveLotOpeningSoonNotification?: boolean | null | undefined;
-    receiveNewSalesNotification?: boolean | null | undefined;
-    receiveNewWorksNotification?: boolean | null | undefined;
-    receiveOrderNotification?: boolean | null | undefined;
-    receiveOutbidNotification?: boolean | null | undefined;
-    receivePromotionNotification?: boolean | null | undefined;
-    receivePurchaseNotification?: boolean | null | undefined;
-    receiveSaleOpeningClosingNotification?: boolean | null | undefined;
-    receiveViewingRoomNotification?: boolean | null | undefined;
-    shareFollows?: boolean | null | undefined;
+  artworksPerYear?: string | null;
+  bio?: string | null;
+  clientMutationId?: string | null;
+  collectorLevel?: number | null;
+  completedOnboarding?: boolean | null;
+  currencyPreference?: CurrencyPreference | null;
+  email?: string | null;
+  emailFrequency?: string | null;
+  gender?: string | null;
+  iconUrl?: string | null;
+  industry?: string | null;
+  isCollector?: boolean | null;
+  lengthUnitPreference?: LengthUnitPreference | null;
+  location?: EditableLocation | null;
+  name?: string | null;
+  notes?: string | null;
+  otherRelevantPositions?: string | null;
+  password?: string | null;
+  phone?: string | null;
+  priceRangeMax?: number | null;
+  priceRangeMin?: number | null;
+  privacy?: string | null;
+  profession?: string | null;
+  receiveLotOpeningSoonNotification?: boolean | null;
+  receiveNewSalesNotification?: boolean | null;
+  receiveNewWorksNotification?: boolean | null;
+  receiveOrderNotification?: boolean | null;
+  receiveOutbidNotification?: boolean | null;
+  receivePromotionNotification?: boolean | null;
+  receivePurchaseNotification?: boolean | null;
+  receiveSaleOpeningClosingNotification?: boolean | null;
+  receiveViewingRoomNotification?: boolean | null;
+  shareFollows?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null | undefined;
-    address2?: string | null | undefined;
-    city?: string | null | undefined;
-    country?: string | null | undefined;
-    countryCode?: string | null | undefined;
-    postalCode?: string | null | undefined;
-    state?: string | null | undefined;
-    stateCode?: string | null | undefined;
-    summary?: string | null | undefined;
+  address?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  country?: string | null;
+  countryCode?: string | null;
+  postalCode?: string | null;
+  state?: string | null;
+  stateCode?: string | null;
+  summary?: string | null;
 };
-export type useAddCreditCardAndUpdateProfileMutationVariables = {
-    creditCardInput: CreditCardInput;
-    profileInput: UpdateMyProfileInput;
+export type useAddCreditCardAndUpdateProfileMutation$variables = {
+  creditCardInput: CreditCardInput;
+  profileInput: UpdateMyProfileInput;
 };
-export type useAddCreditCardAndUpdateProfileMutationResponse = {
-    readonly updateMyUserProfile: {
-        readonly user: {
-            readonly internalID: string;
-        } | null;
+export type useAddCreditCardAndUpdateProfileMutation$data = {
+  readonly updateMyUserProfile: {
+    readonly user: {
+      readonly internalID: string;
     } | null;
-    readonly createCreditCard: {
-        readonly creditCardOrError: {
-            readonly creditCardEdge?: {
-                readonly node: {
-                    readonly lastDigits: string;
-                } | null;
-            } | null | undefined;
-            readonly mutationError?: {
-                readonly type: string | null;
-                readonly message: string;
-                readonly detail: string | null;
-            } | null | undefined;
+  } | null;
+  readonly createCreditCard: {
+    readonly creditCardOrError: {
+      readonly creditCardEdge?: {
+        readonly node: {
+          readonly lastDigits: string;
         } | null;
+      } | null;
+      readonly mutationError?: {
+        readonly type: string | null;
+        readonly message: string;
+        readonly detail: string | null;
+      } | null;
     } | null;
+  } | null;
 };
 export type useAddCreditCardAndUpdateProfileMutation = {
-    readonly response: useAddCreditCardAndUpdateProfileMutationResponse;
-    readonly variables: useAddCreditCardAndUpdateProfileMutationVariables;
+  variables: useAddCreditCardAndUpdateProfileMutation$variables;
+  response: useAddCreditCardAndUpdateProfileMutation$data;
 };
-
-
-
-/*
-mutation useAddCreditCardAndUpdateProfileMutation(
-  $creditCardInput: CreditCardInput!
-  $profileInput: UpdateMyProfileInput!
-) {
-  updateMyUserProfile(input: $profileInput) {
-    user {
-      internalID
-      id
-    }
-  }
-  createCreditCard(input: $creditCardInput) {
-    creditCardOrError {
-      __typename
-      ... on CreditCardMutationSuccess {
-        creditCardEdge {
-          node {
-            lastDigits
-            id
-          }
-        }
-      }
-      ... on CreditCardMutationFailure {
-        mutationError {
-          type
-          message
-          detail
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -399,5 +369,7 @@ return {
   }
 };
 })();
-(node as any).hash = '950f8ec45774ad1bf44857df41f815d7';
+
+(node as any).hash = "950f8ec45774ad1bf44857df41f815d7";
+
 export default node;

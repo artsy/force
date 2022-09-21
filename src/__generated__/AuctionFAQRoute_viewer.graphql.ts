@@ -1,34 +1,37 @@
+/**
+ * @generated SignedSource<<e67c6c03254c8fd0ce53397e3bb96804>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment } from "relay-runtime";
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionFAQRoute_viewer = {
-    readonly bidding: {
-        readonly content: string | null;
-    } | null;
-    readonly buyersPremiumTaxesAndFees: {
-        readonly content: string | null;
-    } | null;
-    readonly paymentsAndShipping: {
-        readonly content: string | null;
-    } | null;
-    readonly emailsAndAlerts: {
-        readonly content: string | null;
-    } | null;
-    readonly conditionsOfSale: {
-        readonly content: string | null;
-    } | null;
-    readonly " $refType": "AuctionFAQRoute_viewer";
+export type AuctionFAQRoute_viewer$data = {
+  readonly bidding: {
+    readonly content: string | null;
+  } | null;
+  readonly buyersPremiumTaxesAndFees: {
+    readonly content: string | null;
+  } | null;
+  readonly paymentsAndShipping: {
+    readonly content: string | null;
+  } | null;
+  readonly emailsAndAlerts: {
+    readonly content: string | null;
+  } | null;
+  readonly conditionsOfSale: {
+    readonly content: string | null;
+  } | null;
+  readonly " $fragmentType": "AuctionFAQRoute_viewer";
 };
-export type AuctionFAQRoute_viewer$data = AuctionFAQRoute_viewer;
 export type AuctionFAQRoute_viewer$key = {
-    readonly " $data"?: AuctionFAQRoute_viewer$data | undefined;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionFAQRoute_viewer">;
+  readonly " $data"?: AuctionFAQRoute_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionFAQRoute_viewer">;
 };
-
-
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -137,5 +140,7 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'd977f5690e8b2ad500f04fdb789740d3';
+
+(node as any).hash = "d977f5690e8b2ad500f04fdb789740d3";
+
 export default node;

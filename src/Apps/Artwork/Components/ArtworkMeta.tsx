@@ -1,4 +1,4 @@
-import { ArtworkMeta_artwork } from "__generated__/ArtworkMeta_artwork.graphql"
+import { ArtworkMeta_artwork$data } from "__generated__/ArtworkMeta_artwork.graphql"
 import { Component } from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,7 +9,7 @@ import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/S
 import { ArtworkZendeskFragmentContainer } from "./ArtworkZendesk"
 
 interface ArtworkMetaProps {
-  artwork: ArtworkMeta_artwork
+  artwork: ArtworkMeta_artwork$data
 }
 
 export class ArtworkMeta extends Component<ArtworkMetaProps> {
@@ -65,10 +65,12 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
           content={`${sd.FACEBOOK_APP_NAMESPACE}:artwork`}
         />
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <SeoDataForArtwork artwork={artwork} />
 
         {this.renderImageMetaTags()}
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         <ArtworkZendeskFragmentContainer artwork={artwork} />
       </>
     )

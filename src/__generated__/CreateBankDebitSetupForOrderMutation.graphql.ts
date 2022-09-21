@@ -1,66 +1,46 @@
+/**
+ * @generated SignedSource<<f46d43de8918954b4dbb1aa839d27632>>
+ * @lightSyntaxTransform
+ * @nogrep
+ */
+
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest } from "relay-runtime";
+import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceCreateBankDebitSetupForOrderInput = {
-    clientMutationId?: string | null | undefined;
-    id: string;
+  clientMutationId?: string | null;
+  id: string;
 };
-export type CreateBankDebitSetupForOrderMutationVariables = {
-    input: CommerceCreateBankDebitSetupForOrderInput;
+export type CreateBankDebitSetupForOrderMutation$variables = {
+  input: CommerceCreateBankDebitSetupForOrderInput;
 };
-export type CreateBankDebitSetupForOrderMutationResponse = {
-    readonly commerceCreateBankDebitSetupForOrder: {
-        readonly actionOrError: {
-            readonly __typename: "CommerceOrderRequiresAction";
-            readonly actionData: {
-                readonly clientSecret: string;
-            };
-        } | {
-            readonly __typename: "CommerceOrderWithMutationFailure";
-            readonly error: {
-                readonly code: string;
-                readonly data: string | null;
-                readonly type: string;
-            };
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        };
-    } | null;
+export type CreateBankDebitSetupForOrderMutation$data = {
+  readonly commerceCreateBankDebitSetupForOrder: {
+    readonly actionOrError: {
+      readonly __typename: "CommerceOrderRequiresAction";
+      readonly actionData: {
+        readonly clientSecret: string;
+      };
+    } | {
+      readonly __typename: "CommerceOrderWithMutationFailure";
+      readonly error: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
+    };
+  } | null;
 };
 export type CreateBankDebitSetupForOrderMutation = {
-    readonly response: CreateBankDebitSetupForOrderMutationResponse;
-    readonly variables: CreateBankDebitSetupForOrderMutationVariables;
+  variables: CreateBankDebitSetupForOrderMutation$variables;
+  response: CreateBankDebitSetupForOrderMutation$data;
 };
-
-
-
-/*
-mutation CreateBankDebitSetupForOrderMutation(
-  $input: CommerceCreateBankDebitSetupForOrderInput!
-) {
-  commerceCreateBankDebitSetupForOrder(input: $input) {
-    actionOrError {
-      __typename
-      ... on CommerceOrderRequiresAction {
-        actionData {
-          clientSecret
-        }
-      }
-      ... on CommerceOrderWithMutationFailure {
-        error {
-          code
-          data
-          type
-        }
-      }
-    }
-  }
-}
-*/
 
 const node: ConcreteRequest = (function(){
 var v0 = [
@@ -198,5 +178,7 @@ return {
   }
 };
 })();
-(node as any).hash = '88eeaa4f917c312fb836ede4caa58b0f';
+
+(node as any).hash = "88eeaa4f917c312fb836ede4caa58b0f";
+
 export default node;

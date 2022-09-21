@@ -1,6 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, BoxProps, Image } from "@artsy/palette"
-import { FillwidthItem_artwork } from "__generated__/FillwidthItem_artwork.graphql"
+import { FillwidthItem_artwork$data } from "__generated__/FillwidthItem_artwork.graphql"
 import { useSystemContext } from "System"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,7 +16,7 @@ import { cropped, resized } from "Utils/resized"
 const logger = createLogger("FillwidthItem.tsx")
 
 export interface FillwidthItemProps extends BoxProps {
-  artwork: FillwidthItem_artwork
+  artwork: FillwidthItem_artwork$data
   contextModule: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean
@@ -99,11 +99,13 @@ export const FillwidthItem: React.FC<FillwidthItemProps> = ({
           />
         </RouterLink>
 
+        {/* @ts-ignore RELAY UPGRADE 13 */}
         {showExtended && <Badge artwork={artwork} width={imageWidth} />}
 
         {isSaveButtonVisible && (
           <SaveButtonFragmentContainer
             contextModule={contextModule}
+            // @ts-ignore RELAY UPGRADE 13
             artwork={artwork}
           />
         )}
@@ -111,6 +113,7 @@ export const FillwidthItem: React.FC<FillwidthItemProps> = ({
 
       {showMetadata && (
         <Metadata
+          // @ts-ignore RELAY UPGRADE 13
           artwork={artwork}
           extended={showExtended}
           hidePartnerName={hidePartnerName}
