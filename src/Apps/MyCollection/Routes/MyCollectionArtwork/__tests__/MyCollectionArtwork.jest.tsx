@@ -1,11 +1,10 @@
 import { Breakpoint } from "@artsy/palette"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { MockBoot } from "DevTools"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { useSystemContext } from "System/useSystemContext"
 import { MyCollectionArtworkTestQuery } from "__generated__/MyCollectionArtworkTestQuery.graphql"
-import { MyCollectionArtworkSWASectionMobileLayout } from "../Components/MyCollectionArtworkSWASection"
 import { MyCollectionArtworkFragmentContainer } from "../MyCollectionArtwork"
 
 jest.mock("System/useSystemContext")
