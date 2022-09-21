@@ -14,6 +14,8 @@ describe("MyCollection Artwork SWA Section - mobile layout", () => {
       <MyCollectionArtworkSWASectionMobileLayout
         route={"/sell/submission/artwork-details/artwork-id"}
         learnMore={learnMore}
+        slug={"slug"}
+        artworkId={"artwork-id"}
       />
     )
   }
@@ -42,6 +44,8 @@ describe("MyCollection Artwork SWA Section - desktop layout", () => {
       <MyCollectionArtworkSWASectionDesktopLayout
         route={`/sell/submission/artwork-details/artwork-id`}
         learnMore={learnMore}
+        slug={"slug"}
+        artworkId={"artwork-id"}
       />
     )
   }
