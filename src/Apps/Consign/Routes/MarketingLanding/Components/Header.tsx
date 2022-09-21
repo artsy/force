@@ -14,14 +14,23 @@ export const Header: React.FC = () => {
 
   const trackSubmitClick = () => {
     trackEvent({
-      // @ts-ignore
       action: "clickedSubmitAnArtwork",
-      // @ts-ignore
       context_module: "Header",
       context_page_owner_type: contextPageOwnerType,
       label: "Submit an Artwork",
       user_id: user?.id,
       destination_path: "/sell/submission/artwork-details",
+    })
+  }
+
+  const trackGetInTouchClick = () => {
+    trackEvent({
+      action: "clickedGetInTouch",
+      context_module: "Header",
+      context_page_owner_type: contextPageOwnerType,
+      label: "Get in Touch",
+      user_id: user?.id,
+      user_email: user?.email,
     })
   }
 
@@ -68,15 +77,17 @@ export const Header: React.FC = () => {
                 </Flex>
 
                 <Spacer ml={[0, 2]} />
+
                 <Flex flex={1}>
                   <Button
                     // @ts-ignore
                     as={RouterLink}
                     variant="secondaryWhite"
-                    onClick={trackSubmitClick}
+                    onClick={trackGetInTouchClick}
                     mb={[4, 0]}
                     width={"100%"}
                     data-testid="get-in-touch-button"
+                    to="mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
                   >
                     Get in Touch
                   </Button>
