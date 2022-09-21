@@ -302,8 +302,8 @@ export const consignRoutes: AppRouteConfig[] = [
               ...UploadPhotos_submission
               ...redirects_submission @relay(mask: false)
             }
-            myCollectionArtworkSubmissionPhotos: artwork(id: $artworkId) {
-              ...UploadPhotos_myCollectionArtworkSubmissionPhotos
+            myCollectionArtwork: artwork(id: $artworkId) {
+              ...UploadPhotos_myCollectionArtwork
             }
           }
         `,

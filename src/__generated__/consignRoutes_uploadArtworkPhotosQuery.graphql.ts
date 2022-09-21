@@ -43,8 +43,8 @@ export type consignRoutes_uploadArtworkPhotosQueryResponse = {
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_submission">;
     } | null;
-    readonly myCollectionArtworkSubmissionPhotos: {
-        readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_myCollectionArtworkSubmissionPhotos">;
+    readonly myCollectionArtwork: {
+        readonly " $fragmentRefs": FragmentRefs<"UploadPhotos_myCollectionArtwork">;
     } | null;
 };
 export type consignRoutes_uploadArtworkPhotosQuery = {
@@ -94,13 +94,13 @@ query consignRoutes_uploadArtworkPhotosQuery(
     }
     id
   }
-  myCollectionArtworkSubmissionPhotos: artwork(id: $artworkId) {
-    ...UploadPhotos_myCollectionArtworkSubmissionPhotos
+  myCollectionArtwork: artwork(id: $artworkId) {
+    ...UploadPhotos_myCollectionArtwork
     id
   }
 }
 
-fragment UploadPhotos_myCollectionArtworkSubmissionPhotos on Artwork {
+fragment UploadPhotos_myCollectionArtwork on Artwork {
   internalID
 }
 
@@ -401,7 +401,7 @@ return {
         "storageKey": null
       },
       {
-        "alias": "myCollectionArtworkSubmissionPhotos",
+        "alias": "myCollectionArtwork",
         "args": (v26/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -411,7 +411,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UploadPhotos_myCollectionArtworkSubmissionPhotos"
+            "name": "UploadPhotos_myCollectionArtwork"
           }
         ],
         "storageKey": null
@@ -476,7 +476,7 @@ return {
         "storageKey": null
       },
       {
-        "alias": "myCollectionArtworkSubmissionPhotos",
+        "alias": "myCollectionArtwork",
         "args": (v26/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
@@ -491,14 +491,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1278b28825e1bf80f70ffb6ee45424cd",
+    "cacheID": "7e5e66781204f16d22dba32d8ac9f227",
     "id": null,
     "metadata": {},
     "name": "consignRoutes_uploadArtworkPhotosQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtworkSubmissionPhotos: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtworkSubmissionPhotos\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtworkSubmissionPhotos on Artwork {\n  internalID\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
+    "text": "query consignRoutes_uploadArtworkPhotosQuery(\n  $id: ID\n  $externalId: ID\n  $sessionID: String\n  $artworkId: String!\n) {\n  submission(id: $id, externalId: $externalId, sessionID: $sessionID) {\n    ...UploadPhotos_submission\n    externalId\n    artist {\n      internalID\n      name\n      id\n    }\n    locationCity\n    locationCountry\n    locationState\n    locationPostalCode\n    locationCountryCode\n    year\n    title\n    medium\n    attributionClass\n    editionNumber\n    editionSize\n    height\n    width\n    depth\n    dimensionsMetric\n    provenance\n    assets {\n      id\n      imageUrls\n      geminiToken\n      size\n      filename\n    }\n    id\n  }\n  myCollectionArtwork: artwork(id: $artworkId) {\n    ...UploadPhotos_myCollectionArtwork\n    id\n  }\n}\n\nfragment UploadPhotos_myCollectionArtwork on Artwork {\n  internalID\n}\n\nfragment UploadPhotos_submission on ConsignmentSubmission {\n  externalId\n  assets {\n    id\n    imageUrls\n    geminiToken\n    size\n    filename\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '29213e660e3d915970936f4511d0e929';
+(node as any).hash = 'd589b9bf838b3e4a75b0c593da6a4d7c';
 export default node;

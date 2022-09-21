@@ -21,6 +21,7 @@ import { getENV } from "Utils/getENV"
 import { recaptcha, RecaptchaAction } from "Utils/recaptcha"
 import { ActionType } from "@artsy/cohesion"
 import createLogger from "Utils/logger"
+import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -87,11 +88,12 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: isLoggedIn && me?.email ? me.email : submissionEmail,
         })
 
-        router.push(
-          artworkId
-            ? `/sell/submission/${submission?.externalId}/thank-you/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/thank-you`
-        )
+        router.push({
+          pathname: compact([
+            `/sell/submission/${submission?.externalId}/thank-you`,
+            artworkId,
+          ]).join("/"),
+        })
       } catch (error) {
         logger.error("Submission error", error)
 
@@ -112,11 +114,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         py={2}
         mb={6}
         width="min-content"
-        to={
-          artworkId
-            ? `/sell/submission/${submission?.externalId}/upload-photos/${artworkId}`
-            : `/sell/submission/${submission?.externalId}/upload-photos`
-        }
+        to={compact([
+          `/sell/submission/${submission?.externalId}/upload-photos`,
+          artworkId,
+        ]).join("/")}
       >
         Back
       </BackLink>

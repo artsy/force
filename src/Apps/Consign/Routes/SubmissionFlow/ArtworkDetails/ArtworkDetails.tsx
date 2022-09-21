@@ -24,6 +24,7 @@ import { UtmParams } from "../Utils/types"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { compact } from "lodash"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -130,9 +131,10 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         pathname: `/sell/submission/${submissionId}/artwork-details`,
       })
       router.push({
-        pathname: artworkId
-          ? `/sell/submission/${submissionId}/upload-photos/${artworkId}`
-          : `/sell/submission/${submissionId}/upload-photos`,
+        pathname: compact([
+          `/sell/submission/${submissionId}/upload-photos`,
+          artworkId,
+        ]).join("/"),
       })
     }
   }
