@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff10f17f0d421a768c85c137fbd5fd8a>>
+ * @generated SignedSource<<d2aec914ba152a4e4d14081ca727ffdf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OnboardingGene_gene$data = {
+export type OnboardingMarketingCollection_marketingCollection$data = {
   readonly artworks: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -19,35 +19,25 @@ export type OnboardingGene_gene$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly internalID: string;
-  readonly name: string | null;
-  readonly " $fragmentType": "OnboardingGene_gene";
+  readonly title: string;
+  readonly " $fragmentType": "OnboardingMarketingCollection_marketingCollection";
 };
-export type OnboardingGene_gene$key = {
-  readonly " $data"?: OnboardingGene_gene$data;
-  readonly " $fragmentSpreads": FragmentRefs<"OnboardingGene_gene">;
+export type OnboardingMarketingCollection_marketingCollection$key = {
+  readonly " $data"?: OnboardingMarketingCollection_marketingCollection$data;
+  readonly " $fragmentSpreads": FragmentRefs<"OnboardingMarketingCollection_marketingCollection">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "OnboardingGene_gene",
+  "name": "OnboardingMarketingCollection_marketingCollection",
   "selections": [
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "title",
       "storageKey": null
     },
     {
@@ -60,53 +50,18 @@ return {
         },
         {
           "kind": "Literal",
-          "name": "forSale",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "height",
-          "value": "*-*"
-        },
-        {
-          "kind": "Literal",
-          "name": "inquireableOnly",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "marketable",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "offerable",
-          "value": true
-        },
-        {
-          "kind": "Literal",
           "name": "page",
           "value": 1
         },
         {
           "kind": "Literal",
-          "name": "priceRange",
-          "value": "*-*"
-        },
-        {
-          "kind": "Literal",
           "name": "sort",
           "value": "-decayed_merch"
-        },
-        {
-          "kind": "Literal",
-          "name": "width",
-          "value": "*-*"
         }
       ],
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "filterArtworksConnection",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
@@ -125,7 +80,13 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -138,14 +99,13 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:50,forSale:true,height:\"*-*\",inquireableOnly:true,marketable:true,offerable:true,page:1,priceRange:\"*-*\",sort:\"-decayed_merch\",width:\"*-*\")"
+      "storageKey": "artworksConnection(first:50,page:1,sort:\"-decayed_merch\")"
     }
   ],
-  "type": "Gene",
+  "type": "MarketingCollection",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "3e738a263393a1812162d68c8845a834";
+(node as any).hash = "e8392b6fc42af68d5aeb3d3b693865d5";
 
 export default node;

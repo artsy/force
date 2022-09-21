@@ -1,10 +1,10 @@
 import { FC } from "react"
-import { OnboardingGeneQueryRenderer } from "../Components/OnboardingGene"
+import { OnboardingMarketingCollectionQueryRenderer } from "../Components/OnboardingMarketingCollection"
 
 export const OnboardingArtistsOnTheRise: FC = () => {
   return (
-    <OnboardingGeneQueryRenderer
-      id="artists-on-the-rise"
+    <OnboardingMarketingCollectionQueryRenderer
+      slug="artists-on-the-rise"
       description={
         <>
           Follow to see fresh works from the studios of up-and-coming artists in

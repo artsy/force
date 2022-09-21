@@ -1,25 +1,26 @@
 import { FC, Fragment, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { OnboardingGene_gene$data } from "__generated__/OnboardingGene_gene.graphql"
-import { OnboardingGeneQuery } from "__generated__/OnboardingGeneQuery.graphql"
+import { OnboardingMarketingCollection_marketingCollection$data } from "__generated__/OnboardingMarketingCollection_marketingCollection.graphql"
+import { OnboardingMarketingCollectionQuery } from "__generated__/OnboardingMarketingCollectionQuery.graphql"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
 import { Masonry } from "Components/Masonry"
 import { extractNodes } from "Utils/extractNodes"
 import { Box, Flex, Message, Spacer, Text } from "@artsy/palette"
-import { FollowGeneButtonQueryRenderer } from "Components/FollowButton/FollowGeneButton"
-import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
-import { OnboardingThankYou } from "Components/Onboarding/Views/OnboardingThankYou"
-import { ContextModule } from "@artsy/cohesion"
-import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
+import { useOnboardingContext } from "../Hooks/useOnboardingContext"
+import { OnboardingThankYou } from "../Views/OnboardingThankYou"
+import { useOnboardingTracking } from "../Hooks/useOnboardingTracking"
 
-interface OnboardingGeneProps {
-  gene: OnboardingGene_gene$data
+interface OnboardingMarketingCollectionProps {
+  marketingCollection: OnboardingMarketingCollection_marketingCollection$data
   description: JSX.Element
 }
 
-const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
-  const artworks = extractNodes(gene.artworks)
+const OnboardingMarketingCollection: FC<OnboardingMarketingCollectionProps> = ({
+  marketingCollection,
+  description,
+}) => {
+  const artworks = extractNodes(marketingCollection.artworks)
   const { onClose } = useOnboardingContext()
   const tracking = useOnboardingTracking()
 
@@ -36,27 +37,13 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
     <Box px={[2, 4]} py={6}>
       <Flex justifyContent="space-between">
         <Box>
-          <Text variant="xl">{gene.name}</Text>
+          <Text variant="xl">{marketingCollection.title}</Text>
 
           <Text variant={["sm", "md"]} color="black60" mt={2}>
             {description}
           </Text>
         </Box>
-
-        <FollowGeneButtonQueryRenderer
-          id={gene.internalID}
-          display={["none", "block"]}
-          contextModule={ContextModule.onboardingFlow}
-        />
       </Flex>
-
-      <FollowGeneButtonQueryRenderer
-        id={gene.internalID}
-        mt={2}
-        display={["block", "none"]}
-        size="small"
-        contextModule={ContextModule.onboardingFlow}
-      />
 
       <Spacer mb={4} />
 
@@ -79,24 +66,16 @@ const OnboardingGene: FC<OnboardingGeneProps> = ({ gene, description }) => {
   )
 }
 
-export const OnboardingGeneFragmentContainer = createFragmentContainer(
-  OnboardingGene,
+export const OnboardingMarketingCollectionFragmentContainer = createFragmentContainer(
+  OnboardingMarketingCollection,
   {
-    gene: graphql`
-      fragment OnboardingGene_gene on Gene {
-        internalID
-        name
-        artworks: filterArtworksConnection(
+    marketingCollection: graphql`
+      fragment OnboardingMarketingCollection_marketingCollection on MarketingCollection {
+        title
+        artworks: artworksConnection(
           first: 50
           page: 1
           sort: "-decayed_merch"
-          height: "*-*"
-          width: "*-*"
-          priceRange: "*-*"
-          marketable: true
-          offerable: true
-          inquireableOnly: true
-          forSale: true
         ) {
           edges {
             node {
@@ -110,19 +89,19 @@ export const OnboardingGeneFragmentContainer = createFragmentContainer(
   }
 )
 
-interface OnboardingGeneQueryRendererProps {
-  id: string
+interface OnboardingMarketingCollectionQueryRendererProps {
+  slug: string
   description: JSX.Element
 }
 
-export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> = ({
-  id,
+export const OnboardingMarketingCollectionQueryRenderer: FC<OnboardingMarketingCollectionQueryRendererProps> = ({
+  slug,
   description,
 }) => {
   const { onComplete } = useOnboardingContext()
 
-  // If a user has arrived to the gene artwork grid page, they've completed a
-  // path within the artwork flow.
+  // If a user has arrived to the marketing collection artwork grid page,
+  // they've completed a path within the artwork flow.
   useEffect(() => {
     onComplete()
   }, [onComplete])
@@ -136,28 +115,28 @@ export const OnboardingGeneQueryRenderer: FC<OnboardingGeneQueryRendererProps> =
   )
 
   return (
-    <SystemQueryRenderer<OnboardingGeneQuery>
+    <SystemQueryRenderer<OnboardingMarketingCollectionQuery>
       query={graphql`
-        query OnboardingGeneQuery($id: String!) {
-          gene(id: $id) {
-            ...OnboardingGene_gene
+        query OnboardingMarketingCollectionQuery($slug: String!) {
+          marketingCollection(slug: $slug) {
+            ...OnboardingMarketingCollection_marketingCollection
           }
         }
       `}
-      variables={{ id }}
+      variables={{ slug }}
       render={({ error, props }) => {
         if (error) {
           console.error(error)
           return null
         }
 
-        if (!props?.gene) {
+        if (!props?.marketingCollection) {
           return <OnboardingThankYou message={ThankYouMessage} />
         }
 
         return (
-          <OnboardingGeneFragmentContainer
-            gene={props.gene}
+          <OnboardingMarketingCollectionFragmentContainer
+            marketingCollection={props.marketingCollection}
             description={description}
           />
         )
